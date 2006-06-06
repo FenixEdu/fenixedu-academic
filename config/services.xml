@@ -103,8 +103,8 @@
 		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.sop.CriarTurma</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
-		<filterChains>
 			<chain name="TimeTableManagerAuthorization" />
+		<filterChains>
 		</filterChains>
 	</service>
 	<service>
@@ -124,7 +124,7 @@
 		<filterChains>
 			<chain name="TimeTableManagerAuthorization" />
 		</filterChains>
-	</service>
+	</service>	
 	<service>
 		<name>DeleteLessons</name>
 		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.sop.DeleteLessons</implementationClass>
@@ -134,6 +134,22 @@
 			<chain name="TimeTableManagerAuthorization" />
 		</filterChains>
 	</service>
+	<service>
+		<name>AddAnnouncementBoardBookmark</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.messaging.AddAnnouncementBoardBookmark</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		<filterChains>
+		</filterChains>
+	</service>	
+	<service>
+		<name>RemoveAnnouncementBoardBookmark</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.messaging.RemoveAnnouncementBoardBookmark</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		<filterChains>
+		</filterChains>
+	</service>		
 	<service>
 		<name>DeleteShift</name>
 		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.sop.DeleteShift</implementationClass>
@@ -2923,6 +2939,13 @@
 		</filterChains>
 	</service>
 	<service>
+		<name>DeleteAnnouncement</name>
+		<implementationClass> 
+            net.sourceforge.fenixedu.applicationTier.Servico.messaging.DeleteAnnouncement</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+	</service>	
+	<service>
 		<name>DeleteProfessorship</name>
 		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.DeleteProfessorship</implementationClass>
 		<description />
@@ -5612,6 +5635,14 @@
 			<chain name="GrantOwnerManagerAuthorization" />
 		</filterChains>
 	</service>
+	<service>
+		<name>ForwardEmailToExecutionCourses</name>
+		<implementationClass> 
+            net.sourceforge.fenixedu.applicationTier.Servico.cms.messaging.ForwardEmailToExecutionCourses</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		<filterChains/>
+	</service>	
 	<service>
 		<name>ReadGrantPaymentEntity</name>
 		<implementationClass> 
@@ -8795,19 +8826,6 @@
         	<chain name="ManagerAuthorization"></chain>
         </filterChains>
     </service>  
-	<!--############# CMS ####################-->  
-    <service>
-		<name>ProcessReceivedMail</name>
-		<implementationClass>
-			net.sourceforge.fenixedu.applicationTier.Servico.cms.messaging.ProcessReceivedMail
-		</implementationClass>
-		<description/>
-		<isTransactional>true</isTransactional>
-		<filterChains>
-			<chain name="ProcessReceivedMailPreFilterChain" />
-		</filterChains>		
-	</service>
-    <!-- ======================================  -->  
  <!-- =========by gedl 15-11-2005============  -->
     <service>
 		<name>ReadCmsByName</name>

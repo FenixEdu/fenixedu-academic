@@ -937,15 +937,6 @@
         <filterClass>net.sourceforge.fenixedu.applicationTier.Filtro.cms.accessControl.CmsManagerAuthorizationFilter</filterClass>
     </filterChain>
 
-<!-- =========by gedl 14-11-2005============  -->
-<filterChain>
-	<name>ProcessReceivedMailPreFilterChain</name>
-	<expression>AcceptableMessageSize &amp;&amp; MailerAuthenticated</expression>	
-	<description/>
-	<invocationTiming>1</invocationTiming>
-	<filterClass>net.sourceforge.fenixedu.applicationTier.Filtro.cms.accessControl.CmsAccessControlFilter</filterClass>
-</filterChain>
-
 <!-- ======================================  --> 
 
 <!--######################################-->

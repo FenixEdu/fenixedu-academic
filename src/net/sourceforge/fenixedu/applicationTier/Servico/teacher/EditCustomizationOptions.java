@@ -18,6 +18,7 @@ public class EditCustomizationOptions extends Service {
         site.setMail(infoSiteNew.getMail());
         site.setInitialStatement(infoSiteNew.getInitialStatement());
         site.setIntroduction(infoSiteNew.getIntroduction());
+        site.setDynamicMailDistribution(infoSiteNew.getDynamicMailDistribution());
 
         return true;
     }

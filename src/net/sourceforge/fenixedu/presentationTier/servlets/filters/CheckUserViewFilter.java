@@ -83,7 +83,7 @@ public class CheckUserViewFilter implements Filter {
         		&& (uri.indexOf("images/") == -1)
                 && (uri.indexOf("download/") == -1)
                 && (uri.indexOf("external/") == -1)
-        		&& (uri.indexOf("index.jsp") == -1)
+                && (uri.indexOf("index.jsp") == -1)
                 && (uri.indexOf("index.html") == -1)
                 && (uri.indexOf("login.do") == -1)
                 && (uri.indexOf("loginCAS.do") == -1)
@@ -98,6 +98,7 @@ public class CheckUserViewFilter implements Filter {
                 && (uri.indexOf("checkPasswordKerberos.do") == -1)
                 && (uri.indexOf("siteMap.do") == -1)
                 && (uri.indexOf("changeLocaleTo.do") == -1)
+                && (uri.indexOf("cms/forwardEmailAction.do") == -1)
                 && (uri.indexOf("isAlive.do") == -1));
     }
 

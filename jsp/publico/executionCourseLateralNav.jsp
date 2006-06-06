@@ -5,7 +5,8 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/app.tld" prefix="app" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
-
+<%@page import="net.sourceforge.fenixedu.presentationTier.Action.teacher.TeacherAdministrationViewerDispatchAction"%>
+<%@page import="net.sourceforge.fenixedu.presentationTier.Action.cms.messaging.ForwardEmailAction"%>
 <bean:define id="component" name="siteView" property="commonComponent" />
 <bean:define id="sections" name="component" property="sections"/>
 
@@ -47,30 +48,42 @@
 			<app:generateSectionMenu name="sections" path="<%=  request.getContextPath() + RequestUtils.getModuleName(request,application)%>" />
 		</logic:notPresent>		
 	</logic:notEmpty>
-
-<%--
-background: url(<%= request.getContextPath() %>/images/rss_ico.gif) 10px 3px no-repeat; padding-left: 32px;
-style="<%=imageURL%>"
-<bean:message  key="label.rss"/>
---%>
-
+	
 	<li>
 		<bean:define id="imageURL" type="java.lang.String">
-			background: url(<%= request.getContextPath() %>/images/rss_ico.gif) 4em 0.3em no-repeat; padding-left: 0em;
+			background: url(<%= request.getContextPath() %>/images/rss_ico.gif) 10px 3px no-repeat; padding-left: 32px;
 		</bean:define>
-		<html:link page="<%= "/viewSite.do" + "?method=rss&amp;objectCode=" + pageContext.findAttribute("objectCode")  + "&amp;executionPeriodOID=" + pageContext.findAttribute(SessionConstants.EXECUTION_PERIOD_OID)%>">
-			<img src="<%= request.getContextPath() %>/images/rss_ico.gif" alt="<bean:message  key="label.rss"/>" style="padding: 0.35em 0;" title="<bean:message  key="label.rss"/>"/>
+		<html:link page="<%= "/viewSite.do" + "?method=rss&amp;objectCode=" + pageContext.findAttribute("objectCode")  + "&amp;executionPeriodOID=" + pageContext.findAttribute(SessionConstants.EXECUTION_PERIOD_OID)%>" style="<%=imageURL%>">
+			<bean:message  key="label.rss"/>
 		</html:link>
 	</li>
 	
-	<logic:notEmpty name="component" property="mail" >	
-		<bean:define id="siteMail" name="component" property="mail" />
-		<html:link href="<%= "mailto:" + pageContext.findAttribute("siteMail") %>">
-			<div class="email"><p><bean:write name="siteMail" /></p></div>
+	<logic:equal name="chooseExecutionCourseFormWithDynamicMailDistribution" property="dynamicMailDistribution" value="true">
+			<%
+				StringBuffer buffer = new StringBuffer();
+				buffer.append(ForwardEmailAction.emailAddressPrefix);
+				buffer.append(request.getParameter("objectCode")).append("&#64");
+				buffer.append(TeacherAdministrationViewerDispatchAction.mailingListDomainConfiguration());
+			%>
+		<bean:define id="advisoryText">
+			<bean:message  key="send.email.dynamicMailDistribution.link" bundle="PUBLIC_DEGREE_INFORMATION"/>
+		</bean:define>
+		<html:link href="<%="mailto:" +buffer.toString() %>" titleKey="send.email.dynamicMailDistribution.title" bundle="PUBLIC_DEGREE_INFORMATION">
+			<div class="email"><p><bean:message key="send.email.dynamicMailDistribution.link" bundle="PUBLIC_DEGREE_INFORMATION"/></p>
 		</html:link>
-	</logic:notEmpty>
+	</logic:equal>
+
 	
+	<logic:notEqual name="chooseExecutionCourseFormWithDynamicMailDistribution" property="dynamicMailDistribution" value="true">
+		<logic:notEmpty name="component" property="mail" >	
+			<bean:define id="siteMail" name="component" property="mail" />
+			<html:link href="<%= "mailto:" + pageContext.findAttribute("siteMail") %>" titleKey="send.email.singleMail.title" bundle="PUBLIC_DEGREE_INFORMATION">
+			<div class="email"><p><bean:message key="send.email.dynamicMailDistribution.link" bundle="PUBLIC_DEGREE_INFORMATION"/></p>
+			</html:link>
+		</logic:notEmpty>
+	</logic:notEqual>
 	
+
 </ul>
 
 

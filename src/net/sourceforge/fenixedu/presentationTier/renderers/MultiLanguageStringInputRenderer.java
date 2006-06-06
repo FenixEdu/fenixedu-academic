@@ -33,6 +33,7 @@ import net.sourceforge.fenixedu.renderers.model.MetaSlotKey;
 import net.sourceforge.fenixedu.renderers.model.SimpleMetaSlot;
 import net.sourceforge.fenixedu.renderers.utils.RenderKit;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
+import net.sourceforge.fenixedu.util.LanguageUtils;
 import net.sourceforge.fenixedu.util.MultiLanguageString;
 
 /**
@@ -346,7 +347,9 @@ public class MultiLanguageStringInputRenderer extends InputRenderer {
             PresentationContext context = getInputContext().createSubContext(getInputContext().getMetaObject());
             context.setProperties(new Properties());
             
-            HtmlSimpleValueComponent languageComponent = (HtmlSimpleValueComponent) RenderKit.getInstance().render(context, language, Language.class);
+            Language usedLanguage = language == null ? LanguageUtils.getUserLanguage() : language;
+            
+            HtmlSimpleValueComponent languageComponent = (HtmlSimpleValueComponent) RenderKit.getInstance().render(context, usedLanguage, Language.class);
             languageComponent.setController(new UpdateLanguageController(textInput, index));
             languageComponent.setTargetSlot(null);
             languageComponent.setName(getLocalName("language/" + index));

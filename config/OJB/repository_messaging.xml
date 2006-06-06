@@ -36,3 +36,25 @@
 <class-descriptor class="net.sourceforge.fenixedu.domain.messaging.ForumSubscription" table="FORUM_SUBSCRIPTION">
         
 </class-descriptor>
+
+<!-- *************************************************************************************************************** -->
+<!-- Definitions for net.sourceforge.fenixedu.domain.messaging.Announcement -->
+<!-- *************************************************************************************************************** -->
+<class-descriptor class="net.sourceforge.fenixedu.domain.messaging.NewAnnouncement" table="ANNOUNCEMENT_MESSAGING">
+        
+</class-descriptor>
+
+<!-- *************************************************************************************************************** -->
+<!-- Definitions for net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard -->
+<!-- *************************************************************************************************************** -->
+<class-descriptor class="net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard">
+	<extent-class class-ref="net.sourceforge.fenixedu.domain.messaging.PartyAnnouncementBoard" />        
+</class-descriptor>
+
+<class-descriptor class="net.sourceforge.fenixedu.domain.messaging.PartyAnnouncementBoard">
+    <extent-class class-ref="net.sourceforge.fenixedu.domain.messaging.UnitAnnouncementBoard" />    
+</class-descriptor>
+
+<class-descriptor class="net.sourceforge.fenixedu.domain.messaging.UnitAnnouncementBoard" table="ANNOUNCEMENT_BOARD">
+
+</class-descriptor>

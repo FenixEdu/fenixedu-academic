@@ -313,12 +313,49 @@ class net.sourceforge.fenixedu.domain.teacher.Category extends net.sourceforge.f
 	Integer weight;
 }
 
+class net.sourceforge.fenixedu.domain.messaging.NewAnnouncement extends net.sourceforge.fenixedu.domain.DomainObject {
+	Integer keyCreator;
+	Integer keyAnnouncementBoard;
+	DateTime creationDate;
+	DateTime referedSubjectBegin;
+	DateTime referedSubjectEnd;
+	DateTime publicationBegin;
+	DateTime publicationEnd;	
+	DateTime lastModification;
+	MultiLanguageString subject;
+	MultiLanguageString keywords;
+	MultiLanguageString body;
+	MultiLanguageString excerpt;	
+	String author;
+	String authorEmail;
+	Boolean hidden;		
+}
+
+class net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard extends net.sourceforge.fenixedu.domain.DomainObject {
+	String ojbConcreteClass;
+	String name;
+	Group readers;
+	Group writers;	
+	Boolean mandatory;
+}
+
+class net.sourceforge.fenixedu.domain.messaging.PartyAnnouncementBoard extends net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard {
+	Integer keyParty;
+}
+
+class net.sourceforge.fenixedu.domain.messaging.PersonAnnouncementBoard extends net.sourceforge.fenixedu.domain.messaging.PartyAnnouncementBoard {
+}
+
+class net.sourceforge.fenixedu.domain.messaging.UnitAnnouncementBoard extends net.sourceforge.fenixedu.domain.messaging.PartyAnnouncementBoard {
+}
+ 
 class net.sourceforge.fenixedu.domain.messaging.ConversationThread extends net.sourceforge.fenixedu.domain.DomainObject {
 	DateTime creationDateDateTime;
-   String subject;
-   Integer keyForum;
-   Integer keyCreator;
+	String subject;
+	Integer keyForum;
+	Integer keyCreator;
 }
+
    
 class net.sourceforge.fenixedu.domain.messaging.ConversationMessage extends net.sourceforge.fenixedu.domain.DomainObject {
 	DateTime creationDateDateTime;
@@ -2309,6 +2346,7 @@ class net.sourceforge.fenixedu.domain.Site extends net.sourceforge.fenixedu.doma
 	String style;
 	String initialStatement;
 	String mail;
+	Boolean dynamicMailDistribution;
 	Integer keyExecutionCourse;
 	String introduction;
 	String alternativeSite;
@@ -3084,6 +3122,29 @@ class net.sourceforge.fenixedu.domain.User extends net.sourceforge.fenixedu.doma
  * 
  */
 
+relation AnnouncementCreator {
+	net.sourceforge.fenixedu.domain.Person playsRole creator;
+	net.sourceforge.fenixedu.domain.messaging.NewAnnouncement playsRole announcements {
+		multiplicity *;
+	}
+}
+
+relation AnnouncementBoardAnnouncements {
+	net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard playsRole announcementBoard;
+	net.sourceforge.fenixedu.domain.messaging.NewAnnouncement playsRole announcements {
+	    multiplicity *;
+	}
+}
+
+relation AnnouncementBoardBookmark {
+	net.sourceforge.fenixedu.domain.Person playsRole persons {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard playsRole bookmarkedBoards {
+		multiplicity *;
+	}
+}
+
 relation AnswerExportProposal {
 	net.sourceforge.fenixedu.domain.ExportGrouping playsRole exportGroupingReceivers {
 		multiplicity *;
@@ -3092,8 +3153,7 @@ relation AnswerExportProposal {
 }
 
 relation AssiduousnessAssiduousnessStatusHistory {
-	net.sourceforge.fenixedu.domain.assiduousness.Assiduousness playsRole assiduousness;
-	
+	net.sourceforge.fenixedu.domain.assiduousness.Assiduousness playsRole assiduousness;	
 	net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessStatusHistory playsRole assiduousnessStatusHistories {
 		multiplicity *;
 	}
@@ -6193,6 +6253,13 @@ relation AccountabilityAccountabilityType {
 	}
 }
 
+relation PartyAnnouncementBoard {
+	net.sourceforge.fenixedu.domain.messaging.PartyAnnouncementBoard playsRole boards{
+		multiplicity *;
+	}	
+	net.sourceforge.fenixedu.domain.organizationalStructure.Party playsRole party;
+}
+
 relation PartyPartyType {
 	net.sourceforge.fenixedu.domain.organizationalStructure.PartyType playsRole partyType;	 
 	net.sourceforge.fenixedu.domain.organizationalStructure.Party playsRole parties {
@@ -7923,6 +7990,20 @@ relation RootDomainObjectCaseStudyChoice {
 relation RootDomainObjectAnnouncement {
 	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
 	net.sourceforge.fenixedu.domain.Announcement playsRole announcements {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectAnnouncementBoard {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard playsRole announcementBoards {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectNewAnnouncement {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.messaging.NewAnnouncement playsRole newAnnouncements {
 		multiplicity *;
 	}
 }

@@ -3,13 +3,16 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
+<%@page import="net.sourceforge.fenixedu.presentationTier.Action.cms.messaging.ForwardEmailAction"%>
+<%@page import="net.sourceforge.fenixedu.presentationTier.Action.teacher.TeacherAdministrationViewerDispatchAction"%>
+
 <p>
 <span class="error"><html:errors/></span>
 </p>
 
 <h2><bean:message key="title.personalizationOptions"/></h2>
 <logic:present name="siteView"> 
-<html:form action="/alternativeSite">
+<html:form action="/alternativeSite" method="get">
 <bean:define id="bodyComponent" name="siteView" property="component"/>
 <br />
 <table width="100%" cellpadding="0" cellspacing="0">
@@ -38,7 +41,23 @@
 	</td>
 	<td><span class="error" >
 	  <html:errors property="mail"/></span>
-    </td>
+    </td>    
+</tr>
+<tr>
+	<td width="200px">
+	  <bean:message key="dyanamicMailDistribution.prompt.message"/>
+	<td>
+		<html:checkbox property="dynamicMailDistribution"></html:checkbox>
+		<%=ForwardEmailAction.emailAddressPrefix%><%=request.getParameter("objectCode")%>&#64;<%=TeacherAdministrationViewerDispatchAction.mailingListDomainConfiguration() %>
+	</td>
+	<td><span class="error" >
+	  <html:errors property="dynamicMailDistribution"/></span>
+    </td>    
+</tr>
+<tr>
+	<td colspan="3">
+		
+	</td>
 </tr>
 </table>
 <br />

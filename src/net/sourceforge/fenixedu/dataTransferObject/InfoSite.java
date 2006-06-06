@@ -24,6 +24,22 @@ public class InfoSite extends InfoObject implements ISiteComponent {
     private String introduction;
 
     private String style;
+    
+    private Boolean dynamicMailDistribution;
+
+    /**
+     * @return the dynamicMailDistribution
+     */
+    public Boolean getDynamicMailDistribution() {
+        return this.dynamicMailDistribution;
+    }
+
+    /**
+     * @param dynamicMailDistribution the dynamicMailDistribution to set
+     */
+    public void setDynamicMailDistribution(Boolean dynamicMailDistribution) {
+        this.dynamicMailDistribution = dynamicMailDistribution;
+    }
 
     /**
      * Construtor

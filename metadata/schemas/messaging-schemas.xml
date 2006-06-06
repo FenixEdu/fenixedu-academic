@@ -84,3 +84,27 @@
 	</slot>
 	<slot name="body" key="label.net.sourceforge.fenixedu.domain.messaging.ConversationMessage.body"/>	
 </schema>
+
+<schema bundle="MESSAGING_RESOURCES" name="announcementBoard.view-with-name-and-active-announcements-count-and-announcements-count" type="net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard">
+	<slot name="name" key="messaging.name.label"/>
+	<slot name="announcementsCount" key="net.sourceforge.fenixedu.messaging.AnnouncementBoard.announcementsCount"/>
+	<slot name="activeAnnouncementsCount" key="net.sourceforge.fenixedu.messaging.AnnouncementBoard.activeAnnouncementsCount"/>
+</schema>
+
+<schema bundle="MESSAGING_RESOURCES" name="announcement.view-with-subject-creationDate-authorName-hidden-publicationBegin-publicationEnd-lastModification" type="net.sourceforge.fenixedu.domain.messaging.NewAnnouncement">
+	<slot name="subject" key="net.sourceforge.fenixedu.domain.messaging.Announcement.title.label"/>
+	<slot name="creationDate" key="net.sourceforge.fenixedu.messaging.AnnouncementBoard.creationDate">
+		<property name="format" value="dd/MM/yyyy HH:mm:ss" />
+	</slot>
+	<slot name="author" key="net.sourceforge.fenixedu.domain.messaging.Announcement.authorName.label"/>	
+	<slot name="hidden" key="net.sourceforge.fenixedu.domain.messaging.Announcement.hidden.label"/>	
+	<slot name="publicationBegin" key="net.sourceforge.fenixedu.domain.messaging.Announcement.publicationBegin.short.label">	
+		<property name="format" value="dd/MM/yyyy HH:mm:ss" />
+	</slot>
+	<slot name="publicationEnd" key="net.sourceforge.fenixedu.domain.messaging.Announcement.publicationEnd.short.label">	
+		<property name="format" value="dd/MM/yyyy HH:mm:ss" />
+	</slot>
+	<slot name="lastModification" key="net.sourceforge.fenixedu.messaging.AnnouncementBoard.lastModification">	
+		<property name="format" value="dd/MM/yyyy HH:mm:ss" />
+	</slot>
+</schema>

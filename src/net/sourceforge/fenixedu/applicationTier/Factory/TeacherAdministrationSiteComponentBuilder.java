@@ -252,6 +252,7 @@ public class TeacherAdministrationSiteComponentBuilder {
 		component.setInitialStatement(site.getInitialStatement());
 		component.setIntroduction(site.getIntroduction());
 		component.setIdInternal(site.getIdInternal());
+		component.setDynamicMailDistribution(site.getDynamicMailDistribution());
 
 		component.setInfoExecutionCourse(InfoExecutionCourse
 				.newInfoFromDomain(site.getExecutionCourse()));

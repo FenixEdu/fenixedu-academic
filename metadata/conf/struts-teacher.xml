@@ -229,15 +229,15 @@
             <form-property name="teacherNumber" type="java.lang.String" />
             <form-property name="page" type="java.lang.Integer" initial="0"/>
         </form-bean>
-        <form-bean name="alternativeSiteForm" type="org.apache.struts.validator.DynaValidatorForm" 
-            dynamic="true">
+		<form-bean name="customOptionsForm" type="net.sourceforge.fenixedu.presentationTier.Action.teacher.form.AlternativeSiteForm" dynamic="true">
             <form-property name="siteAddress" type="java.lang.String" />
             <form-property name="mail" type="java.lang.String" />
             <form-property name="initialStatement" type="java.lang.String" />
             <form-property name="introduction" type="java.lang.String" />
             <form-property name="method" type="java.lang.String" />
             <form-property name="page" type="java.lang.Integer" initial="0" />
-        </form-bean>
+            <form-property name="dynamicMailDistribution" type="java.lang.Boolean" />
+        </form-bean>        
         <form-bean name="sectionForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
             <form-property name="name" type="java.lang.String" />
             <form-property name="sectionOrder" type="java.lang.String" />
@@ -918,7 +918,7 @@
             <!-- form is not used -->
             <forward name="Success" path="/teacherInformation.do?method=prepareEdit&amp;page=0" />
         </action>
-        <action path="/alternativeSite" parameter="method" scope="session" name="alternativeSiteForm" 
+        <action path="/alternativeSite" parameter="method" scope="session" name="customOptionsForm" 
             input="/alternativeSite.do?method=prepareCustomizationOptions&amp;page=0" 
             type="net.sourceforge.fenixedu.presentationTier.Action.teacher.TeacherAdministrationViewerDispatchAction" 
             validate="true">
@@ -1152,14 +1152,14 @@
         </action>
         <!-- End of Actions for Teacher credits -->
         <!-- Action for Teacher Administration Site -->
-        <action path="/teacherAdministrationViewer" name="alternativeSiteForm" 
+        <action path="/teacherAdministrationViewer" name="customOptionsForm" 
             input="/teacherAdministrationViewerError.jsp" scope="request" parameter="method" 
             type="net.sourceforge.fenixedu.presentationTier.Action.teacher.TeacherAdministrationViewerDispatchAction">
             <forward name="viewSite" path="/viewSite.jsp"/>
             <forward name="editAlternativeSite" path="/alternativeSiteManagement.jsp"/>
             <forward name="executionCourseViewer" path="/viewExecutionCourse.jsp"/>
         </action>
-        <action path="/sectionViewer" name="alternativeSiteForm" 
+        <action path="/sectionViewer" name="customOptionsForm" 
             input="/teacherAdministrationViewerError.jsp" scope="request" parameter="method" 
             type="net.sourceforge.fenixedu.presentationTier.Action.teacher.TeacherAdministrationViewerDispatchAction">
             <forward name="sectionsFirstPage" path="/sectionsFirstPage.jsp"/>

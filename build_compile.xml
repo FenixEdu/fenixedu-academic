@@ -187,6 +187,8 @@ script.isAlive.check.slide=${script.isAlive.check.slide}
 			    			   property="mail.smtp.host"/>
 				<replacefilter token="@mail.smtp.name@" 
 			    			   property="mail.smtp.name"/>
+					<replacefilter token="@mailingList.host.name@" 
+				    			   property="mailingList.host.name"/>				
 			</replace>
 
 

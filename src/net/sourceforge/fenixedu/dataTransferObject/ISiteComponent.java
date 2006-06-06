@@ -13,5 +13,4 @@ import java.io.Serializable;
  *  
  */
 public interface ISiteComponent extends Serializable {
-
 }

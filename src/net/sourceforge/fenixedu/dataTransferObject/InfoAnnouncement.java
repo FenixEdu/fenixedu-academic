@@ -149,4 +149,5 @@ public class InfoAnnouncement extends InfoObject implements Comparable, ISiteCom
         }
         return infoAnnouncement;
     }
+
 }

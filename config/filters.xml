@@ -829,7 +829,6 @@
         <isTransactional>false</isTransactional>
     </filter>
 <!--############# CMS ####################-->
-
 <filter>
     <name>CmsManagerAuthorization</name>
     <implementationClass>net.sourceforge.fenixedu.applicationTier.Filtro.cms.accessControl.CmsManagerAuthorizationFilter</implementationClass>
@@ -837,26 +836,6 @@
     <isTransactional>true</isTransactional>
 </filter>
 
-<!-- =========by gedl 14-11-2005============  -->
-<filter>
-	<name>OwnerCanAssociateMailingListToGroupsFilter</name>
-	<implementationClass>net.sourceforge.fenixedu.applicationTier.Filtro.cms.accessControl.OwnerCanAssociateMailingListToGroups</implementationClass>
-	<description/>
-	<isTransactional>true</isTransactional>
-</filter>
-
-<filter>
-	<name>AcceptableMessageSize</name>
-	<implementationClass>net.sourceforge.fenixedu.applicationTier.Filtro.cms.accessControl.AcceptableMessageSize</implementationClass>
-	<description/>
-	<isTransactional>true</isTransactional>
-</filter>
-<filter>
-	<name>MailerAuthenticated</name>
-	<implementationClass>net.sourceforge.fenixedu.applicationTier.Filtro.cms.accessControl.MailerAuthenticated</implementationClass>
-	<description/>
-	<isTransactional>true</isTransactional>
-</filter>
 <filter>
 	<name>ResearcherAuthorization</name>
 	<implementationClass>net.sourceforge.fenixedu.applicationTier.Filtro.research.ResearcherFilter</implementationClass>

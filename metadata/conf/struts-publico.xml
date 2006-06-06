@@ -47,6 +47,13 @@
         <form-property name="objectCode" type="java.lang.String"/>
 	  </form-bean>
 	  
+        <form-bean name="chooseExecutionCourseFormWithDynamicMailDistribution"
+                 type="org.apache.struts.validator.DynaValidatorForm"
+                 dynamic="true">
+        <form-property name="objectCode" type="java.lang.String"/>
+        <form-property name="dynamicMailDistribution" type="java.lang.Boolean"/>
+	  </form-bean>
+	  
 	  <!-- Dynamic-FormBean for Choose Context-->
       <form-bean name="chooseContextForm"
                  type="org.apache.struts.validator.DynaValidatorForm"
@@ -311,7 +318,7 @@
       </action>
 	<action 
 		path="/viewSiteExecutionCourse"
-		name="chooseExecutionCourseForm"
+		name="chooseExecutionCourseFormWithDynamicMailDistribution"
 		input="/chooseContextDA.do?method=nextPagePublic&amp;nextPage=executionCourseSearch"
 		parameter="method"
         type="net.sourceforge.fenixedu.presentationTier.Action.publico.SiteViewerDispatchAction">

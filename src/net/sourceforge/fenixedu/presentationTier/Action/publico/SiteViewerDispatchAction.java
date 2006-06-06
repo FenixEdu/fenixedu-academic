@@ -45,6 +45,7 @@ import net.sourceforge.fenixedu.dataTransferObject.SiteView;
 import net.sourceforge.fenixedu.domain.Evaluation;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixContextDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
@@ -60,6 +61,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.LabelValueBean;
+import org.apache.struts.validator.DynaValidatorForm;
 
 public class SiteViewerDispatchAction extends FenixContextDispatchAction {
 
@@ -80,7 +82,7 @@ public class SiteViewerDispatchAction extends FenixContextDispatchAction {
         setFromRequest(request);
 
         readSiteView(request, firstPageComponent, infoExecutionCourseCode, null, null);
-        return mapping.findForward("sucess");
+        return returnSuccessMappingForward(mapping,form,request);
     }
 
     public ActionForward announcements(ActionMapping mapping, ActionForm form,
@@ -90,7 +92,7 @@ public class SiteViewerDispatchAction extends FenixContextDispatchAction {
         ISiteComponent announcementsComponent = new InfoSiteAnnouncement();
         readSiteView(request, announcementsComponent, null, null, null);
 
-        return mapping.findForward("sucess");
+        return returnSuccessMappingForward(mapping,form,request);
     }
 
     public ActionForward objectives(ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -99,7 +101,7 @@ public class SiteViewerDispatchAction extends FenixContextDispatchAction {
         ISiteComponent objectivesComponent = new InfoSiteObjectives();
         readSiteView(request, objectivesComponent, null, null, null);
 
-        return mapping.findForward("sucess");
+        return returnSuccessMappingForward(mapping,form,request);
     }
 
     public ActionForward program(ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -108,7 +110,7 @@ public class SiteViewerDispatchAction extends FenixContextDispatchAction {
         ISiteComponent programComponent = new InfoSiteProgram();
         readSiteView(request, programComponent, null, null, null);
 
-        return mapping.findForward("sucess");
+        return returnSuccessMappingForward(mapping,form,request);
     }
 
     public ActionForward evaluationMethod(ActionMapping mapping, ActionForm form,
@@ -118,7 +120,7 @@ public class SiteViewerDispatchAction extends FenixContextDispatchAction {
         ISiteComponent evaluationComponent = new InfoEvaluationMethod();
         readSiteView(request, evaluationComponent, null, null, null);
 
-        return mapping.findForward("sucess");
+        return returnSuccessMappingForward(mapping,form,request);
 
     }
 
@@ -129,7 +131,7 @@ public class SiteViewerDispatchAction extends FenixContextDispatchAction {
         ISiteComponent bibliographyComponent = new InfoSiteBibliography();
         readSiteView(request, bibliographyComponent, null, null, null);
 
-        return mapping.findForward("sucess");
+        return returnSuccessMappingForward(mapping,form,request);
     }
 
     public ActionForward curricularCourses(ActionMapping mapping, ActionForm form,
@@ -139,7 +141,7 @@ public class SiteViewerDispatchAction extends FenixContextDispatchAction {
         ISiteComponent curricularCoursesComponent = new InfoSiteAssociatedCurricularCourses();
         readSiteView(request, curricularCoursesComponent, null, null, null);
 
-        return mapping.findForward("sucess");
+        return returnSuccessMappingForward(mapping,form,request);
     }
 
     public ActionForward timeTable(ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -148,7 +150,7 @@ public class SiteViewerDispatchAction extends FenixContextDispatchAction {
         ISiteComponent timeTableComponent = new InfoSiteTimetable();
         readSiteView(request, timeTableComponent, null, null, null);
 
-        return mapping.findForward("sucess");
+        return returnSuccessMappingForward(mapping,form,request);
     }
 
     public ActionForward shifts(ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -157,7 +159,7 @@ public class SiteViewerDispatchAction extends FenixContextDispatchAction {
         ISiteComponent shiftsComponent = new InfoSiteShifts();
         readSiteView(request, shiftsComponent, null, null, null);
 
-        return mapping.findForward("sucess");
+        return returnSuccessMappingForward(mapping,form,request);
     }
 
     public ActionForward evaluations(ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -166,7 +168,7 @@ public class SiteViewerDispatchAction extends FenixContextDispatchAction {
         ISiteComponent evaluationComponent = new InfoSiteEvaluations();
         readSiteView(request, evaluationComponent, null, null, null);
 
-        return mapping.findForward("sucess");
+        return returnSuccessMappingForward(mapping,form,request);
     }
 
     public ActionForward viewMarks(ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -193,7 +195,7 @@ public class SiteViewerDispatchAction extends FenixContextDispatchAction {
             }
         }
 
-        return mapping.findForward("sucess");
+        return returnSuccessMappingForward(mapping,form,request);
     }
 
     public ActionForward section(ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -207,7 +209,7 @@ public class SiteViewerDispatchAction extends FenixContextDispatchAction {
         
         request.setAttribute("dspaceBaseDownloadUrl", DSPACE_BASE_DOWNLOAD_URL);
 
-        return mapping.findForward("sucess");
+        return returnSuccessMappingForward(mapping,form,request);
     }
 
     public ActionForward summaries(ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -249,7 +251,7 @@ public class SiteViewerDispatchAction extends FenixContextDispatchAction {
 
         request.setAttribute("siteView", siteView);
 
-        return mapping.findForward("sucess");
+        return returnSuccessMappingForward(mapping,form,request);
 
     }
     
@@ -263,7 +265,7 @@ public class SiteViewerDispatchAction extends FenixContextDispatchAction {
         
         request.setAttribute("siteView", siteView);
 
-        return mapping.findForward("sucess");
+        return returnSuccessMappingForward(mapping,form,request);
     }
 
 
@@ -279,7 +281,7 @@ public class SiteViewerDispatchAction extends FenixContextDispatchAction {
         ISiteComponent curricularCourseComponent = new InfoSiteCurricularCourse();
         readSiteView(request, curricularCourseComponent, null, null, curricularCourseId);
 
-        return mapping.findForward("sucess");
+        return returnSuccessMappingForward(mapping,form,request);
 
     }
 
@@ -289,7 +291,7 @@ public class SiteViewerDispatchAction extends FenixContextDispatchAction {
         setFromRequest(request);
         ISiteComponent viewProjectsComponent = new InfoSiteProjects();
         readGroupView(request, viewProjectsComponent, null, null, null, null, null);
-        return mapping.findForward("sucess");
+        return returnSuccessMappingForward(mapping,form,request);
 
     }
 
@@ -310,7 +312,7 @@ public class SiteViewerDispatchAction extends FenixContextDispatchAction {
         readGroupView(request, viewShiftsAndGroups, null, groupPropertiesCode, null, null, null);
         request.setAttribute("groupProperties", groupPropertiesCode);
 
-        return mapping.findForward("sucess");
+        return returnSuccessMappingForward(mapping,form,request);
     }
 
     public ActionForward viewStudentsAndGroupsByShiftAction(ActionMapping mapping, ActionForm form,
@@ -346,7 +348,7 @@ public class SiteViewerDispatchAction extends FenixContextDispatchAction {
 
         request.setAttribute("ShiftChosenType", new Integer(1));
 
-        return mapping.findForward("sucess");
+        return returnSuccessMappingForward(mapping,form,request);
     }
 
     public ActionForward viewStudentsAndGroupsWithoutShiftAction(ActionMapping mapping, ActionForm form,
@@ -370,7 +372,7 @@ public class SiteViewerDispatchAction extends FenixContextDispatchAction {
 
         request.setAttribute("ShiftChosenType", new Integer(2));
 
-        return mapping.findForward("sucess");
+        return returnSuccessMappingForward(mapping,form,request);
     }
 
     public ActionForward viewAllStudentsAndGroupsAction(ActionMapping mapping, ActionForm form,
@@ -393,8 +395,9 @@ public class SiteViewerDispatchAction extends FenixContextDispatchAction {
         request.setAttribute("groupProperties", groupPropertiesCode);
 
         request.setAttribute("ShiftChosenType", new Integer(3));
-        return mapping.findForward("sucess");
+        return returnSuccessMappingForward(mapping,form,request);
     }
+
 
     public ActionForward viewStudentGroupInformationAction(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws FenixActionException,
@@ -408,7 +411,7 @@ public class SiteViewerDispatchAction extends FenixContextDispatchAction {
 
         readGroupView(request, viewStudentGroup, null, null, studentGroupCode, null, null);
 
-        return mapping.findForward("sucess");
+        return returnSuccessMappingForward(mapping,form,request);
 
     }
 
@@ -646,6 +649,16 @@ public class SiteViewerDispatchAction extends FenixContextDispatchAction {
 
         request.setAttribute("shift", shift);
 
+    }
+    
+    private ActionForward returnSuccessMappingForward(ActionMapping mapping,ActionForm form,HttpServletRequest request) {
+	
+	String objectCodeString = request.getParameter("objectCode");
+	Integer objectCode = Integer.valueOf(objectCodeString);
+	ExecutionCourse course = RootDomainObject.getInstance().readExecutionCourseByOID(objectCode);
+	DynaValidatorForm dynaForm = (DynaValidatorForm) form;
+	dynaForm.set("dynamicMailDistribution", course.getSite().getDynamicMailDistribution());
+	return mapping.findForward("sucess");
     }
 
 }
