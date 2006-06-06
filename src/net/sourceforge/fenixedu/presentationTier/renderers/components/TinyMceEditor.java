@@ -8,6 +8,7 @@ import javax.servlet.ServletContext;
 import javax.servlet.jsp.PageContext;
 
 import net.sourceforge.fenixedu.domain.Language;
+import net.sourceforge.fenixedu.renderers.components.HtmlLink;
 import net.sourceforge.fenixedu.renderers.components.HtmlScript;
 import net.sourceforge.fenixedu.renderers.components.HtmlTextArea;
 import net.sourceforge.fenixedu.renderers.components.tags.HtmlTag;
@@ -65,6 +66,14 @@ public class TinyMceEditor extends HtmlTextArea {
     public HtmlTag getOwnTag(PageContext context) {
         HtmlTag parentTag = new HtmlTag(null);
         
+        HtmlLink link = new HtmlLink();
+        link.setModuleRelative(false);
+        link.setContextRelative(true);
+        
+        link.setUrl(TinyMceEditor.CODE_PATH);
+        HtmlScript sourceScript = new HtmlScript("text/javascript", link.calculateUrl(), true);
+        parentTag.addChild(sourceScript.getOwnTag(context));
+        
         HtmlScript script = new HtmlScript();
         script.setContentType("text/javascript");
         script.setScript(generateScript(context));
@@ -98,6 +107,7 @@ public class TinyMceEditor extends HtmlTextArea {
         
         Language language = LanguageUtils.getLanguage();
         properties.setProperty("language", language.toString());
+        properties.setProperty("docs_language", "en"); // hardcoded because pt is not supported
         
         builder.append("tinyMCE.init({\n");
         
@@ -107,6 +117,9 @@ public class TinyMceEditor extends HtmlTextArea {
             
             if (value.equals("true") || value.equals("false")) {
                 builder.append(String.valueOf(key) + ": " + value);    
+            }
+            else if (((String) value).matches("\\p{Digit}+")) {
+                builder.append(String.valueOf(key) + ": " + value);
             }
             else {
                 builder.append(String.valueOf(key) + ": '" + value + "'");    

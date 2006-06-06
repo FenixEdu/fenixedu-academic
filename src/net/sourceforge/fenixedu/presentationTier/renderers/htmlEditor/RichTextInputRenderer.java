@@ -121,16 +121,6 @@ public class RichTextInputRenderer extends InputRenderer {
 
             @Override
             public HtmlComponent createComponent(Object object, Class type) {
-                HtmlBlockContainer container = new HtmlBlockContainer();
-                
-                HtmlLink link = new HtmlLink();
-                link.setModuleRelative(false);
-                link.setContextRelative(true);
-                
-                link.setUrl(TinyMceEditor.CODE_PATH);
-                HtmlScript sourceScript = new HtmlScript("text/javascript", link.calculateUrl(), true);
-                container.addChild(sourceScript);
-
                 MetaSlotKey key = (MetaSlotKey) getInputContext().getMetaObject().getKey();
 
                 TinyMceEditor editor = new TinyMceEditor(getConfig());
@@ -144,13 +134,11 @@ public class RichTextInputRenderer extends InputRenderer {
                 editor.setName(key.toString());
                 editor.setId(editor.getName());
                 
-                container.addChild(editor);
-
                 if (isSafe()) {
                     editor.setConverter(new SafeHtmlConverter());
                 }
-                
-                return container;
+             
+                return editor;
             }
             
         };

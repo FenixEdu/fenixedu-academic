@@ -63,7 +63,7 @@ public class HtmlTextArea extends HtmlSimpleValueComponent {
         }
 
         if (getValue() != null) {
-            tag.setText(HtmlText.escape(getValue()));
+            tag.setText(getValue());
         }
         else {
             tag.setText("");
