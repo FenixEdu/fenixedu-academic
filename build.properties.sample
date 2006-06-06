@@ -406,6 +406,7 @@ host.control.name.net.sourceforge.fenixedu.presentationTier.Action.CheckPassword
 host.control.name.net.sourceforge.fenixedu.presentationTier.Action.externalServices.RetrieveUserInformation=127.0.0.1
 host.control.name.net.sourceforge.fenixedu.presentationTier.Action.externalServices.UserPermissionCheck=127.0.0.1
 host.control.name.net.sourceforge.fenixedu.presentationTier.Action.externalServices.GroupCheck=127.0.0.1
+host.control.name.net.sourceforge.fenixedu.presentationTier.Action.cms.messaging.ForwardEmailAction=127.0.0.1
 
 #----------------------------------------------
 # CAS configuration
