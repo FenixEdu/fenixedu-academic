@@ -198,6 +198,7 @@ Documentation:
     <renderer mode="input" type="java.lang.String" layout="longText" class="net.sourceforge.fenixedu.renderers.TextAreaInputRenderer"/>
     <renderer mode="input" type="net.sourceforge.fenixedu.util.MultiLanguageString" class="net.sourceforge.fenixedu.presentationTier.renderers.MultiLanguageStringInputRenderer"/>
     <renderer mode="input" type="net.sourceforge.fenixedu.util.MultiLanguageString" layout="area" class="net.sourceforge.fenixedu.presentationTier.renderers.MultiLanguageTextInputRenderer"/>
+    <renderer mode="input" type="net.sourceforge.fenixedu.util.MultiLanguageString" layout="rich-text" class="net.sourceforge.fenixedu.presentationTier.renderers.MultiLanguageRichTextInputRenderer"/>
     
     <renderer mode="input" type="java.lang.Number" class="net.sourceforge.fenixedu.renderers.IntegerInputRenderer"/>
 

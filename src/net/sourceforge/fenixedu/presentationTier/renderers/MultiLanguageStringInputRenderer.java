@@ -178,6 +178,7 @@ public class MultiLanguageStringInputRenderer extends InputRenderer {
                 return allLanguageBeans;
             }
 
+            int startIndex = 0;
             int lastIndex = 0;
             int index;
 
@@ -193,10 +194,11 @@ public class MultiLanguageStringInputRenderer extends InputRenderer {
                     continue;
                 }
                 
-                String part = value.substring(lastIndex, index);
+                String part = value.substring(startIndex, index);
                 allLanguageBeans.add(importFromString(part.replace("//", "/")));
                 
                 lastIndex = index + 1;
+                startIndex = lastIndex;
             }
             
             return allLanguageBeans;
@@ -210,6 +212,9 @@ public class MultiLanguageStringInputRenderer extends InputRenderer {
         return textInput;
     }
     
+    protected void configureInputComponent(HtmlSimpleValueComponent textInput) {
+    }
+
     @Override
     protected Layout getLayout(Object object, Class type) {
         MetaObject metaObject = getInputContext().getMetaObject();
@@ -344,6 +349,8 @@ public class MultiLanguageStringInputRenderer extends InputRenderer {
             textInput.setValue(value);
             inputContainer.addChild(textInput);
 
+            configureInputComponent(textInput);
+            
             PresentationContext context = getInputContext().createSubContext(getInputContext().getMetaObject());
             context.setProperties(new Properties());
             
