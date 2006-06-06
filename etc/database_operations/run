@@ -27,4 +27,4 @@ function executeWithTempFile() {
 	echo
 }
 
-
+execute "Remove Last Modification Date From Table Degree Info" removeLastModificationDateFromTableDegreeInfo.sql

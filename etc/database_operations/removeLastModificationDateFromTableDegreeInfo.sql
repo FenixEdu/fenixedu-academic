@@ -1,0 +1,1 @@
+alter table DEGREE_INFO drop column LAST_MODIFICATION_DATE_DATE_TIME;

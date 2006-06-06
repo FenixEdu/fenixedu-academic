@@ -639,8 +639,6 @@ class net.sourceforge.fenixedu.domain.DegreeInfo extends net.sourceforge.fenixed
     String qualificationLevelEn;
     String recognitionsEn;    
 
-	DateTime lastModificationDateDateTime;
-
 	Integer keyDegree;
 	Integer keyExecutionYear;
 }
