@@ -573,20 +573,20 @@ public class CompetenceCourse extends CompetenceCourse_Base {
     //  -------------------------------------------------------------
     // read static methods 
     // -------------------------------------------------------------
-    public static List<CompetenceCourse> readByCurricularStage(final CurricularStage curricularStage) {
+    public static List<CompetenceCourse> readOldCompetenceCourses() {
         final List<CompetenceCourse> result = new ArrayList<CompetenceCourse>();
         for (final CompetenceCourse competenceCourse : RootDomainObject.getInstance().getCompetenceCoursesSet()) {
-            if (competenceCourse.getCurricularStage() == curricularStage) {
+            if (!competenceCourse.isBolonha()) {
                 result.add(competenceCourse);
             }
         }
         return result;
     }
     
-    public static List<CompetenceCourse> readFromNewDegreeStructure() {
+    public static List<CompetenceCourse> readBolonhaCompetenceCourses() {
         final List<CompetenceCourse> result = new ArrayList<CompetenceCourse>();
         for (final CompetenceCourse competenceCourse : RootDomainObject.getInstance().getCompetenceCoursesSet()) {
-            if (competenceCourse.getCurricularStage() != CurricularStage.OLD) {
+            if (competenceCourse.isBolonha()) {
                 result.add(competenceCourse);
             }
         }

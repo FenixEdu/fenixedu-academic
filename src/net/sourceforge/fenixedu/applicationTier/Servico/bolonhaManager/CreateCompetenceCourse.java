@@ -36,7 +36,7 @@ public class CreateCompetenceCourse extends Service {
         final String normalizedName = StringFormatter.normalize(name);
         final String normalizedNameEn = StringFormatter.normalize(nameEn);
 
-        for (final CompetenceCourse competenceCourse : CompetenceCourse.readFromNewDegreeStructure()) {
+        for (final CompetenceCourse competenceCourse : CompetenceCourse.readBolonhaCompetenceCourses()) {
             if (StringFormatter.normalize(competenceCourse.getName()).equals(normalizedName)) {
                 throw new ExistingCompetenceCourseInformationException(
                         "error.existingCompetenceCourseWithSameName", competenceCourse

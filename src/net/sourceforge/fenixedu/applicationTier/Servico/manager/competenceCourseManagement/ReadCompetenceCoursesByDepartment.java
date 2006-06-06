@@ -31,7 +31,7 @@ public class ReadCompetenceCoursesByDepartment extends Service{
 		}
 		else {
 			//read competence course with no associated department
-			final List<CompetenceCourse> allCompetenceCourses = CompetenceCourse.readByCurricularStage(CurricularStage.OLD);
+			final List<CompetenceCourse> allCompetenceCourses = CompetenceCourse.readOldCompetenceCourses();
 			final List<CompetenceCourse> noDeptCompetenceCourse = (List<CompetenceCourse>) CollectionUtils.select(allCompetenceCourses, new Predicate() {
 
 				public boolean evaluate(Object arg0) {

@@ -13,7 +13,7 @@ public class ReadAllCompetenceCourses extends Service{
 	public List<InfoCompetenceCourse> run() throws Exception {
 
         final List<InfoCompetenceCourse> result = new ArrayList<InfoCompetenceCourse>();
-        for (final CompetenceCourse competenceCourse : CompetenceCourse.readByCurricularStage(CurricularStage.OLD)) {
+        for (final CompetenceCourse competenceCourse : CompetenceCourse.readOldCompetenceCourses()) {
 			result.add(InfoCompetenceCourse.newInfoFromDomain(competenceCourse));
 		}
 		return result;
