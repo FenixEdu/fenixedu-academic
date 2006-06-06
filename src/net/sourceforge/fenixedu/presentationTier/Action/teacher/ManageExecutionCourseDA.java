@@ -50,8 +50,16 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
 
     public ActionForward prepareEditProgram(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
-        final ExecutionCourse executionCourse = (ExecutionCourse) request
-                .getAttribute("executionCourse");
+        final ExecutionCourse executionCourse = (ExecutionCourse) request.getAttribute("executionCourse");
+        
+        final Teacher teacher = getUserView(request).getPerson().getTeacher();
+        if (teacher.responsibleFor(executionCourse) == null) {
+            ActionMessages messages = new ActionMessages();
+            messages.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage("error.teacherNotResponsibleOrNotCoordinator"));
+            saveErrors(request, messages);
+            return mapping.findForward("program");
+        }
+        
         final String curriculumIDString = request.getParameter("curriculumID");
         if (executionCourse != null && curriculumIDString != null && curriculumIDString.length() > 0) {
             final Curriculum curriculum = findCurriculum(executionCourse, Integer
@@ -105,8 +113,16 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
 
     public ActionForward prepareEditObjectives(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
-        final ExecutionCourse executionCourse = (ExecutionCourse) request
-                .getAttribute("executionCourse");
+        final ExecutionCourse executionCourse = (ExecutionCourse) request.getAttribute("executionCourse");
+        
+        final Teacher teacher = getUserView(request).getPerson().getTeacher();
+        if (teacher.responsibleFor(executionCourse) == null) {
+            ActionMessages messages = new ActionMessages();
+            messages.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage("error.teacherNotResponsibleOrNotCoordinator"));
+            saveErrors(request, messages);
+            return mapping.findForward("objectives");
+        }
+        
         final String curriculumIDString = request.getParameter("curriculumID");
         if (executionCourse != null && curriculumIDString != null && curriculumIDString.length() > 0) {
             final Curriculum curriculum = findCurriculum(executionCourse, Integer
