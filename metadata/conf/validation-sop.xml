@@ -119,7 +119,7 @@
         <arg0 key="property.context.degree" />
       </field>
 
-      <field property="curricularYear" depends="range,required" page="1">
+      <field property="curricularYear" depends="intRange,required" page="1">
         <arg0 key="property.context.curricular.year"/>
         <arg1 key="${var:min}" resource="false"/>
         <arg2 key="${var:max}" resource="false"/>        
@@ -152,7 +152,7 @@
         <arg0 key="property.context.degree" />
       </field>
 
-      <field property="anoCurricular" depends="range,required">
+      <field property="anoCurricular" depends="intRange,required">
         <arg0 key="property.context.curricular.year"/>
         <arg1 key="${var:min}" resource="false"/>
         <arg2 key="${var:max}" resource="false"/>        
@@ -166,7 +166,7 @@
         </var>
       </field>
 
-<!--  <field property="semestre" depends="range, required">
+<!--  <field property="semestre" depends="intRange, required">
         <arg0 key="property.context.semester"/>
         <arg1 key="${var:min}" resource="false"/>
         <arg2 key="${var:max}" resource="false"/>        
@@ -192,7 +192,7 @@
         </var>
       </field>
 
-      <field property="horaInicio" depends="required,integer,range">
+      <field property="horaInicio" depends="required,integer,intRange">
         <arg0 key="property.aula.time.begining"/>
         <arg1 key="${var:min}" resource="false"/>
         <arg2 key="${var:max}" resource="false"/>        
@@ -214,7 +214,7 @@
         </var>
       </field>
       
-      <field property="horaFim" depends="required,integer,range">
+      <field property="horaFim" depends="required,integer,intRange">
         <arg0 key="property.aula.time.end"/>
         <arg1 key="${var:min}" resource="false"/>
         <arg2 key="${var:max}" resource="false"/>        
@@ -265,7 +265,7 @@
         </var>
       </field>
 
-      <field property="horaInicio" depends="required,integer,range">
+      <field property="horaInicio" depends="required,integer,intRange">
         <arg0 key="property.aula.time.begining"/>
         <arg1 key="${var:min}" resource="false"/>
         <arg2 key="${var:max}" resource="false"/>        
@@ -287,7 +287,7 @@
         </var>
       </field>
       
-      <field property="horaFim" depends="required,integer,range">
+      <field property="horaFim" depends="required,integer,intRange">
         <arg0 key="property.aula.time.end"/>
         <arg1 key="${var:min}" resource="false"/>
         <arg2 key="${var:max}" resource="false"/>        
@@ -361,7 +361,7 @@
       </field>
 -->
 
-      <field property="weekDay" depends="required,integer,range" page="1">
+      <field property="weekDay" depends="required,integer,intRange" page="1">
         <arg0 key="property.aula.weekDay"/>
         <arg1 key="${var:min}" resource="false"/>
         <arg2 key="${var:max}" resource="false"/>        
@@ -375,7 +375,7 @@
         </var>
       </field>
 
-      <field property="startHour" depends="required,integer,range" page="1">
+      <field property="startHour" depends="required,integer,intRange" page="1">
         <arg0 key="property.aula.time.begining"/>
         <arg1 key="${var:min}" resource="false"/>
         <arg2 key="${var:max}" resource="false"/>        
@@ -389,7 +389,7 @@
         </var>
       </field>
 
-      <field property="startMinutes" depends="required,integer,range" page="1">
+      <field property="startMinutes" depends="required,integer,intRange" page="1">
         <arg0 key="property.aula.time.begining"/>
         <arg1 key="${var:min}" resource="false"/>
         <arg2 key="${var:max}" resource="false"/>        
@@ -403,7 +403,7 @@
         </var>
       </field>
       
-      <field property="endHour" depends="required,integer,range" page="1">
+      <field property="endHour" depends="required,integer,intRange" page="1">
         <arg0 key="property.aula.time.end"/>
         <arg1 key="${var:min}" resource="false"/>
         <arg2 key="${var:max}" resource="false"/>        
@@ -417,7 +417,7 @@
         </var>
       </field>
 
-      <field property="endMinutes" depends="required,integer,range" page="1">
+      <field property="endMinutes" depends="required,integer,intRange" page="1">
         <arg0 key="property.aula.time.minutes.end"/>
         <arg1 key="${var:min}" resource="false"/>
         <arg2 key="${var:max}" resource="false"/>        
@@ -438,7 +438,7 @@
 	
 	
 	<!-- added by amsg (7/7/2004) -->
-      <field property="startDay" depends="required,integer,range" page="1">
+      <field property="startDay" depends="required,integer,intRange" page="1">
         <arg0 key="property.search.empty.room.start.day"/>
         <arg1 key="${var:min}" resource="false"/>
         <arg2 key="${var:max}" resource="false"/>        
@@ -452,7 +452,7 @@
         </var>
       </field>
 
-      <field property="startMonth" depends="required,integer,range" page="1">
+      <field property="startMonth" depends="required,integer,intRange" page="1">
         <arg0 key="property.search.empty.room.start.month"/>
         <arg1 key="${var:min}" resource="false"/>
         <arg2 key="${var:max}" resource="false"/>        
@@ -470,7 +470,7 @@
         <arg0 key="property.search.empty.room.start.year"/>
       </field>
 
-      <field property="endDay" depends="required,integer,range" page="1">
+      <field property="endDay" depends="required,integer,intRange" page="1">
         <arg0 key="property.search.empty.room.end.day"/>
         <arg1 key="${var:min}" resource="false"/>
         <arg2 key="${var:max}" resource="false"/>        
@@ -484,7 +484,7 @@
         </var>
       </field>
 
-      <field property="endMonth" depends="required,integer,range" page="1">
+      <field property="endMonth" depends="required,integer,intRange" page="1">
         <arg0 key="property.search.empty.room.end.month"/>
         <arg1 key="${var:min}" resource="false"/>
         <arg2 key="${var:max}" resource="false"/>        
@@ -521,7 +521,7 @@
       <field property="floor" depends="required, integer">
         <arg0 key="property.room.floor"/>
       </field>
-      <field property="type" depends="required, integer, range">
+      <field property="type" depends="required, integer, intRange">
         <arg0 key="property.room.floor" />
         <arg1 key="${var:min}" resource="false"/>
         <arg2 key="${var:max}" resource="false"/>        
@@ -534,7 +534,7 @@
           <var-value>3</var-value>
         </var>
       </field>
-      <field property="capacityNormal" depends="required, integer, range">
+      <field property="capacityNormal" depends="required, integer, intRange">
         <arg0 key="property.room.capacity.normal" />
         <arg1 key="${var:min}" resource="false"/>
         <arg2 key="${var:max}" resource="false"/>
@@ -547,7 +547,7 @@
           <var-value>1000</var-value>
         </var>
       </field>
-      <field property="capacityExame" depends="required, integer, range">
+      <field property="capacityExame" depends="required, integer, intRange">
         <arg0 key="property.room.capacity.exame"/>
         <arg1 key="${var:min}" resource="false"/>
         <arg2 key="${var:max}" resource="false"/>
@@ -584,7 +584,7 @@
           <var-value>6</var-value>
         </var>
       </field>        
-      <field property="lotacao" depends="required, integer, range">
+      <field property="lotacao" depends="required, integer, intRange">
         <arg0 key="property.shift.capacity" />
         <arg1 key="${var:min}" resource="false"/>
         <arg2 key="${var:max}" resource="false"/>
@@ -624,7 +624,7 @@
       <field property="nome" depends="required">
         <arg0 key="property.shift.name"/>
       </field>
-      <field property="lotacao" depends="required,range">
+      <field property="lotacao" depends="required,intRange">
         <arg0 key="property.shift.capacity" />
         <arg1 key="${var:min}" resource="false"/>
         <arg2 key="${var:max}" resource="false"/>
@@ -658,7 +658,7 @@
       <field property="executionDegreeOID" depends="required, integer" page="1">
         <arg0 key="property.context.degree" />
       </field>
-      <field property="curricularYear" depends="required, integer, range" page="1">
+      <field property="curricularYear" depends="required, integer, intRange" page="1">
         <arg0 key="property.context.curricular.year"/>
         <arg1 key="${var:min}" resource="false"/>
         <arg2 key="${var:max}" resource="false"/>        
@@ -694,7 +694,7 @@
           <var-value>6</var-value>
         </var>
       </field>
-	  <field property="lotacao" depends="required, integer, range" page="1">
+	  <field property="lotacao" depends="required, integer, intRange" page="1">
         <arg0 key="property.shift.capacity" />
         <arg1 key="${var:min}" resource="false"/>
         <arg2 key="${var:max}" resource="false"/>
@@ -709,15 +709,15 @@
       </field>      
     </form>
 
-    <form name="manageLessonForm">
-      <field property="diaSemana" depends="required, mask" page="1">
+    <form name="manageLessonForm">     
+	  <field property="diaSemana" depends="required, mask" page="1">
         <arg0 key="property.aula.weekDay"/>
         	<var>
         		<var-name>mask</var-name>
           		<var-value>[23456sS]$</var-value>
 			</var>
       </field>
-      <field property="horaInicio" depends="required,integer,range" page="1">
+      <field property="horaInicio" depends="required,integer,intRange" page="1">
         <arg0 key="property.aula.time.begining"/>
         <arg1 key="${var:min}" resource="false"/>
         <arg2 key="${var:max}" resource="false"/>        
@@ -737,7 +737,7 @@
           <var-value>00|0|30$</var-value>
         </var>
       </field>
-      <field property="horaFim" depends="required,integer,range" page="1">
+      <field property="horaFim" depends="required,integer,intRange" page="1">
         <arg0 key="property.aula.time.end"/>
         <arg1 key="${var:min}" resource="false"/>
         <arg2 key="${var:max}" resource="false"/>        
@@ -760,7 +760,7 @@
       <field property="nomeSala" depends="required" page="2">
         <arg0 key="property.aula.sala"/>
       </field>
-      <field property="week" depends="integer,range" page="1">
+      <field property="week" depends="integer,intRange" page="1">
         <arg0 key="property.aula.time.week"/>
         <arg1 key="${var:min}" resource="false"/>
         <arg2 key="${var:max}" resource="false"/>        
@@ -790,7 +790,7 @@
       <field property="executionDegreeOID" depends="integer" page="1">
         <arg0 key="property.context.degree" />
       </field>
-      <field property="curricularYearOID" depends="range" page="1">
+      <field property="curricularYearOID" depends="integer,intRange" page="1">
         <arg0 key="property.context.curricular.year"/>
         <arg1 key="${var:min}" resource="false"/>
         <arg2 key="${var:max}" resource="false"/>        
@@ -822,6 +822,21 @@
         <field property="labHours" depends="required, double" page="1">
 	        <arg0 key="label.hours.load.laboratorial" resource="true"/>
         </field>
+        <field property="seminaryHours" depends="required, double" page="1">
+	        <arg0 key="label.hours.load.seminary" resource="true"/>
+        </field>
+        <field property="problemsHours" depends="required, double" page="1">
+	        <arg0 key="label.hours.load.problems" resource="true"/>
+        </field>
+        <field property="fieldWorkHours" depends="required, double" page="1">
+	        <arg0 key="label.hours.load.fieldWork" resource="true"/>
+        </field>
+        <field property="trainingPeriodHours" depends="required, double" page="1">
+	        <arg0 key="label.hours.load.trainingPeriod" resource="true"/>
+        </field>
+        <field property="tutorialOrientationHours" depends="required, double" page="1">
+	        <arg0 key="label.hours.load.tutorialOrientation" resource="true"/>
+        </field>
     </form>
 
 
@@ -833,7 +848,7 @@
         <arg0 key="property.context.degree" />
       </field>
 
-      <field property="curricularYear" depends="required, range" page="1">
+      <field property="curricularYear" depends="required, intRange" page="1">
         <arg0 key="property.context.curricular.year"/>
         <arg1 key="${var:min}" resource="false"/>
         <arg2 key="${var:max}" resource="false"/>        

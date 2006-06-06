@@ -227,7 +227,7 @@ Turnos associados a turma:
 			<logic:notEqual name="numberOfLessons" value="0">
 	        	<td class="listClasses" rowspan="<%= pageContext.findAttribute("numberOfLessons") %>">
 			</logic:notEqual>
-            	<bean:write name="infoShift" property="tipo"/>
+            	<bean:message name="infoShift" property="tipo.name" bundle="ENUMERATION_RESOURCES"/>
             </td>
 			<logic:equal name="numberOfLessons" value="0">
 				<td class="listClasses">

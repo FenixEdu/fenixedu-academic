@@ -323,7 +323,7 @@
 	  <field property="teacherNumber" depends="required, integer" page="1">
         <arg0 key="label.masterDegree.administrativeOffice.responsibleTeacher" />
       </field>
-	  <field property="day" depends="required, integer, range" page="1">
+	  <field property="day" depends="required, integer, intRange" page="1">
         <arg0 key="label.day" />
         <arg1 key="${var:min}" resource="false"/>
         <arg2 key="${var:max}" resource="false"/>        
@@ -336,7 +336,7 @@
           <var-value>31</var-value>
         </var>
       </field>
-	  <field property="month" depends="required, integer, range" page="1">
+	  <field property="month" depends="required, integer, intRange" page="1">
         <arg0 key="label.month" />
         <arg1 key="${var:min}" resource="false"/>
         <arg2 key="${var:max}" resource="false"/>        
@@ -349,8 +349,8 @@
           <var-value>12</var-value>
         </var>
       </field>
-	  <field property="year" depends="required, integer, range, threeArgsDate" page="1">
-	  	<msg key="message.min" name="range"/>
+	  <field property="year" depends="required, integer, intRange, threeArgsDate" page="1">
+	  	<msg key="message.min" name="intRange"/>
       	<arg0 key="label.exam.enrollment.year" />
         <arg1 key="${var:min}" resource="false"/>
         <arg2 key="${var:max}" resource="false"/>        

@@ -11,6 +11,7 @@ package net.sourceforge.fenixedu.presentationTier.Action.sop.utils;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.ResourceBundle;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -308,16 +309,16 @@ public abstract class RequestUtils {
         return infoExecutionPeriod;
     }
 
-    public static final void setLessonTypes(HttpServletRequest request) {
-        List tiposAula = new ArrayList();
-        tiposAula.add(new LabelValueBean("Teorica", ShiftType.TEORICA.name()));
-        tiposAula.add(new LabelValueBean("Pratica", ShiftType.PRATICA.name()));
-        tiposAula.add(new LabelValueBean("Teorico-Pratica", ShiftType.TEORICO_PRATICA.name()));
-        tiposAula
-                .add(new LabelValueBean("Laboratorial", ShiftType.LABORATORIAL.name()));
-        tiposAula.add(new LabelValueBean("Dúvidas", ShiftType.DUVIDAS.name()));
-        tiposAula.add(new LabelValueBean("Reserva", ShiftType.RESERVA.name()));
+    public static void setLessonTypes(HttpServletRequest request) {
+        final List tiposAula = new ArrayList();
+        final ResourceBundle bundle = ResourceBundle.getBundle("resources.EnumerationResources", request.getLocale());
+        for (final ShiftType shiftType : ShiftType.values()) {
+            tiposAula.add(createLabelValueBean(bundle, shiftType));
+        }
         request.setAttribute("tiposAula", tiposAula);
     }
 
+    public static LabelValueBean createLabelValueBean(final ResourceBundle resourceBundle, final ShiftType shiftType) {
+        return new LabelValueBean(resourceBundle.getString(shiftType.getName()), shiftType.name());
+    }
 }

@@ -124,8 +124,22 @@ public class Context extends Context_Base implements Comparable<Context> {
         super.setChildOrder(order);
     }
 
-    public boolean contains(final Integer semester, final Integer curricularYear, final RegimeType regimeType) {
-        final int argumentOrder = (curricularYear.intValue() - 1) * 2 + semester.intValue();
+    public boolean containsCurricularYear(final Integer curricularYear) {        
+        final CurricularPeriod firstCurricularPeriod = getCurricularPeriod().getParent();
+        final int firstCurricularPeriodOrder = firstCurricularPeriod.getAbsoluteOrderOfChild();                
+        return curricularYear.intValue() == firstCurricularPeriodOrder;
+    } 
+    
+    public boolean containsSemester(final Integer semester) {        
+        final CurricularPeriod firstCurricularPeriod = getCurricularPeriod();
+        final int firstCurricularPeriodOrder = firstCurricularPeriod.getChildOrder();                
+        return semester.intValue() == firstCurricularPeriodOrder;
+    } 
+    
+    public boolean containsSemesterAndCurricularYear(final Integer semester, final Integer curricularYear, 
+            final RegimeType regimeType) {
+        
+        final int argumentOrder = (curricularYear - 1) * 2 + semester.intValue();        
         final CurricularPeriod firstCurricularPeriod = getCurricularPeriod();
         final int firstCurricularPeriodOrder = firstCurricularPeriod.getAbsoluteOrderOfChild();
         final int duration;
@@ -137,7 +151,6 @@ public class Context extends Context_Base implements Comparable<Context> {
             throw new IllegalArgumentException("Unknown regimeType: " + regimeType);
         }
         final int lastCurricularPeriodOrder = firstCurricularPeriodOrder + duration - 1;
-        return firstCurricularPeriodOrder <= argumentOrder && argumentOrder <= lastCurricularPeriodOrder;
+        return firstCurricularPeriodOrder <= argumentOrder && argumentOrder <= lastCurricularPeriodOrder;            
     }
-    
 }

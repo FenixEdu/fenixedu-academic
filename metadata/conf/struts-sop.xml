@@ -71,6 +71,11 @@
         <form-property name="theoPratHours" type="java.lang.String"/>
         <form-property name="praticalHours" type="java.lang.String"/>
         <form-property name="labHours" type="java.lang.String"/>
+        <form-property name="seminaryHours" type="java.lang.String"/>
+        <form-property name="problemsHours" type="java.lang.String"/>
+        <form-property name="fieldWorkHours" type="java.lang.String"/>
+        <form-property name="trainingPeriodHours" type="java.lang.String"/>
+        <form-property name="tutorialOrientationHours" type="java.lang.String"/>
       </form-bean>
 
 	  <!-- Dynamic-FormBean for Create Shift -->
@@ -1235,8 +1240,7 @@
             name="manageLessonForm"
             parameter="method"
             scope="request"
-            validate="true"
-            >
+            validate="true">
 		<exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException"
 				   key="resources.Action.exceptions.ExistingActionException"
                    handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"
@@ -1695,10 +1699,7 @@
 
     
     <!-- ========== Message Resources Definitions ============================ -->
-    <message-resources
-    	parameter="resources.ApplicationResourcesSOP"
-    	null="false"
-    />
+    <message-resources parameter="resources.ApplicationResourcesSOP" null="false"/>
 	<message-resources parameter="resources.GlobalResources" key="GLOBAL_RESOURCES" null="false"/>
     <message-resources parameter="resources.EnumerationResources" key="ENUMERATION_RESOURCES" null="false"/>
 

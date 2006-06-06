@@ -32,7 +32,7 @@ public class ManageExecutionCourseDA extends
 
         InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse) request
                 .getAttribute(SessionConstants.EXECUTION_COURSE);
-
+        
         Object args[] = { infoExecutionCourse };
         List infoClasses = (List) ServiceManagerServiceFactory.executeService(userView,
                 "ReadClassesByExecutionCourse", args);
@@ -54,13 +54,15 @@ public class ManageExecutionCourseDA extends
                 .getAttribute(SessionConstants.EXECUTION_COURSE);
 
         DynaActionForm editExecutionCourseForm = (DynaActionForm) form;
-        infoExecutionCourse.setTheoreticalHours(new Double((String) editExecutionCourseForm
-                .get("theoreticalHours")));
-        infoExecutionCourse.setTheoPratHours(new Double((String) editExecutionCourseForm
-                .get("theoPratHours")));
-        infoExecutionCourse.setPraticalHours(new Double((String) editExecutionCourseForm
-                .get("praticalHours")));
-        infoExecutionCourse.setLabHours(new Double((String) editExecutionCourseForm.get("labHours")));
+        infoExecutionCourse.setTheoreticalHours(new Double((String) editExecutionCourseForm.get("theoreticalHours")));
+        infoExecutionCourse.setTheoPratHours(new Double((String) editExecutionCourseForm.get("theoPratHours")));
+        infoExecutionCourse.setPraticalHours(new Double((String) editExecutionCourseForm.get("praticalHours")));
+        infoExecutionCourse.setLabHours(new Double((String) editExecutionCourseForm.get("labHours")));        
+        infoExecutionCourse.setSeminaryHours(new Double((String) editExecutionCourseForm.get("seminaryHours")));        
+        infoExecutionCourse.setProblemsHours(new Double((String) editExecutionCourseForm.get("problemsHours")));
+        infoExecutionCourse.setFieldWorkHours(new Double((String) editExecutionCourseForm.get("fieldWorkHours")));
+        infoExecutionCourse.setTrainingPeriodHours(new Double((String) editExecutionCourseForm.get("trainingPeriodHours")));
+        infoExecutionCourse.setTutorialOrientationHours(new Double((String) editExecutionCourseForm.get("tutorialOrientationHours")));
 
         Object args[] = { infoExecutionCourse };
         infoExecutionCourse = (InfoExecutionCourse) ServiceManagerServiceFactory.executeService(

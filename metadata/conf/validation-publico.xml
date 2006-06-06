@@ -47,7 +47,7 @@
         <arg0 key="property.context.degree" />
       </field>
 
-      <field property="curYear" depends="range,required" page="1">
+      <field property="curYear" depends="intRange,required" page="1">
         <arg0 key="property.context.curricular.year"/>
         <arg1 key="${var:min}" resource="false"/>
         <arg2 key="${var:max}" resource="false"/>        
@@ -76,7 +76,7 @@
         <arg0 key="Floor" resource="false"/>
       </field>
       
-      <field property="type" depends="range">
+      <field property="type" depends="intRange">
         <arg0 key="Type" resource="false"/>
         <arg1 key="${var:min}" resource="false"/>
         <arg2 key="${var:max}" resource="false"/>        
@@ -90,7 +90,7 @@
         </var>
       </field>
 
-      <field property="capacityNormal" depends="integer,range">
+      <field property="capacityNormal" depends="integer,intRange">
         <arg0 key="CapacityNormal" resource="false"/>
         <arg1 key="${var:min}" resource="false"/>
         <arg2 key="${var:max}" resource="false"/>
@@ -104,7 +104,7 @@
         </var>
       </field>
 
-      <field property="capacityExame" depends="integer,range">
+      <field property="capacityExame" depends="integer,intRange">
         <arg0 key="CapacityExame" resource="false"/>
         <arg1 key="${var:min}" resource="false"/>
         <arg2 key="${var:max}" resource="false"/>
@@ -158,7 +158,7 @@
         <arg0 key="property.context.degree" />
       </field>
 
-      <field property="curYear" depends="range,required" page="1">
+      <field property="curYear" depends="intRange,required" page="1">
         <arg0 key="property.context.curricular.year"/>
         <arg1 key="${var:min}" resource="false"/>
         <arg2 key="${var:max}" resource="false"/>        

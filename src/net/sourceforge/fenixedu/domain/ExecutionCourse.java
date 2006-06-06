@@ -115,10 +115,14 @@ public class ExecutionCourse extends ExecutionCourse_Base {
     }
 
     public void edit(String name, String acronym, double theoreticalHours,
-            double theoreticalPraticalHours, double praticalHours, double laboratoryHours, String comment) {
+            double theoreticalPraticalHours, double praticalHours, double laboratoryHours,
+            double seminaryHours, double problemsHours, double fieldWorkHours, 
+            double trainingPeriodHours, double tutorialOrientationHours, String comment) {
 
         if (name == null || acronym == null || theoreticalHours < 0 || theoreticalPraticalHours < 0
-                || praticalHours < 0 || laboratoryHours < 0 || comment == null)
+                || praticalHours < 0 || laboratoryHours < 0 || seminaryHours < 0 || problemsHours < 0
+                || fieldWorkHours < 0 || trainingPeriodHours < 0 || tutorialOrientationHours < 0
+                || comment == null)
             throw new NullPointerException();
 
         setNome(name);
@@ -127,6 +131,11 @@ public class ExecutionCourse extends ExecutionCourse_Base {
         setTheoPratHours(theoreticalPraticalHours);
         setPraticalHours(praticalHours);
         setLabHours(laboratoryHours);
+        setSeminaryHours(seminaryHours);
+        setProblemsHours(problemsHours);
+        setFieldWorkHours(fieldWorkHours);
+        setTrainingPeriodHours(trainingPeriodHours);
+        setTutorialOrientationHours(tutorialOrientationHours);
         setComment(comment);
     }
 
@@ -892,34 +901,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
     public boolean hasExportGrouping(final Grouping grouping) {
         return getExportGrouping(grouping) != null;
     }
-
-    public boolean hasCurricularCourseWithScopeInGivenCurricularYear(CurricularYear curricularYear) {
-        for (CurricularCourse curricularCourse : this.getAssociatedCurricularCourses()) {
-            if (curricularCourse.hasScopeForCurricularYear(curricularYear)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public boolean hasCurricularCourseInGivenDCP(DegreeCurricularPlan degreeCurricularPlan) {
-        for (CurricularCourse curricularCourse : this.getAssociatedCurricularCourses()) {
-            if (curricularCourse.getDegreeCurricularPlan().equals(degreeCurricularPlan)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public boolean hasCurricularCourseWithScopeInGivenSemester(Integer semester) {
-        for (CurricularCourse curricularCourse : this.getAssociatedCurricularCourses()) {
-            if (curricularCourse.hasScopeInGivenSemester(semester)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
+    
     public boolean hasScopeInGivenSemesterAndCurricularYearInDCP(Integer semester,
             CurricularYear curricularYear, DegreeCurricularPlan degreeCurricularPlan) {
         for (CurricularCourse curricularCourse : this.getAssociatedCurricularCourses()) {

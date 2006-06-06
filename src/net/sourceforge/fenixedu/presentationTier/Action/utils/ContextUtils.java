@@ -10,6 +10,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
+import java.util.ResourceBundle;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -502,6 +503,7 @@ public class ContextUtils {
 
     public static void prepareChangeExecutionDegreeAndCurricularYear(HttpServletRequest request) {
         IUserView userView = SessionUtils.getUserView(request);
+        ResourceBundle bundle = ResourceBundle.getBundle("resources.EnumerationResources");
 
         InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request
                 .getAttribute(SessionConstants.EXECUTION_PERIOD);
@@ -538,8 +540,8 @@ public class ContextUtils {
                 String name = infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree()
                         .getNome();
 
-                name = infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getTipoCurso()
-                        .toString()
+                name = bundle.getString(infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getTipoCurso()
+                        .toString())
                         + " em " + name;
 
                 name += duplicateInfoDegree(executionDegreeList, infoExecutionDegree) ? "-"

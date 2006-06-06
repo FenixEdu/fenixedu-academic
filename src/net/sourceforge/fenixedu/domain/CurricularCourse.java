@@ -971,16 +971,6 @@ public class CurricularCourse extends CurricularCourse_Base {
                         oldCurricularCourse);
     }
 
-    public boolean hasScopeForCurricularYear(final Integer curricularYear) {
-        for (final CurricularCourseScope curricularCourseScope : getScopes()) {
-            final CurricularSemester curricularSemester = curricularCourseScope.getCurricularSemester();
-            if (curricularSemester.getCurricularYear().getYear().equals(curricularYear)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
     public List<Context> getParentContextsByExecutionYear(ExecutionYear executionYear) {
         final List<Context> result = new ArrayList<Context>();
         for (final Context context : this.getParentContexts()) {
@@ -991,10 +981,28 @@ public class CurricularCourse extends CurricularCourse_Base {
         return result;
     }
 
-    public boolean hasScopeForCurricularYear(final CurricularYear curricularYear) {
-        for (final CurricularCourseScope scope : getScopes()) {
-            if (scope.getCurricularSemester().getCurricularYear().equals(curricularYear)) {
-                return true;
+    public boolean hasScopeForCurricularYear(final Integer year, ExecutionPeriod executionPeriod) {
+        CurricularYear curricularYear = CurricularYear.readByYear(year);
+        return hasScopeForCurricularYear(curricularYear, executionPeriod);
+    }
+
+    public boolean hasScopeForCurricularYear(final CurricularYear curricularYear,
+            ExecutionPeriod executionPeriod) {
+        if (isBolonha()) {
+            for (Context context : getParentContexts()) {
+                final CompetenceCourse competenceCourse = getCompetenceCourse();
+                if (competenceCourse != null) {
+                    if (context.isValid(executionPeriod)
+                            && context.containsCurricularYear(curricularYear.getYear())) {
+                        return true;
+                    }
+                }
+            }
+        } else {
+            for (final CurricularCourseScope scope : getScopes()) {
+                if (scope.getCurricularSemester().getCurricularYear().equals(curricularYear)) {
+                    return true;
+                }
             }
         }
         return false;
@@ -1127,15 +1135,17 @@ public class CurricularCourse extends CurricularCourse_Base {
     public boolean hasScopeInGivenSemesterAndCurricularYearInDCP(Integer semester,
             CurricularYear curricularYear, DegreeCurricularPlan degreeCurricularPlan,
             final ExecutionPeriod executionPeriod) {
-        
+
         if (degreeCurricularPlan == null || getDegreeCurricularPlan().equals(degreeCurricularPlan)) {
             if (isBolonha()) {
                 for (Context context : getParentContexts()) {
                     final CompetenceCourse competenceCourse = getCompetenceCourse();
                     if (competenceCourse != null) {
                         if (context.isValid(executionPeriod)
-                                && context.contains(semester, curricularYear.getYear(), competenceCourse
-                                        .getRegime())) {
+                                && ((curricularYear != null && context
+                                        .containsSemesterAndCurricularYear(semester, curricularYear
+                                                .getYear(), competenceCourse.getRegime())) || (curricularYear == null && context
+                                        .containsSemester(semester)))) {
                             return true;
                         }
                     }

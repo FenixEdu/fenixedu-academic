@@ -151,16 +151,6 @@ public class InfoLesson extends InfoShowOccupation implements ISmsDTO, Comparabl
         return hours + ":" + minutes;
     }
 
-    public String toString() {
-        String result = "[INFOAULA";
-        result += ", diaSemana=" + _diaSemana;
-        result += ", tipo=" + _tipo;
-        result += ", sala=" + _infoSala;
-        result += ", shift=" + _infoShift;
-        result += "]";
-        return result;
-    }
-
     public InfoShift getInfoShift() {
         return _infoShift;
     }

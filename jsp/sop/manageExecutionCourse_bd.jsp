@@ -42,6 +42,21 @@ obdecem à nova carga definida.
 				<td class="listClasses-header">
 					<bean:message key="label.hours.load.laboratorial"/>
 				</td>
+				<td class="listClasses-header">
+					<bean:message key="label.hours.load.seminary"/>
+				</td>
+				<td class="listClasses-header">
+					<bean:message key="label.hours.load.problems"/>
+				</td>
+				<td class="listClasses-header">
+					<bean:message key="label.hours.load.fieldWork"/>
+				</td>
+				<td class="listClasses-header">
+					<bean:message key="label.hours.load.trainingPeriod"/>
+				</td>
+				<td class="listClasses-header">
+					<bean:message key="label.hours.load.tutorialOrientation"/>
+				</td>
 			</tr>
 			<tr>
 				<td class="listClasses">
@@ -56,6 +71,22 @@ obdecem à nova carga definida.
 				<td class="listClasses">
 					<html:text name="executionCourse" property="labHours" size="4"/>
 				</td>
+				<td class="listClasses">
+					<html:text name="executionCourse" property="seminaryHours" size="4"/>
+				</td>
+				<td class="listClasses">
+					<html:text name="executionCourse" property="problemsHours" size="4"/>
+				</td>
+				<td class="listClasses">
+					<html:text name="executionCourse" property="fieldWorkHours" size="4"/>
+				</td>
+				<td class="listClasses">
+					<html:text name="executionCourse" property="trainingPeriodHours" size="4"/>
+				</td>
+				<td class="listClasses">
+					<html:text name="executionCourse" property="tutorialOrientationHours" size="4"/>
+				</td>
+				
 			</tr>
 	</table>
 	<br />

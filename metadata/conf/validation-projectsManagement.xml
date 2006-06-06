@@ -4,7 +4,7 @@
 	<formset>
 		<form name="accessForm">
 			<field property="beginDay"
-				depends="required, integer, range" page="1">
+				depends="required, integer, intRange" page="1">
 				<arg0 key="message.beginDay" />
 				<arg1 key="${var:min}" resource="false" />
 				<arg2 key="${var:max}" resource="false" />
@@ -18,7 +18,7 @@
 				</var>
 			</field>
 			<field property="beginMonth"
-				depends="required, integer, range" page="1">
+				depends="required, integer, intRange" page="1">
 				<arg0 key="message.beginMonth" />
 				<arg1 key="${var:min}" resource="false" />
 				<arg2 key="${var:max}" resource="false" />
@@ -32,7 +32,7 @@
 				</var>
 			</field>
 			<field property="beginYear"
-				depends="required, integer, range" page="1">
+				depends="required, integer, intRange" page="1">
 				<arg0 key="message.beginYear" />
 				<arg1 key="${var:min}" resource="false" />
 				<arg2 key="${var:max}" resource="false" />
@@ -54,7 +54,7 @@
 					<var-value>2100</var-value>
 				</var>
 			</field>
-			<field property="endDay" depends="required, integer, range"
+			<field property="endDay" depends="required, integer, intRange"
 				page="1">
 				<arg0 key="message.endDay" />
 				<arg1 key="${var:min}" resource="false" />
@@ -69,7 +69,7 @@
 				</var>
 			</field>
 			<field property="endMonth"
-				depends="required, integer, range" page="1">
+				depends="required, integer, intRange" page="1">
 				<arg0 key="message.endMonth" />
 				<arg1 key="${var:min}" resource="false" />
 				<arg2 key="${var:max}" resource="false" />
@@ -82,7 +82,7 @@
 					<var-value>12</var-value>
 				</var>
 			</field>
-			<field property="endYear" depends="required, integer, range"
+			<field property="endYear" depends="required, integer, intRange"
 				page="1">
 				<arg0 key="message.endYear" />
 				<arg1 key="${var:min}" resource="false" />

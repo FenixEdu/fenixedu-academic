@@ -26,8 +26,9 @@ public class EditExecutionCourse extends Service {
 
         executionCourse.edit(infoExecutionCourse.getNome(), infoExecutionCourse.getSigla(),
                 infoExecutionCourse.getTheoreticalHours(), infoExecutionCourse.getTheoPratHours(),
-                infoExecutionCourse.getPraticalHours(), infoExecutionCourse.getLabHours(),
-                infoExecutionCourse.getComment());
+                infoExecutionCourse.getPraticalHours(), infoExecutionCourse.getLabHours(), infoExecutionCourse.getSeminaryHours(),
+                infoExecutionCourse.getProblemsHours(), infoExecutionCourse.getFieldWorkHours(), infoExecutionCourse.getTrainingPeriodHours(),
+                infoExecutionCourse.getTutorialOrientationHours(), infoExecutionCourse.getComment());
 
         return infoExecutionCourse;
     }

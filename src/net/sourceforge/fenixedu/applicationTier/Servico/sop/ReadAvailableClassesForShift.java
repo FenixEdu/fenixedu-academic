@@ -15,7 +15,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
-import net.sourceforge.fenixedu.domain.CurricularCourseScope;
+import net.sourceforge.fenixedu.domain.CurricularYear;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
@@ -38,25 +38,22 @@ public class ReadAvailableClassesForShift extends Service {
 
         Shift shift = rootDomainObject.readShiftByOID(shiftOID);
 
-        List curricularCourses = shift.getDisciplinaExecucao().getAssociatedCurricularCourses();
-        List scopes = new ArrayList();
-        for (int i = 0; i < curricularCourses.size(); i++) {
-            CurricularCourse curricularCourse = (CurricularCourse) curricularCourses.get(i);
-            scopes.addAll(curricularCourse.getScopes());
-        }
-
+        List<CurricularCourse> curricularCourses = shift.getDisciplinaExecucao()
+                .getAssociatedCurricularCourses();
         ExecutionCourse executionCourse = shift.getDisciplinaExecucao();
 
-        List classes = executionCourse.getExecutionPeriod().getSchoolClasses();
+        List<SchoolClass> executionPeriodClasses = executionCourse.getExecutionPeriod()
+                .getSchoolClasses();
+        List<SchoolClass> shiftClasses = shift.getAssociatedClasses();
 
         infoClasses = new ArrayList();
-        Iterator iter = classes.iterator();
+        Iterator iter = executionPeriodClasses.iterator();
         while (iter.hasNext()) {
-            SchoolClass classImpl = (SchoolClass) iter.next();
-            if (!shift.getAssociatedClasses().contains(classImpl) && containsScope(scopes, classImpl)) {
-                final InfoClass infoClass = InfoClass.newInfoFromDomain(classImpl);
+            SchoolClass schoolClass = (SchoolClass) iter.next();
+            if (!shiftClasses.contains(schoolClass) && containsScope(curricularCourses, schoolClass)) {
+                final InfoClass infoClass = InfoClass.newInfoFromDomain(schoolClass);
 
-                final ExecutionDegree executionDegree = classImpl.getExecutionDegree();
+                final ExecutionDegree executionDegree = schoolClass.getExecutionDegree();
                 final InfoExecutionDegree infoExecutionDegree = InfoExecutionDegree
                         .newInfoFromDomain(executionDegree);
                 infoClass.setInfoExecutionDegree(infoExecutionDegree);
@@ -78,22 +75,13 @@ public class ReadAvailableClassesForShift extends Service {
         return infoClasses;
     }
 
-    /**
-     * @param scopes
-     * @param classImpl
-     * @return
-     */
-    private boolean containsScope(List scopes, SchoolClass classImpl) {
-        for (int i = 0; i < scopes.size(); i++) {
-            CurricularCourseScope scope = (CurricularCourseScope) scopes.get(i);
-
-            if (scope.getCurricularCourse().getDegreeCurricularPlan().equals(
-                    classImpl.getExecutionDegree().getDegreeCurricularPlan())
-                    && scope.getCurricularSemester().getCurricularYear().getYear().equals(
-                            classImpl.getAnoCurricular()))
-                return true;
+    private boolean containsScope(List<CurricularCourse> curricularCourses, SchoolClass schoolClass) {
+        for (CurricularCourse curricularCourse : curricularCourses) {
+            CurricularYear curricularYear = CurricularYear.readByYear(schoolClass.getAnoCurricular());            
+            return curricularCourse.hasScopeInGivenSemesterAndCurricularYearInDCP(schoolClass
+                    .getExecutionPeriod().getSemester(), curricularYear, schoolClass
+                    .getExecutionDegree().getDegreeCurricularPlan(), schoolClass.getExecutionPeriod());
         }
-
         return false;
     }
 

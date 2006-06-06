@@ -101,37 +101,50 @@ public class EditLesson extends Service {
 
     private InfoShiftServiceResult valid(Shift shift, Integer lessonId, Calendar start, Calendar end) throws ExcepcaoPersistencia {
         InfoShiftServiceResult result = new InfoShiftServiceResult();
-        result.setMessageType(InfoShiftServiceResult.SUCESS);
+        result.setMessageType(InfoShiftServiceResult.SUCCESS);
         double hours = getTotalHoursOfShiftType(shift, lessonId, start, end);
         double lessonDuration = (getLessonDurationInMinutes(start.getTime(), end.getTime()).doubleValue()) / 60;
 
         if (shift.getTipo().equals(ShiftType.TEORICA)) {
-            if (hours == shift.getDisciplinaExecucao().getTheoreticalHours().doubleValue()) {
-                result.setMessageType(InfoShiftServiceResult.THEORETICAL_HOURS_LIMIT_REACHED);
-            } else if ((hours + lessonDuration) > shift.getDisciplinaExecucao().getTheoreticalHours()
-                    .doubleValue()) {
-                result.setMessageType(InfoShiftServiceResult.THEORETICAL_HOURS_LIMIT_EXCEEDED);
-            }
+            validForType(result, hours, lessonDuration, shift.getDisciplinaExecucao().getTheoreticalHours().doubleValue(), 
+                InfoShiftServiceResult.THEORETICAL_HOURS_LIMIT_REACHED, InfoShiftServiceResult.THEORETICAL_HOURS_LIMIT_EXCEEDED);
         } else if (shift.getTipo().equals(ShiftType.PRATICA)) {
-            if (hours == shift.getDisciplinaExecucao().getPraticalHours().doubleValue())
-                result.setMessageType(InfoShiftServiceResult.PRATICAL_HOURS_LIMIT_REACHED);
-            else if ((hours + lessonDuration) > shift.getDisciplinaExecucao().getPraticalHours()
-                    .doubleValue())
-                result.setMessageType(InfoShiftServiceResult.PRATICAL_HOURS_LIMIT_EXCEEDED);
-        } else if (shift.getTipo().equals(ShiftType.TEORICO_PRATICA)) {
-            if (hours == shift.getDisciplinaExecucao().getTheoPratHours().doubleValue())
-                result.setMessageType(InfoShiftServiceResult.THEO_PRAT_HOURS_LIMIT_REACHED);
-            else if ((hours + lessonDuration) > shift.getDisciplinaExecucao().getTheoPratHours()
-                    .doubleValue())
-                result.setMessageType(InfoShiftServiceResult.THEO_PRAT_HOURS_LIMIT_EXCEEDED);
+            validForType(result, hours, lessonDuration, shift.getDisciplinaExecucao().getPraticalHours().doubleValue(), 
+                    InfoShiftServiceResult.PRATICAL_HOURS_LIMIT_REACHED, InfoShiftServiceResult.PRATICAL_HOURS_LIMIT_EXCEEDED);                      
+        } else if (shift.getTipo().equals(ShiftType.TEORICO_PRATICA)) {           
+            validForType(result, hours, lessonDuration, shift.getDisciplinaExecucao().getTheoPratHours().doubleValue(), 
+                    InfoShiftServiceResult.THEO_PRAT_HOURS_LIMIT_REACHED, InfoShiftServiceResult.THEO_PRAT_HOURS_LIMIT_EXCEEDED);                       
         } else if (shift.getTipo().equals(ShiftType.LABORATORIAL)) {
-            if (hours == shift.getDisciplinaExecucao().getLabHours().doubleValue())
-                result.setMessageType(InfoShiftServiceResult.LAB_HOURS_LIMIT_REACHED);
-            else if ((hours + lessonDuration) > shift.getDisciplinaExecucao().getLabHours()
-                    .doubleValue())
-                result.setMessageType(InfoShiftServiceResult.LAB_HOURS_LIMIT_EXCEEDED);
-        }
+            validForType(result, hours, lessonDuration, shift.getDisciplinaExecucao().getLabHours().doubleValue(), 
+                    InfoShiftServiceResult.LAB_HOURS_LIMIT_REACHED, InfoShiftServiceResult.LAB_HOURS_LIMIT_EXCEEDED);                     
+        } else if (shift.getTipo().equals(ShiftType.SEMINARY)) {
+            validForType(result, hours, lessonDuration, shift.getDisciplinaExecucao().getSeminaryHours().doubleValue(), 
+                    InfoShiftServiceResult.SEMINARY_LIMIT_REACHED, InfoShiftServiceResult.SEMINARY_LIMIT_EXCEEDED);                     
+        } else if (shift.getTipo().equals(ShiftType.PROBLEMS)) {
+            validForType(result, hours, lessonDuration, shift.getDisciplinaExecucao().getProblemsHours().doubleValue(), 
+                    InfoShiftServiceResult.PROBLEMS_LIMIT_REACHED, InfoShiftServiceResult.PROBLEMS_LIMIT_EXCEEDED);                     
+        } else if (shift.getTipo().equals(ShiftType.FIELD_WORK)) {
+            validForType(result, hours, lessonDuration, shift.getDisciplinaExecucao().getFieldWorkHours().doubleValue(), 
+                    InfoShiftServiceResult.FIELD_WORK_LIMIT_REACHED, InfoShiftServiceResult.FIELD_WORK_LIMIT_EXCEEDED);                     
+        } else if (shift.getTipo().equals(ShiftType.TRAINING_PERIOD)) {
+            validForType(result, hours, lessonDuration, shift.getDisciplinaExecucao().getTrainingPeriodHours().doubleValue(), 
+                    InfoShiftServiceResult.TRAINING_PERIOD_LIMIT_REACHED, InfoShiftServiceResult.TRAINING_PERIOD_LIMIT_EXCEEDED);                     
+        } else if (shift.getTipo().equals(ShiftType.TUTORIAL_ORIENTATION)) {
+            validForType(result, hours, lessonDuration, shift.getDisciplinaExecucao().getTutorialOrientationHours().doubleValue(), 
+                    InfoShiftServiceResult.TUTORIAL_ORIENTATION_LIMIT_REACHED, InfoShiftServiceResult.TUTORIAL_ORIENTATION_LIMIT_EXCEEDED);                     
+        }        
         return result;
+    }
+    
+    private void validForType(InfoShiftServiceResult infoShiftServiceResult, double hours, double lessonDuration, 
+            double maxLessonHoursForType, int reachedType, int limitExceededType) {
+        
+        if (hours == maxLessonHoursForType) {
+            infoShiftServiceResult.setMessageType(reachedType);
+        }
+        else if ((hours + lessonDuration) > maxLessonHoursForType) {
+            infoShiftServiceResult.setMessageType(limitExceededType);
+        }
     }
 
     private double getTotalHoursOfShiftType(Shift shift, Integer lessonId, Calendar start, Calendar end)

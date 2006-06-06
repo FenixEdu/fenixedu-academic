@@ -3,7 +3,9 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="dt" %>
+<%@ taglib uri="/WEB-INF/enum.tld" prefix="e" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
+
 <table width="100%" cellspacing="0">
 	<tr>
     	<td class="infoselected"><p>O curso seleccionado &eacute;:</p>
@@ -14,7 +16,6 @@
 <h2><bean:message key="title.manage.aulas"/></h2>
 <br />
 <span class="error"><html:errors/></span>
-
 <br />
 <bean:message key="message.weekdays"/>
 <br />
@@ -42,9 +43,9 @@
 
 	<table cellspacing="0">
 		<tr>
-	      	<td nowrap class="formTD"><bean:message key="property.aula.weekDay"/>: </td>
+	      	<td nowrap class="formTD"><bean:message key="property.aula.weekDay"/>: </td>	        
 	        <td nowrap class="formTD">
-    	    	<html:text property="diaSemana"  size="2"/>
+    	    	<html:text property="diaSemana" size="2"/>
 	       	</td>
    		</tr>
 	   	<tr>

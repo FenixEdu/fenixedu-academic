@@ -26,8 +26,18 @@ public class InfoExecutionCourse extends InfoObject {
     private Double _praticalHours;
 
     private Double _theoPratHours;
-
+    
     private Double _labHours;
+
+    private Double _seminaryHours;
+    
+    private Double _problemsHours;
+    
+    private Double _fieldWorkHours;
+    
+    private Double _trainingPeriodHours;
+    
+    private Double _tutorialOrientationHours;      
 
     private Double occupancy;
 
@@ -79,18 +89,7 @@ public class InfoExecutionCourse extends InfoObject {
     public InfoExecutionCourse(Integer idInternal) {
         setIdInternal(idInternal);
     }
-
-    /**
-     * @param nome
-     * @param sigla
-     * @param programa
-     * @param infoLicenciaturaExecucao
-     * @param theoreticalHours
-     * @param praticalHours
-     * @param theoPratHours
-     * @param labHours
-     * @deprecated
-     */
+    
     public InfoExecutionCourse(String nome, String sigla, String programa,
             InfoExecutionDegree infoLicenciaturaExecucao, Double theoreticalHours, Double praticalHours,
             Double theoPratHours, Double labHours) {
@@ -117,18 +116,6 @@ public class InfoExecutionCourse extends InfoObject {
         setInfoExecutionPeriod(infoExecutionPeriod);
     }
 
-    /**
-     * @deprecated
-     * @param nome
-     * @param sigla
-     * @param programa
-     * @param infoLicenciaturaExecucao
-     * @param theoreticalHours
-     * @param praticalHours
-     * @param theoPratHours
-     * @param labHours
-     * @param semester
-     */
     public InfoExecutionCourse(String nome, String sigla, String programa,
             InfoExecutionDegree infoLicenciaturaExecucao, Double theoreticalHours, Double praticalHours,
             Double theoPratHours, Double labHours, Integer semester) {
@@ -341,6 +328,11 @@ public class InfoExecutionCourse extends InfoObject {
             setTheoPratHours(executionCourse.getTheoPratHours());
             setLabHours(executionCourse.getLabHours());
             setPraticalHours(executionCourse.getPraticalHours());
+            setSeminaryHours(executionCourse.getSeminaryHours());
+            setFieldWorkHours(executionCourse.getFieldWorkHours());
+            setProblemsHours(executionCourse.getProblemsHours());
+            setTrainingPeriodHours(executionCourse.getTrainingPeriodHours());
+            setTutorialOrientationHours(executionCourse.getTutorialOrientationHours());
             setComment(executionCourse.getComment());
 			setInfoExecutionPeriod(InfoExecutionPeriod.newInfoFromDomain(executionCourse.getExecutionPeriod()));
         }
@@ -370,6 +362,46 @@ public class InfoExecutionCourse extends InfoObject {
 
     public void setInfoGroupings(List infoGroupings) {
         this.infoGroupings = infoGroupings;
+    }
+
+    public Double getFieldWorkHours() {
+        return _fieldWorkHours;
+    }
+
+    public void setFieldWorkHours(Double workHours) {
+        _fieldWorkHours = workHours;
+    }
+
+    public Double getProblemsHours() {
+        return _problemsHours;
+    }
+
+    public void setProblemsHours(Double hours) {
+        _problemsHours = hours;
+    }
+
+    public Double getSeminaryHours() {
+        return _seminaryHours;
+    }
+
+    public void setSeminaryHours(Double hours) {
+        _seminaryHours = hours;
+    }
+
+    public Double getTrainingPeriodHours() {
+        return _trainingPeriodHours;
+    }
+
+    public void setTrainingPeriodHours(Double periodHours) {
+        _trainingPeriodHours = periodHours;
+    }
+
+    public Double getTutorialOrientationHours() {
+        return _tutorialOrientationHours;
+    }
+
+    public void setTutorialOrientationHours(Double orientationHours) {
+        _tutorialOrientationHours = orientationHours;
     }
     
     

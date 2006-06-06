@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.domain;
 
 public enum ShiftType {
+
     TEORICA,
 
     PRATICA,
@@ -11,7 +12,17 @@ public enum ShiftType {
 
     DUVIDAS,
 
-    RESERVA;
+    RESERVA,
+    
+    SEMINARY,
+    
+    PROBLEMS,
+    
+    FIELD_WORK,
+    
+    TRAINING_PERIOD,
+    
+    TUTORIAL_ORIENTATION;
     
     public String getSiglaTipoAula() {
         String value = this.name();
@@ -27,6 +38,16 @@ public enum ShiftType {
             return "D";
         if(value == ShiftType.RESERVA.name())
             return "R";
+        if(value == ShiftType.SEMINARY.name())
+            return "S";
+        if(value == ShiftType.PROBLEMS.name())
+            return "PB";
+        if(value == ShiftType.FIELD_WORK.name())
+            return "TC";
+        if(value == ShiftType.TRAINING_PERIOD.name())
+            return "E";
+        if(value == ShiftType.TUTORIAL_ORIENTATION.name())
+            return "OT";
         return "Error: Invalid lesson type";
         }
     
@@ -44,6 +65,16 @@ public enum ShiftType {
           return "Dúvidas";
       if(value == ShiftType.RESERVA.name())
           return "Reserva";
+      if(value == ShiftType.SEMINARY.name())
+          return "Seminário";
+      if(value == ShiftType.PROBLEMS.name())
+          return "Problemas";
+      if(value == ShiftType.FIELD_WORK.name())
+          return "Trabalho de Campo";
+      if(value == ShiftType.TRAINING_PERIOD.name())
+          return "Estágio";
+      if(value == ShiftType.TUTORIAL_ORIENTATION.name())
+          return "Orientação Tutorial";
       return "Error: Invalid lesson type";
   }
     public String getName(){

@@ -32,3 +32,4 @@ execute "Alter table Space Information" alterTableSpaceInformation.sql
 execute "Adding dynamic mail distribution to execution course's site table (default 0, not null)" alterSiteTable.sql
 execute "Creating new announcement tables" createNewAnnouncementTables.sql
 execute "Add columns to Execution Degree" alterTableExecutionDegree.sql
+execute "Alter table EXECUTION_COURSE" alterExecutionCourseTable.sql

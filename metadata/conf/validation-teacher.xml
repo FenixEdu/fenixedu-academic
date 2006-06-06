@@ -57,9 +57,9 @@
            <var-value>HH:mm</var-value>
         </var>
 	</field>
-	<field property="level" depends="integer, range" page="1">
+	<field property="level" depends="integer, intRange" page="1">
 		<msg name="integer" key="errors.integer"/>
-		<msg name="range" key="errors.range"/>
+		<msg name="intRange" key="errors.range"/>
         <arg0 key="label.exam.enrollment.year" />
         <arg1 key="${var:min}" resource="false"/>
         <arg2 key="${var:max}" resource="false"/>        
@@ -78,7 +78,7 @@
    	<field property="selected" depends="required" page="2">
     	<arg0 key="message.shiftsOrStudents" resource="true"/>
     </field>
-    <field property="beginDayFormatted" depends="required, integer, range" page="1">
+    <field property="beginDayFormatted" depends="required, integer, intRange" page="1">
         <arg0 key="message.beginDay" />
         <arg1 key="${var:min}" resource="false"/>
         <arg2 key="${var:max}" resource="false"/>        
@@ -91,7 +91,7 @@
           <var-value>31</var-value>
         </var>
 	</field>
-	  <field property="beginMonthFormatted" depends="required, integer, range" page="1">
+	  <field property="beginMonthFormatted" depends="required, integer, intRange" page="1">
         <arg0 key="message.beginMonth" />
         <arg1 key="${var:min}" resource="false"/>
         <arg2 key="${var:max}" resource="false"/>        
@@ -104,7 +104,7 @@
           <var-value>12</var-value>
         </var>
 	</field>
-	  <field property="beginYearFormatted" depends="required, integer, range" page="1">
+	  <field property="beginYearFormatted" depends="required, integer, intRange" page="1">
       	<arg0 key="message.beginYear" />
         <arg1 key="${var:min}" resource="false"/>
         <arg2 key="${var:max}" resource="false"/>        
@@ -126,7 +126,7 @@
           <var-value>2100</var-value>
         </var> 
 	</field>
-      <field property="endDayFormatted" depends="required, integer, range" page="1">
+      <field property="endDayFormatted" depends="required, integer, intRange" page="1">
         <arg0 key="message.endDay" />
         <arg1 key="${var:min}" resource="false"/>
         <arg2 key="${var:max}" resource="false"/>        
@@ -139,7 +139,7 @@
           <var-value>31</var-value>
         </var>
 	</field>
-	  <field property="endMonthFormatted" depends="required, integer, range" page="1">
+	  <field property="endMonthFormatted" depends="required, integer, intRange" page="1">
         <arg0 key="message.endMonth" />
         <arg1 key="${var:min}" resource="false"/>
         <arg2 key="${var:max}" resource="false"/>        
@@ -152,7 +152,7 @@
           <var-value>12</var-value>
         </var>
       </field>
-	  <field property="endYearFormatted" depends="required, integer, range" page="1">
+	  <field property="endYearFormatted" depends="required, integer, intRange" page="1">
       	<arg0 key="message.endYear" />
         <arg1 key="${var:min}" resource="false"/>
         <arg2 key="${var:max}" resource="false"/>        
@@ -174,7 +174,7 @@
           <var-value>2100</var-value>
         </var> 
       </field>
-      <field property="beginHourFormatted" depends="required, integer, range" page="1">
+      <field property="beginHourFormatted" depends="required, integer, intRange" page="1">
         <arg0 key="message.testBeginHour" />
         <arg1 key="${var:min}" resource="false"/>
         <arg2 key="${var:max}" resource="false"/>        
@@ -187,7 +187,7 @@
           <var-value>23</var-value>
         </var>
    	</field>
-   	<field property="beginMinuteFormatted" depends="required, integer, range" page="1">
+   	<field property="beginMinuteFormatted" depends="required, integer, intRange" page="1">
         <arg0 key="message.beginMinute" />
         <arg1 key="${var:min}" resource="false"/>
         <arg2 key="${var:max}" resource="false"/>        
@@ -200,7 +200,7 @@
           <var-value>60</var-value>
         </var>
    	</field>
-   	 <field property="endHourFormatted" depends="required, integer, range" page="1">
+   	 <field property="endHourFormatted" depends="required, integer, intRange" page="1">
         <arg0 key="message.testEndHour" />
         <arg1 key="${var:min}" resource="false"/>
         <arg2 key="${var:max}" resource="false"/>        
@@ -213,7 +213,7 @@
           <var-value>23</var-value>
         </var>
    	</field>
-   	<field property="endMinuteFormatted" depends="required, integer, range" page="1">
+   	<field property="endMinuteFormatted" depends="required, integer, intRange" page="1">
         <arg0 key="message.endMinute" />
         <arg1 key="${var:min}" resource="false"/>
         <arg2 key="${var:max}" resource="false"/>        
@@ -244,7 +244,7 @@
 	<field property="cardinalityType" depends="required" page="2">
 		<msg name="required" key="message.cardinalityTypeRequired"/>
 	</field>
-	<field property="optionNumber" depends="required, integer, range" page="2">
+	<field property="optionNumber" depends="required, integer, intRange" page="2">
 		<msg name="required" key="message.optionNumberRequired"/>
 		<arg0 key="label.optionNumber" />
         <arg1 key="${var:min}" resource="false"/>
@@ -258,7 +258,7 @@
           <var-value>99</var-value>
         </var>
 	</field>
-   	 <field property="learningHour" depends="integer, range" page="2">
+   	 <field property="learningHour" depends="integer, intRange" page="2">
         <arg0 key="label.hour" />
         <arg1 key="${var:min}" resource="false"/>
         <arg2 key="${var:max}" resource="false"/>        
@@ -271,7 +271,7 @@
           <var-value>23</var-value>
         </var>
    	</field>
-   	<field property="learningMinute" depends="integer, range" page="2">
+   	<field property="learningMinute" depends="integer, intRange" page="2">
         <arg0 key="label.minutes" />
         <arg1 key="${var:min}" resource="false"/>
         <arg2 key="${var:max}" resource="false"/>        
@@ -284,9 +284,9 @@
           <var-value>60</var-value>
         </var>
    	</field>
-	<field property="level" depends="integer, range" page="2">
+	<field property="level" depends="integer, intRange" page="2">
 		<msg name="integer" key="errors.integer"/>
-		<msg name="range" key="errors.range"/>
+		<msg name="intRange" key="errors.range"/>
         <arg0 key="label.exam.enrollment.year" />
         <arg1 key="${var:min}" resource="false"/>
         <arg2 key="${var:max}" resource="false"/>        
@@ -644,7 +644,7 @@
     <!-- validation for marks Submission -->
    <!--	validator threeArgsDate is only valid when used in year field and fields have to be named year, month an day  -->
    <form name="marksForm">
-	  <field property="day" depends="required, integer, range" page="1">
+	  <field property="day" depends="required, integer, intRange" page="1">
         <arg0 key="label.day" />
         <arg1 key="${var:min}" resource="false"/>
         <arg2 key="${var:max}" resource="false"/>        
@@ -657,7 +657,7 @@
           <var-value>31</var-value>
         </var>
       </field>
-	  <field property="month" depends="required, integer, range" page="1">
+	  <field property="month" depends="required, integer, intRange" page="1">
         <arg0 key="label.month" />
         <arg1 key="${var:min}" resource="false"/>
         <arg2 key="${var:max}" resource="false"/>        
@@ -670,8 +670,8 @@
           <var-value>12</var-value>
         </var>
       </field>
-	  <field property="year" depends="required, integer, range, threeArgsDate" page="1">
-	  	<msg key="message.min" name="range"/>
+	  <field property="year" depends="required, integer, intRange, threeArgsDate" page="1">
+	  	<msg key="message.min" name="intRange"/>
       	<arg0 key="label.exam.enrollment.year" />
         <arg1 key="${var:min}" resource="false"/>
         <arg2 key="${var:max}" resource="false"/>        

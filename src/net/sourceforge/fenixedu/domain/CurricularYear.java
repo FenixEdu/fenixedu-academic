@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.domain;
 
+import java.util.List;
+
 /**
  * @author dcs-rjao
  * 
@@ -25,5 +27,15 @@ public class CurricularYear extends CurricularYear_Base implements Comparable<Cu
 	public int compareTo(final CurricularYear curricularYear) {
 		return getYear().compareTo(curricularYear.getYear());
 	}
+    
+    public static CurricularYear readByYear(Integer year) {
+        List<CurricularYear> curricularYears = RootDomainObject.getInstance().getCurricularYears();
+        for (CurricularYear curricularYear : curricularYears) {
+            if(curricularYear.getYear().equals(year)) {
+                return curricularYear;
+            }    
+        }
+        return null;
+    }
 
 }

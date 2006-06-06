@@ -580,10 +580,6 @@ public class Teacher extends Teacher_Base {
         }
     }
 
-    /**
-     * @param executionPeriod
-     * @return
-     */
     private OccupationPeriod getLessonsPeriod(ExecutionPeriod executionPeriod) {
         for (ExecutionDegree executionDegree : executionPeriod.getExecutionYear()
                 .getExecutionDegreesByType(DegreeType.DEGREE)) {

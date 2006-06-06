@@ -1060,17 +1060,22 @@ class net.sourceforge.fenixedu.domain.WrittenEvaluationEnrolment extends net.sou
 
 class net.sourceforge.fenixedu.domain.ExecutionCourse extends net.sourceforge.fenixedu.domain.DomainObject {
 	String nome;
-	Double theoreticalHours;
 	String sigla;
-	Double labHours;
 	Integer keyExecutionPeriod;
 	Integer keyCourseReport;
 	Integer keyEvaluationMethod;
 	Integer keySite;
 	Integer keyExecutionCourseWebsite;
-	Double praticalHours;
 	String comment;
+	Double theoreticalHours;
+	Double praticalHours;
+	Double labHours;
 	Double theoPratHours;
+	Double seminaryHours;
+	Double problemsHours;
+	Double fieldWorkHours;
+	Double trainingPeriodHours;
+	Double tutorialOrientationHours;
 }
 
 

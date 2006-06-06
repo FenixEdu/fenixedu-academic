@@ -98,7 +98,7 @@ public class ManageShiftsDA extends FenixExecutionDegreeAndCurricularYearContext
         infoShift.setLotacao((Integer) createShiftForm.get("lotacao"));
         infoShift.setNome((String) createShiftForm.get("nome"));
         infoShift.setTipo(ShiftType.valueOf((String) createShiftForm.get("tipoAula")));
-System.out.println("createShift antes do servico"+infoShift);
+        System.out.println("createShift antes do servico"+infoShift);
         Object argsCriarTurno[] = { infoShift };
         try {
             infoShift = (InfoShift) ServiceUtils.executeService(userView, "CriarTurno", argsCriarTurno);

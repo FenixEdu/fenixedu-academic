@@ -60,7 +60,6 @@ public class EditarTurno extends Service {
 		if (shiftToEdit.getAssociatedLessons() != null) {
 			for (int i = 0; i < shiftToEdit.getAssociatedLessons().size(); i++) {
 				shiftToEdit.getAssociatedLessons().get(i).setTipo(infoShiftNew.getTipo());
-				//shiftToEdit.getAssociatedLessons().get(i).setShift(shiftToEdit);
 			}
 		}
 
@@ -115,54 +114,64 @@ public class EditarTurno extends Service {
 
 	private boolean newShiftTypeIsValid(Shift shift, ShiftType newShiftType, double shiftDuration) {
 		// Verify if shift total duration exceeds new shift type duration
-		if (newShiftType.equals(ShiftType.TEORICA)) {
-			if (shiftDuration > shift.getDisciplinaExecucao().getTheoreticalHours().doubleValue()) {
-				return false;
-			}
-		}
-		if (newShiftType.equals(ShiftType.PRATICA)) {
-			if (shiftDuration > shift.getDisciplinaExecucao().getPraticalHours().doubleValue()) {
-				return false;
-			}
-		}
-		if (newShiftType.equals(ShiftType.TEORICO_PRATICA)) {
-			if (shiftDuration > shift.getDisciplinaExecucao().getTheoPratHours().doubleValue()) {
-				return false;
-			}
-		}
-		if (newShiftType.equals(ShiftType.LABORATORIAL)) {
-			if (shiftDuration > shift.getDisciplinaExecucao().getLabHours().doubleValue()) {
-				return false;
-			}
-		}
-		return true;
+        switch (newShiftType) {
+        case TEORICA:
+            return verifyIfShiftDurationIsValid(shiftDuration, shift.getDisciplinaExecucao().getTheoreticalHours().doubleValue());
+        case PRATICA:
+            return verifyIfShiftDurationIsValid(shiftDuration, shift.getDisciplinaExecucao().getPraticalHours().doubleValue());
+        case TEORICO_PRATICA:
+            return verifyIfShiftDurationIsValid(shiftDuration, shift.getDisciplinaExecucao().getTheoPratHours().doubleValue());
+        case LABORATORIAL:
+            return verifyIfShiftDurationIsValid(shiftDuration, shift.getDisciplinaExecucao().getLabHours().doubleValue());
+        case SEMINARY:
+            return verifyIfShiftDurationIsValid(shiftDuration, shift.getDisciplinaExecucao().getSeminaryHours().doubleValue());
+        case PROBLEMS:
+            return verifyIfShiftDurationIsValid(shiftDuration, shift.getDisciplinaExecucao().getProblemsHours().doubleValue());
+        case FIELD_WORK:
+            return verifyIfShiftDurationIsValid(shiftDuration, shift.getDisciplinaExecucao().getFieldWorkHours().doubleValue());
+        case TRAINING_PERIOD:
+            return verifyIfShiftDurationIsValid(shiftDuration, shift.getDisciplinaExecucao().getTrainingPeriodHours().doubleValue());
+        case TUTORIAL_ORIENTATION:
+            return verifyIfShiftDurationIsValid(shiftDuration, shift.getDisciplinaExecucao().getTutorialOrientationHours().doubleValue());
+        default:
+            break;
+        }     
+        return true;
 	}
+    
+    private boolean verifyIfShiftDurationIsValid(double shiftDuration, double maxLessonHoursForType) {                       
+        if (shiftDuration > maxLessonHoursForType) {
+            return false;
+        }        
+        return true;
+    }
+        
+	private boolean newShiftExecutionCourseIsValid(Shift shift,	InfoExecutionCourse newShiftExecutionCourse, double shiftDuration) {
 
-	private boolean newShiftExecutionCourseIsValid(Shift shift,
-			InfoExecutionCourse newShiftExecutionCourse, double shiftDuration) {
-
-		// Verify if shift total duration exceeds new executionCourse uration
-		if (shift.getTipo().equals(ShiftType.TEORICA)) {
-			if (shiftDuration > newShiftExecutionCourse.getTheoreticalHours().doubleValue()) {
-				return false;
-			}
-		}
-		if (shift.getTipo().equals(ShiftType.PRATICA)) {
-			if (shiftDuration > newShiftExecutionCourse.getPraticalHours().doubleValue()) {
-				return false;
-			}
-		}
-		if (shift.getTipo().equals(ShiftType.TEORICO_PRATICA)) {
-			if (shiftDuration > newShiftExecutionCourse.getTheoPratHours().doubleValue()) {
-				return false;
-			}
-		}
-		if (shift.getTipo().equals(ShiftType.LABORATORIAL)) {
-			if (shiftDuration > newShiftExecutionCourse.getLabHours().doubleValue()) {
-				return false;
-			}
-		}
-		return true;
+		// Verify if shift total duration exceeds new executionCourse uration        
+        switch (shift.getTipo()) {
+        case TEORICA:
+            return verifyIfShiftDurationIsValid(shiftDuration, shift.getDisciplinaExecucao().getTheoreticalHours().doubleValue());
+        case PRATICA:
+            return verifyIfShiftDurationIsValid(shiftDuration, shift.getDisciplinaExecucao().getPraticalHours().doubleValue());
+        case TEORICO_PRATICA:
+            return verifyIfShiftDurationIsValid(shiftDuration, shift.getDisciplinaExecucao().getTheoPratHours().doubleValue());
+        case LABORATORIAL:
+            return verifyIfShiftDurationIsValid(shiftDuration, shift.getDisciplinaExecucao().getLabHours().doubleValue());
+        case SEMINARY:
+            return verifyIfShiftDurationIsValid(shiftDuration, shift.getDisciplinaExecucao().getSeminaryHours().doubleValue());
+        case PROBLEMS:
+            return verifyIfShiftDurationIsValid(shiftDuration, shift.getDisciplinaExecucao().getProblemsHours().doubleValue());
+        case FIELD_WORK:
+            return verifyIfShiftDurationIsValid(shiftDuration, shift.getDisciplinaExecucao().getFieldWorkHours().doubleValue());
+        case TRAINING_PERIOD:
+            return verifyIfShiftDurationIsValid(shiftDuration, shift.getDisciplinaExecucao().getTrainingPeriodHours().doubleValue());
+        case TUTORIAL_ORIENTATION:
+            return verifyIfShiftDurationIsValid(shiftDuration, shift.getDisciplinaExecucao().getTutorialOrientationHours().doubleValue());
+        default:
+            break;
+        }     
+        return true;        
 	}
 
 	private Integer getLessonDurationInMinutes(Lesson lesson) {
