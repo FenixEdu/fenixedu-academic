@@ -71,24 +71,39 @@
 					<bean:write name="curricularCourse" property="name"/>
 				</h3>
 				<blockquote>
-					<h4>
-						<bean:message key="title.program"/>
-					</h4>
-					<bean:write name="curriculum" property="program" filter="false"/>
-					<logic:present name="curriculum" property="programEn">
-						<br/>
+					<logic:present name="curriculum">
 						<h4>
-							<bean:message key="title.program.eng"/>
+							<bean:message key="title.program"/>
 						</h4>
-						<bean:write name="curriculum" property="programEn" filter="false"/>
+						<bean:write name="curriculum" property="program" filter="false"/>
+						<logic:present name="curriculum" property="programEn">
+							<br/>
+							<h4>
+								<bean:message key="title.program.eng"/>
+							</h4>
+							<bean:write name="curriculum" property="programEn" filter="false"/>
+						</logic:present>
 					</logic:present>
+					<logic:notPresent name="curriculum">
+						<bean:message key="message.program.not.defined"/>
+					</logic:notPresent>
 				</blockquote>
-				<% if (lastCurriculum == curriculum && (curricularCourse.getBasic() == null || !curricularCourse.getBasic().booleanValue())) { %>
-					<bean:define id="url" type="java.lang.String">/editProgram.do?method=prepareEditProgram&amp;curriculumID=<bean:write name="curriculum" property="idInternal"/></bean:define>
-					<html:link page="<%= url %>" paramId="executionCourseID" paramName="executionCourse" paramProperty="idInternal">
-						<bean:message key="button.edit"/>
-					</html:link>
-				<% } %>
+				<logic:present name="curriculum">
+					<% if (lastCurriculum == curriculum && (curricularCourse.getBasic() == null || !curricularCourse.getBasic().booleanValue())) { %>
+						<bean:define id="url" type="java.lang.String">/editProgram.do?method=prepareEditProgram&amp;curriculumID=<bean:write name="curriculum" property="idInternal"/></bean:define>
+						<html:link page="<%= url %>" paramId="executionCourseID" paramName="executionCourse" paramProperty="idInternal">
+							<bean:message key="button.edit"/>
+						</html:link>
+					<% } %>
+				</logic:present>
+				<logic:notPresent name="curriculum">
+					<% if (curricularCourse.getBasic() == null || !curricularCourse.getBasic().booleanValue()) { %>
+						<bean:define id="url" type="java.lang.String">/createProgram.do?method=prepareCreateProgram&amp;curricularCourseID=<bean:write name="curricularCourse" property="idInternal"/></bean:define>
+						<html:link page="<%= url %>" paramId="executionCourseID" paramName="executionCourse" paramProperty="idInternal">
+							<bean:message key="button.create"/>
+						</html:link>
+					<% } %>
+				</logic:notPresent>
 		</logic:notEqual>
 
 		<br/>

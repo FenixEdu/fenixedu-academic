@@ -839,6 +839,7 @@
 				dynamic="true">
 	   		<form-property name="page" type="java.lang.Integer"/>
 	   		<form-property name="curriculumID" type="java.lang.String"/>
+	   		<form-property name="curricularCourseID" type="java.lang.String"/>
 	   		<form-property name="program" type="java.lang.String"/>
 	   		<form-property name="programEn" type="java.lang.String"/>
 		</form-bean>
@@ -994,6 +995,15 @@
 			<forward name="objectives" path="manage-execution-course-objectives"/>
 			<forward name="evaluationMethod" path="manage-execution-course-evaluationMethod"/>
 			<forward name="bibliographicReference" path="manage-execution-course-bibliographicReference"/>
+        </action>
+        <action path="/createProgram"
+        		parameter="method"
+        		name="programForm"
+        		scope="request" 
+        		input="/createProgram.do?method=prepareCreateProgram&amp;page=0"
+				type="net.sourceforge.fenixedu.presentationTier.Action.teacher.ManageExecutionCourseDA">
+			<forward name="create-program" path="manage-execution-course-program-create"/>
+			<forward name="program" path="manage-execution-course-program"/>
         </action>
         <action path="/editProgram"
         		parameter="method"

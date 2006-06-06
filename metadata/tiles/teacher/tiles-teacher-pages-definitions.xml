@@ -494,6 +494,10 @@
 		<put name="body" value="/teacher/executionCourse/program.jsp" />
 	</definition>
 
+	<definition name="manage-execution-course-program-create" extends="execution-course-administration">
+		<put name="body" value="/teacher/executionCourse/createProgram.jsp" />
+	</definition>
+
 	<definition name="manage-execution-course-program-edit" extends="execution-course-administration">
 		<put name="body" value="/teacher/executionCourse/editProgram.jsp" />
 	</definition>

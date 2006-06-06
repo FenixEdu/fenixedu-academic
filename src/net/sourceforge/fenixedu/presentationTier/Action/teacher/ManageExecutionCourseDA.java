@@ -48,10 +48,47 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
         return mapping.findForward("program");
     }
 
-    public ActionForward prepareEditProgram(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward prepareCreateProgram(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+    		throws Exception {
         final ExecutionCourse executionCourse = (ExecutionCourse) request.getAttribute("executionCourse");
-        
+        final String curricularCourseIDString = request.getParameter("curricularCourseID");
+        if (executionCourse != null && curricularCourseIDString != null && curricularCourseIDString.length() > 0) {
+            final CurricularCourse curricularCourse = findCurricularCourse(executionCourse, Integer.valueOf(curricularCourseIDString));
+            request.setAttribute("curricularCourse", curricularCourse);
+        }
+        return mapping.findForward("create-program");
+    }
+
+    public ActionForward createProgram(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+    		throws FenixActionException {
+        final DynaActionForm dynaActionForm = (DynaActionForm) form;
+        final String curricularCourseIDString = request.getParameter("curricularCourseID");
+        final String program = dynaActionForm.getString("program");
+        final String programEn = dynaActionForm.getString("programEn");
+
+        final ExecutionCourse executionCourse = (ExecutionCourse) request.getAttribute("executionCourse");
+        final CurricularCourse curricularCourse = findCurricularCourse(executionCourse, Integer.valueOf(curricularCourseIDString));
+
+        final IUserView userView = getUserView(request);
+
+        final Object args[] = { executionCourse.getIdInternal(), curricularCourse, program, programEn };
+        try {
+            ServiceManagerServiceFactory.executeService(userView, "CreateProgram", args);
+        } catch (NotAuthorizedFilterException e) {
+            ActionMessages messages = new ActionMessages();
+            messages.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage("error.teacherNotResponsibleOrNotCoordinator"));
+            saveErrors(request, messages);
+        } catch (Exception e) {
+            throw new FenixActionException();
+        }
+
+        return mapping.findForward("program");
+    }
+
+    public ActionForward prepareEditProgram(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+    		throws Exception {
+        final ExecutionCourse executionCourse = (ExecutionCourse) request.getAttribute("executionCourse");
+
         final Teacher teacher = getUserView(request).getPerson().getTeacher();
         if (teacher.responsibleFor(executionCourse) == null) {
             ActionMessages messages = new ActionMessages();
@@ -59,11 +96,10 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
             saveErrors(request, messages);
             return mapping.findForward("program");
         }
-        
+
         final String curriculumIDString = request.getParameter("curriculumID");
         if (executionCourse != null && curriculumIDString != null && curriculumIDString.length() > 0) {
-            final Curriculum curriculum = findCurriculum(executionCourse, Integer
-                    .valueOf(curriculumIDString));
+            final Curriculum curriculum = findCurriculum(executionCourse, Integer.valueOf(curriculumIDString));
             if (curriculum != null) {
                 final DynaActionForm dynaActionForm = (DynaActionForm) form;
                 dynaActionForm.set("program", curriculum.getProgram());
@@ -74,25 +110,21 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
         return mapping.findForward("edit-program");
     }
 
-    public ActionForward editProgram(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException {
+    public ActionForward editProgram(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+    		throws FenixActionException {
         final DynaActionForm dynaActionForm = (DynaActionForm) form;
         final String curriculumIDString = request.getParameter("curriculumID");
         final String program = dynaActionForm.getString("program");
         final String programEn = dynaActionForm.getString("programEn");
 
-        final ExecutionCourse executionCourse = (ExecutionCourse) request
-                .getAttribute("executionCourse");
-        final Curriculum curriculum = findCurriculum(executionCourse, Integer
-                .valueOf(curriculumIDString));
+        final ExecutionCourse executionCourse = (ExecutionCourse) request.getAttribute("executionCourse");
+        final Curriculum curriculum = findCurriculum(executionCourse, Integer.valueOf(curriculumIDString));
         final InfoCurriculum infoCurriculum = new InfoCurriculum();
         infoCurriculum.setProgram(program);
         infoCurriculum.setProgramEn(programEn);
         final IUserView userView = getUserView(request);
 
-        final Object args[] = { executionCourse.getIdInternal(),
-                curriculum.getCurricularCourse().getIdInternal(), infoCurriculum,
-                userView.getUtilizador() };
+        final Object args[] = { executionCourse.getIdInternal(), curriculum.getCurricularCourse().getIdInternal(), infoCurriculum, userView.getUtilizador() };
         try {
             ServiceManagerServiceFactory.executeService(userView, "EditProgram", args);
         } catch (NotAuthorizedFilterException e) {
@@ -111,10 +143,10 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
         return mapping.findForward("objectives");
     }
 
-    public ActionForward prepareEditObjectives(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward prepareEditObjectives(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+    		throws Exception {
         final ExecutionCourse executionCourse = (ExecutionCourse) request.getAttribute("executionCourse");
-        
+
         final Teacher teacher = getUserView(request).getPerson().getTeacher();
         if (teacher.responsibleFor(executionCourse) == null) {
             ActionMessages messages = new ActionMessages();
@@ -122,11 +154,10 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
             saveErrors(request, messages);
             return mapping.findForward("objectives");
         }
-        
+
         final String curriculumIDString = request.getParameter("curriculumID");
         if (executionCourse != null && curriculumIDString != null && curriculumIDString.length() > 0) {
-            final Curriculum curriculum = findCurriculum(executionCourse, Integer
-                    .valueOf(curriculumIDString));
+            final Curriculum curriculum = findCurriculum(executionCourse, Integer.valueOf(curriculumIDString));
             if (curriculum != null) {
                 final DynaActionForm dynaActionForm = (DynaActionForm) form;
                 dynaActionForm.set("generalObjectives", curriculum.getGeneralObjectives());
@@ -139,8 +170,8 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
         return mapping.findForward("edit-objectives");
     }
 
-    public ActionForward editObjectives(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward editObjectives(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+    		throws Exception {
         final DynaActionForm dynaActionForm = (DynaActionForm) form;
         final String curriculumIDString = request.getParameter("curriculumID");
         final String generalObjectives = dynaActionForm.getString("generalObjectives");
@@ -148,10 +179,8 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
         final String operacionalObjectives = dynaActionForm.getString("operacionalObjectives");
         final String operacionalObjectivesEn = dynaActionForm.getString("operacionalObjectivesEn");
 
-        final ExecutionCourse executionCourse = (ExecutionCourse) request
-                .getAttribute("executionCourse");
-        final Curriculum curriculum = findCurriculum(executionCourse, Integer
-                .valueOf(curriculumIDString));
+        final ExecutionCourse executionCourse = (ExecutionCourse) request.getAttribute("executionCourse");
+        final Curriculum curriculum = findCurriculum(executionCourse, Integer.valueOf(curriculumIDString));
         final InfoCurriculum infoCurriculum = new InfoCurriculum();
         infoCurriculum.setGeneralObjectives(generalObjectives);
         infoCurriculum.setGeneralObjectivesEn(generalObjectivesEn);
@@ -159,23 +188,20 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
         infoCurriculum.setOperacionalObjectivesEn(operacionalObjectivesEn);
         final IUserView userView = getUserView(request);
 
-        final Object args[] = { executionCourse.getIdInternal(),
-                curriculum.getCurricularCourse().getIdInternal(), infoCurriculum,
-                userView.getUtilizador() };
+        final Object args[] = { executionCourse.getIdInternal(), curriculum.getCurricularCourse().getIdInternal(), infoCurriculum, userView.getUtilizador() };
         ServiceManagerServiceFactory.executeService(userView, "EditObjectives", args);
 
         return mapping.findForward("objectives");
     }
 
-    public ActionForward evaluationMethod(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward evaluationMethod(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+    		throws Exception {
         return mapping.findForward("evaluationMethod");
     }
 
-    public ActionForward prepareEditEvaluationMethod(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws Exception {
-        final ExecutionCourse executionCourse = (ExecutionCourse) request
-                .getAttribute("executionCourse");
+    public ActionForward prepareEditEvaluationMethod(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+    		throws Exception {
+        final ExecutionCourse executionCourse = (ExecutionCourse) request.getAttribute("executionCourse");
         if (executionCourse != null) {
             final DynaActionForm dynaActionForm = (DynaActionForm) form;
             dynaActionForm.set("evaluationMethod", getEvaluationMethod(executionCourse));
@@ -191,8 +217,7 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
         final String evaluationMethod = request.getParameter("evaluationMethod");
         final String evaluationMethodEn = dynaActionForm.getString("evaluationMethodEn");
 
-        final ExecutionCourse executionCourse = (ExecutionCourse) request
-                .getAttribute("executionCourse");
+        final ExecutionCourse executionCourse = (ExecutionCourse) request.getAttribute("executionCourse");
         final InfoEvaluationMethod infoEvaluationMethod = new InfoEvaluationMethod();
         infoEvaluationMethod.setEvaluationElements(evaluationMethod);
         infoEvaluationMethod.setEvaluationElementsEn(evaluationMethodEn);
@@ -204,18 +229,18 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
         return mapping.findForward("evaluationMethod");
     }
 
-    public ActionForward bibliographicReference(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward bibliographicReference(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+    		throws Exception {
         return mapping.findForward("bibliographicReference");
     }
 
-    public ActionForward prepareCreateBibliographicReference(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward prepareCreateBibliographicReference(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+    		throws Exception {
         return mapping.findForward("create-bibliographicReference");
     }
 
-    public ActionForward createBibliographicReference(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward createBibliographicReference(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+    		throws Exception {
         final DynaActionForm dynaActionForm = (DynaActionForm) form;
         final String title = dynaActionForm.getString("title");
         final String authors = dynaActionForm.getString("authors");
@@ -223,26 +248,21 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
         final String year = dynaActionForm.getString("year");
         final String optional = dynaActionForm.getString("optional");
 
-        final ExecutionCourse executionCourse = (ExecutionCourse) request
-                .getAttribute("executionCourse");
+        final ExecutionCourse executionCourse = (ExecutionCourse) request.getAttribute("executionCourse");
         final IUserView userView = getUserView(request);
 
-        final Object args[] = { executionCourse.getIdInternal(), title, authors, reference, year,
-                Boolean.valueOf(optional) };
+        final Object args[] = { executionCourse.getIdInternal(), title, authors, reference, year, Boolean.valueOf(optional) };
         ServiceManagerServiceFactory.executeService(userView, "CreateBibliographicReference", args);
 
         return mapping.findForward("bibliographicReference");
     }
 
-    public ActionForward prepareEditBibliographicReference(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws Exception {
-        final ExecutionCourse executionCourse = (ExecutionCourse) request
-                .getAttribute("executionCourse");
+    public ActionForward prepareEditBibliographicReference(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+    		throws Exception {
+        final ExecutionCourse executionCourse = (ExecutionCourse) request.getAttribute("executionCourse");
         final String bibliographicReferenceIDString = request.getParameter("bibliographicReferenceID");
-        if (executionCourse != null && bibliographicReferenceIDString != null
-                && bibliographicReferenceIDString.length() > 0) {
-            final BibliographicReference bibliographicReference = findBibliographicReference(
-                    executionCourse, Integer.valueOf(bibliographicReferenceIDString));
+        if (executionCourse != null && bibliographicReferenceIDString != null && bibliographicReferenceIDString.length() > 0) {
+            final BibliographicReference bibliographicReference = findBibliographicReference(executionCourse, Integer.valueOf(bibliographicReferenceIDString));
             if (bibliographicReference != null) {
                 final DynaActionForm dynaActionForm = (DynaActionForm) form;
                 dynaActionForm.set("title", bibliographicReference.getTitle());
@@ -266,14 +286,11 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
         final String year = dynaActionForm.getString("year");
         final String optional = dynaActionForm.getString("optional");
 
-        final ExecutionCourse executionCourse = (ExecutionCourse) request
-                .getAttribute("executionCourse");
-        final BibliographicReference bibliographicReference = findBibliographicReference(
-                executionCourse, Integer.valueOf(bibliographicReferenceIDString));
+        final ExecutionCourse executionCourse = (ExecutionCourse) request.getAttribute("executionCourse");
+        final BibliographicReference bibliographicReference = findBibliographicReference(executionCourse, Integer.valueOf(bibliographicReferenceIDString));
         final IUserView userView = getUserView(request);
 
-        final Object args[] = { bibliographicReference.getIdInternal(), title, authors, reference, year,
-                Boolean.valueOf(optional) };
+        final Object args[] = { bibliographicReference.getIdInternal(), title, authors, reference, year, Boolean.valueOf(optional) };
         ServiceManagerServiceFactory.executeService(userView, "EditBibliographicReference", args);
 
         return mapping.findForward("bibliographicReference");
@@ -296,8 +313,7 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
             return evaluationMethod.getEvaluationElements();
         } else {
             final Set<CompetenceCourse> competenceCourses = executionCourse.getCompetenceCourses();
-            return competenceCourses.isEmpty() ? null : competenceCourses.iterator().next()
-                    .getEvaluationMethod();
+            return competenceCourses.isEmpty() ? null : competenceCourses.iterator().next().getEvaluationMethod();
         }
     }
 
@@ -307,8 +323,7 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
             return evaluationMethod.getEvaluationElementsEn();
         } else {
             final Set<CompetenceCourse> competenceCourses = executionCourse.getCompetenceCourses();
-            return competenceCourses.isEmpty() ? null : competenceCourses.iterator().next()
-                    .getEvaluationMethodEn();
+            return competenceCourses.isEmpty() ? null : competenceCourses.iterator().next().getEvaluationMethodEn();
         }
     }
 
@@ -319,14 +334,12 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
         }
         
         if (executionCourseIDString != null && executionCourseIDString.length() > 0) {
-            final ExecutionCourse executionCourse = findExecutionCourse(request, Integer
-                    .valueOf(executionCourseIDString));
+            final ExecutionCourse executionCourse = findExecutionCourse(request, Integer.valueOf(executionCourseIDString));
             request.setAttribute("executionCourse", executionCourse);
         }
     }
 
-    private static ExecutionCourse findExecutionCourse(final HttpServletRequest request,
-            final Integer executionCourseID) {
+    private static ExecutionCourse findExecutionCourse(final HttpServletRequest request, final Integer executionCourseID) {
         final IUserView userView = getUserView(request);
         if (userView != null) {
             final Person person = userView.getPerson();
@@ -347,8 +360,7 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
 
     private BibliographicReference findBibliographicReference(ExecutionCourse executionCourse,
             Integer bibliographicReferenceID) {
-        for (final BibliographicReference bibliographicReference : executionCourse
-                .getAssociatedBibliographicReferencesSet()) {
+        for (final BibliographicReference bibliographicReference : executionCourse.getAssociatedBibliographicReferencesSet()) {
             if (bibliographicReference.getIdInternal().equals(bibliographicReferenceID)) {
                 return bibliographicReference;
             }
@@ -357,13 +369,21 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
     }
 
     private Curriculum findCurriculum(final ExecutionCourse executionCourse, final Integer curriculumID) {
-        for (final CurricularCourse curricularCourse : executionCourse
-                .getAssociatedCurricularCoursesSet()) {
+        for (final CurricularCourse curricularCourse : executionCourse.getAssociatedCurricularCoursesSet()) {
             for (final Curriculum curriculum : curricularCourse.getAssociatedCurriculumsSet()) {
                 if (curriculum.getIdInternal().equals(curriculumID)) {
                     return curriculum;
                 }
             }
+        }
+        return null;
+    }
+
+    private CurricularCourse findCurricularCourse(final ExecutionCourse executionCourse, final Integer curricularCourseID) {
+        for (final CurricularCourse curricularCourse : executionCourse.getAssociatedCurricularCoursesSet()) {
+        	if (curricularCourse.getIdInternal().equals(curricularCourseID)) {
+        		return curricularCourse;
+        	}
         }
         return null;
     }
