@@ -3,7 +3,7 @@ package net.sourceforge.fenixedu.renderers.components.tags;
 import java.io.IOException;
 import java.io.Writer;
 import java.util.ArrayList;
-import java.util.Hashtable;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -27,7 +27,7 @@ public class HtmlTag {
     private boolean visible;
 
     private HtmlTag() {
-        this.attributes = new Hashtable<String, String>();
+        this.attributes = new HashMap<String, String>();
         this.children = new ArrayList<HtmlTag>();
         this.visible = true;
         this.text = "";

@@ -10,8 +10,10 @@ package net.sourceforge.fenixedu.presentationTier.Action.sop;
 
 import java.util.ArrayList;
 import java.util.Enumeration;
-import java.util.Hashtable;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -95,7 +97,7 @@ public class EditExamRoomsDA
             throw new FenixActionException(e);
         }
 
-        Hashtable roomsHashTable = new Hashtable();
+        Map roomsHashTable = new HashMap();
         for (int i = 0; i < availableRooms.size(); i++) {
             InfoRoom infoRoom = (InfoRoom) availableRooms.get(i);
             List roomsOfBuilding = (List) roomsHashTable.get(infoRoom.getEdificio());
@@ -107,10 +109,7 @@ public class EditExamRoomsDA
         }
 
         List sortedRooms = new ArrayList();
-        Enumeration keyBuildings = roomsHashTable.keys();
-        while (keyBuildings.hasMoreElements()) {
-            sortedRooms.add(roomsHashTable.get(keyBuildings.nextElement()));
-        }
+        sortedRooms.addAll(roomsHashTable.values());
 
         request.setAttribute(SessionConstants.AVAILABLE_ROOMS, sortedRooms);
 
