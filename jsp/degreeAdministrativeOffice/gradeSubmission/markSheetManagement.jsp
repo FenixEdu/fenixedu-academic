@@ -22,7 +22,7 @@
 
 <fr:edit id="edit"
 		 name="edit"
-		 type="net.sourceforge.fenixedu.presentationTier.Action.degreeAdministrativeOffice.gradeSubmission.MarkSheetManagementSearchBean"
+		 type="net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.gradeSubmission.MarkSheetManagementSearchBean"
 		 schema="markSheet.search"
 		 action="/markSheetManagement.do?method=searchMarkSheets">
 	<fr:destination name="postBack" path="/markSheetManagement.do?method=prepareSearchMarkSheetPostBack"/>
