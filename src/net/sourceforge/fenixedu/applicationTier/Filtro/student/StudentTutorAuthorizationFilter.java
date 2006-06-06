@@ -93,7 +93,7 @@ public class StudentTutorAuthorizationFilter extends AccessControlFilter {
      */
     private boolean verifyStudentTutor(Teacher teacher, List<Student> students) throws ExcepcaoPersistencia {
         for (Student student : students) {
-            if (student.hasAssociatedTutor()) {
+            if (student.getAssociatedTutor() != null && student.getAssociatedTutor().getTeacher() == teacher) {
                 return true;
             }
         }
