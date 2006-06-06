@@ -7,8 +7,11 @@ package net.sourceforge.fenixedu.domain;
 import java.util.Calendar;
 import java.util.Date;
 
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.util.CalendarUtil;
 import net.sourceforge.fenixedu.util.DateFormatUtil;
+
+import org.joda.time.YearMonthDay;
 
 /**
  * @author Ana e Ricardo
@@ -23,8 +26,15 @@ public class OccupationPeriod extends OccupationPeriod_Base {
 
     public OccupationPeriod(Date startDate, Date endDate) {
     	this();
+        checkDates(startDate, endDate);
         this.setStart(startDate);
         this.setEnd(endDate);
+    }
+
+    private void checkDates(Date startDate, Date endDate) {
+        if (startDate == null || endDate == null || startDate.after(endDate)) {
+            throw new DomainException("error.occupationPeriod.invalid.dates");
+        }
     }
 
     public Calendar getStartDate() {
@@ -87,6 +97,10 @@ public class OccupationPeriod extends OccupationPeriod_Base {
         return !(this.getStart().after(day) || this.getEnd().before(day));
     }
     
+    public boolean containsDay(YearMonthDay yearMonthDay) {
+        return !(this.getStartYearMonthDay().isAfter(yearMonthDay) || this.getEndYearMonthDay().isBefore(yearMonthDay));
+    }
+    
     public void deleteIfEmpty() {
         if (empty()) {
             delete();
@@ -98,7 +112,10 @@ public class OccupationPeriod extends OccupationPeriod_Base {
                 && getExecutionDegreesForExamsFirstSemester().isEmpty()
                 && getExecutionDegreesForExamsSecondSemester().isEmpty()
                 && getExecutionDegreesForLessonsFirstSemester().isEmpty()
-                && getExecutionDegreesForLessonsSecondSemester().isEmpty();
+                && getExecutionDegreesForLessonsSecondSemester().isEmpty()
+                && getExecutionDegreesForGradeSubmissionNormalSeasonFirstSemester().isEmpty()
+                && getExecutionDegreesForGradeSubmissionNormalSeasonSecondSemester().isEmpty()
+                && getExecutionDegreesForGradeSubmissionSpecialSeason().isEmpty();
     }
 
     private void delete() {
@@ -120,6 +137,15 @@ public class OccupationPeriod extends OccupationPeriod_Base {
                     && DateFormatUtil.equalDates("yyyy-MM-dd", occupationPeriod.getEnd(), endDate) 
                     && (nextOccupationPeriod == null || (nextOccupationPeriod != null && occupationPeriod.getNextPeriod().equals(nextOccupationPeriod)))) {
                         return occupationPeriod;
+            }
+        }
+        return null;
+    }
+    
+    public static OccupationPeriod readFor(YearMonthDay start, YearMonthDay end) {
+        for (final OccupationPeriod occupationPeriod : RootDomainObject.getInstance().getOccupationPeriodsSet()) {
+            if (occupationPeriod.getStartYearMonthDay().equals(start) && occupationPeriod.getEndYearMonthDay().equals(end)) {
+                return occupationPeriod;
             }
         }
         return null;
