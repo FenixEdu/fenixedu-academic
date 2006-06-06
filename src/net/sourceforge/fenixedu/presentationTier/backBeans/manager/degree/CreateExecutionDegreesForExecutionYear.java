@@ -65,6 +65,15 @@ public class CreateExecutionDegreesForExecutionYear extends FenixBackingBean {
     private Integer examsSpecialSeasonEndDay;
     private Integer examsSpecialSeasonEndMonth;
     private Integer examsSpecialSeasonEndYear;
+    private Integer gradeSubmissionNormalSeason1EndDay;
+    private Integer gradeSubmissionNormalSeason1EndMonth;
+    private Integer gradeSubmissionNormalSeason1EndYear;
+    private Integer gradeSubmissionNormalSeason2EndDay;
+    private Integer gradeSubmissionNormalSeason2EndMonth;
+    private Integer gradeSubmissionNormalSeason2EndYear;
+    private Integer gradeSubmissionSpecialSeasonEndDay;
+    private Integer gradeSubmissionSpecialSeasonEndMonth;
+    private Integer gradeSubmissionSpecialSeasonEndYear;
 
     public CreateExecutionDegreesForExecutionYear() {
         super();
@@ -218,13 +227,27 @@ public class CreateExecutionDegreesForExecutionYear extends FenixBackingBean {
         Calendar examsSpecialSeasonEndDate = Calendar.getInstance();
         examsSpecialSeasonEndDate.set(getExamsSpecialSeasonEndYear(), getExamsSpecialSeasonEndMonth(),
                 getExamsSpecialSeasonEndDay());
+        
+        Calendar gradeSubmissionNormalSeason1EndDate = Calendar.getInstance();
+        gradeSubmissionNormalSeason1EndDate.set(getGradeSubmissionNormalSeason1EndYear(), getGradeSubmissionNormalSeason1EndMonth(),
+                getGradeSubmissionNormalSeason1EndDay());
+        
+        Calendar gradeSubmissionNormalSeason2EndDate = Calendar.getInstance();
+        gradeSubmissionNormalSeason2EndDate.set(getGradeSubmissionNormalSeason2EndYear(), getGradeSubmissionNormalSeason2EndMonth(),
+                getGradeSubmissionNormalSeason2EndDay());
+        
+        Calendar gradeSubmissionSpecialSeasonEndDate = Calendar.getInstance();
+        gradeSubmissionSpecialSeasonEndDate.set(getGradeSubmissionSpecialSeasonEndYear(), getGradeSubmissionSpecialSeasonEndMonth(),
+                getGradeSubmissionSpecialSeasonEndDay());
 
         Object[] args = { getChoosenDegreeCurricularPlansIDs(),
                 getChoosenBolonhaDegreeCurricularPlansIDs(), getChoosenExecutionYearID(), getCampus(),
                 getTemporaryExamMap(), lessonSeason1BeginDate, lessonSeason1EndDate,
                 lessonSeason2BeginDate, lessonSeason2EndDate, examsSeason1BeginDate,
                 examsSeason1EndDate, examsSeason2BeginDate, examsSeason2EndDate, 
-                examsSpecialSeasonBeginDate, examsSpecialSeasonEndDate };
+                examsSpecialSeasonBeginDate, examsSpecialSeasonEndDate,
+                gradeSubmissionNormalSeason1EndDate, gradeSubmissionNormalSeason2EndDate,
+                gradeSubmissionSpecialSeasonEndDate};
 
         ServiceUtils.executeService(getUserView(), "CreateExecutionDegreesForExecutionYear", args);
 
@@ -522,6 +545,78 @@ public class CreateExecutionDegreesForExecutionYear extends FenixBackingBean {
 
     public void setExamsSpecialSeasonEndYear(Integer examsSpecialSeasonEndYear) {
         this.examsSpecialSeasonEndYear = examsSpecialSeasonEndYear;
+    }
+
+    public Integer getGradeSubmissionNormalSeason1EndDay() {
+        return gradeSubmissionNormalSeason1EndDay;
+    }
+
+    public void setGradeSubmissionNormalSeason1EndDay(Integer gradeSubmissionNormalSeason1EndDay) {
+        this.gradeSubmissionNormalSeason1EndDay = gradeSubmissionNormalSeason1EndDay;
+    }
+
+    public Integer getGradeSubmissionNormalSeason1EndMonth() {
+        return gradeSubmissionNormalSeason1EndMonth;
+    }
+
+    public void setGradeSubmissionNormalSeason1EndMonth(Integer gradeSubmissionNormalSeason1EndMonth) {
+        this.gradeSubmissionNormalSeason1EndMonth = gradeSubmissionNormalSeason1EndMonth;
+    }
+
+    public Integer getGradeSubmissionNormalSeason1EndYear() {
+        return gradeSubmissionNormalSeason1EndYear;
+    }
+
+    public void setGradeSubmissionNormalSeason1EndYear(Integer gradeSubmissionNormalSeason1EndYear) {
+        this.gradeSubmissionNormalSeason1EndYear = gradeSubmissionNormalSeason1EndYear;
+    }
+
+    public Integer getGradeSubmissionNormalSeason2EndDay() {
+        return gradeSubmissionNormalSeason2EndDay;
+    }
+
+    public void setGradeSubmissionNormalSeason2EndDay(Integer gradeSubmissionNormalSeason2EndDay) {
+        this.gradeSubmissionNormalSeason2EndDay = gradeSubmissionNormalSeason2EndDay;
+    }
+
+    public Integer getGradeSubmissionNormalSeason2EndMonth() {
+        return gradeSubmissionNormalSeason2EndMonth;
+    }
+
+    public void setGradeSubmissionNormalSeason2EndMonth(Integer gradeSubmissionNormalSeason2EndMonth) {
+        this.gradeSubmissionNormalSeason2EndMonth = gradeSubmissionNormalSeason2EndMonth;
+    }
+
+    public Integer getGradeSubmissionNormalSeason2EndYear() {
+        return gradeSubmissionNormalSeason2EndYear;
+    }
+
+    public void setGradeSubmissionNormalSeason2EndYear(Integer gradeSubmissionNormalSeason2EndYear) {
+        this.gradeSubmissionNormalSeason2EndYear = gradeSubmissionNormalSeason2EndYear;
+    }
+
+    public Integer getGradeSubmissionSpecialSeasonEndDay() {
+        return gradeSubmissionSpecialSeasonEndDay;
+    }
+
+    public void setGradeSubmissionSpecialSeasonEndDay(Integer gradeSubmissionSpecialSeasonEndDay) {
+        this.gradeSubmissionSpecialSeasonEndDay = gradeSubmissionSpecialSeasonEndDay;
+    }
+
+    public Integer getGradeSubmissionSpecialSeasonEndMonth() {
+        return gradeSubmissionSpecialSeasonEndMonth;
+    }
+
+    public void setGradeSubmissionSpecialSeasonEndMonth(Integer gradeSubmissionSpecialSeasonEndMonth) {
+        this.gradeSubmissionSpecialSeasonEndMonth = gradeSubmissionSpecialSeasonEndMonth;
+    }
+
+    public Integer getGradeSubmissionSpecialSeasonEndYear() {
+        return gradeSubmissionSpecialSeasonEndYear;
+    }
+
+    public void setGradeSubmissionSpecialSeasonEndYear(Integer gradeSubmissionSpecialSeasonEndYear) {
+        this.gradeSubmissionSpecialSeasonEndYear = gradeSubmissionSpecialSeasonEndYear;
     }
 
 }

@@ -141,7 +141,6 @@
 				<f:selectItems value="#{createExecutionDegrees.years}" />
 			</h:selectOneMenu>	
 			
-			asdasdsa
 			<h:outputText value="<strong>Periodo Exames Época Especial:</strong>" escape="false" />
 			<h:selectOneMenu value="#{createExecutionDegrees.examsSpecialSeasonBeginDay}">
 				<f:selectItems value="#{createExecutionDegrees.days}" />
@@ -166,6 +165,67 @@
 			<h:selectOneMenu value="#{createExecutionDegrees.examsSpecialSeasonEndYear}">
 				<f:selectItems value="#{createExecutionDegrees.years}" />
 			</h:selectOneMenu>
+	
+			<h:outputText value="<strong>Prazo para Lançamento de Notas 1º Semestre:</strong>" escape="false" />
+			<h:selectOneMenu value="#{createExecutionDegrees.gradeSubmissionNormalSeason1EndDay}">
+				<f:selectItems value="#{createExecutionDegrees.days}" />
+			</h:selectOneMenu>
+			<h:outputText value="/" />
+			<h:selectOneMenu value="#{createExecutionDegrees.gradeSubmissionNormalSeason1EndMonth}">
+				<f:selectItems value="#{createExecutionDegrees.months}" />
+			</h:selectOneMenu>
+			<h:outputText value="/" />
+			<h:selectOneMenu value="#{createExecutionDegrees.gradeSubmissionNormalSeason1EndYear}">
+				<f:selectItems value="#{createExecutionDegrees.years}" />
+			</h:selectOneMenu>
+			<%-- It's necessary to put these empty outputText's because panelGrid has 12 columns --%>
+			<h:outputText value="" />
+			<h:outputText value="" />
+			<h:outputText value="" />
+			<h:outputText value="" />
+			<h:outputText value="" />
+			<h:outputText value="" />
+			
+			<h:outputText value="<strong>Prazo para Lançamento de Notas 2º Semestre:</strong>" escape="false" />
+			<h:selectOneMenu value="#{createExecutionDegrees.gradeSubmissionNormalSeason2EndDay}">
+				<f:selectItems value="#{createExecutionDegrees.days}" />
+			</h:selectOneMenu>
+			<h:outputText value="/" />
+			<h:selectOneMenu value="#{createExecutionDegrees.gradeSubmissionNormalSeason2EndMonth}">
+				<f:selectItems value="#{createExecutionDegrees.months}" />
+			</h:selectOneMenu>
+			<h:outputText value="/" />
+			<h:selectOneMenu value="#{createExecutionDegrees.gradeSubmissionNormalSeason2EndYear}">
+				<f:selectItems value="#{createExecutionDegrees.years}" />
+			</h:selectOneMenu>
+			<%-- It's necessary to put these empty outputText's because panelGrid has 12 columns --%>
+			<h:outputText value="" />
+			<h:outputText value="" />
+			<h:outputText value="" />
+			<h:outputText value="" />
+			<h:outputText value="" />
+			<h:outputText value="" />
+			
+			<h:outputText value="<strong>Prazo para Lançamento de Notas Época Especial:</strong>" escape="false" />
+			<h:selectOneMenu value="#{createExecutionDegrees.gradeSubmissionSpecialSeasonEndDay}">
+				<f:selectItems value="#{createExecutionDegrees.days}" />
+			</h:selectOneMenu>
+			<h:outputText value="/" />
+			<h:selectOneMenu value="#{createExecutionDegrees.gradeSubmissionSpecialSeasonEndMonth}">
+				<f:selectItems value="#{createExecutionDegrees.months}" />
+			</h:selectOneMenu>
+			<h:outputText value="/" />
+			<h:selectOneMenu value="#{createExecutionDegrees.gradeSubmissionSpecialSeasonEndYear}">
+				<f:selectItems value="#{createExecutionDegrees.years}" />
+			</h:selectOneMenu>
+			<%-- It's necessary to put these empty outputText's because panelGrid has 12 columns --%>
+			<h:outputText value="" />
+			<h:outputText value="" />
+			<h:outputText value="" />
+			<h:outputText value="" />
+			<h:outputText value="" />
+			<h:outputText value="" />
+			
 		</h:panelGrid>
 		<p/>
 			

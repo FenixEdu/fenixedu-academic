@@ -58,6 +58,18 @@
 	<html:text maxlength="10" size="10" property="periodExamsSpecialSeasonBegin"/>&nbsp;<bean:message bundle="MANAGER_RESOURCES" key="label.manager.to" />&nbsp;<html:text maxlength="10" size="10" property="periodExamsSpecialSeasonEnd"/>&nbsp;(dd/mm/yyyy)
 	</p>
 	
+	<p><label><bean:message bundle="MANAGER_RESOURCES" key="label.manager.executionDegree.gradeSubmissionNormalSeason1"/></label>
+	<html:text maxlength="10" size="10" property="periodGradeSubmissionNormalSeasonFirstSemesterEnd"/>(dd/mm/yyyy)
+	</p>
+	
+	<p><label><bean:message bundle="MANAGER_RESOURCES" key="label.manager.executionDegree.gradeSubmissionNormalSeason2"/></label>
+	<html:text maxlength="10" size="10" property="periodGradeSubmissionNormalSeasonSecondSemesterEnd"/>(dd/mm/yyyy)
+	</p>
+	
+	<p><label><bean:message bundle="MANAGER_RESOURCES" key="label.manager.executionDegree.gradeSubmissionSpecialSeason"/></label>
+	<html:text maxlength="10" size="10" property="periodGradeSubmissionSpecialSeasonEnd"/>(dd/mm/yyyy)
+	</p>
+	
 	</fieldset>
 	</div>
 		

@@ -57,6 +57,15 @@
 				<td class='listClasses-header'> 
 					<bean:message bundle="MANAGER_RESOURCES" key="label.manager.executionDegree.examsSpecialSeason"/>					
 				</td>
+				<td class='listClasses-header'> 
+					<bean:message bundle="MANAGER_RESOURCES" key="label.manager.executionDegree.gradeSubmissionNormalSeason1"/>					
+				</td>
+				<td class='listClasses-header'> 
+					<bean:message bundle="MANAGER_RESOURCES" key="label.manager.executionDegree.gradeSubmissionNormalSeason2"/>					
+				</td>
+				<td class='listClasses-header'> 
+					<bean:message bundle="MANAGER_RESOURCES" key="label.manager.executionDegree.gradeSubmissionSpecialSeason"/>					
+				</td>
 				<td class='listClasses-header'> <bean:message bundle="MANAGER_RESOURCES" key="label.manager.executionDegree.temporaryExamMap"/> </td>
 				<td class='listClasses-header'> <bean:message bundle="MANAGER_RESOURCES" key="label.manager.executionDegree.coordinator"/> </td>
 				<td class='listClasses-header'> </td>
@@ -123,7 +132,49 @@
 							</dt:format>
 						</logic:notEmpty>
 						<logic:empty name="executionDegree" property="periodExamsSpecialSeason">
-							<bean:message bundle="MANAGER_RESOURCES" key="label.manager.executionDegree.noPeriodExamsSpecialSeason" />
+							<bean:message bundle="MANAGER_RESOURCES" key="label.manager.executionDegree.periodNotDefined" />
+						</logic:empty>
+					</td>
+					<td class='listClasses'>
+						<logic:notEmpty name="executionDegree" property="periodGradeSubmissionNormalSeasonFirstSemester">
+							<dt:format pattern="dd/MM/yyyy">
+								<bean:write name="executionDegree" property="periodGradeSubmissionNormalSeasonFirstSemester.start.time" />
+							</dt:format>
+							<p> <bean:message bundle="MANAGER_RESOURCES" key="label.manager.to" /> </p>
+							<dt:format pattern="dd/MM/yyyy">
+								<bean:write name="executionDegree" property="periodGradeSubmissionNormalSeasonFirstSemester.end.time" />
+							</dt:format>
+						</logic:notEmpty>
+						<logic:empty name="executionDegree" property="periodGradeSubmissionNormalSeasonFirstSemester">
+							<bean:message bundle="MANAGER_RESOURCES" key="label.manager.executionDegree.periodNotDefined" />
+						</logic:empty>
+					</td>
+					<td class='listClasses'>
+						<logic:notEmpty name="executionDegree" property="periodGradeSubmissionNormalSeasonSecondSemester">
+							<dt:format pattern="dd/MM/yyyy">
+								<bean:write name="executionDegree" property="periodGradeSubmissionNormalSeasonSecondSemester.start.time" />
+							</dt:format>
+							<p> <bean:message bundle="MANAGER_RESOURCES" key="label.manager.to" /> </p>
+							<dt:format pattern="dd/MM/yyyy">
+								<bean:write name="executionDegree" property="periodGradeSubmissionNormalSeasonSecondSemester.end.time" />
+							</dt:format>
+						</logic:notEmpty>
+						<logic:empty name="executionDegree" property="periodGradeSubmissionNormalSeasonSecondSemester">
+							<bean:message bundle="MANAGER_RESOURCES" key="label.manager.executionDegree.periodNotDefined" />
+						</logic:empty>
+					</td>
+					<td class='listClasses'>
+						<logic:notEmpty name="executionDegree" property="periodGradeSubmissionSpecialSeason">
+							<dt:format pattern="dd/MM/yyyy">
+								<bean:write name="executionDegree" property="periodGradeSubmissionSpecialSeason.start.time" />
+							</dt:format>
+							<p> <bean:message bundle="MANAGER_RESOURCES" key="label.manager.to" /> </p>
+							<dt:format pattern="dd/MM/yyyy">
+								<bean:write name="executionDegree" property="periodGradeSubmissionSpecialSeason.end.time" />
+							</dt:format>
+						</logic:notEmpty>
+						<logic:empty name="executionDegree" property="periodGradeSubmissionSpecialSeason">
+							<bean:message bundle="MANAGER_RESOURCES" key="label.manager.executionDegree.periodNotDefined" />
 						</logic:empty>
 					</td>
 					<td class='listClasses'>

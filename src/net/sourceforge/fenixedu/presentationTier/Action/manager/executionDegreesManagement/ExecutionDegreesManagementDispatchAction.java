@@ -146,10 +146,19 @@ public class ExecutionDegreesManagementDispatchAction extends FenixDispatchActio
             form.set("periodExamsSecondSemesterBegin", executionDegree.getPeriodExamsSecondSemester().getStartYearMonthDay().toString(dateFormat));
             form.set("periodExamsSecondSemesterEnd", executionDegree.getPeriodExamsSecondSemester().getEndYearMonthDay().toString(dateFormat));
             
-            // not all executionDegrees have special season period defined, but should!
+            // not all executionDegrees have these periods defined, but should!
             if (executionDegree.getPeriodExamsSpecialSeason() != null) {
                 form.set("periodExamsSpecialSeasonBegin", executionDegree.getPeriodExamsSpecialSeason().getStartYearMonthDay().toString(dateFormat));
                 form.set("periodExamsSpecialSeasonEnd", executionDegree.getPeriodExamsSpecialSeason().getEndYearMonthDay().toString(dateFormat));
+            }
+            if (executionDegree.getPeriodGradeSubmissionNormalSeasonFirstSemester() != null) {
+                form.set("periodGradeSubmissionNormalSeasonFirstSemesterEnd", executionDegree.getPeriodGradeSubmissionNormalSeasonFirstSemester().getEndYearMonthDay().toString(dateFormat));
+            }
+            if (executionDegree.getPeriodGradeSubmissionNormalSeasonSecondSemester() != null) {
+                form.set("periodGradeSubmissionNormalSeasonSecondSemesterEnd", executionDegree.getPeriodGradeSubmissionNormalSeasonSecondSemester().getEndYearMonthDay().toString(dateFormat));
+            }
+            if (executionDegree.getPeriodGradeSubmissionSpecialSeason() != null) {
+                form.set("periodGradeSubmissionSpecialSeasonEnd", executionDegree.getPeriodGradeSubmissionSpecialSeason().getEndYearMonthDay().toString(dateFormat));
             }
         }
         return mapping.findForward("editExecutionDegree");
@@ -176,6 +185,9 @@ public class ExecutionDegreesManagementDispatchAction extends FenixDispatchActio
             final Date periodExamsSecondSemesterEnd = DateFormatUtil.parse(dateFormat, (String) form.get("periodExamsSecondSemesterEnd"));
             final Date periodExamsSpecialSeasonBegin = DateFormatUtil.parse(dateFormat, (String) form.get("periodExamsSpecialSeasonBegin"));
             final Date periodExamsSpecialSeasonEnd = DateFormatUtil.parse(dateFormat, (String) form.get("periodExamsSpecialSeasonEnd"));
+            final Date periodGradeSubmissionNormalSeasonFirstSemesterEnd = DateFormatUtil.parse(dateFormat, (String) form.get("periodGradeSubmissionNormalSeasonFirstSemesterEnd"));
+            final Date periodGradeSubmissionNormalSeasonSecondSemesterEnd = DateFormatUtil.parse(dateFormat, (String) form.get("periodGradeSubmissionNormalSeasonSecondSemesterEnd"));
+            final Date periodGradeSubmissionSpecialSeasonEnd = DateFormatUtil.parse(dateFormat, (String) form.get("periodGradeSubmissionSpecialSeasonEnd"));
             
             ServiceUtils.executeService(getUserView(request), "EditBolonhaExecutionDegree",
                     new Object[] { executionDegreeID, executionYearID, campusID, temporaryExamMap,
@@ -183,7 +195,9 @@ public class ExecutionDegreesManagementDispatchAction extends FenixDispatchActio
                             periodExamsFirstSemesterBegin, periodExamsFirstSemesterEnd,
                             periodLessonsSecondSemesterBegin, periodLessonsSecondSemesterEnd,
                             periodExamsSecondSemesterBegin, periodExamsSecondSemesterEnd,
-                            periodExamsSpecialSeasonBegin, periodExamsSpecialSeasonEnd });
+                            periodExamsSpecialSeasonBegin, periodExamsSpecialSeasonEnd,
+                            periodGradeSubmissionNormalSeasonFirstSemesterEnd, periodGradeSubmissionNormalSeasonSecondSemesterEnd, 
+                            periodGradeSubmissionSpecialSeasonEnd });
             
             return readExecutionDegrees(mapping, actionForm, request, response);
             
