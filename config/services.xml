@@ -133,22 +133,6 @@
 		<filterChains>
 			<chain name="TimeTableManagerAuthorization" />
 		</filterChains>
-	</service>
-	<service>
-		<name>AddAnnouncementBoardBookmark</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.messaging.AddAnnouncementBoardBookmark</implementationClass>
-		<description />
-		<isTransactional>true</isTransactional>
-		<filterChains>
-		</filterChains>
-	</service>	
-	<service>
-		<name>RemoveAnnouncementBoardBookmark</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.messaging.RemoveAnnouncementBoardBookmark</implementationClass>
-		<description />
-		<isTransactional>true</isTransactional>
-		<filterChains>
-		</filterChains>
 	</service>		
 	<service>
 		<name>DeleteShift</name>
@@ -2937,13 +2921,6 @@
 		<filterChains>
 			<chain name="ExecutionCourseResponsibleForTeacherAuthorization" />
 		</filterChains>
-	</service>
-	<service>
-		<name>DeleteAnnouncement</name>
-		<implementationClass> 
-            net.sourceforge.fenixedu.applicationTier.Servico.messaging.DeleteAnnouncement</implementationClass>
-		<description />
-		<isTransactional>true</isTransactional>
 	</service>	
 	<service>
 		<name>DeleteProfessorship</name>
