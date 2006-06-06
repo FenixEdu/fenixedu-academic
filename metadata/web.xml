@@ -423,11 +423,7 @@
         <init-param>
             <param-name>config/alumni</param-name>
             <param-value>/WEB-INF/conf/struts-alumni.xml</param-value>
-        </init-param> 
-        <init-param>
-            <param-name>config/messaging</param-name>
-            <param-value>/WEB-INF/conf/struts-messaging.xml</param-value>
-        </init-param>               
+        </init-param>         
         <init-param>
             <param-name>debug</param-name>
             <param-value>3</param-value>
