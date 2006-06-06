@@ -18,6 +18,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.cms.messaging.ForwardEma
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
+import net.sourceforge.fenixedu.util.HostAccessControl;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -41,59 +42,64 @@ public class ForwardEmailAction extends FenixAction {
             HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
         String result = "450 Error: Email forwarding service did not run";
 
-//        System.out.println("Got a request from " + request.getRemoteAddr());
+        // System.out.println("Got a request from " + request.getRemoteAddr());
 
-        MimeMessage message = null;
-        final DynaActionForm containerForm = (DynaActionForm) actionForm;
-        final FormFile formFile = (FormFile) containerForm.get("theFile");
-        try {
+        if (HostAccessControl.isAllowed(this, request)) {
 
-            InputStream source = formFile.getInputStream();
-            message = new MimeMessage(Session.getDefaultInstance(System.getProperties()), source);
-            if (isValid(message)) {
-                MessageResources resources = this.getResources(request, "MESSAGING_RESOURCES");
-                String subjectPrefix = resources.getMessage(this.getLocale(request),
-                        "messaging.mailSender.mailingLists.subjectPrefix");
-                message.setSubject(subjectPrefix + " " + message.getSubject());
-//                System.out.println("He/she asked for me to deliver a message whose size is "
-//                        + message.getSize());
+            MimeMessage message = null;
+            final DynaActionForm containerForm = (DynaActionForm) actionForm;
+            final FormFile formFile = (FormFile) containerForm.get("theFile");
+            try {
 
-                ForwardEmailToExecutionCourses.ForwardMailsReport report = (ForwardEmailToExecutionCourses.ForwardMailsReport) ServiceUtils
-                        .executeService(null, "ForwardEmailToExecutionCourses", new Object[] { message,
-                                emailAddressPrefix, mailingListDomainConfiguration() });
+                InputStream source = formFile.getInputStream();
+                message = new MimeMessage(Session.getDefaultInstance(System.getProperties()), source);
+                if (isValid(message)) {
+                    MessageResources resources = this.getResources(request, "MESSAGING_RESOURCES");
+                    String subjectPrefix = resources.getMessage(this.getLocale(request),
+                            "messaging.mailSender.mailingLists.subjectPrefix");
+                    message.setSubject(subjectPrefix + " " + message.getSubject());
+                    // System.out.println("He/she asked for me to deliver a message whose size is "
+                    // + message.getSize());
 
-                if (this.noRecipients(report)) {
-                    result = "550 No recipients. Please verify that you are sending me the X-Original-To header";
-                } else if (this.allMailsSent(report)) {
-                    result = "250 OK";
-                } else if (this.allTargetsAreDisabled(report)) {
-                    result = "550 Target course have dynamic mail distribution in the DISABLED state";
-                } else if (this.allTargetsAreUnknown(report)) {
-                    result = "550 Unknown address";
-                } else if (this.allMailsFailed(report)) {
-                    result = "550 Message not delivered";
+                    ForwardEmailToExecutionCourses.ForwardMailsReport report = (ForwardEmailToExecutionCourses.ForwardMailsReport) ServiceUtils
+                            .executeService(null, "ForwardEmailToExecutionCourses", new Object[] {
+                                    message, emailAddressPrefix, mailingListDomainConfiguration() });
+
+                    if (this.noRecipients(report)) {
+                        result = "550 No recipients. Please verify that you are sending me the X-Original-To header";
+                    } else if (this.allMailsSent(report)) {
+                        result = "250 OK";
+                    } else if (this.allTargetsAreDisabled(report)) {
+                        result = "550 Target course have dynamic mail distribution in the DISABLED state";
+                    } else if (this.allTargetsAreUnknown(report)) {
+                        result = "550 Unknown address";
+                    } else if (this.allMailsFailed(report)) {
+                        result = "550 Message not delivered";
+                    } else {
+                        result = "269 At least one message delivered";
+                    }
+
+                    // for (String address : report.getSentMails()) {
+                    // System.out.println("Sendei para " + address);
+                    // }
                 } else {
-                    result = "269 At least one message delivered";
+                    result = "554 Error: Invalid mail message";
                 }
-
-//                for (String address : report.getSentMails()) {
-//                    System.out.println("Sendei para " + address);
-//                }
-            } else {
-                result = "554 Error: Invalid mail message";
+            } catch (Exception e) {
+                // e.printStackTrace();
+                result = "450 Error: Got an exception when trying to send email: "
+                        + e.getClass().getName();
             }
-        } catch (Exception e) {
-//            e.printStackTrace();
-            result = "450 Error: Got an exception when trying to send email: " + e.getClass().getName();
+        } else {
+            result = "550 requester not allowed";
         }
-
         try {
             sendAnswer(response, result);
         } catch (IOException e) {
             throw new FenixActionException(e);
         }
 
-//        System.out.println("Over and out. Result:  ------->" + result + "<-------");
+        // System.out.println("Over and out. Result: ------->" + result + "<-------");
         return null;
 
     }
