@@ -1086,6 +1086,9 @@ class net.sourceforge.fenixedu.domain.ExecutionDegree extends net.sourceforge.fe
 	Integer keyGratuityValues;
 	Integer keyScheduling;
 	Integer keyPeriodExamsSpecialSeason;
+	Integer keyPeriodGradeSubmissionNormalSeasonFirstSemester;
+	Integer keyPeriodGradeSubmissionNormalSeasonSecondSemester;
+	Integer keyPeriodGradeSubmissionSpecialSeason;
 }
 
 
@@ -4108,6 +4111,27 @@ relation ExecutionDegreePeriodExamsSpecialSeason {
 	net.sourceforge.fenixedu.domain.OccupationPeriod playsRole periodExamsSpecialSeason;
 }
 
+relation ExecutionDegreePeriodGradeSubmissionNormalSeasonFirstSemester {
+	net.sourceforge.fenixedu.domain.ExecutionDegree playsRole executionDegreesForGradeSubmissionNormalSeasonFirstSemester {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.OccupationPeriod playsRole periodGradeSubmissionNormalSeasonFirstSemester;
+}
+
+relation ExecutionDegreePeriodGradeSubmissionNormalSeasonSecondSemester {
+	net.sourceforge.fenixedu.domain.ExecutionDegree playsRole executionDegreesForGradeSubmissionNormalSeasonSecondSemester {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.OccupationPeriod playsRole periodGradeSubmissionNormalSeasonSecondSemester;
+}
+
+relation ExecutionDegreePeriodGradeSubmissionSpecialSeason {
+	net.sourceforge.fenixedu.domain.ExecutionDegree playsRole executionDegreesForGradeSubmissionSpecialSeason {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.OccupationPeriod playsRole periodGradeSubmissionSpecialSeason;
+}
+
 relation ExecutionPeriodContextBegin {
 	net.sourceforge.fenixedu.domain.ExecutionPeriod playsRole beginExecutionPeriod;
 	
@@ -5233,7 +5257,6 @@ relation RoomRoomClassification {
 	}
 	net.sourceforge.fenixedu.domain.space.RoomClassification playsRole roomClassification;
 }
-
 
 relation RoomRoomOccupation {
 	net.sourceforge.fenixedu.domain.space.RoomOccupation playsRole roomOccupations {
