@@ -2754,18 +2754,18 @@ class net.sourceforge.fenixedu.domain.research.result.Result extends net.sourcef
 
 	class net.sourceforge.fenixedu.domain.research.result.Product extends net.sourceforge.fenixedu.domain.research.result.Result {
 		String productInternalId;
-		ProductType type;
+		ProductType productType;
 	}
 	
 	class net.sourceforge.fenixedu.domain.research.result.Patent extends net.sourceforge.fenixedu.domain.research.result.Result {
 		String patentNumber;
-		PatentType type;
+		PatentType patentType;
 		PatentStatus status;
 		Partial registrationDate;
 		Partial approvalDate;
 		Integer keyCountry;
 		String language;
-		FormatType format;
+		FormatType formatType;
 		Integer numberPages;
 		String local;
 	}
