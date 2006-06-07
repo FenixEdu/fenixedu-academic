@@ -146,15 +146,15 @@ public class DegreeManagementBackingBean extends FenixBackingBean {
     }
 
     public List<SelectItem> getBolonhaDegreeTypes() {
+
         List<SelectItem> result = new ArrayList<SelectItem>();
-        
         result.add(new SelectItem(this.NO_SELECTION, scouncilBundle.getString("choose")));
-        result.add(new SelectItem(BolonhaDegreeType.DEGREE.name(), enumerationBundle.getString(BolonhaDegreeType.DEGREE.getName()) + " (" + BolonhaDegreeType.DEGREE.getYears() + " anos)"));
-        result.add(new SelectItem(BolonhaDegreeType.INTEGRATED_MASTER_DEGREE.name(), enumerationBundle.getString(BolonhaDegreeType.INTEGRATED_MASTER_DEGREE.getName())  + " (" + BolonhaDegreeType.INTEGRATED_MASTER_DEGREE.getYears() + " anos)"));
-        result.add(new SelectItem(BolonhaDegreeType.MASTER_DEGREE.name(), enumerationBundle.getString(BolonhaDegreeType.MASTER_DEGREE.getName())  + " (" + BolonhaDegreeType.MASTER_DEGREE.getYears() + " anos)"));
-        result.add(new SelectItem(BolonhaDegreeType.ADVANCED_FORMATION_DIPLOMA.name(), enumerationBundle.getString(BolonhaDegreeType.ADVANCED_FORMATION_DIPLOMA.getName())  + " (" + BolonhaDegreeType.ADVANCED_FORMATION_DIPLOMA.getYears() + " ano)"));
-        result.add(new SelectItem(BolonhaDegreeType.ADVANCED_STUDIES_DIPLOMA.name(), enumerationBundle.getString(BolonhaDegreeType.ADVANCED_STUDIES_DIPLOMA.getName())  + " (" + BolonhaDegreeType.ADVANCED_STUDIES_DIPLOMA.getYears() + " ano)"));
-        result.add(new SelectItem(BolonhaDegreeType.SPECIALIZATION_DEGREE.name(), enumerationBundle.getString(BolonhaDegreeType.SPECIALIZATION_DEGREE.getName())  + " (" + BolonhaDegreeType.SPECIALIZATION_DEGREE.getYears() + " ano)"));
+        
+        for (BolonhaDegreeType bolonhaDegreeType : BolonhaDegreeType.values()) {
+            result.add(new SelectItem(bolonhaDegreeType.name(),
+                    enumerationBundle.getString(bolonhaDegreeType.getName())
+                    + " (" + bolonhaDegreeType.getYears() + " anos)"));
+        }
         
         return result;
     }
