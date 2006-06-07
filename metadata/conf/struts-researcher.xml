@@ -20,11 +20,6 @@
 					type="org.apache.struts.validator.DynaValidatorForm"
 					dynamic="true">
 			<form-property name="resultId" type="java.lang.Integer"/>
-			<form-property name="authorsIdStr" type="java.lang.String"/>
-			<form-property name="nameToSearch" type="java.lang.String"/>
-			<form-property name="newAuthorId" type="java.lang.Integer"/>
-			<form-property name="externalPersonName" type="java.lang.String"/>
-			<form-property name="action" type="java.lang.String"/>
 		</form-bean>
     </form-beans>
 
@@ -48,6 +43,9 @@
     
     <!-- ========== Action Mapping Definitions =============================== -->
     <action-mappings type="org.apache.struts.action.ActionMapping">
+        <action path="/index" type="net.sourceforge.fenixedu.presentationTier.Action.commons.VoidAction">
+            <forward name="Success" path="/viewCurriculum.do?method=prepare"/>
+        </action>       
     
         <action path="/viewCurriculum" parameter="method" type="net.sourceforge.fenixedu.presentationTier.Action.research.ViewCurriculumDispatchAction">
             <forward name="Success" path="viewCurriculum"/>
@@ -64,8 +62,31 @@
         <action path="/projects/projectsManagement" parameter="method" type="net.sourceforge.fenixedu.presentationTier.Action.research.project.ProjectsManagementDispatchAction">
 		    <forward name="Success" path="projects.projectsManagement"/>
 		    <forward name="ProjectSelected" path="projects.editProject"/>
-		</action>  
+		</action>
+        
+		<action path="/result/patents/patentsManagement"
+				name="resultsManagementForm" 
+				parameter="method"
+				scope="request"
+				type="net.sourceforge.fenixedu.presentationTier.Action.research.result.patents.PatentsManagementAction">
+		    <forward name="listPatents" path="patents.listPatents"/>
+		    <forward name="createPatent" path="patents.createPatent"/>
+   		    <forward name="editPatent" path="patents.editPatent"/>
+   		    <forward name="editPatentData" path="patents.editPatentData"/>
+		    <forward name="deletePatent" path="patents.deletePatent"/>
+		    <forward name="patentDetails" path="patents.patentDetails"/>
+		</action>
 		
+		<action path="/result/resultAuthorshipManagement"
+				name="resultsManagementForm"
+				parameter="method"
+				scope="request"
+				type="net.sourceforge.fenixedu.presentationTier.Action.research.result.ResultAuthorshipManagementAction">
+			<forward name="editAuthorship" path="result.authorship"/>
+			<forward name="editPatent" path="/result/patents/patentsManagement.do?method=prepareEditPatent"/>
+			<!-- <forward name="editPublication" path="/result/publications/publicationsManagement.do?method=prepareEditPublication"/> -->
+		</action>
+
 		<action path="/projects/viewProject"
 				type="net.sourceforge.fenixedu.presentationTier.Action.research.project.ViewProjectDispatchAction"
 				scope="request"
@@ -98,35 +119,6 @@
 			<forward name="Success" path="events.viewEvents"/>
 			<forward name="new" path="events.newEvent"/>
 			<forward name="edit" path="events.edit.editEvent"/>
-		</action>		 		
-		
-		<action path="/result/patents/patentsManagement"
-				name="resultsManagementForm" 
-				parameter="method"
-				scope="request"
-				type="net.sourceforge.fenixedu.presentationTier.Action.research.result.patents.PatentsManagementAction">
-		    <forward name="listPatents" path="patents.listPatents"/>
-		    <forward name="createEditPatent" path="patents.createEditPatent"/>
-		    <forward name="deletePatent" path="patents.deletePatent"/>
-		    <forward name="patentDetails" path="patents.patentDetails"/>
-		</action>
-		
-		<action path="/result/resultsManagement"
-				name="resultsManagementForm"
-				parameter="method"
-				scope="request"
-				type="net.sourceforge.fenixedu.presentationTier.Action.research.result.ResultsManagementAction">
-			<forward name="manageAuthors" path="authors.manageAuthors"/>
-			<forward name="createEditPatent" path="/result/patents/patentsManagement.do?method=prepareCreateEditPatent"/>
-			<forward name="listPatents" path="/result/patents/patentsManagement.do?method=listPatents"/>
-		</action>
-		
-        <action path="/index" type="net.sourceforge.fenixedu.presentationTier.Action.commons.VoidAction">
-            <forward name="Success" path="/viewCurriculum.do?method=prepare"/>
-        </action>   
-        		
-		<action path="/domain/view" type="net.sourceforge.fenixedu.presentationTier.renderers.actions.ViewObjectAction">
-		    <forward name="show" path="domain.view"/>
 		</action>
 		
 		<action path="/changeLocaleTo"

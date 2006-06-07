@@ -1,17 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE form-validation PUBLIC "-//Apache Software Foundation//DTD Struts Validation Configuration 1.1//EN" "@validation.doctype.url@">
 <form-validation>
-	<formset>
-		<form name="resultsManagementForm">
-			<field property="nameToSearch" depends="minlength">
-				<arg0 key="label.name"/>
-				<arg1 key="${var:minlength}" resource="false"/>
-				<var>
-	          		<var-name>minlength</var-name>
-	          		<var-value>3</var-value>
-	        	</var>
-			</field>
-		</form>
-	</formset>
+
 </form-validation>
 
