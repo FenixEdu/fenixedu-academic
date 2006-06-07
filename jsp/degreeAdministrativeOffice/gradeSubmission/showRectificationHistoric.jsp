@@ -6,9 +6,11 @@
 
 <h2><bean:message key="label.markSheet.rectificationHistoric"/></h2>
 
-<fr:view name="enrolmentEvaluation" property="markSheet"
-		schema="markSheet.view"
-		layout="tabular">
+<fr:view name="enrolmentEvaluation" property="markSheet" schema="markSheet.view">
+	<fr:layout name="tabular">
+			<fr:property name="classes" value="tstyle4"/>
+	        <fr:property name="columnClasses" value="listClasses,,"/>
+	</fr:layout>
 </fr:view>
 
 <h3><bean:write name="enrolmentEvaluation" property="enrolment.studentCurricularPlan.student.person.name"/> (<bean:write name="enrolmentEvaluation" property="enrolment.studentCurricularPlan.student.number"/>)</h3>
@@ -22,7 +24,7 @@
 </logic:messagesPresent>
 
 <logic:present name="enrolmentEvaluation">
-	<table>
+	<table class="tstyle4">
 	  <tr>
 	    <td><bean:message key="label.markSheet.original.grade"/></td>
 	    <td><bean:write name="enrolmentEvaluation" property="grade"/> (<dt:format pattern="dd/MM/yyyy"><bean:write name="enrolmentEvaluation" property="examDate.time"/></dt:format>)</td>

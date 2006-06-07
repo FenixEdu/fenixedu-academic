@@ -9,9 +9,11 @@
 
 <h3><bean:message key="label.rectifyMarkSheet.step.one"/> &gt; <u><bean:message key="label.rectifyMarkSheet.step.two"/></u></h3>
 
-<fr:view name="rectifyBean" property="markSheet"
-		schema="markSheet.view"
-		layout="tabular">
+<fr:view name="rectifyBean" property="markSheet" schema="markSheet.view">
+	<fr:layout name="tabular">
+		<fr:property name="classes" value="tstyle4"/>
+	    <fr:property name="columnClasses" value="listClasses,,"/>
+	</fr:layout>
 </fr:view>
 
 <h3><bean:write name="rectifyBean" property="enrolmentEvaluation.enrolment.studentCurricularPlan.student.person.name"/> (<bean:write name="rectifyBean" property="enrolmentEvaluation.enrolment.studentCurricularPlan.student.number"/>)</h3>

@@ -11,9 +11,11 @@
 
 <h3><u><bean:message key="label.rectifyMarkSheet.step.one"/></u> &gt; <bean:message key="label.rectifyMarkSheet.step.two"/></h3>
 
-<fr:view name="rectifyBean" property="markSheet"
-		schema="markSheet.view"
-		layout="tabular">
+<fr:view name="rectifyBean" property="markSheet" schema="markSheet.view">
+	<fr:layout name="tabular">
+			<fr:property name="classes" value="tstyle4"/>
+	        <fr:property name="columnClasses" value="listClasses,,"/>
+	</fr:layout>
 </fr:view>
 <br/>
 
@@ -60,7 +62,7 @@
 	</table>
 	<br/><br/>
 	b) <bean:message key="label.rectifyMarkSheet.chooseStudent.fromList"/><br/><br/>
-	<table>
+	<table class="tstyle4">
 		<tr>
 			<th>
 				<bean:message key="label.student.number"/>

@@ -26,7 +26,10 @@
 			 name="submissionBean"
 			 schema="markSheet.teacher.gradeSubmission.step.one"
 			 type="net.sourceforge.fenixedu.dataTransferObject.teacher.gradeSubmission.MarkSheetTeacherGradeSubmissionBean">
-		<fr:layout name="tabular"/>
+		<fr:layout name="tabular">
+			<fr:property name="classes" value="tstyle4"/>
+	    	<fr:property name="columnClasses" value="listClasses,,"/>
+		</fr:layout>
 	</fr:edit>
 	<br/>
 	<html:submit styleClass="inputbutton"><bean:message key="button.continue"/></html:submit>

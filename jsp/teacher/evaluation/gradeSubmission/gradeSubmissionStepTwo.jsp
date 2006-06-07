@@ -38,7 +38,10 @@
 	<fr:view name="submissionBean"
 			 schema="markSheet.teacher.gradeSubmission.step.two.view"
 			 type="net.sourceforge.fenixedu.dataTransferObject.teacher.gradeSubmission.MarkSheetTeacherGradeSubmissionBean">
-		<fr:layout name="tabular"/>
+		<fr:layout name="tabular">
+			<fr:property name="classes" value="tstyle4"/>
+		    <fr:property name="columnClasses" value="listClasses,,"/>
+		</fr:layout>
 	</fr:view>
 	
 	<logic:notEmpty name="submissionBean" property="marksToSubmit">
@@ -54,6 +57,8 @@
 				 schema="markSheet.teacher.gradeSubmission.marksToSubmit" layout="tabular-editable">
 			<fr:layout>
 				<fr:property name="sortBy" value="attends.aluno.number"/>
+				<fr:property name="classes" value="tstyle4"/>
+			    <fr:property name="columnClasses" value="listClasses,,"/>
 			</fr:layout>
 		</fr:edit>
 		<p><a href="javascript:setCheckBoxValue(true)"><bean:message key="button.selectAll"/></a> | <a href="javascript:setCheckBoxValue(false)"><bean:message key="button.selectNone"/></a></p>

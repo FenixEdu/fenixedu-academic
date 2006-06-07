@@ -12,7 +12,7 @@
 <fr:view name="edit" 
 		schema="markSheet.view.step2">
 		<fr:layout name="tabular" >
-			<fr:property name="classes" value="style1"/>
+			<fr:property name="classes" value="tstyle4"/>
 	        <fr:property name="columnClasses" value="listClasses,,"/>
 		</fr:layout>
 </fr:view>
@@ -51,11 +51,12 @@
 
 	<fr:edit id="edit-invisible" name="edit" visible="false"/>
 
+	<bean:message key="label.markSheet.students.capitalized"/>:
 	<fr:edit id="edit-enrolments" name="edit" property="enrolmentEvaluationBeans" 
 			 schema="markSheet.create.step.two" layout="tabular-editable">
 		<fr:layout>
 			<fr:property name="sortBy" value="enrolment.studentCurricularPlan.student.number"/>
-			<fr:property name="classes" value="style1"/>
+			<fr:property name="classes" value="tstyle4"/>
 	        <fr:property name="columnClasses" value="listClasses,,"/>
 		</fr:layout>
 		<fr:destination name="invalid" path="/createMarkSheet.do?method=createMarkSheetStepTwoInvalid"/>

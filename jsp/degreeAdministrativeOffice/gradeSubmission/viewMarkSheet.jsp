@@ -27,7 +27,7 @@
 	</fr:view>
 
 	<br/>
-	<table>
+	<table class="tstyle4">
 		<tr>
 			<td align="left"><bean:message key="label.student.number"/></td>
 			<td align="left"><bean:message key="label.student.name"/></td>			
