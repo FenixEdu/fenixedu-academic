@@ -12,6 +12,12 @@
 
 <p><span class="error"><html:errors/></span></p>
 
+<style type="text/css">
+.tdcheck {
+vertical-align: top;
+}
+</style>
+
 <html:form action="/manageHomepage">
 	<html:hidden property="method" value="submitHomepage"/>
 
@@ -59,8 +65,7 @@
 			</th>
 			<td colspan="3">
 				<html:text property="name" size="50"/>
-				<br />
-				<bean:message key="label.homepage.name.instructions" bundle="HOMEPAGE_RESOURCES"/>
+				<p><bean:message key="label.homepage.name.instructions" bundle="HOMEPAGE_RESOURCES"/></p>
 			</td>
 		</tr>
 		<logic:present name="UserView" property="person.employee.currentContract.workingUnit">
@@ -68,10 +73,10 @@
 				<th>
 					<bean:message key="label.homepage.showUnit" bundle="HOMEPAGE_RESOURCES"/>:
 				</th>
-				<td>
+				<td class="tdcheck">
 					<html:checkbox property="showUnit" value="true"/>
 				</td>
-				<td colspan="2">
+				<td>
 					<p>
 						<bean:define id="currentUnit" name="UserView" property="person.employee.currentContract.workingUnit" toScope="request"/>
 						<jsp:include page="unitStructure.jsp"/>
@@ -83,39 +88,30 @@
 			<logic:present name="UserView" property="person.employee.currentContract">
 				<tr>
 					<th>
-						<bean:message key="label.homepage.showCategory" bundle="HOMEPAGE_RESOURCES"/>
+						<bean:message key="label.homepage.showCategory" bundle="HOMEPAGE_RESOURCES"/>:
 					</th>
-					<td>
+					<td class="tdcheck">
 						<html:checkbox property="showCategory" value="true"/>
 					</td>
-					<td colspan="2">
+					<td>
 						<logic:present name="UserView" property="person.teacher">
 							<bean:write name="UserView" property="person.teacher.category.longName"/>
 						</logic:present>
 					</td>
 				</tr>
 				<tr>
-					<th rowspan="2">
-						<bean:message key="label.homepage.showResearchUnitHomepage" bundle="HOMEPAGE_RESOURCES"/>
+					<th>
+						<bean:message key="label.homepage.showResearchUnitHomepage" bundle="HOMEPAGE_RESOURCES"/>:
 					</th>
-					<td rowspan="2">
+					<td class="tdcheck">
 						<html:checkbox property="showResearchUnitHomepage" value="true"/>
 					</td>					
 					<td>
-						<bean:message key="label.homepage.research.unit.homepage" bundle="HOMEPAGE_RESOURCES"/>
-					</td>
-					<td>
-						<html:text property="researchUnitHomepage"/>
+						<p><bean:message key="label.homepage.research.unit.homepage" bundle="HOMEPAGE_RESOURCES"/>: <html:text property="researchUnitHomepage" size="30"/></p>
+						<p><bean:message key="label.homepage.research.unit.name" bundle="HOMEPAGE_RESOURCES"/>: <html:text property="researchUnit" size="30"/></p>
 					</td>
 				</tr>
-				<tr>
-					<td>
-						<bean:message key="label.homepage.research.unit.name" bundle="HOMEPAGE_RESOURCES"/>
-					</td>
-					<td>
-						<html:text property="researchUnit"/>
-					</td>
-				</tr>
+
 			</logic:present>
 		</logic:present>
 		<logic:notEmpty name="UserView" property="person.activeStudentCurricularPlansSortedByDegreeTypeAndDegreeName">
@@ -123,10 +119,10 @@
 				<th>
 					<bean:message key="label.homepage.showActiveStudentCurricularPlans" bundle="HOMEPAGE_RESOURCES"/>:
 				</th>
-				<th>
+				<td class="tdcheck">
 					<html:checkbox property="showActiveStudentCurricularPlans" value="true"/>
-				</th>
-				<td colspan="2">
+				</td>
+				<td>
 					<logic:iterate id="studentCurricularPlan" name="UserView" property="person.activeStudentCurricularPlansSortedByDegreeTypeAndDegreeName" length="1">
 						<bean:define id="url" type="java.lang.String"><%= request.getContextPath() %>/publico/showDegreeSite.do?method=showDescription&degreeID=<bean:write name="studentCurricularPlan" property="degreeCurricularPlan.degree.idInternal"/></bean:define>
 						<html:link href="<%= url %>">
@@ -170,10 +166,10 @@
 				<th>
 					<bean:message key="label.homepage.showCurrentAttendingExecutionCourses" bundle="HOMEPAGE_RESOURCES"/>:
 				</th>
-				<th>
+				<td class="tdcheck">
 					<html:checkbox property="showCurrentAttendingExecutionCourses" value="true"/>
-				</th>
-				<td colspan="2">
+				</td>
+				<td>
 					<logic:iterate id="attend" name="UserView" property="person.currentAttends" length="1">
 						<bean:define id="executionCourse" name="attend" property="disciplinaExecucao"/>
 						<bean:define id="url" type="java.lang.String"><%= request.getContextPath() %>/publico/viewSiteExecutionCourse.do?method=firstPage&objectCode=<bean:write name="executionCourse" property="idInternal"/></bean:define>
@@ -197,10 +193,10 @@
 				<th>
 					<bean:message key="label.homepage.showAlumniDegrees" bundle="HOMEPAGE_RESOURCES"/>:
 				</th>
-				<th>
+				<td class="tdcheck">
 					<html:checkbox property="showAlumniDegrees" value="true"/>
-				</th>
-				<td colspan="2">
+				</td>
+				<td>
 					<logic:iterate id="studentCurricularPlan" name="UserView" property="person.completedStudentCurricularPlansSortedByDegreeTypeAndDegreeName" length="1">
 						<bean:define id="url" type="java.lang.String"><%= request.getContextPath() %>/publico/showDegreeSite.do?method=showDescription&degreeID=<bean:write name="studentCurricularPlan" property="degreeCurricularPlan.degree.idInternal"/></bean:define>
 						<html:link href="<%= url %>">
@@ -241,7 +237,7 @@
 				</td>
 			</tr>
 		</logic:notEmpty>
-<!--
+<%--
 	<tr><td class="leftcol"><bean:message key="label.homepage.showUnit" bundle="HOMEPAGE_RESOURCES"/>:</td>
 		<td>
 			<html:checkbox property="showUnit" value="true"/>
@@ -255,15 +251,15 @@
 			</logic:iterate>
 		</td>
 	</tr>
--->
+--%>
 		<tr>
 			<th>
 				<bean:message key="label.homepage.showPhoto" bundle="HOMEPAGE_RESOURCES"/>:
 			</th>
-			<td>
+			<td class="tdcheck">
 				<html:checkbox property="showPhoto" value="true"/>
 			</td>
-			<td colspan="2">
+			<td>
 				<html:img align="middle" src="<%= request.getContextPath() +"/person/retrievePersonalPhoto.do?method=retrieveOwnPhoto" %>" />
 			</td>
 		</tr>
@@ -272,10 +268,10 @@
 			<th>
 				<bean:message key="label.homepage.showEmail" bundle="HOMEPAGE_RESOURCES"/>:
 			</th>
-			<td style="vertical-align: center;">
+			<td class="tdcheck">
 				<html:checkbox property="showEmail" value="true"/>
 			</td>
-			<td style="vertical-align: center;" colspan="2">
+			<td style="vertical-align: center;">
 				<bean:write name="UserView" property="person.email"/>
 			</td>
 		</tr>
@@ -284,10 +280,10 @@
 			<th>
 				<bean:message key="label.homepage.showTelephone" bundle="HOMEPAGE_RESOURCES"/>:
 			</th>
-			<td>
+			<td class="tdcheck">
 				<html:checkbox property="showTelephone" value="true"/>
 			</td>
-			<td colspan="2">
+			<td>
 				<bean:write name="UserView" property="person.phone"/>
 			</td>
 		</tr>
@@ -296,10 +292,10 @@
 			<th>
 				<bean:message key="label.homepage.showWorkTelephone" bundle="HOMEPAGE_RESOURCES"/>:
 			</th>
-			<td>
+			<td class="tdcheck">
 				<html:checkbox property="showWorkTelephone" value="true"/>
 			</td>
-			<td colspan="2">
+			<td>
 				<bean:write name="UserView" property="person.workPhone"/>
 			</td>
 		</tr>
@@ -308,10 +304,10 @@
 			<th>
 				<bean:message key="label.homepage.showMobileTelephone" bundle="HOMEPAGE_RESOURCES"/>:
 			</th>
-			<td>
+			<td class="tdcheck">
 				<html:checkbox property="showMobileTelephone" value="true"/>
 			</td>
-			<td colspan="2">
+			<td>
 				<bean:write name="UserView" property="person.mobile"/>
 			</td>
 		</tr>
@@ -320,15 +316,15 @@
 			<th>
 				<bean:message key="label.homepage.showAlternativeHomepage" bundle="HOMEPAGE_RESOURCES"/>:
 			</th>
-			<td>
+			<td class="tdcheck">
 				<html:checkbox property="showAlternativeHomepage" value="true"/>
 			</td>
-			<th>
+			<td td>
 				<bean:define id="url" type="java.lang.String" name="UserView" property="person.webAddress"/>
 				<html:link href="<%= url %>">
 					<bean:write name="UserView" property="person.webAddress"/>
 				</html:link>
-			</th>
+			</td>
 		</tr>
 	
 		<logic:present name="UserView" property="person.teacher">
@@ -337,10 +333,10 @@
 					<th>
 						<bean:message key="label.homepage.showCurrentExecutionCourses" bundle="HOMEPAGE_RESOURCES"/>:
 					</th>
-					<td>
+					<td class="tdcheck">
 						<html:checkbox property="showCurrentExecutionCourses" value="true"/>
 					</td>
-					<td colspan="2">
+					<td>
 						<logic:iterate id="executionCourse" name="UserView" property="person.teacher.currentExecutionCourses" length="1">
 							<bean:define id="url" type="java.lang.String"><%= request.getContextPath() %>/publico/viewSiteExecutionCourse.do?method=firstPage&objectCode=<bean:write name="executionCourse" property="idInternal"/></bean:define>
 							<html:link href="<%= url %>">
@@ -364,7 +360,7 @@
 			</th>
 			<td colspan="3">
 				<html:submit styleClass="mvert05">
-					<bean:message key="person.homepage.submit" bundle="HOMEPAGE_RESOURCES"/>
+					<bean:message key="person.homepage.update" bundle="HOMEPAGE_RESOURCES"/>
 				</html:submit>
 			</td>
 		</tr>
