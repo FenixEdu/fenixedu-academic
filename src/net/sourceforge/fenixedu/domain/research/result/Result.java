@@ -23,7 +23,7 @@ public class Result extends Result_Base {
             
 	        authorship.setAuthor(person);
 	        authorship.setResult(this);
-	        authorship.setOrder(new Integer(authors.indexOf(person)));
+	        authorship.setAuthorOrder(new Integer(authors.indexOf(person)));
 	    }
 	}
     
