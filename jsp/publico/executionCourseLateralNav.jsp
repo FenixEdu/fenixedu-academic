@@ -78,7 +78,7 @@
 		<logic:notEmpty name="component" property="mail" >	
 			<bean:define id="siteMail" name="component" property="mail" />
 			<html:link href="<%= "mailto:" + pageContext.findAttribute("siteMail") %>" titleKey="send.email.singleMail.title" bundle="PUBLIC_DEGREE_INFORMATION">
-			<div class="email">3<p><bean:message key="send.email.dynamicMailDistribution.link" bundle="PUBLIC_DEGREE_INFORMATION"/></p>
+			<div class="email"><p><bean:message key="send.email.dynamicMailDistribution.link" bundle="PUBLIC_DEGREE_INFORMATION"/></p>
 			</html:link>
 		</logic:notEmpty>
 	</logic:notEqual>
