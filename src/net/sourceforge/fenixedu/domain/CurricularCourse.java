@@ -27,6 +27,7 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.precedences.Restriction;
 import net.sourceforge.fenixedu.domain.precedences.RestrictionHasEverBeenOrIsCurrentlyEnrolledInCurricularCourse;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
+import net.sourceforge.fenixedu.util.DateFormatUtil;
 import net.sourceforge.fenixedu.util.EnrolmentEvaluationState;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -1106,8 +1107,9 @@ public class CurricularCourse extends CurricularCourse_Base {
     }
 
     public Collection<MarkSheet> searchMarkSheets(ExecutionPeriod executionPeriod, Teacher teacher,
-            DateTime evaluationDate, MarkSheetState markSheetState, MarkSheetType markSheetType) {
+            Date evaluationDate, MarkSheetState markSheetState, MarkSheetType markSheetType) {
 
+        final String dateFormat = "dd/MM/yyyy";
         final Collection<MarkSheet> result = new HashSet<MarkSheet>();
 
         for (final MarkSheet markSheet : this.getMarkSheetsSet()) {
@@ -1117,8 +1119,7 @@ public class CurricularCourse extends CurricularCourse_Base {
             if (teacher != null && markSheet.getResponsibleTeacher() != teacher) {
                 continue;
             }
-            if (evaluationDate != null
-                    && markSheet.getEvaluationDateDateTime().compareTo(evaluationDate) != 0) {
+            if (evaluationDate != null && DateFormatUtil.compareDates(dateFormat, evaluationDate, markSheet.getEvaluationDateDateTime().toDate()) != 0) {
                 continue;
             }
             if (markSheetState != null && markSheet.getMarkSheetState() != markSheetState) {

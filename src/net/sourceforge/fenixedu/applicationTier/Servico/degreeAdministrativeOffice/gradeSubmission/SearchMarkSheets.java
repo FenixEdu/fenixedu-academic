@@ -8,8 +8,6 @@ import java.util.Map;
 import java.util.TreeMap;
 import java.util.Map.Entry;
 
-import org.joda.time.DateTime;
-
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.gradeSubmission.MarkSheetManagementSearchBean;
@@ -35,7 +33,7 @@ public class SearchMarkSheets extends Service {
         
         Collection<MarkSheet> markSheets = curricularCourse.searchMarkSheets(
                 searchBean.getExecutionPeriod(), searchBean.getTeacher(),
-                new DateTime(searchBean.getEvaluationDate()), searchBean.getMarkSheetState(),
+                searchBean.getEvaluationDate(), searchBean.getMarkSheetState(),
                 searchBean.getMarkSheetType());
         
         Map<MarkSheetType, MarkSheetSearchResultBean> result = new TreeMap<MarkSheetType, MarkSheetSearchResultBean>();
