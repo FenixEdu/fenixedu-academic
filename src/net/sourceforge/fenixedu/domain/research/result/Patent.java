@@ -16,65 +16,6 @@ public class Patent extends Patent_Base {
         super();
     }
  
-    public Patent(MultiLanguageString title, MultiLanguageString description, String patentNumber,
-    		PatentType patentType, PatentStatus patentStatus, Partial registrationDate, Partial approvalDate, 
-    		Country country, String local, Integer numberPages, FormatType format, String language, String url,
-    	    List<Person> authors) {
-    	this();
-    	
-    	if (title == null || patentType == null || patentStatus == null || registrationDate == null || approvalDate == null ||
-    			country == null || format == null)
-    		throw new NullPointerException();
-    	if( authors == null || authors.size() == 0)
-            throw new DomainException("error.result.createPatentWithoutAuthors");
-    	
-    	setTitle(title);
-    	setDescription(description);
-    	setPatentNumber(patentNumber);
-    	setType(patentType);
-    	setStatus(patentStatus);
-    	setRegistrationDate(registrationDate);
-    	setApprovalDate(approvalDate);
-    	setCountry(country);
-    	setLocal(local);
-    	setNumberPages(numberPages);
-    	setFormat(format);
-    	setLanguage(language);
-    	setUrl(url);
-    	
-    	setAuthorships(authors);
-		
-    }
-    
-    public void edit(MultiLanguageString title, MultiLanguageString description, String patentNumber,
-    		PatentType patentType, PatentStatus patentStatus, Partial registrationDate, Partial approvalDate, 
-    		Country country, String local, Integer numberPages, FormatType format, String language, String url,
-    	    List<Person> authors) {
-    	
-    	if (title == null || patentType == null || patentStatus == null || registrationDate == null || approvalDate == null ||
-    			country == null || format == null)
-    		throw new NullPointerException();
-    	if( authors == null || authors.size() == 0)
-            throw new DomainException("error.result.createPatentWithoutAuthors");
-    	
-    	setTitle(title);
-    	setDescription(description);
-    	setPatentNumber(patentNumber);
-    	setType(patentType);
-    	setStatus(patentStatus);
-    	setRegistrationDate(registrationDate);
-    	setApprovalDate(approvalDate);
-    	setCountry(country);
-    	setLocal(local);
-    	setNumberPages(numberPages);
-    	setFormat(format);
-    	setLanguage(language);
-    	setUrl(url);
-    	
-    	setAuthorships(authors);
-		
-    }
-    
     public void delete() {
         
         for (Iterator<Authorship> iterator = getResultAuthorshipsIterator(); iterator.hasNext(); ) {
