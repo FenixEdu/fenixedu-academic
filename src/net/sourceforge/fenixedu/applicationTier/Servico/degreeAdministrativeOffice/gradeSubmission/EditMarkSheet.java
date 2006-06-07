@@ -41,7 +41,7 @@ public class EditMarkSheet extends Service {
             editRectificationMarkSheet(markSheetManagementEditBean);
             
         } else {
-            throw new InvalidArgumentsServiceException("error.invalid.markSheetType");
+            throw new InvalidArgumentsServiceException("error.markSheet.invalid.state");
         }
     }
 
