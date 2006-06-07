@@ -3,7 +3,6 @@
   
   <extent-class class-ref="net.sourceforge.fenixedu.domain.research.result.Publication" />
   <extent-class class-ref="net.sourceforge.fenixedu.domain.research.result.Patent" />
-  <extent-class class-ref="net.sourceforge.fenixedu.domain.research.result.Product" />
  
 	
 	
@@ -15,19 +14,6 @@
 
 </class-descriptor>
 
-<class-descriptor class="net.sourceforge.fenixedu.domain.research.result.Product" table="RESULT">
-    
-	
-   	
-	
-	
-	
-	
-	    
-    
-
-</class-descriptor>
-	
 <class-descriptor class="net.sourceforge.fenixedu.domain.research.result.Patent" table="RESULT">
     
 	
