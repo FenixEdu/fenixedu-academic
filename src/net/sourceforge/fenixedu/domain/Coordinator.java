@@ -21,4 +21,8 @@ public class Coordinator extends Coordinator_Base {
         super.deleteDomainObject();
 	}
 
+    public boolean isResponsible() {
+        return getResponsible().booleanValue();
+    }
+
 }
