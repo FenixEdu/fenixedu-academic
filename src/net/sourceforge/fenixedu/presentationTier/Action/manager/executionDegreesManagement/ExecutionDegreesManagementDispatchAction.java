@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
+import net.sourceforge.fenixedu.domain.Coordinator;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
@@ -67,7 +68,29 @@ public class ExecutionDegreesManagementDispatchAction extends FenixDispatchActio
     
     public ActionForward readCoordinators(ActionMapping mapping,
             ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) {
-        return readExecutionDegree(mapping, actionForm, request, "manageCoordinators");
+        
+        final DynaActionForm form = (DynaActionForm) actionForm;
+        final Integer executionDegreeID = (Integer) form.get("executionDegreeID");
+        if (executionDegreeID != null) {
+            final ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(executionDegreeID);
+
+            request.setAttribute("executionDegree", executionDegree);
+            setResponsibleCoordinatorsIDs(executionDegree, form);
+            return mapping.findForward("manageCoordinators");
+            
+        } else {
+            return mapping.getInputForward();
+        }
+    }
+
+    private void setResponsibleCoordinatorsIDs(ExecutionDegree executionDegree, DynaActionForm form) {
+        final List<Integer> responsibleCoordinatorsList = new ArrayList<Integer>();
+        for (final Coordinator coordinator : executionDegree.getCoordinatorsListSet()) {
+            if (coordinator.isResponsible()) {
+                responsibleCoordinatorsList.add(coordinator.getIdInternal());
+            }
+        }
+        form.set("responsibleCoordinatorsIDs", responsibleCoordinatorsList.toArray(new Integer[responsibleCoordinatorsList.size()]));
     }
 
     public ActionForward prepareInsertCoordinator(ActionMapping mapping,
