@@ -71,9 +71,17 @@
     			extends="researcher.masterPage">
         <put name="body" value="/researcher/result/patents/listPatents.jsp"></put>
     </definition>
-    <definition name="patents.createEditPatent" 
+    <definition name="patents.createPatent" 
         extends="researcher.masterPage">
-        <put name="body" value="/researcher/result/patents/createEditPatent.jsp"></put>
+        <put name="body" value="/researcher/result/patents/createPatent.jsp"></put>
+    </definition>
+    <definition name="patents.editPatent" 
+        extends="researcher.masterPage">
+        <put name="body" value="/researcher/result/patents/editPatent.jsp"></put>
+    </definition>
+    <definition name="patents.editPatentData" 
+        extends="researcher.masterPage">
+        <put name="body" value="/researcher/result/patents/editPatentData.jsp"></put>
     </definition>
     <definition name="patents.deletePatent" 
         extends="researcher.masterPage">
@@ -84,8 +92,8 @@
         <put name="body" value="/researcher/result/patents/patentDetails.jsp"></put>
     </definition>
     
-    <definition name="authors.manageAuthors" 
+    <definition name="result.authorship" 
         extends="researcher.masterPage">
-        <put name="body" value="/researcher/result/manageResultAuthorships.jsp"></put>
+        <put name="body" value="/researcher/result/editResultAuthorships.jsp"></put>
     </definition>
 </tiles-definitions>
