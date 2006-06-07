@@ -563,6 +563,10 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable 
     
 
     public boolean isEvaluationDateInExamPeriod(Date evaluationDate, ExecutionPeriod executionPeriod, MarkSheetType markSheetType) {
+        return (markSheetType == MarkSheetType.SPECIAL_AUTHORIZATION) || checkOccupationPeriod(evaluationDate, executionPeriod, markSheetType); 
+    }
+
+    private boolean checkOccupationPeriod(Date evaluationDate, ExecutionPeriod executionPeriod, MarkSheetType markSheetType) {
         OccupationPeriod occupationPeriod = getOccupationPeriodFor(executionPeriod, markSheetType);        
         return (evaluationDate != null && occupationPeriod != null && occupationPeriod.containsDay(evaluationDate));
     }
