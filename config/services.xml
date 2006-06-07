@@ -9802,6 +9802,33 @@
         <filterChains>
         </filterChains>
     </service>  
+   	<service>
+		<name>ChangeResultAuthorshipsOrder</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.research.result.ChangeResultAuthorshipsOrder</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		<filterChains>
+			<chain name="ResearcherAuthorization" />
+		</filterChains>
+	</service>
+   	<service>
+		<name>DeleteResultAuthorships</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.research.result.DeleteResultAuthorships</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		<filterChains>
+			<chain name="ResearcherAuthorization" />
+		</filterChains>
+	</service>
+	<service>
+		<name>CreateResultAuthorship</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.research.result.CreateResultAuthorship</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		<filterChains>
+			<chain name="ResearcherAuthorization" />
+		</filterChains>
+	</service>
 	<service>
 		<name>DeletePatent</name>
 		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.research.result.DeletePatent</implementationClass>
