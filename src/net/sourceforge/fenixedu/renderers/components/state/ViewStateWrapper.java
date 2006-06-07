@@ -57,8 +57,12 @@ public class ViewStateWrapper implements IViewState {
         viewState.setPostBack(isPostBack);
     }
 
-    public void invalidate() {
-        this.viewState.invalidate();
+    public boolean isCanceled() {
+        return this.viewState.isCanceled();
+    }
+    
+    public void cancel() {
+        this.viewState.cancel();
     }
 
     public HtmlComponent getComponent() {

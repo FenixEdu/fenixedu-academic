@@ -145,6 +145,7 @@ public class ComponentLifeCycle {
 
         boolean allValid = true;
         boolean anySkip = false;
+        boolean anyCanceled = false;
         
         for (IViewState viewState : viewStates) {
             HtmlComponent component = restoreComponent(viewState);
@@ -156,8 +157,8 @@ public class ComponentLifeCycle {
             
             if (cancelRequested(editRequest)) {
                 doCancel(viewState);
-                anySkip = true;
-                break;
+                anyCanceled = true;
+                continue;
             }
             
             ComponentCollector collector = null;
@@ -192,7 +193,7 @@ public class ComponentLifeCycle {
 
         ViewDestination destination;
         try {
-            if (allValid && !anySkip) { 
+            if (allValid && !anySkip && !anyCanceled) { 
                 updateDomain(viewStates);
             }
         } 
@@ -205,16 +206,8 @@ public class ComponentLifeCycle {
     }
 
     public static void doCancel(IViewState viewState) {
-        viewState.setSkipUpdate(true);
-        
-        ViewDestination destination = viewState.getDestination("cancel");
-        
-        if (destination == null) {
-            destination = viewState.getInputDestination();
-        }
-    
-        viewState.setCurrentDestination(destination);
-        viewState.invalidate();
+        viewState.setCurrentDestination("cancel");
+        viewState.cancel();
     }
     
     private boolean cancelRequested(EditRequest editRequest) {
@@ -237,7 +230,10 @@ public class ComponentLifeCycle {
                 break;
             }
             
-            if (viewState.skipUpdate()) {
+            if (viewState.isCanceled()) {
+                destination = viewState.getCurrentDestination();
+            }
+            else if (viewState.skipUpdate()) {
                 destination = viewState.getCurrentDestination();
     
                 if (destination == null) {

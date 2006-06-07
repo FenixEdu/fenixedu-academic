@@ -15,12 +15,14 @@ public interface IViewState extends Serializable {
 
     public String getId();
 
-    public boolean isPostBack();
-
-    public void invalidate();
+    public boolean isPostBack();   
     
     public void setPostBack(boolean isPostBack);
 
+    public boolean isCanceled();
+
+    public void cancel();
+    
     public HtmlComponent getComponent();
 
     public void setComponent(HtmlComponent component);
