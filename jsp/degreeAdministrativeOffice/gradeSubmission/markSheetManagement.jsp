@@ -27,7 +27,10 @@
 		 action="/markSheetManagement.do?method=searchMarkSheets">
 	<fr:destination name="postBack" path="/markSheetManagement.do?method=prepareSearchMarkSheetPostBack"/>
 	<fr:destination name="invalid" path="/markSheetManagement.do?method=prepareSearchMarkSheetInvalid"/>
-	<fr:layout name="tabular"/>
+	<fr:layout name="tabular" >
+			<fr:property name="classes" value="tstyle4"/>
+	        <fr:property name="columnClasses" value="listClasses,,"/>
+	</fr:layout>
 </fr:edit>
 
 <br/>
@@ -60,7 +63,7 @@
 				<tr>
 					<td colspan="2">
 						<strong><bean:message name="markSheetType" property="name" bundle="ENUMERATION_RESOURCES"/></strong>
-						(<bean:write name="markSheetResult" property="totalNumberOfEnroledStudents"/> <bean:message key="label.markSheet.of"/> <bean:write name="markSheetResult" property="totalNumberOfStudents"/> <bean:message key="label.markSheet.evaluatedStudents"/>)
+						(<bean:write name="markSheetResult" property="numberOfEnroledStudents"/> <bean:message key="label.markSheet.of"/> <bean:write name="markSheetResult" property="totalNumberOfStudents"/> <bean:message key="label.markSheet.evaluatedStudents"/>)
 					</td>
 				</tr>
 				<logic:iterate id="markSheet" name="markSheetResult" property="markSheetsSortedByEvaluationDate" type="net.sourceforge.fenixedu.domain.MarkSheet">

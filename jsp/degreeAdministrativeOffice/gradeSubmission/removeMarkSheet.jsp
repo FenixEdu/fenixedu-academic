@@ -20,7 +20,7 @@
 	
 	<fr:view name="markSheet" schema="markSheet.view">
 		<fr:layout name="tabular" >
-			<fr:property name="classes" value="style1"/>
+			<fr:property name="classes" value="tstyle4"/>
 	        <fr:property name="columnClasses" value="listClasses,,"/>
 		</fr:layout>
 	</fr:view>

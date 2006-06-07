@@ -20,14 +20,14 @@
 
 <fr:edit id="edit"
 		 name="edit"
-		 type="net.sourceforge.fenixedu.presentationTier.Action.degreeAdministrativeOffice.gradeSubmission.MarkSheetManagementCreateBean"
+		 type="net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.gradeSubmission.MarkSheetManagementCreateBean"
 		 schema="markSheet.create.step.one"
 		 action='<%= "/createMarkSheet.do?method=createMarkSheetStepOne" + urlPath %>'>
 	<fr:destination name="postBack" path="/createMarkSheet.do?method=prepareSearchMarkSheetPostBack"/>
 	<fr:destination name="invalid" path="/createMarkSheet.do?method=prepareSearchMarkSheetInvalid"/>
 	<fr:destination name="cancel" path='<%= "/createMarkSheet.do?method=backSearchMarkSheet" + urlPath %>'/>
 	<fr:layout name="tabular" >
-			<fr:property name="classes" value="style1"/>
+			<fr:property name="classes" value="tstyle4"/>
 	        <fr:property name="columnClasses" value="listClasses,,"/>
 	</fr:layout>
 </fr:edit>

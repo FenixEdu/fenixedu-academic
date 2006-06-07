@@ -30,7 +30,7 @@
 	
 	<fr:view name="edit" schema="markSheet.view.edit">
 		<fr:layout name="tabular" >
-			<fr:property name="classes" value="style1"/>
+			<fr:property name="classes" value="tstyle4"/>
 	        <fr:property name="columnClasses" value="listClasses,,"/>
 		</fr:layout>
 	</fr:view>
@@ -40,7 +40,7 @@
 		<br/>
 		<fr:edit id="edit-markSheet" name="edit" schema="markSheet.edit">
 			<fr:layout name="tabular" >
-				<fr:property name="classes" value="style1"/>
+				<fr:property name="classes" value="tstyle4"/>
 		        <fr:property name="columnClasses" value="listClasses,,"/>
 			</fr:layout>
 		</fr:edit>
@@ -56,6 +56,15 @@
 	<logic:notEmpty name="edit" property="enrolmentEvaluationBeansToEdit">
 		<br/><br/>
 		<bean:message key="label.markSheet.students.with.grade" />:
+		
+		<fr:hasMessages for="edit-marksheet-enrolments">
+			<ul>
+			<fr:messages>
+				<li><fr:message/></li>
+			</fr:messages>
+			</ul>
+		</fr:hasMessages>
+		
 		<br/>
 
 		<fr:edit id="edit-marksheet-enrolments" name="edit" property="enrolmentEvaluationBeansToEdit" 
@@ -63,7 +72,7 @@
 	             nested="true">
 			<fr:layout>
 				<fr:property name="sortBy" value="enrolment.studentCurricularPlan.student.number"/>
-				<fr:property name="classes" value="style1"/>
+				<fr:property name="classes" value="tstyle4"/>
 		        <fr:property name="columnClasses" value="listClasses,,"/>
 			</fr:layout>
 		</fr:edit>
@@ -72,13 +81,22 @@
 	<logic:notEmpty name="edit" property="enrolmentEvaluationBeansToAppend">
 		<br/><br/>
 		<bean:message key="label.markSheet.students.without.grade" />:
+		
+		<fr:hasMessages for="append-enrolments">
+			<ul>
+			<fr:messages>
+				<li><fr:message/></li>
+			</fr:messages>
+			</ul>
+		</fr:hasMessages>
+		
 		<br/>
 		<fr:edit id="append-enrolments" name="edit" property="enrolmentEvaluationBeansToAppend" 
 				 schema="markSheet.edit.enrolmentEvaluations" layout="tabular-editable"
 	             nested="true">
 			<fr:layout>
 				<fr:property name="sortBy" value="enrolment.studentCurricularPlan.student.number"/>
-				<fr:property name="classes" value="style1"/>
+				<fr:property name="classes" value="tstyle4"/>
 		        <fr:property name="columnClasses" value="listClasses,,"/>
 			</fr:layout>
 		</fr:edit>
