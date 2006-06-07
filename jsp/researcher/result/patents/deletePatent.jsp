@@ -15,18 +15,21 @@
 	<h2><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.result.patent.patentsManagement.title"/></h2>
 	<h3><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.result.patent.deletePatentUseCase.title"/></h3>
 	
-	<p><b><bean:message bundle="RESEARCHER_RESOURCES" key="label.authors"/></b></p>	
-	<fr:view name="authorsList" layout="tabular-list">
+	<%-- Authorships --%>
+	<h3><bean:message bundle="RESEARCHER_RESOURCES" key="label.resultAuthorships"/></h3>
+	<fr:view name="patent" property="resultAuthorships" schema="result.authorships" layout="tabular">
 		<fr:layout>
-			<fr:property name="subLayout" value="values"/>
-			<fr:property name="subSchema" value="result.authors"/>
+			<fr:property name="sortBy" value="authorOrder"/>
 		</fr:layout>
 	</fr:view>
 	<br/>
-	<fr:view name="patent" schema="patent.details">
-		<fr:layout name="tabular">
-	        <fr:property name="classes" value="style1"/>
-	        <fr:property name="columnClasses" value="listClasses,,"/>
+	
+	<%-- Data --%>		
+	<h3><bean:message bundle="RESEARCHER_RESOURCES" key="label.data"/></h3>
+	<fr:view name="patent" schema="patent.viewEditData">
+	    <fr:layout name="tabular">
+    	    <fr:property name="classes" value="style1"/>
+        	<fr:property name="columnClasses" value="listClasses,,"/>
 	    </fr:layout>
 	</fr:view>
 	<br/>
