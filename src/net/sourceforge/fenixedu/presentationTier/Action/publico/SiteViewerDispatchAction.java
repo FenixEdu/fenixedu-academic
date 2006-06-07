@@ -652,12 +652,6 @@ public class SiteViewerDispatchAction extends FenixContextDispatchAction {
     }
     
     private ActionForward returnSuccessMappingForward(ActionMapping mapping,ActionForm form,HttpServletRequest request) {
-	
-	String objectCodeString = request.getParameter("objectCode");
-	Integer objectCode = Integer.valueOf(objectCodeString);
-	ExecutionCourse course = RootDomainObject.getInstance().readExecutionCourseByOID(objectCode);
-	DynaValidatorForm dynaForm = (DynaValidatorForm) form;
-	dynaForm.set("dynamicMailDistribution", course.getSite().getDynamicMailDistribution());
 	return mapping.findForward("sucess");
     }
 

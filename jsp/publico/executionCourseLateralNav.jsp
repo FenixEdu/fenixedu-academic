@@ -8,8 +8,8 @@
 <%@page import="net.sourceforge.fenixedu.presentationTier.Action.teacher.TeacherAdministrationViewerDispatchAction"%>
 <%@page import="net.sourceforge.fenixedu.presentationTier.Action.cms.messaging.ForwardEmailAction"%>
 <bean:define id="component" name="siteView" property="commonComponent" />
+<bean:define id="executionCourse" name="siteView" property="executionCourse" />
 <bean:define id="sections" name="component" property="sections"/>
-
 <ul>
 	<li><html:link page="<%= "/viewSite.do?method=firstPage&amp;objectCode=" + pageContext.findAttribute("executionCourseCode")  + "&amp;executionPeriodOID=" + pageContext.findAttribute(SessionConstants.EXECUTION_PERIOD_OID)%>">
 		<bean:message  key="link.inicialPage"/></html:link></li>
@@ -57,8 +57,8 @@
 			<bean:message  key="label.rss"/>
 		</html:link>
 	</li>
-	
-	<logic:equal name="chooseExecutionCourseFormWithDynamicMailDistribution" property="dynamicMailDistribution" value="true">
+
+	<logic:equal name="executionCourse" property="site.dynamicMailDistribution" value="true">
 			<%
 				StringBuffer buffer = new StringBuffer();
 				buffer.append(ForwardEmailAction.emailAddressPrefix);
@@ -74,11 +74,11 @@
 	</logic:equal>
 
 	
-	<logic:notEqual name="chooseExecutionCourseFormWithDynamicMailDistribution" property="dynamicMailDistribution" value="true">
+	<logic:notEqual name="executionCourse" property="site.dynamicMailDistribution" value="true">
 		<logic:notEmpty name="component" property="mail" >	
 			<bean:define id="siteMail" name="component" property="mail" />
 			<html:link href="<%= "mailto:" + pageContext.findAttribute("siteMail") %>" titleKey="send.email.singleMail.title" bundle="PUBLIC_DEGREE_INFORMATION">
-			<div class="email"><p><bean:message key="send.email.dynamicMailDistribution.link" bundle="PUBLIC_DEGREE_INFORMATION"/></p>
+			<div class="email">3<p><bean:message key="send.email.dynamicMailDistribution.link" bundle="PUBLIC_DEGREE_INFORMATION"/></p>
 			</html:link>
 		</logic:notEmpty>
 	</logic:notEqual>

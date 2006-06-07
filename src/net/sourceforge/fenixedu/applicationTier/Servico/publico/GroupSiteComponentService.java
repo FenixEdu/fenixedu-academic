@@ -30,6 +30,8 @@ public class GroupSiteComponentService extends Service {
 
         commonComponent = componentBuilder2.getComponent(commonComponent, site, null, null, null);
 
-        return new ExecutionCourseSiteView(commonComponent, bodyComponent);
+        ExecutionCourseSiteView executionCourseSiteView = new ExecutionCourseSiteView(commonComponent, bodyComponent);
+        executionCourseSiteView.setExecutionCourse(site.getExecutionCourse());
+        return executionCourseSiteView;
     }
 }
