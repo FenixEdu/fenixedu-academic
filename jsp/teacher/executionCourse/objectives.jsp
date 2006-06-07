@@ -83,35 +83,50 @@
 					<bean:write name="curricularCourse" property="name"/>
 				</h3>
 				<blockquote>
-					<h4>
-						<bean:message key="label.generalObjectives"/>
-					</h4>
-					<bean:write name="curriculum" property="generalObjectives" filter="false"/>
-					<logic:present name="curriculum" property="generalObjectivesEn">
-						<br/>
+					<logic:present name="curriculum">
 						<h4>
-							<bean:message key="label.generalObjectives.eng"/>
+							<bean:message key="label.generalObjectives"/>
 						</h4>
-						<bean:write name="curriculum" property="generalObjectivesEn" filter="false"/>
-					</logic:present>
-					<h4>
-						<bean:message key="label.operacionalObjectives"/>
-					</h4>
-					<bean:write name="curriculum" property="operacionalObjectives" filter="false"/>
-					<logic:present name="curriculum" property="operacionalObjectivesEn">
-						<br/>
+						<bean:write name="curriculum" property="generalObjectives" filter="false"/>
+						<logic:present name="curriculum" property="generalObjectivesEn">
+							<br/>
+							<h4>
+								<bean:message key="label.generalObjectives.eng"/>
+							</h4>
+							<bean:write name="curriculum" property="generalObjectivesEn" filter="false"/>
+						</logic:present>
 						<h4>
-							<bean:message key="label.operacionalObjectives.eng"/>
+							<bean:message key="label.operacionalObjectives"/>
 						</h4>
-						<bean:write name="curriculum" property="operacionalObjectivesEn" filter="false"/>
+						<bean:write name="curriculum" property="operacionalObjectives" filter="false"/>
+						<logic:present name="curriculum" property="operacionalObjectivesEn">
+							<br/>
+							<h4>
+								<bean:message key="label.operacionalObjectives.eng"/>
+							</h4>
+							<bean:write name="curriculum" property="operacionalObjectivesEn" filter="false"/>
+						</logic:present>
 					</logic:present>
+					<logic:notPresent name="curriculum">
+						<bean:message key="message.objectives.not.defined"/>
+					</logic:notPresent>
 				</blockquote>
-				<% if (lastCurriculum == curriculum && (curricularCourse.getBasic() == null || !curricularCourse.getBasic().booleanValue())) { %>
-					<bean:define id="url" type="java.lang.String">/editObjectives.do?method=prepareEditObjectives&amp;curriculumID=<bean:write name="curriculum" property="idInternal"/></bean:define>
-					<html:link page="<%= url %>" paramId="executionCourseID" paramName="executionCourse" paramProperty="idInternal">
-						<bean:message key="button.edit"/>
-					</html:link>
-				<% } %>
+				<logic:present name="curriculum">
+					<% if (lastCurriculum == curriculum && (curricularCourse.getBasic() == null || !curricularCourse.getBasic().booleanValue())) { %>
+						<bean:define id="url" type="java.lang.String">/editObjectives.do?method=prepareEditObjectives&amp;curriculumID=<bean:write name="curriculum" property="idInternal"/></bean:define>
+						<html:link page="<%= url %>" paramId="executionCourseID" paramName="executionCourse" paramProperty="idInternal">
+							<bean:message key="button.edit"/>
+						</html:link>
+					<% } %>
+				</logic:present>
+				<logic:notPresent name="curriculum">
+					<% if (curricularCourse.getBasic() == null || !curricularCourse.getBasic().booleanValue()) { %>
+						<bean:define id="url" type="java.lang.String">/createObjectives.do?method=prepareCreateObjectives&amp;curricularCourseID=<bean:write name="curricularCourse" property="idInternal"/></bean:define>
+						<html:link page="<%= url %>" paramId="executionCourseID" paramName="executionCourse" paramProperty="idInternal">
+							<bean:message key="button.create"/>
+						</html:link>
+					<% } %>
+				</logic:notPresent>
 		</logic:notEqual>
 
 		<br/>

@@ -2857,6 +2857,15 @@
 		</filterChains>
 	</service>
 	<service>
+		<name>CreateObjectives</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.CreateObjectives</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		<filterChains>
+			<chain name="ExecutionCourseResponsibleForTeacherAuthorization" />
+		</filterChains>
+	</service>
+	<service>
 		<name>EditObjectives</name>
 		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.EditObjectives</implementationClass>
 		<description />

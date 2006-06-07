@@ -1014,6 +1014,15 @@
 			<forward name="edit-program" path="manage-execution-course-program-edit"/>
 			<forward name="program" path="manage-execution-course-program"/>
         </action>
+        <action path="/createObjectives"
+        		parameter="method"
+        		name="objectivesForm"
+        		scope="request" 
+        		input="/createObjectives.do?method=prepareCreateObjectives&amp;page=0"
+				type="net.sourceforge.fenixedu.presentationTier.Action.teacher.ManageExecutionCourseDA">
+			<forward name="create-objectives" path="manage-execution-course-objectives-create"/>
+			<forward name="objectives" path="manage-execution-course-objectives"/>
+        </action>
         <action path="/editObjectives"
         		parameter="method"
         		name="objectivesForm"

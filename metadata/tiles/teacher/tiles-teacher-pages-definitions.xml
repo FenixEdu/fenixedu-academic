@@ -506,6 +506,10 @@
 		<put name="body" value="/teacher/executionCourse/objectives.jsp" />
 	</definition>
 
+	<definition name="manage-execution-course-objectives-create" extends="execution-course-administration">
+		<put name="body" value="/teacher/executionCourse/createObjectives.jsp" />
+	</definition>
+
 	<definition name="manage-execution-course-objectives-edit" extends="execution-course-administration">
 		<put name="body" value="/teacher/executionCourse/editObjectives.jsp" />
 	</definition>

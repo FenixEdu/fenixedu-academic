@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurriculum;
@@ -48,14 +49,18 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
         return mapping.findForward("program");
     }
 
+    public void prepareCurricularCourse(HttpServletRequest request) {
+    	final ExecutionCourse executionCourse = (ExecutionCourse) request.getAttribute("executionCourse");
+    	final String curricularCourseIDString = request.getParameter("curricularCourseID");
+    	if (executionCourse != null && curricularCourseIDString != null && curricularCourseIDString.length() > 0) {
+    		final CurricularCourse curricularCourse = findCurricularCourse(executionCourse, Integer.valueOf(curricularCourseIDString));
+    		request.setAttribute("curricularCourse", curricularCourse);
+    	}
+    }
+
     public ActionForward prepareCreateProgram(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
     		throws Exception {
-        final ExecutionCourse executionCourse = (ExecutionCourse) request.getAttribute("executionCourse");
-        final String curricularCourseIDString = request.getParameter("curricularCourseID");
-        if (executionCourse != null && curricularCourseIDString != null && curricularCourseIDString.length() > 0) {
-            final CurricularCourse curricularCourse = findCurricularCourse(executionCourse, Integer.valueOf(curricularCourseIDString));
-            request.setAttribute("curricularCourse", curricularCourse);
-        }
+    	prepareCurricularCourse(request);
         return mapping.findForward("create-program");
     }
 
@@ -132,7 +137,7 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
             messages.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage("error.teacherNotResponsibleOrNotCoordinator"));
             saveErrors(request, messages);
         } catch (Exception e) {
-            throw new FenixActionException();
+            throw new FenixActionException(e);
         }
 
         return mapping.findForward("program");
@@ -140,6 +145,39 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
 
     public ActionForward objectives(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
+        return mapping.findForward("objectives");
+    }
+
+    public ActionForward prepareCreateObjectives(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+			throws Exception {
+    	prepareCurricularCourse(request);
+    	return mapping.findForward("create-objectives");
+    }
+
+    public ActionForward createObjectives(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+			throws FenixFilterException, FenixServiceException, FenixActionException {
+        final DynaActionForm dynaActionForm = (DynaActionForm) form;
+        final String curricularCourseIDString = request.getParameter("curricularCourseID");
+        final String generalObjectives = dynaActionForm.getString("generalObjectives");
+        final String generalObjectivesEn = dynaActionForm.getString("generalObjectivesEn");
+        final String operacionalObjectives = dynaActionForm.getString("operacionalObjectives");
+        final String operacionalObjectivesEn = dynaActionForm.getString("operacionalObjectivesEn");
+
+        final ExecutionCourse executionCourse = (ExecutionCourse) request.getAttribute("executionCourse");
+        final CurricularCourse curricularCourse = findCurricularCourse(executionCourse, Integer.valueOf(curricularCourseIDString));
+        final IUserView userView = getUserView(request);
+
+        final Object args[] = { executionCourse.getIdInternal(), curricularCourse, generalObjectives, generalObjectivesEn, operacionalObjectives, operacionalObjectivesEn };
+        try {
+        	ServiceManagerServiceFactory.executeService(userView, "CreateObjectives", args);
+        } catch (NotAuthorizedFilterException e) {
+        	ActionMessages messages = new ActionMessages();
+        	messages.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage("error.teacherNotResponsibleOrNotCoordinator"));
+        	saveErrors(request, messages);
+        } catch (Exception e) {
+        	throw new FenixActionException(e);
+        }
+
         return mapping.findForward("objectives");
     }
 
@@ -189,7 +227,15 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
         final IUserView userView = getUserView(request);
 
         final Object args[] = { executionCourse.getIdInternal(), curriculum.getCurricularCourse().getIdInternal(), infoCurriculum, userView.getUtilizador() };
-        ServiceManagerServiceFactory.executeService(userView, "EditObjectives", args);
+        try {
+        	ServiceManagerServiceFactory.executeService(userView, "EditObjectives", args);
+        } catch (NotAuthorizedFilterException e) {
+        	ActionMessages messages = new ActionMessages();
+        	messages.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage("error.teacherNotResponsibleOrNotCoordinator"));
+        	saveErrors(request, messages);
+        } catch (Exception e) {
+        	throw new FenixActionException(e);
+        }
 
         return mapping.findForward("objectives");
     }
