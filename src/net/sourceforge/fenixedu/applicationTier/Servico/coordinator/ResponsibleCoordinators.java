@@ -13,18 +13,13 @@ public class ResponsibleCoordinators extends Service {
     public void run(Integer executionDegreeId, List<Integer> coordinatorsToBeResponsibleIDs)
             throws FenixServiceException, ExcepcaoPersistencia {
 
-        final ExecutionDegree executionDegree = rootDomainObject
-                .readExecutionDegreeByOID(executionDegreeId);
+        final ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(executionDegreeId);
         if (executionDegree == null) {
             throw new FenixServiceException("error.noExecutionDegree");
         }
 
         for (final Coordinator coordinator : executionDegree.getCoordinatorsListSet()) {
-            if (coordinatorsToBeResponsibleIDs.contains(coordinator.getIdInternal())) {
-                coordinator.setResponsible(Boolean.TRUE);
-            } else {
-                coordinator.setResponsible(Boolean.FALSE);
-            }
+            coordinator.setResponsible(coordinatorsToBeResponsibleIDs.contains(coordinator.getIdInternal()));
         }
     }
 }
