@@ -29,7 +29,7 @@ public class UniqueAcronymCreator<T extends DomainObject> {
         this.acronymSlot = acronymSlot;
         this.objects = new ArrayList<T>(objects);
         this.toLowerCase = toLowerCase;
-        this.logger.setLevel(Level.INFO);
+        this.logger.setLevel(Level.OFF);
         
         Collections.sort(this.objects, new BeanComparator(this.slotName));
     }
