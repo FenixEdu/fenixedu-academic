@@ -64,7 +64,7 @@ public class CreateMarkSheetByTeacher extends Service {
 
             CurricularCourse curricularCourse = curricularCourseEntry.getKey();
             
-            if (!curricularCourse.isGradeSubmissionAvailableFor(executionCourse.getExecutionPeriod().getExecutionYear())) {
+            if (!curricularCourse.isGradeSubmissionAvailableFor(executionCourse.getExecutionPeriod())) {
                 throw new InvalidArgumentsServiceException("error.curricularCourse.is.not.available.toSubmit.grades");
             }
             

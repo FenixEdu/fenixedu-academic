@@ -83,7 +83,7 @@ public class MarkSheetTeacherGradeSubmissionBean extends DataTranferObject {
     public List<CurricularCourse> getCurricularCoursesAvailableToGradeSubmission() {
         List<CurricularCourse> result = new ArrayList<CurricularCourse>();
         for (CurricularCourse curricularCourse : getAllCurricularCourses()) {
-            if (curricularCourse.isGradeSubmissionAvailableFor(getExecutionCourse().getExecutionPeriod().getExecutionYear())) {
+            if (curricularCourse.isGradeSubmissionAvailableFor(getExecutionCourse().getExecutionPeriod())) {
                 result.add(curricularCourse);
             }
         }

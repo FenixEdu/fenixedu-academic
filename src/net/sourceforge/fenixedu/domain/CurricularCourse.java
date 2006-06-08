@@ -1164,22 +1164,26 @@ public class CurricularCourse extends CurricularCourse_Base {
         return false;
     }
     
-    public boolean isGradeSubmissionAvailableFor(ExecutionYear executionYear) {
-        return isGradeSubmissionAvailableFor(executionYear, MarkSheetType.NORMAL) 
-            || isGradeSubmissionAvailableFor(executionYear, MarkSheetType.IMPROVEMENT)
-            || isGradeSubmissionAvailableFor(executionYear, MarkSheetType.SPECIAL_SEASON);
+    public boolean isGradeSubmissionAvailableFor(ExecutionPeriod executionPeriod) {
+        return isGradeSubmissionAvailableFor(executionPeriod, MarkSheetType.NORMAL) 
+            || isGradeSubmissionAvailableFor(executionPeriod, MarkSheetType.IMPROVEMENT)
+            || isGradeSubmissionAvailableFor(executionPeriod, MarkSheetType.SPECIAL_SEASON);
     }
     
-    public boolean isGradeSubmissionAvailableFor(ExecutionYear executionYear, MarkSheetType type) {
-        final YearMonthDay now = new YearMonthDay();
-        final ExecutionDegree executionDegree = getExecutionDegreeFor(executionYear);
+    public boolean isGradeSubmissionAvailableFor(ExecutionPeriod executionPeriod, MarkSheetType type) {
+        final ExecutionDegree executionDegree = getExecutionDegreeFor(executionPeriod.getExecutionYear());
         switch (type) {
         case NORMAL:
         case IMPROVEMENT:
-            return executionDegree.isDateInFirstSemesterNormalSeasonOfGradeSubmission(now)
-                    || executionDegree.isDateInSecondSemesterNormalSeasonOfGradeSubmission(now);
+            if (executionPeriod.getSemester().equals(Integer.valueOf(1))) {
+                return executionDegree.isDateInFirstSemesterNormalSeasonOfGradeSubmission(new YearMonthDay());
+            } else {
+                return executionDegree.isDateInSecondSemesterNormalSeasonOfGradeSubmission(new YearMonthDay());
+            }
+            
         case SPECIAL_SEASON:
-            return executionDegree.isDateInSpecialSeasonOfGradeSubmission(now);
+            return executionDegree.isDateInSpecialSeasonOfGradeSubmission(new YearMonthDay());
+            
         default:
             return false;
         }
