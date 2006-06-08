@@ -35,7 +35,7 @@
 </tr>
 <tr>
 	<td width="200px">
-	  <bean:message key="message.mailAddressCourse"/>
+	  <html:radio property="dynamicMailDistribution" value="false"/><bean:message key="message.mailAddressCourse"/>
 	<td>
 	  <html:text property="mail" size="30"/>
 	</td>
@@ -45,9 +45,8 @@
 </tr>
 <tr>
 	<td width="200px">
-	  <bean:message key="dyanamicMailDistribution.prompt.message"/>
+	  		<html:radio property="dynamicMailDistribution" value="true"/> <bean:message key="dyanamicMailDistribution.prompt.message"/>
 	<td>
-		<html:checkbox property="dynamicMailDistribution"></html:checkbox>
 		<%=ForwardEmailAction.emailAddressPrefix%><%=request.getParameter("objectCode")%>&#64;<%=TeacherAdministrationViewerDispatchAction.mailingListDomainConfiguration() %>
 	</td>
 	<td><span class="error" >
