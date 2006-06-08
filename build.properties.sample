@@ -444,6 +444,11 @@ allowed-roles.build.file.constructor.header=<?xml version="1.0" encoding="ISO-88
 allowed-roles.build.file.constructor.tail=\n\n\t\t</target>\n\t</project>
 allowed-roles.newline.instruction=${line.seperator}
 
+#----------------------------------------------------------------
+# Printers
+#----------------------------------------------------------------
+markSheet.printers=
+
 #
 #
 #------------------------------------------------------------------------------
