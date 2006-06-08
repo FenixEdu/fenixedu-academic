@@ -178,5 +178,12 @@
 	<definition name="show.markSheetManagement.showRectificationHistoric" extends="definition.degreeAdministrativeOffice.masterPage">
 		<put name="body" value="/degreeAdministrativeOffice/gradeSubmission/showRectificationHistoric.jsp"></put>
 	</definition>
+	<definition name="show.printMarkSheet.choosePrinterMarkSheetsWeb" extends="definition.degreeAdministrativeOffice.masterPage">
+		<put name="body" value="/degreeAdministrativeOffice/gradeSubmission/choosePrinterMarkSheetsWeb_bd.jsp"></put>
+	</definition>	
+	<definition name="show.printMarkSheet.choosePrinterMarkSheet" extends="definition.degreeAdministrativeOffice.masterPage">
+		<put name="body" value="/degreeAdministrativeOffice/gradeSubmission/choosePrinterMarkSheet_bd.jsp"></put>
+	</definition>	
+	
 	
 </tiles-definitions>
