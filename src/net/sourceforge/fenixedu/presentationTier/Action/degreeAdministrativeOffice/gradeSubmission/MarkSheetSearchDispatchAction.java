@@ -141,21 +141,13 @@ public class MarkSheetSearchDispatchAction extends MarkSheetDispatchAction {
         return mapping.findForward("viewMarkSheet");    	
     }
     
-    public ActionForward printMarkSheet(ActionMapping mapping,
-            ActionForm actionForm, HttpServletRequest request, HttpServletResponse response)  {
+    public ActionForward choosePrinter(ActionMapping mapping,
+            ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws FenixFilterException  {
         DynaActionForm form = (DynaActionForm) actionForm;
         Integer markSheetID = (Integer) form.get("msID");
-        MarkSheet markSheet = rootDomainObject.readMarkSheetByOID(markSheetID);
-        try {
-			ServiceUtils.executeService(getUserView(request), "PrintMarkSheet", new Object[] { markSheet });
-		} catch (FenixFilterException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (FenixServiceException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-    	return null;
+        request.setAttribute("markSheet", markSheetID.toString());
+        return mapping.findForward("choosePrinter");
     }
+    
 
 }
