@@ -124,7 +124,7 @@
 		<filterChains>
 			<chain name="TimeTableManagerAuthorization" />
 		</filterChains>
-	</service>	
+	</service>
 	<service>
 		<name>DeleteLessons</name>
 		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.sop.DeleteLessons</implementationClass>
@@ -133,7 +133,7 @@
 		<filterChains>
 			<chain name="TimeTableManagerAuthorization" />
 		</filterChains>
-	</service>		
+	</service>
 	<service>
 		<name>DeleteShift</name>
 		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.sop.DeleteShift</implementationClass>
@@ -899,7 +899,7 @@
 		<filterChains>
 			<chain name="ManagerAuthorization" />
 		</filterChains>
-	</service>	
+	</service>
 	<service>
 		<name>DeleteDegrees</name>
 		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.manager.DeleteDegrees</implementationClass>
@@ -2939,7 +2939,7 @@
 		<filterChains>
 			<chain name="ExecutionCourseResponsibleForTeacherAuthorization" />
 		</filterChains>
-	</service>	
+	</service>
 	<service>
 		<name>DeleteProfessorship</name>
 		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.DeleteProfessorship</implementationClass>
@@ -9811,7 +9811,7 @@
         <filterChains>
         </filterChains>
     </service>  
-   	<service>
+	<service>
 		<name>ChangeResultAuthorshipsOrder</name>
 		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.research.result.ChangeResultAuthorshipsOrder</implementationClass>
 		<description />
@@ -9887,6 +9887,14 @@
 		<filterChains>
 		</filterChains>
 	</service>	
+	<service>
+		<name>ListPayedInsurancesByDates</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.gratuity.ListPayedInsurancesByDates</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		<filterChains>
+		</filterChains>
+	</service>		
 	<service>
 		<name>DeleteRoomClassification</name>
 		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.space.DeleteRoomClassification</implementationClass>
