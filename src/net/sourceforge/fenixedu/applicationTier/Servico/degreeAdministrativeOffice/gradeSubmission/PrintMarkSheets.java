@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.degreeAdministrativeOffice.gradeSubmission;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -9,7 +10,6 @@ import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.UnableToPrintServiceException;
 import net.sourceforge.fenixedu.domain.EnrolmentEvaluation;
 import net.sourceforge.fenixedu.domain.MarkSheet;
@@ -17,13 +17,12 @@ import net.sourceforge.fenixedu.util.FenixDigestUtils;
 import net.sourceforge.fenixedu.util.ReportsUtils;
 
 
-public class PrintMarkSheet extends Service{
+public class PrintMarkSheets extends Service{
 	
-	public void run(MarkSheet markSheet, String printerName) throws FenixServiceException {
-		if(markSheet == null) {
-			throw new InvalidArgumentsServiceException("mark sheet cannot be null");
+	public void run(Collection<MarkSheet> markSheets, String printerName) throws FenixServiceException {
+		for (MarkSheet markSheet : markSheets) {
+			printMarkSheet(markSheet, printerName);
 		}
-		printMarkSheet(markSheet, printerName);
 	}
 	
 	
