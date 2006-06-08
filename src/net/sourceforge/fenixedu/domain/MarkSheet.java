@@ -16,7 +16,7 @@ import net.sourceforge.fenixedu.util.FenixDigestUtils;
 
 public class MarkSheet extends MarkSheet_Base {
 
-    private MarkSheet() {
+    protected MarkSheet() {
         super();
         setRootDomainObject(RootDomainObject.getInstance());
         setCreationDateDateTime(new DateTime());
@@ -595,14 +595,6 @@ public class MarkSheet extends MarkSheet_Base {
         }
     }
 
-    @Override
-    public void setPrinted(Boolean printed) {
-        if (isConfirmed()) {
-            throw new DomainException("error.markSheet.already.confirmed");
-        } else {
-            super.setPrinted(printed);
-        }
-    }
 
     @Override
     public void setReason(String reason) {
