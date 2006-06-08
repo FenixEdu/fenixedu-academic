@@ -10,6 +10,7 @@
 	<property name="src" location="src"/>
 	<property name="src_gen" location="src_gen"/>
 	<property name="config" location="config"/>
+	<property name="reports" location="reports"/>	
 	<property name="institution.config" location="${institution.project}/config"/>
 	<property name="config.web" location="metadata"/>
 
@@ -21,6 +22,7 @@
 	<property name="build.home.webinf.libs" value="${build.home.webinf}/lib"/>
 	<property name="build.home.jsp_gen_code" value="${build.home}/Jsp-Code"/>
 	<property name="build.home.jsp_gen_code.classes" value="${build.home.jsp_gen_code}/classes"/>
+	<property name="build.home.reports" value="${build.home.webinf.classes}/reports"/>
 
 	<!-- Directories for deploy -->
 	<property name="deploy.home" location="deploy"/>
@@ -207,7 +209,14 @@ script.isAlive.check.slide=${script.isAlive.check.slide}
 				<replacefilter token="@db.slide.pass@" 
 			    			   property="db.slide.pass"/>
 			</replace>
-
+			
+			<replace encoding="${encoding}" dir="${build.home.webinf.classes}"
+					 propertyFile="build.properties">
+				<include name="printers.properties"/>
+				<replacefilter token="@markSheet.printers@" 
+			    			   property="markSheet.printers"/>
+			</replace>
+			
 			<replace encoding="${encoding}" dir="${build.home.webinf.classes}"
 					 propertyFile="build.properties">
 				<include name="IstFtpServerConfig.properties"/>
@@ -677,7 +686,7 @@ script.isAlive.check.slide=${script.isAlive.check.slide}
 		</copy>
 	</target>
 
-	<target name="compile" description="Compile application" depends="i18nDefault, compile-domain,compile-renderers, write-all-properties, generate, base-compile">
+	<target name="compile" description="Compile application" depends="i18nDefault, compile-domain,compile-renderers, write-all-properties, generate, base-compile, compile-reports">
 		<ant antfile="build_accessControl.xml"/>
 	</target>
 
@@ -872,5 +881,29 @@ script.isAlive.check.slide=${script.isAlive.check.slide}
 			</classpath>
 		</java>
 	</target>
-
+	
+	<target name="compile-reports" >
+		<mkdir dir="${build.home.reports}"/>
+		<taskdef name="jrc" 
+		      classname="net.sf.jasperreports.ant.JRAntCompileTask">
+		  <classpath>
+			<fileset dir="${lib}">
+				<include name="*.jar"/>
+			</fileset>
+		  </classpath>
+		</taskdef>
+		<jrc destdir="${build.home.reports}">
+			<src>
+				<fileset dir="${reports}">
+				    <include name="*.jrxml"/>
+				</fileset>
+			</src>
+			<classpath>
+				<pathelement path="${build.home.webinf.classes};"/>
+				<fileset dir="${lib}">
+					<include name="*.jar"/>
+				</fileset>
+			</classpath>
+		</jrc>
+	</target>
 </project>
