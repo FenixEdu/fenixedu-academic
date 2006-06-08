@@ -743,6 +743,20 @@
       		<form-property name="executionYear" type="java.lang.Integer" />     
       </form-bean> 
 	  
+	  <form-bean name="listPayedInsurancesForm" 
+      	type="org.apache.struts.validator.DynaValidatorForm"
+        dynamic="true">
+   	        <form-property name="endDateDay" type="java.lang.Integer"/>
+   	        <form-property name="endDateMonth" type="java.lang.Integer"/>
+   	        <form-property name="endDateYear" type="java.lang.Integer"/>			
+   	        <form-property name="beginDateDay" type="java.lang.Integer"/>
+   	        <form-property name="beginDateMonth" type="java.lang.Integer"/>
+   	        <form-property name="beginDateYear" type="java.lang.Integer"/>			   	        
+      		<form-property name="executionYearID" type="java.lang.Integer" />  
+			<form-property name="method" type="java.lang.String" />
+      </form-bean> 
+	  
+	  
 	<form-bean name="fixSibsPaymentFileEntriesForm" 
       	type="org.apache.struts.validator.DynaValidatorForm"
         dynamic="true">
@@ -2481,6 +2495,17 @@
 		<forward name="chooseExecutionYear" path="chooseExecutionYear" />
 		<forward name="defineInsuranceValue" path="defineInsuranceValue" />
 		<forward name="defineSuccess" path="defineInsuranceValueSuccess"/>
+	</action>
+
+	<action path="/listPayedInsurances"
+		type="net.sourceforge.fenixedu.presentationTier.Action.masterDegree.administrativeOffice.gratuity.ListPayedInsurancesDispatchAction"
+		parameter="method"
+		name="listPayedInsurancesForm"
+		scope="request"
+		validate="true"
+		input="/listPayedInsurances.do?method=prepare"
+	>
+		<forward name="chooseDates" path="listPayedInsurances,chooseDates" />
 	</action>
 	
 	<action path="/fixSibsPaymentFileEntries"
