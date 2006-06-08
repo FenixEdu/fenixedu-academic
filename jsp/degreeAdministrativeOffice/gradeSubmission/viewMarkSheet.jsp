@@ -6,9 +6,18 @@
 
 <%@ page import="net.sourceforge.fenixedu.util.FenixDigestUtils"%>
 <h2><bean:message key="label.viewMarkSheet"/></h2>
+<logic:messagesPresent message="true">
+	<br/>
+	<ul>
+	<html:messages id="messages" message="true">
+		<li><span class="error0"><bean:write name="messages" /></span></li>
+	</html:messages>
+	</ul>
+	<br/>
+</logic:messagesPresent>
 
 <html:form action="/markSheetManagement.do">
-	<html:hidden property="method" value="printMarkSheet"/>
+	<html:hidden property="method" value="choosePrinter"/>
 	<html:hidden property="epID" />
 	<html:hidden property="dID" />
 	<html:hidden property="dcpID" />
@@ -70,6 +79,6 @@
 	<strong><bean:message key="label.checksum"/></strong> : <bean:write name="checksum"/>
 	<br/><br/><br/>
 	<html:cancel styleClass="inputbutton" onclick="this.form.method.value='prepareSearchMarkSheetFilled';this.form.submit();"><bean:message key="label.back"/></html:cancel>
-	<html:submit styleClass="inputbutton"><bean:message key="label.print"/></html:submit>
+	<%-- <html:submit styleClass="inputbutton"><bean:message key="label.print"/></html:submit> --%>
 	
 </html:form>

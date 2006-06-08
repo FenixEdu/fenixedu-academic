@@ -8,7 +8,13 @@
 <html:link action="/createMarkSheet.do?method=prepareCreateMarkSheet"><bean:message key="label.createMarkSheet"/></html:link>
 <br/>
 <br/>
-
+<%--<html:link action="/printMarkSheetWeb.do?method=choosePrinterMarkSheetsWeb"><bean:message key="label.print.web.markSheets"/></html:link>
+<br/>
+<br/>
+<html:link action="/markSheetManagement.do?method=prepareSendMail"><bean:message key="label.print.web.markSheets"/></html:link>
+<br/>
+<br/>
+--%>
 <h2><strong><bean:message key="label.searchMarkSheet"/></strong></h2>
 
 <logic:messagesPresent message="true">
