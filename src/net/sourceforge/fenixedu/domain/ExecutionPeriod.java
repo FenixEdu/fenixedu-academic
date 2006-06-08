@@ -1,7 +1,9 @@
 package net.sourceforge.fenixedu.domain;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
@@ -121,6 +123,26 @@ public class ExecutionPeriod extends ExecutionPeriod_Base implements Comparable 
             }
         }
         return result;
+    }
+    
+    public Collection<MarkSheet> getWebMarkSheetsNotPrinted(){
+    	Collection<MarkSheet> markSheets = new HashSet<MarkSheet>(); 
+    	for (MarkSheet sheet : this.getMarkSheets()) {
+			if(sheet.getSubmittedByTeacher() && !sheet.getPrinted()) {
+				markSheets.add(sheet);
+			}
+		}
+    	return markSheets;
+    }
+    
+    public Collection<ExecutionCourse> getExecutionCoursesWithDegreeGradesToSubmit(){
+    	final Collection<ExecutionCourse> executionCourses = new ArrayList<ExecutionCourse>(); 
+    	for (final ExecutionCourse executionCourse : this.getAssociatedExecutionCoursesSet()) {
+			if(executionCourse.hasAnyDegreeGradeToSubmit(this)) {
+				executionCourses.add(executionCourse);
+			}
+		}
+    	return executionCourses;
     }
 
     // -------------------------------------------------------------
