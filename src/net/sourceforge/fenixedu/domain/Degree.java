@@ -29,7 +29,7 @@ public class Degree extends Degree_Base {
     public static final ComparatorChain DEGREE_COMPARATOR_BY_NAME_AND_DEGREE_TYPE = new ComparatorChain();
 
     static {
-        DEGREE_COMPARATOR_BY_NAME_AND_DEGREE_TYPE.addComparator(new BeanComparator("tipoCurso.name"));
+        DEGREE_COMPARATOR_BY_NAME_AND_DEGREE_TYPE.addComparator(new BeanComparator("tipoCurso"));
         DEGREE_COMPARATOR_BY_NAME_AND_DEGREE_TYPE.addComparator(new BeanComparator("nome"));
     }
 
