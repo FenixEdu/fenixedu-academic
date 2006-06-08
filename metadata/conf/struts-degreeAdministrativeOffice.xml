@@ -187,6 +187,13 @@
 			<form-property name="mst" type="java.lang.String" />
 			<form-property name="evaluationID" type="java.lang.Integer" />			
 		</form-bean>
+		
+		<form-bean name="printMarkSheetForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
+			<form-property name="markSheet" type="java.lang.String" />
+			<form-property name="printerName" type="java.lang.String" />
+			<form-property name="page" type="java.lang.Integer" initial="0"/>
+		</form-bean>
+		
 
 	</form-beans>
 
@@ -468,6 +475,7 @@
        		<forward name="removeMarkSheet" path="show.markSheetManagement.remove"/>
        		<forward name="searchMarkSheetFilled" path="/markSheetManagement.do?method=prepareSearchMarkSheetFilled"/>       		
        		<forward name="confirmMarkSheet" path="show.markSheetManagement.confirm.page"/>       		       		       		
+       		<forward name="choosePrinter" path="/printMarkSheet.do?method=choosePrinterMarkSheet"/>       		
 		</action>
 		
 		<action path="/createMarkSheet"
@@ -507,7 +515,28 @@
        		<forward name="editMarkSheet" path="show.markSheetManagement.edit.page"/>
        		<forward name="searchMarkSheetFilled" path="/markSheetManagement.do?method=prepareSearchMarkSheetFilled"/>
 		</action>
+
+		<action path="/printMarkSheet"
+				type="net.sourceforge.fenixedu.presentationTier.Action.degreeAdministrativeOffice.gradeSubmission.PrintMarkSheetDispatchAction"
+				input="/printMarkSheet.do?method=choosePrinterMarkSheet&amp;page=0"
+				parameter="method"
+				name="printMarkSheetForm"
+				scope="request">
+       		<forward name="choosePrinterMarkSheet" path="show.printMarkSheet.choosePrinterMarkSheet"/>       		       		
+       		<forward name="searchMarkSheetFilled" path="/markSheetManagement.do?method=prepareSearchMarkSheetFilled"/>
+       		<forward name="searchMarkSheet" path="/markSheetManagement.do?method=prepareSearchMarkSheet"/>       		
+		</action>		
 		
+		<action path="/printMarkSheetWeb"
+				type="net.sourceforge.fenixedu.presentationTier.Action.degreeAdministrativeOffice.gradeSubmission.PrintMarkSheetDispatchAction"
+				input="/printMarkSheetWeb.do?method=choosePrinterMarkSheetsWeb&amp;page=0"
+				parameter="method"
+				name="printMarkSheetForm"
+				scope="request">
+       		<forward name="choosePrinterMarkSheetsWeb" path="show.printMarkSheet.choosePrinterMarkSheetsWeb"/>
+       		<forward name="searchMarkSheetFilled" path="/markSheetManagement.do?method=prepareSearchMarkSheetFilled"/>
+       		<forward name="searchMarkSheet" path="/markSheetManagement.do?method=prepareSearchMarkSheet"/>       		
+		</action>				
 	</action-mappings>
 
 	<!-- ========== Controller Configuration ================================ -->
