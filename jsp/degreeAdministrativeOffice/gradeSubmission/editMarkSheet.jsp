@@ -16,7 +16,7 @@
 	<html:hidden name="markSheetManagementForm" property="mss" />
 	<html:hidden name="markSheetManagementForm" property="mst" />
 	
-	<h2><bean:message key="label.markSheet.edit" /></h2>
+	<h2><bean:message key="label.markSheet.edit"/> <bean:message key="label.markSheet"/></h2>
 	<br/>
 	
 	<logic:messagesPresent message="true">
@@ -38,6 +38,7 @@
 	<logic:equal name="edit" property="markSheet.markSheetState.name" value="NOT_CONFIRMED">
 		<br/>
 		<br/>
+		<bean:message key="label.markSheet.edit"/>:
 		<fr:edit id="edit-markSheet" name="edit" schema="markSheet.edit">
 			<fr:layout name="tabular" >
 				<fr:property name="classes" value="tstyle4"/>
