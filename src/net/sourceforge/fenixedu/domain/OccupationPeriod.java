@@ -30,9 +30,22 @@ public class OccupationPeriod extends OccupationPeriod_Base {
         this.setStart(startDate);
         this.setEnd(endDate);
     }
+    
+    public OccupationPeriod(YearMonthDay startDate, YearMonthDay endDate) {
+        this();
+        checkDates(startDate, endDate);
+        setStartYearMonthDay(startDate);
+        setEndYearMonthDay(endDate);
+    }
 
     private void checkDates(Date startDate, Date endDate) {
         if (startDate == null || endDate == null || startDate.after(endDate)) {
+            throw new DomainException("error.occupationPeriod.invalid.dates");
+        }
+    }
+    
+    private void checkDates(YearMonthDay startDate, YearMonthDay endDate) {
+        if (startDate == null || endDate == null || startDate.isAfter(endDate)) {
             throw new DomainException("error.occupationPeriod.invalid.dates");
         }
     }
