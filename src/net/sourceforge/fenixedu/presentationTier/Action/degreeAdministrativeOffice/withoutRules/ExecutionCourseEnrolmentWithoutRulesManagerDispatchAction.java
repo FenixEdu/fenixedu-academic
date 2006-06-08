@@ -295,7 +295,7 @@ public class ExecutionCourseEnrolmentWithoutRulesManagerDispatchAction extends D
         MessageResources messageResources = this.getResources(request, "ENUMERATION_RESOURCES");
         
         List executionDegreeLabels = ExecutionDegreesFormat
-                .buildExecutionDegreeLabelValueBean(executionDegreeList, messageResources);
+                .buildExecutionDegreeLabelValueBean(executionDegreeList, messageResources, request);
         request.setAttribute(SessionConstants.DEGREE_LIST, executionDegreeLabels);
 
         //read all curricular years and semester

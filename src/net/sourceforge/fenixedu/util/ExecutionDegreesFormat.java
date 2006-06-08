@@ -7,10 +7,14 @@ package net.sourceforge.fenixedu.util;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
+
+import javax.servlet.http.HttpServletRequest;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 
+import org.apache.struts.Globals;
 import org.apache.struts.util.LabelValueBean;
 import org.apache.struts.util.MessageResources;
 
@@ -19,7 +23,7 @@ import org.apache.struts.util.MessageResources;
  *  
  */
 public class ExecutionDegreesFormat extends FenixUtil {
-    public static List buildExecutionDegreeLabelValueBean(List executionDegreeList, MessageResources messageResources) {
+    public static List buildExecutionDegreeLabelValueBean(List executionDegreeList, MessageResources messageResources, HttpServletRequest request) {
         List executionDegreeLabels = new ArrayList();
         Iterator iterator = executionDegreeList.iterator();
         while (iterator.hasNext()) {
@@ -30,15 +34,13 @@ public class ExecutionDegreesFormat extends FenixUtil {
             String degreeType = null;
             
             if(messageResources != null) {
-                degreeType = messageResources.getMessage(infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getTipoCurso()
-                        .toString());
-                
+            	final Locale locale = (Locale) request.getSession(false).getAttribute(Globals.LOCALE_KEY);
+                degreeType = messageResources.getMessage(locale, infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getTipoCurso().name());
             }
-            
+
             if(degreeType == null)
                 degreeType = infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getTipoCurso().toString();
 
-            
             name = degreeType
                     + " em " + name;
 

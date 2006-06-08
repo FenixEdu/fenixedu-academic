@@ -103,7 +103,7 @@ public class ManageExecutionCoursesDA extends FenixExecutionDegreeAndCurricularY
         MessageResources messageResources = this.getResources(request, "ENUMERATION_RESOURCES");
         /* Generate a label list for the above list of degrees */
         List labelListOfExecutionDegrees = ExecutionDegreesFormat.buildExecutionDegreeLabelValueBean(
-                executionDegreeList, messageResources);// ContextUtils.getLabelListOfExecutionDegrees(executionDegreeList);
+                executionDegreeList, messageResources, request);// ContextUtils.getLabelListOfExecutionDegrees(executionDegreeList);
         request.setAttribute(SessionConstants.LIST_INFOEXECUTIONDEGREE, labelListOfExecutionDegrees);
 
         return mapping.findForward("ShowSearchForm");

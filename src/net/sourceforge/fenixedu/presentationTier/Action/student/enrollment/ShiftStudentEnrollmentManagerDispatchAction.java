@@ -117,7 +117,7 @@ public class ShiftStudentEnrollmentManagerDispatchAction extends TransactionalDi
                 MessageResources messageResources = this.getResources(request, "ENUMERATION_RESOURCES");
                 infoShiftEnrollment.setInfoExecutionDegreesLabelsList(ExecutionDegreesFormat
                         .buildExecutionDegreeLabelValueBean(infoShiftEnrollment
-                                .getInfoExecutionDegreesList(), messageResources));
+                                .getInfoExecutionDegreesList(), messageResources, request));
             }
             return mapping.findForward("selectCourses");
         }
