@@ -15,7 +15,7 @@ public class MarkSheetManagementBaseBean implements Serializable {
     private DomainReference<DegreeCurricularPlan> degreeCurricularPlan;
     private DomainReference<CurricularCourse> curricularCourse;
     private DomainReference<ExecutionPeriod> executionPeriod;
-    private DomainReference<Teacher> teacher;
+    transient private DomainReference<Teacher> teacher;
     
     private String url;
 
@@ -43,7 +43,6 @@ public class MarkSheetManagementBaseBean implements Serializable {
         this.degreeCurricularPlan = (degreeCurricularPlan != null) ? new DomainReference<DegreeCurricularPlan>(degreeCurricularPlan) : null; 
     }
 
-    
     public ExecutionPeriod getExecutionPeriod() {
         return (this.executionPeriod == null) ? null : this.executionPeriod.getObject(); 
     }
