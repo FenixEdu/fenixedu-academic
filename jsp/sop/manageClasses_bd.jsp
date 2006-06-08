@@ -30,6 +30,9 @@
 
 	<span class="error"><html:errors/></span>
    	<br />
+   	<bean:define id="degree" type="net.sourceforge.fenixedu.domain.Degree" name="executionDegreeD" property="degreeCurricularPlan.degree"/>
+   	<bean:define id="curricularYear" type="java.lang.Integer" name="curricularYearOID"/>
+   	<%= degree.constructSchoolClassPrefix(curricularYear) %>
    	<html:text property="className"/>
    	<html:submit styleClass="inputbuttonSmall">
    		<bean:message key="label.create"/>

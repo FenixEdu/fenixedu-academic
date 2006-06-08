@@ -12,6 +12,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServi
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoClass;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
+import net.sourceforge.fenixedu.domain.SchoolClass;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.base.FenixClassAndExecutionDegreeAndCurricularYearContextDispatchAction;
@@ -39,10 +40,12 @@ public class ManageClassDA extends FenixClassAndExecutionDegreeAndCurricularYear
             HttpServletResponse response) throws Exception {
 
         InfoClass infoClass = (InfoClass) request.getAttribute(SessionConstants.CLASS_VIEW);
+        final SchoolClass schoolClass = rootDomainObject.readSchoolClassByOID(infoClass.getIdInternal());
+        request.setAttribute("schoolClass", schoolClass);
 
         // Fill out the form with the name of the class
         DynaActionForm classForm = (DynaActionForm) form;
-        classForm.set("className", infoClass.getNome());
+        classForm.set("className", schoolClass.getEditablePartOfName());
 
         //Get list of shifts and place them in request
         Object args[] = { infoClass };

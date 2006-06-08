@@ -22,15 +22,6 @@
 	<table cellpadding="0" cellspacing="0">
 		<tr>
 			<td class="formTD">
-				<bean:message key="property.turno.name"/>
-				:
-			</td>
-			<td class="formTD">
-				<html:text property="nome" size="11" maxlength="20"/>
-			</td>
-		</tr>
-		<tr>
-			<td class="formTD">
 				<bean:message key="property.turno.disciplina"/>
 				:
 			</td>

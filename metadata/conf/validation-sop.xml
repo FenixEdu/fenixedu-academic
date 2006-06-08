@@ -675,9 +675,6 @@
 
     <!-- Validation for Shift Creation -->
     <form name="createShiftForm">
-      <field property="nome" depends="required" page="1">
-        <arg0 key="property.shift.name"/>
-      </field>
       <field property="courseInitials" depends="required" page="1">
         <arg0 key="property.course"/>
       </field>

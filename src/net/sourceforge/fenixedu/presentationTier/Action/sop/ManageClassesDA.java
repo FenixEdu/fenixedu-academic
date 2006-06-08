@@ -13,6 +13,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoClass;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularYear;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.base.FenixExecutionDegreeAndCurricularYearContextDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
@@ -35,23 +36,19 @@ import org.apache.struts.validator.DynaValidatorForm;
  */
 public class ManageClassesDA extends FenixExecutionDegreeAndCurricularYearContextDispatchAction {
 
-    public ActionForward listClasses(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
+    public ActionForward listClasses(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+    		throws Exception {
 
-        InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request
-                .getAttribute(SessionConstants.EXECUTION_PERIOD);
+        InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request.getAttribute(SessionConstants.EXECUTION_PERIOD);
 
-        InfoCurricularYear infoCurricularYear = (InfoCurricularYear) request
-                .getAttribute(SessionConstants.CURRICULAR_YEAR);
+        InfoCurricularYear infoCurricularYear = (InfoCurricularYear) request.getAttribute(SessionConstants.CURRICULAR_YEAR);
 
-        InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) request
-                .getAttribute(SessionConstants.EXECUTION_DEGREE);
+        InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) request.getAttribute(SessionConstants.EXECUTION_DEGREE);
+        final ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(infoExecutionDegree.getIdInternal());
 
-        Object argsLerTurmas[] = { infoExecutionDegree, infoExecutionPeriod,
-                infoCurricularYear.getYear() };
+        Object argsLerTurmas[] = { infoExecutionDegree, infoExecutionPeriod, infoCurricularYear.getYear() };
 
-        List classesList = (List) ServiceUtils.executeService(SessionUtils.getUserView(request),
-                "LerTurmas", argsLerTurmas);
+        List classesList = (List) ServiceUtils.executeService(SessionUtils.getUserView(request), "LerTurmas", argsLerTurmas);
 
         if (classesList != null && !classesList.isEmpty()) {
             BeanComparator nameComparator = new BeanComparator("nome");
@@ -59,6 +56,8 @@ public class ManageClassesDA extends FenixExecutionDegreeAndCurricularYearContex
 
             request.setAttribute(SessionConstants.CLASSES, classesList);
         }
+
+        request.setAttribute("executionDegreeD", executionDegree);
 
         return mapping.findForward("ShowClassList");
     }

@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.domain;
 
+import java.text.Collator;
 import java.util.Calendar;
 import java.util.Comparator;
 import java.util.Date;
@@ -15,7 +16,11 @@ import net.sourceforge.fenixedu.domain.teacher.DegreeTeachingService;
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
 
+import pt.utl.ist.fenix.tools.util.StringAppender;
+
 public class Shift extends Shift_Base {
+
+    public static final Comparator SHIFT_COMPARATOR_BY_NAME = new BeanComparator("nome", Collator.getInstance());
 
     public static final Comparator SHIFT_COMPARATOR_BY_TYPE_AND_ORDERED_LESSONS = new ComparatorChain();
     static {
@@ -23,10 +28,16 @@ public class Shift extends Shift_Base {
         ((ComparatorChain) SHIFT_COMPARATOR_BY_TYPE_AND_ORDERED_LESSONS).addComparator(new BeanComparator("lessonsStringComparator"));
     }
 
-    public Shift() {
-		super();
-		setRootDomainObject(RootDomainObject.getInstance());
-	}
+    public Shift(final ExecutionCourse executionCourse, final ShiftType shiftType, final Integer lotacao, final Integer availabilityFinal) {
+	super();
+	setRootDomainObject(RootDomainObject.getInstance());
+	final String shiftName = executionCourse.nextShiftName(shiftType);
+	setNome(shiftName);
+	setDisciplinaExecucao(executionCourse);
+	setTipo(shiftType);
+	setLotacao(lotacao);
+	setAvailabilityFinal(availabilityFinal);
+    }
 
     public void delete() {
         if (canBeDeleted()) {
@@ -34,9 +45,12 @@ public class Shift extends Shift_Base {
             for (; hasAnyAssociatedShiftProfessorship(); getAssociatedShiftProfessorship().get(0).delete());
             
             getAssociatedClasses().clear();
+            final ExecutionCourse executionCourse = getDisciplinaExecucao();
             removeDisciplinaExecucao();
             removeRootDomainObject();
-            deleteDomainObject();    
+            deleteDomainObject();
+
+            executionCourse.adjustShiftNames(getTipo());
         } else {
             throw new DomainException("shift.cannot.be.deleted");
         }

@@ -24,6 +24,8 @@ import net.sourceforge.fenixedu.util.MarkType;
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
 
+import pt.utl.ist.fenix.tools.util.StringAppender;
+
 public class Degree extends Degree_Base {
 
     public static final ComparatorChain DEGREE_COMPARATOR_BY_NAME_AND_DEGREE_TYPE = new ComparatorChain();
@@ -601,6 +603,10 @@ public class Degree extends Degree_Base {
         }
         
         return null;
+    }
+
+    public String constructSchoolClassPrefix(final Integer curricularYear) {
+	return isBolonhaDegree() ? StringAppender.append(getSigla(), "0", curricularYear.toString()) : "";
     }
     
 }

@@ -32,27 +32,32 @@ public class EditarTurno extends Service {
 
 		final Shift shiftToEdit = rootDomainObject.readShiftByOID(infoShiftOld.getIdInternal());
 
+		final ExecutionCourse previousExecutionCourse = shiftToEdit.getDisciplinaExecucao();
+		final ExecutionCourse newExecutionCourse = rootDomainObject.readExecutionCourseByOID(infoShiftNew.getInfoDisciplinaExecucao().getIdInternal());
+
+		final ShiftType previousShiftType = shiftToEdit.getTipo();
+		final ShiftType newShiftType = infoShiftNew.getTipo();
+
 		final int capacityDiference = infoShiftNew.getLotacao().intValue() - shiftToEdit.getLotacao().intValue();
 
 		if (shiftToEdit.getAvailabilityFinal().intValue() + capacityDiference < 0) {
 			throw new InvalidFinalAvailabilityException();
 		}
 
-		final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(infoShiftNew.getInfoDisciplinaExecucao().getIdInternal());
-		final Shift otherShiftWithSameNewName = executionCourse.findShiftByName(infoShiftNew.getNome());
+		final Shift otherShiftWithSameNewName = newExecutionCourse.findShiftByName(infoShiftNew.getNome());
 		if (otherShiftWithSameNewName != null && otherShiftWithSameNewName != shiftToEdit) {
 			throw new ExistingServiceException("Duplicate Entry: " + otherShiftWithSameNewName.getNome());
 		}
 
-		shiftToEdit.setNome(infoShiftNew.getNome());
+		//shiftToEdit.setNome(infoShiftNew.getNome());
 		shiftToEdit.setTipo(infoShiftNew.getTipo());
 
 		shiftToEdit.setLotacao(infoShiftNew.getLotacao());
 		shiftToEdit.setAvailabilityFinal(new Integer(shiftToEdit.getAvailabilityFinal().intValue()
 				+ capacityDiference));
 
-        if (shiftToEdit.getDisciplinaExecucao() != executionCourse) {
-            shiftToEdit.setDisciplinaExecucao(executionCourse);
+        if (shiftToEdit.getDisciplinaExecucao() != newExecutionCourse) {
+            shiftToEdit.setDisciplinaExecucao(newExecutionCourse);
         }
 
 		// Also change the type of associated lessons and lessons execution
@@ -62,6 +67,9 @@ public class EditarTurno extends Service {
 				shiftToEdit.getAssociatedLessons().get(i).setTipo(infoShiftNew.getTipo());
 			}
 		}
+
+		previousExecutionCourse.adjustShiftNames(previousShiftType);
+		newExecutionCourse.adjustShiftNames(newShiftType);
 
 		return InfoShift.newInfoFromDomain(shiftToEdit);
 	}

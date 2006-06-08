@@ -15,7 +15,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServi
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShiftWithInfoExecutionCourse;
-import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -24,25 +23,24 @@ public class CriarTurno extends Service {
 
     public InfoShift run(InfoShift infoTurno) throws FenixServiceException, ExcepcaoPersistencia {
     	final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(infoTurno.getInfoDisciplinaExecucao().getIdInternal());
-    	final Shift existingShift = executionCourse.findShiftByName(infoTurno.getNome());
+    	final Shift existingShift = executionCourse.findShiftByName(executionCourse.nextShiftName(infoTurno.getTipo()));
 
         if (existingShift != null) {
             throw new ExistingServiceException("Duplicate Entry: " + infoTurno.getNome());
         }
 
-        Shift newShift = DomainFactory.makeShift();
         Integer availabilityFinal = new Integer(new Double(Math.ceil(1.10 * infoTurno.getLotacao()
                 .doubleValue())).intValue());
-        newShift.setAvailabilityFinal(availabilityFinal);
-        newShift.setDisciplinaExecucao(executionCourse);
-        newShift.setNome(infoTurno.getNome());
-        newShift.setLotacao(infoTurno.getLotacao());
-        newShift.setTipo(infoTurno.getTipo());
 
-        InfoShift infoShift = InfoShiftWithInfoExecutionCourse.newInfoFromDomain(newShift);
+    	final Shift newShift = new Shift(executionCourse, infoTurno.getTipo(), infoTurno.getLotacao(), availabilityFinal);
+//        Shift newShift = DomainFactory.makeShift();
+//        newShift.setAvailabilityFinal(availabilityFinal);
+//        newShift.setDisciplinaExecucao(executionCourse);
+//        newShift.setNome(infoTurno.getNome());
+//        newShift.setLotacao(infoTurno.getLotacao());
+//        newShift.setTipo(infoTurno.getTipo());
 
-        return infoShift;
-
+        return InfoShiftWithInfoExecutionCourse.newInfoFromDomain(newShift);
     }
 
 }

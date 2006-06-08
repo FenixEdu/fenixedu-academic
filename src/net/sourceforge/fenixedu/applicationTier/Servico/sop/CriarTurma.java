@@ -16,54 +16,32 @@ import java.util.Set;
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoClass;
+import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.SchoolClass;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.collections.Predicate;
-
 public class CriarTurma extends Service {
 
     public Object run(final InfoClass infoClass) throws ExcepcaoPersistencia, ExistingServiceException {
-        final ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(infoClass
-                .getInfoExecutionDegree().getIdInternal());
-        final ExecutionPeriod executionPeriod = rootDomainObject.readExecutionPeriodByOID(infoClass
-                .getInfoExecutionPeriod().getIdInternal());
-        final Set<SchoolClass> classes = executionDegree
-                .findSchoolClassesByExecutionPeriodAndCurricularYear(executionPeriod, infoClass
-                        .getAnoCurricular());
+        final ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(infoClass.getInfoExecutionDegree().getIdInternal());
+        final ExecutionPeriod executionPeriod = rootDomainObject.readExecutionPeriodByOID(infoClass.getInfoExecutionPeriod().getIdInternal());
+        final Set<SchoolClass> classes = executionDegree.findSchoolClassesByExecutionPeriodAndCurricularYear(executionPeriod, infoClass.getAnoCurricular());
 
-        final SchoolClass existingClass = (SchoolClass) CollectionUtils.find(classes, new Predicate() {
-            public boolean evaluate(Object arg0) {
-                final SchoolClass schoolClass = (SchoolClass) arg0;
-                return infoClass.getNome().equalsIgnoreCase(schoolClass.getNome());
+        final Integer curricularYear = infoClass.getAnoCurricular();
+        final DegreeCurricularPlan degreeCurricularPlan = executionDegree.getDegreeCurricularPlan();
+        final Degree degree = degreeCurricularPlan.getDegree();
+        final String schoolClassName = degree.constructSchoolClassPrefix(curricularYear) + infoClass.getNome();
+
+        for (final SchoolClass schoolClass : classes) {
+            if (schoolClassName.equalsIgnoreCase(schoolClass.getNome())) {
+        	throw new ExistingServiceException("Duplicate Entry: " + infoClass.getNome());
             }
-
-        });
-
-        if (existingClass != null) {
-            throw new ExistingServiceException("Duplicate Entry: " + infoClass.getNome());
         }
 
-        SchoolClass schoolClass = DomainFactory.makeSchoolClass();
-        schoolClass.setNome(infoClass.getNome());
-        schoolClass.setAnoCurricular(infoClass.getAnoCurricular());
-
-        DegreeCurricularPlan degreeCurricularPlan = DegreeCurricularPlan.readByNameAndDegreeSigla(infoClass.getInfoExecutionDegree()
-                .getInfoDegreeCurricularPlan().getName(), infoClass.getInfoExecutionDegree()
-                .getInfoDegreeCurricularPlan().getInfoDegree().getSigla());
-        
-        schoolClass.setExecutionDegree(ExecutionDegree.getByDegreeCurricularPlanAndExecutionYear(degreeCurricularPlan, infoClass
-                        .getInfoExecutionDegree().getInfoExecutionYear().getYear()));
-
-        schoolClass.setExecutionPeriod(ExecutionPeriod.readByNameAndExecutionYear(infoClass
-                .getInfoExecutionPeriod().getName(), infoClass.getInfoExecutionPeriod()
-                .getInfoExecutionYear().getYear()));
-
+        final SchoolClass schoolClass = new SchoolClass(executionDegree, executionPeriod, infoClass.getNome(), curricularYear);
         return InfoClass.newInfoFromDomain(schoolClass);
     }
 

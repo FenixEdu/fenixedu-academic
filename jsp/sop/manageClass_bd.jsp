@@ -98,8 +98,10 @@
 
 	<span class="error"><html:errors/></span>
    	<br />
+   	<bean:define id="degree" type="net.sourceforge.fenixedu.domain.Degree" name="schoolClass" property="executionDegree.degreeCurricularPlan.degree"/>
+   	<bean:define id="curricularYear" type="java.lang.Integer" name="schoolClass" property="anoCurricular"/>
+   	<%= degree.constructSchoolClassPrefix(curricularYear) %>
    	<html:text property="className"/>
-   	<br />
    	<html:submit styleClass="inputbuttonSmall">
    		<bean:message key="label.change"/>
    	</html:submit>

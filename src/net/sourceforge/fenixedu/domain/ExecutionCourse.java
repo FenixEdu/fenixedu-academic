@@ -35,6 +35,8 @@ import org.joda.time.DateTimeFieldType;
 import org.joda.time.Interval;
 import org.joda.time.Period;
 
+import pt.utl.ist.fenix.tools.util.StringAppender;
+
 public class ExecutionCourse extends ExecutionCourse_Base {
 
     public static final Comparator<ExecutionCourse> EXECUTION_COURSE_NAME_COMPARATOR = new BeanComparator(
@@ -992,4 +994,35 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 		}
 		return false;
 	}
+
+    public String nextShiftName(final ShiftType shiftType) {
+	int i = 1;
+	for (final Shift otherShift : getAssociatedShiftsSet()) {
+	    if (otherShift.getTipo() == shiftType) {
+		i++;
+	    }
+	}
+	return constructShiftName(shiftType, i);
+    }
+
+    public String constructShiftName(final ShiftType shiftType, final int n) {
+	final String number = n < 10 ? "0" + n : Integer.toString(n);
+	return StringAppender.append(getSigla(), shiftType.getSiglaTipoAula(), number);	
+    }
+
+    public SortedSet<Shift> getShiftsByTypeOrderedByShiftName(final ShiftType shiftType) {
+	final SortedSet<Shift> shifts = new TreeSet<Shift>(Shift.SHIFT_COMPARATOR_BY_NAME);
+	for (final Shift shift : getAssociatedShiftsSet()) {
+	    shifts.add(shift);
+	}
+	return shifts;
+    }
+
+    public void adjustShiftNames(final ShiftType shiftType) {
+        int i = 1;
+        for (final Shift otherShift : getShiftsByTypeOrderedByShiftName(shiftType)) {
+            otherShift.setNome(constructShiftName(shiftType, i++));
+        }
+    }
+
 }
