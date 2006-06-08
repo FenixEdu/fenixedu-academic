@@ -5,6 +5,10 @@ package net.sourceforge.fenixedu.domain;
  * @author tfc130
  */
 import java.util.Calendar;
+import java.util.Comparator;
+
+import org.apache.commons.beanutils.BeanComparator;
+import org.apache.commons.collections.comparators.ComparatorChain;
 
 import net.sourceforge.fenixedu.domain.space.OldRoom;
 import net.sourceforge.fenixedu.domain.space.RoomOccupation;
@@ -12,6 +16,13 @@ import net.sourceforge.fenixedu.util.DiaSemana;
 import net.sourceforge.fenixedu.util.date.TimePeriod;
 
 public class Lesson extends Lesson_Base {
+
+    public static final Comparator LESSON_COMPARATOR_BY_WEEKDAY_AND_STARTTIME_AND_ROOMNAME = new ComparatorChain();
+    static {
+        ((ComparatorChain) LESSON_COMPARATOR_BY_WEEKDAY_AND_STARTTIME_AND_ROOMNAME).addComparator(new BeanComparator("diaSemana.diaSemana"));
+        ((ComparatorChain) LESSON_COMPARATOR_BY_WEEKDAY_AND_STARTTIME_AND_ROOMNAME).addComparator(new BeanComparator("beginHourMinuteSecond"));
+        ((ComparatorChain) LESSON_COMPARATOR_BY_WEEKDAY_AND_STARTTIME_AND_ROOMNAME).addComparator(new BeanComparator("roomOccupation.room.name"));
+    }
 
     public Lesson() {
         super();

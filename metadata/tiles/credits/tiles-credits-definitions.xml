@@ -27,6 +27,10 @@
 	<definition name="creditsResumeLine" page="/credits/commons/creditsResumeLine.jsp">
 		<put name="creditLineDTO"/>
 	</definition>
+	
+	<definition name="creditsResumeWithDescription" page="/credits/commons/creditsResumeWithDescription.jsp">
+		<put name="creditLineDTO"/>
+	</definition>
 
 	<definition name="teacher-search-form-layout" page="/credits/commons/searchTeacherLayout.jsp">
 			<put name="searchInfo" value="/commons/blank.jsp"></put>

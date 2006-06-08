@@ -6,6 +6,7 @@
 <%@ taglib uri="/WEB-INF/app.tld" prefix="app" %>
 <bean:define id="component" name="siteView" property="commonComponent" />
 <bean:define id="executionCourse" name="component" property="executionCourse" />
+
 <ul>
 <li><html:link page="/sectionManagement.do?method=prepareCreateRootSection" paramId="objectCode" paramName="executionCourse" paramProperty="idInternal"><bean:message key="link.createRootSection"/></html:link></li>
 </ul>

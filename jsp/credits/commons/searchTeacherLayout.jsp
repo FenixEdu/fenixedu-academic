@@ -19,7 +19,6 @@
 <html:form action="<%= path %>" focus="teacherNumber">
 	<input type="hidden" name="method" value="doSearch"/>
 	<input type="hidden" name="page" value="1"/>
-	<html:hidden property="executionPeriodId"/>
 	<bean:message key="label.teacher.number"/> <html:text property="teacherNumber"	/>
 	<html:submit styleClass="inputbutton">
 		<bean:message key="button.ok"/>

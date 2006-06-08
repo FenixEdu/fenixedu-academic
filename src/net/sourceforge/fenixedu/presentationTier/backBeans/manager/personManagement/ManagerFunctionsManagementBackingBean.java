@@ -8,7 +8,6 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -83,7 +82,7 @@ public class ManagerFunctionsManagementBackingBean extends FunctionsManagementBa
 
         Collections.sort(allUnits, new BeanComparator("name"));
 
-        Date currentDate = Calendar.getInstance().getTime();
+        YearMonthDay currentDate = new YearMonthDay();
         for (Unit unit : allUnits) {
             if (unit.getName().equals(UnitUtils.IST_UNIT_NAME) && unit.isActive(currentDate)) {
                 getUnitTree(buffer, unit);
@@ -121,7 +120,7 @@ public class ManagerFunctionsManagementBackingBean extends FunctionsManagementBa
         Collections.sort(subUnits, new BeanComparator("name"));
 
         for (Unit subUnit : subUnits) {
-            if (subUnit.isActive(Calendar.getInstance().getTime())) {
+            if (subUnit.isActive(new YearMonthDay())) {
                 getUnitsList(subUnit, buffer);
             }
         }

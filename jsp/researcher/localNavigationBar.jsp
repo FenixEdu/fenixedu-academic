@@ -13,8 +13,7 @@
 			<html:link page="/viewCurriculum.do?method=prepare">
 				<bean:message bundle="RESEARCHER_RESOURCES" key="link.viewCurriculum"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 			</html:link>
-		</li>
-		<%--
+		</li>		
 		<li class="navheader"><bean:message bundle="RESEARCHER_RESOURCES" key="link.managementTitle"/></li>
 		<li class="sub">
 			<ul>
@@ -23,8 +22,7 @@
 				<li><html:link page="/projects/projectsManagement.do?method=listProjects"><bean:message bundle="RESEARCHER_RESOURCES" key="link.projectsManagement"/></html:link></li>
 				<li><html:link page="/result/patents/patentsManagement.do?method=listPatents"><bean:message bundle="RESEARCHER_RESOURCES" key="link.patentsManagement"/></html:link></li>			
 			</ul>
-		</li>
-		--%>
+		</li>		
 	</ul>
 	
 	<br />

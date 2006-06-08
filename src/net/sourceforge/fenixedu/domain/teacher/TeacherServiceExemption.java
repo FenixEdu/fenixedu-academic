@@ -4,9 +4,9 @@
  */
 package net.sourceforge.fenixedu.domain.teacher;
 
-import java.util.Date;
-
 import net.sourceforge.fenixedu.domain.RootDomainObject;
+
+import org.joda.time.YearMonthDay;
 
 public class TeacherServiceExemption extends TeacherServiceExemption_Base {
 
@@ -20,10 +20,10 @@ public class TeacherServiceExemption extends TeacherServiceExemption_Base {
         removeRootDomainObject();
         super.deleteDomainObject();
     }
-
-    public boolean belongsToPeriod(Date beginDate, Date endDate) {
-        return (!this.getStart().after(endDate) && (this.getEnd() == null || !this.getEnd().before(
-                beginDate)));
+    
+    public boolean belongsToPeriod(YearMonthDay beginDate, YearMonthDay endDate) {
+        return (!this.getStartYearMonthDay().isAfter(endDate) && (this.getEndYearMonthDay() == null || 
+                !this.getEndYearMonthDay().isBefore(beginDate)));
     }
 
     public boolean isMedicalSituation() {

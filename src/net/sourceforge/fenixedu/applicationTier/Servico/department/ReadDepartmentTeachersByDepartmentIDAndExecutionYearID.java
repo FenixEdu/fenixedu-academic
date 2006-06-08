@@ -27,8 +27,8 @@ public class ReadDepartmentTeachersByDepartmentIDAndExecutionYearID extends Serv
         if (executionYearID != null) {
             ExecutionYear executionYear = rootDomainObject.readExecutionYearByOID(executionYearID);
 
-            teachersFromDepartment = department.getTeachers(executionYear.getBeginDate(), executionYear
-                    .getEndDate());
+            teachersFromDepartment = department.getTeachers(executionYear.getBeginDateYearMonthDay(), executionYear
+                    .getEndDateYearMonthDay());
 
         } else {
             teachersFromDepartment = department.getTeachersHistoric();

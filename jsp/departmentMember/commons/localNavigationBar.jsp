@@ -29,7 +29,7 @@
 		</li>
 		<br/>
   		<li>
-		  	<html:link page="/showAllTeacherCreditsResume.do">
+		  	<html:link page="/showAllTeacherCreditsResume.do?method=showTeacherCreditsResume">
 		  		<bean:message key="link.teacher.credits"/>
 		  	</html:link>  
 		</li>

@@ -46,7 +46,7 @@ public abstract class InfoCreditsBuilder {
 
             public boolean evaluate(Object input) {
                 TeacherServiceExemption serviceExemption = (TeacherServiceExemption) input;
-                return serviceExemption.belongsToPeriod(executionPeriod.getBeginDate(), executionPeriod.getEndDate());
+                return serviceExemption.belongsToPeriod(executionPeriod.getBeginDateYearMonthDay(), executionPeriod.getEndDateYearMonthDay());
             }
         });
         infoCredits.setContainsServiceExemptionsSituations(new Boolean(exists));

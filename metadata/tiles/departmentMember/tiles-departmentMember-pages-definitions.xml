@@ -5,17 +5,51 @@
     <definition name="index" extends="departmentMember.masterPage">
         <put name="body" value="/departmentMember/index.jsp"></put>
     </definition>
-    
+             
 	<definition name="showAllCreditsResume" extends="departmentMember.masterPage">
-		<put name="body" value="/departmentMember/viewTeacherService/credits/listAllTeacherCreditsResume.jsp"/>
+		<put name="body" value="/departmentMember/credits/listAllTeacherCreditsResume.jsp"/>
 	</definition>
 	
 	<definition name="show-teacher-credits-sheet" extends="departmentMember.masterPage">
-		<put name="body" value="/departmentMember/viewTeacherService/credits/showTeacherCredits.jsp"/>
+		<put name="body" value="/departmentMember/credits/showTeacherCredits.jsp"/>
 	</definition>   
 	
 	<definition name="df.page.viewDepartmentTeacherExpectations.viewDepartmentTeacherExpectations" extends="departmentMember.masterPage"> 
 		<put name="body" value="/departmentMember/viewDepartmentTeachersExpectations/viewDepartmentTeachersExpectations.jsp" />
 	</definition>
+	
+    <!-- DegreeTeachingService -->
+    <definition name="show-teaching-service-percentages" extends="departmentMember.masterPage">
+        <put name="body" value="/credits/degreeTeachingService/showTeachingServicePercentages.jsp"/>
+    </definition> 
 	 
+	<!-- SupportLesson -->
+    <definition name="show-teacher-execution-course-support-lessons" extends="departmentMember.masterPage">
+        <put name="body" value="/credits/supportLessons/showProfessorshipSupportLessons.jsp"/>
+    </definition> 
+    <definition name="edit-support-lesson" extends="departmentMember.masterPage">
+        <put name="body" value="/credits/supportLessons/editSupportLesson.jsp"/>
+    </definition>   
+         
+    <!-- WorkingTime -->
+    <definition name="list-institution-working-time" extends="departmentMember.masterPage">
+        <put name="body" value="/credits/workingTime/showTeacherWorkingTime.jsp"/>
+    </definition>  
+    <definition name="edit-institution-work-time" extends="departmentMember.masterPage">
+        <put name="body" value="/credits/workingTime/editTeacherInstitutionWorkTime.jsp"/>
+    </definition>
+         
+    <!-- AdviseServices -->
+    <definition name="list-teacher-advise-services" extends="departmentMember.masterPage">
+        <put name="body" value="/credits/adviseServices/showTeacherAdviseServices.jsp"/>
+    </definition>  
+    
+    <!-- Schedules Print -->  
+    <definition name="show-empty-schedules-resume-print" page="/layout/fenixPrint.jsp">
+        <put name="body" value="/credits/schedulesPrint/emptySchedules.jsp"/>
+    </definition> 
+    <definition name="show-schedules-resume-print" page="/layout/fenixPrint.jsp">
+        <put name="body" value="/credits/schedulesPrint/schedules.jsp"/>
+    </definition>
+        
 </tiles-definitions>

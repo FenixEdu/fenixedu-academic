@@ -5,7 +5,8 @@ import java.util.Date;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.util.DateFormatUtil;
+
+import org.joda.time.YearMonthDay;
 
 public class Function extends Function_Base {
 
@@ -31,14 +32,13 @@ public class Function extends Function_Base {
         this.setType(AccountabilityTypeEnum.MANAGEMENT_FUNCTION);
     }
 
-    public boolean isActive(Date currentDate) {
-        return (this.getEndDate() == null || (DateFormatUtil.equalDates("yyyyMMdd", this.getEndDate(),
-                currentDate) || this.getEndDate().after(currentDate)));
+    public boolean isActive(YearMonthDay currentDate) {
+        return (this.getEndDateYearMonthDay() == null || !this.getEndDateYearMonthDay().isBefore(currentDate));
     }
 
-    public boolean belongsToPeriod(Date beginDate, Date endDate) {
-        return (!this.getBeginDate().after(endDate) && (this.getEndDate() == null || !this.getEndDate()
-                .before(beginDate)));
+    public boolean belongsToPeriod(YearMonthDay beginDate, YearMonthDay endDate) {
+        return (!this.getBeginDateYearMonthDay().isAfter(endDate) && (this.getEndDateYearMonthDay() == null || !this.getEndDateYearMonthDay()
+                .isBefore(beginDate)));
     }
 
     public void delete() {

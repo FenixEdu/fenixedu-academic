@@ -5,7 +5,6 @@
 package net.sourceforge.fenixedu.presentationTier.backBeans.facultyAdmOffice;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Collections;
 import java.util.List;
 
@@ -17,6 +16,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.presentationTier.backBeans.manager.personManagement.ManagerFunctionsManagementBackingBean;
 
 import org.apache.commons.beanutils.BeanComparator;
+import org.joda.time.YearMonthDay;
 
 public class FacultyAdmOfficeFunctionsManagement extends ManagerFunctionsManagementBackingBean {
 
@@ -26,7 +26,7 @@ public class FacultyAdmOfficeFunctionsManagement extends ManagerFunctionsManagem
         List<Unit> allUnits = UnitUtils.readAllUnitsWithoutParents();
         
         for (Unit unit : allUnits) {
-            if (unit.getName().equals(UnitUtils.IST_UNIT_NAME) && unit.isActive(Calendar.getInstance().getTime())) {
+            if (unit.getName().equals(UnitUtils.IST_UNIT_NAME) && unit.isActive(new YearMonthDay())) {
                 getUnitTree(buffer, unit);
             }
         }
@@ -62,7 +62,7 @@ public class FacultyAdmOfficeFunctionsManagement extends ManagerFunctionsManagem
         Collections.sort(subUnits, new BeanComparator("name"));
         
         for (Unit subUnit : subUnits) {
-            if (subUnit.isActive(Calendar.getInstance().getTime())) {
+            if (subUnit.isActive(new YearMonthDay())) {
                 getUnitsList(subUnit, buffer);
             }
         }

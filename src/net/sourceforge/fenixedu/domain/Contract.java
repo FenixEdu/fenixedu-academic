@@ -4,9 +4,7 @@
  */
 package net.sourceforge.fenixedu.domain;
 
-import java.util.Date;
-
-import net.sourceforge.fenixedu.util.DateFormatUtil;
+import org.joda.time.YearMonthDay;
 
 public class Contract extends Contract_Base {
 
@@ -15,15 +13,13 @@ public class Contract extends Contract_Base {
 		setRootDomainObject(RootDomainObject.getInstance());
 	}
 
-	public boolean belongsToPeriod(Date beginDate, Date endDate) {
-        return (!this.getBeginDate().after(endDate)
-                && (this.getEndDate() == null || !this.getEndDate().before(beginDate)));            
+	public boolean belongsToPeriod(YearMonthDay beginDate, YearMonthDay endDate) {
+        return (!this.getBeginDateYearMonthDay().isAfter(endDate)
+                && (this.getEndDateYearMonthDay() == null || !this.getEndDateYearMonthDay().isBefore(beginDate)));            
     }
 
-    public boolean isActive(Date currentDate) {
-        return (this.getEndDate() == null
-                || (DateFormatUtil.equalDates("yyyyMMdd", this.getEndDate(), currentDate) || this
-                        .getEndDate().after(currentDate)));            
+    public boolean isActive(YearMonthDay currentDate) {
+        return (this.getEndDateYearMonthDay() == null || !this.getEndDateYearMonthDay().isBefore(currentDate));            
     }
 
     public void delete() {

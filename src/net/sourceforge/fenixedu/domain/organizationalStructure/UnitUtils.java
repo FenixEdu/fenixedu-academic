@@ -5,12 +5,12 @@
 package net.sourceforge.fenixedu.domain.organizationalStructure;
 
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
+
+import org.joda.time.YearMonthDay;
 
 public class UnitUtils {
 
@@ -68,7 +68,7 @@ public class UnitUtils {
 
     public static List<Unit> readAllDepartmentUnits() {
         final List<Unit> result = new ArrayList<Unit>();
-        final Date now = Calendar.getInstance().getTime();
+        final YearMonthDay now = new YearMonthDay();
         for (final Unit unit : Unit.readAllUnits()) {
             if (unit.isActive(now) && unit.getType() == PartyTypeEnum.DEPARTMENT) {
                 result.add(unit);

@@ -3715,16 +3715,6 @@
 		</filterChains>
 	</service>
 	<service>
-		<name>DeleteSupportLessonByOID</name>
-		<implementationClass> 
-            net.sourceforge.fenixedu.applicationTier.Servico.teacher.professorship.DeleteSupportLessonByOID</implementationClass>
-		<description />
-		<isTransactional>true</isTransactional>
-		<filterChains>
-			<chain name="ReadDeleteSupportLessonAuthorization" />
-		</filterChains>
-	</service>
-	<service>
 		<name>ReadSupportLessonByOID</name>
 		<implementationClass> 
             net.sourceforge.fenixedu.applicationTier.Servico.teacher.professorship.ReadSupportLessonByOID</implementationClass>
@@ -9140,6 +9130,9 @@
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.services.UpdateDegreeTeachingServices</implementationClass>
         <description></description>
         <isTransactional>true</isTransactional>       
+        <filterChains>
+        	<chain name="CreditsServicesAuthorization"></chain>
+        </filterChains>
     </service> 
     <service>
     	<name>ReadDomainExecutionPeriodByOID</name>
@@ -9164,6 +9157,9 @@
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.professorship.EditSupportLesson</implementationClass>
         <description></description>
         <isTransactional>true</isTransactional>       
+        <filterChains>
+        	<chain name="CreditsServicesAuthorization"></chain>
+        </filterChains>
     </service>      
     <service>
     	<name>ReadDomainProfessorshipByOID</name>
@@ -9176,6 +9172,9 @@
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.professorship.DeleteSupportLesson</implementationClass>
         <description></description>
         <isTransactional>true</isTransactional>       
+        <filterChains>
+        	<chain name="CreditsServicesAuthorization"></chain>
+        </filterChains>
     </service>         
     <service>
     	<name>ReadTeacherServiceByTeacherIDAndExecutionPeriodID</name>
@@ -9193,13 +9192,19 @@
     	<name>EditTeacherInstitutionWorkTime</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.services.EditTeacherInstitutionWorkTime</implementationClass>
         <description></description>
-        <isTransactional>true</isTransactional>       
+        <isTransactional>true</isTransactional>   
+        <filterChains>
+        	<chain name="CreditsServicesAuthorization"></chain>
+        </filterChains>         
     </service>       
     <service>
     	<name>CreateTeacherInstitutionWorkTime</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.services.CreateTeacherInstitutionWorkTime</implementationClass>
         <description></description>
         <isTransactional>true</isTransactional>       
+        <filterChains>
+        	<chain name="CreditsServicesAuthorization"></chain>
+        </filterChains>    
     </service>    
     <service>
     	<name>ReadDomainTeacherByOID</name>
@@ -9212,18 +9217,27 @@
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.services.DeleteInstitutionWorkTimeByOID</implementationClass>
         <description></description>
         <isTransactional>true</isTransactional>       
-    </service>     
+        <filterChains>
+        	<chain name="CreditsServicesAuthorization"></chain>
+        </filterChains>   
+    </service>         
     <service>
     	<name>EditTeacherAdviseService</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.services.EditTeacherAdviseService</implementationClass>
         <description></description>
-        <isTransactional>true</isTransactional>       
+        <isTransactional>true</isTransactional>  
+        <filterChains>
+        	<chain name="CreditsServicesAuthorization"></chain>
+        </filterChains>     
     </service>    
     <service>
     	<name>DeleteTeacherAdviseServiceByOID</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.services.DeleteTeacherAdviseServiceByOID</implementationClass>
         <description></description>
         <isTransactional>true</isTransactional>       
+        <filterChains>
+        	<chain name="CreditsServicesAuthorization"></chain>
+        </filterChains>
     </service> 
     <service>
     	<name>ReadOtherServiceByOID</name>
@@ -9236,18 +9250,27 @@
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.services.EditOtherService</implementationClass>
         <description></description>
         <isTransactional>true</isTransactional>       
+        <filterChains>
+        	<chain name="ScientificCouncilAuthorization"></chain>
+        </filterChains>
     </service>   
     <service>
     	<name>CreateOtherService</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.services.CreateOtherService</implementationClass>
         <description></description>
         <isTransactional>true</isTransactional>       
+        <filterChains>
+        	<chain name="ScientificCouncilAuthorization"></chain>
+        </filterChains>
     </service>     
     <service>
     	<name>DeleteOtherServiceByOID</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.services.DeleteOtherServiceByOID</implementationClass>
         <description></description>
-        <isTransactional>true</isTransactional>       
+        <isTransactional>true</isTransactional>  
+        <filterChains>
+        	<chain name="ScientificCouncilAuthorization"></chain>
+        </filterChains>     
     </service>   
     <service>
     	<name>ReadAllTeacherCredits</name>
@@ -9894,7 +9917,16 @@
 		<isTransactional>true</isTransactional>
 		<filterChains>
 		</filterChains>
-	</service>		
+	</service>
+	<service>
+		<name>EditCreditsPeriods</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.scientificCouncil.credits.EditCreditsPeriods</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>		
+		<filterChains>
+			<chain name="ScientificCouncilAuthorization" />
+		</filterChains>
+	</service>	
 	<service>
 		<name>DeleteRoomClassification</name>
 		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.space.DeleteRoomClassification</implementationClass>
@@ -9902,5 +9934,5 @@
 		<isTransactional>true</isTransactional>
 		<filterChains>
 		</filterChains>
-	</service>	
+	</service>
 </serviceDefinitions>

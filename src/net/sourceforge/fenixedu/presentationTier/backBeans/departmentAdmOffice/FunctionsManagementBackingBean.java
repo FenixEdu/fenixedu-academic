@@ -442,7 +442,7 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
             if (!function.isInherentFunction()
                     && ((this.getPersonFunction() != null && function.equals(this.getPersonFunction()
                             .getFunction())) || (this.getPersonFunction() == null && function
-                            .isActive(Calendar.getInstance().getTime())))) {
+                            .isActive(new YearMonthDay())))) {
                 selectItem = new SelectItem();
                 selectItem.setValue(function.getIdInternal());
                 selectItem.setLabel(function.getName());
@@ -498,7 +498,7 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
         StringBuilder buffer = new StringBuilder();
         buffer.append("<ul class='padding nobullet'>");
         if (this.getEmployeeDepartmentUnit() != null
-                && this.getEmployeeDepartmentUnit().isActive(Calendar.getInstance().getTime())) {
+                && this.getEmployeeDepartmentUnit().isActive(new YearMonthDay())) {
             getUnitsList(this.getEmployeeDepartmentUnit(), buffer);
         } else {
             return "";
@@ -525,7 +525,7 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
         }
 
         for (Unit subUnit : parentUnit.getSubUnits()) {
-            if (subUnit.isActive(Calendar.getInstance().getTime())) {
+            if (subUnit.isActive(new YearMonthDay())) {
                 getUnitsList(subUnit, buffer);
             }
         }

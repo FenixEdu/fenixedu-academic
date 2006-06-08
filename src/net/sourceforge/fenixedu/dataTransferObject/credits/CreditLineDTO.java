@@ -57,7 +57,11 @@ public class CreditLineDTO {
         double totalCredits = getTeachingDegreeCredits() + getMasterDegreeCredits()
                 + getTfcAdviseCredits() + getOtherCredits() + getManagementCredits()
                 + getServiceExemptionCredits();
-        return totalCredits;
+        return round(totalCredits);
+    }
+    
+    private Double round(double n) {        
+        return Math.round((n * 100.0)) / 100.0;
     }
 
     public double getManagementCredits() {

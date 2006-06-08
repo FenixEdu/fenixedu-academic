@@ -475,8 +475,33 @@
 		<slot name="event.endDate"/>
 		<slot name="event.fee"/>
 		<slot name="event.eventType"/>
-	</schema>
+	</schema>	
 	
+	<schema name="teacher.credits.period.view" type="net.sourceforge.fenixedu.domain.ExecutionPeriod">		
+		<slot name="teacherCreditsPeriodBegin" key="label.credits.periods.begin">
+			<validator class="net.sourceforge.fenixedu.presentationTier.renderers.validators.DateTimeValidator">
+				<property name="required" value="true"/>
+			</validator>
+		</slot>
+		<slot name="teacherCreditsPeriodEnd" key="label.credits.periods.end">
+			<validator class="net.sourceforge.fenixedu.presentationTier.renderers.validators.DateTimeValidator">
+				<property name="required" value="true"/>
+			</validator>
+		</slot>
+	</schema>	
+	
+	<schema name="departmentAdmOffice.credits.period.view" type="net.sourceforge.fenixedu.domain.ExecutionPeriod">		
+		<slot name="departmentAdmOfficeCreditsPeriodBegin" key="label.credits.periods.begin">
+			<validator class="net.sourceforge.fenixedu.presentationTier.renderers.validators.DateTimeValidator">
+				<property name="required" value="true"/>
+			</validator>
+		</slot>
+		<slot name="departmentAdmOfficeCreditsPeriodEnd" key="label.credits.periods.end">
+ 			<validator class="net.sourceforge.fenixedu.presentationTier.renderers.validators.DateTimeValidator">
+				<property name="required" value="true"/>
+			</validator> 
+		</slot>		
+	</schema>	
 	<schema name="degree.info.description" type="net.sourceforge.fenixedu.domain.DegreeInfo">
 		<slot name="description" layout="rich-text">
 			<property name="safe" value="true"/>
@@ -630,7 +655,7 @@
 			<property name="rows" value="30"/>
 		</slot>
 	</schema>
-
+	
 	&researcher;
 	&markSheet;
 	&messaging;

@@ -241,6 +241,11 @@ Documentation:
 		<property name="month" value="true"/>
 	</renderer>
 	
+	<!--@ The layout year allows you to insert a joda time partial given a year -->
+	<renderer mode="input" type="org.joda.time.Partial" layout="year" class="net.sourceforge.fenixedu.presentationTier.renderers.PartialInputRenderer">
+		<property name="year" value="true"/>
+	</renderer>
+	
 	<!--@ The layout year-month allows you to insert a joda time partial given a month, a year, and a day -->
 	<renderer mode="input" type="org.joda.time.Partial" layout="year-month-day" class="net.sourceforge.fenixedu.presentationTier.renderers.PartialInputRenderer">
 		<property name="year" value="true"/>
@@ -248,19 +253,24 @@ Documentation:
 		<property name="day" value="true"/>
 	</renderer>
 
-	<!--@ The default layout for a TimeOfDay automatically includes the hout, minute, nad second in the partial -->
+	<!--@ The default layout for a TimeOfDay automatically includes the hour, minute, and second in the partial -->
 	<renderer mode="input" type="org.joda.time.TimeOfDay" class="net.sourceforge.fenixedu.presentationTier.renderers.PartialInputRenderer">
 		<property name="hour" value="true"/>
 		<property name="minute" value="true"/>
 		<property name="second" value="true"/>
 	</renderer>
 	
-	<!--@ The default layout for a YearMonthDay automatically includes the hout, minute, nad second in the partial -->
+	<!--@ The default layout for a YearMonthDay automatically includes the hour, minute, and second in the partial -->
 	<renderer mode="input" type="org.joda.time.YearMonthDay" class="net.sourceforge.fenixedu.presentationTier.renderers.PartialInputRenderer">
 		<property name="year" value="true"/>
 		<property name="month" value="true"/>
 		<property name="day" value="true"/>
-	</renderer>
+	</renderer>	
+	
+	<!--@ The default layout for a DateTime automatically includes the hour, minute, and second in the partial -->
+	<renderer type="org.joda.time.DateTime" class="net.sourceforge.fenixedu.renderers.FormatRenderer">
+		<property name="format" value="${dayOfMonth,%02d}-${monthOfYear,%02d}-${year} ${hourOfDay,%02d}:${minuteOfHour,%02d}"/>
+	</renderer>	
 	
     <!--@ Allows to present a collection in a table were rows can be sorted by pressing the table headers. -->
     <renderer type="java.util.Collection" layout="tabular-sortable" class="net.sourceforge.fenixedu.renderers.OrderableCollectionRenderer"/>

@@ -3,10 +3,6 @@
 <form-validation>
     <formset>
         <constant>
-			<constant-name>weekDayMask</constant-name>
-			<constant-value>^[23456sSdD]$</constant-value>
-        </constant>
-        <constant>
 			<constant-name>minHours</constant-name>
 			<constant-value>0</constant-value>
         </constant>
@@ -30,15 +26,7 @@
 			</field>
     	</form>
 		<!-- ================================================================ -->    	    	
-    	<form name="supportLessonForm">
-			<field property="weekDay" depends="required,mask" page="1">
-				<msg name="mask" key="errors.invalid.weekDay"/>
-				<arg0 key="label.property.weekDay" />
-				<var>
-					<var-name>mask</var-name>
-					<var-value>${weekDayMask}</var-value>
-				</var>
-			</field>
+    	<form name="supportLessonForm">			
 			<field property="startTimeHour" depends="required,integer,intRange" page="1">
 				<msg name="integer" key="errors.invalid.startTimeHour"/>
 				<msg name="intRange" key="errors.invalid.startTimeHour"/>				
@@ -171,18 +159,7 @@
 				</var>				
 			</field>
    		</form>
-		<!-- ================================================================ -->    	   		
-		<!-- ================================================================ -->    	
-    	<form name="otherTypeCreditLineForm">
-			<field property="reason" depends="required" page="1">
-				<arg0 key="label.otherTypeCreditLine.reason"/>
-			</field>
-			<field property="credits" depends="required,double" page="1">
-				<arg0 key="label.otherTypeCreditLine.credits"/>
-			</field>
-    	</form>
-		<!-- ================================================================ -->    	
-		<!-- ================================================================ -->    	
+		<!-- ================================================================ -->    	   								
     	<form name="teacherExecutionCourseForm">
 			<field property="executionPeriodId" depends="required,integer" page="1">
 				<msg name="integer" key="errors.required"/>

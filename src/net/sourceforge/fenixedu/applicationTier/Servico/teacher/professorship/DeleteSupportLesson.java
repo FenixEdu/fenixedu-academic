@@ -5,6 +5,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.teacher.professorship;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.domain.SupportLesson;
+import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 /**
@@ -14,9 +15,9 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class DeleteSupportLesson extends Service {
 
-    public void run(Integer supportLessonID) throws ExcepcaoPersistencia {
+    public void run(Integer supportLessonID, RoleType roleType) throws ExcepcaoPersistencia {
         SupportLesson supportLesson = rootDomainObject.readSupportLessonByOID(supportLessonID);
-        supportLesson.delete();
+        supportLesson.delete(roleType);
     }
 
 }

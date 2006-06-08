@@ -869,5 +869,5 @@
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Filtro.teacher.SubmitMarksPeriodFilter</implementationClass>
         <description/>
         <isTransactional>true</isTransactional>
-    </filter>    
+    </filter>        
 </filterDefinitions>

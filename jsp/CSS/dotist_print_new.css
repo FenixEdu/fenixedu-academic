@@ -1,0 +1,44 @@
+body { }
+
+/* print1 */
+#print1 h1 { font-size: 2.0em }
+#print1 h2 { }
+#print1 h3 { font-size: 1.2em; }
+
+#print1 h2 { clear: both; margin-bottom: 0.5em; }
+#print1 p { margin-bottom: 0.5em; }
+
+/* variations */
+.mbottom05 { margin-bottom: 0.5em; }
+.sheet { font-size: 65%; }
+.serif { font-family: Times New Roman, Times, serif; }
+.sans { font-family: Arial, Helvetica, sans-serif; }
+.caps { text-transform: uppercase; }
+.center { text-align: center; }
+.height4 { height: 4em; }
+.height2 { height: 2em; }
+
+/* elements */
+.tb01 {
+width: 100%;
+border-collapse: collapse;
+}
+.tb01 th {
+background-color: #eee;
+border: 1pt solid #aaa;
+height: 1.5em;
+font-weight: normal;
+}
+.tb01 td {
+border: 1pt solid #aaa;
+height: 1.5em;
+}
+
+/*
+.emptybox {
+height: 5em;
+border: 0.9pt solid #aaa;
+padding: 2px;
+margin: 4px 0;
+}
+*/

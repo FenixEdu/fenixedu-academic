@@ -29,9 +29,8 @@
       </form-bean>
 		      
       <form-bean name="creditsReportForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
-      	<form-property name="fromExecutionPeriodID" type="java.lang.String" />
-      	<form-property name="untilExecutionPeriodID" type="java.lang.String" />      	
-      	<form-property name="unitID" type="java.lang.Integer" />
+      	<form-property name="fromExecutionYearID" type="java.lang.String" />
+      	<form-property name="untilExecutionYearID" type="java.lang.String" />      	
       	<form-property name="departmentID" type="java.lang.Integer" />      	
       	<form-property name="method" type="java.lang.String" />      	
       </form-bean>
@@ -51,7 +50,88 @@
 		<form-property name="number" type="java.lang.String" />
 		<form-property name="page" type="java.lang.Integer" initial="0"/> 	    	
       </form-bean> 
-    
+      <form-bean name="otherTypeCreditLineForm" type="org.apache.struts.validator.DynaValidatorForm" 
+            dynamic="true">
+         <form-property name="method" type="java.lang.String"/>
+         <form-property name="teacherNumber" type="java.lang.String"/>            
+         <form-property name="idInternal" type="java.lang.Integer"/>
+         <form-property name="otherServiceID" type="java.lang.Integer"/>
+         <form-property name="page" type="java.lang.Integer"/>            
+         <form-property name="teacherId" type="java.lang.Integer"/>
+         <form-property name="executionPeriodId" type="java.lang.String"/>
+         <form-property name="reason" type="java.lang.String"/>
+         <form-property name="credits" type="java.lang.String"/>
+       </form-bean>
+       <form-bean name="teacherCreditsSheetForm" type="org.apache.struts.validator.DynaValidatorForm" 
+            dynamic="true">            
+            <form-property name="teacherId" type="java.lang.Integer"/>
+			<form-property name="executionPeriodId" type="java.lang.Integer"/> 
+			<form-property name="teacherNumber" type="java.lang.String"/>          
+            <form-property name="method" type="java.lang.String"/>           
+       </form-bean>         
+       <form-bean name="teacherInstitutionWorkingTimeForm" 
+            type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
+            <form-property name="method" type="java.lang.String"/>
+            <form-property name="teacherNumber" type="java.lang.String"/>            
+            <form-property name="page" type="java.lang.Integer" initial="0"/>
+            <form-property name="idInternal" type="java.lang.Integer"/>
+            <form-property name="institutionWorkTimeID" type="java.lang.Integer"/>            
+            <form-property name="teacherServiceID" type="java.lang.Integer"/>             
+            <form-property name="teacherId" type="java.lang.String"/>
+            <form-property name="executionPeriodId" type="java.lang.String"/>
+            <form-property name="weekDay" type="java.lang.String"/>
+            <form-property name="startTimeHour" type="java.lang.String"/>
+            <form-property name="startTimeMinutes" type="java.lang.String"/>
+            <form-property name="endTimeHour" type="java.lang.String"/>
+            <form-property name="endTimeMinutes" type="java.lang.String"/>
+        </form-bean> 
+        <form-bean name="teacherDegreeFinalProjectStudentForm" 
+            type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
+            <form-property name="page" type="java.lang.Integer" initial="0"/>
+            <form-property name="method" type="java.lang.String"/>            
+            <form-property name="teacherNumber" type="java.lang.String"/>
+            <form-property name="idInternal" type="java.lang.Integer"/>
+            <form-property name="teacherAdviseServiceID" type="java.lang.Integer"/>            
+            <form-property name="teacherId" type="java.lang.Integer"/>
+            <form-property name="studentId" type="java.lang.Integer"/>
+            <form-property name="executionPeriodId" type="java.lang.Integer"/>
+            <form-property name="studentNumber" type="java.lang.String"/>
+            <form-property name="percentage" type="java.lang.String" initial="100"/>
+        </form-bean>    
+        <form-bean name="supportLessonForm" type="org.apache.struts.validator.DynaValidatorForm" 
+            dynamic="true">
+            <form-property name="page" type="java.lang.Integer" initial="0"/>
+            <form-property name="method" type="java.lang.String"/>
+            <form-property name="teacherId" type="java.lang.Integer"/>
+            <form-property name="teacherNumber" type="java.lang.String"/>            
+            <form-property name="executionCourseId" type="java.lang.Integer"/>
+            <form-property name="executionPeriodId" type="java.lang.Integer"/>
+            <form-property name="idInternal" type="java.lang.Integer"/>
+            <form-property name="supportLessonID" type="java.lang.Integer"/>
+            <form-property name="infoProfessorshipId" type="java.lang.Integer"/>
+            <form-property name="professorshipID" type="java.lang.Integer"/>
+            <form-property name="weekDay" type="java.lang.String"/>
+            <form-property name="startTimeHour" type="java.lang.String"/>
+            <form-property name="startTimeMinutes" type="java.lang.String"/>
+            <form-property name="endTimeHour" type="java.lang.String"/>
+            <form-property name="endTimeMinutes" type="java.lang.String"/>
+            <form-property name="place" type="java.lang.String"/>
+        </form-bean>   
+        <form-bean name="teacherExecutionCourseShiftProfessorshipForm" 
+            type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
+            <form-property name="teacherNumber" type="java.lang.String"/>
+            <form-property name="teacherId" type="java.lang.Integer"/>
+            <form-property name="executionCourseId" type="java.lang.Integer"/>
+			<form-property name="executionPeriodId" type="java.lang.Integer"/>
+			<form-property name="professorshipID" type="java.lang.Integer"/>
+            <form-property name="teacherPercentageMap" type="java.util.HashMap"/>            
+            <form-property name="page" type="java.lang.Integer" initial="0"/>
+            <form-property name="method" type="java.lang.String"/>
+        </form-bean>       
+        <form-bean name="creditsPeriodsForm" 
+            type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">            
+			<form-property name="executionPeriodId" type="java.lang.Integer"/>
+        </form-bean> 
     </form-beans>
 
     <!-- ========== Global Exception Definitions ============================== -->
@@ -127,26 +207,35 @@
     		
     		</action>
     		
+    	<!-- CREDITS -->    		
 		<action path="/creditsReport"
      		name="creditsReportForm"
     		type="net.sourceforge.fenixedu.presentationTier.Action.scientificCouncil.credits.ViewTeacherCreditsReportDispatchAction" 
     		parameter="method"
-    		scope="request"    		
-    		>
+    		scope="request">
     		<exception type="net.sourceforge.fenixedu.presentationTier.Action.scientificCouncil.credits.ViewTeacherCreditsReportDispatchAction$InvalidPeriodException"
 				key="error.credits.chooseExecutionPeriods" 
-                path="/creditsReport.do?method=prepare"
-            />  
+                path="/creditsReport.do?method=prepare"/>  
     		<forward name="prepare" path="select-report-parameters"/>
     		<forward name="showCreditsReport" path="show-teacher-credits-report"/>
     	</action>  
+    	
+    	<!-- Schedules Impression -->
+    	<action path="/schedulesPrint" 	    
+   	        parameter="method"
+   	        scope="request"
+            type="net.sourceforge.fenixedu.presentationTier.Action.credits.SchedulesPrintAction">                         
+            <forward name="show-empty-schedules-resume-print" path="show-empty-schedules-resume-print"/>  
+            <forward name="show-schedules-resume-print" path="show-schedules-resume-print"/>              
+        </action>
+    	
+    	<!-- Master Degree Management -->    	
     	<action path="/masterDegreeCreditsManagement"
      		name="masterDegreeCreditsForm"
     		type="net.sourceforge.fenixedu.presentationTier.Action.scientificCouncil.credits.MasterDegreeCreditsManagementDispatchAction" 
     		parameter="method"
     		scope="request"
-    		input="/masterDegreeCreditsManagement.do?method=prepareEdit"  		
-    		>						   
+    		input="/masterDegreeCreditsManagement.do?method=prepareEdit">						   
     		<exception type="java.lang.NumberFormatException"
 				key="error.credits.invalidNumber" 
                 path="/masterDegreeCreditsManagement.do?method=prepareEdit"/> 
@@ -158,6 +247,134 @@
     		<forward name="editMasterDegreeCredits" path="edit-masterDegree-credits"/>
     		<forward name="successfulEdit" path="/masterDegreeCreditsManagement.do?method=viewMasterDegreeCredits"/>
     	</action>  
+    	
+    	<!-- ============================================================ -->
+    	<action path="/degreeTeachingServiceManagement" 
+        	input="/degreeTeachingServiceManagement.do?method=showTeachingServiceDetails" 
+            name="teacherExecutionCourseShiftProfessorshipForm"
+            scope="request"
+            parameter="method" 
+            type="net.sourceforge.fenixedu.presentationTier.Action.scientificCouncil.credits.ScientificCouncilManageDegreeTeachingServicesDispatchAction"> 
+            <exception type="java.lang.NumberFormatException" 
+                key="message.invalid.professorship.percentage" 
+                path="/degreeTeachingServiceManagement.do?method=showTeachingServiceDetails&amp;page=0"/>           			            
+            <forward name="show-teaching-service-percentages" path="show-teaching-service-percentages"/>
+            <forward name="sucessfull-edit" path="/showFullTeacherCreditsSheet.do?method=showTeacherCredits"/>
+			<forward name="teacher-not-found" path="/showAllTeacherCreditsResume.do?method=showTeacherCreditsResume&amp;page=0"/>
+        </action> 
+        
+    	<!-- ============================================================ -->
+        <!-- =======  USE CASE : Edit Teacher SUPPORT LESSONS =========== -->
+        <action path="/supportLessonsManagement" 
+        	input="/supportLessonsManagement.do?method=prepareEdit&amp;page=0" 
+            name="supportLessonForm"
+            scope="request"
+            parameter="method" 
+            type="net.sourceforge.fenixedu.presentationTier.Action.scientificCouncil.credits.ScientificCouncilManageTeacherSupportLessonsDispatchAction">
+            <exception type="net.sourceforge.fenixedu.presentationTier.Action.credits.ManageTeacherSupportLessonsDispatchAction$InvalidPeriodException" 
+                key="message.invalidPeriod" 
+                path="/supportLessonsManagement.do?method=prepareEdit&amp;page=0"/>                                         
+            <exception type="net.sourceforge.fenixedu.domain.exceptions.DomainException" 
+                key="" 
+                handler="net.sourceforge.fenixedu.presentationTier.config.FenixDomainExceptionHandler"/>             			            
+			<forward name="list-support-lessons" path="show-teacher-execution-course-support-lessons"/>
+			<forward name="edit-support-lesson" path="edit-support-lesson"/>
+			<forward name="successfull-edit" path="/supportLessonsManagement.do?method=showSupportLessons&amp;page=0"/>
+			<forward name="successfull-delete" path="/supportLessonsManagement.do?method=showSupportLessons&amp;page=0"/>
+			<forward name="teacher-not-found" path="/showAllTeacherCreditsResume.do?method=showTeacherCreditsResume&amp;page=0"/>
+        </action>        
+                                   	
+    	<!-- =======================================================================  -->
+        <!-- =======  USE CASE : Edit Teacher DEGREE FINAL PROJECT STUDENT =========== -->
+        <action path="/teacherAdviseServiceManagement" 
+        	input="/teacherAdviseServiceManagement.do?method=showTeacherAdvises&amp;page=0" 
+            name="teacherDegreeFinalProjectStudentForm"
+            scope="request"
+            parameter="method" 
+            type="net.sourceforge.fenixedu.presentationTier.Action.scientificCouncil.credits.ScientificCouncilManageTeacherAdviseServiceDispatchAction">
+            <exception type="net.sourceforge.fenixedu.domain.exceptions.DomainException" 
+                key="" 
+                handler="net.sourceforge.fenixedu.presentationTier.config.FenixDomainExceptionHandler"/> 
+            <exception type="net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException" 
+                key="" 
+                handler="net.sourceforge.fenixedu.presentationTier.config.FenixExceptionMessageHandler"/>                             			
+            <forward name="list-teacher-advise-services" path="list-teacher-advise-services"/>
+            <forward name="successfull-edit" path="/teacherAdviseServiceManagement.do?method=showTeacherAdvises&amp;page=0"/>              
+            <forward name="successfull-delete" path="/teacherAdviseServiceManagement.do?method=showTeacherAdvises&amp;page=0"/> 
+            <forward name="teacher-not-found" path="/showAllTeacherCreditsResume.do?method=showTeacherCreditsResume&amp;page=0"/>
+		</action>    	    	
+    	
+    	<!-- ===============================================================================  -->
+        <!-- =======  USE CASE : Edit Teacher WORK SERVICE ================================== -->
+        <action path="/institutionWorkingTimeManagement" 
+        	input="/institutionWorkingTimeManagement.do?method=prepareEdit&amp;page=0" 
+            name="teacherInstitutionWorkingTimeForm"
+            scope="request"
+            parameter="method" 
+            type="net.sourceforge.fenixedu.presentationTier.Action.scientificCouncil.credits.ScientificCouncilManageTeacherInstitutionWorkingTimeDispatchAction">
+            <exception type="net.sourceforge.fenixedu.presentationTier.Action.credits.ManageTeacherInstitutionWorkingTimeDispatchAction$InvalidPeriodException" 
+                key="message.invalidPeriod" 
+                path="/institutionWorkingTimeManagement.do?method=prepareEdit&amp;page=0"/>               
+            <exception type="net.sourceforge.fenixedu.domain.exceptions.DomainException" 
+                key="" 
+                handler="net.sourceforge.fenixedu.presentationTier.config.FenixDomainExceptionHandler"/>            			
+            <forward name="list-teacher-institution-working-time" path="list-institution-working-time"/>
+            <forward name="edit-institution-work-time" path="edit-institution-work-time"/>
+            <forward name="successfull-edit" path="/institutionWorkingTimeManagement.do?method=showTeacherWorkingTimePeriods&amp;page=0"/>              
+            <forward name="successfull-delete" path="/institutionWorkingTimeManagement.do?method=showTeacherWorkingTimePeriods&amp;page=0"/> 
+            <forward name="teacher-not-found" path="/showAllTeacherCreditsResume.do?method=showTeacherCreditsResume&amp;page=0"/>           
+		</action>
+    	
+		<!-- Other Type Credits --> 	    
+	    <action path="/otherServiceManagement" 
+            input="/otherServiceManagement.do?method=prepareEditOtherService&amp;page=0" 
+            name="otherTypeCreditLineForm"
+            scope="request"
+            parameter="method" 
+            type="net.sourceforge.fenixedu.presentationTier.Action.scientificCouncil.credits.ManageOtherServiceDispatchAction">                                     
+            <exception type="net.sourceforge.fenixedu.domain.exceptions.DomainException" 
+                key="" 
+                handler="net.sourceforge.fenixedu.presentationTier.config.FenixDomainExceptionHandler"/> 
+			<forward name="show-other-services" path="list-teacher-other-services"/>
+			<forward name="edit-other-service" path="edit-other-service"/>
+			<forward name="successful-edit" path="/otherServiceManagement.do?method=showOtherServices&amp;page=0"/>
+			<forward name="successful-delete" path="/otherServiceManagement.do?method=showOtherServices&amp;page=0"/>	
+			<forward name="teacher-not-found" path="/showAllTeacherCreditsResume.do?method=showTeacherCreditsResume&amp;page=0"/>		
+		</action>
+		
+		<!-- Teacher Credits Sheet -->
+		<action path="/showAllTeacherCreditsResume" 
+			name="teacherCreditsSheetForm"
+            type="net.sourceforge.fenixedu.presentationTier.Action.scientificCouncil.credits.ScientificCouncilShowAllTeacherCreditsResumeAction"
+            scope="request"
+            parameter="method">
+            <exception type="java.lang.NumberFormatException" 
+                key="errors.invalid.teacher-number" 
+                path="/showAllTeacherCreditsResume.do?method=prepareTeacherSearch&amp;page=0"/>
+            <forward name="teacher-not-found" path="search-for-teacher-credits"/>
+            <forward name="search-teacher-form" path="search-for-teacher-credits"/>   
+            <forward name="show-all-credits-resume" path="showAllCreditsResume"/>
+        </action>
+        
+		<action path="/showFullTeacherCreditsSheet" 	    
+   	        name="teacherCreditsSheetForm"
+   	        parameter="method"
+   	        scope="request"
+            type="net.sourceforge.fenixedu.presentationTier.Action.scientificCouncil.credits.ScientificCouncilShowTeacherCreditsDispatchAction">                         
+            <forward name="show-teacher-credits" path="show-teacher-credits"/>
+            <forward name="teacher-not-found" path="/showAllTeacherCreditsResume.do?method=showTeacherCreditsResume&amp;page=0"/>
+        </action>
+    	
+    	<!-- Credits Periods -->
+    	<action path="/defineCreditsPeriods" 	    	
+   	        parameter="method"
+   	        scope="request"
+   	        name="creditsPeriodsForm"
+            type="net.sourceforge.fenixedu.presentationTier.Action.scientificCouncil.credits.ManageCreditsPeriods">                                    
+            <forward name="show-credits-periods" path="show-credits-periods"/>  
+            <forward name="edit-teacher-credits-periods" path="edit-teacher-credits-periods"/>  
+            <forward name="edit-departmentAdmOffice-credits-periods" path="edit-departmentAdmOffice-credits-periods"/>  
+        </action>             
     	
 		<!--Action for reading teachers of an execution course  -->
 		<action
@@ -200,7 +417,7 @@
                 handler="net.sourceforge.fenixedu.presentationTier.config.FenixDomainExceptionHandler"/>  	                   
 	       <forward name="readCurricularCourse" path="/masterDegreeCreditsManagement.do?method=prepareEdit"/>      	      
 	    </action>
-	    	    
+	    	    	    	    
 	</action-mappings>
 
 	<!-- ========== Controller Configuration ================================ -->

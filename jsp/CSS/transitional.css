@@ -79,7 +79,7 @@ table caption {
 padding: 0.5em 1em 0.1em 1em;
 font-style: italic;
 }
-table th { vertical-align: top; }
+table.thtop th { vertical-align: top; }
 
 /* ordenamento das colunas*/
 table.thlight th { font-weight: normal; }
@@ -89,6 +89,7 @@ table .aleft  { text-align: left; }
 table .aright  { text-align: right; }
 table.thleft th { text-align: left; }
 table.thright th { text-align: right; }
+table.thcenter th { text-align: center; }
 table.tdleft td { text-align: left; }
 table.tdright td { text-align: right; }
 .leftcol { text-align: right; vertical-align: top; }
@@ -122,7 +123,7 @@ width: 100%;
 
 .tstyle1a th, .tstyle1b th, .tstyle1c th, .tstyle2 th, .tstyle3 th, .tstyle4 th {
 padding: 0.5em;
-/*text-align: center;*/
+text-align: center;
 /*font-weight: normal;*/
 }
 
@@ -149,7 +150,7 @@ width: 35%;
 .tstyle4 th { background: #eee; }
 .tstyle5 th { background: #f5f5f5; }
 
-.tstyle1a td, .tstyle1b td, .tstyle1c td, .tstyle2 td, .tstyle3 td, .tstyle4 td  { padding: 0.5em; }
+.tstyle1a td, .tstyle1b td, .tstyle1c td, .tstyle2 td, .tstyle3 td, .tstyle4 td  { padding: 0.5em; } /*padding em "em" dá problemas de rendering no firefox, faz arredondamentos diferentes */
 
 .tstyle1a td { border: 1px solid #cccccc; }
 .tstyle1b td { border: 1px solid #ccccc2; }
@@ -283,7 +284,7 @@ margin: 0;
 padding: 0.2em 0.5em 0.2em 0em;
 }
 
-.error0 { margin: 1em 0; padding: 0.1em 0.3em 0.1em 0.3em; background-color: #ffeadd; color: #c00; }
+.error0 { /*margin: 1em 0; padding: 0.1em 0.3em 0.1em 0.3em;*/ background-color: #ffeadd; color: #c00; }
 .error1, .error2, .error3 { background-color: #fee; color: #c00; }
 .error1 { border: 2px solid #c00; }
 .error1 h4 { border-bottom: 1px dotted #d00; background: #fff url(../../pics/error01.gif) 6px 50% no-repeat; color: #c00; }

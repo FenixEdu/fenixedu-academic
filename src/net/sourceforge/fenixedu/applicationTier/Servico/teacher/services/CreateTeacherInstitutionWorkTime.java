@@ -8,6 +8,7 @@ import net.sourceforge.fenixedu.dataTransferObject.teacher.workTime.InstitutionW
 import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.Teacher;
+import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.teacher.TeacherService;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
@@ -19,7 +20,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class CreateTeacherInstitutionWorkTime extends Service {
 
     public void run(Integer teacherID, Integer executioPeriodID,
-            InstitutionWorkTimeDTO institutionWorkTimeDTO) throws ExcepcaoPersistencia {
+            InstitutionWorkTimeDTO institutionWorkTimeDTO, RoleType roleType) throws ExcepcaoPersistencia {
 
         Teacher teacher = rootDomainObject.readTeacherByOID(teacherID);
         ExecutionPeriod executionPeriod = rootDomainObject.readExecutionPeriodByOID(executioPeriodID);
@@ -29,7 +30,6 @@ public class CreateTeacherInstitutionWorkTime extends Service {
             teacherService = DomainFactory.makeTeacherService(teacher, executionPeriod);
         }
         DomainFactory.makeInstitutionWorkTime(teacherService, institutionWorkTimeDTO.getStartTime(),
-                institutionWorkTimeDTO.getEndTime(), institutionWorkTimeDTO.getWeekDay());
+                institutionWorkTimeDTO.getEndTime(), institutionWorkTimeDTO.getWeekDay(), roleType);
     }
-
 }

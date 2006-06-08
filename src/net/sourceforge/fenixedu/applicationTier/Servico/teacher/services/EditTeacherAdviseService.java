@@ -11,6 +11,7 @@ import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.Teacher;
+import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.teacher.Advise;
 import net.sourceforge.fenixedu.domain.teacher.AdviseType;
 import net.sourceforge.fenixedu.domain.teacher.TeacherAdviseService;
@@ -28,7 +29,7 @@ import org.apache.commons.collections.Predicate;
 public class EditTeacherAdviseService extends Service {
 
     public void run(Integer teacherID, Integer executionPeriodID, final Integer studentNumber,
-            Double percentage, AdviseType adviseType) throws ExcepcaoPersistencia, FenixServiceException {
+            Double percentage, AdviseType adviseType, RoleType roleType) throws ExcepcaoPersistencia, FenixServiceException {
 
         Teacher teacher = rootDomainObject.readTeacherByOID(teacherID);
         ExecutionPeriod executionPeriod = rootDomainObject.readExecutionPeriodByOID(executionPeriodID);
@@ -62,9 +63,9 @@ public class EditTeacherAdviseService extends Service {
                 .getTeacherAdviseServiceByExecutionPeriod(executionPeriod);
         if (teacherAdviseService == null) {
             teacherAdviseService = DomainFactory.makeTeacherAdviseService(teacherService, advise,
-                    percentage);
+                    percentage, roleType);
         } else {
-            teacherAdviseService.updatePercentage(percentage);
+            teacherAdviseService.updatePercentage(percentage, roleType);
         }
     }
 }

@@ -38,6 +38,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean;
 
 import org.apache.commons.beanutils.BeanComparator;
+import org.joda.time.YearMonthDay;
 
 public class OrganizationalStructureBackingBean extends FenixBackingBean {
 
@@ -92,7 +93,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 
     public List<Unit> getAllSubUnits() throws FenixFilterException, FenixServiceException {
         List<Unit> allSubUnits = new ArrayList<Unit>();
-        Date currentDate = Calendar.getInstance().getTime();
+        YearMonthDay currentDate = new YearMonthDay();
         for (Unit unit : this.getUnit().getSubUnits()) {
             if ((this.getListingTypeValueToUnitsHidden().getValue().toString().equals("0") && unit
                     .isActive(currentDate))
@@ -108,7 +109,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
             FenixServiceException {
 
         List<Function> allNonInherentFunctions = new ArrayList<Function>();
-        Date currentDate = Calendar.getInstance().getTime();
+        YearMonthDay currentDate = new YearMonthDay();
         for (Function function : this.getUnit().getFunctions()) {
             if (!function.isInherentFunction()
                     && ((this.getListingTypeValueToFunctionsHidden().getValue().toString().equals("0") && function
@@ -123,7 +124,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
     public List<Function> getAllInherentFunctions() throws FenixFilterException, FenixServiceException {
 
         List<Function> allInherentFunctions = new ArrayList<Function>();
-        Date currentDate = Calendar.getInstance().getTime();
+        YearMonthDay currentDate = new YearMonthDay();
         for (Function function : this.getUnit().getFunctions()) {
             if (function.isInherentFunction()
                     && ((this.getListingTypeValueToFunctionsHidden().getValue().toString().equals("0") && function
@@ -193,7 +194,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
         StringBuilder buffer = new StringBuilder();
         List<Unit> allUnitsWithoutParent = UnitUtils.readAllUnitsWithoutParents();
         Collections.sort(allUnitsWithoutParent, new BeanComparator("name"));
-        Date currentDate = Calendar.getInstance().getTime();
+        YearMonthDay currentDate = new YearMonthDay();
 
         for (Unit unit : allUnitsWithoutParent) {
             if (this.getListingTypeValueToUnitsHidden().getValue().toString().equals("0")
@@ -210,14 +211,14 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
     }
 
     public void getUnitTree(StringBuilder buffer, Unit parentUnit, List<Unit> subUnits,
-            Date currentDate, boolean active) {
+            YearMonthDay currentDate, boolean active) {
         buffer.append("<ul class='padding1 nobullet'>");
         getUnitsList(parentUnit, subUnits, buffer, currentDate, active);
         buffer.append("</ul>");
     }
 
     private void getUnitsList(Unit parentUnit, List<Unit> subUnits, StringBuilder buffer,
-            Date currentDate, boolean active) {
+            YearMonthDay currentDate, boolean active) {
 
         openLITag(buffer);
 
@@ -1032,7 +1033,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
         for (Unit unit : allUnits) {
             if (unit.getCostCenterCode() != null && !unit.equals(this.getChooseUnit())
                     && this.getUnitCostCenter().equals(String.valueOf(unit.getCostCenterCode()))
-                    && unit.isActive(Calendar.getInstance().getTime())) {
+                    && unit.isActive(new YearMonthDay())) {
                 setErrorMessage("error.costCenter.alreadyExists");
                 return true;
             }

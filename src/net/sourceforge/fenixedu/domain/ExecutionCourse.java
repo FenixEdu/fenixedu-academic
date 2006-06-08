@@ -480,24 +480,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
             }
         }
         return true;
-    }
-
-    public boolean areAllNotOptionalCurricularCoursesWithLessTenEnrolments() {
-        int enrolments = 0;
-        for (CurricularCourse curricularCourse : this.getAssociatedCurricularCourses()) {
-            if (curricularCourse.getType() == null
-                    || !curricularCourse.getType().equals(CurricularCourseType.OPTIONAL_COURSE)) {
-                enrolments += curricularCourse.getEnrolmentsByExecutionPeriod(this.getExecutionPeriod())
-                        .size();
-                if (enrolments >= 10) {
-                    return false;
-                }
-            } else {
-                return false;
-            }
-        }
-        return true;
-    }
+    }    
 
     private static final Comparator<Evaluation> EVALUATION_COMPARATOR = new Comparator<Evaluation>() {
 

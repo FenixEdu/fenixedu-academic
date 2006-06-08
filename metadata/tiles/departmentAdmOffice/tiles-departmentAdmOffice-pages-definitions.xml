@@ -6,9 +6,8 @@
         <put name="body" value="/departmentAdmOffice/index.jsp"></put>
     </definition>
 
-
     <definition name="creditsManagementIndex" extends="creditsManagement.masterPage">
-        <put name="body" value="/credits/creditsManagementIndex.jsp"/>
+        <put name="body" value="/commons/blank.jsp"/>
     </definition>
 
     <!-- Department Summaries -->
@@ -75,55 +74,20 @@
         <put name="body" value="/departmentAdmOffice/teacher/showShiftProfessorshipsPercentages.jsp"/>
     </definition>
     <definition name="show-teaching-service-percentages" extends="creditsManagement.masterPage">
-        <put name="body" value="/departmentAdmOffice/teacher/showTeachingServicePercentages.jsp"/>
+        <put name="body" value="/credits/degreeTeachingService/showTeachingServicePercentages.jsp"/>
     </definition>
-    <definition name="search-for-support-lessons-management" extends="creditsManagement.masterPage">
-        <put name="body" value="search-for-support-lessons-management-body"/>
-    </definition>
-    <definition name="search-for-support-lessons-management-body" extends="teacher-search-form-layout">
-        <put name="searchInfo" value="label.search.for.support-lessons.management"/>
-    </definition>    
-    <definition name="search-for-support-lessons" extends="creditsManagement.masterPage">
-        <put name="body" value="search-for-support-lessons-body"/>
-    </definition>
-    <definition name="search-for-support-lessons-body" extends="teacher-search-layout">
-        <put name="searchInfo" value="label.search.for.support-lessons.management"/>
-    </definition>
-    <definition name="show-teacher-professorships-for-support-lessons" extends="creditsManagement.masterPage">
-    	<put name="body" value="/departmentAdmOffice/teacher/supportLessons/showTeacherProfessorshipsForSupportLessons.jsp"/>
-    </definition>
-    <definition name="show-teacher-professorships-for-support-lessons-management" 
-        extends="creditsManagement.masterPage">
-        <put name="body" 
-            value="/departmentAdmOffice/teacher/supportLessons/showTeacherProfessorshipsForSupportLessonsManagement.jsp"/>
-    </definition>
-    <definition name="show-teacher-execution-course-support-lessons1" 
-        extends="creditsManagement.masterPage">
-        <put name="body" 
-            value="/departmentAdmOffice/teacher/supportLessons/showProfessorshipSupportLessons1.jsp"/>
-    </definition>
+     
     <definition name="show-teacher-execution-course-support-lessons" extends="creditsManagement.masterPage">
-        <put name="body" value="/departmentAdmOffice/teacher/supportLessons/showProfessorshipSupportLessons.jsp"/>
-    </definition>  
+        <put name="body" value="/credits/supportLessons/showProfessorshipSupportLessons.jsp"/>
+    </definition> 
     <definition name="edit-support-lesson" extends="creditsManagement.masterPage">
-        <put name="body" value="/departmentAdmOffice/teacher/supportLessons/editSupportLesson.jsp"/>
+	    <put name="body" value="/credits/supportLessons/editSupportLesson.jsp"/>       
     </definition>      
-    <definition name="edit-support-lesson1" extends="creditsManagement.masterPage">
-        <put name="body" value="/departmentAdmOffice/teacher/supportLessons/editSupportLesson1.jsp"/>
-    </definition>
-    
-        
-    <definition name="search-for-advise-service" extends="creditsManagement.masterPage">
-        <put name="body" value="search-for-advise-service-body"/>
-    </definition>
-    <definition name="search-for-advise-service-body" extends="teacher-search-layout">
-        <put name="searchInfo" value="label.search.for.degree-final-project-student.management"/>
-    </definition>
+
     <definition name="list-teacher-advise-services" extends="creditsManagement.masterPage">
-        <put name="body" value="/departmentAdmOffice/teacher/degreeFinalProject/showTeacherAdviseServices.jsp"/>
+        <put name="body" value="/credits/adviseServices/showTeacherAdviseServices.jsp"/>
     </definition>    
-    
-    
+        
     <definition name="search-for-dfp-student-management" extends="creditsManagement.masterPage">
         <put name="body" value="search-for-dfp-student-management-body"/>
     </definition>
@@ -134,28 +98,14 @@
         <put name="body" 
             value="/departmentAdmOffice/teacher/degreeFinalProject/showTeacherDfpStudents.jsp"/>
     </definition>
-    <definition name="search-for-institution-working-time-management" 
-        extends="creditsManagement.masterPage">
-        <put name="body" value="search-for-institution-working-time-management-body"/>
-    </definition>
-    <definition name="search-for-institution-working-time-management-body" 
-        extends="teacher-search-form-layout">
-        <put name="searchInfo" value="label.search.for.institution-working-time.management"/>
-    </definition>
-    
-    
-    <definition name="search-for-working-time" extends="creditsManagement.masterPage">
-        <put name="body" value="search-for-working-time-body"/>
-    </definition>
-    <definition name="search-for-working-time-body" extends="teacher-search-layout">
-        <put name="searchInfo" value="label.search.for.institution-working-time.management"/>
-    </definition>
+       
     <definition name="list-institution-working-time" extends="creditsManagement.masterPage">
-        <put name="body" value="/departmentAdmOffice/teacher/workingTime/showTeacherWorkingTime.jsp"/>
+        <put name="body" value="/credits/workingTime/showTeacherWorkingTime.jsp"/>
     </definition>  
     <definition name="edit-institution-work-time" extends="creditsManagement.masterPage">
-        <put name="body" value="/departmentAdmOffice/teacher/workingTime/editTeacherInstitutionWorkTime.jsp"/>
+        <put name="body" value="/credits/workingTime/editTeacherInstitutionWorkTime.jsp"/>
     </definition>      
+    
     <definition name="show-teachers-credits-list" extends="creditsManagement.masterPage">
         <put name="body" value="/departmentAdmOffice/teacher/listDeparmentTeachersCredits.jsp"/>
     </definition>
@@ -164,26 +114,36 @@
         <put name="body" value="/departmentAdmOffice/teacher/workingTime/manageTeacherWorkingTime.jsp"/>
     </definition>
     <definition name="edit-teacher-institution-working-time" extends="creditsManagement.masterPage">
-        <put name="body" 
-            value="/departmentAdmOffice/teacher/workingTime/editTeacherInstitutionWorkingTime.jsp"/>
+        <put name="body" value="/departmentAdmOffice/teacher/workingTime/editTeacherInstitutionWorkingTime.jsp"/>
     </definition>
     <definition name="listDepartmentTeachers" extends="creditsManagement.masterPage">
         <put name="body" value="/departmentAdmOffice/teacher/listDeparmentTeachers.jsp"/>
     </definition>
-    <definition name="searchForTeacherCreditsSheet" extends="creditsManagement.masterPage">
-        <put name="body" value="searchForTeacherCreditsSheetBody"/>
+    
+    <definition name="search-for-teacher-credits" extends="creditsManagement.masterPage">
+        <put name="body" value="search-for-teacher-credits-body"/>
     </definition>
-    <definition name="searchForTeacherCreditsSheetBody" extends="teacher-search-form-layout">
+    <definition name="search-for-teacher-credits-body" extends="teacher-search-layout">
         <put name="searchInfo" value="label.search.for.teacherCreditsSheet"/>
+        <put name="searchTitle" value="label.search.for.teacherCreditsSheet.title"/>
     </definition>
-    <definition name="showTeacherCreditsSheet" extends="creditsManagement.masterPage">
-        <put name="body" value="/credits/showTeacherCreditsSheet.jsp"/>
-    </definition>
+    <definition name="show-teacher-credits" extends="creditsManagement.masterPage">
+        <put name="body" value="/departmentAdmOffice/credits/showTeacherCredits.jsp"/>
+    </definition>       
+    <definition name="showAllCreditsResume" extends="creditsManagement.masterPage">
+		<put name="body" value="/credits/commons/listAllTeacherCreditsResume.jsp"/>
+	</definition>
+	<definition name="creditsResumeTableLine" page="/credits/commons/creditsResumeTableLine.jsp">
+		<put name="creditLineDTO"/>
+	</definition>
+    <definition name="creditsResumeLine" page="/credits/commons/creditsResumeLine.jsp">
+		<put name="creditLineDTO"/>
+	</definition>
+    
     <definition name="createProfessorship" extends="departmentAdmOffice.masterPage">
         <put name="body" value="/departmentAdmOffice/teacher/professorship/createProfessorship.jsp"/>
     </definition>
-    
-    
+       
     <definition name="searchForOtherTypeCreditLine" extends="creditsManagement.masterPage">
         <put name="body" value="/credits/searchTeacherForOtherTypeCreditLine.jsp"/>
     </definition>
@@ -193,31 +153,15 @@
     <definition name="editOtherTypeCreditLine" extends="creditsManagement.masterPage">
         <put name="body" value="/credits/editOtherTypeCreditLine.jsp"/>
     </definition>
-    
-    
-    <definition name="search-for-other-service" extends="creditsManagement.masterPage">
-        <put name="body" value="search-for-other-service-body"/>
-    </definition>
-    <definition name="search-for-other-service-body" extends="teacher-search-layout">
-        <put name="searchInfo" value="label.search.for.otherTypeCreditLine"/>
-    </definition>
-    <definition name="list-teacher-other-services" extends="creditsManagement.masterPage">
-        <put name="body" value="/credits/showOtherServices.jsp"/>
-    </definition>
-    <definition name="edit-other-service" extends="creditsManagement.masterPage">
-        <put name="body" value="/credits/editOtherService.jsp"/>
-    </definition>
-    
-    <definition name="search-for-teacher-credits" extends="creditsManagement.masterPage">
-        <put name="body" value="search-for-teacher-credits-body"/>
-    </definition>
-    <definition name="search-for-teacher-credits-body" extends="teacher-search-layout">
-        <put name="searchInfo" value="label.search.for.teacherCreditsSheet"/>
-    </definition>
-    <definition name="show-teacher-credits" extends="creditsManagement.masterPage">
-        <put name="body" value="/credits/showTeacherCredits.jsp"/>
-    </definition>
-
+	
+	<!-- Schedules Print -->  
+    <definition name="show-empty-schedules-resume-print" page="/layout/fenixPrint.jsp">
+        <put name="body" value="/credits/schedulesPrint/emptySchedules.jsp"/>
+    </definition> 
+    <definition name="show-schedules-resume-print" page="/layout/fenixPrint.jsp">
+        <put name="body" value="/credits/schedulesPrint/schedules.jsp"/>
+    </definition> 
+	                
 	<!-- ==================== View Curricular Course Historic ================== -->
 	<definition name="view-degree-curricular-plan-execution-year" 
 		extends="departmentAdmOffice.masterPage">

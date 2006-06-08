@@ -1,0 +1,22 @@
+
+insert into SPACE set SPACE.NAME = 'Edifício Ciência', SPACE.KEY_CAMPUS = 1, SPACE.ID_INTERNAL = 1, SPACE.OJB_CONCRETE_CLASS = 'net.sourceforge.fenixedu.domain.space.OldBuilding';
+insert into SPACE set SPACE.NAME = 'Localização Indefinida', SPACE.KEY_CAMPUS = 1, SPACE.ID_INTERNAL = 2, SPACE.OJB_CONCRETE_CLASS = 'net.sourceforge.fenixedu.domain.space.OldBuilding';
+insert into SPACE set SPACE.NAME = 'Localização não atribuída', SPACE.KEY_CAMPUS = 1, SPACE.ID_INTERNAL = 3, SPACE.OJB_CONCRETE_CLASS = 'net.sourceforge.fenixedu.domain.space.OldBuilding';
+insert into SPACE set SPACE.NAME = 'LTI do CIIST', SPACE.KEY_CAMPUS = 1, SPACE.ID_INTERNAL = 4, SPACE.OJB_CONCRETE_CLASS = 'net.sourceforge.fenixedu.domain.space.OldBuilding';
+insert into SPACE set SPACE.NAME = 'Pavilhão Central', SPACE.KEY_CAMPUS = 1, SPACE.ID_INTERNAL = 5, SPACE.OJB_CONCRETE_CLASS = 'net.sourceforge.fenixedu.domain.space.OldBuilding';
+insert into SPACE set SPACE.NAME = 'Pavilhão Civil', SPACE.KEY_CAMPUS = 1, SPACE.ID_INTERNAL = 6, SPACE.OJB_CONCRETE_CLASS = 'net.sourceforge.fenixedu.domain.space.OldBuilding';
+insert into SPACE set SPACE.NAME = 'Pavilhão Electricidade', SPACE.KEY_CAMPUS = 1, SPACE.ID_INTERNAL = 7, SPACE.OJB_CONCRETE_CLASS = 'net.sourceforge.fenixedu.domain.space.OldBuilding';
+insert into SPACE set SPACE.NAME = 'Pavilhão Mecânica I', SPACE.KEY_CAMPUS = 1, SPACE.ID_INTERNAL = 8, SPACE.OJB_CONCRETE_CLASS = 'net.sourceforge.fenixedu.domain.space.OldBuilding';
+insert into SPACE set SPACE.NAME = 'Pavilhão Mecânica II', SPACE.KEY_CAMPUS = 1, SPACE.ID_INTERNAL = 9, SPACE.OJB_CONCRETE_CLASS = 'net.sourceforge.fenixedu.domain.space.OldBuilding';
+insert into SPACE set SPACE.NAME = 'Pavilhão Mecânica III', SPACE.KEY_CAMPUS = 1, SPACE.ID_INTERNAL = 10, SPACE.OJB_CONCRETE_CLASS = 'net.sourceforge.fenixedu.domain.space.OldBuilding';
+insert into SPACE set SPACE.NAME = 'Pavilhão Minas', SPACE.KEY_CAMPUS = 1, SPACE.ID_INTERNAL = 11, SPACE.OJB_CONCRETE_CLASS = 'net.sourceforge.fenixedu.domain.space.OldBuilding';
+insert into SPACE set SPACE.NAME = 'Pavilhão Novas Licenciaturas', SPACE.KEY_CAMPUS = 1, SPACE.ID_INTERNAL = 12, SPACE.OJB_CONCRETE_CLASS = 'net.sourceforge.fenixedu.domain.space.OldBuilding';
+insert into SPACE set SPACE.NAME = 'Pavilhão Pós-Graduação', SPACE.KEY_CAMPUS = 1, SPACE.ID_INTERNAL = 13, SPACE.OJB_CONCRETE_CLASS = 'net.sourceforge.fenixedu.domain.space.OldBuilding';
+insert into SPACE set SPACE.NAME = 'Pavilhão Química', SPACE.KEY_CAMPUS = 1, SPACE.ID_INTERNAL = 14, SPACE.OJB_CONCRETE_CLASS = 'net.sourceforge.fenixedu.domain.space.OldBuilding';
+insert into SPACE set SPACE.NAME = 'TagusPark - Bloco A - Nascente', SPACE.KEY_CAMPUS = 2, SPACE.ID_INTERNAL = 15, SPACE.OJB_CONCRETE_CLASS = 'net.sourceforge.fenixedu.domain.space.OldBuilding';
+insert into SPACE set SPACE.NAME = 'TagusPark - Bloco A - Poente', SPACE.KEY_CAMPUS = 2, SPACE.ID_INTERNAL = 16, SPACE.OJB_CONCRETE_CLASS = 'net.sourceforge.fenixedu.domain.space.OldBuilding';
+insert into SPACE set SPACE.NAME = 'TagusPark - Bloco B - Nascente', SPACE.KEY_CAMPUS = 2, SPACE.ID_INTERNAL = 17, SPACE.OJB_CONCRETE_CLASS = 'net.sourceforge.fenixedu.domain.space.OldBuilding';
+insert into SPACE set SPACE.NAME = 'TagusPark - Bloco B - Poente', SPACE.KEY_CAMPUS = 2, SPACE.ID_INTERNAL = 18, SPACE.OJB_CONCRETE_CLASS = 'net.sourceforge.fenixedu.domain.space.OldBuilding';
+insert into SPACE set SPACE.NAME = 'Torre Norte', SPACE.KEY_CAMPUS = 1, SPACE.ID_INTERNAL = 19, SPACE.OJB_CONCRETE_CLASS = 'net.sourceforge.fenixedu.domain.space.OldBuilding';
+insert into SPACE set SPACE.NAME = 'Torre Sul', SPACE.KEY_CAMPUS = 1, SPACE.ID_INTERNAL = 20, SPACE.OJB_CONCRETE_CLASS = 'net.sourceforge.fenixedu.domain.space.OldBuilding';
+insert into SPACE set SPACE.NAME = 'Pavilhâo mecânica IV', SPACE.KEY_CAMPUS = 1, SPACE.ID_INTERNAL = 41, SPACE.OJB_CONCRETE_CLASS = 'net.sourceforge.fenixedu.domain.space.OldBuilding';

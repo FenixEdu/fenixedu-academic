@@ -51,7 +51,7 @@ public class User extends User_Base {
 
     public Login readUserLoginIdentification() {
 
-        // / In present exist only one Person Login Identification
+        // In present exist only one Person Login Identification
         for (Identification identification : this.getIdentifications()) {
             if (identification instanceof Login) {
                 return (Login) identification;

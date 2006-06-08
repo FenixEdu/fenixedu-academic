@@ -19,7 +19,7 @@
 		
 			<h:outputText value="<b>#{bundle['message.name']}</b>" escape="false"/>
 			<h:panelGroup>
-				<h:inputText id="name" required="true" size="30" value="#{organizationalStructureBackingBean.unitName}"/>
+				<h:inputText id="name" required="true" size="60" value="#{organizationalStructureBackingBean.unitName}"/>
 				<h:message for="name" styleClass="error"/>
 			</h:panelGroup>
 			

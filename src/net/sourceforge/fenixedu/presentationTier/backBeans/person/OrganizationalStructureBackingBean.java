@@ -5,7 +5,6 @@
 package net.sourceforge.fenixedu.presentationTier.backBeans.person;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
@@ -90,7 +89,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 
     public String getUnits() throws FenixFilterException, FenixServiceException, ExcepcaoPersistencia {
         StringBuffer buffer = new StringBuffer();
-        Date currentDate = Calendar.getInstance().getTime();
+        YearMonthDay currentDate = new YearMonthDay();
 
         List<Unit> allUnits = getAllUnitsWithoutParent();
         Collections.sort(allUnits, new Comparator() {
@@ -145,7 +144,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
                     }
 
                 } else if (unit.getType() == null) {
-                    if ((subUnitIsEmpty = ValidEmptyType(unit))){
+                    if ((subUnitIsEmpty == ValidEmptyType(unit))){
 	                    if (flag1 == false) {
 	                        buffer.append("<div class='mtop2' style='color: #aaa;'>- - - - - - - -");
 	                        buffer.append("</div>\r\n");
@@ -252,7 +251,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 
     public void getDepartment(StringBuffer buffer, Unit unit) throws FenixFilterException,
             FenixServiceException {
-        Date currentDate = Calendar.getInstance().getTime();
+        YearMonthDay currentDate = new YearMonthDay();
 
         if (unit.getActiveSubUnits(currentDate).size() > 0) {
             List<Unit> departmentUnitList = unit.getActiveSubUnits(currentDate);
@@ -285,7 +284,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
     }
 
     public void getUnitTree(StringBuffer buffer, Unit parentUnit) {
-        Date currentDate = Calendar.getInstance().getTime();
+        YearMonthDay currentDate = new YearMonthDay();
         int parentUnitId = 0;
         boolean past = false;
         if (parentUnit.getActiveSubUnits(currentDate).size() > 0) {
@@ -299,8 +298,8 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 
     private void getUnitsList(Unit parentUnit, int index, StringBuffer buffer, int parentUnitId,
             boolean past) {
-        Date currentDate = Calendar.getInstance().getTime();
-
+        
+        YearMonthDay currentDate = new YearMonthDay();
         if (parentUnit.getIdInternal() != parentUnitId) {
             buffer.append("\t\t<li>").append("<a href=\"").append(getContextPath()).append(
                     "/person/organizationalStructure/chooseUnit.faces?unitID=").append(parentUnitId)
@@ -363,7 +362,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
     public String getFunctions() throws FenixFilterException, FenixServiceException {
 
         StringBuffer buffer = new StringBuffer();
-        Date currentDate = Calendar.getInstance().getTime();
+        YearMonthDay currentDate = new YearMonthDay();
 
         buffer.append("<ul class='mtop3'>\r\n");
         if (this.subUnit.intValue() == this.getUnit().getIdInternal().intValue()) {
@@ -378,7 +377,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
         for (Function function : getSortFunctionList(this.getUnit())) {
             ExecutionYear iExecutionYear = null;
             iExecutionYear = getExecutionYear(this.choosenExecutionYearID);
-            if (function.belongsToPeriod(iExecutionYear.getBeginDate(), iExecutionYear.getEndDate())) {
+            if (function.belongsToPeriod(iExecutionYear.getBeginDateYearMonthDay(), iExecutionYear.getEndDateYearMonthDay())) {
                 buffer.append("\t<ul>\r\n");
                 getFunctionsList(this.getUnit(), function, buffer, iExecutionYear);
                 buffer.append("\t</ul>\r\n");
@@ -402,7 +401,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
             for (Function function : getSortFunctionList(unit)) {
                 ExecutionYear iExecutionYear = null;
                 iExecutionYear = getExecutionYear(this.choosenExecutionYearID);
-                if (function.belongsToPeriod(iExecutionYear.getBeginDate(), iExecutionYear.getEndDate())) {
+                if (function.belongsToPeriod(iExecutionYear.getBeginDateYearMonthDay(), iExecutionYear.getEndDateYearMonthDay())) {
                     buffer.append("\t<ul>\r\n");
                     getFunctionsList(unit, function, buffer, iExecutionYear);
                     buffer.append("\t</ul>\r\n");
@@ -424,8 +423,8 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
                     for (Function subFunction : getSortFunctionList(subUnit)) {
                         ExecutionYear iExecutionYear = null;
                         iExecutionYear = getExecutionYear(this.choosenExecutionYearID);
-                        if (subFunction.belongsToPeriod(iExecutionYear.getBeginDate(), iExecutionYear
-                                .getEndDate())) {
+                        if (subFunction.belongsToPeriod(iExecutionYear.getBeginDateYearMonthDay(), iExecutionYear
+                                .getEndDateYearMonthDay())) {
                             buffer.append("\t<ul>\r\n");
                             getFunctionsList(subUnit, subFunction, buffer, iExecutionYear);
                             buffer.append("\t</ul>\r\n");

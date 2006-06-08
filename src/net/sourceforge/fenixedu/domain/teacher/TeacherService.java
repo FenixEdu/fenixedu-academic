@@ -6,10 +6,12 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Lesson;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Shift;
+import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.domain.SupportLesson;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -89,14 +91,28 @@ public class TeacherService extends TeacherService_Base {
 
     public Double getTeachingDegreeCredits() {
         double credits = 0;
+        ExecutionYear executionYear20062007 = ExecutionYear.readExecutionYearByName("2006/2007");
         for (DegreeTeachingService degreeTeachingService : getDegreeTeachingServices()) {
             ExecutionCourse executionCourse = degreeTeachingService.getProfessorship()
                     .getExecutionCourse();
-            if (!executionCourse.isMasterDegreeOnly()) {
-                double hoursAfter20PM = degreeTeachingService.getShift().hoursAfter(20);
-                double hoursBefore20PM = degreeTeachingService.getShift().hours() - hoursAfter20PM;
-                credits += hoursBefore20PM * (degreeTeachingService.getPercentage().doubleValue() / 100);
-                credits += (hoursAfter20PM * (degreeTeachingService.getPercentage().doubleValue() / 100)) * 1.5;
+            ExecutionPeriod executionPeriod = executionCourse.getExecutionPeriod();
+            if (!executionCourse.isMasterDegreeOnly() && (executionPeriod.getExecutionYear().isBefore(executionYear20062007) ||
+                    !executionCourse.areAllOptionalCurricularCoursesWithLessTenEnrolments())) {
+                
+                Teacher teacher = degreeTeachingService.getProfessorship().getTeacher();
+                Category teacherCategory = teacher.getCategory(executionPeriod.getBeginDateYearMonthDay(), 
+                        executionPeriod.getEndDateYearMonthDay());
+                if (teacherCategory != null 
+                        && teacherCategory.getCode().equals("AST") && teacherCategory.getLongName().equals("ASSISTENTE")
+                        && degreeTeachingService.getShift().getTipo().equals(ShiftType.TEORICA)) {                    
+                    double hours = degreeTeachingService.getShift().hours();
+                    credits += (hours * (degreeTeachingService.getPercentage().doubleValue() / 100)) * 1.5;                    
+                } else {                    
+                    double hoursAfter20PM = degreeTeachingService.getShift().hoursAfter(20);
+                    double hoursBefore20PM = degreeTeachingService.getShift().hours() - hoursAfter20PM;
+                    credits += hoursBefore20PM * (degreeTeachingService.getPercentage().doubleValue() / 100);
+                    credits += (hoursAfter20PM * (degreeTeachingService.getPercentage().doubleValue() / 100)) * 1.5;
+                }                
             }
         }
         return round(credits);
@@ -107,7 +123,7 @@ public class TeacherService extends TeacherService_Base {
         for (SupportLesson supportLesson : getSupportLessons()) {
             hours += supportLesson.hours();
         }
-        return hours;
+        return round(hours);
     }
 
     public Double getMasterDegreeServiceCredits() {
@@ -150,7 +166,7 @@ public class TeacherService extends TeacherService_Base {
         for (InstitutionWorkTime institutionWorkTime : getInstitutionWorkTimes()) {
             hours += institutionWorkTime.getHours();
         }
-        return hours;
+        return round(hours);
     }
 
     public void verifyOverlappingWithInstitutionWorkingTime(Date startTime, Date endTime, WeekDay weekDay) {
@@ -258,8 +274,7 @@ public class TeacherService extends TeacherService_Base {
     }
 
     private Double round(double n) {
-        long rounded = Math.round(n * 100);
-        return new Double(rounded / 100.0);
+        return Math.round((n * 100.0)) / 100.0;
     }
 
     private static class TeacherServiceTeacherServiceItemListener extends

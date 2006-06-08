@@ -12,7 +12,7 @@ import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean;
 
-import org.joda.time.DateTime;
+import org.joda.time.YearMonthDay;
 
 public class DepartmentManagementBackingBean extends FenixBackingBean {
 
@@ -31,9 +31,9 @@ public class DepartmentManagementBackingBean extends FenixBackingBean {
 
         Department department = getDepartment();
         if (department != null) {
-            DateTime today = new DateTime();
-            DateTime tomorrow = today.plusDays(1);
-            result.addAll(department.getTeachers(today.toDate(), tomorrow.toDate()));
+            YearMonthDay today = new YearMonthDay();
+            YearMonthDay tomorrow = today.plusDays(1);
+            result.addAll(department.getTeachers(today, tomorrow));
         }
         
         return new ArrayList<Teacher>(result);

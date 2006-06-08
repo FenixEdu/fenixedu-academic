@@ -7,34 +7,30 @@ import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.SupportLesson;
 import net.sourceforge.fenixedu.domain.Teacher;
+import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.teacher.TeacherService;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class EditSupportLesson extends Service {
 
-    public void run(SupportLessonDTO supportLessonDTO) throws ExcepcaoPersistencia {
-        SupportLesson supportLesson = rootDomainObject.readSupportLessonByOID(supportLessonDTO.getIdInternal());
+    public void run(SupportLessonDTO supportLessonDTO, RoleType roleType) throws ExcepcaoPersistencia {
 
-        if (supportLesson == null) {
-            Professorship professorship = rootDomainObject.readProfessorshipByOID(supportLessonDTO.getProfessorshipID());
-            supportLesson = DomainFactory.makeSupportLesson();
-            supportLesson.setProfessorship(professorship);
-        }
-
-        ExecutionPeriod executionPeriod = supportLesson.getProfessorship().getExecutionCourse()
-                .getExecutionPeriod();
-        Teacher teacher = supportLesson.getProfessorship().getTeacher();
+        Professorship professorship = rootDomainObject.readProfessorshipByOID(supportLessonDTO
+                .getProfessorshipID());
+        ExecutionPeriod executionPeriod = professorship.getExecutionCourse().getExecutionPeriod();
+        Teacher teacher = professorship.getTeacher();
         TeacherService teacherService = teacher.getTeacherServiceByExecutionPeriod(executionPeriod);
 
         if (teacherService == null) {
             DomainFactory.makeTeacherService(teacher, executionPeriod);
         }
-        supportLesson.setEndTime(supportLessonDTO.getEndTime());
-        supportLesson.setStartTime(supportLessonDTO.getStartTime());
-        supportLesson.setPlace(supportLessonDTO.getPlace());
-        supportLesson.setWeekDay(supportLessonDTO.getWeekDay());
 
-        supportLesson.verifyOverlappings();
+        SupportLesson supportLesson = rootDomainObject.readSupportLessonByOID(supportLessonDTO
+                .getIdInternal());
+        if (supportLesson == null) {
+            supportLesson = DomainFactory.makeSupportLesson(supportLessonDTO, professorship, roleType);
+        } else {
+            supportLesson.update(supportLessonDTO, roleType);
+        }
     }
-
 }

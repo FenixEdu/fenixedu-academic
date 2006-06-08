@@ -287,16 +287,8 @@ public class ReadTeacherInformation extends Service {
                 } else {
                     String[] strings1 = infoQualification1.getYear().split("/");
                     String[] strings2 = infoQualification2.getYear().split("/");
-
-                    if (Integer.valueOf(getYear(strings1)) < Integer.valueOf(getYear(strings2))) {
-                        return -1;
-                    } else if (Integer.valueOf(getYear(strings1)) > Integer.valueOf(getYear(strings2))) {
-                        return 1;
-                    } else if (infoQualification1.getYear().equals(infoQualification2.getYear())) {
-                        return 0;
-                    }
+                    return Integer.valueOf(getYear(strings1)).compareTo(Integer.valueOf(getYear(strings2)));        
                 }
-                return 0;
             }
 
             private String getYear(String[] strings1) {

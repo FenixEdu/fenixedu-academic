@@ -53,7 +53,8 @@ public class ReadTeacherServiceDistributionByTeachers extends Service {
 		
 		for (ExecutionPeriod executionPeriodEntry : executionPeriodList) {
 											
-			List<Teacher> teachers = department.getTeachers(executionPeriodEntry.getBeginDate(), executionPeriodEntry.getEndDate());	
+			List<Teacher> teachers = department.getTeachers(executionPeriodEntry.getBeginDateYearMonthDay(),
+                    executionPeriodEntry.getEndDateYearMonthDay());	
 					
 			for (Teacher teacher : teachers) {
 				if(teacher.getCategory() == null){
@@ -63,11 +64,11 @@ public class ReadTeacherServiceDistributionByTeachers extends Service {
 				Double accumulatedCredits = (startPeriod == null ? 0.0 : teacher.getCreditsBetweenExecutionPeriods(startPeriod, endPeriod)); 
 				
 				if(returnDTO.isTeacherPresent(teacher.getIdInternal())){
-					returnDTO.addHoursToTeacher(teacher.getIdInternal(), teacher.getHoursByCategory(executionPeriodEntry.getBeginDate(), executionPeriodEntry.getEndDate()));
+					returnDTO.addHoursToTeacher(teacher.getIdInternal(), teacher.getHoursByCategory(executionPeriodEntry.getBeginDateYearMonthDay(), executionPeriodEntry.getEndDateYearMonthDay()));
 					returnDTO.addCreditsToTeacher(teacher.getIdInternal(), teacher.getServiceExemptionCredits(executionPeriodEntry) + teacher.getManagementFunctionsCredits(executionPeriodEntry));					
 				} else {
 					returnDTO.addTeacher(teacher.getIdInternal(), teacher.getTeacherNumber(), teacher
-							.getCategory().getCode(), teacher.getPerson().getNome(), teacher.getHoursByCategory(executionPeriodEntry.getBeginDate(), executionPeriodEntry.getEndDate()), 
+							.getCategory().getCode(), teacher.getPerson().getNome(), teacher.getHoursByCategory(executionPeriodEntry.getBeginDateYearMonthDay(), executionPeriodEntry.getEndDateYearMonthDay()), 
 							teacher.getServiceExemptionCredits(executionPeriodEntry) + teacher.getManagementFunctionsCredits(executionPeriodEntry), accumulatedCredits);
 				}
 					
@@ -118,13 +119,10 @@ public class ReadTeacherServiceDistributionByTeachers extends Service {
 				for(PersonFunction personFunction: teacherManagementFunctions) {
 					returnDTO.addManagementFunctionToTeacher(teacher.getIdInternal(), personFunction.getFunction().getName(), personFunction.getCredits());
 				}
-					
-				List<TeacherServiceExemption> teacherServiceExemptions = teacher.getServiceExemptionSituations(executionPeriodEntry.getBeginDate(), executionPeriodEntry.getEndDate());
-                
-                TeacherServiceExemption teacherServiceExemption = teacher.chooseOneServiceExemption(teacherServiceExemptions, executionPeriodEntry);
-				
+									               
+                TeacherServiceExemption teacherServiceExemption = teacher.getDominantServiceExemption(executionPeriodEntry);				
                 if(teacherServiceExemption != null) {
-                    double exemptionCredits = (double) teacher.getCreditsForServiceExemption(executionPeriodEntry, teacherServiceExemption);
+                    double exemptionCredits = (double) teacher.getServiceExemptionCredits(executionPeriodEntry);
                     if(exemptionCredits > 0.0) {
                         returnDTO.addExemptionSituationToTeacher(teacher.getIdInternal(), teacherServiceExemption.getType().getName(), exemptionCredits);
                     }

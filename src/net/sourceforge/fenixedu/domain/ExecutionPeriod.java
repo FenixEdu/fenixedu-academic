@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.util.PeriodState;
 import net.sourceforge.fenixedu.util.StringNormalizer;
 
@@ -200,5 +203,39 @@ public class ExecutionPeriod extends ExecutionPeriod_Base implements Comparable 
             }
         }
         return null;
+    }
+
+    public void checkValidCreditsPeriod(RoleType roleType) {
+        if (roleType != RoleType.SCIENTIFIC_COUNCIL) {
+            Interval validCreditsPerid = getValidCreditsPeriod(roleType);
+            if (validCreditsPerid == null) {
+                throw new DomainException("message.invalid.credits.period2");
+            } else if (!validCreditsPerid.containsNow()) {
+                throw new DomainException("message.invalid.credits.period", validCreditsPerid.getStart()
+                        .toString("dd-MM-yyy HH:mm"), validCreditsPerid.getEnd().toString(
+                        "dd-MM-yyy HH:mm"));
+            }
+        }
+    }
+
+    public Interval getValidCreditsPeriod(RoleType roleType) {
+        switch (roleType) {
+        case DEPARTMENT_MEMBER:
+            if (getTeacherCreditsPeriodBegin() != null && getTeacherCreditsPeriodEnd() != null) {
+                return new Interval(getTeacherCreditsPeriodBegin(), getTeacherCreditsPeriodEnd());
+            } else {
+                return null;
+            }
+        case DEPARTMENT_ADMINISTRATIVE_OFFICE:
+            if (getDepartmentAdmOfficeCreditsPeriodBegin() != null
+                    && getDepartmentAdmOfficeCreditsPeriodEnd() != null) {
+                return new Interval(getDepartmentAdmOfficeCreditsPeriodBegin(),
+                        getDepartmentAdmOfficeCreditsPeriodEnd());
+            } else {
+                return null;
+            }
+        default:
+            throw new DomainException("invalid.role.type");
+        }
     }
 }

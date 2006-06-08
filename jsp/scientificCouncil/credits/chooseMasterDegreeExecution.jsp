@@ -3,27 +3,29 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 
-<h3><bean:message key="message.credits.masterDegree.title"/></h3>
+<h2><bean:message key="message.credits.masterDegree.title"/></h2>
 
 <html:form action="/masterDegreeCreditsManagement">
 
 	<html:hidden property="method" value="viewMasterDegreeCredits"/>
 	
-	<bean:message key="label.credits.choose.ExecutionYear"/>:<br/>	
+	<p class="mtop2"><bean:message key="label.credits.choose.ExecutionYear"/>:</p>
+	<p>
 	<html:select property="executionYearID" size="1" onchange="this.form.method.value='prepare';this.form.submit();">
 		<html:options collection="executionYears" property="idInternal" labelProperty="year"/>
 	</html:select>
+	</p>
 	
-	<br/><br/><br/>
-	
-	<bean:message key="label.credits.choose.masterDegreeCurricularPlan"/>: <br/>
+	<p class="mtop2"><bean:message key="label.credits.choose.masterDegreeCurricularPlan"/>:</p>
+	<p>
 	<html:select property="executionDegreeID" size="1" >
 		<html:options collection="masterDegreeExecutions" property="idInternal" labelProperty="degreeCurricularPlan.name"/>
 	</html:select>
+	</p>
 	
-	<br/><br/><br/>
-	
+	<p class="mtop2">
 	<html:submit styleClass="inputbutton">
-		<bean:message key="submit"/>
+		<bean:message key="visualize"/>
 	</html:submit>
+	</p>
 </html:form>

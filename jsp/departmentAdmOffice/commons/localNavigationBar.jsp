@@ -80,14 +80,6 @@
 			</html:link>
 		</li>
 	</ul>
-	<br/>
-	<%--
-	<ul>
-		<html:link page="/functionsManagement/personSearchForFunctionsManagement.faces" >
-			<bean:message key="link.managementPositions.management"/>
-		</html:link>
-	</ul>
-	--%>
 	<ul>
 		<li class="navheader">
 			<strong><bean:message key="title.final.degree.works"/></strong>

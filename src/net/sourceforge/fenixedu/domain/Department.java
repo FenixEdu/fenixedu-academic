@@ -11,7 +11,6 @@
 package net.sourceforge.fenixedu.domain;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -21,6 +20,8 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.teacher.TeacherLegalRegimen;
 import net.sourceforge.fenixedu.domain.teacher.TeacherPersonalExpectation;
+
+import org.joda.time.YearMonthDay;
 
 public class Department extends Department_Base {
 
@@ -33,7 +34,7 @@ public class Department extends Department_Base {
 
         Unit departmentUnit = this.getDepartmentUnit();
         Set<Employee> employees = new HashSet<Employee>();
-        Date currentDate = Calendar.getInstance().getTime();
+        YearMonthDay currentDate = new YearMonthDay();
 
         if (departmentUnit != null) {
             readAndSaveEmployees(departmentUnit, employees, currentDate);
@@ -41,7 +42,7 @@ public class Department extends Department_Base {
         return new ArrayList<Employee>(employees);
     }
 
-    private void readAndSaveEmployees(Unit unit, Set<Employee> employees, Date currentDate) {
+    private void readAndSaveEmployees(Unit unit, Set<Employee> employees, YearMonthDay currentDate) {
         for (Contract contract : unit.getWorkingContracts()) {
             Employee employee = contract.getEmployee();
             if (employee.getActive().booleanValue() && contract.isActive(currentDate)) {
@@ -53,7 +54,7 @@ public class Department extends Department_Base {
         }
     }
 
-    public List<Employee> getWorkingEmployees(Date begin, Date end) {
+    public List<Employee> getWorkingEmployees(YearMonthDay begin, YearMonthDay end) {
 
         Unit departmentUnit = this.getDepartmentUnit();
         Set<Employee> employees = new HashSet<Employee>();
@@ -64,7 +65,7 @@ public class Department extends Department_Base {
         return new ArrayList<Employee>(employees);
     }
 
-    private void readAndSaveEmployees(Unit unit, Set<Employee> employees, Date begin, Date end) {
+    private void readAndSaveEmployees(Unit unit, Set<Employee> employees, YearMonthDay begin, YearMonthDay end) {
         for (Contract contract : unit.getWorkingContracts(begin, end)) {
             employees.add(contract.getEmployee());
         }
@@ -74,7 +75,7 @@ public class Department extends Department_Base {
     }
 
     public List<Teacher> getCurrentTeachers() {
-        Date currentDate = Calendar.getInstance().getTime();
+        YearMonthDay currentDate = new YearMonthDay();
         List<Teacher> teachers = new ArrayList<Teacher>();
         List<Employee> employees = this.getCurrentActiveWorkingEmployees();
 
@@ -109,7 +110,7 @@ public class Department extends Department_Base {
         return allTeachers;
     }
 
-    public List<Teacher> getTeachers(Date begin, Date end) {
+    public List<Teacher> getTeachers(YearMonthDay begin, YearMonthDay end) {
         List<Teacher> teachers = new ArrayList<Teacher>();
         List<Employee> employees = this.getWorkingEmployees(begin, end);
         for (Employee employee : employees) {
@@ -123,7 +124,7 @@ public class Department extends Department_Base {
         return teachers;
     }
 
-    public Teacher getTeacherByPeriod(Integer teacherNumber, Date begin, Date end) {
+    public Teacher getTeacherByPeriod(Integer teacherNumber, YearMonthDay begin, YearMonthDay end) {
         for (Employee employee : getWorkingEmployees(begin, end)) {
             Teacher teacher = employee.getPerson().getTeacher();
             if (teacher != null
@@ -151,7 +152,6 @@ public class Department extends Department_Base {
                 executionYear, startDate, endDate);
 
         checkIfCanCreateExpectationDefinitionPeriod(executionYear);
-
         this.getTeacherExpectationDefinitionPeriods().add(teacherExpectationDefinitionPeriod);
 
     }
@@ -209,8 +209,8 @@ public class Department extends Department_Base {
 
     public List<TeacherPersonalExpectation> getTeachersPersonalExpectationsByExecutionYear(
             ExecutionYear executionYear) {
-        List<Teacher> teachersFromDepartment = getTeachers(executionYear.getBeginDate(), executionYear
-                .getEndDate());
+        List<Teacher> teachersFromDepartment = getTeachers(executionYear.getBeginDateYearMonthDay(), executionYear
+                .getEndDateYearMonthDay());
         List<TeacherPersonalExpectation> personalExpectations = new ArrayList<TeacherPersonalExpectation>();
 
         for (Teacher teacher : teachersFromDepartment) {

@@ -6,9 +6,6 @@
 <p class="infoselected">
 	<b><bean:message key="label.teacher.name" /></b> <bean:write name="teacher" property="person.nome"/><br />
 	<b><bean:message key="label.teacher.number" /></b> <bean:write name="teacher" property="teacherNumber"/> <br />
-	(<i><html:link page='<%= "/showTeacherCredits.do?method=showTeacherCredits&page=1&amp;executionPeriodId=" + executionPeriodId %>' paramId="teacherId" paramName="teacher" paramProperty="idInternal">
-		<bean:message key="label.departmentTeachersList.teacherCreditsSheet"/>
-	</html:link></i>)		
 </p>
 
 <bean:parameter id="executionPeriodId" name="executionPeriodId"/>

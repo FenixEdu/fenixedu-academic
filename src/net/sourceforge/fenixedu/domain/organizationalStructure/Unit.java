@@ -24,9 +24,9 @@ import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.util.DateFormatUtil;
 
 import org.apache.commons.beanutils.BeanComparator;
+import org.joda.time.YearMonthDay;
 
 public class Unit extends Unit_Base {
 
@@ -81,7 +81,7 @@ public class Unit extends Unit_Base {
                 .getDepartment() != null);
     }
 
-    public List<Unit> getInactiveSubUnits(Date currentDate) {
+    public List<Unit> getInactiveSubUnits(YearMonthDay currentDate) {
         List<Unit> allInactiveSubUnits = new ArrayList<Unit>();
         for (Unit subUnit : this.getSubUnits()) {
             if (!subUnit.isActive(currentDate)) {
@@ -91,7 +91,7 @@ public class Unit extends Unit_Base {
         return allInactiveSubUnits;
     }
 
-    public List<Unit> getActiveSubUnits(Date currentDate) {
+    public List<Unit> getActiveSubUnits(YearMonthDay currentDate) {
         List<Unit> allActiveSubUnits = new ArrayList<Unit>();
         for (Unit subUnit : this.getSubUnits()) {
             if (subUnit.isActive(currentDate)) {
@@ -101,7 +101,7 @@ public class Unit extends Unit_Base {
         return allActiveSubUnits;
     }
 
-    public List<Unit> getAllInactiveSubUnits(Date currentDate) {
+    public List<Unit> getAllInactiveSubUnits(YearMonthDay currentDate) {
 
         Set<Unit> allInactiveSubUnits = new HashSet<Unit>();
         for (Unit subUnit : this.getSubUnits()) {
@@ -111,7 +111,7 @@ public class Unit extends Unit_Base {
         return new ArrayList<Unit>(allInactiveSubUnits);
     }
 
-    private void readAndSaveInactiveSubUnits(Unit unit, Set<Unit> allInactiveSubUnits, Date currentDate) {
+    private void readAndSaveInactiveSubUnits(Unit unit, Set<Unit> allInactiveSubUnits, YearMonthDay currentDate) {
         if (!unit.isActive(currentDate)) {
             allInactiveSubUnits.add(unit);
         }
@@ -120,7 +120,7 @@ public class Unit extends Unit_Base {
         }
     }
 
-    public List<Unit> getAllActiveSubUnits(Date currentDate) {
+    public List<Unit> getAllActiveSubUnits(YearMonthDay currentDate) {
         Set<Unit> allActiveSubUnits = new HashSet<Unit>();
         for (Unit subUnit : this.getSubUnits()) {
             readAndSaveActiveSubUnits(subUnit, allActiveSubUnits, currentDate);
@@ -128,7 +128,7 @@ public class Unit extends Unit_Base {
         return new ArrayList<Unit>(allActiveSubUnits);
     }
 
-    private void readAndSaveActiveSubUnits(Unit unit, Set<Unit> allActiveSubUnits, Date currentDate) {
+    private void readAndSaveActiveSubUnits(Unit unit, Set<Unit> allActiveSubUnits, YearMonthDay currentDate) {
         if (unit.isActive(currentDate)) {
             allActiveSubUnits.add(unit);
         }
@@ -165,9 +165,8 @@ public class Unit extends Unit_Base {
         }
     }
 
-    public boolean isActive(Date currentDate) {
-        return (this.getEndDate() == null || (DateFormatUtil.equalDates("yyyyMMdd", this.getEndDate(),
-                currentDate) || this.getEndDate().after(currentDate)));
+    public boolean isActive(YearMonthDay currentDate) {
+        return (this.getEndDateYearMonthDay() == null || !this.getEndDateYearMonthDay().isBefore(currentDate));
     }
 
     public void delete() {
@@ -184,7 +183,7 @@ public class Unit extends Unit_Base {
             for (; !getParticipatingAnyCurricularCourseCurricularRules().isEmpty(); getParticipatingAnyCurricularCourseCurricularRules()
                     .get(0).delete())
                 ;
-
+            
             removeDepartment();
             removeDegree();
             removeRootDomainObject();
@@ -194,7 +193,7 @@ public class Unit extends Unit_Base {
         }
     }
 
-    public List<Contract> getWorkingContracts(Date begin, Date end) {
+    public List<Contract> getWorkingContracts(YearMonthDay begin, YearMonthDay end) {
         List<Contract> contracts = new ArrayList<Contract>();
         for (Contract contract : this.getWorkingContracts()) {
             if (contract.belongsToPeriod(begin, end)) {
@@ -262,7 +261,7 @@ public class Unit extends Unit_Base {
     }
     // end SCIENTIFIC AREA UNITS, COMPETENCE COURSE GROUP UNITS AND RELATED
     
-    public List<Teacher> getTeachers(Date begin, Date end) {
+    public List<Teacher> getTeachers(YearMonthDay begin, YearMonthDay end) {
         List<Teacher> teachers = new ArrayList<Teacher>();
         List<Employee> employees = getWorkingEmployees(begin, end);
         for (Employee employee : employees) {
@@ -275,7 +274,7 @@ public class Unit extends Unit_Base {
         return teachers;
     }
 
-    public Teacher getTeacherByPeriod(Integer teacherNumber, Date begin, Date end) {
+    public Teacher getTeacherByPeriod(Integer teacherNumber, YearMonthDay begin, YearMonthDay end) {
         for (Employee employee : getWorkingEmployees(begin, end)) {
             Teacher teacher = employee.getPerson().getTeacher();
             if (teacher != null && teacher.getTeacherNumber().equals(teacherNumber)
@@ -286,13 +285,13 @@ public class Unit extends Unit_Base {
         return null;
     }
 
-    public List<Employee> getWorkingEmployees(Date begin, Date end) {
+    public List<Employee> getWorkingEmployees(YearMonthDay begin, YearMonthDay end) {
         Set<Employee> employees = new HashSet<Employee>();
         readAndSaveEmployees(this, employees, begin, end);
         return new ArrayList<Employee>(employees);
     }
 
-    private void readAndSaveEmployees(Unit unit, Set<Employee> employees, Date begin, Date end) {
+    private void readAndSaveEmployees(Unit unit, Set<Employee> employees, YearMonthDay begin, YearMonthDay end) {
         for (Contract contract : unit.getWorkingContracts(begin, end)) {
             employees.add(contract.getEmployee());
         }

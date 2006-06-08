@@ -8,16 +8,10 @@
 
 <logic:present role="SCIENTIFIC_COUNCIL">
 	<ul>
-<%-- OLD FEATURE 
-		<li>
-			<html:link page="/curricularCourseManagement.do">
-				<bean:message key="link.curricularCourseManagement" />
-			</html:link>
-		</li>
---%>
 		<li class="navheader">
 			<bean:message key="bolonha.process"/>
 		</li>
+		
 		<li>
 			<html:link page="/competenceCourses/competenceCoursesManagement.faces">
 				<bean:message key="navigation.competenceCoursesManagement"/>
@@ -35,19 +29,29 @@
 			<bean:message key="label.credits.navigation.header"/>
 		</li>
 		<li>
+		  	<html:link page="/defineCreditsPeriods.do?method=showPeriods">
+		  		<bean:message key="link.define.periods"/>
+		  	</html:link>  
+		</li>		
+		<li>
 			<html:link page="/functionsManagement/personSearchForFunctionsManagement.faces" >
 				<bean:message key="link.managementPositions.management"/>
 			</html:link>
 		</li>
 		<li>
-			<html:link page="/creditsReport.do?method=prepare">
-		  		<bean:message key="link.credits.viewReport"/>
-		  	</html:link>
-		</li>		
-		<li>
 			<html:link page="/masterDegreeCreditsManagement.do?method=prepare">
 		  		<bean:message key="link.credits.masterDegree"/>
 		  	</html:link>
 		</li>
+		<li>
+		  	<html:link page="/showAllTeacherCreditsResume.do?method=prepareTeacherSearch">
+		  		<bean:message key="link.teacher.sheet"/>
+		  	</html:link>  
+		</li>			
+		<li>
+			<html:link page="/creditsReport.do?method=prepare">
+		  		<bean:message key="link.credits.viewReport"/>
+		  	</html:link>
+		</li>				
 	</ul>
 </logic:present>

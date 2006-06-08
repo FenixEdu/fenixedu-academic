@@ -191,7 +191,7 @@
 		<managed-bean-name>facultyAdmOfficeFunctionsManagementBackingBean</managed-bean-name>
 		<managed-bean-class>net.sourceforge.fenixedu.presentationTier.backBeans.facultyAdmOffice.FacultyAdmOfficeFunctionsManagement</managed-bean-class>
 		<managed-bean-scope>request</managed-bean-scope>
-	</managed-bean>
+	</managed-bean>	
 	<managed-bean>
 		<description>ScientificCouncilFunctionsManagementBackingBean</description>
 		<managed-bean-name>scientificCouncilFunctionsManagementBackingBean</managed-bean-name>

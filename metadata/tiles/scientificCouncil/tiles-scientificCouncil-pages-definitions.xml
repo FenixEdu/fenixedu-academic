@@ -1,20 +1,33 @@
 <!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 1.1//EN"
 	"http://jakarta.apache.org/struts/dtds/tiles-config_1_1.dtd">
+
 <!-- Tiles definitions -->
 <tiles-definitions>
     <definition name="index" extends="scientificCouncil.masterPage">
         <put name="body" value="/scientificCouncil/index.jsp"></put>
     </definition>
-    
-    <definition name="select-report-parameters" extends="scientificCouncil.masterPage">
-        <put name="body" value="/scientificCouncil/credits/selectReportParameters.jsp"></put>
+          
+    <definition name="df.page.read-execution-course-teachers" extends="scientificCouncil.masterPage" >
+		<put name="body" value="/scientificCouncil/credits/readTeachers_bd.jsp" />
+	</definition>
+	<definition name="df.page.insert-professorShip-by-number" extends="scientificCouncil.masterPage" >
+		<put name="body" value="/manager/insertTeacherByNumber_bd.jsp" />
+	</definition>
+		
+	<!-- Credits -->	
+	<definition name="teacher-search-layout" page="/credits/commons/searchTeacherPageLayout.jsp">
+		<put name="searchTitle" value="/commons/blank.jsp"></put>
+		<put name="searchInfo" value="/commons/blank.jsp"></put>
+	</definition>
+	<definition name="search-for-teacher-credits" extends="scientificCouncil.masterPage">
+        <put name="body" value="search-for-teacher-credits-body"/>
     </definition>
-    
-    <definition name="show-teacher-credits-report" extends="scientificCouncil.masterPage">
-        <put name="body" value="/scientificCouncil/credits/showTeachersCreditsReport.jsp"></put>
-    </definition>        
-    
-    <definition name="select-masterDegree-parameters" extends="scientificCouncil.masterPage">
+    <definition name="search-for-teacher-credits-body" extends="teacher-search-layout">
+        <put name="searchInfo" value="label.search.for.teacherCreditsSheet"/>
+        <put name="searchTitle" value="label.search.for.teacherCreditsSheet.title"/>
+    </definition>
+	
+	<definition name="select-masterDegree-parameters" extends="scientificCouncil.masterPage">
         <put name="body" value="/scientificCouncil/credits/chooseMasterDegreeExecution.jsp"></put>
     </definition>    
     
@@ -24,11 +37,80 @@
 	<definition name="edit-masterDegree-credits" extends="scientificCouncil.masterPage">
         <put name="body" value="/scientificCouncil/credits/editMasterDegreeCredits.jsp"></put>
     </definition>
+	
+	<!-- Credits Report -->	
+	<definition name="select-report-parameters" extends="scientificCouncil.masterPage">
+        <put name="body" value="/scientificCouncil/credits/selectReportParameters.jsp"></put>
+    </definition>    
+    <definition name="show-teacher-credits-report" extends="scientificCouncil.masterPage">
+        <put name="body" value="/scientificCouncil/credits/showTeachersCreditsReport.jsp"></put>
+    </definition>        
     
-    <definition name="df.page.read-execution-course-teachers" extends="scientificCouncil.masterPage" >
-		<put name="body" value="/scientificCouncil/credits/readTeachers_bd.jsp" />
+    <!-- Other Services -->	
+    <definition name="list-teacher-other-services" extends="scientificCouncil.masterPage">
+        <put name="body" value="/scientificCouncil/credits/otherService/showOtherServices.jsp"/>
+    </definition>
+    <definition name="edit-other-service" extends="scientificCouncil.masterPage">
+        <put name="body" value="/scientificCouncil/credits/otherService/editOtherService.jsp"/>
+    </definition>
+         
+    <!-- CreditsSheetAndCreditsResume -->   
+    <definition name="showAllCreditsResume" extends="scientificCouncil.masterPage">
+		<put name="body" value="/credits/commons/listAllTeacherCreditsResume.jsp"/>
 	</definition>
-	<definition name="df.page.insert-professorShip-by-number" extends="scientificCouncil.masterPage" >
-		<put name="body" value="/manager/insertTeacherByNumber_bd.jsp" />
+	<definition name="show-teacher-credits" extends="scientificCouncil.masterPage">
+        <put name="body" value="/scientificCouncil/credits/showTeacherCredits.jsp"/>
+    </definition>
+    <definition name="creditsResumeTableLine" page="/credits/commons/creditsResumeTableLine.jsp">
+		<put name="creditLineDTO"/>
+	</definition>    	
+	<definition name="creditsResumeWithDescription" page="/credits/commons/creditsResumeWithDescription.jsp">
+		<put name="creditLineDTO"/>
 	</definition>
+    
+    <!-- WorkingTime -->
+    <definition name="list-institution-working-time" extends="scientificCouncil.masterPage">
+        <put name="body" value="/credits/workingTime/showTeacherWorkingTime.jsp"/>
+    </definition>  
+    <definition name="edit-institution-work-time" extends="scientificCouncil.masterPage">
+        <put name="body" value="/credits/workingTime/editTeacherInstitutionWorkTime.jsp"/>
+    </definition>
+    
+    <!-- AdviseServices -->
+    <definition name="list-teacher-advise-services" extends="scientificCouncil.masterPage">
+        <put name="body" value="/credits/adviseServices/showTeacherAdviseServices.jsp"/>
+    </definition>        
+        
+    <!-- SupportLesson -->
+    <definition name="show-teacher-execution-course-support-lessons" extends="scientificCouncil.masterPage">
+        <put name="body" value="/credits/supportLessons/showProfessorshipSupportLessons.jsp"/>
+    </definition> 
+    <definition name="edit-support-lesson" extends="scientificCouncil.masterPage">
+        <put name="body" value="/credits/supportLessons/editSupportLesson.jsp"/>
+    </definition>   
+    
+    <!-- DegreeTeachingService -->
+    <definition name="show-teaching-service-percentages" extends="scientificCouncil.masterPage">
+        <put name="body" value="/credits/degreeTeachingService/showTeachingServicePercentages.jsp"/>
+    </definition>  
+    
+    <!-- CreditsPeriods -->
+    <definition name="show-credits-periods" extends="scientificCouncil.masterPage">
+        <put name="body" value="/scientificCouncil/credits/periods/showPeriods.jsp"/>
+    </definition>  
+    <definition name="edit-teacher-credits-periods" extends="scientificCouncil.masterPage">
+        <put name="body" value="/scientificCouncil/credits/periods/editTeacherPeriods.jsp"/>
+    </definition>  
+    <definition name="edit-departmentAdmOffice-credits-periods" extends="scientificCouncil.masterPage">
+        <put name="body" value="/scientificCouncil/credits/periods/editDepartmentAdmOfficePeriods.jsp"/>
+    </definition>         
+    
+    <!-- Schedules Print -->  
+    <definition name="show-empty-schedules-resume-print" page="/layout/fenixPrint.jsp">
+        <put name="body" value="/credits/schedulesPrint/emptySchedules.jsp"/>
+    </definition> 
+    <definition name="show-schedules-resume-print" page="/layout/fenixPrint.jsp">
+        <put name="body" value="/credits/schedulesPrint/schedules.jsp"/>
+    </definition>      
+          
 </tiles-definitions>

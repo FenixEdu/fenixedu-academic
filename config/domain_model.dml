@@ -1106,8 +1106,12 @@ class net.sourceforge.fenixedu.domain.ExecutionPeriod extends net.sourceforge.fe
 	String name;
 	Integer semester;
     PeriodState state;
-	DateTime inquiryResponseBeginDateTime;
+    DateTime inquiryResponseBeginDateTime;
 	DateTime inquiryResponseEndDateTime;
+    DateTime teacherCreditsPeriodBegin;
+    DateTime teacherCreditsPeriodEnd;
+    DateTime departmentAdmOfficeCreditsPeriodBegin;
+    DateTime departmentAdmOfficeCreditsPeriodEnd;
 }
 
 
@@ -2669,8 +2673,7 @@ class net.sourceforge.fenixedu.domain.organizationalStructure.Accountability ext
 	Integer keyChildParty;
 	Integer keyAccountabilityType;
 	String ojbConcreteClass;
-}
-	  	  
+}	  	  
 	class net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction extends net.sourceforge.fenixedu.domain.organizationalStructure.Accountability {
 		Double credits;	
 	}  

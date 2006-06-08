@@ -1,15 +1,27 @@
 package net.sourceforge.fenixedu.domain;
 
 import java.util.Calendar;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.space.OldRoom;
 import net.sourceforge.fenixedu.domain.teacher.DegreeTeachingService;
 
+import org.apache.commons.beanutils.BeanComparator;
+import org.apache.commons.collections.comparators.ComparatorChain;
+
 public class Shift extends Shift_Base {
+
+    public static final Comparator SHIFT_COMPARATOR_BY_TYPE_AND_ORDERED_LESSONS = new ComparatorChain();
+    static {
+        ((ComparatorChain) SHIFT_COMPARATOR_BY_TYPE_AND_ORDERED_LESSONS).addComparator(new BeanComparator("tipo"));
+        ((ComparatorChain) SHIFT_COMPARATOR_BY_TYPE_AND_ORDERED_LESSONS).addComparator(new BeanComparator("lessonsStringComparator"));
+    }
 
     public Shift() {
 		super();
@@ -122,6 +134,22 @@ public class Shift extends Shift_Base {
             }
         }
         return availablePercentage;
+    }
+
+    public SortedSet<Lesson> getLessonsOrderedByWeekDayAndStartTime() {
+        final SortedSet<Lesson> lessons = new TreeSet<Lesson>(Lesson.LESSON_COMPARATOR_BY_WEEKDAY_AND_STARTTIME_AND_ROOMNAME);
+        lessons.addAll(getAssociatedLessonsSet());
+        return lessons;
+    }
+ 
+    public String getLessonsStringComparator() {
+        final StringBuilder stringBuilder = new StringBuilder();
+        for (final Lesson lesson : getLessonsOrderedByWeekDayAndStartTime()) {
+            stringBuilder.append(lesson.getDiaSemana().getDiaSemana().toString());
+            stringBuilder.append(lesson.getBeginHourMinuteSecond().toString());
+            stringBuilder.append(lesson.getRoomOccupation().getRoom().getName().toString());
+        }       
+        return stringBuilder.toString();
     }
 
 }

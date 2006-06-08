@@ -7,16 +7,16 @@
 <%@ page import="net.sourceforge.fenixedu.domain.teacher.TeacherMasterDegreeService" %>
 <%@ page import="net.sourceforge.fenixedu.domain.teacher.TeacherService" %>
 
-<h3><bean:message key="message.credits.masterDegree.title"/></h3>
+<h2><bean:message key="message.credits.masterDegree.title"/></h2>
 
 <bean:define id="executionDegree" name="executionDegree" type="net.sourceforge.fenixedu.domain.ExecutionDegree"/>
 
 <div class="simpleblock1">
-<p><strong><bean:message key="message.credits.masterDegree.curricularPlan"/>:</strong>  <bean:write name="executionDegree" property="degreeCurricularPlan.name"/></p>
-<p><strong><bean:message key="message.credits.masterDegree.executionYear"/>:</strong> <bean:write name="executionDegree" property="executionYear.year"/></p>
+<p><bean:message key="message.credits.masterDegree.curricularPlan"/>: <strong><bean:write name="executionDegree" property="degreeCurricularPlan.name"/></strong></p>
+<p><bean:message key="message.credits.masterDegree.executionYear"/>: <strong><bean:write name="executionDegree" property="executionYear.year"/></strong></p>
 </div>
 
-<p><em><span class="required">*</span> <bean:message key="message.credits.curricularDegree"/></em></p>
+<p><span class="required">*</span> <bean:message key="message.credits.curricularDegree"/></p>
 
 
 <logic:notPresent name="masterDegreeCoursesDTOs">
@@ -39,23 +39,23 @@
 		</tr>
 		
 		<logic:iterate id="masterDegreeCoursesDTO" name="masterDegreeCoursesDTOs" type="net.sourceforge.fenixedu.presentationTier.Action.scientificCouncil.credits.MasterDegreeCreditsManagementDispatchAction.MasterDegreeCreditsDTO">
-		<tr style="border-top: 2px solid #aaa;">
+		<tr>
 			<% int numberLines = 1; %>
 			<td rowspan="<%= masterDegreeCoursesDTO.getTotalRowSpan() %>">
 				<bean:write name="masterDegreeCoursesDTO" property="curricularCourse.name"/>
 			</td>
-			<td rowspan="<%= masterDegreeCoursesDTO.getTotalRowSpan() %>">
+			<td class="acenter" rowspan="<%= masterDegreeCoursesDTO.getTotalRowSpan() %>">
 				<bean:define id="curricularCourseType" name="masterDegreeCoursesDTO" property="curricularCourse.type" type="net.sourceforge.fenixedu.domain.curriculum.CurricularCourseType"/>
 				<e:define id="curricularCourseTypeToString" enumeration="curricularCourseType" bundle="ENUMERATION_RESOURCES"/>
 				<bean:write name="curricularCourseTypeToString"/>
 			</td>
-			<td rowspan="<%= masterDegreeCoursesDTO.getTotalRowSpan() %>">
+			<td class="aright" rowspan="<%= masterDegreeCoursesDTO.getTotalRowSpan() %>">
 				<bean:write name="masterDegreeCoursesDTO" property="curricularCourse.credits"/>
 			</td>
-			<td rowspan="<%= masterDegreeCoursesDTO.getTotalRowSpan() %>">
+			<td class="aright" rowspan="<%= masterDegreeCoursesDTO.getTotalRowSpan() %>">
 				<bean:write name="masterDegreeCoursesDTO" property="numberEnrolments"/>
 			</td>
-			<td rowspan="<%= masterDegreeCoursesDTO.getTotalRowSpan() %>">
+			<td class="acenter" rowspan="<%= masterDegreeCoursesDTO.getTotalRowSpan() %>">
 				<logic:equal name="masterDegreeCoursesDTO" property="semesters" value="0">
 					<bean:message key="message.credits.masterDegree.noAmbit"/>
 				</logic:equal>
@@ -72,14 +72,14 @@
 				<bean:define id="keyMap" name="mapElement" property="key" type="java.lang.String"/>
 				<% Integer profRowSpan = (Integer)masterDegreeCoursesDTO.getProfessorshipsRowSpanMap().get(keyMap); %>
 				<bean:define id="executionCourse" name="mapElement" property="value" type="net.sourceforge.fenixedu.domain.ExecutionCourse"/>
-				<td rowspan="<%= profRowSpan.intValue() %>">
+				<td class="acenter" rowspan="<%= profRowSpan.intValue() %>">
 					<bean:write name="executionCourse" property="executionPeriod.executionYear.year"/><br/>
 					<bean:write name="executionCourse" property="executionPeriod.name"/>
 				</td>		
 				<logic:notEmpty name="executionCourse" property="professorships">	
 					<logic:iterate id="professorship" name="executionCourse" property="professorships" type="net.sourceforge.fenixedu.domain.Professorship">
 						<bean:define id="teacher" name="professorship" property="teacher" type="net.sourceforge.fenixedu.domain.Teacher"/>
-						<td><bean:write name="teacher" property="teacherNumber"/></td>
+						<td class="aright"><bean:write name="teacher" property="teacherNumber"/></td>
 						<td><bean:write name="teacher" property="person.nome"/></td>
 						<% 
 							TeacherService teacherService = teacher.getTeacherServiceByExecutionPeriod(executionCourse.getExecutionPeriod());
@@ -91,8 +91,8 @@
 							}
 						%>
 						<logic:notEmpty name="masterDegreeService">						
-							<td><bean:write name="masterDegreeService" property="hours"/></td>
-							<td><bean:write name="masterDegreeService" property="credits"/></td>						
+							<td class="aright"><bean:write name="masterDegreeService" property="hours"/></td>
+							<td class="aright"><bean:write name="masterDegreeService" property="credits"/></td>						
 						</logic:notEmpty>
 						<logic:empty name="masterDegreeService">
 							<td>-</td>
@@ -156,5 +156,5 @@
 			</logic:iterate>
 		</logic:iterate>		
 	</table>
-	<p><em><span class="required">*</span> <bean:message key="message.credits.curricularDegree"/></em></p>
+	<p><span class="required">*</span> <bean:message key="message.credits.curricularDegree"/></p>
 </logic:present>

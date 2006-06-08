@@ -64,9 +64,7 @@ public class SupportLessonDTO extends InfoObject {
 
     public void setWeekDay(DiaSemana weekDay) {
         this.weekDay = weekDay;
-    }
-
-    
+    }    
 }
 
 

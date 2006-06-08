@@ -148,7 +148,7 @@ public class DateTimeInputRenderer extends InputRenderer {
                     hoursField.setValue(String.format("%02d", calendar.get(Calendar.HOUR_OF_DAY)));
                 }
                 
-                container.addChild(new HtmlText("h:"));
+                container.addChild(new HtmlText("hh"));
                 
                 HtmlTextInput minutesField = new HtmlTextInput();
                 minutesField.setName(key.toString() + "_minutes");
@@ -160,7 +160,7 @@ public class DateTimeInputRenderer extends InputRenderer {
                     minutesField.setValue(String.format("%02d", calendar.get(Calendar.MINUTE)));
                 }
                 
-                container.addChild(new HtmlText("m"));
+                container.addChild(new HtmlText("mm"));
                 
                 hiddenField.setConverter(new DateTimeConverter(dateField, hoursField, minutesField));
                 minutesField.setController(new DateTimeController(hiddenField, dateFormat, dateField, hoursField, minutesField));

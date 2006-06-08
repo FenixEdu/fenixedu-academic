@@ -4,6 +4,7 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher.services;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.teacher.TeacherAdviseService;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
@@ -14,9 +15,10 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class DeleteTeacherAdviseServiceByOID extends Service {
 
-    public void run(Integer teacherAdviseServiceID) throws ExcepcaoPersistencia {
-        TeacherAdviseService teacherAdviseService = (TeacherAdviseService) rootDomainObject.readTeacherServiceItemByOID(teacherAdviseServiceID);
-        teacherAdviseService.delete();
+    public void run(Integer teacherAdviseServiceID, RoleType roleType) throws ExcepcaoPersistencia {
+        TeacherAdviseService teacherAdviseService = (TeacherAdviseService) rootDomainObject
+                .readTeacherServiceItemByOID(teacherAdviseServiceID);
+        teacherAdviseService.delete(roleType);
     }
-    
+
 }

@@ -72,7 +72,7 @@ public class SummariesControlAction extends FenixDispatchAction {
 
             getListing(request, departmentID, executionPeriodID);
             saveDepartmentAndExecutionPeriod(request, departmentID, executionPeriodID);
-            
+
         } else if (departmentID == null || departmentID.equals("")) {
             ActionMessages actionMessages = new ActionMessages();
             actionMessages.add("", new ActionMessage("error.no.deparment"));
@@ -119,7 +119,8 @@ public class SummariesControlAction extends FenixDispatchAction {
         return mapping.findForward("success");
     }
 
-    private void saveDepartmentAndExecutionPeriod(HttpServletRequest request, String departmentID, String executionPeriodID) {
+    private void saveDepartmentAndExecutionPeriod(HttpServletRequest request, String departmentID,
+            String executionPeriodID) {
         request.setAttribute("department", departmentID);
         request.setAttribute("executionPeriod", executionPeriodID);
     }
@@ -135,7 +136,7 @@ public class SummariesControlAction extends FenixDispatchAction {
         ;
 
         List<Teacher> allDepartmentTeachers = (department != null && executionPeriod != null) ? department
-                .getTeachers(executionPeriod.getBeginDate(), executionPeriod.getEndDate())
+                .getTeachers(executionPeriod.getBeginDateYearMonthDay(), executionPeriod.getEndDateYearMonthDay())
                 : new ArrayList<Teacher>();
 
         List<SummariesControlElementDTO> allListElements = new ArrayList<SummariesControlElementDTO>();
@@ -405,12 +406,7 @@ public class SummariesControlAction extends FenixDispatchAction {
 
     private void readAndSaveAllDepartments(HttpServletRequest request) throws FenixFilterException,
             FenixServiceException {
-        Collection<Department> allDepartments = new ArrayList<Department>();
-        Object[] args = { Department.class };
-
-        allDepartments = (Collection<Department>) ServiceManagerServiceFactory.executeService(null,
-                "ReadAllDomainObjects", args);
-
+        Collection<Department> allDepartments = rootDomainObject.getDepartments();
         List<LabelValueBean> departments = getAllDepartments(allDepartments);
         request.setAttribute("departments", departments);
     }
