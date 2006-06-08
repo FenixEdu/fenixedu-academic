@@ -984,4 +984,12 @@ public class ExecutionCourse extends ExecutionCourse_Base {
         return result;
     }
 
+	public boolean hasAnyDegreeGradeToSubmit(ExecutionPeriod period) {
+		for (final CurricularCourse curricularCourse : this.getCurricularCoursesWithDegreeType()) {
+			if(curricularCourse.hasAnyDegreeGradeToSubmit(period)) {
+				return true;
+			}
+		}
+		return false;
+	}
 }

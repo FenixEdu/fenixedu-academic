@@ -1192,4 +1192,22 @@ public class CurricularCourse extends CurricularCourse_Base {
     public ExecutionDegree getExecutionDegreeFor(ExecutionYear executionYear) {
         return getDegreeCurricularPlan().getExecutionDegreeByYear(executionYear);
     }
+
+	public boolean hasAnyDegreeGradeToSubmit(ExecutionPeriod period) {
+		ExecutionDegree executionDegree = getExecutionDegreeFor(period.getExecutionYear());
+		YearMonthDay today = new YearMonthDay();
+		//TODO: special season
+		if(period.getSemester().equals(Integer.valueOf(1))) {
+			if(executionDegree.getPeriodGradeSubmissionNormalSeasonFirstSemester() == null || executionDegree.getPeriodGradeSubmissionNormalSeasonFirstSemester().getEndYearMonthDay().isAfter(today)) {
+				return false;
+			}
+		} else {
+			if(executionDegree.getPeriodGradeSubmissionNormalSeasonFirstSemester() == null || executionDegree.getPeriodGradeSubmissionNormalSeasonSecondSemester().getEndYearMonthDay().isAfter(today)) {
+				return false;
+			}			
+		}
+		Collection<Enrolment> enrolmentsNotSubmited = new HashSet<Enrolment>(getEnrolmentsNotInAnyMarkSheet(MarkSheetType.NORMAL, period));
+		enrolmentsNotSubmited.addAll(getEnrolmentsNotInAnyMarkSheet(MarkSheetType.IMPROVEMENT, period));
+		return !enrolmentsNotSubmited.isEmpty();
+	}
 }
