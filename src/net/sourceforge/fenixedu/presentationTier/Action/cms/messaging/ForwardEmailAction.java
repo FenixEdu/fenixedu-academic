@@ -42,7 +42,7 @@ public class ForwardEmailAction extends FenixAction {
             HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
         String result = "450 Error: Email forwarding service did not run";
 
-        // System.out.println("Got a request from " + request.getRemoteAddr());
+        System.out.println("Got a request from " + request.getRemoteAddr());
 
         if (HostAccessControl.isAllowed(this, request)) {
 
@@ -58,8 +58,8 @@ public class ForwardEmailAction extends FenixAction {
                     String subjectPrefix = resources.getMessage(this.getLocale(request),
                             "messaging.mailSender.mailingLists.subjectPrefix");
                     message.setSubject(subjectPrefix + " " + message.getSubject());
-                    // System.out.println("He/she asked for me to deliver a message whose size is "
-                    // + message.getSize());
+                    System.out.println("He/she asked for me to deliver a message whose size is "
+                            + message.getSize());
 
                     ForwardEmailToExecutionCourses.ForwardMailsReport report = (ForwardEmailToExecutionCourses.ForwardMailsReport) ServiceUtils
                             .executeService(null, "ForwardEmailToExecutionCourses", new Object[] {
@@ -79,14 +79,14 @@ public class ForwardEmailAction extends FenixAction {
                         result = "269 At least one message delivered";
                     }
 
-                    // for (String address : report.getSentMails()) {
-                    // System.out.println("Sendei para " + address);
-                    // }
+                    for (String address : report.getSentMails()) {
+                        System.out.println("Mail enviado para " + address);
+                    }
                 } else {
                     result = "554 Error: Invalid mail message";
                 }
             } catch (Exception e) {
-                // e.printStackTrace();
+                e.printStackTrace();
                 result = "450 Error: Got an exception when trying to send email: "
                         + e.getClass().getName();
             }
