@@ -7,17 +7,28 @@
 <%@page import="net.sourceforge.fenixedu.util.FenixDigestUtils"%>
 <h2><bean:message key="label.confirmMarkSheet"/></h2>
 
-<fr:view name="markSheet" schema="markSheet.view" layout="tabular" />
+<fr:view name="markSheet" schema="markSheet.view">
+	<fr:layout name="tabular" >
+		<fr:property name="classes" value="tstyle4"/>
+        <fr:property name="columnClasses" value="listClasses,,"/>
+	</fr:layout>
+</fr:view>
+
 <br/>
-<fr:view name="markSheet" property="enrolmentEvaluations" schema="markSheet.view.evaluation" layout="tabular"/>
-<br />
+<bean:message key="label.markSheet.students.capitalized"/>:
+<fr:view name="markSheet" property="enrolmentEvaluations" schema="markSheet.view.evaluation">
+	<fr:layout name="tabular" >
+		<fr:property name="classes" value="tstyle4"/>
+        <fr:property name="columnClasses" value="listClasses,,"/>
+	</fr:layout>
+</fr:view>
+
 <bean:define id="mark" name="markSheet" type="net.sourceforge.fenixedu.domain.MarkSheet"/>
 <bean:define id="checksum" value="<%= FenixDigestUtils.getPrettyCheckSum(mark.getCheckSum())%>"/>
-<bean:message key="label.checksum"/> : 	<bean:write name="checksum"/>
-<br /><br />
+<strong><bean:message key="label.checksum"/></strong> : <bean:write name="checksum"/>
+<br/><br/><br/>
 <span class="warning0"><bean:message key="message.markSheet.confirm"/></span>
-<br />
-<br />
+<br/><br/>
 <html:form action="/markSheetManagement.do">
 	<html:hidden property="method" value="confirmMarkSheet"/>
 	<html:hidden property="epID" />
