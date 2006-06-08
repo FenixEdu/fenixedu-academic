@@ -92,6 +92,13 @@
 				<arg0 key="message.error.curriculumHistoric.degreeCurricularPlan" resource="true"/>
 			</field>
 		</form>
+		
+		<form name="printMarkSheetForm">
+			<field property="printerName" depends="required" page="1">
+				<arg0 key="label.printer" resource="true"/>
+			</field>
+		</form>
+		
 	
 		
 	</formset>
