@@ -185,6 +185,9 @@
 	<definition name="showSibsPaymentFileEntries" extends="definition.masterDegreeAdministrativeOffice.gratuity">
 		<put name="body" value="/posGraduacao/gratuity/showSibsPaymentFileEntries.jsp"/>
 	</definition>
+	<definition name="listPayedInsurances,chooseDates" extends="definition.masterDegreeAdministrativeOffice.gratuity">
+		<put name="body" value="/posGraduacao/gratuity/listPayedInsurancesValues.jsp"/>
+	</definition>	
 					
  	<!-- ****************** Enrollment Without Rules **************************** -->	
 	<definition name="df.page.prepareEnrollmentChooseStudentWithoutRules" extends="definition.masterDegreeAdministrativeOffice.studentOperations">
