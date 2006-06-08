@@ -53,6 +53,9 @@ public class ListPayedInsurancesDispatchAction extends FenixDispatchAction {
         request.setAttribute("years", Data.getCustomYears(executionYears.get(0)
                 .getBeginDateYearMonthDay().getYear(), Calendar.getInstance().get(Calendar.YEAR)));
 
+        DynaActionForm actionForm = (DynaActionForm) form;
+        actionForm.set("executionYearID", ExecutionYear.readCurrentExecutionYear().getIdInternal());
+        
         return mapping.findForward("chooseDates");
     }
 
