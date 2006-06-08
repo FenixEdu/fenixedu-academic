@@ -16,7 +16,7 @@
 	<html:hidden property="mss" />
 	<html:hidden property="mst" />
 	
-	<h2><bean:message key="label.markSheet.remove"/></h2>
+	<h2><bean:message key="label.markSheet.remove"/> <bean:message key="label.markSheet"/></h2>
 	
 	<fr:view name="markSheet" schema="markSheet.view">
 		<fr:layout name="tabular" >
