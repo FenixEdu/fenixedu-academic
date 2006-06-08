@@ -17,6 +17,7 @@
 		<li><html:link page="/editInsuranceValue.do?method=chooseExecutionYear"><bean:message key="link.masterDegree.administrativeOffice.gratuity.defineInsuranceValue"/></html:link></li>
 	    <li><html:link page="/fixSibsPaymentFileEntries.do?method=prepare"><bean:message key="link.masterDegree.administrativeOffice.gratuity.fixConflicts"/></html:link></li>
 	    <li><html:link page="/studentsGratuityList.do?method=chooseExecutionYear&amp;page=0"><bean:message key="link.masterDegree.administrativeOffice.gratuity.listStudents"/></html:link></li>
+	    <li><html:link page="/listPayedInsurances.do?method=prepare"><bean:message key="link.masterDegree.administrativeOffice.gratuity.listPayedInsurances"/></html:link></li>	    
 	</blockquote>
 </ul>
 <ul>
