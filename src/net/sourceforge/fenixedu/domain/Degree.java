@@ -554,6 +554,25 @@ public class Degree extends Degree_Base {
         return new ArrayList<Teacher>(result);
     }
     
+    public Collection<Teacher> getMostRecentResponsibleCoordinatorsTeachers() {
+        ExecutionYear executionYear = ExecutionYear.readCurrentExecutionYear();
+        Collection<Teacher> result = this.getResponsibleCoordinatorsTeachers(executionYear);
+
+        if (!result.isEmpty()) {
+            return result;
+        }
+
+        for (;executionYear != null; executionYear = executionYear.getNextExecutionYear()) {
+            result = this.getResponsibleCoordinatorsTeachers(executionYear);
+            
+            if (!result.isEmpty()) {
+                return result;
+            }
+        }
+        
+        return null;
+    }
+    
     public Collection<Campus> getCampus(ExecutionYear executionYear) {
         Set<Campus> result = new HashSet<Campus>();
         for (final DegreeCurricularPlan degreeCurricularPlan : getDegreeCurricularPlans()) {
@@ -563,6 +582,25 @@ public class Degree extends Degree_Base {
             }
         }
         return new ArrayList<Campus>(result);
+    }
+
+    public Collection<Campus> getMostRecentCampus() {
+        ExecutionYear executionYear = ExecutionYear.readCurrentExecutionYear();
+        Collection<Campus> result = this.getCampus(executionYear);
+
+        if (!result.isEmpty()) {
+            return result;
+        }
+
+        for (;executionYear != null; executionYear = executionYear.getNextExecutionYear()) {
+            result = this.getCampus(executionYear);
+            
+            if (!result.isEmpty()) {
+                return result;
+            }
+        }
+        
+        return null;
     }
     
 }
