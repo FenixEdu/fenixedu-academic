@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.Action.publico;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -15,10 +16,12 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeInfo;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.InfoOldInquiriesSummary;
+import net.sourceforge.fenixedu.domain.Campus;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeInfo;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixContextDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
@@ -63,12 +66,8 @@ public class ShowDegreeSiteAction extends FenixContextDispatchAction {
         ExecutionYear executionYearToShow = getExecutionYearToShow(request, degree);
         request.setAttribute("executionYear", executionYearToShow);
 
-        // degree info
-        getDegreeInfoToShow(request, degree, executionYearToShow);
-        
-        // campus and responsible coordinators
-        request.setAttribute("campus", degree.getCampus(executionYearToShow));
-        request.setAttribute("responsibleCoordinatorsTeachers", degree.getResponsibleCoordinatorsTeachers(executionYearToShow));
+        // info
+        getInfoToShow(request, degree, executionYearToShow);
     }
     
     private ExecutionYear getExecutionYearToShow(HttpServletRequest request, Degree degree) throws FenixActionException {
@@ -88,16 +87,32 @@ public class ShowDegreeSiteAction extends FenixContextDispatchAction {
         }
     }
 
-    private DegreeInfo getDegreeInfoToShow(HttpServletRequest request, Degree degree, ExecutionYear executionYearToShow) throws FenixActionException {
+    private void getInfoToShow(HttpServletRequest request, Degree degree, ExecutionYear executionYearToShow) throws FenixActionException {
+        // degree info
         DegreeInfo degreeInfoToShow = executionYearToShow.getDegreeInfo(degree);
-
+        if (degreeInfoToShow == null) {
+            degreeInfoToShow = degree.getMostRecentDegreeInfo();
+        }
         if (degreeInfoToShow != null) {
             final InfoDegreeInfo infoDegreeInfo = InfoDegreeInfo.newInfoFromDomain(degreeInfoToShow);
             infoDegreeInfo.prepareEnglishPresentation(getLocale(request));
             request.setAttribute("infoDegreeInfo", infoDegreeInfo);
         }
         
-        return degreeInfoToShow;
+        // campus
+        Collection<Campus> campus = degree.getCampus(executionYearToShow);
+        if (campus.isEmpty()) {
+            campus = degree.getMostRecentCampus();
+        }
+        request.setAttribute("campus", campus);
+        
+        // responsible coordinators
+        Collection<Teacher> responsibleCoordinatorsTeachers = degree.getResponsibleCoordinatorsTeachers(executionYearToShow);
+        if (responsibleCoordinatorsTeachers.isEmpty()) {
+            responsibleCoordinatorsTeachers = degree.getMostRecentResponsibleCoordinatorsTeachers();
+        }
+        request.setAttribute("responsibleCoordinatorsTeachers", responsibleCoordinatorsTeachers);
+
     }
 
     public ActionForward showAccessRequirements(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
