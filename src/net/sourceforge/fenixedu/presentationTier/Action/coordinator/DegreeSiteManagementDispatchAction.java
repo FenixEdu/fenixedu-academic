@@ -1,8 +1,5 @@
 package net.sourceforge.fenixedu.presentationTier.Action.coordinator;
 
-import java.util.Collections;
-import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -17,7 +14,6 @@ import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.utils.RequestUtils;
 
-import org.apache.commons.beanutils.BeanComparator;
 import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
@@ -47,7 +43,8 @@ public class DegreeSiteManagementDispatchAction extends FenixDispatchAction {
         if (currentDegreeInfo == null) {
             final IUserView userView = SessionUtils.getUserView(request);
             
-            if (!userView.getPerson().getTeacher().isCoordinatorFor(degreeCurricularPlan, currentExecutionYear)) {
+            if (!userView.getPerson().getTeacher().isCoordinatorFor(degreeCurricularPlan, currentExecutionYear)
+                    && !userView.getPerson().getTeacher().isCoordinatorFor(degreeCurricularPlan, currentExecutionYear.getNextExecutionYear())) {
                 final ActionErrors errors = new ActionErrors();
                 errors.add("notAuthorized", new ActionError("error.exception.notAuthorized2"));
                 saveErrors(request, errors);
