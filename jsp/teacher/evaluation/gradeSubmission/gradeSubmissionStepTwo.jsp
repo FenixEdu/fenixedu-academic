@@ -48,7 +48,7 @@
 	
 		<fr:edit id="submissionBean-invisible" name="submissionBean" visible="false"/>
 		
-		<br/>
+		<br/><br/>
 		<table class="infoop"><tr><td><bean:message key="label.submitMarks.instructions"/></td></tr></table>
 		<br/>
 		
