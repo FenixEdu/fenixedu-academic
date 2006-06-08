@@ -41,7 +41,12 @@
 	<bean:define id="evaluationID" name="rectifyBean" property="enrolmentEvaluation.idInternal" />
 	<html:hidden name="markSheetManagementForm" property="evaluationID" value="<%= evaluationID.toString() %>"  />
 
-	<fr:edit id="step2" nested="true" name="rectifyBean" schema="markSheet.rectify.two" layout="tabular"/>			
+	<fr:edit id="step2" nested="true" name="rectifyBean" schema="markSheet.rectify.two">
+		<fr:layout name="tabular">
+			<fr:property name="classes" value="tstyle4"/>
+		    <fr:property name="columnClasses" value="listClasses,,"/>
+		</fr:layout>
+	</fr:edit>
 
 	<br/>
 	<span class="warning0"><bean:message key="message.markSheet.rectify"/></span>

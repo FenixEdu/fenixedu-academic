@@ -27,13 +27,14 @@
 	</fr:view>
 
 	<br/>
+	<bean:message key="label.markSheet.students.capitalized"/>:
 	<table class="tstyle4">
 		<tr>
-			<td align="left"><bean:message key="label.student.number"/></td>
-			<td align="left"><bean:message key="label.student.name"/></td>			
-			<td align="left"><bean:message key="label.evaluationDate"/></td>
-			<td align="left"><bean:message key="label.grades"/></td>
-			<td align="left">&nbsp;</td>
+			<th align="left"><bean:message key="label.student.number"/></th>
+			<th align="left"><bean:message key="label.student.name"/></th>
+			<th align="left"><bean:message key="label.evaluationDate"/></th>
+			<th align="left"><bean:message key="label.grades"/></th>
+			<th align="left">&nbsp;</th>
 		</tr>
 		<bean:define id="url" name="url" />
 		<logic:iterate id="enrolmentEvaluation" name="markSheet" property="enrolmentEvaluationsSortedByStudentNumber" type="net.sourceforge.fenixedu.domain.EnrolmentEvaluation">
@@ -63,11 +64,11 @@
 		</logic:iterate>
 	</table>
 
-	<br/><br/>
+	<br/>
 	<bean:define id="mark" name="markSheet" type="net.sourceforge.fenixedu.domain.MarkSheet"/>
 	<bean:define id="checksum" value="<%= FenixDigestUtils.getPrettyCheckSum(mark.getCheckSum())%>"/>
-	<bean:message key="label.checksum"/> : 	<bean:write name="checksum"/>
-	<br/><br/>
+	<strong><bean:message key="label.checksum"/></strong> : <bean:write name="checksum"/>
+	<br/><br/><br/>
 	<html:cancel styleClass="inputbutton" onclick="this.form.method.value='prepareSearchMarkSheetFilled';this.form.submit();"><bean:message key="label.back"/></html:cancel>
 	<html:submit styleClass="inputbutton"><bean:message key="label.print"/></html:submit>
 	
