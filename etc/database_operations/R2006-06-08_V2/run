@@ -27,3 +27,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Alter ExecutionPeriod Table" alterExecutionPeriodTable.sql
