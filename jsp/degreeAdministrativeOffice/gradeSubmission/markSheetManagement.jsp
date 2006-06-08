@@ -55,7 +55,7 @@
 	
 	<logic:notEmpty name="searchResult">
 
-		<table class="tstyle4">
+		<table>
 			<logic:iterate id="entry" name="searchResult" >
 			
 				<bean:define id="markSheetType" name="entry" property="key"/>
