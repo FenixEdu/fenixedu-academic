@@ -2,13 +2,6 @@
 	"http://jakarta.apache.org/struts/dtds/tiles-config_1_1.dtd">
 <!-- Tiles definitions -->
 <tiles-definitions>
-	<definition name="df.layout.simple" page="/layout/fenixLayout.jsp" >
-		 <put name="title" value="/commons/blank.jsp" />	
-		 <put name="menu" value="/commons/blank.jsp"/>		 
-		 <put name="body" value="/commons/blank.jsp"/>
-		 <put name="header" value="/commons/blank.jsp"/>		 
-		 <put name="footer" value="/copyright.jsp" />
-	</definition>
 	<definition name="df.layout.one-column" page="/layout/fenixLayout_1col.jsp" >
 		 <put name="title" value="/commons/blank.jsp" />	
 		 <put name="serviceName" value="/commons/blank.jsp" />
