@@ -13,9 +13,9 @@
 
 <table>
 <logic:notEmpty name="legalRegimen">
-<tr><td><strong><bean:message key="label.name"/>:</strong> <bean:write name="legalRegimen" property="teacher.person.name"/></td><td><strong><bean:message key="label.number"/>:</strong> <bean:write name="legalRegimen" property="teacher.teacherNumber"/></td></tr>
-<tr><td><strong><bean:message key="label.category"/>:</strong> <bean:write name="legalRegimen" property="category.code"/></td><logic:notEmpty name="workingUnit"><td><strong><bean:message key="label.section"/>:</strong> <bean:write name="workingUnit" property="name"/></td></tr>
-<tr><td><strong><bean:message key="label.department"/>:</strong> <bean:write name="workingUnit" property="departmentUnit.department.realName"/></td><td><strong><bean:message key="label.costCenter"/>:</strong> <bean:write name="workingUnit" property="costCenterCode"/></td></tr></logic:notEmpty>
+	<tr><td><strong><bean:message key="label.name"/>:</strong> <bean:write name="legalRegimen" property="teacher.person.name"/></td><td><strong><bean:message key="label.number"/>:</strong> <bean:write name="legalRegimen" property="teacher.teacherNumber"/></td></tr>
+	<tr><td><strong><bean:message key="label.category"/>:</strong> <bean:write name="legalRegimen" property="category.code"/></td><logic:notEmpty name="workingUnit"><td><strong><bean:message key="label.section"/>:</strong> <bean:write name="workingUnit" property="name"/></td></tr>
+	<tr><td><strong><bean:message key="label.department"/>:</strong> <logic:notEmpty name="workingUnit" property="departmentUnit"> <bean:write name="workingUnit" property="departmentUnit.department.realName"/> </logic:notEmpty> </td><td><strong><bean:message key="label.costCenter"/>:</strong> <bean:write name="workingUnit" property="costCenterCode"/></td></tr></logic:notEmpty>
 </logic:notEmpty>
 </table>
 
