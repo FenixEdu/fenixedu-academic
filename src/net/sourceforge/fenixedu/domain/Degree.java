@@ -433,8 +433,7 @@ public class Degree extends Degree_Base {
         List<DegreeCurricularPlan> result = new ArrayList<DegreeCurricularPlan>();
 
         for (DegreeCurricularPlan degreeCurricularPlan : getDegreeCurricularPlans()) {
-            if (degreeCurricularPlan.getState() == null
-                    || degreeCurricularPlan.getState() == DegreeCurricularPlanState.ACTIVE) {
+            if (degreeCurricularPlan.getState() == DegreeCurricularPlanState.ACTIVE) {
                 result.add(degreeCurricularPlan);
             }
         }
