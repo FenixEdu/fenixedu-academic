@@ -102,14 +102,14 @@ public class ShowDegreeSiteAction extends FenixContextDispatchAction {
         // campus
         Collection<Campus> campus = degree.getCampus(executionYearToShow);
         if (campus.isEmpty()) {
-            campus = degree.getMostRecentCampus();
+            campus = degree.getCurrentCampus();
         }
         request.setAttribute("campus", campus);
         
         // responsible coordinators
         Collection<Teacher> responsibleCoordinatorsTeachers = degree.getResponsibleCoordinatorsTeachers(executionYearToShow);
         if (responsibleCoordinatorsTeachers.isEmpty()) {
-            responsibleCoordinatorsTeachers = degree.getMostRecentResponsibleCoordinatorsTeachers();
+            responsibleCoordinatorsTeachers = degree.getCurrentResponsibleCoordinatorsTeachers();
         }
         request.setAttribute("responsibleCoordinatorsTeachers", responsibleCoordinatorsTeachers);
 

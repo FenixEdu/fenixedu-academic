@@ -556,7 +556,7 @@ public class Degree extends Degree_Base {
         return new ArrayList<Teacher>(result);
     }
     
-    public Collection<Teacher> getMostRecentResponsibleCoordinatorsTeachers() {
+    public Collection<Teacher> getCurrentResponsibleCoordinatorsTeachers() {
         ExecutionYear executionYear = ExecutionYear.readCurrentExecutionYear();
         Collection<Teacher> result = this.getResponsibleCoordinatorsTeachers(executionYear);
 
@@ -572,7 +572,7 @@ public class Degree extends Degree_Base {
             }
         }
         
-        return null;
+        return new ArrayList<Teacher>();
     }
     
     public Collection<Campus> getCampus(ExecutionYear executionYear) {
@@ -586,7 +586,7 @@ public class Degree extends Degree_Base {
         return new ArrayList<Campus>(result);
     }
 
-    public Collection<Campus> getMostRecentCampus() {
+    public Collection<Campus> getCurrentCampus() {
         ExecutionYear executionYear = ExecutionYear.readCurrentExecutionYear();
         Collection<Campus> result = this.getCampus(executionYear);
 
@@ -602,7 +602,7 @@ public class Degree extends Degree_Base {
             }
         }
         
-        return null;
+        return new ArrayList<Campus>();
     }
 
     public String constructSchoolClassPrefix(final Integer curricularYear) {
