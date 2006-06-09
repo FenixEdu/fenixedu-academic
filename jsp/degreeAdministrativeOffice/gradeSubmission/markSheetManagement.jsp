@@ -69,7 +69,9 @@
 				<tr>
 					<td colspan="2">
 						<strong><bean:message name="markSheetType" property="name" bundle="ENUMERATION_RESOURCES"/></strong>
-						(<bean:write name="markSheetResult" property="numberOfEnroledStudents"/> <bean:message key="label.markSheet.of"/> <bean:write name="markSheetResult" property="totalNumberOfStudents"/> <bean:message key="label.markSheet.evaluatedStudents"/>)
+						<logic:equal name="markSheetResult" property="showStatistics" value="true">
+							(<bean:write name="markSheetResult" property="numberOfEnroledStudents"/> <bean:message key="label.markSheet.of"/> <bean:write name="markSheetResult" property="totalNumberOfStudents"/> <bean:message key="label.markSheet.evaluatedStudents"/>)
+						</logic:equal>
 					</td>
 				</tr>
 				<logic:iterate id="markSheet" name="markSheetResult" property="markSheetsSortedByEvaluationDate" type="net.sourceforge.fenixedu.domain.MarkSheet">

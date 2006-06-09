@@ -42,10 +42,14 @@ public class SearchMarkSheets extends Service {
         }
 
         for (Entry<MarkSheetType, MarkSheetSearchResultBean> entry : result.entrySet()) {
+            
             MarkSheetSearchResultBean searchResultBean = entry.getValue();
-            searchResultBean.setTotalNumberOfStudents(
-                    getNumberOfStudentsNotEnrolled(searchBean, curricularCourse, entry) + 
-                    searchResultBean.getNumberOfEnroledStudents());
+            searchResultBean.setShowStatistics(entry.getKey() != MarkSheetType.SPECIAL_AUTHORIZATION);
+            if (searchResultBean.isShowStatistics()) {
+                searchResultBean.setTotalNumberOfStudents(
+                        getNumberOfStudentsNotEnrolled(searchBean, curricularCourse, entry) + 
+                        searchResultBean.getNumberOfEnroledStudents());
+            }
         }
         
         return result;

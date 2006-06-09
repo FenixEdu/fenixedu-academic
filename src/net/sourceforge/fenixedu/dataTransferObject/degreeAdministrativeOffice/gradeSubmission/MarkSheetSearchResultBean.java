@@ -11,6 +11,7 @@ import net.sourceforge.fenixedu.domain.MarkSheetState;
 
 public class MarkSheetSearchResultBean {
     
+    private boolean showStatistics;
     private int totalNumberOfStudents;
     private List<MarkSheet> markSheets;
     
@@ -59,6 +60,14 @@ public class MarkSheetSearchResultBean {
 
     public void setTotalNumberOfStudents(int totalNumberStudents) {
         this.totalNumberOfStudents = totalNumberStudents;
+    }
+
+    public boolean isShowStatistics() {
+        return showStatistics;
+    }
+
+    public void setShowStatistics(boolean showStatistics) {
+        this.showStatistics = showStatistics;
     }
 
 }
