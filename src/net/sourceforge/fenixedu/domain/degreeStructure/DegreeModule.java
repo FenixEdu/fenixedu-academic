@@ -31,40 +31,30 @@ public abstract class DegreeModule extends DegreeModule_Base {
      * 
      * @return A string with one possible full name of this course group
      */
-    public String getOneFullName() {
+    private String getOneFullName(boolean pt) {
         StringBuilder result = new StringBuilder();
         
         DegreeModule iter = this; 
-        result.append(iter.getName());
+        result.append((pt) ? iter.getName() : iter.getNameEn());
         if (iter.isRoot()) {
             return result.toString();
         } else {
             iter = iter.getParentContexts().get(0).getParentCourseGroup();
             
             for (;iter.hasAnyParentContexts(); iter = iter.getParentContexts().get(0).getParentCourseGroup()) {
-                result.insert(0, iter.getName() + " > ");
+                result.insert(0, ((pt) ? iter.getName() : iter.getNameEn()) + " > ");
             }
             
             return result.toString();
         }
     }
     
-    /**
-     * English version of the previous method ==> TODO: MultiLanguageString this!
-     * 
-     */
+    public String getOneFullName() {
+        return getOneFullName(true);
+    }
+
     public String getOneFullNameEn() {
-        StringBuilder result = new StringBuilder();
-        
-        DegreeModule iter = this; 
-        result.append(iter.getNameEn());
-        iter = iter.getParentContexts().get(0).getParentCourseGroup();
-        
-        for (;iter.hasAnyParentContexts(); iter = iter.getParentContexts().get(0).getParentCourseGroup()) {
-            result.insert(0, iter.getNameEn() + " > ");
-        }
-        
-        return result.toString();
+        return getOneFullName(false);
     }
     
     public void delete() {
