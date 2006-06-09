@@ -560,10 +560,13 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable 
         
         return null;
     }
-    
 
     public boolean isEvaluationDateInExamPeriod(Date evaluationDate, ExecutionPeriod executionPeriod, MarkSheetType markSheetType) {
-        return (markSheetType == MarkSheetType.SPECIAL_AUTHORIZATION) || checkOccupationPeriod(evaluationDate, executionPeriod, markSheetType); 
+        return isSpecialAuthorization(markSheetType, executionPeriod, evaluationDate) || checkOccupationPeriod(evaluationDate, executionPeriod, markSheetType); 
+    }
+
+    private boolean isSpecialAuthorization(MarkSheetType markSheetType, ExecutionPeriod executionPeriod, Date evaluationDate) {
+        return (markSheetType == MarkSheetType.SPECIAL_AUTHORIZATION && executionPeriod.containsDay(evaluationDate));
     }
 
     private boolean checkOccupationPeriod(Date evaluationDate, ExecutionPeriod executionPeriod, MarkSheetType markSheetType) {
