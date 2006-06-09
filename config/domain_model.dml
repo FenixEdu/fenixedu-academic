@@ -3128,6 +3128,24 @@ class net.sourceforge.fenixedu.domain.User extends net.sourceforge.fenixedu.doma
 	DateTime currentLoginDateTimeDateTime;
 }
 
+
+class net.sourceforge.fenixedu.domain.system.CronScriptState extends net.sourceforge.fenixedu.domain.DomainObject {
+	String cronScriptClassname;
+	Integer absoluteExecutionOrder;
+	DateTime registrationDate;
+	Boolean isCurrentlyRunning;
+	ByteArray context;
+}
+
+class net.sourceforge.fenixedu.domain.system.CronScriptInvocation extends net.sourceforge.fenixedu.domain.DomainObject {
+	Integer keyCronScriptState;
+	String serverID;
+	DateTime startTime;
+	DateTime endTime;
+	Boolean successful;
+}
+
+
 /*
  * Relations definitions
  * 
@@ -6445,6 +6463,15 @@ relation PartyEventParticipation {
 	net.sourceforge.fenixedu.domain.organizationalStructure.Party playsRole party;
 }
 
+
+relation CronScriptStateCronScriptInvocation {
+	net.sourceforge.fenixedu.domain.system.CronScriptState playsRole cronScriptState;
+	net.sourceforge.fenixedu.domain.system.CronScriptInvocation playsRole cronScriptInvocations {
+		multiplicity *;
+	}
+}
+
+
 /*
  * Relations definitions of relations to RootDomainObject
  * 
@@ -8161,4 +8188,18 @@ relation MarkSheetExecutionPeriod {
 relation RectificationEnrolmentEvaluationRectifiedEnrolmentEvaluation {
     net.sourceforge.fenixedu.domain.EnrolmentEvaluation playsRole rectification;
     net.sourceforge.fenixedu.domain.EnrolmentEvaluation playsRole rectified;
+}
+
+relation RootDomainObjectCronScriptState {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.system.CronScriptState playsRole cronScriptStates {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectCronScriptInvocation {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.system.CronScriptInvocation playsRole cronScriptInvocations {
+		multiplicity *;
+	}
 }

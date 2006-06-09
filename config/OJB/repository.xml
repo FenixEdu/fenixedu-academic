@@ -83,6 +83,7 @@
 <!ENTITY fileItem SYSTEM "repository_fileItem.xml">
 <!ENTITY markSheet SYSTEM "repository_marksheet.xml">
 <!ENTITY messaging SYSTEM "repository_messaging.xml">
+<!ENTITY cron SYSTEM "repository_cron.xml">
 ]>
 <descriptor-repository version="1.0" isolation-level="repeatable-read">
 
@@ -171,9 +172,6 @@
     &fileItem;
     &markSheet;
 	&messaging;
+	&cron;
 
-    <!-- Middleware -->
-    <!--&middleware;-->
-    
-	
 </descriptor-repository>
