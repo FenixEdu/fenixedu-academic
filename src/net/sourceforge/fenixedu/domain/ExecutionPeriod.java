@@ -15,11 +15,12 @@ import org.joda.time.DateMidnight;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeFieldType;
 import org.joda.time.Interval;
+import org.joda.time.YearMonthDay;
 
 /**
  * Created on 11/Fev/2003
  * 
- * @author Joï¿½o Mota
+ * @author João Mota
  * @author jpvl
  * 
  */
@@ -47,7 +48,11 @@ public class ExecutionPeriod extends ExecutionPeriod_Base implements Comparable 
     }
 
     public boolean containsDay(Date day) {
-        return !(this.getBeginDate().after(day) || this.getEndDate().before(day));
+        return ! (this.getBeginDate().after(day) || this.getEndDate().before(day));
+    }
+    
+    public boolean containsDay(YearMonthDay date) {
+        return ! (this.getBeginDateYearMonthDay().isAfter(date) || this.getEndDateYearMonthDay().isBefore(date));
     }
 
     public DateMidnight getThisMonday() {
