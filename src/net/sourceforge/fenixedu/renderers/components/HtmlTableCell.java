@@ -28,8 +28,8 @@ public class HtmlTableCell extends HtmlComponent {
     private String axis;
     private String headers;
     private String scope;
-    private String rowspan;
-    private String colspan;
+    private Integer rowspan;
+    private Integer colspan;
     private String align;
     private String valign;
     
@@ -65,11 +65,11 @@ public class HtmlTableCell extends HtmlComponent {
         this.axis = axis;
     }
 
-    public String getColspan() {
+    public Integer getColspan() {
         return colspan;
     }
 
-    public void setColspan(String colspan) {
+    public void setColspan(Integer colspan) {
         this.colspan = colspan;
     }
 
@@ -81,11 +81,11 @@ public class HtmlTableCell extends HtmlComponent {
         this.headers = headers;
     }
 
-    public String getRowspan() {
+    public Integer getRowspan() {
         return rowspan;
     }
 
-    public void setRowspan(String rowspan) {
+    public void setRowspan(Integer rowspan) {
         this.rowspan = rowspan;
     }
 
