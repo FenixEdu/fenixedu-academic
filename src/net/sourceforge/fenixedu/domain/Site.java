@@ -23,6 +23,7 @@ public class Site extends Site_Base {
     public Site() {
 		super();
 		setRootDomainObject(RootDomainObject.getInstance());
+        setDynamicMailDistribution(false);
 	}
 
 	public void edit(final String initialStatement, final String introduction, final String mail,
