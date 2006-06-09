@@ -16,8 +16,6 @@ import net.sourceforge.fenixedu.domain.teacher.DegreeTeachingService;
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
 
-import pt.utl.ist.fenix.tools.util.StringAppender;
-
 public class Shift extends Shift_Base {
 
     public static final Comparator SHIFT_COMPARATOR_BY_NAME = new BeanComparator("nome", Collator.getInstance());

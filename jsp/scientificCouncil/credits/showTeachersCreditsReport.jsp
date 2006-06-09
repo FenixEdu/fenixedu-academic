@@ -28,7 +28,7 @@
 	<logic:iterate id="mapElement" name="teachersCreditsDisplayMap">
 		<bean:size id="mapSize" name="teachersCreditsDisplayMap"/>
 		<logic:notEqual name="mapSize" value="1">
-			<h3 class="bluetxt mtop2"><bean:write name="mapElement" property="key.name"/></h3>
+			<h3 class="bluetxt mtop2"><bean:write name="mapElement" property="key.realName"/></h3>
 		</logic:notEqual>
 		
 		<bean:define id="teacherCreditsReportByUnit" name="mapElement" property="value"/>

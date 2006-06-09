@@ -627,23 +627,20 @@ public class Teacher extends Teacher_Base {
         
         double overlapPercentage1 = getOverlapPercentage(lessonsPeriod, teacherServiceExemption);
         double overlapPercentage2 = 0.0;
-        if(executionPeriod.containsDay(teacherServiceExemption.getStart())) {                                               
-            if(overlapPercentage1 < 1.0) {        
-                ExecutionPeriod nextExecutionPeriod = executionPeriod.getNextExecutionPeriod();
-                if(sabbaticalMonths >= 11) {
-                    nextExecutionPeriod = executionPeriod.getNextExecutionPeriod();
-                    nextExecutionPeriod = (nextExecutionPeriod != null) ? nextExecutionPeriod.getNextExecutionPeriod() : null;
-                }                
-                if(nextExecutionPeriod != null) {                            
-                    OccupationPeriod nextLessonsPeriod = getLessonsPeriod(nextExecutionPeriod);                        
-                    overlapPercentage2 = getOverlapPercentage(nextLessonsPeriod, teacherServiceExemption);                          
-                }
-                if(overlapPercentage1 > overlapPercentage2) {
-                   return 6; 
-                }
-            } else if(overlapPercentage1 == 1.0) {
-                return 6;
+        if(overlapPercentage1 == 1.0) {
+            return 6;
+        } else if(executionPeriod.containsDay(teacherServiceExemption.getStart())) {                                                                 
+            ExecutionPeriod nextExecutionPeriod = executionPeriod.getNextExecutionPeriod();
+            if(sabbaticalMonths >= 11) {                
+                nextExecutionPeriod = (nextExecutionPeriod != null) ? nextExecutionPeriod.getNextExecutionPeriod() : null;
+            }                
+            if(nextExecutionPeriod != null) {                            
+                OccupationPeriod nextLessonsPeriod = getLessonsPeriod(nextExecutionPeriod);                        
+                overlapPercentage2 = getOverlapPercentage(nextLessonsPeriod, teacherServiceExemption);                          
             }
+            if(overlapPercentage1 > overlapPercentage2) {
+               return 6; 
+            }            
         } else {
             ExecutionPeriod previousExecutionPeriod = executionPeriod.getPreviousExecutionPeriod();
             if(sabbaticalMonths >= 11) {

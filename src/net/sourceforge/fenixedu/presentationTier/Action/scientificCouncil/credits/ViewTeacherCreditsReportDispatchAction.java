@@ -193,7 +193,7 @@ public class ViewTeacherCreditsReportDispatchAction extends FenixDispatchAction 
 
         for (Department department : teachersCreditsByDepartment.keySet()) {
             Set<ExecutionPeriod> executionPeriods = null;
-            String deptName = department.getRealName();
+            String deptName = department.getName();
             deptName = deptName.replaceAll("DEPARTAMENTO", "DEP. ");
             deptName = deptName.replaceAll("ENGENHARIA", "ENG. ");
             spreadsheet.setName(deptName);                      
@@ -346,10 +346,9 @@ public class ViewTeacherCreditsReportDispatchAction extends FenixDispatchAction 
         List filteredExecutionYears = new ArrayList();
         ExecutionYear executionYear0304 = ExecutionYear.readExecutionYearByName("2003/2004");
         for (ExecutionYear executionYear : executionYears) {
-            if (!executionYear.getBeginDate().before(executionYear0304.getBeginDate())) {
+            if (!executionYear.getBeginDateYearMonthDay().isBefore(executionYear0304.getBeginDateYearMonthDay())) {
                 String label = executionYear.getYear();
-                filteredExecutionYears.add(new LabelValueBean(label, executionYear.getIdInternal()
-                        .toString()));
+                filteredExecutionYears.add(new LabelValueBean(label, executionYear.getIdInternal().toString()));
             }
         }
         Collections.sort(filteredExecutionYears, new BeanComparator("label"));

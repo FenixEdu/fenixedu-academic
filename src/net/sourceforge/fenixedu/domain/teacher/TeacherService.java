@@ -93,15 +93,12 @@ public class TeacherService extends TeacherService_Base {
         double credits = 0;
         ExecutionYear executionYear20062007 = ExecutionYear.readExecutionYearByName("2006/2007");
         for (DegreeTeachingService degreeTeachingService : getDegreeTeachingServices()) {
-            ExecutionCourse executionCourse = degreeTeachingService.getProfessorship()
-                    .getExecutionCourse();
+            ExecutionCourse executionCourse = degreeTeachingService.getProfessorship().getExecutionCourse();
             ExecutionPeriod executionPeriod = executionCourse.getExecutionPeriod();
             if (!executionCourse.isMasterDegreeOnly() && (executionPeriod.getExecutionYear().isBefore(executionYear20062007) ||
-                    !executionCourse.areAllOptionalCurricularCoursesWithLessTenEnrolments())) {
-                
+                    !executionCourse.areAllOptionalCurricularCoursesWithLessTenEnrolments())) {                
                 Teacher teacher = degreeTeachingService.getProfessorship().getTeacher();
-                Category teacherCategory = teacher.getCategory(executionPeriod.getBeginDateYearMonthDay(), 
-                        executionPeriod.getEndDateYearMonthDay());
+                Category teacherCategory = teacher.getCategory(executionPeriod.getBeginDateYearMonthDay(), executionPeriod.getEndDateYearMonthDay());
                 if (teacherCategory != null 
                         && teacherCategory.getCode().equals("AST") && teacherCategory.getLongName().equals("ASSISTENTE")
                         && degreeTeachingService.getShift().getTipo().equals(ShiftType.TEORICA)) {                    
@@ -277,8 +274,7 @@ public class TeacherService extends TeacherService_Base {
         return Math.round((n * 100.0)) / 100.0;
     }
 
-    private static class TeacherServiceTeacherServiceItemListener extends
-            dml.runtime.RelationAdapter<TeacherService, TeacherServiceItem> {
+    private static class TeacherServiceTeacherServiceItemListener extends dml.runtime.RelationAdapter<TeacherService, TeacherServiceItem> {
         @Override
         public void afterRemove(TeacherService teacherService, TeacherServiceItem serviceItem) {
             if ((teacherService != null) && teacherService.getServiceItems().isEmpty()) {

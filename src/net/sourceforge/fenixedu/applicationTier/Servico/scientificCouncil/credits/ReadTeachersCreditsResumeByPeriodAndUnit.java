@@ -4,6 +4,7 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.scientificCouncil.credits;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -20,6 +21,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.util.LegalRegimenType;
 
 import org.apache.commons.beanutils.BeanComparator;
+import org.apache.commons.collections.comparators.ComparatorChain;
 
 /**
  * @author Ricardo Rodrigues
@@ -139,8 +141,13 @@ public class ReadTeachersCreditsResumeByPeriodAndUnit extends Service {
     }
 
     public static class TeacherCreditsReportDTO {
-        Map<ExecutionPeriod, Double> creditsByExecutionPeriod = new TreeMap<ExecutionPeriod, Double>(
-                new BeanComparator("beginDate"));
+        private static final Comparator comparator_ = new ComparatorChain();                
+        static {
+            ((ComparatorChain)comparator_).addComparator(new BeanComparator("executionYear.year"));
+            ((ComparatorChain)comparator_).addComparator(new BeanComparator("semester"));            
+        }
+             
+        Map<ExecutionPeriod, Double> creditsByExecutionPeriod = new TreeMap<ExecutionPeriod, Double>(comparator_);
 
         Teacher teacher;
 
