@@ -76,6 +76,8 @@ public enum RoleType {
     RESEARCHER,
     
     ALUMNI,
+    
+    MESSAGING,
 
     PEDAGOGICAL_COUNCIL;
 
