@@ -502,8 +502,19 @@ public class CurricularCourse extends CurricularCourse_Base {
         return curriculum;
     }
 
-    public List<ExecutionCourse> getExecutionCoursesByExecutionPeriod(
-            final ExecutionPeriod executionPeriod) {
+    public List<ExecutionCourse> getExecutionCoursesWithPublicSites() {
+        List<ExecutionCourse> result = new ArrayList<ExecutionCourse>();
+        
+        for (final ExecutionCourse executionCourse : this.getAssociatedExecutionCourses()) {
+            if (executionCourse.hasSite()) {
+                result.add(executionCourse);
+            }
+        }
+        
+        return result;
+    }
+    
+    public List<ExecutionCourse> getExecutionCoursesByExecutionPeriod(final ExecutionPeriod executionPeriod) {
         return (List) CollectionUtils.select(getAssociatedExecutionCourses(), new Predicate() {
             public boolean evaluate(Object o) {
                 ExecutionCourse executionCourse = (ExecutionCourse) o;
@@ -1210,4 +1221,5 @@ public class CurricularCourse extends CurricularCourse_Base {
 		enrolmentsNotSubmited.addAll(getEnrolmentsNotInAnyMarkSheet(MarkSheetType.IMPROVEMENT, period));
 		return !enrolmentsNotSubmited.isEmpty();
 	}
+    
 }

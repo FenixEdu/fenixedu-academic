@@ -81,7 +81,7 @@
 		<h:outputText value="</td></tr>" escape="false"/>
 	</h:panelGroup>
 	<!-- EXECUTION COURSES -->
-	<h:panelGroup rendered="#{!empty CurricularCourseManagement.curricularCourse.associatedExecutionCourses}">
+	<h:panelGroup rendered="#{!empty CurricularCourseManagement.curricularCourse.executionCoursesWithPublicSites}">
 		<h:outputText value="<tr><td class='box_header'>" escape="false"/>
 		<h:outputText value="<strong>#{publicDegreeInfoBundle['public.degree.information.label.courses']}</strong></td></tr>" escape="false"/>
 		<fc:dataRepeater value="#{CurricularCourseManagement.curricularCourse.associatedExecutionCourses}" var="executionCourse">
