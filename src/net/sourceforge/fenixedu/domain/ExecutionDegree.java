@@ -47,11 +47,24 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable 
         ((ComparatorChain) EXECUTION_DEGREE_COMPARATORY_BY_DEGREE_TYPE_AND_NAME_AND_EXECUTION_YEAR).addComparator(executionYearComparator);
     }
 
-    public ExecutionDegree() {
+    private ExecutionDegree() {
 		super();
 		setRootDomainObject(RootDomainObject.getInstance());
 	}
     
+    protected ExecutionDegree(DegreeCurricularPlan degreeCurricularPlan, ExecutionYear executionYear, Campus campus, Boolean temporaryExamMap) {
+        this();
+        
+        if (degreeCurricularPlan == null || executionYear == null || campus == null) {
+            throw new DomainException("execution.degree.null.args.to.constructor");
+        }
+        
+        setDegreeCurricularPlan(degreeCurricularPlan);
+        setExecutionYear(executionYear);
+        setCampus(campus);
+        setTemporaryExamMap(temporaryExamMap);
+    }
+
     public void delete() {
         if (canBeDeleted()) {
             for (; hasAnyCoordinatorsList(); getCoordinatorsList().get(0).delete());

@@ -8,13 +8,14 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.accessControl.AccessControl;
 import net.sourceforge.fenixedu.accessControl.Checked;
 import net.sourceforge.fenixedu.applicationTier.strategy.degreeCurricularPlan.DegreeCurricularPlanStrategyFactory;
 import net.sourceforge.fenixedu.applicationTier.strategy.degreeCurricularPlan.IDegreeCurricularPlanStrategyFactory;
 import net.sourceforge.fenixedu.applicationTier.strategy.degreeCurricularPlan.strategys.IDegreeCurricularPlanStrategy;
-import net.sourceforge.fenixedu.dataTransferObject.CurricularPeriodInfoDTO;
 import net.sourceforge.fenixedu.domain.accessControl.FixedSetGroup;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.branch.BranchType;
@@ -229,9 +230,17 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
     public boolean isBolonha() {
         return !getCurricularStage().equals(CurricularStage.OLD);
     }
+    
+    public boolean isApproved() {
+        return getCurricularStage() == CurricularStage.APPROVED;
+    }
+
+    public boolean isDraft() {
+        return getCurricularStage() == CurricularStage.DRAFT;
+    }
 
     public void approve(ExecutionYear beginExecutionYear) {
-        if (getCurricularStage() == CurricularStage.APPROVED) {
+        if (isApproved()) {
             throw new DomainException("error.degreeCurricularPlan.already.approved");
 
         } else if (beginExecutionYear == null) {
@@ -968,6 +977,19 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
                     beginDate, endDate));
         }
         return curricularCourseScopes;
+    }
+
+    
+    public ExecutionDegree createExecutionDegree(ExecutionYear executionYear, Campus campus, Boolean temporaryExamMap) {
+        if (this.isBolonha() && this.isDraft()) {
+            throw new DomainException("degree.curricular.plan.not.approved.cannot.create.execution.degree");
+        }
+        
+        if (this.hasAnyExecutionDegreeFor(executionYear)) {
+            throw new DomainException("degree.curricular.plan.already.has.execution.degree.for.this.year");
+        }
+        
+        return new ExecutionDegree(this, executionYear, campus, temporaryExamMap);
     }
 
 }

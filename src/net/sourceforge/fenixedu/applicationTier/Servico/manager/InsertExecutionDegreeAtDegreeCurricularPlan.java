@@ -35,17 +35,11 @@ public class InsertExecutionDegreeAtDegreeCurricularPlan extends Service {
 			throw new NonExistingServiceException("message.non.existing.execution.year", null);
 		}
 
-		ExecutionDegree executionDegree = DomainFactory.makeExecutionDegree();
-		executionDegree.setDegreeCurricularPlan(degreeCurricularPlan);
-		executionDegree.setExecutionYear(executionYear);
-		executionDegree.setTemporaryExamMap(infoExecutionDegree.getTemporaryExamMap());
-		executionDegree.setCampus(campus);
-
+		ExecutionDegree executionDegree = degreeCurricularPlan.createExecutionDegree(executionYear, campus, infoExecutionDegree.getTemporaryExamMap());
 		setPeriods(executionDegree, infoExecutionDegree);
 	}
 
-	private void setPeriods(ExecutionDegree executionDegree, InfoExecutionDegree infoExecutionDegree)
-			throws FenixServiceException, ExcepcaoPersistencia {
+	private void setPeriods(ExecutionDegree executionDegree, InfoExecutionDegree infoExecutionDegree) {
 		InfoPeriod infoPeriodExamsFirstSemester = infoExecutionDegree.getInfoPeriodExamsFirstSemester();
 		setCompositePeriod(executionDegree, infoPeriodExamsFirstSemester, 11);
 
@@ -59,8 +53,7 @@ public class InsertExecutionDegreeAtDegreeCurricularPlan extends Service {
 		setCompositePeriod(executionDegree, infoPeriodLessonsSecondSemester, 22);
 	}
 
-	private void setCompositePeriod(ExecutionDegree executionDegree, InfoPeriod infoPeriod,
-			int periodToAssociateExecutionDegree) throws FenixServiceException, ExcepcaoPersistencia {
+	private void setCompositePeriod(ExecutionDegree executionDegree, InfoPeriod infoPeriod, int periodToAssociateExecutionDegree) {
 		List<InfoPeriod> infoPeriodList = new ArrayList<InfoPeriod>();
 
 		infoPeriodList.add(infoPeriod);

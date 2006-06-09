@@ -29,8 +29,7 @@ public class MasterDegreeCandidateTest extends DomainTestBase {
         degree.setSigla("abc");
         degreeCurricularPlan = new DegreeCurricularPlan();
         degreeCurricularPlan.setDegree(degree);
-        executionDegree = new ExecutionDegree();
-        executionDegree.setDegreeCurricularPlan(degreeCurricularPlan);
+        executionDegree = degreeCurricularPlan.createExecutionDegree(null, null, false);
         specialization = Specialization.MASTER_DEGREE;
         masterDegreeCandidate = new MasterDegreeCandidate();
         masterDegreeCandidate.setExecutionDegree(executionDegree);
