@@ -3,6 +3,8 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="dt" %>
 
+<h2>Editar <bean:message bundle="MANAGER_RESOURCES" key="label.manager.executionDegreeManagement"/></h2>
+
 <html:messages id="messages" message="true">
 	<span class="error"><bean:write name="messages" /></span>
 </html:messages>
