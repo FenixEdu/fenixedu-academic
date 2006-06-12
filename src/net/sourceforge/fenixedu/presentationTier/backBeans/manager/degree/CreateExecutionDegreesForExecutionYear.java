@@ -113,7 +113,11 @@ public class CreateExecutionDegreesForExecutionYear extends FenixBackingBean {
                 result = Collections.EMPTY_LIST;
             } else {
                 result = new ArrayList<SelectItem>();
-                for (final DegreeCurricularPlan degreeCurricularPlan : DegreeCurricularPlan.readByDegreeTypeAndState(degreeType, DegreeCurricularPlanState.ACTIVE)) {
+                
+                final List<DegreeCurricularPlan> toShow = DegreeCurricularPlan.readByDegreeTypeAndState(degreeType, DegreeCurricularPlanState.ACTIVE);
+                Collections.sort(toShow, DegreeCurricularPlan.DEGREE_CURRICULAR_PLAN_COMPARATOR_BY_DEGREE_TYPE_AND_EXECUTION_DEGREE_AND_DEGREE_CODE);
+                
+                for (final DegreeCurricularPlan degreeCurricularPlan : toShow) {
                     result.add(new SelectItem(degreeCurricularPlan.getIdInternal(), enumerationBundle.getString(degreeType.getName()) + " " + degreeCurricularPlan.getDegree().getName() + " - " + degreeCurricularPlan.getName()));
                 }
             }
@@ -132,19 +136,22 @@ public class CreateExecutionDegreesForExecutionYear extends FenixBackingBean {
         if (this.bolonhaDegreeCurricularPlansSelectItems == null) {
             final BolonhaDegreeType bolonhaDegreeType = BolonhaDegreeType.valueOf(getChosenDegreeType());
 
-            final List<SelectItem> result = new ArrayList<SelectItem>();
-            final List<Degree> bolonhaDegrees = Degree.readBolonhaDegrees();
-            Collections.sort(bolonhaDegrees, Degree.DEGREE_COMPARATOR_BY_NAME_AND_DEGREE_TYPE);
-            
-            for (final Degree degree : bolonhaDegrees) {
+            final List<DegreeCurricularPlan> toShow = new ArrayList<DegreeCurricularPlan>();
+            for (final Degree degree : Degree.readBolonhaDegrees()) {
                 if (degree.getBolonhaDegreeType() == bolonhaDegreeType) {
                     for (final DegreeCurricularPlan degreeCurricularPlan : degree.getActiveDegreeCurricularPlans()) {
                         if (!degreeCurricularPlan.isApproved()) {
                             continue;
                         }
-                        result.add(new SelectItem(degreeCurricularPlan.getIdInternal(), enumerationBundle.getString(bolonhaDegreeType.getName()) + " " + degreeCurricularPlan.getDegree().getName() + " - " + degreeCurricularPlan.getName()));    
+                        toShow.add(degreeCurricularPlan);    
                     }
                 }
+            }
+            Collections.sort(toShow, DegreeCurricularPlan.DEGREE_CURRICULAR_PLAN_COMPARATOR_BY_DEGREE_TYPE_AND_EXECUTION_DEGREE_AND_DEGREE_CODE);
+            
+            final List<SelectItem> result = new ArrayList<SelectItem>();
+            for (final DegreeCurricularPlan degreeCurricularPlan : toShow) {
+                result.add(new SelectItem(degreeCurricularPlan.getIdInternal(), enumerationBundle.getString(bolonhaDegreeType.getName()) + " " + degreeCurricularPlan.getDegree().getName() + " - " + degreeCurricularPlan.getName()));
             }
 
             this.bolonhaDegreeCurricularPlansSelectItems = new UISelectItems();
