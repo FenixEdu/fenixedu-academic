@@ -258,7 +258,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 
     private void checkIfCurricularCoursesBelongToApprovedCompetenceCourses() {
         final List<String> notApprovedCompetenceCourses = new ArrayList<String>();
-        for (final DegreeModule degreeModule : getDcpDegreeModules(CurricularCourse.class)) {
+        for (final DegreeModule degreeModule : getDcpDegreeModules(CurricularCourse.class, null)) {
             final CurricularCourse curricularCourse = (CurricularCourse) degreeModule;
             if (!curricularCourse.isOptional() && !curricularCourse.getCompetenceCourse().isApproved()) {
                 notApprovedCompetenceCourses.add(curricularCourse.getCompetenceCourse()
@@ -558,28 +558,67 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
         return null;
     }
 
+    /**
+     * Method to get an unfiltered list of a dcp's curricular courses
+     * 
+     * @return All curricular courses that were or still are present in the dcp
+     */
     @Override
     public List<CurricularCourse> getCurricularCourses() {
         if (this.isBolonha()) {
-            List<CurricularCourse> result = new ArrayList<CurricularCourse>();
-            for (DegreeModule degreeModule : getDcpDegreeModules(CurricularCourse.class)) {
-                result.add((CurricularCourse) degreeModule);
-            }
-
-            return result;
+            return this.getCurricularCourses(null);
         } else {
             return super.getCurricularCourses();
         }
     }
 
-    public List<CompetenceCourse> getCompetenceCourses() {
-        Set<CompetenceCourse> result = new HashSet<CompetenceCourse>();
-        if (this.isBolonha()) {
-            for (DegreeModule degreeModule : getDcpDegreeModules(CurricularCourse.class)) {
-                result.add(((CurricularCourse) degreeModule).getCompetenceCourse());
+    /**
+     * Method to get a filtered list of a dcp's curricular courses, with at least one open 
+     * context in the given execution year
+     * 
+     * @return All curricular courses that are present in the dcp
+     */
+    private List<CurricularCourse> getCurricularCourses(ExecutionYear executionYear) {
+        List<CurricularCourse> result = new ArrayList<CurricularCourse>();
+        if (isBolonha()) {
+            for (DegreeModule degreeModule : getDcpDegreeModules(CurricularCourse.class, executionYear)) {
+                result.add((CurricularCourse) degreeModule);
             }
         }
-        return new ArrayList<CompetenceCourse>(result);
+        return result;
+    }
+
+    /**
+     * Method to get an unfiltered list of a bolonha dcp's competence courses
+     * 
+     * @return All competence courses that were or still are present in the dcp, ordered by name
+     */
+    public List<CompetenceCourse> getCompetenceCourses() {
+        if (this.isBolonha()) {
+            return this.getCompetenceCourses(null);
+        } else {
+            return new ArrayList<CompetenceCourse>();
+        }
+        
+    }
+
+    /**
+     * Method to get a filtered list of a dcp's competence courses in the given execution year. 
+     * Each competence courses is connected with a curricular course with at least one open 
+     * context in the execution year
+     * 
+     * @return All competence courses that are present in the dcp
+     */
+    public List<CompetenceCourse> getCompetenceCourses(ExecutionYear executionYear) {
+        SortedSet<CompetenceCourse> result = new TreeSet<CompetenceCourse>(CompetenceCourse.COMPETENCE_COURSE_COMPARATOR_BY_NAME);
+        if (this.isBolonha()) {
+            for (final CurricularCourse curricularCourse : getCurricularCourses(executionYear)) {
+                result.add(curricularCourse.getCompetenceCourse());
+            }
+            return new ArrayList<CompetenceCourse>(result);
+        } else {
+            return new ArrayList<CompetenceCourse>();    
+        }
     }
 
     public List<Branch> getCommonAreas() {
@@ -750,7 +789,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
             final DegreeCurricularPlan degreeCurricularPlan) {
 
         final List<DegreeModule> curricularCoursesFromDegreeCurricularPlan = degreeCurricularPlan
-                .getDcpDegreeModules(CurricularCourse.class);
+                .getDcpDegreeModules(CurricularCourse.class, null);
         for (CurricularCourse curricularCourse : competenceCourse.getAssociatedCurricularCourses()) {
             if (curricularCoursesFromDegreeCurricularPlan.contains(curricularCourse)) {
                 throw new DomainException(
@@ -769,14 +808,14 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
         }
     }
 
-    public List<DegreeModule> getDcpDegreeModules(Class<? extends DegreeModule> clazz) {
+    public List<DegreeModule> getDcpDegreeModules(Class<? extends DegreeModule> clazz, ExecutionYear executionYear) {
         final Set<DegreeModule> result = new HashSet<DegreeModule>();
-        this.getRoot().collectChildDegreeModules(clazz, result);
+        this.getRoot().collectChildDegreeModules(clazz, result, executionYear);
         return new ArrayList<DegreeModule>(result);
     }
 
     public List<List<DegreeModule>> getDcpDegreeModulesIncludingFullPath(
-            Class<? extends DegreeModule> clazz) {
+            Class<? extends DegreeModule> clazz, ExecutionYear executionYear) {
 
         final List<List<DegreeModule>> result = new ArrayList<List<DegreeModule>>();
         final List<DegreeModule> path = new ArrayList<DegreeModule>();
@@ -787,7 +826,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
             result.add(path);
         }
 
-        this.getRoot().collectChildDegreeModulesIncludingFullPath(clazz, result, path);
+        this.getRoot().collectChildDegreeModulesIncludingFullPath(clazz, result, path, executionYear);
 
         return result;
     }
@@ -982,11 +1021,11 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
     
     public ExecutionDegree createExecutionDegree(ExecutionYear executionYear, Campus campus, Boolean temporaryExamMap) {
         if (this.isBolonha() && this.isDraft()) {
-            throw new DomainException("degree.curricular.plan.not.approved.cannot.create.execution.degree");
+            throw new DomainException("degree.curricular.plan.not.approved.cannot.create.execution.degree", this.getName());
         }
         
         if (this.hasAnyExecutionDegreeFor(executionYear)) {
-            throw new DomainException("degree.curricular.plan.already.has.execution.degree.for.this.year");
+            throw new DomainException("degree.curricular.plan.already.has.execution.degree.for.this.year", this.getName(), executionYear.getYear());
         }
         
         return new ExecutionDegree(this, executionYear, campus, temporaryExamMap);

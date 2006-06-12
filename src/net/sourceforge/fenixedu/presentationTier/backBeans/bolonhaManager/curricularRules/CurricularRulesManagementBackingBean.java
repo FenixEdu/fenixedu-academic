@@ -20,6 +20,7 @@ import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriodType;
 import net.sourceforge.fenixedu.domain.curricularRules.AnyCurricularCourse;
 import net.sourceforge.fenixedu.domain.curricularRules.CreditsLimit;
@@ -648,7 +649,9 @@ public class CurricularRulesManagementBackingBean extends FenixBackingBean {
     
     private void getDegreeModules(final Class<? extends DegreeModule> clazz, final List<SelectItem> result)
             {
-        final List<List<DegreeModule>> degreeModulesSet = getDegreeCurricularPlan().getDcpDegreeModulesIncludingFullPath(clazz);
+        final ExecutionYear executionYear = rootDomainObject.readExecutionYearByOID(getExecutionYearID());
+        
+        final List<List<DegreeModule>> degreeModulesSet = getDegreeCurricularPlan().getDcpDegreeModulesIncludingFullPath(clazz, executionYear);
         for (final List<DegreeModule> degreeModules : degreeModulesSet) {
             final DegreeModule lastDegreeModule = (degreeModules.size() > 0) ? degreeModules.get(degreeModules.size() - 1) : null; 
             if (lastDegreeModule != getDegreeModule()) {

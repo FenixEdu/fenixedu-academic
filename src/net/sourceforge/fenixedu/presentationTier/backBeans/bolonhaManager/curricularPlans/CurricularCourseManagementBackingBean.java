@@ -665,7 +665,7 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
     
     private List<SelectItem> readDegreeModules(Class<? extends DegreeModule> clazz) {
         final List<SelectItem> result = new ArrayList<SelectItem>();
-        final List<List<DegreeModule>> degreeModulesSet = getDegreeCurricularPlan().getDcpDegreeModulesIncludingFullPath(clazz);
+        final List<List<DegreeModule>> degreeModulesSet = getDegreeCurricularPlan().getDcpDegreeModulesIncludingFullPath(clazz, getExecutionYear());
         for (final List<DegreeModule> degreeModules : degreeModulesSet) {
             final StringBuilder pathName = new StringBuilder();
             for (final DegreeModule degreeModule : degreeModules) {
@@ -689,6 +689,10 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
             }
         }
         
+        if (getExecutionYearID() == null) {
+            setExecutionYearID(getDegreeCurricularPlan().getMostRecentExecutionDegree().getExecutionYear().getIdInternal());
+        }
+        
         return result;
     }
     
@@ -699,6 +703,14 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
     public String getDegreeLocaleSensitiveName() {
         final Locale locale = FacesContext.getCurrentInstance().getViewRoot().getLocale();
         return locale.getLanguage().equals(Locale.ENGLISH.getLanguage()) ? getDegree().getNameEn() : getDegree().getNome();
+    }
+
+    public List<CompetenceCourse> getDegreeCurricularPlanCompetenceCourses() {
+        if (getExecutionYear() != null) {
+            return getDegreeCurricularPlan().getCompetenceCourses(getExecutionYear());
+        } else {
+            return new ArrayList<CompetenceCourse>();    
+        }
     }
 
 }

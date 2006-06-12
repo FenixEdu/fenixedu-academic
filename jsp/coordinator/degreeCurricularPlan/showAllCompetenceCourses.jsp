@@ -16,7 +16,7 @@ width: 100px;
 padding-right: 10px;
 }
 </style>
-	<fc:dataRepeater rendered="#{!empty CurricularCourseManagement.degreeCurricularPlan.competenceCourses}" value="#{CurricularCourseManagement.degreeCurricularPlan.competenceCourses}" var="competenceCourse">
+	<fc:dataRepeater rendered="#{!empty CurricularCourseManagement.degreeCurricularPlanCompetenceCourses}" value="#{CurricularCourseManagement.degreeCurricularPlanCompetenceCourses}" var="competenceCourse">
 
 		<h:outputText value="<em>#{scouncilBundle['competenceCourse']}</em>" escape="false" />
 		<h:outputText value="<h2>#{competenceCourse.name}</h2>" escape="false"/>
@@ -207,7 +207,7 @@ padding-right: 10px;
 		<h:outputText value="<div class='mvert2 break-before'></div><hr class='invisible mvert3'/>" escape="false"/>
 	</fc:dataRepeater>
 
-	<h:panelGroup rendered="#{empty CurricularCourseManagement.degreeCurricularPlan.competenceCourses}" >
+	<h:panelGroup rendered="#{empty CurricularCourseManagement.degreeCurricularPlanCompetenceCourses}" >
 		<h:outputText value="<em>#{scouncilBundle['no.curricularPlan.competence.courses']}</em>" escape="false" />
 	</h:panelGroup>
 

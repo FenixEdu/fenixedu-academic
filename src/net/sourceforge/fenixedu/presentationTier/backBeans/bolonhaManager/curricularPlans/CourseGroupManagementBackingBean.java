@@ -162,7 +162,7 @@ public class CourseGroupManagementBackingBean extends CurricularCourseManagement
     
     private List<SelectItem> readCourseGroups() {
         final List<SelectItem> result = new ArrayList<SelectItem>();
-        final List<List<DegreeModule>> degreeModulesSet = getDegreeCurricularPlan().getDcpDegreeModulesIncludingFullPath(CourseGroup.class);
+        final List<List<DegreeModule>> degreeModulesSet = getDegreeCurricularPlan().getDcpDegreeModulesIncludingFullPath(CourseGroup.class, null);
         final Set<CourseGroup> allParents = getCourseGroup(getParentCourseGroupID()).getAllParentCourseGroups();
         for (final List<DegreeModule> degreeModules : degreeModulesSet) {
             final DegreeModule lastDegreeModule = (degreeModules.size() > 0) ? degreeModules.get(degreeModules.size() - 1) : null;
