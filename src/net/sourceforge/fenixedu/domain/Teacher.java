@@ -687,8 +687,8 @@ public class Teacher extends Teacher_Base {
     
     public TeacherServiceExemption getDominantServiceExemption(ExecutionPeriod executionPeriod) {        
         OccupationPeriod occupationPeriod = getLessonsPeriod(executionPeriod);
-        List<TeacherServiceExemption> serviceExemptions = getServiceExemptionsWithoutMedicalSituations(executionPeriod.getBeginDateYearMonthDay(),
-                executionPeriod.getEndDateYearMonthDay());       
+        List<TeacherServiceExemption> serviceExemptions = getServiceExemptionsWithoutMedicalSituations(
+                occupationPeriod.getStartYearMonthDay(), occupationPeriod.getEndYearMonthDay());       
         return chooseOneServiceExemption(serviceExemptions, occupationPeriod);
     }
 
@@ -721,8 +721,7 @@ public class Teacher extends Teacher_Base {
         }
         return teacherServiceExemption;
     }
-
-
+    
     public List<Advise> getAdvisesByAdviseTypeAndExecutionYear(AdviseType adviseType,
             ExecutionYear executionYear) {
 
