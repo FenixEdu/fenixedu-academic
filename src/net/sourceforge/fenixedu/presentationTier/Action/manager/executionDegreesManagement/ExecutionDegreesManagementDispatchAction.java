@@ -26,7 +26,6 @@ import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionEx
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.util.DateFormatUtil;
 
-import org.apache.commons.beanutils.BeanComparator;
 import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
@@ -38,7 +37,6 @@ import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.LabelValueBean;
 
 public class ExecutionDegreesManagementDispatchAction extends FenixDispatchAction {
-    private final static ResourceBundle enumerationResources = ResourceBundle.getBundle("resources/EnumerationResources");
 
     public ActionForward readDegreeCurricularPlans(ActionMapping mapping,
             ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) {
@@ -238,6 +236,8 @@ public class ExecutionDegreesManagementDispatchAction extends FenixDispatchActio
     }
     
     private void readAndSetDegrees(HttpServletRequest request) {
+        final ResourceBundle enumerationResources = ResourceBundle.getBundle("resources/EnumerationResources", request.getLocale());
+        
         final List<LabelValueBean> degreeTypes = new ArrayList<LabelValueBean>(BolonhaDegreeType.values().length);
         for (final BolonhaDegreeType bolonhaDegreeType : BolonhaDegreeType.values()) {
             degreeTypes.add(new LabelValueBean(enumerationResources.getString(bolonhaDegreeType.name()),
@@ -248,16 +248,24 @@ public class ExecutionDegreesManagementDispatchAction extends FenixDispatchActio
     }
 
     private void readAndSetDegreeCurricularPlans(HttpServletRequest request, final String degreeTypeName) {
-        final List<LabelValueBean> degreeCurricularPlans = new ArrayList<LabelValueBean>();
+        
+        final List<DegreeCurricularPlan> toShow = new ArrayList<DegreeCurricularPlan>();
         for (final DegreeCurricularPlan degreeCurricularPlan : rootDomainObject.getDegreeCurricularPlansSet()) {
-            if (degreeCurricularPlan.getDegree().getDegreeType().name().equals(degreeTypeName)) {
-                degreeCurricularPlans.add(
-                        new LabelValueBean(
-                                degreeCurricularPlan.getDegree().getName() + " > " + degreeCurricularPlan.getName(), 
-                                degreeCurricularPlan.getIdInternal().toString()));
+            if (degreeCurricularPlan.getDegree().getDegreeType().name().equals(degreeTypeName) && degreeCurricularPlan.hasAnyExecutionDegrees()) {
+                toShow.add(degreeCurricularPlan);
             }
         }
-        Collections.sort(degreeCurricularPlans, new BeanComparator("label"));
+        Collections.sort(toShow, DegreeCurricularPlan.DEGREE_CURRICULAR_PLAN_COMPARATOR_BY_DEGREE_TYPE_AND_EXECUTION_DEGREE_AND_DEGREE_CODE);
+        
+        final ResourceBundle enumerationResources = ResourceBundle.getBundle("resources/EnumerationResources", request.getLocale());
+        final List<LabelValueBean> degreeCurricularPlans = new ArrayList<LabelValueBean>();
+        for (final DegreeCurricularPlan degreeCurricularPlan : toShow) {
+            degreeCurricularPlans.add(
+                    new LabelValueBean(
+                            degreeCurricularPlan.getDegree().getName() + " > " + degreeCurricularPlan.getName(), 
+                            degreeCurricularPlan.getIdInternal().toString()));
+        }
+
         degreeCurricularPlans.add(0, new LabelValueBean(enumerationResources.getString("dropDown.Default"), ""));
         request.setAttribute("degreeCurricularPlans", degreeCurricularPlans);
     }
