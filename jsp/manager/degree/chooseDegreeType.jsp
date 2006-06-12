@@ -3,14 +3,25 @@
 <%@ taglib uri="/WEB-INF/html_basic.tld" prefix="h"%>
 
 <ft:tilesView definition="df.executionDegreeManagement.firstPage" attributeName="body-inline">
+	<f:loadBundle basename="resources/ManagerResources" var="managerResources"/>
+
 	<h:form>
-		<h:panelGrid columns="1">
-			<h:outputText value="Escolha o tipo de Graduação:" />
+
+		<div class='simpleblock4'>
+		<fieldset class='lfloat'>
+		<p>
+			<label>
+				<strong><h:outputText value="#{managerResources['label.manager.degree.tipoCurso']}"/></strong>:
+			</label>
 			<h:selectOneMenu value="#{createExecutionDegrees.chosenDegreeType}" >
 				<f:selectItems value="#{createExecutionDegrees.degreeTypes}" />			
 			</h:selectOneMenu>
-			<h:commandButton action="choose" value="Continuar" styleClass="inputbutton" />		
-		</h:panelGrid>
+		</p>
+		</fieldset>
+		</div>
+		<p>
+			<h:commandButton action="choose" value="Continuar" styleClass="inputbutton" />
+		</p>			
 	</h:form>
 
 </ft:tilesView>
