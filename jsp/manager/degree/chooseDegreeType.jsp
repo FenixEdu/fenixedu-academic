@@ -2,8 +2,10 @@
 <%@ taglib uri="/WEB-INF/jsf_tiles.tld" prefix="ft"%>
 <%@ taglib uri="/WEB-INF/html_basic.tld" prefix="h"%>
 
-<ft:tilesView definition="df.executionDegreeManagement.firstPage" attributeName="body-inline">
+<ft:tilesView definition="df.executionDegreeManagement.default" attributeName="body-inline">
 	<f:loadBundle basename="resources/ManagerResources" var="managerResources"/>
+
+	<h:outputText value="<h2>Criar #{managerResources['label.manager.executionDegreeManagement']}</h2>" escape="false"/>
 
 	<h:form>
 

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.List;
+import java.util.ResourceBundle;
 
 import javax.faces.component.UISelectItems;
 import javax.faces.model.SelectItem;
@@ -11,11 +12,14 @@ import javax.faces.model.SelectItem;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Campus;
+import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.degree.BolonhaDegreeType;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degree.degreeCurricularPlan.DegreeCurricularPlanState;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean;
 import net.sourceforge.fenixedu.util.Data;
@@ -26,6 +30,8 @@ import net.sourceforge.fenixedu.util.Data;
  * 
  */
 public class CreateExecutionDegreesForExecutionYear extends FenixBackingBean {
+    private final ResourceBundle enumerationBundle = getResourceBundle("resources/EnumerationResources");
+    private final ResourceBundle domainExceptionBundle = getResourceBundle("resources/DomainExceptionResources");
 
     private String chosenDegreeType;
     private Integer[] choosenDegreeCurricularPlansIDs;
@@ -74,6 +80,7 @@ public class CreateExecutionDegreesForExecutionYear extends FenixBackingBean {
     private Integer gradeSubmissionSpecialSeasonEndDay;
     private Integer gradeSubmissionSpecialSeasonEndMonth;
     private Integer gradeSubmissionSpecialSeasonEndYear;
+    private List<DegreeCurricularPlan> createdDegreeCurricularPlans;
 
     public CreateExecutionDegreesForExecutionYear() {
         super();
@@ -82,8 +89,10 @@ public class CreateExecutionDegreesForExecutionYear extends FenixBackingBean {
     public List<SelectItem> getDegreeTypes() {
         final List<SelectItem> result = new ArrayList<SelectItem>(BolonhaDegreeType.values().length);
         for (final BolonhaDegreeType bolonhaDegreeType : BolonhaDegreeType.values()) {
-            result.add(new SelectItem(bolonhaDegreeType.name(), bolonhaDegreeType.name()));
+            result.add(new SelectItem(bolonhaDegreeType.name(), enumerationBundle.getString(bolonhaDegreeType.name())));
         }
+        result.add(new SelectItem("dropDown.Default", enumerationBundle.getString("dropDown.Default")));
+        
         return result;
     }
 
@@ -96,9 +105,7 @@ public class CreateExecutionDegreesForExecutionYear extends FenixBackingBean {
     }
 
     public UISelectItems getDegreeCurricularPlansSelectItems() {
-
         if (this.degreeCurricularPlansSelectItems == null) {
-
             final DegreeType degreeType = getDegreeType(getChosenDegreeType());
 
             final List<SelectItem> result;
@@ -106,13 +113,8 @@ public class CreateExecutionDegreesForExecutionYear extends FenixBackingBean {
                 result = Collections.EMPTY_LIST;
             } else {
                 result = new ArrayList<SelectItem>();
-                for (final DegreeCurricularPlan degreeCurricularPlan : DegreeCurricularPlan
-                        .readByDegreeTypeAndState(degreeType, DegreeCurricularPlanState.ACTIVE)) {
-
-                    result.add(new SelectItem(degreeCurricularPlan.getIdInternal(), degreeCurricularPlan
-                            .getDegree().getName()
-                            + " - " + degreeCurricularPlan.getName()));
-
+                for (final DegreeCurricularPlan degreeCurricularPlan : DegreeCurricularPlan.readByDegreeTypeAndState(degreeType, DegreeCurricularPlanState.ACTIVE)) {
+                    result.add(new SelectItem(degreeCurricularPlan.getIdInternal(), enumerationBundle.getString(degreeType.getName()) + " " + degreeCurricularPlan.getDegree().getName() + " - " + degreeCurricularPlan.getName()));
                 }
             }
             this.degreeCurricularPlansSelectItems = new UISelectItems();
@@ -128,15 +130,20 @@ public class CreateExecutionDegreesForExecutionYear extends FenixBackingBean {
 
     public UISelectItems getBolonhaDegreeCurricularPlansSelectItems() {
         if (this.bolonhaDegreeCurricularPlansSelectItems == null) {
-
             final BolonhaDegreeType bolonhaDegreeType = BolonhaDegreeType.valueOf(getChosenDegreeType());
+
             final List<SelectItem> result = new ArrayList<SelectItem>();
-            for (final DegreeCurricularPlan degreeCurricularPlan : rootDomainObject.getDegreeCurricularPlans()) { // Active? (for now doesn't exist in BolonhaDegree)
-                if (degreeCurricularPlan.getDegree().isBolonhaDegree()
-                        && degreeCurricularPlan.getDegree().getBolonhaDegreeType() == bolonhaDegreeType) {
-                    result.add((new SelectItem(degreeCurricularPlan.getIdInternal(),
-                            degreeCurricularPlan.getDegree().getName() + " - "
-                                    + degreeCurricularPlan.getName())));
+            final List<Degree> bolonhaDegrees = Degree.readBolonhaDegrees();
+            Collections.sort(bolonhaDegrees, Degree.DEGREE_COMPARATOR_BY_NAME_AND_DEGREE_TYPE);
+            
+            for (final Degree degree : bolonhaDegrees) {
+                if (degree.getBolonhaDegreeType() == bolonhaDegreeType) {
+                    for (final DegreeCurricularPlan degreeCurricularPlan : degree.getActiveDegreeCurricularPlans()) {
+                        if (!degreeCurricularPlan.isApproved()) {
+                            continue;
+                        }
+                        result.add(new SelectItem(degreeCurricularPlan.getIdInternal(), enumerationBundle.getString(bolonhaDegreeType.getName()) + " " + degreeCurricularPlan.getDegree().getName() + " - " + degreeCurricularPlan.getName()));    
+                    }
                 }
             }
 
@@ -186,7 +193,7 @@ public class CreateExecutionDegreesForExecutionYear extends FenixBackingBean {
         return result;
     }
 
-    public String createExecutionDegrees() throws FenixFilterException, FenixServiceException {
+    public String createExecutionDegrees() throws FenixActionException {
 
         Calendar lessonSeason1BeginDate = Calendar.getInstance();
         lessonSeason1BeginDate.set(getLessonSeason1BeginYear(), getLessonSeason1BeginMonth(),
@@ -249,11 +256,26 @@ public class CreateExecutionDegreesForExecutionYear extends FenixBackingBean {
                 gradeSubmissionNormalSeason1EndDate, gradeSubmissionNormalSeason2EndDate,
                 gradeSubmissionSpecialSeasonEndDate};
 
-        ServiceUtils.executeService(getUserView(), "CreateExecutionDegreesForExecutionYear", args);
+        
+        try {
+            createdDegreeCurricularPlans = (List<DegreeCurricularPlan>) ServiceUtils.executeService(getUserView(), "CreateExecutionDegreesForExecutionYear", args);
+        } catch (FenixFilterException e) {
+            throw new FenixActionException(e);
+        } catch (FenixServiceException e) {
+            throw new FenixActionException(e);
+        } catch (DomainException e) {
+            addErrorMessage(getFormatedMessage(domainExceptionBundle, e.getKey(), e.getArgs()));
+            setChoosenDegreeCurricularPlansIDs(null);
+            return "";
+        }
 
         return "success";
     }
 
+    public List<DegreeCurricularPlan> getCreatedDegreeCurricularPlans() {
+        return createdDegreeCurricularPlans;
+    }
+    
     public List getDays() {
         return Data.getMonthDaysSelectItems();
     }

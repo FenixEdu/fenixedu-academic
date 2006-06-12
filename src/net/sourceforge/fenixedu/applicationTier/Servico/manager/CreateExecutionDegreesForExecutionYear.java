@@ -14,7 +14,6 @@ import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.OccupationPeriod;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 import org.joda.time.YearMonthDay;
 
@@ -48,22 +47,19 @@ public class CreateExecutionDegreesForExecutionYear extends Service {
         allDegreeCurricularPlanIDs.addAll(Arrays.asList(degreeCurricularPlansIDs));
         allDegreeCurricularPlanIDs.addAll(Arrays.asList(bolonhaDegreeCurricularPlansIDs));
 
-        final List<DegreeCurricularPlan> notCreated = new ArrayList<DegreeCurricularPlan>();
+        final List<DegreeCurricularPlan> created = new ArrayList<DegreeCurricularPlan>();
         for (final Integer degreeCurricularPlanID : allDegreeCurricularPlanIDs) {
             final DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanID);
             if (degreeCurricularPlan == null) {
                 continue;
             }
             
-            if (degreeCurricularPlan.hasAnyExecutionDegreeFor(executionYear)) {
-                notCreated.add(degreeCurricularPlan);
-            }
-            
             final ExecutionDegree executionDegree = degreeCurricularPlan.createExecutionDegree(executionYear, campus, temporaryExamMap);
             setPeriods(executionDegree, examsSeason1, examsSeason2, examsSpecialSeason, lessonSeason1, lessonSeason2, gradeSubmissionNormalSeason1, gradeSubmissionNormalSeason2,gradeSubmissionSpecialSeason);
+            created.add(degreeCurricularPlan);
         }
         
-        return notCreated;
+        return created;
     }
 
     private Campus readCampusByName(String campusName) {

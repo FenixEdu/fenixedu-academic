@@ -1,23 +1,39 @@
 <%@ taglib uri="/WEB-INF/jsf_core.tld" prefix="f"%>
 <%@ taglib uri="/WEB-INF/jsf_tiles.tld" prefix="ft"%>
 <%@ taglib uri="/WEB-INF/html_basic.tld" prefix="h"%>
+<%@ taglib uri="/WEB-INF/jsf_fenix_components.tld" prefix="fc"%>
 
-<ft:tilesView definition="df.executionDegreeManagement.firstPage" attributeName="body-inline">
+<ft:tilesView definition="df.executionDegreeManagement.default" attributeName="body-inline">
 	<f:loadBundle basename="resources/ManagerResources" var="managerResources"/>
+	
+	<h:outputText styleClass="success0" rendered="#{!empty createExecutionDegrees.createdDegreeCurricularPlans}" value="Os seguintes planos curriculares foram criados correctamente:"/>
+	<fc:dataRepeater value="#{createExecutionDegrees.createdDegreeCurricularPlans}" var="degreeCurricularPlan">
+		<h:outputText value="<p>#{degreeCurricularPlan.name}</p>" escape="false"/>
+	</fc:dataRepeater>
+
+	<p>
+	<h:messages errorClass="error0" infoClass="success0"/>
+	</p>
+	
 	<h:form>
 		<h:inputHidden value="#{createExecutionDegrees.chosenDegreeType}" />
 						
-		<h:outputText value="<strong>Escolha o(s) Plano(s) Curricular(es) Antigos:</strong>" escape="false" />
+		<h:outputText value="<strong>Planos Curriculares Pré-Bolonha:</strong>" escape="false" />
 		<h:selectManyCheckbox value="#{createExecutionDegrees.choosenDegreeCurricularPlansIDs}" layout="pageDirection" >
 			<f:selectItems binding="#{createExecutionDegrees.degreeCurricularPlansSelectItems}" />
 		</h:selectManyCheckbox>
 		
 		<br/>
 		
-		<h:outputText value="<strong>Escolha o(s) Plano(s) Curricular(es) Novos:</strong>" escape="false" />
-		<h:selectManyCheckbox value="#{createExecutionDegrees.choosenBolonhaDegreeCurricularPlansIDs}" layout="pageDirection" >
-			<f:selectItems binding="#{createExecutionDegrees.bolonhaDegreeCurricularPlansSelectItems}" />
-		</h:selectManyCheckbox>
+		<h:outputText value="<strong>Planos Curriculares de Bolonha:</strong>" escape="false" />
+		<h:panelGroup rendered="#{!empty createExecutionDegrees.bolonhaDegreeCurricularPlansSelectItems}">
+			<h:selectManyCheckbox value="#{createExecutionDegrees.choosenBolonhaDegreeCurricularPlansIDs}" layout="pageDirection" >
+				<f:selectItems binding="#{createExecutionDegrees.bolonhaDegreeCurricularPlansSelectItems}" />
+			</h:selectManyCheckbox>
+		</h:panelGroup>
+		<h:panelGroup rendered="#{empty createExecutionDegrees.bolonhaDegreeCurricularPlansSelectItems}">
+			<h:outputText value="<em>Não existem planos curriculares activos e aprovados</em>" escape="false" />
+		</h:panelGroup>
 
 		<br/>
 		
