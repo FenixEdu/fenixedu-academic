@@ -1,3 +1,6 @@
+<class-descriptor class="net.sourceforge.fenixedu.domain.system.CronRegistry" table="CRON_REGISTRY">
+</class-descriptor>
+
 <class-descriptor class="net.sourceforge.fenixedu.domain.system.CronScriptState" table="CRON_SCRIPT_STATE">
 </class-descriptor>
 

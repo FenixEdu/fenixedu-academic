@@ -3129,12 +3129,18 @@ class net.sourceforge.fenixedu.domain.User extends net.sourceforge.fenixedu.doma
 }
 
 
+class net.sourceforge.fenixedu.domain.system.CronRegistry extends net.sourceforge.fenixedu.domain.DomainObject {
+	DateTime buildVersion;
+}
+
 class net.sourceforge.fenixedu.domain.system.CronScriptState extends net.sourceforge.fenixedu.domain.DomainObject {
 	String cronScriptClassname;
 	Integer absoluteExecutionOrder;
 	DateTime registrationDate;
+	Boolean active;
 	Boolean isCurrentlyRunning;
 	ByteArray context;
+	Period invocationPeriod;
 }
 
 class net.sourceforge.fenixedu.domain.system.CronScriptInvocation extends net.sourceforge.fenixedu.domain.DomainObject {
@@ -8200,6 +8206,13 @@ relation RootDomainObjectCronScriptState {
 relation RootDomainObjectCronScriptInvocation {
 	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
 	net.sourceforge.fenixedu.domain.system.CronScriptInvocation playsRole cronScriptInvocations {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectCronRegistry {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.system.CronRegistry playsRole cronRegistry {
 		multiplicity *;
 	}
 }
