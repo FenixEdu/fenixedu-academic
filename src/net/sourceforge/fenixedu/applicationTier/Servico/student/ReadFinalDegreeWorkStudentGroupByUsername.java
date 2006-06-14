@@ -17,6 +17,7 @@ import net.sourceforge.fenixedu.dataTransferObject.finalDegreeWork.InfoProposal;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.Teacher;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Group;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.GroupProposal;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.GroupStudent;
@@ -28,8 +29,8 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  */
 public class ReadFinalDegreeWorkStudentGroupByUsername extends Service {
 
-    public InfoGroup run(String username) throws ExcepcaoPersistencia {
-    	Student student = Student.readByUsername(username);
+    public InfoGroup run(final Person personUser) throws ExcepcaoPersistencia {
+	final Student student = personUser.getStudentByType(DegreeType.DEGREE);
         Group group = student.findFinalDegreeWorkGroupForCurrentExecutionYear();
         InfoGroup infoGroup = null;
         if (group != null) {

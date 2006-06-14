@@ -14,7 +14,6 @@ import net.sourceforge.fenixedu.dataTransferObject.finalDegreeWork.InfoGroupProp
 import net.sourceforge.fenixedu.dataTransferObject.finalDegreeWork.InfoGroupStudent;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
 
@@ -35,7 +34,7 @@ public class FinalDegreeWorkAttributionDA extends FenixDispatchAction {
             HttpServletResponse response) throws Exception {
         IUserView userView = SessionUtils.getUserView(request);
 
-        Object[] args = { userView.getUtilizador() };
+        Object[] args = { userView.getPerson() };
         InfoGroup infoGroup = (InfoGroup) ServiceUtils.executeService(userView,
                 "ReadFinalDegreeWorkStudentGroupByUsername", args);
         if (infoGroup != null && infoGroup.getGroupProposals() != null) {

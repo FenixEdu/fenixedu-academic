@@ -236,7 +236,7 @@ public class FinalDegreeWorkCandidacyDA extends FenixDispatchAction {
 
         IUserView userView = SessionUtils.getUserView(request);
 
-        Object[] args = { userView.getUtilizador() };
+        Object[] args = { userView.getPerson() };
         InfoGroup infoGroup = (InfoGroup) ServiceUtils.executeService(userView,
                 "ReadFinalDegreeWorkStudentGroupByUsername", args);
 
