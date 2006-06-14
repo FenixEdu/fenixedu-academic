@@ -19,7 +19,7 @@
 		<h:outputText value="<p><label>#{bolonhaBundle['department']}:</label>" escape="false"/>
 		<h:outputText value="#{CurricularCourseManagement.curricularCourse.competenceCourse.departmentUnit.name}</p>" escape="false"/>	
 		<h:outputText value="<p><label>#{bolonhaBundle['course']}:</label>" escape="false"/>
-		<h:outputText value="<span class='attention'>#{CurricularCourseManagement.curricularCourse.competenceCourse.name}</span></p>" escape="false"/>	
+		<h:outputText value="<span class='attention'>#{CurricularCourseManagement.curricularCourse.competenceCourse.name} (#{CurricularCourseManagement.curricularCourse.competenceCourse.acronym})</span></p>" escape="false"/>	
 		<h:outputText value="<p class='mtop1'><label class='lempty'>.</label>" escape="false"/>
 		<h:outputLink value="../competenceCourses/showCompetenceCourse.faces" target="_blank">
 			<h:outputText value="(#{bolonhaBundle['showPage']} #{bolonhaBundle['competenceCourse']})"/>
