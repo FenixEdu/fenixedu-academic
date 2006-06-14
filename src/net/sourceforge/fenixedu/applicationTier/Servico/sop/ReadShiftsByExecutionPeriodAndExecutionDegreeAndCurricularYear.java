@@ -12,7 +12,6 @@ package net.sourceforge.fenixedu.applicationTier.Servico.sop;
  */
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularYear;
@@ -24,6 +23,8 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoRoom;
 import net.sourceforge.fenixedu.dataTransferObject.InfoRoomOccupation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
 import net.sourceforge.fenixedu.domain.CurricularYear;
+import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.Lesson;
@@ -34,14 +35,16 @@ public class ReadShiftsByExecutionPeriodAndExecutionDegreeAndCurricularYear exte
 
     public Object run(InfoExecutionPeriod infoExecutionPeriod, InfoExecutionDegree infoExecutionDegree,
             InfoCurricularYear infoCurricularYear) throws ExcepcaoPersistencia {
-        final ExecutionPeriod executionPeriod = rootDomainObject.readExecutionPeriodByOID(infoExecutionPeriod.getIdInternal());
+
+    	final ExecutionPeriod executionPeriod = rootDomainObject.readExecutionPeriodByOID(infoExecutionPeriod.getIdInternal());
         final ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(infoExecutionDegree.getIdInternal());
+        final DegreeCurricularPlan degreeCurricularPlan = executionDegree.getDegreeCurricularPlan();
         final CurricularYear curricularYear = rootDomainObject.readCurricularYearByOID(infoCurricularYear.getIdInternal());
 
-        final Set<Shift> shifts = executionDegree.findAvailableShifts(curricularYear, executionPeriod);
-
         final List infoShifts = new ArrayList();
-        for (final Shift shift : shifts) {
+        final List<ExecutionCourse> executionCourses = executionPeriod.getExecutionCoursesByDegreeCurricularPlanAndSemesterAndCurricularYearAndName(degreeCurricularPlan, infoExecutionPeriod.getSemester(), curricularYear, "%");
+        for (final ExecutionCourse executionCourse : executionCourses) {
+        for (final Shift shift : executionCourse.getAssociatedShiftsSet()) {
         	final InfoShift infoShift = new InfoShift();
             infoShift.setAvailabilityFinal(shift.getAvailabilityFinal());
             infoShift.setIdInternal(shift.getIdInternal());
@@ -71,6 +74,7 @@ public class ReadShiftsByExecutionPeriodAndExecutionDegreeAndCurricularYear exte
 
             }
             infoShifts.add(infoShift);
+        }
         }
 
         return infoShifts;
