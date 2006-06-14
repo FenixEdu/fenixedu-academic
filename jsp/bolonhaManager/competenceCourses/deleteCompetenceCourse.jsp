@@ -6,14 +6,14 @@
 <ft:tilesView definition="bolonhaManager.masterPage" attributeName="body-inline">
 	<f:loadBundle basename="resources/BolonhaManagerResources" var="bolonhaBundle"/>
 		<h:outputText value="<em>#{bolonhaBundle['competenceCourse']}</em>" escape="false"/>
-		<h:outputText value="<h2>#{bolonhaBundle['delete']}: #{CompetenceCourseManagement.competenceCourse.name}</h2>" style="font-weight: bold" escape="false"/>	
+		<h:outputText value="<h2>#{bolonhaBundle['delete']}: #{CompetenceCourseManagement.competenceCourse.name} (#{CompetenceCourseManagement.competenceCourse.acronym})</h2>" style="font-weight: bold" escape="false"/>	
 	<h:form>
 
-		<h:outputText value="<p><span style='font-weight: bold;'>#{bolonhaBundle['department']}:</span>" escape="false"/>
+		<h:outputText value="<p><span style='font-weight: bold;'>#{bolonhaBundle['department']}: </span>" escape="false"/>
 		<h:outputText value="#{CompetenceCourseManagement.personDepartment.realName}</p>" escape="false"/>
 
 		<fc:dataRepeater value="#{CompetenceCourseManagement.competenceCourse.competenceCourseGroupUnit.parentUnits}" var="scientificAreaUnit">
-			<h:outputText value="<p><span style='font-weight: bold;'>#{bolonhaBundle['area']}</span>" escape="false"/>
+			<h:outputText value="<p><span style='font-weight: bold;'>#{bolonhaBundle['area']}: </span>" escape="false"/>
 			<h:outputText value="#{scientificAreaUnit.name} > #{CompetenceCourseManagement.competenceCourse.competenceCourseGroupUnit.name}</p>" escape="false"/>
 		</fc:dataRepeater>		
 		<br/>
