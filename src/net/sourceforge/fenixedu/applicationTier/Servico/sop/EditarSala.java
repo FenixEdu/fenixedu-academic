@@ -41,7 +41,7 @@ public class EditarSala extends Service {
 
 	protected OldBuilding findBuilding(final String edificio)
 			throws ExcepcaoPersistencia {
-		final Set<OldBuilding> buildings = rootDomainObject.getOldBuildingsSet();
+		final Set<OldBuilding> buildings = OldBuilding.getOldBuildings();
 		return (OldBuilding) CollectionUtils.find(buildings, new Predicate() {
 			public boolean evaluate(Object arg0) {
 				final OldBuilding building = (OldBuilding) arg0;

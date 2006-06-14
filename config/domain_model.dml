@@ -8093,23 +8093,9 @@ relation RootDomainObjectResearchInterest {
 	}
 }
 
-relation RootDomainObjectOldRoom {
-	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
-	net.sourceforge.fenixedu.domain.space.OldRoom playsRole oldRooms {
-		multiplicity *;
-	}
-}
-
 relation RootDomainObjectOldRoomClassification {
 	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
 	net.sourceforge.fenixedu.domain.space.RoomClassification playsRole roomClassification {
-		multiplicity *;
-	}
-}
-
-relation RootDomainObjectOldBuilding {
-	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
-	net.sourceforge.fenixedu.domain.space.OldBuilding playsRole oldBuildings {
 		multiplicity *;
 	}
 }

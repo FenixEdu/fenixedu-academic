@@ -45,7 +45,7 @@ public class ReadLessonsAndExamsInWeekAndRoom extends Service {
 
     // FIXME duplicated code: this method is (almost?) identical to RoomSiteComponentBuilder.getInfoSiteRoomTimeTable
     public List run(InfoRoom infoRoom, Calendar day, InfoExecutionPeriod infoExecutionPeriod) throws ExcepcaoPersistencia, FenixServiceException {
-    	final OldRoom room = rootDomainObject.readOldRoomByOID(infoRoom.getIdInternal());
+    	final OldRoom room = (OldRoom) rootDomainObject.readSpaceByOID(infoRoom.getIdInternal());
 
         List<InfoObject> infoShowOccupations = new ArrayList<InfoObject>();
 

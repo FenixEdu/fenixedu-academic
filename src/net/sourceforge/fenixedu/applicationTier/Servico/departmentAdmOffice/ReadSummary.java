@@ -6,6 +6,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.departmentAdmOffice;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
@@ -90,7 +91,7 @@ public class ReadSummary extends Service {
             }
         }
 
-        List rooms = rootDomainObject.getOldRooms();
+        Collection<OldRoom> rooms = OldRoom.getOldRooms();
         List infoRooms = new ArrayList();
         if (rooms != null && rooms.size() > 0) {
             infoRooms = (List) CollectionUtils.collect(rooms, new Transformer() {

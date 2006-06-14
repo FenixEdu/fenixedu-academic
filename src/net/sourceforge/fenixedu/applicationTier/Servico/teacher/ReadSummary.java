@@ -6,6 +6,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
@@ -96,7 +97,7 @@ public class ReadSummary extends Service {
             }
         }
 
-        List<OldRoom> rooms = rootDomainObject.getOldRooms();
+        final Collection<OldRoom> rooms = OldRoom.getOldRooms();
         List<InfoRoom> infoRooms = new ArrayList(rooms.size());
         for (final OldRoom room : rooms) {
             final InfoRoom infoRoom = new InfoRoom();

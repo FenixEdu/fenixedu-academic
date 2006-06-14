@@ -73,7 +73,7 @@ public class ReadExamsMapByRooms extends Service {
 
     private List getInfoExams(final InfoRoom infoRoom, final ExecutionPeriod executionPeriod) {
         final List<InfoExam> result = new ArrayList<InfoExam>();
-        final OldRoom oldRoom = rootDomainObject.readOldRoomByOID(infoRoom.getIdInternal());
+        final OldRoom oldRoom = (OldRoom) rootDomainObject.readSpaceByOID(infoRoom.getIdInternal());
         for (final RoomOccupation roomOccupation : oldRoom.getRoomOccupations()) {
             final WrittenEvaluation writtenEvaluation = roomOccupation.getWrittenEvaluation();
             if (writtenEvaluation != null && writtenEvaluation instanceof Exam) {

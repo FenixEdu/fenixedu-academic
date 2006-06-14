@@ -129,7 +129,7 @@ public class SummaryUtils {
                             infoSummary.getInfoRoom().getIdInternal())) {
                 room = summary.getRoom();
             } else {
-                room = RootDomainObject.getInstance().readOldRoomByOID(
+                room = (OldRoom) RootDomainObject.getInstance().readSpaceByOID(
                         infoSummary.getInfoRoom().getIdInternal());
             }
         } else {

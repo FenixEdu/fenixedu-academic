@@ -12,7 +12,7 @@ public class ReadBuildings extends Service {
 
     public List run() throws ExcepcaoPersistencia {
     	final List<InfoBuilding> result = new ArrayList<InfoBuilding>();
-    	for (final OldBuilding oldBuilding : rootDomainObject.getOldBuildingsSet()) {
+    	for (final OldBuilding oldBuilding : OldBuilding.getOldBuildings()) {
     		result.add(InfoBuilding.newInfoFromDomain(oldBuilding));
     	}
     	return result;

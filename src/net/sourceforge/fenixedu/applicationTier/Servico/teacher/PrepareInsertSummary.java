@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -65,7 +66,7 @@ public class PrepareInsertSummary extends Service {
             }
         }
 
-        final List<OldRoom> rooms = rootDomainObject.getOldRooms();
+        final Collection<OldRoom> rooms = OldRoom.getOldRooms();
         final List<InfoRoom> infoRooms = new ArrayList<InfoRoom>(rooms.size());
 
         for (final OldRoom room : rooms) {

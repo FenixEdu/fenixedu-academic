@@ -19,7 +19,7 @@ public class LerSalas extends Service {
 
 	public Object run() throws ExcepcaoPersistencia {
 		List infoSalas = new ArrayList();
-		for (final OldRoom oldRoom : rootDomainObject.getOldRoomsSet()) {
+		for (final OldRoom oldRoom : OldRoom.getOldRooms()) {
 			infoSalas.add(new InfoRoom(oldRoom.getNome(), oldRoom.getBuilding().getName(), oldRoom.getPiso(),
 					oldRoom.getTipo(), oldRoom.getCapacidadeNormal(), oldRoom.getCapacidadeExame()));
 		}

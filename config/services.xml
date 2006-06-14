@@ -8094,7 +8094,7 @@
 	</service>
 
 	<service>
-		<name>CreateBuilding</name>
+		<name>CreateBuildingOld</name>
 		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.sop.CreateBuilding</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>

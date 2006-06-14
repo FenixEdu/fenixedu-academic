@@ -21,7 +21,7 @@ public class LerAulasDeSalaEmSemestre extends Service {
             executionPeriodId = infoExecutionPeriod.getIdInternal();
         }
 
-    	final OldRoom room = rootDomainObject.readOldRoomByOID(infoRoom.getIdInternal());
+    	final OldRoom room = (OldRoom) rootDomainObject.readSpaceByOID(infoRoom.getIdInternal());
     	final ExecutionPeriod executionPeriod = rootDomainObject.readExecutionPeriodByOID(executionPeriodId);
 
         final List<Lesson> lessonList = room.findLessonsForExecutionPeriod(executionPeriod);

@@ -93,7 +93,7 @@ public class WriteInquiry extends Service {
     }
 
     private void writeInquiriesRoom(final InfoInquiriesRoom iir, final InquiriesCourse inquiriesCourse) throws ExcepcaoPersistencia {
-		OldRoom room = rootDomainObject.readOldRoomByOID(iir.getRoom().getIdInternal());
+		OldRoom room = (OldRoom) rootDomainObject.readSpaceByOID(iir.getRoom().getIdInternal());
 		inquiriesCourse.createInquiriesRoom(room, iir);
     }
 

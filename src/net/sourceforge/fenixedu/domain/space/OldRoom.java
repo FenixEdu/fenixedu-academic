@@ -93,7 +93,7 @@ public class OldRoom extends OldRoom_Base {
     }
 
     public static OldRoom findOldRoomByName(final String name) {
-    	for (final OldRoom oldRoom : RootDomainObject.getInstance().getOldRooms()) {
+    	for (final OldRoom oldRoom : OldRoom.getOldRooms()) {
     		if (oldRoom.getNome().equalsIgnoreCase(name)) {
     			return oldRoom;
     		}
@@ -104,7 +104,7 @@ public class OldRoom extends OldRoom_Base {
     public static Set<OldRoom> findOldRoomsBySpecifiedArguments(
     		String nome, String edificio, Integer piso, Integer tipo, Integer capacidadeNormal, Integer capacidadeExame)
             throws ExcepcaoPersistencia {        
-        final Set<OldRoom> oldRooms = RootDomainObject.getInstance().getOldRoomsSet();
+        final Set<OldRoom> oldRooms = OldRoom.getOldRooms();
         final Set<OldRoom> result = new HashSet<OldRoom>();
         for (OldRoom room : oldRooms) {
             boolean isAcceptable = true;
@@ -137,7 +137,7 @@ public class OldRoom extends OldRoom_Base {
 
     public static Set<OldRoom> findOldRoomsOfAnyOtherType(final TipoSala tipoSala) {
     	final Set<OldRoom> oldRooms = new HashSet<OldRoom>();
-    	for (final OldRoom oldRoom : RootDomainObject.getInstance().getOldRooms()) {
+    	for (final OldRoom oldRoom : OldRoom.getOldRooms()) {
     		if (!oldRoom.getTipo().equals(tipoSala)) {
     			oldRooms.add(oldRoom);
     		}
@@ -147,17 +147,17 @@ public class OldRoom extends OldRoom_Base {
 
     public static Set<OldRoom> findOldRoomsByBuildingNames(final Collection<String> buildingNames) {
     	final Set<OldRoom> oldRooms = new HashSet<OldRoom>();
-    	for (final OldRoom oldRoom : RootDomainObject.getInstance().getOldRooms()) {
+    	for (final OldRoom oldRoom : OldRoom.getOldRooms()) {
     		if (buildingNames.contains(oldRoom.getBuilding().getName())) {
     			oldRooms.add(oldRoom);
     		}
     	}
     	return oldRooms;
     }
-
+    
     public static Set<OldRoom> findOldRoomsWithNormalCapacity(final Integer normalCapacity) {
     	final Set<OldRoom> oldRooms = new HashSet<OldRoom>();
-    	for (final OldRoom oldRoom : RootDomainObject.getInstance().getOldRooms()) {
+    	for (final OldRoom oldRoom : OldRoom.getOldRooms()) {
     		if (oldRoom.getCapacidadeNormal().intValue() >= normalCapacity.intValue()) {
     			oldRooms.add(oldRoom);
     		}
@@ -174,5 +174,16 @@ public class OldRoom extends OldRoom_Base {
     public void setNome(String name) {
         super.setName(name);
     }
+
     
+    public static Set<OldRoom> getOldRooms() {
+    	final Set<OldRoom> oldRooms = new HashSet<OldRoom>();
+    	for (final Space space : RootDomainObject.getInstance().getSpacesSet()) {
+    		if (space instanceof OldRoom) {
+				OldRoom oldRoom = (OldRoom) space;
+				oldRooms.add(oldRoom);
+			}
+    	}
+    	return oldRooms;
+    }
 }

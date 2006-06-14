@@ -15,7 +15,7 @@ import org.apache.commons.collections.Predicate;
 public class CreateBuilding extends Service {
 
     public void run(final String buildingName, final Integer campusID) throws ExcepcaoPersistencia, ExistingServiceException {
-        final Set buildings = rootDomainObject.getOldBuildingsSet();
+        final Set<OldBuilding> buildings = OldBuilding.getOldBuildings();
 
         if (exists(buildings, buildingName)) {
             throw new ExistingServiceException();

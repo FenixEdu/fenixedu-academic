@@ -28,7 +28,7 @@ public class ReadAvailableRoomsForExam extends Service {
         if (normalCapacity != null) {
             rooms.addAll(OldRoom.findOldRoomsWithNormalCapacity(normalCapacity));
         } else if (withLabs.booleanValue()) {
-        	rooms.addAll(rootDomainObject.getOldRooms());
+        	rooms.addAll(OldRoom.getOldRooms());
         } else {
         	rooms.addAll(OldRoom.findOldRoomsOfAnyOtherType(new TipoSala(TipoSala.LABORATORIO)));
         }

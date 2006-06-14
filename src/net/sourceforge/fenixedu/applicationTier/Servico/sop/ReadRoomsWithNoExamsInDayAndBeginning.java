@@ -12,6 +12,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.sop;
  */
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
@@ -26,7 +27,7 @@ public class ReadRoomsWithNoExamsInDayAndBeginning extends Service {
 
     public List run(Calendar day, Calendar beginning) throws ExcepcaoPersistencia {
         List exams = Exam.getAllByDate(day, beginning);
-        List allRooms = rootDomainObject.getOldRooms();
+        Collection<OldRoom> allRooms = OldRoom.getOldRooms();
 
         List occupiedRooms = new ArrayList();
         for (int i = 0; i < exams.size(); i++) {
