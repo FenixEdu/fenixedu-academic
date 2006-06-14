@@ -17,7 +17,7 @@ padding-right: 10px;
 }
 </style>
 	<h:outputText value="<em>#{bolonhaBundle['competenceCourse']}</em>" escape="false" />
-	<h:outputText value="<h2>#{CompetenceCourseManagement.competenceCourse.name}</h2>" escape="false"/>
+	<h:outputText value="<h2>#{CompetenceCourseManagement.competenceCourse.name} (#{CompetenceCourseManagement.competenceCourse.acronym})</h2>" escape="false"/>
 
 	<h:outputText value="<ul class='nobullet padding1 indent0 mtop3'>" escape="false"/>
 	<h:outputText value="<li><strong>#{bolonhaBundle['department']}: </strong>" escape="false"/>
