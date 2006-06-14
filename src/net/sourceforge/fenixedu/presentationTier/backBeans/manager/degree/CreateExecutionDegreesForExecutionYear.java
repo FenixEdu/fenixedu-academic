@@ -140,10 +140,9 @@ public class CreateExecutionDegreesForExecutionYear extends FenixBackingBean {
             for (final Degree degree : Degree.readBolonhaDegrees()) {
                 if (degree.getBolonhaDegreeType() == bolonhaDegreeType) {
                     for (final DegreeCurricularPlan degreeCurricularPlan : degree.getActiveDegreeCurricularPlans()) {
-                        if (!degreeCurricularPlan.isApproved()) {
-                            continue;
+                        if (!degreeCurricularPlan.isDraft()) {
+                            toShow.add(degreeCurricularPlan);
                         }
-                        toShow.add(degreeCurricularPlan);    
                     }
                 }
             }
