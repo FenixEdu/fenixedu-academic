@@ -27,14 +27,13 @@ import net.sourceforge.fenixedu.util.DateFormatUtil;
 import net.sourceforge.fenixedu.util.ProposalState;
 
 import org.apache.commons.beanutils.BeanComparator;
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.comparators.ComparatorChain;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeFieldType;
 import org.joda.time.Interval;
 import org.joda.time.Period;
 
+import pt.utl.ist.fenix.tools.util.CollectionUtils;
 import pt.utl.ist.fenix.tools.util.StringAppender;
 
 public class ExecutionCourse extends ExecutionCourse_Base {
@@ -252,15 +251,12 @@ public class ExecutionCourse extends ExecutionCourse_Base {
     }
 
     public Attends getAttendsByStudent(final Student student) {
-
-        return (Attends) CollectionUtils.find(getAttends(), new Predicate() {
-
-            public boolean evaluate(Object o) {
-                Attends attends = (Attends) o;
-                return attends.getAluno().equals(student);
-            }
-
-        });
+	for (final Attends attends : getAttendsSet()) {
+	    if (attends.getAluno() == student) {
+		return attends;
+	    }
+	}
+	return null;
     }
 
     public List<Exam> getAssociatedExams() {
@@ -1018,11 +1014,14 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 	return shifts;
     }
 
-    public void adjustShiftNames(final ShiftType shiftType) {
-        int i = 1;
-        for (final Shift otherShift : getShiftsByTypeOrderedByShiftName(shiftType)) {
-            otherShift.setNome(constructShiftName(shiftType, i++));
-        }
+    public void setShiftNames() {
+	final SortedSet<Shift> shifts = CollectionUtils.constructSortedSet(getAssociatedShiftsSet(), Shift.SHIFT_COMPARATOR_BY_TYPE_AND_ORDERED_LESSONS);
+	final int[] counters = new int[ShiftType.values().length];
+	for (final Shift shift : shifts) {
+	    final ShiftType shiftType = shift.getTipo();
+	    final String name = constructShiftName(shiftType, ++counters[shiftType.ordinal()]);
+	    shift.setNome(name);
+	}
     }
 
 }

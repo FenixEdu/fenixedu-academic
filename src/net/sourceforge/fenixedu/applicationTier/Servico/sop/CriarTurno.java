@@ -33,12 +33,6 @@ public class CriarTurno extends Service {
                 .doubleValue())).intValue());
 
     	final Shift newShift = new Shift(executionCourse, infoTurno.getTipo(), infoTurno.getLotacao(), availabilityFinal);
-//        Shift newShift = DomainFactory.makeShift();
-//        newShift.setAvailabilityFinal(availabilityFinal);
-//        newShift.setDisciplinaExecucao(executionCourse);
-//        newShift.setNome(infoTurno.getNome());
-//        newShift.setLotacao(infoTurno.getLotacao());
-//        newShift.setTipo(infoTurno.getTipo());
 
         return InfoShiftWithInfoExecutionCourse.newInfoFromDomain(newShift);
     }

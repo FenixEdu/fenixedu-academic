@@ -24,17 +24,17 @@ public class Shift extends Shift_Base {
     static {
         ((ComparatorChain) SHIFT_COMPARATOR_BY_TYPE_AND_ORDERED_LESSONS).addComparator(new BeanComparator("tipo"));
         ((ComparatorChain) SHIFT_COMPARATOR_BY_TYPE_AND_ORDERED_LESSONS).addComparator(new BeanComparator("lessonsStringComparator"));
+        ((ComparatorChain) SHIFT_COMPARATOR_BY_TYPE_AND_ORDERED_LESSONS).addComparator(new BeanComparator("idInternal"));
     }
 
     public Shift(final ExecutionCourse executionCourse, final ShiftType shiftType, final Integer lotacao, final Integer availabilityFinal) {
 	super();
 	setRootDomainObject(RootDomainObject.getInstance());
-	final String shiftName = executionCourse.nextShiftName(shiftType);
-	setNome(shiftName);
 	setDisciplinaExecucao(executionCourse);
 	setTipo(shiftType);
 	setLotacao(lotacao);
 	setAvailabilityFinal(availabilityFinal);
+	executionCourse.setShiftNames();
     }
 
     public void delete() {
@@ -48,7 +48,7 @@ public class Shift extends Shift_Base {
             removeRootDomainObject();
             deleteDomainObject();
 
-            executionCourse.adjustShiftNames(getTipo());
+            executionCourse.setShiftNames();
         } else {
             throw new DomainException("shift.cannot.be.deleted");
         }
