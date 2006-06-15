@@ -51,6 +51,7 @@ public abstract class DomainObjectAuthorizationFilter extends AuthorizationByRol
                 throw new NotAuthorizedFilterException();
             }
         } catch (RuntimeException e) {
+            e.printStackTrace();
             throw new NotAuthorizedFilterException(e.getMessage());
         }
     }
