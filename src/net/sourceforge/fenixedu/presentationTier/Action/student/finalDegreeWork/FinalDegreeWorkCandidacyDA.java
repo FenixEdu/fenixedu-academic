@@ -190,8 +190,13 @@ public class FinalDegreeWorkCandidacyDA extends FenixDispatchAction {
         if (selectedGroupProposal != null && !selectedGroupProposal.equals("")
                 && StringUtils.isNumeric(selectedGroupProposal) && idInternal != null
                 && !idInternal.equals("") && StringUtils.isNumeric(idInternal)) {
-            Object[] args = { new Integer(idInternal), new Integer(selectedGroupProposal) };
-            ServiceUtils.executeService(userView, "RemoveProposalFromFinalDegreeWorkStudentGroup", args);
+        	try {
+            	Object[] args = { new Integer(idInternal), new Integer(selectedGroupProposal) };
+            	ServiceUtils.executeService(userView, "RemoveProposalFromFinalDegreeWorkStudentGroup", args);
+        	} catch (FenixServiceException ex) {
+            	prepareCandidacy(mapping, form, request, response);
+            	throw ex;
+        	}
         }
 
         dynaActionForm.set("selectedGroupProposal", null);
