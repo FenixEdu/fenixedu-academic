@@ -44,8 +44,12 @@ public class CreateExecutionDegreesForExecutionYear extends Service {
         final OccupationPeriod gradeSubmissionSpecialSeason = getOccupationPeriod(examsSpecialSeasonBeginDate, gradeSubmissionSpecialSeasonEndDate);
 
         final Set<Integer> allDegreeCurricularPlanIDs = new HashSet<Integer>();
-        allDegreeCurricularPlanIDs.addAll(Arrays.asList(degreeCurricularPlansIDs));
-        allDegreeCurricularPlanIDs.addAll(Arrays.asList(bolonhaDegreeCurricularPlansIDs));
+        if (degreeCurricularPlansIDs != null && degreeCurricularPlansIDs.length > 0) {
+        	allDegreeCurricularPlanIDs.addAll(Arrays.asList(degreeCurricularPlansIDs));
+        }
+        if (bolonhaDegreeCurricularPlansIDs != null && bolonhaDegreeCurricularPlansIDs.length > 0) {
+        	allDegreeCurricularPlanIDs.addAll(Arrays.asList(bolonhaDegreeCurricularPlansIDs));
+        }
 
         final List<DegreeCurricularPlan> created = new ArrayList<DegreeCurricularPlan>();
         for (final Integer degreeCurricularPlanID : allDegreeCurricularPlanIDs) {
