@@ -136,9 +136,12 @@ public class ReadStudentCurricularInformation extends Service {
                 infoCurricularCourse.setCode(curricularCourse.getCode());
 
 				
-				final EnrolmentEvaluation enrolmentEvaluation = (EnrolmentEvaluation) Collections.max(enrollmentEvaluations);
-
-                infoEnrollmentGrade.setGrade(enrolmentEvaluation.getGrade());
+                if (!enrollmentEvaluations.isEmpty()) {
+                	final EnrolmentEvaluation enrolmentEvaluation = (EnrolmentEvaluation) Collections.max(enrollmentEvaluations);
+                	infoEnrollmentGrade.setGrade(enrolmentEvaluation.getGrade());
+                } else {
+                	infoEnrollmentGrade.setGrade("error.data.consistency.problem");
+                }
 
                 return infoEnrollmentGrade;
             }
