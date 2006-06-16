@@ -38,7 +38,7 @@
 			</h:selectManyCheckbox>
 		</h:panelGroup>
 		<h:panelGroup rendered="#{empty createExecutionDegrees.bolonhaDegreeCurricularPlansSelectItems.value}">
-			<h:outputText value="<p><em>Não existem planos curriculares activos e aprovados</em></p>" escape="false" />
+			<h:outputText value="<p><em>Não existem planos curriculares activos e aprovados ou publicados</em></p>" escape="false" />
 		</h:panelGroup>
 
 		<br/>
