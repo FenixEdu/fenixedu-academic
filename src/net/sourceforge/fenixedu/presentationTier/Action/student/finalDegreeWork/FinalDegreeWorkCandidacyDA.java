@@ -75,10 +75,11 @@ public class FinalDegreeWorkCandidacyDA extends FenixDispatchAction {
                 && StringUtils.isNumeric(executionDegreeOID)) {
             IUserView userView = SessionUtils.getUserView(request);
 
-            Object[] args = { userView.getUtilizador(), new Integer(executionDegreeOID) };
+            Object[] args = { userView.getPerson(), new Integer(executionDegreeOID) };
             try {
                 ServiceUtils.executeService(userView, "EstablishFinalDegreeWorkStudentGroup", args);
             } catch (FenixServiceException ex) {
+            	request.setAttribute("CalledFromSelect", Boolean.TRUE);
                 prepareCandidacy(mapping, form, request, response);
                 throw ex;
             }
