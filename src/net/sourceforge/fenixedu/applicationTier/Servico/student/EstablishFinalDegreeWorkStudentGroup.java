@@ -8,7 +8,9 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Student;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Group;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.GroupStudent;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -19,9 +21,9 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  */
 public class EstablishFinalDegreeWorkStudentGroup extends Service {
 
-    public boolean run(String username, Integer executionDegreeOID) throws ExcepcaoPersistencia,
+    public boolean run(Person person, Integer executionDegreeOID) throws ExcepcaoPersistencia,
             FenixServiceException {
-    	Student student = Student.readByUsername(username);
+    	Student student = person.getStudentByType(DegreeType.DEGREE);
     	if (student == null) {
             throw new FenixServiceException("Error reading student to place in final degree work group.");
     	}
