@@ -40,15 +40,6 @@ public class ManageSpacesDA extends FenixDispatchAction {
         return mapping.findForward("ShowSpaces");
     }
 
-    protected FactoryExecutor getFactoryObject() {
-    	return (FactoryExecutor) RenderUtils.getViewState().getMetaObject().getObject();
-    }
-
-    protected Object executeFactoryMethod(final HttpServletRequest request) throws FenixFilterException, FenixServiceException {
-        final Object[] args = { getFactoryObject() };
-        return executeService(request, "ExecuteFactoryMethod", args);
-    }
-
     protected SpaceInformation executeSpaceFactoryMethod(final HttpServletRequest request) throws FenixFilterException, FenixServiceException {
         final Object serviceResult = executeFactoryMethod(request);
         if (serviceResult instanceof Space) {

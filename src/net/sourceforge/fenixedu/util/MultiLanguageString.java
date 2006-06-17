@@ -15,11 +15,16 @@ public class MultiLanguageString implements Serializable {
 		this.contentsMap = new HashMap<Language, String>();
 	}
     
-    public MultiLanguageString(String content) {
-        this.contentsMap = new HashMap<Language, String>();
-        setContent(content);
-    }
-	
+	public MultiLanguageString(final String content) {
+	    this();
+	    setContent(content);
+	}
+
+	public MultiLanguageString(final Language language, final String content) {
+	    this();
+	    setContent(language, content);
+	}
+
 	public Collection<String> getAllContents() {
 		return contentsMap.values();
 	}

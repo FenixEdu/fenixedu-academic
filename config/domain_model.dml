@@ -2107,7 +2107,8 @@ class net.sourceforge.fenixedu.domain.Role extends net.sourceforge.fenixedu.doma
 }
 
 class net.sourceforge.fenixedu.domain.space.RoomClassification extends net.sourceforge.fenixedu.domain.DomainObject {
-	String code;
+	Integer keyParentRoomClassification;
+	Integer code;
 	MultiLanguageString name;
 }
 
@@ -2262,17 +2263,38 @@ class net.sourceforge.fenixedu.domain.space.SpaceOccupation extends net.sourcefo
 	String ojbConcreteClass;
 }
 
+	class net.sourceforge.fenixedu.domain.space.ExtensionSpaceOccupation extends net.sourceforge.fenixedu.domain.space.SpaceOccupation {
+		YearMonthDay begin;
+		YearMonthDay end;
+		Integer keyExtension;
+	}
+
+	class net.sourceforge.fenixedu.domain.space.PersonSpaceOccupation extends net.sourceforge.fenixedu.domain.space.SpaceOccupation {
+		YearMonthDay begin;
+		YearMonthDay end;
+		Integer keyPerson;
+	}
+
 	class net.sourceforge.fenixedu.domain.space.RoomOccupation extends net.sourceforge.fenixedu.domain.DomainObject {
 		Integer weekOfQuinzenalStart;
 		Integer keyRoom;
 		Integer frequency;
 		Integer keyPeriod;
 	    DiaSemana dayOfWeek;
-	HourMinuteSecond startTimeDateHourMinuteSecond;
-	HourMinuteSecond endTimeDateHourMinuteSecond;
+		HourMinuteSecond startTimeDateHourMinuteSecond;
+		HourMinuteSecond endTimeDateHourMinuteSecond;
 	    Integer keyWrittenEvaluation;
 	    Integer keyLesson;
 	}
+
+
+class net.sourceforge.fenixedu.domain.space.SpaceResponsability extends net.sourceforge.fenixedu.domain.DomainObject {
+	Integer keySpace;
+	String ojbConcreteClass;
+	YearMonthDay begin;
+	YearMonthDay end;
+	Integer keyUnit;
+}
 
 
 class net.sourceforge.fenixedu.domain.teacher.TeacherService extends net.sourceforge.fenixedu.domain.DomainObject {
@@ -5282,6 +5304,12 @@ relation RoomLesson {
 	net.sourceforge.fenixedu.domain.space.OldRoom playsRole sala;
 }
 
+relation RoomClassificationRoomClassification {
+	net.sourceforge.fenixedu.domain.space.RoomClassification playsRole childRoomClassifications {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.space.RoomClassification playsRole parentRoomClassification;
+}
 
 relation RoomRoomClassification {
 	net.sourceforge.fenixedu.domain.space.Room playsRole room {
@@ -5460,6 +5488,19 @@ relation SpaceSpaceOccupation {
 	net.sourceforge.fenixedu.domain.space.Space playsRole space;
 }
 
+relation SpaceSpaceResponsability {
+	net.sourceforge.fenixedu.domain.space.SpaceResponsability playsRole spaceResponsability {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.space.Space playsRole space;
+}
+
+relation UnitSpaceResponsability {
+	net.sourceforge.fenixedu.domain.space.SpaceResponsability playsRole spaceResponsability {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.organizationalStructure.Unit playsRole unit;
+}
 
 relation StudentCurricularPlanBranch {
     net.sourceforge.fenixedu.domain.StudentCurricularPlan playsRole studentCurricularPlans {
@@ -7505,6 +7546,13 @@ relation RootDomainObjectSpaceOccupation {
 	}
 }
 
+relation RootDomainObjectSpaceResponsability {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.space.SpaceResponsability playsRole spaceResponsability {
+		multiplicity *;
+	}
+}
+
 relation RootDomainObjectContent {
 	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
 	net.sourceforge.fenixedu.domain.cms.Content playsRole contents {
@@ -8093,7 +8141,7 @@ relation RootDomainObjectResearchInterest {
 	}
 }
 
-relation RootDomainObjectOldRoomClassification {
+relation RootDomainObjectRoomClassification {
 	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
 	net.sourceforge.fenixedu.domain.space.RoomClassification playsRole roomClassification {
 		multiplicity *;

@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.space.RoomClassification;
+import net.sourceforge.fenixedu.domain.space.RoomClassification.RoomClassificationFactoryEditor;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
 import org.apache.struts.action.ActionForm;
@@ -17,14 +18,21 @@ import org.apache.struts.action.ActionMapping;
 public class RoomClassificationDA extends FenixDispatchAction {
 
     public ActionForward viewRoomClassifications(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
-    	final SortedSet<RoomClassification> sortedRoomClassifications = RoomClassification.sortByCode(rootDomainObject.getRoomClassificationSet());
+    	final SortedSet<RoomClassification> sortedRoomClassifications = RoomClassification.sortByRoomClassificationAndCode(rootDomainObject.getRoomClassificationSet());
     	request.setAttribute("roomClassifications", sortedRoomClassifications);
         return mapping.findForward("ViewRoomClassifications");
     }
 
+    public ActionForward executeFactoryMethod(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+			throws Exception {
+    	executeFactoryMethod(request);
+    	return viewRoomClassifications(mapping, form, request, response);
+    }
+
     public ActionForward prepareRoomClassification(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
     	final RoomClassification roomClassification = retrieveRoomClassification(request);
-    	request.setAttribute("roomClassification", roomClassification);
+    	final RoomClassificationFactoryEditor roomClassificationFactoryEditor = new RoomClassificationFactoryEditor(roomClassification);
+    	request.setAttribute("roomClassificationEditor", roomClassificationFactoryEditor);
         return viewRoomClassifications(mapping, form, request, response);
     }
 

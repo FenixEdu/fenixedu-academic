@@ -13,6 +13,7 @@ import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.InvalidSessionActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
@@ -147,5 +148,15 @@ public abstract class FenixDispatchAction extends DispatchAction implements Exce
         	    return input;
         	}
     }
+
+    protected Object executeFactoryMethod(final HttpServletRequest request) throws FenixFilterException, FenixServiceException {
+        final Object[] args = { getFactoryObject() };
+        return executeService(request, "ExecuteFactoryMethod", args);
+    }
+
+    protected FactoryExecutor getFactoryObject() {
+    	return (FactoryExecutor) RenderUtils.getViewState().getMetaObject().getObject();
+    }
+
 
 }

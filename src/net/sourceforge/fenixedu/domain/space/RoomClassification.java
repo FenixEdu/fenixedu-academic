@@ -1,32 +1,223 @@
 package net.sourceforge.fenixedu.domain.space;
 
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.Comparator;
+import java.util.Set;
 import java.util.SortedSet;
-import java.util.TreeSet;
 
+import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
+import net.sourceforge.fenixedu.util.MultiLanguageString;
 
 import org.apache.commons.beanutils.BeanComparator;
 
+import pt.utl.ist.fenix.tools.util.CollectionUtils;
+import pt.utl.ist.fenix.tools.util.StringAppender;
+
 public class RoomClassification extends RoomClassification_Base {
 
-	public static final Comparator<RoomClassification> ROOM_CLASSIFICATION_COMPARATORY_BY_CODE = new BeanComparator("code");
+	private transient String absoluteCode;
+	private transient String presentationCode;
 
-	public static SortedSet<RoomClassification> sortByCode(final Collection<RoomClassification> roomClassifications) {
-		final SortedSet<RoomClassification> sortedRoomClassifications = new TreeSet<RoomClassification>(ROOM_CLASSIFICATION_COMPARATORY_BY_CODE);
-		sortedRoomClassifications.addAll(roomClassifications);
-		return sortedRoomClassifications;
+	public static final Comparator<RoomClassification> COMPARATORY_BY_CODE = new BeanComparator("code");
+
+	public static final Comparator<RoomClassification> COMPARATORY_BY_PARENT_ROOM_CLASSIFICATION_AND_CODE = new BeanComparator("absoluteCode");
+
+	public static SortedSet<RoomClassification> sortByCode(
+			final Collection<RoomClassification> roomClassifications) {
+		return CollectionUtils.constructSortedSet(roomClassifications, COMPARATORY_BY_CODE);
 	}
 
-	public RoomClassification() {
+	public static SortedSet<RoomClassification> sortByRoomClassificationAndCode(
+			final Collection<RoomClassification> roomClassifications) {
+		return CollectionUtils.constructSortedSet(roomClassifications,
+				COMPARATORY_BY_PARENT_ROOM_CLASSIFICATION_AND_CODE);
+	}
+
+	public static abstract class RoomClassificationFactory implements Serializable, FactoryExecutor {
+		private String code;
+
+		private MultiLanguageString name;
+
+		public String getCode() {
+			return code;
+		}
+
+		public void setCode(String code) {
+			this.code = code;
+		}
+
+		public MultiLanguageString getName() {
+			return name;
+		}
+
+		public void setName(MultiLanguageString name) {
+			this.name = name;
+		}
+
+		public RoomClassification getParentRoomClassification() {
+			final int index = getCode().lastIndexOf('.', getCode().length());
+			if (index > 0) {
+				final String parentAbsoluteCode = getCode().substring(0, index);
+				for (final RoomClassification roomClassification : RootDomainObject.getInstance().getRoomClassificationSet()) {
+					if (roomClassification.getPresentationCode().equals(parentAbsoluteCode)) {
+						return roomClassification;
+					}
+				}
+				throw new DomainException("error.unexisting.room.classification");
+			} else {
+				return null;
+			}
+		}
+
+		public Integer getChildCode() {
+			final int index = getCode().lastIndexOf('.', getCode().length());
+			if (index > 0) {
+				return Integer.valueOf(getCode().substring(index + 1, getCode().length()));
+			} else {
+				return Integer.valueOf(getCode());
+			}
+		}
+	}
+
+	public static class RoomClassificationFactoryCreator extends RoomClassificationFactory {
+		public RoomClassification execute() {
+			return new RoomClassification(getParentRoomClassification(), getChildCode(), getName());
+		}
+	}
+
+	public static class RoomClassificationFactoryEditor extends RoomClassificationFactory {
+		private DomainReference<RoomClassification> roomClassificationReference;
+
+		public RoomClassificationFactoryEditor() {
+			super();
+		}
+
+		public RoomClassificationFactoryEditor(final RoomClassification roomClassification) {
+			this();
+			setRoomClassification(roomClassification);
+			setCode(roomClassification.getPresentationCode());
+			setName(roomClassification.getName());
+		}
+
+		public RoomClassification getRoomClassification() {
+			return roomClassificationReference == null ? null : roomClassificationReference.getObject();
+		}
+
+		public void setRoomClassification(final RoomClassification roomClassification) {
+			if (roomClassification != null) {
+				roomClassificationReference = new DomainReference<RoomClassification>(roomClassification);
+			}
+		}
+
+		public Object execute() {
+			getRoomClassification().edit(getParentRoomClassification(), getChildCode(), getName());
+			return null;
+		}
+	}
+
+	public RoomClassification(final RoomClassification parentRoomClassification, final Integer code,
+			final MultiLanguageString name) {
 		super();
 		setRootDomainObject(RootDomainObject.getInstance());
+		edit(parentRoomClassification, code, name);
+	}
+
+	public void edit(final RoomClassification parentRoomClassification, final Integer code,
+			final MultiLanguageString name) {
+		final Set<RoomClassification> childRoomClassifications = parentRoomClassification == null ? getRootDomainObject()
+				.getRoomClassificationSet()
+				: parentRoomClassification.getChildRoomClassificationsSet();
+		final RoomClassification existingRoomClassification = findRoomClassificationByCode(
+				childRoomClassifications, parentRoomClassification, code);
+		if (existingRoomClassification != null && existingRoomClassification != this) {
+			throw new DomainException("error.room.classification.with.same.code.exists: " + code);
+		}
+		if (code == null) {
+			throw new NullPointerException("error.room.classification.cannot.have.null.code");
+		}
+		if (name == null) {
+			throw new NullPointerException("error.room.classification.cannot.have.null.name");
+		}
+
+		super.setParentRoomClassification(parentRoomClassification);
+		super.setCode(code);
+		super.setName(name);
+
+		absoluteCode = null;
+		presentationCode = null;
+		for (final RoomClassification childRoomClassification : getChildRoomClassificationsSet()) {
+			childRoomClassification.absoluteCode = null;
+			childRoomClassification.presentationCode = null;
+		}
+	}
+
+	@Override
+	public void setCode(final Integer code) {
+		throw new Error("Use edit method to change an instance of: " + getClass().getName());
+	}
+
+	@Override
+	public void setName(final MultiLanguageString name) {
+		throw new Error("Use edit method to change an instance of: " + getClass().getName());
+	}
+
+	@Override
+	public void setParentRoomClassification(final RoomClassification parentRoomClassification) {
+		throw new Error("Use edit method to change an instance of: " + getClass().getName());
 	}
 
 	public void delete() {
-		setRootDomainObject(null);
-		super.deleteDomainObject();
+		if (getChildRoomClassificationsSet().isEmpty()) {
+			setRootDomainObject(null);
+			super.setParentRoomClassification(null);
+			super.deleteDomainObject();
+		} else {
+			throw new DomainException(
+					"error.cannot.delete.room.classification.with.existing.child.classifications");
+		}
+	}
+
+	public String getAbsoluteCode() {
+		if (absoluteCode == null) {
+			final String code = getCode().toString();
+			final String normalizedCode = getCode().intValue() < 10 ? "0" + code : code;
+			if (getParentRoomClassification() == null) {
+				absoluteCode = normalizedCode;
+			} else {
+				final String parentCode = getParentRoomClassification().getAbsoluteCode();
+				absoluteCode = StringAppender.append(parentCode, ".", normalizedCode);
+			}
+		}
+		return absoluteCode;
+	}
+
+	public String getPresentationCode() {
+		if (presentationCode == null) {
+			final String code = getCode().toString();
+			if (getParentRoomClassification() == null) {
+				presentationCode = code;
+			} else {
+				final String parentCode = getParentRoomClassification().getPresentationCode();
+				presentationCode = StringAppender.append(parentCode, ".", code);
+			}
+		}
+		return presentationCode;
+	}
+
+	public static RoomClassification findRoomClassificationByCode(
+			final Collection<RoomClassification> roomClassifications,
+			final RoomClassification parentRoomClassification, final Integer code) {
+		for (final RoomClassification roomClassification : roomClassifications) {
+			if (roomClassification.getParentRoomClassification() == parentRoomClassification
+					&& code.equals(roomClassification.getCode())) {
+				return roomClassification;
+			}
+		}
+		return null;
 	}
 
 }

@@ -9,14 +9,14 @@
 </h2>
 <br/>
 
-<logic:notPresent name="roomClassification">
+<logic:notPresent name="roomClassificationEditor">
 	<h4>
 		<bean:message bundle="SPACE_RESOURCES" key="space.manager.room.classification.create"/>
 	</h4>
 
-	<fr:create type="net.sourceforge.fenixedu.domain.space.RoomClassification"
-			schema="RoomClassification"
-			action="/roomClassification.do?method=viewRoomClassifications"
+	<fr:create type="net.sourceforge.fenixedu.domain.space.RoomClassification$RoomClassificationFactoryCreator"
+			schema="RoomClassificationFactory"
+			action="/roomClassification.do?method=executeFactoryMethod"
 			>
 		<fr:layout name="tabular" >
 			<fr:property name="classes" value="style1,style1,"/>
@@ -26,15 +26,15 @@
 	</fr:create>
 </logic:notPresent>
 
-<logic:present name="roomClassification">
+<logic:present name="roomClassificationEditor">
 	<h4>
 		<bean:message bundle="SPACE_RESOURCES" key="space.manager.room.classification.edit"/>
 	</h4>
 
-	<fr:edit name="roomClassification"
-			type="net.sourceforge.fenixedu.domain.space.RoomClassification"
-			schema="RoomClassification"
-			action="/roomClassification.do?method=viewRoomClassifications"
+	<fr:edit name="roomClassificationEditor"
+			type="net.sourceforge.fenixedu.domain.space.RoomClassification$RoomClassificationFactoryEditor"
+			schema="RoomClassificationFactory"
+			action="/roomClassification.do?method=executeFactoryMethod"
 			>
 		<fr:layout name="tabular" >
 			<fr:property name="classes" value="style1,style1,"/>
@@ -51,7 +51,7 @@
 </h4>
 
 <fr:view name="roomClassifications"
-		schema="RoomClassification"
+		schema="RoomClassificationInList"
 		>
 	<fr:layout name="tabular" >
 		<fr:property name="classes" value="style1"/>
