@@ -55,7 +55,7 @@
 	<slot name="blueprintNumber"/>
 	<slot name="identification"/>
 	<slot name="description"/>
-	<slot name="classification"/>
+	<slot name="roomClassification.presentationCode"/>
 	<slot name="area"/>
 	<slot name="heightQuality"/>
 	<slot name="illuminationQuality"/>

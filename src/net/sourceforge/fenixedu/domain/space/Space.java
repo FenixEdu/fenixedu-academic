@@ -21,6 +21,7 @@ public abstract class Space extends Space_Base {
         super();
         setRootDomainObject(RootDomainObject.getInstance());
         setOjbConcreteClass(this.getClass().getName());
+        setCreatedOn(new YearMonthDay());
     }
 
     public SpaceInformation getSpaceInformation() {
@@ -53,7 +54,7 @@ public abstract class Space extends Space_Base {
 
     public SortedSet<SpaceInformation> getOrderedSpaceInformations() {
     	final TreeSet<SpaceInformation> spaceInformations = new TreeSet<SpaceInformation>(getSpaceInformations());
-    	YearMonthDay previousValidUntil = null;
+    	YearMonthDay previousValidUntil = getCreatedOn();
     	for (final SpaceInformation spaceInformation : spaceInformations) {
     		spaceInformation.setValidFrom(previousValidUntil);
     		previousValidUntil = spaceInformation.getValidUntil();

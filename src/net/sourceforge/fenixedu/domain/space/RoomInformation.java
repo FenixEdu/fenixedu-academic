@@ -13,7 +13,7 @@ public class RoomInformation extends RoomInformation_Base {
         setBlueprintNumber(roomFactory.getBlueprintNumber());
         setIdentification(roomFactory.getIdentification());
         setDescription(roomFactory.getDescription());
-        setClassification(roomFactory.getClassification());
+        setRoomClassification(roomFactory.getRoomClassification());
         setArea(roomFactory.getArea());
         setHeightQuality(roomFactory.getHeightQuality());
         setIlluminationQuality(roomFactory.getIlluminationQuality());
@@ -38,7 +38,7 @@ public class RoomInformation extends RoomInformation_Base {
     	roomFactoryEditor.setBlueprintNumber(getBlueprintNumber());
     	roomFactoryEditor.setIdentification(getIdentification());
     	roomFactoryEditor.setDescription(getDescription());
-    	roomFactoryEditor.setClassification(getClassification());
+    	roomFactoryEditor.setClassification(getRoomClassification().getPresentationCode());
     	roomFactoryEditor.setArea(getArea());
     	roomFactoryEditor.setHeightQuality(getHeightQuality());
     	roomFactoryEditor.setIlluminationQuality(getIlluminationQuality());

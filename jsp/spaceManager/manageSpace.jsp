@@ -2,6 +2,7 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
+<%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
 
 <logic:present name="selectedSpaceInformation">
 	<bean:define id="selectedSpaceInformationIDString" type="java.lang.String"><bean:write name="selectedSpaceInformation" property="idInternal"/></bean:define>
@@ -47,20 +48,18 @@
 				</logic:equal>
 			</td>
 			<td class="listClasses">
-				<html:link page="/manageSpaces.do?method=viewSpaceInformation&page=0" paramId="spaceInformationID" paramName="selectedSpaceInformation" paramProperty="idInternal">
-					<logic:equal name="selectedSpaceInformation" property="space.class.name" value="net.sourceforge.fenixedu.domain.space.Campus">
-						<bean:write name="selectedSpaceInformation" property="name"/>
-					</logic:equal>
-					<logic:equal name="selectedSpaceInformation" property="space.class.name" value="net.sourceforge.fenixedu.domain.space.Building">
-						<bean:write name="selectedSpaceInformation" property="name"/>
-					</logic:equal>
-					<logic:equal name="selectedSpaceInformation" property="space.class.name" value="net.sourceforge.fenixedu.domain.space.Floor">
-						<bean:write name="selectedSpaceInformation" property="level"/>
-					</logic:equal>
-					<logic:equal name="selectedSpaceInformation" property="space.class.name" value="net.sourceforge.fenixedu.domain.space.Room">
-						<bean:write name="selectedSpaceInformation" property="description"/>
-					</logic:equal>
-				</html:link>
+				<logic:equal name="selectedSpaceInformation" property="space.class.name" value="net.sourceforge.fenixedu.domain.space.Campus">
+					<bean:write name="selectedSpaceInformation" property="name"/>
+				</logic:equal>
+				<logic:equal name="selectedSpaceInformation" property="space.class.name" value="net.sourceforge.fenixedu.domain.space.Building">
+					<bean:write name="selectedSpaceInformation" property="name"/>
+				</logic:equal>
+				<logic:equal name="selectedSpaceInformation" property="space.class.name" value="net.sourceforge.fenixedu.domain.space.Floor">
+					<bean:write name="selectedSpaceInformation" property="level"/>
+				</logic:equal>
+				<logic:equal name="selectedSpaceInformation" property="space.class.name" value="net.sourceforge.fenixedu.domain.space.Room">
+					<bean:write name="selectedSpaceInformation" property="description"/>
+				</logic:equal>
 			</td>
 			<td class="listClasses">
 				<bean:write name="selectedSpaceInformation" property="space.containedSpacesCount"/>
@@ -88,25 +87,45 @@
 		</tr>
 	</table>
 	<br/>
+
+	<bean:message bundle="SPACE_RESOURCES" key="label.versions"/>: 
+	<logic:iterate id="spaceInformation" name="selectedSpaceInformation" property="space.orderedSpaceInformations">
+		<bean:define id="spaceInformation" name="spaceInformation" toScope="request"/>
+			<logic:equal name="spaceInformation" property="idInternal" value="<%= selectedSpaceInformationIDString %>">
+				<jsp:include page="spaceInformationVersion.jsp"/>
+			</logic:equal>
+			<logic:notEqual name="spaceInformation" property="idInternal" value="<%= selectedSpaceInformationIDString %>">
+				<html:link page="/manageSpaces.do?method=manageSpace&page=0" paramId="spaceInformationID" paramName="spaceInformation" paramProperty="idInternal">
+					<jsp:include page="spaceInformationVersion.jsp"/>
+				</html:link>
+			</logic:notEqual>
+	</logic:iterate>
 	<br/>
 
-	<table>
-		<tr>
-			<logic:iterate id="spaceInformation" name="selectedSpaceInformation" property="space.orderedSpaceInformations">
-				<td>
-					<logic:equal name="spaceInformation" property="idInternal" value="<%= selectedSpaceInformationIDString %>">
-						[<bean:write name="spaceInformation" property="validFrom"/>, <bean:write name="spaceInformation" property="validUntil"/>[
-					</logic:equal>
-					<logic:notEqual name="spaceInformation" property="idInternal" value="<%= selectedSpaceInformationIDString %>">
-						<html:link page="/manageSpaces.do?method=manageSpace&page=0" paramId="spaceInformationID" paramName="spaceInformation" paramProperty="idInternal">
-							[<bean:write name="spaceInformation" property="validFrom"/>, <bean:write name="spaceInformation" property="validUntil"/>[
-						</html:link>
-					</logic:notEqual>
-				</td>
-			</logic:iterate>
-		</tr>
-	</table>
+	<html:img align="middle" src="<%= request.getContextPath() +"/images/clip_image002.jpg"%>"/>
 	<br/>
+
+	<logic:equal name="selectedSpaceInformation" property="space.class.name" value="net.sourceforge.fenixedu.domain.space.Room">
+		<fr:view name="selectedSpaceInformation" schema="RoomInformation" layout="tabular"/>
+		<br/>
+		<br/>
+	</logic:equal>
+
+	<logic:iterate id="spaceOccupation" name="selectedSpaceInformation" property="space.spaceOccupations">
+		<logic:equal name="spaceOccupation" property="class.name" value="net.sourceforge.fenixedu.domain.space.PersonSpaceOccupation">
+			<bean:define id="person" name="spaceOccupation" property="person"/>
+			<logic:present name="person" property="teacher">
+				<bean:write name="person" property="teacher.teacherNumber"/>
+			</logic:present>
+			<logic:notPresent name="person" property="teacher">
+				<logic:present name="person" property="employee">
+					<bean:write name="person" property="employee.employeeNumber"/>
+				</logic:present>
+			</logic:notPresent>
+			<bean:write name="person" property="name"/>
+			<br/>
+		</logic:equal>
+	</logic:iterate>
 	<br/>
 
 	<html:link page="/manageSpaces.do?method=showCreateSubSpaceForm&page=0" paramId="spaceInformationID" paramName="selectedSpaceInformation" paramProperty="idInternal">

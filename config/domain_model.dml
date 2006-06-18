@@ -2197,6 +2197,7 @@ class net.sourceforge.fenixedu.domain.Section extends net.sourceforge.fenixedu.d
 class net.sourceforge.fenixedu.domain.space.Space extends net.sourceforge.fenixedu.domain.DomainObject {
 	String ojbConcreteClass;
 	Integer keySuroundingSpace;
+	YearMonthDay createdOn;
 }
 
 class net.sourceforge.fenixedu.domain.space.SpaceInformation extends net.sourceforge.fenixedu.domain.DomainObject {
@@ -2247,7 +2248,6 @@ class net.sourceforge.fenixedu.domain.space.SpaceInformation extends net.sourcef
 		String blueprintNumber;
 		String identification;
 		String description;
-		String classification;
 		BigDecimal area;
 		Boolean heightQuality;
 		Boolean illuminationQuality;
@@ -2255,6 +2255,7 @@ class net.sourceforge.fenixedu.domain.space.SpaceInformation extends net.sourcef
 		Boolean securityQuality;
 		Boolean ageQuality;
 		String observations;
+		Integer keyRoomClassification;
 	}
 
 
@@ -5312,7 +5313,7 @@ relation RoomClassificationRoomClassification {
 }
 
 relation RoomRoomClassification {
-	net.sourceforge.fenixedu.domain.space.Room playsRole room {
+	net.sourceforge.fenixedu.domain.space.RoomInformation playsRole roomInformations {
 		multiplicity *;
 	}
 	net.sourceforge.fenixedu.domain.space.RoomClassification playsRole roomClassification;
@@ -5500,6 +5501,13 @@ relation UnitSpaceResponsability {
 		multiplicity *;
 	}
 	net.sourceforge.fenixedu.domain.organizationalStructure.Unit playsRole unit;
+}
+
+relation PersonPersonSpaceOccupation {
+	net.sourceforge.fenixedu.domain.space.PersonSpaceOccupation playsRole personSpaceOccupations {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.Person playsRole person;
 }
 
 relation StudentCurricularPlanBranch {

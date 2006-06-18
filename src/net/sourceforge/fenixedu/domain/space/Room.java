@@ -95,6 +95,9 @@ public class Room extends Room_Base {
 		public void setSecurityQuality(Boolean securityQuality) {
 			this.securityQuality = securityQuality;
 		}
+		public RoomClassification getRoomClassification() {
+			return RoomClassification.findRoomClassificationByPresentationCode(getClassification());
+		}
 	}
 
 	public static class RoomFactoryCreator extends RoomFactory {

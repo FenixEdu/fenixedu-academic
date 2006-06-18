@@ -15,19 +15,19 @@
 	<br/>
 	<br/>
 
-	<logic:equal name="space" property="class.name" value="net.sourceforge.fenixedu.domain.space.Campus">
+	<logic:equal name="SpaceFactoryEditor" property="space.class.name" value="net.sourceforge.fenixedu.domain.space.Campus">
 		<fr:edit name="SpaceFactoryEditor" schema="CampusFactoryEditor"
 				action="/manageSpaces.do?method=executeFactoryMethod"/>
 	</logic:equal>
-	<logic:equal name="space" property="class.name" value="net.sourceforge.fenixedu.domain.space.Building">
+	<logic:equal name="SpaceFactoryEditor" property="space.class.name" value="net.sourceforge.fenixedu.domain.space.Building">
 		<fr:edit name="SpaceFactoryEditor" schema="BuildingFactoryEditor"
 				action="/manageSpaces.do?method=executeFactoryMethod"/>
 	</logic:equal>
-	<logic:equal name="space" property="class.name" value="net.sourceforge.fenixedu.domain.space.Floor">
+	<logic:equal name="SpaceFactoryEditor" property="space.class.name" value="net.sourceforge.fenixedu.domain.space.Floor">
 		<fr:edit name="SpaceFactoryEditor" schema="FloorFactoryEditor"
 				action="/manageSpaces.do?method=executeFactoryMethod"/>
 	</logic:equal>
-	<logic:equal name="space" property="class.name" value="net.sourceforge.fenixedu.domain.space.Room">
+	<logic:equal name="SpaceFactoryEditor" property="space.class.name" value="net.sourceforge.fenixedu.domain.space.Room">
 		<fr:edit name="SpaceFactoryEditor" schema="RoomFactoryEditor"
 				action="/manageSpaces.do?method=executeFactoryMethod"/>
 	</logic:equal>

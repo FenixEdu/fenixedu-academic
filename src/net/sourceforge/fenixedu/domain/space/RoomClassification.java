@@ -62,12 +62,12 @@ public class RoomClassification extends RoomClassification_Base {
 			final int index = getCode().lastIndexOf('.', getCode().length());
 			if (index > 0) {
 				final String parentAbsoluteCode = getCode().substring(0, index);
-				for (final RoomClassification roomClassification : RootDomainObject.getInstance().getRoomClassificationSet()) {
-					if (roomClassification.getPresentationCode().equals(parentAbsoluteCode)) {
-						return roomClassification;
-					}
+				final RoomClassification roomClassification = findRoomClassificationByPresentationCode(parentAbsoluteCode);
+				if (roomClassification == null) {
+					throw new DomainException("error.unexisting.room.classification");
+				} else {
+					return roomClassification;
 				}
-				throw new DomainException("error.unexisting.room.classification");
 			} else {
 				return null;
 			}
@@ -214,6 +214,15 @@ public class RoomClassification extends RoomClassification_Base {
 		for (final RoomClassification roomClassification : roomClassifications) {
 			if (roomClassification.getParentRoomClassification() == parentRoomClassification
 					&& code.equals(roomClassification.getCode())) {
+				return roomClassification;
+			}
+		}
+		return null;
+	}
+
+	public static RoomClassification findRoomClassificationByPresentationCode(final String presentationCode) {
+		for (final RoomClassification roomClassification : RootDomainObject.getInstance().getRoomClassificationSet()) {
+			if (roomClassification.getPresentationCode().equals(presentationCode)) {
 				return roomClassification;
 			}
 		}
