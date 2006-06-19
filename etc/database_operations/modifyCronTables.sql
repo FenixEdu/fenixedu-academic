@@ -5,6 +5,15 @@ alter table ROOM_CLASSIFICATION add unique (KEY_PARENT_ROOM_CLASSIFICATION, CODE
 alter table SPACE_INFORMATION drop column CLASSIFICATION;
 alter table SPACE_INFORMATION add column KEY_ROOM_CLASSIFICATION int(11);
 alter table SPACE add column CREATED_ON varchar(10);
+create table SPACE_OCCUPATION (
+  ID_INTERNAL int(11),
+  KEY_ROOT_DOMAIN_OBJECT int(11),
+  KEY_SPACE int(11),
+  OJB_CONCRETE_CLASS text,
+  primary key (ID_INTERNAL),
+  index (KEY_ROOT_DOMAIN_OBJECT),
+  index (KEY_SPACE)
+) type=InnoDB;
 alter table SPACE_OCCUPATION add column KEY_SPACE int(11) default null;
 alter table SPACE_OCCUPATION add column KEY_PERSON int(11) default null;
 alter table SPACE_OCCUPATION add column KEY_EXTENSION int(11) default null;
