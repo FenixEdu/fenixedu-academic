@@ -31,7 +31,7 @@
 		<f:param name="degreeCurricularPlanID" value="#{CurricularCourseManagement.degreeCurricularPlanID}"/>
 	</h:outputLink>
 	&nbsp;&gt;&nbsp;
-	<h:outputLink value="showDegreeCurricularPlanBolonha.faces" >
+	<h:outputLink rendered="#{!empty CurricularCourseManagement.organizeBy}" value="showDegreeCurricularPlanBolonha.faces" >
 		<h:outputText value="#{publicDegreeInfoBundle['public.degree.information.label.curriculum']}"/>
 		<f:param name="degreeID" value="#{CurricularCourseManagement.degreeCurricularPlan.degree.idInternal}"/>
 		<f:param name="degreeCurricularPlanID" value="#{CurricularCourseManagement.degreeCurricularPlanID}"/>
@@ -39,6 +39,15 @@
 		<f:param name="organizeBy" value="#{CurricularCourseManagement.organizeBy}"/>
 		<f:param name="showRules" value="#{CurricularCourseManagement.showRules}"/>
 		<f:param name="hideCourses" value="#{CurricularCourseManagement.hideCourses}"/>
+	</h:outputLink>
+	<h:outputLink rendered="#{empty CurricularCourseManagement.organizeBy}" value="showDegreeCurricularPlanBolonha.faces" >
+		<h:outputText value="#{publicDegreeInfoBundle['public.degree.information.label.curriculum']}"/>
+		<f:param name="degreeID" value="#{CurricularCourseManagement.degreeCurricularPlan.degree.idInternal}"/>
+		<f:param name="degreeCurricularPlanID" value="#{CurricularCourseManagement.degreeCurricularPlanID}"/>
+		<f:param name="executionPeriodID" value="#{CurricularCourseManagement.executionYearID}"/>
+		<f:param name="organizeBy" value="groups"/>
+		<f:param name="showRules" value="false"/>
+		<f:param name="hideCourses" value="false"/>
 	</h:outputLink>
 	&nbsp;&gt;&nbsp;
 	<h:outputText rendered="#{!CurricularCourseManagement.renderInEnglish}" value="#{CurricularCourseManagement.curricularCourse.name}"/>
