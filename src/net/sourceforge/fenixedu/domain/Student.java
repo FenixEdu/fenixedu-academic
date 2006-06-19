@@ -41,7 +41,7 @@ public class Student extends Student_Base {
 
     private transient Integer approvedEnrollmentsNumber = 0;
 
-    final static Comparator<Student> NUMBER_COMPARATOR = new BeanComparator("number");;
+    public final static Comparator<Student> NUMBER_COMPARATOR = new BeanComparator("number");
 
     public Student() {
         super();

@@ -40,6 +40,8 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseType;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
+import net.sourceforge.fenixedu.domain.finalDegreeWork.Group;
+import net.sourceforge.fenixedu.domain.finalDegreeWork.GroupProposal;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.GroupStudent;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Scheduleing;
@@ -49,11 +51,13 @@ import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.utils.CommonServiceRequests;
 import net.sourceforge.fenixedu.util.FinalDegreeWorkProposalStatus;
+import net.sourceforge.fenixedu.util.projectsManagement.ExcelStyle;
 import net.sourceforge.fenixedu.util.report.Spreadsheet;
 import net.sourceforge.fenixedu.util.report.Spreadsheet.Row;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.lang.StringUtils;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
@@ -66,6 +70,8 @@ import org.apache.struts.action.DynaActionFormClass;
 import org.apache.struts.config.FormBeanConfig;
 import org.apache.struts.config.ModuleConfig;
 import org.apache.struts.util.MessageResources;
+
+import pt.utl.ist.fenix.tools.util.CollectionUtils;
 
 /**
  * @author Luis Cruz
@@ -1074,10 +1080,24 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
             response.setHeader("Content-disposition", "attachment; filename=proposals_" + yearString + ".xls");
 
             ServletOutputStream writer = response.getOutputStream();
-            final Spreadsheet spreadsheet = new Spreadsheet("Proposals " + yearString);
-            setHeaders(spreadsheet);
-            fillSpreadSheet(executionDegree, spreadsheet);
-            spreadsheet.exportToXLSSheet(writer);
+            final Spreadsheet proposalsSpreadsheet = new Spreadsheet("Proposals " + yearString);
+            setProposalsHeaders(proposalsSpreadsheet);
+            fillProposalsSpreadSheet(executionDegree, proposalsSpreadsheet);
+
+            final Spreadsheet groupsSpreadsheet = new Spreadsheet("Groups " + yearString);
+            fillGroupsSpreadSheet(executionDegree, groupsSpreadsheet);
+
+            final Spreadsheet studentsSpreadsheet = new Spreadsheet("Alunos " + yearString);
+            fillStudentsSpreadSheet(executionDegree, studentsSpreadsheet);
+
+            final HSSFWorkbook workbook = new HSSFWorkbook();
+            final ExcelStyle excelStyle = new ExcelStyle(workbook);
+
+            proposalsSpreadsheet.exportToXLSSheet(workbook, excelStyle.getHeaderStyle(), excelStyle.getStringStyle());
+            groupsSpreadsheet.exportToXLSSheet(workbook, excelStyle.getHeaderStyle(), excelStyle.getStringStyle());
+            studentsSpreadsheet.exportToXLSSheet(workbook, excelStyle.getHeaderStyle(), excelStyle.getStringStyle());
+
+            workbook.write(writer);
 
             writer.flush();
             response.flushBuffer();
@@ -1087,7 +1107,36 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
         return null;
     }
 
-	private void setHeaders(final Spreadsheet spreadsheet) {
+	private void setProposalsHeaders(final Spreadsheet spreadsheet) {
+		spreadsheet.setHeader("Proposta");
+		spreadsheet.setHeader("Estado da Proposta");
+		spreadsheet.setHeader("Títilo");
+		spreadsheet.setHeader("Número Orientador");
+		spreadsheet.setHeader("Nome Orientador");
+		spreadsheet.setHeader("Número Coorientador");
+		spreadsheet.setHeader("Nome Coorientador");
+		spreadsheet.setHeader("Percentagem Créditos Orientador");
+		spreadsheet.setHeader("Percentagem Créditos Coorientador");
+		spreadsheet.setHeader("Nome do Acompanhante");
+		spreadsheet.setHeader("Email do Acompanhante");
+		spreadsheet.setHeader("Telefone do Acompanhante");
+		spreadsheet.setHeader("Nome da empresa");
+		spreadsheet.setHeader("Morada da empresa");
+		spreadsheet.setHeader("Enquadramento");
+		spreadsheet.setHeader("Objectivos");
+		spreadsheet.setHeader("Descrição");
+		spreadsheet.setHeader("Requisitos");
+		spreadsheet.setHeader("Resultado esperado");
+		spreadsheet.setHeader("URL");
+		spreadsheet.setHeader("Área de Especialização");
+		spreadsheet.setHeader("Número mínimo de elementos do grupo");
+		spreadsheet.setHeader("Número máximo de elementos do grupo");
+		spreadsheet.setHeader("Adequação a Dissertação");
+		spreadsheet.setHeader("Observações");
+		spreadsheet.setHeader("Localização da realização do TFC");
+	}
+
+	private void setGroupsHeaders(final Spreadsheet spreadsheet) {
 		spreadsheet.setHeader("Número");
 		spreadsheet.setHeader("Estado da Proposta");
 		spreadsheet.setHeader("Títilo");
@@ -1119,7 +1168,7 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
 	private static final MessageResources applicationResources = MessageResources.getMessageResources("resources/ApplicationResources");
 	private static final MessageResources enumerationResources = MessageResources.getMessageResources("resources/EnumerationResources");
 
-	private void fillSpreadSheet(final ExecutionDegree executionDegree, final Spreadsheet spreadsheet) {
+	private void fillProposalsSpreadSheet(final ExecutionDegree executionDegree, final Spreadsheet spreadsheet) {
 		int maxNumberStudentsPerGroup = 0;
 
 		final Scheduleing scheduleing = executionDegree.getScheduling();
@@ -1220,6 +1269,59 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
 		for (int i = 0; i < maxNumberStudentsPerGroup; i++) {
 			spreadsheet.setHeader("Número aluno " + (i + 1));
 			spreadsheet.setHeader("Nome aluno " + (i + 1));
+		}
+	}
+
+	private void fillGroupsSpreadSheet(final ExecutionDegree executionDegree, final Spreadsheet spreadsheet) {
+		final Scheduleing scheduleing = executionDegree.getScheduling();
+		final SortedSet<Group> groups = scheduleing.getGroupsWithProposalsSortedByStudentNumbers();
+		int numberGroups = 0;
+		int maxNumStudentsPerGroup = 0;
+		for (final Group group : groups) {
+			final Row row = spreadsheet.addRow();
+			row.setCell(Integer.toString(++numberGroups));
+			final SortedSet<GroupStudent> groupStudents = CollectionUtils.constructSortedSet(group.getGroupStudentsSet(), GroupStudent.COMPARATOR_BY_STUDENT_NUMBER);
+			for (final GroupStudent groupStudent : groupStudents) {
+				row.setCell(groupStudent.getStudent().getNumber().toString());
+			}
+			maxNumStudentsPerGroup = Math.max(maxNumStudentsPerGroup, groupStudents.size());
+		}
+		spreadsheet.setHeader("Grupo");
+		for (int i = 0; i < maxNumStudentsPerGroup; spreadsheet.setHeader("Aluno " + ++i));
+		int groupCounter = 0;
+		int maxNumberGroupProposals = 0;
+		for (final Group group : groups) {
+			final Row row = spreadsheet.getRow(groupCounter++);
+			for (int i = group.getGroupStudentsSet().size(); i++ < maxNumStudentsPerGroup; row.setCell(""));
+			final SortedSet<GroupProposal> groupProposals = group.getGroupProposalsSortedByPreferenceOrder();
+			for (final GroupProposal groupProposal : groupProposals) {
+				row.setCell(groupProposal.getFinalDegreeWorkProposal().getProposalNumber().toString());
+			}
+			maxNumberGroupProposals = Math.max(maxNumberGroupProposals, groupProposals.size());
+		}
+		for (int i = 0; i < maxNumberGroupProposals; spreadsheet.setHeader("Proposta de pref. " + ++i));
+	}
+
+	private void fillStudentsSpreadSheet(final ExecutionDegree executionDegree, final Spreadsheet spreadsheet) {
+		final Scheduleing scheduleing = executionDegree.getScheduling();
+		final Integer maximumCurricularYearToCountCompletedCourses = scheduleing.getMaximumCurricularYearToCountCompletedCourses();
+
+		// TODO ... set the headers.
+
+		final SortedSet<Student> students = new TreeSet<Student>(Student.NUMBER_COMPARATOR);
+		for (final ExecutionDegree otherExecutionDegree : scheduleing.getExecutionDegreesSet()) {
+			for (final Group group : executionDegree.getAssociatedFinalDegreeWorkGroupsSet()) {
+				if (!group.getGroupProposalsSet().isEmpty()) {
+					for (final GroupStudent groupStudent : group.getGroupStudentsSet()) {
+						final Student student = groupStudent.getStudent();
+						final Row row = spreadsheet.addRow();
+						row.setCell(student.getNumber().toString());
+
+						// TODO ... set the students information.
+
+					}
+				}
+			}
 		}
 	}
 

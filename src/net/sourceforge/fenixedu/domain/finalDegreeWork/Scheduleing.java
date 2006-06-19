@@ -8,6 +8,8 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
@@ -119,5 +121,25 @@ public class Scheduleing extends Scheduleing_Base {
     public Set<Proposal> findApprovedProposals() {
     	return findProposalsByStatus(FinalDegreeWorkProposalStatus.APPROVED_STATUS);
     }
+
+    public SortedSet<Group> getGroupsSortedByStudentNumbers() {
+    	final SortedSet<Group> groups = new TreeSet<Group>(Group.COMPARATOR_BY_STUDENT_NUMBERS);
+    	for (final ExecutionDegree executionDegree : getExecutionDegreesSet()) {
+   			groups.addAll(executionDegree.getAssociatedFinalDegreeWorkGroupsSet());
+    	}
+    	return groups;
+    }
+
+	public SortedSet<Group> getGroupsWithProposalsSortedByStudentNumbers() {
+    	final SortedSet<Group> groups = new TreeSet<Group>(Group.COMPARATOR_BY_STUDENT_NUMBERS);
+    	for (final ExecutionDegree executionDegree : getExecutionDegreesSet()) {
+    		for (final Group group : executionDegree.getAssociatedFinalDegreeWorkGroupsSet()) {
+    			if (!group.getGroupProposalsSet().isEmpty()) {
+    				groups.add(group);
+    			}
+    		}
+    	}
+    	return groups;
+	}
 
 }
