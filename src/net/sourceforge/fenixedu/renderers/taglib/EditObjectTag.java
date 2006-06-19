@@ -34,8 +34,6 @@ import net.sourceforge.fenixedu.renderers.validators.HtmlValidator;
 import org.apache.struts.config.ModuleConfig;
 import org.apache.struts.taglib.TagUtils;
 
-import com.sun.faces.taglib.html_basic.FormTag;
-
 public class EditObjectTag extends BaseRenderObjectTag {
     
     private boolean nested;
@@ -270,7 +268,7 @@ public class EditObjectTag extends BaseRenderObjectTag {
     }
 
     private boolean hasFormParent() {
-        if (findAncestorWithClass(this, FormTag.class) != null) {
+        if (findAncestorWithClass(this, org.apache.struts.taglib.html.FormTag.class) != null) {
             return true;
         }
         
