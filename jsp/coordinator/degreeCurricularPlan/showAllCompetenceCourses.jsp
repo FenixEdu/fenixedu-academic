@@ -19,7 +19,7 @@ padding-right: 10px;
 	<fc:dataRepeater rendered="#{!empty CurricularCourseManagement.degreeCurricularPlanCompetenceCourses}" value="#{CurricularCourseManagement.degreeCurricularPlanCompetenceCourses}" var="competenceCourse">
 
 		<h:outputText value="<em>#{scouncilBundle['competenceCourse']}</em>" escape="false" />
-		<h:outputText value="<h2>#{competenceCourse.name}</h2>" escape="false"/>
+		<h:outputText value="<h2>#{competenceCourse.name} (#{competenceCourse.acronym})</h2>" escape="false"/>
 
 		<h:outputText value="<ul class='nobullet padding1 indent0 mtop3'>" escape="false"/>
 		<h:outputText value="<li><strong>#{scouncilBundle['department']}: </strong>" escape="false"/>
