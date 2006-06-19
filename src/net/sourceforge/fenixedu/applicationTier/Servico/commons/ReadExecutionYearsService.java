@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.commons;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
@@ -7,19 +8,14 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.collections.Transformer;
-
 public class ReadExecutionYearsService extends Service {
 
 	public List run() throws ExcepcaoPersistencia {
-		return (List) CollectionUtils.collect(rootDomainObject.getExecutionYears(),
-				new Transformer() {
-					public Object transform(Object arg0) {
-						final ExecutionYear executionYear = (ExecutionYear) arg0;
-						return InfoExecutionYear.newInfoFromDomain(executionYear);
-					}
-				});
+		final List<InfoExecutionYear> infoExecutionYears = new ArrayList<InfoExecutionYear>();
+		for (final ExecutionYear executionYear : rootDomainObject.getExecutionYears()) {
+			infoExecutionYears.add(InfoExecutionYear.newInfoFromDomain(executionYear));
+		}
+		return infoExecutionYears;
 	}
 	
 	public ExecutionYear run(Integer executionYearID) throws ExcepcaoPersistencia {
