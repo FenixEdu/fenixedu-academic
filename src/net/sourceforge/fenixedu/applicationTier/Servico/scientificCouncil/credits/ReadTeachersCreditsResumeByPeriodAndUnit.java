@@ -65,8 +65,10 @@ public class ReadTeachersCreditsResumeByPeriodAndUnit extends Service {
         Unit workingUnit = null;
         for (Contract contract : contracts) {
             Unit departmentUnit = contract.getWorkingUnit().getDepartmentUnit();
-            if (departmentUnit != null && departmentUnit.equals(unit)) {
-                workingUnit = contract.getWorkingUnit();
+            Unit contractUnit = contract.getWorkingUnit();
+            if (departmentUnit != null && departmentUnit.equals(unit) &&
+                    (workingUnit == null || contractUnit.getBeginDateYearMonthDay().isAfter(workingUnit.getBeginDateYearMonthDay()))) {
+                workingUnit = contractUnit;
             }
         }
         return workingUnit;

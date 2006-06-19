@@ -196,14 +196,16 @@ public class ViewTeacherCreditsReportDispatchAction extends FenixDispatchAction 
             String deptName = department.getName();
             deptName = deptName.replaceAll("DEPARTAMENTO", "DEP. ");
             deptName = deptName.replaceAll("ENGENHARIA", "ENG. ");
-            spreadsheet.setName(deptName);                      
+            spreadsheet.setName(deptName);                        
+            final Row initialRow = spreadsheet.addRow();
+            initialRow.setCell(department.getRealName());
+            spreadsheet.addRow();
             Map<Unit, List> creditsByUnit = teachersCreditsByDepartment.get(department);
             Double unitTotalCredits = 0.0;
             for (Unit unit : creditsByUnit.keySet()) {
                 List<TeacherCreditsReportDTO> teachersCreditReportDTOs = creditsByUnit.get(unit);
                 if (executionPeriods == null) {
-                    executionPeriods = teachersCreditReportDTOs.get(0).getCreditsByExecutionPeriod()
-                            .keySet();
+                    executionPeriods = teachersCreditReportDTOs.get(0).getCreditsByExecutionPeriod().keySet();
                 }
                 spreadsheet.addRow();
                 final Row row = spreadsheet.addRow();
