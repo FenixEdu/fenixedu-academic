@@ -10,6 +10,7 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.Set;
 
 import javax.faces.component.html.HtmlInputHidden;
 import javax.faces.context.FacesContext;
@@ -17,7 +18,6 @@ import javax.faces.model.SelectItem;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Accountability;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Function;
@@ -50,10 +50,10 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 
     public OrganizationalStructureBackingBean() {
         if (getRequestParameter("unitID") != null) {
-            this.unitID = Integer.valueOf(getRequestParameter("unitID").toString());
+            this.unitID = Integer.valueOf(getRequestParameter("unitID"));
         }
         if (getRequestParameter("subUnit") != null) {
-            this.subUnit = Integer.valueOf(getRequestParameter("subUnit").toString());
+            this.subUnit = Integer.valueOf(getRequestParameter("subUnit"));
         }
         if (getRequestParameter("choosenExecutionYearID") == null) {
             this.choosenExecutionYearID = Integer.valueOf(0);
@@ -63,15 +63,12 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
     }
 
     public List getExecutionYears() throws FenixFilterException, FenixServiceException {
-
-        List<InfoExecutionYear> executionYears = (List<InfoExecutionYear>) ServiceUtils.executeService(
-                getUserView(), "ReadExecutionYearsService", null);
+    	final Set<ExecutionYear> executionYears = rootDomainObject.getExecutionYearsSet();
 
         List<SelectItem> result = new ArrayList<SelectItem>(executionYears.size());
-        for (InfoExecutionYear executionYear : executionYears) {
+        for (ExecutionYear executionYear : executionYears) {
             if (executionYear.getYear().compareTo("2005/2006") >= 0) {
-                result.add(new SelectItem(executionYear.getIdInternal(), executionYear.getYear(),
-                        executionYear.getState().getStateCode()));
+                result.add(new SelectItem(executionYear.getIdInternal(), executionYear.getYear(), executionYear.getState().getStateCode()));
             }
         }
 
@@ -88,7 +85,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
     }
 
     public String getUnits() throws FenixFilterException, FenixServiceException, ExcepcaoPersistencia {
-        StringBuffer buffer = new StringBuffer();
+        StringBuilder buffer = new StringBuilder();
         YearMonthDay currentDate = new YearMonthDay();
 
         List<Unit> allUnits = getAllUnitsWithoutParent();
@@ -97,7 +94,8 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
             public int compare(Object arg0, Object arg1) {
                 Unit Unit1 = (Unit) arg0;
                 Unit Unit2 = (Unit) arg1;
-                if (Unit1.getType() == null && Unit2.getType() == null) {
+                //if (Unit1.getType() == null && Unit2.getType() == null) {
+                if (Unit1.getType() == Unit2.getType()) {
                     return 0;
                 } else if (Unit1.getType() == null) {
                     return 1;
@@ -118,7 +116,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
         for (Unit unit : allUnits) {
 
             if (unit.isActive(currentDate)) {
-                if (unit.getType() != null && unit.getType().name().length() > 0) {
+                if (unit.getType() != null /*&& unit.getType().name().length() > 0*/) {
                     partyType = unit.getType();
                     break;
                 }
@@ -129,7 +127,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
         for (Unit unit : allUnits) {
 
             if (unit.isActive(currentDate)) {
-                if (unit.getType() != null && unit.getType().name().length() > 0) {
+                if (unit.getType() != null /*&& unit.getType().name().length() > 0*/) {
                     if (!partyType.equals(unit.getType())) {
                         partyType = unit.getType();
                         buffer.append("<h3 class='mtop2'>").append(
@@ -249,7 +247,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
         return unitsIst;
     }
 
-    public void getDepartment(StringBuffer buffer, Unit unit) throws FenixFilterException,
+    public void getDepartment(StringBuilder buffer, Unit unit) throws FenixFilterException,
             FenixServiceException {
         YearMonthDay currentDate = new YearMonthDay();
 
@@ -283,7 +281,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
         }
     }
 
-    public void getUnitTree(StringBuffer buffer, Unit parentUnit) {
+    public void getUnitTree(StringBuilder buffer, Unit parentUnit) {
         YearMonthDay currentDate = new YearMonthDay();
         int parentUnitId = 0;
         boolean past = false;
@@ -296,7 +294,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
         }
     }
 
-    private void getUnitsList(Unit parentUnit, int index, StringBuffer buffer, int parentUnitId,
+    private void getUnitsList(Unit parentUnit, int index, StringBuilder buffer, int parentUnitId,
             boolean past) {
         
         YearMonthDay currentDate = new YearMonthDay();
