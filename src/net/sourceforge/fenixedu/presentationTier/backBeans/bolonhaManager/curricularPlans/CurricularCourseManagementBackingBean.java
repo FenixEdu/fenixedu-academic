@@ -706,11 +706,7 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
     }
 
     public List<CompetenceCourse> getDegreeCurricularPlanCompetenceCourses() {
-        if (getExecutionYear() != null) {
-            return getDegreeCurricularPlan().getCompetenceCourses(getExecutionYear());
-        } else {
-            return new ArrayList<CompetenceCourse>();    
-        }
+        return getDegreeCurricularPlan().getCompetenceCourses(getExecutionYear());
     }
 
 }
