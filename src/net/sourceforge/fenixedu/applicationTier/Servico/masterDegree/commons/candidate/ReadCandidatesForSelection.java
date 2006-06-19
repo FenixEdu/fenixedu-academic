@@ -18,18 +18,12 @@ import net.sourceforge.fenixedu.util.SituationName;
  */
 public class ReadCandidatesForSelection extends Service {
 
-	public List run(Integer executionDegreeID, List<Integer> situations)
+	public List run(Integer executionDegreeID, List<SituationName> situationNames)
 			throws FenixServiceException, ExcepcaoPersistencia {
 
 		// Read the candidates
 
 		ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(executionDegreeID);
-
-        
-        List<SituationName> situationNames = new ArrayList<SituationName>();
-        for (Integer situationNameCode : situations) {
-            situationNames.add(new SituationName(situationNameCode));
-        }
         
         List<CandidateSituation> resultTemp = executionDegree.getCandidateSituationsInSituation(situationNames);
         
