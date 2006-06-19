@@ -47,6 +47,7 @@ public class ExecutionDegreeCoordinatorAuthorizationFilter extends Filtro {
     }
 
     public static boolean verifyCondition(IUserView id, Integer objectId) throws ExcepcaoPersistencia {
+    	if (id != null) {
         final Person person = id.getPerson();
         if (person != null) {
             final ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(objectId);
@@ -72,6 +73,7 @@ public class ExecutionDegreeCoordinatorAuthorizationFilter extends Filtro {
                 }
             }
         }
+    	}
 
         return false;
     }
