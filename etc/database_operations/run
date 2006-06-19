@@ -28,3 +28,4 @@ function executeWithTempFile() {
 }
 
 execute "Modify CRON Tables" modifyCronTables.sql
+execute "Add New Person To Manage Department Credits" addNewPersonToManageDepartmentCredits.sql
