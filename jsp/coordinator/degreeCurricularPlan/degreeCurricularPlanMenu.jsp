@@ -5,7 +5,13 @@
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
 <%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree" %>
 
-<bean:define id="degreeCurricularPlanID" name="degreeCurricularPlanID" scope="request" />
+<%
+Integer degreeCurricularPlanID = (Integer) request.getAttribute("degreeCurricularPlanID");
+if (degreeCurricularPlanID == null) {
+    degreeCurricularPlanID = Integer.valueOf(request.getParameter("degreeCurricularPlanID"));
+}
+%>
+
 <logic:present name="<%= SessionConstants.MASTER_DEGREE %>"  >
 	<bean:define id="infoExecutionDegree" name="<%= SessionConstants.MASTER_DEGREE %>" scope="session" type="InfoExecutionDegree" />
 	<br/>
