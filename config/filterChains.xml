@@ -927,6 +927,13 @@
         <invocationTiming>1</invocationTiming>
         <filterClass>net.sourceforge.fenixedu.applicationTier.Filtro.AccessControlFilter</filterClass>
     </filterChain>
+    <filterChain>
+        <name>DepartmentAdministrativeOfficeOrDepartmentMemberOrTeacherAuthorization</name>
+        <expression>DepartmentAdministrativeOfficeAuthorization || TeacherAuthorization || DepartmentMemberAuthorization</expression>
+        <description/>
+        <invocationTiming>1</invocationTiming>
+        <filterClass>net.sourceforge.fenixedu.applicationTier.Filtro.AccessControlFilter</filterClass>
+    </filterChain>
 <!--############# CMS ####################-->
 
     <filterChain>

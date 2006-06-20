@@ -8879,7 +8879,7 @@
         <description></description>
         <isTransactional>true</isTransactional>  
         <filterChains>
-        	<chain name="DepartmentMemberOrTeacherAuthorization"></chain>
+        	<chain name="DepartmentAdministrativeOfficeOrDepartmentMemberOrTeacherAuthorization"></chain>
         </filterChains>     
     </service>
     <service>

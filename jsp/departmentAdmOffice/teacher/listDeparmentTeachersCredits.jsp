@@ -7,10 +7,10 @@
 <h3>
 	<logic:iterate id="department" name="departmentsList" indexId="nrIter">
 		<logic:equal name="nrIter" value="0">
-			<bean:write name="department" property="name"/>
+			<bean:write name="department" property="realName"/>
 		</logic:equal>
 		<logic:notEqual name="nrIter" value="0">
-			, <bean:write name="department" property="name"/>
+			, <bean:write name="department" property="realName"/>
 		</logic:notEqual>
 	</logic:iterate>
 </h3>
