@@ -3,7 +3,7 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
 
-<bean:define id="infoStudentCurricularPlan" name="<%= SessionConstants.INFO_STUDENT_CURRICULAR_PLAN%>" />
+<bean:define id="infoStudentCurricularPlan" name="<%= SessionConstants.INFO_STUDENT_CURRICULAR_PLAN%>" type="net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlan" />
 <bean:define id="infoThesisDataVersion" name="<%= SessionConstants.MASTER_DEGREE_THESIS_DATA_VERSION%>" />
  
 <html>
@@ -36,13 +36,18 @@ font-size: 18px;
 }
 </style>
 
+<%
+	String parish = infoStudentCurricularPlan.getInfoStudent().getInfoPerson().getFreguesiaNaturalidade();
+	String subDivision = infoStudentCurricularPlan.getInfoStudent().getInfoPerson().getConcelhoNaturalidade();
+	String birth = parish.equals(subDivision) ? parish : parish + " - " + subDivision;
+%>
 
 <div id="container">
 <span class="hide">Faço saber que ao licenciado</span> <bean:write name="infoStudentCurricularPlan" property="infoStudent.infoPerson.nome"/><br/>
 
 <span class="hide">Filho de</span> <bean:write name="infoStudentCurricularPlan" property="infoStudent.infoPerson.nomePai"/><br/>
 <span class="hide">e de</span> <bean:write name="infoStudentCurricularPlan" property="infoStudent.infoPerson.nomeMae"/><br/>
-<span class="hide">natural de</span> <bean:write name="infoStudentCurricularPlan" property="infoStudent.infoPerson.infoPais.name"/> <span class="hide">tendo frequentado com aproveitamento</span><br/>
+<span class="hide">natural de</span> <%= birth %> <span class="hide">tendo frequentado com aproveitamento</span><br/>
 <span class="hide">o curso de mestrado em</span> <bean:write name="infoStudentCurricularPlan" property="infoDegreeCurricularPlan.infoDegree.nome"/><br/>
 
 <span class="hide">no Instituto Superior Técnico desta Universidade e defendido, perante um júri legalmente constituído, a disserta-</span><br/>
