@@ -6,7 +6,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.manager;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.support.InfoFAQEntry;
-import net.sourceforge.fenixedu.domain.DomainFactory;
+
 import net.sourceforge.fenixedu.domain.support.FAQEntry;
 import net.sourceforge.fenixedu.domain.support.FAQSection;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -24,7 +24,7 @@ public class CreateFAQEntry extends Service {
                     .getParentSection().getIdInternal());
         }
 
-        FAQEntry faqEntry = DomainFactory.makeFAQEntry();
+        FAQEntry faqEntry = new FAQEntry();
         faqEntry.setParentSection(parentFAQSection);
         faqEntry.setQuestion(infoFAQEntry.getQuestion());
         faqEntry.setAnswer(infoFAQEntry.getAnswer());

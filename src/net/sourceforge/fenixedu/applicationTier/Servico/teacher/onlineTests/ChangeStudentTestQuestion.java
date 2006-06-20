@@ -23,7 +23,7 @@ import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoDistributedTe
 import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoSiteDistributedTestAdvisory;
 import net.sourceforge.fenixedu.domain.Advisory;
 import net.sourceforge.fenixedu.domain.Attends;
-import net.sourceforge.fenixedu.domain.DomainFactory;
+
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Mark;
 import net.sourceforge.fenixedu.domain.Student;
@@ -141,7 +141,7 @@ public class ChangeStudentTestQuestion extends Service {
                                     studentTestQuestion.getStudent(), oldMark));
                         }
                     }
-                    StudentTestLog studentTestLog = DomainFactory.makeStudentTestLog();
+                    StudentTestLog studentTestLog = new StudentTestLog();
                     studentTestLog.setDistributedTest(studentTestQuestion.getDistributedTest());
                     studentTestLog.setStudent(studentTestQuestion.getStudent());
                     studentTestLog.setDate(Calendar.getInstance().getTime());
@@ -255,7 +255,7 @@ public class ChangeStudentTestQuestion extends Service {
     private Advisory getAdvisory(DistributedTest distributedTest, String path) {
         ResourceBundle bundle = ResourceBundle.getBundle("resources.ApplicationResources");
         // Create Advisory
-        Advisory advisory = DomainFactory.makeAdvisory();
+        Advisory advisory = new Advisory();
         advisory.setCreated(Calendar.getInstance().getTime());
         advisory.setExpires(distributedTest.getEndDate().getTime());
         advisory.setSender(MessageFormat.format(bundle.getString("message.distributedTest.from"),
@@ -287,7 +287,7 @@ public class ChangeStudentTestQuestion extends Service {
         }
 
         // Create DistributedTestAdvisory
-        DistributedTestAdvisory distributedTestAdvisory = DomainFactory.makeDistributedTestAdvisory();
+        DistributedTestAdvisory distributedTestAdvisory = new DistributedTestAdvisory();
         distributedTestAdvisory.setAdvisory(advisory);
         distributedTestAdvisory.setDistributedTest(distributedTest);
         return advisory;

@@ -15,7 +15,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgume
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotExecuteException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.tests.InvalidXMLFilesException;
 import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoQuestion;
-import net.sourceforge.fenixedu.domain.DomainFactory;
+
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.onlineTests.Metadata;
 import net.sourceforge.fenixedu.domain.onlineTests.Question;
@@ -62,7 +62,7 @@ public class InsertExerciseVariation extends Service {
                 ParseQuestion parseQuestion = new ParseQuestion();
 
                 parseQuestion.parseQuestion(xmlFile, new InfoQuestion(), replacedPath);
-                Question question = DomainFactory.makeQuestion();
+                Question question = new Question();
                 question.setMetadata(metadata);
                 question.setXmlFile(xmlFile);
                 question.setXmlFileName(metadata.correctFileName(xmlFileName));

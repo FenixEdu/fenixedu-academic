@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
-import net.sourceforge.fenixedu.domain.DomainFactory;
+
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.GratuitySituation;
@@ -150,7 +150,7 @@ public class CreateGratuitySituationsForCurrentExecutionYear extends Service {
             return;
         }
 
-        DomainFactory.makeGratuitySituation(gratuityValues, studentCurricularPlan);
+        new GratuitySituation(gratuityValues, studentCurricularPlan);
     }
 
 }

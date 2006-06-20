@@ -43,7 +43,7 @@ public class ProjectTest extends DomainTestBase {
         }
 
         try {
-            DomainFactory.makeProject(null, null, newEnd, null, this.executionCourse);
+            new Project(null, null, newEnd, null, this.executionCourse);
             fail("Expected NullPointerException!");
         } catch (final NullPointerException e) {
             assertEquals("Unexpected Associated Evaluations Count!", executionCourse
@@ -51,7 +51,7 @@ public class ProjectTest extends DomainTestBase {
         }
 
         try {
-            DomainFactory.makeProject("projectName", null, null, null, this.executionCourse);
+            new Project("projectName", null, null, null, this.executionCourse);
             fail("Expected NullPointerException!");
         } catch (final NullPointerException e) {
             assertEquals("Unexpected Associated Evaluations Count!", executionCourse
@@ -59,7 +59,7 @@ public class ProjectTest extends DomainTestBase {
         }
 
         try {
-            DomainFactory.makeProject("projectName", null, newEnd, null, this.executionCourse);
+            new Project("projectName", null, newEnd, null, this.executionCourse);
             fail("Expected NullPointerException!");
         } catch (final NullPointerException e) {
             assertEquals("Unexpected Associated Evaluations Count!", executionCourse
@@ -67,14 +67,14 @@ public class ProjectTest extends DomainTestBase {
         }
         
         try {
-            DomainFactory.makeProject("projectName", newBegin, wrongEnd, null, this.executionCourse);
+            new Project("projectName", newBegin, wrongEnd, null, this.executionCourse);
             fail("Expected DomainException: BeginDate is After EndDate!");
         } catch (final DomainException e) {
             assertEquals("Unexpected Associated Evaluations Count!", executionCourse
                     .getAssociatedEvaluationsCount(), 1);
         }
 
-        newProject = DomainFactory.makeProject("projectName", newBegin, newEnd, null, this.executionCourse);
+        newProject = new Project("projectName", newBegin, newEnd, null, this.executionCourse);
         checkIfProjectAttributesAreCorrect(newProject, "projectName", newBegin, newEnd, "",
                 this.executionCourse);
     }

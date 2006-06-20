@@ -9,7 +9,7 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.gratuity.masterDegree.DuplicateSibsPaymentFileProcessingServiceException;
-import net.sourceforge.fenixedu.domain.DomainFactory;
+
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.GratuitySituation;
@@ -25,6 +25,8 @@ import net.sourceforge.fenixedu.domain.gratuity.SibsPaymentType;
 import net.sourceforge.fenixedu.domain.gratuity.masterDegree.SibsPaymentFile;
 import net.sourceforge.fenixedu.domain.gratuity.masterDegree.SibsPaymentFileEntry;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization;
+import net.sourceforge.fenixedu.domain.transactions.GratuityTransaction;
+import net.sourceforge.fenixedu.domain.transactions.InsuranceTransaction;
 import net.sourceforge.fenixedu.domain.transactions.PaymentType;
 import net.sourceforge.fenixedu.domain.transactions.TransactionType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -109,7 +111,7 @@ public class ProcessSibsPaymentFile extends Service {
 
             PersonAccount personAccount = student.getPerson().getAssociatedPersonAccount();
             if (personAccount == null) {
-                personAccount = DomainFactory.makePersonAccount(student.getPerson());
+                personAccount = new PersonAccount(student.getPerson());
             }
 
             if (sibsPaymentFileEntry.getPaymentType().equals(SibsPaymentType.INSURANCE)) {
@@ -129,7 +131,7 @@ public class ProcessSibsPaymentFile extends Service {
                     } else {
                         // create the insurance transaction payment for the
                         // execution year
-                        DomainFactory.makeInsuranceTransaction(sibsPaymentFileEntry.getPayedValue(),
+                        new InsuranceTransaction(sibsPaymentFileEntry.getPayedValue(),
                                 new Timestamp(new Date().getTime()), null, PaymentType.SIBS,
                                 TransactionType.INSURANCE_PAYMENT, new Boolean(false),
                                 responsiblePerson, personAccount, null, executionYear, student);
@@ -194,7 +196,7 @@ public class ProcessSibsPaymentFile extends Service {
             TransactionType transactionType = bindSibsCodeTypeToTransactionCodeType(sibsPaymentFileEntry
                     .getPaymentType());
 
-            DomainFactory.makeGratuityTransaction(sibsPaymentFileEntry.getPayedValue(), new Timestamp(
+            new GratuityTransaction(sibsPaymentFileEntry.getPayedValue(), new Timestamp(
                     new Date().getTime()), null, PaymentType.SIBS, transactionType, new Boolean(false),
                     responsiblePerson, personAccount, null, gratuitySituation);
 

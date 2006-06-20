@@ -13,7 +13,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeCandidate;
 import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeCandidateWithInfoPerson;
 import net.sourceforge.fenixedu.domain.CandidateSituation;
 import net.sourceforge.fenixedu.domain.Country;
-import net.sourceforge.fenixedu.domain.DomainFactory;
+
 import net.sourceforge.fenixedu.domain.MasterDegreeCandidate;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -51,7 +51,7 @@ public class EditMasterDegreeCandidate extends Service {
 
             oldCandidateSituation.setValidation(new State(State.INACTIVE));
 
-            CandidateSituation newCandidateSituation = DomainFactory.makeCandidateSituation();
+            CandidateSituation newCandidateSituation = new CandidateSituation();
             newCandidateSituation.setDate(Calendar.getInstance().getTime());
             newCandidateSituation.setMasterDegreeCandidate(masterDegreeCandidate);
             newCandidateSituation.setRemarks(newCandidate.getInfoCandidateSituation().getRemarks());

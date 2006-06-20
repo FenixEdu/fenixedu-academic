@@ -6,8 +6,9 @@ package net.sourceforge.fenixedu.applicationTier.Servico.manager;
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoBranch;
+import net.sourceforge.fenixedu.domain.Branch;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.DomainFactory;
+
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 /**
@@ -23,7 +24,7 @@ public class InsertBranch extends Service {
         if (degreeCurricularPlan == null)
             throw new NonExistingServiceException();
 
-        DomainFactory.makeBranch(infoBranch.getName(), infoBranch.getNameEn(), infoBranch.getCode(),
+        new Branch(infoBranch.getName(), infoBranch.getNameEn(), infoBranch.getCode(),
                 degreeCurricularPlan);
     }
 

@@ -24,7 +24,7 @@ public class PublicationsNumberTest extends DomainTestBase {
 	protected void setUp() throws Exception {
 		super.setUp();
 		
-		teacher = DomainFactory.makeTeacher();
+		teacher = new Teacher();
 		
 		infoPublicationsNumberToCreate = new InfoPublicationsNumber();
 		infoPublicationsNumberToCreate.setNational(1);
@@ -41,14 +41,14 @@ public class PublicationsNumberTest extends DomainTestBase {
 	
 	public void testCreatePublicationsNumber() {
 		try {
-			DomainFactory.makePublicationsNumber(null, infoPublicationsNumberToCreate);
+			new PublicationsNumber(null, infoPublicationsNumberToCreate);
 			fail("Should have thrown a DomainException");
 		
 		} catch (DomainException de) {
 			
 		}
 		
-		PublicationsNumber newPublicationsNumber = DomainFactory.makePublicationsNumber(teacher, infoPublicationsNumberToCreate);
+		PublicationsNumber newPublicationsNumber = new PublicationsNumber(teacher, infoPublicationsNumberToCreate);
 		
 		assertTrue("Failed to reference teacher!", newPublicationsNumber.hasTeacher());
 		assertEquals("Different teacher!", newPublicationsNumber.getTeacher(), teacher);
@@ -57,7 +57,7 @@ public class PublicationsNumberTest extends DomainTestBase {
 	
 	public void testEditPublicationsNumber() {
 		setUpEdit();
-		PublicationsNumber publicationsNumberToEdit = DomainFactory.makePublicationsNumber(teacher, infoPublicationsNumberToCreate);
+		PublicationsNumber publicationsNumberToEdit = new PublicationsNumber(teacher, infoPublicationsNumberToCreate);
 		
 		publicationsNumberToEdit.edit(infoPublicationsNumberEdit);
 		verifyPublicationsNumberAttributes(publicationsNumberToEdit, infoPublicationsNumberEdit);

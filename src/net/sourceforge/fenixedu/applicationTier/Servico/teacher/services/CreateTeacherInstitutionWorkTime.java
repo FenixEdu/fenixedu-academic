@@ -5,10 +5,11 @@ package net.sourceforge.fenixedu.applicationTier.Servico.teacher.services;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.workTime.InstitutionWorkTimeDTO;
-import net.sourceforge.fenixedu.domain.DomainFactory;
+
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.person.RoleType;
+import net.sourceforge.fenixedu.domain.teacher.InstitutionWorkTime;
 import net.sourceforge.fenixedu.domain.teacher.TeacherService;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
@@ -27,9 +28,9 @@ public class CreateTeacherInstitutionWorkTime extends Service {
 
         TeacherService teacherService = teacher.getTeacherServiceByExecutionPeriod(executionPeriod);
         if (teacherService == null) {
-            teacherService = DomainFactory.makeTeacherService(teacher, executionPeriod);
+            teacherService = new TeacherService(teacher, executionPeriod);
         }
-        DomainFactory.makeInstitutionWorkTime(teacherService, institutionWorkTimeDTO.getStartTime(),
+        new InstitutionWorkTime(teacherService, institutionWorkTimeDTO.getStartTime(),
                 institutionWorkTimeDTO.getEndTime(), institutionWorkTimeDTO.getWeekDay(), roleType);
     }
 }

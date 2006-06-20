@@ -75,11 +75,11 @@ public class QualificationTest extends DomainTestBase {
 	}
 		
 	private void setUpDelete() {
-		qualificationToDelete = DomainFactory.makeQualification(person1, country1, infoQualificationToCreate);
+		qualificationToDelete = new Qualification(person1, country1, infoQualificationToCreate);
 	}
  
 	private void setUpEdit() {
-		qualificationToEdit = DomainFactory.makeQualification(person1, country1, infoQualificationToCreate);
+		qualificationToEdit = new Qualification(person1, country1, infoQualificationToCreate);
 
 		infoQualificationToEdit = new InfoQualification();
 		infoQualificationToEdit.setDegree(degree1);
@@ -91,7 +91,7 @@ public class QualificationTest extends DomainTestBase {
 	public void testCreateQualification() {
 		
 		try {
-			DomainFactory.makeQualification(null, country1, infoQualificationToCreate);
+			new Qualification(null, country1, infoQualificationToCreate);
 			fail("Should have thrown a DomainException");
 
 		} catch(DomainException de) {
@@ -99,13 +99,13 @@ public class QualificationTest extends DomainTestBase {
 		}
 
 		
-		Qualification newQualificationWithCountry = DomainFactory.makeQualification(person1, country1, infoQualificationToCreate);
+		Qualification newQualificationWithCountry = new Qualification(person1, country1, infoQualificationToCreate);
 		
 		assertTrue("Failed to reference person!", newQualificationWithCountry.hasPerson());
 		assertTrue("Failed to reference country!", newQualificationWithCountry.hasCountry());
 		verifyQualificationAttributes(newQualificationWithCountry, infoQualificationToCreate);
 
-		Qualification newQualification = DomainFactory.makeQualification(person1, null, infoQualificationToCreate);
+		Qualification newQualification = new Qualification(person1, null, infoQualificationToCreate);
 		
 		assertTrue("Failed to reference person!", newQualification.hasPerson());
 		assertFalse("Shouldn't reference country!", newQualification.hasCountry());

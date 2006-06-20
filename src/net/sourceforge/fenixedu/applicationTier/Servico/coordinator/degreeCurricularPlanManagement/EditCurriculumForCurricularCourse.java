@@ -8,7 +8,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingSe
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurriculum;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Curriculum;
-import net.sourceforge.fenixedu.domain.DomainFactory;
+
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -49,7 +49,7 @@ public class EditCurriculumForCurricularCourse extends Service {
 
         Curriculum oldCurriculum = rootDomainObject.readCurriculumByOID(oldCurriculumId);
         if (oldCurriculum == null) {
-            oldCurriculum = DomainFactory.makeCurriculum();
+            oldCurriculum = new Curriculum();
 
             oldCurriculum.setCurricularCourse(curricularCourse);
             Calendar today = Calendar.getInstance();
@@ -67,7 +67,7 @@ public class EditCurriculumForCurricularCourse extends Service {
                     newInfoCurriculum.getProgramEn(), language, person);
 
         } else {
-            Curriculum newCurriculum = DomainFactory.makeCurriculum();
+            Curriculum newCurriculum = new Curriculum();
             newCurriculum.setCurricularCourse(curricularCourse);
 
             newCurriculum.edit(newInfoCurriculum.getGeneralObjectives(), newInfoCurriculum

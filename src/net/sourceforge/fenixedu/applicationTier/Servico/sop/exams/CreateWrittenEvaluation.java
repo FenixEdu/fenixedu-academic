@@ -8,9 +8,11 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.domain.CurricularCourseScope;
-import net.sourceforge.fenixedu.domain.DomainFactory;
+
+import net.sourceforge.fenixedu.domain.Exam;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.OccupationPeriod;
+import net.sourceforge.fenixedu.domain.WrittenTest;
 import net.sourceforge.fenixedu.domain.space.OldRoom;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.util.Season;
@@ -44,12 +46,12 @@ public class CreateWrittenEvaluation extends Service {
 
         // creating the new written evaluation, according to the service arguments
         if (examSeason != null) {
-            DomainFactory.makeExam(writtenEvaluationDate,
+            new Exam(writtenEvaluationDate,
                     writtenEvaluationStartTime, writtenEvaluationEndTime,
                     executionCoursesToAssociate, curricularCourseScopesToAssociate, roomsToAssociate,
                     period, examSeason);
         } else if (writtenTestDescription != null) {
-            DomainFactory.makeWrittenTest(writtenEvaluationDate, writtenEvaluationStartTime,
+            new WrittenTest(writtenEvaluationDate, writtenEvaluationStartTime,
             		writtenEvaluationEndTime, executionCoursesToAssociate,
                     curricularCourseScopesToAssociate, roomsToAssociate, period, writtenTestDescription);
         } else {
@@ -107,7 +109,7 @@ public class CreateWrittenEvaluation extends Service {
                 writtenEvaluationDate, 
                 null);
         if (period == null) {
-            period = DomainFactory.makeOccupationPeriod(writtenEvaluationDate, writtenEvaluationDate);
+            period = new OccupationPeriod(writtenEvaluationDate, writtenEvaluationDate);
         }
         return period;
     }

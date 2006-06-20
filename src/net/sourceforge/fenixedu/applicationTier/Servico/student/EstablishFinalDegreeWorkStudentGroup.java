@@ -6,7 +6,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.student;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.domain.DomainFactory;
+
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Student;
@@ -29,8 +29,8 @@ public class EstablishFinalDegreeWorkStudentGroup extends Service {
     	}
         Group group = student.findFinalDegreeWorkGroupForCurrentExecutionYear();
         if (group == null) {
-            group = DomainFactory.makeGroup();
-                GroupStudent groupStudent = DomainFactory.makeGroupStudent();
+            group = new Group();
+                GroupStudent groupStudent = new GroupStudent();
                 groupStudent.setStudent(student);
                 groupStudent.setFinalDegreeDegreeWorkGroup(group);
         } else {

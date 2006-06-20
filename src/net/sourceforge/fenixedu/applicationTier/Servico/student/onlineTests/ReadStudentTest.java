@@ -13,7 +13,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoStudentTestQuestion;
 import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoStudentTestQuestionWithAll;
-import net.sourceforge.fenixedu.domain.DomainFactory;
+
 import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.onlineTests.DistributedTest;
 import net.sourceforge.fenixedu.domain.onlineTests.StudentTestLog;
@@ -61,7 +61,7 @@ public class ReadStudentTest extends Service {
             infoStudentTestQuestionList.add(infoStudentTestQuestion);
         }
         if (log.booleanValue()) {
-            StudentTestLog studentTestLog = DomainFactory.makeStudentTestLog();
+            StudentTestLog studentTestLog = new StudentTestLog();
             studentTestLog.setDistributedTest(distributedTest);
             studentTestLog.setStudent(student);
             studentTestLog.setDate(Calendar.getInstance().getTime());

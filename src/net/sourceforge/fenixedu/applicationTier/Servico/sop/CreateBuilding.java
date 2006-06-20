@@ -5,7 +5,7 @@ import java.util.Set;
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.domain.Campus;
-import net.sourceforge.fenixedu.domain.DomainFactory;
+
 import net.sourceforge.fenixedu.domain.space.OldBuilding;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
@@ -23,7 +23,7 @@ public class CreateBuilding extends Service {
 
         final Campus campus = rootDomainObject.readCampusByOID(campusID);
 
-        final OldBuilding building = DomainFactory.makeOldBuilding();
+        final OldBuilding building = new OldBuilding();
         building.setName(buildingName);
         building.setCampus(campus);
     }

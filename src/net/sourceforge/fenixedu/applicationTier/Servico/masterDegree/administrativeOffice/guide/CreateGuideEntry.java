@@ -2,7 +2,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administra
 
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.domain.DocumentType;
-import net.sourceforge.fenixedu.domain.DomainFactory;
+
 import net.sourceforge.fenixedu.domain.GraduationType;
 import net.sourceforge.fenixedu.domain.Guide;
 import net.sourceforge.fenixedu.domain.GuideEntry;
@@ -20,7 +20,7 @@ public class CreateGuideEntry extends Service {
 
         Guide guide = rootDomainObject.readGuideByOID(guideID);
 
-        GuideEntry guideEntry = DomainFactory.makeGuideEntry();
+        GuideEntry guideEntry = new GuideEntry();
 
         guideEntry.setDescription(description);
         guideEntry.setDocumentType(documentType);

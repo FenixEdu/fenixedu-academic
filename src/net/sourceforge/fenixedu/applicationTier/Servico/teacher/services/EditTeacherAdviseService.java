@@ -7,7 +7,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.domain.DomainFactory;
+
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.Teacher;
@@ -48,12 +48,12 @@ public class EditTeacherAdviseService extends Service {
 
         TeacherService teacherService = teacher.getTeacherServiceByExecutionPeriod(executionPeriod);
         if (teacherService == null) {
-            teacherService = DomainFactory.makeTeacherService(teacher, executionPeriod);
+            teacherService = new TeacherService(teacher, executionPeriod);
         }
         List<Advise> advises = student.getAdvisesByTeacher(teacher);
         Advise advise = null;
         if (advises == null || advises.isEmpty()) {
-            advise = DomainFactory.makeAdvise(teacher, student, adviseType, executionPeriod,
+            advise = new Advise(teacher, student, adviseType, executionPeriod,
                     executionPeriod);
         } else {
             advise = advises.iterator().next();
@@ -62,7 +62,7 @@ public class EditTeacherAdviseService extends Service {
         TeacherAdviseService teacherAdviseService = advise
                 .getTeacherAdviseServiceByExecutionPeriod(executionPeriod);
         if (teacherAdviseService == null) {
-            teacherAdviseService = DomainFactory.makeTeacherAdviseService(teacherService, advise,
+            teacherAdviseService = new TeacherAdviseService(teacherService, advise,
                     percentage, roleType);
         } else {
             teacherAdviseService.updatePercentage(percentage, roleType);

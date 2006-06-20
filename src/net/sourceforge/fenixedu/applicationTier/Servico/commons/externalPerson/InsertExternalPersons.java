@@ -7,7 +7,7 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.institution.InsertInstitution;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExternalPerson;
-import net.sourceforge.fenixedu.domain.DomainFactory;
+
 import net.sourceforge.fenixedu.domain.ExternalPerson;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UnitUtils;
@@ -39,7 +39,7 @@ public class InsertExternalPersons extends Service {
             String name = infoExternalPerson.getInfoPerson().getNome();
 
             // creating a new ExternalPerson
-            ExternalPerson externalPerson = DomainFactory.makeExternalPerson(name, Gender.MALE, "", "",
+            ExternalPerson externalPerson = new ExternalPerson(name, Gender.MALE, "", "",
                     "", "", "", String.valueOf(System.currentTimeMillis()), currentInstitution);
 
             externalPersons.add(externalPerson);

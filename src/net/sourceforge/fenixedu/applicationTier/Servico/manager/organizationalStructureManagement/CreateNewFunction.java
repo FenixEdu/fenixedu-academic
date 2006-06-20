@@ -8,7 +8,7 @@ import java.util.Date;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.domain.DomainFactory;
+
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Function;
 import net.sourceforge.fenixedu.domain.organizationalStructure.FunctionType;
@@ -23,7 +23,7 @@ public class CreateNewFunction extends Service {
 
         Function function = null;
         if (functionID == null) {
-            function = DomainFactory.makeFunction();
+            function = new Function();
         } else {
             function = (Function) rootDomainObject.readAccountabilityTypeByOID(functionID);
             if (function == null) {

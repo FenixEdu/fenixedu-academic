@@ -8,8 +8,9 @@ import java.util.Date;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.domain.DomainFactory;
+
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.Project;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class CreateProject extends Service {
@@ -21,6 +22,6 @@ public class CreateProject extends Service {
         if (executionCourse == null) {
             throw new FenixServiceException("error.noExecutionCourse");
         }        
-        DomainFactory.makeProject(name, begin, end, description, executionCourse);        
+        new Project(name, begin, end, description, executionCourse);        
     }
 }

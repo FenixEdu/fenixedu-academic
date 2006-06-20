@@ -7,7 +7,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.grant.GrantTy
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.grant.InvalidGrantPaymentEntityException;
 import net.sourceforge.fenixedu.dataTransferObject.grant.contract.InfoGrantContract;
 import net.sourceforge.fenixedu.dataTransferObject.grant.contract.InfoGrantOrientationTeacher;
-import net.sourceforge.fenixedu.domain.DomainFactory;
+
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantContract;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantCostCenter;
@@ -28,7 +28,7 @@ public class CreateOrEditGrantContract extends Service {
             final Integer maxNumber = (maxGrantContract != null) ? maxGrantContract.getContractNumber() : 0;
             final Integer newContractNumber = Integer.valueOf(maxNumber + 1);
             infoGrantContract.setContractNumber(newContractNumber);
-            grantContract = DomainFactory.makeGrantContract();
+            grantContract = new GrantContract();
         } else {
             grantContract = grantOwner.readGrantContractByNumber(infoGrantContract.getContractNumber()); 
         }
@@ -92,7 +92,7 @@ public class CreateOrEditGrantContract extends Service {
             throw new GrantOrientationTeacherNotFoundException();
         }
 
-        newGrantOrientationTeacher = DomainFactory.makeGrantOrientationTeacher();
+        newGrantOrientationTeacher = new GrantOrientationTeacher();
         newGrantOrientationTeacher.setBeginDate(grantOrientationTeacherInfo.getBeginDate());
         newGrantOrientationTeacher.setEndDate(grantOrientationTeacherInfo.getEndDate());
         newGrantOrientationTeacher.setGrantContract(grantContract);

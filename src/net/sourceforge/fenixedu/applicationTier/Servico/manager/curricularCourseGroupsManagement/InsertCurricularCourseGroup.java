@@ -9,7 +9,8 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgume
 import net.sourceforge.fenixedu.domain.AreaCurricularCourseGroup;
 import net.sourceforge.fenixedu.domain.Branch;
 import net.sourceforge.fenixedu.domain.CurricularCourseGroup;
-import net.sourceforge.fenixedu.domain.DomainFactory;
+import net.sourceforge.fenixedu.domain.OptionalCurricularCourseGroup;
+
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.tools.enrollment.AreaType;
 
@@ -46,9 +47,9 @@ public class InsertCurricularCourseGroup extends Service {
      */
     private CurricularCourseGroup getInstance(String className) {
         if (className.equals(AreaCurricularCourseGroup.class.getName())) {
-            return DomainFactory.makeAreaCurricularCourseGroup();
+            return new AreaCurricularCourseGroup();
         }
-        return DomainFactory.makeOptionalCurricularCourseGroup();
+        return new OptionalCurricularCourseGroup();
     }
 
 }

@@ -4,7 +4,7 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoCareer;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoProfessionalCareer;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoTeachingCareer;
-import net.sourceforge.fenixedu.domain.DomainFactory;
+
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.teacher.Category;
 import net.sourceforge.fenixedu.domain.teacher.ProfessionalCareer;
@@ -28,7 +28,7 @@ public class EditCareer extends Service {
         //If it doesn't exist in the database, a new one has to be created
 		if(teachingCareer == null) {
 			Teacher teacher = rootDomainObject.readTeacherByOID(infoTeachingCareer.getInfoTeacher().getIdInternal());
-			teachingCareer = DomainFactory.makeTeachingCareer(teacher, category, infoTeachingCareer);
+			teachingCareer = new TeachingCareer(teacher, category, infoTeachingCareer);
 		} else {
 			teachingCareer.edit(infoTeachingCareer, category);
 		}
@@ -40,7 +40,7 @@ public class EditCareer extends Service {
 		//If it doesn't exist in the database, a new one has to be created
 		if(professionalCareer == null) {
 			Teacher teacher = rootDomainObject.readTeacherByOID(infoProfessionalCareer.getInfoTeacher().getIdInternal());
-			professionalCareer = DomainFactory.makeProfessionalCareer(teacher, infoProfessionalCareer);
+			professionalCareer = new ProfessionalCareer(teacher, infoProfessionalCareer);
 		} else {
 			professionalCareer.edit(infoProfessionalCareer);
 		}

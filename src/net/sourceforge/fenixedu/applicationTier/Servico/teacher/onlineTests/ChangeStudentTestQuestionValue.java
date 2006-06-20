@@ -21,7 +21,7 @@ import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoSiteDistribut
 import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoStudentTestQuestion;
 import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoStudentTestQuestionWithInfoQuestionAndInfoDistributedTest;
 import net.sourceforge.fenixedu.domain.Attends;
-import net.sourceforge.fenixedu.domain.DomainFactory;
+
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Mark;
 import net.sourceforge.fenixedu.domain.Student;
@@ -91,7 +91,7 @@ public class ChangeStudentTestQuestionValue extends Service {
 
             infoSiteDistributedTestAdvisory.setInfoStudentList(group);
             infoSiteDistributedTestAdvisoryList.add(infoSiteDistributedTestAdvisory);
-            StudentTestLog studentTestLog = DomainFactory.makeStudentTestLog();
+            StudentTestLog studentTestLog = new StudentTestLog();
             studentTestLog.setDistributedTest(studentTestQuestion.getDistributedTest());
             studentTestLog.setStudent(studentTestQuestion.getStudent());
             studentTestLog.setDate(Calendar.getInstance().getTime());

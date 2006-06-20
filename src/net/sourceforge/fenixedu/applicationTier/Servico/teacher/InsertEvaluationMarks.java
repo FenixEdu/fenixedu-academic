@@ -22,7 +22,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoSiteMarks;
 import net.sourceforge.fenixedu.dataTransferObject.TeacherAdministrationSiteView;
 import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.DomainFactory;
+
 import net.sourceforge.fenixedu.domain.Evaluation;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Mark;
@@ -78,7 +78,7 @@ public class InsertEvaluationMarks extends Service {
                     Mark domainMark = evaluation.getMarkByAttend(attend);
                     //verify if the student has already a mark
                     if (domainMark == null) {
-                        domainMark = DomainFactory.makeMark();
+                        domainMark = new Mark();
                         domainMark.setAttend(attend);
                         domainMark.setEvaluation(evaluation);
                         domainMark.setMark(mark.toUpperCase());

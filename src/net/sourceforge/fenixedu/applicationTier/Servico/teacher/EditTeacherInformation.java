@@ -7,7 +7,7 @@ import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoOrientation;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoPublicationsNumber;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoServiceProviderRegime;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoWeeklyOcupation;
-import net.sourceforge.fenixedu.domain.DomainFactory;
+
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.teacher.Orientation;
 import net.sourceforge.fenixedu.domain.teacher.PublicationsNumber;
@@ -39,7 +39,7 @@ public class EditTeacherInformation extends Service {
         ServiceProviderRegime serviceProviderRegime = rootDomainObject.readServiceProviderRegimeByOID(infoServiceProviderRegime.getIdInternal());
 
         if (serviceProviderRegime == null) {
-			serviceProviderRegime = DomainFactory.makeServiceProviderRegime(teacher, infoServiceProviderRegime);
+			serviceProviderRegime = new ServiceProviderRegime(teacher, infoServiceProviderRegime);
 
 		} else {
 			serviceProviderRegime.edit(infoServiceProviderRegime);
@@ -53,7 +53,7 @@ public class EditTeacherInformation extends Service {
         // Weekly Ocupation
         WeeklyOcupation weeklyOcupation = teacher.getWeeklyOcupation();
         if (weeklyOcupation == null) {
-			weeklyOcupation = DomainFactory.makeWeeklyOcupation(teacher, infoWeeklyOcupation);
+			weeklyOcupation = new WeeklyOcupation(teacher, infoWeeklyOcupation);
 		} else {
 			weeklyOcupation.edit(infoWeeklyOcupation);
         }
@@ -65,7 +65,7 @@ public class EditTeacherInformation extends Service {
             Orientation orientation = rootDomainObject.readOrientationByOID(infoOrientation.getIdInternal());
 
             if (orientation == null) {
-				orientation = DomainFactory.makeOrientation(teacher, infoOrientation);
+				orientation = new Orientation(teacher, infoOrientation);
 
 			} else {
 				orientation.edit(infoOrientation);				
@@ -81,7 +81,7 @@ public class EditTeacherInformation extends Service {
             PublicationsNumber publicationsNumber = rootDomainObject.readPublicationsNumberByOID(infoPublicationsNumber.getIdInternal());
 
             if (publicationsNumber == null) {
-				publicationsNumber = DomainFactory.makePublicationsNumber(teacher, infoPublicationsNumber);
+				publicationsNumber = new PublicationsNumber(teacher, infoPublicationsNumber);
 
 			} else {
 				publicationsNumber.edit(infoPublicationsNumber);

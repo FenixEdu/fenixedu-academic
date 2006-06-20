@@ -12,7 +12,7 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoQuestion;
-import net.sourceforge.fenixedu.domain.DomainFactory;
+
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.onlineTests.Metadata;
 import net.sourceforge.fenixedu.domain.onlineTests.Question;
@@ -40,7 +40,7 @@ public class CreateExercise extends Service {
         }
         Metadata metadata = null;
         if (metadataId == null) {
-            metadata = DomainFactory.makeMetadata(executionCourse, author, description,
+            metadata = new Metadata(executionCourse, author, description,
                     questionDifficultyType.getTypeString(), learningTime, mainSubject, secondarySubject,
                     level);
         } else {
@@ -49,7 +49,7 @@ public class CreateExercise extends Service {
                 throw new InvalidArgumentsServiceException();
             }
         }
-        Question question = DomainFactory.makeQuestion();
+        Question question = new Question();
         question.setMetadata(metadata);
         question.setVisibility(new Boolean(true));
         try {

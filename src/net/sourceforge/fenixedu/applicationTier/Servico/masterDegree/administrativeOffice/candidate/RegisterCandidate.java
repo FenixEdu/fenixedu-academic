@@ -21,9 +21,10 @@ import net.sourceforge.fenixedu.domain.Branch;
 import net.sourceforge.fenixedu.domain.CandidateEnrolment;
 import net.sourceforge.fenixedu.domain.CandidateSituation;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.DomainFactory;
+
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.GratuitySituation;
 import net.sourceforge.fenixedu.domain.GratuityValues;
 import net.sourceforge.fenixedu.domain.MasterDegreeCandidate;
 import net.sourceforge.fenixedu.domain.Person;
@@ -111,11 +112,11 @@ public class RegisterCandidate extends Service {
                     "error.exception.masterDegree.gratuity.gratuityValuesNotDefined");
         }
 
-        DomainFactory.makeGratuitySituation(gratuityValues, studentCurricularPlan);
+        new GratuitySituation(gratuityValues, studentCurricularPlan);
     }
 
     private void copyQualifications(MasterDegreeCandidate masterDegreeCandidate, Person person) {
-        Qualification qualification = DomainFactory.makeQualification();
+        Qualification qualification = new Qualification();
         if (masterDegreeCandidate.getAverage() != null) {
             qualification.setMark(masterDegreeCandidate.getAverage().toString());
         }
@@ -140,7 +141,7 @@ public class RegisterCandidate extends Service {
     private void updateCandidateSituation(MasterDegreeCandidate masterDegreeCandidate) {
         masterDegreeCandidate.getActiveCandidateSituation().setValidation(new State(State.INACTIVE));
 
-        CandidateSituation candidateSituation = DomainFactory.makeCandidateSituation();
+        CandidateSituation candidateSituation = new CandidateSituation();
         candidateSituation.setDate(Calendar.getInstance().getTime());
         candidateSituation.setMasterDegreeCandidate(masterDegreeCandidate);
         candidateSituation.setValidation(new State(State.ACTIVE));
@@ -152,7 +153,7 @@ public class RegisterCandidate extends Service {
         List<CandidateEnrolment> candidateEnrolments = masterDegreeCandidate.getCandidateEnrolments();
         ExecutionPeriod executionPeriod = ExecutionPeriod.readActualExecutionPeriod();
         for (CandidateEnrolment candidateEnrolment : candidateEnrolments) {
-            DomainFactory.makeEnrolment(studentCurricularPlan, candidateEnrolment.getCurricularCourse(),
+            new Enrolment(studentCurricularPlan, candidateEnrolment.getCurricularCourse(),
                     executionPeriod, EnrollmentCondition.FINAL, userView.getUtilizador());
         }
     }
@@ -164,7 +165,7 @@ public class RegisterCandidate extends Service {
                 .getDegreeCurricularPlan();
         Date startDate = Calendar.getInstance().getTime();
 
-        StudentCurricularPlan studentCurricularPlan = DomainFactory.makeStudentCurricularPlan(student,
+        StudentCurricularPlan studentCurricularPlan = new StudentCurricularPlan(student,
                 degreecurricularPlan, branch, startDate, StudentCurricularPlanState.ACTIVE,
                 masterDegreeCandidate.getGivenCredits(), masterDegreeCandidate.getSpecialization());
         return studentCurricularPlan;
@@ -178,7 +179,7 @@ public class RegisterCandidate extends Service {
 
         StudentKind studentKind = StudentKind.readByStudentType(StudentType.NORMAL);
         StudentState state = new StudentState(StudentState.INSCRITO);
-        student = DomainFactory.makeStudent(person, studentNumber, studentKind, state, false, false,
+        student = new Student(person, studentNumber, studentKind, state, false, false,
                 EntryPhase.FIRST_PHASE_OBJ, DegreeType.MASTER_DEGREE);
         student.setInterruptedStudies(false);
 

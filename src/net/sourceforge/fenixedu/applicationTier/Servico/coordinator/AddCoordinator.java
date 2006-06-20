@@ -5,7 +5,7 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Coordinator;
-import net.sourceforge.fenixedu.domain.DomainFactory;
+
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Role;
@@ -29,7 +29,7 @@ public class AddCoordinator extends Service {
         
         Coordinator coordinator = executionDegree.getCoordinatorByTeacher(teacher);
         if (coordinator == null) {
-            coordinator = DomainFactory.makeCoordinator(executionDegree, teacher, Boolean.FALSE);
+            coordinator = new Coordinator(executionDegree, teacher, Boolean.FALSE);
             // verify if the teacher already was coordinator
             final List<ExecutionDegree> executionDegreesTeacherList = teacher.getCoordinatedExecutionDegrees();
             if (executionDegreesTeacherList == null || executionDegreesTeacherList.isEmpty()) {

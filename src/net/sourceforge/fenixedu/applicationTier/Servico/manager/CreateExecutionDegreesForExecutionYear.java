@@ -10,7 +10,7 @@ import java.util.Set;
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.domain.Campus;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.DomainFactory;
+
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.OccupationPeriod;
@@ -78,7 +78,7 @@ public class CreateExecutionDegreesForExecutionYear extends Service {
     private OccupationPeriod getOccupationPeriod(final Calendar startDate, final Calendar endDate) {
         OccupationPeriod occupationPeriod = OccupationPeriod.readFor(YearMonthDay.fromCalendarFields(startDate), YearMonthDay.fromCalendarFields(endDate));
         if (occupationPeriod == null) {
-            occupationPeriod = DomainFactory.makeOccupationPeriod(startDate.getTime(), endDate.getTime());
+            occupationPeriod = new OccupationPeriod(startDate.getTime(), endDate.getTime());
             occupationPeriod.setNextPeriod(null);
         }
         return occupationPeriod;

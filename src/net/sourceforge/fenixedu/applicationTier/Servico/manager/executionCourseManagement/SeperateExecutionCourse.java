@@ -8,7 +8,7 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.utils.ExecutionCourseUtils;
 import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
-import net.sourceforge.fenixedu.domain.DomainFactory;
+
 import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
@@ -112,7 +112,7 @@ public class SeperateExecutionCourse extends Service {
     }
 
     private ExecutionCourse createNewExecutionCourse(ExecutionCourse originExecutionCourse) throws ExcepcaoPersistencia {
-        ExecutionCourse destinationExecutionCourse = DomainFactory.makeExecutionCourse();
+        ExecutionCourse destinationExecutionCourse = new ExecutionCourse();
         destinationExecutionCourse.setComment("");
         destinationExecutionCourse.setExecutionPeriod(originExecutionCourse.getExecutionPeriod());
         destinationExecutionCourse.setLabHours(originExecutionCourse.getLabHours());
@@ -123,7 +123,7 @@ public class SeperateExecutionCourse extends Service {
 
         for (int i = 0; i < originExecutionCourse.getProfessorships().size(); i++) {
             Professorship professorship = originExecutionCourse.getProfessorships().get(i);
-            Professorship newProfessorship = DomainFactory.makeProfessorship();
+            Professorship newProfessorship = new Professorship();
             newProfessorship.setExecutionCourse(destinationExecutionCourse);
             newProfessorship.setTeacher(professorship.getTeacher());
             newProfessorship.setResponsibleFor(professorship.getResponsibleFor());

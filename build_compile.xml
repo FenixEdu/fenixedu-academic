@@ -614,20 +614,6 @@ script.isAlive.check.slide=${script.isAlive.check.slide}
 			<include name="net/sourceforge/fenixedu/domain/**"/>
 			<include name="relation/**"/>
 		</javac>
-		<java classname="net.sourceforge.fenixedu.tools.CreateDomainFactoryClassSource" 
-          dir="${src_gen}"
-          fork="true">
-			<classpath>
-				<pathelement path="${build.home.webinf.classes}"/>
-				<fileset dir="${lib}">
-					<include name="**/*.jar"/>
-				</fileset>
-			</classpath>
-			<arg value="-cfn"/>
-			<arg value="net.sourceforge.fenixedu.domain.DomainFactory"/>
-			<arg value="-d"/>
-			<arg value="${dml.definition.file.completed}"/>
-		</java>
 	</target>
 
 	<target name="check-renderers" description="Checks if the lib built is still up to date">

@@ -18,7 +18,7 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoRoom;
-import net.sourceforge.fenixedu.domain.DomainFactory;
+
 import net.sourceforge.fenixedu.domain.space.OldBuilding;
 import net.sourceforge.fenixedu.domain.space.OldRoom;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -56,7 +56,7 @@ public class CriarSala extends Service {
 
     protected OldRoom writeRoom(final InfoRoom infoRoom, final OldBuilding building)
             throws ExcepcaoPersistencia {
-        final OldRoom room = DomainFactory.makeOldRoom();
+        final OldRoom room = new OldRoom();
         room.setCapacidadeExame(infoRoom.getCapacidadeExame());
         room.setCapacidadeNormal(infoRoom.getCapacidadeNormal());
         room.setNome(infoRoom.getNome());

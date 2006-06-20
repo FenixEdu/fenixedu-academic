@@ -8,7 +8,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.InfoWebSite;
 import net.sourceforge.fenixedu.dataTransferObject.InfoWebSiteItem;
 import net.sourceforge.fenixedu.dataTransferObject.InfoWebSiteSection;
-import net.sourceforge.fenixedu.domain.DomainFactory;
+
 import net.sourceforge.fenixedu.domain.WebSiteItem;
 import net.sourceforge.fenixedu.domain.WebSiteSection;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -32,7 +32,7 @@ public class AddItem extends ManageWebSiteItem {
 
         checkData(infoWebSiteItem, webSiteSection);
 
-        WebSiteItem webSiteItem = DomainFactory.makeWebSiteItem();
+        WebSiteItem webSiteItem = new WebSiteItem();
 
         fillWebSiteItemForDB(infoWebSiteItem, user, webSiteSection,
                 webSiteItem);

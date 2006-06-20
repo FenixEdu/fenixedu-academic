@@ -5,8 +5,9 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.publication.InfoPublication;
-import net.sourceforge.fenixedu.domain.DomainFactory;
+
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.research.result.Publication;
 import net.sourceforge.fenixedu.domain.research.result.PublicationType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
@@ -19,7 +20,7 @@ public class InsertPublication extends Service {
 
         final PublicationType publicationType = rootDomainObject.readPublicationTypeByOID(infoPublication.getInfoPublicationType().getIdInternal());
         
-        DomainFactory.makePublication(infoPublication,publicationType,authors);
+        new Publication(infoPublication,publicationType,authors);
     }
     
 }

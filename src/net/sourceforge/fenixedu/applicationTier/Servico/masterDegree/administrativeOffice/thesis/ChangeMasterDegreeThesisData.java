@@ -10,7 +10,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServi
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.GuiderAlreadyChosenServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
-import net.sourceforge.fenixedu.domain.DomainFactory;
+
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.ExternalPerson;
 import net.sourceforge.fenixedu.domain.MasterDegreeThesisDataVersion;
@@ -70,10 +70,9 @@ public class ChangeMasterDegreeThesisData extends Service {
 
         Employee employee = userView.getPerson().getEmployee();
 
-        MasterDegreeThesisDataVersion masterDegreeThesisDataVersion = DomainFactory
-                .makeMasterDegreeThesisDataVersion(storedMasterDegreeThesisDataVersion
-                        .getMasterDegreeThesis(), employee, dissertationTitle, new Date(), new State(
-                        State.ACTIVE));
+        MasterDegreeThesisDataVersion masterDegreeThesisDataVersion = new MasterDegreeThesisDataVersion(
+                storedMasterDegreeThesisDataVersion.getMasterDegreeThesis(), employee,
+                dissertationTitle, new Date(), new State(State.ACTIVE));
 
         Collection<Teacher> guiders = Teacher.readByNumbers(guidersNumbers);
         Collection<Teacher> assistentGuiders = Teacher.readByNumbers(assistentGuidersNumbers);

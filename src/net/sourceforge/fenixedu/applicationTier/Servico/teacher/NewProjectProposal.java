@@ -17,7 +17,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgume
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidSituationServiceException;
 import net.sourceforge.fenixedu.domain.Advisory;
 import net.sourceforge.fenixedu.domain.Attends;
-import net.sourceforge.fenixedu.domain.DomainFactory;
+
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExportGrouping;
 import net.sourceforge.fenixedu.domain.Grouping;
@@ -81,7 +81,7 @@ public class NewProjectProposal extends Service {
 
         boolean acceptProposal = false;
 
-        ExportGrouping groupPropertiesExecutionCourse = DomainFactory.makeExportGrouping(
+        ExportGrouping groupPropertiesExecutionCourse = new ExportGrouping(
                 groupProperties, goalExecutionCourse);
         groupPropertiesExecutionCourse.setProposalState(new ProposalState(new Integer(3)));
         groupPropertiesExecutionCourse.setSenderPerson(senderPerson);
@@ -180,7 +180,7 @@ public class NewProjectProposal extends Service {
 
     private Advisory createNewProjectProposalAdvisory(ExecutionCourse goalExecutionCourse,
             ExecutionCourse startExecutionCourse, Grouping groupProperties, Person senderPerson) {
-        Advisory advisory = DomainFactory.makeAdvisory();
+        Advisory advisory = new Advisory();
         advisory.setCreated(new Date(Calendar.getInstance().getTimeInMillis()));
         if (groupProperties.getEnrolmentEndDay() != null) {
             advisory.setExpires(groupProperties.getEnrolmentEndDay().getTime());
@@ -205,7 +205,7 @@ public class NewProjectProposal extends Service {
 
     private Advisory createNewProjectProposalAdvisoryAux(ExecutionCourse goalExecutionCourse,
             ExecutionCourse startExecutionCourse, Grouping groupProperties, Person senderPerson) {
-        Advisory advisory = DomainFactory.makeAdvisory();
+        Advisory advisory = new Advisory();
         advisory.setCreated(new Date(Calendar.getInstance().getTimeInMillis()));
         if (groupProperties.getEnrolmentEndDay() != null) {
             advisory.setExpires(groupProperties.getEnrolmentEndDay().getTime());
@@ -229,7 +229,7 @@ public class NewProjectProposal extends Service {
 
     private Advisory createNewProjectProposalAcceptedAdvisory(ExecutionCourse goalExecutionCourse,
             ExecutionCourse startExecutionCourse, Grouping groupProperties, Person senderPerson) {
-        Advisory advisory = DomainFactory.makeAdvisory();
+        Advisory advisory = new Advisory();
         advisory.setCreated(new Date(Calendar.getInstance().getTimeInMillis()));
         if (groupProperties.getEnrolmentEndDay() != null) {
             advisory.setExpires(groupProperties.getEnrolmentEndDay().getTime());

@@ -5,7 +5,7 @@ import java.util.Date;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
-import net.sourceforge.fenixedu.domain.DomainFactory;
+
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.onlineTests.Test;
 import net.sourceforge.fenixedu.domain.onlineTests.TestScope;
@@ -20,9 +20,9 @@ public class InsertTest extends Service {
         }
         TestScope testScope = TestScope.readByDomainObject(ExecutionCourse.class, executionCourseId);
         if (testScope == null) {
-            testScope = DomainFactory.makeTestScope(ExecutionCourse.class.getName(), executionCourseId);
+            testScope = new TestScope(ExecutionCourse.class.getName(), executionCourseId);
         }
-        Test test = DomainFactory.makeTest();
+        Test test = new Test();
         test.setTitle(title);
         test.setInformation(information);
         Date date = Calendar.getInstance().getTime();

@@ -15,7 +15,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServi
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.Advisory;
-import net.sourceforge.fenixedu.domain.DomainFactory;
+
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExportGrouping;
 import net.sourceforge.fenixedu.domain.Grouping;
@@ -111,7 +111,7 @@ public class RejectNewProjectProposal extends Service {
 
 	private Advisory createRejectAdvisory(ExecutionCourse executionCourse, Person senderPerson,
 			Person receiverPerson, ExportGrouping groupPropertiesExecutionCourse) {
-		Advisory advisory = DomainFactory.makeAdvisory();
+		Advisory advisory = new Advisory();
 		advisory.setCreated(new Date(Calendar.getInstance().getTimeInMillis()));
 		if (groupPropertiesExecutionCourse.getGrouping().getEnrolmentEndDay() != null) {
 			advisory.setExpires(groupPropertiesExecutionCourse.getGrouping().getEnrolmentEndDay()

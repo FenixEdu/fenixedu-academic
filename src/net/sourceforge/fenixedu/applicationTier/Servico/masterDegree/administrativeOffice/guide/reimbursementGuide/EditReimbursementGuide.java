@@ -14,7 +14,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingSe
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.guide.InvalidGuideSituationServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.guide.InvalidReimbursementValueServiceException;
 import net.sourceforge.fenixedu.domain.DocumentType;
-import net.sourceforge.fenixedu.domain.DomainFactory;
+
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.GratuitySituation;
@@ -63,7 +63,7 @@ public class EditReimbursementGuide extends Service {
         if (!validateReimbursementGuideSituation(activeSituation, situation)) {
             throw new InvalidGuideSituationServiceException();
         }
-        ReimbursementGuideSituation newActiveSituation = DomainFactory.makeReimbursementGuideSituation();
+        ReimbursementGuideSituation newActiveSituation = new ReimbursementGuideSituation();
 
         Person person = Person.readPersonByUsername(userView.getUtilizador());
         Employee employee = person.getEmployee();
@@ -95,7 +95,7 @@ public class EditReimbursementGuide extends Service {
                     .getAssociatedPersonAccount();
 
             if (personAccount == null) {
-                personAccount = DomainFactory.makePersonAccount(reimbursementGuide.getGuide()
+                personAccount = new PersonAccount(reimbursementGuide.getGuide()
                         .getPerson());
             }
 
@@ -117,7 +117,7 @@ public class EditReimbursementGuide extends Service {
                     // .readByOID(ReimbursementGuideEntry.class,
                     // reimbursementGuideEntry.getIdInternal());
 
-                    reimbursementTransaction = DomainFactory.makeReimbursementTransaction(
+                    reimbursementTransaction = new ReimbursementTransaction(
                             reimbursementGuideEntry.getValue(), new Timestamp(Calendar.getInstance()
                                     .getTimeInMillis()), "", reimbursementGuideEntry.getGuideEntry()
                                     .getGuide().getPaymentType(),
@@ -146,7 +146,7 @@ public class EditReimbursementGuide extends Service {
                 if (reimbursementGuideEntry.getGuideEntry().getDocumentType().equals(
                         DocumentType.INSURANCE)) {
 
-                    reimbursementTransaction = DomainFactory.makeReimbursementTransaction(
+                    reimbursementTransaction = new ReimbursementTransaction(
                             reimbursementGuideEntry.getValue(), new Timestamp(Calendar.getInstance()
                                     .getTimeInMillis()), "", reimbursementGuideEntry.getGuideEntry()
                                     .getGuide().getPaymentType(),

@@ -25,7 +25,7 @@ import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoSiteStudentTe
 import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoStudentTestQuestion;
 import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoStudentTestQuestionWithInfoQuestionAndInfoDistributedTest;
 import net.sourceforge.fenixedu.domain.Attends;
-import net.sourceforge.fenixedu.domain.DomainFactory;
+
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Mark;
 import net.sourceforge.fenixedu.domain.Student;
@@ -177,7 +177,7 @@ public class InsertStudentTestResponses extends Service {
                 Mark mark = onlineTest.getMarkByAttend(attend);
 
                 if (mark == null) {
-                    mark = DomainFactory.makeMark();
+                    mark = new Mark();
                     mark.setAttend(attend);
                     mark.setEvaluation(onlineTest);
                 }
@@ -190,7 +190,7 @@ public class InsertStudentTestResponses extends Service {
                 mark.setMark(grade);
             }
 
-            StudentTestLog studentTestLog = DomainFactory.makeStudentTestLog();
+            StudentTestLog studentTestLog = new StudentTestLog();
             studentTestLog.setDistributedTest(distributedTest);
             studentTestLog.setStudent(student);
             studentTestLog.setDate(Calendar.getInstance().getTime());

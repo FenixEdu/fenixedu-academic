@@ -16,7 +16,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoGuideSituation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGuideWithPersonAndExecutionDegreeAndContributor;
 import net.sourceforge.fenixedu.domain.Contributor;
 import net.sourceforge.fenixedu.domain.DocumentType;
-import net.sourceforge.fenixedu.domain.DomainFactory;
+
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.GraduationType;
 import net.sourceforge.fenixedu.domain.Guide;
@@ -81,7 +81,7 @@ public class CreateGuide extends Service {
         Contributor contributor = rootDomainObject.readContributorByOID(infoGuide.getInfoContributor()
                 .getIdInternal());
 
-        Guide guide = DomainFactory.makeGuide();
+        Guide guide = new Guide();
         guide.setExecutionDegree(executionDegree);
         guide.setContributor(contributor);
         guide.setPerson(person);
@@ -102,7 +102,7 @@ public class CreateGuide extends Service {
 
         // Write the new Entries of the Guide
         for (InfoGuideEntry infoGuideEntryIter : (List<InfoGuideEntry>) infoGuide.getInfoGuideEntries()) {
-            GuideEntry guideEntry = DomainFactory.makeGuideEntry();
+            GuideEntry guideEntry = new GuideEntry();
 
             guideEntry.setDescription(infoGuideEntryIter.getDescription());
             guideEntry.setDocumentType(infoGuideEntryIter.getDocumentType());
@@ -115,7 +115,7 @@ public class CreateGuide extends Service {
         }
 
         // Write the New Guide Situation
-        guideSituation = DomainFactory.makeGuideSituation(situationOfGuide, remarks, calendar.getTime(),
+        guideSituation = new GuideSituation(situationOfGuide, remarks, calendar.getTime(),
                 guide, new State(State.ACTIVE));
 
         InfoGuide result = InfoGuideWithPersonAndExecutionDegreeAndContributor.newInfoFromDomain(guide);

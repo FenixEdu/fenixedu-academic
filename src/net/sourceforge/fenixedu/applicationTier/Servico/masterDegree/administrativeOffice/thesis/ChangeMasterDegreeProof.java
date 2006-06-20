@@ -11,7 +11,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ScholarshipNo
 import net.sourceforge.fenixedu.applicationTier.strategy.degreeCurricularPlan.DegreeCurricularPlanStrategyFactory;
 import net.sourceforge.fenixedu.applicationTier.strategy.degreeCurricularPlan.IDegreeCurricularPlanStrategyFactory;
 import net.sourceforge.fenixedu.applicationTier.strategy.degreeCurricularPlan.strategys.IMasterDegreeCurricularPlanStrategy;
-import net.sourceforge.fenixedu.domain.DomainFactory;
+
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.ExternalPerson;
 import net.sourceforge.fenixedu.domain.MasterDegreeProofVersion;
@@ -65,7 +65,7 @@ public class ChangeMasterDegreeProof extends Service {
         List<Teacher> teacherJuries = (List<Teacher>) Teacher.readByNumbers(teacherJuriesNumbers);
         List<ExternalPerson> externalJuries = ExternalPerson.readByIDs(externalJuriesIDs);
 
-        DomainFactory.makeMasterDegreeProofVersion(storedMasterDegreeThesis, employee, new Date(),
+        new MasterDegreeProofVersion(storedMasterDegreeThesis, employee, new Date(),
                 proofDate, thesisDeliveryDate, finalResult, attachedCopiesNumber,
                 new State(State.ACTIVE), teacherJuries, externalJuries);
 

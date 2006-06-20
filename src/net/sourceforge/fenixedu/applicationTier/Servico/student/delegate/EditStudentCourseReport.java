@@ -8,7 +8,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.framework.EditDomainObje
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
 import net.sourceforge.fenixedu.dataTransferObject.student.InfoStudentCourseReport;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
-import net.sourceforge.fenixedu.domain.DomainFactory;
+
 import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.gesdis.StudentCourseReport;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -37,7 +37,7 @@ public class EditStudentCourseReport extends EditDomainObjectService {
 
     @Override
     protected DomainObject createNewDomainObject(InfoObject infoObject) {
-        return DomainFactory.makeStudentCourseReport();
+        return new StudentCourseReport();
     }
 
 	@Override

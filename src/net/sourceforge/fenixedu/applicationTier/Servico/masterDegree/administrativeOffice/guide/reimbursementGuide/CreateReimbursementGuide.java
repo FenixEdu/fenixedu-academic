@@ -15,7 +15,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.guide.Invalid
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.guide.RequiredJustificationServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.guide.reimbursementGuide.InfoReimbursementGuideEntry;
 import net.sourceforge.fenixedu.domain.DocumentType;
-import net.sourceforge.fenixedu.domain.DomainFactory;
+
 import net.sourceforge.fenixedu.domain.Guide;
 import net.sourceforge.fenixedu.domain.GuideEntry;
 import net.sourceforge.fenixedu.domain.GuideState;
@@ -62,7 +62,7 @@ public class CreateReimbursementGuide extends Service {
         }
 
         Integer reimbursementGuideNumber = ReimbursementGuide.generateReimbursementGuideNumber();
-        ReimbursementGuide reimbursementGuide = DomainFactory.makeReimbursementGuide();
+        ReimbursementGuide reimbursementGuide = new ReimbursementGuide();
 
         for (InfoReimbursementGuideEntry infoReimbursementGuideEntry : (List<InfoReimbursementGuideEntry>) infoReimbursementGuideEntries) {
 
@@ -84,8 +84,7 @@ public class CreateReimbursementGuide extends Service {
             }
 
             // create new reimbursement entry
-            ReimbursementGuideEntry newReimbursementGuideEntry = DomainFactory
-                    .makeReimbursementGuideEntry();
+            ReimbursementGuideEntry newReimbursementGuideEntry = new ReimbursementGuideEntry();
             newReimbursementGuideEntry.setGuideEntry(guideEntry);
             newReimbursementGuideEntry.setJustification(infoReimbursementGuideEntry.getJustification());
             newReimbursementGuideEntry.setReimbursementGuide(reimbursementGuide);
@@ -99,8 +98,7 @@ public class CreateReimbursementGuide extends Service {
         reimbursementGuide.setGuide(guide);
 
         // reimbursement Guide Situation
-        ReimbursementGuideSituation reimbursementGuideSituation = DomainFactory
-                .makeReimbursementGuideSituation();
+        ReimbursementGuideSituation reimbursementGuideSituation = new ReimbursementGuideSituation();
         reimbursementGuideSituation.setEmployee(userView.getPerson().getEmployee());
         reimbursementGuideSituation.setModificationDate(Calendar.getInstance());
         reimbursementGuideSituation.setOfficialDate(Calendar.getInstance());

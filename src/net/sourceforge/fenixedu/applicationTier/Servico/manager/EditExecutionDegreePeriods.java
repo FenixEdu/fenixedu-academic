@@ -7,7 +7,7 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPeriod;
-import net.sourceforge.fenixedu.domain.DomainFactory;
+
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.OccupationPeriod;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -51,7 +51,7 @@ public class EditExecutionDegreePeriods extends Service {
         if (period == null) {
             Calendar startDate = infoPeriodNew.getStartDate();
             Calendar endDate = infoPeriodNew.getEndDate();
-            period = DomainFactory.makeOccupationPeriod(startDate.getTime(), endDate.getTime());
+            period = new OccupationPeriod(startDate.getTime(), endDate.getTime());
         }
 
         for (int i = infoPeriodListSize - 2; i >= 0; i--) {
@@ -65,7 +65,7 @@ public class EditExecutionDegreePeriods extends Service {
             if (period == null) {
                 Calendar startDate = infoPeriodNew.getStartDate();
                 Calendar endDate = infoPeriodNew.getEndDate();
-                period = DomainFactory.makeOccupationPeriod(startDate.getTime(), endDate.getTime());
+                period = new OccupationPeriod(startDate.getTime(), endDate.getTime());
                 period.setNextPeriod(nextPeriod);
             }
         }

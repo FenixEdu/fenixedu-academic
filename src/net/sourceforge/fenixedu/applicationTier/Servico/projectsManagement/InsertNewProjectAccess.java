@@ -12,7 +12,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
-import net.sourceforge.fenixedu.domain.DomainFactory;
+
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.domain.person.RoleType;
@@ -52,7 +52,7 @@ public class InsertNewProjectAccess extends Service {
             if (ProjectAccess.getByPersonAndProject(person, new Integer(project.getProjectCode())) != null) {
                 throw new IllegalArgumentException();
             }
-            ProjectAccess projectAccess = DomainFactory.makeProjectAccess();
+            ProjectAccess projectAccess = new ProjectAccess();
             projectAccess.setPerson(person);
             projectAccess.setKeyProjectCoordinator(coordinatorCode);
             projectAccess.setKeyProject(new Integer(project.getProjectCode()));
@@ -76,7 +76,7 @@ public class InsertNewProjectAccess extends Service {
             Integer projectCode = new Integer(projectCodes[i]);
             ProjectAccess projectAccess = getPersonOldProjectAccess(person, projectCode);
             if (projectAccess == null) {
-                projectAccess = DomainFactory.makeProjectAccess();
+                projectAccess = new ProjectAccess();
                 projectAccess.setPerson(person);
                 projectAccess.setKeyProjectCoordinator(new Integer(userNumber));
                 projectAccess.setKeyProject(projectCode);

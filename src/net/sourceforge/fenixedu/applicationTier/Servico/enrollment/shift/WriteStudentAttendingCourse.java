@@ -8,7 +8,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
 import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
-import net.sourceforge.fenixedu.domain.DomainFactory;
+
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Student;
@@ -48,7 +48,7 @@ public class WriteStudentAttendingCourse extends Service {
                     executionCourse);
 
             if (attendsEntry == null) {
-                attendsEntry = DomainFactory.makeAttends();
+                attendsEntry = new Attends();
                 attendsEntry.setAluno(studentCurricularPlan.getStudent());
                 attendsEntry.setDisciplinaExecucao(executionCourse);
 

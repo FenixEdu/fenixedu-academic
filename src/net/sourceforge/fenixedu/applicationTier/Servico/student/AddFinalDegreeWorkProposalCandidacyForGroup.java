@@ -6,7 +6,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.student;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.domain.DomainFactory;
+
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Group;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.GroupProposal;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal;
@@ -43,7 +43,7 @@ public class AddFinalDegreeWorkProposalCandidacyForGroup extends Service {
                         .getMinimumNumberOfStudents().toString());
             }
 
-            GroupProposal groupProposal = DomainFactory.makeGroupProposal();
+            GroupProposal groupProposal = new GroupProposal();
             groupProposal.setFinalDegreeWorkProposal(proposal);
             groupProposal.setFinalDegreeDegreeWorkGroup(group);
             groupProposal.setOrderOfPreference(Integer.valueOf(group.getGroupProposals().size()));

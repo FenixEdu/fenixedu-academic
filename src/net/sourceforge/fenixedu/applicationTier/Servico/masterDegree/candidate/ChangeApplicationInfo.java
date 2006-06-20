@@ -24,7 +24,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeCandidateWith
 import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
 import net.sourceforge.fenixedu.domain.CandidateSituation;
 import net.sourceforge.fenixedu.domain.Country;
-import net.sourceforge.fenixedu.domain.DomainFactory;
+
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.MasterDegreeCandidate;
 import net.sourceforge.fenixedu.domain.Person;
@@ -80,7 +80,7 @@ public class ChangeApplicationInfo extends Service {
                 .getActiveCandidateSituation();
         oldCandidateSituation.setValidation(new State(State.INACTIVE));
 
-        CandidateSituation activeCandidateSituation = DomainFactory.makeCandidateSituation();
+        CandidateSituation activeCandidateSituation = new CandidateSituation();
         activeCandidateSituation.setDate(Calendar.getInstance().getTime());
         activeCandidateSituation.setSituation(SituationName.PENDENT_COM_DADOS_OBJ);
         activeCandidateSituation.setValidation(new State(State.ACTIVE));

@@ -4,7 +4,7 @@ import java.util.Calendar;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.domain.CandidateSituation;
-import net.sourceforge.fenixedu.domain.DomainFactory;
+
 import net.sourceforge.fenixedu.domain.MasterDegreeCandidate;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -35,7 +35,7 @@ public class ApproveCandidates extends Service {
 
             // Create the new Candidate Situation
 
-            CandidateSituation candidateSituation = DomainFactory.makeCandidateSituation();
+            CandidateSituation candidateSituation = new CandidateSituation();
             candidateSituation.setDate(Calendar.getInstance().getTime());
             candidateSituation.setMasterDegreeCandidate(masterDegreeCandidate);
             candidateSituation.setRemarks(remarks[i]);

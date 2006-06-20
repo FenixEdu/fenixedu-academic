@@ -21,7 +21,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoLessonServiceResult;
 import net.sourceforge.fenixedu.dataTransferObject.InfoRoomOccupation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShiftServiceResult;
-import net.sourceforge.fenixedu.domain.DomainFactory;
+
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.Lesson;
 import net.sourceforge.fenixedu.domain.OccupationPeriod;
@@ -50,7 +50,7 @@ public class CreateLesson extends Service {
 
                 InfoShiftServiceResult infoShiftServiceResult = valid(shift, infoLesson);
                 if (infoShiftServiceResult.isSUCESS()) {
-                    RoomOccupation roomOccupation = DomainFactory.makeRoomOccupation();
+                    RoomOccupation roomOccupation = new RoomOccupation();
                     roomOccupation.setDayOfWeek(infoLesson.getInfoRoomOccupation().getDayOfWeek());
                     roomOccupation.setStartTime(infoLesson.getInfoRoomOccupation().getStartTime());
                     roomOccupation.setEndTime(infoLesson.getInfoRoomOccupation().getEndTime());
@@ -65,7 +65,7 @@ public class CreateLesson extends Service {
                             infoLesson.getInfoRoomOccupation().getInfoPeriod().getIdInternal());
                     roomOccupation.setPeriod(period);
 
-                    Lesson aula2 = DomainFactory.makeLesson(infoLesson.getDiaSemana(), infoLesson
+                    Lesson aula2 = new Lesson(infoLesson.getDiaSemana(), infoLesson
                             .getInicio(), infoLesson.getFim(), infoLesson.getTipo(), sala,
                             roomOccupation, shift);
 

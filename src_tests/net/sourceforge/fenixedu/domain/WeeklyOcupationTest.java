@@ -24,7 +24,7 @@ public class WeeklyOcupationTest extends DomainTestBase {
 	protected void setUp() throws Exception {
 		super.setUp();
 		
-		teacher = DomainFactory.makeTeacher();
+		teacher = new Teacher();
 		infoWeeklyOcupationToCreate = new InfoWeeklyOcupation();
 		infoWeeklyOcupationToCreate.setOther(1);
 		infoWeeklyOcupationToCreate.setLecture(2);
@@ -35,7 +35,7 @@ public class WeeklyOcupationTest extends DomainTestBase {
 	}
 	
 	private void setUpEdit() {
-		weeklyOcupationToEdit = DomainFactory.makeWeeklyOcupation(teacher, infoWeeklyOcupationToCreate);
+		weeklyOcupationToEdit = new WeeklyOcupation(teacher, infoWeeklyOcupationToCreate);
 		
 		infoWeeklyOcupationToEdit = new InfoWeeklyOcupation();
 		infoWeeklyOcupationToEdit.setOther(5);
@@ -47,14 +47,14 @@ public class WeeklyOcupationTest extends DomainTestBase {
 	
 	public void testCreateWeeklyOcupation() {
 		try {
-			DomainFactory.makeWeeklyOcupation(null, infoWeeklyOcupationToCreate);
+			new WeeklyOcupation(null, infoWeeklyOcupationToCreate);
 			fail("Should have thrown a DomainException");
 		
 		} catch (DomainException de) {
 			
 		}
 		
-		WeeklyOcupation newWeeklyOcupation = DomainFactory.makeWeeklyOcupation(teacher, infoWeeklyOcupationToCreate);
+		WeeklyOcupation newWeeklyOcupation = new WeeklyOcupation(teacher, infoWeeklyOcupationToCreate);
 		assertTrue("Failed to reference teacher!", newWeeklyOcupation.hasTeacher());
 		assertEquals("Different teacher!", newWeeklyOcupation.getTeacher(), teacher);
 		verifyWeeklyOcupationAttributes(newWeeklyOcupation, infoWeeklyOcupationToCreate);

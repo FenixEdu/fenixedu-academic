@@ -45,7 +45,7 @@ public class ExamTest extends DomainTestBase {
     public void testCreate() {
 
         try {
-            DomainFactory.makeExam(examDate, examStartTime.getTime(), examEndTime.getTime(), executionCoursesToAssociate, 
+            new Exam(examDate, examStartTime.getTime(), examEndTime.getTime(), executionCoursesToAssociate, 
                     curricularCourseScopesToAssociate, rooms, period, season);
             fail("Expected DomainException: There is already an 'Exam' to that season and curricular course scope.");
         } catch (DomainException e) {
@@ -54,7 +54,7 @@ public class ExamTest extends DomainTestBase {
         }
 
         try {
-            DomainFactory.makeExam(examDate, examEndTime.getTime(), examStartTime.getTime(),
+            new Exam(examDate, examEndTime.getTime(), examStartTime.getTime(),
                     executionCoursesToAssociate, curricularCourseScopesToAssociate, rooms, period, season);
             fail("Expected DomainException: The exam start time is after the exam end time.");
         } catch (DomainException e) {
@@ -71,7 +71,7 @@ public class ExamTest extends DomainTestBase {
 
         otherExam.addAssociatedCurricularCourseScope(newCurricularCourseScope);
 
-        final Exam newExam = DomainFactory.makeExam(examDate, examStartTime.getTime(), examEndTime
+        final Exam newExam = new Exam(examDate, examStartTime.getTime(), examEndTime
                 .getTime(), executionCoursesToAssociate, curricularCourseScopesToAssociate,
                 rooms, period, season);
         checkExamAttributes(newExam, examDate, examStartTime.getTime(), examEndTime.getTime(), season,

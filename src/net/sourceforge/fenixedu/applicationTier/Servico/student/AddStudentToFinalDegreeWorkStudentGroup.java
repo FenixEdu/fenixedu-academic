@@ -14,7 +14,7 @@ import net.sourceforge.fenixedu.domain.CurricularCourseScope;
 import net.sourceforge.fenixedu.domain.CurricularSemester;
 import net.sourceforge.fenixedu.domain.CurricularYear;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.DomainFactory;
+
 import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Group;
@@ -109,7 +109,7 @@ public class AddStudentToFinalDegreeWorkStudentGroup extends Service {
     		}
         }
 
-        GroupStudent groupStudent = DomainFactory.makeGroupStudent();
+        GroupStudent groupStudent = new GroupStudent();
         groupStudent.setStudent(student);
         groupStudent.setFinalDegreeDegreeWorkGroup(group);
         return true;

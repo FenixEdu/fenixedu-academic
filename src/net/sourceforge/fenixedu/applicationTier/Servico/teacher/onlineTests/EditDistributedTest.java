@@ -13,7 +13,7 @@ import net.sourceforge.fenixedu.dataTransferObject.comparators.CalendarDateCompa
 import net.sourceforge.fenixedu.dataTransferObject.comparators.CalendarHourComparator;
 import net.sourceforge.fenixedu.domain.Advisory;
 import net.sourceforge.fenixedu.domain.Attends;
-import net.sourceforge.fenixedu.domain.DomainFactory;
+
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Mark;
 import net.sourceforge.fenixedu.domain.Student;
@@ -90,7 +90,7 @@ public class EditDistributedTest extends Service {
         } else if (change2EvaluationType) {
             // Change to evaluation test
             // Create evaluation (onlineTest) and marks
-            OnlineTest onlineTest = DomainFactory.makeOnlineTest();
+            OnlineTest onlineTest = new OnlineTest();
             onlineTest.setDistributedTest(distributedTest);
             onlineTest.addAssociatedExecutionCourses(executionCourse);
             final Set<Student> students = distributedTest.findStudents();
@@ -102,7 +102,7 @@ public class EditDistributedTest extends Service {
                 }
                 Attends attend = student.readAttendByExecutionCourse(executionCourse);
                 if (attend != null) {
-                    Mark mark = DomainFactory.makeMark();
+                    Mark mark = new Mark();
                     mark.setAttend(attend);
                     mark.setEvaluation(onlineTest);
                     DecimalFormat df = new DecimalFormat("#0.##");
@@ -119,7 +119,7 @@ public class EditDistributedTest extends Service {
     private Advisory createTestAdvisory(DistributedTest distributedTest) {
         ResourceBundle bundle = ResourceBundle.getBundle("resources.ApplicationResources");
 
-        Advisory advisory = DomainFactory.makeAdvisory();
+        Advisory advisory = new Advisory();
         advisory.setCreated(Calendar.getInstance().getTime());
         advisory.setExpires(distributedTest.getEndDate().getTime());
         advisory.setSender(MessageFormat.format(bundle.getString("message.distributedTest.from"),
@@ -152,7 +152,7 @@ public class EditDistributedTest extends Service {
 
     private DistributedTestAdvisory createDistributedTestAdvisory(DistributedTest distributedTest,
             Advisory advisory) {
-        DistributedTestAdvisory distributedTestAdvisory = DomainFactory.makeDistributedTestAdvisory();
+        DistributedTestAdvisory distributedTestAdvisory = new DistributedTestAdvisory();
         distributedTestAdvisory.setAdvisory(advisory);
         distributedTestAdvisory.setDistributedTest(distributedTest);
         return distributedTestAdvisory;

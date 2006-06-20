@@ -13,7 +13,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
 import net.sourceforge.fenixedu.domain.Advisory;
-import net.sourceforge.fenixedu.domain.DomainFactory;
+
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.onlineTests.DistributedTest;
@@ -43,7 +43,7 @@ public class InsertDistributedTest extends Service {
         if (executionCourse == null)
             throw new InvalidArgumentsServiceException();
 
-        DistributedTest distributedTest = DomainFactory.makeDistributedTest();
+        DistributedTest distributedTest = new DistributedTest();
 
         Test test = rootDomainObject.readTestByOID(testId);
         if (test == null)
@@ -63,7 +63,7 @@ public class InsertDistributedTest extends Service {
         TestScope testScope = TestScope.readByDomainObject(ExecutionCourse.class, executionCourseId);
 
         if (testScope == null) {
-            testScope = DomainFactory.makeTestScope(executionCourse);
+            testScope = new TestScope(executionCourse);
         }
         distributedTest.setTestScope(testScope);
 
@@ -75,7 +75,7 @@ public class InsertDistributedTest extends Service {
 
             for (InfoStudent infoStudent : infoStudentList) {
                 Student student = rootDomainObject.readStudentByOID(infoStudent.getIdInternal());
-                StudentTestQuestion studentTestQuestion = DomainFactory.makeStudentTestQuestion();
+                StudentTestQuestion studentTestQuestion = new StudentTestQuestion();
                 studentTestQuestion.setStudent(student);
                 studentTestQuestion.setDistributedTest(distributedTest);
                 studentTestQuestion.setTestQuestionOrder(testQuestion.getTestQuestionOrder());
@@ -96,7 +96,7 @@ public class InsertDistributedTest extends Service {
         }
         // Create Evaluation - OnlineTest and Marks
         if (distributedTest.getTestType().equals(new TestType(TestType.EVALUATION))) {
-            OnlineTest onlineTest = DomainFactory.makeOnlineTest();
+            OnlineTest onlineTest = new OnlineTest();
             onlineTest.addAssociatedExecutionCourses(executionCourse);
             onlineTest.setDistributedTest(distributedTest);
         }
@@ -105,7 +105,7 @@ public class InsertDistributedTest extends Service {
         Advisory advisory = getAdvisory(distributedTest, executionCourse.getNome());
 
         // Create DistributedTestAdvisory
-        DistributedTestAdvisory distributedTestAdvisory = DomainFactory.makeDistributedTestAdvisory();
+        DistributedTestAdvisory distributedTestAdvisory = new DistributedTestAdvisory();
         distributedTestAdvisory.setAdvisory(advisory);
         distributedTestAdvisory.setDistributedTest(distributedTest);
 
@@ -124,7 +124,7 @@ public class InsertDistributedTest extends Service {
 
     private Advisory getAdvisory(DistributedTest distributedTest, String sender) {
         ResourceBundle bundle = ResourceBundle.getBundle("resources.ApplicationResources");
-        Advisory advisory = DomainFactory.makeAdvisory();
+        Advisory advisory = new Advisory();
         advisory.setCreated(Calendar.getInstance().getTime());
         advisory.setExpires(distributedTest.getEndDate().getTime());
         advisory.setSender(MessageFormat.format(bundle.getString("message.distributedTest.from"), new Object[] { sender }));

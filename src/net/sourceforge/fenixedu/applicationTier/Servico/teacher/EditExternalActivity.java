@@ -8,7 +8,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoExternalActivity;
-import net.sourceforge.fenixedu.domain.DomainFactory;
+
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.teacher.ExternalActivity;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -24,7 +24,7 @@ public class EditExternalActivity extends Service {
 		//If it doesn't exist in the database, a new one has to be created
 		if(externalActivity == null) {
 			Teacher teacher = rootDomainObject.readTeacherByOID(infoExternalActivity.getInfoTeacher().getIdInternal());
-			externalActivity = DomainFactory.makeExternalActivity(teacher, infoExternalActivity);
+			externalActivity = new ExternalActivity(teacher, infoExternalActivity);
 
 		} else {
 			externalActivity.edit(infoExternalActivity);

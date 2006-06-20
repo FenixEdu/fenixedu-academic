@@ -3,7 +3,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administra
 import java.util.Date;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
-import net.sourceforge.fenixedu.domain.DomainFactory;
+
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.InsuranceValue;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -21,7 +21,7 @@ public class EditInsuranceValueByExecutionYearID extends Service {
             insuranceValue.setEndDate(endDate);
             insuranceValue.setAnnualValue(annualValue);
         } else {
-            insuranceValue = DomainFactory.makeInsuranceValue(executionYear, annualValue, endDate);
+            insuranceValue = new InsuranceValue(executionYear, annualValue, endDate);
         }
     }
 

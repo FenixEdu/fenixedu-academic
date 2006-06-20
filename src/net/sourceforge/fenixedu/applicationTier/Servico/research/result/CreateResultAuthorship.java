@@ -8,7 +8,7 @@ import net.sourceforge.fenixedu.dataTransferObject.research.ProjectParticipantSi
 import net.sourceforge.fenixedu.dataTransferObject.research.ProjectParticipantUnitCreationBean;
 import net.sourceforge.fenixedu.dataTransferObject.research.result.ResultAuthorshipFullCreationBean;
 import net.sourceforge.fenixedu.dataTransferObject.research.result.ResultAuthorshipSimpleCreationBean;
-import net.sourceforge.fenixedu.domain.DomainFactory;
+
 import net.sourceforge.fenixedu.domain.ExternalPerson;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.research.project.Project;

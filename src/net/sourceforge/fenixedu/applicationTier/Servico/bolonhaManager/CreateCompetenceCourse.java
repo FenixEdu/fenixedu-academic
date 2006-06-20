@@ -7,7 +7,7 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingCompetenceCourseInformationException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.CompetenceCourse;
-import net.sourceforge.fenixedu.domain.DomainFactory;
+
 import net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseLevel;
 import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
 import net.sourceforge.fenixedu.domain.degreeStructure.RegimeType;
@@ -26,7 +26,7 @@ public class CreateCompetenceCourse extends Service {
             throw new FenixServiceException("error.invalidUnit");
         }
         checkIfCanCreateCompetenceCourse(name.trim(), nameEn.trim());
-        return DomainFactory.makeCompetenceCourse(name, nameEn, acronym, basic, regimeType,
+        return new CompetenceCourse(name, nameEn, acronym, basic, regimeType,
                 competenceCourseLevel, CurricularStage.DRAFT, unit);
     }
 

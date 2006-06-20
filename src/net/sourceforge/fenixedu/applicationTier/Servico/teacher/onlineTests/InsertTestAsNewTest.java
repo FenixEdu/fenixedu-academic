@@ -9,7 +9,7 @@ import java.util.ResourceBundle;
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
-import net.sourceforge.fenixedu.domain.DomainFactory;
+
 import net.sourceforge.fenixedu.domain.onlineTests.Test;
 import net.sourceforge.fenixedu.domain.onlineTests.TestQuestion;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -22,7 +22,7 @@ public class InsertTestAsNewTest extends Service {
             throw new InvalidArgumentsServiceException();
         }
 
-        Test test = DomainFactory.makeTest();
+        Test test = new Test();
         ResourceBundle bundle = ResourceBundle.getBundle("resources.ApplicationResources");
         test.setTitle(MessageFormat.format(bundle.getString("label.testTitle.duplicated"), new Object[] { oldTest.getTitle() }));
         test.setInformation(oldTest.getInformation());
@@ -35,7 +35,7 @@ public class InsertTestAsNewTest extends Service {
         List<TestQuestion> testQuestionList = oldTest.getTestQuestions();
 
         for (TestQuestion testQuestion : testQuestionList) {
-            TestQuestion newTestQuestion = DomainFactory.makeTestQuestion();
+            TestQuestion newTestQuestion = new TestQuestion();
             newTestQuestion.setQuestion(testQuestion.getQuestion());
             newTestQuestion.setTestQuestionOrder(testQuestion.getTestQuestionOrder());
             newTestQuestion.setTestQuestionValue(testQuestion.getTestQuestionValue());

@@ -5,7 +5,7 @@ import java.util.Date;
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.DomainFactory;
+
 import net.sourceforge.fenixedu.domain.EnrolmentPeriodInClasses;
 import net.sourceforge.fenixedu.domain.EnrolmentPeriodInCurricularCourses;
 import net.sourceforge.fenixedu.domain.EnrolmentPeriodInCurricularCoursesSpecialSeason;
@@ -30,11 +30,11 @@ public class CreateEnrolmentPeriods extends Service {
 	private void createPeriod(final String enrolmentPeriodClassName, final Date startDate, final Date endDate,
 			final ExecutionPeriod executionPeriod, final DegreeCurricularPlan degreeCurricularPlan) throws FenixServiceException {
 		if (EnrolmentPeriodInClasses.class.getName().equals(enrolmentPeriodClassName)) {
-    		DomainFactory.makeEnrolmentPeriodInClasses(degreeCurricularPlan, executionPeriod, startDate, endDate);
+    		new EnrolmentPeriodInClasses(degreeCurricularPlan, executionPeriod, startDate, endDate);
     	} else if (EnrolmentPeriodInCurricularCourses.class.getName().equals(enrolmentPeriodClassName)) {
-    		DomainFactory.makeEnrolmentPeriodInCurricularCourses(degreeCurricularPlan, executionPeriod, startDate, endDate);
+    		new EnrolmentPeriodInCurricularCourses(degreeCurricularPlan, executionPeriod, startDate, endDate);
     	} else if (EnrolmentPeriodInCurricularCoursesSpecialSeason.class.getName().equals(enrolmentPeriodClassName)) {
-    		DomainFactory.makeEnrolmentPeriodInCurricularCoursesSpecialSeason(degreeCurricularPlan, executionPeriod, startDate, endDate);
+    		new EnrolmentPeriodInCurricularCoursesSpecialSeason(degreeCurricularPlan, executionPeriod, startDate, endDate);
     	} else {
     		throw new FenixServiceException("error.invalid.enrolment.period.class.name");
     	}

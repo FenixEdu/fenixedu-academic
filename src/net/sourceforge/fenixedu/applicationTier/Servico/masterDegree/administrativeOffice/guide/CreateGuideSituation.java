@@ -3,7 +3,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administra
 import java.util.Date;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
-import net.sourceforge.fenixedu.domain.DomainFactory;
+
 import net.sourceforge.fenixedu.domain.Guide;
 import net.sourceforge.fenixedu.domain.GuideSituation;
 import net.sourceforge.fenixedu.domain.GuideState;
@@ -26,7 +26,7 @@ public class CreateGuideSituation extends Service {
             guideSituation.setState(new State(State.INACTIVE));
         }
 
-        GuideSituation guideSituation = DomainFactory.makeGuideSituation(situation, remarks, date,
+        GuideSituation guideSituation = new GuideSituation(situation, remarks, date,
                 guide, new State(State.ACTIVE));
 
         guide.getGuideSituations().add(guideSituation);

@@ -2,7 +2,8 @@ package net.sourceforge.fenixedu.applicationTier.Servico.fileManager;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoInexistente;
-import net.sourceforge.fenixedu.domain.DomainFactory;
+
+import net.sourceforge.fenixedu.domain.FileEntry;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.util.ByteArray;
@@ -39,7 +40,7 @@ public class StorePersonalPhoto extends Service {
             person.getPersonalPhoto().delete();
         }
 
-        DomainFactory.makeFileEntry(contentType, new ByteArray(contents), person);
+        new FileEntry(contentType, new ByteArray(contents), person);
 
     }
 }

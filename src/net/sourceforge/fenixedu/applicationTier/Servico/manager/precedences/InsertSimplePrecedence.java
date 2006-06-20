@@ -7,7 +7,8 @@ package net.sourceforge.fenixedu.applicationTier.Servico.manager.precedences;
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
-import net.sourceforge.fenixedu.domain.DomainFactory;
+import net.sourceforge.fenixedu.domain.precedences.Precedence;
+
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 /**
@@ -31,7 +32,7 @@ public class InsertSimplePrecedence extends Service {
             }
         }
 
-        DomainFactory.makePrecedence(curricularCourseToAddPrecedence, className,
+        new Precedence(curricularCourseToAddPrecedence, className,
                 precedentCurricularCourse, number);
     }
 

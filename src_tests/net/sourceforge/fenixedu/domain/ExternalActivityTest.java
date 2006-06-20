@@ -42,12 +42,12 @@ public class ExternalActivityTest extends DomainTestBase {
 	}
 	
 	private void setUpDelete() {
-		externalActivityToDelete = DomainFactory.makeExternalActivity(teacher, infoExternalActivityToCreate);
+		externalActivityToDelete = new ExternalActivity(teacher, infoExternalActivityToCreate);
 		initializeExternalActivity(externalActivityToDelete);
 	}
 
 	private void setUpEdit() {
-		externalActivityToEdit = DomainFactory.makeExternalActivity(teacher, infoExternalActivityToCreate);
+		externalActivityToEdit = new ExternalActivity(teacher, infoExternalActivityToCreate);
 		initializeExternalActivity(externalActivityToEdit);
 
 		infoExternalActivityToEdit = new InfoExternalActivity();
@@ -56,14 +56,14 @@ public class ExternalActivityTest extends DomainTestBase {
 	
 	public void testCreateExternalActivity() {
 		try {
-			DomainFactory.makeExternalActivity(null, infoExternalActivityToCreate);
+			new ExternalActivity(null, infoExternalActivityToCreate);
 			fail("Should have thrown a DomainException");
 
 		} catch(DomainException de) {
 			
 		}
 
-		ExternalActivity newExternalActivity =  DomainFactory.makeExternalActivity(teacher, infoExternalActivityToCreate);
+		ExternalActivity newExternalActivity =  new ExternalActivity(teacher, infoExternalActivityToCreate);
 		assertTrue("Failed to reference teacher!", newExternalActivity.hasTeacher());
 		verifyExternalActivityAttributes(newExternalActivity, infoExternalActivityToCreate);
 	}

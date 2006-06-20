@@ -14,7 +14,7 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGratuityValues;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPaymentPhase;
-import net.sourceforge.fenixedu.domain.DomainFactory;
+
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.GratuityValues;
 import net.sourceforge.fenixedu.domain.PaymentPhase;
@@ -58,7 +58,7 @@ public class InsertGratuityData extends Service {
 		if (gratuityValues == null) // it doesn't exist in database, then
 		// write it
 		{
-			gratuityValues = DomainFactory.makeGratuityValues();
+			gratuityValues = new GratuityValues();
 
 			gratuityValues.setExecutionDegree(executionDegree);
 		}
@@ -194,7 +194,7 @@ public class InsertGratuityData extends Service {
 			while (iterator.hasNext()) {
 				InfoPaymentPhase infoPaymentPhase = (InfoPaymentPhase) iterator.next();
 
-				PaymentPhase paymentPhase = DomainFactory.makePaymentPhase();
+				PaymentPhase paymentPhase = new PaymentPhase();
 				paymentPhase.setStartDate(infoPaymentPhase.getStartDate());
 				paymentPhase.setEndDate(infoPaymentPhase.getEndDate());
 				paymentPhase.setValue(infoPaymentPhase.getValue());

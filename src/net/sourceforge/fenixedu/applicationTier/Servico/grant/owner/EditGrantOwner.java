@@ -4,7 +4,7 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.grant.owner.InfoGrantOwner;
 import net.sourceforge.fenixedu.domain.Country;
-import net.sourceforge.fenixedu.domain.DomainFactory;
+
 import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Role;
@@ -67,7 +67,7 @@ public class EditGrantOwner extends Service {
         // create or edit person information
         if (infoGrantOwner.getPersonInfo().getIdInternal() == null) {            
             infoGrantOwner.getPersonInfo().setUsername("T" + System.currentTimeMillis());
-            person = DomainFactory.makePerson(infoGrantOwner.getPersonInfo(), country);            
+            person = new Person(infoGrantOwner.getPersonInfo(), country);            
         } else {
             person = (Person) rootDomainObject.readPartyByOID(infoGrantOwner.getPersonInfo()
                     .getIdInternal());
@@ -84,7 +84,7 @@ public class EditGrantOwner extends Service {
         if (grantOwner == null) {
             
             maxNumber = GrantOwner.readMaxGrantOwnerNumber();
-            grantOwner = DomainFactory.makeGrantOwner();
+            grantOwner = new GrantOwner();
 
             if (!person.hasRole(RoleType.PERSON)) {
                 person.addPersonRoles(Role.getRoleByRoleType(RoleType.PERSON));

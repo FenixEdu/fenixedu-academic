@@ -17,7 +17,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServi
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonValidChangeServiceException;
 import net.sourceforge.fenixedu.domain.DocumentType;
-import net.sourceforge.fenixedu.domain.DomainFactory;
+
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.GratuitySituation;
 import net.sourceforge.fenixedu.domain.Guide;
@@ -28,6 +28,8 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.PersonAccount;
 import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
+import net.sourceforge.fenixedu.domain.transactions.GratuityTransaction;
+import net.sourceforge.fenixedu.domain.transactions.InsuranceTransaction;
 import net.sourceforge.fenixedu.domain.transactions.PaymentTransaction;
 import net.sourceforge.fenixedu.domain.transactions.PaymentType;
 import net.sourceforge.fenixedu.domain.transactions.TransactionType;
@@ -77,7 +79,7 @@ public class ChangeGuideSituation extends Service {
             // Create The New Situation
             activeGuideSituation.setState(new State(State.INACTIVE));
 
-            GuideSituation newGuideSituation = DomainFactory.makeGuideSituation();
+            GuideSituation newGuideSituation = new GuideSituation();
 
             Calendar date = Calendar.getInstance();
             newGuideSituation.setDate(date.getTime());
@@ -92,7 +94,7 @@ public class ChangeGuideSituation extends Service {
                 // For Transactions Creation
                 PersonAccount personAccount = guide.getPerson().getAssociatedPersonAccount();
                 if (personAccount == null) {
-                    personAccount = DomainFactory.makePersonAccount(guide.getPerson());
+                    personAccount = new PersonAccount(guide.getPerson());
                 }
 
                 Person employeePerson = Person.readPersonByUsername(userView.getUtilizador());
@@ -112,7 +114,7 @@ public class ChangeGuideSituation extends Service {
                         Double value = new Double(guideEntry.getPrice().doubleValue()
                                 * guideEntry.getQuantity().intValue());
 
-                        PaymentTransaction paymentTransaction = DomainFactory.makeGratuityTransaction(
+                        PaymentTransaction paymentTransaction = new GratuityTransaction(
                                 value, new Timestamp(Calendar.getInstance().getTimeInMillis()),
                                 guideEntry.getDescription(), guide.getPaymentType(),
                                 TransactionType.GRATUITY_ADHOC_PAYMENT, Boolean.FALSE, employeePerson,
@@ -138,7 +140,7 @@ public class ChangeGuideSituation extends Service {
                                     "error.message.transaction.insuranceTransactionAlreadyExists");
                         }
 
-                        DomainFactory.makeInsuranceTransaction(guideEntry.getPrice(), new Timestamp(
+                        new InsuranceTransaction(guideEntry.getPrice(), new Timestamp(
                                 Calendar.getInstance().getTimeInMillis()), guideEntry.getDescription(),
                                 guide.getPaymentType(), TransactionType.INSURANCE_PAYMENT,
                                 Boolean.FALSE, guide.getPerson(), personAccount, guideEntry,

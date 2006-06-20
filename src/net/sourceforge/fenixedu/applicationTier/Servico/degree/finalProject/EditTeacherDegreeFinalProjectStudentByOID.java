@@ -8,7 +8,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
 import net.sourceforge.fenixedu.dataTransferObject.degree.finalProject.InfoTeacherDegreeFinalProjectStudent;
 import net.sourceforge.fenixedu.dataTransferObject.degree.finalProject.InfoTeacherDegreeFinalProjectStudentWithStudentAndPerson;
-import net.sourceforge.fenixedu.domain.DomainFactory;
+
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.Teacher;
@@ -45,7 +45,7 @@ public class EditTeacherDegreeFinalProjectStudentByOID extends Service {
         TeacherDegreeFinalProjectStudent teacherDegreeFinalProjectStudent = getTeacherDegreeFinalProjectStudentFor(
                 teacher, student, executionPeriod);
         if (teacherDegreeFinalProjectStudent == null) {
-            teacherDegreeFinalProjectStudent = DomainFactory.makeTeacherDegreeFinalProjectStudent(
+            teacherDegreeFinalProjectStudent = new TeacherDegreeFinalProjectStudent(
                     executionPeriod, teacher, student);
         }
         teacherDegreeFinalProjectStudent.setPercentage(infoTeacherDegreeFinalProjectStudent

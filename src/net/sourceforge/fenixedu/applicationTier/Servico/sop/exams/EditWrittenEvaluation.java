@@ -8,7 +8,7 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.domain.CurricularCourseScope;
-import net.sourceforge.fenixedu.domain.DomainFactory;
+
 import net.sourceforge.fenixedu.domain.Exam;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.OccupationPeriod;
@@ -80,7 +80,7 @@ public class EditWrittenEvaluation extends Service {
                     writtenEvaluationDate, 
                     null);
             if (period == null) {
-                period = DomainFactory.makeOccupationPeriod(writtenEvaluationDate, writtenEvaluationDate);
+                period = new OccupationPeriod(writtenEvaluationDate, writtenEvaluationDate);
             }
         }
         return period;

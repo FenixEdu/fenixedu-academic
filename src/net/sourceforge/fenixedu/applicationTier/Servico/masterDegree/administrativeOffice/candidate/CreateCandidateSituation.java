@@ -4,7 +4,7 @@ import java.util.Calendar;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.domain.CandidateSituation;
-import net.sourceforge.fenixedu.domain.DomainFactory;
+
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.MasterDegreeCandidate;
 import net.sourceforge.fenixedu.domain.Person;
@@ -28,7 +28,7 @@ public class CreateCandidateSituation extends Service {
         }
         // Create the New Candidate Situation
         final Calendar calendar = Calendar.getInstance();
-        DomainFactory.makeCandidateSituation(calendar.getTime(), null, new State(State.ACTIVE),
+        new CandidateSituation(calendar.getTime(), null, new State(State.ACTIVE),
                 masterDegreeCandidate, newSituation);
     }
 }

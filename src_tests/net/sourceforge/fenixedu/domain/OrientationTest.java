@@ -24,7 +24,7 @@ public class OrientationTest extends DomainTestBase {
 	protected void setUp() throws Exception {
 		super.setUp();
 		
-		teacher = DomainFactory.makeTeacher();
+		teacher = new Teacher();
 		
 		infoOrientationToCreate = new InfoOrientation();
 		infoOrientationToCreate.setOrientationType(OrientationType.DEGREE);
@@ -42,14 +42,14 @@ public class OrientationTest extends DomainTestBase {
 	
 	public void testCreateOrientation() {
 		try {
-			DomainFactory.makeOrientation(null, infoOrientationToCreate);
+			new Orientation(null, infoOrientationToCreate);
 			fail("Should have thrown a DomainException");
 		
 		} catch (DomainException de) {
 			
 		}
 		
-		Orientation newOrientation = DomainFactory.makeOrientation(teacher, infoOrientationToCreate);
+		Orientation newOrientation = new Orientation(teacher, infoOrientationToCreate);
 		
 		assertTrue("Failed to reference teacher!", newOrientation.hasTeacher());
 		assertEquals("Different teacher!", newOrientation.getTeacher(), teacher);
@@ -58,7 +58,7 @@ public class OrientationTest extends DomainTestBase {
 	
 	public void testEditOrientation() {
 		setUpEdit();
-		Orientation orientationToEdit = DomainFactory.makeOrientation(teacher, infoOrientationToCreate);
+		Orientation orientationToEdit = new Orientation(teacher, infoOrientationToCreate);
 		
 		orientationToEdit.edit(infoOrientationEdit);
 		verifyOrientationAttributes(orientationToEdit, infoOrientationEdit);

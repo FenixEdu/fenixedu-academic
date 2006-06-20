@@ -21,7 +21,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoGuideWithPersonAndExecuti
 import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
 import net.sourceforge.fenixedu.domain.Contributor;
 import net.sourceforge.fenixedu.domain.DocumentType;
-import net.sourceforge.fenixedu.domain.DomainFactory;
+
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.GraduationType;
 import net.sourceforge.fenixedu.domain.MasterDegreeCandidate;
@@ -61,7 +61,7 @@ public class PrepareCreateGuide extends Service {
                 && (contributorName.length() != 0) && (contributorName != null)) {
 
             // Create the Contributor
-            contributor = DomainFactory.makeContributor();
+            contributor = new Contributor();
             contributor.setContributorNumber(contributorNumber);
             contributor.setContributorAddress(contributorAddress);
             contributor.setContributorName(contributorName);

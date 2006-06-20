@@ -9,7 +9,7 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.person.InfoQualification;
 import net.sourceforge.fenixedu.domain.Country;
-import net.sourceforge.fenixedu.domain.DomainFactory;
+
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Qualification;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -26,7 +26,7 @@ public class EditQualification extends Service {
 		Country country = rootDomainObject.readCountryByOID(infoQualification.getInfoCountry().getIdInternal());
 		if(qualification == null) {
 			Person person = (Person) rootDomainObject.readPartyByOID(infoQualification.getInfoPerson().getIdInternal());
-			qualification = DomainFactory.makeQualification(person, country, infoQualification);
+			qualification = new Qualification(person, country, infoQualification);
 		
 		} else {
 			qualification.edit(infoQualification, country);

@@ -15,7 +15,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoGuideEntry;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGuideWithPersonAndExecutionDegreeAndContributor;
 import net.sourceforge.fenixedu.domain.Contributor;
 import net.sourceforge.fenixedu.domain.DocumentType;
-import net.sourceforge.fenixedu.domain.DomainFactory;
+
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.GraduationType;
 import net.sourceforge.fenixedu.domain.GratuitySituation;
@@ -27,6 +27,8 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.PersonAccount;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Student;
+import net.sourceforge.fenixedu.domain.transactions.GratuityTransaction;
+import net.sourceforge.fenixedu.domain.transactions.InsuranceTransaction;
 import net.sourceforge.fenixedu.domain.transactions.PaymentTransaction;
 import net.sourceforge.fenixedu.domain.transactions.TransactionType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -94,7 +96,7 @@ public class EditGuideInformation extends Service {
         if ((othersPrice != null) && (othersQuantity != null) && (!othersPrice.equals(new Double(0)))
                 && (!othersQuantity.equals(new Integer(0)))) {
             change = true;
-            othersGuideEntry = DomainFactory.makeGuideEntry();
+            othersGuideEntry = new GuideEntry();
             othersGuideEntry.setDescription(othersRemarks);
             othersGuideEntry.setDocumentType(DocumentType.OTHERS);
             // TODO : In the future it's possible to be a Major Degree
@@ -139,7 +141,7 @@ public class EditGuideInformation extends Service {
                 }
 
                 // Create The new Situation
-                GuideSituation guideSituation = DomainFactory.makeGuideSituation();
+                GuideSituation guideSituation = new GuideSituation();
                 guideSituation.setDate(infoGuide.getInfoGuideSituation().getDate());
                 guideSituation.setGuide(newGuideVersion);
                 guideSituation.setRemarks(infoGuide.getRemarks());
@@ -151,12 +153,12 @@ public class EditGuideInformation extends Service {
                 PersonAccount personAccount = guide.getPerson().getAssociatedPersonAccount();
 
                 if (personAccount == null) {
-                    personAccount = DomainFactory.makePersonAccount(guide.getPerson());
+                    personAccount = new PersonAccount(guide.getPerson());
                 }
 
                 // Write the Guide Entries
                 for (InfoGuideEntry infoGuideEntry : (List<InfoGuideEntry>) newInfoGuideEntries) {
-                    GuideEntry guideEntry = DomainFactory.makeGuideEntry();
+                    GuideEntry guideEntry = new GuideEntry();
                     infoGuideEntry.copyToDomain(infoGuideEntry, guideEntry);
 
                     // Reset id internal to allow persistence to write a new
@@ -173,7 +175,7 @@ public class EditGuideInformation extends Service {
                         gratuitySituation = student
                                 .readGratuitySituationByExecutionDegree(executionDegree);
 
-                        paymentTransaction = DomainFactory.makeGratuityTransaction(
+                        paymentTransaction = new GratuityTransaction(
                                 guideEntry.getPrice(), new Timestamp(Calendar.getInstance()
                                         .getTimeInMillis()), guideEntry.getDescription(), infoGuide
                                         .getPaymentType(), TransactionType.GRATUITY_ADHOC_PAYMENT,
@@ -189,7 +191,7 @@ public class EditGuideInformation extends Service {
 
                     // Write Insurance Transaction
                     if (guideEntry.getDocumentType().equals(DocumentType.INSURANCE)) {
-                        paymentTransaction = DomainFactory.makeInsuranceTransaction(guideEntry
+                        paymentTransaction = new InsuranceTransaction(guideEntry
                                 .getPrice(), new Timestamp(Calendar.getInstance().getTimeInMillis()),
                                 guideEntry.getDescription(), infoGuide.getPaymentType(),
                                 TransactionType.INSURANCE_PAYMENT, Boolean.FALSE, guide.getPerson(),
@@ -250,7 +252,7 @@ public class EditGuideInformation extends Service {
 
         ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(
                 infoGuide.getInfoExecutionDegree().getIdInternal());
-        Guide guide = DomainFactory.makeGuide();
+        Guide guide = new Guide();
 
         // Set the fields
         guide.setContributor(contributor);

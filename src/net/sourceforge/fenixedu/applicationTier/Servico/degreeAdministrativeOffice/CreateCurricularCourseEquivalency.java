@@ -2,8 +2,9 @@ package net.sourceforge.fenixedu.applicationTier.Servico.degreeAdministrativeOff
 
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
+import net.sourceforge.fenixedu.domain.CurricularCourseEquivalence;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.DomainFactory;
+
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class CreateCurricularCourseEquivalency extends Service {
@@ -14,7 +15,7 @@ public class CreateCurricularCourseEquivalency extends Service {
         final CurricularCourse curricularCourse = (CurricularCourse) rootDomainObject.readDegreeModuleByOID(curricularCourseID);
         final CurricularCourse oldCurricularCourse = (CurricularCourse) rootDomainObject.readDegreeModuleByOID(oldCurricularCourseID);
 
-        DomainFactory.makeCurricularCourseEquivalence(degreeCurricularPlan, curricularCourse, oldCurricularCourse);
+        new CurricularCourseEquivalence(degreeCurricularPlan, curricularCourse, oldCurricularCourse);
     }
 
 }

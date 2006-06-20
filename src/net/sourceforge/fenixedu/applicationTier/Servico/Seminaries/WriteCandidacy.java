@@ -8,7 +8,7 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoCandidacy;
 import net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoCaseStudyChoice;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
-import net.sourceforge.fenixedu.domain.DomainFactory;
+
 import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.Seminaries.Candidacy;
 import net.sourceforge.fenixedu.domain.Seminaries.CaseStudy;
@@ -25,7 +25,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class WriteCandidacy extends Service {
 
     public void run(InfoCandidacy infoCandidacy) throws ExcepcaoPersistencia {
-        Candidacy candidacy = DomainFactory.makeCandidacy();
+        Candidacy candidacy = new Candidacy();
         candidacy.setApproved(infoCandidacy.getApproved());
         candidacy.setMotivation(infoCandidacy.getMotivation());
         
@@ -58,7 +58,7 @@ public class WriteCandidacy extends Service {
 
         // Seminary Case Study Choices
         for (InfoCaseStudyChoice infoCaseStudyChoice : infoCandidacy.getCaseStudyChoices()) {
-            final CaseStudyChoice caseStudyChoice = DomainFactory.makeCaseStudyChoice();
+            final CaseStudyChoice caseStudyChoice = new CaseStudyChoice();
             
             caseStudyChoice.setOrder(infoCaseStudyChoice.getOrder());
 

@@ -10,7 +10,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.domain.CandidateEnrolment;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
-import net.sourceforge.fenixedu.domain.DomainFactory;
+
 import net.sourceforge.fenixedu.domain.MasterDegreeCandidate;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
@@ -83,7 +83,7 @@ public class WriteCandidateEnrolments extends Service {
                 throw new NonExistingServiceException();
             }
 
-            CandidateEnrolment candidateEnrolment = DomainFactory.makeCandidateEnrolment();
+            CandidateEnrolment candidateEnrolment = new CandidateEnrolment();
 
             masterDegreeCandidate.addCandidateEnrolments(candidateEnrolment);
             candidateEnrolment.setCurricularCourse(curricularCourse);

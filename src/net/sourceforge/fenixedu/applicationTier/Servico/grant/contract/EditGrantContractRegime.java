@@ -9,7 +9,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
 import net.sourceforge.fenixedu.dataTransferObject.grant.contract.InfoGrantContractRegime;
-import net.sourceforge.fenixedu.domain.DomainFactory;
+
 import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Teacher;
@@ -51,7 +51,7 @@ public class EditGrantContractRegime extends EditDomainObjectService {
 
     @Override
     protected DomainObject createNewDomainObject(InfoObject infoObject) {
-        return DomainFactory.makeGrantContractRegime();
+        return new GrantContractRegime();
     }
 
     @Override

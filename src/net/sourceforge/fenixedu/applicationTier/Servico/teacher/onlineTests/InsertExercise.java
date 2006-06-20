@@ -18,7 +18,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.tests.InvalidXMLFilesException;
 import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoQuestion;
-import net.sourceforge.fenixedu.domain.DomainFactory;
+
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.onlineTests.Metadata;
@@ -65,7 +65,7 @@ public class InsertExercise extends Service {
                 try {
                     ParseQuestion parseQuestion = new ParseQuestion();
                     parseQuestion.parseQuestion(xmlFile, new InfoQuestion(), replacedPath);
-                    Question question = DomainFactory.makeQuestion();
+                    Question question = new Question();
                     question.setXmlFile(xmlFile);
                     question.setXmlFileName(xmlFileName);
                     question.setVisibility(new Boolean("true"));
@@ -88,7 +88,7 @@ public class InsertExercise extends Service {
                     try {
                         Vector<Element> vector = parse.parseMetadata(xmlFile, path);
                         if (metadata == null) {
-                            metadata = DomainFactory.makeMetadata(executionCourse, xmlFile, vector);
+                            metadata = new Metadata(executionCourse, xmlFile, vector);
                         } else {
                             badXmls.add(xmlFileName
                                     + ": Já foi assumido outro ficheiro como ficheiro de metadata.");
@@ -98,7 +98,7 @@ public class InsertExercise extends Service {
                     }
                 }
                 if (metadata == null) {
-                    metadata = DomainFactory.makeMetadata(executionCourse, null, null);
+                    metadata = new Metadata(executionCourse, null, null);
                 }
                 metadata.getQuestions().addAll(questionList);
                 createAny = true;

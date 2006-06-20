@@ -5,7 +5,7 @@ import java.util.Map;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
-import net.sourceforge.fenixedu.domain.DomainFactory;
+
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Teacher;
@@ -32,12 +32,12 @@ public class EditTeacherMasterDegreeCredits extends Service {
             
             TeacherService teacherService = teacher.getTeacherServiceByExecutionPeriod(executionPeriod);
             if (teacherService == null) {
-                teacherService = DomainFactory.makeTeacherService(teacher, executionPeriod);
+                teacherService = new TeacherService(teacher, executionPeriod);
             }
             
             TeacherMasterDegreeService teacherMasterDegreeService = teacherService.getMasterDegreeServiceByProfessorship(professorship);
             if (teacherMasterDegreeService == null) {
-                teacherMasterDegreeService = DomainFactory.makeTeacherMasterDegreeService(
+                teacherMasterDegreeService = new TeacherMasterDegreeService(
                         teacherService, professorship);
             }
             

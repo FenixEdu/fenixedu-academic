@@ -4,7 +4,7 @@ import java.io.File;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.framework.FileItemService;
-import net.sourceforge.fenixedu.domain.DomainFactory;
+
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
@@ -52,7 +52,7 @@ public class CreateFileItemForItem extends FileItemService {
             throw new FenixServiceException(e.getMessage(),e);
         }
 
-        final FileItem fileItem = DomainFactory.makeFileItem();
+        final FileItem fileItem = new FileItem();
         fileItem.setFilename(uploadedFileDescriptor.getFilename());
         fileItem.setDisplayName(displayName);
         fileItem.setMimeType(uploadedFileDescriptor.getMimeType());

@@ -10,7 +10,7 @@ import java.util.Set;
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.DomainFactory;
+
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.Site;
@@ -38,8 +38,8 @@ public class CreateExecutionCoursesForDegreeCurricularPlansAndExecutionPeriod ex
 
                 if (curricularCourse.getExecutionCoursesByExecutionPeriod(executionPeriod).isEmpty()) {
 
-                    ExecutionCourse executionCourse = DomainFactory.makeExecutionCourse();
-                    Site site = DomainFactory.makeSite();
+                    ExecutionCourse executionCourse = new ExecutionCourse();
+                    Site site = new Site();
 
                     executionCourse.setSite(site);
                     executionCourse.setExecutionPeriod(executionPeriod);

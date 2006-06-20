@@ -9,7 +9,7 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoQuestion;
-import net.sourceforge.fenixedu.domain.DomainFactory;
+
 import net.sourceforge.fenixedu.domain.onlineTests.Metadata;
 import net.sourceforge.fenixedu.domain.onlineTests.Question;
 import net.sourceforge.fenixedu.domain.onlineTests.Test;
@@ -76,7 +76,7 @@ public class InsertTestQuestion extends Service {
 				if (thisQuestionValue == null)
 					thisQuestionValue = new Double(0);
 			}
-			TestQuestion testQuestion = DomainFactory.makeTestQuestion();
+			TestQuestion testQuestion = new TestQuestion();
 			test.setLastModifiedDate(Calendar.getInstance().getTime());
 			testQuestion.setQuestion(question);
 			testQuestion.setTest(test);

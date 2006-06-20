@@ -69,13 +69,13 @@ public class CareerTest extends DomainTestBase {
 		infoProfessionalCareerToCreate.setEntity("new entity");
 		infoProfessionalCareerToCreate.setFunction("new function");
 
-		category = DomainFactory.makeCategory(); 
+		category = new Category(); 
 		category.setCode(categoryCode);
 		category.setLongName(categoryLongName);
 		category.setShortName(categoryShortName);
 		category.setCanBeExecutionCourseResponsible(categoryCanBeExecutionCourseResponsible);
 
-		category2 = DomainFactory.makeCategory();
+		category2 = new Category();
 		category2.setCode(categoryCode2);
 		category2.setLongName(categoryLongName2);
 		category2.setShortName(categoryShortName2);
@@ -102,15 +102,15 @@ public class CareerTest extends DomainTestBase {
 //	}
 
 	private void setUpDelete() {
-		teachingCareerToDelete = DomainFactory.makeTeachingCareer(teacher, category, infoTeachingCareerToCreate);
+		teachingCareerToDelete = new TeachingCareer(teacher, category, infoTeachingCareerToCreate);
 		
-		professionalCareerToDelete = DomainFactory.makeProfessionalCareer(teacher, infoProfessionalCareerToCreate);
+		professionalCareerToDelete = new ProfessionalCareer(teacher, infoProfessionalCareerToCreate);
 	}
 
 	private void setUpEdit() {
-		teachingCareerToEdit = DomainFactory.makeTeachingCareer(teacher, category, infoTeachingCareerToCreate);
+		teachingCareerToEdit = new TeachingCareer(teacher, category, infoTeachingCareerToCreate);
 		
-		professionalCareerToEdit = DomainFactory.makeProfessionalCareer(teacher, infoProfessionalCareerToCreate);
+		professionalCareerToEdit = new ProfessionalCareer(teacher, infoProfessionalCareerToCreate);
 		
 		infoTeachingCareerToEdit = new InfoTeachingCareer();
 		infoTeachingCareerToEdit.setBeginYear(2002);
@@ -127,7 +127,7 @@ public class CareerTest extends DomainTestBase {
 	public void testCreateCareer() {
 
 		try {
-			DomainFactory.makeProfessionalCareer(null, infoProfessionalCareerToCreate);
+			new ProfessionalCareer(null, infoProfessionalCareerToCreate);
 			fail("Should have thrown a DomainException");
 
 		} catch(DomainException de) {
@@ -135,7 +135,7 @@ public class CareerTest extends DomainTestBase {
 		}
 
 		try {
-			DomainFactory.makeTeachingCareer(null, category, infoTeachingCareerToCreate);
+			new TeachingCareer(null, category, infoTeachingCareerToCreate);
 			fail("Should have thrown a DomainException");
 
 		} catch(DomainException de) {
@@ -143,7 +143,7 @@ public class CareerTest extends DomainTestBase {
 		}
 		
 		try {
-			DomainFactory.makeTeachingCareer(teacher, null, infoTeachingCareerToCreate);
+			new TeachingCareer(teacher, null, infoTeachingCareerToCreate);
 			fail("Should have thrown a DomainException");
 
 		} catch(DomainException de) {
@@ -151,12 +151,12 @@ public class CareerTest extends DomainTestBase {
 		}
 		
 
-		ProfessionalCareer newProfessionalCareer = DomainFactory.makeProfessionalCareer(teacher, infoProfessionalCareerToCreate);
+		ProfessionalCareer newProfessionalCareer = new ProfessionalCareer(teacher, infoProfessionalCareerToCreate);
 		assertTrue("Failed to reference teacher!", newProfessionalCareer.hasTeacher());
 		assertEquals("Different teacher!", newProfessionalCareer.getTeacher(), teacher);
 		verifyCareerAttributes(newProfessionalCareer, infoProfessionalCareerToCreate);
 		
-		TeachingCareer newTeachingCareer = DomainFactory.makeTeachingCareer(teacher, category, infoTeachingCareerToCreate);
+		TeachingCareer newTeachingCareer = new TeachingCareer(teacher, category, infoTeachingCareerToCreate);
 		assertTrue("Failed to reference teacher!", newTeachingCareer.hasTeacher());
 		assertEquals("Different teacher!", newTeachingCareer.getTeacher(), teacher);
 		assertEquals("Different category!", newTeachingCareer.getCategory(), category);

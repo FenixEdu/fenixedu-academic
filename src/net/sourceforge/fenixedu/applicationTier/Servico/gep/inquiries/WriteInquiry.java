@@ -10,7 +10,7 @@ import net.sourceforge.fenixedu.dataTransferObject.inquiries.InfoInquiriesRoom;
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.InfoInquiriesTeacher;
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.InfoInquiry;
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.InfoTeacherOrNonAffiliatedTeacherWithRemainingClassTypes;
-import net.sourceforge.fenixedu.domain.DomainFactory;
+
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
@@ -73,7 +73,7 @@ public class WriteInquiry extends Service {
 			schoolClass = rootDomainObject.readSchoolClassByOID(iic.getStudentSchoolClass().getIdInternal());
         }
 
-		return DomainFactory.makeInquiriesCourse(executionCourse, executionDegreeCourse, executionDegreeStudent, executionPeriod, schoolClass, iic,
+		return new InquiriesCourse(executionCourse, executionDegreeCourse, executionDegreeStudent, executionPeriod, schoolClass, iic,
                 student.getEntryGradeClassification(), student.getApprovationRatioClassification(), student.getArithmeticMeanClassification());
     }
 
@@ -99,7 +99,7 @@ public class WriteInquiry extends Service {
 
     private InquiriesRegistry writeInquiriesRegistry(final InquiriesCourse inquiriesCourse, final InfoStudent infoStudent) throws ExcepcaoPersistencia {
         Student student = rootDomainObject.readStudentByOID(infoStudent.getIdInternal());
-        return DomainFactory.makeInquiriesRegistry(inquiriesCourse.getExecutionCourse(), inquiriesCourse.getExecutionPeriod(), student);
+        return new InquiriesRegistry(inquiriesCourse.getExecutionCourse(), inquiriesCourse.getExecutionPeriod(), student);
     }
     
 }

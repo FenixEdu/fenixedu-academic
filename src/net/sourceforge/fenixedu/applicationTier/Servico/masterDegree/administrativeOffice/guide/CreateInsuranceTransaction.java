@@ -11,13 +11,14 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
-import net.sourceforge.fenixedu.domain.DomainFactory;
+
 import net.sourceforge.fenixedu.domain.Guide;
 import net.sourceforge.fenixedu.domain.GuideEntry;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.PersonAccount;
 import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
+import net.sourceforge.fenixedu.domain.transactions.InsuranceTransaction;
 import net.sourceforge.fenixedu.domain.transactions.TransactionType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
@@ -48,10 +49,10 @@ public class CreateInsuranceTransaction extends Service {
         PersonAccount personAccount = guide.getPerson().getAssociatedPersonAccount();
 
         if (personAccount == null) {
-            personAccount = DomainFactory.makePersonAccount(guide.getPerson());
+            personAccount = new PersonAccount(guide.getPerson());
         }
 
-        DomainFactory.makeInsuranceTransaction(guideEntry.getPrice(), new Timestamp(Calendar
+        new InsuranceTransaction(guideEntry.getPrice(), new Timestamp(Calendar
                 .getInstance().getTimeInMillis()), guideEntry.getDescription(), guide.getPaymentType(),
                 TransactionType.INSURANCE_PAYMENT, Boolean.FALSE, responsible, personAccount,
                 guideEntry, guide.getExecutionDegree().getExecutionYear(), student);

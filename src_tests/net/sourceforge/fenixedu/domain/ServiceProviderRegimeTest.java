@@ -25,14 +25,14 @@ public class ServiceProviderRegimeTest extends DomainTestBase {
 	protected void setUp() throws Exception {
 		super.setUp();
 		
-		teacher = DomainFactory.makeTeacher();
+		teacher = new Teacher();
 		infoServiceProviderRegimeToCreate = new InfoServiceProviderRegime();
 		infoServiceProviderRegimeToCreate.setProviderRegimeType(ProviderRegimeType.COMPLEMENT);
 
 	}
 	
 	private void setUpEdit() {
-		serviceProviderRegimeToEdit = DomainFactory.makeServiceProviderRegime(teacher, infoServiceProviderRegimeToCreate);
+		serviceProviderRegimeToEdit = new ServiceProviderRegime(teacher, infoServiceProviderRegimeToCreate);
 		
 		infoServiceProviderRegimeToEdit = new InfoServiceProviderRegime();
 		infoServiceProviderRegimeToCreate.setProviderRegimeType(ProviderRegimeType.CUMULATIVE);
@@ -40,14 +40,14 @@ public class ServiceProviderRegimeTest extends DomainTestBase {
 	
 	public void testCreateServiceProviderRegime() {
 		try {
-			DomainFactory.makeServiceProviderRegime(null, infoServiceProviderRegimeToCreate);
+			new ServiceProviderRegime(null, infoServiceProviderRegimeToCreate);
 			fail("Should have thrown a DomainException");
 		
 		} catch (DomainException de) {
 			
 		}
 		
-		ServiceProviderRegime newServiceProviderRegime = DomainFactory.makeServiceProviderRegime(teacher, infoServiceProviderRegimeToCreate);
+		ServiceProviderRegime newServiceProviderRegime = new ServiceProviderRegime(teacher, infoServiceProviderRegimeToCreate);
 		assertTrue("Failed to reference teacher!", newServiceProviderRegime.hasTeacher());
 		assertEquals("Different teacher!", newServiceProviderRegime.getTeacher(), teacher);
 		verifyServiceProviderRegimeAttributes(newServiceProviderRegime, infoServiceProviderRegimeToCreate);

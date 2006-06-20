@@ -11,7 +11,7 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.InfoAdvisory;
 import net.sourceforge.fenixedu.domain.Advisory;
-import net.sourceforge.fenixedu.domain.DomainFactory;
+
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.domain.person.RoleType;
@@ -36,7 +36,7 @@ public class CreateAdvisory extends Service {
 
     public Boolean run(InfoAdvisory infoAdvisory, AdvisoryRecipients advisoryRecipients)
             throws ExcepcaoPersistencia {
-        final Advisory advisory = DomainFactory.makeAdvisory();
+        final Advisory advisory = new Advisory();
         advisory.setCreated(infoAdvisory.getCreated());
         advisory.setSubject(infoAdvisory.getSubject());
         advisory.setExpires(infoAdvisory.getExpires());

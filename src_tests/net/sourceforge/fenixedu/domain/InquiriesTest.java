@@ -46,11 +46,11 @@ public class InquiriesTest extends DomainTestBase {
 	protected void setUp() throws Exception {
 		super.setUp();
 		
-		executionCourse = DomainFactory.makeExecutionCourse();
-		executionDegreeStudent = DomainFactory.makeExecutionDegree();
-		executionDegreeCourse = DomainFactory.makeExecutionDegree();
-		executionPeriod = DomainFactory.makeExecutionPeriod();
-		schoolClass = DomainFactory.makeSchoolClass();
+		executionCourse = new ExecutionCourse();
+		executionDegreeStudent = new ExecutionDegree();
+		executionDegreeCourse = new ExecutionDegree();
+		executionPeriod = new ExecutionPeriod();
+		schoolClass = new SchoolClass();
 		
 		infoInquiriesCourse = new InfoInquiriesCourse();
 		
@@ -93,30 +93,30 @@ public class InquiriesTest extends DomainTestBase {
 		inquiriesCourse = new InquiriesCourse(executionCourse, executionDegreeCourse,
 				executionDegreeStudent, executionPeriod, schoolClass, infoInquiriesCourse, null, null, null);
 		
-		teacher = DomainFactory.makeTeacher();
-		nonAffiliatedTeacher = DomainFactory.makeNonAffiliatedTeacher();
+		teacher = new Teacher();
+		nonAffiliatedTeacher = new NonAffiliatedTeacher();
 		
 		initializeInfoInquiriesTeacher();
 		
 	}
 	
 	private void setUpCreateInquiriesRoom() {
-		inquiriesCourse = DomainFactory.makeInquiriesCourse(executionCourse, executionDegreeCourse,
+		inquiriesCourse = new InquiriesCourse(executionCourse, executionDegreeCourse,
 				executionDegreeStudent, executionPeriod, schoolClass, infoInquiriesCourse, null, null, null);
 		
-		room = DomainFactory.makeOldRoom();
+		room = new OldRoom();
 		initializeInfoInquiriesRoom();	
 		
 	}
 	
 	private void setUpCreateInquiriesRegistry() {
-		student = DomainFactory.makeStudent();
+		student = new Student();
 	}
 	
 	public void testCreateInquiriesCourse() {
 		
 		try {
-			DomainFactory.makeInquiriesCourse(null, executionDegreeCourse,
+			new InquiriesCourse(null, executionDegreeCourse,
 					executionDegreeStudent, executionPeriod, schoolClass, infoInquiriesCourse, null, null, null);
 			fail("Should have thrown a DomainException");
 
@@ -125,7 +125,7 @@ public class InquiriesTest extends DomainTestBase {
 		}
 		
 		try {
-			DomainFactory.makeInquiriesCourse(executionCourse, null,
+			new InquiriesCourse(executionCourse, null,
 					executionDegreeStudent, executionPeriod, schoolClass, infoInquiriesCourse, null, null, null);
 			fail("Should have thrown a DomainException");
 
@@ -134,7 +134,7 @@ public class InquiriesTest extends DomainTestBase {
 		}
 		
 		try {
-			DomainFactory.makeInquiriesCourse(executionCourse, executionDegreeCourse,
+			new InquiriesCourse(executionCourse, executionDegreeCourse,
 					null, executionPeriod, schoolClass, infoInquiriesCourse, null, null, null);
 			fail("Should have thrown a DomainException");
 
@@ -143,7 +143,7 @@ public class InquiriesTest extends DomainTestBase {
 		}
 		
 		try {
-			DomainFactory.makeInquiriesCourse(executionCourse, executionDegreeCourse,
+			new InquiriesCourse(executionCourse, executionDegreeCourse,
 					executionDegreeStudent, null, schoolClass, infoInquiriesCourse, null, null, null);
 			fail("Should have thrown a DomainException");
 
@@ -151,7 +151,7 @@ public class InquiriesTest extends DomainTestBase {
 			
 		}
 		
-		InquiriesCourse newInquiriesCourse = DomainFactory.makeInquiriesCourse(executionCourse, executionDegreeCourse,
+		InquiriesCourse newInquiriesCourse = new InquiriesCourse(executionCourse, executionDegreeCourse,
 				executionDegreeStudent, executionPeriod, schoolClass, infoInquiriesCourse, null, null, null);
 		
 		assertTrue("Failed to reference executionCourse!", newInquiriesCourse.hasExecutionCourse());
@@ -300,7 +300,7 @@ public class InquiriesTest extends DomainTestBase {
 		setUpCreateInquiriesRegistry();
 		
 		try {
-			DomainFactory.makeInquiriesRegistry(null, executionPeriod, student);
+			new InquiriesRegistry(null, executionPeriod, student);
 			fail("Should have thrown a NullArgumentException");
 
 		} catch(NullArgumentException nae) {
@@ -308,7 +308,7 @@ public class InquiriesTest extends DomainTestBase {
 		}
 		
 		try {
-			DomainFactory.makeInquiriesRegistry(executionCourse, null, student);
+			new InquiriesRegistry(executionCourse, null, student);
 			fail("Should have thrown a NullArgumentException");
 
 		} catch(NullArgumentException nae) {
@@ -316,14 +316,14 @@ public class InquiriesTest extends DomainTestBase {
 		}
 		
 		try {
-			DomainFactory.makeInquiriesRegistry(executionCourse, executionPeriod, null);
+			new InquiriesRegistry(executionCourse, executionPeriod, null);
 			fail("Should have thrown a NullArgumentException");
 
 		} catch(NullArgumentException nae) {
 			
 		}
 		
-		InquiriesRegistry inquiriesRegistry = DomainFactory.makeInquiriesRegistry(executionCourse, executionPeriod, student);
+		InquiriesRegistry inquiriesRegistry = new InquiriesRegistry(executionCourse, executionPeriod, student);
 		
 		assertTrue("Failed to reference executionCourse!", inquiriesRegistry.hasExecutionCourse());
 		assertTrue("Failed to reference executionPeriod!", inquiriesRegistry.hasExecutionPeriod());

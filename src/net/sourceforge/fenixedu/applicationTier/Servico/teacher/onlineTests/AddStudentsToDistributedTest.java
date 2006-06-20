@@ -16,7 +16,7 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
 import net.sourceforge.fenixedu.domain.Advisory;
-import net.sourceforge.fenixedu.domain.DomainFactory;
+
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.onlineTests.DistributedTest;
@@ -52,7 +52,7 @@ public class AddStudentsToDistributedTest extends Service {
                 Student student = rootDomainObject.readStudentByOID(
                         ((InfoStudent) infoStudentList.get(j)).getIdInternal());
                 if (StudentTestQuestion.findStudentTestQuestions(student, distributedTest).isEmpty()) {
-                    StudentTestQuestion studentTestQuestion = DomainFactory.makeStudentTestQuestion();
+                    StudentTestQuestion studentTestQuestion = new StudentTestQuestion();
                     studentTestQuestion.setStudent(student);
                     studentTestQuestion.setDistributedTest(distributedTest);
                     studentTestQuestion.setTestQuestionOrder(studentTestQuestionExample.getTestQuestionOrder());
@@ -76,7 +76,7 @@ public class AddStudentsToDistributedTest extends Service {
         // create advisory for new students
         Advisory advisory = createTestAdvisory(distributedTest);
 
-        DistributedTestAdvisory distributedTestAdvisory = DomainFactory.makeDistributedTestAdvisory();
+        DistributedTestAdvisory distributedTestAdvisory = new DistributedTestAdvisory();
         distributedTestAdvisory.setAdvisory(advisory);
         distributedTestAdvisory.setDistributedTest(distributedTest);
 
@@ -95,7 +95,7 @@ public class AddStudentsToDistributedTest extends Service {
 
     private Advisory createTestAdvisory(DistributedTest distributedTest) {
         ResourceBundle bundle = ResourceBundle.getBundle("resources.ApplicationResources");
-        Advisory advisory = DomainFactory.makeAdvisory();
+        Advisory advisory = new Advisory();
         advisory.setCreated(Calendar.getInstance().getTime());
         advisory.setExpires(distributedTest.getEndDate().getTime());
         advisory.setSender(MessageFormat.format(bundle.getString("message.distributedTest.from"), new Object[] { ((ExecutionCourse) distributedTest

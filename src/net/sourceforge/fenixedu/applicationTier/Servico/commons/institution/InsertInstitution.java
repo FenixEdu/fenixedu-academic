@@ -5,7 +5,7 @@ import java.util.Calendar;
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.domain.DomainFactory;
+
 import net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityTypeEnum;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PartyTypeEnum;
@@ -40,7 +40,7 @@ public class InsertInstitution extends Service {
     }
 
     private Unit makeNewUnit(String unitName, Unit externalIntitutionsUnit) throws ExcepcaoPersistencia {
-        Unit institutionUnit = DomainFactory.makeUnit();
+        Unit institutionUnit = new Unit();
         institutionUnit.setName(unitName);
         institutionUnit.setBeginDate(Calendar.getInstance().getTime());
         institutionUnit.setType(PartyTypeEnum.EXTERNAL_INSTITUTION);

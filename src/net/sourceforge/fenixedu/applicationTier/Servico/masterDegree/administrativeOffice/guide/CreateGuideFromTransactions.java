@@ -13,7 +13,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoGuideSituation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGuideWithPersonAndExecutionDegreeAndContributor;
 import net.sourceforge.fenixedu.domain.Contributor;
 import net.sourceforge.fenixedu.domain.DocumentType;
-import net.sourceforge.fenixedu.domain.DomainFactory;
+
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.GraduationType;
 import net.sourceforge.fenixedu.domain.Guide;
@@ -60,7 +60,7 @@ public class CreateGuideFromTransactions extends Service {
         Calendar calendar = Calendar.getInstance();
         infoGuideSituation.setSituation(situationOfGuide);
 
-        Guide guide = DomainFactory.makeGuide();
+        Guide guide = new Guide();
         guide.setCreationDate(infoGuide.getCreationDate());
         guide.setGuideRequester(infoGuide.getGuideRequester());
         guide.setNumber(infoGuide.getNumber());
@@ -104,7 +104,7 @@ public class CreateGuideFromTransactions extends Service {
                 throw new ExcepcaoInexistente();
             }
 
-            guideEntry = DomainFactory.makeGuideEntry();
+            guideEntry = new GuideEntry();
 
             if (transaction instanceof GratuityTransaction) {
                 guideEntry.setDocumentType(DocumentType.GRATUITY);
@@ -133,7 +133,7 @@ public class CreateGuideFromTransactions extends Service {
         guide.setTotal(NumberUtils.formatNumber(new Double(guideTotal), 2));
 
         // Write the New Guide Situation
-        guideSituation = DomainFactory.makeGuideSituation(infoGuideSituation.getSituation(),
+        guideSituation = new GuideSituation(infoGuideSituation.getSituation(),
                 infoGuideSituation.getRemarks(), infoGuideSituation.getDate(), guide, infoGuideSituation
                         .getState());
 

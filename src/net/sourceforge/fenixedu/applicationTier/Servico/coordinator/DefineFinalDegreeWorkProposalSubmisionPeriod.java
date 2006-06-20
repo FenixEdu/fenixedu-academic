@@ -7,7 +7,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.coordinator;
 import java.util.Date;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
-import net.sourceforge.fenixedu.domain.DomainFactory;
+
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Scheduleing;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -27,7 +27,7 @@ public class DefineFinalDegreeWorkProposalSubmisionPeriod extends Service {
                 Scheduleing scheduleing = executionDegree.getScheduling();
 
                 if (scheduleing == null) {
-                    scheduleing = DomainFactory.makeScheduleing();
+                    scheduleing = new Scheduleing();
                     scheduleing.setCurrentProposalNumber(new Integer(1));
                 }
 

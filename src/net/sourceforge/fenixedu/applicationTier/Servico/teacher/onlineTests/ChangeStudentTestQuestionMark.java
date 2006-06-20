@@ -19,7 +19,7 @@ import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoSiteDistribut
 import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoStudentTestQuestion;
 import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoStudentTestQuestionWithInfoQuestionAndInfoDistributedTest;
 import net.sourceforge.fenixedu.domain.Attends;
-import net.sourceforge.fenixedu.domain.DomainFactory;
+
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Mark;
 import net.sourceforge.fenixedu.domain.Student;
@@ -113,7 +113,7 @@ public class ChangeStudentTestQuestionMark extends Service {
                     final String markValue = getNewStudentMark(studentTestQuestion.getDistributedTest(),
                             studentTestQuestion.getStudent());
                     if (mark == null) {
-                        mark = DomainFactory.makeMark(attend, onlineTest, markValue);
+                        mark = new Mark(attend, onlineTest, markValue);
                     } else {
                         mark.setMark(markValue);
                     }
@@ -122,7 +122,7 @@ public class ChangeStudentTestQuestionMark extends Service {
                     }
                 }
             }
-            StudentTestLog studentTestLog = DomainFactory.makeStudentTestLog();
+            StudentTestLog studentTestLog = new StudentTestLog();
             studentTestLog.setDistributedTest(studentTestQuestion.getDistributedTest());
             studentTestLog.setStudent(studentTestQuestion.getStudent());
             studentTestLog.setDate(Calendar.getInstance().getTime());

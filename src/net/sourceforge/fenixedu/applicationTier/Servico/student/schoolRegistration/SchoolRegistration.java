@@ -10,7 +10,7 @@ import net.sourceforge.fenixedu.applicationTier.security.PasswordEncryptor;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
 import net.sourceforge.fenixedu.dataTransferObject.student.schoolRegistration.InfoResidenceCandidacy;
 import net.sourceforge.fenixedu.domain.Country;
-import net.sourceforge.fenixedu.domain.DomainFactory;
+
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
@@ -83,7 +83,7 @@ public class SchoolRegistration extends Service {
             final InfoResidenceCandidacy infoResidenceCandidacy) throws ExcepcaoPersistencia {
 
         if (infoResidenceCandidacy != null) {
-            final ResidenceCandidacies residenceCandidacy = DomainFactory.makeResidenceCandidacies();
+            final ResidenceCandidacies residenceCandidacy = new ResidenceCandidacies();
 
             residenceCandidacy.setStudent(student);
             residenceCandidacy.setCreationDate(new Date());

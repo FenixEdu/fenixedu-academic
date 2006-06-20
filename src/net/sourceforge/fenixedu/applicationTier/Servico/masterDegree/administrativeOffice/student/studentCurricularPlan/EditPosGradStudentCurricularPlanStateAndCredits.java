@@ -12,7 +12,7 @@ import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.Branch;
 import net.sourceforge.fenixedu.domain.CreditsInAnySecundaryArea;
 import net.sourceforge.fenixedu.domain.CreditsInScientificArea;
-import net.sourceforge.fenixedu.domain.DomainFactory;
+
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.EnrolmentEquivalence;
@@ -77,7 +77,7 @@ public class EditPosGradStudentCurricularPlanStateAndCredits extends Service {
 				if (extraCurricularCourses.contains(enrolment.getIdInternal())) {
 					if (!(enrolment instanceof EnrolmentInExtraCurricularCourse)) {
 
-						Enrolment auxEnrolment = DomainFactory.makeEnrolmentInExtraCurricularCourse(enrolment.getStudentCurricularPlan(), enrolment.getCurricularCourse(), enrolment.getExecutionPeriod(), enrolment.getCondition(), enrolment.getCreatedBy());
+						Enrolment auxEnrolment = new EnrolmentInExtraCurricularCourse(enrolment.getStudentCurricularPlan(), enrolment.getCurricularCourse(), enrolment.getExecutionPeriod(), enrolment.getCondition(), enrolment.getCreatedBy());
 
 						copyEnrollment(enrolment, auxEnrolment);
 						setEnrolmentCreationInformation(userView, auxEnrolment);
@@ -91,7 +91,7 @@ public class EditPosGradStudentCurricularPlanStateAndCredits extends Service {
 				} else {
 					if (enrolment instanceof EnrolmentInExtraCurricularCourse) {
 
-						Enrolment auxEnrolment = DomainFactory.makeEnrolment(enrolment.getStudentCurricularPlan(), enrolment.getCurricularCourse(), enrolment.getExecutionPeriod(), enrolment.getCondition(), enrolment.getCreatedBy());
+						Enrolment auxEnrolment = new Enrolment(enrolment.getStudentCurricularPlan(), enrolment.getCurricularCourse(), enrolment.getExecutionPeriod(), enrolment.getCondition(), enrolment.getCreatedBy());
 
 						copyEnrollment(enrolment, auxEnrolment);
 						setEnrolmentCreationInformation(userView, auxEnrolment);

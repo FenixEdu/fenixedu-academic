@@ -10,7 +10,7 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.Department;
-import net.sourceforge.fenixedu.domain.DomainFactory;
+
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PartyTypeEnum;
@@ -26,7 +26,7 @@ public class CreateNewUnit extends Service {
 
         Unit unit = null;
         if (unitID == null) {
-            unit = DomainFactory.makeUnit();
+            unit = new Unit();
         } else {
             unit = (Unit) rootDomainObject.readPartyByOID(unitID);
             if (unit == null) {

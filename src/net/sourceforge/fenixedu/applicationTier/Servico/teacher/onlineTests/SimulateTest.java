@@ -15,7 +15,7 @@ import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoQuestion;
 import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoSiteStudentTestFeedback;
 import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoStudentTestQuestion;
 import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoTestScope;
-import net.sourceforge.fenixedu.domain.DomainFactory;
+
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.onlineTests.Question;
 import net.sourceforge.fenixedu.domain.onlineTests.Test;
@@ -59,7 +59,7 @@ public class SimulateTest extends Service {
             ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseId);
             if (executionCourse == null)
                 throw new InvalidArgumentsServiceException();
-            testScope = DomainFactory.makeTestScope(executionCourse);
+            testScope = new TestScope(executionCourse);
         }
 
         InfoDistributedTest infoDistributedTest = new InfoDistributedTest();

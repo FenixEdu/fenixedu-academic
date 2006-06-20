@@ -6,7 +6,8 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.DomainFactory;
+import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
+
 import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.StudentCurricularPlanState;
@@ -29,7 +30,7 @@ public class CreateStudentCurricularPlan extends Service {
             throw new NonExistingServiceException("exception.degree.curricular.plan.does.not.exist");
         }
 
-        DomainFactory.makeStudentCurricularPlan(student, degreeCurricularPlan,
+        new StudentCurricularPlan(student, degreeCurricularPlan,
                 studentCurricularPlanState, startDate);
     }
 }

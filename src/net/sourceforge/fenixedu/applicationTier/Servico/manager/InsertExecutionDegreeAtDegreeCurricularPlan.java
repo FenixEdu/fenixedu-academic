@@ -11,7 +11,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPeriod;
 import net.sourceforge.fenixedu.domain.Campus;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.DomainFactory;
+
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.OccupationPeriod;
@@ -74,7 +74,7 @@ public class InsertExecutionDegreeAtDegreeCurricularPlan extends Service {
 		if (period == null) {
 			Calendar startDate = infoPeriodNew.getStartDate();
 			Calendar endDate = infoPeriodNew.getEndDate();
-			period = DomainFactory.makeOccupationPeriod(startDate.getTime(), endDate.getTime());
+			period = new OccupationPeriod(startDate.getTime(), endDate.getTime());
 		}
 
 		// iteracoes
@@ -89,7 +89,7 @@ public class InsertExecutionDegreeAtDegreeCurricularPlan extends Service {
 			if (period == null) {
 				Calendar startDate = infoPeriodNew.getStartDate();
 				Calendar endDate = infoPeriodNew.getEndDate();
-				period = DomainFactory.makeOccupationPeriod(startDate.getTime(), endDate.getTime());
+				period = new OccupationPeriod(startDate.getTime(), endDate.getTime());
 				period.setNextPeriod(nextPeriod);
 			}
 		}

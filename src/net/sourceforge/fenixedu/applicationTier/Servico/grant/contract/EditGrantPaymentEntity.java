@@ -10,7 +10,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.grant.GrantOrientationTeacherNotFoundException;
 import net.sourceforge.fenixedu.dataTransferObject.grant.contract.InfoGrantCostCenter;
 import net.sourceforge.fenixedu.dataTransferObject.grant.contract.InfoGrantProject;
-import net.sourceforge.fenixedu.domain.DomainFactory;
+
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantCostCenter;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantProject;
@@ -26,7 +26,7 @@ public class EditGrantPaymentEntity extends Service {
         GrantCostCenter grantCostCenter = (GrantCostCenter) rootDomainObject
                 .readGrantPaymentEntityByOID(infoObject.getIdInternal());
         if (grantCostCenter == null) {
-            grantCostCenter = DomainFactory.makeGrantCostCenter();
+            grantCostCenter = new GrantCostCenter();
         }
         grantCostCenter.setDesignation(infoObject.getDesignation());
         grantCostCenter.setNumber(infoObject.getNumber());
@@ -44,7 +44,7 @@ public class EditGrantPaymentEntity extends Service {
         GrantProject grantProject = (GrantProject) rootDomainObject
                 .readGrantPaymentEntityByOID(infoObject.getIdInternal());
         if (grantProject == null) {
-            grantProject = DomainFactory.makeGrantProject();
+            grantProject = new GrantProject();
         }
         grantProject.setDesignation(infoObject.getDesignation());
         grantProject.setNumber(infoObject.getNumber());

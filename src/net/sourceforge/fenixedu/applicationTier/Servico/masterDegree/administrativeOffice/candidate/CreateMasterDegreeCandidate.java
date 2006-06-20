@@ -13,7 +13,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegreeWithInfoEx
 import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeCandidate;
 import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeCandidateWithInfoPerson;
 import net.sourceforge.fenixedu.domain.CandidateSituation;
-import net.sourceforge.fenixedu.domain.DomainFactory;
+
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.MasterDegreeCandidate;
 import net.sourceforge.fenixedu.domain.Person;
@@ -44,7 +44,7 @@ public class CreateMasterDegreeCandidate extends Service {
 
         if (person == null) {
             // Create the new Person
-            person = DomainFactory.makePerson(name, identificationDocumentNumber,
+            person = new Person(name, identificationDocumentNumber,
                     identificationDocumentType, Gender.MALE, "T" + System.currentTimeMillis());
         } else {
             MasterDegreeCandidate existingMasterDegreeCandidate = person
@@ -59,7 +59,7 @@ public class CreateMasterDegreeCandidate extends Service {
         
 
         // Set the Candidate's Situation
-        CandidateSituation candidateSituation = DomainFactory.makeCandidateSituation();
+        CandidateSituation candidateSituation = new CandidateSituation();
         // First candidate situation
         candidateSituation.setRemarks("Pré-Candidatura. Pagamento da candidatura por efectuar.");
         candidateSituation.setSituation(new SituationName(SituationName.PRE_CANDIDATO));
@@ -68,7 +68,7 @@ public class CreateMasterDegreeCandidate extends Service {
         candidateSituation.setDate(actualDate.getTime());
 
         // Create the Candidate
-        MasterDegreeCandidate masterDegreeCandidate = DomainFactory.makeMasterDegreeCandidate();
+        MasterDegreeCandidate masterDegreeCandidate = new MasterDegreeCandidate();
         masterDegreeCandidate.addSituations(candidateSituation);
         masterDegreeCandidate.setSpecialization(degreeType);
         masterDegreeCandidate.setExecutionDegree(executionDegree);

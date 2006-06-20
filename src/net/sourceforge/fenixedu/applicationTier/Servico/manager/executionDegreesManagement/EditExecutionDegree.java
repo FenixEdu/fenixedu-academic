@@ -5,7 +5,7 @@ import java.util.Date;
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Campus;
-import net.sourceforge.fenixedu.domain.DomainFactory;
+
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.OccupationPeriod;
@@ -59,7 +59,7 @@ public class EditExecutionDegree extends Service {
         
         OccupationPeriod occupationPeriod = OccupationPeriod.readFor(YearMonthDay.fromDateFields(startDate), YearMonthDay.fromDateFields(endDate));
         if (occupationPeriod == null) {
-            occupationPeriod = DomainFactory.makeOccupationPeriod(startDate, endDate);
+            occupationPeriod = new OccupationPeriod(startDate, endDate);
             occupationPeriod.setNextPeriod(null);
         }
         return occupationPeriod;

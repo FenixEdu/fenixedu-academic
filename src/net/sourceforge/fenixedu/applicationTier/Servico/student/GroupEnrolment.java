@@ -19,7 +19,7 @@ import net.sourceforge.fenixedu.applicationTier.strategy.groupEnrolment.strategy
 import net.sourceforge.fenixedu.applicationTier.strategy.groupEnrolment.strategys.IGroupEnrolmentStrategy;
 import net.sourceforge.fenixedu.applicationTier.strategy.groupEnrolment.strategys.IGroupEnrolmentStrategyFactory;
 import net.sourceforge.fenixedu.domain.Attends;
-import net.sourceforge.fenixedu.domain.DomainFactory;
+
 import net.sourceforge.fenixedu.domain.Grouping;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.Student;
@@ -83,7 +83,7 @@ public class GroupEnrolment extends Service {
         }
         checkStudentUsernamesAlreadyEnroledInStudentGroup(strategy, studentUsernames, grouping);
 
-        newStudentGroup = DomainFactory.makeStudentGroup(groupNumber, grouping, shift);
+        newStudentGroup = new StudentGroup(groupNumber, grouping, shift);
         for (final String studentUsernameIter : (List<String>) studentUsernames) {
             Attends attend = grouping.getStudentAttend(studentUsernameIter);
             attend.addStudentGroups(newStudentGroup);

@@ -4,7 +4,7 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.domain.Country;
 import net.sourceforge.fenixedu.domain.DislocatedStudent;
 import net.sourceforge.fenixedu.domain.District;
-import net.sourceforge.fenixedu.domain.DomainFactory;
+
 import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
@@ -19,7 +19,7 @@ public class WriteDislocatedStudentAnswer extends Service {
         }
         District district = rootDomainObject.readDistrictByOID(districtID);
         
-        DislocatedStudent dislocatedStudent = DomainFactory.makeDislocatedStudent();
+        DislocatedStudent dislocatedStudent = new DislocatedStudent();
         dislocatedStudent.setStudent(student);
         dislocatedStudent.setCountry(country);
         dislocatedStudent.setDislocatedCountry(dislocatedCountry);

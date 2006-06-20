@@ -6,7 +6,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.manager;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.support.InfoFAQSection;
-import net.sourceforge.fenixedu.domain.DomainFactory;
+
 import net.sourceforge.fenixedu.domain.support.FAQSection;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
@@ -23,7 +23,7 @@ public class CreateFAQSection extends Service {
                     .getParentSection().getIdInternal());
         }
 
-        FAQSection faqSection = DomainFactory.makeFAQSection();
+        FAQSection faqSection = new FAQSection();
         faqSection.setSectionName(infoFAQSection.getSectionName());
         faqSection.setParentSection(parentFAQSection);
     }

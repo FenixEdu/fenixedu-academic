@@ -1,9 +1,10 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher.services;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
-import net.sourceforge.fenixedu.domain.DomainFactory;
+
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.Teacher;
+import net.sourceforge.fenixedu.domain.teacher.OtherService;
 import net.sourceforge.fenixedu.domain.teacher.TeacherService;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
@@ -17,10 +18,10 @@ public class CreateOtherService extends Service {
         
         TeacherService teacherService = teacher.getTeacherServiceByExecutionPeriod(executionPeriod);
         if(teacherService == null){
-            teacherService = DomainFactory.makeTeacherService(teacher,executionPeriod);
+            teacherService = new TeacherService(teacher,executionPeriod);
         }
         
-        DomainFactory.makeOtherService(teacherService,credits,reason);
+        new OtherService(teacherService,credits,reason);
     }
     
 }

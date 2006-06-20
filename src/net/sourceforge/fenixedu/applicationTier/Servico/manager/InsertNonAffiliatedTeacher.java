@@ -6,7 +6,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.manager;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotExistingServiceException;
-import net.sourceforge.fenixedu.domain.DomainFactory;
+
 import net.sourceforge.fenixedu.domain.NonAffiliatedTeacher;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
@@ -30,7 +30,7 @@ public class InsertNonAffiliatedTeacher extends Service {
             throw new NotExistingServiceException("teacher.already.exists");
         }
 
-        final NonAffiliatedTeacher nonAffiliatedTeacher = DomainFactory.makeNonAffiliatedTeacher();
+        final NonAffiliatedTeacher nonAffiliatedTeacher = new NonAffiliatedTeacher();
         nonAffiliatedTeacher.setName(nonAffiliatedTeacherName);
         nonAffiliatedTeacher.setInstitutionUnit(institution);
         
