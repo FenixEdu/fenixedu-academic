@@ -4,6 +4,7 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -24,6 +25,7 @@ import net.sourceforge.fenixedu.util.EnrolmentEvaluationState;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.Predicate;
+import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.commons.lang.StringUtils;
 
 /**
@@ -33,6 +35,12 @@ import org.apache.commons.lang.StringUtils;
  */
 
 public class Enrolment extends Enrolment_Base {
+
+	public static final Comparator<Enrolment> COMPARATOR_BY_EXECUTION_PERIOD = new BeanComparator("executionPeriod");
+	public static final Comparator<Enrolment> REVERSE_COMPARATOR_BY_EXECUTION_PERIOD = new ComparatorChain();
+	static {
+		((ComparatorChain) REVERSE_COMPARATOR_BY_EXECUTION_PERIOD).addComparator(new BeanComparator("executionPeriod"), true);
+	}
 
     private Integer accumulatedWeight;
     /*static {

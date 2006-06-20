@@ -33,11 +33,16 @@ import net.sourceforge.fenixedu.dataTransferObject.finalDegreeWork.InfoSchedulei
 import net.sourceforge.fenixedu.domain.Branch;
 import net.sourceforge.fenixedu.domain.CompetenceCourse;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
+import net.sourceforge.fenixedu.domain.CurricularCourseScope;
+import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.Department;
+import net.sourceforge.fenixedu.domain.Enrolment;
+import net.sourceforge.fenixedu.domain.EnrolmentEvaluation;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Student;
+import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseType;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Group;
@@ -1079,23 +1084,28 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
             response.setContentType("text/plain");
             response.setHeader("Content-disposition", "attachment; filename=proposals_" + yearString + ".xls");
 
-            ServletOutputStream writer = response.getOutputStream();
+            
+            final HSSFWorkbook workbook = new HSSFWorkbook();
+            final ExcelStyle excelStyle = new ExcelStyle(workbook);
+            final ServletOutputStream writer = response.getOutputStream();
+
             final Spreadsheet proposalsSpreadsheet = new Spreadsheet("Proposals " + yearString);
             setProposalsHeaders(proposalsSpreadsheet);
             fillProposalsSpreadSheet(executionDegree, proposalsSpreadsheet);
+            proposalsSpreadsheet.exportToXLSSheet(workbook, excelStyle.getHeaderStyle(), excelStyle.getStringStyle());
 
             final Spreadsheet groupsSpreadsheet = new Spreadsheet("Groups " + yearString);
             fillGroupsSpreadSheet(executionDegree, groupsSpreadsheet);
-
-            final Spreadsheet studentsSpreadsheet = new Spreadsheet("Alunos " + yearString);
-            fillStudentsSpreadSheet(executionDegree, studentsSpreadsheet);
-
-            final HSSFWorkbook workbook = new HSSFWorkbook();
-            final ExcelStyle excelStyle = new ExcelStyle(workbook);
-
-            proposalsSpreadsheet.exportToXLSSheet(workbook, excelStyle.getHeaderStyle(), excelStyle.getStringStyle());
             groupsSpreadsheet.exportToXLSSheet(workbook, excelStyle.getHeaderStyle(), excelStyle.getStringStyle());
-            studentsSpreadsheet.exportToXLSSheet(workbook, excelStyle.getHeaderStyle(), excelStyle.getStringStyle());
+
+            final Scheduleing scheduleing = executionDegree.getScheduling();
+            for (final ExecutionDegree otherExecutionDegree : scheduleing.getExecutionDegreesSet()) {
+            	final DegreeCurricularPlan degreeCurricularPlan = otherExecutionDegree.getDegreeCurricularPlan();
+            	final Degree degree = degreeCurricularPlan.getDegree();
+            	final Spreadsheet studentsSpreadsheet = new Spreadsheet("Alunos " + degree.getSigla() + " " + yearString);
+            	fillStudentsSpreadSheet(executionDegree, studentsSpreadsheet);
+            	studentsSpreadsheet.exportToXLSSheet(workbook, excelStyle.getHeaderStyle(), excelStyle.getStringStyle());
+            }
 
             workbook.write(writer);
 
@@ -1303,10 +1313,27 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
 	}
 
 	private void fillStudentsSpreadSheet(final ExecutionDegree executionDegree, final Spreadsheet spreadsheet) {
+		final DegreeCurricularPlan degreeCurricularPlan = executionDegree.getDegreeCurricularPlan();
+		final ExecutionYear executionYear = executionDegree.getExecutionYear();
 		final Scheduleing scheduleing = executionDegree.getScheduling();
 		final Integer maximumCurricularYearToCountCompletedCourses = scheduleing.getMaximumCurricularYearToCountCompletedCourses();
 
-		// TODO ... set the headers.
+		spreadsheet.setHeader("Aluno");
+		final List<CurricularCourse> curricularCourses = new ArrayList<CurricularCourse>();
+		for (final CurricularCourse curricularCourse : degreeCurricularPlan.getCurricularCoursesSet()) {
+			final Set<CurricularCourseScope> curricularCourseScopes = curricularCourse.getActiveScopesInExecutionYear(executionYear);
+			for (final CurricularCourseScope curricularCourseScope : curricularCourseScopes) {
+				if (maximumCurricularYearToCountCompletedCourses != null) {
+					if (curricularCourseScope.getCurricularSemester().getCurricularYear().getYear().intValue() <= maximumCurricularYearToCountCompletedCourses.intValue()) {
+						curricularCourses.add(curricularCourse);
+						spreadsheet.setHeader(curricularCourse.getName());
+					}
+				} else {
+					curricularCourses.add(curricularCourse);
+					spreadsheet.setHeader(curricularCourse.getName());					
+				}
+			}
+		}
 
 		final SortedSet<Student> students = new TreeSet<Student>(Student.NUMBER_COMPARATOR);
 		for (final ExecutionDegree otherExecutionDegree : scheduleing.getExecutionDegreesSet()) {
@@ -1317,15 +1344,48 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
 						final Row row = spreadsheet.addRow();
 						row.setCell(student.getNumber().toString());
 
-						// TODO ... set the students information.
-
+						final StudentCurricularPlan studentCurricularPlan = student.getActiveOrConcludedStudentCurricularPlan();
+						for (final CurricularCourse curricularCourse : curricularCourses) {
+							if (studentCurricularPlan.isCurricularCourseApproved(curricularCourse)) {
+								final String grade = findGradeForCurricularCourse(student, curricularCourse);
+								if (grade != null) {
+									row.setCell(grade);
+								} else {
+									row.setCell("AP");
+								}
+							} else {
+								row.setCell("");
+							}
+						}
 					}
 				}
 			}
 		}
 	}
 
-    public ActionForward detailedProposalList(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+    private String findGradeForCurricularCourse(final Student student, final CurricularCourse curricularCourse) {
+    	final SortedSet<Enrolment> enrolments = new TreeSet<Enrolment>(Enrolment.REVERSE_COMPARATOR_BY_EXECUTION_PERIOD);
+    	for (final StudentCurricularPlan studentCurricularPlan : student.getStudentCurricularPlansSet()) {
+    		for (final Enrolment enrolment : studentCurricularPlan.getEnrolmentsSet()) {
+    			final CurricularCourse enrolmentCurricularCourse = enrolment.getCurricularCourse();
+    			if (enrolmentCurricularCourse == curricularCourse ||
+    					(enrolmentCurricularCourse.getCompetenceCourse() != null
+    							&& enrolmentCurricularCourse.getCompetenceCourse() == curricularCourse.getCompetenceCourse())) {
+    				enrolments.add(enrolment);
+    			}
+    		}
+    	}
+    	for (final Enrolment enrolment : enrolments) {
+    		final EnrolmentEvaluation enrolmentEvaluation = enrolment.getFinalEnrolmentEvaluation();
+    		if (enrolmentEvaluation != null && enrolmentEvaluation.isApproved()) {
+    			final String grade = enrolmentEvaluation.getGrade();
+    			return grade == null || grade.length() == 0 ? null : grade;
+    		}
+    	}
+		return null;
+	}
+
+	public ActionForward detailedProposalList(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
 			throws FenixActionException, FenixFilterException, FenixServiceException {
     	final String executionDegreeOIDString = request.getParameter("executionDegreeOID");
     	final ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(Integer.valueOf(executionDegreeOIDString));

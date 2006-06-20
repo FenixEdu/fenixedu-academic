@@ -227,6 +227,21 @@ public class CurricularCourse extends CurricularCourse_Base {
         return activeScopesInExecutionPeriod;
     }
 
+    public Set<CurricularCourseScope> getActiveScopesInExecutionYear(final ExecutionYear executionYear) {
+        final Set<CurricularCourseScope> activeScopes = new HashSet<CurricularCourseScope>();
+        for (final CurricularCourseScope scope : getScopes()) {
+            final CurricularSemester curricularSemester = scope.getCurricularSemester();
+            for (final ExecutionPeriod executionPeriod : executionYear.getExecutionPeriodsSet()) {
+            	if (curricularSemester.getSemester().equals(executionPeriod.getSemester())
+            			&& (scope.getBeginDate().getTime().getTime() <= executionPeriod.getBeginDate().getTime())
+            			&& ((scope.getEndDate() == null) || (scope.getEndDate().getTime().getTime() >= executionPeriod.getEndDate().getTime()))) {
+            		activeScopes.add(scope);
+            	}
+            }
+        }
+        return activeScopes;
+    }
+
     public List<CurricularCourseScope> getActiveScopesInExecutionPeriodAndSemester(
             final ExecutionPeriod executionPeriod) {
         List<CurricularCourseScope> activeScopesInExecutionPeriod = new ArrayList<CurricularCourseScope>();
