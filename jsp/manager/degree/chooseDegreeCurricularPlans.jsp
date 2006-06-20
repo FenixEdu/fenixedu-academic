@@ -4,6 +4,7 @@
 <%@ taglib uri="/WEB-INF/jsf_fenix_components.tld" prefix="fc"%>
 
 <ft:tilesView definition="df.executionDegreeManagement.default" attributeName="body-inline">
+	<style>@import "<%= request.getContextPath() %>/CSS/transitional.css";</style>
 	<f:loadBundle basename="resources/ManagerResources" var="managerResources"/>
 	
 	<h:outputText styleClass="success0" rendered="#{!empty createExecutionDegrees.createdDegreeCurricularPlans}" value="Os seguintes planos curriculares foram criados correctamente:"/>
@@ -17,6 +18,7 @@
 	
 	<h:form>
 		<h:inputHidden value="#{createExecutionDegrees.chosenDegreeType}" />
+		<fc:viewState binding="#{createExecutionDegrees.viewState}"/>
 						
 		<h:outputText value="<strong>Planos Curriculares Pré-Bolonha:</strong>" escape="false" />
 
@@ -44,211 +46,176 @@
 		<br/>
 		
 		<h:panelGroup rendered="#{!empty createExecutionDegrees.degreeCurricularPlansSelectItems.value || !empty createExecutionDegrees.bolonhaDegreeCurricularPlansSelectItems.value}">
-			<p>
-				<h:panelGrid columns="2">
-					<h:outputText value="<strong>Ano lectivo de execução:</strong>" escape="false" />
-					<h:selectOneMenu value="#{createExecutionDegrees.choosenExecutionYearID}">
+			<h:outputText value="<fieldset class='lfloat3'>" escape="false"/>
+
+				<h:outputText value="<div class='simpleblock4'>" escape="false"/>
+				<h:outputText value="<p><label>Ano de execução:</label>" escape="false"/>
+					<h:selectOneMenu value="#{createExecutionDegrees.choosenExecutionYearID}" onchange="this.form.submit();" valueChangeListener="#{createExecutionDegrees.onChoosenExecutionYearChanged}">
 						<f:selectItems value="#{createExecutionDegrees.executionYears}" />
 					</h:selectOneMenu>
-								
-					<h:outputText value="<strong>Campus:</strong>" escape="false" />
+				<h:outputText value="</p>" escape="false"/>
+				<h:outputText value="<p><label>Campus:</label>" escape="false"/>
 					<h:selectOneMenu value="#{createExecutionDegrees.campus}" >
 						<f:selectItems value="#{createExecutionDegrees.allCampus}" />
 					</h:selectOneMenu>
-						
-					<h:outputText value="<strong>Mapa de exames temporário:<strong>" escape="false" />
+				<h:outputText value="</p>" escape="false"/>
+				<h:outputText value="<p><label>Mapa de exames temporário:</label>" escape="false"/>
 					<h:selectBooleanCheckbox value="#{createExecutionDegrees.temporaryExamMap}" />		
-				</h:panelGrid>
-			</p>
-			<br/>
-			<p>
-				<h:panelGrid columns="12">
-				 	<h:outputText value="<strong>Periodo Aulas 1º Semestre:</strong>" escape="false"/>
+				<h:outputText value="</p>" escape="false"/>
+				<h:outputText value="</div>" escape="false"/>
+
+				<h:outputText value="<div class='simpleblock4'>" escape="false"/>
+				<h:outputText value="<p><label><strong>1º Semestre</strong></label></p><br/>" escape="false"/>
+				<h:outputText value="<p><label>Aulas</label>" escape="false"/>
 					<h:selectOneMenu value="#{createExecutionDegrees.lessonSeason1BeginDay}">
 						<f:selectItems value="#{createExecutionDegrees.days}" />
 					</h:selectOneMenu>
-					<h:outputText value="/" />
+					<h:outputText value=" / " />
 					<h:selectOneMenu value="#{createExecutionDegrees.lessonSeason1BeginMonth}">
 						<f:selectItems value="#{createExecutionDegrees.months}" />
 					</h:selectOneMenu>
-					<h:outputText value="/" />
-					<h:selectOneMenu value="#{createExecutionDegrees.lessonSeason1BeginYear}">
-						<f:selectItems value="#{createExecutionDegrees.years}" />
-					</h:selectOneMenu>
+					<h:outputText value=" / " />
+					<h:outputText value="#{createExecutionDegrees.lessonSeason1BeginYear}"/>
 					<h:outputText value=" a " />
 					<h:selectOneMenu value="#{createExecutionDegrees.lessonSeason1EndDay}">
 						<f:selectItems value="#{createExecutionDegrees.days}" />
 					</h:selectOneMenu>
-					<h:outputText value="/" />
+					<h:outputText value=" / " />
 					<h:selectOneMenu value="#{createExecutionDegrees.lessonSeason1EndMonth}">
 						<f:selectItems value="#{createExecutionDegrees.months}" />
 					</h:selectOneMenu>
-					<h:outputText value="/" />
-					<h:selectOneMenu value="#{createExecutionDegrees.lessonSeason1EndYear}">
-						<f:selectItems value="#{createExecutionDegrees.years}" />
-					</h:selectOneMenu>
-					
-				 	<h:outputText value="<strong>Periodo Exames 1º Semestre:</strong>" escape="false"/>
+					<h:outputText value=" / " />
+					<h:outputText value="#{createExecutionDegrees.lessonSeason1EndYear}"/>
+				<h:outputText value="</p>" escape="false"/>
+				<h:outputText value="<p><label>Exames</label>" escape="false"/>
 					<h:selectOneMenu value="#{createExecutionDegrees.examsSeason1BeginDay}">
 						<f:selectItems value="#{createExecutionDegrees.days}" />
 					</h:selectOneMenu>
-					<h:outputText value="/" />
+					<h:outputText value=" / " />
 					<h:selectOneMenu value="#{createExecutionDegrees.examsSeason1BeginMonth}">
 						<f:selectItems value="#{createExecutionDegrees.months}" />
 					</h:selectOneMenu>
-					<h:outputText value="/" />
-					<h:selectOneMenu value="#{createExecutionDegrees.examsSeason1BeginYear}">
-						<f:selectItems value="#{createExecutionDegrees.years}" />
-					</h:selectOneMenu>
+					<h:outputText value=" / " />
+					<h:outputText value="#{createExecutionDegrees.examsSeason1BeginYear}"/>
 					<h:outputText value=" a " />
 					<h:selectOneMenu value="#{createExecutionDegrees.examsSeason1EndDay}">
 						<f:selectItems value="#{createExecutionDegrees.days}" />
 					</h:selectOneMenu>
-					<h:outputText value="/" />
+					<h:outputText value=" / " />
 					<h:selectOneMenu value="#{createExecutionDegrees.examsSeason1EndMonth}">
 						<f:selectItems value="#{createExecutionDegrees.months}" />
 					</h:selectOneMenu>
-					<h:outputText value="/" />
-					<h:selectOneMenu value="#{createExecutionDegrees.examsSeason1EndYear}">
-						<f:selectItems value="#{createExecutionDegrees.years}" />
-					</h:selectOneMenu>					
+					<h:outputText value=" / " />
+					<h:outputText value="#{createExecutionDegrees.examsSeason1EndYear}"/>
+				<h:outputText value="</p>" escape="false"/>
+				<h:outputText value="<p><label>Prazo Lançamento Notas</label>" escape="false"/>
+					<h:selectOneMenu value="#{createExecutionDegrees.gradeSubmissionNormalSeason1EndDay}">
+						<f:selectItems value="#{createExecutionDegrees.days}" />
+					</h:selectOneMenu>
+					<h:outputText value=" / " />
+					<h:selectOneMenu value="#{createExecutionDegrees.gradeSubmissionNormalSeason1EndMonth}">
+						<f:selectItems value="#{createExecutionDegrees.months}" />
+					</h:selectOneMenu>
+					<h:outputText value=" / " />
+					<h:outputText value="#{createExecutionDegrees.gradeSubmissionNormalSeason1EndYear}"/>
+				<h:outputText value="</p>" escape="false"/>
 				
-				 	<h:outputText value="<strong>Periodo Aulas 2º Semestre:<strong>" escape="false" />
+				<h:outputText value="</div>" escape="false"/>
+					
+				<h:outputText value="<div class='simpleblock4'>" escape="false"/>
+				<h:outputText value="<p><label><strong>2º Semestre</strong></label></p><br/>" escape="false"/>
+				<h:outputText value="<p><label>Aulas</label>" escape="false"/>
 					<h:selectOneMenu value="#{createExecutionDegrees.lessonSeason2BeginDay}">
 						<f:selectItems value="#{createExecutionDegrees.days}" />
 					</h:selectOneMenu>
-					<h:outputText value="/" />
+					<h:outputText value=" / " />
 					<h:selectOneMenu value="#{createExecutionDegrees.lessonSeason2BeginMonth}">
 						<f:selectItems value="#{createExecutionDegrees.months}" />
 					</h:selectOneMenu>
-					<h:outputText value="/" />
-					<h:selectOneMenu value="#{createExecutionDegrees.lessonSeason2BeginYear}">
-						<f:selectItems value="#{createExecutionDegrees.years}" />
-					</h:selectOneMenu>
+					<h:outputText value=" / " />
+					<h:outputText value="#{createExecutionDegrees.lessonSeason2BeginYear}"/>
 					<h:outputText value=" a " />
 					<h:selectOneMenu value="#{createExecutionDegrees.lessonSeason2EndDay}">
 						<f:selectItems value="#{createExecutionDegrees.days}" />
 					</h:selectOneMenu>
-					<h:outputText value="/" />
+					<h:outputText value=" / " />
 					<h:selectOneMenu value="#{createExecutionDegrees.lessonSeason2EndMonth}">
 						<f:selectItems value="#{createExecutionDegrees.months}" />
 					</h:selectOneMenu>
-					<h:outputText value="/" />
-					<h:selectOneMenu value="#{createExecutionDegrees.lessonSeason2EndYear}">
-						<f:selectItems value="#{createExecutionDegrees.years}" />
-					</h:selectOneMenu>
-				
-				 	<h:outputText value="<strong>Periodo Exames 2º Semestre:</strong>" escape="false" />
+					<h:outputText value=" / " />
+					<h:outputText value="#{createExecutionDegrees.lessonSeason2EndYear}"/>
+				<h:outputText value="</p>" escape="false"/>
+				<h:outputText value="<p><label>Exames</label>" escape="false"/>
 					<h:selectOneMenu value="#{createExecutionDegrees.examsSeason2BeginDay}">
 						<f:selectItems value="#{createExecutionDegrees.days}" />
 					</h:selectOneMenu>
-					<h:outputText value="/" />
+					<h:outputText value=" / " />
 					<h:selectOneMenu value="#{createExecutionDegrees.examsSeason2BeginMonth}">
 						<f:selectItems value="#{createExecutionDegrees.months}" />
 					</h:selectOneMenu>
-					<h:outputText value="/" />
-					<h:selectOneMenu value="#{createExecutionDegrees.examsSeason2BeginYear}">
-						<f:selectItems value="#{createExecutionDegrees.years}" />
-					</h:selectOneMenu>
+					<h:outputText value=" / " />
+					<h:outputText value="#{createExecutionDegrees.examsSeason2BeginYear}"/>
 					<h:outputText value=" a " />
 					<h:selectOneMenu value="#{createExecutionDegrees.examsSeason2EndDay}">
 						<f:selectItems value="#{createExecutionDegrees.days}" />
 					</h:selectOneMenu>
-					<h:outputText value="/" />
+					<h:outputText value=" / " />
 					<h:selectOneMenu value="#{createExecutionDegrees.examsSeason2EndMonth}">
 						<f:selectItems value="#{createExecutionDegrees.months}" />
 					</h:selectOneMenu>
-					<h:outputText value="/" />
-					<h:selectOneMenu value="#{createExecutionDegrees.examsSeason2EndYear}">
-						<f:selectItems value="#{createExecutionDegrees.years}" />
-					</h:selectOneMenu>	
-					
-					<h:outputText value="<strong>Periodo Exames Época Especial:</strong>" escape="false" />
+					<h:outputText value=" / " />
+					<h:outputText value="#{createExecutionDegrees.examsSeason2EndYear}"/>
+				<h:outputText value="</p>" escape="false"/>
+				<h:outputText value="<p><label>Prazo Lançamento Notas</label>" escape="false"/>
+					<h:selectOneMenu value="#{createExecutionDegrees.gradeSubmissionNormalSeason2EndDay}">
+						<f:selectItems value="#{createExecutionDegrees.days}" />
+					</h:selectOneMenu>
+					<h:outputText value=" / " />
+					<h:selectOneMenu value="#{createExecutionDegrees.gradeSubmissionNormalSeason2EndMonth}">
+						<f:selectItems value="#{createExecutionDegrees.months}" />
+					</h:selectOneMenu>
+					<h:outputText value=" / " />
+					<h:outputText value="#{createExecutionDegrees.gradeSubmissionNormalSeason2EndYear}"/>
+				<h:outputText value="</p>" escape="false"/>
+				<h:outputText value="</div>" escape="false"/>
+
+				<h:outputText value="<div class='simpleblock4'>" escape="false"/>
+				<h:outputText value="<p><label><strong>Época Especial</strong></label></p><br/>" escape="false"/>
+				<h:outputText value="<p><label>Exames</label>" escape="false"/>
 					<h:selectOneMenu value="#{createExecutionDegrees.examsSpecialSeasonBeginDay}">
 						<f:selectItems value="#{createExecutionDegrees.days}" />
 					</h:selectOneMenu>
-					<h:outputText value="/" />
+					<h:outputText value=" / " />
 					<h:selectOneMenu value="#{createExecutionDegrees.examsSpecialSeasonBeginMonth}">
 						<f:selectItems value="#{createExecutionDegrees.months}" />
 					</h:selectOneMenu>
-					<h:outputText value="/" />
-					<h:selectOneMenu value="#{createExecutionDegrees.examsSpecialSeasonBeginYear}">
-						<f:selectItems value="#{createExecutionDegrees.years}" />
-					</h:selectOneMenu>
+					<h:outputText value=" / " />
+					<h:outputText value="#{createExecutionDegrees.examsSpecialSeasonBeginYear}"/>					
 					<h:outputText value=" a " />
 					<h:selectOneMenu value="#{createExecutionDegrees.examsSpecialSeasonEndDay}">
 						<f:selectItems value="#{createExecutionDegrees.days}" />
 					</h:selectOneMenu>
-					<h:outputText value="/" />
+					<h:outputText value=" / " />
 					<h:selectOneMenu value="#{createExecutionDegrees.examsSpecialSeasonEndMonth}">
 						<f:selectItems value="#{createExecutionDegrees.months}" />
 					</h:selectOneMenu>
-					<h:outputText value="/" />
-					<h:selectOneMenu value="#{createExecutionDegrees.examsSpecialSeasonEndYear}">
-						<f:selectItems value="#{createExecutionDegrees.years}" />
-					</h:selectOneMenu>
-			
-					<h:outputText value="<strong>Prazo para Lançamento de Notas 1º Semestre:</strong>" escape="false" />
-					<h:selectOneMenu value="#{createExecutionDegrees.gradeSubmissionNormalSeason1EndDay}">
-						<f:selectItems value="#{createExecutionDegrees.days}" />
-					</h:selectOneMenu>
-					<h:outputText value="/" />
-					<h:selectOneMenu value="#{createExecutionDegrees.gradeSubmissionNormalSeason1EndMonth}">
-						<f:selectItems value="#{createExecutionDegrees.months}" />
-					</h:selectOneMenu>
-					<h:outputText value="/" />
-					<h:selectOneMenu value="#{createExecutionDegrees.gradeSubmissionNormalSeason1EndYear}">
-						<f:selectItems value="#{createExecutionDegrees.years}" />
-					</h:selectOneMenu>
-					<%-- It's necessary to put these empty outputText's because panelGrid has 12 columns --%>
-					<h:outputText value="" />
-					<h:outputText value="" />
-					<h:outputText value="" />
-					<h:outputText value="" />
-					<h:outputText value="" />
-					<h:outputText value="" />
-					
-					<h:outputText value="<strong>Prazo para Lançamento de Notas 2º Semestre:</strong>" escape="false" />
-					<h:selectOneMenu value="#{createExecutionDegrees.gradeSubmissionNormalSeason2EndDay}">
-						<f:selectItems value="#{createExecutionDegrees.days}" />
-					</h:selectOneMenu>
-					<h:outputText value="/" />
-					<h:selectOneMenu value="#{createExecutionDegrees.gradeSubmissionNormalSeason2EndMonth}">
-						<f:selectItems value="#{createExecutionDegrees.months}" />
-					</h:selectOneMenu>
-					<h:outputText value="/" />
-					<h:selectOneMenu value="#{createExecutionDegrees.gradeSubmissionNormalSeason2EndYear}">
-						<f:selectItems value="#{createExecutionDegrees.years}" />
-					</h:selectOneMenu>
-					<%-- It's necessary to put these empty outputText's because panelGrid has 12 columns --%>
-					<h:outputText value="" />
-					<h:outputText value="" />
-					<h:outputText value="" />
-					<h:outputText value="" />
-					<h:outputText value="" />
-					<h:outputText value="" />
-					
-					<h:outputText value="<strong>Prazo para Lançamento de Notas Época Especial:</strong>" escape="false" />
+					<h:outputText value=" / " />
+					<h:outputText value="#{createExecutionDegrees.examsSpecialSeasonEndYear}"/>					
+				<h:outputText value="</p>" escape="false"/>
+				<h:outputText value="<p><label>Prazo Lançamento Notas</label>" escape="false"/>
 					<h:selectOneMenu value="#{createExecutionDegrees.gradeSubmissionSpecialSeasonEndDay}">
 						<f:selectItems value="#{createExecutionDegrees.days}" />
 					</h:selectOneMenu>
-					<h:outputText value="/" />
+					<h:outputText value=" / " />
 					<h:selectOneMenu value="#{createExecutionDegrees.gradeSubmissionSpecialSeasonEndMonth}">
 						<f:selectItems value="#{createExecutionDegrees.months}" />
 					</h:selectOneMenu>
-					<h:outputText value="/" />
-					<h:selectOneMenu value="#{createExecutionDegrees.gradeSubmissionSpecialSeasonEndYear}">
-						<f:selectItems value="#{createExecutionDegrees.years}" />
-					</h:selectOneMenu>
-					<%-- It's necessary to put these empty outputText's because panelGrid has 12 columns --%>
-					<h:outputText value="" />
-					<h:outputText value="" />
-					<h:outputText value="" />
-					<h:outputText value="" />
-					<h:outputText value="" />
-					<h:outputText value="" />
-				</h:panelGrid>
-			</p>
+					<h:outputText value=" / " />
+					<h:outputText value="#{createExecutionDegrees.gradeSubmissionSpecialSeasonEndYear}"/>										
+				<h:outputText value="</p>" escape="false"/>
+				<h:outputText value="</div>" escape="false"/>
+
+			<h:outputText value="</fieldset>" escape="false"/>
 			
 			<h:commandButton action="#{createExecutionDegrees.createExecutionDegrees}" value="#{managerResources['label.create']}" styleClass="inputbutton"/>
 
