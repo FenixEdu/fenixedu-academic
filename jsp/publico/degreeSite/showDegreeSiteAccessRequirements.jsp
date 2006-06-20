@@ -2,7 +2,6 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
-<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
 
 <bean:define id="institutionUrl" type="java.lang.String">
 	<bean:message key="institution.url" bundle="GLOBAL_RESOURCES"/>
@@ -66,7 +65,25 @@
 		<p><bean:write name="infoDegreeInfo" property="testIngression" filter="false" /></p>
 	</logic:notEmpty>
   
-	<!-- AVAILABLE SPACES -->
+	<!-- CLASSIFICATIONS -->
+	<logic:notEmpty name="infoDegreeInfo" property="classifications">
+		<h2 class="arrow_bullet"><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.minimumScores" /></h2>
+	 	<bean:write name="infoDegreeInfo" property="classifications" filter="false" />
+	</logic:notEmpty>
+ 	
+	<!-- ACCESS REQUISITES -->
+	<logic:notEmpty name="infoDegreeInfo" property="accessRequisites">
+		<h2 class="arrow_bullet"><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.accessRequisites" /></h2>
+	 	<bean:write name="infoDegreeInfo" property="accessRequisites" filter="false" />
+	</logic:notEmpty>
+
+	<!-- CANDIDACY DOCUMENTS -->
+	<logic:notEmpty name="infoDegreeInfo" property="candidacyDocuments">
+		<h2 class="arrow_bullet"><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.candidacyDocuments" /></h2>
+	 	<bean:write name="infoDegreeInfo" property="candidacyDocuments" filter="false" />
+	</logic:notEmpty>
+ 	
+	<!-- DRIFTS -->
  	<logic:notEmpty name="infoDegreeInfo" property="driftsInitial">
 		<h2 class="arrow_bullet"><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.availableSpaces" /></h2>
 		<ul>
@@ -80,13 +97,7 @@
 	  </ul>			
 	</logic:notEmpty>    	  	
 	 
-	<!-- MINIMUM SCORES-->
-	<logic:notEmpty name="infoDegreeInfo" property="classifications">
-		<h2 class="arrow_bullet"><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.minimumScores" /></h2>
-	 	<bean:write name="infoDegreeInfo" property="classifications" filter="false" />
-	</logic:notEmpty>
- 	
- 	<!-- ENTRANCE MARKS -->
+ 	<!-- MARKS -->
  	<logic:notEmpty name="infoDegreeInfo" property="markAverage">
 		<h2 class="arrow_bullet"><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.entranceMarks" /></h2>
 		<ul>
@@ -102,6 +113,8 @@
 	
 	<logic:empty name="infoDegreeInfo" property="testIngression">
 	<logic:empty name="infoDegreeInfo" property="classifications">
+	<logic:empty name="infoDegreeInfo" property="accessRequisites">
+	<logic:empty name="infoDegreeInfo" property="candidacyDocuments">
 	<logic:empty name="infoDegreeInfo" property="driftsInitial">
 	<logic:empty name="infoDegreeInfo" property="driftsFirst">
 	<logic:empty name="infoDegreeInfo" property="driftsSecond">
@@ -110,6 +123,8 @@
 	<logic:empty name="infoDegreeInfo" property="markMax">
 		<p><i><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="not.available" /></i></p>
 	</logic:empty>
+	</logic:empty>
+	</logic:empty>	
 	</logic:empty>
 	</logic:empty>	
 	</logic:empty>	

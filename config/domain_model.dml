@@ -643,26 +643,52 @@ class net.sourceforge.fenixedu.domain.DegreeCurricularPlan extends net.sourcefor
 
 
 class net.sourceforge.fenixedu.domain.DegreeInfo extends net.sourceforge.fenixedu.domain.DomainObject {
+	Integer keyDegree;
+	Integer keyExecutionYear;
+/*
+    MultiLanguageString description;
+    MultiLanguageString history;
+    MultiLanguageString objectives;
+    MultiLanguageString designedFor;
+    MultiLanguageString professionalExits;
+    MultiLanguageString operationalRegime;
+    MultiLanguageString gratuity;
+    MultiLanguageString additionalInfo;
+    MultiLanguageString links;
+
+    MultiLanguageString testIngression;
+    MultiLanguageString classifications;
+    MultiLanguageString accessRequisites;
+    MultiLanguageString candidacyDocuments;
+    Integer driftsInitial;
+    Integer driftsFirst;
+    Integer driftsSecond;
+    Double markMin;    
+    Double markMax;
+    Double markAverage;
+
+    MultiLanguageString qualificationLevel;
+    MultiLanguageString recognitions;
+*/
+
     String description;
-    String objectives;
     String history;
+    String objectives;
+    String designedFor;
     String professionalExits;
+    String operationalRegime;
+    String gratuity;
+    String schoolCalendar;
+    String candidacyPeriod;
+    String selectionResultDeadline;
+    String enrolmentPeriod;
     String additionalInfo;
     String links;
-    
-    String descriptionEn;
-    String objectivesEn;
-    String historyEn;
-    String professionalExitsEn;
-    String additionalInfoEn;        
-    String linksEn;
-    
+
     String testIngression;
     String classifications;
-
-    String testIngressionEn;
-    String classificationsEn;
-
+    String accessRequisites;
+    String candidacyDocuments;
     Integer driftsInitial;
     Integer driftsFirst;
     Integer driftsSecond;
@@ -673,11 +699,27 @@ class net.sourceforge.fenixedu.domain.DegreeInfo extends net.sourceforge.fenixed
     String qualificationLevel;
     String recognitions;
 
-    String qualificationLevelEn;
-    String recognitionsEn;    
+    String descriptionEn;
+    String historyEn;
+    String objectivesEn;
+    String designedForEn;
+    String professionalExitsEn;
+    String operationalRegimeEn;
+    String gratuityEn;
+    String schoolCalendarEn;
+    String candidacyPeriodEn;
+    String selectionResultDeadlineEn;
+    String enrolmentPeriodEn;
+    String additionalInfoEn;        
+    String linksEn;
+    
+    String testIngressionEn;
+    String classificationsEn;
+    String accessRequisitesEn;
+    String candidacyDocumentsEn;
 
-	Integer keyDegree;
-	Integer keyExecutionYear;
+    String qualificationLevelEn;
+    String recognitionsEn;
 }
 
 
