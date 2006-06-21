@@ -143,4 +143,14 @@ public class MarkSheetEditDispatchAction extends MarkSheetDispatchAction {
         }
         return enrolmentEvaluationBeansToAppend;
     }
+    
+    public ActionForward prepareEditArchiveInformation(ActionMapping mapping, ActionForm actionForm,
+            HttpServletRequest request, HttpServletResponse response) {
+        
+        DynaActionForm form = (DynaActionForm) actionForm;
+        request.setAttribute("markSheet", rootDomainObject.readMarkSheetByOID((Integer) form.get("msID")));
+        request.setAttribute("url", buildUrl(form));
+        return mapping.findForward("editArchiveInformation");
+    }
+    
 }
