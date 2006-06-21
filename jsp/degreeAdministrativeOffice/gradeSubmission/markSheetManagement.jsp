@@ -26,13 +26,14 @@
 	<br/>
 </logic:messagesPresent>
 
-<fr:edit id="edit"
+<fr:edit id="search"
 		 name="edit"
 		 type="net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.gradeSubmission.MarkSheetManagementSearchBean"
 		 schema="markSheet.search"
 		 action="/markSheetManagement.do?method=searchMarkSheets">
 	<fr:destination name="postBack" path="/markSheetManagement.do?method=prepareSearchMarkSheetPostBack"/>
 	<fr:destination name="invalid" path="/markSheetManagement.do?method=prepareSearchMarkSheetInvalid"/>
+	<fr:destination name="cancel" path="/markSheetManagement.do?method=prepareSearchMarkSheet" />
 	<fr:layout name="tabular" >
 			<fr:property name="classes" value="tstyle4"/>
 	        <fr:property name="columnClasses" value="listClasses,,"/>
@@ -111,7 +112,12 @@
 									<bean:message key="label.markSheet.confirm" />
 								</html:link>
 							</logic:equal>							
-							<logic:equal name="markSheet" property="notConfirmed" value="false">
+							<logic:equal name="markSheet" property="confirmed" value="true">
+								<%-- 
+								<html:link action='<%= "/editMarkSheet.do?method=prepareEditArchiveInformation" + url %>' paramId="msID" paramName="markSheet" paramProperty="idInternal">
+									<bean:message key="label.markSheet.archive" />
+								</html:link>
+								--%>
 								<html:link action='<%= "/rectifyMarkSheet.do?method=prepareRectifyMarkSheet" + url %>' paramId="msID" paramName="markSheet" paramProperty="idInternal">
 									<bean:message key="label.markSheet.rectify" />
 								</html:link>
