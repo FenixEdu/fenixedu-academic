@@ -24,42 +24,24 @@
 	<h:messages infoClass="success0" errorClass="error0" layout="table" globalOnly="true"/>
 
 	<h:outputText value="<br/><h1>#{publicDepartmentBundle['department.faculty']} #{publicDepartmentBundle['of.masculine']} #{CompetenceCourseManagement.selectedDepartmentUnit.department.realName}</h1>" escape="false"/>
-	<h:outputText value="<br/>" escape="false"/>
 	
 	<h:form>
-		<h:dataTable value="#{DepartmentManagement.departmentTeachers}"
-			var="teacher" columnClasses="listClasses" headerClass="listClasses-header" style="width: 70%;">
-			<h:column>
-				<f:facet name="header">
-					<h:outputText value="#{bundle['label.teacher.name']}"></h:outputText>
-				</f:facet>
-				<h:outputLink rendered="#{!empty teacher.person.homepage && teacher.person.homepage.activated}" value="../../homepage/#{teacher.person.user.userUId}" target="_blank">
-					<h:outputText value="#{teacher.person.nome}"/>
-				</h:outputLink>
-				<h:outputText rendered="#{empty teacher.person.homepage || !teacher.person.homepage.activated}" value="#{teacher.person.nome}"/>
-			</h:column>
-			<h:column>
-				<f:facet name="header">
-					<h:outputText value="#{bundle['label.teacher.category']}"/>
-				</f:facet>
-				<h:outputText value="#{teacher.category.longName}"/>
-			</h:column>
-		</h:dataTable>
-<%--
-		<h:column>
-			<h:outputText value="<h2 class='greytxt'>Professor Catedrático</h2>" escape="false"/>
-		</h:column>
-		<fc:dataRepeater value="#{DepartmentManagement.departmentTeachers}" var="teacher" >
-			<h:panelGroup rendered="#{teacher.category.longName == 'PROFESSOR CATEDRATICO'}" >
-				<h:outputText value="<p>" escape="false"/>
+
+		<fc:dataRepeater value="#{DepartmentManagement.sortedDepartmentCategories}" var="category" >
+			<h:outputText value="<h2 class='greytxt mtop2'>#{category.longName}</h2>" escape="false"/>
+		
+		<fc:dataRepeater value="#{DepartmentManagement.teachersByCategory[category]}" var="teacher" >
+				<h:outputText value="<p style='padding-left: 2em'>" escape="false"/>
 				<h:outputLink rendered="#{!empty teacher.person.homepage && teacher.person.homepage.activated}" value="../../homepage/#{teacher.person.user.userUId}" target="_blank">
 					<h:outputText value="#{teacher.person.nome}"/>
 				</h:outputLink>
 				<h:outputText rendered="#{empty teacher.person.homepage || !teacher.person.homepage.activated}" value="#{teacher.person.nome}"/>
 				<h:outputText value="</p>" escape="false"/>
-			</h:panelGroup>
 		</fc:dataRepeater>
---%>
+	
+
+		</fc:dataRepeater>
+
 	</h:form>
 
 </ft:tilesView>

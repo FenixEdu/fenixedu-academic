@@ -1,21 +1,27 @@
 package net.sourceforge.fenixedu.presentationTier.backBeans.publico;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.SortedSet;
+import java.util.TreeMap;
 import java.util.TreeSet;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
+import net.sourceforge.fenixedu.domain.teacher.Category;
 import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean;
 
 import org.joda.time.YearMonthDay;
 
 public class DepartmentManagementBackingBean extends FenixBackingBean {
 
+    private Collection<Category> sortedDepartmentCategories = new TreeSet<Category>();
+    private Map<Category, List<Teacher>> teachersByCategory; 
+    
     public Department getDepartment() {
         Integer selectedDepartmentUnitID = getAndHoldIntegerParameter("selectedDepartmentUnitID");
         if (selectedDepartmentUnitID != null) {
@@ -26,7 +32,7 @@ public class DepartmentManagementBackingBean extends FenixBackingBean {
         }
     }
     
-    public List<Teacher> getDepartmentTeachers() throws FenixFilterException, FenixServiceException {
+    private List<Teacher> getDepartmentTeachers() {
         final SortedSet<Teacher> result = new TreeSet<Teacher>(Teacher.TEACHER_COMPARATOR_BY_CATEGORY_AND_NUMBER);
 
         Department department = getDepartment();
@@ -38,5 +44,43 @@ public class DepartmentManagementBackingBean extends FenixBackingBean {
         
         return new ArrayList<Teacher>(result);
     }
+    
+    private void initializeStructures() {
+    	teachersByCategory = new TreeMap<Category, List<Teacher>>();    
+
+        for (final Teacher teacher : getDepartmentTeachers()) {
+            Category category = teacher.getCategory();
+            
+            if (!teachersByCategory.containsKey(category)) {
+System.out.println("descobri a categoria " + category.getLongName());
+                final List<Teacher> categoryTeachers = new ArrayList<Teacher>();
+                categoryTeachers.add(teacher);
+                
+                teachersByCategory.put(category, categoryTeachers);
+                sortedDepartmentCategories.add(category);
+            } else {
+                final List<Teacher> categoryTeachers = teachersByCategory.get(category);
+                categoryTeachers.add(teacher);
+            }
+        }
+    }
+
+
+    public Map<Category, List<Teacher>> getTeachersByCategory() {
+        if (teachersByCategory == null) {
+            initializeStructures();
+        } 
+        
+        return teachersByCategory;
+    }
+
+    public List<Category> getSortedDepartmentCategories() {
+        if (sortedDepartmentCategories.isEmpty()) {
+            initializeStructures();
+        } 
+        
+        return new ArrayList<Category>(sortedDepartmentCategories);
+    }
 
 }
+
