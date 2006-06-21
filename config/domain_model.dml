@@ -992,6 +992,7 @@ class net.sourceforge.fenixedu.domain.MarkSheet extends net.sourceforge.fenixedu
     MarkSheetState markSheetState;
     Boolean submittedByTeacher;
     Boolean printed;
+    String archiveInformation;
 }
 
 class net.sourceforge.fenixedu.domain.EnrolmentEvaluation extends net.sourceforge.fenixedu.domain.DomainObject {
