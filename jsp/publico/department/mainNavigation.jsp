@@ -16,7 +16,7 @@
 		</h:outputLink>
  	<h:outputText value="</li><li>" escape="false"/>
 		<h:outputLink value="../department/showDepartmentTeachers.faces">
-			<h:outputText value="#{publicDepartmentBundle['department.teachers']}"/>
+			<h:outputText value="#{publicDepartmentBundle['department.faculty']}"/>
 			<f:param name="selectedDepartmentUnitID" value="#{CompetenceCourseManagement.selectedDepartmentUnitID}"/>
 		</h:outputLink>
  	<h:outputText value="</li><li>" escape="false"/>
