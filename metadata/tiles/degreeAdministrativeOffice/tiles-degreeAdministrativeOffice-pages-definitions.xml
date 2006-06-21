@@ -174,7 +174,11 @@
 	<definition name="show.markSheetManagement.edit.page" extends="definition.degreeAdministrativeOffice.masterPage">
 		<put name="body" value="/degreeAdministrativeOffice/gradeSubmission/editMarkSheet.jsp"></put>
 	</definition>
-
+	
+	<definition name="show.markSheetManagement.edit.archiveInformation" extends="definition.degreeAdministrativeOffice.masterPage">
+		<put name="body" value="/degreeAdministrativeOffice/gradeSubmission/editMarkSheetArchiveInformation.jsp"></put>
+	</definition>
+	
 	<definition name="show.markSheetManagement.showRectificationHistoric" extends="definition.degreeAdministrativeOffice.masterPage">
 		<put name="body" value="/degreeAdministrativeOffice/gradeSubmission/showRectificationHistoric.jsp"></put>
 	</definition>

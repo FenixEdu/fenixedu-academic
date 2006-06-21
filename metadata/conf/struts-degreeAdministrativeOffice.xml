@@ -513,6 +513,7 @@
 				scope="request">
 				
        		<forward name="editMarkSheet" path="show.markSheetManagement.edit.page"/>
+			<forward name="editArchiveInformation" path="show.markSheetManagement.edit.archiveInformation"/>
        		<forward name="searchMarkSheetFilled" path="/markSheetManagement.do?method=prepareSearchMarkSheetFilled"/>
 		</action>
 
