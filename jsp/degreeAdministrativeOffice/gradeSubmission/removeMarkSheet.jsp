@@ -18,7 +18,7 @@
 	
 	<h2><bean:message key="label.markSheet.remove"/> <bean:message key="label.markSheet"/></h2>
 	
-	<fr:view name="markSheet" schema="markSheet.view">
+	<fr:view name="markSheet" schema="degreeAdministrativeOffice.markSheet.view">
 		<fr:layout name="tabular" >
 			<fr:property name="classes" value="tstyle4"/>
 	        <fr:property name="columnClasses" value="listClasses,,"/>

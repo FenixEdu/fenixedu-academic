@@ -11,7 +11,7 @@
 
 <h3><u><bean:message key="label.rectifyMarkSheet.step.one"/></u> &gt; <bean:message key="label.rectifyMarkSheet.step.two"/></h3>
 
-<fr:view name="rectifyBean" property="markSheet" schema="markSheet.view">
+<fr:view name="rectifyBean" property="markSheet" schema="degreeAdministrativeOffice.markSheet.view">
 	<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle4"/>
 	        <fr:property name="columnClasses" value="listClasses,,"/>

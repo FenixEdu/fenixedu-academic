@@ -28,7 +28,7 @@
 	<html:hidden property="mss" />
 	<html:hidden property="mst" />
 	
-	<fr:view name="markSheet" schema="markSheet.view">
+	<fr:view name="markSheet" schema="degreeAdministrativeOffice.markSheet.view">
 		<fr:layout name="tabular" >
 			<fr:property name="classes" value="tstyle4"/>
 	        <fr:property name="columnClasses" value="listClasses,,"/>
