@@ -125,7 +125,7 @@
 	<h:panelGroup rendered="#{!empty CurricularCourseManagement.curricularCourse.weigth && CurricularCourseManagement.curricularCourse.weigth != 0.0}">
 		<h:outputText value="<h2 class='arrow_bullet'>#{bolonhaBundle['weight']}</h2>" escape="false"/>
 		<h:outputText value="<p>" escape="false"/>
-		<h:outputText value="#{CurricularCourseManagement.curricularCourse.weigth}"/>
+		<h:outputText value="#{CurricularCourseManagement.curricularCourse.weigth} (#{bolonhaBundle['for.average.grade.calculus']})"/>
 		<h:outputText value="</p>" escape="false"/>
 	</h:panelGroup>
 	
