@@ -151,6 +151,11 @@ public class CurricularCourse extends CurricularCourse_Base {
         return (isBolonha()) ? this.getParentDegreeCurricularPlan() : super.getDegreeCurricularPlan();
     }
 
+    @Override
+    public Double getWeigth() {
+        return (isBolonha()) ? this.getCompetenceCourse().getEctsCredits() : super.getWeigth();
+    }
+    
     public Degree getDegree() {
         return getDegreeCurricularPlan().getDegree();
     }
