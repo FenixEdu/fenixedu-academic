@@ -21,7 +21,7 @@
 		</h:outputLink>
  	<h:outputText value="</li><li>" escape="false"/>
 		<h:outputLink value="../department/showDepartmentCompetenceCourses.faces">
-			<h:outputText value="#{publicDepartmentBundle['department.competence.courses']}"/>
+			<h:outputText value="#{publicDepartmentBundle['department.courses']}"/>
 			<f:param name="selectedDepartmentUnitID" value="#{CompetenceCourseManagement.selectedDepartmentUnitID}"/>
 		</h:outputLink>
  	<h:outputText value="</li></ul>" escape="false"/>
