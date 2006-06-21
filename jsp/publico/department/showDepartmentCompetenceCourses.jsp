@@ -19,12 +19,12 @@
 		<h:outputText value="#{CompetenceCourseManagement.selectedDepartmentUnit.department.realName}"/>
 	</h:outputLink>
 	&nbsp;&gt;&nbsp;
-	<h:outputText value="#{publicDepartmentBundle['department.competence.courses']}"/>
+	<h:outputText value="#{publicDepartmentBundle['department.courses']}"/>
 	
 	<h:messages infoClass="success0" errorClass="error0" layout="table" globalOnly="true"/>
 
-	<h:outputText value="<br/><h1>#{publicDepartmentBundle['department.competence.courses']} #{publicDepartmentBundle['from.masculine']} " escape="false"/>
-	<h:outputText value="<acronym title='#{CompetenceCourseManagement.selectedDepartmentUnit.department.realName}'>#{CompetenceCourseManagement.selectedDepartmentUnit.department.acronym}</acronym></h1>" escape="false"/>
+	<h:outputText value="<br/><h1>#{publicDepartmentBundle['department.courses']} #{publicDepartmentBundle['from.masculine']} " escape="false"/>
+	<h:outputText value="#{CompetenceCourseManagement.selectedDepartmentUnit.department.realName}</h1>" escape="false"/>
 
 	<h:form>
 
