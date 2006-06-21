@@ -77,13 +77,24 @@
 		<property name="format" value="${name} (${code})" />
 	</slot>
 	<slot name="executionPeriod" layout="format" key="label.executionPeriod">
-		<property name="format" value="${semester}º ${executionYear.year}" />
+		<property name="format" value="${semester}ºS ${executionYear.year}" />
 	</slot>
 	<slot name="responsibleTeacher" layout="format" key="label.teacher">
 		<property name="format" value="${person.name} (${teacherNumber})" />
 	</slot>
 	<slot name="markSheetType"  key="label.markSheetType"/>
 	<slot name="evaluationDate" key="label.evaluationDate"/>
+</schema>
+
+<schema name="degreeAdministrativeOffice.markSheet.view" extends="markSheet.view" type="net.sourceforge.fenixedu.domain.MarkSheet">
+	<slot name="archiveInformation" key="label.markSheet.archive"/>
+</schema>
+
+<schema name="markSheet.editArchiveInformation" type="net.sourceforge.fenixedu.domain.MarkSheet">
+	<slot name="archiveInformation" key="label.markSheet.archive">
+		<property name="size" value="50"/>
+		<property name="maxLength" value="100"/>
+	</slot>
 </schema>
 
 <schema name="markSheet.create.step.one"
