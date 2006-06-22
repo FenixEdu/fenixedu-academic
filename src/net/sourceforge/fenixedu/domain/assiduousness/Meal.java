@@ -56,15 +56,9 @@ public class Meal extends Meal_Base {
         return pointList;
     }
 
-    // Calcula o desconto a efectuar
-    // Se funcionario almocar em mais do que 1 hora nao desconta nada
-    // senao devolve o que falta para que a hora de almoco seja 1 hora.
     public Duration calculateMealDiscount(Duration lunchBreak) {
         if (lunchBreak.isShorterThan(getMandatoryMealDiscount())
                 || lunchBreak.isEqual(getMandatoryMealDiscount())) {
-            System.out.println("almocou em menos de 1 hora");
-            System.out.println("desconto refeicao "
-                    + lunchBreak.minus(getMandatoryMealDiscount()).toPeriod().toString());
             return getMandatoryMealDiscount().minus(lunchBreak);
         } else {
             return Duration.ZERO;
@@ -80,16 +74,15 @@ public class Meal extends Meal_Base {
         return TimeInterval.countDurationFromClockings(clockingIn, clockingOut, this.getMealBreak());
     }
 
-    
     public TimeOfDay getEndOfMealBreakMinusMealDiscount() {
-        return getMealBreak().getEndTime().toDateTimeToday().minus(getMandatoryMealDiscount()).toTimeOfDay();
+        return getMealBreak().getEndTime().toDateTimeToday().minus(getMandatoryMealDiscount())
+                .toTimeOfDay();
     }
-    
+
     public TimeInterval getEndOfMealBreakMinusDiscountInterval() {
         return new TimeInterval(getEndOfMealBreakMinusMealDiscount(), getEndMealBreak(), false);
     }
-    
-    
+
     public void delete() {
         if (canBeDeleted()) {
             removeRootDomainObject();
@@ -100,5 +93,5 @@ public class Meal extends Meal_Base {
     public boolean canBeDeleted() {
         return !hasAnyWorkScheduleTypes();
     }
-    
+
 }

@@ -31,9 +31,7 @@ public class DailyBalance {
 
     // duracao da compensacao
     private Duration totalBalance;
-    
 
-    
     public DailyBalance() {
         super();
     }
@@ -99,7 +97,7 @@ public class DailyBalance {
     public void setMissingClocking(Boolean missingClocking) {
         this.missingClocking = missingClocking;
     }
-    
+
     public void setTotalBalance(Duration totalBalance) {
         this.totalBalance = totalBalance;
     }
@@ -107,7 +105,7 @@ public class DailyBalance {
     public Duration getTotalBalance() {
         return totalBalance;
     }
-    
+
     public Duration getLunchBreak() {
         return lunchBreak;
     }
@@ -153,18 +151,15 @@ public class DailyBalance {
         Duration normalWorkPeriodAbsence = Duration.ZERO.minus(this.getWorkSchedule()
                 .getWorkScheduleType().getNormalWorkPeriod().getWorkPeriodDuration());
         if (normalWorkPeriodBalance.isShorterThan(normalWorkPeriodAbsence)) {
-            System.out.println(normalWorkPeriodBalance.toPeriod().toString() + " e menor que "
-                    + normalWorkPeriodAbsence.toPeriod().toString());
             return normalWorkPeriodAbsence;
         } else {
             return normalWorkPeriodBalance;
         }
     }
 
-    
     public void discountBalanceLeaveInFixedPeriod(List<Leave> balanceLeaveList) {
         Duration balance = Duration.ZERO;
-        for (Leave balanceLeave: balanceLeaveList) {
+        for (Leave balanceLeave : balanceLeaveList) {
             balance = balance.plus(balanceLeave.getDuration());
         }
         Duration newFixedPeriodAbsence = getFixedPeriodAbsence().minus(balance);
@@ -174,7 +169,5 @@ public class DailyBalance {
             setFixedPeriodAbsence(newFixedPeriodAbsence);
         }
     }
-            
-    
-    
+
 }

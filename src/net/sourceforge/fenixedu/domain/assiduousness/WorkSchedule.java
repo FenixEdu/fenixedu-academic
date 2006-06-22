@@ -56,10 +56,10 @@ public class WorkSchedule extends WorkSchedule_Base {
         if (wsType.definedMeal()) { // o horario tem um intervalo de refeicao definido
 
             // calcular qd e' q funcionario foi almocar
-            mealInterval = timeline.calculateMealBreakInterval(wsType.getMeal().getMealBreak()); // calcular
-            System.out.println("intervalo refeicao: " + mealInterval);
+            mealInterval = timeline.calculateMealBreakInterval(wsType.getMeal().getMealBreak());
 
-            if (mealInterval != null) { // funcionario fez intervalo para almoco => ha 2 periodos de
+            if (mealInterval != null) {
+                // funcionario fez intervalo para almoco => ha 2 periodos de
                 // trabalho
                 dailyBalance.setLunchBreak(mealInterval.getDuration());
                 // actualiza almoco no dailyBalance calcula primeiro periodo de trabalho do horario
@@ -71,46 +71,34 @@ public class WorkSchedule extends WorkSchedule_Base {
                                 .getClockingTime(), AttributeType.NULL), new TimePoint(
                                 getWorkScheduleType().getClockingEndTime(), getWorkScheduleType()
                                         .isClokingTimeNextDay(), AttributeType.NULL));
-                System.out.println("primeiro periodo de trabalho:"
-                        + firstWorkPeriod.toPeriod().toString());
-
                 // calcula segundo periodo de trabalho do horario normal: desde entrada depois do almoco
                 // ate' 'a saida
                 if (((WorkPeriod) wsType.getNormalWorkPeriod()).isSecondWorkPeriodDefined()) {
-                    System.out.println("fim da meal " + mealInterval.getEndTime().toString());
                     lastWorkPeriod = timeline.calculateDurationAllIntervalsByAttributesFromTime(
                             new TimePoint(mealInterval.getEndTime(), false, null),
                             DomainConstants.WORKED_ATTRIBUTES, new TimePoint(getWorkScheduleType()
                                     .getClockingTime(), AttributeType.NULL), new TimePoint(
                                     getWorkScheduleType().getClockingEndTime(), getWorkScheduleType()
                                             .isClokingTimeNextDay(), AttributeType.NULL));
-                    System.out.println("segundo periodo de trabalho:"
-                            + lastWorkPeriod.toPeriod().toString());
                 }
                 dailyBalance.setWorkedOnNormalWorkPeriod(firstWorkPeriod.plus(lastWorkPeriod));
-                System.out.println("saldo antes de descontar a meal: "
-                        + dailyBalance.getNormalWorkPeriodBalance().toString());
                 // Fixed Periods if defined
                 wsType.calculateFixedPeriodDuration(dailyBalance, timeline);
                 wsType.checkMealDurationAccordingToRules(dailyBalance);
 
             } else { // o funcionario nao foi almocar so fez 1 periodo de trabalho
-                System.out.println("funcionario nao foi almocar");
                 Duration workPeriod = timeline.calculateDurationAllIntervalsByAttributes(
                         DomainConstants.WORKED_ATTRIBUTES, new TimePoint(getWorkScheduleType()
                                 .getClockingTime(), AttributeType.NULL), new TimePoint(
                                 getWorkScheduleType().getClockingEndTime(), getWorkScheduleType()
                                         .isClokingTimeNextDay(), AttributeType.NULL));
-                System.out.println("nwp: " + workPeriod);
 
                 // caso dos horarios de isencao de horario
                 if (wsType.getMeal().getMinimumMealBreakInterval().isEqual(Duration.ZERO)) {
-                    System.out.println("horario de isencao de horario");
 
                     if (firstClockingDate != null
                             && wsType.getMeal().getMealBreak().contains(firstClockingDate, false)) {
                         // funcionario entrou no intervalo de almoco
-                        System.out.println("funcionario entrou no intervalo de almoco");
                         // considera-se o periodo desde o inicio do intervalo de almoco + desconto
                         // obrigatorio de almoco
                         // se funcionario entrar nesse periodo de tempo e'-lhe descontado desde a entrada
@@ -134,7 +122,6 @@ public class WorkSchedule extends WorkSchedule_Base {
                     if (firstClockingDate != null) {
                         if (wsType.getMeal().getMealBreak().contains(firstClockingDate, false)) {
                             // funcionario entrou no intervalo de almoco
-                            System.out.println("funcionario entrou no intervalo de almoco");
                             // considera-se o periodo desde o inicio do intervalo de almoco + desconto
                             // obrigatorio de almoco
                             // se funcionario entrar nesse periodo de tempo e'-lhe descontado desde a
@@ -152,8 +139,6 @@ public class WorkSchedule extends WorkSchedule_Base {
                             // calcular o periodo fixo
                             wsType.calculateFixedPeriodDuration(dailyBalance, timeline);
                             dailyBalance.setWorkedOnNormalWorkPeriod(workPeriod);
-                            System.out.println("nwp: "
-                                    + dailyBalance.getWorkedOnNormalWorkPeriod().toPeriod().toString());
 
                             // primeiro clocking e' antes do periodo de almoco;
                             // ver se o ultimo clocking e' depois do periodo de almoco
@@ -194,15 +179,6 @@ public class WorkSchedule extends WorkSchedule_Base {
             wsType.calculateFixedPeriodDuration(dailyBalance, timeline);
 
         }
-        System.out.println("total worked -> "
-                + dailyBalance.getWorkedOnNormalWorkPeriod().toPeriod().toString());
-        System.out.println("devia ter trabalhado ->"
-                + ((WorkPeriod) wsType.getNormalWorkPeriod()).getWorkPeriodDuration().toPeriod()
-                        .toString());
-        System.out.println("saldo ->"
-                + dailyBalance.getWorkedOnNormalWorkPeriod().minus(
-                        wsType.getNormalWorkPeriod().getWorkPeriodDuration()).toPeriod().toString());
-
         return dailyBalance;
     }
 

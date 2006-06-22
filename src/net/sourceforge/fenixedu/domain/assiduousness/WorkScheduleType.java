@@ -83,24 +83,12 @@ public class WorkScheduleType extends WorkScheduleType_Base {
         if (definedMeal()) {
             if (dailyBalance.getLunchBreak().isShorterThan(getMeal().getMinimumMealBreakInterval())) {
                 // NormalWorkPeriodBalance will be - totalNormalWorkPeriodDuration
-                System.out.println("almoco e' menor q o tempo dado para almoco");
                 turnDayToAbsence(dailyBalance);
             } else {
-                System.out.println("nwp: "
-                        + (dailyBalance.getWorkedOnNormalWorkPeriod()).toPeriod().toString());
-                System.out.println("saldo nwp antes: "
-                        + getNormalWorkPeriod().getWorkPeriodDuration().minus(
-                                (dailyBalance.getWorkedOnNormalWorkPeriod())).toPeriod().toString());
-                System.out.println("almoco" + dailyBalance.getLunchBreak().toPeriod().toString());
-                System.out.println("demorou mais de 15m a almocar");
                 Duration mealDiscount = ((Meal) getMeal()).calculateMealDiscount(dailyBalance
                         .getLunchBreak());
-                System.out.println("descontar " + mealDiscount.toPeriod().toString());
-                // periodo normal menos desconto
                 dailyBalance.setWorkedOnNormalWorkPeriod(dailyBalance.getWorkedOnNormalWorkPeriod()
                         .minus(mealDiscount));
-                System.out.println("nwp: depois "
-                        + (dailyBalance.getWorkedOnNormalWorkPeriod()).toPeriod().toString());
             }
         }
     }
@@ -112,84 +100,9 @@ public class WorkScheduleType extends WorkScheduleType_Base {
             // FixedPeriod absence will be the whole fixed period duration
             dailyBalance.setFixedPeriodAbsence(((WorkPeriod) this.getFixedWorkPeriod())
                     .getWorkPeriodDuration());
-            System.out.println(dailyBalance.getFixedPeriodAbsence().toPeriod().toString());
         }
     }
 
-    // TODO
-    // Os funcionario so' podem trabalhar 5 horas seguidas
-    // o tempo para alem dessas 5 horas nao e' contabilizado.
-    // No caso de fazerem mais de 5 horas de manha o periodo da tarde nao deve ser contabilizado
-    // Excepto Jornadas Continuas em q ha periodos de 6 horas com intervalo de 30 minutos (?)
-    // public Duration checkNormalWorkPeriodAccordingToRules(Duration normalWorkPeriodWorked) {
-    // System.out.println("normalworkperiod worked" +normalWorkPeriodWorked.toPeriod().toString());
-    // if (normalWorkPeriodWorked.isLongerThan(DomainConstants.MAX_MORNING_WORK)) {
-    // return DomainConstants.MAX_MORNING_WORK;
-    // } else {
-    // return normalWorkPeriodWorked;
-    // }
-    // }
-
-    /*
-     * ATTRIBUTE BUILDERS WITH DATA FROM THE PRESENTATION TODO check if this makes any sense in the new
-     * arch
-     */
-
-    // // builds an Interval from start date and time and end date and time.
-    // public static Interval createIntervalFromTimes(Integer startYear, Integer startMonth, Integer
-    // startDay, Integer startHours, Integer startMinutes, Integer endHours,
-    // Integer endMinutes, boolean nextDay) throws InvalidIntervalLimitsException {
-    // DateTime startTime = new DateTime(startYear.intValue(), startMonth.intValue(),
-    // startDay.intValue(), startHours.intValue(), startMinutes.intValue(), 0, 0);
-    // DateTime endTime = new DateTime(startYear.intValue(), startMonth.intValue(), startDay.intValue(),
-    // endHours.intValue(), endMinutes.intValue(), 0, 0);
-    // if (startTime.isBefore(endTime)) {
-    // // next day
-    // if (nextDay) {
-    // endTime = endTime.plus(Period.days(1));
-    // }
-    // return new Interval(startTime, endTime);
-    // } else {
-    // // TODO throw exception the startTime and endTime are inconsistent...
-    // throw new InvalidIntervalLimitsException("startTime and endTime are inconsistent...");
-    // }
-    // }
-    // // builds an Interval from start date and time and end date and time.
-    // public static TimeInterval createTimeIntervalFromTimes(Integer startYear, Integer startMonth,
-    // Integer startDay, Integer startHours, Integer startMinutes, Integer endHours,
-    // Integer endMinutes, boolean nextDay) throws InvalidIntervalLimitsException {
-    //        
-    // DateTime startTime = new DateTime(startYear.intValue(), startMonth.intValue(),
-    // startDay.intValue(), startHours.intValue(), startMinutes.intValue(), 0, 0);
-    // DateTime endTime = new DateTime(startYear.intValue(), startMonth.intValue(), startDay.intValue(),
-    // endHours.intValue(), endMinutes.intValue(), 0, 0);
-    // if (startTime.isBefore(endTime)) {
-    // // next day
-    // if (nextDay) {
-    // endTime = endTime.plus(Period.days(1));
-    // }
-    // return new Interval(startTime, endTime);
-    // } else {
-    // // TODO throw exception the startTime and endTime are inconsistent...
-    // throw new InvalidIntervalLimitsException("startTime and endTime are inconsistent...");
-    // }
-    // }
-    // // builds regular schedule/fixed period/meal break intervals from the data got from the
-    // presentation
-    // public static Interval createTimeIntervalPeriod(Integer startYear, Integer startMonth, Integer
-    // startDay, Integer startHours, Integer startMinutes, Integer endHours,
-    // Integer endMinutes, boolean nextDay, FenixDomainException specificException) throws
-    // FenixDomainException {
-    // Interval interval = null;
-    // try {
-    // interval = createIntervalFromTimes(startYear, startMonth, startDay, startHours, startMinutes,
-    // endHours, endMinutes, nextDay);
-    // } catch (InvalidIntervalLimitsException e) {
-    // throw specificException;
-    // }
-    // return interval;
-    // }
-    // builds regular schedule/fixed period/meal break intervals from the data got from the presentation
     public static TimeInterval createTimeInterval(Integer startHours, Integer startMinutes,
             Integer endHours, Integer endMinutes, boolean nextDay, FenixDomainException specificException)
             throws FenixDomainException {
@@ -203,28 +116,6 @@ public class WorkScheduleType extends WorkScheduleType_Base {
         }
         return timeInterval;
     }
-
-    // // builds and validates the workday
-    // public static TimeInterval createWorkDay(Integer startHours, Integer startMinutes, Integer
-    // endHours,
-    // Integer endMinutes, boolean nextDay) throws FenixDomainException {
-    // // expediente
-    // TimeInterval workDay = null;
-    // try {
-    // workDay = createTimeInterval(startHours, startMinutes, endHours, endMinutes, nextDay, null);
-    // // Se duracao do expediente for menor que a duracao do expediente minimo
-    // // ou duracao do expediente for maior que a duracao do expediente maximo da' erro!
-    // if (workDay.getDuration().isShorterThan(DomainConstants.DURATION_MINIMUM_WORKDAY)
-    // || workDay.getDuration().isLongerThan(DomainConstants.DURATION_MAXIMUM_WORKDAY)) {
-    // System.out.println("erro: workday ta fora dos limites.");
-    // // TODO mudar msg
-    // throw new WorkdayOutOfLegalBoundsException("workdayOutofBounds exception");
-    // }
-    // } catch (InvalidIntervalLimitsException e) {
-    // throw new InvalidWorkdayIntervalException("Invalid WorkDay Interval Exception");
-    // }
-    // return workDay;
-    // }
 
     public void delete() {
         if (canBeDeleted()) {
@@ -254,22 +145,22 @@ public class WorkScheduleType extends WorkScheduleType_Base {
     public TimeOfDay getWorkEndTime() {
         return getWorkTime().plus(getWorkTimeDuration().toPeriod());
     }
-    
+
     public TimeOfDay getClockingEndTime() {
         return getClockingTime().plus(getClockingTimeDuration().toPeriod());
     }
-    
+
     public boolean isWorkTimeNextDay() {
         DateTime now = TimeOfDay.MIDNIGHT.toDateTimeToday();
         Duration maxDuration = new Duration(getWorkTime().toDateTime(now).getMillis(), now.plusDays(1)
                 .getMillis());
         return (getWorkTimeDuration().compareTo(maxDuration) >= 0);
     }
-    
+
     public boolean isClokingTimeNextDay() {
         DateTime now = TimeOfDay.MIDNIGHT.toDateTimeToday();
-        Duration maxDuration = new Duration(getClockingTime().toDateTime(now).getMillis(), now.plusDays(1)
-                .getMillis());
+        Duration maxDuration = new Duration(getClockingTime().toDateTime(now).getMillis(), now.plusDays(
+                1).getMillis());
         return (getClockingTimeDuration().compareTo(maxDuration) >= 0);
     }
 }
