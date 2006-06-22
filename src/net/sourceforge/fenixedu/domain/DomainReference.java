@@ -8,10 +8,10 @@ import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 
 /**
- * A <code>DomainReference</code> allows groups to refer to domain objects and still being
- * persisted in the database as value types. The <code>DomainReference</code> introduces an
- * indirection point between the group and the domain object and can be considerered as a typified
- * universal reference to domain objects.
+ * A <code>DomainReference</code> allows a serializable object to refer to a domain object. 
+ * The <code>DomainReference</code> introduces an indirection point between the holder object 
+ * and the domain object that avoids any data from the domain object to be stored in the 
+ * serialization point.
  * 
  * @author cfgi
  */
@@ -19,17 +19,25 @@ public class DomainReference<T extends DomainObject> implements Serializable {
     
     private static final long serialVersionUID = 1L;
 
-    String className;
+    String className; // is also used to know when we are storing the null value
     Integer oid;
 
-    transient Class type;
+    transient Class type; // chached type, transient to protect from class hierarchy changes
     transient T object;
 
     public DomainReference(T object) {
-    	this.object = object;
-    	this.type = object.getClass();
-        this.className = object.getClass().getName();
-        this.oid = object.getIdInternal();        
+        if (object == null) {
+            this.object = null;
+            this.type = null;
+            this.className = null;
+            this.oid = null;
+        }
+        else {
+            	this.object = object;
+            	this.type = object.getClass();
+            this.className = object.getClass().getName();
+            this.oid = object.getIdInternal();
+        }
     }
 
     public Integer getOid() {
@@ -41,6 +49,10 @@ public class DomainReference<T extends DomainObject> implements Serializable {
     }
     
     public Class getType() {
+        if (this.className == null) {
+            return null;
+        }
+        
         if (this.type != null) {
             return this.type;
         }
@@ -58,6 +70,10 @@ public class DomainReference<T extends DomainObject> implements Serializable {
             return this.object;
         }
 
+        if (this.className == null) { // null object
+            return null;
+        }
+        
         ISuportePersistente persistenceSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
         IPersistentObject persistentObject = persistenceSupport.getIPersistentObject();
         
@@ -68,19 +84,40 @@ public class DomainReference<T extends DomainObject> implements Serializable {
 
     @Override
     public boolean equals(Object other) {
-        if (!(other instanceof DomainReference)) {
+        if (! (other instanceof DomainReference)) {
             return false;
         }
 
         DomainReference otherReference = (DomainReference) other;
 
-        return this.getType().equals(otherReference.getType())
-                && this.getOid().equals(otherReference.getOid());
+        if (this.getOid() == null && otherReference.getOid() != null) {
+            return false;
+        }
+        
+        if (this.getOid() != null && !this.getOid().equals(otherReference.getOid())) {
+            return false;
+        }
+        
+        if (this.getType() == null && otherReference.getType() != null) {
+            return false;
+        }
+        
+        if (this.getType() != null && !this.getType().equals(otherReference.getType())) {
+            return false;
+        }
+
+        return true;
     }
 
     @Override
     public int hashCode() {
-        return this.getOid().hashCode() + this.getType().hashCode();
+        int oidHash;
+        int typeHash;
+        
+        oidHash  = getOid() == null ? 0 : getOid().hashCode();
+        typeHash = getType() == null ? 0 : getType().hashCode();
+        
+        return oidHash + typeHash;
     }
 
 }
