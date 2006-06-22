@@ -135,6 +135,7 @@ valueType net.sourceforge.fenixedu.domain.MarkSheetType					as MarkSheetType;
 valueType net.sourceforge.fenixedu.domain.MarkSheetState					as MarkSheetState;
 valueType net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseLevel     as CompetenceCourseLevel;
 
+
 /*
 *
 * Class definitions
@@ -3216,6 +3217,26 @@ class net.sourceforge.fenixedu.domain.system.CronScriptInvocation extends net.so
 	DateTime endTime;
 	Boolean successful;
 }
+
+class net.sourceforge.fenixedu.domain.candidacy.Candidacy extends net.sourceforge.fenixedu.domain.DomainObject {
+	Integer number;
+}
+
+	class net.sourceforge.fenixedu.domain.candidacy.DFACandidacy extends net.sourceforge.fenixedu.domain.candidacy.Candidacy {
+	}
+
+class net.sourceforge.fenixedu.domain.candidacy.CandidacySituation extends net.sourceforge.fenixedu.domain.DomainObject {
+	DateTime situationDate;
+}
+
+	class net.sourceforge.fenixedu.domain.candidacy.PreCandidacySituation extends net.sourceforge.fenixedu.domain.candidacy.CandidacySituation {
+	}
+	
+	class net.sourceforge.fenixedu.domain.candidacy.PaymentCandidacySituation extends net.sourceforge.fenixedu.domain.candidacy.CandidacySituation {
+	}
+	
+	class net.sourceforge.fenixedu.domain.candidacy.PendentCandidacySituation extends net.sourceforge.fenixedu.domain.candidacy.CandidacySituation {
+	}
 
 
 /*
@@ -8298,6 +8319,34 @@ relation RootDomainObjectCronScriptInvocation {
 relation RootDomainObjectCronRegistry {
 	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
 	net.sourceforge.fenixedu.domain.system.CronRegistry playsRole cronRegistry {
+		multiplicity *;
+	}
+}
+
+relation PersonCandidacy {
+	net.sourceforge.fenixedu.domain.Person playsRole person;
+	net.sourceforge.fenixedu.domain.candidacy.Candidacy playsRole candidacies {
+		multiplicity *;
+	}
+}
+
+relation CandidacySituationCandidacy {
+	net.sourceforge.fenixedu.domain.candidacy.Candidacy playsRole candidacy;
+	net.sourceforge.fenixedu.domain.candidacy.CandidacySituation playsRole candidacySituations {
+		multiplicity *;
+	}
+}
+
+relation CandidacySituationEmployee {
+    net.sourceforge.fenixedu.domain.Employee playsRole employee;
+	net.sourceforge.fenixedu.domain.candidacy.CandidacySituation playsRole candidacySituations {
+		multiplicity *;
+	}
+}
+
+relation DFACandidacyExecutionDegree {
+    net.sourceforge.fenixedu.domain.ExecutionDegree playsRole executionDegree;
+	net.sourceforge.fenixedu.domain.candidacy.DFACandidacy playsRole dfaCandidacies {
 		multiplicity *;
 	}
 }
