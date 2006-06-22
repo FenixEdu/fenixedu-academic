@@ -3,7 +3,16 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
-<h2><bean:message key="title.showJustifications" /></h2>
+<em><bean:message key="title.assiduousness" /></em>
+<br />
+<h2><bean:message key="link.justifications" /></h2>
+<br />
+<br />
+<logic:present name="yearMonth">
+	<fr:edit name="yearMonth" schema="choose.date"
+		action="/assiduousnessRecords.do?method=showJustifications">
+	</fr:edit>
+</logic:present>
 <br />
 <br />
 <logic:present name="leaves">

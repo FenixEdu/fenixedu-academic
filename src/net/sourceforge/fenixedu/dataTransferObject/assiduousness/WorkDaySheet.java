@@ -75,6 +75,9 @@ public class WorkDaySheet implements Serializable {
     }
 
     public String getDateFormatted() {
+        if(getDate() == null) {
+            return "";
+        }
         return getDate().toString("dd/MM/yyyy");
     }
 

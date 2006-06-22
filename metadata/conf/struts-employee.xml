@@ -48,7 +48,6 @@
 			type="net.sourceforge.fenixedu.presentationTier.Action.employee.AssiduousnessDispatchAction"
 			validate="true">
 			<forward name="show-employee-info" path="show-employee-info" />
-			<forward name="choose-date" path="choose-date" />
 			<forward name="show-clockings" path="show-clockings" />
 			<forward name="show-justifications"
 				path="show-justifications" />

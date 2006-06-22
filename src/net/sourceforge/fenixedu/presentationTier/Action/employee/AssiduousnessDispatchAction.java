@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.presentationTier.Action.employee;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.ResourceBundle;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -25,6 +26,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
 import net.sourceforge.fenixedu.renderers.components.state.ViewState;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 import net.sourceforge.fenixedu.util.Month;
+import net.sourceforge.fenixedu.util.WeekDay;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.struts.action.ActionForm;
@@ -33,6 +35,7 @@ import org.apache.struts.action.ActionMapping;
 import org.joda.time.DateTime;
 import org.joda.time.Duration;
 import org.joda.time.Period;
+import org.joda.time.TimeOfDay;
 import org.joda.time.YearMonthDay;
 
 public class AssiduousnessDispatchAction extends FenixDispatchAction {
@@ -53,19 +56,6 @@ public class AssiduousnessDispatchAction extends FenixDispatchAction {
         return mapping.findForward("show-employee-info");
     }
 
-    public ActionForward prepareChooseDate(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixServiceException,
-            FenixFilterException {
-        String action = (String) request.getParameter("action");
-        System.out.println("---------------> " + action);
-        YearMonth yearMonth = new YearMonth();
-        yearMonth.setYear(new YearMonthDay().getYear());
-        yearMonth.setMonth(Month.values()[new YearMonthDay().getMonthOfYear() - 1]);
-        request.setAttribute("yearMonth", yearMonth);
-        request.setAttribute("action", action);
-        return mapping.findForward("choose-date");
-    }
-
     public ActionForward showClockings(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws FenixServiceException,
             FenixFilterException {
@@ -76,15 +66,19 @@ public class AssiduousnessDispatchAction extends FenixDispatchAction {
             System.out.println("não existe empregado");
             return mapping.findForward("index");
         }
+        YearMonth yearMonth = null;
         ViewState viewState = (ViewState) RenderUtils.getViewState();
-        YearMonth yearMonth = (YearMonth) viewState.getMetaObject().getObject();
-
-        if (yearMonth.getYear() > new YearMonthDay().getYear()) {
+        if (viewState != null) {
+            yearMonth = (YearMonth) viewState.getMetaObject().getObject();
+        }
+        if (yearMonth == null) {
+            yearMonth = new YearMonth();
+            yearMonth.setYear(new YearMonthDay().getYear());
+            yearMonth.setMonth(Month.values()[new YearMonthDay().getMonthOfYear() - 1]);
+        } else if (yearMonth.getYear() > new YearMonthDay().getYear()) {
             // erro - não pode ver nos anos futuros
             System.out.println("erro - não pode ver nos anos futuros");
         }
-        System.out.println();
-
         YearMonthDay beginDate = new YearMonthDay(yearMonth.getYear(),
                 yearMonth.getMonth().ordinal() + 1, 01);
         YearMonthDay endDate = new YearMonthDay(yearMonth.getYear(), yearMonth.getMonth().ordinal() + 1,
@@ -95,6 +89,7 @@ public class AssiduousnessDispatchAction extends FenixDispatchAction {
             Collections.sort(orderedClockings, new BeanComparator("date"));
             request.setAttribute("clockings", orderedClockings);
         }
+        request.setAttribute("yearMonth", yearMonth);
         return mapping.findForward("show-clockings");
     }
 
@@ -108,14 +103,19 @@ public class AssiduousnessDispatchAction extends FenixDispatchAction {
             System.out.println("não existe empregado");
             return mapping.findForward("index");
         }
+        YearMonth yearMonth = null;
         ViewState viewState = (ViewState) RenderUtils.getViewState();
-        YearMonth yearMonth = (YearMonth) viewState.getMetaObject().getObject();
-
-        if (yearMonth.getYear() > new YearMonthDay().getYear()) {
+        if (viewState != null) {
+            yearMonth = (YearMonth) viewState.getMetaObject().getObject();
+        }
+        if (yearMonth == null) {
+            yearMonth = new YearMonth();
+            yearMonth.setYear(new YearMonthDay().getYear());
+            yearMonth.setMonth(Month.values()[new YearMonthDay().getMonthOfYear() - 1]);
+        } else if (yearMonth.getYear() > new YearMonthDay().getYear()) {
             // erro - não pode ver nos anos futuros
             System.out.println("erro - não pode ver nos anos futuros");
         }
-        System.out.println();
         if (employee.getAssiduousness() != null) {
             YearMonthDay beginDate = new YearMonthDay(yearMonth.getYear(), yearMonth.getMonth()
                     .ordinal() + 1, 01);
@@ -126,6 +126,7 @@ public class AssiduousnessDispatchAction extends FenixDispatchAction {
             Collections.sort(orderedJustifications, new BeanComparator("date"));
             request.setAttribute("leaves", orderedJustifications);
         }
+        request.setAttribute("yearMonth", yearMonth);
         return mapping.findForward("show-justifications");
     }
 
@@ -139,16 +140,24 @@ public class AssiduousnessDispatchAction extends FenixDispatchAction {
             System.out.println("não existe empregado");
             return mapping.findForward("index");
         }
+        YearMonth yearMonth = null;
         ViewState viewState = (ViewState) RenderUtils.getViewState();
-        YearMonth yearMonth = (YearMonth) viewState.getMetaObject().getObject();
+        if (viewState != null) {
+            yearMonth = (YearMonth) viewState.getMetaObject().getObject();
+        }
+        if (yearMonth == null) {
+            yearMonth = new YearMonth();
+            yearMonth.setYear(new YearMonthDay().getYear());
+            yearMonth.setMonth(Month.values()[new YearMonthDay().getMonthOfYear() - 1]);
+        } else if (yearMonth.getYear() > new YearMonthDay().getYear()) {
+            // erro - não pode ver nos anos futuros
+            System.out.println("erro - não pode ver nos anos futuros");
+        }
 
         YearMonthDay beginDate = new YearMonthDay(yearMonth.getYear(),
                 yearMonth.getMonth().ordinal() + 1, 01);
         int endDay = beginDate.dayOfMonth().getMaximumValue();
-        if (yearMonth.getYear() > new YearMonthDay().getYear()) {
-            // erro - não pode ver nos anos futuros
-            System.out.println("erro - não pode ver nos anos futuros");
-        } else if (yearMonth.getYear() == new YearMonthDay().getYear()
+        if (yearMonth.getYear() == new YearMonthDay().getYear()
                 && yearMonth.getMonth().ordinal() + 1 == new YearMonthDay().getMonthOfYear()) {
             endDay = new YearMonthDay().getDayOfMonth();
         }
@@ -157,6 +166,7 @@ public class AssiduousnessDispatchAction extends FenixDispatchAction {
                 endDay);
         request.setAttribute("workSheet", getWorkDaySheet(employee.getAssiduousness(), beginDate,
                 endDate, request));
+        request.setAttribute("yearMonth", yearMonth);
         return mapping.findForward("show-work-sheet");
     }
 
@@ -165,6 +175,8 @@ public class AssiduousnessDispatchAction extends FenixDispatchAction {
         List<WorkDaySheet> workSheet = new ArrayList<WorkDaySheet>();
 
         int maxClockingColumns = 0;
+        Duration totalBalance = new Duration(0);
+        Duration totalUnjustified = new Duration(0);
         for (YearMonthDay thisDay = beginDate; thisDay.isBefore(endDate.plusDays(1)); thisDay = thisDay
                 .plusDays(1)) {
             WorkDaySheet workDaySheet = new WorkDaySheet();
@@ -174,21 +186,23 @@ public class AssiduousnessDispatchAction extends FenixDispatchAction {
             // workDaySheet.setWorkScheduleAcronym();
             String notes = "";
             if (assiduousness != null) {
+
                 Schedule schedule = assiduousness.getSchedule(thisDay);
+                boolean isDayHoliday = assiduousness.isHoliday(thisDay);
+
                 if (schedule == null) {
                     workDaySheet.setNotes(notes);
-                    workDaySheet.setWorkScheduleAcronym("");
                     workDaySheet.setBalanceTime(new Period(0));
                     workDaySheet.setUnjustifiedTime(new Duration(0));
                     workSheet.add(workDaySheet);
                 } else {
                     WorkSchedule workSchedule = schedule.workScheduleWithDate(thisDay);
-                    if (workSchedule != null) {
+                    if (workSchedule != null && !isDayHoliday) {
                         DateTime init = thisDay.toDateTime(workSchedule.getWorkScheduleType()
                                 .getWorkTime());
                         DateTime end = thisDay.toDateTime(workSchedule.getWorkScheduleType()
                                 .getWorkEndTime());
-                        if (workSchedule.getWorkScheduleType().isNextDay()) {
+                        if (workSchedule.getWorkScheduleType().isWorkTimeNextDay()) {
                             end = end.plusDays(1);
                         }
 
@@ -204,33 +218,58 @@ public class AssiduousnessDispatchAction extends FenixDispatchAction {
                             workDaySheet.addClockings(assiduousnessRecord.getDate().toTimeOfDay());
                         }
 
-                        List<Leave> leaves = new ArrayList<Leave>(assiduousness.getLeaves(thisDay,
-                                thisDay));
+                        List<Leave> leaves = new ArrayList<Leave>(assiduousness.getLeaves(thisDay));
                         Collections.sort(leaves, new BeanComparator("date"));
                         for (Leave leave : leaves) {
                             if (notes.length() != 0) {
-                                notes.concat("/");
+                                notes = notes.concat(" / ");
                             }
-                            notes.concat(leave.getJustificationMotive().getAcronym());
+                            notes = notes.concat(leave.getJustificationMotive().getAcronym());
                         }
                         workDaySheet.setNotes(notes);
                         DailyBalance dailyBalance = assiduousness.calculateDailyBalance(thisDay);
                         workDaySheet
                                 .setBalanceTime(dailyBalance.getNormalWorkPeriodBalance().toPeriod());
+                        totalBalance = totalBalance.plus(dailyBalance.getNormalWorkPeriodBalance());
                         workDaySheet.setUnjustifiedTime(dailyBalance.getFixedPeriodAbsence());
+                        totalUnjustified = totalUnjustified.plus(workDaySheet.getUnjustifiedTime());
                         workDaySheet.setWorkScheduleAcronym(workSchedule.getWorkScheduleType()
                                 .getAcronym());
                         workSheet.add(workDaySheet);
                     } else {
+                        DateTime init = thisDay.toDateTime(new TimeOfDay(7, 30, 0, 0));
+                        DateTime end = thisDay.toDateTime(new TimeOfDay(23, 59, 59, 99));
+                        List<AssiduousnessRecord> clockings = assiduousness
+                                .getClockingsAndMissingClockings(init, end);
+                        Collections.sort(clockings, new BeanComparator("date"));
+                        DailyBalance dailyBalance = assiduousness.calculateDailyBalance(thisDay);
+                        workDaySheet.setBalanceTime(dailyBalance.getTotalBalance().toPeriod());
+                        totalBalance = totalBalance.plus(dailyBalance.getTotalBalance());
                         workDaySheet.setNotes(notes);
-                        workDaySheet.setWorkScheduleAcronym("");
-                        workDaySheet.setBalanceTime(new Period(0));
+                        for (AssiduousnessRecord assiduousnessRecord : clockings) {
+                            workDaySheet.addClockings(assiduousnessRecord.getDate().toTimeOfDay());
+                        }
+                        if (isDayHoliday) {
+                            ResourceBundle bundle = ResourceBundle
+                                    .getBundle("resources.EmployeeResources");
+                            workDaySheet.setWorkScheduleAcronym(bundle.getString("label.holiday"));
+                        } else {
+                            ResourceBundle bundle = ResourceBundle
+                                    .getBundle("resources.EnumerationResources");
+                            workDaySheet.setWorkScheduleAcronym(bundle.getString(WeekDay
+                                    .fromJodaTimeToWeekDay(thisDay.toDateTimeAtMidnight()).toString()));
+                        }
                         workDaySheet.setUnjustifiedTime(new Duration(0));
                         workSheet.add(workDaySheet);
                     }
                 }
             }
         }
+        WorkDaySheet workDaySheet = new WorkDaySheet();
+        workDaySheet.setBalanceTime(totalBalance.toPeriod());
+        workDaySheet.setUnjustifiedTime(totalUnjustified);
+        workSheet.add(workDaySheet);
+
         request.setAttribute("maxClockingColumns", maxClockingColumns == 0 ? 1 : maxClockingColumns);
         return workSheet;
     }

@@ -9,9 +9,6 @@
 	<definition name="show-employee-info" extends="definition.employee.two-column">
 		<put name="body" value="/employee/showEmployeeInfo.jsp" />
 	</definition>
-	<definition name="choose-date" extends="definition.employee.two-column">
-		<put name="body" value="/employee/chooseDate.jsp" />
-	</definition>
 	<definition name="show-clockings" extends="definition.employee.two-column">
 		<put name="body" value="/employee/showClockings.jsp" />
 	</definition>
