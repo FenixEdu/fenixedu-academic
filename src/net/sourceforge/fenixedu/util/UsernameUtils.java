@@ -56,6 +56,7 @@ public class UsernameUtils extends FenixUtil {
         try {
             return generateNewUsername(person.getUsername(), mostImportantRole.getRoleType(), person);
         } catch (DomainException e) {
+        	e.printStackTrace();
             return person.getUsername();
         }
 

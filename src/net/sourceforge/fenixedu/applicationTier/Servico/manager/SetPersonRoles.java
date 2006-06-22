@@ -1,7 +1,6 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.manager;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Set;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.domain.Person;
@@ -10,17 +9,8 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class SetPersonRoles extends Service {
 
-    public Boolean run(final String username, final List<Integer> roleOIDs) throws ExcepcaoPersistencia {
-        final Person person = Person.readPersonByUsername(username);
-
-        final List<Role> roles = new ArrayList<Role>();
-        for (final Integer roleId : roleOIDs) {
-            roles.add(rootDomainObject.readRoleByOID(roleId));
-        }
-
+    public void run(final Person person, final Set<Role> roles) throws ExcepcaoPersistencia {
         person.indicatePrivledges(roles);
-
-        return Boolean.TRUE;
     }
 
 }

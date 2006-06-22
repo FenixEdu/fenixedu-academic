@@ -4,8 +4,9 @@
  */
 package net.sourceforge.fenixedu.presentationTier.Action.manager;
 
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -13,6 +14,8 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoRole;
+import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
@@ -99,14 +102,19 @@ public class ManageRolesDA extends FenixDispatchAction {
         DynaActionForm rolesForm = (DynaActionForm) form;
         String[] roleOIDsAsStrings = (String[]) rolesForm.get("roleOIDs");
         String username = (String) rolesForm.get("username");
+        final Person person = Person.readPersonByUsername(username);
 
-        List roleOIDs = new ArrayList();
-        for (int i = 0; i < roleOIDsAsStrings.length; i++) {
-            roleOIDs.add(new Integer(roleOIDsAsStrings[i]));
+        final Set<Role> roles = new HashSet<Role>();
+        for (final String roleId : roleOIDsAsStrings) {
+            roles.add(rootDomainObject.readRoleByOID(Integer.valueOf(roleId)));
         }
+//        List roleOIDs = new ArrayList();
+//        for (int i = 0; i < roleOIDsAsStrings.length; i++) {
+//            roleOIDs.add(new Integer(roleOIDsAsStrings[i]));
+//        }
 
         IUserView userView = SessionUtils.getUserView(request);
-        Object[] args = { username, roleOIDs };
+        Object[] args = { person, roles };
         try {
             ServiceUtils.executeService(userView, "SetPersonRoles", args);
         } catch (Exception e) {

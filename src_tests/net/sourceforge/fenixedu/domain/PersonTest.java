@@ -1,8 +1,8 @@
 package net.sourceforge.fenixedu.domain;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import net.sourceforge.fenixedu.applicationTier.security.PasswordEncryptor;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
@@ -631,7 +631,7 @@ public class PersonTest extends DomainTestBase {
 	}
 
 	public void testIndicatePrivledges() {
-		List<Role> roles = new ArrayList<Role>();
+		Set<Role> roles = new HashSet<Role>();
 		roles.add(personRole);
 		roles.add(employeeRole);
 		roles.add(teacherRole);

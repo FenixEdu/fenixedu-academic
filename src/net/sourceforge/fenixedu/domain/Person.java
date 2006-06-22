@@ -1,12 +1,15 @@
 package net.sourceforge.fenixedu.domain;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
@@ -32,6 +35,7 @@ import net.sourceforge.fenixedu.domain.research.result.Result;
 import net.sourceforge.fenixedu.domain.sms.SentSms;
 import net.sourceforge.fenixedu.domain.sms.SmsDeliveryType;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.StudentCurricularPlanState;
+import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
 import net.sourceforge.fenixedu.util.DateFormatUtil;
 import net.sourceforge.fenixedu.util.PeriodState;
 import net.sourceforge.fenixedu.util.UsernameUtils;
@@ -557,7 +561,7 @@ public class Person extends Person_Base {
         }
     }
 
-    public void indicatePrivledges(final List<Role> roles) {
+    public void indicatePrivledges(final Set<Role> roles) {
         getPersonRoles().retainAll(roles);
         getPersonRoles().addAll(roles);
     }
@@ -850,8 +854,7 @@ public class Person extends Person_Base {
         }
 
         private static void removeRoleIfPresent(Person person, RoleType roleType) {
-            Role tmpRole = null;
-            tmpRole = person.getPersonRole(roleType);
+            final Role tmpRole = person.getPersonRole(roleType);
             if (tmpRole != null) {
                 person.getPersonRoles().remove(tmpRole);
             }
@@ -1277,5 +1280,56 @@ public class Person extends Person_Base {
     	}
     	return false;
     }
+
+	public static class FindPersonFactory implements Serializable, FactoryExecutor {
+		private Integer institutionalNumber;
+
+		public Integer getInstitutionalNumber() {
+			return institutionalNumber;
+		}
+
+		public void setInstitutionalNumber(Integer institutionalNumber) {
+			this.institutionalNumber = institutionalNumber;
+		}
+
+		transient Set<Person> people = null;
+
+		public FindPersonFactory execute() {
+			people = Person.findPerson(this);
+			return this;
+		}
+
+		public Set<Person> getPeople() {
+			return people;
+		}
+	}
+
+	public static Set<Person> findPerson(final FindPersonFactory findPersonFactory) {
+		final Set<Person> people = new HashSet<Person>();
+		for (final Party party : RootDomainObject.getInstance().getPartysSet()) {
+			if (party instanceof Person) {
+				final Person person = (Person) party;
+				if (findPersonFactory.getInstitutionalNumber() != null) {
+					if (person.getTeacher() != null && person.getTeacher().getTeacherNumber().equals(findPersonFactory.getInstitutionalNumber())) {
+						people.add(person);
+					} else if (person.getEmployee() != null && person.getEmployee().getEmployeeNumber().equals(findPersonFactory.getInstitutionalNumber())) {
+						people.add(person);
+					} else if (person.hasStudentWithNumber(findPersonFactory.getInstitutionalNumber())) {
+						people.add(person);
+					}
+				}
+			}
+		}
+		return people;
+	}
+
+	private boolean hasStudentWithNumber(final Integer institutionalNumber) {
+		for (final Student student : getStudents()) {
+			if (student.getNumber().equals(institutionalNumber)) {
+				return true;
+			}
+		}
+		return false;
+	}
 
 }

@@ -9,6 +9,7 @@
 	<!ENTITY messaging SYSTEM "messaging-schemas.xml">
 	<!ENTITY space SYSTEM "space-schemas.xml">
 	<!ENTITY assiduousness SYSTEM "assiduousness-schemas.xml">
+	<!ENTITY party SYSTEM "party-schemas.xml">
 ]>
 
 <schemas>
@@ -766,4 +767,5 @@
 	&messaging;
 	&space;
 	&assiduousness;
+	&party;
 </schemas>

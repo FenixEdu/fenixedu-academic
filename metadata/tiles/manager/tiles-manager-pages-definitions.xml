@@ -554,9 +554,14 @@
 	<definition name="df.executionDegreeManagement.insertCoordinator" extends="df.executionDegreeManagement.default" >
 		<put name="body" value="/manager/executionDegreesManagement/insertCoordinator.jsp" />
 	</definition>
-	
+
 	<definition name="df.executionDegreeManagement.editExecutionDegree" extends="df.executionDegreeManagement.default" >
 		<put name="body" value="/manager/executionDegreesManagement/editExecutionDegree.jsp" />
 	</definition>
-    
+
+	<definition name="df.recover.inactive.person.search.form" extends="definition.manager.masterPage" >
+		<put name="navLocal" value="/manager/personManagement/mainMenu.jsp" />
+		<put name="body" value="/manager/personManagement/recoverInactivePerson.jsp" />
+	</definition>
+
 </tiles-definitions>

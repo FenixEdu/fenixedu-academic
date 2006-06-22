@@ -1,0 +1,8 @@
+<schema name="FindPersonFactory" type="net.sourceforge.fenixedu.domain.Person$FindPersonFactory">
+	<slot name="institutionalNumber" bundle="MANAGER_RESOURCES" key="institutionalNumber"/>
+</schema>
+<schema name="FindPersonFactoryResult" type="net.sourceforge.fenixedu.domain.Person">
+	<slot name="documentIdNumber" bundle="MANAGER_RESOURCES" key="documentIdNumber"/>
+	<slot name="name"/>
+	<slot name="email"/>
+</schema>

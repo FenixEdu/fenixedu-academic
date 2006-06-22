@@ -50,6 +50,12 @@
 	</html:link>		
 </strong></p>
 
+<p><strong>&raquo;
+	<html:link page="/recoverInactivePerson.do?method=prepare&page=0">
+		<bean:message bundle="MANAGER_RESOURCES" key="link.recover.inactive.person"/>
+	</html:link>		
+</strong></p>
+
 <!-- 
 <p><strong>&raquo;
 	<html:link module="/manager" page="/mergePersons.do?method=prepare">

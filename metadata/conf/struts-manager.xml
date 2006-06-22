@@ -1967,6 +1967,13 @@
 		<forward name="editExecutionDegree" path="df.executionDegreeManagement.editExecutionDegree" />
 	</action>
 
+	<action path="/recoverInactivePerson"
+			input="/recoverInactivePerson.do?method=prepare&amp;page=0"
+			parameter="method"
+			type="net.sourceforge.fenixedu.presentationTier.Action.manager.RecoverInactivePersonDA">
+		<forward name="showSearchForm" path="df.recover.inactive.person.search.form" />
+	</action>
+
 	</action-mappings>
 
 	<!-- ========== Controller Configuration ================================ -->
