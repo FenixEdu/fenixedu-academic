@@ -78,21 +78,6 @@ public class EnumInputRenderer extends InputRenderer {
         this.key = key;
     }
 
-    // NOTE: duplicate code with EnumRenderer
-    protected String getEnumDescription(Enum enumerate) {
-        String description = RenderUtils.getResourceString("ENUMERATION_RESOURCES", enumerate.toString()); 
-            
-        if (description == null) {
-            description = RenderUtils.getResourceString(enumerate.toString());
-        }
-        
-        if (description == null) {
-            description = enumerate.toString();
-        }
-        
-        return description;
-    }
-
     @Override
     protected Layout getLayout(Object object, Class type) {
         return new Layout() {
@@ -109,7 +94,7 @@ public class EnumInputRenderer extends InputRenderer {
                 Object[] constants = type.getEnumConstants();
                 for (Object object : constants) {
                     Enum oneEnum = (Enum) object;
-                    String description = getEnumDescription(oneEnum);
+                    String description = RenderUtils.getEnumString(oneEnum);
                     
                     HtmlMenuOption option = menu.createOption(description);
                     option.setValue(oneEnum.toString());

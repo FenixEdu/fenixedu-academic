@@ -17,21 +17,6 @@ import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
  */
 public class EnumRenderer extends OutputRenderer {
 
-    // NOTE: duplicate code with EnumInputRenderer
-    protected String getEnumDescription(Enum enumerate) {
-        String description = RenderUtils.getResourceString("ENUMERATION_RESOURCES", enumerate.toString()); 
-            
-        if (description == null) {
-            description = RenderUtils.getResourceString(enumerate.toString());
-        }
-        
-        if (description == null) {
-        	    description = enumerate.toString();
-        }
-        
-        return description;
-    }
-
     @Override
     protected Layout getLayout(Object object, Class type) {
         return new Layout() {
@@ -44,7 +29,7 @@ public class EnumRenderer extends OutputRenderer {
                     return new HtmlText();
                 }
                 
-                String description = getEnumDescription(enumerate);
+                String description = RenderUtils.getEnumString(enumerate);
                 
                 return new HtmlText(description);
             }

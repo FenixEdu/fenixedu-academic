@@ -24,11 +24,11 @@
   inner slot elements. It specifies the bundle for every slot. You can override
   this in a per-slot basis.
 -->
-<!ELEMENT schema (remove*,slot+)>
+<!ELEMENT schema ((remove+,slot*)|(slot+))>
 
 <!ATTLIST schema
 	name ID #REQUIRED
-	type NMTOKEN #REQUIRED
+	type CDATA #REQUIRED
 	extends IDREF #IMPLIED
 	bundle NMTOKEN #IMPLIED
 >

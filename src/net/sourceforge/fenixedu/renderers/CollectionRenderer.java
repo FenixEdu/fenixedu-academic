@@ -615,7 +615,24 @@ public class CollectionRenderer extends OutputRenderer {
                     Object realObject = object.getObject();
 
                     try {
-                        checkBox.setUserValue(String.valueOf(PropertyUtils.getProperty(realObject, getCheckboxValue())));
+                        String checkBoxValue = String.valueOf(PropertyUtils.getProperty(realObject, getCheckboxValue()));
+
+                        boolean checked = false;
+                        String[] existingValues = getContext().getViewState().getRequest().getParameterValues(getCheckboxName());
+
+                        if (existingValues != null) {
+                            for (int i = 0; i < existingValues.length; i++) {
+                                String value = existingValues[i];
+                                
+                                if (value.equals(checkBoxValue)) {
+                                    checked = true;
+                                    break;
+                                }
+                            }
+                        }
+                        
+                        checkBox.setChecked(checked);
+                        checkBox.setUserValue(checkBoxValue);
                     } catch (Exception e) {
                         throw new RuntimeException("could not set check box value by reading property '" + getCheckboxValue() + "' from object " + realObject, e);
                     }

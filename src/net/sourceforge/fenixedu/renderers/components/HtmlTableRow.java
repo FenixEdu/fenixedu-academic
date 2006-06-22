@@ -36,6 +36,13 @@ public class HtmlTableRow extends HtmlComponent {
         return cell;
     }
 
+    public HtmlTableCell createCell(String text) {
+        HtmlTableCell cell = createCell();
+        cell.setText(text);
+        
+        return cell;
+    }
+
     public List<HtmlTableCell> getCells() {
         return cells;
     }

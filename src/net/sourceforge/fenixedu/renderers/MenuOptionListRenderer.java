@@ -191,11 +191,12 @@ public class MenuOptionListRenderer extends InputRenderer {
     
     protected Collection getPossibleObjects() {
         Object object = getInputContext().getParentContext().getMetaObject().getObject();
-
+        Object value = getInputContext().getMetaObject().getObject();
+        
         if (getProviderClass() != null) {
             try {
                 DataProvider provider = getProvider();
-                Collection collection = (Collection) provider.provide(object);
+                Collection collection = (Collection) provider.provide(object, value);
                 
                 if (getSortBy() == null) {
                     return collection;

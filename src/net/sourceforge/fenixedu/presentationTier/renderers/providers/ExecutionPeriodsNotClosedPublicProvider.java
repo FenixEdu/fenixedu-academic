@@ -13,7 +13,7 @@ import org.apache.commons.collections.comparators.ReverseComparator;
 
 public class ExecutionPeriodsNotClosedPublicProvider implements DataProvider {
 
-    public Object provide(Object source) {
+    public Object provide(Object source, Object currentValue) {
 
         /*
          * get executionPeriods after '2 Semestre 2005/2006'

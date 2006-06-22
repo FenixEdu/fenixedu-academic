@@ -34,6 +34,14 @@ public class HtmlList extends HtmlComponent {
         
         return newItem;
     }
+    
+    public HtmlListItem createItem(int index) {
+        HtmlListItem newItem = new HtmlListItem();
+
+        this.items.add(index, newItem);
+        
+        return newItem;
+    }
 
     @Override
     public List<HtmlComponent> getChildren() {

@@ -7,14 +7,17 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Properties;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 
+import net.sourceforge.fenixedu.renderers.components.HtmlComponent;
 import net.sourceforge.fenixedu.renderers.components.state.ComponentLifeCycle;
 import net.sourceforge.fenixedu.renderers.components.state.IViewState;
 import net.sourceforge.fenixedu.renderers.components.state.LifeCycleConstants;
@@ -35,6 +38,7 @@ public class RenderUtils {
     private static Logger logger = Logger.getLogger(RenderUtils.class);
     
     public static String RESOURCE_LABEL_PREFIX = "label";
+    public static String COMPONENT_REGISTRY_NAME = RenderUtils.class.getName() + "/component/registry";
     
     public static String getSlotLabel(Class objectType, String slotName, String key) {
         return getSlotLabel(objectType, slotName, null, key);
@@ -85,6 +89,20 @@ public class RenderUtils {
     
     public static String getResourceString(String key) {
         return getResourceString(null, key);
+    }
+    
+    public static String getEnumString(Enum enumerate) {
+        String description = RenderUtils.getResourceString("ENUMERATION_RESOURCES", enumerate.toString()); 
+        
+        if (description == null) {
+            description = RenderUtils.getResourceString(enumerate.toString());
+        }
+        
+        if (description == null) {
+                description = enumerate.toString();
+        }
+        
+        return description;
     }
     
     public static String getResourceString(String bundle, String key) {
@@ -453,5 +471,25 @@ public class RenderUtils {
         }
         
         return false;
+    }
+
+    public static void registerComponent(String id, HtmlComponent component) {
+        Map<String, HtmlComponent> map = initRegistry();
+        
+        map.put(id, component);
+    }
+
+    public static HtmlComponent getRegisteredComponent(String id) {
+        return initRegistry().get(id);
+    }
+    
+    private static Map<String, HtmlComponent> initRegistry() {
+        Map<String, HtmlComponent> map = (Map<String, HtmlComponent>) RenderersRequestProcessor.getCurrentRequest().getAttribute(COMPONENT_REGISTRY_NAME);
+        
+        if (map == null) {
+            RenderersRequestProcessor.getCurrentRequest().setAttribute(COMPONENT_REGISTRY_NAME, map = new HashMap<String, HtmlComponent>());
+        }
+        
+        return map;
     }
 }

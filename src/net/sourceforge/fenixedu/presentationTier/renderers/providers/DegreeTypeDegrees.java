@@ -16,7 +16,7 @@ import org.apache.commons.beanutils.BeanComparator;
 
 public class DegreeTypeDegrees implements DataProvider {
 
-    public Object provide(Object source) {
+    public Object provide(Object source, Object currentValue) {
 
         final List<Degree> result = new ArrayList<Degree>();
         for (Degree degree : RootDomainObject.getInstance().getDegreesSet()) {

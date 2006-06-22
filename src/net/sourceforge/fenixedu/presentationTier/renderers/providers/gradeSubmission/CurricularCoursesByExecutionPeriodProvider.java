@@ -12,7 +12,7 @@ import net.sourceforge.fenixedu.renderers.components.converters.Converter;
 
 public class CurricularCoursesByExecutionPeriodProvider implements DataProvider {
 
-    public Object provide(Object source) {
+    public Object provide(Object source, Object currentValue) {
 
         final MarkSheetTeacherGradeSubmissionBean submissionBean = (MarkSheetTeacherGradeSubmissionBean) source;
         final List<CurricularCourse> result = (submissionBean.getExecutionCourse() != null) ? submissionBean

@@ -5,6 +5,7 @@ import net.sourceforge.fenixedu.renderers.components.HtmlTable;
 import net.sourceforge.fenixedu.renderers.components.HtmlTableCell;
 import net.sourceforge.fenixedu.renderers.components.HtmlTableHeader;
 import net.sourceforge.fenixedu.renderers.components.HtmlTableRow;
+import net.sourceforge.fenixedu.renderers.components.HtmlText;
 
 import org.apache.log4j.Logger;
 
@@ -77,12 +78,51 @@ public abstract class TabularLayout extends Layout {
 
         if (hasHeader()) {
             HtmlTableHeader header = table.createHeader();
-            HtmlTableRow row = header.createRow();
+            
+            HtmlTableRow firstRow = header.createRow();
+            HtmlTableRow secondRow = null;
 
+            if (hasHeaderGroups()) {
+                secondRow = header.createRow();
+            }
+
+            String lastGroup = null;
+            HtmlTableCell lastGroupCell = null;
+            
             for (int columnIndex = 0; columnIndex < columnNumber; columnIndex++) {
-                HtmlTableCell cell = row.createCell();
-
-                cell.setBody(getHeaderComponent(columnIndex));
+                String group = getHeaderGroup(columnIndex);
+                
+                if (hasHeaderGroups() && group != null) {
+                    if (lastGroup != null && lastGroup.equals(group)) {
+                        if (lastGroupCell.getColspan() == null) {
+                            lastGroupCell.setColspan(2);
+                        }
+                        else {
+                            lastGroupCell.setColspan(lastGroupCell.getColspan() + 1);
+                        }
+                    }
+                    else {
+                        HtmlTableCell cell = firstRow.createCell();
+                        cell.setBody(new HtmlText(group));
+                        
+                        lastGroup = group;
+                        lastGroupCell = cell;
+                    }
+                    
+                    HtmlTableCell cell = secondRow.createCell();
+                    cell.setBody(getHeaderComponent(columnIndex));
+                }
+                else {
+                    lastGroup = null;
+                    lastGroupCell = null;
+                    
+                    HtmlTableCell cell = firstRow.createCell();
+                    cell.setBody(getHeaderComponent(columnIndex));
+                    
+                    if (hasHeaderGroups()) {
+                        cell.setRowspan(2);
+                    }
+                }
             }
         }
 
@@ -113,11 +153,19 @@ public abstract class TabularLayout extends Layout {
         return false;
     }
 
+    protected boolean hasHeaderGroups() {
+        return false;
+    }
+    
+    protected abstract HtmlComponent getHeaderComponent(int columnIndex);
+
+    protected String getHeaderGroup(int columnIndex) {
+        return null;
+    }
+
     protected abstract int getNumberOfColumns();
 
     protected abstract int getNumberOfRows();
-
-    protected abstract HtmlComponent getHeaderComponent(int columnIndex);
 
     protected abstract HtmlComponent getComponent(int rowIndex, int columnIndex);
     

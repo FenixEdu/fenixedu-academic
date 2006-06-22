@@ -49,6 +49,8 @@ public class CheckBoxOptionListRenderer extends InputRenderer {
 
     private String sortBy;
     
+    private boolean selectAllShown;
+    
     /**
      * This property allows you to configure the class attribute for each
      * object's presentation.
@@ -142,6 +144,20 @@ public class CheckBoxOptionListRenderer extends InputRenderer {
         this.sortBy = sortBy;
     }
     
+    public boolean isSelectAllShown() {
+        return this.selectAllShown;
+    }
+
+    /**
+     * Makes the renderer add and option that selects and unselects 
+     * all the remaining options.
+     * 
+     * @property
+     */
+    public void setSelectAllShown(boolean selectAllShown) {
+        this.selectAllShown = selectAllShown;
+    }
+
     @Override
     protected Layout getLayout(Object object, Class type) {
         return new CheckBoxListLayout();
@@ -170,11 +186,12 @@ public class CheckBoxOptionListRenderer extends InputRenderer {
 
     protected Collection getPossibleObjects() {
         Object object = getInputContext().getParentContext().getMetaObject().getObject();
+        Object value = getInputContext().getMetaObject().getObject();
 
         if (getProviderClass() != null) {
             try {
                 DataProvider provider = getProvider();
-                Collection collection = (Collection) provider.provide(object);
+                Collection collection = (Collection) provider.provide(object, value);
                 
                 if (getSortBy() == null) {
                     return collection;
@@ -199,6 +216,7 @@ public class CheckBoxOptionListRenderer extends InputRenderer {
             Collection collection = (Collection) object;
             
             HtmlCheckBoxList listComponent = new HtmlCheckBoxList();
+            listComponent.setSelectAllShown(isSelectAllShown());
             
             Collection possibleObjects = getPossibleObjects();
             for (Object obj : possibleObjects) {
@@ -234,6 +252,9 @@ public class CheckBoxOptionListRenderer extends InputRenderer {
                 }
             }
             
+            // TODO: make providers only provide a converter for a single object
+            //       make a wrapper converter that calls that converter for each value
+            //       this allows converters to be used to menus and checkboxes 
             Converter converter = getConverter();
             if (converter != null) {
                 listComponent.setConverter(converter);

@@ -105,6 +105,10 @@ public class HtmlLink extends HtmlComponent {
         this.parameters.put(name, value);
     }
     
+    public void setParameter(String name, Object value) {
+        this.parameters.put(name, value == null ? "" : value.toString());
+    }
+
     public Map<String, String> getParameters() {
         return this.parameters;
     }

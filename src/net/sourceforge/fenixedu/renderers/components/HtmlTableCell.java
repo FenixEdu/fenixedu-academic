@@ -37,6 +37,12 @@ public class HtmlTableCell extends HtmlComponent {
         this(CellType.DATA);
     }
     
+    public HtmlTableCell(String text) {
+        this();
+        
+        setText(text);
+    }
+    
     public HtmlTableCell(CellType header) {
         this.type = header;
     }

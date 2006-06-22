@@ -14,7 +14,7 @@ import net.sourceforge.fenixedu.renderers.components.converters.Converter;
 
 public class DegreeCurricularPlansForDegree implements DataProvider {
 
-    public Object provide(Object source) {
+    public Object provide(Object source, Object currentValue) {
 
         final MarkSheetManagementBaseBean markSheetManagementBean = (MarkSheetManagementBaseBean) source;
         final List<DegreeCurricularPlan> result = new ArrayList<DegreeCurricularPlan>();

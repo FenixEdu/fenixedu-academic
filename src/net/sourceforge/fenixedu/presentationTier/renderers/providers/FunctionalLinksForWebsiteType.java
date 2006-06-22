@@ -15,7 +15,7 @@ import net.sourceforge.fenixedu.renderers.components.converters.Converter;
 
 public class FunctionalLinksForWebsiteType implements DataProvider {
 
-    public Object provide(Object source) {
+    public Object provide(Object source, Object currentValue) {
         WebsiteType type = (WebsiteType) source;
         List<FunctionalityLink> links = new ArrayList<FunctionalityLink>();
         
