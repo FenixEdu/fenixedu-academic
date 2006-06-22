@@ -95,7 +95,7 @@ vertical-align: top;
 					</td>
 					<td>
 						<logic:present name="UserView" property="person.teacher">
-							<bean:write name="UserView" property="person.teacher.category.longName"/>
+							<bean:write name="UserView" property="person.teacher.category.name.content"/>
 						</logic:present>
 					</td>
 				</tr>

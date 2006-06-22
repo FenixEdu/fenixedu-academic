@@ -27,7 +27,7 @@
 						<bean:write name="teacher" property="person.nome"/>
 					</td>
 					<td class="listClasses">
-						<bean:write name="teacher" property="category.longName"/>
+						<bean:write name="teacher" property="category.name.content"/>
 					</td>
 					<td class="listClasses">
 						<bean:write name="teacher" property="person.email"/>

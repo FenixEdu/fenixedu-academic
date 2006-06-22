@@ -54,7 +54,7 @@ vertical-align: top;
 				<logic:present name="homepage" property="person.employee.currentContract">
 					<string:capitalizeAllWords>
 						<string:lowerCase>
-							<bean:write name="homepage" property="person.teacher.category.longName"/>
+							<bean:write name="homepage" property="person.teacher.category.name.content"/>
 						</string:lowerCase>
 					</string:capitalizeAllWords>
 				</logic:present>

@@ -54,7 +54,7 @@
 				</td>
 				<td class="listClasses">
 					<logic:present name="infoTeacherCreditsDetails" property="category">
-						<label title='<bean:write name="infoTeacherCreditsDetails" property="category.longName" />'>
+						<label title='<bean:write name="infoTeacherCreditsDetails" property="category.name.content" />'>
 							<bean:write name="infoTeacherCreditsDetails" property="category.code"/>
 						</label>						
 					</logic:present>
