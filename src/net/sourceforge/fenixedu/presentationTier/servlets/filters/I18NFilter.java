@@ -18,6 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.util.LanguageUtils;
 
 import org.apache.struts.Globals;
@@ -85,7 +86,10 @@ public class I18NFilter implements Filter {
     }
 
     public static void setDefaultLocale(final HttpServletRequest request, HttpSession httpSession) {
-        final Locale locale = new Locale("pt", "PT");
+    	final String language = PropertiesManager.getProperty("language");
+    	final String location = PropertiesManager.getProperty("location");
+    	final String variante = PropertiesManager.getProperty("variante");
+        final Locale locale = new Locale(language, location, variante);
         httpSession.setAttribute(Globals.LOCALE_KEY, locale);
 
         request.removeAttribute(Globals.LOCALE_KEY);

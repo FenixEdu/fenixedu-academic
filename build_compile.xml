@@ -351,6 +351,10 @@ script.isAlive.check.slide=${script.isAlive.check.slide}
 								property="dspace.password"/>
 				<replacefilter token="@language@"
 						    property="language"/>	
+				<replacefilter token="@location@"
+						    property="location"/>
+				<replacefilter token="@variante@"
+						    property="variante"/>
 			</replace>
 
 			<replace encoding="${encoding}" dir="${build.home.webinf.classes}"
