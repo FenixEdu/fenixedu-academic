@@ -28,7 +28,7 @@
 	<h:form>
 
 		<fc:dataRepeater value="#{DepartmentManagement.sortedDepartmentCategories}" var="category" >
-			<h:outputText value="<h2 class='greytxt mtop2'>#{category.longName}</h2>" escape="false"/>
+			<h:outputText value="<h2 class='greytxt mtop2'>#{category.name.content}</h2>" escape="false"/>
 		
 		<fc:dataRepeater value="#{DepartmentManagement.teachersByCategory[category]}" var="teacher" >
 				<h:outputText value="<p style='padding-left: 2em'>" escape="false"/>

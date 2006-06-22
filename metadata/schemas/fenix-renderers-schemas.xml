@@ -752,6 +752,14 @@
 			<property name="rows" value="30"/>
 		</slot>
 	</schema>
+
+	<schema name="teacherCategory.edit" type="net.sourceforge.fenixedu.domain.teacher.Category">
+		<slot name="longName" read-only="true"/>
+		<slot name="code" read-only="true"/>
+		<slot name="name">
+			<property name="size" value="50"/>
+		</slot>
+	</schema>
 	
 	&researcher;
 	&markSheet;

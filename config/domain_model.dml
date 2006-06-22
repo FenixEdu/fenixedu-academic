@@ -309,8 +309,9 @@ class net.sourceforge.fenixedu.domain.Seminaries.CaseStudyChoice extends net.sou
 class net.sourceforge.fenixedu.domain.teacher.Category extends net.sourceforge.fenixedu.domain.DomainObject {
 	String code;
 	String longName;
-	Boolean canBeExecutionCourseResponsible;
 	String shortName;
+	MultiLanguageString name;
+	Boolean canBeExecutionCourseResponsible;
 	Integer weight;
 }
 
