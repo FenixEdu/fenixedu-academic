@@ -86,10 +86,10 @@ public class I18NFilter implements Filter {
     }
 
     public static void setDefaultLocale(final HttpServletRequest request, HttpSession httpSession) {
-    	final String language = PropertiesManager.getProperty("language");
+        final String language = PropertiesManager.getProperty("language");
     	final String location = PropertiesManager.getProperty("location");
-    	final String variante = PropertiesManager.getProperty("variante");
-        final Locale locale = new Locale(language, location, variante);
+    	final String variant = PropertiesManager.getProperty("variant");
+        final Locale locale = new Locale(language, location, variant);
         httpSession.setAttribute(Globals.LOCALE_KEY, locale);
 
         request.removeAttribute(Globals.LOCALE_KEY);

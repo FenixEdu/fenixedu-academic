@@ -24,6 +24,7 @@ public class UniqueAcronymCreator<T extends DomainObject> {
     private static boolean toLowerCase;
     private final static Logger logger = Logger.getLogger(UniqueAcronymCreator.class);
     
+    // TODO Paulo Zenida: Por que não pôr antes Set em vez de List?
     public UniqueAcronymCreator(String slotName, String acronymSlot, List<T> objects, boolean toLowerCase) throws Exception {
         this.slotName = slotName;
         this.acronymSlot = acronymSlot;

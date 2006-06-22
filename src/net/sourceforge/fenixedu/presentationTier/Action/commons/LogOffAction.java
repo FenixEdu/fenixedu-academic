@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import net.sourceforge.fenixedu._development.PropertiesManager;
+import net.sourceforge.fenixedu.presentationTier.servlets.filters.I18NFilter;
 
 import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionForm;
@@ -48,7 +49,8 @@ public class LogOffAction extends Action {
             killSession(request);
             result = mapping.findForward("showLoginPage");
         }
-
+        // this way, we always put the locale as the default we want
+        I18NFilter.setDefaultLocale(request, request.getSession());
         return result;
     }
 

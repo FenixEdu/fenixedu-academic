@@ -12,6 +12,7 @@
 	<property name="config" location="config"/>
 	<property name="reports" location="reports"/>	
 	<property name="institution.config" location="${institution.project}/config"/>
+	<property name="institution.metadata.tiles" location="${institution.project}/metadata/tiles"/>
 	<property name="config.web" location="metadata"/>
 
 	<!-- Directories for compiled code -->
@@ -117,6 +118,11 @@ script.isAlive.check.slide=${script.isAlive.check.slide}
 		<copy encoding="${encoding}" todir="${build.home.webinf.classes}" overwrite="true">
 			<fileset dir="${institution.config}"/>
 		</copy>
+
+		<copy encoding="${encoding}" todir="${build.home.webinf}/tiles" overwrite="true">
+			<fileset dir="${institution.metadata.tiles}"/>
+		</copy>
+		
 	</target>
 
 	<target name="replace-property-values">
@@ -353,8 +359,8 @@ script.isAlive.check.slide=${script.isAlive.check.slide}
 						    property="language"/>	
 				<replacefilter token="@location@"
 						    property="location"/>
-				<replacefilter token="@variante@"
-						    property="variante"/>
+				<replacefilter token="@variant@"
+						    property="variant"/>
 			</replace>
 
 			<replace encoding="${encoding}" dir="${build.home.webinf.classes}"
