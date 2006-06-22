@@ -7,9 +7,6 @@
 	<data-sources/>
 	
 	    <form-beans type="org.apache.struts.action.ActionFormBean">
-	       <form-bean name="receiveEmailForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
-	            <form-property name="theFile" type="org.apache.struts.upload.FormFile" />
-	        </form-bean>
         </form-beans>
     <!--  ================================================ -->        
 	
@@ -62,11 +59,10 @@
 			validate="true">
     	</action>
     	
-    	<action path="/forwardEmailAction"
-			type="net.sourceforge.fenixedu.presentationTier.Action.cms.messaging.ForwardEmailAction"
+    	<action path="/expandAlias"
+			type="net.sourceforge.fenixedu.presentationTier.Action.messaging.ExecutionCourseAliasExpandingAction"
 			parameter="method"
 			scope="request"
-			name="receiveEmailForm"
 			validate="false"
 			>
 		</action>		

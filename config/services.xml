@@ -5621,9 +5621,9 @@
 		</filterChains>
 	</service>
 	<service>
-		<name>ForwardEmailToExecutionCourses</name>
+		<name>ExpandExecutionCourseMailAlias</name>
 		<implementationClass> 
-            net.sourceforge.fenixedu.applicationTier.Servico.cms.messaging.ForwardEmailToExecutionCourses</implementationClass>
+             net.sourceforge.fenixedu.applicationTier.Servico.messaging.ExpandExecutionCourseMailAlias</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains/>
