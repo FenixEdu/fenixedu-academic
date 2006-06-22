@@ -591,62 +591,62 @@
 		</slot>
 		<slot name="schoolCalendar" layout="rich-text">
 			<property name="safe" value="true"/>
-			<property name="config" value="basic"/>
+			<property name="config" value="advanced"/>
 			<property name="columns" value="75"/>
 		</slot>
 		<slot name="schoolCalendarEn" layout="rich-text">
 			<property name="safe" value="true"/>
-			<property name="config" value="basic"/>
+			<property name="config" value="advanced"/>
 			<property name="columns" value="75"/>
 		</slot>
 		<slot name="candidacyPeriod" layout="rich-text">
 			<property name="safe" value="true"/>
-			<property name="config" value="basic"/>
+			<property name="config" value="advanced"/>
 			<property name="columns" value="75"/>
 		</slot>
 		<slot name="candidacyPeriodEn" layout="rich-text">
 			<property name="safe" value="true"/>
-			<property name="config" value="basic"/>
+			<property name="config" value="advanced"/>
 			<property name="columns" value="75"/>
 		</slot>
 		<slot name="selectionResultDeadline" layout="rich-text">
 			<property name="safe" value="true"/>
-			<property name="config" value="basic"/>
+			<property name="config" value="advanced"/>
 			<property name="columns" value="75"/>
 		</slot>
 		<slot name="selectionResultDeadlineEn" layout="rich-text">
 			<property name="safe" value="true"/>
-			<property name="config" value="basic"/>
+			<property name="config" value="advanced"/>
 			<property name="columns" value="75"/>
 		</slot>
 		<slot name="enrolmentPeriod" layout="rich-text">
 			<property name="safe" value="true"/>
-			<property name="config" value="basic"/>
+			<property name="config" value="advanced"/>
 			<property name="columns" value="75"/>
 		</slot>
 		<slot name="enrolmentPeriodEn" layout="rich-text">
 			<property name="safe" value="true"/>
-			<property name="config" value="basic"/>
+			<property name="config" value="advanced"/>
 			<property name="columns" value="75"/>
 		</slot>
 		<slot name="additionalInfo" layout="rich-text">
 			<property name="safe" value="true"/>
-			<property name="config" value="basic"/>
+			<property name="config" value="advanced"/>
 			<property name="columns" value="75"/>
 		</slot>
 		<slot name="additionalInfoEn" layout="rich-text">
 			<property name="safe" value="true"/>
-			<property name="config" value="basic"/>
+			<property name="config" value="advanced"/>
 			<property name="columns" value="75"/>
 		</slot>
 		<slot name="links" layout="rich-text">
 			<property name="safe" value="true"/>
-			<property name="config" value="basic"/>
+			<property name="config" value="advanced"/>
 			<property name="columns" value="75"/>
 		</slot>
 		<slot name="linksEn" layout="rich-text">
 			<property name="safe" value="true"/>
-			<property name="config" value="basic"/>
+			<property name="config" value="advanced"/>
 			<property name="columns" value="75"/>
 		</slot>
 	</schema>
@@ -654,42 +654,42 @@
 	<schema name="degree.info.access" type="net.sourceforge.fenixedu.domain.DegreeInfo">
 		<slot name="testIngression" layout="rich-text">
 			<property name="safe" value="true"/>
-			<property name="config" value="basic"/>
+			<property name="config" value="advanced"/>
 			<property name="columns" value="75"/>
 		</slot>
 		<slot name="testIngressionEn" layout="rich-text">
 			<property name="safe" value="true"/>
-			<property name="config" value="basic"/>
+			<property name="config" value="advanced"/>
 			<property name="columns" value="75"/>
 		</slot>
 		<slot name="classifications" layout="rich-text">
 			<property name="safe" value="true"/>
-			<property name="config" value="basic"/>
+			<property name="config" value="advanced"/>
 			<property name="columns" value="75"/>
 		</slot>
 		<slot name="classificationsEn" layout="rich-text">
 			<property name="safe" value="true"/>
-			<property name="config" value="basic"/>
+			<property name="config" value="advanced"/>
 			<property name="columns" value="75"/>
 		</slot>
 		<slot name="accessRequisites" layout="rich-text">
 			<property name="safe" value="true"/>
-			<property name="config" value="basic"/>
+			<property name="config" value="advanced"/>
 			<property name="columns" value="75"/>
 		</slot>
 		<slot name="accessRequisitesEn" layout="rich-text">
 			<property name="safe" value="true"/>
-			<property name="config" value="basic"/>
+			<property name="config" value="advanced"/>
 			<property name="columns" value="75"/>
 		</slot>
 		<slot name="candidacyDocuments" layout="rich-text">
 			<property name="safe" value="true"/>
-			<property name="config" value="basic"/>
+			<property name="config" value="advanced"/>
 			<property name="columns" value="75"/>
 		</slot>
 		<slot name="candidacyDocumentsEn" layout="rich-text">
 			<property name="safe" value="true"/>
-			<property name="config" value="basic"/>
+			<property name="config" value="advanced"/>
 			<property name="columns" value="75"/>
 		</slot>
 		<slot name="driftsInitial" layout="rich-text">
