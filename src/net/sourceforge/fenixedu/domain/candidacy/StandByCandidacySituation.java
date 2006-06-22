@@ -4,9 +4,9 @@ import net.sourceforge.fenixedu.accessControl.AccessControl;
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
-public class PaymentCandidacySituation extends PaymentCandidacySituation_Base {
+public class StandByCandidacySituation extends StandByCandidacySituation_Base {
     
-    public  PaymentCandidacySituation(Candidacy candidacy) {
+    public  StandByCandidacySituation(Candidacy candidacy) {
         super();
         setCandidacy(candidacy);
         Employee employee = AccessControl.getUserView().getPerson().getEmployee();
@@ -17,14 +17,20 @@ public class PaymentCandidacySituation extends PaymentCandidacySituation_Base {
 
 	@Override
 	public void checkConditionsToForward() {
-		// TODO: check if the candidate has already payed emulamento
-		
-		
+		// TODO check if all necessary data is filled
+		if(!checkIfDataIsFilled()) {
+			throw new DomainException("");
+		}
 	}
 
 	@Override
 	public void nextState() {
-		CandidacySituation candidacySituation = new PendentCandidacySituation(getCandidacy());
+		CandidacySituation candidacySituation = new StandByFilledDataCandidacySituation(getCandidacy());
+		
+	}
+	
+	private boolean checkIfDataIsFilled() {
+		return false;
 	}
     
 }

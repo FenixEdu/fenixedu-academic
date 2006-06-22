@@ -13,18 +13,16 @@ public class PreCandidacySituation extends PreCandidacySituation_Base {
         if(employee == null) {
         	throw new DomainException("person is not an employee");
         }
+        //TODO: create payment event
     }
 	
     @Override
 	public void nextState() {
-    	//TODO: create payment event
-		CandidacySituation candidacySituation = new PaymentCandidacySituation(getCandidacy());
+		CandidacySituation candidacySituation = new StandByCandidacySituation(getCandidacy());
 	}
 
 	@Override
 	public  void checkConditionsToForward() {
-		if(getCandidacy().getPerson() == null || ((DFACandidacy)getCandidacy()).getExecutionDegree() == null) {
-			throw new DomainException("");
-		}
+    	//TODO: check if the candidate has already payed emulamento
 	}
 }

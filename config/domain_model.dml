@@ -3232,13 +3232,16 @@ class net.sourceforge.fenixedu.domain.candidacy.CandidacySituation extends net.s
 
 	class net.sourceforge.fenixedu.domain.candidacy.PreCandidacySituation extends net.sourceforge.fenixedu.domain.candidacy.CandidacySituation {
 	}
-	
-	class net.sourceforge.fenixedu.domain.candidacy.PaymentCandidacySituation extends net.sourceforge.fenixedu.domain.candidacy.CandidacySituation {
-	}
-	
-	class net.sourceforge.fenixedu.domain.candidacy.PendentCandidacySituation extends net.sourceforge.fenixedu.domain.candidacy.CandidacySituation {
+		
+	class net.sourceforge.fenixedu.domain.candidacy.StandByCandidacySituation extends net.sourceforge.fenixedu.domain.candidacy.CandidacySituation {
 	}
 
+	class net.sourceforge.fenixedu.domain.candidacy.StandByFilledDataCandidacySituation extends net.sourceforge.fenixedu.domain.candidacy.CandidacySituation {
+	}
+	
+	class net.sourceforge.fenixedu.domain.candidacy.StandByConfirmedDataCandidacySituation extends net.sourceforge.fenixedu.domain.candidacy.CandidacySituation {
+	}
+	
 
 /*
  * Relations definitions

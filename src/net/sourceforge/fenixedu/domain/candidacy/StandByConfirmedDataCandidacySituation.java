@@ -4,9 +4,9 @@ import net.sourceforge.fenixedu.accessControl.AccessControl;
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
-public class PendentCandidacySituation extends PendentCandidacySituation_Base {
+public class StandByConfirmedDataCandidacySituation extends StandByConfirmedDataCandidacySituation_Base {
     
-    public  PendentCandidacySituation(Candidacy candidacy) {
+    public  StandByConfirmedDataCandidacySituation(Candidacy candidacy) {
         super();
         setCandidacy(candidacy);
         Employee employee = AccessControl.getUserView().getPerson().getEmployee();
