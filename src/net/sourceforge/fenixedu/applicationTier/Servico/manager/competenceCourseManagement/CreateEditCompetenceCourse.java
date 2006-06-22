@@ -10,7 +10,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoCompetenceCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCompetenceCourseWithCurricularCourses;
 import net.sourceforge.fenixedu.domain.CompetenceCourse;
 import net.sourceforge.fenixedu.domain.Department;
-import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 public class CreateEditCompetenceCourse extends Service {
@@ -28,7 +27,7 @@ public class CreateEditCompetenceCourse extends Service {
 		try {
 			CompetenceCourse competenceCourse = null;
 			if(competenceCourseID == null) {
-				competenceCourse = new CompetenceCourse(code, name, departments, CurricularStage.OLD);
+				competenceCourse = new CompetenceCourse(code, name, departments);
 			} else {
 				competenceCourse = rootDomainObject.readCompetenceCourseByOID(competenceCourseID);
 				if(competenceCourse == null) {

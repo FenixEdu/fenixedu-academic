@@ -14,14 +14,13 @@ public class CompetenceCourseInformation extends CompetenceCourseInformation_Bas
         setRootDomainObject(RootDomainObject.getInstance());
     }
 
-    public CompetenceCourseInformation(String name, String nameEn, String acronym, Boolean basic,
+    public CompetenceCourseInformation(String name, String nameEn, Boolean basic,
             RegimeType regimeType, CompetenceCourseLevel competenceCourseLevel, Date endDate) {        
         
         this();
-        checkParameters(name, nameEn, acronym, basic, regimeType, competenceCourseLevel);
+        checkParameters(name, nameEn, basic, regimeType, competenceCourseLevel);
         setName(StringFormatter.prettyPrint(name));
         setNameEn(StringFormatter.prettyPrint(nameEn));
-        setAcronym(acronym);
         setBasic(basic);
         setRegime(regimeType);
         setCompetenceCourseLevel(competenceCourseLevel);
@@ -29,19 +28,18 @@ public class CompetenceCourseInformation extends CompetenceCourseInformation_Bas
         setBibliographicReferences(new BibliographicReferences());
     }
     
-    private void checkParameters(String name, String nameEn, String acronym, Boolean basic,
+    private void checkParameters(String name, String nameEn, Boolean basic,
             RegimeType regimeType, CompetenceCourseLevel competenceCourseLevel) {
         
-        if (name == null || nameEn == null || acronym == null || basic == null || regimeType == null || competenceCourseLevel == null) {
+        if (name == null || nameEn == null || basic == null || regimeType == null || competenceCourseLevel == null) {
             throw new DomainException("competence.course.information.invalid.parameters");
         }
     }
 
-    public void edit(String name, String nameEn, String acronym, Boolean basic, CompetenceCourseLevel competenceCourseLevel) {
-        checkParameters(name, nameEn, acronym, basic, getRegime(), competenceCourseLevel);
+    public void edit(String name, String nameEn, Boolean basic, CompetenceCourseLevel competenceCourseLevel) {
+        checkParameters(name, nameEn, basic, getRegime(), competenceCourseLevel);
         setName(StringFormatter.prettyPrint(name));
         setNameEn(StringFormatter.prettyPrint(nameEn));        
-        setAcronym(acronym);
         setBasic(basic);
         setCompetenceCourseLevel(competenceCourseLevel);
     }

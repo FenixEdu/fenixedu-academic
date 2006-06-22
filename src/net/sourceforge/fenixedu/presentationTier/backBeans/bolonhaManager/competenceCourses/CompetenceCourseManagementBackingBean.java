@@ -585,7 +585,7 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
     public String createCompetenceCourse() {
         try {
             if (isCompetenceCourseLevelValid()) {
-                final Object args[] = { getName(), getNameEn(), getAcronym(), getBasic(),
+                final Object args[] = { getName(), getNameEn(), null, getBasic(),
                         RegimeType.SEMESTRIAL, getEnumCompetenceCourseLevel(), getCompetenceCourseGroupUnitID() };
                 final CompetenceCourse competenceCourse = (CompetenceCourse) ServiceUtils.executeService(
                         getUserView(), "CreateCompetenceCourse", args);
@@ -632,7 +632,7 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
     public String editCompetenceCourse() {
         try {
             if (isCompetenceCourseLevelValid()) {
-                final Object args[] = { getCompetenceCourseID(), getName(), getNameEn(), getAcronym(),
+                final Object args[] = { getCompetenceCourseID(), getName(), getNameEn(), null,
                         getBasic(), getEnumCompetenceCourseLevel(), CurricularStage.valueOf(getStage()) };
                 ServiceUtils.executeService(getUserView(), "EditCompetenceCourse", args);
                 return "editCompetenceCourseMainPage";

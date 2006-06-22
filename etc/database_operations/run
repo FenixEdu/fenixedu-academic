@@ -27,3 +27,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Allow Acronym Null Competence Course Information" allowAcronymNullCompetenceCourseInformation.sql

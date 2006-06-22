@@ -44,7 +44,7 @@
 		<h:outputText value="</p>" escape="false"/>	
 		
 		<h:outputText value="<p><label>#{bolonhaBundle['acronym']}: </label>" escape="false"/>
-		<h:inputText id="acronym" required="true" maxlength="40" size="10" value="#{CompetenceCourseManagement.acronym}"/>
+		<h:inputText id="acronym" disabled="true" required="true" maxlength="40" size="10" value="#{CompetenceCourseManagement.acronym}"/>
 		<h:message styleClass="error0" for="acronym" />
 		<h:outputText value="</p>" escape="false"/>	
 		

@@ -26,8 +26,8 @@ public class EditCompetenceCourse extends Service {
             throws ExcepcaoPersistencia, FenixServiceException {
 
         final CompetenceCourse competenceCourse = readCompetenceCourse(competenceCourseID);
-        checkIfCanEditCompetenceCourse(competenceCourse, name.trim(), nameEn.trim(), acronym.trim());
-        competenceCourse.edit(name, nameEn, acronym, basic, competenceCourseLevel, curricularStage);
+        checkIfCanEditCompetenceCourse(competenceCourse, name.trim(), nameEn.trim());
+        competenceCourse.edit(name, nameEn, basic, competenceCourseLevel, curricularStage);
     }
     
     public void run(Integer competenceCourseID, CurricularStage curricularStage) throws ExcepcaoPersistencia, FenixServiceException {
@@ -76,7 +76,7 @@ public class EditCompetenceCourse extends Service {
     }
     
     private void checkIfCanEditCompetenceCourse(final CompetenceCourse competenceCourseToEdit,
-            final String name, final String nameEn, final String acronym) throws ExcepcaoPersistencia,
+            final String name, final String nameEn) throws ExcepcaoPersistencia,
             FenixServiceException {
 
         final String normalizedName = StringFormatter.normalize(name);

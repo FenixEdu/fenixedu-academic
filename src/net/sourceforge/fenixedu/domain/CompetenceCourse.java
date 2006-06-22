@@ -24,6 +24,7 @@ import net.sourceforge.fenixedu.domain.degreeStructure.BibliographicReferences.B
 import net.sourceforge.fenixedu.domain.degreeStructure.BibliographicReferences.BibliographicReferenceType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
+import net.sourceforge.fenixedu.util.UniqueAcronymCreator;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.joda.time.YearMonthDay;
@@ -39,25 +40,37 @@ public class CompetenceCourse extends CompetenceCourse_Base {
         setRootDomainObject(RootDomainObject.getInstance());
     }
 
-    public CompetenceCourse(String code, String name, Collection<Department> departments,
-            CurricularStage curricularStage) {
+    public CompetenceCourse(String code, String name, Collection<Department> departments) {
         this();
-        super.setCurricularStage(curricularStage);
+        super.setCurricularStage(CurricularStage.OLD);
         fillFields(code, name);
         if (departments != null) {
             addDepartments(departments);
         }
     }
 
-    public CompetenceCourse(String name, String nameEn, String acronym, Boolean basic,
+    public CompetenceCourse(String name, String nameEn, Boolean basic,
             RegimeType regimeType, CompetenceCourseLevel competenceCourseLevel,
             CurricularStage curricularStage, Unit unit) {
      
         this();
         super.setCurricularStage(curricularStage);
         super.setCompetenceCourseGroupUnit(unit);
-        super.addCompetenceCourseInformations(new CompetenceCourseInformation(name.trim(),
-                nameEn.trim(), acronym.trim(), basic, regimeType, competenceCourseLevel, null));
+
+        CompetenceCourseInformation competenceCourseInformation = new CompetenceCourseInformation(name.trim(), nameEn.trim(), basic, regimeType, competenceCourseLevel, null);
+        super.addCompetenceCourseInformations(competenceCourseInformation);
+
+        // unique acronym creation
+        try {
+            final UniqueAcronymCreator uniqueAcronymCreator = new UniqueAcronymCreator<CompetenceCourse>(
+                    "name", 
+                    "acronym", 
+                    CompetenceCourse.readBolonhaCompetenceCourses(), 
+                    true);
+            competenceCourseInformation.setAcronym(uniqueAcronymCreator.create(this));
+        } catch (Exception e) {
+            throw new DomainException("competence.course.unable.to.create.acronym");
+        }
     }
 
     public boolean isBolonha() {
@@ -133,11 +146,23 @@ public class CompetenceCourse extends CompetenceCourse_Base {
         }
     }
 
-    public void edit(String name, String nameEn, String acronym, Boolean basic,
-            CompetenceCourseLevel competenceCourseLevel, CurricularStage curricularStage) {
+    public void edit(String name, String nameEn, Boolean basic, CompetenceCourseLevel competenceCourseLevel, CurricularStage curricularStage) {
         changeCurricularStage(curricularStage);
-        getRecentCompetenceCourseInformation().edit(name.trim(), nameEn.trim(), acronym.trim(), basic,
-                competenceCourseLevel);
+        getRecentCompetenceCourseInformation().edit(name.trim(), nameEn.trim(), basic, competenceCourseLevel);
+        
+        // unique acronym creation
+        String acronym = null;
+        try {
+            final UniqueAcronymCreator uniqueAcronymCreator = new UniqueAcronymCreator<CompetenceCourse>(
+                    "name", 
+                    "acronym", 
+                    CompetenceCourse.readBolonhaCompetenceCourses(), 
+                    true);
+            acronym = uniqueAcronymCreator.create(this);
+        } catch (Exception e) {
+            throw new DomainException("competence.course.unable.to.create.acronym");
+        }
+        getRecentCompetenceCourseInformation().setAcronym(acronym);
     }
 
     public void changeCurricularStage(CurricularStage curricularStage) {

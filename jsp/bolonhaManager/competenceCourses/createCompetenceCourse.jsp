@@ -51,11 +51,11 @@
 		<h:message styleClass="error0" for="nameEn"/>
 		<h:outputText value="</p>" escape="false"/>	
 		
-		<h:outputText value="<p><label>#{bolonhaBundle['acronym']}: </label>" escape="false"/>
+<%-- 		<h:outputText value="<p><label>#{bolonhaBundle['acronym']}: </label>" escape="false"/>
 		<h:inputText id="acronym" required="true" maxlength="10" size="9" value="#{CompetenceCourseManagement.acronym}"/>
 		<h:message styleClass="error0" for="acronym" />
 		<h:outputText value="</p>" escape="false"/>
-		
+--%>		
 		<h:outputText value="<p><label>#{bolonhaBundle['competenceCourseLevel']}: </label>" escape="false"/>
 		<fc:selectOneMenu value="#{CompetenceCourseManagement.competenceCourseLevel}">
 			<f:selectItem itemValue="" itemLabel="#{enumerationBundle['dropDown.Default']}"/>
