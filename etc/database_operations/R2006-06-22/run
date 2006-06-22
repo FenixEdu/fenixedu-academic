@@ -32,3 +32,6 @@ execute "Add ArchiveInformation column to MarkSheet" alterMarkSheetTable.sql
 executeWithTempFile "Add Name To Category" addNameToCategory.sql
 
 execute "Allow Acronym Null Competence Course Information" allowAcronymNullCompetenceCourseInformation.sql
+
+execute "Holidays" holidaysTables.sql
+execute "Change Assiduousness tables" modifyAssiduousnessTables.sql

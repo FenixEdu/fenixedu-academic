@@ -26,7 +26,3 @@ function executeWithTempFile() {
 	rm tmp.sql
 	echo
 }
-
-execute "Holidays" holidaysTables.sql
-execute "Change Assiduousness tables" modifyAssiduousnessTables.sql
-execute "Insert Assiduousness Stuff" inserts.sql
