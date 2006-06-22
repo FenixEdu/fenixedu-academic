@@ -230,14 +230,18 @@ public class WorkScheduleType extends WorkScheduleType_Base {
         if (canBeDeleted()) {
             removeRootDomainObject();
             Meal meal = getMeal();
-            removeMeal();
-            meal.delete();
+            if (meal != null) {
+                removeMeal();
+                meal.delete();
+            }
             WorkPeriod normalWorkPeriod = getNormalWorkPeriod();
             removeNormalWorkPeriod();
             normalWorkPeriod.delete();
             WorkPeriod fixedWorkPeriod = getFixedWorkPeriod();
-            removeFixedWorkPeriod();
-            fixedWorkPeriod.delete();
+            if (fixedWorkPeriod != null) {
+                removeFixedWorkPeriod();
+                fixedWorkPeriod.delete();
+            }
             removeModifiedBy();
             deleteDomainObject();
         }
@@ -250,15 +254,22 @@ public class WorkScheduleType extends WorkScheduleType_Base {
     public TimeOfDay getWorkEndTime() {
         return getWorkTime().plus(getWorkTimeDuration().toPeriod());
     }
-
-    public TimeOfDay getEndClockingTime() {
+    
+    public TimeOfDay getClockingEndTime() {
         return getClockingTime().plus(getClockingTimeDuration().toPeriod());
     }
-
-    public boolean isNextDay() {
+    
+    public boolean isWorkTimeNextDay() {
         DateTime now = TimeOfDay.MIDNIGHT.toDateTimeToday();
         Duration maxDuration = new Duration(getWorkTime().toDateTime(now).getMillis(), now.plusDays(1)
                 .getMillis());
         return (getWorkTimeDuration().compareTo(maxDuration) >= 0);
+    }
+    
+    public boolean isClokingTimeNextDay() {
+        DateTime now = TimeOfDay.MIDNIGHT.toDateTimeToday();
+        Duration maxDuration = new Duration(getClockingTime().toDateTime(now).getMillis(), now.plusDays(1)
+                .getMillis());
+        return (getClockingTimeDuration().compareTo(maxDuration) >= 0);
     }
 }

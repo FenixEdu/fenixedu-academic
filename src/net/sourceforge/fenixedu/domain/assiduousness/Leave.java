@@ -22,17 +22,18 @@ public class Leave extends Leave_Base {
 
     public Leave(Assiduousness assiduousness, DateTime date, Duration dateDuration,
             JustificationMotive justificationMotive, String notes, DateTime lastModificationDate,
-            Employee modifiedBy) {
+            Employee modifiedBy, Integer oracleSequence) {
         super();
         setRootDomainObject(RootDomainObject.getInstance());
         setDate(date);
         setJustificationMotive(justificationMotive);
         setAssiduousness(assiduousness);
         setNotes(notes);
-        setOjbConcreteClass(Leave.class.getName());
         setDuration(dateDuration);
         setLastModifiedDate(lastModificationDate);
         setModifiedBy(modifiedBy);
+        setOracleSequence(oracleSequence);
+        setOjbConcreteClass(Leave.class.getName());
     }
 
     public DateTime getEndDate() {
@@ -104,10 +105,10 @@ public class Leave extends Leave_Base {
     // Returns true if the justification is for the day
     public boolean justificationForDay(YearMonthDay day) {
         DateTime dayAtMidnight = day.toDateTimeAtMidnight();
-        if(getDate().equals(getEndDate()) && dayAtMidnight.equals(getDate())){
+        if (getDate().equals(getEndDate()) && dayAtMidnight.equals(getDate())) {
             return true;
         }
-        Interval justificationInterval = new Interval(getDate(), getEndDate());        
+        Interval justificationInterval = new Interval(getDate(), getEndDate());
         if (justificationInterval.contains(dayAtMidnight)) {
             return true;
         }

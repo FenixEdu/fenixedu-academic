@@ -1,16 +1,17 @@
 package net.sourceforge.fenixedu.domain.assiduousness;
 
+import net.sourceforge.fenixedu.domain.Employee;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
+
 import org.joda.time.DateTime;
 import org.joda.time.TimeOfDay;
 import org.joda.time.YearMonthDay;
 
-import net.sourceforge.fenixedu.domain.Employee;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
-
 public class MissingClocking extends MissingClocking_Base {
 
     public MissingClocking(Assiduousness assiduousness, DateTime date,
-            JustificationMotive justificationMotive, DateTime lastModifiedDate, Employee modifiedBy) {
+            JustificationMotive justificationMotive, DateTime lastModifiedDate, Employee modifiedBy,
+            Integer oracleSequence) {
         super();
         setRootDomainObject(RootDomainObject.getInstance());
         setAssiduousness(assiduousness);
@@ -18,16 +19,17 @@ public class MissingClocking extends MissingClocking_Base {
         setJustificationMotive(justificationMotive);
         setLastModifiedDate(lastModifiedDate);
         setModifiedBy(modifiedBy);
+        setOracleSequence(oracleSequence);
         setOjbConcreteClass(MissingClocking.class.getName());
     }
-    
+
     public TimeOfDay getTime() {
         return getDate().toTimeOfDay();
     }
-    
+
     // Check if the Leave occured in a particular date
     public boolean occuredInDate(YearMonthDay date) {
         return (getDate().toYearMonthDay().isAfter(date) || getDate().toYearMonthDay().isEqual(date));
     }
-        
+
 }

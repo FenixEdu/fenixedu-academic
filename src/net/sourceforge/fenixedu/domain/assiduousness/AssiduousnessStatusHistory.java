@@ -26,4 +26,11 @@ public class AssiduousnessStatusHistory extends AssiduousnessStatusHistory_Base 
         return new DateInterval(getBeginDate(), getEndDate());
     }
 
+    public void delete() {
+        removeRootDomainObject();
+        removeAssiduousness();
+        removeAssiduousnessStatus();
+        removeModifiedBy();
+        deleteDomainObject();
+    }
 }

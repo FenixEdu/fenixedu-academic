@@ -9,6 +9,7 @@ import java.util.List;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PartyTypeEnum;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 
+import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 
 /**
@@ -20,6 +21,7 @@ public class Employee extends Employee_Base {
     public Employee() {
         super();
         setRootDomainObject(RootDomainObject.getInstance());
+        setCreationDate(new DateTime());
     }
 
     public Department getCurrentDepartmentWorkingPlace() {
