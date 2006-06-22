@@ -72,6 +72,8 @@ public class InfoExecutionCourse extends InfoObject {
     // na base de dados.
     protected InfoExecutionPeriod infoExecutionPeriod;
 
+    private ExecutionCourse executionCourse;
+
     // The following variable serves the purpose of indicating the
     // the curricular year in which the execution course is given
     // for a certain execution degree through which
@@ -322,6 +324,7 @@ public class InfoExecutionCourse extends InfoObject {
     public void copyFromDomain(ExecutionCourse executionCourse) {
         super.copyFromDomain(executionCourse);
         if (executionCourse != null) {
+        	setExecutionCourse(executionCourse);
             setNome(executionCourse.getNome());
             setSigla(executionCourse.getSigla());
             setTheoreticalHours(executionCourse.getTheoreticalHours());
@@ -403,6 +406,14 @@ public class InfoExecutionCourse extends InfoObject {
     public void setTutorialOrientationHours(Double orientationHours) {
         _tutorialOrientationHours = orientationHours;
     }
+
+	public ExecutionCourse getExecutionCourse() {
+		return executionCourse;
+	}
+
+	public void setExecutionCourse(ExecutionCourse executionCourse) {
+		this.executionCourse = executionCourse;
+	}
     
     
 }
