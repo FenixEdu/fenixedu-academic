@@ -54,7 +54,9 @@ padding-right: 10px;
 
 	<h:outputText value="<div class='simpleblock3 mtop2'>" escape="false"/>
 	<h:outputText value="<p><strong>#{bolonhaBundle['state']}: </strong>" escape="false"/>
-	<h:outputText value="<span class='highlight1'>#{enumerationBundle[CompetenceCourseManagement.competenceCourse.curricularStage.name]}</span></p>" escape="false"/>
+	<h:outputText rendered="#{CompetenceCourseManagement.competenceCourse.curricularStage.name == 'DRAFT'}" value="<span class='highlight1'>#{enumerationBundle[CompetenceCourseManagement.competenceCourse.curricularStage.name]}</span></p>" escape="false"/>
+	<h:outputText rendered="#{CompetenceCourseManagement.competenceCourse.curricularStage.name == 'PUBLISHED'}" value="<span class='highlight3'>#{enumerationBundle[CompetenceCourseManagement.competenceCourse.curricularStage.name]}</span></p>" escape="false"/>
+	<h:outputText rendered="#{CompetenceCourseManagement.competenceCourse.curricularStage.name == 'APPROVED'}" value="<span class='highlight4'>#{enumerationBundle[CompetenceCourseManagement.competenceCourse.curricularStage.name]}</span></p>" escape="false"/>		
 	<h:outputText value="<ul class='nobullet padding1 indent0 mbottom0'>" escape="false"/>	
 	<h:outputText value="<li><strong>#{bolonhaBundle['name']} (pt): </strong>" escape="false"/>
 	<h:outputText value="#{CompetenceCourseManagement.competenceCourse.name}</li>" escape="false"/>
