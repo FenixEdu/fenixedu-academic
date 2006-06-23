@@ -50,7 +50,7 @@ public class CurricularPeriodLabelFormatter {
     private static void buildLabel(CurricularPeriod curricularPeriod, ResourceBundle bundle, StringBuilder result, boolean abbreviated) {
         result.insert(0, bundle.getString((abbreviated) ? curricularPeriod.getPeriodType().getAbbreviatedName() : curricularPeriod.getPeriodType().name()));
         result.insert(0, " ");
-        result.insert(0, curricularPeriod.getOrder());        
+        result.insert(0, curricularPeriod.getChildOrder());        
     }
 
 }
