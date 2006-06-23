@@ -84,6 +84,7 @@
 <!ENTITY markSheet SYSTEM "repository_marksheet.xml">
 <!ENTITY messaging SYSTEM "repository_messaging.xml">
 <!ENTITY cron SYSTEM "repository_cron.xml">
+<!ENTITY accounting SYSTEM "repository_accounting.xml">
 ]>
 <descriptor-repository version="1.0" isolation-level="repeatable-read">
 
@@ -173,5 +174,6 @@
     &markSheet;
 	&messaging;
 	&cron;
+	&accounting;
 
 </descriptor-repository>
