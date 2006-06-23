@@ -65,6 +65,13 @@
 	    </html:link>
 	</li>
 	</ul>
+	<ul>
+	<li>
+		<html:link page="/listGrantContractAndInsuranceByCriteria.do?method=actionStart">
+	    	<bean:message key="link.grant.owner.list.byInsurance"/>
+	    </html:link>
+	</li>
+	</ul>
 	
 	<br/>
 	<strong><bean:message key="link.grant.stats"/></strong>	
