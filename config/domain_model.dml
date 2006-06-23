@@ -135,7 +135,8 @@ valueType net.sourceforge.fenixedu.domain.research.event.EventParticipation.Even
 valueType net.sourceforge.fenixedu.domain.MarkSheetType					as MarkSheetType;
 valueType net.sourceforge.fenixedu.domain.MarkSheetState					as MarkSheetState;
 valueType net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseLevel     as CompetenceCourseLevel;
-
+valueType net.sourceforge.fenixedu.domain.accounting.AccountType     as AccountType;
+valueType net.sourceforge.fenixedu.domain.accounting.EventType     as AccountingEventType;
 
 /*
 *
@@ -149,6 +150,34 @@ class net.sourceforge.fenixedu.domain.DomainObject {
 }
 
 class net.sourceforge.fenixedu.domain.RootDomainObject extends net.sourceforge.fenixedu.domain.DomainObject {
+}
+
+class net.sourceforge.fenixedu.domain.accounting.Account extends net.sourceforge.fenixedu.domain.DomainObject {
+    Integer keyParty;
+    AccountType accountType;
+}
+
+class net.sourceforge.fenixedu.domain.accounting.AccountingTransaction extends net.sourceforge.fenixedu.domain.DomainObject {
+    DateTime whenRegisted;
+}
+
+class net.sourceforge.fenixedu.domain.accounting.Entry extends net.sourceforge.fenixedu.domain.DomainObject {
+    Integer keyAccount;
+    Integer keyAccountingTransaction;
+    Integer keyEvent;
+    DateTime whenBooked;
+    BigDecimal amount;
+}
+
+class net.sourceforge.fenixedu.domain.accounting.Event extends net.sourceforge.fenixedu.domain.DomainObject {
+    String ojbConcreteClass;
+    AccountingEventType eventType;
+    DateTime whenOccured;
+    DateTime whenNoticed;
+}
+
+class net.sourceforge.fenixedu.domain.candidacy.DFACandidacyEvent extends net.sourceforge.fenixedu.domain.accounting.Event {
+    Integer keyCandidacy;
 }
 
 class net.sourceforge.fenixedu.domain.teacher.Advise extends net.sourceforge.fenixedu.domain.DomainObject {
@@ -8442,6 +8471,69 @@ relation CandidacySituationEmployee {
 relation DFACandidacyExecutionDegree {
     net.sourceforge.fenixedu.domain.ExecutionDegree playsRole executionDegree;
 	net.sourceforge.fenixedu.domain.candidacy.DFACandidacy playsRole dfaCandidacies {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectAccount {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.accounting.Account playsRole accounts {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectAccountTransaction {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.accounting.AccountingTransaction playsRole accountingTransactions {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectEntry {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.accounting.Entry playsRole entries {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectAccountingEvent {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.accounting.Event playsRole accountingEvents {
+		multiplicity *;
+	}
+}
+
+relation PartyAccount {
+	net.sourceforge.fenixedu.domain.organizationalStructure.Party playsRole party;
+	net.sourceforge.fenixedu.domain.accounting.Account playsRole accounts {
+		multiplicity *;
+	}
+}
+
+relation AccountEntry {
+	net.sourceforge.fenixedu.domain.accounting.Account playsRole account;
+	net.sourceforge.fenixedu.domain.accounting.Entry playsRole entries {
+		multiplicity *;
+	}
+}
+
+relation EventEntry {
+	net.sourceforge.fenixedu.domain.accounting.Event playsRole event;
+	net.sourceforge.fenixedu.domain.accounting.Entry playsRole entries {
+		multiplicity *;
+	}
+}
+
+relation AccountTransactionEntry {
+	net.sourceforge.fenixedu.domain.accounting.AccountingTransaction playsRole accountingTransaction;
+	net.sourceforge.fenixedu.domain.accounting.Entry playsRole entries {
+		multiplicity *;
+	}
+}
+
+relation DFACandidacyEventCandidacy {
+	net.sourceforge.fenixedu.domain.candidacy.DFACandidacy playsRole candidacy;
+	net.sourceforge.fenixedu.domain.candidacy.DFACandidacyEvent playsRole candidacyEvents {
 		multiplicity *;
 	}
 }
