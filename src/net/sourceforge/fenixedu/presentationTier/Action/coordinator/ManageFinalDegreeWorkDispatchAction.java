@@ -1368,9 +1368,10 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
     	for (final StudentCurricularPlan studentCurricularPlan : student.getStudentCurricularPlansSet()) {
     		for (final Enrolment enrolment : studentCurricularPlan.getEnrolmentsSet()) {
     			final CurricularCourse enrolmentCurricularCourse = enrolment.getCurricularCourse();
-    			if (enrolmentCurricularCourse == curricularCourse ||
-    					(enrolmentCurricularCourse.getCompetenceCourse() != null
-    							&& enrolmentCurricularCourse.getCompetenceCourse() == curricularCourse.getCompetenceCourse())) {
+    			if (enrolmentCurricularCourse == curricularCourse
+                        || (enrolmentCurricularCourse.getCompetenceCourse() != null
+    							&& enrolmentCurricularCourse.getCompetenceCourse() == curricularCourse.getCompetenceCourse())
+                        || hasGlobalEquivalence(curricularCourse, enrolmentCurricularCourse)) {
     				enrolments.add(enrolment);
     			}
     		}
@@ -1385,7 +1386,12 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
 		return null;
 	}
 
-	public ActionForward detailedProposalList(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+	private boolean hasGlobalEquivalence(final CurricularCourse curricularCourse, final CurricularCourse enrolmentCurricularCourse) {
+        // TODO Auto-generated method stub
+        return false;
+    }
+
+    public ActionForward detailedProposalList(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
 			throws FenixActionException, FenixFilterException, FenixServiceException {
     	final String executionDegreeOIDString = request.getParameter("executionDegreeOID");
     	final ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(Integer.valueOf(executionDegreeOIDString));

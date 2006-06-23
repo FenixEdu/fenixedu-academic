@@ -9962,5 +9962,15 @@
 		<filterChains>
 			<chain name="DepartmentAdministrativeOfficeOrDepartmentMemberOrTeacherAuthorization"/>
 		</filterChains>
-	</service>	
+	</service>
+	<service>
+		<name>DeleteHoliday</name>
+		<implementationClass> 
+            net.sourceforge.fenixedu.applicationTier.Servico.manager.DeleteHoliday</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		<filterChains>
+			<chain name="ManagerAuthorization" />
+		</filterChains>
+	</service>
 </serviceDefinitions>

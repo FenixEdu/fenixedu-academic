@@ -36,6 +36,17 @@ public class Holiday extends Holiday_Base {
     }
 
     public static class HolidayFactoryCreator extends HolidayFactory {
+        private DomainReference<Locality> localityReference;
+
+        public Locality getLocality() {
+            return localityReference == null ? null : localityReference.getObject();
+        }
+        public void setLocality(Locality locality) {
+            if (locality != null) {
+                this.localityReference = new DomainReference<Locality>(locality);
+            }
+        }
+
         public Holiday execute() {
             return new Holiday(this);
         }
@@ -71,7 +82,14 @@ public class Holiday extends Holiday_Base {
             dateTimeFieldValuesArray[i] = dateTimeFieldValues.get(i).intValue();
         }
         final Partial partial = new Partial(dateTimeFieldTypesArray, dateTimeFieldValuesArray);
+
         setDate(partial);
+        setLocality(creator.getLocality());
+    }
+
+    public void delete() {
+        setRootDomainObject(null);
+        super.deleteDomainObject();
     }
 
 }
