@@ -79,11 +79,16 @@
 							<h:column>
 								<h:outputText value="<li class='tree_label' style='background-position: 0em 0.5em;'>#{competenceCourseGroupUnit.name}" escape="false"/>
 								<h:dataTable value="#{competenceCourseGroupUnit.competenceCourses}" var="competenceCourse"
-										styleClass="showinfo1 smallmargin mtop05" style="width: 50em;" rowClasses="color2" columnClasses=",aright" rendered="#{!empty competenceCourseGroupUnit.competenceCourses}">
+										styleClass="showinfo1 smallmargin mtop05" style="width: 60em;" rowClasses="color2" columnClasses=",aright" rendered="#{!empty competenceCourseGroupUnit.competenceCourses}">
 										
 										<h:column>
-											<h:outputText value="#{competenceCourse.name}"/>
-											<h:outputText value=" <em>(#{enumerationBundle[competenceCourse.curricularStage]})</em>" escape="false"/>
+											<h:outputText value="#{competenceCourse.name} "/>
+											<h:outputText rendered="#{!empty competenceCourse.acronym}" value="(#{competenceCourse.acronym}) "/>
+											<h:outputText value="<span style='color: #aaa;'>" escape="false"/>
+											<h:outputText rendered="#{competenceCourse.curricularStage.name == 'DRAFT'}" value="<em style='color: #bb5;'>#{enumerationBundle[competenceCourse.curricularStage]}</em>" escape="false"/>
+											<h:outputText rendered="#{competenceCourse.curricularStage.name == 'PUBLISHED'}" value="<em style='color: #569;'>#{enumerationBundle[competenceCourse.curricularStage]}</em>" escape="false"/>
+											<h:outputText rendered="#{competenceCourse.curricularStage.name == 'APPROVED'}" value="<em style='color: #595;'>#{enumerationBundle[competenceCourse.curricularStage]}</em>" escape="false"/>
+											<h:outputText value="</span>" escape="false"/>
 										</h:column>
 									
 										<h:column>

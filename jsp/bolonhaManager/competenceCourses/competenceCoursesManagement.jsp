@@ -52,40 +52,45 @@
 									</h:outputLink>
 								<h:outputText value="</td></tr></table>" escape="false"/>
 								
-								
+
 								<h:dataTable value="#{competenceCourseGroupUnit.competenceCourses}" var="competenceCourse" 
 												styleClass="showinfo1 smallmargin mtop05" style="width: 54em;" rowClasses="color2" columnClasses=",aright" rendered="#{!empty competenceCourseGroupUnit.competenceCourses}">
 									<h:column>
-										<h:outputText value="#{competenceCourse.name}"/>
-										<h:outputText value="  <em>(#{enumerationBundle[competenceCourse.curricularStage]})</em>" escape="false"/>
+										<h:outputText value="#{competenceCourse.name} "/>
+										<h:outputText rendered="#{!empty competenceCourse.acronym}" value="(#{competenceCourse.acronym}) "/>
+										<h:outputText value="<span style='color: #aaa;'>" escape="false"/>
+										<h:outputText rendered="#{competenceCourse.curricularStage.name == 'DRAFT'}" value="<em style='color: #bb5;'>#{enumerationBundle[competenceCourse.curricularStage]}</em>" escape="false"/>
+										<h:outputText rendered="#{competenceCourse.curricularStage.name == 'PUBLISHED'}" value="<em style='color: #569;'>#{enumerationBundle[competenceCourse.curricularStage]}</em>" escape="false"/>
+										<h:outputText rendered="#{competenceCourse.curricularStage.name == 'APPROVED'}" value="<em style='color: #595;'>#{enumerationBundle[competenceCourse.curricularStage]}</em>" escape="false"/>
+										<h:outputText value="</span>" escape="false"/>
 									</h:column>
-									
+
 									<h:column>
 										<h:outputLink value="showCompetenceCourse.faces">
 											<h:outputText value="#{bolonhaBundle['show']}"/>
 											<f:param name="action" value="ccm"/>
 											<f:param name="competenceCourseID" value="#{competenceCourse.idInternal}"/>
 										</h:outputLink>
-												<h:panelGroup rendered="#{competenceCourse.curricularStage.name != 'APPROVED'}">
-										<h:outputText value=", "/>
-											<h:outputLink value="editCompetenceCourseMainPage.faces">
-												<h:outputText value="#{bolonhaBundle['edit']}" />
-												<f:param name="action" value="ccm"/>
+										<h:panelGroup rendered="#{competenceCourse.curricularStage.name != 'APPROVED'}">
+											<h:outputText value=", "/>
+												<h:outputLink value="editCompetenceCourseMainPage.faces">
+													<h:outputText value="#{bolonhaBundle['edit']}" />
+													<f:param name="action" value="ccm"/>
+													<f:param name="competenceCourseID" value="#{competenceCourse.idInternal}"/>
+												</h:outputLink>
+												<h:outputText value=", "/>
+														<h:outputLink rendered="#{competenceCourse.curricularStage.name != 'APPROVED'}" value="deleteCompetenceCourse.faces">
+												<h:outputText value="#{bolonhaBundle['delete']}" />
 												<f:param name="competenceCourseID" value="#{competenceCourse.idInternal}"/>
 											</h:outputLink>
 											<h:outputText value=", "/>
-													<h:outputLink rendered="#{competenceCourse.curricularStage.name != 'APPROVED'}" value="deleteCompetenceCourse.faces">
-											<h:outputText value="#{bolonhaBundle['delete']}" />
-											<f:param name="competenceCourseID" value="#{competenceCourse.idInternal}"/>
-										</h:outputLink>
-													<h:outputText value=", "/>
-													<h:outputLink value="setCompetenceCourseBibliographicReference.faces">
-														<h:outputText value="#{bolonhaBundle['bibliographicReference']}" />
-														<f:param name="action" value="add"/>
-														<f:param name="bibliographicReferenceID" value="-1"/>
-														<f:param name="competenceCourseID" value="#{competenceCourse.idInternal}"/>
-													</h:outputLink>									
-												</h:panelGroup>
+											<h:outputLink value="setCompetenceCourseBibliographicReference.faces">
+												<h:outputText value="#{bolonhaBundle['bibliographicReference']}" />
+												<f:param name="action" value="add"/>
+												<f:param name="bibliographicReferenceID" value="-1"/>
+												<f:param name="competenceCourseID" value="#{competenceCourse.idInternal}"/>
+											</h:outputLink>									
+										</h:panelGroup>
 									</h:column>
 								</h:dataTable>
 								
