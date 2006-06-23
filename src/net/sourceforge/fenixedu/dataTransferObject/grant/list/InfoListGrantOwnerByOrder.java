@@ -40,8 +40,28 @@ public class InfoListGrantOwnerByOrder extends InfoObject {
     private String numberPaymentEntity;
     
     private String designation;
+    
+    private Double totalInsurance;
+    
+    private long totalOfDays;
 
-    public String getDesignation() {
+    public Double getTotalInsurance() {
+		return totalInsurance;
+	}
+
+	public void setTotalInsurance(Double totalInsurance) {
+		this.totalInsurance = totalInsurance;
+	}
+
+	public long getTotalOfDays() {
+		return totalOfDays;
+	}
+
+	public void setTotalOfDays(long totalOfDays) {
+		this.totalOfDays = totalOfDays;
+	}
+
+	public String getDesignation() {
 		return designation;
 	}
 
