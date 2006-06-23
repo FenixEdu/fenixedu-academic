@@ -14,7 +14,7 @@ import org.joda.time.YearMonthDay;
 
 public class TeacherLegalRegimen extends TeacherLegalRegimen_Base {
 
-    public static final Comparator TEACHER_LEGAL_REGIMEM_COMPARATOR_BY_BEGIN_DATE = new BeanComparator("beginDate");
+    public static final Comparator TEACHER_LEGAL_REGIMEN_COMPARATOR_BY_BEGIN_DATE = new BeanComparator("beginDate");
     
     public TeacherLegalRegimen() {
 		super();

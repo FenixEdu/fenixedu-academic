@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.util.PeriodState;
@@ -150,8 +151,9 @@ public class ExecutionPeriod extends ExecutionPeriod_Base implements Comparable 
     }
 
     // -------------------------------------------------------------
-    // read static methods
+    // read static methods    
     // -------------------------------------------------------------
+    
     public static ExecutionPeriod readActualExecutionPeriod() {
         for (final ExecutionPeriod executionPeriod : RootDomainObject.getInstance()
                 .getExecutionPeriodsSet()) {
@@ -263,5 +265,16 @@ public class ExecutionPeriod extends ExecutionPeriod_Base implements Comparable 
         default:
             throw new DomainException("invalid.role.type");
         }
+    }
+    
+    public OccupationPeriod getLessonsPeriod() {
+        for (ExecutionDegree executionDegree : getExecutionYear().getExecutionDegreesByType(DegreeType.DEGREE)) {
+            if (getSemester() == 1) {
+                return executionDegree.getPeriodLessonsFirstSemester();
+            } else {
+                return executionDegree.getPeriodLessonsSecondSemester();
+            }
+        }
+        return null;
     }
 }

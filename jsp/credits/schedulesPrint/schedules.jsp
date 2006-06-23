@@ -185,23 +185,7 @@
 					</table>
 				</div>		
 			<% } %>							
-		</logic:notEmpty>
-		
-		<logic:empty name="supportLessonList">
-			<br style="clear: both;"/>
-			<div style="width: 49%; float: left;">
-				<table class="tb01">
-					<tr><th style="width: 3em;"><bean:message key="label.type"/></th><th><bean:message key="label.weekDay"/></th><th><bean:message key="label.schedule"/></th><th style="width: 5em;"><bean:message key="label.place"/></th></tr>
-					<tr class="height2"><td><bean:message key="label.supportLessons"/></td><td></td><td></td><td></td></tr>
-				</table>
-			</div>			
-			<div style="width: 49%; float: left;">
-				<table class="tb01" style="margin-left: 2%;">
-					<tr><th style="width: 3em;"><bean:message key="label.type"/></th><th><bean:message key="label.weekDay"/></th><th><bean:message key="label.schedule"/></th><th style="width: 5em;"><bean:message key="label.place"/></th></tr>
-					<tr class="height2"><td><bean:message key="label.supportLessons"/></td><td></td><td></td><td></td></tr>
-				</table>
-			</div>
-		</logic:empty>
+		</logic:notEmpty>		
 		<br style="clear: both;"/>
 	</logic:iterate>
 </logic:notEmpty>			
@@ -242,19 +226,19 @@
 	<br style="clear: both;"/>
 </logic:notEmpty>
 
-<table class="tb01" style="width: 99%;">
-	<tr><th style="width: 20em;"><bean:message key="label.notes"/></th></tr>		
-	<tr class="height2">
-		<td>			
-		    <logic:notEmpty name="teacherService">
-			    <logic:notEmpty name="teacherService" property="masterDegreeTeachingNotes">
-			    	<bean:define id="masterDegreeTeachingNotesAux" name="teacherService" property="masterDegreeTeachingNotes" />
-					<%= masterDegreeTeachingNotesAux.toString().replaceAll("(\r\n)|(\n)", "<br />") %>
-				</logic:notEmpty>
-		    </logic:notEmpty>
-		</td>
-	</tr>
-</table>	
+<logic:notEmpty name="teacherService">
+	<logic:notEmpty name="teacherService" property="masterDegreeTeachingNotes">
+		<table class="tb01" style="width: 99%;">
+			<tr><th style="width: 20em;"><bean:message key="label.notes"/></th></tr>		
+			<tr class="height2">
+				<td>					    
+				   	<bean:define id="masterDegreeTeachingNotesAux" name="teacherService" property="masterDegreeTeachingNotes" />
+					<%= masterDegreeTeachingNotesAux.toString().replaceAll("(\r\n)|(\n)", "<br />") %>			
+				</td>
+			</tr>
+		</table>	
+	</logic:notEmpty>
+</logic:notEmpty>
 <br style="clear: both;"/>
 
 
@@ -300,25 +284,7 @@
 	</div>
 	<% } %>
 </logic:notEmpty>
-
-<logic:empty name="adviseServices">
-	<p class="mbottom05">Alunos:</p>
-	<div style="width: 49%; float: left;">
-		<table class="tb01">
-			<tr><th style="width: 5em;"><bean:message key="label.number"/></th><th><bean:message key="label.name"/></th><th style="width: 7em;"><bean:message key="label.professorship"/> (%)</th></tr>
-			<tr class="height4"><td></td><td></td><td></td></tr>
-		</table>
-	</div>	
-	<div style="width: 49%; float: left;">
-		<table class="tb01" style="margin-left: 2%;">
-			<tr><th style="width: 5em;"><bean:message key="label.number"/></th><th><bean:message key="label.name"/></th><th style="width: 7em;"><bean:message key="label.professorship"/> (%)</th></tr>
-			<tr class="height4"><td></td><td></td><td></td></tr>
-		</table>
-	</div>
-</logic:empty>
 <br style="clear: both;"/>
-
-
 
 <h3 class="mbottom05"><bean:message key="label.institution.working.time"/></h3>
 <logic:present name="institutionWorkTimeList">
@@ -349,19 +315,7 @@
 		 </tr>	
 	</table>
 </logic:present>
-<logic:notPresent name="institutionWorkTimeList">
-	<table class="tb01" style="width: 99%;">
-		<tr>
-			<logic:iterate id="weekDay" name="weekDays">
-				<th style="width: 16.5em;"><bean:message name="weekDay" property="name" bundle="ENUMERATION_RESOURCES"/></th>
-			</logic:iterate>
-		</tr>	
-		<tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-		<tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-	</table>
-</logic:notPresent>
-
-
+<br style="clear: both;"/>
 
 <h3 class="mbottom05"><bean:message key="label.others"/></h3>
 <logic:notEmpty name="otherServices">
@@ -377,22 +331,26 @@
 		</table>
 	</div>
 	<br style="clear: both;"/>
-	<br/>
+	<logic:notEmpty name="teacherService">
+		<logic:notEmpty name="teacherService" property="othersNotes">
+			<br/>
+		</logic:notEmpty>
+	</logic:notEmpty>
 </logic:notEmpty>
 
-<table class="tb01" style="width: 99%;">
-	<tr><th style="width: 20em;"><bean:message key="label.notes"/></th></tr>		
-	<tr class="height2">
-		<td>
-		     <logic:notEmpty name="teacherService">
- 		        <logic:notEmpty name="teacherService" property="othersNotes">
+<logic:notEmpty name="teacherService">
+	<logic:notEmpty name="teacherService" property="othersNotes">
+		<table class="tb01" style="width: 99%;">
+			<tr><th style="width: 20em;"><bean:message key="label.notes"/></th></tr>		
+			<tr class="height2">
+				<td>				     
 					<bean:define id="othersNotesAux" name="teacherService" property="othersNotes" />
 					<%= othersNotesAux.toString().replaceAll("(\r\n)|(\n)", "<br />") %>
-				</logic:notEmpty>
-			</logic:notEmpty>
-		</td>
-	</tr>
-</table>
+				</td>
+			</tr>
+		</table>
+	</logic:notEmpty>
+</logic:notEmpty>
 <br style="clear: both;"/>
 
 
@@ -435,19 +393,19 @@
 	<br style="clear: both;"/>
 </logic:notEmpty>
 
-<table class="tb01" style="width: 99%;">
-	<tr><th style="width: 20em;"><bean:message key="label.notes"/></th></tr>		
-	<tr class="height2">
-		<td>
-		     <logic:notEmpty name="teacherService">
-			     <logic:notEmpty name="teacherService" property="managementFunctionNotes">
+<logic:notEmpty name="teacherService">
+	<logic:notEmpty name="teacherService" property="managementFunctionNotes">
+		<table class="tb01" style="width: 99%;">
+			<tr><th style="width: 20em;"><bean:message key="label.notes"/></th></tr>		
+			<tr class="height2">
+				<td>
 					<bean:define id="managementFunctionNotesAux" name="teacherService" property="managementFunctionNotes"/>
-					<%= managementFunctionNotesAux.toString().replaceAll("(\r\n)|(\n)", "<br />") %>
-				</logic:notEmpty>
-			</logic:notEmpty>
-		</td>
-	</tr>
-</table>
+					<%= managementFunctionNotesAux.toString().replaceAll("(\r\n)|(\n)", "<br />") %>				
+				</td>
+			</tr>
+		</table>
+	</logic:notEmpty>
+</logic:notEmpty>
 <br style="clear: both;"/>
 
 
@@ -488,19 +446,19 @@
 	<br style="clear: both;"/>
 </logic:notEmpty>
 
-<table class="tb01" style="width: 99%;">
-	<tr><th style="width: 20em;"><bean:message key="label.notes"/></th></tr>		
-	<tr class="height2">
-		<td>
-		    <logic:notEmpty name="teacherService">
-	   		    <logic:notEmpty name="teacherService" property="serviceExemptionNotes">
+<logic:notEmpty name="teacherService">
+	<logic:notEmpty name="teacherService" property="serviceExemptionNotes">
+		<table class="tb01" style="width: 99%;">
+			<tr><th style="width: 20em;"><bean:message key="label.notes"/></th></tr>		
+			<tr class="height2">
+				<td>
 					<bean:define id="serviceExemptionNotesAux" name="teacherService" property="serviceExemptionNotes"/>
 					<%= serviceExemptionNotesAux.toString().replaceAll("(\r\n)|(\n)", "<br />") %>
-				</logic:notEmpty>
-			</logic:notEmpty>
-		</td>
-	</tr>
-</table>
+				</td>
+			</tr>
+		</table>
+	</logic:notEmpty>
+</logic:notEmpty>
 <br style="clear: both;"/>
 <br/>
 

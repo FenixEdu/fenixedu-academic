@@ -5,6 +5,8 @@ package net.sourceforge.fenixedu.domain;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.domain.organizationalStructure.PartyTypeEnum;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
@@ -55,6 +57,12 @@ public class Employee extends Employee_Base {
             return contract.getWorkingUnit();
         }
         return null;
+    }
+    
+    public Unit getLastWorkingPlaceByPeriod(YearMonthDay beginDate, YearMonthDay endDate) {
+        SortedSet<Contract> contracts = new TreeSet<Contract>(Contract.CONTRACT_COMPARATOR_BY_BEGIN_DATE);        
+        contracts.addAll(getContractsByPeriod(beginDate, endDate));
+        return (!contracts.isEmpty()) ? contracts.last().getWorkingUnit() : null;    
     }
 
     public List<Unit> getWorkingPlacesByPeriod(YearMonthDay beginDate, YearMonthDay endDate) {

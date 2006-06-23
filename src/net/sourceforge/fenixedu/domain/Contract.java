@@ -4,10 +4,15 @@
  */
 package net.sourceforge.fenixedu.domain;
 
+import java.util.Comparator;
+
+import org.apache.commons.beanutils.BeanComparator;
 import org.joda.time.YearMonthDay;
 
 public class Contract extends Contract_Base {
 
+    public static final Comparator CONTRACT_COMPARATOR_BY_BEGIN_DATE = new BeanComparator("beginDateYearMonthDay");
+    
     public Contract() {
 		super();
 		setRootDomainObject(RootDomainObject.getInstance());

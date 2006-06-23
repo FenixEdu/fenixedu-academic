@@ -116,8 +116,8 @@ public class TeacherService extends TeacherService_Base {
             ExecutionPeriod executionPeriod = executionCourse.getExecutionPeriod();
             if (!executionCourse.isMasterDegreeOnly() && (executionPeriod.getExecutionYear().isBefore(executionYear20062007) ||
                     !executionCourse.areAllOptionalCurricularCoursesWithLessTenEnrolments())) {                
-                Teacher teacher = degreeTeachingService.getProfessorship().getTeacher();
-                Category teacherCategory = teacher.getCategory(executionPeriod.getBeginDateYearMonthDay(), executionPeriod.getEndDateYearMonthDay());
+                Teacher teacher = degreeTeachingService.getProfessorship().getTeacher();                
+                Category teacherCategory = teacher.getCategoryForCreditsByPeriod(executionPeriod);
                 if (teacherCategory != null 
                         && teacherCategory.getCode().equals("AST") && teacherCategory.getLongName().equals("ASSISTENTE")
                         && degreeTeachingService.getShift().getTipo().equals(ShiftType.TEORICA)) {                    

@@ -10,7 +10,6 @@ import java.util.Map;
 import java.util.TreeMap;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
-import net.sourceforge.fenixedu.domain.Contract;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
@@ -30,50 +29,37 @@ import org.apache.commons.collections.comparators.ComparatorChain;
 
 public class ReadTeachersCreditsResumeByPeriodAndUnit extends Service {
 
-    public List<TeacherCreditsReportDTO> run(Unit unit, ExecutionPeriod fromExecutionPeriod,
+    public List<TeacherCreditsReportDTO> run(Unit department, ExecutionPeriod fromExecutionPeriod,
             ExecutionPeriod untilExecutionPeriod) throws ExcepcaoPersistencia {
 
         List<ExecutionPeriod> executionPeriodsBetween = getExecutionPeriodsBetween(fromExecutionPeriod,
                 untilExecutionPeriod);
-        List<Teacher> teachers = unit.getTeachers(fromExecutionPeriod.getBeginDateYearMonthDay(),
+        
+        List<Teacher> teachers = department.getTeachers(fromExecutionPeriod.getBeginDateYearMonthDay(),
                 untilExecutionPeriod.getEndDateYearMonthDay());
-
+        
         List<TeacherCreditsReportDTO> creditLines = new ArrayList<TeacherCreditsReportDTO>();
-        for (Teacher teacher : teachers) {
+        for (Teacher teacher : teachers) {            
             if (!verifyIfTeacherIsMonitor(teacher, executionPeriodsBetween)
-                    && !verifyIfTeacherIsInactive(teacher, executionPeriodsBetween)
-                    && !verifyIfTeacherIsDeath(teacher)) {
-                TeacherCreditsReportDTO creditsReportDTO = new TeacherCreditsReportDTO();
-                creditsReportDTO.setTeacher(teacher);
-                for (ExecutionPeriod executionPeriod : executionPeriodsBetween) {
-                    updateCreditLine(teacher, executionPeriod, creditsReportDTO, true);
+                    && !verifyIfTeacherIsInactive(teacher, executionPeriodsBetween) 
+                    && !verifyIfTeacherIsDeath(teacher)) {                
+                Unit workingUnit = teacher.getLastWorkingUnit(untilExecutionPeriod.getBeginDateYearMonthDay(), untilExecutionPeriod.getEndDateYearMonthDay());
+                Unit workingUnitDepartment = (workingUnit != null) ? workingUnit.getDepartmentUnit() : null;
+                if(workingUnitDepartment != null && workingUnitDepartment.getDepartment().equals(department.getDepartment())) {               
+                    TeacherCreditsReportDTO creditsReportDTO = new TeacherCreditsReportDTO();
+                    creditsReportDTO.setTeacher(teacher);
+                    for (ExecutionPeriod executionPeriod : executionPeriodsBetween) {
+                        updateCreditLine(teacher, executionPeriod, creditsReportDTO, true);
+                    }                    
+                    creditsReportDTO.setUnit(workingUnit);
+                    creditsReportDTO.setPastCredits(teacher.getBalanceOfCreditsUntil(fromExecutionPeriod.getPreviousExecutionPeriod()));
+                    creditLines.add(creditsReportDTO);
                 }
-                List<Contract> contracts = teacher.getPerson().getEmployee().getContractsByPeriod(
-                        fromExecutionPeriod.getBeginDateYearMonthDay(), untilExecutionPeriod.getEndDateYearMonthDay());
-
-                Unit workingUnit = getTeacherWorkingUnit(unit, contracts);
-                creditsReportDTO.setUnit(workingUnit);
-                creditsReportDTO.setPastCredits(teacher.getBalanceOfCreditsUntil(fromExecutionPeriod
-                        .getPreviousExecutionPeriod()));
-                creditLines.add(creditsReportDTO);
             }
         }
         return creditLines;
     }
-
-    private Unit getTeacherWorkingUnit(Unit unit, List<Contract> contracts) {
-        Unit workingUnit = null;
-        for (Contract contract : contracts) {
-            Unit departmentUnit = contract.getWorkingUnit().getDepartmentUnit();
-            Unit contractUnit = contract.getWorkingUnit();
-            if (departmentUnit != null && departmentUnit.equals(unit) &&
-                    (workingUnit == null || contractUnit.getBeginDateYearMonthDay().isAfter(workingUnit.getBeginDateYearMonthDay()))) {
-                workingUnit = contractUnit;
-            }
-        }
-        return workingUnit;
-    }
-
+    
     private boolean verifyIfTeacherIsDeath(Teacher teacher) {
         for (TeacherLegalRegimen legalRegimen : teacher.getLegalRegimens()) {
             if (legalRegimen.getLegalRegimenType().equals(LegalRegimenType.DEATH)) {
