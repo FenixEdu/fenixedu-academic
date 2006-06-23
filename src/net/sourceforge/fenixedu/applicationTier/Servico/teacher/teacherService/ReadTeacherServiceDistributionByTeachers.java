@@ -64,11 +64,11 @@ public class ReadTeacherServiceDistributionByTeachers extends Service {
 				Double accumulatedCredits = (startPeriod == null ? 0.0 : teacher.getCreditsBetweenExecutionPeriods(startPeriod, endPeriod)); 
 				
 				if(returnDTO.isTeacherPresent(teacher.getIdInternal())){
-					returnDTO.addHoursToTeacher(teacher.getIdInternal(), teacher.getHoursByCategory(executionPeriodEntry.getBeginDateYearMonthDay(), executionPeriodEntry.getEndDateYearMonthDay()));
+					returnDTO.addHoursToTeacher(teacher.getIdInternal(), teacher.getHoursByCategory(executionPeriodEntry));
 					returnDTO.addCreditsToTeacher(teacher.getIdInternal(), teacher.getServiceExemptionCredits(executionPeriodEntry) + teacher.getManagementFunctionsCredits(executionPeriodEntry));					
 				} else {
 					returnDTO.addTeacher(teacher.getIdInternal(), teacher.getTeacherNumber(), teacher
-							.getCategory().getCode(), teacher.getPerson().getNome(), teacher.getHoursByCategory(executionPeriodEntry.getBeginDateYearMonthDay(), executionPeriodEntry.getEndDateYearMonthDay()), 
+							.getCategory().getCode(), teacher.getPerson().getNome(), teacher.getHoursByCategory(executionPeriodEntry), 
 							teacher.getServiceExemptionCredits(executionPeriodEntry) + teacher.getManagementFunctionsCredits(executionPeriodEntry), accumulatedCredits);
 				}
 					

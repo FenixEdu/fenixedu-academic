@@ -11,6 +11,7 @@ import java.util.TreeMap;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.OccupationPeriod;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.teacher.Category;
@@ -69,17 +70,18 @@ public class ReadTeachersCreditsResumeByPeriodAndUnit extends Service {
         return false;
     }
 
-    private boolean verifyIfTeacherIsInactive(Teacher teacher,
-            List<ExecutionPeriod> executionPeriodsBetween) {
+    private boolean verifyIfTeacherIsInactive(Teacher teacher, List<ExecutionPeriod> executionPeriodsBetween) {
 
         if (!executionPeriodsBetween.isEmpty()) {
-            ExecutionPeriod lastExecutionPeriod = executionPeriodsBetween.get(executionPeriodsBetween
-                    .size() - 1);
-            List<TeacherLegalRegimen> allLegalRegimens = teacher
-                    .getAllLegalRegimensWithoutEndSituations(lastExecutionPeriod.getBeginDateYearMonthDay(),
-                            lastExecutionPeriod.getEndDateYearMonthDay());
-            if (allLegalRegimens.isEmpty()) {
-                return true;
+            ExecutionPeriod lastExecutionPeriod = executionPeriodsBetween.get(executionPeriodsBetween.size() - 1);
+            OccupationPeriod occupationPeriod = lastExecutionPeriod.getLessonsPeriod();  
+            if(occupationPeriod != null) {
+                List<TeacherLegalRegimen> allLegalRegimens = teacher
+                        .getAllLegalRegimensWithoutEndSituations(occupationPeriod.getStartYearMonthDay(),
+                                occupationPeriod.getEndYearMonthDay());
+                if (allLegalRegimens.isEmpty()) {
+                    return true;
+                }
             }
         }
         return false;
