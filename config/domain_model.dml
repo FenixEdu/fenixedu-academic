@@ -1569,7 +1569,7 @@ class net.sourceforge.fenixedu.domain.FileItem extends net.sourceforge.fenixedu.
 }
 
 class net.sourceforge.fenixedu.domain.Holiday extends net.sourceforge.fenixedu.domain.DomainObject {
-	YearMonthDay date; 
+	Partial date; 
 	Integer keyLocality;
 }
 
