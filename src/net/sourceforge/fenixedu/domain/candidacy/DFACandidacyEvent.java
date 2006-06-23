@@ -7,7 +7,6 @@ import net.sourceforge.fenixedu.domain.accounting.Account;
 import net.sourceforge.fenixedu.domain.accounting.AccountType;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.organizationalStructure.UnitUtils;
 
 import org.joda.time.DateTime;
 
@@ -33,11 +32,11 @@ public class DFACandidacyEvent extends DFACandidacyEvent_Base {
     @Override
     protected void internalProcess() {
         
-        final Account institutionExternalAccount = UnitUtils.readInstitutionUnit().getAccountBy(AccountType.EXTERNAL);
-        final Account degreeInternalAccount = getCandidacyDegree().getUnit().getAccountBy(AccountType.INTERNAL);
+        final Account personExternalAccount = getCandidacy().getPerson().getAccountBy(AccountType.EXTERNAL);
         final Account personInternalAccount = getCandidacy().getPerson().getAccountBy(AccountType.INTERNAL);
+        final Account degreeInternalAccount = getCandidacyDegree().getUnit().getAccountBy(AccountType.INTERNAL);
         
-        makeAccountingTransaction(institutionExternalAccount, personInternalAccount, calculateAmount());
+        makeAccountingTransaction(personExternalAccount, personInternalAccount, calculateAmount());
         makeAccountingTransaction(personInternalAccount, degreeInternalAccount, calculateAmount());
     }
 
