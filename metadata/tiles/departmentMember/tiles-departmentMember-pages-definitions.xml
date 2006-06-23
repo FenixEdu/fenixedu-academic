@@ -45,11 +45,14 @@
     </definition>  
     
     <!-- Schedules Print -->  
-    <definition name="show-empty-schedules-resume-print" page="/layout/fenixPrint.jsp">
-        <put name="body" value="/credits/schedulesPrint/emptySchedules.jsp"/>
-    </definition> 
     <definition name="show-schedules-resume-print" page="/layout/fenixPrint.jsp">
         <put name="body" value="/credits/schedulesPrint/schedules.jsp"/>
     </definition>
+    
+    <!-- Credits Notes -->
+    <definition name="show-note" extends="departmentMember.masterPage">
+        <put name="body" value="/credits/notes/listCreditsNotes.jsp"/>
+    </definition>
+    
         
 </tiles-definitions>

@@ -239,25 +239,23 @@
 			</logic:iterate>
 		</table>
 	</div>
+	<br style="clear: both;"/>
 </logic:notEmpty>
 
-<logic:empty name="masterDegreeServices">
-	<div style="width: 49%; float: left;">
-		<table class="tb01">
-			<tr><th><bean:message key="label.course"/></th><th style="width: 5em;"><bean:message key="label.hours"/></th><th style="width: 5em;"><bean:message key="label.credits"/></th></tr>
-			<tr class="height2"><td></td><td></td><td></td></tr>
-		</table>
-	</div>
-	
-	<div style="width: 49%; float: left;">
-		<table class="tb01" style="margin-left: 2%;">
-			<tr><th><bean:message key="label.course"/></th><th style="width: 5em;"><bean:message key="label.hours"/></th><th style="width: 5em;"><bean:message key="label.credits"/></th></tr>
-			<tr class="height2"><td></td><td></td><td></td></tr>
-		</table>
-	</div>
-</logic:empty>
+<table class="tb01" style="width: 99%;">
+	<tr><th style="width: 20em;"><bean:message key="label.notes"/></th></tr>		
+	<tr class="height2">
+		<td>			
+		    <logic:notEmpty name="teacherService">
+			    <logic:notEmpty name="teacherService" property="masterDegreeTeachingNotes">
+			    	<bean:define id="masterDegreeTeachingNotesAux" name="teacherService" property="masterDegreeTeachingNotes" />
+					<%= masterDegreeTeachingNotesAux.toString().replaceAll("(\r\n)|(\n)", "<br />") %>
+				</logic:notEmpty>
+		    </logic:notEmpty>
+		</td>
+	</tr>
+</table>	
 <br style="clear: both;"/>
-
 
 
 <h3 class="mbottom05"><bean:message key="label.advises"/></h3>
@@ -378,25 +376,24 @@
 			</logic:iterate>
 		</table>
 	</div>
+	<br style="clear: both;"/>
+	<br/>
 </logic:notEmpty>
 
-<logic:empty name="otherServices">
-	<div style="width: 49%; float: left;">
-		<table class="tb01">
-			<tr><th><bean:message key="label.reason"/></th><th style="width: 5em;"><bean:message key="label.credits"/></th></tr>
-			<tr class="height2"><td></td><td></td></tr>
-		</table>
-	</div>
-	
-	<div style="width: 49%; float: left;">
-		<table class="tb01" style="margin-left: 2%;">
-			<tr><th><bean:message key="label.reason"/></th><th style="width: 5em;"><bean:message key="label.credits"/></th></tr>
-			<tr class="height2"><td></td><td></td></tr>
-		</table>
-	</div>
-</logic:empty>
+<table class="tb01" style="width: 99%;">
+	<tr><th style="width: 20em;"><bean:message key="label.notes"/></th></tr>		
+	<tr class="height2">
+		<td>
+		     <logic:notEmpty name="teacherService">
+ 		        <logic:notEmpty name="teacherService" property="othersNotes">
+					<bean:define id="othersNotesAux" name="teacherService" property="othersNotes" />
+					<%= othersNotesAux.toString().replaceAll("(\r\n)|(\n)", "<br />") %>
+				</logic:notEmpty>
+			</logic:notEmpty>
+		</td>
+	</tr>
+</table>
 <br style="clear: both;"/>
-
 
 
 <h3 class="mbottom05"><bean:message key="label.managent.functions"/></h3>
@@ -435,23 +432,22 @@
 			</tr>
 		</logic:iterate>
 	</table>
+	<br style="clear: both;"/>
 </logic:notEmpty>
 
-<logic:empty name="personFunctions">
-	<div style="width: 49%; float: left;">
-		<table class="tb01">
-			<tr><th><bean:message key="label.function"/></th><th><bean:message key="label.unit"/></th><th style="width: 10em;"><bean:message key="label.period"/></th><th style="width: 5em;"><bean:message key="label.credits"/></th></tr>
-			<tr class="height2"><td></td><td></td><td></td><td></td></tr>
-		</table>
-	</div>
-	
-	<div style="width: 49%; float: left;">
-		<table class="tb01" style="margin-left: 2%;">
-			<tr><th><bean:message key="label.function"/></th><th><bean:message key="label.unit"/></th><th style="width: 10em;"><bean:message key="label.period"/></th><th style="width: 5em;"><bean:message key="label.credits"/></th></tr>
-			<tr class="height2"><td></td><td></td><td></td><td></td></tr>
-		</table>
-	</div>
-</logic:empty>
+<table class="tb01" style="width: 99%;">
+	<tr><th style="width: 20em;"><bean:message key="label.notes"/></th></tr>		
+	<tr class="height2">
+		<td>
+		     <logic:notEmpty name="teacherService">
+			     <logic:notEmpty name="teacherService" property="managementFunctionNotes">
+					<bean:define id="managementFunctionNotesAux" name="teacherService" property="managementFunctionNotes"/>
+					<%= managementFunctionNotesAux.toString().replaceAll("(\r\n)|(\n)", "<br />") %>
+				</logic:notEmpty>
+			</logic:notEmpty>
+		</td>
+	</tr>
+</table>
 <br style="clear: both;"/>
 
 
@@ -489,23 +485,22 @@
 			</tr>
 		</logic:iterate>
 	</table>
+	<br style="clear: both;"/>
 </logic:notEmpty>
-<logic:empty name="serviceExemptions">
-	<div style="width: 49%; float: left;">
-		<table class="tb01">
-			<tr><th style="width: 33%"><bean:message key="label.situation"/></th><th><bean:message key="label.organization"/></th><th style="width: 33%"><bean:message key="label.period"/></th></tr>
-			<tr><td></td><td></td><td></td></tr>
-		</table>
-	</div>
-	
-	<div style="width: 49%; float: left;">
-		<table class="tb01" style="margin-left: 2%;">
-			<tr><th><bean:message key="label.situation"/></th><th><bean:message key="label.organization"/></th><th><bean:message key="label.period"/></th></tr>
-			<tr><td></td><td></td><td></td></tr>
-		</table>
-	</div>
-</logic:empty>
 
+<table class="tb01" style="width: 99%;">
+	<tr><th style="width: 20em;"><bean:message key="label.notes"/></th></tr>		
+	<tr class="height2">
+		<td>
+		    <logic:notEmpty name="teacherService">
+	   		    <logic:notEmpty name="teacherService" property="serviceExemptionNotes">
+					<bean:define id="serviceExemptionNotesAux" name="teacherService" property="serviceExemptionNotes"/>
+					<%= serviceExemptionNotesAux.toString().replaceAll("(\r\n)|(\n)", "<br />") %>
+				</logic:notEmpty>
+			</logic:notEmpty>
+		</td>
+	</tr>
+</table>
 <br style="clear: both;"/>
 <br/>
 

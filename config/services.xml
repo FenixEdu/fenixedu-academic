@@ -9954,4 +9954,13 @@
 		<filterChains>
 		</filterChains>
 	</service>
+		<service>
+		<name>EditTeacherServiceNotes</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.credits.EditTeacherServiceNotes</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		<filterChains>
+			<chain name="DepartmentAdministrativeOfficeOrDepartmentMemberOrTeacherAuthorization"/>
+		</filterChains>
+	</service>	
 </serviceDefinitions>

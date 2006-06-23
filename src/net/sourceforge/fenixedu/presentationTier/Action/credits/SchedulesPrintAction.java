@@ -35,6 +35,8 @@ public class SchedulesPrintAction extends ShowTeacherCreditsDispatchAction {
         setWorkingUnit(request, executionPeriod, teacher);                        
         setWeekDays(request);
         
+        request.setAttribute("teacherService", teacher.getTeacherServiceByExecutionPeriod(executionPeriod));
+        
         return mapping.findForward("show-schedules-resume-print");
     }
 

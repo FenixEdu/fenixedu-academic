@@ -19,8 +19,7 @@ import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.presentationTier.Action.credits.ManageDegreeTeachingServicesDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
 
-public class DepartmentMemberManageDegreeTeachingServicesDispatchAction extends
-        ManageDegreeTeachingServicesDispatchAction {
+public class DepartmentMemberManageDegreeTeachingServicesDispatchAction extends ManageDegreeTeachingServicesDispatchAction {
 
     public ActionForward showTeachingServiceDetails(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws NumberFormatException,

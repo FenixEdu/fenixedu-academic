@@ -287,6 +287,27 @@
 	</table>
 </logic:empty>
 
+<logic:notEmpty name="teacherService">
+	<logic:notEmpty name="teacherService" property="masterDegreeTeachingNotes">		
+		<table class="tstyle4">
+				<tr>
+					<th><bean:message key="label.notes"/></th>
+				</tr>
+				<tr>
+					<td>
+						<bean:define id="masterDegreeTeachingNotesAux" name="teacherService" property="masterDegreeTeachingNotes" />
+						<%= masterDegreeTeachingNotesAux.toString().replaceAll("(\r\n)|(\n)", "<br />") %>
+					</td>
+				</tr>
+		</table>
+	</logic:notEmpty>
+	<p class="mtop0 pleft1">
+		<html:link page='<%= "/manageCreditsNotes.do?method=viewNote&amp;noteType=masterDegreeTeachingNote&amp;page=0" + "&amp;executionPeriodId=" + executionPeriodId %>' paramId="teacherNumber" paramName="teacher" paramProperty="teacherNumber">
+				<bean:message key="link.notes"/>
+		</html:link>
+	</p>	
+</logic:notEmpty>
+
 <%-- ================================================================================== --%>
 
 <%-- ============================== ADVISES TFC ======================================= --%>
@@ -421,6 +442,27 @@
 	</table>
 </logic:empty>
 
+<logic:notEmpty name="teacherService">
+	<logic:notEmpty name="teacherService" property="othersNotes">
+		<table class="tstyle4">
+				<tr>
+					<th><bean:message key="label.notes"/></th>
+				</tr>
+				<tr>
+					<td>
+						<bean:define id="othersNotesAux" name="teacherService" property="othersNotes" />
+						<%= othersNotesAux.toString().replaceAll("(\r\n)|(\n)", "<br />") %>
+					</td>
+				</tr>
+		</table>
+	</logic:notEmpty>
+	<p class="mtop0 pleft1">
+		<html:link page='<%= "/manageCreditsNotes.do?method=viewNote&amp;noteType=otherNote&amp;page=0" + "&amp;executionPeriodId=" + executionPeriodId %>' paramId="teacherNumber" paramName="teacher" paramProperty="teacherNumber">
+				<bean:message key="link.notes"/>
+		</html:link>
+	</p>
+</logic:notEmpty>
+
 <%-- ========================== Management Position Lines =============================== --%>
 <h3 class="barra"><span>6) <bean:message key="label.teacherCreditsSheet.managementPositionLines" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></span></h3>
 
@@ -482,6 +524,27 @@
 	</table>
 </logic:empty>	
 
+<logic:notEmpty name="teacherService">
+	<logic:notEmpty name="teacherService" property="managementFunctionNotes">
+		<table class="tstyle4">
+				<tr>
+					<th><bean:message key="label.notes"/></th>
+				</tr>
+				<tr>
+					<td>
+						<bean:define id="managementFunctionNotesAux" name="teacherService" property="managementFunctionNotes"/>
+						<%= managementFunctionNotesAux.toString().replaceAll("(\r\n)|(\n)", "<br />") %>
+					</td>
+				</tr>
+		</table>
+	</logic:notEmpty>
+	<p class="mtop0 pleft1">
+		<html:link page='<%= "/manageCreditsNotes.do?method=viewNote&amp;noteType=managementFunctionNote&amp;page=0" + "&amp;executionPeriodId=" + executionPeriodId %>' paramId="teacherNumber" paramName="teacher" paramProperty="teacherNumber">
+				<bean:message key="link.notes"/>
+		</html:link>
+	</p>
+</logic:notEmpty>
+
 <%-- ============================ SERVICE EXEMPTIONS ================================= --%>
 <h3 class="barra"><span>7) <bean:message key="label.teacherCreditsSheet.serviceExemptionLines" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></span></h3>
 
@@ -536,6 +599,27 @@
 			</tr>
 	</table>					
 </logic:empty>
+
+<logic:notEmpty name="teacherService">
+	<logic:notEmpty name="teacherService" property="serviceExemptionNotes">
+		<table class="tstyle4">
+				<tr>
+					<th><bean:message key="label.notes"/></th>
+				</tr>
+				<tr>
+					<td>
+						<bean:define id="serviceExemptionNotesAux" name="teacherService" property="serviceExemptionNotes"/>
+						<%= serviceExemptionNotesAux.toString().replaceAll("(\r\n)|(\n)", "<br />") %>
+					</td>
+				</tr>
+		</table>
+	</logic:notEmpty>
+	<p class="mtop0 pleft1">
+		<html:link page='<%= "/manageCreditsNotes.do?method=viewNote&amp;noteType=serviceExemptionNote&amp;page=0" + "&amp;executionPeriodId=" + executionPeriodId %>' paramId="teacherNumber" paramName="teacher" paramProperty="teacherNumber">
+				<bean:message key="link.notes"/>
+		</html:link>
+	</p>
+</logic:notEmpty>
 
 <br/>	
 <html:link page='<%= link %>'>

@@ -2357,6 +2357,10 @@ class net.sourceforge.fenixedu.domain.space.SpaceResponsability extends net.sour
 class net.sourceforge.fenixedu.domain.teacher.TeacherService extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer keyTeacher;
 	Integer keyExecutionPeriod;
+	String masterDegreeTeachingNotes;
+	String managementFunctionNotes;
+	String serviceExemptionNotes;
+	String othersNotes;
 }
 
 class net.sourceforge.fenixedu.domain.teacher.TeacherServiceItem extends net.sourceforge.fenixedu.domain.DomainObject {

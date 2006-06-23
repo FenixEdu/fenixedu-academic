@@ -285,6 +285,22 @@
 	</table>
 </logic:empty>
 
+<logic:notEmpty name="teacherService">
+	<logic:notEmpty name="teacherService" property="masterDegreeTeachingNotes">		
+		<table class="tstyle4">
+				<tr>
+					<th><bean:message key="label.notes"/></th>
+				</tr>
+				<tr>
+					<td>
+						<bean:define id="masterDegreeTeachingNotesAux" name="teacherService" property="masterDegreeTeachingNotes" />
+						<%= masterDegreeTeachingNotesAux.toString().replaceAll("(\r\n)|(\n)", "<br />") %>
+					</td>
+				</tr>
+		</table>
+	</logic:notEmpty>
+</logic:notEmpty>
+
 <%-- ================================================================================== --%>
 
 <%-- ============================== ADVISES TFC ======================================= --%>
@@ -425,6 +441,22 @@
 	</html:link>	
 </p>
 
+<logic:notEmpty name="teacherService">
+	<logic:notEmpty name="teacherService" property="othersNotes">
+		<table class="tstyle4">
+				<tr>
+					<th><bean:message key="label.notes"/></th>
+				</tr>
+				<tr>
+					<td>
+						<bean:define id="othersNotesAux" name="teacherService" property="othersNotes" />
+						<%= othersNotesAux.toString().replaceAll("(\r\n)|(\n)", "<br />") %>
+					</td>
+				</tr>
+		</table>
+	</logic:notEmpty>
+</logic:notEmpty>
+
 <%-- ========================== Management Position Lines =============================== --%>
 <h3 class="barra"><span>6) <bean:message key="label.teacherCreditsSheet.managementPositionLines" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></span></h3>
 
@@ -484,6 +516,22 @@
 	</logic:empty>
 </table>								
 
+<logic:notEmpty name="teacherService">
+	<logic:notEmpty name="teacherService" property="managementFunctionNotes">
+		<table class="tstyle4">
+				<tr>
+					<th><bean:message key="label.notes"/></th>
+				</tr>
+				<tr>
+					<td>
+						<bean:define id="managementFunctionNotesAux" name="teacherService" property="managementFunctionNotes"/>
+						<%= managementFunctionNotesAux.toString().replaceAll("(\r\n)|(\n)", "<br />") %>
+					</td>
+				</tr>
+		</table>
+	</logic:notEmpty>
+</logic:notEmpty>
+
 <%-- ============================ SERVICE EXEMPTIONS ================================= --%>
 <h3 class="barra"><span>7) <bean:message key="label.teacherCreditsSheet.serviceExemptionLines" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></span></h3>
 
@@ -537,6 +585,22 @@
 		</tr>
 	</logic:empty>
 </table>	
+<logic:notEmpty name="teacherService">
+	<logic:notEmpty name="teacherService" property="serviceExemptionNotes">
+		<table class="tstyle4">
+				<tr>
+					<th><bean:message key="label.notes"/></th>
+				</tr>
+				<tr>
+					<td>
+						<bean:define id="serviceExemptionNotesAux" name="teacherService" property="serviceExemptionNotes"/>
+						<%= serviceExemptionNotesAux.toString().replaceAll("(\r\n)|(\n)", "<br />") %>
+					</td>
+				</tr>
+		</table>
+	</logic:notEmpty>
+</logic:notEmpty>
+
 <br/>	
 <html:link page='<%= link %>'>
 	<bean:message key="link.return"/>

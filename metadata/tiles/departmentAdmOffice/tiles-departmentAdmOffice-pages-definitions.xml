@@ -161,6 +161,11 @@
     <definition name="show-schedules-resume-print" page="/layout/fenixPrint.jsp">
         <put name="body" value="/credits/schedulesPrint/schedules.jsp"/>
     </definition> 
+    
+    <!-- Credits Notes -->
+    <definition name="show-note" extends="creditsManagement.masterPage">
+        <put name="body" value="/credits/notes/listCreditsNotes.jsp"/>
+    </definition>
 	                
 	<!-- ==================== View Curricular Course Historic ================== -->
 	<definition name="view-degree-curricular-plan-execution-year" 

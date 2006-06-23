@@ -23,7 +23,7 @@ public class JavaYearMonthDay2SqlStringFieldConversion implements FieldConversio
             int year = Integer.parseInt(string.substring(0, 4));
             int month = Integer.parseInt(string.substring(5, 7));
             int day = Integer.parseInt(string.substring(8, 10));
-            if (month == 0 || day == 0) {
+            if (year == 0 || month == 0 || day == 0) {
                 return null;
             }
             return new YearMonthDay(year, month, day);

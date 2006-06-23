@@ -239,7 +239,17 @@
 			<form-property name="alteredField" type="java.lang.String" />
 			<form-property name="status" type="java.lang.String" />
 			<form-property name="degreeCurricularPlanID" type="java.lang.Integer" initial="0"/>
-		</form-bean>		
+		</form-bean>	
+		<form-bean name="creditsNotesForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
+            <form-property name="method" type="java.lang.String"/>            
+            <form-property name="noteType" type="java.lang.String"/>     
+			<form-property name="managementFunctionNote" type="java.lang.String" />
+			<form-property name="serviceExemptionNote" type="java.lang.String" />
+			<form-property name="otherNote" type="java.lang.String" />
+			<form-property name="masterDegreeTeachingNote" type="java.lang.String" />												
+			<form-property name="executionPeriodId" type="java.lang.Integer"/>
+			<form-property name="teacherId" type="java.lang.Integer" />												
+		</form-bean>  	
     </form-beans>
 
     <!-- ========== Global Exception Definitions ============================== -->
@@ -577,6 +587,17 @@
             type="net.sourceforge.fenixedu.presentationTier.Action.credits.SchedulesPrintAction">                         
             <forward name="show-empty-schedules-resume-print" path="show-empty-schedules-resume-print"/>  
             <forward name="show-schedules-resume-print" path="show-schedules-resume-print"/>              
+        </action>
+        
+        <!-- Credits Notes -->
+    	<action path="/manageCreditsNotes" 
+	    	name="creditsNotesForm"	    
+   	        parameter="method"
+   	        scope="request"
+            type="net.sourceforge.fenixedu.presentationTier.Action.departmentAdmOffice.credits.DepartmentAdmOfficeManageCreditsNotes">                         
+            <forward name="show-note" path="show-note"/>  
+            <forward name="edit-note" path="/showFullTeacherCreditsSheet.do?method=showTeacherCredits&amp;page=0"/> 
+            <forward name="teacher-not-found" path="/showAllTeacherCreditsResume.do?method=showTeacherCreditsResume&amp;page=0"/>             
         </action>
         
         <!-- =======================================================================  -->

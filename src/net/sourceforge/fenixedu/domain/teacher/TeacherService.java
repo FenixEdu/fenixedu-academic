@@ -15,6 +15,7 @@ import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.domain.SupportLesson;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.util.CalendarUtil;
 import net.sourceforge.fenixedu.util.WeekDay;
 
@@ -48,6 +49,24 @@ public class TeacherService extends TeacherService_Base {
         }
     }
 
+    public void editNotes( String managementFunctionNote, String serviceExemptionNote,
+            String otherNote, String masterDegreeTeachingNote, RoleType roleType) {
+        
+        getExecutionPeriod().checkValidCreditsPeriod(roleType);
+        if(managementFunctionNote != null) {
+            setManagementFunctionNotes(managementFunctionNote);
+        }
+        if(serviceExemptionNote != null) {
+            setServiceExemptionNotes(serviceExemptionNote);
+        }
+        if(masterDegreeTeachingNote != null) {
+            setMasterDegreeTeachingNotes(masterDegreeTeachingNote);
+        }
+        if(otherNote != null) {
+            setOthersNotes(otherNote);                
+        }
+    }
+    
     public DegreeTeachingService getDegreeTeachingServiceByShiftAndProfessorship(final Shift shift,
             final Professorship professorship) {
         return (DegreeTeachingService) CollectionUtils.find(getDegreeTeachingServices(),
