@@ -3,7 +3,7 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
-<%@page import="net.sourceforge.fenixedu.presentationTier.Action.cms.messaging.ForwardEmailAction"%>
+<%@page import="net.sourceforge.fenixedu.presentationTier.Action.messaging.ExecutionCourseAliasExpandingAction"%>
 <%@page import="net.sourceforge.fenixedu.presentationTier.Action.teacher.TeacherAdministrationViewerDispatchAction"%>
 
 <p>
@@ -28,6 +28,8 @@
 	<td width="200px">
 		<bean:message key="message.siteAddress"/>
 	</td>
+	<td witdh="1px">
+	</td>
 	<td><html:text property="siteAddress" size="30"/>
 	</td>
 	<td><span class="error" ><html:errors property="siteAddress"/></span>
@@ -35,8 +37,12 @@
 </tr>
 <tr>
 	<td width="200px">
-	  <html:radio property="dynamicMailDistribution" value="false"/><bean:message key="message.mailAddressCourse"/>
-	<td>
+		<bean:message key="message.mailAddressCourse"/>	 
+	</td>
+	<td width="1px">
+		<html:radio property="dynamicMailDistribution" value="false"/>
+	</td>
+	<td>  	  
 	  <html:text property="mail" size="30"/>
 	</td>
 	<td><span class="error" >
@@ -44,17 +50,20 @@
     </td>    
 </tr>
 <tr>
-	<td width="200px">
-	  		<html:radio property="dynamicMailDistribution" value="true"/> <bean:message key="dyanamicMailDistribution.prompt.message"/>
 	<td>
-		<%=ForwardEmailAction.emailAddressPrefix%><%=request.getParameter("objectCode")%>&#64;<%=TeacherAdministrationViewerDispatchAction.mailingListDomainConfiguration() %>
 	</td>
+	<td width="1px">
+		<html:radio property="dynamicMailDistribution" value="true"/>
+	</td>
+	<td width="400px">
+	  	<%=ExecutionCourseAliasExpandingAction.emailAddressPrefix%><%=request.getParameter("objectCode")%>&#64;<%=TeacherAdministrationViewerDispatchAction.mailingListDomainConfiguration() %>	
+	</td>		
 	<td><span class="error" >
 	  <html:errors property="dynamicMailDistribution"/></span>
     </td>    
 </tr>
 <tr>
-	<td colspan="3">
+	<td colspan="4">
 		
 	</td>
 </tr>

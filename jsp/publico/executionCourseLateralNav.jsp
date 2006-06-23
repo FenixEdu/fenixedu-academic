@@ -6,7 +6,7 @@
 <%@ taglib uri="/WEB-INF/app.tld" prefix="app" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
 <%@page import="net.sourceforge.fenixedu.presentationTier.Action.teacher.TeacherAdministrationViewerDispatchAction"%>
-<%@page import="net.sourceforge.fenixedu.presentationTier.Action.cms.messaging.ForwardEmailAction"%>
+<%@page import="net.sourceforge.fenixedu.presentationTier.Action.messaging.ExecutionCourseAliasExpandingAction"%>
 <bean:define id="component" name="siteView" property="commonComponent" />
 <bean:define id="executionCourse" name="siteView" property="executionCourse" />
 <bean:define id="sections" name="component" property="sections"/>
@@ -61,7 +61,7 @@
 	<logic:equal name="executionCourse" property="site.dynamicMailDistribution" value="true">
 			<%
 				StringBuffer buffer = new StringBuffer();
-				buffer.append(ForwardEmailAction.emailAddressPrefix);
+				buffer.append(ExecutionCourseAliasExpandingAction.emailAddressPrefix);
 				buffer.append(request.getParameter("objectCode")).append("&#64");
 				buffer.append(TeacherAdministrationViewerDispatchAction.mailingListDomainConfiguration());
 			%>
