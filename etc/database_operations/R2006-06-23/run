@@ -27,3 +27,5 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Alter TEACHER_SERVICE Table" alterTeacherServiceTable.sql
+execute "Fix Holidays" fixHoliday.sql
