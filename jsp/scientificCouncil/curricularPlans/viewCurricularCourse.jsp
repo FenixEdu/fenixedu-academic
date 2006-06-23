@@ -19,7 +19,7 @@
 		<h:outputText value="<p><label>#{scientificBundle['department']}:</label>" escape="false"/>
 		<h:outputText value="#{CurricularCourseManagement.curricularCourse.competenceCourse.departmentUnit.name}</p>" escape="false"/>	
 		<h:outputText value="<p><label>#{scientificBundle['course']}:</label>" escape="false"/>
-		<h:outputText value="<span class='attention'>#{CurricularCourseManagement.curricularCourse.competenceCourse.name}</span></p>" escape="false"/>	
+		<h:outputText value="<span class='attention'>#{CurricularCourseManagement.curricularCourse.name}</span></p>" escape="false"/>	
 		<h:outputText value="<p class='mtop1'><label class='lempty'>.</label>" escape="false"/>
 		<h:outputLink value="../competenceCourses/showCompetenceCourse.faces" target="_blank">
 			<h:outputText value="(#{scientificBundle['showPage']} #{scientificBundle['competenceCourse']})"/>
