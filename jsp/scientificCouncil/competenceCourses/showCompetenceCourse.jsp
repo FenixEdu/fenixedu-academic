@@ -65,8 +65,10 @@ padding-right: 10px;
 	<h:outputText value="#{CompetenceCourseManagement.competenceCourse.name}</li>" escape="false"/>
 	<h:outputText value="<li><strong>#{scouncilBundle['nameEn']} (en): </strong>" escape="false"/>
 	<h:outputText value="#{CompetenceCourseManagement.competenceCourse.nameEn}</li>" escape="false" />
-	<h:outputText value="<li><strong>#{scouncilBundle['acronym']}: </strong>" escape="false"/>
-	<h:outputText value="#{CompetenceCourseManagement.competenceCourse.acronym}</li>" escape="false"/>
+	<h:panelGroup rendered="#{!empty CompetenceCourseManagement.competenceCourse.acronym}">
+		<h:outputText value="<li><strong>#{scouncilBundle['acronym']}: </strong>" escape="false"/>
+		<h:outputText value="#{CompetenceCourseManagement.competenceCourse.acronym}</li>" escape="false"/>
+	</h:panelGroup>
 	<h:outputText value="<li><strong>#{scouncilBundle['competenceCourseLevel']}: </strong>" escape="false"/>
 	<h:outputText value="#{enumerationBundle[CompetenceCourseManagement.competenceCourse.competenceCourseLevel]}</li>" escape="false" rendered="#{!empty CompetenceCourseManagement.competenceCourse.competenceCourseLevel}"/>	
 	<h:outputText value="<em>#{scouncilBundle['label.notDefined']}</em></li>" escape="false" rendered="#{empty CompetenceCourseManagement.competenceCourse.competenceCourseLevel}"/>	

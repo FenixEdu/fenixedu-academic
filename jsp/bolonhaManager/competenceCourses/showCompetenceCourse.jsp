@@ -17,7 +17,9 @@ padding-right: 10px;
 }
 </style>
 	<h:outputText value="<em>#{bolonhaBundle['competenceCourse']}</em>" escape="false" />
-	<h:outputText value="<h2>#{CompetenceCourseManagement.competenceCourse.name} (#{CompetenceCourseManagement.competenceCourse.acronym})</h2>" escape="false"/>
+	<h:outputText value="<h2>#{CompetenceCourseManagement.competenceCourse.name} " escape="false"/>
+	<h:outputText rendered="#{!empty CompetenceCourseManagement.competenceCourse.acronym}" value="(#{CompetenceCourseManagement.competenceCourse.acronym})" escape="false"/>
+	<h:outputText value="</h2>" escape="false"/>
 
 	<h:outputText value="<ul class='nobullet padding1 indent0 mtop3'>" escape="false"/>
 	<h:outputText value="<li><strong>#{bolonhaBundle['department']}: </strong>" escape="false"/>
@@ -65,8 +67,10 @@ padding-right: 10px;
 	<h:outputText value="#{CompetenceCourseManagement.competenceCourse.name}</li>" escape="false"/>
 	<h:outputText value="<li><strong>#{bolonhaBundle['nameEn']} (en): </strong>" escape="false"/>
 	<h:outputText value="#{CompetenceCourseManagement.competenceCourse.nameEn}</li>" escape="false" />
-	<h:outputText value="<li><strong>#{bolonhaBundle['acronym']}: </strong>" escape="false"/>
-	<h:outputText value="#{CompetenceCourseManagement.competenceCourse.acronym}</li>" escape="false"/>
+	<h:panelGroup rendered="#{!empty CompetenceCourseManagement.competenceCourse.acronym}">
+		<h:outputText value="<li><strong>#{bolonhaBundle['acronym']}: </strong>" escape="false"/>
+		<h:outputText value="#{CompetenceCourseManagement.competenceCourse.acronym}</li>" escape="false"/>
+	</h:panelGroup>
 	<h:outputText value="<li><strong>#{bolonhaBundle['competenceCourseLevel']}: </strong>" escape="false"/>
 	<h:outputText value="#{enumerationBundle[CompetenceCourseManagement.competenceCourse.competenceCourseLevel]}</li>" escape="false" rendered="#{!empty CompetenceCourseManagement.competenceCourse.competenceCourseLevel}"/>	
 	<h:outputText value="<em>#{bolonhaBundle['label.notDefined']}</em></li>" escape="false" rendered="#{empty CompetenceCourseManagement.competenceCourse.competenceCourseLevel}"/>	
