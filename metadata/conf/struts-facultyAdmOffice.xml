@@ -624,6 +624,19 @@
    			<forward name="list-byCriteria-grant-contract" path="listGrantContractByCriteria"/>
    			<forward name="show-grant-owner" path="showGrantOwner"/>
     </action>
+    
+     <!-- ================ USE CASE: LIST GRANT CONTRACT AND INSURANCE BY CRITERIA ====================== -->
+	<action path="/listGrantContractAndInsuranceByCriteria" 
+			input="/listGrantContractAndInsuranceByCriteria.do?page=0&amp;method=actionStart"
+			name="listGrantContractByCriteriaForm" 
+			scope="request"
+   			parameter="method"
+		    validate="true"
+   			type="net.sourceforge.fenixedu.presentationTier.Action.grant.list.ListGrantContractAndInsuranceByCriteriaAction">
+   			<forward name="select-criteria" path="selectCriteriaInsurance"/>
+   			<forward name="list-byCriteria-grant-contract-and-insurance" path="listGrantContractAndInsuranceByCriteria"/>
+   			<forward name="show-grant-owner" path="showGrantOwnerInsurance"/>
+    </action>
 
 
     <!-- ===================== USE CASE: GRANT OWNER STATS ============================== -->

@@ -109,12 +109,19 @@
 		<put name="body" value="/facultyAdmOffice/grant/list/showGrantOwner.jsp"></put>
 	</definition>
 	
+	
 	<!-- GRANT CONTRACT BY CRITERIA LIST -->
 	<definition name="selectCriteria" extends="facultyAdmOffice.masterPage">
 		<put name="body" value="/facultyAdmOffice/grant/list/selectCriteriaToListGrantContract.jsp"></put>
 	</definition>
 	<definition name="listGrantContractByCriteria" extends="facultyAdmOffice.masterPage">
 		<put name="body" value="/facultyAdmOffice/grant/list/listGrantContractByCriteria.jsp"></put>
+	</definition>
+	<definition name="selectCriteriaInsurance" extends="facultyAdmOffice.masterPage">
+		<put name="body" value="/facultyAdmOffice/grant/list/selectCriteriaToListGrantContractAndInsurance.jsp"></put>
+	</definition>
+	<definition name="listGrantContractAndInsuranceByCriteria" extends="facultyAdmOffice.masterPage">
+		<put name="body" value="/facultyAdmOffice/grant/list/listGrantContractByCriteriaAndInsurance.jsp"></put>
 	</definition>
 
 	<!-- GRANT STATS -->
