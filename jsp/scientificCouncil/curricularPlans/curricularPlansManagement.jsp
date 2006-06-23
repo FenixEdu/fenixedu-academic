@@ -55,7 +55,11 @@
 			<h:outputText rendered="#{index == 0}" value="<th><strong>#{scouncilBundle['plans']}:</strong></th>" escape="false"/>
 			<h:outputText rendered="#{index > 0}" value="<th></th>" escape="false"/>
 
-			<h:outputText value="<td><em style='color: #777; background-color: #ffa;'>#{enumerationBundle[degreeCurricularPlan.curricularStage.name]}</em> #{degreeCurricularPlan.name}</td>" escape="false" />
+			<h:outputText value="<td>" escape="false" />
+			<h:outputText rendered="#{degreeCurricularPlan.curricularStage.name == 'DRAFT'}" value="<em class='highlight1' style='color: #555;'>#{enumerationBundle[degreeCurricularPlan.curricularStage.name]}</em>" escape="false" />
+			<h:outputText rendered="#{degreeCurricularPlan.curricularStage.name == 'PUBLISHED'}" value="<em class='highlight3' style='color: #555;'>#{enumerationBundle[degreeCurricularPlan.curricularStage.name]}</em>" escape="false" />
+			<h:outputText rendered="#{degreeCurricularPlan.curricularStage.name == 'APPROVED'}" value="<em class='highlight4' style='color: #555;'>#{enumerationBundle[degreeCurricularPlan.curricularStage.name]}</em>" escape="false" />
+			<h:outputText value=" #{degreeCurricularPlan.name}</td>" escape="false" />
 
 			<h:outputText value="<td>" escape="false"/>
 			<h:outputLink value="viewCurricularPlan.faces">
