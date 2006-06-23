@@ -1,4 +1,0 @@
-select concat('update PERSON set PERSON.KEY_TEACHER = ',
-	TEACHER.ID_INTERNAL,' where PERSON.ID_INTERNAL = ', 
-	TEACHER.KEY_PERSON, ';') 
-as "" from TEACHER where TEACHER.KEY_PERSON IS NOT NULL;
