@@ -19,7 +19,9 @@
 		<h:outputText value="<p><label>#{bolonhaBundle['department']}:</label>" escape="false"/>
 		<h:outputText value="#{CurricularCourseManagement.curricularCourse.competenceCourse.departmentUnit.name}</p>" escape="false"/>	
 		<h:outputText value="<p><label>#{bolonhaBundle['course']}:</label>" escape="false"/>
-		<h:outputText value="<span class='attention'>#{CurricularCourseManagement.curricularCourse.name} (#{CurricularCourseManagement.curricularCourse.acronym})</span></p>" escape="false"/>	
+		<h:outputText value="<span class='attention'>#{CurricularCourseManagement.curricularCourse.name} " escape="false"/>
+		<h:outputText rendered="#{!empty CurricularCourseManagement.curricularCourse.acronym})" value="(#{CurricularCourseManagement.curricularCourse.acronym})" escape="false"/>
+		<h:outputText value="</span></p>" escape="false"/>		
 		<h:outputText value="<p class='mtop1'><label class='lempty'>.</label>" escape="false"/>
 		<h:outputLink value="../competenceCourses/showCompetenceCourse.faces" target="_blank">
 			<h:outputText value="(#{bolonhaBundle['showPage']} #{bolonhaBundle['competenceCourse']})"/>
