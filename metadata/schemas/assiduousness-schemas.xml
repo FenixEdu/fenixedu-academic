@@ -12,7 +12,7 @@
 
 <schema name="show.leaves"
 	type="net.sourceforge.fenixedu.domain.assiduousness.Leave">
-	<slot name="date" key="label.beginDate" />
+	<slot name="partialDate" key="label.beginDate" />
 	<slot name="partialEndDate" key="label.endDateOrDuration" />
 	<slot name="justificationMotive.description"
 		key="label.justification" />
@@ -36,7 +36,7 @@
 <schema name="show.schedule"
 	type="net.sourceforge.fenixedu.domain.assiduousness.Schedule">
 	<slot name="beginDate" key="label.beginDate" />
-	<slot name="workSchedules" key="label.assiduousness.schedule"
+	<slot name="workSchedules" key="label.schedule"
 		schema="show.workSchedule" layout="tabular-list">
 		<property name="subLayout" value="tabular" />
 		<property name="subSchema" value="show.workSchedule" />

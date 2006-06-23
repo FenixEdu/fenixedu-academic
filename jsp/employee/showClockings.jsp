@@ -9,9 +9,13 @@
 <br />
 <br />
 <logic:present name="yearMonth">
-	<fr:edit name="yearMonth" schema="choose.date"
-		action="/assiduousnessRecords.do?method=showClockings">
-	</fr:edit>
+	<fr:form action="/assiduousnessRecords.do?method=showClockings">
+		<fr:edit name="yearMonth" schema="choose.date" />
+		<br />
+		<html:submit>
+			<bean:message key="button.submit" />
+		</html:submit>
+	</fr:form>
 </logic:present>
 <br />
 <br />

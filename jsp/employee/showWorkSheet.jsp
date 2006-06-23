@@ -9,9 +9,13 @@
 <br />
 <br />
 <logic:present name="yearMonth">
-	<fr:edit name="yearMonth" schema="choose.date"
-		action="/assiduousnessRecords.do?method=showWorkSheet">
-	</fr:edit>
+	<fr:form action="/assiduousnessRecords.do?method=showWorkSheet">
+		<fr:edit name="yearMonth" schema="choose.date" />
+		<br />
+		<html:submit>
+			<bean:message key="button.submit" />
+		</html:submit>
+	</fr:form>
 </logic:present>
 <br />
 <br />
@@ -21,13 +25,14 @@
 	</logic:empty>
 	<logic:notEmpty name="workSheet">
 		<table class="tstyle1b">
-			<th><bean:message key="label.day"/></th>
-			<th><bean:message key="label.assiduousness.schedule"/></th>
-			<th><bean:message key="label.balance"/></th>
-			<th><bean:message key="label.unjustified"/></th>
-			<th><bean:message key="label.notes"/></th>
-			<bean:define id="maxClockingColumns" name="maxClockingColumns"/>
-			<th colspan="<%= maxClockingColumns %>"><bean:message key="link.clockings"/></th>
+			<th><bean:message key="label.day" /></th>
+			<th><bean:message key="label.schedule" /></th>
+			<th><bean:message key="label.balance" /></th>
+			<th><bean:message key="label.unjustified" /></th>
+			<th><bean:message key="label.notes" /></th>
+			<bean:define id="maxClockingColumns" name="maxClockingColumns" />
+			<th colspan="<%= maxClockingColumns %>"><bean:message
+				key="link.clockings" /></th>
 			<logic:iterate id="workDaySheet" name="workSheet">
 				<tr>
 					<td><bean:write name="workDaySheet" property="dateFormatted" /></td>
@@ -36,14 +41,23 @@
 					<td><bean:write name="workDaySheet"
 						property="unjustifiedTimeFormatted" /></td>
 					<td><bean:write name="workDaySheet" property="notes" /></td>
-					<% int clockingColumns = 0; %>
-					<logic:iterate id="clocking" name="workDaySheet" property="clockings" type="org.joda.time.TimeOfDay">
-						<% clockingColumns++; %>
-						<td><%= clocking.toString("HH:mm:ss") %></td>
+					<%int clockingColumns = 0;
+
+                        %>
+					<logic:iterate id="clocking" name="workDaySheet"
+						property="clockings" type="org.joda.time.TimeOfDay">
+						<%clockingColumns++;
+
+                            %>
+						<td><%=clocking.toString("HH:mm:ss")%></td>
 					</logic:iterate>
-					<% for(;clockingColumns < (Integer)maxClockingColumns; clockingColumns++){ %>
-						<td></td>
-					<% } %>
+					<%for (; clockingColumns < (Integer) maxClockingColumns; clockingColumns++) {
+
+                        %>
+					<td></td>
+					<%}
+
+                    %>
 				</tr>
 			</logic:iterate>
 		</table>

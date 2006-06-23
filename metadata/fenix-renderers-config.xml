@@ -126,8 +126,6 @@ Documentation:
 
 	<renderer type="org.joda.time.base.AbstractPartial" class="net.sourceforge.fenixedu.presentationTier.renderers.PartialRenderer"/>
 	
-	<renderer type="org.joda.time.DateTime" class="net.sourceforge.fenixedu.presentationTier.renderers.DateTimeRenderer"/>
-	
 	<renderer type="org.joda.time.Duration" class="net.sourceforge.fenixedu.presentationTier.renderers.DurationRenderer"/>
 
 	<!--@ The default presentation for a joda partial is the presentation of all the date components of partial as
