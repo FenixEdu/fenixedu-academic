@@ -2123,6 +2123,16 @@
 		</filterChains>
 	</service>
 	<service>
+		<name>ListGrantContractAndInsuranceByCriteria</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.grant.list.ListGrantContractAndInsuranceByCriteria</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		<filterChains>
+			<chain name="GrantOwnerManagerAuthorization" />
+		</filterChains>
+	</service>
+	
+	<service>
 		<name>CalculateStateGrantOwnerByCriteria</name>
 		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.grant.stat.CalculateStateGrantOwnerByCriteria</implementationClass>
 		<description />
