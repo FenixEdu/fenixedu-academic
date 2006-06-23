@@ -17,4 +17,9 @@ public class StandByFilledDataCandidacySituation extends StandByFilledDataCandid
 		CandidacySituation candidacySituation = new StandByConfirmedDataCandidacySituation(getCandidacy());
 	}
     
+    @Override
+    public boolean canChangePersonalData() {
+        return true;
+    }
+    
 }

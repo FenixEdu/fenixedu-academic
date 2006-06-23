@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.domain.candidacy;
 
+import java.util.Collections;
+
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 public abstract class Candidacy extends Candidacy_Base {
@@ -18,5 +20,9 @@ public abstract class Candidacy extends Candidacy_Base {
     }
     
     public abstract Integer createCandidacyNumber();
+    
+    public CandidacySituation getActiveCandidacySituation(){
+        return Collections.max(getCandidacySituations(), CandidacySituation.DATE_COMPARATOR);
+    }
     
 }

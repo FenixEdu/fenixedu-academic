@@ -32,5 +32,10 @@ public class StandByCandidacySituation extends StandByCandidacySituation_Base {
 	private boolean checkIfDataIsFilled() {
 		return false;
 	}
+
+    @Override
+    public boolean canChangePersonalData() {
+        return true;
+    }
     
 }
