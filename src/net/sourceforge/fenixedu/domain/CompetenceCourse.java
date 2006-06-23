@@ -11,6 +11,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.accessControl.Checked;
 import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriodType;
@@ -31,7 +32,7 @@ import org.joda.time.YearMonthDay;
 
 public class CompetenceCourse extends CompetenceCourse_Base {
 
-    public static final Comparator COMPETENCE_COURSE_COMPARATOR_BY_NAME = new BeanComparator("name", Collator.getInstance());
+    public static final Comparator<CompetenceCourse> COMPETENCE_COURSE_COMPARATOR_BY_NAME = new BeanComparator("name", Collator.getInstance());
     
     private CompetenceCourseInformation recentCompetenceCourseInformation;
 
@@ -65,7 +66,7 @@ public class CompetenceCourse extends CompetenceCourse_Base {
             final UniqueAcronymCreator uniqueAcronymCreator = new UniqueAcronymCreator<CompetenceCourse>(
                     "name", 
                     "acronym", 
-                    CompetenceCourse.readBolonhaCompetenceCourses(), 
+                    (Set<CompetenceCourse>) CompetenceCourse.readBolonhaCompetenceCourses(), 
                     true);
             competenceCourseInformation.setAcronym(uniqueAcronymCreator.create(this));
         } catch (Exception e) {
@@ -156,7 +157,7 @@ public class CompetenceCourse extends CompetenceCourse_Base {
             final UniqueAcronymCreator uniqueAcronymCreator = new UniqueAcronymCreator<CompetenceCourse>(
                     "name", 
                     "acronym", 
-                    CompetenceCourse.readBolonhaCompetenceCourses(), 
+                    (Set<CompetenceCourse>) CompetenceCourse.readBolonhaCompetenceCourses(), 
                     true);
             acronym = uniqueAcronymCreator.create(this);
         } catch (Exception e) {
@@ -608,10 +609,20 @@ public class CompetenceCourse extends CompetenceCourse_Base {
         return result;
     }
     
-    public static List<CompetenceCourse> readBolonhaCompetenceCourses() {
-        final List<CompetenceCourse> result = new ArrayList<CompetenceCourse>();
+    public static Collection<CompetenceCourse> readBolonhaCompetenceCourses() {
+        final Set<CompetenceCourse> result = new TreeSet<CompetenceCourse>(COMPETENCE_COURSE_COMPARATOR_BY_NAME);
         for (final CompetenceCourse competenceCourse : RootDomainObject.getInstance().getCompetenceCoursesSet()) {
             if (competenceCourse.isBolonha()) {
+                result.add(competenceCourse);
+            }
+        }
+        return result;
+    }
+
+    public static Collection<CompetenceCourse> readApprovedBolonhaCompetenceCourses() {
+        final Set<CompetenceCourse> result = new TreeSet<CompetenceCourse>(COMPETENCE_COURSE_COMPARATOR_BY_NAME);
+        for (final CompetenceCourse competenceCourse : RootDomainObject.getInstance().getCompetenceCoursesSet()) {
+            if (competenceCourse.isBolonha() && competenceCourse.isApproved()) {
                 result.add(competenceCourse);
             }
         }

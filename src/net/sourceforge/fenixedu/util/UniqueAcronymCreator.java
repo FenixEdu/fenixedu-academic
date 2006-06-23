@@ -1,12 +1,10 @@
 package net.sourceforge.fenixedu.util;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.domain.DomainObject;
 
@@ -20,19 +18,17 @@ public class UniqueAcronymCreator<T extends DomainObject> {
 
     private String slotName;
     private String acronymSlot;
-    private List<T> objects;
+    private Set<T> objects;
     private static boolean toLowerCase;
     private final static Logger logger = Logger.getLogger(UniqueAcronymCreator.class);
     
-    // TODO Paulo Zenida: Por que não pôr antes Set em vez de List?
-    public UniqueAcronymCreator(String slotName, String acronymSlot, List<T> objects, boolean toLowerCase) throws Exception {
+    public UniqueAcronymCreator(String slotName, String acronymSlot, Set<T> objects, boolean toLowerCase) throws Exception {
         this.slotName = slotName;
         this.acronymSlot = acronymSlot;
-        this.objects = new ArrayList<T>(objects);
+        this.objects = new TreeSet<T>(new BeanComparator(this.slotName));
+        this.objects.addAll(objects);
         this.toLowerCase = toLowerCase;
         this.logger.setLevel(Level.OFF);
-        
-        Collections.sort(this.objects, new BeanComparator(this.slotName));
     }
 
     private static Map<Integer, String> existingAcronyms = new HashMap<Integer, String>();
