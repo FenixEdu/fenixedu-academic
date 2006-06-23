@@ -1974,6 +1974,13 @@
 		<forward name="showSearchForm" path="df.recover.inactive.person.search.form" />
 	</action>
 
+	<action path="/manageHolidays"
+			input="/manageHolidays.do?method=prepare&amp;page=0"
+			parameter="method"
+			type="net.sourceforge.fenixedu.presentationTier.Action.manager.ManageHolidaysDA">
+		<forward name="showHolidays" path="df.show.holidays" />
+	</action>
+
 	</action-mappings>
 
 	<!-- ========== Controller Configuration ================================ -->

@@ -564,4 +564,8 @@
 		<put name="body" value="/manager/personManagement/recoverInactivePerson.jsp" />
 	</definition>
 
+	<definition name="df.show.holidays" extends="definition.manager.masterPage" >
+		<put name="body" value="/manager/showHolidays.jsp" />
+	</definition>
+
 </tiles-definitions>

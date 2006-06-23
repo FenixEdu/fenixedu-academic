@@ -6,3 +6,8 @@
 	<slot name="name"/>
 	<slot name="email"/>
 </schema>
+<schema name="HolidayFactoryCreatory" type="net.sourceforge.fenixedu.domain.Holiday$HolidayFactoryCreator">
+	<slot name="year" bundle="MANAGER_RESOURCES" key="label.year"/>
+	<slot name="monthOfYear" bundle="MANAGER_RESOURCES" key="label.month"/>
+	<slot name="dayOfMonth" bundle="MANAGER_RESOURCES" key="label.day"/>
+</schema>
