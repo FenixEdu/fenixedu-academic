@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.domain.Announcement;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
+import pt.utl.ist.fenix.tools.util.StringAppender;
 import de.nava.informa.core.ChannelIF;
 import de.nava.informa.core.ItemIF;
 import de.nava.informa.impl.basic.ChannelBuilder;
@@ -15,25 +15,35 @@ import de.nava.informa.impl.basic.Item;
 
 public class GenerateAnnoucementsRSS extends RSSAction{
 	
- 
-	@Override
-	protected ChannelIF getRSSChannel(HttpServletRequest request) throws Exception {
-		String id = request.getParameter("id");
-		Object[] args = {ExecutionCourse.class, Integer.valueOf(id)};
-		ExecutionCourse executionCourse = (ExecutionCourse) ServiceManagerServiceFactory.executeService(null, "ReadDomainObject", args);
+ 	@Override
+	protected ChannelIF getRSSChannel(final HttpServletRequest request) throws Exception {
+		final String id = request.getParameter("id");
+		final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(Integer.valueOf(id));
+
+		final String executionCourseName = executionCourse.getNome();
 		ChannelBuilder builder = new ChannelBuilder();
-    	ChannelIF channel = builder.createChannel(executionCourse.getNome());
-    	channel.setDescription("Anúncios da disciplina " + executionCourse.getNome());
-    	for (Announcement announcement : executionCourse.getSite().getAssociatedAnnouncements()) {
-			ItemIF item = new Item();
+    	ChannelIF channel = builder.createChannel(executionCourseName);
+    	channel.setDescription("Anúncios da disciplina " + executionCourseName);
+
+		final String appContext = PropertiesManager.getProperty("app.context");
+        final String context = (appContext != null && appContext.length() > 0) ? "/" + appContext : "";
+        final String commonLocalUrl = StringAppender.append(context,
+        		"/publico/viewSite.do?method=announcements&objectCode=",
+        		executionCourse.getSite().getIdInternal().toString(),
+        		"&executionPeriodOID=",
+        		executionCourse.getExecutionPeriod().getIdInternal().toString(),
+        		"#");
+
+    	for (final Announcement announcement : executionCourse.getSite().getAssociatedAnnouncements()) {
+			final ItemIF item = new Item();
 			item.setTitle(announcement.getTitle());
 			item.setDate(announcement.getLastModifiedDate());
 			item.setDescription(announcement.getInformation());
-			String appContext = PropertiesManager.getProperty("app.context");
-            String context = (appContext != null && appContext.length() > 0) ? "/" + appContext : "";
-			item.setLink(new URL(request.getScheme(), request.getServerName(), request.getServerPort(), context + "/publico/viewSite.do?method=announcements&objectCode=" + executionCourse.getSite().getIdInternal() + "&executionPeriodOID=" + executionCourse.getExecutionPeriod().getIdInternal() + "#" + announcement.getIdInternal()));
+			final String localUrl = commonLocalUrl + announcement.getIdInternal().toString();
+			item.setLink(new URL(request.getScheme(), request.getServerName(), request.getServerPort(), localUrl));
 			channel.addItem(item);
 		}
+
     	return channel;
 	}
 
