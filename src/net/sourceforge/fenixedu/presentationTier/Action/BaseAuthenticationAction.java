@@ -164,19 +164,12 @@ public abstract class BaseAuthenticationAction extends FenixAction {
         return actionForward;
     }
 
-    private InfoRole getRole(RoleType roleType, Collection rolesList) {
-
-        InfoRole infoRole = new InfoRole();
-        infoRole.setRoleType(roleType);
-
-        Iterator iterator = rolesList.iterator();
-        while (iterator.hasNext()) {
-
-            InfoRole role = (InfoRole) iterator.next();
-            if (role.equals(infoRole))
-                return role;
-
-        }
+    private InfoRole getRole(RoleType roleType, Collection<InfoRole> rolesList) {
+    	for (final InfoRole infoRole : rolesList) {
+    		if (infoRole.getRoleType() == roleType) {
+    			return infoRole;
+    		}
+    	}
         return null;
     }
     
