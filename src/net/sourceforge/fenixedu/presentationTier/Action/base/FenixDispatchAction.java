@@ -37,9 +37,17 @@ public abstract class FenixDispatchAction extends DispatchAction implements Exce
 
     protected static final RootDomainObject rootDomainObject = RootDomainObject.getInstance();
 
+    private static final String ACTION_MESSAGES_REQUEST_KEY = "FENIX_ACTION_MESSAGES";
+
     public ActionForward execute(ActionMapping mapping, ActionForm actionForm,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
-        return super.execute(mapping, actionForm, request, response);
+
+        final ActionMessages actionMessages = new ActionMessages();
+        request.setAttribute(ACTION_MESSAGES_REQUEST_KEY, actionMessages);
+        final ActionForward actionForward = super.execute(mapping, actionForm, request, response);
+        saveMessages(request, actionMessages);
+
+        return actionForward;
     }
 
     protected static IUserView getUserView(HttpServletRequest request) {
@@ -51,7 +59,7 @@ public abstract class FenixDispatchAction extends DispatchAction implements Exce
         return ServiceUtils.executeService(getUserView(request), serviceName, serviceArgs);
     }
 
-    protected DomainObject readDomainObject(final HttpServletRequest request, final Class clazz, final Integer idInternal) {
+	protected DomainObject readDomainObject(final HttpServletRequest request, final Class clazz, final Integer idInternal) {
         return rootDomainObject.readDomainObjectByOID(clazz, idInternal);
     }
 
@@ -117,7 +125,7 @@ public abstract class FenixDispatchAction extends DispatchAction implements Exce
         final String value = dynaActionForm.getString(string);
         return value == null || value.length() == 0 ? null : Integer.valueOf(value);
     }
-
+    
     protected Integer getRequestParameterAsInteger(HttpServletRequest request, String parameterName) {
         String requestParameter = request.getParameter(parameterName);
 
@@ -157,7 +165,7 @@ public abstract class FenixDispatchAction extends DispatchAction implements Exce
         }
     }
 
-    protected Object executeFactoryMethod(final HttpServletRequest request) throws FenixFilterException, FenixServiceException {
+	protected Object executeFactoryMethod(final HttpServletRequest request) throws FenixFilterException, FenixServiceException {
         final Object[] args = { getFactoryObject() };
         return executeService(request, "ExecuteFactoryMethod", args);
     }
@@ -166,5 +174,9 @@ public abstract class FenixDispatchAction extends DispatchAction implements Exce
     	return (FactoryExecutor) RenderUtils.getViewState().getMetaObject().getObject();
     }
 
+    protected void addActionMessage(HttpServletRequest request, String key, String... args) {
+        final ActionMessages actionMessages = (ActionMessages) request.getAttribute(ACTION_MESSAGES_REQUEST_KEY);
+        actionMessages.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage(key, args));
+    }
 
 }
