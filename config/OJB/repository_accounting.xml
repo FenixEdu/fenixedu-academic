@@ -24,13 +24,21 @@
 <!-- ************************************************************************************************************ -->
 <class-descriptor class="net.sourceforge.fenixedu.domain.accounting.Event" table="ACCOUNTING_EVENT">
 
-	<extent-class class-ref="net.sourceforge.fenixedu.domain.candidacy.CandidacyEvent" />		
+	<extent-class class-ref="net.sourceforge.fenixedu.domain.candidacy.DFACandidacyEvent" />
+	<extent-class class-ref="net.sourceforge.fenixedu.domain.candidacy.DFACandidacyPaymentEvent" />
 </class-descriptor>
 
 <!-- ************************************************************************************************************ -->
 <!-- Definitions for net.sourceforge.fenixedu.domain.candidacy.DFACandidacyEvent -->
 <!-- ************************************************************************************************************ -->
 <class-descriptor class="net.sourceforge.fenixedu.domain.candidacy.DFACandidacyEvent" table="ACCOUNTING_EVENT">
+
+</class-descriptor>
+
+<!-- ************************************************************************************************************ -->
+<!-- Definitions for net.sourceforge.fenixedu.domain.candidacy.DFACandidacyPaymentEvent -->
+<!-- ************************************************************************************************************ -->
+<class-descriptor class="net.sourceforge.fenixedu.domain.candidacy.DFACandidacyPaymentEvent" table="ACCOUNTING_EVENT">
 
 </class-descriptor>
 
