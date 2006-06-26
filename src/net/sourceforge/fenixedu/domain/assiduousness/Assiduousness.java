@@ -17,7 +17,6 @@ import net.sourceforge.fenixedu.domain.assiduousness.util.JustificationType;
 import net.sourceforge.fenixedu.domain.assiduousness.util.TimePoint;
 import net.sourceforge.fenixedu.domain.assiduousness.util.Timeline;
 import net.sourceforge.fenixedu.domain.space.Campus;
-import net.sourceforge.fenixedu.presentationTier.renderers.components.TinyMceEditor;
 import net.sourceforge.fenixedu.util.WeekDay;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -26,8 +25,6 @@ import org.joda.time.Duration;
 import org.joda.time.Interval;
 import org.joda.time.TimeOfDay;
 import org.joda.time.YearMonthDay;
-
-import sun.security.krb5.internal.bi;
 
 public class Assiduousness extends Assiduousness_Base {
 
@@ -228,13 +225,9 @@ public class Assiduousness extends Assiduousness_Base {
         Campus campus = getAssiduousnessCampus(thisDay);
         if (campus != null) {
             for (Holiday holiday : getRootDomainObject().getHolidays()) {
-                if (holiday.getDate().isEqual(
-                        new YearMonthDay(0, thisDay.getMonthOfYear(), thisDay.getDayOfMonth()))
-                        || holiday.getDate().isEqual(thisDay)) {
-                    if (holiday.getLocality() == null
-                            || holiday.getLocality().equals(campus.getSpaceInformation().getLocality())) {
-                        return true;
-                    }
+                if ((holiday.getLocality() == null || holiday.getLocality() == campus.getSpaceInformation().getLocality())
+                        && holiday.getDate().isMatch(thisDay.toDateMidnight())) {
+                    return true;
                 }
             }
         }
