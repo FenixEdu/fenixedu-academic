@@ -137,6 +137,7 @@ valueType net.sourceforge.fenixedu.domain.MarkSheetState					as MarkSheetState;
 valueType net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseLevel     as CompetenceCourseLevel;
 valueType net.sourceforge.fenixedu.domain.accounting.AccountType     as AccountType;
 valueType net.sourceforge.fenixedu.domain.accounting.EventType     as AccountingEventType;
+valueType net.sourceforge.fenixedu.domain.accounting.EntryType     as EntryType;
 
 /*
 *
@@ -168,11 +169,13 @@ class net.sourceforge.fenixedu.domain.accounting.Entry extends net.sourceforge.f
     Integer keyReceipt;
     DateTime whenBooked;
     BigDecimal amount;
+    EntryType entryType;
 }
 
 class net.sourceforge.fenixedu.domain.accounting.Receipt extends net.sourceforge.fenixedu.domain.DomainObject {
     Integer keyParty;
     Integer version;
+    DateTime whenRegisted;
 }
 
 class net.sourceforge.fenixedu.domain.accounting.Event extends net.sourceforge.fenixedu.domain.DomainObject {
@@ -180,7 +183,7 @@ class net.sourceforge.fenixedu.domain.accounting.Event extends net.sourceforge.f
     Integer keyParty;
     AccountingEventType eventType;
     DateTime whenOccured;
-    DateTime whenNoticed;
+    Boolean processed;
 }
 
 class net.sourceforge.fenixedu.domain.candidacy.DFACandidacyEvent extends net.sourceforge.fenixedu.domain.accounting.Event {

@@ -24,7 +24,7 @@ public class AccountingTransaction extends AccountingTransaction_Base {
 
     private void init(Entry debit, Entry credit) {
         checkParameters(debit, credit);
-        setWhenRegisted(credit.getWhenBooked());
+        super.setWhenRegisted(credit.getWhenBooked());
         super.addEntries(debit);
         super.addEntries(credit);
     }

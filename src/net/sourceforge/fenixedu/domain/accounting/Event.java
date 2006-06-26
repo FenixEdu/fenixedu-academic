@@ -26,6 +26,7 @@ public abstract class Event extends Event_Base {
         super.setEventType(eventType);
         super.setWhenOccured(whenOccured);
         super.setParty(party);
+        super.setProcessed(Boolean.FALSE);
     }
 
     private void checkParameters(EventType eventType, DateTime whenOccured, Party party) throws DomainException {
@@ -41,8 +42,8 @@ public abstract class Event extends Event_Base {
     }
     
     // TODO: to remove after create agreement and posting rules
-    protected Entry makeEntry(BigDecimal amount, Account account) {
-        return new Entry(amount, account, this);
+    protected Entry makeEntry(EntryType entryType, BigDecimal amount, Account account) {
+        return new Entry(entryType, amount, account, this);
     }
     
     // TODO: to remove after create agreement and posting rules
@@ -51,22 +52,24 @@ public abstract class Event extends Event_Base {
     }
     
     // TODO: to remove after create agreement and posting rules
-    protected void makeAccountingTransaction(Account from, Account to, BigDecimal amount) {
-        new AccountingTransaction(makeEntry(amount.negate(), from), makeEntry(amount, to));
+    protected void makeAccountingTransaction(Account from, Account to, EntryType entryType, BigDecimal amount) {
+        new AccountingTransaction(makeEntry(entryType, amount.negate(), from), makeEntry(entryType, amount, to));
     }
     
-    public boolean wasProcessed() {
-        return getWhenNoticed() != null;
+    public boolean isProcessed() {
+        return getProcessed().booleanValue();
     }
     
-    public final void process() {
-        if (! wasProcessed()) {
-            super.setWhenNoticed(new DateTime());
-            internalProcess();
+    //TODO: correct method
+    public final void process(List<EntryDTO> entryDTOs) {
+        if (! isProcessed()) {
+            // ???
+            super.setProcessed(Boolean.TRUE);
+            internalProcess(entryDTOs);
         }
     }
     
-    protected abstract void internalProcess();
+    protected abstract void internalProcess(List<EntryDTO> entryDTOs);
     
     public abstract List<EntryDTO> calculateEntries();
 
@@ -101,8 +104,8 @@ public abstract class Event extends Event_Base {
     }
 
     @Override
-    public void setWhenNoticed(DateTime whenNoticed) {
-        throw new DomainException("error.accounting.event.cannot.modify.noticedDateTime");
+    public void setProcessed(Boolean processed) {
+        throw new DomainException("error.accounting.event.cannot.modify.processed.value");
     }
 
     @Override

@@ -14,22 +14,26 @@ public class Entry extends Entry_Base {
         setRootDomainObject(RootDomainObject.getInstance());
     }
     
-    Entry(BigDecimal amount, Account account, Event event) {
+    Entry(EntryType entryType, BigDecimal amount, Account account, Event event) {
         this();
-        init(event.getWhenNoticed(), amount, account, event);
+        init(new DateTime(), entryType, amount, account, event);
     }
 
-    private void init(DateTime whenBooked, BigDecimal amount, Account account, Event event) {
-        checkParameters(whenBooked, amount, account, event);
+    private void init(DateTime whenBooked, EntryType entryType, BigDecimal amount, Account account, Event event) {
+        checkParameters(whenBooked, entryType, amount, account, event);
         super.setWhenBooked(whenBooked);
+        super.setEntryType(entryType);
         super.setAmount(amount);
         super.setAccount(account);
         super.setEvent(event);
     }
 
-    private void checkParameters(DateTime whenBooked, BigDecimal amount, Account account, Event event) {
+    private void checkParameters(DateTime whenBooked, EntryType entryType, BigDecimal amount, Account account, Event event) {
         if (whenBooked == null) {
             throw new DomainException("error.accounting.entry.invalid.whenBooked");
+        }
+        if (entryType == null) {
+            throw new DomainException("error.accounting.entry.invalid.entryType");
         }
         if (amount == null) {
             throw new DomainException("error.accounting.entry.invalid.amount");
@@ -77,6 +81,11 @@ public class Entry extends Entry_Base {
     @Override
     public void setWhenBooked(DateTime whenBooked) {
         throw new DomainException("error.accounting.entry.cannot.modify.bookedDateTime");
+    }
+    
+    @Override
+    public void setEntryType(EntryType entryType) {
+        throw new DomainException("error.accounting.entry.cannot.modify.entryType");
     }
     
     @Override

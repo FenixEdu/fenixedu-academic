@@ -5,6 +5,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
+import org.joda.time.DateTime;
+
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
@@ -15,6 +17,7 @@ public class Receipt extends Receipt_Base {
         super();
         super.setRootDomainObject(RootDomainObject.getInstance());
         super.setVersion(1);
+        super.setWhenRegisted(new DateTime());
     }
     
     public Receipt(Party party, Entry ... entries) {
@@ -22,7 +25,7 @@ public class Receipt extends Receipt_Base {
         init(party, entries);
     }
 
-    private void init(Party party, Entry... entries) {
+    private void init(Party party, Entry ... entries) {
         checkParameters(party);
         setParty(party);
         for (final Entry entry : entries) {
@@ -66,4 +69,8 @@ public class Receipt extends Receipt_Base {
         throw new DomainException("error.accounting.receipt.cannot.modify.version");
     }
     
+    @Override
+    public void setWhenRegisted(DateTime whenRegisted) {
+        throw new DomainException("error.accounting.receipt.cannot.modify.registedDateTime");
+    }    
 }

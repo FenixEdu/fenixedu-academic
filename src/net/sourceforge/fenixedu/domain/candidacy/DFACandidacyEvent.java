@@ -7,6 +7,7 @@ import java.util.List;
 import net.sourceforge.fenixedu.dataTransferObject.accounting.EntryDTO;
 import net.sourceforge.fenixedu.domain.accounting.Account;
 import net.sourceforge.fenixedu.domain.accounting.AccountType;
+import net.sourceforge.fenixedu.domain.accounting.EntryType;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
@@ -32,14 +33,18 @@ public class DFACandidacyEvent extends DFACandidacyEvent_Base {
     }
 
     @Override
-    protected void internalProcess() {
+    protected void internalProcess(List<EntryDTO> entryDTOs) {
+        
+        //TODO: correct this
         
         final Account personExternalAccount = getPersonAccountBy(AccountType.EXTERNAL);
         final Account personInternalAccount = getPersonAccountBy(AccountType.INTERNAL);
         final Account degreeInternalAccount = getDegreeAccountBy(AccountType.INTERNAL);
         
-        makeAccountingTransaction(personExternalAccount, personInternalAccount, calculateAmount());
-        makeAccountingTransaction(personInternalAccount, degreeInternalAccount, calculateAmount());
+        for (final EntryDTO entry : entryDTOs) {
+            makeAccountingTransaction(personExternalAccount, personInternalAccount, EntryType.EMOLUMENTO, entry.getAmount());
+            makeAccountingTransaction(personInternalAccount, degreeInternalAccount, EntryType.EMOLUMENTO, entry.getAmount());
+        }
     }
     
     @Override
