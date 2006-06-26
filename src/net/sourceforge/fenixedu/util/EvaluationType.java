@@ -12,9 +12,9 @@ public class EvaluationType extends FenixUtil {
     public static final int FINAL = 2;
 
     public static final int ONLINE_TEST = 3;
-    
+
     public static final int TEST = 4;
-    
+
     public static final int PROJECT = 5;
 
     public static final EvaluationType EXAM_TYPE = new EvaluationType(EXAM);
@@ -22,9 +22,9 @@ public class EvaluationType extends FenixUtil {
     public static final EvaluationType FINAL_TYPE = new EvaluationType(FINAL);
 
     public static final EvaluationType ONLINE_TEST_TYPE = new EvaluationType(ONLINE_TEST);
-    
+
     public static final EvaluationType TEST_TYPE = new EvaluationType(TEST);
-    
+
     public static final EvaluationType PROJECT_TYPE = new EvaluationType(PROJECT);
 
     public static final String EXAM_STRING = "Exame";
@@ -32,9 +32,9 @@ public class EvaluationType extends FenixUtil {
     public static final String FINAL_STRING = "Final";
 
     public static final String ONLINE_TEST_STRING = "Ficha de Trabalho";
-    
+
     public static final String TEST_STRING = "Teste";
-    
+
     public static final String PROJECT_STRING = "Projecto";
 
     private Integer type;
@@ -59,6 +59,8 @@ public class EvaluationType extends FenixUtil {
             this.type = Integer.valueOf(EvaluationType.ONLINE_TEST);
         if (type.equals(EvaluationType.TEST_STRING))
             this.type = Integer.valueOf(EvaluationType.TEST);
+        if (type.equals(EvaluationType.PROJECT_TYPE))
+            this.type = Integer.valueOf(EvaluationType.PROJECT);
 
     }
 
@@ -80,7 +82,9 @@ public class EvaluationType extends FenixUtil {
             return EvaluationType.ONLINE_TEST_STRING;
         if (type.intValue() == EvaluationType.TEST)
             return EvaluationType.TEST_STRING;
-        
+        if (type.intValue() == EvaluationType.PROJECT)
+            return EvaluationType.PROJECT_STRING;
+
         return "ERRO!";
     }
 

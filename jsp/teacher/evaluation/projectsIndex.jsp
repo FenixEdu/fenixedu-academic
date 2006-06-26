@@ -36,6 +36,13 @@
 						<f:param value="#{project.end}" />
 					</h:outputFormat>
 					<h:outputText value="<b> | </b>" escape="false"/>
+					<h:outputLink value="#{projectManagementBackingBean.contextPath}/teacher/projectSubmissionsManagement.do">
+						<f:param id="method" name="method" value="viewLastProjectSubmissionForEachGroup" />
+						<f:param id="executionCourseID" name="executionCourseID" value="#{projectManagementBackingBean.executionCourseID}" />
+						<f:param id="projectID" name="projectID" value="#{project.idInternal}" />
+						<h:outputFormat value="#{bundle['link.teacher.executionCourseManagement.evaluation.project.viewProjectSubmissions']}"/>
+					</h:outputLink>
+					<h:outputText value="<b> | </b>" escape="false"/>
 					<h:commandLink action="enterEditProject">
 						<f:param id="projectIDToEdit" name="projectID" value="#{project.idInternal}" />
 						<h:outputFormat value="#{bundle['link.edit']}"/>

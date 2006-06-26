@@ -9202,7 +9202,7 @@
     	<name>EditTeacherInstitutionWorkTime</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.services.EditTeacherInstitutionWorkTime</implementationClass>
         <description></description>
-        <isTransactional>true</isTransactional>   
+        <isTransactional>true</isTransactional>       
         <filterChains>
         	<chain name="CreditsServicesAuthorization"></chain>
         </filterChains>         
@@ -9230,12 +9230,12 @@
         <filterChains>
         	<chain name="CreditsServicesAuthorization"></chain>
         </filterChains>   
-    </service>         
+    </service>     
     <service>
     	<name>EditTeacherAdviseService</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.services.EditTeacherAdviseService</implementationClass>
         <description></description>
-        <isTransactional>true</isTransactional>  
+        <isTransactional>true</isTransactional>       
         <filterChains>
         	<chain name="CreditsServicesAuthorization"></chain>
         </filterChains>     
@@ -9277,7 +9277,7 @@
     	<name>DeleteOtherServiceByOID</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.services.DeleteOtherServiceByOID</implementationClass>
         <description></description>
-        <isTransactional>true</isTransactional>  
+        <isTransactional>true</isTransactional>       
         <filterChains>
         	<chain name="ScientificCouncilAuthorization"></chain>
         </filterChains>     
@@ -9928,7 +9928,7 @@
 		<isTransactional>true</isTransactional>
 		<filterChains>
 		</filterChains>
-	</service>	
+	</service>
 	<service>
 		<name>ListPayedInsurancesByDates</name>
 		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.gratuity.ListPayedInsurancesByDates</implementationClass>
@@ -9954,7 +9954,7 @@
 		<filterChains>
 		</filterChains>
 	</service>
-		<service>
+	<service>
 		<name>EditTeacherServiceNotes</name>
 		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.credits.EditTeacherServiceNotes</implementationClass>
 		<description />
@@ -9973,4 +9973,13 @@
 			<chain name="ManagerAuthorization" />
 		</filterChains>
 	</service>
+	<service>
+		<name>CreateProjectSubmission</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.projectSubmission.CreateProjectSubmission</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		<filterChains>
+			<chain name="StudentAuthorization" />
+		</filterChains>
+	</service>	
 </serviceDefinitions>

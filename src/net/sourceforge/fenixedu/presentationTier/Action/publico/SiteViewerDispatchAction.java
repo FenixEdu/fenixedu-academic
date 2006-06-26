@@ -10,7 +10,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -45,7 +44,6 @@ import net.sourceforge.fenixedu.dataTransferObject.SiteView;
 import net.sourceforge.fenixedu.domain.Evaluation;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixContextDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
@@ -61,13 +59,13 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.LabelValueBean;
-import org.apache.struts.validator.DynaValidatorForm;
+
+import pt.utl.ist.fenix.tools.file.FileManagerFactory;
 
 public class SiteViewerDispatchAction extends FenixContextDispatchAction {
 
-    private static final String DSPACE_BASE_DOWNLOAD_URL = PropertiesManager
-            .getProperty("dspace.serverUrl")
-            + PropertiesManager.getProperty("dspace.downloadUriPrefix");
+    private static final String FILE_DOWNLOAD_URL_FORMAT = FileManagerFactory.getFileManager()
+            .getDirectDownloadUrlFormat();
 
     public ActionForward firstPage(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixActionException, FenixFilterException,
@@ -82,7 +80,7 @@ public class SiteViewerDispatchAction extends FenixContextDispatchAction {
         setFromRequest(request);
 
         readSiteView(request, firstPageComponent, infoExecutionCourseCode, null, null);
-        return returnSuccessMappingForward(mapping,form,request);
+        return returnSuccessMappingForward(mapping, form, request);
     }
 
     public ActionForward announcements(ActionMapping mapping, ActionForm form,
@@ -92,7 +90,7 @@ public class SiteViewerDispatchAction extends FenixContextDispatchAction {
         ISiteComponent announcementsComponent = new InfoSiteAnnouncement();
         readSiteView(request, announcementsComponent, null, null, null);
 
-        return returnSuccessMappingForward(mapping,form,request);
+        return returnSuccessMappingForward(mapping, form, request);
     }
 
     public ActionForward objectives(ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -101,7 +99,7 @@ public class SiteViewerDispatchAction extends FenixContextDispatchAction {
         ISiteComponent objectivesComponent = new InfoSiteObjectives();
         readSiteView(request, objectivesComponent, null, null, null);
 
-        return returnSuccessMappingForward(mapping,form,request);
+        return returnSuccessMappingForward(mapping, form, request);
     }
 
     public ActionForward program(ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -110,7 +108,7 @@ public class SiteViewerDispatchAction extends FenixContextDispatchAction {
         ISiteComponent programComponent = new InfoSiteProgram();
         readSiteView(request, programComponent, null, null, null);
 
-        return returnSuccessMappingForward(mapping,form,request);
+        return returnSuccessMappingForward(mapping, form, request);
     }
 
     public ActionForward evaluationMethod(ActionMapping mapping, ActionForm form,
@@ -120,7 +118,7 @@ public class SiteViewerDispatchAction extends FenixContextDispatchAction {
         ISiteComponent evaluationComponent = new InfoEvaluationMethod();
         readSiteView(request, evaluationComponent, null, null, null);
 
-        return returnSuccessMappingForward(mapping,form,request);
+        return returnSuccessMappingForward(mapping, form, request);
 
     }
 
@@ -131,7 +129,7 @@ public class SiteViewerDispatchAction extends FenixContextDispatchAction {
         ISiteComponent bibliographyComponent = new InfoSiteBibliography();
         readSiteView(request, bibliographyComponent, null, null, null);
 
-        return returnSuccessMappingForward(mapping,form,request);
+        return returnSuccessMappingForward(mapping, form, request);
     }
 
     public ActionForward curricularCourses(ActionMapping mapping, ActionForm form,
@@ -141,7 +139,7 @@ public class SiteViewerDispatchAction extends FenixContextDispatchAction {
         ISiteComponent curricularCoursesComponent = new InfoSiteAssociatedCurricularCourses();
         readSiteView(request, curricularCoursesComponent, null, null, null);
 
-        return returnSuccessMappingForward(mapping,form,request);
+        return returnSuccessMappingForward(mapping, form, request);
     }
 
     public ActionForward timeTable(ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -150,7 +148,7 @@ public class SiteViewerDispatchAction extends FenixContextDispatchAction {
         ISiteComponent timeTableComponent = new InfoSiteTimetable();
         readSiteView(request, timeTableComponent, null, null, null);
 
-        return returnSuccessMappingForward(mapping,form,request);
+        return returnSuccessMappingForward(mapping, form, request);
     }
 
     public ActionForward shifts(ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -159,7 +157,7 @@ public class SiteViewerDispatchAction extends FenixContextDispatchAction {
         ISiteComponent shiftsComponent = new InfoSiteShifts();
         readSiteView(request, shiftsComponent, null, null, null);
 
-        return returnSuccessMappingForward(mapping,form,request);
+        return returnSuccessMappingForward(mapping, form, request);
     }
 
     public ActionForward evaluations(ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -168,7 +166,7 @@ public class SiteViewerDispatchAction extends FenixContextDispatchAction {
         ISiteComponent evaluationComponent = new InfoSiteEvaluations();
         readSiteView(request, evaluationComponent, null, null, null);
 
-        return returnSuccessMappingForward(mapping,form,request);
+        return returnSuccessMappingForward(mapping, form, request);
     }
 
     public ActionForward viewMarks(ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -195,7 +193,7 @@ public class SiteViewerDispatchAction extends FenixContextDispatchAction {
             }
         }
 
-        return returnSuccessMappingForward(mapping,form,request);
+        return returnSuccessMappingForward(mapping, form, request);
     }
 
     public ActionForward section(ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -206,10 +204,10 @@ public class SiteViewerDispatchAction extends FenixContextDispatchAction {
 
         ISiteComponent sectionComponent = new InfoSiteSection();
         readSiteView(request, sectionComponent, null, sectionIndex, null);
-        
-        request.setAttribute("dspaceBaseDownloadUrl", DSPACE_BASE_DOWNLOAD_URL);
 
-        return returnSuccessMappingForward(mapping,form,request);
+        request.setAttribute("fileDownloadUrlFormat", FILE_DOWNLOAD_URL_FORMAT);
+
+        return returnSuccessMappingForward(mapping, form, request);
     }
 
     public ActionForward summaries(ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -251,10 +249,10 @@ public class SiteViewerDispatchAction extends FenixContextDispatchAction {
 
         request.setAttribute("siteView", siteView);
 
-        return returnSuccessMappingForward(mapping,form,request);
+        return returnSuccessMappingForward(mapping, form, request);
 
     }
-    
+
     public ActionForward rss(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixActionException, FenixFilterException {
         ISiteComponent rssComponent = new InfoSiteRSS();
@@ -262,12 +260,11 @@ public class SiteViewerDispatchAction extends FenixContextDispatchAction {
         SiteView siteView = readSiteView(request, null, null, null, null);
 
         siteView.setComponent(rssComponent);
-        
+
         request.setAttribute("siteView", siteView);
 
-        return returnSuccessMappingForward(mapping,form,request);
+        return returnSuccessMappingForward(mapping, form, request);
     }
-
 
     public ActionForward curricularCourse(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws FenixActionException,
@@ -281,7 +278,7 @@ public class SiteViewerDispatchAction extends FenixContextDispatchAction {
         ISiteComponent curricularCourseComponent = new InfoSiteCurricularCourse();
         readSiteView(request, curricularCourseComponent, null, null, curricularCourseId);
 
-        return returnSuccessMappingForward(mapping,form,request);
+        return returnSuccessMappingForward(mapping, form, request);
 
     }
 
@@ -291,7 +288,7 @@ public class SiteViewerDispatchAction extends FenixContextDispatchAction {
         setFromRequest(request);
         ISiteComponent viewProjectsComponent = new InfoSiteProjects();
         readGroupView(request, viewProjectsComponent, null, null, null, null, null);
-        return returnSuccessMappingForward(mapping,form,request);
+        return returnSuccessMappingForward(mapping, form, request);
 
     }
 
@@ -312,7 +309,7 @@ public class SiteViewerDispatchAction extends FenixContextDispatchAction {
         readGroupView(request, viewShiftsAndGroups, null, groupPropertiesCode, null, null, null);
         request.setAttribute("groupProperties", groupPropertiesCode);
 
-        return returnSuccessMappingForward(mapping,form,request);
+        return returnSuccessMappingForward(mapping, form, request);
     }
 
     public ActionForward viewStudentsAndGroupsByShiftAction(ActionMapping mapping, ActionForm form,
@@ -348,7 +345,7 @@ public class SiteViewerDispatchAction extends FenixContextDispatchAction {
 
         request.setAttribute("ShiftChosenType", new Integer(1));
 
-        return returnSuccessMappingForward(mapping,form,request);
+        return returnSuccessMappingForward(mapping, form, request);
     }
 
     public ActionForward viewStudentsAndGroupsWithoutShiftAction(ActionMapping mapping, ActionForm form,
@@ -372,7 +369,7 @@ public class SiteViewerDispatchAction extends FenixContextDispatchAction {
 
         request.setAttribute("ShiftChosenType", new Integer(2));
 
-        return returnSuccessMappingForward(mapping,form,request);
+        return returnSuccessMappingForward(mapping, form, request);
     }
 
     public ActionForward viewAllStudentsAndGroupsAction(ActionMapping mapping, ActionForm form,
@@ -395,9 +392,8 @@ public class SiteViewerDispatchAction extends FenixContextDispatchAction {
         request.setAttribute("groupProperties", groupPropertiesCode);
 
         request.setAttribute("ShiftChosenType", new Integer(3));
-        return returnSuccessMappingForward(mapping,form,request);
+        return returnSuccessMappingForward(mapping, form, request);
     }
-
 
     public ActionForward viewStudentGroupInformationAction(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws FenixActionException,
@@ -411,7 +407,7 @@ public class SiteViewerDispatchAction extends FenixContextDispatchAction {
 
         readGroupView(request, viewStudentGroup, null, null, studentGroupCode, null, null);
 
-        return returnSuccessMappingForward(mapping,form,request);
+        return returnSuccessMappingForward(mapping, form, request);
 
     }
 
@@ -650,9 +646,10 @@ public class SiteViewerDispatchAction extends FenixContextDispatchAction {
         request.setAttribute("shift", shift);
 
     }
-    
-    private ActionForward returnSuccessMappingForward(ActionMapping mapping,ActionForm form,HttpServletRequest request) {
-	return mapping.findForward("sucess");
+
+    private ActionForward returnSuccessMappingForward(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request) {
+        return mapping.findForward("sucess");
     }
 
 }

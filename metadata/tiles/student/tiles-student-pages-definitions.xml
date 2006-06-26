@@ -206,4 +206,16 @@
 		<put name="body" value="/messaging/viewThread.jsp" />
 	</definition>
 	
+	<definition name="view-projects-with-online-submission" extends="definition.student.masterPage">
+		<put name="body" value="/student/projectSubmissions/viewProjectsWithOnlineSubmission.jsp" />
+	</definition>
+	
+	<definition name="view-project-submissions" extends="definition.student.masterPage">
+		<put name="body" value="/student/projectSubmissions/viewProjectSubmissions.jsp" />
+	</definition>
+	
+	<definition name="submit-project" extends="definition.student.masterPage">
+		<put name="body" value="/student/projectSubmissions/submitProject.jsp" />
+	</definition>
+	
 </tiles-definitions>

@@ -80,7 +80,7 @@
 <!ENTITY weeklyWorkLoad SYSTEM "repository_weeklyWorkLoad.xml">
 <!ENTITY studentCurriculum SYSTEM "repository_student_curriculum.xml">
 <!ENTITY homepage SYSTEM "repository_homepage.xml">
-<!ENTITY fileItem SYSTEM "repository_fileItem.xml">
+<!ENTITY file SYSTEM "repository_file.xml">
 <!ENTITY markSheet SYSTEM "repository_marksheet.xml">
 <!ENTITY messaging SYSTEM "repository_messaging.xml">
 <!ENTITY cron SYSTEM "repository_cron.xml">
@@ -170,7 +170,7 @@
     &weeklyWorkLoad;
     &studentCurriculum;
     &homepage;
-    &fileItem;
+    &file;
     &markSheet;
 	&messaging;
 	&cron;

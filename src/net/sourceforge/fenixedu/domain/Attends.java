@@ -32,7 +32,7 @@ import org.joda.time.YearMonthDay;
  * @author tfc130
  */
 public class Attends extends Attends_Base {
-
+    
     public static final Comparator<Attends> ATTENDS_COMPARATOR = new Comparator<Attends>() {
         public int compare(final Attends attends1, final Attends attends2) {
             final ExecutionCourse executionCourse1 = attends1.getDisciplinaExecucao();
@@ -67,7 +67,7 @@ public class Attends extends Attends_Base {
     }
 
     public void delete() throws DomainException {
-        if (!hasAnyShiftEnrolments() && !hasAnyStudentGroups() && !hasAnyAssociatedMarks()) {
+        if (!hasAnyShiftEnrolments() && !hasAnyStudentGroups() && !hasAnyAssociatedMarks() && !hasAnyProjectSubmissions()) {
             removeAluno();
             removeDisciplinaExecucao();
             removeEnrolment();
@@ -279,7 +279,7 @@ public class Attends extends Attends_Base {
             throw new DomainException("unsupported.execution.period.semester");
         }
     }
-
+    
     public static List<Attends> readByDegreeCurricularPlanAndExecutionPeriod(
             DegreeCurricularPlan degreeCurricularPlan, ExecutionPeriod executionPeriod) {
         final Set<Attends> attends = new HashSet<Attends>();
@@ -294,4 +294,6 @@ public class Attends extends Attends_Base {
         }
         return new ArrayList<Attends>(attends);
     }
+    
+
 }

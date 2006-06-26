@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.domain;
 
+import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 public class FileItem extends FileItem_Base {
@@ -11,6 +12,16 @@ public class FileItem extends FileItem_Base {
     public FileItem() {
         super();
         setRootDomainObject(RootDomainObject.getInstance());
+        setOjbConcreteClass(this.getClass().getName());
+    }
+
+    public FileItem(String filename, String displayName, String mimeType, String checksum,
+            String checksumAlgorithm, Integer size, String dspaceBitstreamIdentification,
+            Group permittedGroup, FileItemPermittedGroupType fileItemPermittedGroupType) {
+        this();
+        init(filename, displayName, mimeType, checksum, checksumAlgorithm, size,
+                dspaceBitstreamIdentification, permittedGroup);
+        setFileItemPermittedGroupType(fileItemPermittedGroupType);
     }
 
     public void delete() {
@@ -29,23 +40,8 @@ public class FileItem extends FileItem_Base {
 
     }
 
-    public boolean isPersonAllowedToAccess(Person person) {
-        return this.getPermittedGroup().isMember(person);
-    }
-
-    // -------------------------------------------------------------
-    // read static methods
-    // -------------------------------------------------------------
-
-    // TODO: perhaps this method should be called readByExternalIdentification
-    public static FileItem readByDspaceBitstreamIdentification(String dspaceBitstreamIdentification) {
-        for (FileItem fileItem : RootDomainObject.getInstance().getFileItems()) {
-            if (fileItem.getDspaceBitstreamIdentification().equals(dspaceBitstreamIdentification)) {
-                return fileItem;
-            }
-        }
-
-        return null;
+    public static FileItem readByOID(Integer idInternal) {
+        return (FileItem) RootDomainObject.getInstance().readFileByOID(idInternal);
     }
 
 }

@@ -154,17 +154,23 @@
 <!-- Definitions for net.sourceforge.fenixedu.domain.Project -->
 <class-descriptor class="net.sourceforge.fenixedu.domain.Project"
    	  table="EVALUATION">
-   	  
-      
-      
-      
-      
-      
-      
-      />
-      
-      />
-      
+   	       
+	  	  
+	  
+</class-descriptor>
+
+<!-- Definitions for net.sourceforge.fenixedu.domain.ProjectSubmission -->
+<class-descriptor class="net.sourceforge.fenixedu.domain.ProjectSubmission"
+   	  table="PROJECT_SUBMISSION">
+   	       
+	  	  
+	  
+</class-descriptor>
+
+<!-- Definitions for net.sourceforge.fenixedu.domain.ProjectSubmission -->
+<class-descriptor class="net.sourceforge.fenixedu.domain.ProjectSubmissionLog"
+   	  table="PROJECT_SUBMISSION_LOG">
+   	       
 	  	  
 	  
 </class-descriptor>

@@ -882,7 +882,7 @@
 	   		<form-property name="method" type="java.lang.String"/>
 	   		<form-property name="executionCourseID" type="java.lang.Integer"/>
 		</form-bean>
-		
+				
     </form-beans>
 
     <!-- ========== Global Exception Definitions ============================== -->
@@ -2261,6 +2261,18 @@
         	<forward name="mainPage" path="/evaluation/finalEvaluationIndex.faces"/>
         	<forward name="gradeSubmission.step.one" path="show.markSheetManagement.gradeSubmission.step.one"/>
         	<forward name="gradeSubmission.step.two" path="show.markSheetManagement.gradeSubmission.step.two"/>
+        </action>
+        
+        
+        <!-- ===== Project Submissions Management === -->
+        <action path="/projectSubmissionsManagement"
+        	type="net.sourceforge.fenixedu.presentationTier.Action.teacher.ProjectSubmissionsManagementDispatchAction"
+        	parameter="method"
+        	scope="request">
+        	  
+        	<forward name="viewLastProjectSubmissionForEachGroup" path="view-last-project-submission-for-each-group"/>
+        	<forward name="viewProjectSubmissionsByGroup" path="view-project-submissions-by-group"/>
+        	<forward name="viewProjectSubmissionLogsByGroup" path="view-project-submission-logs-by-group"/>
         </action>
         
     </action-mappings>

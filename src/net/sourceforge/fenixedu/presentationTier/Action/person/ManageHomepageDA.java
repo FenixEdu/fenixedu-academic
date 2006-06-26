@@ -4,9 +4,13 @@
  */
 package net.sourceforge.fenixedu.presentationTier.Action.person;
 
+import java.util.SortedSet;
+import java.util.TreeSet;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.homepage.Homepage;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
@@ -50,6 +54,11 @@ public class ManageHomepageDA extends FenixDispatchAction {
     	} else {
             dynaActionForm.set("name", person.getName());
         }
+        
+        SortedSet<Attends> personAttendsSortedByExecutionCourseName = new TreeSet<Attends>(
+                Attends.ATTENDS_COMPARATOR_BY_EXECUTION_COURSE_NAME);
+        personAttendsSortedByExecutionCourseName.addAll(person.getCurrentAttends());
+        request.setAttribute("personAttends", personAttendsSortedByExecutionCourseName);
 
         return mapping.findForward("show-manage-homepage");
     }

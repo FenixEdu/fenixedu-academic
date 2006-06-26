@@ -34,7 +34,7 @@ import org.apache.struts.actions.DispatchAction;
 import org.apache.struts.validator.DynaValidatorForm;
 
 public abstract class FenixDispatchAction extends DispatchAction implements ExceptionHandler {
-    
+
     protected static final RootDomainObject rootDomainObject = RootDomainObject.getInstance();
 
     public ActionForward execute(ActionMapping mapping, ActionForm actionForm,
@@ -46,13 +46,13 @@ public abstract class FenixDispatchAction extends DispatchAction implements Exce
         return SessionUtils.getUserView(request);
     }
 
-    protected Object executeService(final HttpServletRequest request, final String serviceName, final Object[] serviceArgs)
-            throws FenixFilterException, FenixServiceException {
+    protected Object executeService(final HttpServletRequest request, final String serviceName,
+            final Object[] serviceArgs) throws FenixFilterException, FenixServiceException {
         return ServiceUtils.executeService(getUserView(request), serviceName, serviceArgs);
     }
 
-    protected DomainObject readDomainObject(final HttpServletRequest request, final Class clazz, final Integer idInternal)
-            throws FenixFilterException, FenixServiceException {
+    protected DomainObject readDomainObject(final HttpServletRequest request, final Class clazz,
+            final Integer idInternal) throws FenixFilterException, FenixServiceException {
         final Object[] args = { clazz, idInternal };
         return (DomainObject) executeService(request, "ReadDomainObject", args);
     }
@@ -118,35 +118,47 @@ public abstract class FenixDispatchAction extends DispatchAction implements Exce
     }
 
     protected Integer getInteger(final DynaActionForm dynaActionForm, final String string) {
-        	final String value = dynaActionForm.getString(string);
-        	return value == null || value.length() == 0 ? null : Integer.valueOf(value);
-	}
+        final String value = dynaActionForm.getString(string);
+        return value == null || value.length() == 0 ? null : Integer.valueOf(value);
+    }
 
-    public ActionForward processException(HttpServletRequest request, ActionMapping mapping, ActionForward input, Exception e) {
-        	if (! (e instanceof DomainException)) {
-        	    return null;
-        	}
-        	
-        	DomainException domainException = (DomainException) e;
-        	ActionMessages messages = getMessages(request);
-        	
-        	if (messages == null) {
-        	    messages = new ActionMessages();
-        	}
-        	
-        	messages.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage(domainException.getKey(), domainException.getArgs()));
-        	saveMessages(request, messages);
-        	
-        	IViewState viewState = RenderUtils.getViewState();
-        	ViewDestination destination = viewState.getDestination("exception");
-        	if (destination != null) {
-        	    return destination.getActionForward();
-        	}
-        	else {
-        	    // show exception in output to ease finding the problem when messages are not shown in page
-        	    e.printStackTrace(); 
-        	    return input;
-        	}
+    protected Integer getRequestParameterAsInteger(HttpServletRequest request, String parameterName) {
+        String requestParameter = request.getParameter(parameterName);
+
+        if (requestParameter != null) {
+            return Integer.valueOf(requestParameter);
+        } else {
+            return null;
+        }
+    }
+
+    public ActionForward processException(HttpServletRequest request, ActionMapping mapping,
+            ActionForward input, Exception e) {
+        if (!(e instanceof DomainException)) {
+            return null;
+        }
+
+        DomainException domainException = (DomainException) e;
+        ActionMessages messages = getMessages(request);
+
+        if (messages == null) {
+            messages = new ActionMessages();
+        }
+
+        messages.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage(domainException.getKey(),
+                domainException.getArgs()));
+        saveMessages(request, messages);
+
+        IViewState viewState = RenderUtils.getViewState();
+        ViewDestination destination = viewState.getDestination("exception");
+        if (destination != null) {
+            return destination.getActionForward();
+        } else {
+            // show exception in output to ease finding the problem when
+            // messages are not shown in page
+            e.printStackTrace();
+            return input;
+        }
     }
 
     protected Object executeFactoryMethod(final HttpServletRequest request) throws FenixFilterException, FenixServiceException {

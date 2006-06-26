@@ -61,22 +61,32 @@
 
 		<h:panelGroup rendered="#{CoordinatorEvaluationsBackingBean.evaluationType == 'net.sourceforge.fenixedu.domain.Project'}">
 			<h:panelGrid columns="2" styleClass="infoop" columnClasses="alignright,,"  rowClasses=",,,valigntop">
-				<h:outputText value="#{bundle['label.name']}: "/>
+				<h:outputText value="#{bundle['label.net.sourceforge.fenixedu.domain.Project.name']}: "/>
 				<h:outputText value="#{CoordinatorEvaluationsBackingBean.name}"/>
 
-				<h:outputText value="#{bundle['label.publish.date']}: "/>
+				<h:outputText value="#{bundle['label.net.sourceforge.fenixedu.domain.Project.projectBeginDateTime']}: "/>
 				<h:outputText value="#{CoordinatorEvaluationsBackingBean.begin}"/>
 
-				<h:outputText value="#{bundle['label.delivery.date']}: "/>
+				<h:outputText value="#{bundle['label.net.sourceforge.fenixedu.domain.Project.projectEndDateTime']}: "/>
 				<h:outputText value="#{CoordinatorEvaluationsBackingBean.end}"/>
 
-				<h:outputText value="#{bundle['label.description']}: "/>
+				<h:outputText value="#{bundle['label.net.sourceforge.fenixedu.domain.Project.description']}: "/>
 				<h:outputText value="#{CoordinatorEvaluationsBackingBean.description}"/>
+				
+				<h:outputText value="#{bundle['label.net.sourceforge.fenixedu.domain.Project.onlineSubmissionsAllowed']}: "/>
+				<h:outputText value="#{CoordinatorEvaluationsBackingBean.onlineSubmissionsAllowed ? bundle['label.yes'] : bundle['label.no']}"/>
+				
+				<h:outputText value="#{bundle['label.net.sourceforge.fenixedu.domain.Project.maxSubmissionsToKeep']}: " rendered="#{CoordinatorEvaluationsBackingBean.onlineSubmissionsAllowed}"/>
+				<h:outputText value="#{CoordinatorEvaluationsBackingBean.maxSubmissionsToKeep}" rendered="#{CoordinatorEvaluationsBackingBean.onlineSubmissionsAllowed}"/>
+				
+				<h:outputText value="#{bundle['label.net.sourceforge.fenixedu.domain.Project.grouping.name']}: " rendered="#{CoordinatorEvaluationsBackingBean.onlineSubmissionsAllowed}"/>
+				<h:outputText value="#{CoordinatorEvaluationsBackingBean.grouping.name}" rendered="#{CoordinatorEvaluationsBackingBean.onlineSubmissionsAllowed}"/>
+				
 			</h:panelGrid>
 		</h:panelGroup>
 
 		<h:outputText value="<br/>" escape="false" />
 		<h:commandButton action="#{CoordinatorEvaluationsBackingBean.deleteEvaluation}" styleClass="inputbutton" value="#{bundle['button.delete']}"/>
-		<h:commandButton immediate="true" styleClass="inputbutton" value="#{bundle['button.cancel']}"/>
+		<h:commandButton immediate="true" styleClass="inputbutton" value="#{bundle['button.cancel']}" action="#{CoordinatorEvaluationsBackingBean.returnToCalendar}"/>
 	</h:form>
 </ft:tilesView>

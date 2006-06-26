@@ -5,9 +5,10 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.domain.FileItem;
 import net.sourceforge.fenixedu.domain.Item;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.integrationTier.dspace.DspaceClient;
-import net.sourceforge.fenixedu.integrationTier.dspace.DspaceClientException;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
+import pt.utl.ist.fenix.tools.file.FileManagerException;
+import pt.utl.ist.fenix.tools.file.FileManagerFactory;
+import pt.utl.ist.fenix.tools.file.IFileManager;
 
 /**
  * 
@@ -16,19 +17,17 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  */
 public class DeleteFileItemFromItem extends Service {
 
-    public void run(Integer itemId, Integer fileItemId)
-            throws FenixServiceException, ExcepcaoPersistencia, DomainException {
+    public void run(Integer itemId, Integer fileItemId) throws FenixServiceException,
+            ExcepcaoPersistencia, DomainException, FileManagerException {
 
         final Item item = rootDomainObject.readItemByOID(itemId);
-        final FileItem fileItem = rootDomainObject.readFileItemByOID(fileItemId);
-        
+        final FileItem fileItem = FileItem.readByOID(fileItemId);
+
         item.removeFileItems(fileItem);
 
-        try {
-            DspaceClient.deleteFile(fileItem.getDspaceBitstreamIdentification());
-        } catch (DspaceClientException e) {
-            throw new FenixServiceException(e.getMessage(),e);
-        }
+        final IFileManager fileManager = FileManagerFactory.getFileManager();
+        fileManager.deleteFile(fileItem.getExternalStorageIdentification());
+
     }
 
 }

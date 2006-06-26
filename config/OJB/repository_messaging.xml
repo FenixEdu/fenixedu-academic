@@ -5,7 +5,7 @@
 <!-- *************************************************************************************************************** -->
 <!-- Definitions for net.sourceforge.fenixedu.domain.messaging.Forum -->
 <!-- *************************************************************************************************************** -->
-<class-descriptor class="net.sourceforge.fenixedu.domain.messaging.Forum">
+<class-descriptor class="net.sourceforge.fenixedu.domain.messaging.Forum" table="FORUM">
 	<extent-class class-ref="net.sourceforge.fenixedu.domain.messaging.ExecutionCourseForum" />
 </class-descriptor>
 

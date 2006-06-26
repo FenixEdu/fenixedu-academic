@@ -20,11 +20,11 @@ import net.sourceforge.fenixedu.util.ProposalState;
 public class Grouping extends Grouping_Base {
 
     public Grouping() {
-		super();
-		setRootDomainObject(RootDomainObject.getInstance());
-	}
+        super();
+        setRootDomainObject(RootDomainObject.getInstance());
+    }
 
-	public Calendar getEnrolmentBeginDay() {
+    public Calendar getEnrolmentBeginDay() {
         if (this.getEnrolmentBeginDayDate() != null) {
             Calendar result = Calendar.getInstance();
             result.setTime(this.getEnrolmentBeginDayDate());
@@ -109,10 +109,10 @@ public class Grouping extends Grouping_Base {
         Integer groupMaximumNumber = this.getGroupMaximumNumber();
         if (shiftStudentGroups != null && groupMaximumNumber != null
                 && shiftStudentGroups.size() == groupMaximumNumber)
-            throw new DomainException(this.getClass().getName(), 
+            throw new DomainException(this.getClass().getName(),
                     "error.shift.with.max.number.of.studentGroups");
     }
-    
+
     public Integer getNumberOfStudentsInGrouping() {
         return this.getAttends().size();
     }
@@ -231,7 +231,8 @@ public class Grouping extends Grouping_Base {
         if (!this.getName().equals(groupingName)) {
             for (final ExecutionCourse executionCourse : this.getExecutionCourses()) {
                 if (executionCourse.getGroupingByName(groupingName) != null) {
-                    throw new DomainException(this.getClass().getName(), "error.exception.existing.groupProperties");
+                    throw new DomainException(this.getClass().getName(),
+                            "error.exception.existing.groupProperties");
                 }
             }
         }
@@ -251,7 +252,7 @@ public class Grouping extends Grouping_Base {
         if (readStudentGroupBy(groupNumber) != null) {
             throw new DomainException(this.getClass().getName(), "error.invalidGroupNumber");
         }
-      
+
         checkForStudentsInStudentGroupsAndGrouping(students);
 
         StudentGroup newStudentGroup = null;
@@ -264,16 +265,18 @@ public class Grouping extends Grouping_Base {
             Attends attend = getStudentAttend(student);
             newStudentGroup.addAttends(attend);
         }
-    }   
+    }
 
     private void checkForStudentsInStudentGroupsAndGrouping(List<Student> students) {
         for (Student student : students) {
             Attends attend = getStudentAttend(student);
             for (final StudentGroup studentGroup : this.getStudentGroups()) {
                 if (studentGroup.getAttends().contains(attend))
-                    throw new DomainException(this.getClass().getName(), "errors.existing.studentEnrolment");                
-                else if(!this.getAttends().contains(attend))
-                    throw new DomainException(this.getClass().getName(), "errors.notExisting.studentInGrouping");
+                    throw new DomainException(this.getClass().getName(),
+                            "errors.existing.studentEnrolment");
+                else if (!this.getAttends().contains(attend))
+                    throw new DomainException(this.getClass().getName(),
+                            "errors.notExisting.studentInGrouping");
             }
         }
     }
@@ -299,7 +302,7 @@ public class Grouping extends Grouping_Base {
             executionCourse.removeExportGroupings(exportGrouping);
             exportGrouping.delete();
         }
-        
+
         removeRootDomainObject();
         super.deleteDomainObject();
     }
@@ -311,7 +314,7 @@ public class Grouping extends Grouping_Base {
         }
         return max;
     }
-    
+
     public ExportGrouping getExportGrouping(final ExecutionCourse executionCourse) {
         for (final ExportGrouping exportGrouping : this.getExportGroupingsSet()) {
             if (exportGrouping.getExecutionCourse() == executionCourse) {
@@ -320,9 +323,19 @@ public class Grouping extends Grouping_Base {
         }
         return null;
     }
-    
+
     public boolean hasExportGrouping(final ExecutionCourse executionCourse) {
         return getExportGrouping(executionCourse) != null;
+    }
+
+    public StudentGroup getStudentGroupByAttends(Attends attends) {
+        for (StudentGroup studentGroup : getStudentGroups()) {
+            if (studentGroup.getAttends().contains(attends)) {
+                return studentGroup;
+            }
+        }
+
+        return null;
     }
 
 }

@@ -762,6 +762,39 @@
 		</slot>
 	</schema>
 	
+	<schema name="evaluation.project.view-with-name-description-and-grouping" type="net.sourceforge.fenixedu.domain.Project" bundle="APPLICATION_RESOURCES">
+	    <slot name="name" />
+	    <slot name="description"/>
+   	    <slot name="grouping.name" />
+	</schema>
+	
+	<schema name="projectSubmission.view-full" type="net.sourceforge.fenixedu.domain.ProjectSubmission" bundle="APPLICATION_RESOURCES">
+	    <slot name="studentGroup.groupNumber"/>
+   	    <slot name="attends.aluno.number" />
+   	    <slot name="attends.aluno.person.name" />
+   	    <slot name="submissionDateTime" />
+   	    <slot name="projectSubmissionFile.filename" />
+   	    <slot name="projectSubmissionFile.size" />
+   	    <slot name="projectSubmissionFile.checksum"/>
+	</schema>
+	
+	<schema name="projectSubmission.create" type="net.sourceforge.fenixedu.dataTransferObject.projectSubmission.CreateProjectSubmissionBean">
+		<slot name="fileInputStream" key="label.projectSubmission.projectFile" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+			<property name="fileNameSlot" value="filename"/>
+		</slot>
+	</schema>
+	
+	<schema name="projectSubmissionLog.view-full" type="net.sourceforge.fenixedu.domain.ProjectSubmissionLog" bundle="APPLICATION_RESOURCES">
+	    <slot name="studentGroup.groupNumber"/>
+   	    <slot name="attends.aluno.number" />
+   	    <slot name="attends.aluno.person.name" />
+   	    <slot name="submissionDateTime" />
+   	    <slot name="filename" />
+   	    <slot name="fileSize" />
+   	    <slot name="fileChecksum"/>
+	</schema>
+		
+	
 	&researcher;
 	&markSheet;
 	&messaging;

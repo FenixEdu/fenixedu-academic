@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.Action.student;
 
 import java.util.SortedSet;
+import java.util.TreeSet;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -26,8 +27,9 @@ public class ViewExecutionCourseForunsDispatchAction extends ForunsManagement {
             HttpServletResponse response) throws FenixActionException, FenixFilterException,
             FenixServiceException {
 
-        SortedSet<Attends> attendsForCurrentExecutionPeriod = getUserView(request).getPerson()
-                .getCurrentAttends();
+        SortedSet<Attends> attendsForCurrentExecutionPeriod = new TreeSet<Attends>(
+                Attends.ATTENDS_COMPARATOR_BY_EXECUTION_COURSE_NAME);
+        attendsForCurrentExecutionPeriod.addAll(getUserView(request).getPerson().getCurrentAttends());
 
         request.setAttribute("attendsForExecutionPeriod", attendsForCurrentExecutionPeriod);
 

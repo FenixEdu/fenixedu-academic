@@ -6,6 +6,7 @@ package net.sourceforge.fenixedu.util;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -24,7 +25,9 @@ public class FileUtils {
     private static int[] fileWriterSynch = new int[0];
 
     // Cluster safe global unique temporary filename
-    private static final String TEMPORARY_FILE_GLOBAL_UNIQUE_NAME = UUID.randomUUID().toString();
+    private static final String TEMPORARY_FILE_GLOBAL_UNIQUE_NAME_PREFIX = UUID.randomUUID().toString();
+
+    private static final int BUFFER_SIZE = 1024 * 1024;
 
     public static String readFile(final String filename) throws IOException {
         final FileReader fileReader = new FileReader(filename);
@@ -93,8 +96,6 @@ public class FileUtils {
     }
 
     public static void copy(InputStream inputStream, OutputStream outputStream) throws IOException {
-
-        final int BUFFER_SIZE = 1024 * 1024;
         final byte[] buffer = new byte[BUFFER_SIZE];
 
         while (true) {
@@ -110,7 +111,26 @@ public class FileUtils {
     }
 
     public static String getTemporaryFileBaseName() {
-        return TEMPORARY_FILE_GLOBAL_UNIQUE_NAME;
+        return TEMPORARY_FILE_GLOBAL_UNIQUE_NAME_PREFIX;
+    }
+
+    public static File copyToTemporaryFile(InputStream inputStream) throws IOException {
+        File temporaryFile = File.createTempFile(TEMPORARY_FILE_GLOBAL_UNIQUE_NAME_PREFIX, "");
+        // In case anything fails the file will be cleaned when jvm
+        // shutsdown
+        temporaryFile.deleteOnExit();
+        
+        FileOutputStream targetFileOutputStream = null;
+        try {
+            targetFileOutputStream = new FileOutputStream(temporaryFile);
+            copy(inputStream, targetFileOutputStream);
+        } finally {
+            if (targetFileOutputStream != null) {
+                targetFileOutputStream.close();
+            }
+        }
+
+        return temporaryFile;
     }
 
 }

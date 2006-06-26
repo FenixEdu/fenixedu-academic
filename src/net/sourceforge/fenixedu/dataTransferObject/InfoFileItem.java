@@ -10,7 +10,7 @@ import net.sourceforge.fenixedu.domain.FileItemPermittedGroupType;
  */
 public class InfoFileItem extends InfoObject {
 
-    private String filename;
+    private String name;
 
     private String displayName;
 
@@ -22,7 +22,7 @@ public class InfoFileItem extends InfoObject {
 
     private Integer size;
 
-    private String dspaceBitstreamIdentification;
+    private String externalStorageIdentification;
     
     private FileItemPermittedGroupType permittedGroupType;
 
@@ -33,14 +33,14 @@ public class InfoFileItem extends InfoObject {
     public void copyFromDomain(FileItem fileItem) {
         super.copyFromDomain(fileItem);
         if (fileItem != null) {
-            setFilename(fileItem.getFilename());
+            setName(fileItem.getFilename());
             setDisplayName(fileItem.getDisplayName());
             setMimeType(fileItem.getMimeType());
             setChecksum(fileItem.getChecksum());
             setChecksumAlgorithm(fileItem.getChecksumAlgorithm());
             setSize(fileItem.getSize());
-            setDspaceBitstreamIdentification(fileItem.getDspaceBitstreamIdentification());
-            setPermittedGroupType(fileItem.getPermittedGroupType());
+            setExternalStorageIdentification(fileItem.getExternalStorageIdentification());
+            setPermittedGroupType(fileItem.getFileItemPermittedGroupType());
             
         }
     }
@@ -82,20 +82,20 @@ public class InfoFileItem extends InfoObject {
         this.displayName = displayName;
     }
 
-    public String getDspaceBitstreamIdentification() {
-        return dspaceBitstreamIdentification;
+    public String getExternalStorageIdentification() {
+        return externalStorageIdentification;
     }
 
-    public void setDspaceBitstreamIdentification(String dspaceIdentification) {
-        this.dspaceBitstreamIdentification = dspaceIdentification;
+    public void setExternalStorageIdentification(String externalStorageIdentification) {
+        this.externalStorageIdentification = externalStorageIdentification;
     }
 
     public String getFilename() {
-        return filename;
+        return name;
     }
 
-    public void setFilename(String filename) {
-        this.filename = filename;
+    public void setName(String filename) {
+        this.name = filename;
     }
 
     public String getMimeType() {

@@ -71,7 +71,7 @@
 
 			<h:outputText value="<br/>" escape="false" />
 			<h:commandButton action="#{CoordinatorEvaluationsBackingBean.createWrittenTest}" styleClass="inputbutton" value="#{bundle['button.create']}"/>
-			<h:commandButton immediate="true" styleClass="inputbutton" value="#{bundle['button.cancel']}"/>
+			<h:commandButton immediate="true" styleClass="inputbutton" value="#{bundle['button.cancel']}" action="#{CoordinatorEvaluationsBackingBean.cancelEvaluationCreation}"/>
 		</h:form>
 	</h:panelGroup>
 
@@ -84,28 +84,54 @@
 			<h:outputText escape="false" value="<input id='executionCourseID' name='executionCourseID' type='hidden' value='#{CoordinatorEvaluationsBackingBean.executionCourseID}'/>"/>
 
 			<h:panelGrid columns="2" styleClass="infoop" columnClasses="alignright,,"  rowClasses=",,,valigntop">
-				<h:outputText value="#{bundle['label.name']}: "/>
-				<h:inputText id="name" required="true" maxlength="100" size="20" value="#{CoordinatorEvaluationsBackingBean.name}"/>
+				<h:outputText value="#{bundle['label.net.sourceforge.fenixedu.domain.Project.name']}: "/>
+				<h:panelGroup>
+					<h:inputText id="name" required="true" maxlength="100" size="20" value="#{CoordinatorEvaluationsBackingBean.name}"/>
+					<h:message for="name" styleClass="error"/>
+				</h:panelGroup>
 
-				<h:outputText value="#{bundle['label.publish.date']}: "/>
+				<h:outputText value="#{bundle['label.net.sourceforge.fenixedu.domain.Project.projectBeginDateTime']}: " />
 				<h:panelGroup>
 					<h:inputText id="begin" required="true" maxlength="100" size="20" value="#{CoordinatorEvaluationsBackingBean.begin}"/>
-					<h:outputText value="#{bundle['label.date.hour.pattern']}: "/>
+					<h:outputText value="#{bundle['label.date.hour.pattern']} "/>
+					<h:message for="begin" styleClass="error"/>
 				</h:panelGroup>
 
-				<h:outputText value="#{bundle['label.delivery.date']}: "/>
+				<h:outputText value="#{bundle['label.net.sourceforge.fenixedu.domain.Project.projectEndDateTime']}: " />
 				<h:panelGroup>
 					<h:inputText id="end" required="true" maxlength="100" size="20" value="#{CoordinatorEvaluationsBackingBean.end}"/>
-					<h:outputText value="#{bundle['label.date.hour.pattern']}: "/>
+					<h:outputText value="#{bundle['label.date.hour.pattern']} "/>
+					<h:message for="end" styleClass="error"/>
 				</h:panelGroup>
 
-				<h:outputText value="#{bundle['label.description']}: "/>
+				<h:outputText value="#{bundle['label.net.sourceforge.fenixedu.domain.Project.description']}: "/>
 				<h:inputTextarea rows="4" cols="40" value="#{CoordinatorEvaluationsBackingBean.description}"/>
+				
+				<h:outputText value="#{bundle['label.net.sourceforge.fenixedu.domain.Project.onlineSubmissionsAllowed']}" />
+				<h:panelGroup>
+					<h:selectBooleanCheckbox id="onlineSubmissionsAllowed" required="true" value="#{CoordinatorEvaluationsBackingBean.onlineSubmissionsAllowed}" />
+					<h:message for="onlineSubmissionsAllowed" styleClass="error"/>
+				</h:panelGroup>
+
+				<h:outputText value="#{bundle['label.net.sourceforge.fenixedu.domain.Project.maxSubmissionsToKeep']}" />				
+				<h:panelGroup>
+					<h:inputText id="maxSubmissionsToKeep" required="false" value="#{CoordinatorEvaluationsBackingBean.maxSubmissionsToKeep}" maxlength="2" size="2"/>
+					<h:message for="maxSubmissionsToKeep" styleClass="error"/>
+				</h:panelGroup>
+				
+				<h:outputText value="#{bundle['label.net.sourceforge.fenixedu.domain.Project.grouping.name']}" />
+				<h:panelGroup>
+					<h:selectOneMenu id="groupingID" value="#{CoordinatorEvaluationsBackingBean.groupingID}">
+						<f:selectItems value="#{CoordinatorEvaluationsBackingBean.executionCourseGroupings}"/>
+					</h:selectOneMenu>
+					<h:message for="groupingID" styleClass="error"/>
+				</h:panelGroup>			
+				
 			</h:panelGrid>
 
 			<h:outputText value="<br/>" escape="false" />
 			<h:commandButton action="#{CoordinatorEvaluationsBackingBean.createProject}" styleClass="inputbutton" value="#{bundle['button.create']}"/>
-			<h:commandButton immediate="true" styleClass="inputbutton" value="#{bundle['button.cancel']}"/>
+			<h:commandButton immediate="true" styleClass="inputbutton" value="#{bundle['button.cancel']}" action="#{CoordinatorEvaluationsBackingBean.returnToCalendar}"/>
 		</h:form>
 	</h:panelGroup>
 

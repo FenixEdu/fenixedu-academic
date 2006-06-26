@@ -812,6 +812,15 @@
 		    <forward name="viewThread" path="view-thread"/>
   		</action>
   		
+  		<action path="/projectSubmission"
+  			type="net.sourceforge.fenixedu.presentationTier.Action.student.ProjectSubmissionDispatchAction"
+  			scope="request"
+  			parameter="method">
+  			<forward name="viewProjectsWithOnlineSubmission" path="view-projects-with-online-submission"/>
+  			<forward name="viewProjectSubmissions" path="view-project-submissions"/>
+  			<forward name="submitProject" path="submit-project"/>
+  		</action>
+  		
 	</action-mappings>     
 
     

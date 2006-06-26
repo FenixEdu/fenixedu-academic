@@ -26,13 +26,13 @@
 				<logic:iterate id="infoFileItem" name="item" property="infoFileItems">
 				<bean:define id="itemCode" name="item" property="idInternal" type="java.lang.Integer"/>
 				<bean:define id="displayName" name="infoFileItem" property="displayName" type="java.lang.String"/>
-				<bean:define id="dspaceBitstreamIdentification" name="infoFileItem" property="dspaceBitstreamIdentification" type="java.lang.String"/>
+				<bean:define id="externalStorageIdentification" name="infoFileItem" property="externalStorageIdentification" type="java.lang.String"/>
 				<bean:define id="filename" name="infoFileItem" property="filename" type="java.lang.String"/>
 				<bean:define id="fileItemId" name="infoFileItem" property="idInternal" type="java.lang.Integer"/>
 					<tr>
 						<td><img src="<%= request.getContextPath() %>/images/list-bullet.gif" alt="" /></td>
 						<td>
-							<html:link href="<%= pageContext.findAttribute("dspaceBaseDownloadUrl") + "/" + dspaceBitstreamIdentification + "/" + filename %>" ><bean:write name="infoFileItem" property="displayName"/></html:link>
+							<html:link href="<%= pageContext.findAttribute("fileDownloadUrlFormat") + "/" + externalStorageIdentification + "/" + filename %>" ><bean:write name="infoFileItem" property="displayName"/></html:link>
 						</td>
 					</tr>	
 				</logic:iterate>

@@ -1,10 +1,8 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 
-import java.io.File;
+import java.io.InputStream;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.framework.FileItemService;
-
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
@@ -14,15 +12,13 @@ import net.sourceforge.fenixedu.domain.Item;
 import net.sourceforge.fenixedu.domain.Section;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.integrationTier.dspace.DspaceClient;
-import net.sourceforge.fenixedu.integrationTier.dspace.DspaceClientException;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-
-import org.dspace.external.interfaces.remoteManager.objects.FileUpload;
-import org.dspace.external.interfaces.remoteManager.objects.ItemMetadata;
-import org.dspace.external.interfaces.remoteManager.objects.Path;
-import org.dspace.external.interfaces.remoteManager.objects.PathComponent;
-import org.dspace.external.interfaces.remoteManager.objects.UploadedFileDescriptor;
+import pt.utl.ist.fenix.tools.file.FileDescriptor;
+import pt.utl.ist.fenix.tools.file.FileManagerFactory;
+import pt.utl.ist.fenix.tools.file.FileMetadata;
+import pt.utl.ist.fenix.tools.file.FilePath;
+import pt.utl.ist.fenix.tools.file.IFileManager;
+import pt.utl.ist.fenix.tools.file.Node;
 
 /**
  * 
@@ -31,75 +27,55 @@ import org.dspace.external.interfaces.remoteManager.objects.UploadedFileDescript
  */
 public class CreateFileItemForItem extends FileItemService {
 
-    public void run(Integer itemId, File temporaryFile, String originalFilename, String displayName,
-            FileItemPermittedGroupType fileItemPermittedGroupType) throws FenixServiceException,
-            ExcepcaoPersistencia, DomainException {
+    public void run(Integer itemId, InputStream fileInputStream, String originalFilename,
+            String displayName, FileItemPermittedGroupType fileItemPermittedGroupType)
+            throws FenixServiceException, ExcepcaoPersistencia, DomainException {
 
         final Item item = rootDomainObject.readItemByOID(itemId);
-        final Path destination = getDspaceDestination(item);
-        final ItemMetadata itemMetadata = new ItemMetadata(displayName, item.getSection().getSite()
-                .getExecutionCourse().getNome());
         final ExecutionCourse executionCourse = item.getSection().getSite().getExecutionCourse();
         final Group permittedGroup = createPermittedGroup(fileItemPermittedGroupType, executionCourse);
-
-        final FileUpload fileUpload = new FileUpload(destination, originalFilename,
-                (permittedGroup != null) ? true : false, itemMetadata);
-
-        UploadedFileDescriptor uploadedFileDescriptor;
-        try {
-            uploadedFileDescriptor = DspaceClient.uploadFile(fileUpload, temporaryFile);
-        } catch (DspaceClientException e) {
-            throw new FenixServiceException(e.getMessage(),e);
-        }
-
-        final FileItem fileItem = new FileItem();
-        fileItem.setFilename(uploadedFileDescriptor.getFilename());
-        fileItem.setDisplayName(displayName);
-        fileItem.setMimeType(uploadedFileDescriptor.getMimeType());
-        fileItem.setChecksum(uploadedFileDescriptor.getChecksum());
-        fileItem.setChecksumAlgorithm(uploadedFileDescriptor.getChecksumAlgorithm());
-        fileItem.setSize(uploadedFileDescriptor.getSize());
-        fileItem.setDspaceBitstreamIdentification(uploadedFileDescriptor.getBitstreamIdentification());
-        fileItem.setPermittedGroupType(fileItemPermittedGroupType);
-        fileItem.setPermittedGroup(permittedGroup);
+        final FilePath filePath = getFilePath(item);
+        final FileMetadata fileMetadata = new FileMetadata(displayName, item.getSection().getSite()
+                .getExecutionCourse().getNome());
+        final IFileManager fileManager = FileManagerFactory.getFileManager();
+        final FileDescriptor fileDescriptor = fileManager.saveFile(filePath, originalFilename,
+                (permittedGroup != null) ? true : false, fileMetadata, fileInputStream);
+        final FileItem fileItem = new FileItem(fileDescriptor.getFilename(), displayName, fileDescriptor
+                .getMimeType(), fileDescriptor.getChecksum(), fileDescriptor.getChecksumAlgorithm(),
+                fileDescriptor.getSize(), fileDescriptor.getUniqueId(), permittedGroup,
+                fileItemPermittedGroupType);
 
         item.addFileItems(fileItem);
 
     }
 
-    private Path getDspaceDestination(Item item) {
-        final Path dspaceDestination = new Path();
-        dspaceDestination
-                .addPathComponent(new PathComponent("I" + item.getIdInternal(), item.getName()));
+    private FilePath getFilePath(Item item) {
+        final FilePath filePath = new FilePath();
+        filePath.addNode(new Node("I" + item.getIdInternal(), item.getName()));
 
         final Section section = item.getSection();
-        dspaceDestination.add(0, new PathComponent("S" + section.getIdInternal(), section.getName()));
+        filePath.addNode(0, new Node("S" + section.getIdInternal(), section.getName()));
 
         if (section.getSuperiorSection() != null) {
             Section superiorSection = section.getSuperiorSection();
-
             while (superiorSection != null) {
-                dspaceDestination.add(0, new PathComponent("S" + superiorSection.getIdInternal(),
-                        superiorSection.getName()));
+                filePath.addNode(0, new Node("S" + superiorSection.getIdInternal(), superiorSection
+                        .getName()));
 
                 superiorSection = superiorSection.getSuperiorSection();
             }
         }
 
         final ExecutionCourse executionCourse = section.getSite().getExecutionCourse();
-        dspaceDestination.add(0, new PathComponent("EC" + executionCourse.getIdInternal(),
-                executionCourse.getNome()));
+        filePath.addNode(0, new Node("EC" + executionCourse.getIdInternal(), executionCourse.getNome()));
 
         final ExecutionPeriod executionPeriod = executionCourse.getExecutionPeriod();
-        dspaceDestination.add(0, new PathComponent("EP" + executionPeriod.getIdInternal(),
-                executionPeriod.getName()));
+        filePath.addNode(0, new Node("EP" + executionPeriod.getIdInternal(), executionPeriod.getName()));
 
         final ExecutionYear executionYear = executionPeriod.getExecutionYear();
-        dspaceDestination.add(0, new PathComponent("EY" + executionYear.getIdInternal(), executionYear
-                .getYear()));
+        filePath.addNode(0, new Node("EY" + executionYear.getIdInternal(), executionYear.getYear()));
 
-        return dspaceDestination;
+        return filePath;
     }
-
 
 }

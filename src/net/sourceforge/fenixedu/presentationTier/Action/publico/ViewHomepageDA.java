@@ -9,6 +9,7 @@ import java.util.TreeSet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.Contract;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
@@ -44,7 +45,13 @@ public class ViewHomepageDA extends FenixDispatchAction {
     		saveMessages(request, actionMessages);
     		return list(mapping, actionForm, request, response);
     	} else {
+            SortedSet<Attends> personAttendsSortedByExecutionCourseName = new TreeSet<Attends>(
+                    Attends.ATTENDS_COMPARATOR_BY_EXECUTION_COURSE_NAME);
+            personAttendsSortedByExecutionCourseName.addAll(homepage.getPerson().getCurrentAttends());
+            
+            request.setAttribute("personAttends", personAttendsSortedByExecutionCourseName);
     		request.setAttribute("homepage", homepage);
+            
     		return mapping.findForward("view-homepage");
     	}
     }

@@ -478,7 +478,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
             }
         }
         return true;
-    }    
+    }
 
     private static final Comparator<Evaluation> EVALUATION_COMPARATOR = new Comparator<Evaluation>() {
 
@@ -882,15 +882,15 @@ public class ExecutionCourse extends ExecutionCourse_Base {
     public boolean hasExportGrouping(final Grouping grouping) {
         return getExportGrouping(grouping) != null;
     }
-    
+
     public boolean hasScopeInGivenSemesterAndCurricularYearInDCP(Integer semester,
             CurricularYear curricularYear, DegreeCurricularPlan degreeCurricularPlan) {
         for (CurricularCourse curricularCourse : this.getAssociatedCurricularCourses()) {
             if (curricularCourse.hasScopeInGivenSemesterAndCurricularYearInDCP(semester, curricularYear,
                     degreeCurricularPlan, getExecutionPeriod())) {
-                return true;
-            }
-        }
+                        return true;
+                    }
+                }
         return false;
     }
 
@@ -981,8 +981,8 @@ public class ExecutionCourse extends ExecutionCourse_Base {
         }
         return result;
     }
-
-	public boolean hasAnyDegreeGradeToSubmit(ExecutionPeriod period) {
+    
+    public boolean hasAnyDegreeGradeToSubmit(ExecutionPeriod period) {
 		for (final CurricularCourse curricularCourse : this.getCurricularCoursesWithDegreeType()) {
 			if(curricularCourse.hasAnyDegreeGradeToSubmit(period)) {
 				return true;
@@ -990,8 +990,8 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 		}
 		return false;
 	}
-
-    public String nextShiftName(final ShiftType shiftType) {
+	
+	public String nextShiftName(final ShiftType shiftType) {
 	int i = 1;
 	for (final Shift otherShift : getAssociatedShiftsSet()) {
 	    if (otherShift.getTipo() == shiftType) {
@@ -1022,6 +1022,27 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 	    final String name = constructShiftName(shiftType, ++counters[shiftType.ordinal()]);
 	    shift.setNome(name);
 	}
+    }
+
+    public boolean hasProjectsWithOnlineSubmission() {
+        for (Project project : getAssociatedProjects()) {
+            if (project.getOnlineSubmissionsAllowed() == true) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public List<Project> getProjectsWithOnlineSubmission() {
+        List<Project> result = new ArrayList<Project>();
+        for (Project project : getAssociatedProjects()) {
+            if (project.getOnlineSubmissionsAllowed() == true) {
+                result.add(project);
+            }
+        }
+
+        return result;
     }
 
 }

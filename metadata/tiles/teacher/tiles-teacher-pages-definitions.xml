@@ -563,4 +563,18 @@
 		<put name="body" value="/teacher/evaluation/gradeSubmission/gradeSubmissionStepTwo.jsp" />
 	</definition>
 	
+	<!-- ==== Project Submissions Management === -->
+	<definition name="view-last-project-submission-for-each-group" extends="df.teacher.evaluation-management">
+		<put name="body" value="/teacher/evaluation/viewLastProjectSubmissionForEachGroup.jsp" />
+	</definition>
+	
+	<definition name="view-project-submissions-by-group" extends="df.teacher.evaluation-management">
+		<put name="body" value="/teacher/evaluation/viewProjectSubmissionsByGroup.jsp" />
+	</definition>
+	
+	<definition name="view-project-submission-logs-by-group" extends="df.teacher.evaluation-management">
+		<put name="body" value="/teacher/evaluation/viewProjectSubmissionLogsByGroup.jsp" />
+	</definition>
+	
+	
 </tiles-definitions>

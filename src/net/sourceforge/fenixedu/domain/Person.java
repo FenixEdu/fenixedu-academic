@@ -1256,8 +1256,8 @@ public class Person extends Person_Base {
         return result;
     }
 
-    public SortedSet<Attends> getCurrentAttends() {
-    	final SortedSet<Attends> attends = new TreeSet<Attends>(Attends.ATTENDS_COMPARATOR_BY_EXECUTION_COURSE_NAME);
+    public Set<Attends> getCurrentAttends() {
+    	final Set<Attends> attends = new HashSet<Attends>();
     	for (final Student student : getStudentsSet()) {
     		for (final Attends attend : student.getAssociatedAttendsSet()) {
     			final ExecutionCourse executionCourse = attend.getDisciplinaExecucao();

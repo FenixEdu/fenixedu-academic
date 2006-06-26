@@ -170,14 +170,14 @@ vertical-align: top;
 					<html:checkbox property="showCurrentAttendingExecutionCourses" value="true"/>
 				</td>
 				<td>
-					<logic:iterate id="attend" name="UserView" property="person.currentAttends" length="1">
+					<logic:iterate id="attend" name="personAttends" length="1">
 						<bean:define id="executionCourse" name="attend" property="disciplinaExecucao"/>
 						<bean:define id="url" type="java.lang.String"><%= request.getContextPath() %>/publico/viewSiteExecutionCourse.do?method=firstPage&objectCode=<bean:write name="executionCourse" property="idInternal"/></bean:define>
 						<html:link href="<%= url %>">
 							<bean:write name="executionCourse" property="nome"/>
 						</html:link>
 					</logic:iterate>
-					<logic:iterate id="attend" name="UserView" property="person.currentAttends" offset="1">
+					<logic:iterate id="attend" name="personAttends" offset="1">
 						,
 						<bean:define id="executionCourse" name="attend" property="disciplinaExecucao"/>
 						<bean:define id="url" type="java.lang.String"><%= request.getContextPath() %>/publico/viewSiteExecutionCourse.do?method=firstPage&objectCode=<bean:write name="executionCourse" property="idInternal"/></bean:define>

@@ -1,4 +1,4 @@
-package net.sourceforge.fenixedu.applicationTier.Servico.framework;
+package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;

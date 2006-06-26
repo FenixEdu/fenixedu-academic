@@ -5,13 +5,18 @@
 package net.sourceforge.fenixedu.presentationTier.backBeans.teacher.evaluation;
 
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
+import javax.faces.model.SelectItem;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.Grouping;
 import net.sourceforge.fenixedu.domain.Project;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.util.DateFormatUtil;
 
@@ -19,15 +24,30 @@ import org.apache.commons.beanutils.BeanComparator;
 
 public class ProjectManagementBackingBean extends EvaluationManagementBackingBean {
     protected String name;
+
     protected String beginProjectDate;
+
     protected String beginProjectHour;
+
     protected String endProjectDate;
+
     protected String endProjectHour;
+
     protected Project project;
+
     protected Integer projectID;
+
     protected List<Project> associatedProjects;
-    
-    public ProjectManagementBackingBean() {    
+
+    protected Boolean onlineSubmissionsAllowed;
+
+    protected Integer maxSubmissionsToKeep;
+
+    protected Integer groupingID;
+
+    protected List<SelectItem> executionCourseGroupings;
+
+    public ProjectManagementBackingBean() {
         super();
     }
 
@@ -43,7 +63,8 @@ public class ProjectManagementBackingBean extends EvaluationManagementBackingBea
         try {
             final Object[] args = { getExecutionCourseID(), getName(),
                     DateFormatUtil.parse("dd/MM/yyyy HH:mm", getBeginString()),
-                    DateFormatUtil.parse("dd/MM/yyyy HH:mm", getEndString()), getDescription() };
+                    DateFormatUtil.parse("dd/MM/yyyy HH:mm", getEndString()), getDescription(),
+                    getOnlineSubmissionsAllowed(), getMaxSubmissionsToKeep(), getGroupingID() };
             ServiceUtils.executeService(getUserView(), "CreateProject", args);
         } catch (final FenixFilterException e) {
             return "";
@@ -53,6 +74,9 @@ public class ProjectManagementBackingBean extends EvaluationManagementBackingBea
         } catch (final ParseException e) {
             setErrorMessage("error.invalidDate");
             return "";
+        } catch (final DomainException e) {
+            setErrorMessage(e.getKey());
+            return "";
         }
         return "projectsIndex";
     }
@@ -61,7 +85,8 @@ public class ProjectManagementBackingBean extends EvaluationManagementBackingBea
         try {
             final Object[] args = { getExecutionCourseID(), getProjectID(), getName(),
                     DateFormatUtil.parse("dd/MM/yyyy HH:mm", getBeginString()),
-                    DateFormatUtil.parse("dd/MM/yyyy HH:mm", getEndString()), getDescription() };
+                    DateFormatUtil.parse("dd/MM/yyyy HH:mm", getEndString()), getDescription(),
+                    getOnlineSubmissionsAllowed(), getMaxSubmissionsToKeep(), getGroupingID() };
             ServiceUtils.executeService(getUserView(), "EditProject", args);
             setAssociatedProjects(null);
         } catch (final FenixFilterException e) {
@@ -70,6 +95,9 @@ public class ProjectManagementBackingBean extends EvaluationManagementBackingBea
             return "";
         } catch (ParseException e) {
             setErrorMessage("error.invalidDate");
+            return "";
+        } catch (DomainException e) {
+            setErrorMessage(e.getKey());
             return "";
         }
         return "projectsIndex";
@@ -83,6 +111,8 @@ public class ProjectManagementBackingBean extends EvaluationManagementBackingBea
         } catch (FenixFilterException e) {
         } catch (FenixServiceException e) {
             setErrorMessage(e.getMessage());
+        } catch (DomainException e) {
+            setErrorMessage(e.getKey());
         }
         return "projectsIndex";
     }
@@ -104,8 +134,8 @@ public class ProjectManagementBackingBean extends EvaluationManagementBackingBea
     public List<Project> getAssociatedProjects() throws FenixFilterException, FenixServiceException {
         if (this.associatedProjects == null) {
             final Object[] args = { ExecutionCourse.class, this.getExecutionCourseID() };
-            final ExecutionCourse executionCourse = (ExecutionCourse) ServiceUtils.executeService(
-                    null, "ReadDomainObject", args);
+            final ExecutionCourse executionCourse = (ExecutionCourse) ServiceUtils.executeService(null,
+                    "ReadDomainObject", args);
             this.associatedProjects = executionCourse.getAssociatedProjects();
             Collections.sort(this.associatedProjects, new BeanComparator("begin"));
         }
@@ -191,4 +221,55 @@ public class ProjectManagementBackingBean extends EvaluationManagementBackingBea
     public void setEndProjectHour(String endProjectHour) {
         this.endProjectHour = endProjectHour;
     }
+
+    public Integer getGroupingID() {
+        if (this.groupingID == null && this.getProject() != null) {
+            Grouping grouping = this.getProject().getGrouping();
+
+            this.groupingID = (grouping != null) ? grouping.getIdInternal() : null;
+        }
+        return groupingID;
+    }
+
+    public void setGroupingID(Integer groupingID) {
+        this.groupingID = groupingID;
+    }
+
+    public Integer getMaxSubmissionsToKeep() {
+        if (this.maxSubmissionsToKeep == null && this.getProject() != null) {
+            this.maxSubmissionsToKeep = this.getProject().getMaxSubmissionsToKeep();
+        }
+        return maxSubmissionsToKeep;
+    }
+
+    public void setMaxSubmissionsToKeep(Integer maxSubmissionsToKeep) {
+        this.maxSubmissionsToKeep = maxSubmissionsToKeep;
+    }
+
+    public Boolean getOnlineSubmissionsAllowed() {
+        if (this.onlineSubmissionsAllowed == null && this.getProject() != null) {
+            this.onlineSubmissionsAllowed = this.getProject().getOnlineSubmissionsAllowed();
+        }
+        return onlineSubmissionsAllowed;
+    }
+
+    public void setOnlineSubmissionsAllowed(Boolean onlineSubmissionsAllowed) {
+        this.onlineSubmissionsAllowed = onlineSubmissionsAllowed;
+    }
+
+    public List<SelectItem> getExecutionCourseGroupings() throws FenixFilterException,
+            FenixServiceException {
+        if (this.executionCourseGroupings == null) {
+            this.executionCourseGroupings = new ArrayList<SelectItem>();
+
+            for (Grouping grouping : getExecutionCourse().getGroupings()) {
+                this.executionCourseGroupings.add(new SelectItem(grouping.getIdInternal(), grouping
+                        .getName()));
+            }
+
+        }
+
+        return this.executionCourseGroupings;
+    }
+
 }

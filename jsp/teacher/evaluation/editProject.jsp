@@ -22,7 +22,7 @@
 			<h:panelGrid columns="2" styleClass="infoop" columnClasses="alignright,,"  rowClasses=",,,valigntop">
 				<h:panelGroup>
 					<h:outputText value="* " style="color: red"/>
-					<h:outputText value="#{bundle['label.name']}: " />
+					<h:outputText value="#{bundle['label.net.sourceforge.fenixedu.domain.Project.name']}: " />
 				</h:panelGroup>	
 				<h:panelGroup>
 					<h:inputText id="name" required="true" maxlength="100" size="20" value="#{projectManagementBackingBean.name}" />			
@@ -30,7 +30,7 @@
 				</h:panelGroup>
 				<h:panelGroup>
 					<h:outputText value="* " style="color: red"/>				
-					<h:outputText value="#{bundle['label.publish.date']}: " />
+					<h:outputText value="#{bundle['label.net.sourceforge.fenixedu.domain.Project.projectBeginDateTime']}: " />
 				</h:panelGroup>
 				<h:panelGroup>
 					<h:inputText id="beginDate" required="true" maxlength="10" size="10" value="#{projectManagementBackingBean.beginProjectDate}" />
@@ -42,7 +42,7 @@
 				</h:panelGroup>
 				<h:panelGroup>
 					<h:outputText value="* " style="color: red"/>					
-					<h:outputText value="#{bundle['label.delivery.date']}: " />
+					<h:outputText value="#{bundle['label.net.sourceforge.fenixedu.domain.Project.projectEndDateTime']}: " />
 				</h:panelGroup>
 				<h:panelGroup>
 					<h:inputText id="endDate" required="true" maxlength="10" size="10" value="#{projectManagementBackingBean.endProjectDate}" />
@@ -52,10 +52,31 @@
 					<h:outputText value=" #{bundle['label.hour.instructions']}" />
 					<h:message for="endHour" styleClass="error"/>
 				</h:panelGroup>				
-				<h:outputText value="#{bundle['label.description']}: " />
+				<h:outputText value="#{bundle['label.net.sourceforge.fenixedu.domain.Project.description']}: " />
 				<h:inputTextarea rows="4" cols="40" value="#{projectManagementBackingBean.description}" />
+				
+				<h:outputText value="#{bundle['label.net.sourceforge.fenixedu.domain.Project.onlineSubmissionsAllowed']}" />
 				<h:panelGroup>
-					<h:outputText value="* " style="color: red"/>
+					<h:selectBooleanCheckbox id="onlineSubmissionsAllowed" required="true" value="#{projectManagementBackingBean.onlineSubmissionsAllowed}" />
+					<h:message for="onlineSubmissionsAllowed" styleClass="error"/>
+				</h:panelGroup>
+
+				<h:outputText value="#{bundle['label.net.sourceforge.fenixedu.domain.Project.maxSubmissionsToKeep']}" />				
+				<h:panelGroup>
+					<h:inputText id="maxSubmissionsToKeep" required="false" value="#{projectManagementBackingBean.maxSubmissionsToKeep}" maxlength="2" size="2"/>
+					<h:message for="maxSubmissionsToKeep" styleClass="error"/>
+				</h:panelGroup>
+				
+				<h:outputText value="#{bundle['label.net.sourceforge.fenixedu.domain.Project.grouping.name']}" />
+				<h:panelGroup>
+					<h:selectOneMenu id="groupingID" value="#{projectManagementBackingBean.groupingID}">
+						<f:selectItems value="#{projectManagementBackingBean.executionCourseGroupings}"/>
+					</h:selectOneMenu>
+					<h:message for="groupingID" styleClass="error"/>
+				</h:panelGroup>			
+				
+				<h:panelGroup>
+					<h:outputText value="<br/><br/>* " style="color: red" escape="false"/>
 					<h:outputText value="#{bundle['label.neededFields']}"/>
 				</h:panelGroup>
 			</h:panelGrid>			

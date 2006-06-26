@@ -10,6 +10,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixRemoteSe
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.logging.SystemInfo;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import pt.utl.ist.fenix.tools.file.FileManagerException;
 
 public class ServiceManagerServiceFactory {
 
@@ -27,6 +28,10 @@ public class ServiceManagerServiceFactory {
             if (e != null && e.getCause() != null && e.getCause() instanceof DomainException) {
                 DomainException domainException = (DomainException) e.getCause();
                 throw domainException;
+            }
+            if (e != null && e.getCause() != null && e.getCause() instanceof FileManagerException) {
+                FileManagerException fileManagerException = (FileManagerException) e.getCause();
+                throw fileManagerException;
             }
             if (e != null && e.getCause() != null && e.getCause() instanceof FenixFilterException) {
                 FenixFilterException fenixFilterException = (FenixFilterException) e.getCause();

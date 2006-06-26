@@ -106,7 +106,7 @@
 		<logic:iterate id="infoFileItem" name="item" property="infoFileItems">
 		<tr>
 		<bean:define id="displayName" name="infoFileItem" property="displayName" type="java.lang.String"/>
-		<bean:define id="dspaceBitstreamIdentification" name="infoFileItem" property="dspaceBitstreamIdentification" type="java.lang.String"/>
+		<bean:define id="externalStorageIdentification" name="infoFileItem" property="externalStorageIdentification" type="java.lang.String"/>
 		<bean:define id="filename" name="infoFileItem" property="filename" type="java.lang.String"/>
 		<bean:define id="fileItemId" name="infoFileItem" property="idInternal" type="java.lang.Integer"/>
 		<bean:define id="permittedGroupType" name="infoFileItem" property="permittedGroupType" type="net.sourceforge.fenixedu.domain.FileItemPermittedGroupType"/>
@@ -114,7 +114,7 @@
 			<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="" />
 		</td>
 		<td>
-			<html:link href="<%= pageContext.findAttribute("dspaceBaseDownloadUrl") + "/" + dspaceBitstreamIdentification + "/" + filename %>" ><bean:write name="displayName"/>&nbsp;&nbsp;(<bean:message key="<%=permittedGroupType.toString() %>" bundle="ENUMERATION_RESOURCES"/>)</html:link>
+			<html:link href="<%= pageContext.findAttribute("fileDownloadUrlFormat") + "/" + externalStorageIdentification + "/" + filename %>" ><bean:write name="displayName"/>&nbsp;&nbsp;(<bean:message key="<%=permittedGroupType.toString() %>" bundle="ENUMERATION_RESOURCES"/>)</html:link>
 		</td>
 		<td>&nbsp;&nbsp;<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="" />
 		</td>
@@ -124,7 +124,6 @@
 		<td>
 			<html:link page="<%= "/editItemFilePermissions.do?method=prepareEditItemFilePermissions&objectCode=" + pageContext.findAttribute("objectCode") + "&amp;itemCode=" + itemCode + "&amp;currentSectionCode=" + currentSectionCode + "&fileItemId=" + fileItemId %>" ><bean:message key="label.teacher.siteAdministration.viewSection.editItemFilePermissions"/></html:link>
 		</td>
-		
 		</tr>
 		</logic:iterate>
 		</table>
