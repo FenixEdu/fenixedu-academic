@@ -183,11 +183,17 @@ class net.sourceforge.fenixedu.domain.accounting.Event extends net.sourceforge.f
     Integer keyParty;
     AccountingEventType eventType;
     DateTime whenOccured;
-    Boolean processed;
+    Boolean closed;
+    Integer keyPayedEvent;
+    Integer keyReimbursedEvent;
 }
 
 class net.sourceforge.fenixedu.domain.candidacy.DFACandidacyEvent extends net.sourceforge.fenixedu.domain.accounting.Event {
     Integer keyCandidacy;
+}
+
+class net.sourceforge.fenixedu.domain.candidacy.DFACandidacyPaymentEvent extends net.sourceforge.fenixedu.domain.accounting.Event {
+
 }
 
 class net.sourceforge.fenixedu.domain.teacher.Advise extends net.sourceforge.fenixedu.domain.DomainObject {
@@ -8677,3 +8683,18 @@ relation PartyReceipt {
 		multiplicity *;
 	}
 }
+
+relation EventPayedEvents {
+	net.sourceforge.fenixedu.domain.accounting.Event playsRole payedEvent;
+	net.sourceforge.fenixedu.domain.accounting.Event playsRole payments {
+		multiplicity *;
+	}
+}
+
+relation EventReimbursedEvents {
+	net.sourceforge.fenixedu.domain.accounting.Event playsRole reimbursedEvent;
+	net.sourceforge.fenixedu.domain.accounting.Event playsRole reimbursements {
+		multiplicity *;
+	}
+}
+
