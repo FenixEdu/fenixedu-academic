@@ -42,6 +42,10 @@ public class Entry extends Entry_Base {
             throw new DomainException("error.accounting.entry.invalid.account.and.entry");
         }
     }
+    
+    public boolean isPositiveAmount() {
+        return getAmount().signum() > 0;
+    }
 
     @Override
     public void removeAccount() {
