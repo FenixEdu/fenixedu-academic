@@ -24,8 +24,7 @@ public class WeeklyWorkLoadDA extends FenixDispatchAction {
         final Integer executionCourseID = (executionCourseIDString == null || executionCourseIDString.length() == 0) ?
                 null : Integer.valueOf(executionCourseIDString);
 
-        final Object[] args = { ExecutionCourse.class, executionCourseID };
-        final ExecutionCourse executionCourse = (ExecutionCourse) executeService(request, "ReadDomainObject", args);
+        final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseID);
         request.setAttribute("executionCourse", executionCourse);
         request.setAttribute("weeklyWorkLoadView", executionCourse.getWeeklyWorkLoadView());
 

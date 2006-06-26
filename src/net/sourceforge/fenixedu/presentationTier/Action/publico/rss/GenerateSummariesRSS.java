@@ -7,7 +7,6 @@ import javax.servlet.http.HttpServletRequest;
 import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Summary;
-import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import de.nava.informa.core.ChannelIF;
 import de.nava.informa.core.ItemIF;
 import de.nava.informa.impl.basic.ChannelBuilder;
@@ -19,8 +18,7 @@ public class GenerateSummariesRSS extends RSSAction{
 	@Override
 	protected ChannelIF getRSSChannel(HttpServletRequest request) throws Exception {
 		String id = request.getParameter("id");
-		Object[] args = {ExecutionCourse.class, Integer.valueOf(id)};
-		ExecutionCourse executionCourse = (ExecutionCourse) ServiceManagerServiceFactory.executeService(null, "ReadDomainObject", args);
+		ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(Integer.valueOf(id));
 		ChannelBuilder builder = new ChannelBuilder();
     	ChannelIF channel = builder.createChannel(executionCourse.getNome());
     	channel.setDescription("Sumários da disciplina " + executionCourse.getNome());

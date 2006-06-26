@@ -86,8 +86,7 @@ public class FunctionalityLinkManagement extends FenixDispatchAction {
             return start(mapping, actionForm, request, response);
         }
         
-        IUserView userView = SessionUtils.getUserView(request);
-        FunctionalityLink functionalityLink = (FunctionalityLink) ServiceUtils.executeService(userView, "ReadDomainObject", new Object[] { FunctionalityLink.class, oid });
+        FunctionalityLink functionalityLink = (FunctionalityLink) rootDomainObject.readContentByOID(oid);
         
         if (functionalityLink == null) {
             addError(request, "cms.functionalityLink.functionalityLinkNotFound");

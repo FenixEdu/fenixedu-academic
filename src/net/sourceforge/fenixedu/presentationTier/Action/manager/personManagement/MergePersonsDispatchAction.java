@@ -69,10 +69,8 @@ public class MergePersonsDispatchAction extends FenixDispatchAction {
         } else {
             Integer person1ID = Integer.valueOf(request.getParameter("person1ID"));
             Integer person2ID = Integer.valueOf(request.getParameter("person2ID"));
-            Object[] args1 = { Person.class, person1ID };
-            person1 = (Person) ServiceUtils.executeService(userView, "ReadDomainObject", args1);
-            Object[] args2 = { Person.class, person2ID };
-            person2 = (Person) ServiceUtils.executeService(userView, "ReadDomainObject", args2);
+            person1 = (Person) rootDomainObject.readPartyByOID(person1ID);
+            person2 = (Person) rootDomainObject.readPartyByOID(person2ID);
         }
 
         if (person1 == null || person2 == null) {

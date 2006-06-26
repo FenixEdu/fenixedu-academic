@@ -4,9 +4,8 @@ import java.util.Collection;
 
 import javax.servlet.jsp.JspException;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.domain.DomainObject;
-import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.presentationTier.renderers.converters.DomainObjectKeyArrayConverter;
 import net.sourceforge.fenixedu.presentationTier.renderers.converters.DomainObjectKeyConverter;
 import net.sourceforge.fenixedu.renderers.components.state.HiddenSlot;
@@ -120,13 +119,9 @@ public class FenixHiddenSlotTag extends HiddenSlotTag {
     }
 
     protected Object getPersistentObject() throws JspException {
-        IUserView userView = (IUserView) pageContext.getAttribute("UserView", getScopeByName("Session"));
-
         try {
             Class type = Class.forName(getType());
-            Object[] args = { type, Integer.valueOf(getOid())};
-
-            return ServiceUtils.executeService(userView, "ReadDomainObject", args);
+            return RootDomainObject.readDomainObjectByOID(type, Integer.valueOf(getOid()));
         } catch (Exception e) {
             throw new JspException(e);
         } 

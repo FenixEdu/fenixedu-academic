@@ -23,7 +23,6 @@ import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
-import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -138,10 +137,7 @@ public class CoordinatorEvaluationManagementBackingBean extends FenixBackingBean
     }
 
     public ExecutionCourse getExecutionCourse() throws FenixFilterException, FenixServiceException {
-
-        final Object[] argsToReadExecutionCourse = { ExecutionCourse.class, this.getExecutionCourseID() };
-        return (ExecutionCourse) ServiceUtils.executeService(null, "ReadDomainObject",
-                argsToReadExecutionCourse);
+        return rootDomainObject.readExecutionCourseByOID(this.getExecutionCourseID());
     }
 
     protected List<ExecutionCourse> getExecutionCourses() {
@@ -163,14 +159,7 @@ public class CoordinatorEvaluationManagementBackingBean extends FenixBackingBean
     }
 
     public ExecutionPeriod getExecutionPeriod() {
-        if (executionPeriod == null) {
-            try {
-                final Object args[] = { ExecutionPeriod.class, getExecutionPeriodID() };
-                return (ExecutionPeriod) ServiceUtils.executeService(null, "ReadDomainObject", args);
-            } catch (Exception e) {
-            }
-        }
-        return this.executionPeriod;
+        return executionPeriod == null ? rootDomainObject.readExecutionPeriodByOID(getExecutionCourseID()) : this.executionPeriod;
     }
 
     protected InfoExecutionPeriod getCurrentExecutionPeriod() {
@@ -196,9 +185,7 @@ public class CoordinatorEvaluationManagementBackingBean extends FenixBackingBean
     public Evaluation getEvaluation() {
         try {
             if (this.evaluation == null && this.getEvaluationID() != null) {
-                final Object[] args = { WrittenEvaluation.class, this.getEvaluationID() };
-                this.evaluation = (Evaluation) ServiceUtils.executeService(null, "ReadDomainObject",
-                        args);
+                this.evaluation = rootDomainObject.readEvaluationByOID(this.getEvaluationID());
             }
             return this.evaluation;
         } catch (Exception e) {

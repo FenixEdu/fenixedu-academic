@@ -5,11 +5,10 @@ import java.util.List;
 import java.util.Properties;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.renderers.ObjectKey;
 import net.sourceforge.fenixedu.applicationTier.Servico.renderers.UpdateObjects.ObjectChange;
 import net.sourceforge.fenixedu.domain.DomainObject;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.renderers.model.MetaObject;
@@ -57,17 +56,7 @@ public class DomainMetaObject implements MetaObject {
     }
 
     protected DomainObject getPersistentObject() {
-        try {
-            IUserView userView = getUserView();
-
-            return (DomainObject) ServiceUtils.executeService(userView, "ReadDomainObject", new Object[] { getType(), getOid() });
-        } catch (FenixFilterException e) {
-            e.printStackTrace();
-        } catch (FenixServiceException e) {
-            e.printStackTrace();
-        }
-        
-        return null;
+        return RootDomainObject.getInstance().readDomainObjectByOID(getType(), getOid());
     }
 
     public void setUser(UserIdentity user) {

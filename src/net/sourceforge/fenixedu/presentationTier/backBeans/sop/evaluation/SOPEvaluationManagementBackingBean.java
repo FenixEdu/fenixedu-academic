@@ -43,7 +43,6 @@ import net.sourceforge.fenixedu.domain.space.RoomOccupation;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
 import net.sourceforge.fenixedu.presentationTier.backBeans.teacher.evaluation.EvaluationManagementBackingBean;
 import net.sourceforge.fenixedu.presentationTier.jsf.components.util.CalendarLink;
 import net.sourceforge.fenixedu.util.DateFormatUtil;
@@ -138,12 +137,7 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
     }
 
     public ExecutionPeriod getExecutionPeriod() {
-        final Object[] args = { ExecutionPeriod.class, this.getExecutionPeriodID() };
-        try {
-            return (ExecutionPeriod) ServiceUtils.executeService(null, "ReadDomainObject", args);
-        } catch (Exception e) {
-            return null;
-        }
+        return rootDomainObject.readExecutionPeriodByOID(this.getExecutionPeriodID());
     }
 
     public String getExecutionPeriodLabel() {
@@ -216,12 +210,7 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
     }
 
     public ExecutionDegree getExecutionDegree() {
-        final Object[] args = { ExecutionDegree.class, this.getExecutionDegreeID() };
-        try {
-            return (ExecutionDegree) ServiceUtils.executeService(null, "ReadDomainObject", args);
-        } catch (Exception e) {
-            return null;
-        }
+        return rootDomainObject.readExecutionDegreeByOID(getExecutionDegreeID());
     }
 
     public String getExecutionDegreeLabel() {
@@ -998,8 +987,7 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
 
         if (this.getChosenRoomsIDs() != null && this.getChosenRoomsIDs().length != 0) {
             for (Integer chosenRoomID : this.getChosenRoomsIDs()) {
-                final Object[] args = { OldRoom.class, chosenRoomID };
-                OldRoom room = (OldRoom) ServiceUtils.executeService(null, "ReadDomainObject", args);
+                OldRoom room = (OldRoom) rootDomainObject.readSpaceByOID(chosenRoomID);
 
                 result.append(room.getNome());
                 result.append("; ");
@@ -1195,9 +1183,7 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
 
     private void fillInAuxiliarMaps() throws FenixFilterException, FenixServiceException {
         for (Integer executionCourseID : this.associatedExecutionCourses) {
-            final Object[] args = { ExecutionCourse.class, executionCourseID };
-            ExecutionCourse executionCourse = (ExecutionCourse) ServiceUtils.executeService(null,
-                    "ReadDomainObject", args);
+            ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseID);
             this.associatedExecutionCoursesNames.put(executionCourseID, executionCourse.getNome());
 
             List<SelectItem> items = new ArrayList<SelectItem>();
@@ -1273,9 +1259,7 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
                 list.add(integer);
             }
 
-            final Object[] args = { ExecutionCourse.class, integer };
-            ExecutionCourse executionCourse = (ExecutionCourse) ServiceUtils.executeService(null,
-                    "ReadDomainObject", args);
+            ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(integer);
 
             List<Integer> auxiliarArray = new ArrayList<Integer>();
             for (CurricularCourse curricularCourse : executionCourse.getAssociatedCurricularCourses()) {
@@ -1426,14 +1410,7 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
     }
 
     private List<ExecutionCourse> readExecutionCourses() {
-        ExecutionDegree executionDegree;
-        final Object[] argsRead = { ExecutionDegree.class, this.getSelectedExecutionDegreeID() };
-        try {
-            executionDegree = (ExecutionDegree) ServiceUtils.executeService(null, "ReadDomainObject",
-                    argsRead);
-        } catch (Exception e) {
-            return null;
-        }
+        final ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(getSelectedExecutionCourseID());
 
         try {
             final Object args[] = { executionDegree.getDegreeCurricularPlan().getIdInternal(),

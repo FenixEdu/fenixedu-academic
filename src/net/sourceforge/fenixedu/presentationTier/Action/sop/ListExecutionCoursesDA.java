@@ -77,15 +77,12 @@ public class ListExecutionCoursesDA extends FenixDispatchAction {
     }
 
     private ExecutionPeriod retrieveDomainObject(ActionForm form, HttpServletRequest request) throws FenixFilterException, FenixServiceException {
-        final IUserView userView = getUserView(request);
-
         final DynaActionForm dynaActionForm = (DynaActionForm) form;
         final String executionPeriodIDString = (String) dynaActionForm.get("executionPeriodID");
         final Integer executionPeriodID = executionPeriodIDString != null && executionPeriodIDString.length() > 0
                 ? Integer.valueOf(executionPeriodIDString) : null;
 
-        final Object args[] = { ExecutionPeriod.class, executionPeriodID };
-        return (ExecutionPeriod) ServiceUtils.executeService(userView, "ReadDomainObject", args);
+        return rootDomainObject.readExecutionPeriodByOID(executionPeriodID);
     }
 
     private void exportToXls(final ServletOutputStream servletOutputStream, final ExecutionPeriod executionPeriod) throws IOException {

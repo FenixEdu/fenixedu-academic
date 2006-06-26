@@ -18,17 +18,14 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Grouping;
 import net.sourceforge.fenixedu.domain.Lesson;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.StudentGroup;
-import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 
 import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionForm;
@@ -53,23 +50,8 @@ public class ShowStudentGroupInfo extends Action
 
 		try
 		{
-			Object argsAutenticacao[] =
-			{ username, password, requestURL, null};
-			IUserView userView = (IUserView) ServiceManagerServiceFactory.executeService(null, "Autenticacao", argsAutenticacao);
-
-			ExecutionCourse executionCourse = null;
-			Collection<Grouping> groupings = null;
-			try
-			{
-				executionCourse = (ExecutionCourse) ServiceUtils.executeService(userView, "ReadDomainObject", new Object[]
-				{ ExecutionCourse.class, executionCourseID });
-				groupings = executionCourse.getGroupings();
-			}
-			catch (FenixServiceException e)
-			{
-				e.printStackTrace();
-				throw new FenixActionException(e);
-			}
+			ExecutionCourse executionCourse = RootDomainObject.getInstance().readExecutionCourseByOID(executionCourseID);
+			Collection<Grouping> groupings = executionCourse.getGroupings();
 
 			if (executionCourse == null || groupings == null) return new String("-1");
 

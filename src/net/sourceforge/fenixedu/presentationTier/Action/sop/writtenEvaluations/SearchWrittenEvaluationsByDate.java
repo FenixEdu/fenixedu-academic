@@ -8,7 +8,6 @@ import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Evaluation;
@@ -16,9 +15,7 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixContextDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
-import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
 import net.sourceforge.fenixedu.util.DateFormatUtil;
 
 import org.apache.commons.lang.StringUtils;
@@ -104,13 +101,9 @@ public class SearchWrittenEvaluationsByDate extends FenixContextDispatchAction {
     }
 
 	private ExecutionPeriod getExecutionPeriod(HttpServletRequest request) throws FenixFilterException, FenixServiceException {
-		final IUserView userView = SessionUtils.getUserView(request);
-
 		final String executionPeriodString = (String) request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID);
 		final Integer executionPeriodID = Integer.valueOf(executionPeriodString);
-
-		final Object[] args = { ExecutionPeriod.class, executionPeriodID };
-		return (ExecutionPeriod) ServiceUtils.executeService(userView, "ReadDomainObject", args);
+        return rootDomainObject.readExecutionPeriodByOID(executionPeriodID);
 	}
 
 	private Date getDate(final DynaActionForm dynaActionForm) throws ParseException {

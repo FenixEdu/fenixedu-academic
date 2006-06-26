@@ -468,9 +468,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
     }
 
     public List<Exam> getExamList() throws FenixFilterException, FenixServiceException {
-        final Object[] args = { ExecutionCourse.class, this.getExecutionCourseID() };
-        ExecutionCourse executionCourse = (ExecutionCourse) ServiceUtils.executeService(null,
-                "ReadDomainObject", args);
+        ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(getExecutionCourseID());
 
         List<Exam> examsList = new ArrayList(executionCourse.getAssociatedExams());
         Collections.sort(examsList, new BeanComparator("dayDate"));
@@ -478,9 +476,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
     }
 
     public List<OnlineTest> getOnlineTestList() throws FenixFilterException, FenixServiceException {
-        final Object[] args = { ExecutionCourse.class, this.getExecutionCourseID() };
-        ExecutionCourse executionCourse = (ExecutionCourse) ServiceUtils.executeService(null,
-                "ReadDomainObject", args);
+        ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(getExecutionCourseID());
 
         List<OnlineTest> onlineTestList = new ArrayList(executionCourse.getAssociatedOnlineTests());
         Collections.sort(onlineTestList, new BeanComparator("distributedTest.beginDateDate"));
@@ -488,9 +484,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
     }
     
     public List<WrittenTest> getWrittenTestList() throws FenixFilterException, FenixServiceException {
-        final Object[] args = { ExecutionCourse.class, this.getExecutionCourseID() };
-        ExecutionCourse executionCourse = (ExecutionCourse) ServiceUtils.executeService(null,
-                "ReadDomainObject", args);
+        ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(getExecutionCourseID());
 
         List<WrittenTest> writtenTestList = new ArrayList(executionCourse.getAssociatedWrittenTests());
         Collections.sort(writtenTestList, new BeanComparator("dayDate"));
@@ -500,8 +494,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
     public Evaluation getEvaluation() throws FenixFilterException, FenixServiceException {
         if (this.evaluation == null) {
             if (this.getEvaluationID() != null) {
-                final Object[] args = { Evaluation.class, this.getEvaluationID() };
-                evaluation = (Evaluation) ServiceUtils.executeService(null, "ReadDomainObject", args);
+                evaluation = rootDomainObject.readEvaluationByOID(getEvaluationID());
             } else { // Should not happen
                 return null;
             }
@@ -598,9 +591,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
         executionCourseIDs.add(this.getExecutionCourseID().toString());
 
         List<String> curricularCourseScopeIDs = new ArrayList<String>();
-        final Object[] argsToReadExecutionCourse = { ExecutionCourse.class, this.getExecutionCourseID() };
-        ExecutionCourse executionCourse = (ExecutionCourse) ServiceUtils.executeService(null,
-                "ReadDomainObject", argsToReadExecutionCourse);
+        ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(getExecutionCourseID());
         for (CurricularCourse curricularCourse : executionCourse.getAssociatedCurricularCourses()) {
             for (CurricularCourseScope curricularCourseScope : curricularCourse.getScopes()) {
                 if (curricularCourseScope.getCurricularSemester().getSemester().equals(
@@ -628,8 +619,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
     }
 
     public ExecutionCourse getExecutionCourse() throws FenixFilterException, FenixServiceException {
-        final Object[] args = { ExecutionCourse.class, getExecutionCourseID() };
-        return (ExecutionCourse) ServiceUtils.executeService(null, "ReadDomainObject", args);
+        return rootDomainObject.readExecutionCourseByOID(getExecutionCourseID());
     }
 
     public Map<Integer, String> getMarks() throws FenixFilterException, FenixServiceException {
@@ -725,15 +715,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
         executionCourseIDs.add(this.getExecutionCourseID().toString());
 
         final List<String> curricularCourseScopeIDs = new ArrayList<String>();
-        final Object[] argsToReadExecutionCourse = { ExecutionCourse.class, this.getExecutionCourseID() };
-        ExecutionCourse executionCourse = null;
-        try {
-            executionCourse = (ExecutionCourse) ServiceUtils.executeService(null, "ReadDomainObject", argsToReadExecutionCourse);
-        } catch (Exception e) {
-            String errorMessage = e.getMessage();
-            this.setErrorMessage(errorMessage);
-            return "";
-        }
+        ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(getExecutionCourseID());
 
         for (CurricularCourse curricularCourse : executionCourse.getAssociatedCurricularCourses()) {
             for (CurricularCourseScope curricularCourseScope : curricularCourse.getScopes()) {
@@ -940,10 +922,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
     }
 
     public List<Attends> getExecutionCourseAttends() throws FenixFilterException, FenixServiceException {
-        final Object[] args = { ExecutionCourse.class, this.getExecutionCourseID() };
-        ExecutionCourse executionCourse = (ExecutionCourse) ServiceUtils.executeService(null,
-                "ReadDomainObject", args);
-        
+        ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(getExecutionCourseID());
         List<Attends> executionCourseAttends = new ArrayList(executionCourse.getAttends());
         Collections.sort(executionCourseAttends, new BeanComparator("aluno.number"));
         return executionCourseAttends;

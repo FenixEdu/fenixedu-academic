@@ -84,8 +84,7 @@ public class ExecutionPeriodDA extends FenixContextDispatchAction {
 
         request.setAttribute(SessionConstants.LABELLIST_EXECUTIONPERIOD, executionPeriodsLabelValueList);
 
-        final Object[] args = { ExecutionPeriod.class, selectedExecutionPeriod.getIdInternal() };
-        final ExecutionPeriod executionPeriod = (ExecutionPeriod) ServiceUtils.executeService(userView, "ReadDomainObject", args);
+        final ExecutionPeriod executionPeriod = rootDomainObject.readExecutionPeriodByOID(selectedExecutionPeriod.getIdInternal());
         final List<ExecutionDegree> executionDegrees = new ArrayList<ExecutionDegree>(executionPeriod.getExecutionYear().getExecutionDegrees());
         Collections.sort(executionDegrees, executionDegreeComparator);
         request.setAttribute("executionPeriodDomainObject", executionPeriod);

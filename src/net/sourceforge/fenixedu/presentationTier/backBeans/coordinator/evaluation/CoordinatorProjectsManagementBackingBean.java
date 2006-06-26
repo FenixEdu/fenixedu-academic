@@ -78,9 +78,7 @@ public class CoordinatorProjectsManagementBackingBean extends CoordinatorProject
     public Evaluation getEvaluation() {
         try {
             if (this.evaluation == null && this.getEvaluationID() != null) {
-                final Object[] args = { Project.class, this.getEvaluationID() };
-                this.evaluation = (Evaluation) ServiceUtils.executeService(null, "ReadDomainObject",
-                        args);
+                this.evaluation = rootDomainObject.readEvaluationByOID(getEvaluationID());
             }
             return this.evaluation;
         } catch (Exception e) {

@@ -6,7 +6,7 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.DomainObject;
-import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 
 import org.apache.struts.action.Action;
 
@@ -36,13 +36,9 @@ public abstract class NavigationAction extends Action {
     }
 
     protected DomainObject getTargetObject(HttpServletRequest request) throws FenixFilterException, FenixServiceException, ClassNotFoundException {
-        IUserView userView = getUserView(request);
-
         Integer oid = getGivenOid(request);
         Class type = getGivenType(request);
-        
-        Object[] args = { type, oid };
-        return (DomainObject) ServiceUtils.executeService(userView, "ReadDomainObject", args);
+        return RootDomainObject.getInstance().readDomainObjectByOID(type, oid);
     }
     
     protected String getCompleteTypeName(String typeName) {

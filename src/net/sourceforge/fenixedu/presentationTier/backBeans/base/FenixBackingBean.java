@@ -139,8 +139,7 @@ public class FenixBackingBean {
     @Deprecated
     public DomainObject readDomainObject(final Class clazz, final Integer idInternal)
             throws FenixFilterException, FenixServiceException {
-        return (DomainObject) ServiceUtils.executeService(getUserView(), "ReadDomainObject",
-                new Object[] { clazz, idInternal });
+        return rootDomainObject.readDomainObjectByOID(clazz, idInternal);
     }
 
     protected Integer getAndHoldIntegerParameter(final String parameterName) {

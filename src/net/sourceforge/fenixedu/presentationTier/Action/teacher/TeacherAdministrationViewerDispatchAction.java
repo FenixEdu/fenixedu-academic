@@ -1011,19 +1011,16 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
     }
 
     public ActionForward prepareEditItemFilePermissions(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixActionException,
-            FenixFilterException, FenixServiceException {
-        HttpSession session = request.getSession(false);
-        IUserView userView = getUserView(request);
-        DynaActionForm editItemFilePermissionsForm = (DynaActionForm) form;
-        Integer fileItemId = getFileItemId(request);
-        Integer itemId = getItemCode(request);
+	    HttpServletRequest request, HttpServletResponse response) throws FenixActionException,
+	    FenixFilterException, FenixServiceException {
+	DynaActionForm editItemFilePermissionsForm = (DynaActionForm) form;
+	Integer fileItemId = getFileItemId(request);
+	Integer itemId = getItemCode(request);
 
         ISiteComponent itemsComponent = new InfoSiteItems();
         readSiteView(request, itemsComponent, null, itemId, null);
 
-        FileItem fileItem = (FileItem) ServiceUtils.executeService(userView, "ReadDomainObject",
-                new Object[] { FileItem.class, fileItemId });
+	FileItem fileItem = rootDomainObject.readFileItemByOID(fileItemId);
 
         editItemFilePermissionsForm.set("fileItemId", fileItem.getIdInternal());
         editItemFilePermissionsForm.set("itemCode", itemId);

@@ -168,8 +168,7 @@ public class WeeklyWorkLoadDA extends FenixDispatchAction {
         final String domainObjectIDString = (String) dynaActionForm.get(formAttributeName);
         final Integer domainObjectID = domainObjectIDString == null || domainObjectIDString.length() == 0 ?
                 null : Integer.valueOf(domainObjectIDString);
-        final Object[] args = { clazz, domainObjectID };
-        final DomainObject domainObject = (DomainObject) executeService(request, "ReadDomainObject", args);
+        final DomainObject domainObject = rootDomainObject.readDomainObjectByOID(clazz, domainObjectID);
         request.setAttribute(requestAttributeName, domainObject);
         return domainObject;
     }

@@ -49,8 +49,7 @@ public class WebsiteTypeManagement extends FenixDispatchAction {
             return start(mapping, actionForm, request, response);
         }
         
-        IUserView userView = SessionUtils.getUserView(request);
-        WebsiteType websiteType = (WebsiteType) ServiceUtils.executeService(userView, "ReadDomainObject", new Object[] { WebsiteType.class, oid });
+        WebsiteType websiteType = rootDomainObject.readWebsiteTypeByOID(oid);
         
         if (websiteType == null) {
             addError(request, "cms.websiteTypeManagement.websiteType.notFound");
@@ -230,8 +229,7 @@ public class WebsiteTypeManagement extends FenixDispatchAction {
             return null;
         }
         
-        IUserView userView = SessionUtils.getUserView(request);
-        return ServiceUtils.executeService(userView, "ReadDomainObject", new Object[] { type, oid });
+        return rootDomainObject.readDomainObjectByOID(clazz, oid);
     }
     
     protected ActionForward redirect(String name, ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -244,8 +242,7 @@ public class WebsiteTypeManagement extends FenixDispatchAction {
             return start(mapping, actionForm, request, response);
         }
         
-        IUserView userView = SessionUtils.getUserView(request);
-        WebsiteType websiteType = (WebsiteType) ServiceUtils.executeService(userView, "ReadDomainObject", new Object[] { WebsiteType.class, oid });
+        WebsiteType websiteType = rootDomainObject.readWebsiteTypeByOID(oid);
         
         if (websiteType == null) {
             addError(request, "cms.websiteTypeManagement.websiteType.notFound");

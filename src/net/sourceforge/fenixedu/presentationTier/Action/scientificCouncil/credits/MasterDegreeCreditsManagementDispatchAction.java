@@ -98,14 +98,11 @@ public class MasterDegreeCreditsManagementDispatchAction extends FenixDispatchAc
             HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
             FenixServiceException {
 
-        IUserView userView = SessionUtils.getUserView(request);
         DynaActionForm dynaForm = (DynaActionForm) form;
         Integer executionDegreeID = (Integer) dynaForm.get("executionDegreeID");
 
         if (executionDegreeID != null) {
-            Object[] args = { ExecutionDegree.class, executionDegreeID };
-            ExecutionDegree executionDegree = (ExecutionDegree) ServiceUtils.executeService(userView,
-                    "ReadDomainObject", args);
+            ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(executionDegreeID);
             request.setAttribute("executionDegree", executionDegree);
 
             List<CurricularCourse> curricularCourses = executionDegree.getDegreeCurricularPlan()
@@ -132,26 +129,18 @@ public class MasterDegreeCreditsManagementDispatchAction extends FenixDispatchAc
     public ActionForward prepareEdit(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 
-        IUserView userView = SessionUtils.getUserView(request);
-
         DynaActionForm dynaForm = (DynaActionForm) form;
 
         Integer curricularCourseID = (Integer) dynaForm.get("curricularCourseID");
-        Object args1[] = { CurricularCourse.class, curricularCourseID };
-        CurricularCourse curricularCourse = (CurricularCourse) ServiceUtils.executeService(userView,
-                "ReadDomainObject", args1);
+        CurricularCourse curricularCourse = (CurricularCourse) rootDomainObject.readDegreeModuleByOID(curricularCourseID);
 
         Integer executionDegreeID = (Integer) dynaForm.get("executionDegreeID");
         ExecutionDegree executionDegree = null;
         if (executionDegreeID != null) {
-            Object args2[] = { ExecutionDegree.class, executionDegreeID };
-            executionDegree = (ExecutionDegree) ServiceUtils.executeService(userView,
-                    "ReadDomainObject", args2);
+            executionDegree = rootDomainObject.readExecutionDegreeByOID(executionDegreeID);
         } else {
             Integer executionCourseID = Integer.parseInt(request.getParameter("executionCourseId"));
-            Object args3[] = { ExecutionCourse.class, executionCourseID };
-            ExecutionCourse executionCourse = (ExecutionCourse) ServiceUtils.executeService(userView,
-                    "ReadDomainObject", args3);
+            ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseID);
             executionDegree = curricularCourse.getDegreeCurricularPlan().getExecutionDegreeByYear(
                     executionCourse.getExecutionPeriod().getExecutionYear());
 

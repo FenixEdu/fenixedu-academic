@@ -552,9 +552,7 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
     }
 
     public Person getPerson() throws FenixFilterException, FenixServiceException {
-
-        final Object[] argsToRead = { Person.class, this.getPersonID() };
-        return (Person) ServiceUtils.executeService(null, "ReadDomainObject", argsToRead);
+        return (Person) rootDomainObject.readPartyByOID(getPersonID());
     }
 
     public int getPersonsNumber() throws FenixFilterException, FenixServiceException {
@@ -596,11 +594,8 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
     }
 
     public Unit getUnit() throws FenixFilterException, FenixServiceException {
-
         if (this.unit == null && this.getUnitID() != null) {
-            final Object[] argsToRead = { Unit.class, this.getUnitID() };
-            this.unit = (Unit) ServiceUtils.executeService(null, "ReadDomainObject", argsToRead);
-
+            this.unit = (Unit) rootDomainObject.readPartyByOID(getUnitID());
         } else if (this.unit == null && this.getPersonFunctionID() != null) {
             this.unit = this.getPersonFunction().getFunction().getUnit();
         }
@@ -648,9 +643,7 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
 
     public Function getFunction() throws FenixFilterException, FenixServiceException {
         if (this.function == null && this.getFunctionID() != null) {
-            final Object[] argsToRead = { Function.class, this.getFunctionID() };
-            this.function = (Function) ServiceUtils.executeService(null, "ReadDomainObject", argsToRead);
-
+            this.function = (Function) rootDomainObject.readAccountabilityTypeByOID(getFunctionID());
         } else if (this.function == null && this.getPersonFunctionID() != null) {
             this.function = this.getPersonFunction().getFunction();
         }

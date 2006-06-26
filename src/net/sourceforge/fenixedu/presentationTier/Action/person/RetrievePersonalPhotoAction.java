@@ -57,8 +57,7 @@ public class RetrievePersonalPhotoAction extends FenixDispatchAction {
         IUserView userView = SessionUtils.getUserView(request);
         Integer personID = new Integer(request.getParameter("personCode"));
 
-        Object[] args = { Person.class, personID };
-        Person person = (Person) ServiceUtils.executeService(userView, "ReadDomainObject", args);
+        Person person = (Person) rootDomainObject.readPartyByOID(personID);
         FileEntry personalPhoto = person.getPersonalPhoto();
 
         if (personalPhoto != null) {

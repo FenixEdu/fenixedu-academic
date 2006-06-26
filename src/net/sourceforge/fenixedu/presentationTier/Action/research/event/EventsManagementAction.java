@@ -37,7 +37,7 @@ public class EventsManagementAction extends FenixDispatchAction {
     	
     	IUserView userView = getUserView(request);
     	Integer oid = Integer.parseInt(request.getParameter("oid"));
-    	EventParticipation participation = (EventParticipation) ServiceUtils.executeService(userView, "ReadDomainObject", new Object[] { EventParticipation.class, oid });
+        EventParticipation participation = rootDomainObject.readEventParticipationByOID(oid);
     	
     	request.setAttribute("person", userView.getPerson());
     	request.setAttribute("eventParticipation", participation);

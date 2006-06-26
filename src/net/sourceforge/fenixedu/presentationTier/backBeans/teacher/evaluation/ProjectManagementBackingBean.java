@@ -119,23 +119,14 @@ public class ProjectManagementBackingBean extends EvaluationManagementBackingBea
 
     private Project getProject() {
         if (this.project == null && this.getProjectID() != null) {
-            try {
-                final Object[] args = { Project.class, getProjectID() };
-                this.project = (Project) ServiceUtils.executeService(null, "ReadDomainObject", args);
-            } catch (FenixFilterException e) {
-                return null;
-            } catch (FenixServiceException e) {
-                return null;
-            }
+            this.project = (Project) rootDomainObject.readEvaluationByOID(getProjectID());
         }
         return this.project;
     }
 
     public List<Project> getAssociatedProjects() throws FenixFilterException, FenixServiceException {
         if (this.associatedProjects == null) {
-            final Object[] args = { ExecutionCourse.class, this.getExecutionCourseID() };
-            final ExecutionCourse executionCourse = (ExecutionCourse) ServiceUtils.executeService(null,
-                    "ReadDomainObject", args);
+            final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(getExecutionCourseID());
             this.associatedProjects = executionCourse.getAssociatedProjects();
             Collections.sort(this.associatedProjects, new BeanComparator("begin"));
         }

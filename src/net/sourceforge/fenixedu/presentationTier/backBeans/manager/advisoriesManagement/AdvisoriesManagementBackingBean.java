@@ -9,7 +9,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
@@ -115,9 +114,7 @@ public class AdvisoriesManagementBackingBean extends FenixBackingBean {
 
     public Advisory getAdvisory() throws FenixFilterException, FenixServiceException {
         if (advisory == null) {
-            final Object[] argsToRead = { Advisory.class, this.getAdvisoryID() };
-            this.advisory = (Advisory) ServiceUtils
-                    .executeService(null, "ReadDomainObject", argsToRead);
+            this.advisory = rootDomainObject.readAdvisoryByOID(this.getAdvisoryID());
         }
         return advisory;
     }

@@ -1,9 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.renderers.converters;
 
-import net.sourceforge.fenixedu.accessControl.AccessControl;
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.domain.DomainObject;
-import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.renderers.components.converters.ConversionException;
 import net.sourceforge.fenixedu.renderers.components.converters.Converter;
 
@@ -28,9 +26,7 @@ public class DomainObjectKeyConverter extends Converter {
             Integer oid = Integer.parseInt(parts[1]);
             
             try {
-                IUserView userView = AccessControl.getUserView();
-                
-                return ServiceUtils.executeService(userView, "ReadDomainObject", new Object[] { keyType, oid });
+                return RootDomainObject.getInstance().readDomainObjectByOID(keyType, oid);
             } catch (Exception e) {
                 throw new ConversionException("could not get object with given key: " + key, e);
             }

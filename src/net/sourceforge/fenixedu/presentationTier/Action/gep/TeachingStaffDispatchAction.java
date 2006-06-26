@@ -107,10 +107,8 @@ public class TeachingStaffDispatchAction extends FenixDispatchAction {
         IUserView userView = SessionUtils.getUserView(request);
 
         Integer executionCourseID = Integer.valueOf(request.getParameter("executionCourseID"));
-        Object[] args = { ExecutionCourse.class, executionCourseID };
 
-        ExecutionCourse executionCourse = (ExecutionCourse) ServiceUtils.executeService(userView,
-                "ReadDomainObject", args);
+        ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseID);
 
         List institutions = (List) ServiceUtils.executeService(userView, "ReadAllInstitutions", null);
         Collections.sort(institutions, new BeanComparator("name"));

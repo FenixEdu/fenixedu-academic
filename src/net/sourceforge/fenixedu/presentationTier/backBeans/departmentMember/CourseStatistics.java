@@ -2,7 +2,6 @@ package net.sourceforge.fenixedu.presentationTier.backBeans.departmentMember;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 import javax.faces.event.ActionEvent;
 import javax.faces.event.ValueChangeEvent;
@@ -17,11 +16,7 @@ import net.sourceforge.fenixedu.dataTransferObject.department.DegreeCourseStatis
 import net.sourceforge.fenixedu.dataTransferObject.department.ExecutionCourseStatisticsDTO;
 import net.sourceforge.fenixedu.domain.CompetenceCourse;
 import net.sourceforge.fenixedu.domain.Department;
-import net.sourceforge.fenixedu.domain.Enrolment;
-import net.sourceforge.fenixedu.domain.EnrolmentEvaluation;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
-import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationType;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean;
 
@@ -188,12 +183,6 @@ public class CourseStatistics extends FenixBackingBean {
     }
 
     public CompetenceCourse getCompetenceCourse() throws FenixFilterException, FenixServiceException {
-        if (competenceCourse == null) {
-            competenceCourse = (CompetenceCourse) ServiceUtils.executeService(getUserView(),
-                    "ReadDomainObject", new Object[] { CompetenceCourse.class,
-                            this.getCompetenceCourseId() });
-        }
-
-        return competenceCourse;
+        return competenceCourse == null ? rootDomainObject.readCompetenceCourseByOID(getCompetenceCourseId()) : competenceCourse;
     }
 }

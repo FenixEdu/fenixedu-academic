@@ -6,7 +6,6 @@ import java.util.TreeSet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.commons.collections.Table;
@@ -20,9 +19,7 @@ import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.SchoolClass;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixContextDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
-import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
 import net.sourceforge.fenixedu.util.PeriodState;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -40,13 +37,10 @@ public class ShowClassesDispatchAction extends FenixContextDispatchAction {
         
         getInfoDegreeCurricularPlan(request, degreeOID);
 
-        final IUserView userView = SessionUtils.getUserView(request);
         final Integer executionPeriodID = ((InfoExecutionPeriod) request.getAttribute(SessionConstants.EXECUTION_PERIOD)).getIdInternal();
-        final Object[] args1 = { ExecutionPeriod.class, executionPeriodID };
-        final ExecutionPeriod executionPeriod = (ExecutionPeriod) ServiceUtils.executeService(userView, "ReadDomainObject", args1);
+        final ExecutionPeriod executionPeriod = rootDomainObject.readExecutionPeriodByOID(executionPeriodID);
 
-        final Object[] args2 = { Degree.class, degreeOID };
-        final Degree degree = (Degree) ServiceUtils.executeService(userView, "ReadDomainObject", args2);
+        final Degree degree = rootDomainObject.readDegreeByOID(degreeOID);
 
         if (executionPeriod != null) {
         	final ExecutionPeriod nextExecutionPeriod = executionPeriod.getNextExecutionPeriod();

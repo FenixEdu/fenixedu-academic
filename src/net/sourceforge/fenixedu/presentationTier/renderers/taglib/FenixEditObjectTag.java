@@ -2,8 +2,7 @@ package net.sourceforge.fenixedu.presentationTier.renderers.taglib;
 
 import javax.servlet.jsp.JspException;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.presentationTier.renderers.factories.DomainMetaObject;
 import net.sourceforge.fenixedu.renderers.model.MetaObject;
 import net.sourceforge.fenixedu.renderers.schemas.Schema;
@@ -57,13 +56,9 @@ public class FenixEditObjectTag extends EditObjectTag {
 
     protected Object getPersistentObject() throws JspException {
         if (getOid() != null && getType() != null) {
-            IUserView userView = (IUserView) pageContext.getAttribute("UserView", getScopeByName("Session"));
-    
             try {
                 Class type = Class.forName(getType());
-                Object[] args = { type, Integer.valueOf(getOid())};
-
-                return ServiceUtils.executeService(userView, "ReadDomainObject", args);
+                return RootDomainObject.getInstance().readDomainObjectByOID(type, Integer.valueOf(getOid()));
             } catch (Exception e) {
                 throw new JspException(e);
             } 
