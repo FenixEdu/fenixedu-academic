@@ -616,10 +616,10 @@ public class Teacher extends Teacher_Base {
     private int getSabbaticalCredits(int sabbaticalMonths, OccupationPeriod lessonsPeriod, TeacherServiceExemption teacherServiceExemption,
             ExecutionPeriod executionPeriod) {
         
-        double overlapPercentage1 = getOverlapPercentage(lessonsPeriod, teacherServiceExemption);
-        double overlapPercentage2 = 0.0;
+        double overlapPercentage1 = getOverlapPercentage(lessonsPeriod, teacherServiceExemption), overlapPercentage2 = 0.0;
+        
         if(overlapPercentage1 == 1.0) {
-            return 6;
+            return getCreditsByServiceExemptionType(teacherServiceExemption.getType(), lessonsPeriod);
         } else if(executionPeriod.containsDay(teacherServiceExemption.getStart())) {                                                                 
             ExecutionPeriod nextExecutionPeriod = executionPeriod.getNextExecutionPeriod();
             if(sabbaticalMonths >= 11) {                
@@ -630,7 +630,7 @@ public class Teacher extends Teacher_Base {
                 overlapPercentage2 = getOverlapPercentage(nextLessonsPeriod, teacherServiceExemption);                          
             }
             if(overlapPercentage1 > overlapPercentage2) {
-               return 6; 
+               return getCreditsByServiceExemptionType(teacherServiceExemption.getType(), lessonsPeriod); 
             }            
         } else {
             ExecutionPeriod previousExecutionPeriod = executionPeriod.getPreviousExecutionPeriod();
@@ -640,10 +640,17 @@ public class Teacher extends Teacher_Base {
             OccupationPeriod previousLessonsPeriod = previousExecutionPeriod.getLessonsPeriod();
             overlapPercentage2 = getOverlapPercentage(previousLessonsPeriod, teacherServiceExemption);
             if(overlapPercentage1 > overlapPercentage2) {
-                return 6; 
+                return getCreditsByServiceExemptionType(teacherServiceExemption.getType(), lessonsPeriod); 
             }                        
         }        
         return 0;
+    }
+    
+    private int getCreditsByServiceExemptionType(ServiceExemptionType serviceExemptionType, OccupationPeriod occupationPeriod) {
+        if (serviceExemptionType.equals(ServiceExemptionType.SABBATICAL)) {
+            return 6;
+        }
+        return getHoursByCategory(occupationPeriod);        
     }
 
     private int getSabbaticalMonthDuration(TeacherServiceExemption teacherServiceExemption) {        

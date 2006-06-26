@@ -20,6 +20,10 @@
 	<b><bean:message key="label.execution-period" />:</b> <bean:write name="executionCourse" property="executionPeriod.name"/> - <bean:write name="executionCourse" property="executionPeriod.executionYear.year"/> <br />	
 </p>
 
+<p>
+<bean:message key="label.teaching.service.help.top"/>
+</p>
+
 <span class="error"><html:errors/></span>
 <html:messages id="message" message="true">
 	<span class="error">
@@ -139,6 +143,7 @@
 				</logic:notEqual>	
 		</logic:iterate>
 	</table>
+	<p class="mtop0"><bean:message key="label.teaching.service.help.bottom"/></p>
 	<p>
 	<html:submit styleClass="inputbutton">
 		<bean:message key="button.save"/>
@@ -146,5 +151,5 @@
 	<html:submit styleClass="inputbutton" onclick="this.form.method.value='cancel';this.form.page.value='0'">
 			<bean:message key="button.cancel"/>
 	</html:submit>
-	</p>
+	</p>	
 </html:form>

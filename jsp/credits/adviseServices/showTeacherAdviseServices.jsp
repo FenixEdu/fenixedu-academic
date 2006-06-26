@@ -12,6 +12,10 @@
 	<b><bean:message key="label.execution-period" /></b> <bean:write name="executionPeriod" property="name"/> - <bean:write name="executionPeriod" property="executionYear.year"/><br />	
 </p>
 
+<p>
+<bean:message key="label.teacher.advise.service.help"/>
+</p>	
+
 <h3>
 	<bean:message key="label.teacher-dfp-student.add-student"/>			
 </h3>
