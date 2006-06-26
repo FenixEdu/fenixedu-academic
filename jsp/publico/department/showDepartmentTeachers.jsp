@@ -38,7 +38,7 @@
 		
 		<fc:dataRepeater value="#{DepartmentManagement.teachersByCategory[category]}" var="teacher" >
 				<h:outputText value="<p style='padding-left: 2em'>" escape="false"/>
-				<h:outputLink rendered="#{!empty teacher.person.homepage && teacher.person.homepage.activated}" value="../../homepage/#{teacher.person.user.userUId}" target="_blank">
+				<h:outputLink rendered="#{!empty teacher.person.homepage && teacher.person.homepage.activated}" value="../../homepage/#{teacher.person.user.userUId}">
 					<h:outputText value="#{teacher.person.nome}"/>
 				</h:outputLink>
 				<h:outputText rendered="#{empty teacher.person.homepage || !teacher.person.homepage.activated}" value="#{teacher.person.nome}"/>

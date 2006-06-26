@@ -20,6 +20,46 @@ vertical-align: top;
 }
 </style>
 
+	<logic:present name="homepage" property="person.employee.currentDepartmentWorkingPlace">
+		<bean:define id="institutionUrl" type="java.lang.String">
+			<bean:message key="institution.url" bundle="GLOBAL_RESOURCES"/>
+		</bean:define>
+		<bean:define id="institutionUrlStructure" type="java.lang.String">
+			<bean:message key="institution.url" bundle="GLOBAL_RESOURCES"/>
+			<bean:message key="link.institution.structure" bundle="GLOBAL_RESOURCES"/>
+		</bean:define>
+		<bean:define id="departmentUrl" type="java.lang.String">
+			<bean:write name="homepage" property="person.employee.currentDepartmentWorkingPlace.departmentUnit.webAddress"/>
+		</bean:define>
+		<bean:define id="departmentUnitID" type="java.lang.String">
+			<bean:write name="homepage" property="person.employee.currentDepartmentWorkingPlace.departmentUnit.idInternal"/>
+		</bean:define>
+
+		<div class="breadcumbs">
+			<html:link href="<%= institutionUrl %>">
+				<bean:message key="institution.name.abbreviation" bundle="GLOBAL_RESOURCES"/>
+			</html:link>
+			&nbsp;&gt;&nbsp;
+			<html:link href="<%=institutionUrlStructure%>">
+				<bean:message bundle="PUBLIC_DEPARTMENT_RESOURCES" key="structure"/>
+			</html:link>
+			&nbsp;&gt;&nbsp;
+			<html:link href="department/showDepartments.faces">
+				<bean:message bundle="PUBLIC_DEPARTMENT_RESOURCES" key="academic.units"/>
+			</html:link>
+			&nbsp;&gt;&nbsp;			
+			<html:link href="<%=departmentUrl%>">
+				<bean:write name="homepage" property="person.employee.currentDepartmentWorkingPlace.realName"/>
+			</html:link>
+			&nbsp;&gt;&nbsp;			
+			<html:link href="<%= "department/showDepartmentTeachers.faces?selectedDepartmentUnitID=" + departmentUnitID %>">
+				<bean:message bundle="PUBLIC_DEPARTMENT_RESOURCES" key="department.faculty"/>
+			</html:link>
+			&nbsp;&gt;&nbsp;			
+			<bean:message bundle="HOMEPAGE_RESOURCES" key="link.homepage.home"/>
+		</div>
+	</logic:present>
+
 		<h1 id="no">
 			<%-- <bean:message bundle="HOMEPAGE_RESOURCES" key="title.homepage.of"/>: --%>
 			<bean:write name="homepage" property="name"/>
