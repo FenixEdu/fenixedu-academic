@@ -57,35 +57,29 @@ public class UniqueAcronymCreator<T extends DomainObject> {
         
         final String slotValue = (String) PropertyUtils.getProperty(object, slotName);
         final String slotValueWithNoAccents = noAccent(slotValue);
+        
+        logger.info("slotValue -> " + slotValue);
+        logger.info("slotValueWithNoAccents -> " + slotValueWithNoAccents);
 
         objectId = (Integer) PropertyUtils.getProperty(object, "idInternal");
         splitsName = slotValueWithNoAccents.split(" ");
         
         String acronym = constructBasicAcronym(new StringBuilder());
         
-        // ?
-        //addAcception(acronym);
-        
         if (canAccept(acronym)) {
             return acronym;
         } else {
             acronym = constructExtendedAcronym(acronym);
             
-            // ?
-            //addAcception(acronym);
-
             if (canAccept(acronym)) {
                 return acronym;
             } else {
                 int index = 3;
 
                 StringBuilder acronymAux = new StringBuilder(acronym.toString());
-                while (!canAccept(acronym.toString())) {
+                while (!canAccept(acronym.toString()) && (index <= slotValueWithNoAccents.length())) {
                     acronymAux = appendLastChar(index, acronymAux);
                     acronym = acronymAux.toString();
-                    
-                    // ?                    
-                    //addAcception(acronym);
                     
                     if (canAccept(acronym)) {
                         return acronym;
@@ -328,17 +322,6 @@ public class UniqueAcronymCreator<T extends DomainObject> {
         rejectionSet.add("(sm)");
         rejectionSet.add("(taguspark)");
         rejectionSet.add("");
-        rejectionSet.add("i");
-        rejectionSet.add("ii");
-        rejectionSet.add("iii");
-        rejectionSet.add("iv");
-        rejectionSet.add("v");
-        rejectionSet.add("vi");
-        rejectionSet.add("vii");
-        rejectionSet.add("viii");
-        rejectionSet.add("ix");
-        rejectionSet.add("x");
-
 
         acceptSet.add("1");
         acceptSet.add("2");
@@ -369,6 +352,16 @@ public class UniqueAcronymCreator<T extends DomainObject> {
         acceptSet.add("(SIE)");
         acceptSet.add("(TAGUSPARK)");
         
+        numerationSet.add("i");
+        numerationSet.add("ii");
+        numerationSet.add("iii");
+        numerationSet.add("iv");
+        numerationSet.add("v");
+        numerationSet.add("vi");
+        numerationSet.add("vii");
+        numerationSet.add("viii");
+        numerationSet.add("ix");
+        numerationSet.add("x");
         numerationSet.add("I");
         numerationSet.add("II");
         numerationSet.add("III");
