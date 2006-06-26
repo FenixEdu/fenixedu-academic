@@ -347,14 +347,6 @@ script.isAlive.check.slide=${script.isAlive.check.slide}
 			  				   property="cas.logoutUrl"/>
 				<replacefilter token="@password.generator@"
 		    			   property="password.generator"/>	
-				<replacefilter token="@dspace.serverUrl@"
-							property="dspace.serverUrl"/>
-				<replacefilter token="@dspace.downloadUriPrefix@"
-							property="dspace.downloadUriPrefix"/>
-				<replacefilter token="@dspace.username@"
-							property="dspace.username"/>
-				<replacefilter token="@dspace.password@"
-								property="dspace.password"/>
 				<replacefilter token="@language@"
 						    property="language"/>	
 				<replacefilter token="@location@"
@@ -485,6 +477,21 @@ script.isAlive.check.slide=${script.isAlive.check.slide}
 				<include name="berserk.properties"/>
 				<replacefilter token="@application.filterBroker@"
 			  				   property="application.filterBroker"/>
+			</replace>
+			
+			<replace encoding="${encoding}" dir="${build.home.webinf.classes}"
+					 propertyFile="build.properties">
+				<include name="FileManagerConfiguration.properties"/>
+				<replacefilter token="@file.manager.implementation.class@" 
+			    			   property="file.manager.implementation.class"/>
+				<replacefilter token="@dspace.serverUrl@"
+							property="dspace.serverUrl"/>
+				<replacefilter token="@dspace.downloadUriFormat@"
+							property="dspace.downloadUriFormat"/>
+				<replacefilter token="@dspace.username@"
+							property="dspace.username"/>
+				<replacefilter token="@dspace.password@"
+							property="dspace.password"/>
 			</replace>
 		</sequential>
 	</target>
