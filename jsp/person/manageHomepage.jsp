@@ -15,6 +15,7 @@
 <style type="text/css">
 .tdcheck {
 vertical-align: top;
+width: 0.5em;
 }
 </style>
 

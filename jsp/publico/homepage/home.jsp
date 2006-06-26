@@ -65,6 +65,7 @@ vertical-align: top;
 			<bean:write name="homepage" property="name"/>
 		</h1>
 
+
 	<table class="invisible">
 		<!-- photo -->
 		<logic:equal name="homepage" property="showPhoto" value="true">
@@ -107,8 +108,6 @@ vertical-align: top;
 		<!-- research unit -->
 		<logic:equal name="homepage" property="showResearchUnitHomepage" value="true">
 		<tr>
-			
-			
 			<logic:present name="homepage" property="person.teacher">
 				<logic:present name="homepage" property="person.employee.currentContract">
 					<logic:present name="homepage" property="researchUnitHomepage">
@@ -125,18 +124,18 @@ vertical-align: top;
 							</logic:match>
 							<logic:notMatch name="homepage" property="researchUnitHomepage" value="http://">
 								<logic:match name="homepage" property="researchUnitHomepage" value="https://">
-									<th><bean:define id="url" type="java.lang.String" name="homepage" property="researchUnitHomepage"/></th>
+									<bean:define id="url" type="java.lang.String" name="homepage" property="researchUnitHomepage"/>
+									<th><bean:message key="label.homepage.showResearchUnitHomepage" bundle="HOMEPAGE_RESOURCES"/>:</th>
 									<td>
-										<bean:message key="label.homepage.showResearchUnitHomepage" bundle="HOMEPAGE_RESOURCES"/>:
 										<html:link href="<%= url %>">
 											<bean:write name="homepage" property="researchUnit.content"/> 
 										</html:link>
 									</td>
 								</logic:match>
 								<logic:notMatch name="homepage" property="researchUnitHomepage" value="http://">
-									<th><bean:define id="url" type="java.lang.String">http://<bean:write name="homepage" property="researchUnitHomepage"/></bean:define></th>
+									<th><bean:message key="label.homepage.showResearchUnitHomepage" bundle="HOMEPAGE_RESOURCES"/>:</th>
 									<td>
-										<bean:message key="label.homepage.showResearchUnitHomepage" bundle="HOMEPAGE_RESOURCES"/>:
+										<bean:define id="url" type="java.lang.String">http://<bean:write name="homepage" property="researchUnitHomepage"/></bean:define>
 										<html:link href="<%= url %>">
 											<bean:write name="homepage" property="researchUnit.content"/> 
 										</html:link>

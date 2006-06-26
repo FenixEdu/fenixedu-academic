@@ -135,7 +135,7 @@ width: 35%;
 .tstyle2 th { border: none; border-bottom: 1px solid #ccc; }
 .tstyle3 th { padding: 0.5em 1em; border: 1px solid #ccc; }
 .tstyle4 th { border: 1px solid #ccc; }
-.tstyle5 th { padding: 0.3em; border: 1px solid #fff; }
+.tstyle5 th { padding: 0.3em; border: 1px solid #fff; vertical-align: top; }
 
 .tstyle1a th { background: #f8f8f8 url(../../pics/back_32gray.gif) left bottom repeat-x; }
 .tstyle1b th, .tstyle6 th { background: #fafaf6 url(../../pics/back_32yellow.gif) left bottom repeat-x;}
