@@ -17,7 +17,6 @@
 					<bean:write name="homepage" property="person.employee.currentDepartmentWorkingPlace.acronym"/>
 				</html:link>
 		    </li>
-<%-- 
 			<li>
 				<html:link href="<%= "department/showDepartmentTeachers.faces?selectedDepartmentUnitID=" + departmentUnitID %>">
 					<bean:message bundle="PUBLIC_DEPARTMENT_RESOURCES" key="department.faculty"/>
@@ -28,7 +27,6 @@
 					<bean:message bundle="PUBLIC_DEPARTMENT_RESOURCES" key="department.courses"/>
 				</html:link>
 		    </li>
---%>
 	    </logic:present>
 		<logic:notPresent name="homepage" property="person.employee.currentDepartmentWorkingPlace">
 			<li>
