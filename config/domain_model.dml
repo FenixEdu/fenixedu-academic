@@ -165,12 +165,19 @@ class net.sourceforge.fenixedu.domain.accounting.Entry extends net.sourceforge.f
     Integer keyAccount;
     Integer keyAccountingTransaction;
     Integer keyEvent;
+    Integer keyReceipt;
     DateTime whenBooked;
     BigDecimal amount;
 }
 
+class net.sourceforge.fenixedu.domain.accounting.Receipt extends net.sourceforge.fenixedu.domain.DomainObject {
+    Integer keyParty;
+    Integer version;
+}
+
 class net.sourceforge.fenixedu.domain.accounting.Event extends net.sourceforge.fenixedu.domain.DomainObject {
     String ojbConcreteClass;
+    Integer keyParty;
     AccountingEventType eventType;
     DateTime whenOccured;
     DateTime whenNoticed;
@@ -8517,8 +8524,22 @@ relation AccountEntry {
 	}
 }
 
+relation PartyEvent {
+	net.sourceforge.fenixedu.domain.organizationalStructure.Party playsRole party;
+	net.sourceforge.fenixedu.domain.accounting.Event playsRole events {
+		multiplicity *;
+	}
+}
+
 relation EventEntry {
 	net.sourceforge.fenixedu.domain.accounting.Event playsRole event;
+	net.sourceforge.fenixedu.domain.accounting.Entry playsRole entries {
+		multiplicity *;
+	}
+}
+
+relation ReceiptEntry {
+	net.sourceforge.fenixedu.domain.accounting.Receipt playsRole receipt;
 	net.sourceforge.fenixedu.domain.accounting.Entry playsRole entries {
 		multiplicity *;
 	}
@@ -8534,6 +8555,20 @@ relation AccountTransactionEntry {
 relation DFACandidacyEventCandidacy {
 	net.sourceforge.fenixedu.domain.candidacy.DFACandidacy playsRole candidacy;
 	net.sourceforge.fenixedu.domain.candidacy.DFACandidacyEvent playsRole candidacyEvents {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectReceipt {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.accounting.Receipt playsRole receipts {
+		multiplicity *;
+	}
+}
+
+relation PartyReceipt {
+	net.sourceforge.fenixedu.domain.organizationalStructure.Party playsRole party;
+	net.sourceforge.fenixedu.domain.accounting.Receipt playsRole receipts {
 		multiplicity *;
 	}
 }
