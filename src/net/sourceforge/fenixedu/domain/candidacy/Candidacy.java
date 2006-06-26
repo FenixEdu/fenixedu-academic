@@ -25,4 +25,12 @@ public abstract class Candidacy extends Candidacy_Base {
         return Collections.max(getCandidacySituations(), CandidacySituation.DATE_COMPARATOR);
     }
     
+    //static methods
+    
+    public static Candidacy readByCandidacyNumber(Integer candidacyNumber)
+    {
+        //TODO: FINISH
+        return null;
+    }
+    
 }
