@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.presentationTier.backBeans.base;
 
-import java.util.Collection;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
@@ -12,11 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
-import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
 import net.sourceforge.fenixedu.presentationTier.jsf.components.UIViewState;
 
@@ -127,19 +122,6 @@ public class FenixBackingBean {
 
     protected void addWarnMessage(String message) {
         addMessage(FacesMessage.SEVERITY_WARN, message);
-    }
-
-    @Deprecated
-    public Collection readAllDomainObjects(final Class clazz) throws FenixFilterException,
-            FenixServiceException {
-        return (Collection) ServiceUtils
-                .executeService(getUserView(), "ReadAllDomainObjects", new Object[] { clazz });
-    }
-
-    @Deprecated
-    public DomainObject readDomainObject(final Class clazz, final Integer idInternal)
-            throws FenixFilterException, FenixServiceException {
-        return rootDomainObject.readDomainObjectByOID(clazz, idInternal);
     }
 
     protected Integer getAndHoldIntegerParameter(final String parameterName) {

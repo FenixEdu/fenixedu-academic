@@ -123,11 +123,9 @@ public class CoordinatorEvaluationsBackingBean extends FenixBackingBean {
         this.curricularYearID = curricularYearID;
     }
 
-    public DegreeCurricularPlan getDegreeCurricularPlan() throws FenixFilterException,
-            FenixServiceException {
+    public DegreeCurricularPlan getDegreeCurricularPlan() {
         final Integer degreeCurricularPlanID = getDegreeCurricularPlanID();
-        return (DegreeCurricularPlan) readDomainObject(DegreeCurricularPlan.class,
-                degreeCurricularPlanID);
+        return rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanID);
     }
 
     private ExecutionPeriod getCurrentExecutionPeriod() throws FenixFilterException,
@@ -177,7 +175,7 @@ public class CoordinatorEvaluationsBackingBean extends FenixBackingBean {
 
     public ExecutionPeriod getExecutionPeriod() throws FenixFilterException, FenixServiceException {
         final Integer executionPeriodID = getExecutionPeriodID();
-        return (ExecutionPeriod) readDomainObject(ExecutionPeriod.class, executionPeriodID);
+        return rootDomainObject.readExecutionPeriodByOID(executionPeriodID);
     }
 
     private ExecutionDegree getExecutionDegree() throws FenixFilterException, FenixServiceException {
@@ -366,10 +364,9 @@ public class CoordinatorEvaluationsBackingBean extends FenixBackingBean {
         return false;
     }
 
-    private CurricularYear getCurricularYear() throws FenixFilterException, FenixServiceException {
+    private CurricularYear getCurricularYear() {
         final Integer curricularYearID = getCurricularYearID();
-        return (curricularYearID != null) ? (CurricularYear) readDomainObject(CurricularYear.class,
-                curricularYearID) : null;
+        return (curricularYearID != null) ? rootDomainObject.readCurricularYearByOID(curricularYearID) : null;
     }
 
     private void constructEmptyCalendarLink(final List<CalendarLink> calendarLinks,
@@ -595,8 +592,8 @@ public class CoordinatorEvaluationsBackingBean extends FenixBackingBean {
         return "viewCalendar";
     }
 
-    public ExecutionCourse getExecutionCourse() throws FenixFilterException, FenixServiceException {
-        return (ExecutionCourse) readDomainObject(ExecutionCourse.class, getExecutionCourseID());
+    public ExecutionCourse getExecutionCourse() {
+        return rootDomainObject.readExecutionCourseByOID(getExecutionCourseID());
     }
 
     private List<String> getCurricularCourseScopeIDs(final ExecutionCourse executionCourse) {

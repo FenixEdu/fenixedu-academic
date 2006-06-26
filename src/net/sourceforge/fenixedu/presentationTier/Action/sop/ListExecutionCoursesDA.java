@@ -15,7 +15,6 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
@@ -29,7 +28,6 @@ import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.util.report.Spreadsheet;
 import net.sourceforge.fenixedu.util.report.Spreadsheet.Row;
 
@@ -42,10 +40,7 @@ public class ListExecutionCoursesDA extends FenixDispatchAction {
 
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-        final IUserView userView = getUserView(request);
-
-        final Object args1[] = { ExecutionPeriod.class };
-        final Collection<ExecutionPeriod> executionPeriods = (Collection<ExecutionPeriod>) ServiceUtils.executeService(userView, "ReadAllDomainObjects", args1);
+        final Collection<ExecutionPeriod> executionPeriods = rootDomainObject.getExecutionPeriodsSet();
         final List<ExecutionPeriod> sortedExecutionPeriods = new ArrayList<ExecutionPeriod>(executionPeriods);
         Collections.sort(sortedExecutionPeriods);
         Collections.reverse(sortedExecutionPeriods);

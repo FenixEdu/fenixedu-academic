@@ -36,8 +36,7 @@ public class RoleGroupOperationsManagement extends FenixDispatchAction {
         request.setAttribute("person", person);
         request.setAttribute("userGroupTypeToAdd", userGroupType);
 
-        IUserView userView = SessionUtils.getUserView(request);
-        Collection roles = (Collection) ServiceUtils.executeService(userView, "ReadAllDomainObjects", new Object[] { Role.class });
+        Collection roles = rootDomainObject.getRolesSet();
         
         request.setAttribute("roles", roles);
         

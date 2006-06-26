@@ -20,7 +20,6 @@ import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean;
 import net.sourceforge.fenixedu.util.PeriodState;
 import pt.utl.ist.fenix.tools.smtp.EmailSender;
@@ -104,8 +103,7 @@ public class SendMailBackingBean extends FenixBackingBean {
 
         final Boolean executionCourseResponsibles = getExecutionCourseResponsibles();
         if (executionCourseResponsibles.booleanValue()) {
-            final Object[] args = { ExecutionYear.class };
-            final Collection<ExecutionYear> executionYears = (Collection<ExecutionYear>) ServiceUtils.executeService(userView, "ReadAllDomainObjects", args);
+            final Collection<ExecutionYear> executionYears = rootDomainObject.getExecutionYearsSet();
             for (final ExecutionYear executionYear : executionYears) {
                 if (executionYear.getState().equals(PeriodState.CURRENT)) {
                     for (final ExecutionPeriod executionPeriod : executionYear.getExecutionPeriods()) {
@@ -147,8 +145,7 @@ public class SendMailBackingBean extends FenixBackingBean {
     }
 
 	private void addEmailsForDegreeType(final List<String> emails, final DegreeType degreeType) throws FenixServiceException, FenixFilterException {
-        final Object[] args = { ExecutionYear.class };
-        final Collection<ExecutionYear> executionYears = (Collection<ExecutionYear>) ServiceUtils.executeService(userView, "ReadAllDomainObjects", args);
+        final Collection<ExecutionYear> executionYears = rootDomainObject.getExecutionYearsSet();
         for (final ExecutionYear executionYear : executionYears) {
             if (executionYear.getState().equals(PeriodState.CURRENT)) {
                 for (final ExecutionDegree executionDegree : executionYear.getExecutionDegrees()) {

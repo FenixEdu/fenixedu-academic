@@ -1,12 +1,14 @@
 package net.sourceforge.fenixedu.presentationTier.Action.cms.websiteTypeManagement;
 
-import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.domain.cms.Cms;
+import net.sourceforge.fenixedu.domain.cms.Content;
 import net.sourceforge.fenixedu.domain.cms.FunctionalityLink;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
@@ -22,8 +24,12 @@ import org.apache.struts.action.ActionMessages;
 public class FunctionalityLinkManagement extends FenixDispatchAction {
 
     public ActionForward start(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
-        IUserView userView = SessionUtils.getUserView(request);
-        Collection functionalityLinks = (Collection) ServiceUtils.executeService(userView, "ReadAllDomainObjects", new Object[] { FunctionalityLink.class });
+        final Set<FunctionalityLink> functionalityLinks = new HashSet<FunctionalityLink>();
+        for (final Content content : rootDomainObject.getContentsSet()) {
+            if (content instanceof FunctionalityLink) {
+                functionalityLinks.add((FunctionalityLink) content);
+            }
+        }
         
         request.setAttribute("functionalityLinks", functionalityLinks);
         

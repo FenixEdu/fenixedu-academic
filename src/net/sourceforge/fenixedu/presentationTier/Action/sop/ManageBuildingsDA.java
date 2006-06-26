@@ -1,7 +1,6 @@
 package net.sourceforge.fenixedu.presentationTier.Action.sop;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -9,7 +8,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.domain.Campus;
 import net.sourceforge.fenixedu.domain.space.OldBuilding;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
@@ -28,13 +26,11 @@ public class ManageBuildingsDA extends FenixDispatchAction {
 
         final IUserView userView = SessionUtils.getUserView(request);
 
-        final Object args1[] = { OldBuilding.class };
-        final List buildings = new ArrayList((Collection) ServiceUtils.executeService(userView, "ReadAllDomainObjects", args1));
+        final List buildings = new ArrayList(OldBuilding.getOldBuildings());
         Collections.sort(buildings, new BeanComparator("name"));
         request.setAttribute("buildings", buildings);
 
-        final Object args2[] = { Campus.class };
-        final List campuss = new ArrayList((Collection) ServiceUtils.executeService(userView, "ReadAllDomainObjects", args2));
+        final List campuss = new ArrayList(rootDomainObject.getCampussSet());
         Collections.sort(campuss, new BeanComparator("name"));
         request.setAttribute("campuss", campuss);
 

@@ -29,7 +29,6 @@ import net.sourceforge.fenixedu.domain.WrittenTest;
 import net.sourceforge.fenixedu.domain.space.OldBuilding;
 import net.sourceforge.fenixedu.domain.space.OldRoom;
 import net.sourceforge.fenixedu.domain.space.RoomOccupation;
-import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.backBeans.teacher.evaluation.EvaluationManagementBackingBean;
 import net.sourceforge.fenixedu.presentationTier.jsf.components.util.CalendarLink;
 import net.sourceforge.fenixedu.util.DateFormatUtil;
@@ -126,7 +125,7 @@ public class WrittenEvaluationsByRoomBackingBean extends EvaluationManagementBac
     private Collection<OldRoom> allRooms = null;
     private Collection<OldRoom> getAllRooms() throws FenixFilterException, FenixServiceException {
         if (allRooms == null) {
-            allRooms = (Collection<OldRoom>) ServiceUtils.executeService(getUserView(), "ReadAllDomainObjects", new Object[] { OldRoom.class });
+            allRooms = OldRoom.getOldRooms();
         }
         return allRooms;
     }
@@ -197,7 +196,7 @@ public class WrittenEvaluationsByRoomBackingBean extends EvaluationManagementBac
     }
 
     public Collection<OldBuilding> getBuildings() throws FenixFilterException, FenixServiceException {
-        return (Collection<OldBuilding>) readAllDomainObjects(OldBuilding.class);
+        return OldBuilding.getOldBuildings();
     }
 
     public Collection<SelectItem> getBuildingSelectItems() throws FenixFilterException,
@@ -224,8 +223,7 @@ public class WrittenEvaluationsByRoomBackingBean extends EvaluationManagementBac
 
     public ExecutionPeriod getExecutionPeriod() throws FenixFilterException, FenixServiceException {
         final Integer executionPeriodID = getExecutionPeriodOID();
-        return (executionPeriodID != null) ?
-                (ExecutionPeriod) readDomainObject(ExecutionPeriod.class, executionPeriodID) : null;
+        return (executionPeriodID != null) ? rootDomainObject.readExecutionPeriodByOID(executionPeriodID) : null;
     }
 
     public Date getCalendarBegin() throws FenixFilterException, FenixServiceException {

@@ -55,10 +55,8 @@ public abstract class FenixDispatchAction extends DispatchAction implements Exce
         return rootDomainObject.readDomainObjectByOID(clazz, idInternal);
     }
 
-    protected Collection readAllDomainObjects(final HttpServletRequest request, final Class clazz)
-            throws FenixFilterException, FenixServiceException {
-        final Object[] args = { clazz };
-        return (Collection) executeService(request, "ReadAllDomainObjects", args);
+    protected Collection readAllDomainObjects(final HttpServletRequest request, final Class clazz) {
+        return rootDomainObject.readAllDomainObjects(clazz);
     }
 
     protected Person getLoggedPerson(HttpServletRequest request) throws FenixFilterException, FenixServiceException {

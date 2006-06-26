@@ -102,9 +102,7 @@ public class WeeklyWorkLoadDA extends FenixDispatchAction {
     public ActionForward prepare(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
             FenixServiceException {
-
-        final Object[] args = { ExecutionPeriod.class };
-        final Collection<ExecutionPeriod> executionPeriods = (Collection<ExecutionPeriod>) executeService(request, "ReadAllDomainObjects", args);
+        final Collection<ExecutionPeriod> executionPeriods = rootDomainObject.getExecutionPeriodsSet();
         final Set<ExecutionPeriod> sortedExecutionPeriods = new TreeSet<ExecutionPeriod>(executionPeriods);
         request.setAttribute("executionPeriods", sortedExecutionPeriods);
 

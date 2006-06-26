@@ -24,7 +24,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.domain.cms.website.Website;
-import net.sourceforge.fenixedu.domain.cms.website.WebsiteType;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
@@ -58,8 +57,7 @@ public class ExecutionCourseWebsiteManagement extends FenixDispatchAction
 		try
 		{
 			IUserView userView = SessionUtils.getUserView(request);
-			Collection<Website> websites = (Collection<Website>) ServiceUtils.executeService(userView, "ReadAllDomainObjects", new Object[]
-			{ Website.class });
+			Collection<Website> websites = rootDomainObject.readAllDomainObjects(Website.class);
 			Collection<InfoExecutionPeriod> infoExecutionPeriods = (Collection<InfoExecutionPeriod>) ServiceUtils.executeService(userView, "ReadExecutionPeriods", null);
 			if (infoExecutionPeriods != null && !infoExecutionPeriods.isEmpty())
 			{
@@ -248,7 +246,7 @@ public class ExecutionCourseWebsiteManagement extends FenixDispatchAction
 		try
 		{
 			infoExecutionCourses = (List) ServiceUtils.executeService(userView, "ReadExecutionCoursesByExecutionDegreeIdAndExecutionPeriodIdAndCurYear", args);
-            websiteTypes = (Collection) ServiceUtils.executeService(userView, "ReadAllDomainObjects", new Object[] { WebsiteType.class });
+            websiteTypes = rootDomainObject.getWebsiteTypesSet();
 		}
 		catch (FenixServiceException e)
 		{

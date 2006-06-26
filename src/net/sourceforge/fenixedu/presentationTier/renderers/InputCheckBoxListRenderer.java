@@ -4,10 +4,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import net.sourceforge.fenixedu.accessControl.AccessControl;
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.domain.DomainObject;
-import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.presentationTier.renderers.converters.DomainObjectKeyConverter;
 import net.sourceforge.fenixedu.renderers.CheckBoxOptionListRenderer;
 import net.sourceforge.fenixedu.renderers.components.converters.Converter;
@@ -126,10 +124,7 @@ public class InputCheckBoxListRenderer extends CheckBoxOptionListRenderer {
 
             if (DomainObject.class.isAssignableFrom(type)) {
                 try {
-                    IUserView userView = AccessControl.getUserView();
-
-                    return (Collection) ServiceUtils.executeService(userView, "ReadAllDomainObjects",
-                            new Object[] { type });
+                    return RootDomainObject.getInstance().readAllDomainObjects(type);
                 } catch (Exception e) {
                     throw new RuntimeException("could not read all objects of type " + choiceType);
                 }

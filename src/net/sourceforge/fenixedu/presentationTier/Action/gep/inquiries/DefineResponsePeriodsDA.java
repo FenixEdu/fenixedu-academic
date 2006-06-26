@@ -29,16 +29,11 @@ public class DefineResponsePeriodsDA extends FenixDispatchAction {
 
 	public ActionForward prepare(ActionMapping mapping, ActionForm actionForm,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
-
-		final IUserView userView = SessionUtils.getUserView(request);
-
         final DynaActionForm dynaActionForm = (DynaActionForm) actionForm;
         final String executionPeriodIDString = dynaActionForm.getString("executionPeriodID");
         final Integer executionPeriodID = validInteger(executionPeriodIDString) ? Integer.valueOf(executionPeriodIDString) : null;
 
-        final Object[] args = new Object[] { ExecutionPeriod.class };
-        final Collection<ExecutionPeriod> executionPeriods = (Collection<ExecutionPeriod>)
-                ServiceUtils.executeService(userView, "ReadAllDomainObjects", args);
+        final Collection<ExecutionPeriod> executionPeriods = rootDomainObject.getExecutionPeriodsSet();
 
         ExecutionPeriod selectedExecutionPeriod = null;
         final List<LabelValueBean> executionPeriodLVBs = new ArrayList<LabelValueBean>();

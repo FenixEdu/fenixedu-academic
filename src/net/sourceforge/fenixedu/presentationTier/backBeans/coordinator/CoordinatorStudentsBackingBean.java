@@ -58,9 +58,9 @@ public class CoordinatorStudentsBackingBean extends FenixBackingBean {
         this.sortBy = sortBy;
     }
 
-    public DegreeCurricularPlan getDegreeCurricularPlan() throws FenixFilterException, FenixServiceException {
+    public DegreeCurricularPlan getDegreeCurricularPlan() {
         final Integer degreeCurricularPlanID = getDegreeCurricularPlanID();
-        return (DegreeCurricularPlan) readDomainObject(DegreeCurricularPlan.class, degreeCurricularPlanID);
+        return rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanID);
     }
 
     public String getStudentCurricularPlanStateString() {

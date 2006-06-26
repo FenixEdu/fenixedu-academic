@@ -236,12 +236,7 @@ public class CoordinatorEvaluationManagementBackingBean extends FenixBackingBean
     }
 
     private DegreeCurricularPlan getDegreeCurricularPlan() {
-        try {
-            return (DegreeCurricularPlan) this.readDomainObject(DegreeCurricularPlan.class,
-                    getDegreeCurricularPlanID());
-        } catch (Exception e) {
-            return null;
-        }
+        return rootDomainObject.readDegreeCurricularPlanByOID(getDegreeCurricularPlanID());
     }
 
     /**

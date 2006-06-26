@@ -521,50 +521,45 @@ public class SiteViewerDispatchAction extends FenixContextDispatchAction {
                         "ReadExecutionPeriodByOID", new Object[] { executionPeriodID });
             }
 
-            try {
-                // weeks
-                Calendar begin = Calendar.getInstance();
-                begin.setTime(executionPeriod.getBeginDate());
-                Calendar end = Calendar.getInstance();
-                end.setTime(executionPeriod.getEndDate());
-                ArrayList weeksLabelValueList = new ArrayList();
-                begin.add(Calendar.DATE, Calendar.MONDAY - begin.get(Calendar.DAY_OF_WEEK));
-                int i = 0;
-                boolean selectedWeek = false;
-                while (begin.before(end) || begin.before(Calendar.getInstance())) {
-                    Calendar day = Calendar.getInstance();
-                    day.setTimeInMillis(begin.getTimeInMillis());
-                    weeks.add(day);
-                    String beginWeekString = DateFormatUtils.format(begin.getTime(), "dd/MM/yyyy");
-                    begin.add(Calendar.DATE, 5);
-                    String endWeekString = DateFormatUtils.format(begin.getTime(), "dd/MM/yyyy");
-                    weeksLabelValueList.add(new LabelValueBean(beginWeekString + " - " + endWeekString,
-                            new Integer(i).toString()));
-                    begin.add(Calendar.DATE, 2);
-                    if (!selectedWeek && indexWeek == null && Calendar.getInstance().before(begin)) {
-                        indexForm.set("indexWeek", new Integer(i));
-                        selectedWeek = true;
-                    }
-                    i++;
+            // weeks
+            Calendar begin = Calendar.getInstance();
+            begin.setTime(executionPeriod.getBeginDate());
+            Calendar end = Calendar.getInstance();
+            end.setTime(executionPeriod.getEndDate());
+            ArrayList weeksLabelValueList = new ArrayList();
+            begin.add(Calendar.DATE, Calendar.MONDAY - begin.get(Calendar.DAY_OF_WEEK));
+            int i = 0;
+            boolean selectedWeek = false;
+            while (begin.before(end) || begin.before(Calendar.getInstance())) {
+                Calendar day = Calendar.getInstance();
+                day.setTimeInMillis(begin.getTimeInMillis());
+                weeks.add(day);
+                String beginWeekString = DateFormatUtils.format(begin.getTime(), "dd/MM/yyyy");
+                begin.add(Calendar.DATE, 5);
+                String endWeekString = DateFormatUtils.format(begin.getTime(), "dd/MM/yyyy");
+                weeksLabelValueList.add(new LabelValueBean(beginWeekString + " - " + endWeekString,
+                        new Integer(i).toString()));
+                begin.add(Calendar.DATE, 2);
+                if (!selectedWeek && indexWeek == null && Calendar.getInstance().before(begin)) {
+                    indexForm.set("indexWeek", new Integer(i));
+                    selectedWeek = true;
                 }
-
-                final Collection<ExecutionPeriod> executionPeriods = (Collection<ExecutionPeriod>) ServiceUtils
-                        .executeService(userView, "ReadAllDomainObjects",
-                                new Object[] { ExecutionPeriod.class });
-                final List<LabelValueBean> executionPeriodLabelValueBeans = new ArrayList<LabelValueBean>();
-                for (final ExecutionPeriod ep : executionPeriods) {
-                    if (ep.getState() == PeriodState.OPEN || ep.getState() == PeriodState.CURRENT) {
-                        executionPeriodLabelValueBeans.add(new LabelValueBean(ep.getName() + " "
-                                + ep.getExecutionYear().getYear(), ep.getIdInternal().toString()));
-                    }
-                }
-                request.setAttribute(SessionConstants.LABELLIST_EXECUTIONPERIOD,
-                        executionPeriodLabelValueBeans);
-
-                request.setAttribute(SessionConstants.LABELLIST_WEEKS, weeksLabelValueList);
-            } catch (FenixServiceException e) {
-                throw new FenixActionException();
+                i++;
             }
+
+            final Collection<ExecutionPeriod> executionPeriods = rootDomainObject
+                    .getExecutionPeriodsSet();
+            final List<LabelValueBean> executionPeriodLabelValueBeans = new ArrayList<LabelValueBean>();
+            for (final ExecutionPeriod ep : executionPeriods) {
+                if (ep.getState() == PeriodState.OPEN || ep.getState() == PeriodState.CURRENT) {
+                    executionPeriodLabelValueBeans.add(new LabelValueBean(ep.getName() + " "
+                            + ep.getExecutionYear().getYear(), ep.getIdInternal().toString()));
+                }
+            }
+            request.setAttribute(SessionConstants.LABELLIST_EXECUTIONPERIOD,
+                    executionPeriodLabelValueBeans);
+
+            request.setAttribute(SessionConstants.LABELLIST_WEEKS, weeksLabelValueList);
             if (indexWeek != null) {
                 today = (Calendar) weeks.get(indexWeek.intValue());
             }

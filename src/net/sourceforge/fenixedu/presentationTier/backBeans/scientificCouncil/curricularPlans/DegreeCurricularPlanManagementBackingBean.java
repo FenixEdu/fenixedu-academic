@@ -45,7 +45,7 @@ public class DegreeCurricularPlanManagementBackingBean extends FenixBackingBean 
     }
 
     public DegreeCurricularPlan getDcp() throws FenixFilterException, FenixServiceException {
-        return (dcp == null) ? (dcp = (DegreeCurricularPlan) readDomainObject(DegreeCurricularPlan.class, getDcpId())) : dcp;
+        return (dcp == null) ? (dcp = rootDomainObject.readDegreeCurricularPlanByOID(getDcpId())) : dcp;
     }
 
     public void setDcp(DegreeCurricularPlan dcp) {

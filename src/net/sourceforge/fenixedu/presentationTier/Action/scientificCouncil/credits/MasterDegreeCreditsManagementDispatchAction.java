@@ -52,10 +52,7 @@ public class MasterDegreeCreditsManagementDispatchAction extends FenixDispatchAc
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 
-        IUserView userView = SessionUtils.getUserView(request);
-        Object[] args = { ExecutionYear.class };
-        Collection<ExecutionYear> executionYears = (Collection<ExecutionYear>) ServiceUtils.executeService(userView,
-                "ReadAllDomainObjects", args);
+        Collection<ExecutionYear> executionYears = rootDomainObject.getExecutionYears();
 
         List<ExecutionYear> notClosedExecutionYears = (List<ExecutionYear>) CollectionUtils.select(
                 executionYears, new Predicate() {

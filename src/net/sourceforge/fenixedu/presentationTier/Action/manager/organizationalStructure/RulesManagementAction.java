@@ -4,13 +4,11 @@
  */
 package net.sourceforge.fenixedu.presentationTier.Action.manager.organizationalStructure;
 
-import java.util.ArrayList;
 import java.util.Collection;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.ConnectionRule;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
@@ -62,12 +60,8 @@ public class RulesManagementAction extends FenixDispatchAction {
         return mapping.findForward("listRules");
     }
     
-    private void readConnectionRules(HttpServletRequest request) throws FenixServiceException, FenixFilterException {
-        Collection<ConnectionRule> connectionRules = new ArrayList<ConnectionRule>();        
-        Object[] args = { ConnectionRule.class };        
-        connectionRules = (Collection<ConnectionRule>) ServiceManagerServiceFactory.executeService(null,
-                "ReadAllDomainObjects", args);
-
+    private void readConnectionRules(HttpServletRequest request) {
+        Collection<ConnectionRule> connectionRules = rootDomainObject.getConnectionRulesSet();
         request.setAttribute("connectionRules", connectionRules);
     }
 }

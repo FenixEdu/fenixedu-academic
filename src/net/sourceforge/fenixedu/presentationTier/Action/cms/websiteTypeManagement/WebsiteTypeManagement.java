@@ -31,11 +31,8 @@ import org.apache.struts.action.ActionMessages;
 public class WebsiteTypeManagement extends FenixDispatchAction {
 
     public ActionForward start(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
-        IUserView userView = SessionUtils.getUserView(request);
-        Collection websiteTypes = (Collection) ServiceUtils.executeService(userView, "ReadAllDomainObjects", new Object[] { WebsiteType.class });
-        
+        Collection websiteTypes = rootDomainObject.getWebsiteTypesSet();
         request.setAttribute("websiteTypes", websiteTypes);
-        
         return mapping.findForward("list");
     }
 

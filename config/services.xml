@@ -1,13 +1,6 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <serviceDefinitions>
 	<service>
-		<name>ReadAllDomainObjects</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadAllDomainObjects</implementationClass>
-		<description />
-		<isTransactional>true</isTransactional>
-		<filterChains />
-	</service>
-	<service>
 		<name>ExecuteFactoryMethod</name>
 		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.commons.ExecuteFactoryMethod</implementationClass>
 		<description />
