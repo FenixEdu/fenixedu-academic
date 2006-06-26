@@ -410,7 +410,6 @@ host.control.name.net.sourceforge.fenixedu.presentationTier.Action.externalServi
 host.control.name.net.sourceforge.fenixedu.presentationTier.Action.externalServices.GroupCheck=127.0.0.1
 host.control.name.net.sourceforge.fenixedu.presentationTier.Action.messaging.ExecutionCourseAliasExpandingAction=127.0.0.1,0:0:0:0:0:0:0:1
 
-
 #----------------------------------------------
 # CAS configuration
 #----------------------------------------------
@@ -420,14 +419,6 @@ cas.validateUrl=https://localhost:8443/cas/serviceValidate
 cas.logoutUrl=https://localhost:8443/cas/logout
 cas.serviceUrl.localhost=https://localhost:8443/ciapl/loginCAS.do
 cas.serviceUrl.salad21=https://salad21.ist.utl.pt:8443/ciapl/loginCAS.do
-
-#----------------------------------------------------------------
-# Dspace configuration
-#----------------------------------------------------------------
-dspace.serverUrl=https://localhost:8443/dspace
-dspace.downloadUriPrefix=/bitstream
-dspace.username=ist12345
-dspace.password=pass
 
 #------------------------------------------------------------------------------
 # Miscellaneous 
@@ -451,6 +442,20 @@ allowed-roles.newline.instruction=${line.seperator}
 # Printers
 #----------------------------------------------------------------
 markSheet.printers=
+
+#----------------------------------------------------------------
+# File Manager
+#----------------------------------------------------------------
+file.manager.implementation.class=pt.utl.ist.fenix.tools.file.dspace.DspaceFileManager
+
+#----------------------------------------------------------------
+# File Manager - Dspace Configuration
+#----------------------------------------------------------------
+dspace.serverUrl=https://localhost:8443/dspace
+dspace.downloadUriFormat=bitstream
+dspace.username=ist12628
+dspace.password=pass
+
 
 #
 #
