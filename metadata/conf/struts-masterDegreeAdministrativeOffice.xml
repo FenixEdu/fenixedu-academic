@@ -2544,6 +2544,28 @@
 			  >		  
 	         <forward name="showList" path="showMasterDegreeThesisList"/>
 	  </action>
+	  
+	  <!-- Payments -->
+	  <action path="/payments"
+		      parameter="method"
+              type="net.sourceforge.fenixedu.presentationTier.Action.commons.VoidAction"
+			  >
+	         <forward name="Success" path="/payments/indexPayments.jsp"/> 
+      </action>
+      
+      <action path="/guidesManagement"
+		      parameter="method"
+              type="net.sourceforge.fenixedu.presentationTier.Action.masterDegree.payments.GuidesManagementDispatchAction"
+			  >
+	         <forward name="success" path="show.guides.management.firstPage"/> 
+      </action>
+      
+      <action path="/receiptsManagement"
+		      parameter="method"
+              type="net.sourceforge.fenixedu.presentationTier.Action.masterDegree.payments.ReceiptsManagementDispatchAction"
+			  >
+	         <forward name="success" path="show.receipts.management.firstPage"/> 
+      </action>
 	
     </action-mappings>
     
