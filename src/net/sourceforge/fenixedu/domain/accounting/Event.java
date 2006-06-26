@@ -26,7 +26,7 @@ public abstract class Event extends Event_Base {
         super.setEventType(eventType);
         super.setWhenOccured(whenOccured);
         super.setParty(party);
-        super.setProcessed(Boolean.FALSE);
+        super.setClosed(Boolean.FALSE);
     }
 
     private void checkParameters(EventType eventType, DateTime whenOccured, Party party) throws DomainException {
@@ -56,18 +56,21 @@ public abstract class Event extends Event_Base {
         new AccountingTransaction(makeEntry(entryType, amount.negate(), from), makeEntry(entryType, amount, to));
     }
     
-    public boolean isProcessed() {
-        return getProcessed().booleanValue();
+    public boolean isClosed() {
+        return getClosed().booleanValue() || checkIfIsProcessed();
     }
     
-    //TODO: correct method
     public final void process(List<EntryDTO> entryDTOs) {
-        if (! isProcessed()) {
-            // ???
-            super.setProcessed(Boolean.TRUE);
+        if (! isClosed()) {
             internalProcess(entryDTOs);
         }
     }
+    
+    protected void closeEvent() {
+        super.setClosed(Boolean.TRUE);
+    }
+   
+    protected abstract boolean checkIfIsProcessed();
     
     protected abstract void internalProcess(List<EntryDTO> entryDTOs);
     
@@ -104,7 +107,7 @@ public abstract class Event extends Event_Base {
     }
 
     @Override
-    public void setProcessed(Boolean processed) {
+    public void setClosed(Boolean closed) {
         throw new DomainException("error.accounting.event.cannot.modify.processed.value");
     }
 
