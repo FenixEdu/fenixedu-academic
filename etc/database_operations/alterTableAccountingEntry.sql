@@ -1,0 +1,1 @@
+alter table ACCOUNTING_ENTRY add column KEY_RECEIPT int(11) DEFAULT NULL;
