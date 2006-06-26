@@ -26,3 +26,6 @@ function executeWithTempFile() {
 	rm tmp.sql
 	echo
 }
+
+execute "Add column entry type" alterTableAccountingEntry.sql
+execute "Changing Event table " alterTableAccountingEvent.sql
