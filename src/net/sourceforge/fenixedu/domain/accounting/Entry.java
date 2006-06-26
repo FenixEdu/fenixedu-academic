@@ -79,4 +79,13 @@ public class Entry extends Entry_Base {
         throw new DomainException("error.accounting.entry.cannot.modify.bookedDateTime");
     }
     
+    @Override
+    public void setReceipt(Receipt receipt) {
+        if (hasReceipt()) {
+            throw new DomainException("error.accounting.entry.receipt.already.defined");            
+        } else {
+            super.setReceipt(receipt);    
+        }
+    }
+    
 }

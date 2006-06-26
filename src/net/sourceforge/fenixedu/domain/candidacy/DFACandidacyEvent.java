@@ -1,8 +1,10 @@
 package net.sourceforge.fenixedu.domain.candidacy;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
-import net.sourceforge.fenixedu.domain.Degree;
+import net.sourceforge.fenixedu.dataTransferObject.accounting.EntryDTO;
 import net.sourceforge.fenixedu.domain.accounting.Account;
 import net.sourceforge.fenixedu.domain.accounting.AccountType;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
@@ -14,8 +16,8 @@ public class DFACandidacyEvent extends DFACandidacyEvent_Base {
     
     public DFACandidacyEvent(DateTime whenOccured, DFACandidacy candidacy) {
         super();
-        init(EventType.CANDIDACY_ENROLMENT_PAYMENT, whenOccured);
         init(candidacy);
+        init(EventType.CANDIDACY_ENROLMENT_PAYMENT, whenOccured, candidacy.getPerson());
     }
 
     private void init(DFACandidacy candidacy) {
@@ -32,20 +34,31 @@ public class DFACandidacyEvent extends DFACandidacyEvent_Base {
     @Override
     protected void internalProcess() {
         
-        final Account personExternalAccount = getCandidacy().getPerson().getAccountBy(AccountType.EXTERNAL);
-        final Account personInternalAccount = getCandidacy().getPerson().getAccountBy(AccountType.INTERNAL);
-        final Account degreeInternalAccount = getCandidacyDegree().getUnit().getAccountBy(AccountType.INTERNAL);
+        final Account personExternalAccount = getPersonAccountBy(AccountType.EXTERNAL);
+        final Account personInternalAccount = getPersonAccountBy(AccountType.INTERNAL);
+        final Account degreeInternalAccount = getDegreeAccountBy(AccountType.INTERNAL);
         
         makeAccountingTransaction(personExternalAccount, personInternalAccount, calculateAmount());
         makeAccountingTransaction(personInternalAccount, degreeInternalAccount, calculateAmount());
     }
-
-    private Degree getCandidacyDegree() {
-        return getCandidacy().getExecutionDegree().getDegreeCurricularPlan().getDegree();
+    
+    @Override
+    public List<EntryDTO> calculateEntries() {
+        List<EntryDTO> result = new ArrayList<EntryDTO>();
+        result.add(new EntryDTO(calculateAmount(), this));
+        return result;
+    }
+    
+    private Account getDegreeAccountBy(AccountType accountType) {
+        return getCandidacy().getExecutionDegree().getDegreeCurricularPlan().getDegree().getUnit().getAccountBy(accountType);
+    }
+    
+    private Account getPersonAccountBy(AccountType accountType) {
+        return getCandidacy().getPerson().getAccountBy(accountType);
     }
     
     // TODO: temporary (to remove after agreement and posting rules)
-    public BigDecimal calculateAmount() {
+    private BigDecimal calculateAmount() {
         return new BigDecimal("100");
     }
     
@@ -53,5 +66,5 @@ public class DFACandidacyEvent extends DFACandidacyEvent_Base {
     public void setCandidacy(DFACandidacy candidacy) {
         throw new DomainException("error.candidacy.dfaCandidacyEvent.cannot.modify.candidacy");
     }
-    
+
 }

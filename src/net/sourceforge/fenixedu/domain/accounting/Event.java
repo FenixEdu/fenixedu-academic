@@ -6,10 +6,12 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
-import org.joda.time.DateTime;
-
+import net.sourceforge.fenixedu.dataTransferObject.accounting.EntryDTO;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
+
+import org.joda.time.DateTime;
 
 public abstract class Event extends Event_Base {
     
@@ -19,19 +21,22 @@ public abstract class Event extends Event_Base {
         setOjbConcreteClass(getClass().getName());
     }
     
-    protected void init(EventType eventType, DateTime whenOccured) {
-        checkParameters(eventType, whenOccured);
+    protected void init(EventType eventType, DateTime whenOccured, Party party) {
+        checkParameters(eventType, whenOccured, party);
         super.setEventType(eventType);
         super.setWhenOccured(whenOccured);
-        super.setWhenNoticed(null);
+        super.setParty(party);
     }
 
-    private void checkParameters(EventType eventType, DateTime whenOccured) throws DomainException {
+    private void checkParameters(EventType eventType, DateTime whenOccured, Party party) throws DomainException {
         if (eventType == null) {
             throw new DomainException("error.accounting.event.invalid.eventType");
         }
         if (whenOccured == null) {
             throw new DomainException("error.accounting.event.invalid.dateTime");
+        }
+        if (party == null) {
+            throw new DomainException("error.accounting.event.invalid.party");
         }
     }
     
@@ -62,6 +67,8 @@ public abstract class Event extends Event_Base {
     }
     
     protected abstract void internalProcess();
+    
+    public abstract List<EntryDTO> calculateEntries();
 
     @Override
     public void addEntries(Entry entries) {
@@ -101,6 +108,11 @@ public abstract class Event extends Event_Base {
     @Override
     public void setWhenOccured(DateTime whenOccured) {
         throw new DomainException("error.accounting.event.cannot.modify.occuredDateTime");
+    }
+    
+    @Override
+    public void setParty(Party party) {
+        throw new DomainException("error.accounting.event.cannot.modify.party");
     }
 
 }
