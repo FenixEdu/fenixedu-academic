@@ -182,21 +182,25 @@ class net.sourceforge.fenixedu.domain.accounting.Receipt extends net.sourceforge
 
 class net.sourceforge.fenixedu.domain.accounting.Event extends net.sourceforge.fenixedu.domain.DomainObject {
     String ojbConcreteClass;
-    Integer keyParty;
     AccountingEventType eventType;
     DateTime whenOccured;
     Boolean closed;
-    Integer keyPayedEvent;
-    Integer keyReimbursedEvent;
 }
-
-class net.sourceforge.fenixedu.domain.candidacy.DFACandidacyEvent extends net.sourceforge.fenixedu.domain.accounting.Event {
-    Integer keyCandidacy;
-}
-
-class net.sourceforge.fenixedu.domain.candidacy.DFACandidacyPaymentEvent extends net.sourceforge.fenixedu.domain.accounting.Event {
-
-}
+	class net.sourceforge.fenixedu.domain.accounting.DebtEvent extends net.sourceforge.fenixedu.domain.accounting.Event {
+   	 	Integer keyParty;
+	}
+		class net.sourceforge.fenixedu.domain.candidacy.DFACandidacyEvent extends net.sourceforge.fenixedu.domain.accounting.DebtEvent {
+		    Integer keyCandidacy;
+		}
+		
+	class net.sourceforge.fenixedu.domain.accounting.PaymentEvent extends net.sourceforge.fenixedu.domain.accounting.Event {
+   	 	Integer keyDebtEvent;
+	}
+	
+	class net.sourceforge.fenixedu.domain.accounting.ReimbursementEvent extends net.sourceforge.fenixedu.domain.accounting.Event {
+   	 	Integer keyPaymentEvent;
+   	 	Integer keyEmployee;
+	}
 
 class net.sourceforge.fenixedu.domain.teacher.Advise extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer keyStartExecutionPeriod;
@@ -2907,7 +2911,7 @@ class net.sourceforge.fenixedu.domain.publication.Publication extends net.source
 	String editorCity;
 }
 
-
+	
 class net.sourceforge.fenixedu.domain.teacher.PublicationsNumber extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer national;
 	Integer keyTeacher;
@@ -3221,7 +3225,7 @@ class net.sourceforge.fenixedu.domain.research.result.Result extends net.sourcef
 	String note;
 	String url;
     String ojbConcreteClass;
-    
+
 	DateTime lastModificationDate;
 	String modifyedBy;
 }
@@ -8698,9 +8702,9 @@ relation AccountEntry {
 	}
 }
 
-relation PartyEvent {
+relation PartyDebtEvent {
 	net.sourceforge.fenixedu.domain.organizationalStructure.Party playsRole party;
-	net.sourceforge.fenixedu.domain.accounting.Event playsRole events {
+	net.sourceforge.fenixedu.domain.accounting.DebtEvent playsRole debtEvents {
 		multiplicity *;
 	}
 }
@@ -8747,17 +8751,23 @@ relation PartyReceipt {
 	}
 }
 
-relation EventPayedEvents {
-	net.sourceforge.fenixedu.domain.accounting.Event playsRole payedEvent;
-	net.sourceforge.fenixedu.domain.accounting.Event playsRole payments {
+relation DebtEventPaymentEvent {
+	net.sourceforge.fenixedu.domain.accounting.DebtEvent playsRole debtEvent;
+	net.sourceforge.fenixedu.domain.accounting.PaymentEvent playsRole paymentEvents {
 		multiplicity *;
 	}
 }
 
-relation EventReimbursedEvents {
-	net.sourceforge.fenixedu.domain.accounting.Event playsRole reimbursedEvent;
-	net.sourceforge.fenixedu.domain.accounting.Event playsRole reimbursements {
+relation PaymentEventReimbursementEvent {
+	net.sourceforge.fenixedu.domain.accounting.PaymentEvent playsRole paymentEvent;
+	net.sourceforge.fenixedu.domain.accounting.ReimbursementEvent playsRole reimbursementEvents {
 		multiplicity *;
 	}
 }
 
+relation ReimbursementEventEmployee {
+	net.sourceforge.fenixedu.domain.Employee playsRole employee;
+	net.sourceforge.fenixedu.domain.accounting.ReimbursementEvent playsRole reimbursementEvents {
+		multiplicity *;
+	}
+}

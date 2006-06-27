@@ -24,21 +24,36 @@
 <!-- ************************************************************************************************************ -->
 <class-descriptor class="net.sourceforge.fenixedu.domain.accounting.Event" table="ACCOUNTING_EVENT">
 
+	<extent-class class-ref="net.sourceforge.fenixedu.domain.accounting.DebtEvent" />
+	<extent-class class-ref="net.sourceforge.fenixedu.domain.accounting.PaymentEvent" />
+	<extent-class class-ref="net.sourceforge.fenixedu.domain.accounting.ReimbursementEvent" />
+</class-descriptor>
+
+<!-- ************************************************************************************************************ -->
+<!-- Definitions for net.sourceforge.fenixedu.domain.accouting.DebtEvent -->
+<!-- ************************************************************************************************************ -->
+<class-descriptor class="net.sourceforge.fenixedu.domain.accounting.DebtEvent" table="ACCOUNTING_EVENT">
 	<extent-class class-ref="net.sourceforge.fenixedu.domain.candidacy.DFACandidacyEvent" />
-	<extent-class class-ref="net.sourceforge.fenixedu.domain.candidacy.DFACandidacyPaymentEvent" />
+</class-descriptor>
+
+<!-- ************************************************************************************************************ -->
+<!-- Definitions for net.sourceforge.fenixedu.domain.accouting.PaymentEvent -->
+<!-- ************************************************************************************************************ -->
+<class-descriptor class="net.sourceforge.fenixedu.domain.accounting.PaymentEvent" table="ACCOUNTING_EVENT">
+
+</class-descriptor>
+
+<!-- ************************************************************************************************************ -->
+<!-- Definitions for net.sourceforge.fenixedu.domain.accouting.ReimbursementEvent -->
+<!-- ************************************************************************************************************ -->
+<class-descriptor class="net.sourceforge.fenixedu.domain.accounting.ReimbursementEvent" table="ACCOUNTING_EVENT">
+
 </class-descriptor>
 
 <!-- ************************************************************************************************************ -->
 <!-- Definitions for net.sourceforge.fenixedu.domain.candidacy.DFACandidacyEvent -->
 <!-- ************************************************************************************************************ -->
 <class-descriptor class="net.sourceforge.fenixedu.domain.candidacy.DFACandidacyEvent" table="ACCOUNTING_EVENT">
-
-</class-descriptor>
-
-<!-- ************************************************************************************************************ -->
-<!-- Definitions for net.sourceforge.fenixedu.domain.candidacy.DFACandidacyPaymentEvent -->
-<!-- ************************************************************************************************************ -->
-<class-descriptor class="net.sourceforge.fenixedu.domain.candidacy.DFACandidacyPaymentEvent" table="ACCOUNTING_EVENT">
 
 </class-descriptor>
 

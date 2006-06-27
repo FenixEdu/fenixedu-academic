@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.dataTransferObject.accounting.PaymentsManagementDTO;
-import net.sourceforge.fenixedu.domain.accounting.Event;
+import net.sourceforge.fenixedu.domain.accounting.DebtEvent;
 import net.sourceforge.fenixedu.domain.candidacy.Candidacy;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
@@ -23,7 +23,7 @@ public abstract class PaymentsManagementDispatchAction extends FenixDispatchActi
 
         return mapping.findForward("success");
     }
-    
+
     protected Integer getCandidacyNumber(final DynaActionForm form) {
         final Integer candidacyNumber = (Integer) form.get("candidacyNumber");
         return (candidacyNumber == null || candidacyNumber.intValue() == 0) ? null : candidacyNumber;
@@ -32,10 +32,11 @@ public abstract class PaymentsManagementDispatchAction extends FenixDispatchActi
     protected PaymentsManagementDTO searchEventsForCandidacy(Integer candidacyNumber) {
 
         PaymentsManagementDTO managementDTO = null;
-        final Candidacy candidacy = (candidacyNumber != null) ? Candidacy.readByCandidacyNumber(candidacyNumber) : null;
+        final Candidacy candidacy = (candidacyNumber != null) ? Candidacy
+                .readByCandidacyNumber(candidacyNumber) : null;
         if (candidacy != null) {
             managementDTO = new PaymentsManagementDTO(candidacy);
-            for (final Event event : candidacy.getPerson().getEventsSet()) {
+            for (final DebtEvent event : candidacy.getPerson().getDebtEventsSet()) {
                 if (!event.isClosed()) {
                     managementDTO.getEntryDTOs().addAll(event.calculateEntries());
                 }

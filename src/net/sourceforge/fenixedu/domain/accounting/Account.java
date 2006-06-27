@@ -13,15 +13,15 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import org.joda.time.Interval;
 
 public class Account extends Account_Base {
-    
+
     private Account() {
         super();
         setRootDomainObject(RootDomainObject.getInstance());
     }
-    
+
     public Account(AccountType accountType, Party party) {
         this();
-        init(accountType, party);        
+        init(accountType, party);
     }
 
     private void init(AccountType accountType, Party party) {
@@ -38,7 +38,7 @@ public class Account extends Account_Base {
             throw new DomainException("error.accounting.account.invalid.party");
         }
     }
-    
+
     public BigDecimal balance(Interval interval) {
         BigDecimal result = new BigDecimal("0");
         for (final Entry entry : super.getEntriesSet()) {
@@ -48,7 +48,7 @@ public class Account extends Account_Base {
         }
         return result;
     }
-    
+
     public BigDecimal deposits(Interval interval) {
         BigDecimal result = new BigDecimal("0");
         for (final Entry entry : super.getEntriesSet()) {
@@ -58,7 +58,7 @@ public class Account extends Account_Base {
         }
         return result;
     }
-    
+
     public BigDecimal withdraws(Interval interval) {
         BigDecimal result = new BigDecimal("0");
         for (final Entry entry : super.getEntriesSet()) {
@@ -68,7 +68,7 @@ public class Account extends Account_Base {
         }
         return result;
     }
-    
+
     @Override
     public void addEntries(Entry entries) {
         throw new DomainException("error.accounting.account.cannot.add.entries");
@@ -93,15 +93,15 @@ public class Account extends Account_Base {
     public void removeEntries(Entry entries) {
         throw new DomainException("error.accounting.account.cannot.remove.entries");
     }
-    
+
     @Override
     public void setAccountType(AccountType accountType) {
         throw new DomainException("error.accounting.account.cannot.modify.accountType");
     }
-    
+
     @Override
     public void setParty(Party party) {
         throw new DomainException("error.accounting.account.cannot.modify.party");
     }
-    
+
 }

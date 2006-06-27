@@ -15,10 +15,10 @@ import net.sourceforge.fenixedu.domain.Person;
  */
 public class CheckIfUserCanAccessFile extends Service {
 
-    public Boolean run(String uniqueUsername, String dspaceBitstreamIdentification)
+    public Boolean run(String uniqueUsername, String externalStorageIdentification)
             throws FenixServiceException {
         Person person = Person.readPersonByIstUsername(uniqueUsername);
-        File file = File.readByExternalStorageIdentification(dspaceBitstreamIdentification);
+        File file = File.readByExternalStorageIdentification(externalStorageIdentification);
 
         if (person != null && file != null) {
             return file.isPersonAllowedToAccess(person);

@@ -5,9 +5,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.accounting.EntryDTO;
+import net.sourceforge.fenixedu.dataTransferObject.accounting.PaymentEntryDTO;
 import net.sourceforge.fenixedu.domain.accounting.EntryType;
-import net.sourceforge.fenixedu.domain.accounting.Event;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
+import net.sourceforge.fenixedu.domain.accounting.PaymentEvent;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 import org.joda.time.DateTime;
@@ -38,10 +39,10 @@ public class DFACandidacyEvent extends DFACandidacyEvent_Base {
         }
     }
 
-    private boolean canCloseEvent() {
-        BigDecimal amountToBePayed = calculateAmount();
-        for (final Event event : getPayments()) {
-            if (!event.isClosed()) {
+    @Override
+    protected boolean canCloseEvent() {
+        for (final PaymentEvent paymentEvent : getPaymentEvents()) {
+            if (!paymentEvent.isClosed()) {
                 return false;
             }
         }
@@ -51,26 +52,15 @@ public class DFACandidacyEvent extends DFACandidacyEvent_Base {
     @Override
     public List<EntryDTO> calculateEntries() {
         List<EntryDTO> result = new ArrayList<EntryDTO>();
-        result.add(new EntryDTO(EntryType.CANDIDACY_ENROLMENT_FEE, calculateAmount(),
-                calculateTotalPayedAmount(), calculateAmount().subtract(calculateTotalPayedAmount()),
-                this));
+        result.add(new PaymentEntryDTO(EntryType.CANDIDACY_ENROLMENT_FEE, getAmountToPay(),
+                calculateTotalPayedAmount(), this, getAmountToPay()
+                        .subtract(calculateTotalPayedAmount())));
         return result;
     }
 
-    private BigDecimal calculateTotalPayedAmount() {
-        BigDecimal totalPayedAmount = new BigDecimal("0");
-
-        for (Event event : getPayments()) {
-            DFACandidacyPaymentEvent paymentEvent = (DFACandidacyPaymentEvent) event;
-            totalPayedAmount = totalPayedAmount.add(paymentEvent.calculateAmount());
-        }
-
-        return totalPayedAmount;
-
-    }
-
     // TODO: remove after posting rules?
-    public BigDecimal calculateAmount() {
+    @Override
+    public BigDecimal getAmountToPay() {
         return new BigDecimal("100");
     }
 

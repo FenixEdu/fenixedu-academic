@@ -11,11 +11,11 @@ public class ProjectSubmissionFile extends ProjectSubmissionFile_Base {
     }
 
     public ProjectSubmissionFile(String filename, String displayName, String mimeType, String checksum,
-            String checksumAlgorithm, Integer size, String dspaceBitstreamIdentification,
+            String checksumAlgorithm, Integer size, String externalStorageIdentification,
             Group permittedGroup) {
         this();
         init(filename, displayName, mimeType, checksum, checksumAlgorithm, size,
-                dspaceBitstreamIdentification, permittedGroup);
+                externalStorageIdentification, permittedGroup);
 
     }
     

@@ -8,18 +8,19 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import org.joda.time.DateTime;
 
 public class Entry extends Entry_Base {
-    
+
     private Entry() {
         super();
         setRootDomainObject(RootDomainObject.getInstance());
     }
-    
+
     Entry(EntryType entryType, BigDecimal amount, Account account, Event event) {
         this();
         init(new DateTime(), entryType, amount, account, event);
     }
 
-    private void init(DateTime whenBooked, EntryType entryType, BigDecimal amount, Account account, Event event) {
+    private void init(DateTime whenBooked, EntryType entryType, BigDecimal amount, Account account,
+            Event event) {
         checkParameters(whenBooked, entryType, amount, account, event);
         super.setWhenBooked(whenBooked);
         super.setEntryType(entryType);
@@ -28,7 +29,8 @@ public class Entry extends Entry_Base {
         super.setEvent(event);
     }
 
-    private void checkParameters(DateTime whenBooked, EntryType entryType, BigDecimal amount, Account account, Event event) {
+    private void checkParameters(DateTime whenBooked, EntryType entryType, BigDecimal amount,
+            Account account, Event event) {
         if (whenBooked == null) {
             throw new DomainException("error.accounting.entry.invalid.whenBooked");
         }
@@ -42,7 +44,7 @@ public class Entry extends Entry_Base {
             throw new DomainException("error.accounting.entry.invalid.account.and.entry");
         }
     }
-    
+
     public boolean isPositiveAmount() {
         return getAmount().signum() > 0;
     }
@@ -86,19 +88,19 @@ public class Entry extends Entry_Base {
     public void setWhenBooked(DateTime whenBooked) {
         throw new DomainException("error.accounting.entry.cannot.modify.bookedDateTime");
     }
-    
+
     @Override
     public void setEntryType(EntryType entryType) {
         throw new DomainException("error.accounting.entry.cannot.modify.entryType");
     }
-    
+
     @Override
     public void setReceipt(Receipt receipt) {
         if (hasReceipt()) {
-            throw new DomainException("error.accounting.entry.receipt.already.defined");            
+            throw new DomainException("error.accounting.entry.receipt.already.defined");
         } else {
-            super.setReceipt(receipt);    
+            super.setReceipt(receipt);
         }
     }
-    
+
 }

@@ -12,20 +12,20 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 
 public class Receipt extends Receipt_Base {
-    
+
     private Receipt() {
         super();
         super.setRootDomainObject(RootDomainObject.getInstance());
         super.setVersion(1);
         super.setWhenRegisted(new DateTime());
     }
-    
-    public Receipt(Party party, Entry ... entries) {
+
+    public Receipt(Party party, Entry... entries) {
         this();
         init(party, entries);
     }
 
-    private void init(Party party, Entry ... entries) {
+    private void init(Party party, Entry... entries) {
         checkParameters(party);
         setParty(party);
         for (final Entry entry : entries) {
@@ -68,9 +68,9 @@ public class Receipt extends Receipt_Base {
     public void setVersion(Integer version) {
         throw new DomainException("error.accounting.receipt.cannot.modify.version");
     }
-    
+
     @Override
     public void setWhenRegisted(DateTime whenRegisted) {
         throw new DomainException("error.accounting.receipt.cannot.modify.registedDateTime");
-    }    
+    }
 }

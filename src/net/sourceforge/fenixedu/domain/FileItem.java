@@ -16,11 +16,11 @@ public class FileItem extends FileItem_Base {
     }
 
     public FileItem(String filename, String displayName, String mimeType, String checksum,
-            String checksumAlgorithm, Integer size, String dspaceBitstreamIdentification,
+            String checksumAlgorithm, Integer size, String externalStorageIdentification,
             Group permittedGroup, FileItemPermittedGroupType fileItemPermittedGroupType) {
         this();
         init(filename, displayName, mimeType, checksum, checksumAlgorithm, size,
-                dspaceBitstreamIdentification, permittedGroup);
+                externalStorageIdentification, permittedGroup);
         setFileItemPermittedGroupType(fileItemPermittedGroupType);
     }
 

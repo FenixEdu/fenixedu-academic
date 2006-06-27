@@ -11,15 +11,15 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 public class AccountingTransaction extends AccountingTransaction_Base {
-    
+
     private AccountingTransaction() {
         super();
         setRootDomainObject(RootDomainObject.getInstance());
     }
-    
+
     AccountingTransaction(Entry debit, Entry credit) {
         this();
-        init(debit, credit);     
+        init(debit, credit);
     }
 
     private void init(Entry debit, Entry credit) {
@@ -28,7 +28,7 @@ public class AccountingTransaction extends AccountingTransaction_Base {
         super.addEntries(debit);
         super.addEntries(credit);
     }
-    
+
     private void checkParameters(Entry debit, Entry credit) {
         if (debit == null) {
             throw new DomainException("error.accounting.accountingTransaction.invalid.debitEntry");
@@ -62,9 +62,10 @@ public class AccountingTransaction extends AccountingTransaction_Base {
     public void removeEntries(Entry entries) {
         throw new DomainException("error.accounting.accountingTransaction.cannot.remove.entries");
     }
-    
+
     @Override
     public void setWhenRegisted(DateTime whenRegisted) {
-        throw new DomainException("error.accounting.accountingTransaction.cannot.modify.registedDateTime");
+        throw new DomainException(
+                "error.accounting.accountingTransaction.cannot.modify.registedDateTime");
     }
 }
