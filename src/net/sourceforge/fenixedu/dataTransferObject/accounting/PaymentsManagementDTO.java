@@ -8,34 +8,38 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.DomainReference;
-import net.sourceforge.fenixedu.domain.candidacy.Candidacy;
+import net.sourceforge.fenixedu.domain.Person;
 
 public class PaymentsManagementDTO implements Serializable {
 
-    private DomainReference<Candidacy> candidacy;
+    private DomainReference<Person> person;
     private List<EntryDTO> entryDTOs;
-    
-    public PaymentsManagementDTO(Candidacy candidacy) {
-        setCandidacy(candidacy);
+
+    public PaymentsManagementDTO(Person person) {
+        setPerson(person);
         setEntryDTOs(new ArrayList<EntryDTO>());
     }
-    
-    public Candidacy getCandidacy() {
-        return (this.candidacy != null) ? this.candidacy.getObject() : null;
+
+    public Person getPerson() {
+        return (this.person != null) ? this.person.getObject() : null;
     }
 
-    public void setCandidacy(Candidacy candidacy) {
-        this.candidacy = (candidacy != null) ? new DomainReference<Candidacy>(candidacy) : null;
+    public void setPerson(Person person) {
+        this.person = (person != null) ? new DomainReference<Person>(person) : null;
+    }
+
+    public void addEntryDTOs(List<EntryDTO> entryDTOs) {
+        this.entryDTOs.addAll(entryDTOs);
     }
 
     public List<EntryDTO> getEntryDTOs() {
         return entryDTOs;
     }
-    
+
     private void setEntryDTOs(List<EntryDTO> entryDTOs) {
         this.entryDTOs = entryDTOs;
     }
-    
+
     public List<EntryDTO> getSelectedEntries() {
         final List<EntryDTO> result = new ArrayList<EntryDTO>();
         for (final EntryDTO each : getEntryDTOs()) {

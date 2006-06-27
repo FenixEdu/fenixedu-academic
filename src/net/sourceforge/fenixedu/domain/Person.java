@@ -17,6 +17,7 @@ import net.sourceforge.fenixedu.applicationTier.security.PasswordEncryptor;
 import net.sourceforge.fenixedu.applicationTier.utils.GeneratePassword;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
 import net.sourceforge.fenixedu.domain.accessControl.PersonGroup;
+import net.sourceforge.fenixedu.domain.accounting.DebtEvent;
 import net.sourceforge.fenixedu.domain.candidacy.Candidacy;
 import net.sourceforge.fenixedu.domain.candidacy.DFACandidacy;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
@@ -1378,5 +1379,15 @@ public class Person extends Person_Base {
 		}
 		return false;
 	}
+    
+    public List<DebtEvent> getNotPayedEvents() {
+        final List<DebtEvent> result = new ArrayList<DebtEvent>();
+        for (final DebtEvent event : getDebtEventsSet()) {
+            if (!event.isClosed()) {
+                result.add(event);
+            }
+        }
+        return result;
+    }
 
 }
