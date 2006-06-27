@@ -291,7 +291,7 @@ class net.sourceforge.fenixedu.domain.CostCenter extends net.sourceforge.fenixed
 }
 
 
-class net.sourceforge.fenixedu.domain.Seminaries.Candidacy extends net.sourceforge.fenixedu.domain.DomainObject {
+class net.sourceforge.fenixedu.domain.Seminaries.SeminaryCandidacy extends net.sourceforge.fenixedu.domain.DomainObject {
     Boolean approved;
     Integer keyStudent;
     Integer keyCurricularCourse;
@@ -3326,14 +3326,21 @@ class net.sourceforge.fenixedu.domain.system.CronScriptInvocation extends net.so
 }
 
 class net.sourceforge.fenixedu.domain.candidacy.Candidacy extends net.sourceforge.fenixedu.domain.DomainObject {
+    String ojbConcreteClass;
 	Integer number;
+	Integer keyPerson;
 }
 
 	class net.sourceforge.fenixedu.domain.candidacy.DFACandidacy extends net.sourceforge.fenixedu.domain.candidacy.Candidacy {
+		Integer keyExecutionDegree;
+		Integer keyPrecedentDegreeInformation;
 	}
 
 class net.sourceforge.fenixedu.domain.candidacy.CandidacySituation extends net.sourceforge.fenixedu.domain.DomainObject {
+    String ojbConcreteClass;
 	DateTime situationDate;
+	Integer keyEmployee;
+	Integer keyCandidacy;
 }
 
 	class net.sourceforge.fenixedu.domain.candidacy.PreCandidacySituation extends net.sourceforge.fenixedu.domain.candidacy.CandidacySituation {
@@ -3534,7 +3541,7 @@ relation CmsUsers
 }
 
 relation CandidacyCaseStudyChoice {
-    net.sourceforge.fenixedu.domain.Seminaries.Candidacy playsRole candidacy;
+    net.sourceforge.fenixedu.domain.Seminaries.SeminaryCandidacy playsRole candidacy;
     net.sourceforge.fenixedu.domain.Seminaries.CaseStudyChoice playsRole caseStudyChoices {
         multiplicity *;
     }
@@ -3542,7 +3549,7 @@ relation CandidacyCaseStudyChoice {
 
 
 relation CandidacyCurricularCourse {
-    net.sourceforge.fenixedu.domain.Seminaries.Candidacy playsRole associatedCandidancies {
+    net.sourceforge.fenixedu.domain.Seminaries.SeminaryCandidacy playsRole associatedCandidancies {
         multiplicity *;
     }
     net.sourceforge.fenixedu.domain.CurricularCourse playsRole curricularCourse;
@@ -3550,7 +3557,7 @@ relation CandidacyCurricularCourse {
 
 
 relation CandidacyModality {
-    net.sourceforge.fenixedu.domain.Seminaries.Candidacy playsRole associatedModalities {
+    net.sourceforge.fenixedu.domain.Seminaries.SeminaryCandidacy playsRole associatedModalities {
         multiplicity *;
     }
     net.sourceforge.fenixedu.domain.Seminaries.Modality playsRole modality;
@@ -3558,7 +3565,7 @@ relation CandidacyModality {
 
 
 relation CandidacyStudent {
-    net.sourceforge.fenixedu.domain.Seminaries.Candidacy playsRole associatedCandidancies {
+    net.sourceforge.fenixedu.domain.Seminaries.SeminaryCandidacy playsRole associatedCandidancies {
         multiplicity *;
     }
     net.sourceforge.fenixedu.domain.Student playsRole student;
@@ -5650,7 +5657,7 @@ relation ScientificAreaCreditsInScientificArea {
 
 relation SeminaryCandidacy {
     net.sourceforge.fenixedu.domain.Seminaries.Seminary playsRole seminary;
-    net.sourceforge.fenixedu.domain.Seminaries.Candidacy playsRole candidacies {
+    net.sourceforge.fenixedu.domain.Seminaries.SeminaryCandidacy playsRole candidacies {
         multiplicity *;
     }
 }
@@ -6050,7 +6057,7 @@ relation TestScope {
 
 relation ThemeCandidacy {
     net.sourceforge.fenixedu.domain.Seminaries.Theme playsRole theme;
-    net.sourceforge.fenixedu.domain.Seminaries.Candidacy playsRole associatedCandidacies {
+    net.sourceforge.fenixedu.domain.Seminaries.SeminaryCandidacy playsRole associatedCandidacies {
         multiplicity *;
     }
 }
@@ -7282,7 +7289,7 @@ relation RootDomainObjectTeacher {
 
 relation RootDomainObjectCandidacy {
 	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
-	net.sourceforge.fenixedu.domain.Seminaries.Candidacy playsRole candidacys {
+	net.sourceforge.fenixedu.domain.Seminaries.SeminaryCandidacy playsRole candidacys {
 		multiplicity *;
 	}
 }
@@ -8494,6 +8501,20 @@ relation RootDomainObjectPeriodicity {
 relation RootDomainObjectMonthlyBalance {
 	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
 	net.sourceforge.fenixedu.domain.assiduousness.MonthlyBalance playsRole monthlyBalances {
+		multiplicity *;
+	}
+}
+
+relation CandidacyRootDomainObject {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.candidacy.Candidacy playsRole candidacies {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectCandidacySituation {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.candidacy.CandidacySituation playsRole candidacySituations {
 		multiplicity *;
 	}
 }
