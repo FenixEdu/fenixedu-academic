@@ -103,67 +103,87 @@ public class UniqueAcronymCreator<T extends DomainObject> {
 
     private static String constructBasicAcronym(StringBuilder acronym) {
         for (int i = 0; i < splitsName.length; i++) {
-            if (!isValidRejection(splitsName[i])) {
+            if (splitsName[i].indexOf("(") == 0) {
+                int closingBracketsSplit = i;
+                for (; closingBracketsSplit < splitsName.length && !splitsName[closingBracketsSplit].contains(")"); closingBracketsSplit++);
+                
+                if (closingBracketsSplit == i) {
+                    // Ex: Xpto (And) --> X-And
+                    String toAppend = splitsName[i].substring(0 + 1, splitsName[i].indexOf(")"));
+                    acronym.append("-").append(toAppend);
+                    logger.info("constructBasicAcronym, found a '(...)', appendding " + toAppend);
+                } else {
+                    // Ex: Xpto (And <anything> More) --> X-And<anything>More
+                    
+                    // adding 'And'
+                    String toAppend = splitsName[i].substring(1, splitsName[i].length());
+                    
+                    // adding anything in between, if not rejectfull
+                    for (int iter = i + 1; iter < closingBracketsSplit; iter++) {
+                        if ((!isValidRejection(splitsName[iter]) && splitsName[iter].length() >= 3) || hasNumber(splitsName[iter])) {
+                            toAppend += splitsName[iter];
+                        }
+                    }
+                    
+                    // adding 'More'
+                    toAppend += splitsName[closingBracketsSplit].substring(0, splitsName[closingBracketsSplit].length() - 1);
+                    
+                    // skipping until this split in next iteration
+                    i = closingBracketsSplit + 1;
+                    
+                    acronym.append("-").append(toAppend);
+                    logger.info("constructBasicAcronym, found a '(... ...)', appendding " + toAppend);
+                }
+            } else if (splitsName[i].indexOf("-") == 0) {
+                // Ex: Xpto - and --> X-AND
+                
+                if ((i + 1 ) <= splitsName.length - 1) {
+                    if (!isValidRejection(splitsName[i + 1])) {
+                        // adding 'And', but limiting it to 4 chars
+                        String toAppend = (splitsName[i + 1].length() < 4) ? splitsName[i + 1].toUpperCase() : String.valueOf(splitsName[i + 1].charAt(0)).toUpperCase();
+                        
+                        // skipping until this split in next iteration
+                        i = i + 1;
+                        
+                        if (toAppend.length() == 1) {
+                            acronym.append(toAppend);
+                            logger.info("constructBasicAcronym, found a '- ...', appendding letter " + toAppend);
+                        } else {
+                            acronym.append("-").append(toAppend);
+                            logger.info("constructBasicAcronym, found a '- ...', appendding " + toAppend);
+                        }
+                    } else {
+                        acronym.append("-");
+                        logger.info("constructBasicAcronym, found a '- ...', only appendding '-'");
+                    }
+                } else {
+                    if (!splitsName[i].equals("-")) {
+                        String toAppend = splitsName[i].substring(1, splitsName[i].length() - 1);
+                        toAppend = (toAppend.length() < 4) ? toAppend.toUpperCase() : String.valueOf(toAppend.charAt(0)).toUpperCase();
+                        
+                        acronym.append("-").append(toAppend);
+                        logger.info("constructBasicAcronym, found a '-...' at the end, appendding " + toAppend);
+                    }
+                }
+            } else if (isValidNumeration(splitsName[i]) || hasNumber(splitsName[i])) {
+                // Ex: Xpto I --> X-I
+                
+                acronym.append("-").append(splitsName[i].toUpperCase());
+                logger.info("constructBasicAcronym, found a numeration, appendding " + splitsName[i].toUpperCase());
+            } else if (!isValidRejection(splitsName[i]) && splitsName[i].length() >= 3) {
                 if (splitsName[i].contains("-")) {
                     // Ex: Xpto And-More --> XAM
                     
                     int index = splitsName[i].indexOf("-");
                     acronym.append(splitsName[i].charAt(0)).append(splitsName[i].charAt(index+1));
                     logger.info("constructBasicAcronym, found a '-', appendding " + splitsName[i].charAt(0) + splitsName[i].charAt(index+1));
-                } else if (splitsName[i].contains("/")) {
-                    // Ex: Xpto And/More --> XAM
-                    
-                    int index = splitsName[i].indexOf("/");
-                    acronym.append(splitsName[i].charAt(0)).append(splitsName[i].charAt(index+1));
-                    logger.info("constructBasicAcronym, found a '/', appendding " + splitsName[i].charAt(0) + splitsName[i].charAt(index+1));
-                } else if (splitsName[i].indexOf("(") == 0) {
-
-                    int closingBracketsSplit = i;
-                    for (; closingBracketsSplit < splitsName.length && !splitsName[closingBracketsSplit].contains(")"); closingBracketsSplit++);
-                    
-                    if (closingBracketsSplit == i) {
-                        // Ex: Xpto (And) --> X-And
-                        String toAppend = splitsName[i].substring(0, splitsName[i].indexOf(")") - 1);
-                        acronym.append("-").append(toAppend);
-                        logger.info("constructBasicAcronym, found a '(...)', appendding " + toAppend);
-                    } else {
-                        // Ex: Xpto (And More) --> X-AndMore
-                        
-                        // adding 'And'
-                        String toAppend = splitsName[i].substring(1, splitsName[i].length());
-                        
-                        // adding 'More'
-                        toAppend += splitsName[closingBracketsSplit].substring(0, splitsName[closingBracketsSplit].length() - 1);
-                        
-                        // skipping until this split in next iteration
-                        i = closingBracketsSplit + 1;
-                        
-                        acronym.append("-").append(toAppend);
-                        logger.info("constructBasicAcronym, found a '(... ...)', appendding " + toAppend);
-                    }
                 } else {
                     // Ex: Xpto And More --> XAM
                     
                     acronym.append(splitsName[i].charAt(0));
                     logger.info("constructBasicAcronym, appendding " + splitsName[i].charAt(0));
                 }
-            } else if (isValidNumeration(splitsName[i])) {
-                // Ex: Xpto I --> X-I
-                
-                acronym.append("-").append(splitsName[i]);
-                logger.info("constructBasicAcronym, found a numeration, appendding " + splitsName[i]);
-            } else if (splitsName[i].indexOf("-") == 0) {
-                // Ex: Xpto - and --> X-AND
-                
-                // adding 'And', but limiting it to 4 chars
-                String toAppend = (splitsName[i + 1].length() < 4) ? splitsName[i + 1].toUpperCase() : String.valueOf(splitsName[i + 1].charAt(0)).toUpperCase();
-                
-                // skipping until this split in next iteration
-                i = i + 1;
-                
-                acronym.append("-").append(toAppend);
-                logger.info("constructBasicAcronym, found a '- ...', appendding " + toAppend);
-            } 
+            }
         }
         
         logger.info("constructBasicAcronym, returning " + acronym.toString());
@@ -171,7 +191,7 @@ public class UniqueAcronymCreator<T extends DomainObject> {
     }
 
     private static boolean isValidRejection(String string) {
-        if (rejectionSet.contains(StringUtils.lowerCase(string)) || (string.length() < 3)) {
+        if (rejectionSet.contains(StringUtils.lowerCase(string))) {
             logger.info("isValidRejection, true -> " + string);
             return true;
         }
@@ -190,6 +210,20 @@ public class UniqueAcronymCreator<T extends DomainObject> {
         return false;
     }
 
+    private static boolean hasNumber(String string) {
+        for (int i = 0; i < string.length(); ++i) {
+            char c = string.charAt(i);
+
+            if (numberSet.contains(String.valueOf(c))) {
+                logger.info("hasNumber, true -> " + string);
+                return true;
+            }
+        }
+            
+        logger.info("hasNumber, false -> " + string);
+        return false;
+    }
+    
     private static void addAcception(String acronym) {
         logger.info("addAcception, called with " + acronym);
         
@@ -237,15 +271,21 @@ public class UniqueAcronymCreator<T extends DomainObject> {
         logger.info("appendLast, called with " + acronym);
         
         for (int i = splitsName.length - 1; i > -1; i--) {
-            if (!(isValidAcception(splitsName[i])) && splitsName[i].length() >= 3) {
+            if (!isValidAcception(splitsName[i]) && splitsName[i].length() >= 3 && !isValidNumeration(splitsName[i])) {
                 String toAppend = splitsName[i].substring(1, 3);
                 toAppend = (toLowerCase) ? toAppend.toLowerCase() : toAppend.toUpperCase();
                 
                 if (acronym.toString().contains("-")) {
-                    logger.info("appendLast, found a '-', appending " + toAppend);
-                    
                     int hiffen = acronym.toString().indexOf("-");
-                    acronym.insert(hiffen, toAppend);
+                    if ((hiffen+1 < acronym.toString().length()) && (isValidNumeration(String.valueOf(acronym.charAt(hiffen + 1)))
+                            || hasNumber(String.valueOf(acronym.charAt(hiffen + 1))))) {
+                        acronym.insert(hiffen, toAppend);    
+                        logger.info("appendLast, found a '-', appending before hiffen " + toAppend);
+                    } else {
+                        acronym.append(toAppend);
+                        logger.info("appendLast, found a '-', appending in end " + toAppend);
+                    }
+                    
                 } else {
                     logger.info("appendLast, appending " + toAppend);
                     acronym.append(toAppend);
@@ -265,10 +305,15 @@ public class UniqueAcronymCreator<T extends DomainObject> {
                 toAppend = (toLowerCase) ? toAppend.toLowerCase() : toAppend.toUpperCase();
                 
                 if (acronym.toString().contains("-")) {
-                    logger.info("appendLastChar, found a '-', appending " + toAppend);
-                    
                     int hiffen = acronym.toString().indexOf("-");
-                    acronym.insert(hiffen, toAppend);
+                    if (isValidNumeration(String.valueOf(acronym.charAt(hiffen + 1)))
+                            || hasNumber(String.valueOf(acronym.charAt(hiffen + 1)))) {
+                        acronym.insert(hiffen, toAppend);    
+                        logger.info("appendLastChar, found a '-', appending before hiffen " + toAppend);
+                    } else {
+                        acronym.append(toAppend);
+                        logger.info("appendLastChar, found a '-', appending in end " + toAppend);
+                    }
                 } else {
                     logger.info("appendLastChar, appending " + toAppend);
                     acronym.append(toAppend);
@@ -283,6 +328,7 @@ public class UniqueAcronymCreator<T extends DomainObject> {
 
     private static Set<String> rejectionSet = new HashSet<String>();
     private static Set<String> acceptSet = new HashSet<String>();
+    private static Set<String> numberSet = new HashSet<String>();
     private static Set<String> numerationSet = new HashSet<String>();
     static {
         rejectionSet.add("às");
@@ -304,8 +350,6 @@ public class UniqueAcronymCreator<T extends DomainObject> {
         rejectionSet.add("por");
         rejectionSet.add("aos");
         rejectionSet.add("ao");
-        rejectionSet.add("b");
-        rejectionSet.add("c");
         rejectionSet.add("a)");
         rejectionSet.add("b)");
         rejectionSet.add("c)");
@@ -323,16 +367,6 @@ public class UniqueAcronymCreator<T extends DomainObject> {
         rejectionSet.add("(taguspark)");
         rejectionSet.add("");
 
-        acceptSet.add("1");
-        acceptSet.add("2");
-        acceptSet.add("3");
-        acceptSet.add("4");
-        acceptSet.add("5");
-        acceptSet.add("6");
-        acceptSet.add("7");
-        acceptSet.add("8");
-        acceptSet.add("9");
-        acceptSet.add("10");
         acceptSet.add("-");
         acceptSet.add("B");
         acceptSet.add("C");
@@ -352,16 +386,17 @@ public class UniqueAcronymCreator<T extends DomainObject> {
         acceptSet.add("(SIE)");
         acceptSet.add("(TAGUSPARK)");
         
-        numerationSet.add("i");
-        numerationSet.add("ii");
-        numerationSet.add("iii");
-        numerationSet.add("iv");
-        numerationSet.add("v");
-        numerationSet.add("vi");
-        numerationSet.add("vii");
-        numerationSet.add("viii");
-        numerationSet.add("ix");
-        numerationSet.add("x");
+        numberSet.add("1");
+        numberSet.add("2");
+        numberSet.add("3");
+        numberSet.add("4");
+        numberSet.add("5");
+        numberSet.add("6");
+        numberSet.add("7");
+        numberSet.add("8");
+        numberSet.add("9");
+        numberSet.add("10");
+        
         numerationSet.add("I");
         numerationSet.add("II");
         numerationSet.add("III");
@@ -372,6 +407,8 @@ public class UniqueAcronymCreator<T extends DomainObject> {
         numerationSet.add("VIII");
         numerationSet.add("IX");
         numerationSet.add("X");
+        numerationSet.add("XX");
+        numerationSet.add("XXI");
     }
 
     private static StringBuilder sbna = null;
@@ -548,6 +585,38 @@ public class UniqueAcronymCreator<T extends DomainObject> {
                 break;
             case 'ÿ':
                 sbna.append('y');
+                break;
+
+            case ',':
+                sbna.append(' ');
+                break;
+
+            case ':':
+                sbna.append(" - ");
+                break;
+
+            case '-':
+                sbna.append(" -");
+                break;
+
+            case 'º':
+                sbna.append(' ');
+                break;
+
+            case 'ª':
+                sbna.append(' ');
+                break;
+
+            case '/':
+                sbna.append(' ');
+                break;
+
+            case '.':
+                sbna.append(' ');
+                break;
+
+            case '(':
+                sbna.append(" (");
                 break;
 
             default:
