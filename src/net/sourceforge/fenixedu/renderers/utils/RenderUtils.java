@@ -21,7 +21,6 @@ import net.sourceforge.fenixedu.renderers.components.HtmlComponent;
 import net.sourceforge.fenixedu.renderers.components.state.ComponentLifeCycle;
 import net.sourceforge.fenixedu.renderers.components.state.IViewState;
 import net.sourceforge.fenixedu.renderers.components.state.LifeCycleConstants;
-import net.sourceforge.fenixedu.renderers.components.state.ViewState;
 import net.sourceforge.fenixedu.renderers.plugin.RenderersRequestProcessor;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -108,10 +107,7 @@ public class RenderUtils {
     public static String getResourceString(String bundle, String key) {
         MessageResources resources = getMessageResources(bundle);
 
-        Locale locale = RequestUtils.getUserLocale(RenderersRequestProcessor.getCurrentRequest(), null);
-        if (locale == null) {
-            locale = Locale.getDefault();
-        }
+        Locale locale = getLocale();
 
         if (resources.isPresent(locale, key)) {
             return resources.getMessage(locale, key);
@@ -121,19 +117,23 @@ public class RenderUtils {
             return null;
         }
         
-        try {
-            // TODO: allow the name to be configured or fetch the resources in other way
-            MessageResources rendererResources = getMessageResources("RENDERER_RESOURCES");
-            
-            if (rendererResources.isPresent(locale, key)) {
-                return rendererResources.getMessage(locale, key);
-            }
-        }
-        catch (Exception e) {
-            // could not found renderer resources, ignore and procede
+        // TODO: allow the name to be configured or fetch the resources in other way
+        MessageResources rendererResources = getMessageResources("RENDERER_RESOURCES");
+        
+        if (rendererResources.isPresent(locale, key)) {
+            return rendererResources.getMessage(locale, key);
         }
         
         return null;
+    }
+
+    private static Locale getLocale() {
+        Locale locale = RequestUtils.getUserLocale(RenderersRequestProcessor.getCurrentRequest(), null);
+        if (locale == null) {
+            locale = Locale.getDefault();
+        }
+        
+        return locale;
     }
 
     public static MessageResources getMessageResources() {
@@ -232,7 +232,7 @@ public class RenderUtils {
             builder.append(format.substring(lastIndex));
         }
         
-        return String.format(builder.toString(), args.toArray());
+        return String.format(getLocale(), builder.toString(), args.toArray());
     }
     
     public static void setProperties(Object target, Properties properties) {
