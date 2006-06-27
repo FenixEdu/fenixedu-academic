@@ -26,3 +26,8 @@ function executeWithTempFile() {
 	rm tmp.sql
 	echo
 }
+
+execute "Create Written Evaluation Context Table" createWrittenEvaluationContextTable.sql
+execute "Create Candidacy Tables" createCandidacyTables.sql
+execute "Alter Table Result" alterTableResult.sql
+execute "Creating Accounting Tables" CreateAccountingTables.sql
