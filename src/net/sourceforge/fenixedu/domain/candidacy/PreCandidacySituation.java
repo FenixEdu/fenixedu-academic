@@ -13,6 +13,7 @@ public class PreCandidacySituation extends PreCandidacySituation_Base {
         if(employee == null) {
         	throw new DomainException("person is not an employee");
         }
+        setEmployee(employee);
         //TODO: create payment event
     }
 	

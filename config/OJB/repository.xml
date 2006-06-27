@@ -85,6 +85,7 @@
 <!ENTITY messaging SYSTEM "repository_messaging.xml">
 <!ENTITY cron SYSTEM "repository_cron.xml">
 <!ENTITY accounting SYSTEM "repository_accounting.xml">
+<!ENTITY candidacy SYSTEM "repository_candidacy.xml">
 ]>
 <descriptor-repository version="1.0" isolation-level="repeatable-read">
 
@@ -175,5 +176,6 @@
 	&messaging;
 	&cron;
 	&accounting;
+	&candidacy;
 
 </descriptor-repository>

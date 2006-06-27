@@ -221,7 +221,7 @@
 		<put name="navLocal" value="/posGraduacao/lists/listsMenu.jsp" />
 		<put name="navGeral" value="/posGraduacao/commonNavGeralPosGraduacao.jsp" />
 	</definition>
-	
+
 	<!-- ************* Payments ************* -->
 	<definition name="show.guides.management.firstPage" extends="definition.masterDegreeAdministrativeOffice.masterPage">
 		<put name="navLocal" value="/posGraduacao/payments/paymentsMenu.jsp" />
@@ -237,5 +237,13 @@
 		<put name="navLocal" value="/posGraduacao/payments/paymentsMenu.jsp" />
 		<put name="body" value="/commons/blank.jsp"/>
 	</definition>
-
+	
+	<!-- ************* DFA candidacy ************* -->	
+	<definition name="df.page.chooseDFAExecutionDegree" extends="definition.masterDegreeAdministrativeOffice.masterPage">
+		<put name="body" value="/posGraduacao/candidacy/chooseDFACandidacyExecutionDegree.jsp"/>
+	</definition>
+	<definition name="df.page.fillCandidateData" extends="definition.masterDegreeAdministrativeOffice.masterPage">
+		<put name="body" value="/posGraduacao/candidacy/fillCandidateData.jsp"/>
+	</definition>
+	
 </tiles-definitions>

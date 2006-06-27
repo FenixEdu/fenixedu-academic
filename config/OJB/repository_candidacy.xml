@@ -1,0 +1,40 @@
+<!-- ************************************************************************************************************ -->
+<!-- Definitions for net.sourceforge.fenixedu.domain.candidacy.Candidacy -->
+<!-- ************************************************************************************************************ -->
+<class-descriptor class="net.sourceforge.fenixedu.domain.candidacy.Candidacy" table="CANDIDACY">
+	<extent-class class-ref="net.sourceforge.fenixedu.domain.candidacy.DFACandidacy"/>
+</class-descriptor>
+
+<!-- ************************************************************************************************************ -->
+<!-- Definitions for net.sourceforge.fenixedu.domain.candidacy.DFACandidacy -->
+<!-- ************************************************************************************************************ -->
+<class-descriptor class="net.sourceforge.fenixedu.domain.candidacy.DFACandidacy" table="CANDIDACY">
+	
+</class-descriptor>
+
+
+<!-- ************************************************************************************************************ -->
+<!-- Definitions for net.sourceforge.fenixedu.domain.candidacy.CandidacySituation -->
+<!-- ************************************************************************************************************ -->
+<class-descriptor class="net.sourceforge.fenixedu.domain.candidacy.CandidacySituation" table="CANDIDACY_SITUATION">
+	<extent-class class-ref="net.sourceforge.fenixedu.domain.candidacy.PreCandidacySituation"/>
+	<extent-class class-ref="net.sourceforge.fenixedu.domain.candidacy.StandByCandidacySituation"/>
+	<extent-class class-ref="net.sourceforge.fenixedu.domain.candidacy.StandByConfirmedDataCandidacySituation"/>
+	<extent-class class-ref="net.sourceforge.fenixedu.domain.candidacy.StandByFilledDataCandidacySituation"/>			
+</class-descriptor>
+
+<class-descriptor class="net.sourceforge.fenixedu.domain.candidacy.PreCandidacySituation" table="CANDIDACY_SITUATION">
+
+</class-descriptor>
+
+<class-descriptor class="net.sourceforge.fenixedu.domain.candidacy.StandByCandidacySituation" table="CANDIDACY_SITUATION">
+
+</class-descriptor>
+
+<class-descriptor class="net.sourceforge.fenixedu.domain.candidacy.StandByConfirmedDataCandidacySituation" table="CANDIDACY_SITUATION">
+
+</class-descriptor>
+
+<class-descriptor class="net.sourceforge.fenixedu.domain.candidacy.StandByFilledDataCandidacySituation" table="CANDIDACY_SITUATION">
+
+</class-descriptor>

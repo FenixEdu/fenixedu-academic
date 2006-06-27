@@ -9968,4 +9968,12 @@
 			<chain name="StudentAuthorization" />
 		</filterChains>
 	</service>	
+	<service>
+		<name>CreateDFACandidacy</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.candidacy.CreateDFACandidacy</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		<filterChains>
+		</filterChains>
+	</service>	
 </serviceDefinitions>

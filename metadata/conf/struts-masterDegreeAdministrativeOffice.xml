@@ -2552,7 +2552,7 @@
 			  >		  
 	         <forward name="showList" path="showMasterDegreeThesisList"/>
 	  </action>
-	  
+
 	  <!-- Payments -->
 	  <action path="/payments"
 		      parameter="method"
@@ -2579,6 +2579,20 @@
 			  >
 	         <forward name="success" path="show.receipts.management.firstPage"/> 
       </action>
+
+
+	<!-- DFACandidacy -->
+	  <action path="/dfaCandidacy"
+		      parameter="method"
+		      scope="request"
+		      input="df.page.chooseDFAExecutionDegree"
+              type="net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.candidacy.DFACandidacyDispatchAction"
+			  >
+	         <forward name="chooseExecutionDegree" path="df.page.chooseDFAExecutionDegree"/>
+	         <forward name="fillCandidateData" path="df.page.fillCandidateData"/>
+	         <forward name="DisplayExecutionDegreeList" path="/guide/chooseExecutionDegreeToCreateGuide.jsp"/>
+	  </action>
+	
 	
     </action-mappings>
     
@@ -2590,6 +2604,7 @@
 	<message-resources parameter="resources.GlobalResources" key="GLOBAL_RESOURCES" null="false"/>
 	<message-resources parameter="resources.ApplicationResources" key="DEFAULT" null="false"/>
     <message-resources parameter="resources.EnumerationResources" key="ENUMERATION_RESOURCES" null="false"/>
+    <message-resources parameter="resources.AdminOffice" key="ADMIN_OFFICE_RESOURCES" null="false"/>    
    
     <!-- ========== Plug Ins Configuration ================================= -->
     <plug-in className="org.apache.struts.validator.ValidatorPlugIn">

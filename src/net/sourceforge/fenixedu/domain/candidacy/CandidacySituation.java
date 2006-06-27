@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.domain.candidacy;
 
 import java.util.Comparator;
 
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.util.IState;
 
 import org.joda.time.DateTime;
@@ -16,7 +17,9 @@ public abstract class CandidacySituation extends CandidacySituation_Base impleme
     
     public  CandidacySituation() {
         super();
+        setRootDomainObject(RootDomainObject.getInstance());
         setSituationDate(new DateTime());
+        setOjbConcreteClass(this.getClass().getName());
     }
     
     public abstract void nextState();

@@ -17,6 +17,8 @@ import net.sourceforge.fenixedu.applicationTier.security.PasswordEncryptor;
 import net.sourceforge.fenixedu.applicationTier.utils.GeneratePassword;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
 import net.sourceforge.fenixedu.domain.accessControl.PersonGroup;
+import net.sourceforge.fenixedu.domain.candidacy.Candidacy;
+import net.sourceforge.fenixedu.domain.candidacy.DFACandidacy;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Accountability;
@@ -899,6 +901,20 @@ public class Person extends Person_Base {
         }
         return null;
     }
+    
+    public DFACandidacy getDFACandidacyByExecutionDegree(
+            final ExecutionDegree executionDegree) {
+        for (final Candidacy candidacy : this.getCandidaciesSet()) {
+        	if(candidacy instanceof DFACandidacy) {
+        		final DFACandidacy dfaCandidacy = (DFACandidacy) candidacy;
+        		if(dfaCandidacy.getExecutionDegree().equals(executionDegree)) {
+        			return dfaCandidacy;
+        		}
+        	}
+        }
+        return null;
+    }
+
 
     @Deprecated
     public String getCodigoFiscal() {

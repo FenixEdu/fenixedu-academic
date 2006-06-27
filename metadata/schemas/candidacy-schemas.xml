@@ -1,0 +1,44 @@
+<schema name="candidacy.choose.executionDegree"
+	type="net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.candidacy.CreateDFACandidacyBean">
+	<slot name="degree" key="label.degree"
+		layout="menu-select-postback"
+		validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		<property name="providerClass"
+			value="net.sourceforge.fenixedu.presentationTier.renderers.providers.candidacy.DFATypeDegrees" />
+		<property name="choiceType"
+			value="net.sourceforge.fenixedu.domain.Degree" />
+		<property name="format" value="${name}" />
+	</slot>
+	<slot name="degreeCurricularPlan" key="label.degreeCurricularPlan"
+		layout="menu-select-postback"
+		validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		<property name="providerClass"
+			value="net.sourceforge.fenixedu.presentationTier.renderers.providers.candidacy.DegreeCurricularPlansForDegree" />
+		<property name="choiceType"
+			value="net.sourceforge.fenixedu.domain.DegreeCurricularPlan" />
+		<property name="format" value="${name}" />
+	</slot>
+	<slot name="executionDegree" key="label.executionDegree"
+		layout="menu-select-postback"
+		validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		<property name="providerClass"
+			value="net.sourceforge.fenixedu.presentationTier.renderers.providers.candidacy.ExecutionDegreesForDegreeCurricularPlan" />
+		<property name="choiceType"
+			value="net.sourceforge.fenixedu.domain.ExecutionDegree" />
+		<property name="format" value="${executionYear.year}" />
+	</slot>
+</schema>
+<schema name="candidacy.choose.person"
+	type="net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.candidacy.CreateDFACandidacyBean">
+	<slot name="name" key="label.name"/>
+	<slot name="identificationNumber" key="label.identificationNumber">
+		<property name="size" value="52" />
+		<property name="maxLength" value="50" />
+	</slot>	
+	<slot name="identificationNumber" key="label.identificationNumber">
+		<property name="size" value="22" />
+		<property name="maxLength" value="20" />
+
+	</slot>		
+	<slot name="idDocumentType" key="label.idDocumentType"/>	
+</schema>	
