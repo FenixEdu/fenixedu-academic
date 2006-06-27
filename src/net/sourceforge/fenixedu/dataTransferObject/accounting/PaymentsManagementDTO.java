@@ -35,5 +35,15 @@ public class PaymentsManagementDTO implements Serializable {
     private void setEntryDTOs(List<EntryDTO> entryDTOs) {
         this.entryDTOs = entryDTOs;
     }
+    
+    public List<EntryDTO> getSelectedEntries() {
+        final List<EntryDTO> result = new ArrayList<EntryDTO>();
+        for (final EntryDTO each : getEntryDTOs()) {
+            if (each.isSelected()) {
+                result.add(each);
+            }
+        }
+        return result;
+    }
 
 }
