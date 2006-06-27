@@ -24,7 +24,7 @@ import org.joda.time.DateMidnight;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeFieldType;
 import org.joda.time.Interval;
-import org.joda.time.Period;
+import org.joda.time.PeriodType;
 import org.joda.time.YearMonthDay;
 
 /**
@@ -197,8 +197,7 @@ public class Attends extends Attends_Base {
     }
 
     public int getCalculatePreviousWeek() {
-        final int previousWeekOffset = calculateCurrentWeekOffset() - 1;
-        return Integer.valueOf(previousWeekOffset + 1);
+        return calculateCurrentWeekOffset();
     }
 
     public int calculateCurrentWeekOffset() {
@@ -206,9 +205,10 @@ public class Attends extends Attends_Base {
         final DateMidnight firstMonday = beginningOfLessonPeriod.withField(
                 DateTimeFieldType.dayOfWeek(), 1);
         final DateMidnight thisMonday = new DateMidnight().withField(DateTimeFieldType.dayOfWeek(), 1);
-        final Period period = new Period(firstMonday, thisMonday);
-        return (period.getYears() * 12 + period.getMonths()) * 4 + period.getWeeks()
-                + (Double.valueOf(StrictMath.ceil((period.getDays() / 7.0))).intValue());
+
+        final Interval interval = new Interval(firstMonday, thisMonday);
+
+        return interval.toPeriod(PeriodType.weeks()).getWeeks();
     }
 
     public Set<WeeklyWorkLoad> getSortedWeeklyWorkLoads() {
