@@ -10,6 +10,7 @@
 	<!ENTITY space SYSTEM "space-schemas.xml">
 	<!ENTITY assiduousness SYSTEM "assiduousness-schemas.xml">
 	<!ENTITY party SYSTEM "party-schemas.xml">
+	<!ENTITY payments SYSTEM "payments-schemas.xml">
 ]>
 
 <schemas>
@@ -793,7 +794,6 @@
    	    <slot name="fileSize" />
    	    <slot name="fileChecksum"/>
 	</schema>
-		
 	
 	&researcher;
 	&markSheet;
@@ -801,4 +801,6 @@
 	&space;
 	&assiduousness;
 	&party;
+	&payments;
+	
 </schemas>
