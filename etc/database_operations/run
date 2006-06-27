@@ -27,9 +27,4 @@ function executeWithTempFile() {
 	echo
 }
 
-execute "Add column entry type" alterTableAccountingEntry.sql
-execute "Changing Event table " alterTableAccountingEvent.sql
-execute "Rename table File Item to File" RenameTableFileItemToFile.sql
-execute "Changing table File" AlterTableFile.sql
-execute "Creating Project Submission Tables" CreateProjectSubmissionTables.sql
-execute "Changing table Evaluation" AlterTableEvaluation.sql
+execute "Add column KEY_PARTY to Event table" alterTableAccountingEvent.sql
