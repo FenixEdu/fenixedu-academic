@@ -13,8 +13,8 @@
 
 	<li><bean:message key="label.masterDegree.administrativeOffice.payments" /></li>
 	<blockquote>
-		<li><html:link page="/guidesManagement.do?method=firstPage"><bean:message key="link.masterDegree.administrativeOffice.guides" /></html:link></li>
-		<li><html:link page="/receiptsManagement.do?method=firstPage"><bean:message key="link.masterDegree.administrativeOffice.receipts" /></html:link></li>
+		<li><html:link page="/guidesManagement.do?method=prepareSearchPerson"><bean:message key="link.masterDegree.administrativeOffice.guides" /></html:link></li>
+		<li><html:link page="/receiptsManagement.do?method=prepareSearchPerson"><bean:message key="link.masterDegree.administrativeOffice.receipts" /></html:link></li>
 	</blockquote>
 </ul>
    
