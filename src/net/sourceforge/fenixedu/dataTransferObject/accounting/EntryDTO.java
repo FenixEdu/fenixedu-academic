@@ -10,6 +10,7 @@ import net.sourceforge.fenixedu.domain.accounting.Event;
 
 public class EntryDTO implements Serializable {
     
+    private boolean selected;
     private DomainReference<Account> account;
     private DomainReference<Event> event;
     private EntryType entryType;
@@ -76,5 +77,13 @@ public class EntryDTO implements Serializable {
 
     public void setEntryType(EntryType entryType) {
         this.entryType = entryType;
+    }
+
+    public boolean isSelected() {
+        return selected;
+    }
+
+    public void setSelected(boolean selected) {
+        this.selected = selected;
     }
 }
