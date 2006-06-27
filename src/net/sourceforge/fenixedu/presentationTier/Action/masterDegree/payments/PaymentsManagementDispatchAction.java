@@ -14,6 +14,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.apache.struts.action.DynaActionForm;
 
 public abstract class PaymentsManagementDispatchAction extends FenixDispatchAction {
 
@@ -22,11 +23,16 @@ public abstract class PaymentsManagementDispatchAction extends FenixDispatchActi
 
         return mapping.findForward("success");
     }
+    
+    protected Integer getCandidacyNumber(final DynaActionForm form) {
+        final Integer candidacyNumber = (Integer) form.get("candidacyNumber");
+        return (candidacyNumber == null || candidacyNumber.intValue() == 0) ? null : candidacyNumber;
+    }
 
     protected PaymentsManagementDTO searchEventsForCandidacy(Integer candidacyNumber) {
 
         PaymentsManagementDTO managementDTO = null;
-        final Candidacy candidacy = Candidacy.readByCandidacyNumber(candidacyNumber);
+        final Candidacy candidacy = (candidacyNumber != null) ? Candidacy.readByCandidacyNumber(candidacyNumber) : null;
         if (candidacy != null) {
             managementDTO = new PaymentsManagementDTO(candidacy);
             for (final Event event : candidacy.getPerson().getEventsSet()) {
