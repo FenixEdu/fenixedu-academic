@@ -37,6 +37,7 @@ public class RoomExamSearchDA extends FenixContextDispatchAction {
 
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
+      
         IUserView userView = SessionUtils.getUserView(request);
         Object args[] = {};
         List infoBuildings = (List) ServiceUtils.executeService(userView, "ReadBuildings", args);
@@ -56,6 +57,9 @@ public class RoomExamSearchDA extends FenixContextDispatchAction {
         request.setAttribute("public.buildings", buildings);
         request.setAttribute("public.types", types);
 
+        final String executionPeriodString = (String) request.getParameter(SessionConstants.EXECUTION_PERIOD_OID);
+        request.setAttribute(SessionConstants.EXECUTION_PERIOD_OID, executionPeriodString);
+        
         return mapping.findForward("roomSearch");
     }
 
@@ -64,7 +68,7 @@ public class RoomExamSearchDA extends FenixContextDispatchAction {
 
         IUserView userView = SessionUtils.getUserView(request);
         DynaValidatorForm roomExamForm = (DynaValidatorForm) form;
-
+                
         String name = (String) roomExamForm.get("name");
         if (name.equals("")) {
             name = null;

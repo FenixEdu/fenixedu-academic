@@ -9,6 +9,8 @@ import java.util.List;
 import java.util.Random;
 import java.util.Set;
 
+import net.sourceforge.fenixedu.domain.CurricularCourseScope.DegreeModuleScopeCurricularCourseScope;
+import net.sourceforge.fenixedu.domain.degreeStructure.Context.DegreeModuleScopeContext;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.space.OldRoom;
 import net.sourceforge.fenixedu.domain.space.Room;
@@ -37,7 +39,7 @@ public class WrittenEvaluation extends WrittenEvaluation_Base {
 
     public WrittenEvaluation(Date evaluationDay, Date evaluationBeginningTime, Date evaluationEndTime,
             List<ExecutionCourse> executionCoursesToAssociate,
-            List<CurricularCourseScope> curricularCourseScopesToAssociate, List<OldRoom> rooms,
+            List<DegreeModuleScope> curricularCourseScopesToAssociate, List<OldRoom> rooms,
             OccupationPeriod period) {
     	this();
         setAttributesAndAssociateRooms(evaluationDay, evaluationBeginningTime, evaluationEndTime,
@@ -169,7 +171,7 @@ public class WrittenEvaluation extends WrittenEvaluation_Base {
 
     protected void setAttributesAndAssociateRooms(Date day, Date beginning, Date end,
             List<ExecutionCourse> executionCoursesToAssociate,
-            List<CurricularCourseScope> curricularCourseScopesToAssociate, List<OldRoom> rooms,
+            List<DegreeModuleScope> curricularCourseScopesToAssociate, List<OldRoom> rooms,
             OccupationPeriod period) {
         if (rooms == null) {
             rooms = new ArrayList<OldRoom>(0);
@@ -178,7 +180,14 @@ public class WrittenEvaluation extends WrittenEvaluation_Base {
         checkValidHours(beginning, end);
 
         this.getAssociatedExecutionCourses().addAll(executionCoursesToAssociate);
-        this.getAssociatedCurricularCourseScope().addAll(curricularCourseScopesToAssociate);
+        for (DegreeModuleScope degreeModuleScope : curricularCourseScopesToAssociate) {
+            if(degreeModuleScope instanceof DegreeModuleScopeCurricularCourseScope) {
+                this.addAssociatedCurricularCourseScope(((DegreeModuleScopeCurricularCourseScope)degreeModuleScope).
+                        getCurricularCourseScope());
+            } else if(degreeModuleScope instanceof DegreeModuleScopeContext) {                
+                this.addAssociatedContexts(((DegreeModuleScopeContext)degreeModuleScope).getContext());
+            }
+        }        
 
         this.setDayDate(day);
         this.setBeginningDate(beginning);
@@ -252,7 +261,7 @@ public class WrittenEvaluation extends WrittenEvaluation_Base {
 
     protected void edit(Date day, Date beginning, Date end,
             List<ExecutionCourse> executionCoursesToAssociate,
-            List<CurricularCourseScope> curricularCourseScopesToAssociate, List<OldRoom> rooms,
+            List<DegreeModuleScope> curricularCourseScopesToAssociate, List<OldRoom> rooms,
             OccupationPeriod period) {
         setAttributesAndAssociateRooms(day, beginning, end, executionCoursesToAssociate,
                 curricularCourseScopesToAssociate, rooms, period);
@@ -484,4 +493,7 @@ public class WrittenEvaluation extends WrittenEvaluation_Base {
         return Integer.valueOf(countNumberReservedSeats - writtenEvaluationEnrolmentsCount);
     }
 
+    public List<DegreeModuleScope> getDegreeModuleScopes(){
+        return DegreeModuleScope.getDegreeModuleScopes(this);
+    }    
 }

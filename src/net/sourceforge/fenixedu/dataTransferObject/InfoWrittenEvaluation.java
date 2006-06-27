@@ -21,6 +21,7 @@ import net.sourceforge.fenixedu.domain.space.RoomOccupation;
  */
 public class InfoWrittenEvaluation extends InfoEvaluation {
 
+    protected WrittenEvaluation writtenEvaluation;
     protected Calendar day;
     protected Calendar beginning;
     protected Calendar end;
@@ -132,6 +133,7 @@ public class InfoWrittenEvaluation extends InfoEvaluation {
     public void copyFromDomain(WrittenEvaluation writtenEvaluation) {
         super.copyFromDomain(writtenEvaluation);
         if (writtenEvaluation != null) {
+            this.writtenEvaluation = writtenEvaluation;
             associatedExecutionCourse = new ArrayList();
             associatedRoomOccupation = new ArrayList();
             associatedCurricularCourseScope = new ArrayList();
@@ -167,5 +169,13 @@ public class InfoWrittenEvaluation extends InfoEvaluation {
             }
         }
         return infoWrittenEvaluation;
+    }
+
+    public WrittenEvaluation getWrittenEvaluation() {
+        return writtenEvaluation;
+    }
+
+    public void setWrittenEvaluation(WrittenEvaluation writtenEvaluation) {
+        this.writtenEvaluation = writtenEvaluation;
     }
 }

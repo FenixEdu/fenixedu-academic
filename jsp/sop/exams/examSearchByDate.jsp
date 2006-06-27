@@ -10,6 +10,8 @@
 
 	<html:hidden property="method" value="search"/>
 	<html:hidden property="page" value="1"/>
+	<html:hidden property="executionPeriodOID"/>
+	
 	<h2>Procurar Exames por Data</h2>
 	<span class="error"><html:errors/></span>
 	<table>

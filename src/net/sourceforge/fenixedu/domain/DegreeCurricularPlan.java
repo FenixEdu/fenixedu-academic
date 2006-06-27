@@ -392,35 +392,12 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 
     public List<ExecutionCourse> getExecutionCoursesByExecutionPeriodAndSemesterAndYear(
             ExecutionPeriod executionPeriod, Integer curricularYear, Integer semester) {
+        
         List<ExecutionCourse> result = new ArrayList<ExecutionCourse>();
         for (final CurricularCourse curricularCourse : this.getCurricularCourses()) {
-            for (final CurricularCourseScope curricularCourseScope : curricularCourse.getScopes()) {
-                if (curricularCourseScope.getCurricularSemester().getSemester().equals(semester)
-                        && curricularCourseScope.getCurricularSemester().getCurricularYear().getYear()
-                                .equals(curricularYear)) {
-                    for (final ExecutionCourse executionCourse : curricularCourse
-                            .getAssociatedExecutionCourses()) {
-                        if (executionCourse.getExecutionPeriod().equals(executionPeriod)) {
-                            result.add(executionCourse);
-                        }
-                    }
-                    break;
-                }
-            }
-        }
-        return result;
-    }
-
-    public List<ExecutionCourse> getExecutionCoursesByExecutionPeriodAndSemesterAndCurricularYearAndName(
-            ExecutionPeriod executionPeriod, Integer curricularYear, Integer semester) {
-        List<ExecutionCourse> result = new ArrayList<ExecutionCourse>();
-        for (final CurricularCourse curricularCourse : this.getCurricularCourses()) {
-            for (final CurricularCourseScope curricularCourseScope : curricularCourse.getScopes()) {
-                if (curricularCourseScope.getCurricularSemester().getSemester().equals(semester)
-                        && curricularCourseScope.getCurricularSemester().getCurricularYear().getYear()
-                                .equals(curricularYear)) {
-                    for (final ExecutionCourse executionCourse : curricularCourse
-                            .getAssociatedExecutionCourses()) {
+            for (final DegreeModuleScope degreeModuleScope : curricularCourse.getDegreeModuleScopes()) {
+                if (degreeModuleScope.getCurricularSemester().equals(semester) && degreeModuleScope.getCurricularYear().equals(curricularYear)) {
+                    for (final ExecutionCourse executionCourse : curricularCourse.getAssociatedExecutionCourses()) {
                         if (executionCourse.getExecutionPeriod().equals(executionPeriod)) {
                             result.add(executionCourse);
                         }

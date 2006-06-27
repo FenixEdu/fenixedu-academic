@@ -35,10 +35,11 @@ public class CoordinatorWrittenTestsManagementBackingBean extends
             final List<String> executionCourseIDs = new ArrayList<String>(1);
             executionCourseIDs.add(this.getExecutionCourseID().toString());
             final List<String> curricularCourseScopeIDs = getCurricularCourseScopeIDs(executionCourse);
+            final List<String> curricularCourseContextIDs = new ArrayList<String>();
 
             final Object[] args = { this.getExecutionCourseID(), this.getBegin().getTime(), this.getBegin().getTime(),
-                    this.getEnd().getTime(), executionCourseIDs, curricularCourseScopeIDs, null, null,
-                    this.getDescription() };
+                    this.getEnd().getTime(), executionCourseIDs, curricularCourseScopeIDs, curricularCourseContextIDs,
+                    null, null, this.getDescription() };
             ServiceUtils.executeService(getUserView(), "CreateWrittenEvaluation", args);
 
         } catch (Exception e) {
@@ -62,9 +63,10 @@ public class CoordinatorWrittenTestsManagementBackingBean extends
             final List<String> executionCourseIDs = new ArrayList<String>(1);
             executionCourseIDs.add(this.getExecutionCourseID().toString());
             final List<String> curricularCourseScopeIDs = getCurricularCourseScopeIDs(executionCourse);
+            List<String> curricularCourseContextIDs = new ArrayList<String>();
 
             final Object[] args = { executionCourse.getIdInternal(), this.getBegin().getTime(), this.getBegin().getTime(),
-                    this.getEnd().getTime(), executionCourseIDs, curricularCourseScopeIDs, null,
+                    this.getEnd().getTime(), executionCourseIDs, curricularCourseScopeIDs, curricularCourseContextIDs, null,
                     this.getEvaluationID(), null, this.getDescription() };
             ServiceUtils.executeService(getUserView(), "EditWrittenEvaluation", args);
 

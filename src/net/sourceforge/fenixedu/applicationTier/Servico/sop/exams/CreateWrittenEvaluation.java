@@ -8,11 +8,12 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.domain.CurricularCourseScope;
-
+import net.sourceforge.fenixedu.domain.DegreeModuleScope;
 import net.sourceforge.fenixedu.domain.Exam;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.OccupationPeriod;
 import net.sourceforge.fenixedu.domain.WrittenTest;
+import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.space.OldRoom;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.util.Season;
@@ -30,12 +31,13 @@ public class CreateWrittenEvaluation extends Service {
      */
     public void run(Integer executionCourseID, Date writtenEvaluationDate,
             Date writtenEvaluationStartTime, Date writtenEvaluationEndTime,
-            List<String> executionCourseIDs, List<String> curricularCourseScopeIDs,
+            List<String> executionCourseIDs, List<String> curricularCourseScopeIDs, List<String> curricularCourseContextIDs,
             List<String> roomIDs, Season examSeason, String writtenTestDescription)
             throws FenixServiceException, ExcepcaoPersistencia {
 
         final List<ExecutionCourse> executionCoursesToAssociate = readExecutionCourses(executionCourseIDs);
-        final List<CurricularCourseScope> curricularCourseScopesToAssociate = readCurricularCourseScopes(curricularCourseScopeIDs);
+        final List<DegreeModuleScope> curricularCourseScopesToAssociate = readCurricularCourseScopesAndContexts(curricularCourseScopeIDs, 
+                curricularCourseContextIDs);
 
         List<OldRoom> roomsToAssociate = null;
         OccupationPeriod period = null;
@@ -74,19 +76,26 @@ public class CreateWrittenEvaluation extends Service {
         return result;
     }
 
-    private List<CurricularCourseScope> readCurricularCourseScopes(final List<String> curricularCourseScopeIDs)
-        throws FenixServiceException, ExcepcaoPersistencia {
+    private List<DegreeModuleScope> readCurricularCourseScopesAndContexts(final List<String> curricularCourseScopeIDs, 
+            List<String> curricularCourseContextIDs) throws FenixServiceException, ExcepcaoPersistencia {
 
-        if (curricularCourseScopeIDs.isEmpty()) {
+        if (curricularCourseScopeIDs.isEmpty() && curricularCourseContextIDs.isEmpty()) {
             throw new FenixServiceException("error.invalidCurricularCourseScope");
         }
-        final List<CurricularCourseScope> result = new ArrayList<CurricularCourseScope>();
+        final List<DegreeModuleScope> result = new ArrayList<DegreeModuleScope>();
         for (final String curricularCourseScopeID : curricularCourseScopeIDs) {
             final CurricularCourseScope curricularCourseScope = rootDomainObject.readCurricularCourseScopeByOID(Integer.valueOf(curricularCourseScopeID));
             if (curricularCourseScope == null) {
                 throw new FenixServiceException("error.invalidCurricularCourseScope");
             }
-            result.add(curricularCourseScope);
+            result.add(curricularCourseScope.getDegreeModuleScopeCurricularCourseScope());
+        }
+        for (final String curricularCourseContextID : curricularCourseContextIDs) {
+            final Context curricularCourseContext = rootDomainObject.readContextByOID(Integer.valueOf(curricularCourseContextID));
+            if (curricularCourseContext == null) {
+                throw new FenixServiceException("error.invalidCurricularCourseScope");
+            }
+            result.add(curricularCourseContext.getDegreeModuleScopeContext());
         }
         return result;
     }

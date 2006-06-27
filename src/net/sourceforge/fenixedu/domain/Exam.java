@@ -8,6 +8,7 @@ import java.util.List;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.space.OldRoom;
 import net.sourceforge.fenixedu.domain.space.RoomOccupation;
+import net.sourceforge.fenixedu.util.DateFormatUtil;
 import net.sourceforge.fenixedu.util.Season;
 
 public class Exam extends Exam_Base {
@@ -26,7 +27,7 @@ public class Exam extends Exam_Base {
     
     public Exam(Date examDay, Date examStartTime, Date examEndTime, 
             List<ExecutionCourse> executionCoursesToAssociate,
-            List<CurricularCourseScope> curricularCourseScopesToAssociate, 
+            List<DegreeModuleScope> curricularCourseScopesToAssociate, 
             List<OldRoom> rooms,
             OccupationPeriod period, Season season) {
     	super();
@@ -40,7 +41,7 @@ public class Exam extends Exam_Base {
     }
 
     private boolean checkScopeAndSeasonConstrains(List<ExecutionCourse> executionCoursesToAssociate,
-            List<CurricularCourseScope> curricularCourseScopesToAssociate, Season season) {
+            List<DegreeModuleScope> curricularCourseScopesToAssociate, Season season) {
 
         // for each execution course, there must not exist an exam for the same
         // season and scope
@@ -65,7 +66,7 @@ public class Exam extends Exam_Base {
 
     public void edit(Date examDay, Date examStartTime, Date examEndTime, 
             List<ExecutionCourse> executionCoursesToAssociate,
-            List<CurricularCourseScope> curricularCourseScopesToAssociate, 
+            List<DegreeModuleScope> curricularCourseScopesToAssociate, 
             List<OldRoom> rooms, OccupationPeriod period, Season season) {
 
         // It's necessary to remove this associations before check some constrains
@@ -135,15 +136,15 @@ public class Exam extends Exam_Base {
         
         outter:
         for (Exam exam : Exam.readExams()) {
-            if (! examDay.equals(exam.getDay())) {
+            if (! DateFormatUtil.equalDates("dd/MM/yyyy", examDay.getTime(), exam.getDayDate())) {
                 continue;
             }
             
-            if (examStartTime != null && !examStartTime.equals(exam.getBeginning())) {
+            if (examStartTime != null && !DateFormatUtil.equalDates("HH:mm", examStartTime.getTime(), exam.getBeginningDate())) {
                 continue;
             }
             
-            if (examEndTime != null && !examEndTime.equals(exam.getEnd())) {
+            if (examEndTime != null && !DateFormatUtil.equalDates("HH:mm", examEndTime.getTime(), exam.getEndDate())) {
                 continue;
             }
             

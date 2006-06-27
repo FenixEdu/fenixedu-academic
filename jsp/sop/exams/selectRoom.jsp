@@ -1,5 +1,4 @@
 <%@ page language="java" %>
-<%@ page import="org.apache.struts.Globals" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
@@ -35,6 +34,7 @@ function cleanSelect() {
 <span class="error"><html:errors/></span>
 <html:hidden property="method" value="show"/> 
 <html:hidden property="page" value="1"/> 
+<html:hidden property="executionPeriodOID"/> 
 	
 <logic:present name="<%=SessionConstants.ROOMS_LIST%>">		
 

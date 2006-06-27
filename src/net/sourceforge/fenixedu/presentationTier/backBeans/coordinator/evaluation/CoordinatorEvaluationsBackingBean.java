@@ -531,19 +531,21 @@ public class CoordinatorEvaluationsBackingBean extends FenixBackingBean {
         final List<String> executionCourseIDs = new ArrayList<String>(1);
         executionCourseIDs.add(this.getExecutionCourseID().toString());
 
-        final List<String> curricularCourseScopeIDs = getCurricularCourseScopeIDs(executionCourse);
+		final List<String> curricularCourseScopeIDs = getCurricularCourseScopeIDs(executionCourse);
+        final List<String> curricularCourseContextIDs = new ArrayList<String>();
 
-        try {
-            final Object[] args = { getExecutionCourseID(),
-                    DateFormatUtil.parse("dd/MM/yyyy", getDate()),
-                    DateFormatUtil.parse("HH:mm", getBeginTime()),
-                    DateFormatUtil.parse("HH:mm", getEndTime()), executionCourseIDs,
-                    curricularCourseScopeIDs, null, null, getDescription() };
-            ServiceUtils.executeService(getUserView(), "CreateWrittenEvaluation", args);
-        } catch (ParseException ex) {
-            setErrorMessage("error.invalid.date");
-            return "viewCreationPage";
-        }
+		try {
+			final Object[] args = { getExecutionCourseID(),
+					DateFormatUtil.parse("dd/MM/yyyy", getDate()),
+					DateFormatUtil.parse("HH:mm", getBeginTime()),
+					DateFormatUtil.parse("HH:mm", getEndTime()),
+					executionCourseIDs, curricularCourseScopeIDs, curricularCourseContextIDs,
+                    null, null, getDescription() };
+			ServiceUtils.executeService(getUserView(), "CreateWrittenEvaluation", args);
+		} catch (ParseException ex) {
+			setErrorMessage("error.invalid.date");
+			return "viewCreationPage";
+		}
 
         return "viewCalendar";
     }
@@ -554,22 +556,24 @@ public class CoordinatorEvaluationsBackingBean extends FenixBackingBean {
         final List<String> executionCourseIDs = new ArrayList<String>(1);
         executionCourseIDs.add(this.getExecutionCourseID().toString());
 
-        final List<String> curricularCourseScopeIDs = getCurricularCourseScopeIDs(executionCourse);
+		final List<String> curricularCourseScopeIDs = getCurricularCourseScopeIDs(executionCourse);
+        List<String> curricularCourseContextIDs = new ArrayList<String>();
 
-        try {
-            final Object[] args = { executionCourse.getIdInternal(),
-                    DateFormatUtil.parse("dd/MM/yyyy", getDate()),
-                    DateFormatUtil.parse("HH:mm", getBeginTime()),
-                    DateFormatUtil.parse("HH:mm", getEndTime()), executionCourseIDs,
-                    curricularCourseScopeIDs, null, getEvaluationID(), null, getDescription() };
-            ServiceUtils.executeService(getUserView(), "EditWrittenEvaluation", args);
-        } catch (ParseException ex) {
-            setErrorMessage("error.invalid.date");
-            return "viewEditPage";
-        } catch (NotAuthorizedFilterException ex) {
-            setErrorMessage(ex.getMessage());
-            return "viewEditPage";
-        }
+		try {
+			final Object[] args = { executionCourse.getIdInternal(),
+					DateFormatUtil.parse("dd/MM/yyyy", getDate()),
+					DateFormatUtil.parse("HH:mm", getBeginTime()),
+					DateFormatUtil.parse("HH:mm", getEndTime()),
+					executionCourseIDs, curricularCourseScopeIDs, curricularCourseContextIDs,
+                    null, getEvaluationID(), null, getDescription() };
+			ServiceUtils.executeService(getUserView(), "EditWrittenEvaluation", args);
+		} catch (ParseException ex) {
+			setErrorMessage("error.invalid.date");
+			return "viewEditPage";
+		} catch (NotAuthorizedFilterException ex) {
+			setErrorMessage(ex.getMessage());
+			return "viewEditPage";			
+		}
 
         return "viewCalendar";
     }

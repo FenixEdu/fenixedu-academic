@@ -8,7 +8,6 @@ package net.sourceforge.fenixedu.applicationTier.Servico.sop;
  */
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
@@ -26,25 +25,19 @@ public class ReadExecutionDegreesByExecutionYear extends Service {
     public List run(InfoExecutionYear infoExecutionYear) throws ExcepcaoPersistencia {
 
         final List infoExecutionDegreeList = new ArrayList();
+        final List<ExecutionDegree>  executionDegrees = readExecutionDegrees(infoExecutionYear);
 
-        final List executionDegrees = readExecutionDegrees(infoExecutionYear);
-
-        for (final Iterator iterator = executionDegrees.iterator(); iterator.hasNext();) {
-            final ExecutionDegree executionDegree = (ExecutionDegree) iterator.next();
-            final InfoExecutionDegree infoExecutionDegree = InfoExecutionDegreeWithInfoExecutionYear
-                    .newInfoFromDomain(executionDegree);
+        for (ExecutionDegree executionDegree : executionDegrees) {                        
+            final InfoExecutionDegree infoExecutionDegree = InfoExecutionDegreeWithInfoExecutionYear.newInfoFromDomain(executionDegree);
             if (executionDegree.getDegreeCurricularPlan() != null) {
-                infoExecutionDegree.setInfoDegreeCurricularPlan(InfoDegreeCurricularPlan
-                        .newInfoFromDomain(executionDegree.getDegreeCurricularPlan()));
+                infoExecutionDegree.setInfoDegreeCurricularPlan(InfoDegreeCurricularPlan.newInfoFromDomain(executionDegree.getDegreeCurricularPlan()));
                 if (executionDegree.getDegreeCurricularPlan().getDegree() != null) {
                     infoExecutionDegree.getInfoDegreeCurricularPlan().setInfoDegree(
-                            InfoDegree.newInfoFromDomain(executionDegree.getDegreeCurricularPlan()
-                                    .getDegree()));
+                            InfoDegree.newInfoFromDomain(executionDegree.getDegreeCurricularPlan().getDegree()));
                 }
             }
             infoExecutionDegreeList.add(infoExecutionDegree);
         }
-
         return infoExecutionDegreeList;
     }
 
@@ -53,7 +46,6 @@ public class ReadExecutionDegreesByExecutionYear extends Service {
             return ExecutionDegree.getAllByExecutionYear(ExecutionYear.readCurrentExecutionYear()
                     .getYear());
         }
-
         return ExecutionDegree.getAllByExecutionYear(infoExecutionYear.getYear());
     }
 

@@ -591,6 +591,8 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
         executionCourseIDs.add(this.getExecutionCourseID().toString());
 
         List<String> curricularCourseScopeIDs = new ArrayList<String>();
+        List<String> curricularCourseContextIDs = new ArrayList<String>();
+        
         ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(getExecutionCourseID());
         for (CurricularCourse curricularCourse : executionCourse.getAssociatedCurricularCourses()) {
             for (CurricularCourseScope curricularCourseScope : curricularCourse.getScopes()) {
@@ -603,7 +605,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
 
         final Season season = (getSeason() != null) ? new Season(getSeason()) : null;
         final Object[] args = { this.getExecutionCourseID(), this.getBegin().getTime(), this.getBegin().getTime(), this.getEnd().getTime(), executionCourseIDs,
-                curricularCourseScopeIDs, null, season, this.getDescription() };
+                curricularCourseScopeIDs, curricularCourseContextIDs, null, season, this.getDescription() };
         try {
             ServiceUtils.executeService(getUserView(), "CreateWrittenEvaluation", args);
         } catch (Exception e) {
@@ -725,10 +727,13 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
                 }
             }
         }
+        
+        List<String> curricularCourseContextIDs = new ArrayList<String>();
 
         final Season season = (getSeason() != null) ? new Season(getSeason()) : null;
-        final Object[] args = { this.getExecutionCourseID(), this.getBegin().getTime(), this.getBegin().getTime(), this.getEnd().getTime(), executionCourseIDs,
-                curricularCourseScopeIDs, null, this.evaluationID, season, this.getDescription() };
+        final Object[] args = { this.getExecutionCourseID(), this.getBegin().getTime(), this.getBegin().getTime(), 
+                this.getEnd().getTime(), executionCourseIDs, curricularCourseScopeIDs, curricularCourseContextIDs, 
+                null, this.evaluationID, season, this.getDescription() };
         try {
             ServiceUtils.executeService(getUserView(), "EditWrittenEvaluation", args);
         } catch (Exception e) {

@@ -11,6 +11,7 @@
 
 	<html:hidden property="method" value="search"/>
 	<html:hidden property="page" value="1"/>
+	<html:hidden property="executionPeriodOID" value="<%= request.getAttribute("executionPeriodOID").toString() %>"/>
 
 	<span class="error"><html:errors/></span>
 
@@ -94,8 +95,8 @@
 								</logic:equal>
 							</logic:iterate>
 
-							<logic:iterate id="curricularCourseScope" name="curricularCourse" property="scopes">
-								<bean:define id="curricularYearID" name="curricularCourseScope" property="curricularSemester.curricularYear.idInternal"/>
+							<logic:iterate id="degreeModuleScope" name="curricularCourse" property="degreeModuleScopes">
+								<bean:define id="curricularYearID" name="degreeModuleScope" property="curricularYear"/>
 							</logic:iterate>
 						</logic:iterate>
 					</logic:iterate>
@@ -129,7 +130,7 @@
 										+ "="
 										+ pageContext.findAttribute("executionCourseID")
 										+ "&amp;"
-										+ "curricularYearID"
+										+ "curricularYearIDsParameterString"
 										+ "="
 										+ pageContext.findAttribute("curricularYearID") 
 										+ "&amp;"

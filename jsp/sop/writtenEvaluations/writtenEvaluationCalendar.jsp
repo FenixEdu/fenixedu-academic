@@ -302,7 +302,8 @@ table.executionCoursesWithoutWrittenEvaluations td {
 										<c:param name="executionPeriodID" value="${SOPEvaluationManagementBackingBean.executionPeriodID}"/>
 										<c:param name="executionDegreeID" value="${SOPEvaluationManagementBackingBean.executionDegreeID}"/>
 										<c:param name="executionPeriodOID" value="${SOPEvaluationManagementBackingBean.executionPeriodOID}"/>
-										<c:param name="executionCourseID" value="${executionCourse.idInternal}"/>
+										<c:param name="executionCourseID" value="${executionCourse.idInternal}"/>										
+										<c:param name="curricularYearIDsParameterString" value="${SOPEvaluationManagementBackingBean.curricularYearIDsParameterString}"/>
 									</c:url>
 									<a href='<c:out value="${creationURL}"/>' style="text-decoration:none">
 										<c:out value="${bundleSOP['link.create.evaluation']}"/>
@@ -313,7 +314,8 @@ table.executionCoursesWithoutWrittenEvaluations td {
 										<c:param name="executionDegreeID" value="${SOPEvaluationManagementBackingBean.executionDegreeID}"/>
 										<c:param name="executionPeriodID" value="${SOPEvaluationManagementBackingBean.executionPeriodID}"/>
 										<c:param name="executionCourseID" value="${executionCourse.idInternal}"/>
-										<c:param name="executionPeriodOID" value="${SOPEvaluationManagementBackingBean.executionPeriodOID}"/>
+										<c:param name="executionPeriodOID" value="${SOPEvaluationManagementBackingBean.executionPeriodOID}"/>							
+										<c:param name="curricularYearIDsParameterString" value="${SOPEvaluationManagementBackingBean.curricularYearIDsParameterString}"/>			
 									</c:url>
 									<a href='<c:out value="${commentURL}"/>' style="text-decoration:none">
 										<c:if test="${executionCourse.comment != null && executionCourse.comment != ''}">

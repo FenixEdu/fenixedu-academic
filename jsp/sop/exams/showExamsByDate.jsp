@@ -37,9 +37,16 @@
 		</tr>
 		<logic:iterate id="infoViewExam" indexId="index" name="<%= SessionConstants.LIST_EXAMSANDINFO %>" scope="request">
 				
-			<logic:iterate id="infoScope" name="infoViewExam" property="infoExam.associatedCurricularCourseScope">
-				<bean:define id="curricularYearOID" name="infoScope" property="infoCurricularSemester.infoCurricularYear.year"/>				
-			</logic:iterate>
+			<logic:notEmpty name="infoViewExam" property="infoExam.associatedCurricularCourseScope">
+				<logic:iterate id="infoScope" name="infoViewExam" property="infoExam.associatedCurricularCourseScope">
+					<bean:define id="curricularYearOID" name="infoScope" property="infoCurricularSemester.infoCurricularYear.year"/>				
+				</logic:iterate>			
+			</logic:notEmpty>
+			<logic:empty name="infoViewExam" property="infoExam.associatedCurricularCourseScope">
+				<logic:iterate id="degreeModuleScope" name="infoViewExam" property="infoExam.writtenEvaluation.degreeModuleScopes">
+					<bean:define id="curricularYearOID" name="degreeModuleScope" property="curricularYear"/>				
+				</logic:iterate>			
+			</logic:empty>
 			
 			<bean:define id="examID" name="infoViewExam" property="infoExam.idInternal"/> 
 			<tr>

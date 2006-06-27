@@ -17,9 +17,8 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourseWithExecut
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
-import net.sourceforge.fenixedu.domain.CurricularCourseScope;
-import net.sourceforge.fenixedu.domain.CurricularYear;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.DegreeModuleScope;
 import net.sourceforge.fenixedu.domain.Exam;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
@@ -43,10 +42,10 @@ public class ReadFilteredExamsMap extends Service {
 
         ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(infoExecutionDegree.getIdInternal());
 
-        this.obtainExamSeasonInfo(result, infoExecutionPeriod.getSemester(), executionDegree);
+        obtainExamSeasonInfo(result, infoExecutionPeriod.getSemester(), executionDegree);
 
         // Obtain execution courses and associated information of the given execution degree for each curricular year specified
-        List<InfoExecutionCourse> infoExecutionCourses = this.obtainInfoExecutionCourses(curricularYears, infoExecutionPeriod, executionDegree);
+        List<InfoExecutionCourse> infoExecutionCourses = obtainInfoExecutionCourses(curricularYears, infoExecutionPeriod, executionDegree);
         result.setExecutionCourses(infoExecutionCourses);
 
         return result;
@@ -96,7 +95,7 @@ public class ReadFilteredExamsMap extends Service {
                 }
                 infoExecutionCourse.setAssociatedInfoCurricularCourses(associatedInfoCurricularCourses);
 
-                List<InfoExam> associatedInfoExams = this.obtainInfoExams(executionDegree, infoExecutionPeriod.getIdInternal(), curricularYear, executionCourse);
+                List<InfoExam> associatedInfoExams = obtainInfoExams(executionDegree, infoExecutionPeriod.getIdInternal(), curricularYear, executionCourse);
                 infoExecutionCourse.setAssociatedInfoExams(associatedInfoExams);
 
                 result.add(infoExecutionCourse);
@@ -108,24 +107,20 @@ public class ReadFilteredExamsMap extends Service {
     private List<InfoExam> obtainInfoExams(ExecutionDegree executionDegree, Integer executionPeriodId, Integer wantedCurricularYear, ExecutionCourse executionCourse) throws ExcepcaoPersistencia {
         List<InfoExam> result = new ArrayList<InfoExam>();
         for (Exam exam : executionCourse.getAssociatedExams()) {
-            InfoExam infoExam = InfoExamWithRoomOccupationsAndScopesWithCurricularCoursesWithDegreeAndSemesterAndYear.newInfoFromDomain(exam);
-            
+            InfoExam infoExam = InfoExamWithRoomOccupationsAndScopesWithCurricularCoursesWithDegreeAndSemesterAndYear.newInfoFromDomain(exam);            
             int numberOfStudentsForExam = 0;
             Set<CurricularCourse> checkedCurricularCourses = new HashSet<CurricularCourse>();
-            for (CurricularCourseScope curricularCourseScope : exam.getAssociatedCurricularCourseScope()) {
-                CurricularCourse curricularCourse = curricularCourseScope.getCurricularCourse();
+            for (DegreeModuleScope degreeModuleScope : exam.getDegreeModuleScopes()) {
+                CurricularCourse curricularCourse = degreeModuleScope.getCurricularCourse();
                 if (!checkedCurricularCourses.contains(curricularCourse)) {
                     checkedCurricularCourses.add(curricularCourse);
                     ExecutionPeriod executionPeriod = rootDomainObject.readExecutionPeriodByOID(executionPeriodId);
-                    int numberEnroledStudentsInCurricularCourse = curricularCourse.countEnrolmentsByExecutionPeriod(executionPeriod);
-                    
+                    int numberEnroledStudentsInCurricularCourse = curricularCourse.countEnrolmentsByExecutionPeriod(executionPeriod);                    
                     numberOfStudentsForExam += numberEnroledStudentsInCurricularCourse;
                 }
-                
-                CurricularYear curricularYearFromScope = curricularCourseScope.getCurricularSemester().getCurricularYear();
-                boolean isCurricularYearEqual = curricularYearFromScope.getYear().equals(wantedCurricularYear);
-
-                DegreeCurricularPlan degreeCurricularPlanFromScope = curricularCourseScope.getCurricularCourse().getDegreeCurricularPlan();
+                                
+                boolean isCurricularYearEqual = degreeModuleScope.getCurricularYear().equals(wantedCurricularYear);
+                DegreeCurricularPlan degreeCurricularPlanFromScope = degreeModuleScope.getCurricularCourse().getDegreeCurricularPlan();
                 DegreeCurricularPlan degreeCurricularPlanFromExecutionDegree = executionDegree.getDegreeCurricularPlan();
                 boolean isCurricularPlanEqual = degreeCurricularPlanFromScope.equals(degreeCurricularPlanFromExecutionDegree);
 
@@ -138,5 +133,4 @@ public class ReadFilteredExamsMap extends Service {
         }
         return result;
     }
-
 }

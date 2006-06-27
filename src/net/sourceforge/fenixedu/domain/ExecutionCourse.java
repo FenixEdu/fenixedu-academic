@@ -882,11 +882,10 @@ public class ExecutionCourse extends ExecutionCourse_Base {
     public boolean hasExportGrouping(final Grouping grouping) {
         return getExportGrouping(grouping) != null;
     }
-
-    public boolean hasScopeInGivenSemesterAndCurricularYearInDCP(Integer semester,
-            CurricularYear curricularYear, DegreeCurricularPlan degreeCurricularPlan) {
+    
+    public boolean hasScopeInGivenSemesterAndCurricularYearInDCP(CurricularYear curricularYear, DegreeCurricularPlan degreeCurricularPlan) {
         for (CurricularCourse curricularCourse : this.getAssociatedCurricularCourses()) {
-            if (curricularCourse.hasScopeInGivenSemesterAndCurricularYearInDCP(semester, curricularYear,
+            if (curricularCourse.hasScopeInGivenSemesterAndCurricularYearInDCP(curricularYear,
                     degreeCurricularPlan, getExecutionPeriod())) {
                         return true;
                     }

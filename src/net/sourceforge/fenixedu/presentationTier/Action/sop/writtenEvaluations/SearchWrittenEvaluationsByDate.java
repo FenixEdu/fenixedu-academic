@@ -30,6 +30,10 @@ public class SearchWrittenEvaluationsByDate extends FenixContextDispatchAction {
 
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
+        
+        final String executionPeriodString = (String) request.getParameter(SessionConstants.EXECUTION_PERIOD_OID);
+        DynaActionForm dynaActionForm = (DynaActionForm) form;
+        dynaActionForm.set(SessionConstants.EXECUTION_PERIOD_OID, executionPeriodString);
         return mapping.findForward("show");
     }
 
@@ -41,7 +45,7 @@ public class SearchWrittenEvaluationsByDate extends FenixContextDispatchAction {
     	final Date begin = getTimeDateFromForm(dynaActionForm, "beginningHour", "beginningMinute");
     	final Date end = getTimeDateFromForm(dynaActionForm, "endHour", "endMinute");
 
-        return search(mapping, request, day, begin, end);
+        return search(mapping, request, day, begin, end, dynaActionForm);
     }
 
     public ActionForward returnToSearchPage(ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -73,12 +77,13 @@ public class SearchWrittenEvaluationsByDate extends FenixContextDispatchAction {
             end = null;
         }
 
-        return search(mapping, request, DateFormatUtil.parse("yyyy/MM/dd", date), begin, end);
+        return search(mapping, request, DateFormatUtil.parse("yyyy/MM/dd", date), begin, end, dynaActionForm);
     }
 
     public ActionForward search(ActionMapping mapping, HttpServletRequest request,
-            final Date day, final Date begin, final Date end) throws Exception {
-        final ExecutionPeriod executionPeriod = getExecutionPeriod(request);
+            final Date day, final Date begin, final Date end, DynaActionForm dynaActionForm) throws Exception {
+        
+        final ExecutionPeriod executionPeriod = getExecutionPeriod(dynaActionForm, request);
         final Set<WrittenEvaluation> writtenEvaluations = new HashSet<WrittenEvaluation>();
         for (final ExecutionCourse executionCourse : executionPeriod.getAssociatedExecutionCourses()) {
             for (final Evaluation evaluation : executionCourse.getAssociatedEvaluations()) {
@@ -100,10 +105,9 @@ public class SearchWrittenEvaluationsByDate extends FenixContextDispatchAction {
         return mapping.findForward("show");
     }
 
-	private ExecutionPeriod getExecutionPeriod(HttpServletRequest request) throws FenixFilterException, FenixServiceException {
-		final String executionPeriodString = (String) request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID);
-		final Integer executionPeriodID = Integer.valueOf(executionPeriodString);
-        return rootDomainObject.readExecutionPeriodByOID(executionPeriodID);
+	private ExecutionPeriod getExecutionPeriod(DynaActionForm dynaActionForm, HttpServletRequest request) throws FenixFilterException, FenixServiceException {		
+		final String executionPeriodString = dynaActionForm.getString(SessionConstants.EXECUTION_PERIOD_OID);			
+		return (ExecutionPeriod) rootDomainObject.readExecutionPeriodByOID(Integer.valueOf(executionPeriodString));
 	}
 
 	private Date getDate(final DynaActionForm dynaActionForm) throws ParseException {

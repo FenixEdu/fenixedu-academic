@@ -14,7 +14,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoViewExam;
 import net.sourceforge.fenixedu.dataTransferObject.InfoViewExamByDayAndShift;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
-import net.sourceforge.fenixedu.domain.CurricularCourseScope;
+import net.sourceforge.fenixedu.domain.DegreeModuleScope;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.Exam;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
@@ -27,8 +27,8 @@ public class ReadExamsByDate extends Service {
 
     public InfoViewExam run(Calendar examDay, Calendar examStartTime, Calendar examEndTime)
             throws ExcepcaoPersistencia {
-        final List<Exam> filteredExams = Exam.getAllByDate(examDay,
-                examStartTime, examEndTime);
+        
+        final List<Exam> filteredExams = Exam.getAllByDate(examDay, examStartTime, examEndTime);
 
         final InfoViewExam infoViewExam = new InfoViewExam();
         List<InfoViewExamByDayAndShift> infoViewExamsByDayAndShiftList = new ArrayList<InfoViewExamByDayAndShift>();
@@ -39,6 +39,7 @@ public class ReadExamsByDate extends Service {
 
             final InfoExam infoExam = InfoExamWithRoomOccupationsAndScopesWithCurricularCoursesWithDegreeAndSemesterAndYear
                     .newInfoFromDomain(exam);
+            
             final List<InfoExecutionCourse> infoExecutionCourses = readInfoExecutionCourses(exam);
             final List<InfoDegree> infoDegrees = readInfoDegrees(exam, viewExamByDayAndShift);
             final Integer availableRoomOccupation = calculateAvailableRoomOccupation(exam,
@@ -73,9 +74,8 @@ public class ReadExamsByDate extends Service {
                 .getExecutionPeriod();
         int numberStudentes = 0;
 
-        for (final CurricularCourseScope curricularCourseScope : exam
-                .getAssociatedCurricularCourseScope()) {
-            final CurricularCourse curricularCourse = curricularCourseScope.getCurricularCourse();
+        for (final DegreeModuleScope degreeModuleScope : exam.getDegreeModuleScopes()) {
+            final CurricularCourse curricularCourse = degreeModuleScope.getCurricularCourse();
             if (!curricularCourseIDs.contains(curricularCourse.getIdInternal())) {
                 curricularCourseIDs.add(curricularCourse.getIdInternal());
                 result.add(InfoDegree.newInfoFromDomain(curricularCourse.getDegreeCurricularPlan()

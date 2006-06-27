@@ -2,12 +2,16 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
-<%@ page import="org.apache.struts.Globals" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
+
 <span class="error"><html:errors/></span>
+
 <html:form action="/ExamSearchByDegreeAndYear">
 	<html:hidden property="page" value="1"/>
-	<html:hidden property="method" value="choose"/>
+	<html:hidden property="method" value="choose"/>			
+	<bean:define id="executionPeriodOID" name="executionPeriodOID"/>
+	<html:hidden property="executionPeriodOID" value="<%= executionPeriodOID.toString() %>"/>
+    
     <table width="100%">
     	<tr>
         	<td class="infoop">Por favor, proceda &agrave; escolha
@@ -17,7 +21,7 @@
 	<br />
     <p><bean:message key="property.context.degree"/>:
 	<html:select property="index" size="1">
-    	<html:options collection="<%=SessionConstants.DEGREES %>" property="value" labelProperty="label"/>
+    	<html:options collection="<%= SessionConstants.DEGREES %>" property="value" labelProperty="label"/>
     </html:select>
 	</p>
 	<br />

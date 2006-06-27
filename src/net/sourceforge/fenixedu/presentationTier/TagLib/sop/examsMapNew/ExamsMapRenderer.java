@@ -818,14 +818,12 @@ public class ExamsMapRenderer implements IExamsMapRenderer {
         strBuffer.append("<strong>" + year + "&ordm; ");
         strBuffer.append(getMessageResource(pageContext, "public.degree.information.label.year"));
         strBuffer.append("</strong>");
-        strBuffer.append(" - <strong>"
-                + ((InfoExecutionCourse) examsMap.getExecutionCourses().get(0)).getInfoExecutionPeriod()
-                        .getSemester() + "&ordm; ");
-        strBuffer.append(getMessageResource(pageContext, "public.degree.information.label.semester"));
-        strBuffer.append("</strong>");
-        strBuffer.append(" - <strong>"
-                + ((InfoExecutionCourse) examsMap.getExecutionCourses().get(0)).getInfoExecutionPeriod()
-                        .getInfoExecutionYear().getYear() + "</strong><br />");
+        if(!examsMap.getExecutionCourses().isEmpty()){                   
+            strBuffer.append(" - <strong>" + ((InfoExecutionCourse) examsMap.getExecutionCourses().get(0)).getInfoExecutionPeriod().getSemester() + "&ordm; ");
+            strBuffer.append(getMessageResource(pageContext, "public.degree.information.label.semester"));
+            strBuffer.append("</strong>");
+        }
+        strBuffer.append(" - <strong>" + examsMap.getInfoExecutionDegree().getInfoExecutionYear().getYear() + "</strong><br />");
         strBuffer.append("<table border='1' cellspacing='0' cellpadding='3' width='95%'>");
 
         renderExamsTableHeader(strBuffer, pageContext);

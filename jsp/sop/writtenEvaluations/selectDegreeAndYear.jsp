@@ -9,6 +9,9 @@
 
 	<html:hidden property="method" value="choose"/>
 	<html:hidden property="page" value="1"/>
+	
+	<bean:define id="executionPeriodOID" name="executionPeriodOID"/>
+	<html:hidden property="executionPeriodOID" value="<%= executionPeriodOID.toString() %>"/>
 
 	<span class="error"><html:errors/></span>
 

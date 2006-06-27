@@ -153,5 +153,67 @@ public class CurricularCourseScope extends CurricularCourseScope_Base {
         return DateFormatUtil.compareDates("yyyyMMdd", getBegin(), end) < 0 &&
                 (getEnd() == null || DateFormatUtil.compareDates("yyyyMMdd", getEnd(), begin) > 0);
     }
+    
+    public boolean isActiveForExecutionPeriod(final ExecutionPeriod executionPeriod) {
+        return intersects(executionPeriod.getBeginDate(), executionPeriod.getEndDate())
+                && executionPeriod.getSemester().equals(getCurricularSemester().getSemester());
+    }
 
+    private DegreeModuleScopeCurricularCourseScope degreeModuleScopeCurricularCourseScope = null;
+    
+    private synchronized void initDegreeModuleScopeCurricularCourseScope() {
+        if(degreeModuleScopeCurricularCourseScope == null) {
+            degreeModuleScopeCurricularCourseScope = new DegreeModuleScopeCurricularCourseScope(this);
+        }
+    }
+    
+    public DegreeModuleScopeCurricularCourseScope getDegreeModuleScopeCurricularCourseScope() {
+        if(degreeModuleScopeCurricularCourseScope == null) {
+            initDegreeModuleScopeCurricularCourseScope();
+        }
+        return degreeModuleScopeCurricularCourseScope;
+    }   
+    
+    public class DegreeModuleScopeCurricularCourseScope extends DegreeModuleScope {
+
+        private final CurricularCourseScope curricularCourseScope;
+        
+        private DegreeModuleScopeCurricularCourseScope(CurricularCourseScope curricularCourseScope) {
+            this.curricularCourseScope= curricularCourseScope;
+        }
+        
+        @Override
+        public Integer getIdInternal() {        
+            return curricularCourseScope.getIdInternal();
+        }
+
+        @Override
+        public Integer getCurricularSemester() {
+            return curricularCourseScope.getCurricularSemester().getSemester();
+        }
+
+        @Override
+        public Integer getCurricularYear() {
+            return curricularCourseScope.getCurricularSemester().getCurricularYear().getYear();
+        }
+
+        @Override
+        public String getBranch() {           
+            return curricularCourseScope.getBranch().getName();
+        }
+
+        public CurricularCourseScope getCurricularCourseScope() {
+            return curricularCourseScope;
+        }
+
+        @Override
+        public boolean isActiveForExecutionPeriod(final ExecutionPeriod executionPeriod) {
+            return curricularCourseScope.isActiveForExecutionPeriod(executionPeriod);
+        }
+
+        @Override
+        public CurricularCourse getCurricularCourse() {            
+            return curricularCourseScope.getCurricularCourse();
+        }        
+    }    
 }

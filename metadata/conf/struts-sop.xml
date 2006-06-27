@@ -438,6 +438,7 @@
         <form-property name="exam" type="java.lang.String"/>
         <form-property name="roomsId" type="java.lang.String[]"/>
         <form-property name="page" type="java.lang.Integer"/>
+        <form-property name="executionPeriodOID" type="java.lang.String"/>
       </form-bean>
 
       <form-bean name="examSearchByDegreeAndYearForm"
@@ -446,6 +447,7 @@
         <form-property name="index" type="java.lang.String"/>
         <form-property name="selectedCurricularYears" type="java.lang.String[]" size="0"/>
         <form-property name="selectAllCurricularYears" type="java.lang.Boolean"/>
+        <form-property name="executionPeriodOID" type="java.lang.String"/>
         <form-property name="page" type="java.lang.Integer"/> 
       </form-bean>
 
@@ -456,6 +458,7 @@
         <form-property name="selectAllCurricularYears" type="java.lang.Boolean"/>
         <form-property name="selectedCurricularYears" type="java.lang.String[]" size="0"/>
         <form-property name="executionDegreeID" type="java.lang.String"/>
+        <form-property name="executionPeriodOID" type="java.lang.String"/>
       </form-bean>
 
       <form-bean name="examSearchByDateForm"
@@ -468,6 +471,7 @@
         <form-property name="beginningMinute" type="java.lang.String"/>
         <form-property name="endHour" type="java.lang.String"/>
         <form-property name="endMinute" type="java.lang.String"/>
+        <form-property name="executionPeriodOID" type="java.lang.String"/>
         <form-property name="page" type="java.lang.Integer"/>
       </form-bean>
       

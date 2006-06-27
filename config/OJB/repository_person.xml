@@ -99,10 +99,10 @@
 	
      
 </class-descriptor>
-
+<!--
  ***********************************
      Definitions for net.sourceforge.fenixedu.domain.assiduousness.IdentificationCard
-     *********************************** 
+     *********************************** -->
 <class-descriptor class="net.sourceforge.fenixedu.domain.assiduousness.IdentificationCard" table="IDENTIFICATION">
 	
 	

@@ -23,8 +23,9 @@ public class WrittenTest extends WrittenTest_Base {
 
     public WrittenTest(Date testDate, Date testStartTime, Date testEndTime,
             List<ExecutionCourse> executionCoursesToAssociate,
-            List<CurricularCourseScope> curricularCourseScopesToAssociate, List<OldRoom> rooms,
+            List<DegreeModuleScope> curricularCourseScopesToAssociate, List<OldRoom> rooms,
             OccupationPeriod period, String description) {
+        
     	super();
         checkEvaluationDate(testDate, executionCoursesToAssociate);
         setAttributesAndAssociateRooms(testDate, testStartTime, testEndTime,
@@ -47,7 +48,7 @@ public class WrittenTest extends WrittenTest_Base {
 
     public void edit(Date testDate, Date testStartTime, Date testEndTime,
             List<ExecutionCourse> executionCoursesToAssociate,
-            List<CurricularCourseScope> curricularCourseScopesToAssociate, List<OldRoom> rooms,
+            List<DegreeModuleScope> curricularCourseScopesToAssociate, List<OldRoom> rooms,
             OccupationPeriod period, String description) {
         
         checkEvaluationDate(testDate, executionCoursesToAssociate);

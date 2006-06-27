@@ -6113,6 +6113,15 @@ relation WrittenEvaluationCurricularCourseScope {
 	}
 }
 
+relation WrittenEvaluationContext {
+	net.sourceforge.fenixedu.domain.WrittenEvaluation playsRole associatedWrittenEvaluations {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.degreeStructure.Context playsRole associatedContexts {
+		multiplicity *;
+	}
+}
+
 relation WrittenEvaluationRoomOccupation {
 	net.sourceforge.fenixedu.domain.WrittenEvaluation playsRole writtenEvaluation;
 	

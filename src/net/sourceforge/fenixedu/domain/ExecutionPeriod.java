@@ -114,15 +114,14 @@ public class ExecutionPeriod extends ExecutionPeriod_Base implements Comparable 
     }
 
     public List<ExecutionCourse> getExecutionCoursesByDegreeCurricularPlanAndSemesterAndCurricularYearAndName(
-            DegreeCurricularPlan degreeCurricularPlan, Integer semester, CurricularYear curricularYear,
+            DegreeCurricularPlan degreeCurricularPlan, CurricularYear curricularYear,
             String name) {
         List<ExecutionCourse> result = new ArrayList<ExecutionCourse>();
         String normalizedName = (name != null) ? StringNormalizer.normalize(name).toLowerCase().replaceAll("%", ".*") : null; 
         for (ExecutionCourse executionCourse : this.getAssociatedExecutionCourses()) {
             String executionCourseName = StringNormalizer.normalize(executionCourse.getNome()).toLowerCase();            
             if (normalizedName != null && executionCourseName.matches(normalizedName)) {
-                if (executionCourse.hasScopeInGivenSemesterAndCurricularYearInDCP(semester,
-                        curricularYear, degreeCurricularPlan)) {
+                if (executionCourse.hasScopeInGivenSemesterAndCurricularYearInDCP(curricularYear, degreeCurricularPlan)) {
                     result.add(executionCourse);
                 }
             }

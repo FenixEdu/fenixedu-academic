@@ -29,6 +29,9 @@ public class ExamSearchByDate extends FenixContextDispatchAction {
 
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
+        
+        final String executionPeriodString = (String) request.getParameter(SessionConstants.EXECUTION_PERIOD_OID);
+        request.setAttribute(SessionConstants.EXECUTION_PERIOD_OID, executionPeriodString);
         return mapping.findForward("choose");
     }
 
@@ -70,6 +73,7 @@ public class ExamSearchByDate extends FenixContextDispatchAction {
 
     public ActionForward search(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
+      
         DynaActionForm examSearchByDateForm = (DynaActionForm) form;
         IUserView userView = SessionUtils.getUserView(request);
 

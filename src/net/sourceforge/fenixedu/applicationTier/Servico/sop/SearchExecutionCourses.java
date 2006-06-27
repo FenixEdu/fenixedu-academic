@@ -58,7 +58,7 @@ public class SearchExecutionCourses extends Service {
         
         List<ExecutionCourse> executionCourses = new ArrayList<ExecutionCourse>();
         if(executionPeriod != null) {
-        	executionCourses = executionPeriod.getExecutionCoursesByDegreeCurricularPlanAndSemesterAndCurricularYearAndName(executionDegree.getDegreeCurricularPlan(), executionPeriod.getSemester(), curricularYear, executionCourseName);
+        	executionCourses = executionPeriod.getExecutionCoursesByDegreeCurricularPlanAndSemesterAndCurricularYearAndName(executionDegree.getDegreeCurricularPlan(), curricularYear, executionCourseName);
         }
 
         result = (List) CollectionUtils.collect(executionCourses, new Transformer() {

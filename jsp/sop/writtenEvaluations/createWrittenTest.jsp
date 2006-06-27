@@ -16,7 +16,6 @@
 
 	<h:form>
 		<h:inputHidden binding="#{SOPEvaluationManagementBackingBean.executionCourseIdHidden}" />
-
 		<h:inputHidden binding="#{SOPEvaluationManagementBackingBean.executionPeriodIdHidden}"/>
 		<h:inputHidden binding="#{SOPEvaluationManagementBackingBean.executionDegreeIdHidden}" />
 		<h:inputHidden binding="#{SOPEvaluationManagementBackingBean.calendarPeriodHidden}"/>
@@ -145,6 +144,9 @@
 				</h:commandLink>
 				<h:selectManyCheckbox value="#{SOPEvaluationManagementBackingBean.curricularCourseScopesToAssociate[associatedExecutionCourseID]}" layout="pageDirection" >
 					<f:selectItems value="#{SOPEvaluationManagementBackingBean.curricularCourseScopesSelectItems[associatedExecutionCourseID]}" />	
+				</h:selectManyCheckbox>
+				<h:selectManyCheckbox value="#{SOPEvaluationManagementBackingBean.curricularCourseContextToAssociate[associatedExecutionCourseID]}" layout="pageDirection" >
+					<f:selectItems value="#{SOPEvaluationManagementBackingBean.curricularCourseContextSelectItems[associatedExecutionCourseID]}" />	
 				</h:selectManyCheckbox>
 			</h:column>
 		</h:dataTable>

@@ -259,8 +259,7 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable 
         final DegreeCurricularPlan degreeCurricularPlan = getDegreeCurricularPlan();
         final Set<Shift> shifts = new HashSet<Shift>();               
         for (final CurricularCourse curricularCourse : degreeCurricularPlan.getCurricularCourses()) {
-            if (curricularCourse.hasScopeInGivenSemesterAndCurricularYearInDCP(executionPeriod.getSemester(),
-                    curricularYear, degreeCurricularPlan, executionPeriod)) {
+            if (curricularCourse.hasScopeInGivenSemesterAndCurricularYearInDCP(curricularYear, degreeCurricularPlan, executionPeriod)) {
                 for (final ExecutionCourse executionCourse : curricularCourse.getAssociatedExecutionCourses()) {
                     if (executionCourse.getExecutionPeriod() == executionPeriod) {
                         shifts.addAll(executionCourse.getAssociatedShifts());
@@ -354,30 +353,25 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable 
     }
 
     public static List<ExecutionDegree> getAllByExecutionYear(String year) {
-        List<ExecutionDegree> result = new ArrayList<ExecutionDegree>();
         
+        List<ExecutionDegree> result = new ArrayList<ExecutionDegree>();        
         if (year == null) {
             return result;
         }
         
         for (ExecutionDegree executionDegree : RootDomainObject.getInstance().getExecutionDegrees()) {
-            if (! year.equals(executionDegree.getExecutionYear().getYear())) {
-                continue;
-            }
-            
-            result.add(executionDegree);
+            if (year.equals(executionDegree.getExecutionYear().getYear())) {
+                result.add(executionDegree);
+            }                        
         }
         
         // sort by degreeCurricularPlan.idInternal descending
         Collections.sort(result, new Comparator<ExecutionDegree>() { 
-
             public int compare(ExecutionDegree o1, ExecutionDegree o2) {
                 Integer idInternal1 = o1.getDegreeCurricularPlan().getIdInternal();
-                Integer idInternal2 = o2.getDegreeCurricularPlan().getIdInternal();
-                
+                Integer idInternal2 = o2.getDegreeCurricularPlan().getIdInternal();                
                 return idInternal2.compareTo(idInternal1); 
-            }
-            
+            }           
         });
         
         return result;

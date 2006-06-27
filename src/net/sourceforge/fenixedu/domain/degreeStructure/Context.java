@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.domain.degreeStructure;
 
 import net.sourceforge.fenixedu.accessControl.Checked;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
+import net.sourceforge.fenixedu.domain.DegreeModuleScope;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
@@ -96,7 +97,8 @@ public class Context extends Context_Base implements Comparable<Context> {
     }
     
     public boolean isValid(ExecutionPeriod executionPeriod) {
-    	return (getBeginExecutionPeriod().isBeforeOrEquals(executionPeriod) && (getEndExecutionPeriod() == null || getEndExecutionPeriod().isAfterOrEquals(executionPeriod)));
+    	return (getBeginExecutionPeriod().isBeforeOrEquals(executionPeriod) && (getEndExecutionPeriod() == null || getEndExecutionPeriod().isAfterOrEquals(executionPeriod)))
+            && containsSemester(executionPeriod.getSemester());
     }
     
     public boolean isValid(ExecutionYear executionYear) {
@@ -152,5 +154,63 @@ public class Context extends Context_Base implements Comparable<Context> {
         }
         final int lastCurricularPeriodOrder = firstCurricularPeriodOrder + duration - 1;
         return firstCurricularPeriodOrder <= argumentOrder && argumentOrder <= lastCurricularPeriodOrder;            
+    }
+    
+    private DegreeModuleScopeContext degreeModuleScopeContext = null;
+    
+    private synchronized void initDegreeModuleScopeContext() {
+        if(degreeModuleScopeContext == null) {
+            degreeModuleScopeContext = new DegreeModuleScopeContext(this);
+        }
+    }
+    
+    public DegreeModuleScopeContext getDegreeModuleScopeContext() {
+        if(degreeModuleScopeContext == null) {
+            initDegreeModuleScopeContext();
+        }
+        return degreeModuleScopeContext;
+    }
+    
+    public class DegreeModuleScopeContext extends DegreeModuleScope {
+
+        private final Context context;
+        
+        private DegreeModuleScopeContext(Context context) {
+            this.context = context;
+        }
+               
+        @Override
+        public Integer getIdInternal() {       
+            return context.getIdInternal();
+        }
+
+        @Override
+        public Integer getCurricularSemester() {        
+            return context.getCurricularPeriod().getChildOrder();                        
+        }
+
+        @Override
+        public Integer getCurricularYear() {       
+            return context.getCurricularPeriod().getParent().getAbsoluteOrderOfChild(); 
+        }
+
+        @Override
+        public String getBranch() {            
+            return "";
+        }           
+        
+        public Context getContext() {
+            return context;
+        }
+
+        @Override
+        public boolean isActiveForExecutionPeriod(final ExecutionPeriod executionPeriod) {
+            return getContext().isValid(executionPeriod);
+        }
+
+        @Override
+        public CurricularCourse getCurricularCourse() {            
+            return (CurricularCourse) context.getChildDegreeModule();
+        }
     }
 }

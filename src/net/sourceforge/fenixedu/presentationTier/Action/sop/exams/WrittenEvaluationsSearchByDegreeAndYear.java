@@ -15,11 +15,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
-import net.sourceforge.fenixedu.domain.CurricularCourseScope;
-import net.sourceforge.fenixedu.domain.CurricularSemester;
-import net.sourceforge.fenixedu.domain.CurricularYear;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.DegreeModuleScope;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
@@ -67,12 +65,12 @@ public class WrittenEvaluationsSearchByDegreeAndYear extends FenixContextDispatc
 
     public ActionForward choose(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-
-        final InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request.getAttribute(SessionConstants.EXECUTION_PERIOD);
-        final ExecutionPeriod executionPeriod = rootDomainObject.readExecutionPeriodByOID(infoExecutionPeriod.getIdInternal());
+        
+        DynaActionForm dynaActionForm = (DynaActionForm) form;
+        Integer executionPeriodId = Integer.valueOf(dynaActionForm.getString(SessionConstants.EXECUTION_PERIOD_OID));        
+        final ExecutionPeriod executionPeriod = rootDomainObject.readExecutionPeriodByOID(executionPeriodId);
         request.setAttribute("executionPeriod", executionPeriod);
-
-        final DynaActionForm dynaActionForm = (DynaActionForm) form;
+        
         final Boolean selectAllCurricularYears = (Boolean) dynaActionForm.get("selectAllCurricularYears");
         final String[] selectedCurricularYears = (String[]) dynaActionForm.get("selectedCurricularYears");
         final String executionDegreeID = (String) dynaActionForm.get("executionDegreeID");
@@ -82,8 +80,8 @@ public class WrittenEvaluationsSearchByDegreeAndYear extends FenixContextDispatc
         	years.add(Integer.valueOf(yearString));
         }
 
-        final Map<ExecutionDegree, Map<CurricularYear, Set<ExecutionCourse>>> executionCoursesByCurricularYearByExecutionDegree =
-        		new TreeMap<ExecutionDegree, Map<CurricularYear, Set<ExecutionCourse>>>(new Comparator<ExecutionDegree>() {
+        final Map<ExecutionDegree, Map<Integer, Set<ExecutionCourse>>> executionCoursesByCurricularYearByExecutionDegree =
+        		new TreeMap<ExecutionDegree, Map<Integer, Set<ExecutionCourse>>>(new Comparator<ExecutionDegree>() {
 					public int compare(ExecutionDegree executionDegree1, ExecutionDegree executionDegree2) {
 						final Degree degree1 = executionDegree1.getDegreeCurricularPlan().getDegree();
 						final Degree degree2 = executionDegree2.getDegreeCurricularPlan().getDegree();
@@ -93,40 +91,41 @@ public class WrittenEvaluationsSearchByDegreeAndYear extends FenixContextDispatc
 					}}); 
         for (final ExecutionDegree executionDegree : executionPeriod.getExecutionYear().getExecutionDegrees()) {
             if (executionDegreeID == null || executionDegreeID.length() == 0 || executionDegreeID.equals(executionDegree.getIdInternal().toString())) {
-            	final Map<CurricularYear, Set<ExecutionCourse>> executionCoursesByCurricularYear = new TreeMap<CurricularYear, Set<ExecutionCourse>>(new Comparator<CurricularYear>() {
-					public int compare(final CurricularYear curricularYear1, final CurricularYear curricularYear2) {
-						return curricularYear1.getYear().compareTo(curricularYear2.getYear());
+            	final Map<Integer, Set<ExecutionCourse>> executionCoursesByCurricularYear = new TreeMap<Integer, Set<ExecutionCourse>>(new Comparator<Integer>() {
+					public int compare(final Integer curricularYear1, final Integer curricularYear2) {
+						return curricularYear1.compareTo(curricularYear2);
 					}});
             	executionCoursesByCurricularYearByExecutionDegree.put(executionDegree, executionCoursesByCurricularYear);
                 for (final CurricularCourse curricularCourse : executionDegree.getDegreeCurricularPlan().getCurricularCourses()) {
-                	for (final CurricularCourseScope curricularCourseScope : curricularCourse.getActiveScopesInExecutionPeriod(executionPeriod)) {
-                		final CurricularSemester curricularSemester = curricularCourseScope.getCurricularSemester();
-           				final CurricularYear curricularYear = curricularSemester.getCurricularYear();
-           				final Integer year = curricularYear.getYear();
-           				if (curricularSemester.getSemester().equals(executionPeriod.getSemester()) &&
-           						(selectAllCurricularYears != null && selectAllCurricularYears.booleanValue()) || years.contains(year)) {
-           					final Set<ExecutionCourse> executionCourses;
-           					if (!executionCoursesByCurricularYear.containsKey(curricularYear)) {
-           						executionCourses = new TreeSet<ExecutionCourse>(new Comparator<ExecutionCourse>() {
-									public int compare(final ExecutionCourse executionCourse1, final ExecutionCourse executionCourse2) {
-										return executionCourse1.getNome().compareTo(executionCourse2.getNome());
-									}});
-           						executionCoursesByCurricularYear.put(curricularYear, executionCourses);
-           					} else {
-           						executionCourses = executionCoursesByCurricularYear.get(curricularYear);
-           					}
-                            for (final ExecutionCourse executionCourse : curricularCourse.getAssociatedExecutionCourses()) {
-                               	if (executionPeriod == executionCourse.getExecutionPeriod()) {
-                               		executionCourses.add(executionCourse);
-                               	}
-                           }
-           				}
-                	}
+                	for (final DegreeModuleScope degreeModuleScope : curricularCourse.getDegreeModuleScopes()) {
+                        if(degreeModuleScope.isActiveForExecutionPeriod(executionPeriod)) {
+                    		final Integer curricularSemester = degreeModuleScope.getCurricularSemester();
+               				final Integer curricularYear = degreeModuleScope.getCurricularYear();               				
+               				if (curricularSemester.equals(executionPeriod.getSemester()) &&
+                                    (selectAllCurricularYears != null && selectAllCurricularYears.booleanValue()) || years.contains(curricularYear)) {
+               					
+                                final Set<ExecutionCourse> executionCourses;
+               					if (!executionCoursesByCurricularYear.containsKey(curricularYear)) {
+               						executionCourses = new TreeSet<ExecutionCourse>(new Comparator<ExecutionCourse>() {
+    									public int compare(final ExecutionCourse executionCourse1, final ExecutionCourse executionCourse2) {
+    										return executionCourse1.getNome().compareTo(executionCourse2.getNome());
+    									}});
+               						executionCoursesByCurricularYear.put(curricularYear, executionCourses);
+               					} else {
+               						executionCourses = executionCoursesByCurricularYear.get(curricularYear);
+               					}
+                                for (final ExecutionCourse executionCourse : curricularCourse.getAssociatedExecutionCourses()) {
+                                   	if (executionPeriod == executionCourse.getExecutionPeriod()) {
+                                   		executionCourses.add(executionCourse);
+                                   	}
+                               }
+               				}
+                    	}
+                    }
                 }
             }
         }
         request.setAttribute("executionCoursesByCurricularYearByExecutionDegree", executionCoursesByCurricularYearByExecutionDegree);
-
         return mapping.findForward("showMap");
     }
 

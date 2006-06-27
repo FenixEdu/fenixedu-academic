@@ -147,6 +147,9 @@
 				<h:selectManyCheckbox value="#{SOPEvaluationManagementBackingBean.curricularCourseScopesToAssociate[associatedExecutionCourseID]}" layout="pageDirection" >
 					<f:selectItems value="#{SOPEvaluationManagementBackingBean.curricularCourseScopesSelectItems[associatedExecutionCourseID]}" />	
 				</h:selectManyCheckbox>
+				<h:selectManyCheckbox value="#{SOPEvaluationManagementBackingBean.curricularCourseContextToAssociate[associatedExecutionCourseID]}" layout="pageDirection" >
+					<f:selectItems value="#{SOPEvaluationManagementBackingBean.curricularCourseContextSelectItems[associatedExecutionCourseID]}" />	
+				</h:selectManyCheckbox>
 			</h:column>
 		</h:dataTable>
 		<h:outputText rendered="#{empty SOPEvaluationManagementBackingBean.associatedExecutionCourses}" value="<b>#{bundleSOP['label.no.associated.curricular.courses']}</b><br/>" escape="false"/>

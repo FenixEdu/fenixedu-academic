@@ -14,7 +14,7 @@
 			<strong>
 				<bean:write name="executionCoursesByCurricularYearByExecutionDegreeEntry" property="key.degreeCurricularPlan.degree.nome"/>
 				<br/>
-				<bean:define id="year" type="java.lang.Integer" name="executionCoursesByCurricularYearEntry" property="key.year"/> <bean:message key="label.year" arg0="<%= year.toString() %>"/>
+				<bean:define id="year" type="java.lang.Integer" name="executionCoursesByCurricularYearEntry" property="key"/> <bean:message key="label.year" arg0="<%= year.toString() %>"/>
 				-
 				<bean:define id="semester" type="java.lang.Integer" name="executionPeriod" property="semester"/> <bean:message key="label.period" arg0="<%= semester.toString() %>"/>
 				-

@@ -140,13 +140,14 @@ public class CreateExamDA extends FenixDateAndTimeContextDispatchAction {
 
         // associated scopes
         List<String> curricularCourseScopeIDs = Arrays.asList((String[]) createExamForm.get("scopes"));
-        
+        List<String> curricularCourseContextIDs = new ArrayList<String>();
+                
         // associated rooms
         List<String> roomIDs = Arrays.asList((String[]) createExamForm.get("rooms"));
         
         // Create an exam with season, examDateAndTime and executionCourse
         Object argsCreateExam[] = { null, examDate.getTime(), examStartTime.getTime(), examEndTime.getTime(), 
-                executionCourseIDs, curricularCourseScopeIDs, roomIDs, season, null };
+                executionCourseIDs, curricularCourseScopeIDs, curricularCourseContextIDs, roomIDs, season, null };
         try {
             ServiceUtils.executeService(userView, "CreateWrittenEvaluation", argsCreateExam);
         } catch (FenixServiceException ex) {
@@ -566,9 +567,11 @@ public class CreateExamDA extends FenixDateAndTimeContextDispatchAction {
         }
 
         List<String> scopeIDs = Arrays.asList((String[]) createExamForm.get("scopes"));
+        List<String> contextIDs = new ArrayList<String>();
         List<String> roomIDs = Arrays.asList((String[]) createExamForm.get("rooms"));
 
-        Object argsEditExam[] = { null, examDate.getTime(), examStartTime.getTime(), examEndTime.getTime(), executionCourseIDs, scopeIDs, roomIDs, infoExamID, season, null };
+        Object argsEditExam[] = { null, examDate.getTime(), examStartTime.getTime(), examEndTime.getTime(), executionCourseIDs, scopeIDs, 
+                contextIDs, roomIDs, infoExamID, season, null };
         try {
             ServiceUtils.executeService(userView, "EditWrittenEvaluation", argsEditExam);
         } 

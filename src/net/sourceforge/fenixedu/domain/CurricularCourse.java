@@ -1013,28 +1013,11 @@ public class CurricularCourse extends CurricularCourse_Base {
         return result;
     }
 
-    public boolean hasScopeForCurricularYear(final Integer year, ExecutionPeriod executionPeriod) {
-        CurricularYear curricularYear = CurricularYear.readByYear(year);
-        return hasScopeForCurricularYear(curricularYear, executionPeriod);
-    }
-
-    public boolean hasScopeForCurricularYear(final CurricularYear curricularYear,
-            ExecutionPeriod executionPeriod) {
-        if (isBolonha()) {
-            for (Context context : getParentContexts()) {
-                final CompetenceCourse competenceCourse = getCompetenceCourse();
-                if (competenceCourse != null) {
-                    if (context.isValid(executionPeriod)
-                            && context.containsCurricularYear(curricularYear.getYear())) {
-                        return true;
-                    }
-                }
-            }
-        } else {
-            for (final CurricularCourseScope scope : getScopes()) {
-                if (scope.getCurricularSemester().getCurricularYear().equals(curricularYear)) {
-                    return true;
-                }
+    public boolean hasScopeForCurricularYear(final Integer curricularYear, ExecutionPeriod executionPeriod) {
+        for (DegreeModuleScope degreeModuleScope : getDegreeModuleScopes()) {
+            if(degreeModuleScope.isActiveForExecutionPeriod(executionPeriod) &&
+                    degreeModuleScope.getCurricularYear().equals(curricularYear)) {
+                return true;
             }
         }
         return false;
@@ -1164,37 +1147,20 @@ public class CurricularCourse extends CurricularCourse_Base {
         return result;
     }
 
-    public boolean hasScopeInGivenSemesterAndCurricularYearInDCP(Integer semester,
-            CurricularYear curricularYear, DegreeCurricularPlan degreeCurricularPlan,
+    public boolean hasScopeInGivenSemesterAndCurricularYearInDCP(CurricularYear curricularYear, DegreeCurricularPlan degreeCurricularPlan,
             final ExecutionPeriod executionPeriod) {
 
-        if (degreeCurricularPlan == null || getDegreeCurricularPlan().equals(degreeCurricularPlan)) {
-            if (isBolonha()) {
-                for (Context context : getParentContexts()) {
-                    final CompetenceCourse competenceCourse = getCompetenceCourse();
-                    if (competenceCourse != null) {
-                        if (context.isValid(executionPeriod)
-                                && ((curricularYear != null && context
-                                        .containsSemesterAndCurricularYear(semester, curricularYear
-                                                .getYear(), competenceCourse.getRegime())) || (curricularYear == null && context
-                                        .containsSemester(semester)))) {
-                            return true;
-                        }
-                    }
-                }
-            } else {
-                for (CurricularCourseScope curricularCourseScope : getScopes()) {
-                    if (curricularCourseScope.getCurricularSemester().getSemester().equals(semester)
-                            && (curricularYear == null || curricularCourseScope.getCurricularSemester()
-                                    .getCurricularYear().equals(curricularYear))) {
-                        return true;
-                    }
+        if (degreeCurricularPlan == null || getDegreeCurricularPlan().equals(degreeCurricularPlan)) {           
+            for (DegreeModuleScope degreeModuleScope : getDegreeModuleScopes()) {
+                if(degreeModuleScope.isActiveForExecutionPeriod(executionPeriod) && 
+                        (curricularYear == null || degreeModuleScope.getCurricularYear().equals(curricularYear.getYear()))) {
+                    return true;
                 }
             }
-        }
+        }        
         return false;
     }
-    
+          
     public boolean isGradeSubmissionAvailableFor(ExecutionPeriod executionPeriod) {
         return isGradeSubmissionAvailableFor(executionPeriod, MarkSheetType.NORMAL) 
             || isGradeSubmissionAvailableFor(executionPeriod, MarkSheetType.IMPROVEMENT)
@@ -1242,4 +1208,7 @@ public class CurricularCourse extends CurricularCourse_Base {
 		return !enrolmentsNotSubmited.isEmpty();
 	}
     
+    public List<DegreeModuleScope> getDegreeModuleScopes(){
+        return DegreeModuleScope.getDegreeModuleScopes(this);
+    }      
 }

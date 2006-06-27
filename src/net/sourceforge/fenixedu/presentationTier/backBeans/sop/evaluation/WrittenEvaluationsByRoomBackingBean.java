@@ -15,10 +15,9 @@ import javax.faces.model.SelectItem;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
-import net.sourceforge.fenixedu.domain.CurricularCourseScope;
-import net.sourceforge.fenixedu.domain.CurricularSemester;
 import net.sourceforge.fenixedu.domain.CurricularYear;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.DegreeModuleScope;
 import net.sourceforge.fenixedu.domain.Exam;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
@@ -80,11 +79,11 @@ public class WrittenEvaluationsByRoomBackingBean extends EvaluationManagementBac
     }
 
     public String getName() {
-        return name;
+        return name;       
     }
 
     public void setName(String name) {
-        this.name = name;
+        this.name = name;        
     }
 
     public String getNormalCapacity() {
@@ -243,22 +242,20 @@ public class WrittenEvaluationsByRoomBackingBean extends EvaluationManagementBac
             final Map<OldRoom, List<CalendarLink>> calendarLinksMap = new HashMap<OldRoom, List<CalendarLink>>();
             // final Collection<List<CalendarLink>>
             // collectionOfCalendarLinkLists = new
-            // ArrayList<List<CalendarLink>>();
+            // ArrayList<List<CalendarLink>>();                  
             for (final OldRoom room : rooms) {
                 final List<CalendarLink> calendarLinks = new ArrayList<CalendarLink>();
                 for (final RoomOccupation roomOccupation : room.getRoomOccupations()) {
                     final WrittenEvaluation writtenEvaluation = roomOccupation.getWrittenEvaluation();
-                    if (writtenEvaluation != null) {
-                        final ExecutionCourse executionCourse = writtenEvaluation
-                                .getAssociatedExecutionCourses().get(0);
-
-                        final CalendarLink calendarLink = new CalendarLink();
-                        calendarLink.setObjectOccurrence(writtenEvaluation.getDay());
-                        calendarLink.setObjectLinkLabel(constructEvaluationCalendarPresentarionString(
-                                writtenEvaluation, executionCourse));
-                        calendarLink.setLinkParameters(constructLinkParameters(executionCourse,
-                                writtenEvaluation));
-                        calendarLinks.add(calendarLink);
+                    if (writtenEvaluation != null) {                     
+                        if(verifyWrittenEvaluationExecutionPeriod(writtenEvaluation, getExecutionPeriod())) {
+                            final ExecutionCourse executionCourse = writtenEvaluation.getAssociatedExecutionCourses().get(0);
+                            final CalendarLink calendarLink = new CalendarLink();
+                            calendarLink.setObjectOccurrence(writtenEvaluation.getDay());
+                            calendarLink.setObjectLinkLabel(constructEvaluationCalendarPresentarionString(writtenEvaluation, executionCourse));
+                            calendarLink.setLinkParameters(constructLinkParameters(executionCourse, writtenEvaluation));
+                            calendarLinks.add(calendarLink);
+                        }
                     }
                 }
                 // collectionOfCalendarLinkLists.add(calendarLinks);
@@ -270,6 +267,15 @@ public class WrittenEvaluationsByRoomBackingBean extends EvaluationManagementBac
             return null;
         }
     }
+    
+    private boolean verifyWrittenEvaluationExecutionPeriod(WrittenEvaluation writtenEvaluation, ExecutionPeriod executionPeriod) {
+        for (ExecutionCourse executionCourse : writtenEvaluation.getAssociatedExecutionCourses()) {
+            if(executionCourse.getExecutionPeriod() == executionPeriod) {
+                return true;
+            }
+        }        
+        return false;
+    }
 
     public List<Entry<OldRoom, List<CalendarLink>>> getWrittenEvaluationCalendarLinksEntryList() throws FenixFilterException, FenixServiceException {
         final Map<OldRoom, List<CalendarLink>> calendarLinks = getWrittenEvaluationCalendarLinks();
@@ -280,12 +286,9 @@ public class WrittenEvaluationsByRoomBackingBean extends EvaluationManagementBac
             final WrittenEvaluation writtenEvaluation) {
     	final ExecutionPeriod executionPeriod = executionCourse.getExecutionPeriod();
     	final ExecutionDegree executionDegree = findExecutionDegree(executionCourse);
-    	final CurricularSemester curricularSemester = findCurricularSemester(executionCourse);
-        CurricularYear curricularYear = null;
-        if (curricularSemester != null) {
-            curricularYear = curricularSemester.getCurricularYear(); 
-        }
-
+    	final Integer year = findCurricularYear(executionCourse);        
+        CurricularYear curricularYear = CurricularYear.readByYear(year);
+        
         final Map<String, String> linkParameters = new HashMap<String, String>();
         linkParameters.put("executionCourseID", executionCourse.getIdInternal().toString());
         linkParameters.put("evaluationID", writtenEvaluation.getIdInternal().toString());
@@ -314,15 +317,15 @@ public class WrittenEvaluationsByRoomBackingBean extends EvaluationManagementBac
     	return null;
 	}
 
-    private CurricularSemester findCurricularSemester(final ExecutionCourse executionCourse) {
+    private Integer findCurricularYear(final ExecutionCourse executionCourse) {
     	final ExecutionPeriod executionPeriod = executionCourse.getExecutionPeriod();
 
-    	for (final CurricularCourse curricularCourse : executionCourse.getAssociatedCurricularCourses()) {
-    		final List<CurricularCourseScope> curricularCourseScopes = curricularCourse.getActiveScopesInExecutionPeriod(executionPeriod);
-    		if (!curricularCourseScopes.isEmpty()) {
-    			final CurricularCourseScope curricularCourseScope = curricularCourseScopes.get(0);
-    			return curricularCourseScope.getCurricularSemester();
-    		}
+    	for (final CurricularCourse curricularCourse : executionCourse.getAssociatedCurricularCourses()) {    		
+            for (DegreeModuleScope degreeModuleScope : curricularCourse.getDegreeModuleScopes()) {
+                if(degreeModuleScope.isActiveForExecutionPeriod(executionPeriod)) {
+                    return degreeModuleScope.getCurricularYear();
+                }
+            }    	
     	}
     	return null;
 	}

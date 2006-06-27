@@ -28,3 +28,4 @@ function executeWithTempFile() {
 }
 
 execute "Add column KEY_PARTY to Event table" alterTableAccountingEvent.sql
+execute "Create Written Evaluation Context Table" createWrittenEvaluationContextTable.sql

@@ -42,7 +42,7 @@ public class ReadShiftsByExecutionPeriodAndExecutionDegreeAndCurricularYear exte
         final CurricularYear curricularYear = rootDomainObject.readCurricularYearByOID(infoCurricularYear.getIdInternal());
 
         final List infoShifts = new ArrayList();
-        final List<ExecutionCourse> executionCourses = executionPeriod.getExecutionCoursesByDegreeCurricularPlanAndSemesterAndCurricularYearAndName(degreeCurricularPlan, infoExecutionPeriod.getSemester(), curricularYear, "%");
+        final List<ExecutionCourse> executionCourses = executionPeriod.getExecutionCoursesByDegreeCurricularPlanAndSemesterAndCurricularYearAndName(degreeCurricularPlan, curricularYear, "%");
         for (final ExecutionCourse executionCourse : executionCourses) {
         for (final Shift shift : executionCourse.getAssociatedShiftsSet()) {
         	final InfoShift infoShift = new InfoShift();
