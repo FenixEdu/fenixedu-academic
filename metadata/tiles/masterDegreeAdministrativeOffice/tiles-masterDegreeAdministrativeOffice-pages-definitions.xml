@@ -223,9 +223,9 @@
 	</definition>
 
 	<!-- ************* Payments ************* -->
-	<definition name="show.guides.management.firstPage" extends="definition.masterDegreeAdministrativeOffice.masterPage">
+	<definition name="show.guides.management.searchPerson" extends="definition.masterDegreeAdministrativeOffice.masterPage">
 		<put name="navLocal" value="/posGraduacao/payments/paymentsMenu.jsp" />
-		<put name="body" value="/posGraduacao/payments/guides/searchCandidacy.jsp"/>
+		<put name="body" value="/posGraduacao/payments/guides/searchPerson.jsp"/>
 	</definition>
 	
 	<definition name="show.guides.management.showEvents" extends="definition.masterDegreeAdministrativeOffice.masterPage">
@@ -233,7 +233,7 @@
 		<put name="body" value="/posGraduacao/payments/guides/showEvents.jsp"/>
 	</definition>
 	
-	<definition name="show.receipts.management.firstPage" extends="definition.masterDegreeAdministrativeOffice.masterPage">
+	<definition name="show.receipts.management.searchPerson" extends="definition.masterDegreeAdministrativeOffice.masterPage">
 		<put name="navLocal" value="/posGraduacao/payments/paymentsMenu.jsp" />
 		<put name="body" value="/commons/blank.jsp"/>
 	</definition>

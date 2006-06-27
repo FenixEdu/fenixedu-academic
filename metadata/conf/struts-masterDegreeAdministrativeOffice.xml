@@ -779,7 +779,10 @@
 	
 	<form-bean name="paymentsForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
 		<form-property name="method" type="java.lang.String" />
-		<form-property name="candidacyNumber" type="java.lang.Integer" />
+		<form-property name="candidacyNumber" type="java.lang.String" />
+		<form-property name="username" type="java.lang.String" />
+		<form-property name="documentType" type="java.lang.String" />
+		<form-property name="documentNumber" type="java.lang.String" />
     </form-bean>
 	
    </form-beans>
@@ -2567,8 +2570,9 @@
 		      scope="request"
               type="net.sourceforge.fenixedu.presentationTier.Action.masterDegree.payments.GuidesManagementDispatchAction"
 			  >
-	         <forward name="success" path="show.guides.management.firstPage"/>
+	         <forward name="success" path="show.guides.management.searchPerson"/>
 	         <forward name="showEvents" path="show.guides.management.showEvents"/>
+	         <forward name="printGuide" path="/payments/guides/printGuidePage.jsp"/>
       </action>
       
       <action path="/receiptsManagement"
@@ -2577,7 +2581,7 @@
 		      scope="request"
               type="net.sourceforge.fenixedu.presentationTier.Action.masterDegree.payments.ReceiptsManagementDispatchAction"
 			  >
-	         <forward name="success" path="show.receipts.management.firstPage"/> 
+	         <forward name="success" path="show.receipts.management.searchPerson"/> 
       </action>
 
 
