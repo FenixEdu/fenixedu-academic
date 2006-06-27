@@ -15,33 +15,42 @@ public class Result extends Result_Base {
         setRootDomainObject(RootDomainObject.getInstance());
         setOjbConcreteClass(getClass().getName());
     }
+    
+    public void setParticipation(Person author){
+        ResultParticipation resultParticipation = new ResultParticipation();
+        
+        resultParticipation.setPerson(author);
+        resultParticipation.setResult(this);
+        int order = this.getResultParticipationsCount();
+        
+        resultParticipation.setPersonOrder(new Integer(order));
+    }
  
-    public void setAuthorships(List<Person> authors) {
-    	removeAuthorships();
+    public void setParticipations(List<Person> authors) {
+    	removeParticipations();
 	    for (Person person : authors) {
-	        final Authorship authorship = new Authorship();
+	        final ResultParticipation resultParticipation = new ResultParticipation();
             
-	        authorship.setAuthor(person);
-	        authorship.setResult(this);
-	        authorship.setAuthorOrder(new Integer(authors.indexOf(person)));
+            resultParticipation.setPerson(person);
+            resultParticipation.setResult(this);
+            resultParticipation.setPersonOrder(new Integer(authors.indexOf(person)));
 	    }
 	}
     
-    public List<Person> getAuthorships(){
-        List<Person> authorsList = new ArrayList<Person>();
+    public List<Person> getParticipations(){
+        List<Person> personsList = new ArrayList<Person>();
         
-        for (Authorship author : getResultAuthorships()) {
-            authorsList.add(author.getAuthor());
+        for (ResultParticipation resultParticipation : getResultParticipations()) {
+            personsList.add(resultParticipation.getPerson());
         }
-        return authorsList;
+        return personsList;
     }
     
-	public void removeAuthorships() {
-	    for (Iterator<Authorship> iterator = getResultAuthorshipsIterator(); iterator.hasNext(); ) {
-	        Authorship authorship = iterator.next();
+	public void removeParticipations() {
+	    for (Iterator<ResultParticipation> iterator = getResultParticipationsIterator(); iterator.hasNext(); ) {
+            ResultParticipation resultParticipation = iterator.next();
 	        iterator.remove();
-            //((Authorship) rootDomainObject.readAuthorshipByOID(authorship.getIdInternal())).delete();
-	        authorship.delete();
+            resultParticipation.delete();
 	    }
 	}
 }

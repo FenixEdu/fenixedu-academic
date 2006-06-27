@@ -1,13 +1,13 @@
-<schema name="authorship.result" type="net.sourceforge.fenixedu.domain.research.result.Authorship">
+<schema name="resultParticipation.result" type="net.sourceforge.fenixedu.domain.research.result.ResultParticipation">
 	<slot name="result.title"/>
+</schema>
+<schema name="person.result" type="net.sourceforge.fenixedu.domain.research.result.Result">
+	<slot name="title"/>
 </schema>
 
 <schema name="project.summary" type="net.sourceforge.fenixedu.domain.research.project.Project">
 	<slot name="title"/>
 </schema>
-
-
-
 
 
 <schema name="researcher.person.personalInfo" bundle="RESEARCHER_RESOURCES" type="net.sourceforge.fenixedu.domain.Person">
@@ -85,104 +85,6 @@
 	<slot name="party.name" read-only="true"/>
 	<slot name="role"/>
 </schema>
-
-<!-- SCHEMAS FOR PATENTS MANAGEMENT -->
-<schema name="patent-default" type="net.sourceforge.fenixedu.domain.research.result.Patent" bundle="RESEARCHER_RESOURCES">
-	<slot name="resultAuthorships" layout="tabular-list">
-		<property name="subLayout" value="values"/>
-		<property name="subSchema" value="result.authorships"/>
-	</slot>
-	<slot name="title" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredMultiLanguageStringValidator"/> 
-	<slot name="description" layout="area">
-		<property name="rows" value="5"/>
-		<property name="columns" value="75"/>
-	</slot>
-	<slot name="patentType"/>
-	<slot name="status"/>
-	<slot name="registrationDate" layout="year-month" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
-	<slot name="approvalDate" layout="year-month" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
-	<slot name="country" layout="menu-select">
-		<property name="choiceType" value="net.sourceforge.fenixedu.domain.Country"/> 
-		<property name="format" value="${name}"/>
-		<property name="sortBy" value="name"/>
-	</slot>
-	<slot name="local"/>
-	<slot name="patentNumber"/>
-	<slot name="numberPages"/>	
-	<slot name="formatType"/>	
-	<slot name="language"/>
-	<slot name="url"/>
-</schema>
-
-<schema name="patent.create" extends="patent-default" type="net.sourceforge.fenixedu.domain.research.result.Patent" bundle="RESEARCHER_RESOURCES">
-	<remove name="resultAuthorships"/>
-</schema>
-
-<schema name="patent.viewEditData" extends="patent-default" type="net.sourceforge.fenixedu.domain.research.result.Patent" bundle="RESEARCHER_RESOURCES">
-	<remove name="resultAuthorships"/>
-	<slot name="description"/>
-	<slot name="country" layout="format">
-		<property name="format" value="${name}"/>
-	</slot>
-</schema>
-
-<schema name="result.patentShortList" type="net.sourceforge.fenixedu.domain.research.result.Authorship">
-	<slot name="result.title" layout="link">
-		<property name="viewPage" value="/result/patents/patentsManagement.do?method=preparePatentDetails"/>	
-	</slot>
-	<slot name="result.registrationDate"/>
-</schema>
-
-<schema name="result.creator.name" type="net.sourceforge.fenixedu.domain.Person" bundle="RESEARCHER_RESOURCES">
-	<slot name="name"/>
-</schema>
-
-<schema name="result.authorships" type="net.sourceforge.fenixedu.domain.research.result.Authorship" bundle="RESEARCHER_RESOURCES">
-	<slot name="author.name"/>
-</schema>
-
-<schema name="resultAuthorship.internalPerson.creation" type="net.sourceforge.fenixedu.dataTransferObject.research.result.ResultAuthorshipSimpleCreationBean" bundle="RESEARCHER_RESOURCES">
-	<slot name="person" layout="autoComplete" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredAutoCompleteSelectionValidator">
-		<property name="size" value="70"/>
-		<property name="rawSlotName" value="personName"/>
-		<property name="labelField" value="name"/>
-		<property name="indicatorShown" value="true"/>
-		<property name="serviceName" value="SearchObjects"/>
-		<property name="serviceArgs" value="slot=name"/>
-		<property name="className" value="net.sourceforge.fenixedu.domain.Person"/>				
-		<property name="minChars" value="4"/>
-	</slot>
-</schema>
-
-<schema name="resultAuthorship.externalPerson.simpleCreation" type="net.sourceforge.fenixedu.dataTransferObject.research.result.ResultAuthorshipSimpleCreationBean" bundle="RESEARCHER_RESOURCES">
-	<slot name="externalPerson" layout="autoComplete" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
-		<property name="size" value="70"/>
-		<property name="rawSlotName" value="personName"/>
-		<property name="labelField" value="person.name"/>
-		<property name="format" value="${person.name} - ${person.externalPerson.institutionUnit.name}"/>
-		<property name="indicatorShown" value="true"/>		
-		<property name="serviceName" value="SearchObjects"/>
-		<property name="serviceArgs" value="slot=person.name"/>
-		<property name="className" value="net.sourceforge.fenixedu.domain.ExternalPerson"/>				
-		<property name="minChars" value="4"/>
-	</slot>
-</schema>
-
-<schema name="resultAuthorship.externalPerson.fullCreation" type="net.sourceforge.fenixedu.dataTransferObject.research.result.ResultAuthorshipFullCreationBean" bundle="RESEARCHER_RESOURCES">
-	<slot name="personName" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" read-only="true"/>
-	<slot name="organization" layout="autoComplete" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
-		<property name="size" value="40"/>
-		<property name="rawSlotName" value="organizationName"/>
-		<property name="labelField" value="name"/>
-		<property name="indicatorShown" value="true"/>		
-		<property name="serviceName" value="SearchExternalUnits"/>
-		<property name="serviceArgs" value="slot=name"/>
-		<property name="className" value="net.sourceforge.fenixedu.domain.organizationalStructure.Unit"/>				
-		<property name="minChars" value="4"/>
-	</slot>
-</schema>
-
-<!-- END SCHEMAS FOR PATENTS MANAGEMENT -->
 
 <schema name="projectParticipation.internalPerson.creation" type="net.sourceforge.fenixedu.dataTransferObject.research.ProjectParticipantSimpleCreationBean" bundle="RESEARCHER_RESOURCES">
 	<slot name="person" layout="autoComplete" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredAutoCompleteSelectionValidator">
@@ -267,3 +169,314 @@
 	<slot name="eventType" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>	
 	<slot name="role" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
 </schema>
+
+
+<!-- SCHEMAS FOR PATENTS MANAGEMENT -->
+<schema name="patent-default" type="net.sourceforge.fenixedu.domain.research.result.ResultPatent" bundle="RESEARCHER_RESOURCES">
+	<slot name="resultParticipations" layout="tabular-list">
+		<property name="subLayout" value="values"/>
+		<property name="subSchema" value="result.participations"/>
+	</slot>
+	<slot name="title" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/> 
+	<slot name="note" layout="area">
+		<property name="rows" value="5"/>
+		<property name="columns" value="75"/>
+	</slot>
+	<slot name="patentType"/>
+	<slot name="patentStatus"/>
+	<slot name="registrationDate" layout="year-month" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+	<slot name="approvalDate" layout="year-month" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+	<slot name="country" layout="menu-select">
+		<property name="choiceType" value="net.sourceforge.fenixedu.domain.Country"/> 
+		<property name="format" value="${name}"/>
+		<property name="sortBy" value="name"/>
+	</slot>
+	<slot name="local"/>
+	<slot name="patentNumber"/>
+	<slot name="url"/>
+</schema>
+
+<schema name="patent.create" extends="patent-default" type="net.sourceforge.fenixedu.domain.research.result.ResultPatent" bundle="RESEARCHER_RESOURCES">
+	<remove name="resultParticipations"/>
+</schema>
+
+<schema name="patent.viewEditData" extends="patent-default" type="net.sourceforge.fenixedu.domain.research.result.ResultPatent" bundle="RESEARCHER_RESOURCES">
+	<remove name="resultParticipations"/>
+	<slot name="note"/>
+	<slot name="country" layout="format">
+		<property name="format" value="${name}"/>
+	</slot>
+</schema>
+
+<schema name="result.patentShortList" type="net.sourceforge.fenixedu.domain.research.result.ResultParticipation">
+	<slot name="result.title" layout="link">
+		<property name="viewPage" value="/result/patents/patentsManagement.do?method=preparePatentDetails"/>	
+	</slot>
+	<slot name="result.registrationDate"/>
+</schema>
+
+<schema name="result.creator.name" type="net.sourceforge.fenixedu.domain.Person" bundle="RESEARCHER_RESOURCES">
+	<slot name="name"/>
+</schema>
+
+<schema name="result.participations" type="net.sourceforge.fenixedu.domain.research.result.ResultParticipation" bundle="RESEARCHER_RESOURCES">
+	<slot name="person.name" read-only="true"/>
+</schema>
+
+<schema name="resultParticipation.internalPerson.creation" type="net.sourceforge.fenixedu.dataTransferObject.research.result.ResultParticipationSimpleCreationBean" bundle="RESEARCHER_RESOURCES">
+	<slot name="person" layout="autoComplete" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredAutoCompleteSelectionValidator">
+		<property name="size" value="70"/>
+		<property name="rawSlotName" value="personName"/>
+		<property name="labelField" value="name"/>
+		<property name="indicatorShown" value="true"/>
+		<property name="serviceName" value="SearchObjects"/>
+		<property name="serviceArgs" value="slot=name"/>
+		<property name="className" value="net.sourceforge.fenixedu.domain.Person"/>				
+		<property name="minChars" value="4"/>
+	</slot>
+</schema>
+
+<schema name="resultParticipation.externalPerson.simpleCreation" type="net.sourceforge.fenixedu.dataTransferObject.research.result.ResultParticipationSimpleCreationBean" bundle="RESEARCHER_RESOURCES">
+	<slot name="externalPerson" layout="autoComplete" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		<property name="size" value="70"/>
+		<property name="rawSlotName" value="personName"/>
+		<property name="labelField" value="person.name"/>
+		<property name="format" value="${person.name} - ${person.externalPerson.institutionUnit.name}"/>
+		<property name="indicatorShown" value="true"/>		
+		<property name="serviceName" value="SearchObjects"/>
+		<property name="serviceArgs" value="slot=person.name"/>
+		<property name="className" value="net.sourceforge.fenixedu.domain.ExternalPerson"/>				
+		<property name="minChars" value="4"/>
+	</slot>
+</schema>
+
+<schema name="resultParticipation.externalPerson.fullCreation" type="net.sourceforge.fenixedu.dataTransferObject.research.result.ResultParticipationFullCreationBean" bundle="RESEARCHER_RESOURCES">
+	<slot name="personName" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" read-only="true"/>
+	<slot name="organization" layout="autoComplete" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		<property name="size" value="40"/>
+		<property name="rawSlotName" value="organizationName"/>
+		<property name="labelField" value="name"/>
+		<property name="indicatorShown" value="true"/>		
+		<property name="serviceName" value="SearchExternalUnits"/>
+		<property name="serviceArgs" value="slot=name"/>
+		<property name="className" value="net.sourceforge.fenixedu.domain.organizationalStructure.Unit"/>				
+		<property name="minChars" value="4"/>
+	</slot>
+</schema>
+
+<!-- END SCHEMAS FOR PATENTS MANAGEMENT -->
+
+
+<!-- PUBLICATIONS SCHEMAS -->
+<!-- Publication schema names's construction:
+		should be "result.publication.[***]."+[PublicationType(in lower case)]
+ -->
+
+<!-- Resume: only important details to show in publications management -->
+<schema name="result.publication.resume.book" type="net.sourceforge.fenixedu.domain.research.result.ResultPublication" bundle="RESEARCHER_RESOURCES">
+	<slot name="title" layout="link">
+		<property name="viewPage" value="/publications/publicationsManagement.do?method=preparePublicationDetails"/>
+	</slot>
+	<slot name="publisher"/>
+	<slot name="year"/>
+	<slot name="resultParticipations" schema="result.participations" layout="values">
+ 		<property name="htmlSeparator" value=", "/>
+	</slot>
+</schema>
+<schema name="result.publication.resume.book_part" type="net.sourceforge.fenixedu.domain.research.result.ResultPublication" bundle="RESEARCHER_RESOURCES">
+	<slot name="title" layout="link">
+		<property name="viewPage" value="/publications/publicationsManagement.do?method=preparePublicationDetails"/>
+	</slot>
+	<slot name="publisher"/>
+	<slot name="year"/>
+	<slot name="resultParticipations" schema="result.participations" layout="values">
+ 		<property name="htmlSeparator" value=", "/>
+	</slot>
+</schema>
+<schema name="result.publication.resume.article" type="net.sourceforge.fenixedu.domain.research.result.ResultPublication" bundle="RESEARCHER_RESOURCES">
+	<slot name="title" layout="link">
+		<property name="viewPage" value="/publications/publicationsManagement.do?method=preparePublicationDetails"/>
+	</slot>
+	<slot name="journalName"/>
+	<slot name="month"/>
+	<slot name="year"/>
+	<slot name="resultParticipations" schema="result.participations" layout="values">
+		<property name="htmlSeparator" value=", "/>
+	</slot>
+</schema>
+<schema name="result.publication.resume.thesis" type="net.sourceforge.fenixedu.domain.research.result.ResultPublication" bundle="RESEARCHER_RESOURCES">
+	<slot name="title" layout="link">
+		<property name="viewPage" value="/publications/publicationsManagement.do?method=preparePublicationDetails"/>
+	</slot>
+	<slot name="thesisType"/>
+	<slot name="year"/><!-- begin year -->
+	<slot name="resultParticipations" schema="result.participations" layout="values">
+		<property name="htmlSeparator" value=", "/>
+	</slot>
+</schema>
+<schema name="result.publication.resume.conference" type="net.sourceforge.fenixedu.domain.research.result.ResultPublication" bundle="RESEARCHER_RESOURCES">
+	<slot name="title" layout="link">
+		<property name="viewPage" value="/publications/publicationsManagement.do?method=preparePublicationDetails"/>
+	</slot>
+	<slot name="conference"/>
+	<slot name="year"/>
+	<slot name="resultParticipations" schema="result.participations" layout="values">
+		<property name="htmlSeparator" value=", "/>
+	</slot>
+</schema>
+<schema name="result.publication.resume.technical_report" type="net.sourceforge.fenixedu.domain.research.result.ResultPublication" bundle="RESEARCHER_RESOURCES">
+	<slot name="title" layout="link">
+		<property name="viewPage" value="/publications/publicationsManagement.do?method=preparePublicationDetails"/>
+	</slot>
+	<slot name="year"/>
+	<slot name="resultParticipations" schema="result.participations" layout="values">
+		<property name="htmlSeparator" value=", "/>
+	</slot>
+</schema>
+<schema name="result.publication.resume.other_publication" type="net.sourceforge.fenixedu.domain.research.result.ResultPublication" bundle="RESEARCHER_RESOURCES">
+	<slot name="title" layout="link">
+		<property name="viewPage" value="/publications/publicationsManagement.do?method=preparePublicationDetails"/>
+	</slot>
+	<slot name="otherPublicationType"/>
+	<slot name="year"/>
+	<slot name="resultParticipations" schema="result.participations" layout="values">
+		<property name="htmlSeparator" value=", "/>
+	</slot>
+</schema>
+<schema name="result.publication.resume.unstructured" type="net.sourceforge.fenixedu.domain.research.result.ResultPublication" bundle="RESEARCHER_RESOURCES">
+	<slot name="title" key="label.description"/>
+	<slot name="resultParticipations" schema="result.participations" layout="values">
+		<property name="htmlSeparator" value=", "/>
+	</slot>
+</schema>
+
+<!-- Publication Details: all attributes to show in publication details -->
+<schema name="result.publication.details.book" type="net.sourceforge.fenixedu.domain.research.result.ResultPublication" bundle="RESEARCHER_RESOURCES">
+	<slot name="title" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+	<slot name="publisher" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+ 	<slot name="year" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>	
+	<slot name="month"/>
+	<slot name="publisherCity"/>
+	<slot name="country"/>
+	<slot name="numberPages"/>
+	<slot name="language"/>
+	<slot name="edition"/>
+	<slot name="volume"/>
+	<slot name="serie"/>
+	<slot name="isbn"/>
+	<slot name="scopeType"/>
+	<slot name="url"/>
+	<slot name="note" layout="area">
+		<property name="rows" value="4"/>
+		<property name="columns" value="50"/>
+	</slot>
+</schema>
+<schema name="result.publication.details.book_part" type="net.sourceforge.fenixedu.domain.research.result.ResultPublication" bundle="RESEARCHER_RESOURCES">
+	<slot name="title" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+	<slot name="publisher" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+ 	<slot name="year" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>	
+	<slot name="month"/>
+	<slot name="publisherCity"/>
+	<slot name="firstPage"/>
+	<slot name="lastPage"/>
+	<slot name="language"/>
+	<slot name="edition"/>
+	<slot name="volume"/>
+	<slot name="serie"/>
+	<slot name="instituition"/>
+	<slot name="url"/>
+	<slot name="note" layout="area">
+		<property name="rows" value="4"/>
+		<property name="columns" value="50"/>
+	</slot>
+</schema>
+<schema name="result.publication.details.article" type="net.sourceforge.fenixedu.domain.research.result.ResultPublication" bundle="RESEARCHER_RESOURCES">
+	<slot name="title" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+	<slot name="articleType" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+	<slot name="journalName" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+	<slot name="year"/>
+	<slot name="month"/>
+	<slot name="volume"/>
+	<slot name="number"/>
+	<slot name="firstPage"/>
+	<slot name="lastPage"/>
+	<slot name="language"/>
+	<slot name="publisher"/>
+	<slot name="country"/>
+	<slot name="scopeType"/>
+	<slot name="issn"/>
+	<slot name="url"/>
+	<slot name="note" layout="area">
+		<property name="rows" value="4"/>
+		<property name="columns" value="50"/>
+	</slot>
+</schema>
+<schema name="result.publication.details.thesis" type="net.sourceforge.fenixedu.domain.research.result.ResultPublication" bundle="RESEARCHER_RESOURCES">
+	<slot name="title" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+	<slot name="thesisType" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+	<slot name="university"/>
+	<slot name="local"/>
+	<slot name="year"/>
+	<slot name="month"/>
+	<slot name="numberPages"/>
+	<slot name="language"/>
+	<slot name="url"/>
+	<slot name="note" layout="area">
+		<property name="rows" value="4"/>
+		<property name="columns" value="50"/>
+	</slot>
+</schema>
+<schema name="result.publication.details.conference" type="net.sourceforge.fenixedu.domain.research.result.ResultPublication" bundle="RESEARCHER_RESOURCES">
+	<slot name="title" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+	<slot name="conference" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+	<slot name="year"/>
+	<slot name="publisher"/>
+	<slot name="local"/>
+	<slot name="institution"/>
+	<slot name="month"/>
+	<slot name="language"/>
+	<slot name="firstPage"/>
+	<slot name="lastPage"/>
+	<slot name="publisher"/>
+	<slot name="url"/>
+	<slot name="note" layout="area">
+		<property name="rows" value="4"/>
+		<property name="columns" value="50"/>
+	</slot>
+</schema>
+<schema name="result.publication.details.technical_report" type="net.sourceforge.fenixedu.domain.research.result.ResultPublication" bundle="RESEARCHER_RESOURCES">
+	<slot name="title" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+	<slot name="instituition"/>
+	<slot name="publisher"/>
+	<slot name="year"/>
+	<slot name="month"/>
+	<slot name="numberPages"/>
+	<slot name="language"/>
+	<slot name="number"/>
+	<slot name="url"/>
+	<slot name="note" layout="area">
+		<property name="rows" value="4"/>
+		<property name="columns" value="50"/>
+	</slot>
+</schema>
+<schema name="result.publication.details.other_publication" type="net.sourceforge.fenixedu.domain.research.result.ResultPublication" bundle="RESEARCHER_RESOURCES">
+	<slot name="title" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+	<slot name="otherPublicationType" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+	<slot name="publisher"/>
+	<slot name="publisherCity"/>
+	<slot name="number"/>
+	<slot name="country"/>
+	<slot name="year"/>
+	<slot name="month"/>
+	<slot name="numberPages"/>
+	<slot name="language"/>
+	<slot name="url"/>
+	<slot name="note" layout="area">
+		<property name="rows" value="4"/>
+		<property name="columns" value="50"/>
+	</slot>
+</schema>
+<schema name="result.publication.details.unstructured" type="net.sourceforge.fenixedu.domain.research.result.ResultPublication" bundle="RESEARCHER_RESOURCES">
+	<slot name="title" key="label.description" />
+</schema>
+

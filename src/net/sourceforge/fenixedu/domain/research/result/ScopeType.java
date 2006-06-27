@@ -1,9 +1,10 @@
 package net.sourceforge.fenixedu.domain.research.result;
 
-public enum ProductType {
+public enum ScopeType {
     
-	LABORATORY_PROTOTYPE,
-	INDUSTRIAL_PROTOTYPE;
+	LOCAL,
+	NATIONAL,
+    INTERNATIONAL;
           
     public String getName() {
         return name();

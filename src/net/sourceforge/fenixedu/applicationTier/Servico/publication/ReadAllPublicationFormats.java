@@ -5,7 +5,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.publication.InfoPublicationFormat;
-import net.sourceforge.fenixedu.domain.research.result.PublicationFormat;
+import net.sourceforge.fenixedu.domain.publication.PublicationFormat;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class ReadAllPublicationFormats extends Service {

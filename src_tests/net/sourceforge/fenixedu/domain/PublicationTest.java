@@ -5,9 +5,9 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.publication.PublicationDTO;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.research.result.Authorship;
-import net.sourceforge.fenixedu.domain.research.result.Publication;
-import net.sourceforge.fenixedu.domain.research.result.PublicationType;
+import net.sourceforge.fenixedu.domain.publication.Authorship;
+import net.sourceforge.fenixedu.domain.publication.Publication;
+import net.sourceforge.fenixedu.domain.publication.PublicationType;
 
 public class PublicationTest extends DomainTestBase {
 
@@ -186,7 +186,7 @@ public class PublicationTest extends DomainTestBase {
         existentPublication.setScope(scope+1);
         existentPublication.setSerie(serie+1);
         existentPublication.setSubType(subtype+1);
-        existentPublication.setTitlePt(title+1);
+        existentPublication.setTitle(title+1);
         existentPublication.setTranslatedAuthor(translated_author+1);
         existentPublication.setUniversity(university+1);
         existentPublication.setUrl(url+1);
@@ -197,7 +197,7 @@ public class PublicationTest extends DomainTestBase {
         Authorship authorship = new Authorship();
         authorship.setAuthor(person1);
         authorship.setOrder(1);
-        authorship.setResult(existentPublication);
+        authorship.setPublication(existentPublication);
         //existentPublication.getPublicationAuthorships().add(authorship);
 
     }
@@ -250,7 +250,7 @@ public class PublicationTest extends DomainTestBase {
         assertNotNull(publication);
         
         List<Person> createdAuthors = new ArrayList<Person>(authors.size());
-        for(Authorship authorship : publication.getResultAuthorships()) {
+        for(Authorship authorship : publication.getPublicationAuthorships()) {
             createdAuthors.add(authorship.getAuthor());
         }
         
@@ -288,7 +288,7 @@ public class PublicationTest extends DomainTestBase {
         assertNotNull(existentPublication);
         
         List<Person> createdAuthors = new ArrayList<Person>(authors.size());
-        for(Authorship authorship : existentPublication.getResultAuthorships()) {
+        for(Authorship authorship : existentPublication.getPublicationAuthorships()) {
             createdAuthors.add(authorship.getAuthor());
         }
         
@@ -322,7 +322,7 @@ public class PublicationTest extends DomainTestBase {
         
         existentPublication.delete();
         
-        assertEquals("Authorships Size Unexpected", 0, existentPublication.getResultAuthorshipsCount());
+        assertEquals("Authorships Size Unexpected", 0, existentPublication.getPublicationAuthorshipsCount());
         assertEquals("PublicationTeachers Size Unexpected", 0, existentPublication.getPublicationTeachersCount());
         assertNull("PublicationType Unexpected", existentPublication.getType());
         

@@ -1,16 +1,17 @@
 package net.sourceforge.fenixedu.persistenceTier.Conversores;
 
-import net.sourceforge.fenixedu.domain.research.result.FormatType;
+
+import net.sourceforge.fenixedu.domain.research.result.publication.ThesisType;
 
 import org.apache.ojb.broker.accesslayer.conversions.ConversionException;
 import org.apache.ojb.broker.accesslayer.conversions.FieldConversion;
 
-public class FormatType2SqlFormatTypeConversion implements FieldConversion {
+public class ThesisType2SqlThesisTypeConversion implements FieldConversion {
 
     public Object javaToSql(Object source) throws ConversionException {
 
-        if (source instanceof FormatType) {
-            FormatType s = (FormatType) source;
+        if (source instanceof ThesisType) {
+            ThesisType s = (ThesisType) source;
             return s.name();
         }
         return source;
@@ -22,7 +23,7 @@ public class FormatType2SqlFormatTypeConversion implements FieldConversion {
           }            
           else if (source instanceof String) {            
             String src = (String) source;            
-            return FormatType.valueOf(src);
+            return ThesisType.valueOf(src);
         }
         return source;
     }

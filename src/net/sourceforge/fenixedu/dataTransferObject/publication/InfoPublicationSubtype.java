@@ -7,7 +7,7 @@
 package net.sourceforge.fenixedu.dataTransferObject.publication;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
-import net.sourceforge.fenixedu.domain.research.result.PublicationSubtype;
+import net.sourceforge.fenixedu.domain.publication.PublicationSubtype;
 
 /**
  * @author TJBF & PFON

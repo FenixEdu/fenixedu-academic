@@ -10,8 +10,8 @@ import java.util.Iterator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
-import net.sourceforge.fenixedu.domain.research.result.Attribute;
-import net.sourceforge.fenixedu.domain.research.result.PublicationType;
+import net.sourceforge.fenixedu.domain.publication.Attribute;
+import net.sourceforge.fenixedu.domain.publication.PublicationType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 /**

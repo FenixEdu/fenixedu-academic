@@ -15,11 +15,11 @@
 	<h2><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.result.patent.patentsManagement.title"/></h2>
 	<h3><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.result.patent.patentDetailsUseCase.title"/></h3>
 
-	<%-- Authorships --%>
-	<h3><bean:message bundle="RESEARCHER_RESOURCES" key="label.resultAuthorships"/></h3>
-	<fr:view name="patent" property="resultAuthorships" schema="result.authorships" layout="tabular">
+	<%-- Participations --%>
+	<h3><bean:message bundle="RESEARCHER_RESOURCES" key="label.resultParticipations"/></h3>
+	<fr:view name="patent" property="resultParticipations" schema="result.participations" layout="tabular">
 		<fr:layout>
-			<fr:property name="sortBy" value="authorOrder"/>
+			<fr:property name="sortBy" value="personOrder"/>
 		</fr:layout>
 	</fr:view>
 	<br/>

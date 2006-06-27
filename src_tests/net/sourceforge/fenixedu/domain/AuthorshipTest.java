@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.research.result.Authorship;
-import net.sourceforge.fenixedu.domain.research.result.Publication;
+import net.sourceforge.fenixedu.domain.publication.Authorship;
+import net.sourceforge.fenixedu.domain.publication.Publication;
 
 public class AuthorshipTest extends DomainTestBase {
 
@@ -53,22 +53,22 @@ public class AuthorshipTest extends DomainTestBase {
         
         authorship1 = new Authorship();
         authorship1.setAuthor(person1);
-        authorship1.setResult(publication);
+        authorship1.setPublication(publication);
         authorship1.setOrder(1);
         
         authorship2 = new Authorship();
         authorship2.setAuthor(person2);
-        authorship2.setResult(publication);
+        authorship2.setPublication(publication);
         authorship2.setOrder(2);
         
         authorship3 = new Authorship();
         authorship3.setAuthor(person3);
-        authorship3.setResult(publication);
+        authorship3.setPublication(publication);
         authorship3.setOrder(3);
         
         authorship4 = new Authorship();
         authorship4.setAuthor(person4);
-        authorship4.setResult(publication);
+        authorship4.setPublication(publication);
         authorship4.setOrder(4);
         
     }
@@ -77,11 +77,11 @@ public class AuthorshipTest extends DomainTestBase {
     	try {
 	        Authorship authorship = new Authorship(publication, person5, 5);
 	        
-	        assertEquals("Publication Expected", (Publication)authorship.getResult(), publication);
+	        assertEquals("Publication Expected", (Publication)authorship.getPublication(), publication);
 	        assertEquals("Person Expected", authorship.getAuthor(), person5);
 	        assertEquals("Authorship's Order Unexpected", new Integer(5), authorship.getOrder());
 	        
-	        assertEquals("Authorships size unexpected", 5, publication.getResultAuthorshipsCount());
+	        assertEquals("Authorships size unexpected", 5, publication.getPublicationAuthorshipsCount());
 	        assertEquals("Teachers size unexpected", 0, publication.getPublicationTeachersCount());
     	} catch (DomainException domainException) {
     		fail("The authorship should have been sucessfully created");
@@ -99,12 +99,12 @@ public class AuthorshipTest extends DomainTestBase {
     }
 
     public void testDeleteAuthorship() {
-        assertEquals("Unexpected Authorships Size", 4, publication.getResultAuthorshipsCount());
-        assertTrue("Publication doen't contain the authorship being deleted", publication.getResultAuthorships().contains(authorship2));
+        assertEquals("Unexpected Authorships Size", 4, publication.getPublicationAuthorshipsCount());
+        assertTrue("Publication doen't contain the authorship being deleted", publication.getPublicationAuthorships().contains(authorship2));
         
         authorship2.delete();
         
-        assertEquals("Authorships Size Unexpected", 3, publication.getResultAuthorshipsCount());
+        assertEquals("Authorships Size Unexpected", 3, publication.getPublicationAuthorshipsCount());
         assertEquals("PublicationTeachers Size Unexpected", 0, publication.getPublicationTeachersCount());
         assertEquals("Unexpected Authorships Size", 1, person1.getPersonAuthorshipsCount());
         assertEquals("Unexpected Authorships Size", 0, person2.getPersonAuthorshipsCount());
@@ -117,7 +117,7 @@ public class AuthorshipTest extends DomainTestBase {
         assertEquals("Unexpected Order for Authorship3", new Integer(2), authorship3.getOrder());
         assertEquals("Unexpected Order for Authorship4", new Integer(3), authorship4.getOrder());
         
-        assertFalse("Publication still contains the authorship", publication.getResultAuthorships().contains(authorship2));
+        assertFalse("Publication still contains the authorship", publication.getPublicationAuthorships().contains(authorship2));
     }
     
 }

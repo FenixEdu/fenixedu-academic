@@ -8,7 +8,7 @@ package net.sourceforge.fenixedu.dataTransferObject.publication;
 
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
-import net.sourceforge.fenixedu.domain.research.result.Authorship;
+import net.sourceforge.fenixedu.domain.publication.Authorship;
 
 /**
  * @author <a href="mailto:cgmp@mega.ist.utl.pt">Carlos Pereira </a> & <a href="mailto:fmmp@mega.ist.utl.pt">Francisco Passos </a>
@@ -29,13 +29,13 @@ public class InfoPublicationAuthor extends InfoObject {
         super.copyFromDomain(publicationAuthor);
         if (publicationAuthor != null){
 	        this.setKeyAuthor(publicationAuthor.getKeyAuthor());
-	        this.setKeyPublication(publicationAuthor.getKeyResult());
+	        this.setKeyPublication(publicationAuthor.getKeyPublication());
 	        this.setOrder(publicationAuthor.getOrder());
 	        InfoAuthor infoAuthor = new InfoAuthor();
 	        infoAuthor.copyFromDomain(publicationAuthor.getAuthor());
 	        this.setInfoAuthor(infoAuthor);
 	        InfoPublication infoPublication = new InfoPublication();
-	        infoPublication.copyFromDomain(publicationAuthor.getResult());
+	        infoPublication.copyFromDomain(publicationAuthor.getPublication());
 	        this.setInfoPublication(infoPublication);
         }
     }
@@ -45,7 +45,7 @@ public class InfoPublicationAuthor extends InfoObject {
         if (infoPublicationAuthor != null && publicationAuthor != null){
             super.copyToDomain(infoPublicationAuthor, publicationAuthor);
             publicationAuthor.setKeyAuthor(infoPublicationAuthor.getKeyAuthor());
-            publicationAuthor.setKeyResult(infoPublicationAuthor.getKeyPublication());
+            publicationAuthor.setKeyPublication(infoPublicationAuthor.getKeyPublication());
             publicationAuthor.setOrder(infoPublicationAuthor.getOrder());
         }
     }

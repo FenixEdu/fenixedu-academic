@@ -127,8 +127,10 @@ valueType net.sourceforge.fenixedu.domain.research.project.ProjectParticipation.
 valueType net.sourceforge.fenixedu.domain.research.project.ProjectEventAssociation.ProjectEventAssociationRole			as ProjectEventAssociationRole;
 valueType net.sourceforge.fenixedu.domain.research.result.PatentType							as PatentType;
 valueType net.sourceforge.fenixedu.domain.research.result.PatentStatus							as PatentStatus;
-valueType net.sourceforge.fenixedu.domain.research.result.FormatType							as FormatType;
-valueType net.sourceforge.fenixedu.domain.research.result.ProductType							as ProductType;
+valueType net.sourceforge.fenixedu.domain.research.result.publication.PublicationType			as ResultPublicationType;
+valueType net.sourceforge.fenixedu.domain.research.result.publication.BookRole					as BookRole;
+valueType net.sourceforge.fenixedu.domain.research.result.publication.ThesisType				as ThesisType;
+valueType net.sourceforge.fenixedu.domain.research.result.ScopeType								as ScopeType;
 valueType net.sourceforge.fenixedu.domain.FileItemPermittedGroupType							as FileItemPermittedGroupType;
 valueType net.sourceforge.fenixedu.util.HourMinuteSecond										as HourMinuteSecond;
 valueType net.sourceforge.fenixedu.domain.research.event.EventParticipation.EventParticipationRole					as EventParticipationRole;
@@ -2852,38 +2854,29 @@ class net.sourceforge.fenixedu.domain.teacher.WeeklyOcupation extends net.source
     Integer support;
 }
 
-class net.sourceforge.fenixedu.domain.research.result.PublicationType extends net.sourceforge.fenixedu.domain.DomainObject {
+class net.sourceforge.fenixedu.domain.publication.PublicationType extends net.sourceforge.fenixedu.domain.DomainObject {
 	String publicationType;
 }
 
-
-class net.sourceforge.fenixedu.domain.research.result.PublicationTeacher extends net.sourceforge.fenixedu.domain.DomainObject {
+class net.sourceforge.fenixedu.domain.publication.PublicationTeacher extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer keyTeacher;
 	Integer keyPublication;
     PublicationArea publicationArea;
 }
 
-
-class net.sourceforge.fenixedu.domain.research.result.Authorship extends net.sourceforge.fenixedu.domain.DomainObject {
+class net.sourceforge.fenixedu.domain.publication.Authorship extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer keyAuthor;
-	Integer keyResult;
+	Integer keyPublication;
 	Integer authorOrder;
 }
 
-class net.sourceforge.fenixedu.domain.research.result.Result extends net.sourceforge.fenixedu.domain.DomainObject {
-	MultiLanguageString title;
-	String titleOld;
-	MultiLanguageString description;
-	String descriptionOld;
+class net.sourceforge.fenixedu.domain.publication.Publication extends net.sourceforge.fenixedu.domain.DomainObject {
+	String title;
+	String observation;
 	String url;
-    String ojbConcreteClass;
-}
-
-	class net.sourceforge.fenixedu.domain.research.result.Publication extends net.sourceforge.fenixedu.domain.research.result.Result {
 	Integer issn;
 	String volume;
 	String subType;
-	String editorCity;
 	String criticizedAuthor;
 	String instituition;
 	String translatedAuthor;
@@ -2906,30 +2899,13 @@ class net.sourceforge.fenixedu.domain.research.result.Result extends net.sourcef
 	String journalName;
 	String language;
 	Integer numberPages;
-	String editor;
 	String country;
 	Integer year;
 	String format;
 	Integer keyType;
+	String editor;
+	String editorCity;
 }
-
-	class net.sourceforge.fenixedu.domain.research.result.Product extends net.sourceforge.fenixedu.domain.research.result.Result {
-		String productInternalId;
-		ProductType productType;
-	}
-	
-	class net.sourceforge.fenixedu.domain.research.result.Patent extends net.sourceforge.fenixedu.domain.research.result.Result {
-		String patentNumber;
-		PatentType patentType;
-		PatentStatus status;
-		Partial registrationDate;
-		Partial approvalDate;
-		Integer keyCountry;
-		String language;
-		FormatType formatType;
-		Integer numberPages;
-		String local;
-	}
 
 
 class net.sourceforge.fenixedu.domain.teacher.PublicationsNumber extends net.sourceforge.fenixedu.domain.DomainObject {
@@ -2940,20 +2916,20 @@ class net.sourceforge.fenixedu.domain.teacher.PublicationsNumber extends net.sou
     PublicationType publicationType;
 }
 
-class net.sourceforge.fenixedu.domain.research.result.PublicationFormat extends net.sourceforge.fenixedu.domain.DomainObject {
+class net.sourceforge.fenixedu.domain.publication.PublicationFormat extends net.sourceforge.fenixedu.domain.DomainObject {
 	String format;
 }
 
-class net.sourceforge.fenixedu.domain.research.result.Attribute extends net.sourceforge.fenixedu.domain.DomainObject {
+class net.sourceforge.fenixedu.domain.publication.Attribute extends net.sourceforge.fenixedu.domain.DomainObject {
 	String attributeType;
 }
 
-class net.sourceforge.fenixedu.domain.research.result.PublicationSubtype extends net.sourceforge.fenixedu.domain.DomainObject {
+class net.sourceforge.fenixedu.domain.publication.PublicationSubtype extends net.sourceforge.fenixedu.domain.DomainObject {
 	String subtype;
 	Integer keyPublicationType;
 }	
 
-class net.sourceforge.fenixedu.domain.research.result.PublicationTypeAttribute extends net.sourceforge.fenixedu.domain.DomainObject {
+class net.sourceforge.fenixedu.domain.publication.PublicationTypeAttribute extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer keyPublicationType;
     Integer keyAttribute;
     Boolean required;
@@ -3240,7 +3216,36 @@ class net.sourceforge.fenixedu.domain.assiduousness.Card extends net.sourceforge
 }
 
 
+class net.sourceforge.fenixedu.domain.research.result.Result extends net.sourceforge.fenixedu.domain.DomainObject {
+	String title;
+	String note;
+	String url;
+    String ojbConcreteClass;
+    
+	DateTime lastModificationDate;
+	String modifyedBy;
+}
 
+	class net.sourceforge.fenixedu.domain.research.result.ResultPublication extends net.sourceforge.fenixedu.domain.research.result.Result {
+		Integer year;
+
+	}
+
+	class net.sourceforge.fenixedu.domain.research.result.ResultPatent extends net.sourceforge.fenixedu.domain.research.result.Result {
+		String patentNumber;
+		PatentType patentType;
+		PatentStatus patentStatus;
+		Partial registrationDate;
+		Partial approvalDate;
+		Integer keyCountry;
+		String local;
+	}
+
+class net.sourceforge.fenixedu.domain.research.result.ResultParticipation extends net.sourceforge.fenixedu.domain.DomainObject {
+	Integer keyPerson;
+	Integer keyResult;
+	Integer personOrder;
+}
 
 class net.sourceforge.fenixedu.domain.research.project.Project extends net.sourceforge.fenixedu.domain.DomainObject{
 	Integer number;
@@ -6131,65 +6136,65 @@ relation WrittenEvaluationRoomOccupation {
 }
 
 relation PublicationTeacherPublication {
-	net.sourceforge.fenixedu.domain.research.result.PublicationTeacher playsRole publicationTeachers {
+	net.sourceforge.fenixedu.domain.publication.PublicationTeacher playsRole publicationTeachers {
 		multiplicity *;
 	}
-	net.sourceforge.fenixedu.domain.research.result.Publication playsRole publication;
+	net.sourceforge.fenixedu.domain.publication.Publication playsRole publication;
 }
 
 relation PublicationTeacherTeacher {
-	net.sourceforge.fenixedu.domain.research.result.PublicationTeacher playsRole teacherPublications {
+	net.sourceforge.fenixedu.domain.publication.PublicationTeacher playsRole teacherPublications {
 		multiplicity *;
 	}
 	net.sourceforge.fenixedu.domain.Teacher playsRole teacher;
 }
 
 relation AuthorshipPerson {
-	net.sourceforge.fenixedu.domain.research.result.Authorship playsRole personAuthorships {
+	net.sourceforge.fenixedu.domain.publication.Authorship playsRole personAuthorships {
 		multiplicity *;
 	}
 	net.sourceforge.fenixedu.domain.Person playsRole author;
 }
 
-relation ResultAuthorship {
-	net.sourceforge.fenixedu.domain.research.result.Authorship playsRole resultAuthorships {
+relation PublicationAuthorship {
+	net.sourceforge.fenixedu.domain.publication.Authorship playsRole publicationAuthorships {
 		multiplicity *;
 	}
-	net.sourceforge.fenixedu.domain.research.result.Result playsRole result;
+	net.sourceforge.fenixedu.domain.publication.Publication playsRole publication;
 }
 
 relation PatentCountry {
 	net.sourceforge.fenixedu.domain.Country playsRole country;
-	net.sourceforge.fenixedu.domain.research.result.Patent playsRole patents{
+	net.sourceforge.fenixedu.domain.research.result.ResultPatent playsRole patents{
 		multiplicity *;
 	}
 }
 
 relation AttributePublicationTypeAttribute {
-	net.sourceforge.fenixedu.domain.research.result.PublicationTypeAttribute playsRole publicationTypeAttributes {
+	net.sourceforge.fenixedu.domain.publication.PublicationTypeAttribute playsRole publicationTypeAttributes {
 		multiplicity *;
 	}
-	net.sourceforge.fenixedu.domain.research.result.Attribute playsRole attribute;
+	net.sourceforge.fenixedu.domain.publication.Attribute playsRole attribute;
 }
 
 relation PublicationTypePublicationTypeAttribute {
-	net.sourceforge.fenixedu.domain.research.result.PublicationTypeAttribute playsRole publicationTypeAttributes {
+	net.sourceforge.fenixedu.domain.publication.PublicationTypeAttribute playsRole publicationTypeAttributes {
 		multiplicity *;
 	}
-	net.sourceforge.fenixedu.domain.research.result.PublicationType playsRole publicationType;
+	net.sourceforge.fenixedu.domain.publication.PublicationType playsRole publicationType;
 }
 
 relation PublicationTypePublication {
-	net.sourceforge.fenixedu.domain.research.result.PublicationType playsRole type;
-	net.sourceforge.fenixedu.domain.research.result.Publication playsRole publications {
+	net.sourceforge.fenixedu.domain.publication.PublicationType playsRole type;
+	net.sourceforge.fenixedu.domain.publication.Publication playsRole publications {
 		multiplicity *;
 	}
 	
 }
 
 relation PublicationTypePublicationSubtype {
-	net.sourceforge.fenixedu.domain.research.result.PublicationType playsRole publicationType;
-	net.sourceforge.fenixedu.domain.research.result.PublicationSubtype playsRole subtypes {
+	net.sourceforge.fenixedu.domain.publication.PublicationType playsRole publicationType;
+	net.sourceforge.fenixedu.domain.publication.PublicationSubtype playsRole subtypes {
 		multiplicity *;
 	}
 }
@@ -6698,6 +6703,20 @@ relation AccountabilityChildParty {
 	}	 
 }
 
+relation ResultParticipationPerson {
+	net.sourceforge.fenixedu.domain.Person playsRole person;
+	net.sourceforge.fenixedu.domain.research.result.ResultParticipation playsRole resultParticipations {
+		multiplicity *;
+	}
+}
+
+relation ResultParticipationResult {
+	net.sourceforge.fenixedu.domain.research.result.Result playsRole result;
+	net.sourceforge.fenixedu.domain.research.result.ResultParticipation playsRole resultParticipations {
+		multiplicity *;
+	}
+}
+
 relation ProjectParticipationProject {
 	net.sourceforge.fenixedu.domain.research.project.Project playsRole project;
 	net.sourceforge.fenixedu.domain.research.project.ProjectParticipation playsRole projectParticipations {
@@ -6976,7 +6995,7 @@ relation RootDomainObjectSite {
 
 relation RootDomainObjectAttribute {
 	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
-	net.sourceforge.fenixedu.domain.research.result.Attribute playsRole attributes {
+	net.sourceforge.fenixedu.domain.publication.Attribute playsRole attributes {
 		multiplicity *;
 	}
 }
@@ -7179,7 +7198,7 @@ relation RootDomainObjectDislocatedStudent {
 
 relation RootDomainObjectPublicationType {
 	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
-	net.sourceforge.fenixedu.domain.research.result.PublicationType playsRole publicationTypes {
+	net.sourceforge.fenixedu.domain.publication.PublicationType playsRole publicationTypes {
 		multiplicity *;
 	}
 }
@@ -7215,13 +7234,6 @@ relation RootDomainObjectQuestion {
 relation RootDomainObjectPersonalGroup {
 	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
 	net.sourceforge.fenixedu.domain.PersonalGroup playsRole personalGroups {
-		multiplicity *;
-	}
-}
-
-relation RootDomainObjectResult {
-	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
-	net.sourceforge.fenixedu.domain.research.result.Result playsRole results {
 		multiplicity *;
 	}
 }
@@ -7340,7 +7352,7 @@ relation RootDomainObjectAssiduousnessRegime {
 
 relation RootDomainObjectPublicationTeacher {
 	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
-	net.sourceforge.fenixedu.domain.research.result.PublicationTeacher playsRole publicationTeachers {
+	net.sourceforge.fenixedu.domain.publication.PublicationTeacher playsRole publicationTeachers {
 		multiplicity *;
 	}
 }
@@ -7431,7 +7443,7 @@ relation RootDomainObjectMoneyCostCenter {
 
 relation RootDomainObjectPublicationTypeAttribute {
 	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
-	net.sourceforge.fenixedu.domain.research.result.PublicationTypeAttribute playsRole publicationTypeAttributes {
+	net.sourceforge.fenixedu.domain.publication.PublicationTypeAttribute playsRole publicationTypeAttributes {
 		multiplicity *;
 	}
 }
@@ -7557,7 +7569,7 @@ relation RootDomainObjectCountry {
 
 relation RootDomainObjectPublicationFormat {
 	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
-	net.sourceforge.fenixedu.domain.research.result.PublicationFormat playsRole publicationFormats {
+	net.sourceforge.fenixedu.domain.publication.PublicationFormat playsRole publicationFormats {
 		multiplicity *;
 	}
 }
@@ -7639,9 +7651,16 @@ relation RootDomainObjectCompetenceCourse {
 	}
 }
 
+relation RootDomainObjectPublication {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.publication.Publication playsRole publications {
+		multiplicity *;
+	}
+}
+
 relation RootDomainObjectAuthorship {
 	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
-	net.sourceforge.fenixedu.domain.research.result.Authorship playsRole authorships {
+	net.sourceforge.fenixedu.domain.publication.Authorship playsRole authorships {
 		multiplicity *;
 	}
 }
@@ -8017,6 +8036,20 @@ relation RootDomainObjectDistributedTest {
 	}
 }
 
+relation RootDomainObjectResult {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.research.result.Result playsRole results {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectResultParticipation {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.research.result.ResultParticipation playsRole resultParticipations {
+		multiplicity *;
+	}
+}
+
 relation RootDomainObjectProjectParticipation {
 	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
 	net.sourceforge.fenixedu.domain.research.project.ProjectParticipation playsRole projectParticipations {
@@ -8110,7 +8143,7 @@ relation RootDomainObjectDegreeModule {
 
 relation RootDomainObjectPublicationSubtype {
 	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
-	net.sourceforge.fenixedu.domain.research.result.PublicationSubtype playsRole publicationSubtypes {
+	net.sourceforge.fenixedu.domain.publication.PublicationSubtype playsRole publicationSubtypes {
 		multiplicity *;
 	}
 }

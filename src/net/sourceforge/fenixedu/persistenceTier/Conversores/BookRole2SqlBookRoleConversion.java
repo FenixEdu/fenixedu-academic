@@ -1,16 +1,16 @@
 package net.sourceforge.fenixedu.persistenceTier.Conversores;
 
-import net.sourceforge.fenixedu.domain.research.result.ProductType;
+import net.sourceforge.fenixedu.domain.research.result.publication.BookRole;
 
 import org.apache.ojb.broker.accesslayer.conversions.ConversionException;
 import org.apache.ojb.broker.accesslayer.conversions.FieldConversion;
 
-public class ProductType2SqlProductTypeConversion implements FieldConversion {
+public class BookRole2SqlBookRoleConversion implements FieldConversion {
 
     public Object javaToSql(Object source) throws ConversionException {
 
-        if (source instanceof ProductType) {
-        	ProductType s = (ProductType) source;
+        if (source instanceof BookRole) {
+            BookRole s = (BookRole) source;
             return s.name();
         }
         return source;
@@ -22,7 +22,7 @@ public class ProductType2SqlProductTypeConversion implements FieldConversion {
           }            
           else if (source instanceof String) {            
             String src = (String) source;            
-            return ProductType.valueOf(src);
+            return BookRole.valueOf(src);
         }
         return source;
     }

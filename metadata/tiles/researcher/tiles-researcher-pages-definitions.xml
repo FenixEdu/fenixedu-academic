@@ -92,8 +92,28 @@
         <put name="body" value="/researcher/result/patents/patentDetails.jsp"></put>
     </definition>
     
-    <definition name="result.authorship" 
+    <definition name="result.participation" 
         extends="researcher.masterPage">
-        <put name="body" value="/researcher/result/editResultAuthorships.jsp"></put>
+        <put name="body" value="/researcher/result/editResultParticipations.jsp"></put>
+    </definition>
+
+
+    <definition name="publications.publicationsManagement" extends="researcher.masterPage">
+        <put name="body" value="/researcher/result/publications/publicationsManagement.jsp"></put>
+    </definition>
+    <definition name="publications.createPublication" extends="researcher.masterPage">
+        <put name="body" value="/researcher/result/publications/createPublication.jsp"></put>
+    </definition>
+    <definition name="publications.editPublicationData" extends="researcher.masterPage">
+        <put name="body" value="/researcher/result/publications/editPublicationData.jsp"></put>
+    </definition>
+    <definition name="publications.viewPublication" extends="researcher.masterPage">
+        <put name="body" value="/researcher/result/publications/viewPublication.jsp"></put>
+    </definition>
+    <definition name="publications.viewEditPublication" extends="researcher.masterPage">
+        <put name="body" value="/researcher/result/publications/viewEditPublication.jsp"></put>
+    </definition>
+    <definition name="publications.deletePublication" extends="researcher.masterPage">
+        <put name="body" value="/researcher/result/publications/deletePublication.jsp"></put>
     </definition>
 </tiles-definitions>

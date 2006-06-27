@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.research.result.Authorship;
-import net.sourceforge.fenixedu.domain.research.result.Publication;
-import net.sourceforge.fenixedu.domain.research.result.PublicationTeacher;
+import net.sourceforge.fenixedu.domain.publication.Authorship;
+import net.sourceforge.fenixedu.domain.publication.Publication;
+import net.sourceforge.fenixedu.domain.publication.PublicationTeacher;
 import net.sourceforge.fenixedu.util.PublicationArea;
 
 public class PublicationTeacherTest extends DomainTestBase {
@@ -60,7 +60,7 @@ public class PublicationTeacherTest extends DomainTestBase {
             assertEquals("PublicationTeacher's Area Unexpected", PublicationArea.DIDATIC, publicationTeacher.getPublicationArea());
             
             assertEquals("PublicationTeachers size unexpected", 2, publication.getPublicationTeachersCount());
-            assertEquals("Authorships size unexpected", 1, publication.getResultAuthorshipsCount());
+            assertEquals("Authorships size unexpected", 1, publication.getPublicationAuthorshipsCount());
         } catch (DomainException domainException) {
             fail("The teacher should be allowed to associate himself with the publication");
         }

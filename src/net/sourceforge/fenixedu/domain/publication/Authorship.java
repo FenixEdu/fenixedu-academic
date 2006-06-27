@@ -1,8 +1,9 @@
-package net.sourceforge.fenixedu.domain.research.result;
+package net.sourceforge.fenixedu.domain.publication;
 
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.research.result.Result;
 
 public class Authorship extends Authorship_Base {
     
@@ -16,20 +17,20 @@ public class Authorship extends Authorship_Base {
      ********************************************************************/
 
     
-    public Authorship(Result result, Person person, Integer order) throws DomainException {
+    public Authorship(Publication publication, Person person, Integer order) throws DomainException {
     	//Check to see if the publication allready has an authorship with that order
-    	for (Authorship authorship : result.getResultAuthorships()) {
+    	for (Authorship authorship : publication.getPublicationAuthorships()) {
     		if (authorship.getOrder() == order) 
-    			throw new DomainException("errors.publications.authorshipWithIncorrectOrder", result.getTitle().getContent(), order.toString());
+    			throw new DomainException("errors.publications.authorshipWithIncorrectOrder", publication.getTitle(), order.toString());
 		}
-        setResult(result);
+        setPublication(publication);
         setAuthor(person);
         setOrder(order);
     }
 
     public void delete() {
     	removeAuthor();
-        removeResult();
+        removePublication();
         removeRootDomainObject();
         deleteDomainObject();
     }

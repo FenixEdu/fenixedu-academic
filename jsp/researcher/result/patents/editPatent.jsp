@@ -16,14 +16,14 @@
 	<em><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.result.superUseCaseTitle"/></em>
 	<h2><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.result.patent.editPatentUseCase.title"/></h2>
 
-	<%-- Authorships --%>
-	<h3><bean:message bundle="RESEARCHER_RESOURCES" key="label.resultAuthorships"/></h3>	
-	<fr:view name="patent" property="resultAuthorships" schema="result.authorships" layout="tabular">
-		<fr:layout><fr:property name="sortBy" value="authorOrder"/></fr:layout>
+	<%-- Participations --%>
+	<h3><bean:message bundle="RESEARCHER_RESOURCES" key="label.resultParticipations"/></h3>	
+	<fr:view name="patent" property="resultParticipations" schema="result.participations" layout="tabular">
+		<fr:layout><fr:property name="sortBy" value="personOrder"/></fr:layout>
 	</fr:view>
 	
-	<html:link page="<%="/result/resultAuthorshipManagement.do?method=prepareEditAuthorship&resultId=" + patentId %>">
-		<bean:message bundle="RESEARCHER_RESOURCES" key="researcher.result.editResult.editAuthorships" />
+	<html:link page="<%="/result/resultParticipationManagement.do?method=prepareEditParticipation&resultId=" + patentId %>">
+		<bean:message bundle="RESEARCHER_RESOURCES" key="researcher.result.editResult.editParticipations" />
 	</html:link>
 	<br/>	
  	<br/>

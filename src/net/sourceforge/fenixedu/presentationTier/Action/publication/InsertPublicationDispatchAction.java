@@ -129,6 +129,8 @@ public class InsertPublicationDispatchAction extends FenixDispatchAction {
         publication.setInfoPublicationType(type);
         publication.setPublicationType(type.getPublicationType());
         publication.setKeyPublicationType(keyPublicationType);
+        if(type.getPublicationType().equalsIgnoreCase("other"))
+            publication.setPublicationType((String)dynaForm.get("publicationType"));
 
         if (attributes.get("subtype") != null)
             publication.setSubType((String) dynaForm.get("subtype"));

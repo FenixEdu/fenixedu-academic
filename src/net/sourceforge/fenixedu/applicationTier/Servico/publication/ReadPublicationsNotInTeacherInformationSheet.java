@@ -9,9 +9,9 @@ import net.sourceforge.fenixedu.dataTransferObject.SiteView;
 import net.sourceforge.fenixedu.dataTransferObject.publication.InfoPublication;
 import net.sourceforge.fenixedu.dataTransferObject.publication.InfoSitePublications;
 import net.sourceforge.fenixedu.domain.Teacher;
-import net.sourceforge.fenixedu.domain.research.result.Authorship;
-import net.sourceforge.fenixedu.domain.research.result.Publication;
-import net.sourceforge.fenixedu.domain.research.result.PublicationTeacher;
+import net.sourceforge.fenixedu.domain.publication.Authorship;
+import net.sourceforge.fenixedu.domain.publication.Publication;
+import net.sourceforge.fenixedu.domain.publication.PublicationTeacher;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 
@@ -28,8 +28,8 @@ public class ReadPublicationsNotInTeacherInformationSheet extends Service {
         }
         
         List<InfoPublication> infoPublications = new ArrayList<InfoPublication>();
-        for(Authorship authorship : teacher.getPerson().getPersonAuthorshipsWithPublications()) {
-            Publication publication = (Publication)authorship.getResult();
+        for(Authorship authorship : teacher.getPerson().getPersonAuthorships()) {
+            Publication publication = (Publication)authorship.getPublication();
             if (!publicationsInTeacherSheet.contains(publication)) {
                 infoPublications.add(InfoPublication.newInfoFromDomain(publication));
             }

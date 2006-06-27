@@ -1,4 +1,4 @@
-package net.sourceforge.fenixedu.domain.research.result;
+package net.sourceforge.fenixedu.domain.publication;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -6,10 +6,9 @@ import java.util.Iterator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.publication.PublicationDTO;
-import net.sourceforge.fenixedu.domain.Language;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.util.MultiLanguageString;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.CollectionUtils;
@@ -18,11 +17,12 @@ import org.apache.commons.collections.Transformer;
 public class Publication extends Publication_Base {
 
     static {
-    	ResultAuthorship.addListener(new PublicationAuthorshipListener());
+    	PublicationAuthorship.addListener(new PublicationAuthorshipListener());
     }
 
     public Publication() {
-    	super();
+        super();
+        setRootDomainObject(RootDomainObject.getInstance());
     } 
     
 
@@ -30,8 +30,9 @@ public class Publication extends Publication_Base {
      *                        BUSINESS SERVICES                         *
      ********************************************************************/
     
-    public Publication (PublicationDTO publicationDTO, PublicationType publicationType, List<Person> authors) {
+    public Publication (PublicationDTO publicationDTO, net.sourceforge.fenixedu.domain.publication.PublicationType publicationType, List<Person> authors) {
     	this();
+        setRootDomainObject(RootDomainObject.getInstance());
         if( authors == null || authors.size() == 0)
             throw new DomainException("error.publication.createPublicationWithoutAuthors");
         setProperties(publicationDTO);
@@ -41,7 +42,7 @@ public class Publication extends Publication_Base {
         setAuthorships(authors);
     }
     
-    public void edit(PublicationDTO publicationDTO, PublicationType publicationType, List<Person> authors) {
+    public void edit(PublicationDTO publicationDTO, net.sourceforge.fenixedu.domain.publication.PublicationType publicationType, List<Person> authors) {
         if( authors == null || authors.size() == 0)
             throw new DomainException("error.publication.editPublicationWithoutAuthors");
 
@@ -51,7 +52,7 @@ public class Publication extends Publication_Base {
         
         //removeAuthorships();
         
-        setAuthorships(authors);
+       setAuthorships(authors);
     }
     
     public void delete()
@@ -64,76 +65,55 @@ public class Publication extends Publication_Base {
             publicationTeacher.delete();
         }
         
-        for (Iterator<Authorship> iterator = getResultAuthorshipsIterator(); iterator.hasNext(); ) {
+        for (Iterator<Authorship> iterator = getPublicationAuthorshipsIterator(); iterator.hasNext(); ) {
             Authorship authorship = iterator.next();
             iterator.remove();
             authorship.delete();
         }
-        
-        removeRootDomainObject();
         super.deleteDomainObject();
     }
     
-    /*Methods to keep the old interface working with MultiLanguage*/
-    public void setObservation(String observation)
-    {
-    	if (observation == null || observation.length() == 0)
-    	{
-    		setDescription(null);
-    		return;
-    	}
-    	MultiLanguageString description = getDescription();
-    	if (description == null)
-    	{
-    		description = new MultiLanguageString();
-    	   	description.setContent(Language.pt, observation);
-    	   	setDescription(description);
-    	}
-    	else
-    	{
-    		description.setContent(Language.pt, observation);
-    	}
+    public void setAuthorship(Person author){
+        Authorship authorship = new Authorship();
+        
+        authorship.setAuthor(author);
+        authorship.setPublication(this);
+        int order = this.getPublicationAuthorshipsCount();
+        
+        authorship.setAuthorOrder(new Integer(order));
     }
-    public String getObservation()
-    {
-    	MultiLanguageString description = getDescription();
-    	if (description == null)
-    		return "";
-    	else
-    		return description.getContent(Language.pt);
-     }
+ 
+    public void setAuthorships(List<Person> authors) {
+        removeAuthorships();
+        for (Person person : authors) {
+            final Authorship authorship = new Authorship();
+            
+            authorship.setAuthor(person);
+            authorship.setPublication(this);
+            authorship.setAuthorOrder(new Integer(authors.indexOf(person)));
+        }
+    }
+    
+    public List<Person> getAuthorships(){
+        List<Person> authorsList = new ArrayList<Person>();
+        
+        for (Authorship author : getPublicationAuthorships()) {
+            authorsList.add(author.getAuthor());
+        }
+        return authorsList;
+    }
+    
+    public void removeAuthorships() {
+        for (Iterator<Authorship> iterator = getPublicationAuthorshipsIterator(); iterator.hasNext(); ) {
+            Authorship authorship = iterator.next();
+            iterator.remove();
+            //((Authorship) rootDomainObject.readAuthorshipByOID(authorship.getIdInternal())).delete();
+            authorship.delete();
+        }
+    }
+    
+     
 
-    public void setTitlePt(String titlePt)
-    {
-    	if (titlePt == null || titlePt.length() == 0)
-    	{
-    		setTitle(null);
-    		return;
-    	}
-    	MultiLanguageString title = this.getTitle();
-    	if (title == null)
-    	{
-    		title = new MultiLanguageString();
-    		title.setContent(Language.pt, titlePt);
-      		setTitle(title);
-    	}
-    	else
-    	{
-    		title.setContent(Language.pt, titlePt);
-    	}
-    }
-    public String getTitlePt()
-    {
-    	MultiLanguageString title = getTitle();
-    	if (title == null)
-    	{
-    		return "";
-    	}
-    	else
-    	{
-    		return title.getContent(Language.pt);
-    	}
-    }
 
     
     /********************************************************************
@@ -163,12 +143,12 @@ public class Publication extends Publication_Base {
         setNumber(publicationDTO.getNumber());
         setNumberPages(publicationDTO.getNumberPages());
         setObservation(publicationDTO.getObservation());
-        setOriginalLanguage(publicationDTO.getOriginalLanguage());        
+        setOriginalLanguage(publicationDTO.getOriginalLanguage());
         setPublicationType(publicationDTO.getPublicationType());
         setScope(publicationDTO.getScope());
         setSerie(publicationDTO.getSerie());
         setSubType(publicationDTO.getSubType());
-        setTitlePt(publicationDTO.getTitle());
+        setTitle(publicationDTO.getTitle());
         setTranslatedAuthor(publicationDTO.getTranslatedAuthor());
         setUniversity(publicationDTO.getUniversity());
         setUrl(publicationDTO.getUrl());
@@ -195,7 +175,7 @@ public class Publication extends Publication_Base {
         String publication;
         publication = "";
 
-        publication += getTitlePt();
+        publication += getTitle();
 
         String str = "";
         if (getType()!=null && getType().getPublicationType()!=null && getType().getPublicationType().equalsIgnoreCase("translation"))
@@ -209,7 +189,7 @@ public class Publication extends Publication_Base {
 
         publication += " - ";
 
-        List publicationAuthorships = new ArrayList(this.getResultAuthorships());
+        List publicationAuthorships = new ArrayList(this.getPublicationAuthorships());
         Collections.sort(publicationAuthorships, new BeanComparator("order"));
         
         List authors = (List) CollectionUtils.collect(publicationAuthorships, new Transformer() {
@@ -346,7 +326,7 @@ public class Publication extends Publication_Base {
     }
 
 
-    private static class PublicationAuthorshipListener extends dml.runtime.RelationAdapter<Result,Authorship> {
+    private static class PublicationAuthorshipListener extends dml.runtime.RelationAdapter<Publication,Authorship> {
         
 	/*
 	 * This method is responsible for, after removing an authorship from a publication, having all 
@@ -356,10 +336,10 @@ public class Publication extends Publication_Base {
 	 * @see relations.PublicationAuthorship_Base#remove(net.sourceforge.fenixedu.domain.research.result.Authorship, net.sourceforge.fenixedu.domain.research.result.Publication)
 	 */
         @Override
-        public void afterRemove(Result publication, Authorship removedAuthorship) {
+        public void afterRemove(Publication publication, Authorship removedAuthorship) {
             if ((removedAuthorship != null) && (publication != null)) {
                 int removedOrder = removedAuthorship.getOrder();
-                for(Authorship authorship : publication.getResultAuthorships()) {
+                for(Authorship authorship : publication.getPublicationAuthorships()) {
                     if (authorship.getOrder() > removedOrder) {
                         authorship.setOrder(authorship.getOrder()-1);
                     }

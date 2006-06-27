@@ -18,7 +18,7 @@
 	
 	<bean:define id="patentId" name="patent" property="idInternal"/>
 		
-	<fr:edit 	id="editPatent" name="patent" type="net.sourceforge.fenixedu.domain.research.result.Patent" 
+	<fr:edit 	id="editPatent" name="patent" type="net.sourceforge.fenixedu.domain.research.result.ResultPatent" 
 				schema="patent.create"
 				action="<%="/result/patents/patentsManagement.do?method=prepareEditPatent&patentId=" + patentId %>">
 	    <fr:layout name="tabular">

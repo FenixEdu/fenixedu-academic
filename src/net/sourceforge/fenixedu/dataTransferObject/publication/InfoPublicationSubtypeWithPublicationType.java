@@ -1,7 +1,7 @@
 
 package net.sourceforge.fenixedu.dataTransferObject.publication;
 
-import net.sourceforge.fenixedu.domain.research.result.PublicationSubtype;
+import net.sourceforge.fenixedu.domain.publication.PublicationSubtype;
 
 public class InfoPublicationSubtypeWithPublicationType extends InfoPublicationSubtype {
 

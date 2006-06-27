@@ -9,7 +9,7 @@ package net.sourceforge.fenixedu.presentationTier.Action.publication;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.domain.research.result.Publication;
+import net.sourceforge.fenixedu.domain.publication.Publication;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
 import org.apache.struts.action.ActionForm;
@@ -35,7 +35,7 @@ public class DeletePublicationAction extends FenixDispatchAction {
 
     protected Publication getPublication(final HttpServletRequest request) {
 	final Integer publicationID = Integer.valueOf(request.getParameter("idInternal"));
-	return (Publication) rootDomainObject.readResultByOID(publicationID);
+	return (Publication) rootDomainObject.readPublicationByOID(publicationID);
     }
 
     public ActionForward cancel(ActionMapping mapping, ActionForm actionForm,

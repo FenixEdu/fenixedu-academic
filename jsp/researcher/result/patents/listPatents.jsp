@@ -21,13 +21,13 @@
 	<br/>
 	
 	<b><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.result.patent.listPatentsUseCase.title"/></b>
-	<logic:empty name="UserView" property="person.personAuthorshipsWithPatents">
+	<logic:empty name="UserView" property="person.personParticipationsWithPatents">
 		<p><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.result.patent.listPatentsUseCase.emptyList"/></p>
 		<br/>
 	</logic:empty>
 	
-	<logic:notEmpty name="UserView" property="person.personAuthorshipsWithPatents">
-		<fr:view name="UserView" property="person.personAuthorshipsWithPatents" layout="tabular-list">
+	<logic:notEmpty name="UserView" property="person.personParticipationsWithPatents">
+		<fr:view name="UserView" property="person.personParticipationsWithPatents" layout="tabular-list">
 			<fr:layout>
 				<fr:property name="subLayout" value="values-comma"/>
 				<fr:property name="subSchema" value="result.patentShortList"/>

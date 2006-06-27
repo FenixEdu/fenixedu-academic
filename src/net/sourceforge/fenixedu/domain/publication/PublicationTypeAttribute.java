@@ -2,7 +2,7 @@
  * Created on Apr 13, 2005
  *
  */
-package net.sourceforge.fenixedu.domain.research.result;
+package net.sourceforge.fenixedu.domain.publication;
 
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 

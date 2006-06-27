@@ -5,8 +5,8 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.framework.DomainObjectAut
 import net.sourceforge.fenixedu.dataTransferObject.publication.InfoPublication;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.domain.research.result.Authorship;
-import net.sourceforge.fenixedu.domain.research.result.Publication;
+import net.sourceforge.fenixedu.domain.publication.Authorship;
+import net.sourceforge.fenixedu.domain.publication.Publication;
 
 public class PublicationAuthorAuthorizationFilter extends DomainObjectAuthorizationFilter {
 
@@ -16,9 +16,9 @@ public class PublicationAuthorAuthorizationFilter extends DomainObjectAuthorizat
 
     protected boolean verifyCondition(IUserView id, Integer objectId) {
 
-        final Publication publication = (Publication) rootDomainObject.readResultByOID(objectId);
+        final Publication publication = (Publication) rootDomainObject.readPublicationByOID(objectId);
         final Person possibleAuthor = Person.readPersonByUsername(id.getUtilizador());
-        for (final Authorship authorship : publication.getResultAuthorships()) {
+        for (final Authorship authorship : publication.getPublicationAuthorships()) {
             if (authorship.getAuthor() == possibleAuthor) {
                 return true;
             }

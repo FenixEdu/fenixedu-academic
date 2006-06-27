@@ -10,6 +10,9 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.domain.research.ResearchInterest;
 import net.sourceforge.fenixedu.domain.research.project.Project;
 import net.sourceforge.fenixedu.domain.research.project.ProjectParticipation;
+import net.sourceforge.fenixedu.domain.research.result.ResultParticipation;
+import net.sourceforge.fenixedu.domain.research.result.ResultPatent;
+import net.sourceforge.fenixedu.domain.research.result.ResultPublication;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
 import org.apache.struts.action.ActionForm;
@@ -34,6 +37,16 @@ public class ViewCurriculumDispatchAction extends FenixDispatchAction {
         .getResearchInterests();
 
         request.setAttribute("researchInterests", researchInterests);
+        
+        List<ResultPublication> resultPublications = getUserView(request).getPerson().getResultPublications();
+        request.setAttribute("resultPublications", resultPublications);
+        
+        List<ResultPatent> resultPatents = new ArrayList<ResultPatent>();
+
+        for(ResultParticipation participation : userView.getPerson().getPersonParticipationsWithPatents()) {
+            resultPatents.add((ResultPatent)participation.getResult());
+        }
+        request.setAttribute("resultPatents", resultPatents);
         
         return mapping.findForward("Success");
     }

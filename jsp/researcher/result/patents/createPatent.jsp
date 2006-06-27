@@ -16,8 +16,8 @@
 
 	<h2><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.result.patent.createPatentUseCase.title"/></h2>
 
-	<h3><bean:message bundle="RESEARCHER_RESOURCES" key="label.resultAuthorships"/></h3>
-	<fr:view name="authorsList" layout="tabular-list">
+	<h3><bean:message bundle="RESEARCHER_RESOURCES" key="label.resultParticipations"/></h3>
+	<fr:view name="participationsList" layout="tabular-list">
 		<fr:layout>
 			<fr:property name="subLayout" value="values"/>
 			<fr:property name="subSchema" value="result.creator.name"/>
@@ -25,10 +25,10 @@
 	</fr:view>
 	
 	<h3><bean:message bundle="RESEARCHER_RESOURCES" key="label.data"/></h3>	
-	<fr:create 	id="createPatent" type="net.sourceforge.fenixedu.domain.research.result.Patent" 
+	<fr:create 	id="createPatent" type="net.sourceforge.fenixedu.domain.research.result.ResultPatent" 
 				schema="patent.create"
 				action="/result/patents/patentsManagement.do?method=listPatents">
-		<fr:hidden slot="authorships" multiple="true" name="authorsList"/>
+		<fr:hidden slot="participations" multiple="true" name="participationsList"/>
 	    <fr:layout name="tabular">
 	        <fr:property name="classes" value="style1"/>
 	        <fr:property name="columnClasses" value="listClasses,,"/>

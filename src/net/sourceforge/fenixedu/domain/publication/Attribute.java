@@ -1,4 +1,4 @@
-package net.sourceforge.fenixedu.domain.research.result;
+package net.sourceforge.fenixedu.domain.publication;
 
 import java.util.ArrayList;
 import java.util.List;

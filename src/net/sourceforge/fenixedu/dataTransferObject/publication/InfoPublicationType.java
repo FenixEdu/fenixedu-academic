@@ -3,7 +3,7 @@ package net.sourceforge.fenixedu.dataTransferObject.publication;
 import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
-import net.sourceforge.fenixedu.domain.research.result.PublicationType;
+import net.sourceforge.fenixedu.domain.publication.PublicationType;
 
 public class InfoPublicationType extends InfoObject {
 

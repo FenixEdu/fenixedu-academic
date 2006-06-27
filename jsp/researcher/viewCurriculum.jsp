@@ -121,20 +121,20 @@
 		
 		<h3 id='publicationsTitle' class='cd_heading'/> <span> <bean:message bundle="RESEARCHER_RESOURCES" key="researcher.viewCurriculum.publicationsTitle"/> </span> </h3>
 		
-		<fr:view name="UserView" property="person.personAuthorships">
+		<fr:view name="resultPublications">
 			<fr:layout>
 				<fr:property name="eachLayout" value="values-comma"/>
-				<fr:property name="eachSchema" value="authorship.result"/>
+				<fr:property name="eachSchema" value="person.result"/>
 			</fr:layout>
 		</fr:view>
 		
 		<!-- Patents -->
 		<h3 id='patentsTitle' class='cd_heading'/> <span> <bean:message bundle="RESEARCHER_RESOURCES" key="researcher.viewCurriculum.patentsTitle"/> </span> </h3>
 		
-		<fr:view name="UserView" property="person.personAuthorshipsWithPatents">
+		<fr:view name="resultPatents">
 			<fr:layout>
 				<fr:property name="eachLayout" value="values-comma"/>
-				<fr:property name="eachSchema" value="authorship.result"/>
+				<fr:property name="eachSchema" value="person.result"/>
 			</fr:layout>
 		</fr:view>
 --%>		

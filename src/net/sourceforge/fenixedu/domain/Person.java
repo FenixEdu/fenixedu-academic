@@ -30,10 +30,10 @@ import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 import net.sourceforge.fenixedu.domain.person.MaritalStatus;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.projectsManagement.ProjectAccess;
-import net.sourceforge.fenixedu.domain.research.result.Authorship;
-import net.sourceforge.fenixedu.domain.research.result.Patent;
-import net.sourceforge.fenixedu.domain.research.result.Publication;
 import net.sourceforge.fenixedu.domain.research.result.Result;
+import net.sourceforge.fenixedu.domain.research.result.ResultParticipation;
+import net.sourceforge.fenixedu.domain.research.result.ResultPatent;
+import net.sourceforge.fenixedu.domain.research.result.ResultPublication;
 import net.sourceforge.fenixedu.domain.sms.SentSms;
 import net.sourceforge.fenixedu.domain.sms.SmsDeliveryType;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.StudentCurricularPlanState;
@@ -363,30 +363,61 @@ public class Person extends Person_Base {
         return this.getPais().getNationality();
     }
 
-    public List<Authorship> getPersonAuthorshipsWithPublications() {
-
-        List<Authorship> publicationAuthorships = new ArrayList<Authorship>();
-        for (Authorship authorship : getPersonAuthorships()) {
-            Result result = authorship.getResult();
-            // filter only publication authorships
-            if (result instanceof Publication) {
-                publicationAuthorships.add(authorship);
+    public List<ResultPublication> getResultPublications()
+    {
+        List<ResultPublication> resultPublications = new ArrayList<ResultPublication>();
+        Result result = null;
+        for (ResultParticipation resultParticipation : getResultParticipations()) {
+            result = resultParticipation.getResult();
+            // filter only publication participations
+            if (result instanceof ResultPublication) {
+                resultPublications.add((ResultPublication)result);
             }
         }
-        return publicationAuthorships;
+        
+        //comparator by year in descendent order
+        Comparator YearComparator = new Comparator()
+        {
+            public int compare(Object o1, Object o2) {
+                Integer publication1Year = ((ResultPublication) o1).getYear();
+                Integer publication2Year = ((ResultPublication) o2).getYear();
+                if (publication1Year == null) {
+                    return 1;
+                } else if (publication2Year == null) {
+                    return -1;
+                }
+                return (-1) * publication1Year.compareTo(publication2Year);
+            }
+        };
+        //order publications
+        Collections.sort(resultPublications, YearComparator);
+        return resultPublications;
+    }
+ 
+    public List<ResultParticipation> getPersonParticipationsWithPublications() {
+
+        List<ResultParticipation> publicationParticipations = new ArrayList<ResultParticipation>();
+        for (ResultParticipation resultParticipation : getResultParticipations()) {
+            Result result = resultParticipation.getResult();
+            // filter only publication authorships
+            if (result instanceof ResultPublication) {
+                publicationParticipations.add(resultParticipation);
+            }
+        }
+        return publicationParticipations;
     }
 
-    public List<Authorship> getPersonAuthorshipsWithPatents() {
+    public List<ResultParticipation> getPersonParticipationsWithPatents() {
 
-        List<Authorship> patentAuthorships = new ArrayList<Authorship>();
-        for (Authorship authorship : getPersonAuthorships()) {
-            Result result = authorship.getResult();
+        List<ResultParticipation> patentParticipations = new ArrayList<ResultParticipation>();
+        for (ResultParticipation resultParticipation : getResultParticipations()) {
+            Result result = resultParticipation.getResult();
             // filter only patent authorships
-            if (result instanceof Patent) {
-                patentAuthorships.add(authorship);
+            if (result instanceof ResultPatent) {
+                patentParticipations.add(resultParticipation);
             }
         }
-        return patentAuthorships;
+        return patentParticipations;
     }
 
     @Override

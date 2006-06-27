@@ -11,8 +11,8 @@ import net.sourceforge.fenixedu.dataTransferObject.publication.InfoPublication;
 import net.sourceforge.fenixedu.dataTransferObject.publication.InfoSitePublications;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Teacher;
-import net.sourceforge.fenixedu.domain.research.result.Authorship;
-import net.sourceforge.fenixedu.domain.research.result.Publication;
+import net.sourceforge.fenixedu.domain.publication.Authorship;
+import net.sourceforge.fenixedu.domain.publication.Publication;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class ReadAuthorshipsWithPublicationsByUsername extends Service {
@@ -26,8 +26,8 @@ public class ReadAuthorshipsWithPublicationsByUsername extends Service {
 		/*List<InfoPublication> infoPublications = new ArrayList<InfoPublication>(person
 				.getPersonAuthorshipsCount());*/
 
-		for (Authorship authorship : person.getPersonAuthorshipsWithPublications()) {
-			infoPublications.add(InfoPublication.newInfoFromDomain((Publication)authorship.getResult()));
+		for (Authorship authorship : person.getPersonAuthorships()) {
+			infoPublications.add(InfoPublication.newInfoFromDomain((Publication)authorship.getPublication()));
 		}
 
 		InfoSitePublications infoSitePublications = new InfoSitePublications();
