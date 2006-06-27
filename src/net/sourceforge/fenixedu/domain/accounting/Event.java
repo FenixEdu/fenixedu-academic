@@ -14,13 +14,13 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import org.joda.time.DateTime;
 
 public abstract class Event extends Event_Base {
-    
+
     protected Event() {
         super();
         setRootDomainObject(RootDomainObject.getInstance());
         setOjbConcreteClass(getClass().getName());
     }
-    
+
     protected void init(EventType eventType, DateTime whenOccured, Party party) {
         checkParameters(eventType, whenOccured, party);
         super.setEventType(eventType);
@@ -28,16 +28,17 @@ public abstract class Event extends Event_Base {
         super.setParty(party);
         super.setClosed(Boolean.FALSE);
     }
-    
+
     protected void initPayedEvent(Event payedEvent) {
         super.setPayedEvent(payedEvent);
     }
-    
+
     protected void initReimbursementEvent(Event reimbursementEvent) {
         super.setReimbursedEvent(reimbursementEvent);
     }
 
-    private void checkParameters(EventType eventType, DateTime whenOccured, Party party) throws DomainException {
+    private void checkParameters(EventType eventType, DateTime whenOccured, Party party)
+            throws DomainException {
         if (eventType == null) {
             throw new DomainException("error.accounting.event.invalid.eventType");
         }
@@ -48,40 +49,40 @@ public abstract class Event extends Event_Base {
             throw new DomainException("error.accounting.event.invalid.party");
         }
     }
-    
+
     // TODO: to remove after create agreement and posting rules
     protected Entry makeEntry(EntryType entryType, BigDecimal amount, Account account) {
         return new Entry(entryType, amount, account, this);
     }
-    
+
     // TODO: to remove after create agreement and posting rules
     protected void makeAccountingTransaction(Entry debit, Entry credit) {
         new AccountingTransaction(debit, credit);
     }
-    
+
     // TODO: to remove after create agreement and posting rules
-    protected void makeAccountingTransaction(Account from, Account to, EntryType entryType, BigDecimal amount) {
-        new AccountingTransaction(makeEntry(entryType, amount.negate(), from), makeEntry(entryType, amount, to));
+    protected void makeAccountingTransaction(Account from, Account to, EntryType entryType,
+            BigDecimal amount) {
+        new AccountingTransaction(makeEntry(entryType, amount.negate(), from), makeEntry(entryType,
+                amount, to));
     }
-    
+
     public boolean isClosed() {
-        return getClosed().booleanValue() || checkIfIsProcessed();
+        return getClosed().booleanValue();
     }
-    
+
     public final void process(List<EntryDTO> entryDTOs) {
-        if (! isClosed()) {
+        if (!isClosed()) {
             internalProcess(entryDTOs);
         }
     }
-    
+
     protected void closeEvent() {
         super.setClosed(Boolean.TRUE);
     }
-   
-    protected abstract boolean checkIfIsProcessed();
-    
+
     protected abstract void internalProcess(List<EntryDTO> entryDTOs);
-    
+
     public abstract List<EntryDTO> calculateEntries();
 
     @Override
@@ -123,17 +124,17 @@ public abstract class Event extends Event_Base {
     public void setWhenOccured(DateTime whenOccured) {
         throw new DomainException("error.accounting.event.cannot.modify.occuredDateTime");
     }
-    
+
     @Override
     public void setParty(Party party) {
         throw new DomainException("error.accounting.event.cannot.modify.party");
     }
-    
+
     @Override
     public void setPayedEvent(Event payedEvent) {
         throw new DomainException("error.accounting.event.cannot.modify.payedEvent");
     }
-    
+
     @Override
     public void setReimbursedEvent(Event reimbursedEvent) {
         throw new DomainException("error.accounting.event.cannot.modify.reimbursedEvent");
