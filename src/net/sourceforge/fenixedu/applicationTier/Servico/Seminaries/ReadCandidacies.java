@@ -27,7 +27,7 @@ import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.EnrolmentEvaluation;
 import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
-import net.sourceforge.fenixedu.domain.Seminaries.Candidacy;
+import net.sourceforge.fenixedu.domain.Seminaries.SeminaryCandidacy;
 import net.sourceforge.fenixedu.domain.Seminaries.CaseStudy;
 import net.sourceforge.fenixedu.domain.Seminaries.CaseStudyChoice;
 import net.sourceforge.fenixedu.domain.Seminaries.Modality;
@@ -67,10 +67,10 @@ public class ReadCandidacies extends Service {
         CaseStudy caseStudy4 = case4Id.intValue() == -1 ? null : rootDomainObject.readCaseStudyByOID(case4Id);
         CaseStudy caseStudy5 = case5Id.intValue() == -1 ? null : rootDomainObject.readCaseStudyByOID(case5Id);
         
-        List<Candidacy> filteredCandidacies = new ArrayList<Candidacy>();
+        List<SeminaryCandidacy> filteredCandidacies = new ArrayList<SeminaryCandidacy>();
         
         outter: 
-        for (Candidacy candidacy : Candidacy.getAllCandidacies()) {
+        for (SeminaryCandidacy candidacy : SeminaryCandidacy.getAllCandidacies()) {
             if (modality != null && !candidacy.getModality().equals(modality)) {
                 continue;
             }
@@ -120,7 +120,7 @@ public class ReadCandidacies extends Service {
         
         List infoCandidacies = new LinkedList();
         
-        for (Candidacy candidacy : filteredCandidacies) {
+        for (SeminaryCandidacy candidacy : filteredCandidacies) {
 			Student student = candidacy.getStudent();
 			StudentCurricularPlan studentCurricularPlan = student.getActiveStudentCurricularPlan();
 			List enrollments = studentCurricularPlan.getEnrolments();

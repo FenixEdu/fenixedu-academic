@@ -19,9 +19,9 @@ import net.sourceforge.fenixedu.domain.Student;
  * Created at Jul 23, 2003, 9:49:19 AM
  *  
  */
-public class Candidacy extends Candidacy_Base {
+public class SeminaryCandidacy extends SeminaryCandidacy_Base {
 
-	public Candidacy() {
+	public SeminaryCandidacy() {
 		super();
 		setRootDomainObject(RootDomainObject.getInstance());
 	}
@@ -41,10 +41,10 @@ public class Candidacy extends Candidacy_Base {
         deleteDomainObject();
     }
 
-    public static List<Candidacy> getByStudentAndSeminary(Student student, Seminary seminary) {
-        List<Candidacy> candidacies = new ArrayList<Candidacy>();
+    public static List<SeminaryCandidacy> getByStudentAndSeminary(Student student, Seminary seminary) {
+        List<SeminaryCandidacy> candidacies = new ArrayList<SeminaryCandidacy>();
         
-        for (Candidacy candidacy : RootDomainObject.getInstance().getCandidacys()) {
+        for (SeminaryCandidacy candidacy : RootDomainObject.getInstance().getCandidacys()) {
             if (! candidacy.getStudent().equals(student)) {
                 continue;
             }
@@ -59,7 +59,7 @@ public class Candidacy extends Candidacy_Base {
         return candidacies;
     }
 
-    public static List<Candidacy> getAllCandidacies() {
+    public static List<SeminaryCandidacy> getAllCandidacies() {
         return RootDomainObject.getInstance().getCandidacys();
     }
 

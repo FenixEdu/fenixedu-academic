@@ -18,7 +18,7 @@ import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.EnrolmentEvaluation;
 import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
-import net.sourceforge.fenixedu.domain.Seminaries.Candidacy;
+import net.sourceforge.fenixedu.domain.Seminaries.SeminaryCandidacy;
 import net.sourceforge.fenixedu.domain.Seminaries.Seminary;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
@@ -36,7 +36,7 @@ public class SelectCandidaciesService extends Service {
 		result.setSeminaries(infoSeminaries);
 
 		List<CandidacyDTO> infoCandidacies = new ArrayList<CandidacyDTO>();
-		for (Candidacy candidacy : getCandidacies(seminaryID, seminaries)) {
+		for (SeminaryCandidacy candidacy : getCandidacies(seminaryID, seminaries)) {
 			Student student = candidacy.getStudent();
 			StudentCurricularPlan studentCurricularPlan = getStudentCurricularPlan(student);
 
@@ -109,7 +109,7 @@ public class SelectCandidaciesService extends Service {
 		return selectedSCP;
 	}
 
-	private List<Candidacy> getCandidacies(final Integer seminaryID, List seminaries) {
+	private List<SeminaryCandidacy> getCandidacies(final Integer seminaryID, List seminaries) {
 		Seminary seminary = (Seminary) CollectionUtils.find(seminaries, new Predicate() {
 
 			public boolean evaluate(Object arg0) {

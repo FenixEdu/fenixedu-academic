@@ -5,7 +5,7 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
-import net.sourceforge.fenixedu.domain.Seminaries.Candidacy;
+import net.sourceforge.fenixedu.domain.Seminaries.SeminaryCandidacy;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import pt.utl.ist.berserk.ServiceRequest;
 import pt.utl.ist.berserk.ServiceResponse;
@@ -32,7 +32,7 @@ public class ManagerOrSeminariesCoordinatorFilter extends Filtro {
     public boolean doesThisSCPBelongToASeminaryCandidate(Integer SCPIDInternal) {
         StudentCurricularPlan scp = rootDomainObject.readStudentCurricularPlanByOID(SCPIDInternal);
         if (scp != null) {
-            List<Candidacy> candidacies = scp.getStudent().getAssociatedCandidancies();
+            List<SeminaryCandidacy> candidacies = scp.getStudent().getAssociatedCandidancies();
             return !candidacies.isEmpty();
         }
         

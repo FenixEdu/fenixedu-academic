@@ -101,7 +101,7 @@
 </class-descriptor>
 
 
-<class-descriptor class="net.sourceforge.fenixedu.domain.Seminaries.Candidacy"
+<class-descriptor class="net.sourceforge.fenixedu.domain.Seminaries.SeminaryCandidacy"
                   table="SEMINARY_CANDIDACY">
 
     

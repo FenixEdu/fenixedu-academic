@@ -8,7 +8,7 @@ package net.sourceforge.fenixedu.applicationTier.Filtro.Seminaries;
 import net.sourceforge.fenixedu.applicationTier.Filtro.Filtro;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.Student;
-import net.sourceforge.fenixedu.domain.Seminaries.Candidacy;
+import net.sourceforge.fenixedu.domain.Seminaries.SeminaryCandidacy;
 import pt.utl.ist.berserk.ServiceRequest;
 import pt.utl.ist.berserk.ServiceResponse;
 
@@ -33,7 +33,7 @@ public class CandidacyOwnershipFilter extends Filtro {
         Integer candidacyID = (Integer) getServiceCallArguments(request)[0];
 
         Student student = Student.readByUsername(getRemoteUser(request).getUtilizador());
-        Candidacy candidacy = rootDomainObject.readCandidacyByOID(candidacyID);
+        SeminaryCandidacy candidacy = rootDomainObject.readSeminaryCandidacyByOID(candidacyID);
         //
         if ((candidacy != null)
                 && (candidacy.getStudent().getIdInternal().intValue() != student.getIdInternal()

@@ -10,7 +10,7 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.AuthorizationUtils;
 import net.sourceforge.fenixedu.applicationTier.Filtro.Filtro;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.Student;
-import net.sourceforge.fenixedu.domain.Seminaries.Candidacy;
+import net.sourceforge.fenixedu.domain.Seminaries.SeminaryCandidacy;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import pt.utl.ist.berserk.ServiceRequest;
 import pt.utl.ist.berserk.ServiceResponse;
@@ -66,7 +66,7 @@ public class CandidacyAccessFilter extends Filtro {
 
         Student student = Student.readByUsername(id.getUtilizador());
         if (student != null) {
-            Candidacy candidacy = rootDomainObject.readCandidacyByOID(candidacyID);
+            SeminaryCandidacy candidacy = rootDomainObject.readSeminaryCandidacyByOID(candidacyID);
             //
             if ((candidacy != null)
                     && (candidacy.getStudent().getIdInternal().intValue() != student.getIdInternal()

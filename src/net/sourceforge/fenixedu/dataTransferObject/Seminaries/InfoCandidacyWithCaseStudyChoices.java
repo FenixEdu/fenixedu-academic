@@ -2,7 +2,7 @@ package net.sourceforge.fenixedu.dataTransferObject.Seminaries;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.Seminaries.Candidacy;
+import net.sourceforge.fenixedu.domain.Seminaries.SeminaryCandidacy;
 import net.sourceforge.fenixedu.domain.Seminaries.CaseStudyChoice;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -16,7 +16,7 @@ import org.apache.commons.collections.Transformer;
  *  
  */
 public class InfoCandidacyWithCaseStudyChoices extends InfoCandidacy {
-    public void copyFromDomain(Candidacy candidacy) {
+    public void copyFromDomain(SeminaryCandidacy candidacy) {
         super.copyFromDomain(candidacy);
         if (candidacy != null && candidacy.getCaseStudyChoices() != null) {
 
@@ -30,7 +30,7 @@ public class InfoCandidacyWithCaseStudyChoices extends InfoCandidacy {
         }
     }
 
-    public static InfoCandidacy newInfoFromDomain(Candidacy candidacy) {
+    public static InfoCandidacy newInfoFromDomain(SeminaryCandidacy candidacy) {
         InfoCandidacyWithCaseStudyChoices infoCandidacy = null;
         if (candidacy != null) {
             infoCandidacy = new InfoCandidacyWithCaseStudyChoices();

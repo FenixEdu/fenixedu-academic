@@ -12,7 +12,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseWithInfoD
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentWithInfoPerson;
-import net.sourceforge.fenixedu.domain.Seminaries.Candidacy;
+import net.sourceforge.fenixedu.domain.Seminaries.SeminaryCandidacy;
 
 /**
  * @author Goncalo Luiz gedl [AT] rnl [DOT] ist [DOT] utl [DOT] pt
@@ -110,7 +110,7 @@ public class InfoCandidacy extends InfoObject {
         approved = boolean1;
     }
 
-    public void copyFromDomain(Candidacy candidacy) {
+    public void copyFromDomain(SeminaryCandidacy candidacy) {
         super.copyFromDomain(candidacy);
         if (candidacy != null) {
             setApproved(candidacy.getApproved());
@@ -124,7 +124,7 @@ public class InfoCandidacy extends InfoObject {
         }
     }
 
-    public static InfoCandidacy newInfoFromDomain(Candidacy candidacy) {
+    public static InfoCandidacy newInfoFromDomain(SeminaryCandidacy candidacy) {
         InfoCandidacy infoCandidacy = null;
         if (candidacy != null) {
             infoCandidacy = new InfoCandidacy();

@@ -8,7 +8,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.Seminaries;
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoCandidacy;
 import net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoCandidacyWithCaseStudyChoices;
-import net.sourceforge.fenixedu.domain.Seminaries.Candidacy;
+import net.sourceforge.fenixedu.domain.Seminaries.SeminaryCandidacy;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.presentationTier.Action.Seminaries.Exceptions.BDException;
 
@@ -24,7 +24,7 @@ public class GetCandidacyById extends Service {
 	public InfoCandidacy run(Integer id) throws BDException, ExcepcaoPersistencia {
 		InfoCandidacy infoCandidacy = null;
 
-		Candidacy candidacy = rootDomainObject.readCandidacyByOID(id);
+		SeminaryCandidacy candidacy = rootDomainObject.readSeminaryCandidacyByOID(id);
 		infoCandidacy = InfoCandidacyWithCaseStudyChoices.newInfoFromDomain(candidacy);
 
 		return infoCandidacy;

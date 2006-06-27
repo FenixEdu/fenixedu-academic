@@ -11,7 +11,7 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoCandidacy;
 import net.sourceforge.fenixedu.domain.Student;
-import net.sourceforge.fenixedu.domain.Seminaries.Candidacy;
+import net.sourceforge.fenixedu.domain.Seminaries.SeminaryCandidacy;
 import net.sourceforge.fenixedu.domain.Seminaries.Seminary;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.presentationTier.Action.Seminaries.Exceptions.BDException;
@@ -31,9 +31,9 @@ public class GetCandidaciesByStudentIDAndSeminaryID extends Service {
         Student student = rootDomainObject.readStudentByOID(studentID);
         Seminary seminary = rootDomainObject.readSeminaryByOID(seminaryID);
 
-        List<Candidacy> candidacies = Candidacy.getByStudentAndSeminary(student, seminary);
+        List<SeminaryCandidacy> candidacies = SeminaryCandidacy.getByStudentAndSeminary(student, seminary);
 
-        for (Candidacy candidacy : candidacies) {
+        for (SeminaryCandidacy candidacy : candidacies) {
             InfoCandidacy infoCandidacy = InfoCandidacy.newInfoFromDomain(candidacy);
             infoCandidacy.setSeminaryName(seminary.getName());
 
