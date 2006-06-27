@@ -16,7 +16,7 @@
 	<bean:write name="paymentsManagementDTO" property="candidacy.number" />
 	<br/>
 	
-	<fr:edit id="guides" name="paymentsManagementDTO" visible="false"/>
+	<fr:edit id="payments-guides" name="paymentsManagementDTO" visible="false"/>
 	
 	<fr:edit id="guides-entries" name="paymentsManagementDTO" property="entryDTOs" schema="payments-guides-entry">
 		<fr:layout name="tabular" >
@@ -26,7 +26,10 @@
 		</fr:layout>
 	</fr:edit>
 	
+	<html:link page="" target="_blank"><bean:message key="label.masterDegree.administrativeOffice.payments.print"/></html:link>
+	<html:link page="" target="_blank"><bean:message key="label.masterDegree.administrativeOffice.payments.back"/></html:link>
 	<html:submit><bean:message key="label.masterDegree.administrativeOffice.payments.print"/></html:submit>
+	
 	<html:cancel styleClass="inputbutton" onclick="this.form.method.value='firstPage';"><bean:message key="button.cancel"/></html:cancel>
 
 </html:form>
