@@ -225,7 +225,12 @@
 	<!-- ************* Payments ************* -->
 	<definition name="show.guides.management.firstPage" extends="definition.masterDegreeAdministrativeOffice.masterPage">
 		<put name="navLocal" value="/posGraduacao/payments/paymentsMenu.jsp" />
-		<put name="body" value="/commons/blank.jsp"/>
+		<put name="body" value="/posGraduacao/payments/guides/searchCandidacy.jsp"/>
+	</definition>
+	
+	<definition name="show.guides.management.showEvents" extends="definition.masterDegreeAdministrativeOffice.masterPage">
+		<put name="navLocal" value="/posGraduacao/payments/paymentsMenu.jsp" />
+		<put name="body" value="/posGraduacao/payments/guides/showEvents.jsp"/>
 	</definition>
 	
 	<definition name="show.receipts.management.firstPage" extends="definition.masterDegreeAdministrativeOffice.masterPage">
