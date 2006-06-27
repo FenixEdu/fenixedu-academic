@@ -25,11 +25,14 @@ public abstract class PaymentsManagementDispatchAction extends FenixDispatchActi
 
     protected PaymentsManagementDTO searchEventsForCandidacy(Integer candidacyNumber) {
 
+        PaymentsManagementDTO managementDTO = null;
         final Candidacy candidacy = Candidacy.readByCandidacyNumber(candidacyNumber);
-        final PaymentsManagementDTO managementDTO = new PaymentsManagementDTO();
-        for (final Event event : candidacy.getPerson().getEventsSet()) {
-            if (!event.isClosed()) {
-                managementDTO.getEntryDTOs().addAll(event.calculateEntries());
+        if (candidacy != null) {
+            managementDTO = new PaymentsManagementDTO(candidacy);
+            for (final Event event : candidacy.getPerson().getEventsSet()) {
+                if (!event.isClosed()) {
+                    managementDTO.getEntryDTOs().addAll(event.calculateEntries());
+                }
             }
         }
         return managementDTO;
