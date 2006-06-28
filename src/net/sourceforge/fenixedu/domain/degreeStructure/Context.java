@@ -98,7 +98,8 @@ public class Context extends Context_Base implements Comparable<Context> {
     
     public boolean isValid(ExecutionPeriod executionPeriod) {
     	return (getBeginExecutionPeriod().isBeforeOrEquals(executionPeriod) && (getEndExecutionPeriod() == null || getEndExecutionPeriod().isAfterOrEquals(executionPeriod)))
-            && containsSemester(executionPeriod.getSemester());
+            && ((getChildDegreeModule() instanceof CurricularCourse && containsSemester(executionPeriod.getSemester()))
+                    || !(getChildDegreeModule() instanceof CurricularCourse));
     }
     
     public boolean isValid(ExecutionYear executionYear) {
