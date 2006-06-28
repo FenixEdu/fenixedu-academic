@@ -3,6 +3,9 @@ package net.sourceforge.fenixedu.dataTransferObject.assiduousness;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ResourceBundle;
+
+import net.sourceforge.fenixedu.util.WeekDay;
 
 import org.joda.time.Duration;
 import org.joda.time.Period;
@@ -98,26 +101,18 @@ public class WorkDaySheet implements Serializable {
             result.append(balancePeriod.getMinutes());
         }
         return result.toString();
-    }
+    }    
 
-    public String getUnjustifiedTimeFormatted() {
-        Period unjustifiedPeriod = getUnjustifiedTime().toPeriod();
-        StringBuffer result = new StringBuffer();
-        result.append(unjustifiedPeriod.getHours());
-        result.append(":");
-        if (unjustifiedPeriod.getMinutes() >= -10 && unjustifiedPeriod.getMinutes() < 10) {
-            result.append("0");
+    public String getDay() {
+        if(getDate() == null) {
+            return "";
         }
-
-        if (unjustifiedPeriod.getMinutes() < 0) {
-            result.append((-unjustifiedPeriod.getMinutes()));
-            if (!result.toString().startsWith("-")) {
-                result = new StringBuffer("-").append(result);
-            }
-        } else {
-            result.append(unjustifiedPeriod.getMinutes());
+        ResourceBundle bundle = ResourceBundle.getBundle("resources.EmployeeResources");
+        String day = "" + getDate().getDayOfMonth();
+        if (getDate().getDayOfMonth() < 10) {
+            day = "0".concat(day);
         }
-        return result.toString();
+        return  day + " - " + bundle.getString(WeekDay.fromJodaTimeToWeekDay(getDate().toDateTimeAtMidnight())
+                        .toString()+"_ACRONYM");
     }
-
 }

@@ -221,11 +221,26 @@ public class Assiduousness extends Assiduousness_Base {
         return leavesList;
     }
 
+    public List<MissingClocking> getMissingClockings(YearMonthDay beginDate, YearMonthDay endDate) {
+        DateInterval interval = new DateInterval(beginDate, endDate);
+        List<MissingClocking> missingClockingsList = new ArrayList<MissingClocking>();
+        for (AssiduousnessRecord assiduousnessRecord : getAssiduousnessRecords()) {
+            if (assiduousnessRecord instanceof MissingClocking
+                    && interval.containsDate(assiduousnessRecord.getDate())
+                    && (assiduousnessRecord.getAnulation() == null || assiduousnessRecord.getAnulation()
+                            .getState().equals(AnulationState.INVALID))) {
+                missingClockingsList.add((MissingClocking) assiduousnessRecord);
+            }
+        }
+        return missingClockingsList;
+    }
+
     public boolean isHoliday(YearMonthDay thisDay) {
         Campus campus = getAssiduousnessCampus(thisDay);
         if (campus != null) {
             for (Holiday holiday : getRootDomainObject().getHolidays()) {
-                if ((holiday.getLocality() == null || holiday.getLocality() == campus.getSpaceInformation().getLocality())
+                if ((holiday.getLocality() == null || holiday.getLocality() == campus
+                        .getSpaceInformation().getLocality())
                         && holiday.getDate().isMatch(thisDay.toDateMidnight())) {
                     return true;
                 }

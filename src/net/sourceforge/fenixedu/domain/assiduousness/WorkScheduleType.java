@@ -103,20 +103,6 @@ public class WorkScheduleType extends WorkScheduleType_Base {
         }
     }
 
-    public static TimeInterval createTimeInterval(Integer startHours, Integer startMinutes,
-            Integer endHours, Integer endMinutes, boolean nextDay, FenixDomainException specificException)
-            throws FenixDomainException {
-        TimeInterval timeInterval = null;
-        TimeOfDay startTime = new TimeOfDay(startHours, startMinutes);
-        TimeOfDay endTime = new TimeOfDay(endHours, endMinutes);
-        if (startTime.isBefore(endTime)) {
-            timeInterval = new TimeInterval(startTime, endTime, nextDay);
-        } else {
-            throw specificException;
-        }
-        return timeInterval;
-    }
-
     public void delete() {
         if (canBeDeleted()) {
             removeRootDomainObject();

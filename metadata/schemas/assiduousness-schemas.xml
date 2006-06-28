@@ -1,7 +1,54 @@
+<schema name="show.employeeInformation"
+	type="net.sourceforge.fenixedu.domain.Employee">
+	<slot name="person" schema="show.employeePersonalInformation"
+		layout="values-dash" key="label.employee" />
+	<slot name="currentWorkingPlace" schema="show.employeeUnit"
+		layout="values-dash" key="label.unit" />
+</schema>
+
+<schema name="show.employeePersonalInformation"
+	type="net.sourceforge.fenixedu.domain.Person">
+	<slot name="employee.employeeNumber" key="label.number" />
+	<slot name="name" key="label.name" />
+</schema>
+
+<schema name="show.employeeUnit"
+	type="net.sourceforge.fenixedu.domain.organizationalStructure.Unit">
+	<slot name="costCenterCode" />
+	<slot name="name" />
+</schema>
+
+<schema name="show.workDaySheet"
+	type="net.sourceforge.fenixedu.dataTransferObject.assiduousness.WorkDaySheet">
+	<slot name="day" key="label.day" />
+	<slot name="workScheduleAcronym" key="label.schedule" />
+	<slot name="balanceTimeFormatted" key="label.balance" />
+	<slot name="unjustifiedTime" key="label.unjustified">
+		<property name="format" value="HH:mm" />
+	</slot>
+	<slot name="notes" key="label.notes" />
+	<slot name="clockings" layout="flowLayout" key="link.clockings">
+		<property name="htmlSeparator" value="," />
+	</slot>
+</schema>
+
+<schema name="show.clockingsDaySheet"
+	type="net.sourceforge.fenixedu.dataTransferObject.assiduousness.ClockingsDaySheet">
+	<slot name="day" key="label.day" />
+	<slot name="clockings" layout="flowLayout"
+		key="label.clockings/Units">
+		<property name="eachLayout" value="values" />
+		<property name="htmlSeparator" value="," />
+		<property name="eachSchema" value="show.clocking" />
+	</slot>
+</schema>
+
 <schema name="show.clocking"
 	type="net.sourceforge.fenixedu.domain.assiduousness.Clocking">
-	<slot name="date" key="label.clockingDate" />
-	<slot name="clockUnit" schema="show.clockUnit" layout="values-dash" />
+	<slot name="timeOfDay">
+		<property name="format" value="HH:mm/" />
+	</slot>
+	<slot name="clockUnit" schema="show.clockUnit" layout="values" />
 </schema>
 
 <schema name="show.clockUnit"
@@ -10,8 +57,8 @@
 </schema>
 
 
-<schema name="show.leaves"
-	type="net.sourceforge.fenixedu.domain.assiduousness.Leave">
+<schema name="show.justifications"
+	type="net.sourceforge.fenixedu.domain.assiduousness.Justification">
 	<slot name="partialDate" key="label.beginDate" />
 	<slot name="partialEndDate" key="label.endDateOrDuration" />
 	<slot name="justificationMotive.description"
@@ -40,13 +87,13 @@
 		schema="show.workSchedule" layout="tabular-list">
 		<property name="subLayout" value="tabular" />
 		<property name="subSchema" value="show.workSchedule" />
-		<property name="columnClasses" value="tstyle6" />	
+		<property name="columnClasses" value="tstyle6" />
 	</slot>
 </schema>
 
 <schema name="show.workSchedule"
 	type="net.sourceforge.fenixedu.domain.assiduousness.WorkSchedule">
-	<slot name="workScheduleType.acronym" key="label.acronym"/>
+	<slot name="workScheduleType.acronym" key="label.acronym" />
 	<!-- 	<slot name="periodicity.workWeekNumber" key="label.week" /> -->
 	<slot name="workWeek.days" key="label.days" />
 	<slot name="workScheduleType.normalWorkPeriod"
@@ -80,7 +127,7 @@
 	</slot>
 	<slot name="endMealBreak">
 		<property name="format" value="'-' HH:mm " />
-	</slot>
+	</slot>	
 	<slot name="minimumMealBreakInterval">
 		<property name="format" value="'(min:' HH:mm" />
 	</slot>

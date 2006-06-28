@@ -8,6 +8,15 @@
 <h2><bean:message key="link.justifications" /></h2>
 <br />
 <br />
+<logic:present name="employee">
+	<fr:view name="employee" schema="show.employeeInformation">
+		<fr:layout name="tabular">
+			<fr:property name="classes" value="examMap" />
+		</fr:layout>
+	</fr:view>
+</logic:present>
+<br />
+<br />
 <logic:present name="yearMonth">
 	<fr:form action="/assiduousnessRecords.do?method=showJustifications">
 		<fr:edit name="yearMonth" schema="choose.date" />
@@ -19,12 +28,12 @@
 </logic:present>
 <br />
 <br />
-<logic:present name="leaves">
-	<logic:empty name="leaves">
-		<bean:message key="message.employee.noLeaves" />
+<logic:present name="justifications">
+	<logic:empty name="justifications">
+		<bean:message key="message.employee.noJustifications" />
 	</logic:empty>
-	<logic:notEmpty name="leaves">
-		<fr:view name="leaves" schema="show.leaves">
+	<logic:notEmpty name="justifications">
+		<fr:view name="justifications" schema="show.justifications">
 			<fr:layout name="tabular">
 				<fr:property name="classes" value="tstyle1b" />
 				<fr:property name="columnClasses" value="acenter" />
@@ -33,6 +42,6 @@
 		</fr:view>
 	</logic:notEmpty>
 </logic:present>
-<logic:notPresent name="leaves">
-	<bean:message key="message.employee.noLeaves" />
+<logic:notPresent name="justifications">
+	<bean:message key="message.employee.noJustifications" />
 </logic:notPresent>

@@ -2,10 +2,9 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <style>@import url(<%= request.getContextPath() %>/CSS/navlateralnew.css);</style>
 <!-- Import new CSS for this section: #navlateral  -->
-<ul>
-<%--
+<%-- <ul>
 	<li><html:link page="/assiduousnessRecords.do?method=showEmployeeInfo">
-		<bean:message key="link.employeeInfo" />
+		<bean:message key="label.schedule" />
 	</html:link></li>
 
 	<li><html:link
@@ -21,5 +20,5 @@
 		page="/assiduousnessRecords.do?method=showJustifications">
 		<bean:message key="link.justifications" />
 	</html:link></li>
---%>
 </ul>
+--%>
