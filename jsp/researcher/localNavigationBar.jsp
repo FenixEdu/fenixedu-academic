@@ -21,7 +21,7 @@
 				<li><html:link page="/interests/interestsManagement.do?method=prepare"><bean:message bundle="RESEARCHER_RESOURCES" key="link.interestsManagement"/></html:link></li>
 				<li><html:link page="/events/eventsManagement.do?method=showEvents"><bean:message bundle="RESEARCHER_RESOURCES" key="link.eventsManagement"/></html:link></li>
 				<li><html:link page="/projects/projectsManagement.do?method=listProjects"><bean:message bundle="RESEARCHER_RESOURCES" key="link.projectsManagement"/></html:link></li>
-				<li><html:link page="/result/patents/patentsManagement.do?method=listPatents"><bean:message bundle="RESEARCHER_RESOURCES" key="link.patentsManagement"/></html:link></li>			
+				<li><html:link page="/patents/patentsManagement.do?method=listPatents"><bean:message bundle="RESEARCHER_RESOURCES" key="link.patentsManagement"/></html:link></li>			
 				<li><html:link page="/publications/publicationsManagement.do?method=listPublications"><bean:message bundle="RESEARCHER_RESOURCES" key="link.Publications"/></html:link></li>
 			</ul>
 		</li>
