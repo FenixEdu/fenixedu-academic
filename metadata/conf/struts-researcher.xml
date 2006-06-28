@@ -107,29 +107,44 @@
 			<forward name="edit" path="events.edit.editEvent"/>
 		</action>
 		
-	    <action path="/result/patents/patentsManagement"
+        <!-- Result Patents Management Action Mapping -->
+		<action path="/patents/patentsManagement"
 				name="resultsManagementForm" 
 				parameter="method"
 				scope="request"
 				type="net.sourceforge.fenixedu.presentationTier.Action.research.result.patents.ResultPatentsManagementAction">
-		    <forward name="listPatents" path="patents.listPatents"/>
-		    <forward name="createPatent" path="patents.createPatent"/>
-   		    <forward name="editPatent" path="patents.editPatent"/>
-   		    <forward name="editPatentData" path="patents.editPatentData"/>
-		    <forward name="deletePatent" path="patents.deletePatent"/>
-		    <forward name="patentDetails" path="patents.patentDetails"/>
+		    <forward name="listPatents" path="patents.list"/>
+		    <forward name="createPatent" path="patents.create"/>
+   		    <forward name="editPatent" path="patents.edit"/>
+   		    <forward name="editPatentData" path="patents.editData"/>
+		    <forward name="deletePatent" path="patents.delete"/>
+		    <forward name="patentDetails" path="patents.details"/>
 		</action>
-		
+
+		<!-- Result Participation Management Action Mapping -->	
 		<action path="/result/resultParticipationManagement"
 				name="resultsManagementForm"
 				parameter="method"
 				scope="request"
 				type="net.sourceforge.fenixedu.presentationTier.Action.research.result.ResultParticipationManagementAction">
 			<forward name="editParticipation" path="result.participation"/>
-			<forward name="editPatent" path="/result/patents/patentsManagement.do?method=prepareEditPatent"/>
+			<forward name="editPatent" path="/patents/patentsManagement.do?method=prepareEditPatent"/>
 			<forward name="viewEditPublication" path="/publications/publicationsManagement.do?method=prepareViewEditPublication"/>
 		</action>
+
+		<!-- Result Associations Management Action Mapping -->
+		<action path="/result/resultAssociationsManagement"
+				name="resultsManagementForm"
+				parameter="method"
+				scope="request"
+				type="net.sourceforge.fenixedu.presentationTier.Action.research.result.ResultAssociationsManagementAction">
+			<forward name="editUnitAssociations" path="result.unitAssociations"/>
+			<forward name="editEventAssociations" path="result.eventAssociations"/>
+			<forward name="editPatent" path="/result/patents/patentsManagement.do?method=prepareEditPatent"/>
+			<!-- <forward name="editPublication" path="/result/publications/publicationsManagement.do?method=prepareEditPublication"/> -->
+		</action>
 	
+		<!-- Result Publications Management Action Mapping -->
 		<action path="/publications/publicationsManagement"
 	        	 name="publicationsForm"
 	        	 parameter="method"
