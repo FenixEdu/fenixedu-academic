@@ -18,6 +18,10 @@
 <br />
 <br />
 <logic:present name="yearMonth">
+	<bean:define id="month" name="yearMonth" property="month"/>
+	<bean:message key="<%=month.toString()%>" bundle="ENUMERATION_RESOURCES"/>
+	<bean:write name="yearMonth" property="year"/>
+	<br/><br/>
 	<fr:form action="/assiduousnessRecords.do?method=showClockings">
 		<fr:edit name="yearMonth" schema="choose.date" />
 		<br />

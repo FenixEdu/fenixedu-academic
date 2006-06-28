@@ -48,7 +48,9 @@
 	<slot name="timeOfDay">
 		<property name="format" value="HH:mm/" />
 	</slot>
-	<slot name="clockUnit" schema="show.clockUnit" layout="values" />
+	<slot name="clockUnit" schema="show.clockUnit" layout="values" >
+		<property name="classes" value="bgcolor1" />
+	</slot>
 </schema>
 
 <schema name="show.clockUnit"

@@ -44,6 +44,8 @@ import org.joda.time.Duration;
 import org.joda.time.Period;
 import org.joda.time.TimeOfDay;
 import org.joda.time.YearMonthDay;
+import org.joda.time.format.PeriodFormatter;
+import org.joda.time.format.PeriodFormatterBuilder;
 
 public class AssiduousnessDispatchAction extends FenixDispatchAction {
 
@@ -331,11 +333,10 @@ public class AssiduousnessDispatchAction extends FenixDispatchAction {
                 }
             }
         }
-        WorkDaySheet workDaySheet = new WorkDaySheet();
-        workDaySheet.setBalanceTime(totalBalance.toPeriod());
-        workDaySheet.setUnjustifiedTime(totalUnjustified);
-        workSheet.add(workDaySheet);
-
+        PeriodFormatter fmt = new PeriodFormatterBuilder().printZeroAlways().appendHours()
+                .appendSeparator(":").minimumPrintedDigits(2).appendMinutes().toFormatter();
+        request.setAttribute("totalBalance", fmt.print(totalBalance.toPeriod()));
+        request.setAttribute("totalUnjustified", fmt.print(totalUnjustified.toPeriod()));
         request.setAttribute("subtitles", subtitles.values());
         return workSheet;
     }

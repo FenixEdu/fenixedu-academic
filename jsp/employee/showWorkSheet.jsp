@@ -7,6 +7,10 @@
 <br />
 <h2><bean:message key="link.workSheet" /></h2>
 <br />
+<div class="infoop2">
+	A visualização da informação da assiduidade encontra-se em fase de testes. <br/>
+	Se encontrar alguma incorrecção na informação disponibilizada contacte o suporte utilizando: suporte@dot.ist.utl.pt.
+</div>
 <br />
 <logic:present name="employee">
 	<fr:view name="employee" schema="show.employeeInformation">
@@ -18,6 +22,10 @@
 <br />
 <br />
 <logic:present name="yearMonth">
+	<bean:define id="month" name="yearMonth" property="month"/>
+	<bean:message key="<%=month.toString()%>" bundle="ENUMERATION_RESOURCES"/>
+	<bean:write name="yearMonth" property="year"/>
+	<br/><br/>
 	<fr:form action="/assiduousnessRecords.do?method=showWorkSheet">
 		<fr:edit name="yearMonth" schema="choose.date"/>
 		<br />
@@ -41,15 +49,24 @@
 			</fr:layout>
 		</fr:view>
 	</logic:notEmpty>
+	
+	<logic:present name="totalBalance">
+		<bean:message key="label.totalBalance" />:
+		<bean:write name="totalBalance"/><br/>
+	</logic:present>
+	<logic:present name="totalUnjustified">
+		<bean:message key="label.totalUnjustified" />:
+		<bean:write name="totalUnjustified"/><br/>
+	</logic:present>
+	<br/>
+	<logic:notEmpty name="subtitles">
+		<em><bean:message key="label.subtitle"/>:</em>
+		<br/>
+		<logic:iterate name="subtitles" id="subtile">
+			<bean:write name="subtile"/><br/>
+		</logic:iterate>
+	</logic:notEmpty>
 </logic:present>
 <logic:notPresent name="workSheet">
 	<bean:message key="message.employee.noWorkSheet" />
 </logic:notPresent>
-
-<logic:notEmpty name="subtitles">
-<em><bean:message key="label.subtitle"/>:</em>
-<br/>
-	<logic:iterate name="subtitles" id="subtile">
-		<bean:write name="subtile"/><br/>
-	</logic:iterate>
-</logic:notEmpty>
