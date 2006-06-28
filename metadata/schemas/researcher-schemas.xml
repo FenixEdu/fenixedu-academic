@@ -210,7 +210,7 @@
 
 <schema name="result.patentShortList" type="net.sourceforge.fenixedu.domain.research.result.ResultParticipation">
 	<slot name="result.title" layout="link">
-		<property name="viewPage" value="/result/patents/patentsManagement.do?method=preparePatentDetails"/>	
+		<property name="viewPage" value="/patents/patentsManagement.do?method=preparePatentDetails"/>	
 	</slot>
 	<slot name="result.registrationDate"/>
 </schema>
@@ -263,7 +263,7 @@
 		<property name="minChars" value="4"/>
 	</slot>
 </schema>
-
+<!-- 
 <schema name="resultEventAssociation.summary" type="net.sourceforge.fenixedu.domain.research.result.ResultEventAssociation" bundle="RESEARCHER_RESOURCES">
 	<slot name="event.name"/>
 	<slot name="role"/>
@@ -318,7 +318,7 @@
 	</slot>
 	<slot name="role" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
 </schema>
-
+-->
 <!-- END SCHEMAS FOR PATENTS MANAGEMENT -->
 
 
