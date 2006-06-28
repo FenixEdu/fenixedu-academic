@@ -15,6 +15,9 @@
 	<h2><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.result.patent.patentsManagement.title"/></h2>
 	<h3><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.result.patent.deletePatentUseCase.title"/></h3>
 	
+	<span class="error">
+		<bean:message bundle="RESEARCHER_RESOURCES" key="researcher.result.deleteResult.warning"/>
+	</span>
 	<%-- Participations --%>
 	<h3><bean:message bundle="RESEARCHER_RESOURCES" key="label.resultParticipations"/></h3>
 	<fr:view name="patent" property="resultParticipations" schema="result.participations" layout="tabular">
@@ -34,7 +37,7 @@
 	</fr:view>
 	<br/>
 	
-	<html:form action="/result/patents/patentsManagement">
+	<html:form action="/patents/patentsManagement">
 		<html:hidden property="method" value="deletePatent"/>
 		<bean:define id="patentId" name="patent" property="idInternal" />
 		<html:hidden property="resultId" value="<%= patentId.toString() %>"/>

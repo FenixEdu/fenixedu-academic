@@ -20,12 +20,12 @@
 		
 	<fr:edit 	id="editPatent" name="patent" type="net.sourceforge.fenixedu.domain.research.result.ResultPatent" 
 				schema="patent.create"
-				action="<%="/result/patents/patentsManagement.do?method=prepareEditPatent&patentId=" + patentId %>">
+				action="<%="/patents/patentsManagement.do?method=prepareEditPatent&patentId=" + patentId %>">
 	    <fr:layout name="tabular">
 	        <fr:property name="classes" value="style1"/>
 	        <fr:property name="columnClasses" value="listClasses,,"/>
 	    </fr:layout>
-   	    <fr:destination name="cancel" path="<%="/result/patents/patentsManagement.do?method=prepareEditPatent&patentId=" + patentId %>"/>
+   	    <fr:destination name="cancel" path="<%="/patents/patentsManagement.do?method=prepareEditPatent&patentId=" + patentId %>"/>
 	</fr:edit>
 </logic:present>
 <br/>

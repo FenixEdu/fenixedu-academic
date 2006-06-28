@@ -27,13 +27,13 @@
 	<h3><bean:message bundle="RESEARCHER_RESOURCES" key="label.data"/></h3>	
 	<fr:create 	id="createPatent" type="net.sourceforge.fenixedu.domain.research.result.ResultPatent" 
 				schema="patent.create"
-				action="/result/patents/patentsManagement.do?method=listPatents">
+				action="/patents/patentsManagement.do?method=listPatents">
 		<fr:hidden slot="participations" multiple="true" name="participationsList"/>
 	    <fr:layout name="tabular">
 	        <fr:property name="classes" value="style1"/>
 	        <fr:property name="columnClasses" value="listClasses,,"/>
 	    </fr:layout>
-	    <fr:destination name="cancel" path="/result/patents/patentsManagement.do?method=listPatents"/>
+	    <fr:destination name="cancel" path="/patents/patentsManagement.do?method=listPatents"/>
 	</fr:create>
 </logic:present>
 <br/>

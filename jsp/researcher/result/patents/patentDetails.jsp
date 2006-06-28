@@ -35,7 +35,7 @@
 	
 	<br/>	
 	<br/>
-	<html:link page="<%= "/result/patents/patentsManagement.do?method=listPatents" %>">
+	<html:link page="<%= "/patents/patentsManagement.do?method=listPatents" %>">
 		<bean:message bundle="RESEARCHER_RESOURCES" key="researcher.project.editProject.goBackToView" />
 	</html:link>
 </logic:present>

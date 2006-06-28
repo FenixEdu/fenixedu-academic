@@ -14,7 +14,7 @@
 <logic:present role="RESEARCHER">
 	<h2 id='pageTitle'/> <bean:message bundle="RESEARCHER_RESOURCES" key="researcher.result.patent.patentsManagement.title"/> </h2>
 		
-	<html:link module="/researcher" page="/result/patents/patentsManagement.do?method=prepareCreatePatent">
+	<html:link module="/researcher" page="/patents/patentsManagement.do?method=prepareCreatePatent">
 		<bean:message bundle="RESEARCHER_RESOURCES" key="researcher.result.patent.createPatentUseCase.title" />
 	</html:link>
 	<br/>
@@ -32,13 +32,13 @@
 				<fr:property name="subLayout" value="values-comma"/>
 				<fr:property name="subSchema" value="result.patentShortList"/>
 				
-				<fr:property name="link(edit)" value="/result/patents/patentsManagement.do?method=prepareEditPatent"/>
+				<fr:property name="link(edit)" value="/patents/patentsManagement.do?method=prepareEditPatent"/>
 				<fr:property name="param(edit)" value="result.idInternal/patentId"/>
 				<fr:property name="key(edit)" value="link.edit"/>
 				<fr:property name="bundle(edit)" value="RESEARCHER_RESOURCES"/>
 				<fr:property name="order(edit)" value="1"/>
 	
-				<fr:property name="link(delete)" value="/result/patents/patentsManagement.do?method=prepareDeletePatent"/>
+				<fr:property name="link(delete)" value="/patents/patentsManagement.do?method=prepareDeletePatent"/>
 				<fr:property name="param(delete)" value="result.idInternal/resultId"/>
 				<fr:property name="key(delete)" value="link.delete"/>
 				<fr:property name="bundle(delete)" value="RESEARCHER_RESOURCES"/>
