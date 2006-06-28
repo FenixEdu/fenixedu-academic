@@ -26,3 +26,6 @@ function executeWithTempFile() {
 	rm tmp.sql
 	echo
 }
+
+execute "Alter TEACHER_SERVICE_ITEM table" alterTeacherServiceItem.sql 
+execute "Remove TeacherServiceNotes" removeTeacherServiceNotes.sql 

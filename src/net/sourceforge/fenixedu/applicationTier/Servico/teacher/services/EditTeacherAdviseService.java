@@ -53,17 +53,14 @@ public class EditTeacherAdviseService extends Service {
         List<Advise> advises = student.getAdvisesByTeacher(teacher);
         Advise advise = null;
         if (advises == null || advises.isEmpty()) {
-            advise = new Advise(teacher, student, adviseType, executionPeriod,
-                    executionPeriod);
+            advise = new Advise(teacher, student, adviseType, executionPeriod, executionPeriod);
         } else {
             advise = advises.iterator().next();
         }
 
-        TeacherAdviseService teacherAdviseService = advise
-                .getTeacherAdviseServiceByExecutionPeriod(executionPeriod);
+        TeacherAdviseService teacherAdviseService = advise.getTeacherAdviseServiceByExecutionPeriod(executionPeriod);
         if (teacherAdviseService == null) {
-            teacherAdviseService = new TeacherAdviseService(teacherService, advise,
-                    percentage, roleType);
+            teacherAdviseService = new TeacherAdviseService(teacherService, advise, percentage, roleType);
         } else {
             teacherAdviseService.updatePercentage(percentage, roleType);
         }

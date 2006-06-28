@@ -1,24 +1,44 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.credits;
 
+import org.apache.commons.lang.StringUtils;
+
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.teacher.TeacherService;
+import net.sourceforge.fenixedu.domain.teacher.TeacherServiceNotes;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class EditTeacherServiceNotes extends Service {
 
     public Boolean run(Integer teacherId, Integer executionPeriodId, String managementFunctionNote, String serviceExemptionNote,
-            String otherNote, String masterDegreeTeachingNote, RoleType roleType) throws FenixServiceException, ExcepcaoPersistencia {    
+            String otherNote, String masterDegreeTeachingNote, String functionsAccumulation, RoleType roleType) 
+            throws FenixServiceException, ExcepcaoPersistencia {    
         
         Teacher teacher = rootDomainObject.readTeacherByOID(teacherId);
         ExecutionPeriod executionPeriod = rootDomainObject.readExecutionPeriodByOID(executionPeriodId);
         TeacherService teacherService = teacher.getTeacherServiceByExecutionPeriod(executionPeriod);
         
-        if(teacherService != null) {
-            teacherService.editNotes(managementFunctionNote, serviceExemptionNote, otherNote, masterDegreeTeachingNote, roleType);
+        if(teacherService == null) {
+            teacherService = new TeacherService(teacher, executionPeriod);
+        }
+         
+        TeacherServiceNotes teacherServiceNotes = teacherService.getTeacherServiceNotes();
+        if(teacherServiceNotes == null) {
+            teacherServiceNotes = new TeacherServiceNotes(teacherService);
+        }
+        
+        teacherServiceNotes.editNotes(managementFunctionNote, serviceExemptionNote, otherNote, masterDegreeTeachingNote,
+                functionsAccumulation, roleType);
+        
+        if(StringUtils.isEmpty(teacherServiceNotes.getManagementFunctionNotes()) && 
+                StringUtils.isEmpty(teacherServiceNotes.getServiceExemptionNotes()) &&
+                StringUtils.isEmpty(teacherServiceNotes.getOthersNotes()) &&
+                StringUtils.isEmpty(teacherServiceNotes.getFunctionsAccumulation()) &&
+                StringUtils.isEmpty(teacherServiceNotes.getMasterDegreeTeachingNotes())) {            
+            teacherServiceNotes.delete();
         }
         
         return Boolean.TRUE;

@@ -12,13 +12,21 @@
 	<b><bean:message key="label.execution-period" /></b> <bean:write name="executionPeriod" property="name"/> - <bean:write name="executionPeriod" property="executionYear.year"/><br />	
 </p>
 
-<p>
-<bean:message key="label.teacher.advise.service.help"/>
-</p>	
+<p><bean:message key="label.teacher.advise.service.help" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></p>	
 
-<h3>
-	<bean:message key="label.teacher-dfp-student.add-student"/>			
-</h3>
+<h3><bean:message key="label.teacher-dfp-student.add-student"/></h3>
+
+<span class="error"><html:errors /></span>
+<logic:messagesPresent message="true">
+	<hr class="error"/><u><b>Para prosseguir deverá corrigir os seguintes erros:</b></u><br/>		
+	<ul>
+		<html:messages id="msg" message="true">
+			<span class="error"><li><i><bean:write name="msg"/></i></li></span>
+		</html:messages>
+	</ul>
+	<hr class="error"/>
+</logic:messagesPresent>	
+
 <html:form action="/teacherAdviseServiceManagement">
 	<html:hidden property="method" value="editAdviseService"/>
 	<html:hidden property="page" value="1"/>	
@@ -26,18 +34,7 @@
 	<html:hidden property="studentId"/>	
 	<html:hidden property="teacherId"/>	
 	<html:hidden property="teacherNumber"/>	
-	<html:hidden property="executionPeriodId"/>
-	
-	<span class="error"><html:errors /></span>
-	<logic:messagesPresent message="true">
-		<hr class="error"/><u><b>Para prosseguir deverá corrigir os seguintes erros:</b></u><br/>		
-			<ul>
-				<html:messages id="msg" message="true">
-					<span class="error"><li><i><bean:write name="msg" /></i></li></span>
-				</html:messages>
-			</ul>
-			<hr class="error"/>
-	</logic:messagesPresent>					
+	<html:hidden property="executionPeriodId"/>						
 	
 	<table>
 		<tr>

@@ -27,11 +27,12 @@ public class ManageCreditsNotes extends FenixDispatchAction {
 
         TeacherService teacherService = teacher.getTeacherServiceByExecutionPeriod(executionPeriod);
         DynaActionForm dynaActionForm = (DynaActionForm) actionForm;
-        if (teacherService != null) {
-            dynaActionForm.set("managementFunctionNote", teacherService.getManagementFunctionNotes());
-            dynaActionForm.set("serviceExemptionNote", teacherService.getServiceExemptionNotes());
-            dynaActionForm.set("masterDegreeTeachingNote", teacherService.getMasterDegreeTeachingNotes());
-            dynaActionForm.set("otherNote", teacherService.getOthersNotes());
+        if (teacherService != null && teacherService.getTeacherServiceNotes() != null) {
+            dynaActionForm.set("managementFunctionNote", teacherService.getTeacherServiceNotes().getManagementFunctionNotes());
+            dynaActionForm.set("serviceExemptionNote", teacherService.getTeacherServiceNotes().getServiceExemptionNotes());
+            dynaActionForm.set("masterDegreeTeachingNote", teacherService.getTeacherServiceNotes().getMasterDegreeTeachingNotes());
+            dynaActionForm.set("otherNote", teacherService.getTeacherServiceNotes().getOthersNotes());
+            dynaActionForm.set("functionsAccumulationNote", teacherService.getTeacherServiceNotes().getFunctionsAccumulation());
         }
 
         dynaActionForm.set("noteType", noteType);
@@ -45,7 +46,7 @@ public class ManageCreditsNotes extends FenixDispatchAction {
 
         Teacher teacher = rootDomainObject.readTeacherByOID(teacherId);
         ExecutionPeriod executionPeriod = rootDomainObject.readExecutionPeriodByOID(executionPeriodId);
-        String managementFunctionNote, serviceExemptionNote, otherNote, masterDegreeTeachingNote;
+        String managementFunctionNote, serviceExemptionNote, otherNote, masterDegreeTeachingNote, functionsAccumulation;
                      
         managementFunctionNote = (!StringUtils.isEmpty(dynaActionForm.getString("managementFunctionNote"))) ? 
                 dynaActionForm.getString("managementFunctionNote") : (noteType.equals("managementFunctionNote")) ? "" : null;                 
@@ -57,17 +58,19 @@ public class ManageCreditsNotes extends FenixDispatchAction {
                 dynaActionForm.getString("otherNote") : (noteType.equals("otherNote")) ? "" : null;                 
         
         masterDegreeTeachingNote = (!StringUtils.isEmpty(dynaActionForm.getString("masterDegreeTeachingNote"))) ? 
-                dynaActionForm.getString("masterDegreeTeachingNote") : (noteType.equals("masterDegreeTeachingNote")) ? "" : null;                     
+                dynaActionForm.getString("masterDegreeTeachingNote") : (noteType.equals("masterDegreeTeachingNote")) ? "" : null;   
+        
+        functionsAccumulation = (!StringUtils.isEmpty(dynaActionForm.getString("functionsAccumulationNote"))) ? 
+                        dynaActionForm.getString("functionsAccumulationNote") : (noteType.equals("functionsAccumulationNote")) ? "" : null;   
         
         Object[] args = { teacherId, executionPeriodId, managementFunctionNote, serviceExemptionNote, otherNote,
-                masterDegreeTeachingNote, roleType};
+                masterDegreeTeachingNote, functionsAccumulation, roleType};
 
         try {
             ServiceUtils.executeService(getUserView(request), "EditTeacherServiceNotes", args);
         } catch (DomainException domainException) {
             ActionMessages actionMessages = new ActionMessages();
-            actionMessages.add("error", new ActionMessage(domainException.getMessage(), domainException
-                    .getArgs()));
+            actionMessages.add("error", new ActionMessage(domainException.getMessage(), domainException.getArgs()));
             saveMessages(request, actionMessages);            
             getNote(dynaActionForm, teacher, executionPeriod, noteType);
             return mapping.findForward("show-note");      

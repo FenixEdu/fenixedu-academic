@@ -48,13 +48,13 @@ public class ShowTeacherCreditsDispatchAction extends FenixDispatchAction {
 
         setTeachingServicesAndSupportLessons(request, teacher, executionPeriod);
 
-        TeacherService teacherService = teacher.getTeacherServiceByExecutionPeriod(executionPeriod);
-        request.setAttribute("teacherService", teacherService);
-        if (teacherService != null) {
+        TeacherService teacherService = teacher.getTeacherServiceByExecutionPeriod(executionPeriod);        
+        if (teacherService != null) {            
             setMasterDegreeServices(request, teacherService);
             setAdviseServices(request, teacherService);
             setInstitutionWorkTimes(request, teacherService);           
-            request.setAttribute("otherServices", teacherService.getOtherServices());            
+            request.setAttribute("otherServices", teacherService.getOtherServices());
+            request.setAttribute("teacherServiceNotes", teacherService.getTeacherServiceNotes());
         }
 
         List<TeacherServiceExemption> serviceExemptions = teacher

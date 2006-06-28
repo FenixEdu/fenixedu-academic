@@ -18,10 +18,22 @@
 		</span>
 	</html:messages>
 	
-	<p><h2><bean:message key="label.notes"/></h2></p>	
-	<br/>
-	
 	<bean:define id="noteType" name="creditsNotesForm" property="noteType" type="java.lang.String" />
+	<p><h2><bean:message key="<%="label."+noteType %>" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></h2></p>	
+
+<%
+	try {
+		final String noteTypeHelp = java.util.ResourceBundle.getBundle("resources.TeacherCreditsSheetResources", request.getLocale()).getString("label."+noteType+".help");
+%>
+		<p class="infoselected">	
+			<%= noteTypeHelp %>			
+		</p>
+<%
+	} catch (java.util.MissingResourceException ex) {
+
+	}
+%>
+
 	<html:textarea cols="60" rows="8" property="<%= noteType %>" styleClass="mbottom05"/>	
 	
 	<br/>	

@@ -143,16 +143,23 @@
     <extent-class class-ref="net.sourceforge.fenixedu.domain.teacher.InstitutionWorkTime"/>
     <extent-class class-ref="net.sourceforge.fenixedu.domain.teacher.DegreeTeachingService"/>
     <extent-class class-ref="net.sourceforge.fenixedu.domain.teacher.TeacherAdviseService"/>
+    <extent-class class-ref="net.sourceforge.fenixedu.domain.teacher.TeacherServiceNotes"/>
 </class-descriptor>    
 
 <!-- Definitions for net.sourceforge.fenixedu.domain.teacher.TeacherPastService -->
 <class-descriptor class="net.sourceforge.fenixedu.domain.teacher.TeacherPastService" table="TEACHER_SERVICE_ITEM">
 
-      
+
+
+
+
+</class-descriptor>
       					
       
       
-            
+    
+<!-- Definitions for net.sourceforge.fenixedu.domain.teacher.TeacherPastService -->
+<class-descriptor class="net.sourceforge.fenixedu.domain.teacher.TeacherServiceNotes" table="TEACHER_SERVICE_ITEM">        
       
 	  
       

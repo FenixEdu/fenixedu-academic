@@ -9,17 +9,17 @@
 
 <div id="print1" class="sheet sans">
 
-<h1 class="caps center"><bean:message key="label.schedule"/> do <bean:write name="executionPeriod" property="name"/> <bean:write name="executionPeriod" property="executionYear.year"/></h1>
+<h1 class="caps center"><bean:message key="label.schedule" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/> do <bean:write name="executionPeriod" property="semester"/>º Semestre <bean:write name="executionPeriod" property="executionYear.year"/></h1>
 
 <table>
 <logic:notEmpty name="legalRegimen">
-	<tr><td><strong><bean:message key="label.name"/>:</strong> <bean:write name="legalRegimen" property="teacher.person.name"/></td><td><strong><bean:message key="label.number"/>:</strong> <bean:write name="legalRegimen" property="teacher.teacherNumber"/></td></tr>
-	<tr><td><strong><bean:message key="label.category"/>:</strong> <bean:write name="legalRegimen" property="category.code"/></td><logic:notEmpty name="workingUnit"><td><strong><bean:message key="label.section"/>:</strong> <bean:write name="workingUnit" property="name"/></td></tr>
-	<tr><td><strong><bean:message key="label.department"/>:</strong> <logic:notEmpty name="workingUnit" property="departmentUnit"> <bean:write name="workingUnit" property="departmentUnit.department.realName"/> </logic:notEmpty> </td><td><strong><bean:message key="label.costCenter"/>:</strong> <bean:write name="workingUnit" property="costCenterCode"/></td></tr></logic:notEmpty>
+	<tr><td><strong><bean:message key="label.name" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>:</strong> <bean:write name="legalRegimen" property="teacher.person.name"/></td><td><strong><bean:message key="label.number" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>:</strong> <bean:write name="legalRegimen" property="teacher.teacherNumber"/></td></tr>
+	<tr><td><strong><bean:message key="label.category" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>:</strong> <bean:write name="legalRegimen" property="category.code"/></td><logic:notEmpty name="workingUnit"><td><strong><bean:message key="label.section" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>:</strong> <bean:write name="workingUnit" property="name"/></td></tr>
+	<tr><td><strong><bean:message key="label.department" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>:</strong> <logic:notEmpty name="workingUnit" property="departmentUnit"> <bean:write name="workingUnit" property="departmentUnit.department.realName"/> </logic:notEmpty> </td><td><strong><bean:message key="label.costCenter" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>:</strong> <bean:write name="workingUnit" property="costCenterCode"/></td></tr></logic:notEmpty>
 </logic:notEmpty>
 </table>
 
-<h3><bean:message key="label.degree.professorships"/></h3>
+<h3><bean:message key="label.degree.professorships" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></h3>
 <logic:notEmpty name="professorshipDTOs">
 	<logic:iterate id="professorshipDTO" name="professorshipDTOs" indexId="indexProfessorship">
 		<bean:define id="professorship" name="professorshipDTO" property="professorship"/>
@@ -51,7 +51,7 @@
 			<div style="width: 49%; float: left;">
 				<table class="tb01">
 					<%-- <logic:equal name="indexProfessorship" value="0"> --%>
-						<tr><th>Turno</th><th style="width: 3em;"><bean:message key="label.type"/></th><th><bean:message key="label.schedule"/></th><th style="width: 7em;"><bean:message key="label.professorship"/> (%)</th></tr>					
+						<tr><th>Turno</th><th style="width: 3em;"><bean:message key="label.type" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></th><th><bean:message key="label.schedule" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></th><th style="width: 7em;"><bean:message key="label.professorship" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/> (%)</th></tr>					
 					<%-- </logic:equal> --%>
 					<logic:iterate id="degreeTeachingService" name="degreeTeachingServices" length="<%= String.valueOf(degreeTeachingServicesLength) %>">						
 						<bean:define id="lessonList" name="degreeTeachingService" property="shift.lessonsOrderedByWeekDayAndStartTime"/>											
@@ -67,7 +67,7 @@
 								      </dt:format> 
 									ás <dt:format patternId="hoursPattern">
 									      <bean:write name="lesson" property="fim.timeInMillis"/>
-									   </dt:format> , <bean:message key="label.room"/> <bean:write name="lesson" property="sala.nome"/>)
+									   </dt:format> , <bean:message key="label.room" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/> <bean:write name="lesson" property="sala.nome"/>)
 								      ,
 							    </logic:iterate>
 						    </td>						    						    
@@ -81,7 +81,7 @@
 				<div style="width: 49%; float: left;">
 					<table class="tb01" style="margin-left: 2%;">
 						<%-- <logic:equal name="indexProfessorship" value="0"> --%>
-							<tr><th>Turno</th><th style="width: 3em;"><bean:message key="label.type"/></th><th><bean:message key="label.schedule"/></th><th style="width: 7em;"><bean:message key="label.professorship"/> (%)</th></tr>					
+							<tr><th>Turno</th><th style="width: 3em;"><bean:message key="label.type" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></th><th><bean:message key="label.schedule" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></th><th style="width: 7em;"><bean:message key="label.professorship" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/> (%)</th></tr>					
 						<%--  </logic:equal> --%>
 						<logic:iterate id="degreeTeachingService" name="degreeTeachingServices" offset="<%= String.valueOf(degreeTeachingServicesLength) %>">							
 							<bean:define id="lessonList" name="degreeTeachingService" property="shift.lessonsOrderedByWeekDayAndStartTime"/>												
@@ -97,7 +97,7 @@
 									      </dt:format> 
 										ás <dt:format patternId="hoursPattern">
 										      <bean:write name="lesson" property="fim.timeInMillis"/>
-										   </dt:format> ,<bean:message key="label.room"/> <bean:write name="lesson" property="sala.nome"/>)
+										   </dt:format> ,<bean:message key="label.room" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/> <bean:write name="lesson" property="sala.nome"/>)
 									      ,
 								    </logic:iterate>
 							    </td>							    						    
@@ -112,14 +112,14 @@
 		<logic:empty name="degreeTeachingServices">
 			<div style="width: 49%; float: left;">
 				<table class="tb01">
-					<tr><th style="width: 3em;"><bean:message key="label.type"/></th><th><bean:message key="label.schedule"/></th><th style="width: 5em;"><bean:message key="label.room"/></th><th style="width: 7em;"><bean:message key="label.professorship"/> (%)</th></tr>
+					<tr><th style="width: 3em;"><bean:message key="label.type" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></th><th><bean:message key="label.schedule" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></th><th style="width: 5em;"><bean:message key="label.room" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></th><th style="width: 7em;"><bean:message key="label.professorship" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/> (%)</th></tr>
 					<tr class="height4"><td></td><td></td><td></td><td></td></tr>
 				</table>
 			</div>
 	
 			<div style="width: 49%; float: left;">
 				<table class="tb01" style="margin-left: 2%;">
-					<tr><th style="width: 3em;"><bean:message key="label.type"/></th><th><bean:message key="label.schedule"/></th><th style="width: 5em;"><bean:message key="label.room"/></th><th style="width: 7em;"><bean:message key="label.professorship"/> (%)</th></tr>
+					<tr><th style="width: 3em;"><bean:message key="label.type" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></th><th><bean:message key="label.schedule" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></th><th style="width: 5em;"><bean:message key="label.room" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></th><th style="width: 7em;"><bean:message key="label.professorship" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/> (%)</th></tr>
 					<tr class="height4"><td></td><td></td><td></td><td></td></tr>
 				</table>
 			</div>		
@@ -142,10 +142,10 @@
 		
 			<div style="width: 49%; float: left;">
 				<table class="tb01">
-					<tr><th style="width: 4em;"><bean:message key="label.type"/></th><th><bean:message key="label.weekDay"/></th><th><bean:message key="label.schedule"/></th><th><bean:message key="label.place"/></th></tr>
+					<tr><th style="width: 4em;"><bean:message key="label.type" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></th><th><bean:message key="label.weekDay" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></th><th><bean:message key="label.schedule" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></th><th><bean:message key="label.place" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></th></tr>
 					<logic:iterate id="supportLesson" name="supportLessonList" length="<%= String.valueOf(supportLessonsLength) %>">
 						<tr>
-							<td><bean:message key="label.supportLessons"/></td>
+							<td><bean:message key="label.supportLessons" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></td>
 							<td style="text-align: center;"><bean:write name="supportLesson" property="weekDay"/></td>
 							<td style="text-align: center;">
 							  	<dt:format patternId="hoursPattern">
@@ -165,10 +165,10 @@
 			<% if(supportLessonsLength != supportLessonList.size()){ %>		
 				<div style="width: 49%; float: left;">
 					<table class="tb01" style="margin-left: 2%;">
-						<tr><th style="width: 4em;"><bean:message key="label.type"/></th><th><bean:message key="label.weekDay"/></th><th><bean:message key="label.schedule"/></th><th><bean:message key="label.place"/></th></tr>
+						<tr><th style="width: 4em;"><bean:message key="label.type" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></th><th><bean:message key="label.weekDay" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></th><th><bean:message key="label.schedule" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></th><th><bean:message key="label.place" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></th></tr>
 						<logic:iterate id="supportLesson" name="supportLessonList" offset="<%= String.valueOf(supportLessonsLength) %>">
 							<tr>
-								<td><bean:message key="label.supportLessons"/></td>
+								<td><bean:message key="label.supportLessons" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></td>
 								<td style="text-align: center;"><bean:write name="supportLesson" property="weekDay"/></td>
 								<td style="text-align: center;">
 								  	<dt:format patternId="hoursPattern">
@@ -191,11 +191,11 @@
 </logic:notEmpty>			
 
 
-<h3 class="mbottom05"><bean:message key="label.master.degree.professorships"/></h3>
+<h3 class="mbottom05"><bean:message key="label.master.degree.professorships" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></h3>
 <logic:notEmpty name="masterDegreeServices">
 	<div style="width: 49%; float: left;">
 		<table class="tb01">	
-			<tr><th><bean:message key="label.course"/></th><th style="width: 5em;"><bean:message key="label.hours"/></th><th style="width: 5em;"><bean:message key="label.credits"/></th></tr>
+			<tr><th><bean:message key="label.course" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></th><th style="width: 5em;"><bean:message key="label.hours" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></th><th style="width: 5em;"><bean:message key="label.credits" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></th></tr>
 			<logic:iterate id="masterDegreeService" name="masterDegreeServices">
 				<tr>
 				  <td> 
@@ -226,13 +226,13 @@
 	<br style="clear: both;"/>
 </logic:notEmpty>
 
-<logic:notEmpty name="teacherService">
-	<logic:notEmpty name="teacherService" property="masterDegreeTeachingNotes">
+<logic:notEmpty name="teacherServiceNotes">
+	<logic:notEmpty name="teacherServiceNotes" property="masterDegreeTeachingNotes">
 		<table class="tb01" style="width: 99%;">
-			<tr><th style="width: 20em;"><bean:message key="label.notes"/></th></tr>		
+			<tr><th style="width: 20em;text-align: center;"><bean:message key="label.notes" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></th></tr>		
 			<tr class="height2">
 				<td>					    
-				   	<bean:define id="masterDegreeTeachingNotesAux" name="teacherService" property="masterDegreeTeachingNotes" />
+				   	<bean:define id="masterDegreeTeachingNotesAux" name="teacherServiceNotes" property="masterDegreeTeachingNotes" />
 					<%= masterDegreeTeachingNotesAux.toString().replaceAll("(\r\n)|(\n)", "<br />") %>			
 				</td>
 			</tr>
@@ -242,7 +242,7 @@
 <br style="clear: both;"/>
 
 
-<h3 class="mbottom05"><bean:message key="label.advises"/></h3>
+<h3 class="mbottom05"><bean:message key="label.advises" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></h3>
 <logic:notEmpty name="adviseServices">
 
 	<bean:define id="adviseServicesBean" name="adviseServices" type="java.util.List"/>
@@ -258,7 +258,7 @@
 	<p class="mbottom05">Alunos:</p>		
 	<div style="width: 49%; float: left;">
 		<table class="tb01">
-			<tr><th style="width: 5em;"><bean:message key="label.number"/></th><th><bean:message key="label.name"/></th><th style="width: 7em;"><bean:message key="label.professorship"/> (%)</th></tr>					
+			<tr><th style="width: 5em;"><bean:message key="label.number" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></th><th><bean:message key="label.name" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></th><th style="width: 7em;"><bean:message key="label.professorship" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/> (%)</th></tr>					
 			<logic:iterate id="adviseService" name="adviseServicesBean" length="<%= String.valueOf(advisesLength) %>">
 			<tr> 
 				<td><bean:write name="adviseService" property="advise.student.number"/></td>
@@ -272,7 +272,7 @@
 	<% if(advisesLength != adviseServicesBean.size()){ %>
 	<div style="width: 49%; float: left;">
 		<table class="tb01" style="margin-left: 2%;">
-			<tr><th style="width: 5em;"><bean:message key="label.number"/></th><th><bean:message key="label.name"/></th><th style="width: 7em;"><bean:message key="label.professorship"/> (%)</th></tr>					
+			<tr><th style="width: 5em;"><bean:message key="label.number" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></th><th><bean:message key="label.name" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></th><th style="width: 7em;"><bean:message key="label.professorship" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/> (%)</th></tr>					
 			<logic:iterate id="adviseService" name="adviseServicesBean" offset="<%= String.valueOf(advisesLength) %>">
 			<tr> 
 				<td><bean:write name="adviseService" property="advise.student.number"/></td>
@@ -286,7 +286,7 @@
 </logic:notEmpty>
 <br style="clear: both;"/>
 
-<h3 class="mbottom05"><bean:message key="label.institution.working.time"/></h3>
+<h3 class="mbottom05"><bean:message key="label.institution.working.time"  bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></h3>
 <logic:present name="institutionWorkTimeList">
 	<table class="tb01" style="width: 99%;">		
 		<tr>
@@ -317,11 +317,28 @@
 </logic:present>
 <br style="clear: both;"/>
 
-<h3 class="mbottom05"><bean:message key="label.others"/></h3>
+<h3 class="mbottom05"><bean:message key="label.functionsAccumulation" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></h3>
+<logic:notEmpty name="teacherServiceNotes">
+	<logic:notEmpty name="teacherServiceNotes" property="functionsAccumulation">
+		<table class="tb01" style="width: 99%;">
+			<tr><th style="width: 20em;text-align: center;"><bean:message key="label.notes" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></th></tr>		
+			<tr class="height2">
+				<td>				     
+					<bean:define id="functionsAccumulationAux" name="teacherServiceNotes" property="functionsAccumulation" />
+					<%= functionsAccumulationAux.toString().replaceAll("(\r\n)|(\n)", "<br />") %>
+				</td>
+			</tr>
+		</table>
+	</logic:notEmpty>
+</logic:notEmpty>
+<br style="clear: both;"/>
+
+
+<h3 class="mbottom05"><bean:message key="label.others" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></h3>
 <logic:notEmpty name="otherServices">
 	<div style="width: 49%; float: left;">
 		<table class="tb01">
-			<tr><th><bean:message key="label.reason"/></th><th style="width: 5em;"><bean:message key="label.credits"/></th></tr>
+			<tr><th><bean:message key="label.reason" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></th><th style="width: 5em;"><bean:message key="label.credits" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></th></tr>
 			<logic:iterate id="otherService" name="otherServices" >
 				<tr>
 					<td><bean:write name="otherService" property="reason"/></td>
@@ -331,20 +348,20 @@
 		</table>
 	</div>
 	<br style="clear: both;"/>
-	<logic:notEmpty name="teacherService">
-		<logic:notEmpty name="teacherService" property="othersNotes">
+	<logic:notEmpty name="teacherServiceNotes">
+		<logic:notEmpty name="teacherServiceNotes" property="othersNotes">
 			<br/>
 		</logic:notEmpty>
 	</logic:notEmpty>
 </logic:notEmpty>
 
-<logic:notEmpty name="teacherService">
-	<logic:notEmpty name="teacherService" property="othersNotes">
+<logic:notEmpty name="teacherServiceNotes">
+	<logic:notEmpty name="teacherServiceNotes" property="othersNotes">
 		<table class="tb01" style="width: 99%;">
-			<tr><th style="width: 20em;"><bean:message key="label.notes"/></th></tr>		
+			<tr><th style="width: 20em;text-align: center;"><bean:message key="label.notes" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></th></tr>		
 			<tr class="height2">
 				<td>				     
-					<bean:define id="othersNotesAux" name="teacherService" property="othersNotes" />
+					<bean:define id="othersNotesAux" name="teacherServiceNotes" property="othersNotes" />
 					<%= othersNotesAux.toString().replaceAll("(\r\n)|(\n)", "<br />") %>
 				</td>
 			</tr>
@@ -354,10 +371,10 @@
 <br style="clear: both;"/>
 
 
-<h3 class="mbottom05"><bean:message key="label.managent.functions"/></h3>
+<h3 class="mbottom05"><bean:message key="label.managent.functions" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></h3>
 <logic:notEmpty name="personFunctions">
 	<table class="tb01" style="width: 99%;">
-		<tr><th>Cargo</th><th><bean:message key="label.unit"/></th><th style="width: 15em;"><bean:message key="label.period"/></th><th style="width: 5em;"><bean:message key="label.credits"/></th></tr>
+		<tr><th>Cargo</th><th><bean:message key="label.unit" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></th><th style="width: 15em;"><bean:message key="label.period" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></th><th style="width: 5em;"><bean:message key="label.credits" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></th></tr>
 		<logic:iterate id="personFunction" name="personFunctions" >
 			<tr class="height2">
 				<td><bean:write name="personFunction" property="function.name"/></td>
@@ -393,13 +410,13 @@
 	<br style="clear: both;"/>
 </logic:notEmpty>
 
-<logic:notEmpty name="teacherService">
-	<logic:notEmpty name="teacherService" property="managementFunctionNotes">
+<logic:notEmpty name="teacherServiceNotes">
+	<logic:notEmpty name="teacherServiceNotes" property="managementFunctionNotes">
 		<table class="tb01" style="width: 99%;">
-			<tr><th style="width: 20em;"><bean:message key="label.notes"/></th></tr>		
+			<tr><th style="width: 20em;text-align: center;"><bean:message key="label.notes" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></th></tr>		
 			<tr class="height2">
 				<td>
-					<bean:define id="managementFunctionNotesAux" name="teacherService" property="managementFunctionNotes"/>
+					<bean:define id="managementFunctionNotesAux" name="teacherServiceNotes" property="managementFunctionNotes"/>
 					<%= managementFunctionNotesAux.toString().replaceAll("(\r\n)|(\n)", "<br />") %>				
 				</td>
 			</tr>
@@ -410,10 +427,10 @@
 
 
 
-<h3 class="mbottom05"><bean:message key="label.service.exemptions"/></h3>
+<h3 class="mbottom05"><bean:message key="label.service.exemptions" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></h3>
 <logic:notEmpty name="serviceExemptions">
 	<table class="tb01" style="width: 99%;">
-		<tr><th style="width: 20em;"><bean:message key="label.situation"/></th><th><bean:message key="label.organization"/></th><th style="width: 15em;"><bean:message key="label.period"/></th></tr>
+		<tr><th style="width: 20em;"><bean:message key="label.situation" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></th><th><bean:message key="label.organization" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></th><th style="width: 15em;"><bean:message key="label.period" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></th></tr>
 		<logic:iterate id="serviceExemption" name="serviceExemptions" >
 			<tr>
 				<td><bean:message name="serviceExemption" property="type.name" bundle="ENUMERATION_RESOURCES"/></td>
@@ -446,13 +463,13 @@
 	<br style="clear: both;"/>
 </logic:notEmpty>
 
-<logic:notEmpty name="teacherService">
-	<logic:notEmpty name="teacherService" property="serviceExemptionNotes">
+<logic:notEmpty name="teacherServiceNotes">
+	<logic:notEmpty name="teacherServiceNotes" property="serviceExemptionNotes">
 		<table class="tb01" style="width: 99%;">
-			<tr><th style="width: 20em;"><bean:message key="label.notes"/></th></tr>		
+			<tr><th style="width: 20em;text-align: center;"><bean:message key="label.notes" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></th></tr>		
 			<tr class="height2">
 				<td>
-					<bean:define id="serviceExemptionNotesAux" name="teacherService" property="serviceExemptionNotes"/>
+					<bean:define id="serviceExemptionNotesAux" name="teacherServiceNotes" property="serviceExemptionNotes"/>
 					<%= serviceExemptionNotesAux.toString().replaceAll("(\r\n)|(\n)", "<br />") %>
 				</td>
 			</tr>
@@ -462,12 +479,12 @@
 <br style="clear: both;"/>
 <br/>
 
-<p><bean:message key="label.date"/>: __ / __ / __</p>
+<p><bean:message key="label.date" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>: __ / __ / __</p>
 
 <br/>
 
 <table style="width: 100%; text-align: center;">
-<tr><td><bean:message key="label.schedules.teacher"/></td><td><bean:message key="label.schedules.section.coordinator"/></td><td><bean:message key="label.schedules.department.president"/></td></tr>
+<tr><td><bean:message key="label.schedules.teacher" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></td><td><bean:message key="label.schedules.section.coordinator" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></td><td><bean:message key="label.schedules.department.president" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></td></tr>
 </table>
 
 </div>

@@ -2437,10 +2437,6 @@ class net.sourceforge.fenixedu.domain.space.SpaceResponsability extends net.sour
 class net.sourceforge.fenixedu.domain.teacher.TeacherService extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer keyTeacher;
 	Integer keyExecutionPeriod;
-	String masterDegreeTeachingNotes;
-	String managementFunctionNotes;
-	String serviceExemptionNotes;
-	String othersNotes;
 }
 
 class net.sourceforge.fenixedu.domain.teacher.TeacherServiceItem extends net.sourceforge.fenixedu.domain.DomainObject {
@@ -2464,8 +2460,8 @@ class net.sourceforge.fenixedu.domain.teacher.TeacherServiceItem extends net.sou
 	}
 	
 	class net.sourceforge.fenixedu.domain.teacher.InstitutionWorkTime extends net.sourceforge.fenixedu.domain.teacher.TeacherServiceItem {
-	HourMinuteSecond startTimeHourMinuteSecond;
-	HourMinuteSecond endTimeHourMinuteSecond;
+		HourMinuteSecond startTimeHourMinuteSecond;
+		HourMinuteSecond endTimeHourMinuteSecond;
 		WeekDay weekDay;
 	}	
 	
@@ -2478,6 +2474,14 @@ class net.sourceforge.fenixedu.domain.teacher.TeacherServiceItem extends net.sou
 	class net.sourceforge.fenixedu.domain.teacher.TeacherAdviseService extends net.sourceforge.fenixedu.domain.teacher.TeacherServiceItem {
 		Double percentage;
 		Integer keyAdvise;
+	}
+	
+	class net.sourceforge.fenixedu.domain.teacher.TeacherServiceNotes extends net.sourceforge.fenixedu.domain.teacher.TeacherServiceItem {
+		String masterDegreeTeachingNotes;
+		String managementFunctionNotes;
+		String serviceExemptionNotes;
+		String othersNotes;
+		String functionsAccumulation;
 	}
 	
 class net.sourceforge.fenixedu.domain.teacher.ServiceProviderRegime extends net.sourceforge.fenixedu.domain.DomainObject {

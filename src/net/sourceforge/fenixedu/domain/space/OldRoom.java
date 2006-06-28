@@ -41,7 +41,7 @@ public class OldRoom extends OldRoom_Base {
     /** @deprecated */
 	public void delete() {
         if (canBeDeleted()) {
-            setBuilding(null);
+            removeBuilding();
             deleteDomainObject();
         } else {
             String[] args = { "a sala", "as aulas" };

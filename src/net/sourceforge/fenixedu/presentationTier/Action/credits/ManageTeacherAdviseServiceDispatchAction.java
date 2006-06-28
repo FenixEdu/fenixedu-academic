@@ -103,21 +103,17 @@ public class ManageTeacherAdviseServiceDispatchAction extends FenixDispatchActio
         saveMessages(request, actionMessages);
     }
 
-    private void addMessages(AdvisePercentageException ape, ActionMessages actionMessages,
-            AdviseType adviseType) {
+    private void addMessages(AdvisePercentageException ape, ActionMessages actionMessages, AdviseType adviseType) {
         ExecutionPeriod executionPeriod = ape.getExecutionPeriod();
         ActionMessage initialActionMessage = new ActionMessage("message.teacherAdvise.percentageExceed");
         actionMessages.add("", initialActionMessage);
         for (Advise advise : ape.getAdvises()) {
-            TeacherAdviseService teacherAdviseService = advise
-                    .getTeacherAdviseServiceByExecutionPeriod(executionPeriod);
+            TeacherAdviseService teacherAdviseService = advise.getTeacherAdviseServiceByExecutionPeriod(executionPeriod);
             if (adviseType.equals(ape.getAdviseType()) && teacherAdviseService != null) {
                 Integer teacherNumber = advise.getTeacher().getTeacherNumber();
                 String teacherName = advise.getTeacher().getPerson().getNome();
                 Double percentage = teacherAdviseService.getPercentage();
-                ActionMessage actionMessage = new ActionMessage(
-                        "message.teacherAdvise.teacher.percentageExceed", teacherNumber.toString(),
-                        teacherName, percentage.toString(), "%");
+                ActionMessage actionMessage = new ActionMessage("message.teacherAdvise.teacher.percentageExceed", teacherNumber.toString(), teacherName, percentage.toString(), "%");
                 actionMessages.add("message.teacherAdvise.teacher.percentageExceed", actionMessage);
             }
         }

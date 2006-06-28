@@ -21,7 +21,7 @@
 </p>
 
 <p>
-<bean:message key="label.teaching.service.help.top"/>
+<bean:message key="label.teaching.service.help.top" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>
 </p>
 
 <span class="error"><html:errors/></span>
@@ -143,7 +143,7 @@
 				</logic:notEqual>	
 		</logic:iterate>
 	</table>
-	<p class="mtop0"><bean:message key="label.teaching.service.help.bottom"/></p>
+	<p class="mtop0"><bean:message key="label.teaching.service.help.bottom" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></p>
 	<p>
 	<html:submit styleClass="inputbutton">
 		<bean:message key="button.save"/>
