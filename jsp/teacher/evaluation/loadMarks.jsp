@@ -59,7 +59,11 @@
 
 			<h:outputText styleClass="error" rendered="#{!empty evaluationManagementBackingBean.errorMessage}"
 				value="#{bundle[evaluationManagementBackingBean.errorMessage]}"/>
-			<h:messages layout="table" errorClass="error"/>
+			<h:panelGroup rendered="#{evaluationManagementBackingBean.messagesEmpty}">
+				<h:outputText styleClass="error" value="#{bundle['error.load.mark.file']}" />
+				<h:outputText value="<br/><br/>" escape="false"/>
+				<h:messages layout="table" errorClass="error"/>
+			</h:panelGroup>				
 
 			<h:outputText value="#{bundle['label.file']}: <br/>" escape="false"/>
 			<h:outputText value="<input size=\"30\" type=\"file\" name=\"theFile\"/>" escape="false"/>
