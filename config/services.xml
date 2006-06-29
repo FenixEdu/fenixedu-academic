@@ -5067,16 +5067,6 @@
 		<filterChains/>
 	</service>
 	<service>
-		<name>ReadDegreeInfoByExecutionDegree</name>
-		<implementationClass> 
-            net.sourceforge.fenixedu.applicationTier.Servico.coordinator.ReadDegreeInfoByExecutionDegree</implementationClass>
-		<description />
-		<isTransactional>true</isTransactional>
-		<filterChains>
-			<chain name="DegreeCoordinatorAuthorization" />
-		</filterChains>
-	</service>
-	<service>
 		<name>ReadActiveDegreeCurricularPlanScopes</name>
 		<implementationClass> 
             net.sourceforge.fenixedu.applicationTier.Servico.coordinator.degreeCurricularPlanManagement.ReadActiveDegreeCurricularPlanScopes</implementationClass>
@@ -5154,14 +5144,6 @@
 		<name>ReadWebSiteSectionByCode</name>
 		<implementationClass> 
             net.sourceforge.fenixedu.applicationTier.Servico.publico.ReadWebSiteSectionByCode</implementationClass>
-		<description />
-		<isTransactional>true</isTransactional>
-		<filterChains />
-	</service>
-	<service>
-		<name>ReadDegreeInfoByDegree</name>
-		<implementationClass> 
-            net.sourceforge.fenixedu.applicationTier.Servico.publico.ReadDegreeInfoByDegree</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains />
@@ -7330,16 +7312,6 @@
 		<implementationClass> 
             net.sourceforge.fenixedu.applicationTier.Servico.coordinator.degreeCurricularPlanManagement.ReadDegreeCurricularPlanHistoryByDegreeCurricularPlanID
 		</implementationClass>
-		<description />
-		<isTransactional>true</isTransactional>
-		<filterChains>
-			<chain name="CoordinatorAuthorization" />
-		</filterChains>
-	</service>
-	<service>
-		<name>ReadDegreeInfoByDegreeCurricularPlanID</name>
-		<implementationClass> 
-            net.sourceforge.fenixedu.applicationTier.Servico.coordinator.ReadDegreeInfoByDegreeCurricularPlanID</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains>
