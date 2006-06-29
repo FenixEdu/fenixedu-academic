@@ -6,9 +6,16 @@
 	<slot name="name"/>
 	<slot name="email"/>
 </schema>
+<schema name="locality.name" type="net.sourceforge.fenixedu.domain.Locality">
+	<slot name="name"/>
+</schema>
 <schema name="Holiday" type="net.sourceforge.fenixedu.domain.Holiday">
 	<slot name="date"/>
-	<slot name="locality.name" bundle="MANAGER_RESOURCES" key="label.locality"/>
+	<slot name="locality" layout="null-as-label">
+		<property name="label" value=""/>
+		<property name="subLayout" value="values"/>
+		<property name="subSchema" value="locality.name"/>
+	</slot>
 </schema>
 <schema name="HolidayFactoryCreatory" type="net.sourceforge.fenixedu.domain.Holiday$HolidayFactoryCreator">
 	<slot name="year" bundle="MANAGER_RESOURCES" key="label.year"/>

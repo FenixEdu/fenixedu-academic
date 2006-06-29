@@ -16,35 +16,6 @@
 </fr:create>
 <br/>
 <br/>
-<table class="style1">
-	<tr>
-		<th><bean:message bundle="MANAGER_RESOURCES" key="label.date"/></th>
-		<th><bean:message bundle="MANAGER_RESOURCES" key="label.locality"/></th>
-		<th></th>
-	</tr>
-	<logic:iterate id="holiday" name="holidays">
-		<tr>
-			<td class="listClasses">
-				<fr:view name="holiday" property="date"/>
-			</td>
-			<td class="listClasses">
-				<logic:present name="holiday" property="locality">
-					<bean:write name="holiday" property="locality.name"/>
-				</logic:present>
-			</td>
-			<td class="listClasses">
-				<html:link action="/manageHolidays.do?method=create&amp;page=0"
-						paramId="holidayID" paramName="holiday" paramProperty="idInternal">
-					<bean:message bundle="MANAGER_RESOURCES" key="link.delete"/>
-				</html:link>
-			</td>
-		</tr>
-	</logic:iterate>
-</table>
-<%--
-This has a bug... locality may be null, and when this happens the getName provokes a NPE.
-<br/>
-<br/>
 <logic:present name="holidays">
 	<fr:view name="holidays" schema="Holiday" layout="tabular">
 		<fr:layout>
@@ -57,4 +28,3 @@ This has a bug... locality may be null, and when this happens the getName provok
 		</fr:layout>
 	</fr:view>
 </logic:present>
---%>
