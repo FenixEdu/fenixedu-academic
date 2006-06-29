@@ -29,7 +29,7 @@ public class FenixBackingBean {
     private UIViewState viewState;
 
     protected static final RootDomainObject rootDomainObject = RootDomainObject.getInstance();
-    
+
     public FenixBackingBean() {
         final FacesContext facesContext = FacesContext.getCurrentInstance();
 
@@ -61,15 +61,18 @@ public class FenixBackingBean {
     }
 
     protected HttpServletResponse getResponse() {
-        return (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
+        return (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext()
+                .getResponse();
     }
 
     protected String getRequestParameter(String parameterName) {
-        return (String) FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get(parameterName);
+        return (String) FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap()
+                .get(parameterName);
     }
 
     protected String[] getRequestParameterValues(String parameterName) {
-        return (String[]) FacesContext.getCurrentInstance().getExternalContext().getRequestParameterValuesMap().get(parameterName);
+        return (String[]) FacesContext.getCurrentInstance().getExternalContext()
+                .getRequestParameterValuesMap().get(parameterName);
     }
 
     protected Object getRequestAttribute(String attributeName) {
@@ -147,28 +150,29 @@ public class FenixBackingBean {
         }
         return parameterValue;
     }
-    
-    protected String getFormatedMessage(final String bundleName, final String key, final String ... args) {
-    	final ResourceBundle bundle = getResourceBundle(bundleName);
+
+    protected String getFormatedMessage(final String bundleName, final String key, final String... args) {
+        final ResourceBundle bundle = getResourceBundle(bundleName);
         String message = bundle.getString(key);
-    	return formatMessage(message, args);
+        return formatMessage(message, args);
     }
 
-    protected String getFormatedMessage(final ResourceBundle bundle, final String key, final String ... args) {
+    protected String getFormatedMessage(final ResourceBundle bundle, final String key,
+            final String... args) {
         return formatMessage(bundle.getString(key), args);
     }
-    
+
     private String formatMessage(String message, final String... args) {
-        if(message != null && args != null) {
-            for(int i = 0; args.length > i; i++) {
+        if (message != null && args != null) {
+            for (int i = 0; args.length > i; i++) {
                 String substring = "{" + i + "}";
                 message = StringUtils.replace(message, substring, args[i]);
             }
         }
         return message;
     }
-    
-    protected void addErrorMessages(final ResourceBundle bundle, final String key, final String ... args) {
+
+    protected void addErrorMessages(final ResourceBundle bundle, final String key, final String... args) {
         String message = bundle.getString(key);
         if (message != null) {
             int indexOfManyArgs = message.indexOf("{...}");
@@ -182,7 +186,7 @@ public class FenixBackingBean {
             }
         }
     }
-    
+
     protected Double getAndHoldDoubleParameter(final String parameterName) {
         final String parameterString = getRequestParameter(parameterName);
         final Double parameterValue;
@@ -216,6 +220,10 @@ public class FenixBackingBean {
     public Boolean getRenderInEnglish() {
         final Locale locale = FacesContext.getCurrentInstance().getViewRoot().getLocale();
         return locale.getLanguage().equals(Locale.ENGLISH.getLanguage());
+    }
+
+    public Boolean isMessagesEmpty() {
+        return FacesContext.getCurrentInstance().getMessages().hasNext();
     }
 
 }
