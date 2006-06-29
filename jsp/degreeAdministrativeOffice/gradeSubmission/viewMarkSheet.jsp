@@ -79,6 +79,6 @@
 	<strong><bean:message key="label.checksum"/></strong> : <bean:write name="checksum"/>
 	<br/><br/><br/>
 	<html:cancel styleClass="inputbutton" onclick="this.form.method.value='prepareSearchMarkSheetFilled';this.form.submit();"><bean:message key="label.back"/></html:cancel>
-	<%-- <html:submit styleClass="inputbutton"><bean:message key="label.print"/></html:submit> --%>
+	<html:submit styleClass="inputbutton"><bean:message key="label.print"/></html:submit>
 	
 </html:form>
