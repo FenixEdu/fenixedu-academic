@@ -578,7 +578,7 @@ public class CompetenceCourse extends CompetenceCourse_Base {
     public Set<DegreeCurricularPlan> presentIn() {
         Set<DegreeCurricularPlan> result = new HashSet<DegreeCurricularPlan>();
         for (CurricularCourse curricularCourse : this.getAssociatedCurricularCourses()) {
-            result.add(curricularCourse.getParentDegreeCurricularPlan());
+            result.add(curricularCourse.getDegreeCurricularPlan());
         }
         
         return result;
