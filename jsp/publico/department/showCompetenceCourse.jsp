@@ -17,13 +17,21 @@
 		<h:outputText value="#{globalBundle['institution.name.abbreviation']}"/>
 	</h:outputLink>
 	&nbsp;&gt;&nbsp;
+	<h:outputLink target="_blank" value="#{globalBundle['institution.url']}#{globalBundle['link.institution.structure']}">
+		<h:outputText value="#{publicDepartmentBundle['structure']}"/>
+	</h:outputLink>
+	&nbsp;&gt;&nbsp;
+	<h:outputLink value="showDepartments.faces">
+		<h:outputText value="#{publicDepartmentBundle['academic.units']}"/>
+	</h:outputLink>
+	&nbsp;&gt;&nbsp;
 	<h:outputText rendered="#{empty CompetenceCourseManagement.competenceCourse.departmentUnit.webAddress}" value="#{CompetenceCourseManagement.competenceCourse.departmentUnit.department.realName}"/>
 	<h:outputLink rendered="#{!empty CompetenceCourseManagement.competenceCourse.departmentUnit.webAddress}" value="#{CompetenceCourseManagement.competenceCourse.departmentUnit.webAddress}" target="_blank">
 		<h:outputText value="#{CompetenceCourseManagement.competenceCourse.departmentUnit.department.realName}"/>
 	</h:outputLink>
 	&nbsp;&gt;&nbsp;
 	<h:outputLink value="../department/showDepartmentCompetenceCourses.faces">
-		<h:outputText value="#{publicDepartmentBundle['department.competence.courses']}"/>
+		<h:outputText value="#{publicDepartmentBundle['department.courses']}"/>
 		<f:param name="selectedDepartmentUnitID" value="#{CompetenceCourseManagement.competenceCourse.departmentUnit.idInternal}"/>
 	</h:outputLink>
 	&nbsp;&gt;&nbsp;
