@@ -632,7 +632,6 @@
      
      		>
 	     <forward  name="showDegreeCurricularPlan" path="showDegreeCurricularPlanNew"/>  		  
-	     <forward  name="showDegreeCurricularPlanEnglish" path="showDegreeCurricularPlanEnglish"/>
      </action>
  <!--   "/showDegreeSite.do?method=showCurricularPlan"  -->
      <action path="/showCourseSite"
@@ -694,7 +693,7 @@
               name="chooseContextDegreeForm"
               parameter="method"
               >    
-          <forward name="Sucess" path="/showDegreeCurricularPlanNew.do?method=showCurricularPlan&amp;page=0"/>     
+          <forward name="Sucess" path="/showDegreeCurricularPlanNew.do?method=showCurricularPlan&amp;page=0"/>
           <forward name="choose" path="/prepareSelectExecutionCourseActionNew.do"/>
       </action>
       <action path="/prepareSelectExecutionCourseActionNew"

@@ -1213,6 +1213,7 @@ class net.sourceforge.fenixedu.domain.ExecutionDegree extends net.sourceforge.fe
 	Integer keyPeriodGradeSubmissionNormalSeasonFirstSemester;
 	Integer keyPeriodGradeSubmissionNormalSeasonSecondSemester;
 	Integer keyPeriodGradeSubmissionSpecialSeason;
+	MultiLanguageString anotation;
 }
 
 

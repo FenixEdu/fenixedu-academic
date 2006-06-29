@@ -25,6 +25,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSection;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSite;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
@@ -268,16 +269,11 @@ public abstract class RequestUtils {
             InfoExecutionDegree executionDegree) {
         if (executionDegree != null) {
             request.setAttribute("exeDegree", executionDegree);
-
-            request.setAttribute("nameDegreeCurricularPlan", executionDegree
-                    .getInfoDegreeCurricularPlan().getName());
-			if (executionDegree.getInfoDegreeCurricularPlan()
-			.getInfoDegree() != null)
-	            request.setAttribute("degreeInitials", executionDegree.getInfoDegreeCurricularPlan()
-	                    .getInfoDegree().getSigla());
-			request.setAttribute("degreeCurricularPlanID", executionDegree.getInfoDegreeCurricularPlan()
-							   .getIdInternal());
-
+            request.setAttribute("nameDegreeCurricularPlan", executionDegree.getInfoDegreeCurricularPlan().getName());
+			if (executionDegree.getInfoDegreeCurricularPlan().getInfoDegree() != null)
+	            request.setAttribute("degreeInitials", executionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getSigla());
+			request.setAttribute("degreeCurricularPlanID", executionDegree.getInfoDegreeCurricularPlan().getIdInternal());
+			request.setAttribute("executionDegree", RootDomainObject.getInstance().readExecutionDegreeByOID(executionDegree.getIdInternal()));
         }
 
     }

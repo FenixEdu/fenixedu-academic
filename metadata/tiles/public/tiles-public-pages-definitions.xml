@@ -46,10 +46,6 @@
 	<definition name="showDegreeCurricularPlanNew" extends="definition.public.mainPageIST">
 		<put name="main_navigation" value="/publico/degreeSite/degreeSiteMainNavigation.jsp" />	
 		<put name="body" value="/publico/degreeSite/showDegreeCurricularPlanNew.jsp"/>
-	</definition>	
-	<definition name="showDegreeCurricularPlanEnglish" extends="definition.public.mainPageIST">
-		<put name="main_navigation" value="/publico/degreeSite/degreeSiteMainNavigation.jsp" />	
-		<put name="body" value="/publico/degreeSite/showDegreeCurricularPlanEnglish.jsp"/>
 	</definition>
 	<definition name="showCurricularCourseSite" extends="definition.public.mainPageIST">
 		<!--<put name="main_navigation" value="/publico/degreeSite/degreeSiteMainNavigation.jsp" />	-->

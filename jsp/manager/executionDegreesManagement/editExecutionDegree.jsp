@@ -1,7 +1,9 @@
+<%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="dt" %>
+<%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
 
 <html:messages id="messages" message="true">
 	<span class="error"><bean:write name="messages" /></span>
@@ -76,3 +78,10 @@
 	<html:submit styleClass="inputbutton"><bean:message bundle="MANAGER_RESOURCES" key="button.save"/></html:submit>
 
 </html:form>
+
+<br/>
+<br/>
+<fr:edit name="executionDegree"
+		type="net.sourceforge.fenixedu.domain.ExecutionDegree"
+		schema="net.sourceforge.fenixedu.domain.ExecutionDegree.annotation"
+		/>

@@ -11,7 +11,8 @@
 	<!ENTITY assiduousness SYSTEM "assiduousness-schemas.xml">
 	<!ENTITY party SYSTEM "party-schemas.xml">
 	<!ENTITY payments SYSTEM "payments-schemas.xml">
-	<!ENTITY candidacy SYSTEM "candidacy-schemas.xml">	
+	<!ENTITY candidacy SYSTEM "candidacy-schemas.xml">
+	<!ENTITY execution SYSTEM "execution-schemas.xml">
 ]>
 
 <schemas>
@@ -804,4 +805,5 @@
 	&party;
 	&payments;
 	&candidacy;
+	&execution;
 </schemas>

@@ -1,0 +1,3 @@
+<schema name="net.sourceforge.fenixedu.domain.ExecutionDegree.annotation" type="net.sourceforge.fenixedu.domain.ExecutionDegree">
+	<slot name="anotation"/>
+</schema>
