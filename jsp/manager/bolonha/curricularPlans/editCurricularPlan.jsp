@@ -3,7 +3,7 @@
 <%@ taglib uri="/WEB-INF/jsf_fenix_components.tld" prefix="fc"%>
 <%@ taglib uri="/WEB-INF/html_basic.tld" prefix="h"%>
 
-<ft:tilesView definition="scientificCouncil.masterPage" attributeName="body-inline">
+<ft:tilesView definition="definition.manager.masterPage" attributeName="body-inline">
 	<f:loadBundle basename="resources/ScientificCouncilResources" var="scouncilBundle"/>
 	<f:loadBundle basename="resources/EnumerationResources" var="enumerationBundle"/>
 	
@@ -27,6 +27,13 @@
 			<f:selectItems value="#{DegreeCurricularPlanManagement.curricularStages}" />
 		</h:selectOneMenu>
 		<h:message for="curricularStage" errorClass="error" rendered="#{empty DegreeCurricularPlanManagement.errorMessage}"/>
+		<h:outputText value="</p>" escape="false"/>
+		
+		<h:outputText value="<p><label>#{scouncilBundle['state']}:</label> " escape="false"/>
+		<h:selectOneMenu id="state" value="#{DegreeCurricularPlanManagement.state}" onchange="this.form.submit();">
+			<f:selectItems value="#{DegreeCurricularPlanManagement.states}" />
+		</h:selectOneMenu>
+		<h:message for="state" errorClass="error" rendered="#{empty DegreeCurricularPlanManagement.errorMessage}"/>
 		<h:outputText value="</p>" escape="false"/>
 		
 		<h:panelGroup rendered="#{DegreeCurricularPlanManagement.curricularStage == 'APPROVED'}">
@@ -57,13 +64,6 @@
 		<h:panelGroup rendered="#{empty CurricularPlansMembersManagementBackingBean.groupMembersLabels}">
 			<h:outputText value="<p><em>#{scouncilBundle['label.empty.curricularPlanGroup.members']}</em><p/>" escape="false" />
 		</h:panelGroup>
-		
-		<h:outputText value="<p>" escape="false" />
-		<h:outputLink value="editCurricularPlanMembersGroup.faces">
-			<h:outputText value="#{scouncilBundle['accessGroupManagement']}" />
-			<f:param name="dcpId" value="#{CurricularPlansMembersManagementBackingBean.degreeCurricularPlan.idInternal}"/>
-		</h:outputLink>
-		<h:outputText value="</p>" escape="false" />
 		
 		<h:outputText value="<br/><p>" escape="false" />
 		<h:commandButton styleClass="inputbutton" value="#{scouncilBundle['button.save']}"

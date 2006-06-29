@@ -98,15 +98,24 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
     public DegreeCurricularPlan() {
         super();
         setRootDomainObject(RootDomainObject.getInstance());
+
+        super.setOjbConcreteClass(getClass().getName());
     }
 
-    private DegreeCurricularPlan(Degree degree) {
+    private DegreeCurricularPlan(Degree degree, String name, GradeScale gradeScale) {
         this();
+
         if (degree == null) {
             throw new DomainException("degreeCurricularPlan.degree.not.null");
         }
         super.setDegree(degree);
-        super.setOjbConcreteClass(getClass().getName());
+
+        if (name == null) {
+            throw new DomainException("degreeCurricularPlan.name.not.null");
+        }
+        super.setName(name);
+
+        super.setGradeScale(gradeScale);
     }
 
     protected DegreeCurricularPlan(Degree degree, String name, DegreeCurricularPlanState state,
@@ -114,36 +123,20 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
             Integer minimalYearForOptionalCourses, Double neededCredits, MarkType markType,
             Integer numerusClausus, String annotation, GradeScale gradeScale) {
 
-        this(degree);
+        this(degree, name, gradeScale);
         super.setCurricularStage(CurricularStage.OLD);
-
-        if (name == null) {
-            throw new DomainException("degreeCurricularPlan.name.not.null");
-        }
-
-        super.setName(name);
-        super.setGradeScale(gradeScale);
-
-        oldStructureFieldsChange(state, inicialDate, endDate, degreeDuration,
-                minimalYearForOptionalCourses, neededCredits, markType, numerusClausus, annotation);
-
         this
                 .setConcreteClassForStudentCurricularPlans(degree
                         .getConcreteClassForDegreeCurricularPlans());
+        super.setState(state);
+
+        oldStructureFieldsChange(inicialDate, endDate, degreeDuration, minimalYearForOptionalCourses,
+                neededCredits, markType, numerusClausus, annotation);
     }
 
-    private void commonFieldsChange(String name, GradeScale gradeScale) {
-        if (name == null) {
-            throw new DomainException("degreeCurricularPlan.name.not.null");
-        }
-
-        this.setName(name);
-        this.setGradeScale(gradeScale);
-    }
-
-    private void oldStructureFieldsChange(DegreeCurricularPlanState state, Date inicialDate,
-            Date endDate, Integer degreeDuration, Integer minimalYearForOptionalCourses,
-            Double neededCredits, MarkType markType, Integer numerusClausus, String annotation) {
+    private void oldStructureFieldsChange(Date inicialDate, Date endDate, Integer degreeDuration,
+            Integer minimalYearForOptionalCourses, Double neededCredits, MarkType markType,
+            Integer numerusClausus, String annotation) {
 
         if (inicialDate == null) {
             throw new DomainException("degreeCurricularPlan.inicialDate.not.null");
@@ -153,7 +146,6 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
             throw new DomainException("degreeCurricularPlan.minimalYearForOptionalCourses.not.null");
         }
 
-        this.setState(state);
         this.setInitialDate(inicialDate);
         this.setEndDate(endDate);
         this.setDegreeDuration(degreeDuration);
@@ -166,55 +158,44 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 
     protected DegreeCurricularPlan(Degree degree, String name, GradeScale gradeScale, Person creator,
             CurricularPeriod curricularPeriod) {
-        this(degree);
+        this(degree, name, gradeScale);
 
-        if (name == null) {
-            throw new DomainException("degreeCurricularPlan.name.not.null");
+        if (creator == null) {
+            throw new DomainException("degreeCurricularPlan.creator.not.null");
         }
-
-        super.setName(name);
-        super.setGradeScale(gradeScale);
-        this.setRoot(new CourseGroup(name, name));
-        this.setState(DegreeCurricularPlanState.ACTIVE);
-
-        newStructureFieldsChange(CurricularStage.DRAFT, null);
+        this.setCurricularPlanMembersGroup(new FixedSetGroup(creator));
 
         if (curricularPeriod == null) {
             throw new DomainException("degreeCurricularPlan.curricularPeriod.not.null");
         }
         this.setDegreeStructure(curricularPeriod);
 
-        if (creator == null) {
-            throw new DomainException("degreeCurricularPlan.creator.not.null");
-        }
-        this.setCurricularPlanMembersGroup(new FixedSetGroup(creator));
+        this.setRoot(new CourseGroup(name, name));
+        this.setState(DegreeCurricularPlanState.ACTIVE);
+        newStructureFieldsChange(CurricularStage.DRAFT, null);
     }
 
     private void newStructureFieldsChange(CurricularStage curricularStage,
             ExecutionYear beginExecutionYear) {
+
         if (curricularStage == null) {
             throw new DomainException("degreeCurricularPlan.curricularStage.not.null");
-        }
-        if (curricularStage == CurricularStage.APPROVED) {
+        } else if (hasAnyExecutionDegrees() && curricularStage == CurricularStage.DRAFT) {
+            throw new DomainException("degreeCurricularPlan.has.already.been.executed");
+        } else if (curricularStage == CurricularStage.APPROVED) {
             approve(beginExecutionYear);
         } else {
+            if (isApproved()) {
+                resetBeginExecutionPeriodForDegreeCurricularPlan(getRoot());
+            }
             this.setCurricularStage(curricularStage);
         }
     }
 
-    public void edit(String name, DegreeCurricularPlanState state, Date inicialDate, Date endDate,
-            Integer degreeDuration, Integer minimalYearForOptionalCourses, Double neededCredits,
-            MarkType markType, Integer numerusClausus, String annotation, GradeScale gradeScale) {
-
-        commonFieldsChange(name, gradeScale);
-        oldStructureFieldsChange(state, inicialDate, endDate, degreeDuration,
-                minimalYearForOptionalCourses, neededCredits, markType, numerusClausus, annotation);
-    }
-
-    public void edit(String name, CurricularStage curricularStage, GradeScale gradeScale,
-            ExecutionYear beginExecutionYear) {
-        commonFieldsChange(name, gradeScale);
-        newStructureFieldsChange(curricularStage, beginExecutionYear);
+    private void commonFieldsChange(String name, GradeScale gradeScale) {
+        if (name == null) {
+            throw new DomainException("degreeCurricularPlan.name.not.null");
+        }
 
         // assert unique pair name/degree
         for (final DegreeCurricularPlan dcp : this.getDegree().getDegreeCurricularPlans()) {
@@ -222,37 +203,57 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
                 throw new DomainException("error.degreeCurricularPlan.existing.name.and.degree");
             }
         }
+        this.setName(name);
 
+        this.setGradeScale(gradeScale);
+    }
+
+    public void edit(String name, DegreeCurricularPlanState state, Date inicialDate, Date endDate,
+            Integer degreeDuration, Integer minimalYearForOptionalCourses, Double neededCredits,
+            MarkType markType, Integer numerusClausus, String annotation, GradeScale gradeScale) {
+
+        commonFieldsChange(name, gradeScale);
+        oldStructureFieldsChange(inicialDate, endDate, degreeDuration, minimalYearForOptionalCourses,
+                neededCredits, markType, numerusClausus, annotation);
+
+        this.setState(state);
+    }
+
+    public void edit(String name, CurricularStage curricularStage, DegreeCurricularPlanState state,
+            GradeScale gradeScale, ExecutionYear beginExecutionYear) {
+
+        if (isApproved()
+                && ((name != null && !getName().equals(name)) || (gradeScale != null && !getGradeScale()
+                        .equals(gradeScale)))) {
+            throw new DomainException("error.degreeCurricularPlan.already.approved");
+        } else {
+            commonFieldsChange(name, gradeScale);
+        }
+
+        newStructureFieldsChange(curricularStage, beginExecutionYear);
+
+        this.setState(state);
         this.getRoot().setName(name);
         this.getRoot().setNameEn(name);
     }
 
-    public boolean isBolonha() {
-        return !getCurricularStage().equals(CurricularStage.OLD);
-    }
-    
-    public boolean isApproved() {
-        return getCurricularStage() == CurricularStage.APPROVED;
-    }
-
-    public boolean isDraft() {
-        return getCurricularStage() == CurricularStage.DRAFT;
-    }
-
-    public void approve(ExecutionYear beginExecutionYear) {
+    private void approve(ExecutionYear beginExecutionYear) {
         if (isApproved()) {
             throw new DomainException("error.degreeCurricularPlan.already.approved");
-
-        } else if (beginExecutionYear == null) {
-            throw new DomainException("error.invalid.execution.year");
-
-        } else if (beginExecutionYear.readExecutionPeriodForSemester(Integer.valueOf(1)) == null) {
-            throw new DomainException("error.invalid.execution.period");
-
         }
+
+        final ExecutionPeriod beginExecutionPeriod;
+        if (beginExecutionYear == null) {
+            throw new DomainException("error.invalid.execution.year");
+        } else {
+            beginExecutionPeriod = beginExecutionYear.readExecutionPeriodForSemester(Integer.valueOf(1));
+            if (beginExecutionPeriod == null) {
+                throw new DomainException("error.invalid.execution.period");
+            }
+        }
+
         checkIfCurricularCoursesBelongToApprovedCompetenceCourses();
-        initBeginExecutionPeriodForDegreeCurricularPlan(getRoot(), beginExecutionYear
-                .readExecutionPeriodForSemester(Integer.valueOf(1)));
+        initBeginExecutionPeriodForDegreeCurricularPlan(getRoot(), beginExecutionPeriod);
         setCurricularStage(CurricularStage.APPROVED);
     }
 
@@ -286,6 +287,22 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
                         .getChildDegreeModule(), beginExecutionPeriod);
             }
         }
+    }
+
+    private void resetBeginExecutionPeriodForDegreeCurricularPlan(final CourseGroup courseGroup) {
+        initBeginExecutionPeriodForDegreeCurricularPlan(courseGroup, null);
+    }
+
+    public boolean isBolonha() {
+        return !getCurricularStage().equals(CurricularStage.OLD);
+    }
+
+    public boolean isApproved() {
+        return getCurricularStage() == CurricularStage.APPROVED;
+    }
+
+    public boolean isDraft() {
+        return getCurricularStage() == CurricularStage.DRAFT;
     }
 
     private Boolean getCanBeDeleted() {
@@ -392,12 +409,14 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 
     public List<ExecutionCourse> getExecutionCoursesByExecutionPeriodAndSemesterAndYear(
             ExecutionPeriod executionPeriod, Integer curricularYear, Integer semester) {
-        
+
         List<ExecutionCourse> result = new ArrayList<ExecutionCourse>();
         for (final CurricularCourse curricularCourse : this.getCurricularCourses()) {
             for (final DegreeModuleScope degreeModuleScope : curricularCourse.getDegreeModuleScopes()) {
-                if (degreeModuleScope.getCurricularSemester().equals(semester) && degreeModuleScope.getCurricularYear().equals(curricularYear)) {
-                    for (final ExecutionCourse executionCourse : curricularCourse.getAssociatedExecutionCourses()) {
+                if (degreeModuleScope.getCurricularSemester().equals(semester)
+                        && degreeModuleScope.getCurricularYear().equals(curricularYear)) {
+                    for (final ExecutionCourse executionCourse : curricularCourse
+                            .getAssociatedExecutionCourses()) {
                         if (executionCourse.getExecutionPeriod().equals(executionPeriod)) {
                             result.add(executionCourse);
                         }
@@ -550,8 +569,8 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
     }
 
     /**
-     * Method to get a filtered list of a dcp's curricular courses, with at least one open 
-     * context in the given execution year
+     * Method to get a filtered list of a dcp's curricular courses, with at
+     * least one open context in the given execution year
      * 
      * @return All curricular courses that are present in the dcp
      */
@@ -568,7 +587,8 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
     /**
      * Method to get an unfiltered list of a bolonha dcp's competence courses
      * 
-     * @return All competence courses that were or still are present in the dcp, ordered by name
+     * @return All competence courses that were or still are present in the dcp,
+     *         ordered by name
      */
     public List<CompetenceCourse> getCompetenceCourses() {
         if (this.isBolonha()) {
@@ -576,25 +596,26 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
         } else {
             return new ArrayList<CompetenceCourse>();
         }
-        
+
     }
 
     /**
-     * Method to get a filtered list of a dcp's competence courses in the given execution year. 
-     * Each competence courses is connected with a curricular course with at least one open 
-     * context in the execution year
+     * Method to get a filtered list of a dcp's competence courses in the given
+     * execution year. Each competence courses is connected with a curricular
+     * course with at least one open context in the execution year
      * 
      * @return All competence courses that are present in the dcp
      */
     public List<CompetenceCourse> getCompetenceCourses(ExecutionYear executionYear) {
-        SortedSet<CompetenceCourse> result = new TreeSet<CompetenceCourse>(CompetenceCourse.COMPETENCE_COURSE_COMPARATOR_BY_NAME);
+        SortedSet<CompetenceCourse> result = new TreeSet<CompetenceCourse>(
+                CompetenceCourse.COMPETENCE_COURSE_COMPARATOR_BY_NAME);
         if (this.isBolonha()) {
             for (final CurricularCourse curricularCourse : getCurricularCourses(executionYear)) {
                 result.add(curricularCourse.getCompetenceCourse());
             }
             return new ArrayList<CompetenceCourse>(result);
         } else {
-            return new ArrayList<CompetenceCourse>();    
+            return new ArrayList<CompetenceCourse>();
         }
     }
 
@@ -785,7 +806,8 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
         }
     }
 
-    public List<DegreeModule> getDcpDegreeModules(Class<? extends DegreeModule> clazz, ExecutionYear executionYear) {
+    public List<DegreeModule> getDcpDegreeModules(Class<? extends DegreeModule> clazz,
+            ExecutionYear executionYear) {
         final Set<DegreeModule> result = new HashSet<DegreeModule>();
         this.getRoot().collectChildDegreeModules(clazz, result, executionYear);
         return new ArrayList<DegreeModule>(result);
@@ -995,16 +1017,19 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
         return curricularCourseScopes;
     }
 
-    
-    public ExecutionDegree createExecutionDegree(ExecutionYear executionYear, Campus campus, Boolean temporaryExamMap) {
+    public ExecutionDegree createExecutionDegree(ExecutionYear executionYear, Campus campus,
+            Boolean temporaryExamMap) {
         if (this.isBolonha() && this.isDraft()) {
-            throw new DomainException("degree.curricular.plan.not.approved.cannot.create.execution.degree", this.getName());
+            throw new DomainException(
+                    "degree.curricular.plan.not.approved.cannot.create.execution.degree", this.getName());
         }
-        
+
         if (this.hasAnyExecutionDegreeFor(executionYear)) {
-            throw new DomainException("degree.curricular.plan.already.has.execution.degree.for.this.year", this.getName(), executionYear.getYear());
+            throw new DomainException(
+                    "degree.curricular.plan.already.has.execution.degree.for.this.year", this.getName(),
+                    executionYear.getYear());
         }
-        
+
         return new ExecutionDegree(this, executionYear, campus, temporaryExamMap);
     }
 

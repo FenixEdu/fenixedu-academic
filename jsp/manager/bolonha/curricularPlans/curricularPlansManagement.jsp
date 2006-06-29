@@ -18,11 +18,11 @@
 		<h:messages infoClass="success0" errorClass="error0" layout="table" globalOnly="true"/>
 	
 		<fc:dataRepeater value="#{DegreeManagement.filteredBolonhaDegrees}" var="degree" rendered="#{!empty DegreeManagement.filteredBolonhaDegrees}">
-			<h:outputText value="<table style='width: 720px' class='showinfo1 bgcolor1'>" escape="false"/>
+			<h:outputText value="<table style='width: 750px' class='showinfo1 bgcolor1'>" escape="false"/>
 			<h:outputText value="<tr><th width='80px'><strong>#{bolonhaBundle['degree']}:</strong></th>" escape="false"/>
 	
 			<h:outputText value="<td> #{enumerationBundle[degree.bolonhaDegreeType.name]} #{degree.nome} (#{degree.sigla})</td>" escape="false"/>
-			<h:outputText value="<td style='width: 110px'>" escape="false"/>
+			<h:outputText value="<td style='width: 140px'>" escape="false"/>
 			<h:outputLink value="viewDegree.faces">
 				<h:outputFormat value="#{bolonhaBundle['view']}"/>
 				<f:param name="degreeId" value="#{degree.idInternal}"/>
@@ -47,6 +47,15 @@
 				<h:outputText value="<td>" escape="false"/>
 				<h:outputLink value="viewCurricularPlan.faces">
 					<h:outputText value="#{bolonhaBundle['view']}" />
+					<f:param name="degreeCurricularPlanID" value="#{degreeCurricularPlan.idInternal}"/>
+					<f:param name="organizeBy" value="groups"/>
+					<f:param name="showRules" value="false"/>
+					<f:param name="hideCourses" value="false"/>
+					<f:param name="action" value="view"/>
+				</h:outputLink>
+				<h:outputText value=" , " escape="false" rendered="#{degreeCurricularPlan.userCanBuild}"/>
+				<h:outputLink value="editCurricularPlan.faces">
+					<h:outputText value="#{bolonhaBundle['edit']}" />
 					<f:param name="degreeCurricularPlanID" value="#{degreeCurricularPlan.idInternal}"/>
 					<f:param name="organizeBy" value="groups"/>
 					<f:param name="showRules" value="false"/>

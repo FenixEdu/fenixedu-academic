@@ -32,6 +32,8 @@ import org.apache.ojb.broker.accesslayer.conversions.JavaDate2SqlDateFieldConver
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.apache.struts.action.ActionMessage;
+import org.apache.struts.action.ActionMessages;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.validator.DynaValidatorForm;
 
@@ -217,7 +219,10 @@ public class EditDegreeCurricularPlanDispatchAction extends FenixDispatchAction 
         } catch (NonExistingServiceException e) {
             throw new NonExistingActionException(e.getMessage(), mapping.findForward("readDegree"));
         } catch (FenixServiceException fenixServiceException) {
-            throw new FenixActionException(fenixServiceException);
+            ActionMessages actionMessages = new ActionMessages();
+            actionMessages.add(fenixServiceException.getMessage(), new ActionMessage(fenixServiceException.getMessage()));
+            saveMessages(request, actionMessages);
+            return mapping.findForward("editDegreeCP");
         }
         return mapping.findForward("readDegreeCP");
     }

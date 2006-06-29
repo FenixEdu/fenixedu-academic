@@ -11,6 +11,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.GradeScale;
+import net.sourceforge.fenixedu.domain.degree.degreeCurricularPlan.DegreeCurricularPlanState;
 import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
@@ -37,14 +38,21 @@ public class DegreeCurricularPlanManagementBackingBean extends FenixBackingBean 
     }
 
     public Integer getDcpId() {
-        return (dcpId == null) ? (dcpId = getAndHoldIntegerParameter("dcpId")) : dcpId;
+        if (dcp == null) {
+            if (getAndHoldIntegerParameter("dcpId") != null) {
+                dcpId = getAndHoldIntegerParameter("dcpId");
+            } else {
+                dcpId = getAndHoldIntegerParameter("degreeCurricularPlanID");
+            }
+        }
+        return dcpId;
     }
 
     public void setDcpId(Integer dcpId) {
         this.dcpId = dcpId;
     }
 
-    public DegreeCurricularPlan getDcp() throws FenixFilterException, FenixServiceException {
+    public DegreeCurricularPlan getDcp() {
         return (dcp == null) ? (dcp = rootDomainObject.readDegreeCurricularPlanByOID(getDcpId())) : dcp;
     }
 
@@ -52,7 +60,7 @@ public class DegreeCurricularPlanManagementBackingBean extends FenixBackingBean 
         this.dcp = dcp;
     }
 
-    public String getName() throws FenixFilterException, FenixServiceException {
+    public String getName() {
         return (name == null && getDcp() != null) ? (name = getDcp().getName()) : name;
     }
 
@@ -60,7 +68,7 @@ public class DegreeCurricularPlanManagementBackingBean extends FenixBackingBean 
         this.name = name;
     }    
 
-    public String getCurricularStage() throws FenixFilterException, FenixServiceException {
+    public String getCurricularStage() {
         if (getViewState().getAttribute("curricularStage") == null && getDcp() != null) {
             setCurricularStage(getDcp().getCurricularStage().getName());
         }
@@ -71,7 +79,18 @@ public class DegreeCurricularPlanManagementBackingBean extends FenixBackingBean 
         getViewState().setAttribute("curricularStage", curricularStage);
     }
     
-    public String getGradeScale() throws FenixFilterException, FenixServiceException {
+    public String getState() {
+        if (getViewState().getAttribute("state") == null && getDcp() != null) {
+            setState(getDcp().getState().getName());
+        }
+        return (String) getViewState().getAttribute("state");
+    }
+
+    public void setState(String state) {
+        getViewState().setAttribute("state", state);
+    }
+    
+    public String getGradeScale() {
         return (gradeScale == null && getDcp() != null) ? (gradeScale = getDcp().getGradeScale().getName()) : gradeScale;
     }
 
@@ -97,9 +116,22 @@ public class DegreeCurricularPlanManagementBackingBean extends FenixBackingBean 
     public List<SelectItem> getCurricularStages() {
         List<SelectItem> result = new ArrayList<SelectItem>();
         
-        result.add(new SelectItem(CurricularStage.DRAFT.name(), enumerationBundle.getString(CurricularStage.DRAFT.getName())));
+        if (!getDcp().hasAnyExecutionDegrees()) {
+            result.add(new SelectItem(CurricularStage.DRAFT.name(), enumerationBundle.getString(CurricularStage.DRAFT.getName())));    
+        }
         result.add(new SelectItem(CurricularStage.PUBLISHED.name(), enumerationBundle.getString(CurricularStage.PUBLISHED.getName())));
         result.add(new SelectItem(CurricularStage.APPROVED.name(), enumerationBundle.getString(CurricularStage.APPROVED.getName())));
+        
+        return result;
+    }
+    
+    public List<SelectItem> getStates() {
+        List<SelectItem> result = new ArrayList<SelectItem>();
+        
+        result.add(new SelectItem(DegreeCurricularPlanState.ACTIVE.name(), enumerationBundle.getString(DegreeCurricularPlanState.ACTIVE.getName())));
+        result.add(new SelectItem(DegreeCurricularPlanState.NOT_ACTIVE.name(), enumerationBundle.getString(DegreeCurricularPlanState.NOT_ACTIVE.getName())));
+        result.add(new SelectItem(DegreeCurricularPlanState.CONCLUDED.name(), enumerationBundle.getString(DegreeCurricularPlanState.CONCLUDED.getName())));
+        result.add(new SelectItem(DegreeCurricularPlanState.PAST.name(), enumerationBundle.getString(DegreeCurricularPlanState.PAST.getName())));
         
         return result;
     }
@@ -125,8 +157,8 @@ public class DegreeCurricularPlanManagementBackingBean extends FenixBackingBean 
         return result;
     }
     
-    public String editCurricularPlan() throws FenixFilterException, FenixServiceException {
-        Object[] args = { getDcpId(), getName(), CurricularStage.valueOf(getCurricularStage()), null, getExecutionYearID() }; //GradeScale.valueOf(this.gradeScale) };
+    public String editCurricularPlan() {
+        Object[] args = { getDcpId(), getName(), CurricularStage.valueOf(getCurricularStage()), DegreeCurricularPlanState.valueOf(getState()), null, getExecutionYearID() };
         return changeDegreeCurricularPlan("EditDegreeCurricularPlan", args, "degreeCurricularPlan.edited", "error.editingDegreeCurricularPlan");
     }
     

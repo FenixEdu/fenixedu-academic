@@ -4,8 +4,8 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class EditDegreeCurricularPlan extends Service {
@@ -24,22 +24,14 @@ public class EditDegreeCurricularPlan extends Service {
             throw new FenixServiceException("message.nonExistingDegreeCurricularPlan");
         }
 
-        final Degree degree = dcpToEdit.getDegree();
-        if (degree == null) {
-            throw new FenixServiceException("message.nonExistingDegree");
+        try {
+            dcpToEdit.edit(infoDcp.getName(), infoDcp.getState(), infoDcp.getInitialDate(), infoDcp
+                    .getEndDate(), infoDcp.getDegreeDuration(), infoDcp.getMinimalYearForOptionalCourses(),
+                    infoDcp.getNeededCredits(), infoDcp.getMarkType(), infoDcp.getNumerusClausus(), infoDcp
+                            .getAnotation(), infoDcp.getGradeScale());
+        } catch (DomainException e) {
+            throw new FenixServiceException(e.getMessage());
         }
-        
-        // assert unique pair name/degree
-        for (final DegreeCurricularPlan degreeCurricularPlan : degree.getDegreeCurricularPlans()) {
-        	if (degreeCurricularPlan != dcpToEdit && degreeCurricularPlan.getName().equalsIgnoreCase(infoDcp.getName())) {
-        		throw new FenixServiceException("error.degreeCurricularPlan.existing.name.and.degree");
-        	}
-        }
-
-        dcpToEdit.edit(infoDcp.getName(), infoDcp.getState(), infoDcp.getInitialDate(), infoDcp
-                .getEndDate(), infoDcp.getDegreeDuration(), infoDcp.getMinimalYearForOptionalCourses(),
-                infoDcp.getNeededCredits(), infoDcp.getMarkType(), infoDcp.getNumerusClausus(), infoDcp
-                        .getAnotation(), infoDcp.getGradeScale());
     }
 
 }
