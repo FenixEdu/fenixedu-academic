@@ -222,7 +222,7 @@ public class FenixBackingBean {
         return locale.getLanguage().equals(Locale.ENGLISH.getLanguage());
     }
 
-    public Boolean isMessagesEmpty() {
+    public boolean isMessagesEmpty() {
         return FacesContext.getCurrentInstance().getMessages().hasNext();
     }
 
