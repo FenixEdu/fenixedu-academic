@@ -2,6 +2,7 @@
 
 <h2>Renderers</h2>
 
+<a name="top"></a>
 <ul>
     <li><a href="#setup">Setup</a></li>
     <li><a href="#fundamentals">Fundamentals</a></li>
@@ -10,8 +11,8 @@
 
 <hr/>
 
-<h3>Setup</h3>
 <a name="setup"></a>
+<h3>Setup</h3>
 
 Renderers integrate with the application as a Struts Plugin. In the same way
 as Tiles or even Struts Validator you have to declare it's use in the module's
@@ -71,8 +72,8 @@ example of the required modification is:
     is replaced by the corresponding module name.
 </p>
 
-<h3>Fundamentals</h3>
 <a name="fundamentals"></a>
+<h3>Fundamentals</h3>
 
 There are three fundamental concepts:
 <ul>
@@ -120,8 +121,8 @@ There are three fundamental concepts:
     you to understand how to extend it.
 </p>
 
-<h3>Examples</h3>
 <a name="examples"></a>
+<h3>Examples</h3>
 
 The following examples intend to explain the use and extension of the renderers though simple,
 concrete, and increasingly challenging situations.
@@ -132,4 +133,5 @@ concrete, and increasingly challenging situations.
     <li><html:link page="/renderers/steroids.do">The third situation: input on steroids</html:link></li>
     <li><html:link page="/renderers/actions.do">The fourth situation: renderers meet actions</html:link></li>
     <li><html:link page="/renderers/new.do">The fifth situation: a new renderer</html:link></li>
+    <li><html:link page="/renderers/schemas.do">Appendix A: Schemas</html:link></li>
 </ul>

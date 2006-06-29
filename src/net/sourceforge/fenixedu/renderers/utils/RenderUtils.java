@@ -128,12 +128,18 @@ public class RenderUtils {
     }
 
     private static Locale getLocale() {
-        Locale locale = RequestUtils.getUserLocale(RenderersRequestProcessor.getCurrentRequest(), null);
-        if (locale == null) {
-            locale = Locale.getDefault();
+        HttpServletRequest currentRequest = RenderersRequestProcessor.getCurrentRequest();
+        
+        if (currentRequest == null) { // no in renderers context
+            return Locale.getDefault();
         }
         
-        return locale;
+        Locale locale = RequestUtils.getUserLocale(currentRequest, null);
+        if (locale != null) {
+            return locale;
+        }
+        
+        return Locale.getDefault();
     }
 
     public static MessageResources getMessageResources() {

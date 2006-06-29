@@ -3,6 +3,7 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
 
 <!-- Title and TOC -->
+<a name="top"></a>
 <div style="margin-bottom: 50px">
     <h2>The fourth situation: a new renderer</h2>
     
@@ -13,8 +14,8 @@
         <li><a href="#examples">Some renderers explained</a></li>
     </ul>
 
-<h3>When and why</h3>
 <a name="reasons"></a>
+<h3>When and why</h3>
 
 <p>
     Now it's the time to show how to extends the existing renderers and create new ones. But first we
@@ -81,8 +82,8 @@
     lifecycle.
 </p>
 
-<h3>Objects and meta-objects</h3>
 <a name="meta"></a>
+<h3>Objects and meta-objects</h3>
 
 <p>
     The basic interface for a renderer is:
@@ -117,8 +118,8 @@
     be a replacement for the concrete object passed to the renderer. 
 </p>
 
-<h3>Some renderers explained</h3>
 <a name="examples"></a>
+<h3>Some renderers explained</h3>
 
 <p>
     Next, some examples of renderers are presented. We start by showing one of the simplest renderers:
@@ -186,15 +187,15 @@
 
     private static Logger logger = Logger.getLogger(EnumInputRenderer.class);
     
-    protected String getEnumDescription(Enum enumerate) {
+    protected String getEnumDescription(Enum enumValue) {
         ResourceBundle bundle = getEnumerationBundle();
         
-        String description = enumerate.toString();
+        String description = enumValue.toString();
         
         try {
-            description = bundle.getString(enumerate.toString());
+            description = bundle.getString(enumValue.toString());
         } catch (MissingResourceException e) {
-            logger.warn(&quot;could not get name of enumeration: &quot; + enumerate.toString());
+            logger.warn(&quot;could not get name of enumeration: &quot; + enumValue.toString());
         }
         
         return description;
@@ -364,4 +365,7 @@ class EnumConverter extends Converter {
 
 <p style="margin-top: 50px; padding-top: 10px; border-top: 1px solid #AAAAAA">
     <span style="float: left;"><a href="#top">Top</a></span>
+    <span style="float: right;">
+        Next: <html:link page="/renderers/schemas.do">Appendix A: Schemas</html:link>
+    </span>
 </p>

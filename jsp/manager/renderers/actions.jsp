@@ -3,6 +3,7 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
 
 <!-- Title and TOC -->
+<a name="top"></a>
 <div style="margin-bottom: 50px">
     <h2>The third situation: renderers meet actions</h2>
     
@@ -15,8 +16,8 @@
     </ul>
 </div>
 
-<h3>How do I collect random pieces of information?</h3>
 <a name="wrapper"></a>
+<h3>How do I collect random pieces of information?</h3>
 
 <p>
    When you use the <code>edit</code> tag you are always editing an object.
@@ -24,8 +25,8 @@
    that bean.
 </p>
 
-<h3>Can you give an example?</h3>
 <a name="example"></a>
+<h3>Can you give an example?</h3>
 
 <p>
     Suppose you, for some strange reason, need the user to introduce two ages,
@@ -115,8 +116,8 @@ SearchBean bean = (SearchBean) viewState.getMetaObject().getObject();
     persons.
 </p>
 
-<h3>I need to control the form</h3>
 <a name="nested"></a>
+<h3>I need to control the form</h3>
 
 <p>
     So you need to pass some extra hidden fields to the action, use some properties from 
@@ -163,8 +164,8 @@ SearchBean bean = (SearchBean) viewState.getMetaObject().getObject();
     viewstate processing.
 </p>
 
-<h3>Intercepting the submission and changing the destination</h3>
 <a name="controllers"></a>
+<h3>Intercepting the submission and changing the destination</h3>
 
 <p>
     Now imagine that you want to do something to the submited data before the action is executed or even choose
@@ -274,8 +275,8 @@ SearchBean bean = (SearchBean) viewState.getMetaObject().getObject();
 }</pre>
 </div>
 
-<h3>Controllers and renderer's can save it's own attributes in the <code>ViewState</code></h3>
 <a name="attributes"></a>
+<h3>Controllers and renderer's can save it's own attributes in the <code>ViewState</code></h3>
 
 <p>
     Sometimes for a more complex implementation of a controller or renderer you need to store some

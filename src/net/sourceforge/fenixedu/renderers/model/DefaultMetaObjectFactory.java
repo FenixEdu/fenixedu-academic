@@ -7,18 +7,20 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.renderers.schemas.Schema;
 import net.sourceforge.fenixedu.renderers.schemas.SchemaSlotDescription;
+import net.sourceforge.fenixedu.renderers.schemas.Signature;
+import net.sourceforge.fenixedu.renderers.schemas.SignatureParameter;
 
 public class DefaultMetaObjectFactory extends MetaObjectFactory {
 
     @Override
-    public MultipleMetaObject createMetaObjectCollection() {
-        return new SimpleMetaObjectCollection();
+    public MetaObjectCollection createMetaObjectCollection() {
+        return new MetaObjectCollection();
     }
 
     @Override
     public MetaObject createMetaObject(Object object, Schema schema) {
         if (object instanceof Collection) {
-            MultipleMetaObject multipleMetaObject = createMetaObjectCollection();
+            MetaObjectCollection multipleMetaObject = createMetaObjectCollection();
             
             for (Iterator iter = ((Collection) object).iterator(); iter.hasNext();) {
                 Object element = (Object) iter.next();
@@ -35,24 +37,71 @@ public class DefaultMetaObjectFactory extends MetaObjectFactory {
 
     @Override
     public MetaObject createMetaObject(Class type, Schema schema) {
-        SimpleCreationMetaObject metaObject;
+        CreationMetaObject metaObject;
         
         try {
-            metaObject = new SimpleCreationMetaObject(type.newInstance());
+            metaObject = new CreationMetaObject(type);
         } catch (Exception e) {
             throw new RuntimeException("could not create a new instance of " + type, e);
         } 
         
-        metaObject.setSchema(schema.getName());
-        
-        List<SchemaSlotDescription> slotDescriptions = schema.getSlotDescriptions(); 
-        for (SchemaSlotDescription description : slotDescriptions) {
-            SimpleMetaSlot metaSlot = (SimpleMetaSlot) createMetaSlot(metaObject, description);
-            
-            metaObject.addSlot(metaSlot);
-        }
+        addSlotDescriptions(schema, metaObject);
+        setInstanceCreator(type, schema, metaObject);
+        addCompositeSlotSetters(schema, metaObject);
         
         return metaObject;
+    }
+
+    protected void setInstanceCreator(Class type, Schema schema, MetaObject metaObject) {
+        Signature signature = schema.getConstructor();
+        
+        if (signature != null) {
+            InstanceCreator creator = new InstanceCreator(type);
+            
+            for (SignatureParameter parameter : signature.getParameters()) {
+                SchemaSlotDescription description = parameter.getSlotDescription();
+                
+                for (MetaSlot slot : metaObject.getAllSlots()) {
+                    if (slot.getName().equals(description.getSlotName())) {
+                        creator.addArgument(slot, parameter.getType());
+                    }
+                }
+            }
+            
+            metaObject.setInstanceCreator(creator);
+        }
+    }
+
+    protected void addSlotDescriptions(Schema schema, SimpleMetaObject metaObject) {
+        List<SchemaSlotDescription> slotDescriptions = schema.getSlotDescriptions(); 
+        for (SchemaSlotDescription description : slotDescriptions) {
+            MetaSlot metaSlot = (MetaSlot) createMetaSlot(metaObject, description);
+            
+            if (! description.isHidden()) {
+                metaObject.addSlot(metaSlot);
+            }
+            else {
+                metaObject.addHiddenSlot(metaSlot);
+            }
+        }
+    }
+
+    protected void addCompositeSlotSetters(Schema schema, SimpleMetaObject metaObject) {
+        for (Signature setterSignature : schema.getSpecialSetters()) {
+            CompositeSlotSetter compositeSlotSetter = new CompositeSlotSetter(metaObject, setterSignature.getName());
+            
+            for (SignatureParameter parameter : setterSignature.getParameters()) {
+                SchemaSlotDescription description = parameter.getSlotDescription();
+                
+                for (MetaSlot slot : metaObject.getSlots()) {
+                    if (slot.getName().equals(description.getSlotName())) {
+                       compositeSlotSetter.addArgument(slot, parameter.getType());
+                    }
+                }
+            }
+            
+            metaObject.addCompositeSetter(compositeSlotSetter);
+        }
     }
 
     protected MetaObject createOneMetaObject(Object object, Schema schema) {
@@ -61,14 +110,9 @@ public class DefaultMetaObjectFactory extends MetaObjectFactory {
         }
         else {
             SimpleMetaObject metaObject = new SimpleMetaObject(object);
-            metaObject.setSchema(schema.getName());
-            
-            List<SchemaSlotDescription> slotDescriptions = schema.getSlotDescriptions(); 
-            for (SchemaSlotDescription description : slotDescriptions) {
-                SimpleMetaSlot metaSlot = (SimpleMetaSlot) createMetaSlot(metaObject, description);
-                
-                metaObject.addSlot(metaSlot);
-            }
+
+            addSlotDescriptions(schema, metaObject);
+            addCompositeSlotSetters(schema, metaObject);
             
             return metaObject;
         }
@@ -105,16 +149,16 @@ public class DefaultMetaObjectFactory extends MetaObjectFactory {
 
     @Override
     public MetaSlot createMetaSlot(MetaObject metaObject, SchemaSlotDescription slotDescription) {
-        SimpleMetaSlot metaSlot;
+        MetaSlot metaSlot;
         
         if (metaObject instanceof CreationMetaObject) {
-            metaSlot = new SimpleMetaSlotWithDefault((SimpleMetaObject) metaObject, slotDescription.getSlotName());
+            metaSlot = new MetaSlotWithDefault((SimpleMetaObject) metaObject, slotDescription.getSlotName());
         }
         else {
-            metaSlot = new SimpleMetaSlot((SimpleMetaObject) metaObject, slotDescription.getSlotName());
+            metaSlot = new MetaSlot((SimpleMetaObject) metaObject, slotDescription.getSlotName());
         }
         
-        metaSlot.setLabelKey(slotDescription.getKey());
+        metaSlot.setLabelKey(slotDescription.getKey()); 
         metaSlot.setBundle(slotDescription.getBundle());
         metaSlot.setSchema(slotDescription.getSchema());
         metaSlot.setLayout(slotDescription.getLayout());
@@ -124,6 +168,7 @@ public class DefaultMetaObjectFactory extends MetaObjectFactory {
         metaSlot.setProperties(slotDescription.getProperties());
         metaSlot.setConverter(slotDescription.getConverter());
         metaSlot.setReadOnly(slotDescription.isReadOnly());
+        metaSlot.setSetterIgnored(slotDescription.isSetterIgnored());
         
         return metaSlot;
     }

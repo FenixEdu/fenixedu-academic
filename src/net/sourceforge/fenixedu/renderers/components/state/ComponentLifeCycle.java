@@ -21,7 +21,8 @@ import net.sourceforge.fenixedu.renderers.model.MetaObject;
 import net.sourceforge.fenixedu.renderers.model.MetaObjectFactory;
 import net.sourceforge.fenixedu.renderers.model.MetaSlot;
 import net.sourceforge.fenixedu.renderers.model.MetaSlotKey;
-import net.sourceforge.fenixedu.renderers.model.MultipleMetaObject;
+import net.sourceforge.fenixedu.renderers.model.MetaObjectCollection;
+import net.sourceforge.fenixedu.renderers.model.UserIdentity;
 import net.sourceforge.fenixedu.renderers.utils.RenderKit;
 import net.sourceforge.fenixedu.renderers.validators.HtmlValidator;
 
@@ -408,7 +409,7 @@ public class ComponentLifeCycle {
 
     private void updateDomain(List<IViewState> viewStates) {
         List<MetaObject> metaObjectsToCommit = new ArrayList<MetaObject>();
-        MultipleMetaObject metaObjectCollection = MetaObjectFactory.createObjectCollection();
+        MetaObjectCollection metaObjectCollection = MetaObjectFactory.createObjectCollection();
         
         // TODO: check if should update viewstates that are not visible
         for (IViewState state : viewStates) {
@@ -421,7 +422,7 @@ public class ComponentLifeCycle {
             if (! metaObjectsToCommit.contains(metaObject)) {
                 metaObjectsToCommit.add(metaObject);
             }
-            
+
             metaObjectCollection.setUser(state.getUser());
         }
         
@@ -451,6 +452,11 @@ public class ComponentLifeCycle {
             if (metaSlot == null) {
                 continue;
             }
+
+            // ensure that slots marked as read-only are not changed
+            if (metaSlot.isReadOnly()) {
+                continue;
+            }
             
             try {
                 Object finalValue = formComponent.getConvertedValue(metaSlot);
@@ -472,22 +478,11 @@ public class ComponentLifeCycle {
                 return (MetaSlot) metaObject;
             }
             else {
-                // HACK: for hidden slots
-                // although we may be editing a slot directly hidden slots
-                // are still added to the base meta object
                 metaObject = ((MetaSlot) metaObject).getMetaObject(); 
             }
         }
 
-        // search in normal slots
-        for (MetaSlot slot : metaObject.getSlots()) {
-            if (slot.getKey().equals(targetSlot)) {
-                return slot;
-            }
-        }
-        
-        // search in hidden slots
-        for (MetaSlot slot : metaObject.getHiddenSlots()) {
+        for (MetaSlot slot : metaObject.getAllSlots()) {
             if (slot.getKey().equals(targetSlot)) {
                 return slot;
             }

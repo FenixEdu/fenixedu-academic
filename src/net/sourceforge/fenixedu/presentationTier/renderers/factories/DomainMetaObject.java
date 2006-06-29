@@ -2,49 +2,40 @@ package net.sourceforge.fenixedu.presentationTier.renderers.factories;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Properties;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.applicationTier.Servico.renderers.ObjectChange;
 import net.sourceforge.fenixedu.applicationTier.Servico.renderers.ObjectKey;
-import net.sourceforge.fenixedu.applicationTier.Servico.renderers.UpdateObjects.ObjectChange;
 import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
-import net.sourceforge.fenixedu.renderers.model.MetaObject;
+import net.sourceforge.fenixedu.renderers.model.CompositeSlotSetter;
 import net.sourceforge.fenixedu.renderers.model.MetaObjectKey;
 import net.sourceforge.fenixedu.renderers.model.MetaSlot;
-import net.sourceforge.fenixedu.renderers.model.UserIdentity;
+import net.sourceforge.fenixedu.renderers.model.SimpleMetaObject;
 
-public class DomainMetaObject implements MetaObject {
+public class DomainMetaObject extends SimpleMetaObject {
 
-    private String schema;
     private Class type;
     private int oid;
-    private List<MetaSlot> slots;
-
-    private List<MetaSlot> hiddenSlots;
-    private Properties properties;
     
     private transient DomainObject object;
-    private transient UserIdentity userIdentity;
 
     private String service;
 
     protected DomainMetaObject() {
-        this.slots = new ArrayList<MetaSlot>();
-        this.hiddenSlots = new ArrayList<MetaSlot>();
-
-        this.properties = new Properties();
-        this.service = "UpdateObjects";
+        super(null);
+        
+        setService("UpdateObjects");
     }
     
     public DomainMetaObject(DomainObject object) {
         this();
         
+        this.object = object;
         this.type = object.getClass();
         this.oid = object.getIdInternal().intValue();
-        this.object = object;
     }
     
     public Object getObject() {
@@ -59,22 +50,6 @@ public class DomainMetaObject implements MetaObject {
         return RootDomainObject.getInstance().readDomainObjectByOID(getType(), getOid());
     }
 
-    public void setUser(UserIdentity user) {
-        this.userIdentity = user;
-        
-        List<MetaSlot> allSlots = new ArrayList<MetaSlot>();
-        allSlots.addAll(getSlots());
-        allSlots.addAll(getHiddenSlots());
-        
-        for (MetaSlot slot : allSlots) {
-            slot.setUser(user);
-        }
-    }
-    
-    public UserIdentity getUser() {
-        return this.userIdentity;
-    }
-
     protected IUserView getUserView() {
         return ((FenixUserIdentity) getUser()).getUserView();
     }
@@ -83,67 +58,62 @@ public class DomainMetaObject implements MetaObject {
         return oid;
     }
     
+    protected void setOid(int oid) {
+        this.oid = oid;
+    }
+    
     public Class getType() {
         return type;
     }
 
-    public List<MetaSlot> getSlots() {
-        return slots;
-    }
-    
-    public void addSlot(MetaSlot metaSlot) {
-        this.slots.add(metaSlot);
-    }
-
-    public boolean removeSlot(MetaSlot slot) {
-        return this.slots.remove(slot);
-    }
-    
-    public List<MetaSlot> getHiddenSlots() {
-        return this.hiddenSlots;
-    }
-
-    public void addHiddenSlot(MetaSlot slot) {
-        this.hiddenSlots.add(slot);
+    protected void setType(Class type) {
+        this.type = type;
     }
 
     public MetaObjectKey getKey() {
-        return new DomainMetaObjectKey(getOid(), getType());
-    }
-
-    public Properties getProperties() {
-        return properties;
-    }
-    
-    public void setProperties(Properties properties) {
-        this.properties = properties;
+        return new MetaObjectKey(getType(), getOid());
     }
 
     public void commit() {
         List<ObjectChange> changes = new ArrayList<ObjectChange>();
         
-        List<MetaSlot> allSlots = new ArrayList<MetaSlot>();
-        allSlots.addAll(getSlots());
-        allSlots.addAll(getHiddenSlots());
-        
-        for (MetaSlot slot : allSlots) {
-            CachedMetaSlot cachedSlot = (CachedMetaSlot) slot;
+        ObjectKey key = new ObjectKey(getOid(), getType());
+
+        for (MetaSlot slot : getAllSlots()) {
+            if (slot.isSetterIgnored()) {
+                continue;
+            }
             
-            if (cachedSlot.isCached()) {
-                Object change = cachedSlot.getCachedObject();
+            if (slot.isCached()) {
+                Object change = slot.getObject();
                 
-                ObjectKey key = new ObjectKey(getOid(), getType());
-                ObjectChange objectChange = new ObjectChange(key, cachedSlot.getName(), change);
+                ObjectChange objectChange = new ObjectChange(key, slot.getName(), change);
                 changes.add(objectChange);
             }
         }
  
+        for (CompositeSlotSetter compositeSetter : getCompositeSetters()) {
+            try {
+                changes.add(new ObjectChange(key, compositeSetter.getSetter(getType()), compositeSetter.getArgumentValues()));
+            } catch (NoSuchMethodException e) {
+                throw new RuntimeException("could not find specialized setter", e);
+            }
+        }
+        
         callService(changes);
+    }
+
+    public String getService() {
+        return this.service;
+    }
+
+    public void setService(String service) {
+        this.service = service;
     }
 
     protected Object callService(List<ObjectChange> changes) {
         try {
-            return ServiceUtils.executeService(getUserView(), getService(), new Object[] { changes });
+            return ServiceUtils.executeService(getUserView(), getService(), getServiceArguments(changes));
         } catch (DomainException e) {
             throw e;
         } 
@@ -155,20 +125,8 @@ public class DomainMetaObject implements MetaObject {
         }
     }
 
-    public void setSchema(String name) {
-        this.schema = name;
-    }
-
-    public String getSchema() {
-        return schema;
-    }
-
-    public String getService() {
-        return this.service;
-    }
-
-    public void setService(String service) {
-        this.service = service;
+    protected Object[] getServiceArguments(List<ObjectChange> changes) {
+        return new Object[] { changes };
     }
 
 }

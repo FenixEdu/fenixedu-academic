@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.renderers;
 import java.lang.reflect.InvocationTargetException;
 
 import net.sourceforge.fenixedu.domain.DomainObject;
+import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.renderers.utils.RendererPropertyUtils;
 
 public class CreateObjects extends UpdateObjects {
@@ -12,9 +13,15 @@ public class CreateObjects extends UpdateObjects {
     }
 
     @Override
-    protected DomainObject getNewObject(ObjectChange change) throws InstantiationException, IllegalAccessException {
+    protected DomainObject getNewObject(ObjectChange change) throws ExcepcaoPersistencia, ClassNotFoundException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
         Class objectClass = change.key.getType();
-        return (DomainObject) objectClass.newInstance();
+        
+        if (change.constructor != null) {
+            return (DomainObject) change.constructor.newInstance(change.values);
+        }
+        else {
+            return (DomainObject) objectClass.newInstance();
+        }
     }
     
     @Override

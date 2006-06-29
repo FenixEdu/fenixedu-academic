@@ -36,6 +36,7 @@ public class ViewObjectTag extends BaseRenderObjectTag {
     protected PresentationContext createPresentationContext(Object object, String layout, String schema, Properties properties) {
         OutputContext context = new OutputContext();
         
+        context.setSchema(schema);
         context.setLayout(layout);
         context.setProperties(properties);
         

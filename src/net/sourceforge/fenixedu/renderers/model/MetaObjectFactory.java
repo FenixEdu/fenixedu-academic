@@ -18,7 +18,7 @@ public abstract class MetaObjectFactory {
         return currentFactory;
     }
     
-    public static MultipleMetaObject createObjectCollection() {
+    public static MetaObjectCollection createObjectCollection() {
         return currentFactory.createMetaObjectCollection();
     }
 
@@ -54,7 +54,7 @@ public abstract class MetaObjectFactory {
         return currentFactory.createMetaSlot(metaObject, slotDescription);
     }
 
-    public abstract MultipleMetaObject createMetaObjectCollection();
+    public abstract MetaObjectCollection createMetaObjectCollection();
     
     public abstract MetaObject createMetaObject(Object object, Schema schema);
     

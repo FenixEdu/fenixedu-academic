@@ -3,6 +3,7 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
 
 <!-- Title and TOC -->
+<a name="top"></a>
 <div style="margin-bottom: 50px">
     <h2>The second situation: give me input</h2>
     
@@ -19,8 +20,8 @@
     </ul>
 </div>
 
-<h3>What is "input" exactly?</h3>
 <a name="introduction"></a>
+<h3>What is "input" exactly?</h3>
 
 <p>
     In the renderers' context "input" has a more specific meaning than normal. What we refer as input
@@ -36,8 +37,8 @@
     complex input from the user.
 </p>
 
-<h3>But let's start with the basics</h3>
 <a name="basics"></a>
+<h3>But let's start with the basics</h3>
 
 <p>
     The main difference from all the previous examples is that for input we use a different tag: <code>edit</code>.
@@ -157,8 +158,8 @@
     </div>
 </div>
 
-<h3>What is a validator?</h3>
 <a name="define-validator"></a>
+<h3>What is a validator?</h3>
 
 <p>
     A validator is a simple <code>HtmlComponent</code>. This means that, among other things, it's it can be included
@@ -299,8 +300,8 @@ public class RegexpValidator extends HtmlValidator {
     the viewstate is preserved and the form presentation is associated with that viewstate.
 </p>
 
-<h3>Can I choose the default values?</h3>
 <a name="defaults"></a>
+<h3>Can I choose the default values?</h3>
 
 <p>
     As you may have noticed, all fields appear blank at first. This happens because we don't have 
@@ -340,14 +341,14 @@ public class RegexpValidator extends HtmlValidator {
     </div>
 </div>
 
-<h3>Hey! Default values in schemas are bad</h3>
 <a name="dynamic-defaults"></a>
+<h3>Hey! Default values in schemas are bad</h3>
 
 <p>
     Indeed they are. But they are simple and are directly tied to the schema, that is,
     to the place were you tell how you want the object to be presented. The default value,
     as presented before, allows you to statically specify values that are independent from the
-    context were the schema is being used. This works reasonably well for enumerates or some
+    context were the schema is being used. This works reasonably well for enums or some
     strings but is less good for complex values that cannot be easily represented as a string.
 </p>
 
@@ -472,8 +473,8 @@ public class RegexpValidator extends HtmlValidator {
     multiplicity 1.
 </p>
 
-<h3>And if the user does not provide enough input?</h3>
 <a name="hidden"></a>
+<h3>And if the user does not provide enough input?</h3>
 
 <p>
     Sometimes you want the user to fill some of the object's slots and want to fill the remaining slots yourself. Or

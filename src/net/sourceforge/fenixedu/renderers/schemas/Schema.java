@@ -4,19 +4,21 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-
 public class Schema {
 
     private String name;
-
     private Class type;
-
+    
     private List<SchemaSlotDescription> slotDescriptions;
+
+    private Signature constructor;
+    private List<Signature> setters;
     
     public Schema(String name, Class type) {
         this.name = name;
         this.type = type;
         this.slotDescriptions = new ArrayList<SchemaSlotDescription>();
+        this.setters = new ArrayList<Signature>();
     }
     
     public Schema(String name, Class type, Schema baseSchema) {
@@ -39,6 +41,14 @@ public class Schema {
 
     public Class getType() {
         return type;
+    }
+
+    public Signature getConstructor() {
+        return this.constructor;
+    }
+
+    public void setConstructor(Signature constructor) {
+        this.constructor = constructor;
     }
 
     public List<SchemaSlotDescription> getSlotDescriptions() {
@@ -81,5 +91,13 @@ public class Schema {
     
     public void removeSlotDescription(SchemaSlotDescription slotDescription) {
         this.slotDescriptions.remove(slotDescription);
+    }
+
+    public void addSpecialSetter(Signature setterSignature) {
+        this.setters.add(setterSignature);
+    }
+    
+    public List<Signature> getSpecialSetters() {
+        return this.setters;
     }
 }

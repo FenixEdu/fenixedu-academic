@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.renderers.model;
 
-public class PrimitiveMetaObjectKey extends SimpleMetaObjectKey {
+public class PrimitiveMetaObjectKey extends MetaObjectKey {
 
     private Object object;
     private Class type;

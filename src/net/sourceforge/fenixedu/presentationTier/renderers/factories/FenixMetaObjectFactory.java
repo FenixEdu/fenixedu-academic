@@ -1,21 +1,18 @@
 package net.sourceforge.fenixedu.presentationTier.renderers.factories;
 
-import java.util.List;
-
 import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.renderers.model.DefaultMetaObjectFactory;
 import net.sourceforge.fenixedu.renderers.model.MetaObject;
+import net.sourceforge.fenixedu.renderers.model.MetaObjectCollection;
 import net.sourceforge.fenixedu.renderers.model.MetaSlot;
-import net.sourceforge.fenixedu.renderers.model.MultipleMetaObject;
-import net.sourceforge.fenixedu.renderers.model.SimpleMetaSlot;
 import net.sourceforge.fenixedu.renderers.schemas.Schema;
 import net.sourceforge.fenixedu.renderers.schemas.SchemaSlotDescription;
 
 public class FenixMetaObjectFactory extends DefaultMetaObjectFactory {
     
     @Override
-    public MultipleMetaObject createMetaObjectCollection() {
-        return new DomainCollectionMetaObject();
+    public MetaObjectCollection createMetaObjectCollection() {
+        return new DomainMetaObjectCollection();
     }
 
     @Override
@@ -42,44 +39,35 @@ public class FenixMetaObjectFactory extends DefaultMetaObjectFactory {
 
     private MetaObject createDomainMetaObject(Object object, Schema schema) {
         DomainMetaObject metaObject = new DomainMetaObject((DomainObject) object);
-        metaObject.setSchema(schema.getName());
         
-        List<SchemaSlotDescription> slotDescriptions = schema.getSlotDescriptions(); 
-        for (SchemaSlotDescription description : slotDescriptions) {
-            MetaSlot metaSlot = (MetaSlot) createMetaSlot(metaObject, description);
-            
-            metaObject.addSlot(metaSlot);
-        }
+        addSlotDescriptions(schema, metaObject);
+        addCompositeSlotSetters(schema, metaObject);
         
         return metaObject;
     }
 
     private MetaObject createCreationMetaObject(Class type, Schema schema) {
         CreationDomainMetaObject metaObject = new CreationDomainMetaObject(type);
-        metaObject.setSchema(schema.getName());
         
-        List<SchemaSlotDescription> slotDescriptions = schema.getSlotDescriptions(); 
-        for (SchemaSlotDescription description : slotDescriptions) {
-            MetaSlot metaSlot = (MetaSlot) createMetaSlot(metaObject, description);
-            
-            metaObject.addSlot(metaSlot);
-        }
+        addSlotDescriptions(schema, metaObject);
+        setInstanceCreator(schema.getType(), schema, metaObject);
+        addCompositeSlotSetters(schema, metaObject);
         
         return metaObject;
     }
 
     @Override
     public MetaSlot createMetaSlot(MetaObject metaObject, SchemaSlotDescription slotDescription) {
-        SimpleMetaSlot metaSlot;
+        MetaSlot metaSlot;
         
         if (metaObject instanceof CreationDomainMetaObject) { // CreationMetaObject extends DomainMetaObject
-            metaSlot = new CachedMetaSlotWithDefault(metaObject, slotDescription.getSlotName());
+            metaSlot = new MetaSlotWithDefault(metaObject, slotDescription.getSlotName());
         }
         else if (metaObject instanceof DomainMetaObject) {
-            metaSlot = new CachedMetaSlot(metaObject, slotDescription.getSlotName());
+            metaSlot = new MetaSlot(metaObject, slotDescription.getSlotName());
         }
         else {
-            metaSlot = (SimpleMetaSlot) super.createMetaSlot(metaObject, slotDescription);
+            metaSlot = super.createMetaSlot(metaObject, slotDescription);
         }
         
         metaSlot.setLabelKey(slotDescription.getKey());
@@ -92,6 +80,7 @@ public class FenixMetaObjectFactory extends DefaultMetaObjectFactory {
         metaSlot.setProperties(slotDescription.getProperties());
         metaSlot.setConverter(slotDescription.getConverter());
         metaSlot.setReadOnly(slotDescription.isReadOnly());
+        metaSlot.setSetterIgnored(slotDescription.isSetterIgnored());
         
         return metaSlot;
     }

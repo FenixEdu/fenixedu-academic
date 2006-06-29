@@ -510,6 +510,10 @@
         <put name="body" value="/manager/renderers/search-results.jsp" />
     </definition>
 
+    <definition name="renderers.schemas" extends="definition.manager.masterPage" >
+        <put name="body" value="/manager/renderers/schemas.jsp" />
+    </definition>
+
     <!-- ========== ConnectionRules Management ============ -->
     <definition name="listRules" extends="definition.manager.masterPage" >
     	<put name="body" value="/manager/organizationalStructureManagament/listRules.jsp" />

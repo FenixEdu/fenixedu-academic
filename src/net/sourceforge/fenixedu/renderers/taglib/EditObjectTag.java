@@ -152,6 +152,7 @@ public class EditObjectTag extends BaseRenderObjectTag {
         else {
             InputContext context = new InputContext();
     
+            context.setSchema(schema);
             context.setLayout(layout);
             context.setProperties(properties);
     
@@ -452,31 +453,31 @@ public class EditObjectTag extends BaseRenderObjectTag {
         MetaObject metaObject = getNewMetaObject(targetObject, schema);
         
         for (HiddenSlot slot : this.hiddenSlots) {
-            SchemaSlotDescription slotDescription = new SchemaSlotDescription(slot.getName());
+            MetaSlot metaSlot = metaObject.getSlot(slot.getName());
             
-            slotDescription.setConverter(slot.getConverter());
+            if (metaSlot == null) {
+                SchemaSlotDescription slotDescription = new SchemaSlotDescription(slot.getName());
+                slotDescription.setConverter(slot.getConverter());
+                
+                metaSlot = MetaObjectFactory.createSlot(metaObject, slotDescription);
+                metaObject.addHiddenSlot(metaSlot);
+            }
+            else {
+                metaSlot.setConverter(slot.getConverter());
+            }
             
-            MetaSlot metaSlot = MetaObjectFactory.createSlot(metaObject, slotDescription);
-            metaObject.addHiddenSlot(metaSlot);
-        
             slot.setKey(metaSlot.getKey());
         }
 
-
+        // are we editing a single slot or the entire object
         if (getSlot() == null) {
             return metaObject;
         }
         else {
-            for (MetaSlot slot : metaObject.getSlots()) {
-                if (slot.getName().equals(getSlot())) {
-                    return slot;
-                }
-            }
+            MetaSlot metaSlot = metaObject.getSlot(getSlot());
             
-            for (MetaSlot slot : metaObject.getHiddenSlots()) {
-                if (slot.getName().equals(getSlot())) {
-                    return slot;
-                }
+            if (metaSlot != null) {
+                return metaSlot;
             }
             
             throw new RuntimeException("specified slot '" + getSlot() + "' does not exist in object " + targetObject);

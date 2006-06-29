@@ -12,7 +12,6 @@
         <li><a href="#present">Presenting an object</a></li>
         <li><a href="#labels">Before schemas what about ...</a></li>
         <li><a href="#schemas">And now schemas for everybody</a></li>
-        <li><a href="#extension">Reusing schemas with extension</a></li>
         <li><a href="#properties">Renderers can receive properties</a></li>
         <li><a href="#more-schemas">Schemas have so much more to be said</a></li>
         <li><a href="#layouts">We add new schemas but what about new layouts?</a></li>
@@ -20,8 +19,8 @@
     </ul>
 </div>
 
-<h3>Warming up</h3>
 <a name="warming"></a>
+<h3>Warming up</h3>
 
 <p>
     As the use of renderers is made through a TagLib, the first thing you need to do is to 
@@ -40,8 +39,8 @@
     beloved <code>Ctrl+Space</code> shortcut to auto-complete tags and see documentation.
 </p>
 
-<h3>Presenting an object</h3>
 <a name="present"></a>
+<h3>Presenting an object</h3>
 
 <p>
     The first thing you would like to know is: 
@@ -137,8 +136,8 @@
     interface as the type you will get a <code>ClassNotPersistenceCapableException</code>.
 </p>
 
-<h3>Before schemas what about ...</h3>
 <a name="labels"></a>
+<h3>Before schemas what about ...</h3>
 
 <p>
     ... that user friendlly names that appear in the left side of the table?
@@ -198,8 +197,8 @@
     database.
 </p>
 
-<h3>And now schemas for everybody</h3>
 <a name="schemas"></a>
+<h3>And now schemas for everybody</h3>
 
 <p>
     The last example shows a lot of information some of which we may not need. We can control this by
@@ -239,78 +238,8 @@
     </div>
 </div>
 
-<h3>Reusing schemas with extension</h3>
-<a name="extension"></a>
-
-<p>
-    Suppose you define a schema to show the personal details of a person. It could contain about 20 well configured
-    and highly tailored slot definitions. Now if you want, in other context, to show the personal information and
-    the information about the person's filiation you are in trouble. You need a new schema but how do you reuse
-    the last schema? 
-</p>
-
-<p>
-    Well, if you were thinking Copy&amp;Paste that always works but is not what I want to say.
-    If you simply want  to present the information you can create a new schema with the slots for the filiation's
-    information an present the person two times: the first with the first schema and the second with the schema
-    you just created. Off course you will have all the drawbacs of having two presentations: You can't really mantain
-    an uniform presentation of all the information together and you can't use the same strategy to edit that
-    information.
-</p>
-
-<p>
-    You can reuse previous schemas by extending them. The extension mechanism is in some (and few) ways similar to 
-    the extension in OO languages. Let's use an example to show how things work:
-</p>
-
-<div style="border: 1px solid #000; padding: 20px 20px 20px 20px" >
-    <pre>&lt;schema name=&quot;person.personal&quot; type=&quot;net.sourceforge.fenixedu.domain.Person&quot;&gt;
-  &lt;slot name=&quot;name&quot;/&gt;
-  &lt;slot name=&quot;birthdate&quot;/&gt;
-  &lt;slot name=&quot;email&quot;/&gt;
-&lt;/schema&gt;
-
-&lt;schema name=&quot;person.filiation&quot; type=&quot;net.sourceforge.fenixedu.domain.Person&quot; extends=&quot;person.personal&quot;&gt;
-  &lt;remove name=&quot;email&quot;/&gt;
-  &lt;slot name=&quot;nameOfFather&quot;/&gt;
-  &lt;slot name=&quot;nameOfMother&quot;/&gt;
-&lt;/schema&gt;
-
-&lt;schema name=&quot;person.filiation.edit&quot; type=&quot;net.sourceforge.fenixedu.domain.Person&quot; extends=&quot;person.filiation&quot;&gt;
-  &lt;slot name=&quot;name&quot;      read-only=&quot;true&quot;/&gt;
-  &lt;slot name=&quot;birthdate&quot; read-only=&quot;true&quot;/&gt;
-  &lt;slot name=&quot;email&quot;     read-only=&quot;true&quot;/&gt;
-&lt;/schema&gt;</pre>
-</div>
-
-<p>
-    In this example the <code>person.filiation</code> schema is extending the <code>person.personal</code>
-    schema. Additionally we are removing the <code>email</code> slot in the <code>person.filiation</code>
-    schema. This means that the schema will have 4 slots in the order <code>name</code>, <code>birthdate</code>,
-    <code>nameOfFather</code>, and <code>nameOfMother</code>.
-</p>
-
-<p>
-    The remove tag indicates slots that you don't want to include/inherit. This is preformed before any other
-    thing is considered in the schema that is extending, in this case <code>person.filiation</code>.
-    You can also "override" slot's definitions. If you declare a slot with a name that exists in the 
-    parent then you are overriding it. This means that the slot will remain in the position it was first declared
-    but will only have the properties of it's last declaration. In the last schema, named <code>person.filiation.edit</code>,
-    we are extending the <code>person.filiation</code> schema and indicating that the slot's included/inhertited
-    from the <code>person.personal</code> schema are read only. Nevertheless this schema contains all the
-    slot's in the same order as <code>person.filiation</code>. All the new slot's are included after existing
-    slot's.
-</p>
-
-<p>
-    <strong>A note about problems of reuse</strong>. Schemas are intended to be reused in several presentation 
-    through out the application. So, if you change a schema check the schemas that are extending that one. If your
-    changes are too big you can choose to make a new schema or change the name and check wich dependencies
-    fail (schemas can only extend existing schemas and an errors will be reported).
-</p>
-
-<h3>Renderers can receive properties</h3>
 <a name="properties"></a>
+<h3>Renderers can receive properties</h3>
 
 <p>
     So we now can present a person showing only the information we want and in a tabular layout as intended.
@@ -379,8 +308,8 @@
     the second has no class.
 </p>
 
-<h3>Schemas have so much more to be said</h3>
 <a name="more-schemas"></a>
+<h3>Schemas have so much more to be said</h3>
 
 <p>
     We saw the simple use of schemas: to limit the presented slots. But schemas can contain much more 
@@ -440,8 +369,8 @@
     </div>
 </div>
 
-<h3>We add new schemas but what about new layouts?</h3>
 <a name="layouts"></a>
+<h3>We add new schemas but what about new layouts?</h3>
 
 <p>
     First, remember that a layout is a combination of a name, a renderer and a set of properties. Layouts are defined in the
@@ -504,8 +433,8 @@
     </div>
 </div>
 
-<h3>We can always use templates and all that we already knew</h3>
 <a name="templates"></a>
+<h3>We can always use templates and all that we already knew</h3>
 
 <p>
     Suppose that you need to present a person in a very exotic manner. It would probably be much easier

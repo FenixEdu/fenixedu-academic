@@ -3,6 +3,7 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
 
 <!-- Title and TOC -->
+<a name="top"></a>
 <div style="margin-bottom: 50px">
     <h2>The third situation: input on steroids</h2>
     
@@ -17,8 +18,8 @@
     </ul>
 </div>
 
+<a name="why"></a>
 <h3>Steroids? Why?</h3>
-<a name="#why"></a>
 
 <p>
     Because the basic renderers philosophy was extended with the objective of making the input
@@ -57,8 +58,8 @@
     what people were used to with struts or JSF but still with a significat difference in philosophy.
 </p>
 
+<a name="remember"></a>
 <h3>A little flashback about the renderers philosophy</h3>
-<a name="#remember"></a>
 
 <p>
     The renderers frameworks is focused on the application data. Whats important is what the
@@ -107,8 +108,8 @@
     slot you need directly in the JSP.
 </p>
 
+<a name="how"></a>
 <h3>How does this all really works?</h3>
-<a name="#how"></a>
 
 <p>
     So to edit a person you would do something like
@@ -232,8 +233,8 @@
     Nevertheless all that configuration if made in the JSP thought the available tags and attributes.
 </p>
 
+<a name="messages"></a>
 <h3>One more thing about messages</h3>
-<a name="#messages"></a>
 
 <p>
     When you submit a form and something goes wrong (probably a validation fails) the form is redisplayed and 
@@ -311,8 +312,8 @@
     value then the convertion message will be available instead.
 </p>
 
+<a name="contexts"></a>
 <h3>More about it: contexts</h3>
-<a name="#contexts"></a>
 
 <p>
     We have already mentioned contexts but have never propertly defined what a context is. When you use one of
@@ -355,8 +356,8 @@
     force you to declare a form bean for the action like the <tt>html:form</tt> does.
 </p>
 
+<a name="creation"></a>
 <h3>Contexts are needed for creation</h3>
-<a name="#creation"></a>
 
 <p>
     Everything that was said is fine for the <tt>fr:edit</tt>. Neverthless you need to know a little more about the

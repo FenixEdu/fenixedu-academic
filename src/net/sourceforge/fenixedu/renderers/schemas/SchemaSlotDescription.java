@@ -10,24 +10,22 @@ public class SchemaSlotDescription {
     private String slotName;
 
     private String layout;
-
-    private String key;
-
-    private String bundle;
-    
+    private String schema;
     private Properties properties;
 
-    private Class<HtmlValidator> validator;
+    private String bundle;
+    private String key;
     
+    private Class<Converter> converter;
+
+    private Class<HtmlValidator> validator;
     private Properties validatorProperties;
     
     private String defaultValue;
 
-    private String schema;
-    
-    private Class<Converter> converter;
-    
     private boolean readOnly;
+    private boolean hidden;
+    private boolean setterIgnored;
     
     public SchemaSlotDescription(String slotName) {
         this.slotName = slotName;
@@ -120,4 +118,21 @@ public class SchemaSlotDescription {
     public void setReadOnly(boolean readOnly) {
         this.readOnly = readOnly;
     }
+
+    public void setHidden(boolean hidden) {
+        this.hidden = hidden;
+    }
+    
+    public boolean isHidden() {
+        return this.hidden;
+    }
+
+    public boolean isSetterIgnored() {
+        return this.setterIgnored;
+    }
+
+    public void setSetterIgnored(boolean setterIgnored) {
+        this.setterIgnored = setterIgnored;
+    }
+    
 }

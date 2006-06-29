@@ -1,41 +1,23 @@
 package net.sourceforge.fenixedu.presentationTier.renderers.factories;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.renderers.UpdateObjects.ObjectChange;
-import net.sourceforge.fenixedu.renderers.model.CreationMetaObject;
+import net.sourceforge.fenixedu.applicationTier.Servico.renderers.ObjectChange;
+import net.sourceforge.fenixedu.applicationTier.Servico.renderers.ObjectKey;
+import net.sourceforge.fenixedu.renderers.model.InstanceCreator;
 import net.sourceforge.fenixedu.renderers.model.MetaObjectKey;
 
-public class CreationDomainMetaObject extends DomainMetaObject implements CreationMetaObject {
-
-    private Class type;
-    private transient Object createdObject;
+public class CreationDomainMetaObject extends DomainMetaObject {
 
     public CreationDomainMetaObject(Class type) {
         super();
-
-        this.type = type;
+        
+        setType(type);
+        setOid(0);
+        
         setService("CreateObjects");
-    }
-
-    @Override
-    public Object getObject() {
-        return getType();
-    }
-    
-    public Object getCreatedObject() {
-        return this.createdObject;
-    }
-
-    @Override
-    public int getOid() {
-        return 0;
-    }
-    
-    @Override
-    public Class getType() {
-        return type;
     }
 
     public MetaObjectKey getKey() {
@@ -44,16 +26,30 @@ public class CreationDomainMetaObject extends DomainMetaObject implements Creati
 
     @Override
     protected Object callService(List<ObjectChange> changes) {
-        Collection created = (Collection) super.callService(changes);
+        List<ObjectChange> newChanges = new ArrayList<ObjectChange>(changes);
+        
+        InstanceCreator instanceCreator = getInstanceCreator();
+        if (instanceCreator != null) {
+            ObjectKey key = new ObjectKey(getOid(), getType());
+            
+            try {
+                newChanges.add(0, new ObjectChange(key, instanceCreator.getConstructor(), instanceCreator.getArgumentValues()));
+            } catch (Exception e) {
+                throw new RuntimeException("could not find constructor for '" + getType().getName() + "' with arguments " + instanceCreator.getArgumentTypes(), e);
+            }
+        }
+        
+        Collection created = (Collection) super.callService(newChanges);
         
         // heuristic, does not work so well if multiple objects are created
         for (Object object : created) {
             if (getType().isAssignableFrom(object.getClass())) {
-                this.createdObject = object;
+                setObject(object);
                 break;
             }
         }
         
         return created;
     }
+
 }

@@ -23,14 +23,31 @@
   The 'bundle' attribute is an abbreviation for the 'bundle' attribute of the
   inner slot elements. It specifies the bundle for every slot. You can override
   this in a per-slot basis.
+  
+  The 'constructor' attribute allows you to specify the constructor to be called
+  when the schema is beeing used to create an object of the given type. The
+  constuctor is specified by indicating the parameters and types of the constructor.
+  You also indicate wich slot will be passed as argument and in waht order.
+  The specification of the constructor as the following format:
+  
+  	<slot name>[:<type>][,<slot name>[:<type>])]*
+  	
+  If the type is not specified then the type of the slot is used. A specification
+  like:
+  
+  	s1:Integer,s2,s3:java.util.Date
+  	
+  indicates that the constructor with types (java.lang.Integer, <type of s2>, java.util.Date)
+  will be called with the values for slot s1, slot s2, and slot s3.
 -->
-<!ELEMENT schema ((remove+,slot*)|(slot+))>
+<!ELEMENT schema ((remove+,slot*,setter*)|(slot+,setter*))>
 
 <!ATTLIST schema
 	name ID #REQUIRED
 	type CDATA #REQUIRED
 	extends IDREF #IMPLIED
 	bundle NMTOKEN #IMPLIED
+	constructor CDATA #IMPLIED
 >
 
 <!--
@@ -61,6 +78,12 @@
   
   The 'read-only' attribute allows you to prevent slots from beeing edited in an 
   input operation.
+  
+  The 'hidden' attributes prevents the slot from beeing used in the presentation but
+  makes the slot available. So you can use this slot when specifying the constructor
+  or a special setter. Offcourse you need to pass the value as an hidden slot in a
+  JSP. Otherwise the slot will have the null value or any other value that was previously 
+  set.
 -->
 <!ELEMENT slot (validator?,property*)>
 
@@ -74,6 +97,7 @@
 	converter NMTOKEN #IMPLIED
 	default CDATA #IMPLIED
 	read-only NMTOKEN #IMPLIED
+	hidden NMTOKEN #IMPLIED
 >
 
 <!--
@@ -113,4 +137,25 @@
 <!ATTLIST property
 	value CDATA #REQUIRED
 	name NMTOKEN #REQUIRED
+>
+
+<!--
+  The setter element allows you to specify a special setter for a group of slots.
+  If no setter is specified then each slot will be read with a standard getter and
+  set with a standard setter. For example, if a slot is called s1 then it will be
+  read with getS1 and set with setS1.
+  
+  The 'signature' attribute allows you to specify a signature similar to the one
+  specified for the constructor. The format of the signature is
+  
+  	<setter name>(<slot name>[:<type>][,<slot name>[:<type>])]*)
+  	
+  The setter name is the complete method name. Do not ommit the "set" prefix. Each
+  slot referred in the signature will not be setted with the standard setter for that
+  slot. Instead they will be seted together using the specified method.
+  -->
+<!ELEMENT setter EMPTY>
+
+<!ATTLIST setter
+	signature CDATA #REQUIRED
 >

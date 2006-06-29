@@ -30,7 +30,6 @@ import net.sourceforge.fenixedu.renderers.layouts.Layout;
 import net.sourceforge.fenixedu.renderers.model.MetaObject;
 import net.sourceforge.fenixedu.renderers.model.MetaSlot;
 import net.sourceforge.fenixedu.renderers.model.MetaSlotKey;
-import net.sourceforge.fenixedu.renderers.model.SimpleMetaSlot;
 import net.sourceforge.fenixedu.renderers.utils.RenderKit;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 import net.sourceforge.fenixedu.util.LanguageUtils;
@@ -219,8 +218,8 @@ public class MultiLanguageStringInputRenderer extends InputRenderer {
     protected Layout getLayout(Object object, Class type) {
         MetaObject metaObject = getInputContext().getMetaObject();
         
-        if (metaObject != null && metaObject instanceof SimpleMetaSlot) {
-            SimpleMetaSlot metaSlot = (SimpleMetaSlot) metaObject;
+        if (metaObject != null && metaObject instanceof MetaSlot) {
+            MetaSlot metaSlot = (MetaSlot) metaObject;
             
             if (! metaSlot.hasValidator()) {
                 Class defaultValidator = MultiLanguageStringValidator.class;

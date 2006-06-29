@@ -12,6 +12,8 @@ public abstract class PresentationContext {
     
     private RenderMode renderMode;
     
+    private String schema;
+    
     private String layout;
     
     private Properties properties;
@@ -46,6 +48,14 @@ public abstract class PresentationContext {
 
     public void setParentContext(PresentationContext parentContext) {
         this.parentContext = parentContext;
+    }
+
+    public String getSchema() {
+        return this.schema;
+    }
+
+    public void setSchema(String schema) {
+        this.schema = schema;
     }
 
     public String getLayout() {

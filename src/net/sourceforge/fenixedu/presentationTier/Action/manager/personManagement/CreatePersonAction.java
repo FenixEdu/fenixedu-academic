@@ -33,8 +33,7 @@ public class CreatePersonAction extends FenixDispatchAction {
 			HttpServletRequest request, HttpServletResponse response)
 			throws FenixFilterException, FenixServiceException {
 
-		final Person person = (Person) ((net.sourceforge.fenixedu.renderers.model.CreationMetaObject)
-                RenderUtils.getViewState().getMetaObject()).getCreatedObject();
+		final Person person = (Person) RenderUtils.getViewState().getMetaObject().getObject();
 
         final Object[] args = { person, RoleType.PERSON };
         ServiceUtils.executeService(getUserView(request), "AddPersonRole", args);

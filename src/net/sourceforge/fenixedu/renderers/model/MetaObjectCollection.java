@@ -2,15 +2,20 @@ package net.sourceforge.fenixedu.renderers.model;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Properties;
 
-public class SimpleMetaObjectCollection implements MultipleMetaObject {
-
+/**
+ * The MetaObjectCollection provides a wrapper for several meta objects.
+ * It's purpose, besides behaving like a collection of objects or better a list,
+ * is to coordinate the {@link #commit()} operation for all the meta objects 
+ * contained in this MetaObjectCollection.
+ * 
+ * @author cfgi
+ */
+public class MetaObjectCollection extends MetaObject {
+    
     private List<MetaObject> metaObjects;
     
-    private transient UserIdentity user;
-
-    public SimpleMetaObjectCollection() {
+    public MetaObjectCollection() {
         super();
         
         this.metaObjects = new ArrayList<MetaObject>();
@@ -28,12 +33,8 @@ public class SimpleMetaObjectCollection implements MultipleMetaObject {
         return this.metaObjects.remove(metaObject);
     }
     
-    public UserIdentity getUser() {
-        return this.user;
-    }
-
     public void setUser(UserIdentity user) {
-        this.user = user;
+        super.setUser(user);
         
         for (MetaObject metaObject : getAllMetaObjects()) {
             metaObject.setUser(user);
@@ -50,11 +51,13 @@ public class SimpleMetaObjectCollection implements MultipleMetaObject {
         return objects;
     }
 
+    /**
+     * @return <code>ArrayList.class</code>
+     */
     public Class getType() {
         return ArrayList.class;
     }
 
-    @Deprecated
     public List<MetaSlot> getSlots() {
         List<MetaSlot> slots = new ArrayList<MetaSlot>();
         
@@ -76,24 +79,14 @@ public class SimpleMetaObjectCollection implements MultipleMetaObject {
         return null;
     }
 
-    public Properties getProperties() {
-        return new Properties();
-    }
-
-    public void setProperties(Properties properties) {
-    }
-
-    public String getSchema() {
-        if (getAllMetaObjects().isEmpty()) {
-            return null;
-        }
-        else {
-            return this.getAllMetaObjects().get(0).getSchema();
-        }
-    }
-
     public List<MetaSlot> getHiddenSlots() {
-        return new ArrayList<MetaSlot>();
+        List<MetaSlot> slots = new ArrayList<MetaSlot>();
+        
+        for (MetaObject metaObject : getAllMetaObjects()) {
+            slots.addAll(metaObject.getHiddenSlots());
+        }
+        
+        return slots;
     }
 
     public void addHiddenSlot(MetaSlot slot) {
@@ -104,5 +97,4 @@ public class SimpleMetaObjectCollection implements MultipleMetaObject {
             metaObject.commit();
         }
     }
-
 }

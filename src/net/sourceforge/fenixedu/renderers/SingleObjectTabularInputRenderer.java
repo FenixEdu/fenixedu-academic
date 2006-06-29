@@ -6,7 +6,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.renderers.components.HtmlComponent;
 import net.sourceforge.fenixedu.renderers.model.MetaObjectFactory;
-import net.sourceforge.fenixedu.renderers.model.MultipleMetaObject;
+import net.sourceforge.fenixedu.renderers.model.MetaObjectCollection;;
 
 /**
  * {@inheritDoc}
@@ -27,7 +27,7 @@ public class SingleObjectTabularInputRenderer extends TabularInputRenderer {
             List list = new ArrayList();
             list.add(object);
             
-            MultipleMetaObject multipleMetaObject = MetaObjectFactory.createObjectCollection();
+            MetaObjectCollection multipleMetaObject = MetaObjectFactory.createObjectCollection();
             multipleMetaObject.add(getInputContext().getMetaObject());
             
             getInputContext().setMetaObject(multipleMetaObject);

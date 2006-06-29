@@ -14,8 +14,11 @@ import javax.servlet.ServletException;
 import net.sourceforge.fenixedu.renderers.exceptions.NoSuchSchemaException;
 import net.sourceforge.fenixedu.renderers.schemas.Schema;
 import net.sourceforge.fenixedu.renderers.schemas.SchemaSlotDescription;
+import net.sourceforge.fenixedu.renderers.schemas.Signature;
+import net.sourceforge.fenixedu.renderers.schemas.SignatureParameter;
 import net.sourceforge.fenixedu.renderers.utils.RenderKit;
 import net.sourceforge.fenixedu.renderers.utils.RenderMode;
+import net.sourceforge.fenixedu.renderers.utils.RendererPropertyUtils;
 
 import org.apache.log4j.Logger;
 import org.jdom.Document;
@@ -82,10 +85,11 @@ public class ConfigurationReader {
                 String typeName           = schemaElement.getAttributeValue("type");
                 String extendedSchemaName = schemaElement.getAttributeValue("extends");
                 String schemaBundle       = schemaElement.getAttributeValue("bundle");
+                String constructor        = schemaElement.getAttributeValue("constructor");
 
                 Class type;
                 try {
-                    type = getClassForType(typeName);
+                    type = getClassForType(typeName, true);
                 } catch (ClassNotFoundException e) {
                     logger.error("schema '" + schemaName + "' was defined for the undefined type '" + typeName + "'");
                     e.printStackTrace();
@@ -131,15 +135,17 @@ public class ConfigurationReader {
                 for (Iterator slotIterator = slotElements.iterator(); slotIterator.hasNext();) {
                     Element slotElement = (Element) slotIterator.next();
 
-                    String slotName      = slotElement.getAttributeValue("name");
-                    String layout        = slotElement.getAttributeValue("layout");
-                    String key           = slotElement.getAttributeValue("key");
-                    String bundle        = slotElement.getAttributeValue("bundle");
-                    String slotSchema    = slotElement.getAttributeValue("schema");
-                    String validatorName = slotElement.getAttributeValue("validator");
-                    String defaultValue  = slotElement.getAttributeValue("default");
-                    String converterName = slotElement.getAttributeValue("converter");
-                    String readOnlyValue = slotElement.getAttributeValue("read-only");
+                    String slotName       = slotElement.getAttributeValue("name");
+                    String layout         = slotElement.getAttributeValue("layout");
+                    String key            = slotElement.getAttributeValue("key");
+                    String bundle         = slotElement.getAttributeValue("bundle");
+                    String slotSchema     = slotElement.getAttributeValue("schema");
+                    String validatorName  = slotElement.getAttributeValue("validator");
+                    String defaultValue   = slotElement.getAttributeValue("default");
+                    String converterName  = slotElement.getAttributeValue("converter");
+                    String readOnlyValue  = slotElement.getAttributeValue("read-only");
+                    String hiddenValue    = slotElement.getAttributeValue("hidden");
+                    String alwaysSetValue = slotElement.getAttributeValue("always-set");
 
                     Properties properties = getPropertiesFromElement(slotElement);
                     
@@ -156,7 +162,7 @@ public class ConfigurationReader {
                     Class validator = null;
                     if (validatorName != null) {
                         try {
-                            validator = getClassForType(validatorName);
+                            validator = getClassForType(validatorName, true);
                         } catch (ClassNotFoundException e) {
                             logger.error("in schema '" + schemaName + "': validator '" + validatorName + "' was not found");
                             e.printStackTrace();
@@ -167,7 +173,7 @@ public class ConfigurationReader {
                     Class converter = null;
                     if (converterName != null) {
                         try {
-                            converter = getClassForType(converterName);
+                            converter = getClassForType(converterName, true);
                         } catch (ClassNotFoundException e) {
                             logger.error("in schema '" + schemaName + "': converter '" + converterName + "' was not found");
                             e.printStackTrace();
@@ -176,6 +182,7 @@ public class ConfigurationReader {
                     }
                     
                     boolean readOnly = readOnlyValue == null ? false : Boolean.parseBoolean(readOnlyValue);
+                    boolean hidden = hiddenValue == null ? false : Boolean.parseBoolean(hiddenValue);
                     
                     if (bundle == null) {
                         bundle = schemaBundle;
@@ -193,14 +200,111 @@ public class ConfigurationReader {
                     slotDescription.setValidatorProperties(validatorProperties);
                     slotDescription.setDefaultValue(defaultValue);
                     slotDescription.setReadOnly(readOnly);
+                    slotDescription.setHidden(hidden);
                     
                     schema.addSlotDescription(slotDescription);
                 }
 
+                Signature construtorSignature = null;
+                if (constructor != null) {
+                    construtorSignature = parseSignature(schema, constructor);
+                    
+                    if (construtorSignature != null) {
+                        for (SignatureParameter parameter : construtorSignature.getParameters()) {
+                            parameter.getSlotDescription().setSetterIgnored(true);
+                        }
+                    }
+                }
+
+                schema.setConstructor(construtorSignature);
+                
+                List setterElements = schemaElement.getChildren("setter");
+                for (Iterator setterIterator = setterElements.iterator(); setterIterator.hasNext();) {
+                    Element setterElement = (Element) setterIterator.next();
+
+                    String signature = setterElement.getAttributeValue("signature");
+                    
+                    Signature setterSignature = parseSignature(schema, signature);
+                    if (setterSignature != null) {
+                        for (SignatureParameter parameter : setterSignature.getParameters()) {
+                            parameter.getSlotDescription().setSetterIgnored(true);
+                        }
+                        
+                        schema.addSpecialSetter(setterSignature);
+                    }
+                }
+                
                 logger.debug("adding new schema: " + schema.getName());
                 RenderKit.getInstance().registerSchema(schema);
             }
         }
+    }
+
+    private Signature parseSignature(Schema schema, String signature) {
+
+        String name;
+        String parameters;
+        
+        int indexOfStartParent = signature.indexOf("(");
+        if (indexOfStartParent != -1) {
+            name = signature.substring(0, indexOfStartParent).trim();
+            
+            int indexOfCloseParen = signature.indexOf(")", indexOfStartParent);
+            
+            if (indexOfCloseParen == -1) {
+                logger.error("in schema " + schema.getName() + ": malformed signature '" + signature + "', missing ')'");
+                return null;
+            }
+            
+            parameters = signature.substring(indexOfStartParent + 1, indexOfCloseParen);
+        }
+        else {
+            name = null;
+            parameters = signature.trim();
+        }
+
+        Signature programmaticSignature = new Signature(name);
+
+        String[] allParameters = parameters.split(",");
+        for (int i = 0; i < allParameters.length; i++) {
+            String singleParameter = allParameters[i].trim();
+            
+            String slotName;
+            String typeName;
+            
+            int index = singleParameter.indexOf(":");
+            if (index != -1) {
+                slotName = singleParameter.substring(0, index).trim();
+                typeName = singleParameter.substring(index + 1).trim();
+            }
+            else {
+                slotName = singleParameter;
+                typeName = null;
+            }
+
+            SchemaSlotDescription slotDescription = schema.getSlotDescription(slotName);
+            if (slotDescription == null) {
+                logger.error("in schema " + schema.getName() + ": malformed signature '" + signature + "', slot '" + slotName + "' is not defined");
+            }
+            
+            Class slotType;
+            
+            if (typeName != null) {
+                try {
+                    slotType = getClassForType(typeName, false);
+                } catch (ClassNotFoundException e) {
+                    logger.error("in schema " + schema.getName() + ": malformed signature '" + signature + "', could not find type '" + typeName + "'");
+                    return null;
+                }
+            }
+            else {
+                slotType = RendererPropertyUtils.getPropertyType(schema.getType(), slotName);
+            }
+            
+            programmaticSignature.addParameter(slotDescription, slotType);
+        }
+        
+        return programmaticSignature;
     }
 
     private Properties getPropertiesFromElement(Element element) {
@@ -235,7 +339,7 @@ public class ConfigurationReader {
                 Properties rendererProperties = getPropertiesFromElement(rendererElement);
 
                 try {
-                    Class objectClass = getClassForType(type);
+                    Class objectClass = getClassForType(type, true);
                     Class rendererClass = Class.forName(className);
 
                     String modeName = rendererElement.getAttributeValue("mode");
@@ -257,7 +361,7 @@ public class ConfigurationReader {
         }
     }
 
-    private Class getClassForType(String type) throws ClassNotFoundException {
+    private Class getClassForType(String type, boolean prefixedLangPackage) throws ClassNotFoundException {
         String[] primitiveTypesNames = { "void", "boolean", "byte", "short", "int", "long", "char", "float", "double" };
         Class[]  primitiveTypesClass = { Void.TYPE, Boolean.TYPE, Byte.TYPE, Short.TYPE, Integer.TYPE, 
                                          Long.TYPE, Character.TYPE, Float.TYPE, Double.TYPE };
@@ -268,7 +372,12 @@ public class ConfigurationReader {
             }
         }
         
-        return Class.forName(type);
+        if (! prefixedLangPackage && type.indexOf(".") == -1) {
+            return Class.forName("java.lang." + type);
+        }
+        else {
+            return Class.forName(type);
+        }
     }
  
     private Element readConfigRootElement(final ServletContext context, String name, final String configFile) throws ServletException {

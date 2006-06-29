@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.renderers;
 
 import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Hashtable;
@@ -8,26 +9,13 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.domain.DomainObject;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 import org.apache.commons.beanutils.PropertyUtils;
 
 public class UpdateObjects extends Service {
     
-    public static class ObjectChange {
-        public final ObjectKey key;
-
-        public final String slot;
-
-        public final Object value;
-
-        public ObjectChange(ObjectKey key, String slot, Object value) {
-            this.key = key;
-            this.slot = slot;
-            this.value = value;
-        }
-    }
-
     public Collection run(List<ObjectChange> changes) throws ExcepcaoPersistencia, ClassNotFoundException,
             IllegalAccessException, InvocationTargetException, NoSuchMethodException, InstantiationException {
         beforeRun(changes);
@@ -37,12 +25,31 @@ public class UpdateObjects extends Service {
         for (ObjectChange change : changes) {
             Object object = getObject(objects, change);
 
-            setProperty(object, change.slot, change.value);
+            processChange(change, object);
         }
         
         afterRun(objects.values());
         
         return objects.values();
+    }
+
+    protected void processChange(ObjectChange change, Object object) throws IllegalAccessException, InvocationTargetException, NoSuchMethodException, InstantiationException {
+        if (change.slot != null) {
+            setProperty(object, change.slot, change.value);
+        }
+        else if (change.setter != null) {
+            invokeSetter(object, change.setter, change.values);
+        }
+    }
+
+    private void invokeSetter(Object object, Method setter, Object[] values) {
+        try {
+            setter.invoke(object, values);
+        } catch (InvocationTargetException e) {
+            throw new RuntimeException("error while invoking specialized setter", e.getTargetException());
+        } catch (Exception e) {
+            throw new RuntimeException("error while invoking specialized setter", e);
+        }
     }
 
     /**
@@ -121,7 +128,7 @@ public class UpdateObjects extends Service {
     }
 
     private Object getObject(Hashtable<ObjectKey, Object> objects, ObjectChange change) throws ExcepcaoPersistencia,
-            ClassNotFoundException, InstantiationException, IllegalAccessException {
+            ClassNotFoundException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
         Object object = objects.get(change.key);
 
         if (object == null) {
@@ -132,7 +139,7 @@ public class UpdateObjects extends Service {
         return object;
     }
 
-    protected DomainObject getNewObject(ObjectChange change) throws InstantiationException, IllegalAccessException {
-        return rootDomainObject.readDomainObjectByOID(change.key.getType(), change.key.getOid());
+    protected DomainObject getNewObject(ObjectChange change) throws InstantiationException, IllegalAccessException, ExcepcaoPersistencia, ClassNotFoundException, IllegalArgumentException, InvocationTargetException {
+        return RootDomainObject.readDomainObjectByOID(change.key.getType(), change.key.getOid());
     }
 }
