@@ -661,14 +661,16 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
             /*final Object[] args = { getExecutionCourseID(), getEvaluationID(), marks };
             TeacherAdministrationSiteView siteView = (TeacherAdministrationSiteView) ServiceUtils.executeService(getUserView(), "InsertEvaluationMarks", args);
             processServiceErrors(siteView);*/
+            
+            return "success";
 
         } catch (InvalidMarksServiceException e) {
 			for(DomainException domainException: e.getExceptionList()) {
 				addErrorMessage(getFormatedMessage("resources/ApplicationResources", domainException.getKey(), domainException.getArgs()));
 			}
 			return "";
-        } catch (Exception e) {
-            this.setErrorMessage(e.getMessage());
+        } catch (IOException e) {
+            addErrorMessages(getResourceBundle("resources/ApplicationResources"), e.getMessage(), null);
             return "";
         } finally {
             if (inputStream != null) {
@@ -679,8 +681,6 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
                 }
             }
         }
-
-        return "success";
     }
 
     private Map<Integer, String> loadMarks(final InputStream inputStream) throws IOException {
