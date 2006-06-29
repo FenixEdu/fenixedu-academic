@@ -65,7 +65,7 @@
 									(<dt:format patternId="hoursPattern">
 										<bean:write name="lesson" property="inicio.timeInMillis"/>
 								      </dt:format> 
-									ás <dt:format patternId="hoursPattern">
+									às <dt:format patternId="hoursPattern">
 									      <bean:write name="lesson" property="fim.timeInMillis"/>
 									   </dt:format> , <bean:message key="label.room" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/> <bean:write name="lesson" property="sala.nome"/>)
 								      ,
@@ -95,7 +95,7 @@
 										(<dt:format patternId="hoursPattern">
 											<bean:write name="lesson" property="inicio.timeInMillis"/>
 									      </dt:format> 
-										ás <dt:format patternId="hoursPattern">
+										às <dt:format patternId="hoursPattern">
 										      <bean:write name="lesson" property="fim.timeInMillis"/>
 										   </dt:format> ,<bean:message key="label.room" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/> <bean:write name="lesson" property="sala.nome"/>)
 									      ,
@@ -151,7 +151,7 @@
 							  	<dt:format patternId="hoursPattern">
 									<bean:write name="supportLesson" property="startTime.time"/>
 								</dt:format>
-								ás 
+								às 
 								<dt:format patternId="hoursPattern">
 									<bean:write name="supportLesson" property="endTime.time"/>
 								</dt:format>
@@ -174,7 +174,7 @@
 								  	<dt:format patternId="hoursPattern">
 										<bean:write name="supportLesson" property="startTime.time"/>
 									</dt:format>
-									ás 
+									às 
 									<dt:format patternId="hoursPattern">
 										<bean:write name="supportLesson" property="endTime.time"/>
 									</dt:format>
