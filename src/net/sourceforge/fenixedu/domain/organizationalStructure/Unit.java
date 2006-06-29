@@ -6,6 +6,7 @@ package net.sourceforge.fenixedu.domain.organizationalStructure;
 
 import java.text.Collator;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.HashSet;
@@ -14,6 +15,7 @@ import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.CompetenceCourse;
 import net.sourceforge.fenixedu.domain.Contract;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
@@ -33,7 +35,7 @@ public class Unit extends Unit_Base {
 	public static final Comparator UNIT_COMPARATOR_BY_NAME = new BeanComparator("name", Collator.getInstance());
 
     public Unit() {
-        super();
+        super();        
     }
 
     public List<Unit> getTopUnits() {
@@ -452,5 +454,25 @@ public class Unit extends Unit_Base {
             }
         }
         return result;
+    }
+    
+    public static Unit createNewExternalInstitution(String unitName) {
+        
+        if(unitName == null) {
+            throw new DomainException("error.unit.empty.name");
+        }
+        
+        Unit externalInstitutionUnit = UnitUtils.readUnitWithoutParentstByName(UnitUtils.EXTERNAL_INSTITUTION_UNIT_NAME);
+        if (externalInstitutionUnit == null) {
+            throw new DomainException("error.exception.commons.institution.rootInstitutionNotFound");
+        }
+        
+        Unit institutionUnit = new Unit();
+        institutionUnit.setName(unitName);
+        institutionUnit.setBeginDate(Calendar.getInstance().getTime());
+        institutionUnit.setType(PartyTypeEnum.EXTERNAL_INSTITUTION);
+        institutionUnit.addParent(externalInstitutionUnit, 
+                AccountabilityType.readAccountabilityTypeByType(AccountabilityTypeEnum.ORGANIZATIONAL_STRUCTURE));
+        return institutionUnit;
     }
 }

@@ -26,6 +26,9 @@ public class CreateNewUnit extends Service {
 
         Unit unit = null;
         if (unitID == null) {
+            if(unitName == null) {
+                throw new FenixServiceException("error.unit.empty.name");
+            }
             unit = new Unit();
         } else {
             unit = (Unit) rootDomainObject.readPartyByOID(unitID);

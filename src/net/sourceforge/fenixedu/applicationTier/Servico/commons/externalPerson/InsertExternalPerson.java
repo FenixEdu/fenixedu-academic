@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.applicationTier.Servico.commons.externalPerson;
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-
 import net.sourceforge.fenixedu.domain.ExternalPerson;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.person.Gender;
@@ -35,12 +34,10 @@ public class InsertExternalPerson extends Service {
      * @param organizationName - Name of the Unit to be created and associated with the ExternalPerson
      * @return the newly created ExternalPerson
      * @throws ExcepcaoPersistencia
+     * @throws FenixServiceException 
      */
-    public ExternalPerson run(String personName, String organizationName) throws ExcepcaoPersistencia {
-        
-        final Unit organization = new Unit();
-        organization.setName(organizationName);
-        
+    public ExternalPerson run(String personName, String organizationName) throws ExcepcaoPersistencia, FenixServiceException {                 
+        final Unit organization = Unit.createNewExternalInstitution(organizationName);                
         return new ExternalPerson(personName, Gender.MALE, null, null, null,
                 null, null, String.valueOf(System.currentTimeMillis()), organization);
     }
@@ -62,9 +59,9 @@ public class InsertExternalPerson extends Service {
 
         storedExternalPerson = ExternalPerson.readByNameAndAddressAndInstitutionID(personName,
                 null, organization.getIdInternal());   
+        
         if (storedExternalPerson != null)
-            throw new ExistingServiceException(
-                    "error.exception.commons.externalPerson.existingExternalPerson");
+            throw new ExistingServiceException("error.exception.commons.externalPerson.existingExternalPerson");
 
         return new ExternalPerson(personName, Gender.MALE, null, null, null,
                 null, null, String.valueOf(System.currentTimeMillis()), organization);

@@ -1,14 +1,11 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.research.project;
 
-import java.util.ArrayList;
-
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.externalPerson.InsertExternalPerson;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.research.ProjectParticipantFullCreationBean;
 import net.sourceforge.fenixedu.dataTransferObject.research.ProjectParticipantSimpleCreationBean;
 import net.sourceforge.fenixedu.dataTransferObject.research.ProjectParticipantUnitCreationBean;
-
 import net.sourceforge.fenixedu.domain.ExternalPerson;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.research.project.Project;
@@ -86,9 +83,8 @@ public class CreateProjectParticipant extends Service  {
             throw new FenixServiceException();
         }
         
-        if (bean.getUnit() == null) {
-        	unit = new Unit();
-        	unit.setName(bean.getUnitName());
+        if (bean.getUnit() == null) {          
+        	unit = Unit.createNewExternalInstitution(bean.getUnitName());
         }
         else{
         	unit = bean.getUnit();
