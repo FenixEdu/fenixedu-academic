@@ -1103,7 +1103,7 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
             	final DegreeCurricularPlan degreeCurricularPlan = otherExecutionDegree.getDegreeCurricularPlan();
             	final Degree degree = degreeCurricularPlan.getDegree();
             	final Spreadsheet studentsSpreadsheet = new Spreadsheet("Alunos " + degree.getSigla() + " " + yearString);
-            	fillStudentsSpreadSheet(executionDegree, studentsSpreadsheet);
+            	fillStudentsSpreadSheet(otherExecutionDegree, studentsSpreadsheet);
             	studentsSpreadsheet.exportToXLSSheet(workbook, excelStyle.getHeaderStyle(), excelStyle.getStringStyle());
             }
 
@@ -1335,26 +1335,27 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
 			}
 		}
 
-		final SortedSet<Student> students = new TreeSet<Student>(Student.NUMBER_COMPARATOR);
+//		final SortedSet<Student> students = new TreeSet<Student>(Student.NUMBER_COMPARATOR);
 		for (final ExecutionDegree otherExecutionDegree : scheduleing.getExecutionDegreesSet()) {
-			for (final Group group : executionDegree.getAssociatedFinalDegreeWorkGroupsSet()) {
+			for (final Group group : otherExecutionDegree.getAssociatedFinalDegreeWorkGroupsSet()) {
 				if (!group.getGroupProposalsSet().isEmpty()) {
 					for (final GroupStudent groupStudent : group.getGroupStudentsSet()) {
 						final Student student = groupStudent.getStudent();
-						final Row row = spreadsheet.addRow();
-						row.setCell(student.getNumber().toString());
-
 						final StudentCurricularPlan studentCurricularPlan = student.getActiveOrConcludedStudentCurricularPlan();
-						for (final CurricularCourse curricularCourse : curricularCourses) {
-							if (studentCurricularPlan.isCurricularCourseApproved(curricularCourse)) {
-								final String grade = findGradeForCurricularCourse(student, curricularCourse);
-								if (grade != null) {
-									row.setCell(grade);
+						if (studentCurricularPlan.getDegreeCurricularPlan() == degreeCurricularPlan) {
+							final Row row = spreadsheet.addRow();
+							row.setCell(student.getNumber().toString());
+							for (final CurricularCourse curricularCourse : curricularCourses) {
+								if (studentCurricularPlan.isCurricularCourseApproved(curricularCourse)) {
+									final String grade = findGradeForCurricularCourse(student, curricularCourse);
+									if (grade != null) {
+										row.setCell(grade);
+									} else {
+										row.setCell("AP");
+									}
 								} else {
-									row.setCell("AP");
+									row.setCell("");
 								}
-							} else {
-								row.setCell("");
 							}
 						}
 					}
