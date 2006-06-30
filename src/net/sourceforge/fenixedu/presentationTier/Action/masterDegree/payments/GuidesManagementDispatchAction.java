@@ -13,14 +13,4 @@ import org.apache.struts.action.ActionMapping;
 
 public class GuidesManagementDispatchAction extends PaymentsManagementDispatchAction {
         
-    public ActionForward printGuide(ActionMapping mapping, ActionForm actionForm,
-            HttpServletRequest request, HttpServletResponse response) {
-
-        //PaymentsManagementDTO managementDTO = (PaymentsManagementDTO) RenderUtils.getViewState("payments-guides").getMetaObject().getObject();
-        //request.setAttribute("paymentsManagementDTO", managementDTO);
-        
-        
-        
-        return mapping.findForward("printGuide");
-    }
 }
