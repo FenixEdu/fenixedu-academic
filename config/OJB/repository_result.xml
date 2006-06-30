@@ -1,11 +1,15 @@
 <!-- Definitions for net.sourceforge.fenixedu.domain.research.result.Result -->
 <class-descriptor class="net.sourceforge.fenixedu.domain.research.result.Result" table="RESULT">
   <extent-class class-ref="net.sourceforge.fenixedu.domain.research.result.ResultPublication" />
-  <extent-class class-ref="net.sourceforge.fenixedu.domain.research.result.ResultPatent" />
+  <extent-class class-ref="net.sourceforge.fenixedu.domain.research.result.patent.ResultPatent" />
 </class-descriptor>
 	
-<class-descriptor class="net.sourceforge.fenixedu.domain.research.result.ResultPatent" table="RESULT" />
+<class-descriptor class="net.sourceforge.fenixedu.domain.research.result.patent.ResultPatent" table="RESULT" />
 
 <class-descriptor class="net.sourceforge.fenixedu.domain.research.result.ResultPublication" table="RESULT"/>
 
 <class-descriptor class="net.sourceforge.fenixedu.domain.research.result.ResultParticipation" table="RESULT_PARTICIPATION"/>
+
+<class-descriptor class="net.sourceforge.fenixedu.domain.research.result.ResultEventAssociation" table="RESULT_EVENT_ASSOCIATION"/>
+
+<class-descriptor class="net.sourceforge.fenixedu.domain.research.result.ResultUnitAssociation" table="RESULT_UNIT_ASSOCIATION"/>
