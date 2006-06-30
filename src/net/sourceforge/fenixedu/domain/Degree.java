@@ -486,10 +486,18 @@ public class Degree extends Degree_Base {
     }
 
     /**
+     * @param executionYearToShow 
      * @return the most recent info of this degree.
      */
     public DegreeInfo getMostRecentDegreeInfo() {
-        ExecutionYear executionYear = ExecutionYear.readCurrentExecutionYear();
+        return getMostRecentDegreeInfo(ExecutionYear.readCurrentExecutionYear());
+    }
+
+    /**
+     * @param executionYearToShow 
+     * @return the most recent info of this degree.
+     */
+    public DegreeInfo getMostRecentDegreeInfo(ExecutionYear executionYear) {
         DegreeInfo result = executionYear.getDegreeInfo(this);
 
         if (result != null) {
