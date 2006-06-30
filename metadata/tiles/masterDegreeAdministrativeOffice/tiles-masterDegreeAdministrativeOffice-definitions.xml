@@ -40,4 +40,9 @@
 		<put name="navLocal" value="/posGraduacao/gratuity/gratuityMenu.jsp"/>
 	</definition>
 	
+	<definition name="definition.masterDegreeAdministrativeOffice.dfaCandidacy" extends="definition.masterDegreeAdministrativeOffice.masterPage">
+		<put name="navLocal" value="/posGraduacao/candidacy/dfaCandidacyMenu.jsp"/>
+	</definition>
+	
+	
 </tiles-definitions>

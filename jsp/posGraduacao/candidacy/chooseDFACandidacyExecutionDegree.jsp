@@ -7,7 +7,7 @@
 
 <fr:form action="/dfaCandidacy.do?method=createCandidacy">
 	<fr:edit id="executionDegree"
-			 name="createCandidacyBean"
+			 name="candidacyBean"
 			 type="net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.candidacy.CreateDFACandidacyBean"
 			 schema="candidacy.choose.executionDegree">
 		<fr:destination name="postBack" path="/dfaCandidacy.do?method=chooseExecutionDegreePostBack"/>
@@ -17,11 +17,11 @@
 		</fr:layout>
 	</fr:edit>
 	
-	<logic:present name="createCandidacyBean" property="executionDegree">
+	<logic:present name="candidacyBean" property="executionDegree">
 		<fr:edit id="person"
-			 name="createCandidacyBean"
+			 name="candidacyBean"
 			 type="net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.candidacy.CreateDFACandidacyBean"
-			 schema="candidacy.choose.person">
+			 schema="candidacy.create.choose.person">
 		</fr:edit>
 	</logic:present>
 	<html:submit/>

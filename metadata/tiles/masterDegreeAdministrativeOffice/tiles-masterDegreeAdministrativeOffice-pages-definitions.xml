@@ -236,11 +236,28 @@
 	</definition>
 		
 	
-	<!-- ************* DFA candidacy ************* -->	
-	<definition name="df.page.chooseDFAExecutionDegree" extends="definition.masterDegreeAdministrativeOffice.masterPage">
+	<!-- ************* DFA candidacy ************* -->
+	<definition name="df.page.dfaCandidacyIndex" extends="definition.masterDegreeAdministrativeOffice.dfaCandidacy">
+		<put name="body" value="/posGraduacao/welcomeScreen.jsp"/>
+	</definition>
+		
+	<definition name="df.page.chooseDFAExecutionDegree" extends="definition.masterDegreeAdministrativeOffice.dfaCandidacy">
 		<put name="body" value="/posGraduacao/candidacy/chooseDFACandidacyExecutionDegree.jsp"/>
 	</definition>
-	<definition name="df.page.fillCandidateData" extends="definition.masterDegreeAdministrativeOffice.masterPage">
+
+	<definition name="df.page.showCreatedCandidacy" extends="definition.masterDegreeAdministrativeOffice.dfaCandidacy">
+		<put name="body" value="/posGraduacao/candidacy/showCreatedCandidacy.jsp"/>
+	</definition>
+
+	<definition name="df.page.prepareGenPass" extends="definition.masterDegreeAdministrativeOffice.dfaCandidacy">
+		<put name="body" value="/posGraduacao/candidacy/prepareGenPass.jsp"/>
+	</definition>
+
+	<definition name="df.page.listCandidacies" extends="definition.masterDegreeAdministrativeOffice.dfaCandidacy">
+		<put name="body" value="/posGraduacao/candidacy/listCandidacies.jsp"/>
+	</definition>
+	
+	<definition name="df.page.fillCandidateData" extends="definition.masterDegreeAdministrativeOffice.dfaCandidacy">
 		<put name="body" value="/posGraduacao/candidacy/fillCandidateData.jsp"/>
 	</definition>
 	
