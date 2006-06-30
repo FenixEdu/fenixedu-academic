@@ -22,10 +22,5 @@ public class DFACandidacy extends DFACandidacy_Base {
         new PreCandidacySituation(this);
     }
     
-	@Override
-	public Integer createCandidacyNumber() {
-		//TODO criar o numero
-		return null;
-	}
     
 }

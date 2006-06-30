@@ -784,6 +784,14 @@
 		<form-property name="documentType" type="java.lang.String" />
 		<form-property name="documentNumber" type="java.lang.String" />
     </form-bean>
+    
+	<!-- DFA Candidacy -->
+	
+	<form-bean name="dfaCandidacyForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
+		<form-property name="method" type="java.lang.String" />
+		<form-property name="candidacyNumber" type="java.lang.Integer" />
+    </form-bean>
+    
 	
    </form-beans>
     
@@ -921,6 +929,14 @@
 			  >
 	         <forward name="Success" path="/marksManagement/indexMarksManagement.jsp"/> 
       </action>
+      
+      <action path="/dfaCandidacySection"
+		      parameter="method"
+              type="net.sourceforge.fenixedu.presentationTier.Action.commons.VoidAction"
+			  >
+	         <forward name="Success" path="df.page.dfaCandidacyIndex"/> 
+      </action>
+      
       
     
       
@@ -2571,14 +2587,28 @@
 	<!-- DFACandidacy -->
 	  <action path="/dfaCandidacy"
 		      parameter="method"
+		      name="dfaCandidacyForm"
 		      scope="request"
 		      input="df.page.chooseDFAExecutionDegree"
               type="net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.candidacy.DFACandidacyDispatchAction"
 			  >
 	         <forward name="chooseExecutionDegree" path="df.page.chooseDFAExecutionDegree"/>
+ 	         <forward name="showCreatedCandidacy" path="df.page.showCreatedCandidacy"/>
+ 	         <forward name="prepareGenPass" path="df.page.prepareGenPass"/> 
+ 	         <forward name="generatePassword" path="/candidacy/showNewPass.jsp"/>
 	         <forward name="fillCandidateData" path="df.page.fillCandidateData"/>
 	         <forward name="DisplayExecutionDegreeList" path="/guide/chooseExecutionDegreeToCreateGuide.jsp"/>
 	  </action>
+	  
+	  <action path="/listDFACandidacy"
+		      parameter="method"
+		      scope="request"
+		      input="df.page.listCandidacies"
+              type="net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.candidacy.DFACandidacyDispatchAction"
+			  >
+   	         <forward name="listCandidacies" path="df.page.listCandidacies"/>
+	  </action>
+	  
 	
 	
     </action-mappings>

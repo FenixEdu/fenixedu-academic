@@ -20,5 +20,16 @@ public class GenerateNewPasswordService extends Service {
 
 		return password;
 	}
+    
+    public String run(Person person) throws Exception {
+        if (person == null) {
+            throw new ExcepcaoInexistente("Unknown Person!");
+        }
 
+        String password = GeneratePassword.getInstance().generatePassword(person);
+
+        person.setPassword(PasswordEncryptor.encryptPassword(password));
+
+        return password;
+    }
 }

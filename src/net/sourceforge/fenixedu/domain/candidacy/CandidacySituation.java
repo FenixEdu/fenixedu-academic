@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.domain.candidacy;
 
 import java.util.Comparator;
+import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.util.IState;
@@ -25,8 +26,20 @@ public abstract class CandidacySituation extends CandidacySituation_Base impleme
     public abstract void nextState();
     
     public abstract void checkConditionsToForward();
+
+    public abstract void nextState(String nextState);
     
+    public abstract void checkConditionsToForward(String nextState);
+    
+    public abstract Set<String> getValidNextStates();
+    
+    public abstract CandidacySituationType getCandidacySituationType();
+
     public boolean canChangePersonalData(){
         return false;
+    }
+    
+    public boolean canGeneratePass(){
+        return true;
     }
 }

@@ -1,5 +1,5 @@
 <schema name="candidacy.choose.executionDegree"
-	type="net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.candidacy.CreateDFACandidacyBean">
+	type="net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.candidacy.DFACandidacyBean">
 	<slot name="degree" key="label.degree"
 		layout="menu-select-postback"
 		validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
@@ -28,7 +28,7 @@
 		<property name="format" value="${executionYear.year}" />
 	</slot>
 </schema>
-<schema name="candidacy.choose.person"
+<schema name="candidacy.create.choose.person"
 	type="net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.candidacy.CreateDFACandidacyBean">
 	<slot name="name" key="label.name"/>
 	<slot name="identificationNumber" key="label.identificationNumber">
@@ -42,3 +42,21 @@
 	</slot>		
 	<slot name="idDocumentType" key="label.idDocumentType"/>	
 </schema>	
+<schema name="candidacy.show.candidady"
+		type="net.sourceforge.fenixedu.domain.candidacy.Candidacy">
+	<slot name="person.name" key="label.name"/>
+	<slot name="number" key="label.candidacy.number"/>	
+	<slot name="executionDegree" layout="format" key="label.degree" >
+		<property name="format" value="${degreeCurricularPlan.degree.name} - ${degreeCurricularPlan.name}" />
+	</slot>
+	<slot name="person.documentIdNumber" key="label.person.documentIdNumber"/>		
+	<slot name="person.idDocumentType" key="label.person.idDocumentType"/>			
+</schema>
+<schema name="candidacy.show.list.candidady"
+		type="net.sourceforge.fenixedu.domain.candidacy.Candidacy">
+	<slot name="number" key="label.candidacy.number"/>
+	<slot name="person.name" key="label.name"/>
+	<slot name="executionDegree" layout="format" key="label.degree" >
+		<property name="format" value="${degreeCurricularPlan.degree.name} - ${degreeCurricularPlan.name}" />
+	</slot>		
+</schema>

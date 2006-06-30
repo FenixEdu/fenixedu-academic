@@ -1,5 +1,8 @@
 package net.sourceforge.fenixedu.domain.candidacy;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import net.sourceforge.fenixedu.accessControl.AccessControl;
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -13,6 +16,7 @@ public class StandByCandidacySituation extends StandByCandidacySituation_Base {
         if(employee == null) {
         	throw new DomainException("person is not an employee");
         }
+        setEmployee(employee);
     }
 
 	@Override
@@ -25,8 +29,7 @@ public class StandByCandidacySituation extends StandByCandidacySituation_Base {
 
 	@Override
 	public void nextState() {
-		CandidacySituation candidacySituation = new StandByFilledDataCandidacySituation(getCandidacy());
-		
+		new StandByFilledDataCandidacySituation(getCandidacy());
 	}
 	
 	private boolean checkIfDataIsFilled() {
@@ -36,6 +39,28 @@ public class StandByCandidacySituation extends StandByCandidacySituation_Base {
     @Override
     public boolean canChangePersonalData() {
         return true;
+    }
+
+    @Override
+    public void checkConditionsToForward(String nextState) {
+        checkConditionsToForward();
+    }
+
+    @Override
+    public CandidacySituationType getCandidacySituationType() {
+        return CandidacySituationType.STAND_BY;
+    }
+
+    @Override
+    public Set<String> getValidNextStates() {
+        Set<String> nextStates = new HashSet<String>();
+        nextStates.add(CandidacySituationType.STAND_BY_FILLED_DATA.toString());
+        return nextStates;
+    }
+
+    @Override
+    public void nextState(String nextState) {
+        nextState();
     }
     
 }

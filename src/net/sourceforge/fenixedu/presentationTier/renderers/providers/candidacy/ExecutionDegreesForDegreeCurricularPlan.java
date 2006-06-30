@@ -4,8 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.candidacy.CreateDFACandidacyBean;
-import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
+import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.candidacy.DFACandidacyBean;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.presentationTier.renderers.converters.DomainObjectKeyConverter;
 import net.sourceforge.fenixedu.renderers.DataProvider;
@@ -17,10 +16,10 @@ public class ExecutionDegreesForDegreeCurricularPlan implements DataProvider {
 
     public Object provide(Object source, Object currentValue) {
 
-        final CreateDFACandidacyBean createDFACandidacyBean = (CreateDFACandidacyBean) source;
+        final DFACandidacyBean dfaCandidacyBean = (DFACandidacyBean) source;
         final List<ExecutionDegree> result = new ArrayList<ExecutionDegree>();
-        if (createDFACandidacyBean.getDegree() != null && createDFACandidacyBean.getDegreeCurricularPlan() != null) {
-            result.addAll(createDFACandidacyBean.getDegreeCurricularPlan().getExecutionDegreesSet());
+        if (dfaCandidacyBean.getDegree() != null && dfaCandidacyBean.getDegreeCurricularPlan() != null) {
+            result.addAll(dfaCandidacyBean.getDegreeCurricularPlan().getExecutionDegreesSet());
         }
         Collections.sort(result, new BeanComparator("year"));
         return result;
