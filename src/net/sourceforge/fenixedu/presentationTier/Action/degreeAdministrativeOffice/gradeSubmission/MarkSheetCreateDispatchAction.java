@@ -122,8 +122,9 @@ public class MarkSheetCreateDispatchAction extends MarkSheetDispatchAction {
         ActionMessages actionMessages = createActionMessages();
         try {
 
-            ServiceUtils.executeService(getUserView(request), "CreateMarkSheet", new Object[] { createBean });
-            return mapping.findForward("searchMarkSheetFilled");
+            MarkSheet markSheet = (MarkSheet) ServiceUtils.executeService(getUserView(request), "CreateMarkSheet", new Object[] { createBean });
+            ((DynaActionForm) actionForm).set("msID", markSheet.getIdInternal());
+            return viewMarkSheet(mapping, actionForm, request, response);
 
         } catch (NotAuthorizedFilterException e) {
             addMessage(request, actionMessages, "error.notAuthorized");
