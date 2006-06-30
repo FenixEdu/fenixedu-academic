@@ -117,6 +117,7 @@ public class MarkSheetCreateDispatchAction extends MarkSheetDispatchAction {
 
         MarkSheetManagementCreateBean createBean = (MarkSheetManagementCreateBean) RenderUtils
                 .getViewState("edit-invisible").getMetaObject().getObject();
+        createBean.setTeacher(Teacher.readByNumber(createBean.getTeacherNumber()));
 
         ActionMessages actionMessages = createActionMessages();
         try {
