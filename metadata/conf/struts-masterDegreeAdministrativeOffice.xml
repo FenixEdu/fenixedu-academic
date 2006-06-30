@@ -783,6 +783,7 @@
 		<form-property name="username" type="java.lang.String" />
 		<form-property name="documentType" type="java.lang.String" />
 		<form-property name="documentNumber" type="java.lang.String" />
+		<form-property name="receiptId" type="java.lang.Integer" />
     </form-bean>
     
 	<!-- DFA Candidacy -->
@@ -2578,9 +2579,14 @@
               type="net.sourceforge.fenixedu.presentationTier.Action.masterDegree.payments.PaymentsManagementDispatchAction"
    		      name="paymentsForm"
    		      scope="request">
-	         <forward name="searchPerson" path="payments.management.searchPerson"/> 
-   	         <forward name="chooseOperation" path="payments.management.showOperations"/> 
-   	         <forward name="showEvents" path="payments.management.showEvents"/> 
+	         <forward name="searchPerson" path="payments.management.searchPerson"/>
+   	         <forward name="chooseOperation" path="payments.management.showOperations"/>
+   	         <forward name="showEvents" path="payments.management.showEvents"/>
+   	         <forward name="showGuide" path="payments.management.showGuide"/>
+   	         <forward name="printGuide" path="/payments/guides/printGuidePage.jsp"/>
+   	         <forward name="showReceipts" path="/payments/receipts/showReceipts.jsp"/>
+   	         <forward name="showReceipt" path="/payments/receipts/showReceipt.jsp"/>
+   	         <forward name="printReceipt" path="/payments/receipts/printReceiptPage.jsp"/>
       </action>
       
 
