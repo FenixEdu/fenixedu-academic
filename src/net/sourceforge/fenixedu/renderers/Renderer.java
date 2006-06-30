@@ -168,6 +168,7 @@ public abstract class Renderer {
         MetaObject metaObject = MetaObjectFactory.createObject(value, schema);
 
         PresentationContext newContext = getContext().createSubContext(metaObject);
+        newContext.setSchema(schema == null ? null : schema.getName());
         newContext.setLayout(layout);
         newContext.setProperties(properties);
         
@@ -195,9 +196,7 @@ public abstract class Renderer {
      * slot's value. That subcontext will be configured with the layout and properties defined in the slot.
      */
     protected HtmlComponent renderSlot(MetaSlot slot) {
-        PresentationContext newContext = getContext().createSubContext(slot);
-        newContext.setLayout(slot.getLayout());
-        newContext.setProperties(slot.getProperties());
+        PresentationContext newContext = createPresentationContext(slot);
         
         Object value = slot.getObject();
         Class type = slot.getType();
@@ -205,20 +204,31 @@ public abstract class Renderer {
         RenderKit kit = RenderKit.getInstance(); 
         return kit.render(newContext, value, type);
     }
-    
+
     /**
      * Same as previous method but does the rendering with the specified renderer. The renderer
      * must know how to handle the value of the slot. 
      */
     protected HtmlComponent renderSlot(Renderer renderer, MetaSlot slot) {
-        PresentationContext newContext = getContext().createSubContext(slot);
-        newContext.setLayout(slot.getLayout());
-        newContext.setProperties(slot.getProperties());
-
+        PresentationContext newContext = createPresentationContext(slot);
+        
         Object value = slot.getObject();
         Class type = slot.getType();
         
         RenderKit kit = RenderKit.getInstance(); 
         return kit.renderUsing(renderer, newContext, value, type);
     }
+
+    protected PresentationContext createPresentationContext(MetaSlot slot) {
+        Schema schema = RenderKit.getInstance().findSchema(slot.getSchema());
+        MetaObject metaObject = MetaObjectFactory.createObject(slot.getObject(), schema);
+        
+        PresentationContext newContext = getContext().createSubContext(metaObject);
+        newContext.setSchema(slot.getSchema());
+        newContext.setLayout(slot.getLayout());
+        newContext.setProperties(slot.getProperties());
+        
+        return newContext;
+    }
+    
 }

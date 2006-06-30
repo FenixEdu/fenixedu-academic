@@ -1,12 +1,11 @@
 package net.sourceforge.fenixedu.renderers.model;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 import java.util.Properties;
 
 import net.sourceforge.fenixedu.renderers.components.converters.Converter;
+import net.sourceforge.fenixedu.renderers.schemas.Schema;
 import net.sourceforge.fenixedu.renderers.utils.RenderKit;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 import net.sourceforge.fenixedu.renderers.utils.RendererPropertyUtils;
@@ -44,14 +43,16 @@ public class MetaSlot extends MetaObject {
     private boolean readOnly;
     private boolean setterIgnored;
 
-    private MetaObject cachedObject;
     private boolean isCached;
+    private MetaObject valueMetaObject;
     
     public MetaSlot(MetaObject metaObject, String name) {
         super();
         
         this.metaObject = metaObject;
         this.name = name;
+        
+        this.valueMetaObject = null;
     }
 
     /**
@@ -177,7 +178,7 @@ public class MetaSlot extends MetaObject {
      */
     public Object getObject() {
         if (isCached()) {
-            return this.cachedObject.getObject();
+            return getValueMetaObject().getObject();
         }
         else {
             try {
@@ -199,10 +200,30 @@ public class MetaSlot extends MetaObject {
      * Change this slot's value. 
      */
     public void setObject(Object object) {
-        this.cachedObject = MetaObjectFactory.createObject(object, RenderKit.getInstance().findSchema(getSchema()));
-        this.cachedObject.setUser(getUser());
-        
+        setValueMetaObject(object);
         setCached(true);
+    }
+
+    protected void setValueMetaObject(MetaObject metaObject) {
+        this.valueMetaObject = metaObject;
+        
+        if (this.valueMetaObject != null) {
+            this.valueMetaObject.setUser(getUser());
+        }
+    }
+    
+    private void setValueMetaObject(Object object) {
+        Schema schema = RenderKit.getInstance().findSchema(getSchema());
+        
+        setValueMetaObject(MetaObjectFactory.createObject(object, schema));
+    }
+    
+    protected MetaObject getValueMetaObject() {
+        if (this.valueMetaObject == null) {
+            setValueMetaObject(getObject());
+        }
+        
+        return this.valueMetaObject;
     }
 
     public void setUser(UserIdentity user) {
@@ -217,31 +238,34 @@ public class MetaSlot extends MetaObject {
             }
         }
         
-        if (isCached()) {
-            this.cachedObject.setUser(user);
+        if (this.valueMetaObject != null) {
+            this.valueMetaObject.setUser(user);
         }
     }
 
     public List<MetaSlot> getSlots() {
-        return new ArrayList<MetaSlot>();
+        MetaObject valueMetaObject = getValueMetaObject();
+        
+        return valueMetaObject.getSlots();
     }
 
     public void addSlot(MetaSlot slot) {
-        // no sub slots
+        // ignore
     }
 
     public boolean removeSlot(MetaSlot slot) {
-        // no sub slots
+        // ignored
         return false;
     }
 
     public List<MetaSlot> getHiddenSlots() {
-        // no sub slots
-        return new ArrayList<MetaSlot>();
+        MetaObject valueMetaObject = getValueMetaObject();
+
+        return valueMetaObject.getHiddenSlots();
     }
 
     public void addHiddenSlot(MetaSlot slot) {
-        // no sub slots
+        // ignore
     }
 
     public void setLayout(String layout) {
