@@ -13,6 +13,7 @@ import net.sourceforge.fenixedu.domain.accounting.EntryType;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
+import net.sourceforge.fenixedu.domain.util.StateMachine;
 
 public class DFACandidacyEvent extends DFACandidacyEvent_Base {
 
@@ -108,6 +109,13 @@ public class DFACandidacyEvent extends DFACandidacyEvent_Base {
         }
 
         return payedAmount;
+    }
+
+    @Override
+    public void closeEvent() {
+        StateMachine.execute(getCandidacy().getActiveCandidacySituation());
+        
+        super.closeEvent();
     }
 
 }

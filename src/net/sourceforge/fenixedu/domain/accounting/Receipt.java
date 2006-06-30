@@ -13,6 +13,8 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 
+import org.joda.time.DateTime;
+
 public class Receipt extends Receipt_Base {
 
     public static Comparator<Receipt> COMPARATOR_BY_YEAR_AND_NUMBER = new Comparator<Receipt>() {
@@ -27,36 +29,40 @@ public class Receipt extends Receipt_Base {
 
     private Receipt() {
         super();
+        super.setNumber(generateReceiptNumber());
         super.setRootDomainObject(RootDomainObject.getInstance());
     }
 
-    Receipt(Party party, Contributor contributor, Integer year, Integer version, Entry... entries) {
+    public Receipt(Party party, Contributor contributor, List<Entry> entries) {
         this();
-        init(party, contributor, year, entries);
+        init(party, contributor, entries);
     }
 
-    private void init(Party party, Contributor contributor, Integer year, Entry... entries) {
-        checkParameters(party, contributor, year);
+    private void init(Party party, Contributor contributor, List<Entry> entries) {
+        checkParameters(party, contributor, entries);
         super.setParty(party);
-        super.setNumber(generateReceiptNumber());
+        super.setYear(new DateTime().getYear());
         super.setContributor(contributor);
-        super.setYear(year);
 
         for (final Entry entry : entries) {
             entry.setReceipt(this);
         }
     }
 
-    private void checkParameters(Party party, Contributor contributor, Integer year) {
+    private void checkParameters(Party party, Contributor contributor, List<Entry> entries) {
         if (party == null) {
             throw new DomainException("error.accouting.receipt.party.cannot.be.null");
         }
         if (contributor == null) {
             throw new DomainException("error.accounting.receipt.contributor.cannot.be.null");
         }
-        if (year == null) {
-            throw new DomainException("error.accounting.receipt.year.cannot.be.null");
+        if (entries == null) {
+            throw new DomainException("error.accounting.receipt.entries.cannot.be.null");
         }
+        if (entries.isEmpty()) {
+            throw new DomainException("error.accounting.receipt.entries.cannot.be.empty");
+        }
+
     }
 
     @Override
@@ -105,9 +111,9 @@ public class Receipt extends Receipt_Base {
     }
 
     private Integer generateReceiptNumber() {
-        return Collections.max(RootDomainObject.getInstance().getReceipts(),
-                Receipt.COMPARATOR_BY_YEAR_AND_NUMBER).getNumber() + 1;
-
+        final List<Receipt> receipts = RootDomainObject.getInstance().getReceipts();
+        return receipts.isEmpty() ? 1 : Collections.max(receipts, Receipt.COMPARATOR_BY_YEAR_AND_NUMBER)
+                .getNumber() + 1;
     }
 
     public ReceiptVersion createReceiptVersion(Employee employee) {

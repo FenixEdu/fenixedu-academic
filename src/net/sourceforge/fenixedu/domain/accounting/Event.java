@@ -123,9 +123,21 @@ public abstract class Event extends Event_Base {
     }
 
     public Set<Entry> getEntries() {
-        Set<Entry> result = new HashSet<Entry>();
+        final Set<Entry> result = new HashSet<Entry>();
         for (final AccountingTransaction transaction : getAccountingTransactions()) {
             result.add(transaction.getEntryByAccount(getToAccount()));
+        }
+
+        return result;
+    }
+
+    public Set<Entry> getEntriesWithoutReceipt() {
+        final Set<Entry> result = new HashSet<Entry>();
+        for (final AccountingTransaction transaction : getAccountingTransactions()) {
+            final Entry entry = transaction.getEntryByAccount(getToAccount());
+            if (!entry.hasReceipt()) {
+                result.add(entry);
+            }
         }
 
         return result;

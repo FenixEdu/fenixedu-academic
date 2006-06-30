@@ -9986,24 +9986,6 @@
 		</filterChains>
 	</service>
 	<service>
-		<name>CreatePaymentsForEvents</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.accounting.CreatePaymentsForEvents</implementationClass>
-		<description />
-		<isTransactional>true</isTransactional>
-		<filterChains>
-			<chain name="MasterDegreeAdministrativeOfficeAuthorization" />
-		</filterChains>
-	</service>
-	<service>
-		<name>CreateReceiptVersion</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.accounting.CreateReceiptVersion</implementationClass>
-		<description />
-		<isTransactional>true</isTransactional>
-		<filterChains>
-			<chain name="MasterDegreeAdministrativeOfficeAuthorization" />
-		</filterChains>
-	</service>
-	<service>
 		<name>EditPrecedentDegreeInformation</name>
 		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.candidacy.EditPrecedentDegreeInformation</implementationClass>
 		<description />
@@ -10019,6 +10001,33 @@
 		<filterChains>
 		</filterChains>		
 	</service>	
+	<service>
+		<name>CreatePaymentsForEvents</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.accounting.CreatePaymentsForEvents</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		<filterChains>
+			<chain name="MasterDegreeAdministrativeOfficeAuthorization" />
+		</filterChains>
+	</service>
+	<service>
+		<name>CreateReceipt</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.accounting.CreateReceipt</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		<filterChains>
+			<chain name="MasterDegreeAdministrativeOfficeAuthorization" />
+		</filterChains>
+	</service>
+	<service>
+		<name>CreateReceiptVersion</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.accounting.CreateReceiptVersion</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		<filterChains>
+			<chain name="MasterDegreeAdministrativeOfficeAuthorization" />
+		</filterChains>
+	</service>
 	<service>
 		<name>SaveCandidacyDocumentFiles</name>
 		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.candidacy.SaveCandidacyDocumentFiles</implementationClass>

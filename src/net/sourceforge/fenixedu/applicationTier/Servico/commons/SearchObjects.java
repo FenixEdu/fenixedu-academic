@@ -33,13 +33,13 @@ public class SearchObjects extends Service implements AutoCompleteSearchService 
             outter: 
             for (DomainObject object : objects) {
                 try {
-                    String objectValue = (String) PropertyUtils.getProperty(object, slotName);
+                    Object objectValue = (Object) PropertyUtils.getProperty(object, slotName);
                     
                     if (objectValue == null) {
                         continue;
                     }
                     
-                    String normalizedValue = StringNormalizer.normalize(objectValue).toLowerCase();
+                    String normalizedValue = StringNormalizer.normalize(objectValue.toString()).toLowerCase();
                     
                     for (int i = 0; i < values.length; i++) {
                         String part = values[i];

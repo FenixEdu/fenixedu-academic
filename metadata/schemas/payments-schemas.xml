@@ -30,3 +30,29 @@
 	<slot name="contributorAddress"/>
 	<slot name="contributorNumber>"/>
 </schema>
+
+<schema name="selectableEntryBean.view" type="net.sourceforge.fenixedu.dataTransferObject.accounting.SelectableEntryBean">
+	<slot name="selected" key="label.commons.emptySelected" />
+	<slot name="entry.entryType" read-only="true" key="label.net.sourceforge.fenixedu.domain.accounting.Entry.entryType"/>
+	<slot name="entry.description" read-only="true" key="label.net.sourceforge.fenixedu.domain.accounting.Entry.description" />
+	<slot name="entry.whenBooked" read-only="true" key="label.net.sourceforge.fenixedu.domain.accounting.Entry.whenBooked" />
+	<slot name="entry.amount" read-only="true" key="label.net.sourceforge.fenixedu.domain.accounting.Entry.amount" />
+</schema>
+
+<schema name="createReceiptBean.create" type="net.sourceforge.fenixedu.dataTransferObject.accounting.CreateReceiptBean">
+	<slot name="contributor" layout="autoComplete"  validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		<property name="size" value="70"/>
+		<property name="labelField" value="contributorNumber"/>
+		<property name="format" value="${contributorNumber} - ${contributorName}"/>
+		<property name="indicatorShown" value="true"/>		
+		<property name="serviceName" value="SearchObjects"/>
+		<property name="serviceArgs" value="slot=contributorNumber"/>
+		<property name="className" value="net.sourceforge.fenixedu.domain.Contributor"/>
+		<property name="minChars" value="1"/>
+		<property name="maxCount" value="20"/>
+	</slot>
+</schema>
+
+
+
+

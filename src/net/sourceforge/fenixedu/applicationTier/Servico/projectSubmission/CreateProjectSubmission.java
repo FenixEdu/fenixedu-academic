@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.projectSubmission;
 
 import java.io.FileInputStream;
+import java.io.InputStream;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -63,7 +64,7 @@ public class CreateProjectSubmission extends Service {
             final CreateProjectSubmissionBean createProjectSubmissionBean, final Group permittedGroup)
             throws FenixServiceException, FileManagerException {
 
-        final FileInputStream fileInputStream = createProjectSubmissionBean.getFileInputStream();
+        final InputStream inputStream = createProjectSubmissionBean.getInputStream();
         final String filename = createProjectSubmissionBean.getFilename();
         final Attends attends = createProjectSubmissionBean.getAttends();
         final Project project = createProjectSubmissionBean.getProject();
@@ -73,7 +74,7 @@ public class CreateProjectSubmission extends Service {
         final FileMetadata fileMetadata = new FileMetadata(filename, attends.getAluno().getPerson()
                 .getNome());
         final FileDescriptor fileDescriptor = FileManagerFactory.getFileManager().saveFile(filePath,
-                filename, (permittedGroup != null) ? true : false, fileMetadata, fileInputStream);
+                filename, (permittedGroup != null) ? true : false, fileMetadata, inputStream);
 
         final ProjectSubmissionFile projectSubmissionFile = new ProjectSubmissionFile(filename,
                 filename, fileDescriptor.getMimeType(), fileDescriptor.getChecksum(), fileDescriptor

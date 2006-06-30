@@ -17,7 +17,6 @@ import net.sourceforge.fenixedu.applicationTier.security.PasswordEncryptor;
 import net.sourceforge.fenixedu.applicationTier.utils.GeneratePassword;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
 import net.sourceforge.fenixedu.domain.accessControl.PersonGroup;
-import net.sourceforge.fenixedu.domain.accounting.Event;
 import net.sourceforge.fenixedu.domain.candidacy.Candidacy;
 import net.sourceforge.fenixedu.domain.candidacy.DFACandidacy;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
@@ -931,19 +930,18 @@ public class Person extends Person_Base {
         }
         return null;
     }
-    
+
     public DFACandidacy getDFACandidacyByExecutionDegree(final ExecutionDegree executionDegree) {
         for (final Candidacy candidacy : this.getCandidaciesSet()) {
-        	if(candidacy instanceof DFACandidacy) {
-        		final DFACandidacy dfaCandidacy = (DFACandidacy) candidacy;
-        		if(dfaCandidacy.getExecutionDegree().equals(executionDegree)) {
-        			return dfaCandidacy;
-        		}
-        	}
+            if (candidacy instanceof DFACandidacy) {
+                final DFACandidacy dfaCandidacy = (DFACandidacy) candidacy;
+                if (dfaCandidacy.getExecutionDegree().equals(executionDegree)) {
+                    return dfaCandidacy;
+                }
+            }
         }
         return null;
     }
-
 
     @Deprecated
     public String getCodigoFiscal() {
@@ -1267,34 +1265,34 @@ public class Person extends Person_Base {
     public SortedSet<StudentCurricularPlan> getActiveStudentCurricularPlansSortedByDegreeTypeAndDegreeName() {
         final SortedSet<StudentCurricularPlan> studentCurricularPlans = new TreeSet<StudentCurricularPlan>(
                 StudentCurricularPlan.STUDENT_CURRICULAR_PLAN_COMPARATOR_BY_DEGREE_TYPE_AND_DEGREE_NAME);
-    	for (final Student student : getStudentsSet()) {
-    		final StudentCurricularPlan studentCurricularPlan = student.getActiveStudentCurricularPlan();
-    		if (studentCurricularPlan != null) {
-    			studentCurricularPlans.add(studentCurricularPlan);
-    		}
-    	}
-    	return studentCurricularPlans;
+        for (final Student student : getStudentsSet()) {
+            final StudentCurricularPlan studentCurricularPlan = student.getActiveStudentCurricularPlan();
+            if (studentCurricularPlan != null) {
+                studentCurricularPlans.add(studentCurricularPlan);
+            }
+        }
+        return studentCurricularPlans;
     }
 
     public SortedSet<StudentCurricularPlan> getCompletedStudentCurricularPlansSortedByDegreeTypeAndDegreeName() {
         final SortedSet<StudentCurricularPlan> studentCurricularPlans = new TreeSet<StudentCurricularPlan>(
                 StudentCurricularPlan.STUDENT_CURRICULAR_PLAN_COMPARATOR_BY_DEGREE_TYPE_AND_DEGREE_NAME);
-    	for (final Student student : getStudentsSet()) {
+        for (final Student student : getStudentsSet()) {
             for (final StudentCurricularPlan studentCurricularPlan : student
                     .getStudentCurricularPlansSet()) {
-    			if (studentCurricularPlan.getCurrentState() == StudentCurricularPlanState.CONCLUDED) {
-    				studentCurricularPlans.add(studentCurricularPlan);
-    			}
-    		}
-    	}
-    	return studentCurricularPlans;
+                if (studentCurricularPlan.getCurrentState() == StudentCurricularPlanState.CONCLUDED) {
+                    studentCurricularPlans.add(studentCurricularPlan);
+                }
+            }
+        }
+        return studentCurricularPlans;
     }
 
     public List<ProjectAccess> readProjectAccessesByCoordinator(Integer coordinatorCode) {
         List<ProjectAccess> result = new ArrayList<ProjectAccess>();
         Date currentDate = Calendar.getInstance().getTime();
         for (ProjectAccess projectAccess : getProjectAccessesSet()) {
-            if(projectAccess.getKeyProjectCoordinator().equals(coordinatorCode)) {
+            if (projectAccess.getKeyProjectCoordinator().equals(coordinatorCode)) {
                 if (!DateFormatUtil.isBefore("yyyy/MM/dd", currentDate, projectAccess.getBegin())
                         && !DateFormatUtil.isAfter("yyyy/MM/dd", currentDate, projectAccess.getEnd())) {
                     result.add(projectAccess);
@@ -1305,103 +1303,83 @@ public class Person extends Person_Base {
     }
 
     public Set<Attends> getCurrentAttends() {
-    	final Set<Attends> attends = new HashSet<Attends>();
-    	for (final Student student : getStudentsSet()) {
-    		for (final Attends attend : student.getAssociatedAttendsSet()) {
-    			final ExecutionCourse executionCourse = attend.getDisciplinaExecucao();
-    			final ExecutionPeriod executionPeriod = executionCourse.getExecutionPeriod();
-    			if (executionPeriod.getState().equals(PeriodState.CURRENT)) {
-    				attends.add(attend);
-    			}
-    		}
-    	}
-    	return attends;
+        final Set<Attends> attends = new HashSet<Attends>();
+        for (final Student student : getStudentsSet()) {
+            for (final Attends attend : student.getAssociatedAttendsSet()) {
+                final ExecutionCourse executionCourse = attend.getDisciplinaExecucao();
+                final ExecutionPeriod executionPeriod = executionCourse.getExecutionPeriod();
+                if (executionPeriod.getState().equals(PeriodState.CURRENT)) {
+                    attends.add(attend);
+                }
+            }
+        }
+        return attends;
     }
-    
+
     public boolean hasIstUsername() {
-    	if(this.getIstUsername() != null) {
-    		return true;
-    	}
-    	if(UsernameUtils.shouldHaveUID(this)) {
-    		this.setIstUsername(UsernameUtils.updateIstUsername(this));
-    		return true;
-    	}
-    	return false;
+        if (this.getIstUsername() != null) {
+            return true;
+        }
+        if (UsernameUtils.shouldHaveUID(this)) {
+            this.setIstUsername(UsernameUtils.updateIstUsername(this));
+            return true;
+        }
+        return false;
     }
 
-	public static class FindPersonFactory implements Serializable, FactoryExecutor {
-		private Integer institutionalNumber;
+    public static class FindPersonFactory implements Serializable, FactoryExecutor {
+        private Integer institutionalNumber;
 
-		public Integer getInstitutionalNumber() {
-			return institutionalNumber;
-		}
+        public Integer getInstitutionalNumber() {
+            return institutionalNumber;
+        }
 
-		public void setInstitutionalNumber(Integer institutionalNumber) {
-			this.institutionalNumber = institutionalNumber;
-		}
+        public void setInstitutionalNumber(Integer institutionalNumber) {
+            this.institutionalNumber = institutionalNumber;
+        }
 
-		transient Set<Person> people = null;
+        transient Set<Person> people = null;
 
-		public FindPersonFactory execute() {
-			people = Person.findPerson(this);
-			return this;
-		}
+        public FindPersonFactory execute() {
+            people = Person.findPerson(this);
+            return this;
+        }
 
-		public Set<Person> getPeople() {
-			return people;
-		}
-	}
+        public Set<Person> getPeople() {
+            return people;
+        }
+    }
 
-	public static Set<Person> findPerson(final FindPersonFactory findPersonFactory) {
-		final Set<Person> people = new HashSet<Person>();
-		for (final Party party : RootDomainObject.getInstance().getPartysSet()) {
-			if (party instanceof Person) {
-				final Person person = (Person) party;
-				if (findPersonFactory.getInstitutionalNumber() != null) {
+    public static Set<Person> findPerson(final FindPersonFactory findPersonFactory) {
+        final Set<Person> people = new HashSet<Person>();
+        for (final Party party : RootDomainObject.getInstance().getPartysSet()) {
+            if (party instanceof Person) {
+                final Person person = (Person) party;
+                if (findPersonFactory.getInstitutionalNumber() != null) {
                     if (person.getTeacher() != null
                             && person.getTeacher().getTeacherNumber().equals(
                                     findPersonFactory.getInstitutionalNumber())) {
-						people.add(person);
+                        people.add(person);
                     } else if (person.getEmployee() != null
                             && person.getEmployee().getEmployeeNumber().equals(
                                     findPersonFactory.getInstitutionalNumber())) {
-						people.add(person);
-					} else if (person.hasStudentWithNumber(findPersonFactory.getInstitutionalNumber())) {
-						people.add(person);
-					}
-				}
-			}
-		}
-		return people;
-	}
-
-	private boolean hasStudentWithNumber(final Integer institutionalNumber) {
-		for (final Student student : getStudents()) {
-			if (student.getNumber().equals(institutionalNumber)) {
-				return true;
-			}
-		}
-		return false;
-	}
-
-    public Set<Event> getNotPayedEvents() {
-        return getEventsByState(false);
-	}
-
-    public Set<Event> getPayedEvents() {
-        return getEventsByState(true);
-    }
-
-    private Set<Event> getEventsByState(boolean closed) {
-        final Set<Event> result = new HashSet<Event>();
-
-        for (Event event : getEventsSet()) {
-            if (event.isClosed() == closed) {
-                result.add(event);
+                        people.add(person);
+                    } else if (person.hasStudentWithNumber(findPersonFactory.getInstitutionalNumber())) {
+                        people.add(person);
+                    }
+                }
             }
         }
+        return people;
+    }
 
-        return result;
+    private boolean hasStudentWithNumber(final Integer institutionalNumber) {
+        for (final Student student : getStudents()) {
+            if (student.getNumber().equals(institutionalNumber)) {
+                return true;
+            }
+        }
+        return false;
     }
 
 }

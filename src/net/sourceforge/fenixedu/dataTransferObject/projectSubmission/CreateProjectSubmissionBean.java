@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.dataTransferObject.projectSubmission;
 
-import java.io.FileInputStream;
+import java.io.InputStream;
 import java.io.Serializable;
 
 import net.sourceforge.fenixedu.domain.Attends;
@@ -19,7 +19,7 @@ public class CreateProjectSubmissionBean implements Serializable {
 
     private DomainReference<Person> personReference;
 
-    private transient FileInputStream fileInputStream;
+    private transient InputStream inputStream;
 
     private String filename;
 
@@ -59,12 +59,12 @@ public class CreateProjectSubmissionBean implements Serializable {
         this.personReference = (person != null) ? new DomainReference<Person>(person) : null;
     }
 
-    public FileInputStream getFileInputStream() {
-        return fileInputStream;
+    public InputStream getInputStream() {
+        return inputStream;
     }
 
-    public void setFileInputStream(FileInputStream fileInputStream) {
-        this.fileInputStream = fileInputStream;
+    public void setInputStream(InputStream fileInputStream) {
+        this.inputStream = fileInputStream;
     }
 
     public String getFilename() {

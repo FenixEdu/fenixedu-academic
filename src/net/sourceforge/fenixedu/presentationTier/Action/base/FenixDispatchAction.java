@@ -140,6 +140,18 @@ public abstract class FenixDispatchAction extends DispatchAction implements Exce
         }
     }
 
+    /**
+     * Searches in request parameters first and next in request attributed
+     * 
+     * @param request
+     * @param name
+     * @return
+     */
+    protected Object getFromRequest(HttpServletRequest request, String name) {
+        final String requestParameter = request.getParameter(name);
+        return (requestParameter != null) ? requestParameter : request.getAttribute(name);
+    }
+
     public ActionForward processException(HttpServletRequest request, ActionMapping mapping,
             ActionForward input, Exception e) {
         if (!(e instanceof DomainException)) {

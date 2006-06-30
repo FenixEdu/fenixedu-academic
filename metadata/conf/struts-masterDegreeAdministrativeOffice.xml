@@ -2579,14 +2579,15 @@
               type="net.sourceforge.fenixedu.presentationTier.Action.masterDegree.payments.PaymentsManagementDispatchAction"
    		      name="paymentsForm"
    		      scope="request">
-	         <forward name="searchPerson" path="payments.management.searchPerson"/>
-   	         <forward name="chooseOperation" path="payments.management.showOperations"/>
-   	         <forward name="showEvents" path="payments.management.showEvents"/>
+	         <forward name="searchPerson" path="payments.management.searchPerson"/> 
+   	         <forward name="showOperations" path="payments.management.showOperations"/> 
+   	         <forward name="showEvents" path="payments.management.showEvents"/> 
    	         <forward name="showGuide" path="payments.management.showGuide"/>
    	         <forward name="printGuide" path="/payments/guides/printGuidePage.jsp"/>
    	         <forward name="showReceipts" path="/payments/receipts/showReceipts.jsp"/>
    	         <forward name="showReceipt" path="/payments/receipts/showReceipt.jsp"/>
    	         <forward name="printReceipt" path="/payments/receipts/printReceiptPage.jsp"/>
+   	         <forward name="showPaymentsWithoutReceipt" path="payments.management.showPaymentsWithoutReceipt"/> 
       </action>
       
 

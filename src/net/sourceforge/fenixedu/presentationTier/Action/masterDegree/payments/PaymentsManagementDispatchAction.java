@@ -3,7 +3,9 @@
  */
 package net.sourceforge.fenixedu.presentationTier.Action.masterDegree.payments;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -11,13 +13,16 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
+import net.sourceforge.fenixedu.dataTransferObject.accounting.CreateReceiptBean;
 import net.sourceforge.fenixedu.dataTransferObject.accounting.EntryDTO;
 import net.sourceforge.fenixedu.dataTransferObject.accounting.PaymentsManagementDTO;
+import net.sourceforge.fenixedu.dataTransferObject.accounting.SelectableEntryBean;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.accounting.Entry;
 import net.sourceforge.fenixedu.domain.accounting.Event;
 import net.sourceforge.fenixedu.domain.accounting.Receipt;
 import net.sourceforge.fenixedu.domain.candidacy.Candidacy;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
@@ -58,9 +63,8 @@ public class PaymentsManagementDispatchAction extends FenixDispatchAction {
             return prepareSearchPerson(mapping, actionForm, request, response);
         }
 
-        request.setAttribute("paymentsManagementDTO", searchNotPayedEventsForPerson(candidacy
-                .getPerson()));
-        return mapping.findForward("showEvents");
+        request.setAttribute("person", candidacy.getPerson());
+        return mapping.findForward("showOperations");
     }
 
     public ActionForward searchPersonByUsername(ActionMapping mapping, ActionForm actionForm,
@@ -75,8 +79,8 @@ public class PaymentsManagementDispatchAction extends FenixDispatchAction {
             return prepareSearchPerson(mapping, actionForm, request, response);
         }
 
-        request.setAttribute("paymentsManagementDTO", searchNotPayedEventsForPerson(person));
-        return mapping.findForward("showEvents");
+        request.setAttribute("person", person);
+        return mapping.findForward("showOperations");
     }
 
     public ActionForward searchPersonByDocumentIDandDocumentType(ActionMapping mapping,
@@ -93,8 +97,8 @@ public class PaymentsManagementDispatchAction extends FenixDispatchAction {
             return prepareSearchPerson(mapping, actionForm, request, response);
         }
 
-        request.setAttribute("paymentsManagementDTO", searchNotPayedEventsForPerson(person));
-        return mapping.findForward("showEvents");
+        request.setAttribute("person", person);
+        return mapping.findForward("showOperations");
     }
 
     protected Integer getCandidacyNumber(final DynaActionForm form) {
@@ -135,10 +139,58 @@ public class PaymentsManagementDispatchAction extends FenixDispatchAction {
         return mapping.findForward("showEvents");
     }
 
-    public ActionForward showPerformedPayments(ActionMapping mapping, ActionForm form,
+    public ActionForward showPaymentsWithoutReceipt(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) {
 
-        return null;
+        final Person person = getPerson(request);
+        final List<SelectableEntryBean> selectableEntryBeans = getSelectableEntryBeans(person
+                .getPaymentsWithoutReceipt());
+        final CreateReceiptBean receiptBean = new CreateReceiptBean();
+        receiptBean.setParty(person);
+        receiptBean.setEntries(selectableEntryBeans);
+
+        request.setAttribute("createReceiptBean", receiptBean);
+
+        return mapping.findForward("showPaymentsWithoutReceipt");
+    }
+
+    public ActionForward createReceipt(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
+            FenixServiceException {
+
+        final CreateReceiptBean createReceiptBean = (CreateReceiptBean) RenderUtils.getViewState(
+                "createReceiptBean").getMetaObject().getObject();
+        final List<SelectableEntryBean> entries = (List<SelectableEntryBean>) RenderUtils.getViewState(
+                "createReceiptBean-entries-part").getMetaObject().getObject();
+        createReceiptBean.setEntries(entries);
+
+        try {
+            final Receipt receipt = (Receipt) ServiceUtils
+                    .executeService(getUserView(request), "CreateReceipt", new Object[] {
+                            createReceiptBean.getParty(), createReceiptBean.getContributor(),
+                            createReceiptBean.getSelectedEntries() });
+
+            request.setAttribute("receiptID", receipt.getIdInternal());
+
+            return prepareShowReceipt(mapping, form, request, response);
+
+        } catch (DomainException ex) {
+            addActionMessage(request, ex.getKey(), ex.getArgs());
+
+            request.setAttribute("createReceiptBean", createReceiptBean);
+
+            return mapping.findForward("showPaymentsWithoutReceipt");
+        }
+
+    }
+
+    private List<SelectableEntryBean> getSelectableEntryBeans(final Set<Entry> entries) {
+        final List<SelectableEntryBean> selectableEntryBeans = new ArrayList<SelectableEntryBean>();
+        for (final Entry entry : entries) {
+            selectableEntryBeans.add(new SelectableEntryBean(false, entry));
+        }
+
+        return selectableEntryBeans;
     }
 
     public ActionForward showReceipts(ActionMapping mapping, ActionForm actionForm,
@@ -148,9 +200,39 @@ public class PaymentsManagementDispatchAction extends FenixDispatchAction {
         return mapping.findForward("showReceipts");
     }
 
+    public ActionForward doPayment(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+
+        final PaymentsManagementDTO paymentsManagementDTO = (PaymentsManagementDTO) RenderUtils
+                .getViewState("paymentsManagementDTO").getMetaObject().getObject();
+
+        final List<EntryDTO> selectedEntries = (List<EntryDTO>) RenderUtils.getViewState(
+                "payment-entries").getMetaObject().getObject();
+
+        // TODO: render is misconfigured, this was supposed to be done
+        // automatically
+        paymentsManagementDTO.setEntryDTOs(selectedEntries);
+
+        try {
+            ServiceUtils.executeService(getUserView(request), "CreatePaymentsForEvents", new Object[] {
+                    paymentsManagementDTO.getPerson(), getUserView(request).getPerson().getUser(),
+                    paymentsManagementDTO.getSelectedEntries() });
+        } catch (DomainException ex) {
+            addActionMessage(request, ex.getKey(), ex.getArgs());
+
+            request.setAttribute("paymentsManagementDTO", paymentsManagementDTO);
+
+            return mapping.findForward("showEvents");
+        }
+
+        request.setAttribute("personId", paymentsManagementDTO.getPerson().getIdInternal());
+
+        return showPaymentsWithoutReceipt(mapping, form, request, response);
+    }
+
     private Person getPerson(HttpServletRequest request) {
-        return (Person) rootDomainObject
-                .readPartyByOID(getRequestParameterAsInteger(request, "personId"));
+        return (Person) rootDomainObject.readPartyByOID(Integer.valueOf(getFromRequest(request,
+                "personId").toString()));
     }
 
     public ActionForward preparePrintGuide(ActionMapping mapping, ActionForm actionForm,
@@ -171,12 +253,6 @@ public class PaymentsManagementDispatchAction extends FenixDispatchAction {
                 "paymentsManagementDTO").getMetaObject().getObject();
         request.setAttribute("paymentsManagementDTO", managementDTO);
         return mapping.findForward("printGuide");
-    }
-
-    private void getPaymentsManagementDTO(HttpServletRequest request) {
-        PaymentsManagementDTO managementDTO = (PaymentsManagementDTO) RenderUtils.getViewState(
-                "paymentsManagementDTO").getMetaObject().getObject();
-        request.setAttribute("paymentsManagementDTO", managementDTO);
     }
 
     public ActionForward prepareShowReceipt(ActionMapping mapping, ActionForm actionForm,
@@ -206,9 +282,6 @@ public class PaymentsManagementDispatchAction extends FenixDispatchAction {
                     receipt, getUserView(request).getPerson().getEmployee() });
 
             return mapping.findForward("printReceipt");
-
-        } catch (NotAuthorizedException e) {
-            addActionMessage(request, "error.notAuthorized");
 
         } catch (InvalidArgumentsServiceException e) {
             addActionMessage(request, e.getMessage());

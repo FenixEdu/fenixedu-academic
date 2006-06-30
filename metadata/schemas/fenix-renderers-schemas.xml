@@ -782,7 +782,7 @@
 	</schema>
 	
 	<schema name="projectSubmission.create" type="net.sourceforge.fenixedu.dataTransferObject.projectSubmission.CreateProjectSubmissionBean">
-		<slot name="fileInputStream" key="label.projectSubmission.projectFile" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		<slot name="inputStream" key="label.projectSubmission.projectFile" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
 			<property name="fileNameSlot" value="filename"/>
 		</slot>
 	</schema>
@@ -801,6 +801,10 @@
 		<slot name="name"/>
 		<slot name="address"/>
 		<slot name="fiscalCode"/>
+	</schema>
+	
+	<schema name="party.view-with-name" type="net.sourceforge.fenixedu.domain.organizationalStructure.Party" bundle="DEFAULT">
+		<slot name="name"/>
 	</schema>
 	
 	&researcher;

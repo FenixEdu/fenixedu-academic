@@ -989,7 +989,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         InputStream formFileInputStream = null;
         try {
             formFileInputStream = formFile.getInputStream();
-            Object[] args = { itemId, formFile.getInputStream(), formFile.getFileName(), displayName,
+            Object[] args = { itemId, formFileInputStream, formFile.getFileName(), displayName,
                     fileItemPermittedGroupType };
 
             ServiceUtils.executeService(userView, "CreateFileItemForItem", args);
@@ -1081,41 +1081,6 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         return filenameOnly;
     }
 
-    /**
-     * Creates a temporary file representing the uploaded file This
-     * 
-     * @param formFile
-     * @return
-     * @throws IOException
-     */
-    private File createTemporaryFile(FormFile formFile) throws IOException {
-        File tmpFile = null;
-        FileOutputStream tmpFileOutputStream = null;
-        try {
-
-            tmpFile = File.createTempFile(FileUtils.getTemporaryFileBaseName(), null);
-
-            // In case anything fails the file will be cleaned when jvm
-            // shutsdown
-            tmpFile.deleteOnExit();
-
-            tmpFileOutputStream = new FileOutputStream(tmpFile);
-
-            FileUtils.copy(formFile.getInputStream(), tmpFileOutputStream);
-
-        } finally {
-            if (tmpFileOutputStream != null) {
-                try {
-                    tmpFileOutputStream.close();
-                } catch (IOException e) {
-                    throw e;
-                }
-            }
-        }
-
-        return tmpFile;
-
-    }
 
     public ActionForward deleteFile(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixActionException, FenixFilterException, FenixServiceException {

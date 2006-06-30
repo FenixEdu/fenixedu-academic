@@ -27,7 +27,7 @@ import pt.utl.ist.fenix.tools.file.Node;
  */
 public class CreateFileItemForItem extends FileItemService {
 
-    public void run(Integer itemId, InputStream fileInputStream, String originalFilename,
+    public void run(Integer itemId, InputStream inputStream, String originalFilename,
             String displayName, FileItemPermittedGroupType fileItemPermittedGroupType)
             throws FenixServiceException, ExcepcaoPersistencia, DomainException {
 
@@ -39,7 +39,7 @@ public class CreateFileItemForItem extends FileItemService {
                 .getExecutionCourse().getNome());
         final IFileManager fileManager = FileManagerFactory.getFileManager();
         final FileDescriptor fileDescriptor = fileManager.saveFile(filePath, originalFilename,
-                (permittedGroup != null) ? true : false, fileMetadata, fileInputStream);
+                (permittedGroup != null) ? true : false, fileMetadata, inputStream);
         final FileItem fileItem = new FileItem(fileDescriptor.getFilename(), displayName, fileDescriptor
                 .getMimeType(), fileDescriptor.getChecksum(), fileDescriptor.getChecksumAlgorithm(),
                 fileDescriptor.getSize(), fileDescriptor.getUniqueId(), permittedGroup,

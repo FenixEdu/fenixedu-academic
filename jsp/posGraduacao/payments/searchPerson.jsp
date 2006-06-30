@@ -8,7 +8,7 @@
 
 	<html:hidden property="method" />
 
-	<h2><bean:message key="link.masterDegree.administrativeOffice.receipts" /></h2>
+	<h2><bean:message key="label.masterDegree.administrativeOffice.payments" /></h2>
 	<hr>
 
 	<logic:messagesPresent message="true">
