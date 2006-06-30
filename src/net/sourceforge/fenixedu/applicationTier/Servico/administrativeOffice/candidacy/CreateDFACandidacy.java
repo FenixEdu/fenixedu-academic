@@ -4,6 +4,7 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.candidacy.DFACandidacy;
+import net.sourceforge.fenixedu.domain.candidacy.StandByCandidacySituation;
 import net.sourceforge.fenixedu.domain.candidacy.DFACandidacyEvent;
 import net.sourceforge.fenixedu.domain.person.Gender;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
@@ -22,10 +23,11 @@ public class CreateDFACandidacy extends Service {
         person.addPersonRoleByRoleType(RoleType.MASTER_DEGREE_CANDIDATE);
         person.addPersonRoleByRoleType(RoleType.PERSON);
 
-        DFACandidacy candidacy = new DFACandidacy(person, executionDegree);
-
+		DFACandidacy candidacy = new DFACandidacy(person, executionDegree);
+	
         new DFACandidacyEvent(person, candidacy);
-
-        return candidacy;
-    }
+		
+		
+		return candidacy;
+	}
 }
