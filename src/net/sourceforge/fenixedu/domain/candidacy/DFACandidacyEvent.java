@@ -95,7 +95,8 @@ public class DFACandidacyEvent extends DFACandidacyEvent_Base {
 
     @Override
     public String getDescriptionEntryType(EntryType entryType) {
-        return "dfaCandidacyEvent.description";
+        return getCandidacy().getExecutionDegree().getDegreeCurricularPlan().getDegree().getName() + " "
+                + getCandidacy().getExecutionDegree().getExecutionYear().getYear();
     }
 
     @Override
