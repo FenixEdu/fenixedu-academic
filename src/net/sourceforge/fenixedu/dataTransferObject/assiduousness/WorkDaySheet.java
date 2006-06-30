@@ -115,4 +115,13 @@ public class WorkDaySheet implements Serializable {
         return  day + " - " + bundle.getString(WeekDay.fromJodaTimeToWeekDay(getDate().toDateTimeAtMidnight())
                         .toString()+"_ACRONYM");
     }
+    
+    public String getWeekDay() {
+        if(getDate() == null) {
+            return "";
+        }
+        ResourceBundle bundle = ResourceBundle.getBundle("resources.EmployeeResources");
+        return  bundle.getString(WeekDay.fromJodaTimeToWeekDay(getDate().toDateTimeAtMidnight())
+                        .toString()+"_ACRONYM");
+    }
 }

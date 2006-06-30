@@ -3,35 +3,47 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
+
 <em><bean:message key="title.assiduousness" /></em>
-<br />
 <h2><bean:message key="link.justifications" /></h2>
-<br />
-<br />
+
 <logic:present name="employee">
+<div class="toprint">
 	<fr:view name="employee" schema="show.employeeInformation">
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="examMap" />
 		</fr:layout>
 	</fr:view>
+	<br/>
+</div>
 </logic:present>
-<br />
-<br />
+
 <logic:present name="yearMonth">
+	<div class="mvert1">
+	<fr:form action="/assiduousnessRecords.do?method=showWorkSheet">
+		<fr:edit name="yearMonth" schema="choose.date">
+			<fr:layout>
+		        <fr:property name="classes" value="thlight thright"/>
+			</fr:layout>
+		</fr:edit>
+		<p>
+		<html:submit styleClass="invisible" >
+			<bean:message key="button.submit" />
+		</html:submit>
+		</p>
+	</fr:form>
+	</div>
+	
+	<div class="toprint">
+	<p class="bold mbottom0">
 	<bean:define id="month" name="yearMonth" property="month"/>
 	<bean:message key="<%=month.toString()%>" bundle="ENUMERATION_RESOURCES"/>
 	<bean:write name="yearMonth" property="year"/>
-	<br/><br/>
-	<fr:form action="/assiduousnessRecords.do?method=showJustifications">
-		<fr:edit name="yearMonth" schema="choose.date" />
-		<br />
-		<html:submit>
-			<bean:message key="button.submit" />
-		</html:submit>
-	</fr:form>
+	</p>
+	</div>
 </logic:present>
-<br />
-<br />
+
+
 <logic:present name="justifications">
 	<logic:empty name="justifications">
 		<bean:message key="message.employee.noJustifications" />

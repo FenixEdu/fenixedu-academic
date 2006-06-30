@@ -3,44 +3,56 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
+
 <em><bean:message key="title.assiduousness" /></em>
-<br />
 <h2><bean:message key="label.schedule" /></h2>
-<br />
-<br />
+
+
+
 <logic:present name="employee">
+<div class="toprint">
 	<fr:view name="employee" schema="show.employeeInformation">
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="examMap" />
 		</fr:layout>
 	</fr:view>
+</div>
 </logic:present>
-<br />
-<br />
+
+
 <logic:present name="workScheduleDayList">
-	<table class="tstyle1b">
+	<table class="tstyle1b thtop thlight">
 		<tr>
-			<th><bean:message key="label.acronym"/>:</th>
+			<th class="cornerleft"></th><th><b>2ª Feira</b></th><th><b>3ª Feira</b></th><th><b>4ª Feira</b></th><th><b>5ª Feira</b></th><th><b>6ª Feira</b></th>
+		</tr>
+		<tr>
+			<th style="text-align: right;"><bean:message key="label.acronym"/>:</th>
 			<logic:iterate name="workScheduleDayList" id="workScheduleDay">
-				<th><bean:write name="workScheduleDay" property="weekDaySchedule"/></th>
+				<td class="acenter"><bean:write name="workScheduleDay" property="weekDaySchedule"/></td>
 			</logic:iterate>
 		</tr>
 		<tr>
-			<th><bean:message key="label.normalWorkPeriod"/>:</th>
+			<th style="text-align: right;"><bean:message key="label.normalWorkPeriod"/>:</th>
 			<logic:iterate name="workScheduleDayList" id="workScheduleDay">
-				<td><bean:write name="workScheduleDay" property="normalWorkPeriod" filter="false"/></td>
+				<td class="acenter"><bean:write name="workScheduleDay" property="normalWorkPeriod" filter="false"/></td>
 			</logic:iterate>
 		</tr>
+		
+
 		<tr>
-			<th><bean:message key="label.fixedWorkPeriod"/>:</th>
+			<th style="text-align: right;"><bean:message key="label.fixedWorkPeriod"/>:</th>
 			<logic:iterate name="workScheduleDayList" id="workScheduleDay">
-				<td><bean:write name="workScheduleDay" property="fixedWorkPeriod" filter="false"/></td>
+				<td class="acenter"><bean:write name="workScheduleDay" property="fixedWorkPeriod" filter="false"/></td>
 			</logic:iterate>
 		</tr>
+		
 		<tr>
-			<th><bean:message key="label.mealPeriod"/>:</th>
+			<th style="text-align: right;"><bean:message key="label.mealPeriod"/>:</th>
 			<logic:iterate name="workScheduleDayList" id="workScheduleDay">
-				<td><bean:write name="workScheduleDay" property="mealPeriod" filter="false"/></td>
+				<td class="acenter">
+					<bean:write name="workScheduleDay" property="mealPeriod" filter="false"/><br/>
+					<p class="mvert05" style="color: #888;"><bean:write name="workScheduleDay" property="mandatoryMealPeriods" filter="false"/></p>
+				</td>
 			</logic:iterate>			
 		</tr>				
 	</table>

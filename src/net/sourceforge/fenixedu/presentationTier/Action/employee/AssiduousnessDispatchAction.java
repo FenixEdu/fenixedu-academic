@@ -85,7 +85,7 @@ public class AssiduousnessDispatchAction extends FenixDispatchAction {
         for (WeekDay weekDay : workWeek.getDays()) {
             if (workScheduleDays.get(weekDay.toString()) == null) {
                 WorkScheduleDaySheet workScheduleDaySheet = new WorkScheduleDaySheet();
-                workScheduleDaySheet.setWeekDaySchedule(bundle.getString(weekDay + "_ACRONYM"));
+                workScheduleDaySheet.setWeekDaySchedule("");
                 workScheduleDays.put(weekDay.toString(), workScheduleDaySheet);
             }
         }
@@ -95,8 +95,7 @@ public class AssiduousnessDispatchAction extends FenixDispatchAction {
             HashMap<String, WorkScheduleDaySheet> workScheduleDays, ResourceBundle bundle) {
         for (WeekDay weekDay : workSchedule.getWorkWeek().getDays()) {
             WorkScheduleDaySheet workScheduleDaySheet = new WorkScheduleDaySheet();
-            workScheduleDaySheet.setWeekDaySchedule(bundle.getString(weekDay + "_ACRONYM") + " - "
-                    + workSchedule.getWorkScheduleType().getAcronym());
+            workScheduleDaySheet.setWeekDaySchedule(workSchedule.getWorkScheduleType().getAcronym());
             workScheduleDaySheet.setWorkSchedule(workSchedule);
             workScheduleDays.put(weekDay.toString(), workScheduleDaySheet);
         }

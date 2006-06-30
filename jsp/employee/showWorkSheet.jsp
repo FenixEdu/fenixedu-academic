@@ -3,39 +3,53 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
+
 <em><bean:message key="title.assiduousness" /></em>
-<br />
 <h2><bean:message key="link.workSheet" /></h2>
-<br />
-<div class="infoop2">
-	A visualização da informação da assiduidade encontra-se em fase de testes. <br/>
-	Se encontrar alguma incorrecção na informação disponibilizada contacte o suporte utilizando: suporte@dot.ist.utl.pt.
+
+<div class="warning0">
+<strong>Atenção:</strong><br/>
+A visualização da informação da assiduidade encontra-se em fase de testes.<br/>
+Se encontrar alguma incorrecção na informação disponibilizada contacte o suporte utilizando: suporte@dot.ist.utl.pt
 </div>
-<br />
+
 <logic:present name="employee">
+<div class="toprint">
 	<fr:view name="employee" schema="show.employeeInformation">
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="examMap" />
 		</fr:layout>
 	</fr:view>
+	<br/>
+</div>
 </logic:present>
-<br />
-<br />
+
 <logic:present name="yearMonth">
-	<bean:define id="month" name="yearMonth" property="month"/>
-	<bean:message key="<%=month.toString()%>" bundle="ENUMERATION_RESOURCES"/>
-	<bean:write name="yearMonth" property="year"/>
-	<br/><br/>
+	<div class="mvert1">
 	<fr:form action="/assiduousnessRecords.do?method=showWorkSheet">
-		<fr:edit name="yearMonth" schema="choose.date"/>
-		<br />
+		<fr:edit name="yearMonth" schema="choose.date">
+			<fr:layout>
+		        <fr:property name="classes" value="thlight thright"/>
+			</fr:layout>
+		</fr:edit>
+		<p>
 		<html:submit styleClass="invisible" >
 			<bean:message key="button.submit" />
 		</html:submit>
+		</p>
 	</fr:form>
+	</div>
+	
+	<div class="toprint">
+	<p class="bold mbottom0">
+	<bean:define id="month" name="yearMonth" property="month"/>
+	<bean:message key="<%=month.toString()%>" bundle="ENUMERATION_RESOURCES"/>
+	<bean:write name="yearMonth" property="year"/>
+	</p>
+	</div>
 </logic:present>
-<br />
-<br />
+
+
 <logic:present name="workSheet">
 	<logic:empty name="workSheet">
 		<bean:message key="message.employee.noWorkSheet" />
@@ -43,27 +57,25 @@
 	<logic:notEmpty name="workSheet">
 		<fr:view name="workSheet" schema="show.workDaySheet">
 			<fr:layout name="tabular">
-				<fr:property name="classes" value="tstyle1b" />
-				<fr:property name="columnClasses" value="aleft,aleft,aright,aright,aleft,aleft" />
+			    <fr:property name="classes" value="tstyle1b"/>
+				<fr:property name="columnClasses" value="bgcolor3 acenter,,acenter,aright,aright,aleft,aleft" />
 				<fr:property name="headerClasses" value="acenter" />
 			</fr:layout>
 		</fr:view>
 	</logic:notEmpty>
 	
 	<logic:present name="totalBalance">
-		<bean:message key="label.totalBalance" />:
-		<bean:write name="totalBalance"/><br/>
+		<p class="mvert05"><bean:message key="label.totalBalance" />: <span class="highlight1"><bean:write name="totalBalance"/></span></p>
 	</logic:present>
 	<logic:present name="totalUnjustified">
-		<bean:message key="label.totalUnjustified" />:
-		<bean:write name="totalUnjustified"/><br/>
+		<p class="mvert05"><bean:message key="label.totalUnjustified" />: <span class="highlight1"><bean:write name="totalUnjustified"/></span></p>
 	</logic:present>
-	<br/>
+
+
 	<logic:notEmpty name="subtitles">
-		<em><bean:message key="label.subtitle"/>:</em>
-		<br/>
+		<p class="mtop1 mbottom05"><em><bean:message key="label.subtitle"/>:</em></p>
 		<logic:iterate name="subtitles" id="subtile">
-			<bean:write name="subtile"/><br/>
+			<p class="mvert05"><bean:write name="subtile"/></p>
 		</logic:iterate>
 	</logic:notEmpty>
 </logic:present>

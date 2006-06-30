@@ -20,7 +20,8 @@
 
 <schema name="show.workDaySheet"
 	type="net.sourceforge.fenixedu.dataTransferObject.assiduousness.WorkDaySheet">
-	<slot name="day" key="label.day" />
+	<slot name="date.dayOfMonth" key="label.day" />
+	<slot name="weekDay" key="label.weekDay" />
 	<slot name="workScheduleAcronym" key="label.schedule" />
 	<slot name="balanceTimeFormatted" key="label.balance" />
 	<slot name="unjustifiedTime" key="label.unjustified">
@@ -46,10 +47,10 @@
 <schema name="show.clocking"
 	type="net.sourceforge.fenixedu.domain.assiduousness.Clocking">
 	<slot name="timeOfDay">
-		<property name="format" value="HH:mm/" />
+		<property name="format" value="HH:mm" />
 	</slot>
 	<slot name="clockUnit" schema="show.clockUnit" layout="values" >
-		<property name="classes" value="bgcolor1" />
+		<property name="classes" value="lowlight1" />
 	</slot>
 </schema>
 

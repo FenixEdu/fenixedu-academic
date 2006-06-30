@@ -92,6 +92,8 @@ table.thright th { text-align: right; }
 table.thcenter th { text-align: center; }
 table.tdleft td { text-align: left; }
 table.tdright td { text-align: right; }
+table th.cornerleft { background: none; border-left: none; border-top: none; }
+table td.cornerright { }
 .leftcol { text-align: right; vertical-align: top; }
 
 
@@ -180,9 +182,6 @@ font-weight: normal;
 /* ----------------------
  ---- Show Info --------
 ----------------------- */
-
-.bgcolor1 { background-color: #fcfcf0; }
-.bgcolor2 { background-color: #fbfbdd; }
 
 .showinfo1, .showinfo3 {
 border-collapse: collapse;
@@ -423,3 +422,9 @@ margin: 0;
 
 .width100 { width: 100%; }
 .width8em { width: 8em; } /*used in forums*/
+
+.toprint { display: none;}
+.lowlight1 { /*font-size: 0.8em;*/ color: #999; }
+.bgcolor1 { background-color: #fcfcf0; }
+.bgcolor2 { background-color: #fbfbdd; }
+.bgcolor3 { background-color: #fafaf6; }
