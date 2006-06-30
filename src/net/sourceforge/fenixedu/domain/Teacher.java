@@ -415,8 +415,8 @@ public class Teacher extends Teacher_Base {
         return result;
     }
 
-    public List<ExecutionDegree> getCoordinatedExecutionDegrees(DegreeCurricularPlan degreeCurricularPlan) {
-        List<ExecutionDegree> result = new ArrayList<ExecutionDegree>();
+    public Collection<ExecutionDegree> getCoordinatedExecutionDegrees(DegreeCurricularPlan degreeCurricularPlan) {
+        Set<ExecutionDegree> result = new TreeSet<ExecutionDegree>(new BeanComparator("executionYear"));
         for (Coordinator coordinator : getCoordinators()) {
             if (coordinator.getExecutionDegree().getDegreeCurricularPlan().equals(degreeCurricularPlan)) {
                 result.add(coordinator.getExecutionDegree());    
