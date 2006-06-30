@@ -18,6 +18,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.manager.CreateExecutionP
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
 import net.sourceforge.fenixedu.dataTransferObject.comparators.ExecutionPeriodComparator;
+import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
@@ -157,6 +158,15 @@ public class ManageExecutionPeriodsDA extends FenixDispatchAction {
         } 
 
         return prepare(mapping, form, request, response);
+    }
+
+    public ActionForward prepareEdit(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+    		throws Exception {
+    	final String executionPeriodIDString = request.getParameter("executionPeriodID");
+    	final Integer executionPeriodID = Integer.valueOf(executionPeriodIDString);
+    	final ExecutionPeriod executionPeriod = rootDomainObject.readExecutionPeriodByOID(executionPeriodID);
+    	request.setAttribute("executionPeriod", executionPeriod);
+    	return mapping.findForward("editExecutionPeriod");
     }
 
 }

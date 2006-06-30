@@ -83,6 +83,8 @@ de uma elevada quantidade de dados pelo que demoram alguns minutos a processar.
 			</td>
 			<td class="listClasses-header">
 			</td>
+			<td class="listClasses-header">
+			</td>
 		</tr>
 		<logic:iterate id="infoExecutionPeriod" name="<%= SessionConstants.LIST_EXECUTION_PERIODS %>">
 			<bean:define id="year" name="infoExecutionPeriod" property="infoExecutionYear.year"/>
@@ -150,6 +152,15 @@ de uma elevada quantidade de dados pelo que demoram alguns minutos a processar.
 					</html:link>
 				</logic:equal>
 
+				</td>
+				<td class="listClasses">
+					<bean:define id="infoExecutionPeriodID" name="infoExecutionPeriod" property="idInternal"/>
+					<html:link module="/manager" page="<%= "/manageExecutionPeriods.do?method=prepareEdit"
+								+ "&amp;executionPeriodID="
+								+ infoExecutionPeriodID
+								%>" >
+						<bean:message bundle="MANAGER_RESOURCES" key="link.edit"/>
+					</html:link>
 				</td>
 			</tr>
 		</logic:iterate>

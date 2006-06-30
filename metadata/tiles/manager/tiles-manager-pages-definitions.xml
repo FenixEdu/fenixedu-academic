@@ -74,6 +74,10 @@
 		<put name="body" value="/manager/readExecutionPeriods_bd.jsp" />
 		<put name="navLocal" value="/manager/curricularCourseNavLocalManager.jsp" />
 	</definition>
+	<definition name="df.page.manage.edit.execution-period" extends="definition.manager.masterPage" >
+		<put name="body" value="/manager/editExecutionPeriod.jsp" />
+		<put name="navLocal" value="/manager/curricularCourseNavLocalManager.jsp" />
+	</definition>
 	<definition name="df.page.read-execution-courses" extends="definition.manager.masterPage" >
 		<put name="body" value="/manager/readExecutionCoursesByExecutionPeriod_bd.jsp" />
 		<put name="navLocal" value="/manager/curricularCourseNavLocalManager.jsp" />

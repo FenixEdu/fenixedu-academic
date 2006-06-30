@@ -20,16 +20,16 @@
 			</td>
 			<td>
 				<html:select property="curricularSemesterId">
-				<html:option key="option.curricular.course.scope.semester.1" value="1"/>
-    			<html:option key="option.curricular.course.scope.semester.2" value="2"/>
-    			<html:option key="option.curricular.course.scope.semester.3" value="3"/>
-    			<html:option key="option.curricular.course.scope.semester.4" value="4"/>
-    			<html:option key="option.curricular.course.scope.semester.5" value="5"/>
-    			<html:option key="option.curricular.course.scope.semester.6" value="6"/>
-    			<html:option key="option.curricular.course.scope.semester.7" value="7"/>
-    			<html:option key="option.curricular.course.scope.semester.8" value="8"/>
-    			<html:option key="option.curricular.course.scope.semester.9" value="9"/>
-    			<html:option key="option.curricular.course.scope.semester.10" value="10"/>
+				<html:option bundle="MANAGER_RESOURCES" key="option.curricular.course.scope.semester.1" value="1"/>
+    			<html:option bundle="MANAGER_RESOURCES" key="option.curricular.course.scope.semester.2" value="2"/>
+    			<html:option bundle="MANAGER_RESOURCES" key="option.curricular.course.scope.semester.3" value="3"/>
+    			<html:option bundle="MANAGER_RESOURCES" key="option.curricular.course.scope.semester.4" value="4"/>
+    			<html:option bundle="MANAGER_RESOURCES" key="option.curricular.course.scope.semester.5" value="5"/>
+    			<html:option bundle="MANAGER_RESOURCES" key="option.curricular.course.scope.semester.6" value="6"/>
+    			<html:option bundle="MANAGER_RESOURCES" key="option.curricular.course.scope.semester.7" value="7"/>
+    			<html:option bundle="MANAGER_RESOURCES" key="option.curricular.course.scope.semester.8" value="8"/>
+    			<html:option bundle="MANAGER_RESOURCES" key="option.curricular.course.scope.semester.9" value="9"/>
+    			<html:option bundle="MANAGER_RESOURCES" key="option.curricular.course.scope.semester.10" value="10"/>
     			</html:select>
 			</td>
 		</tr>
