@@ -145,7 +145,7 @@
 
 <schema name="candidacySituation.full" type="net.sourceforge.fenixedu.domain.candidacy.CandidacySituation">
 	<slot name="situationDate"/>
-	<slot name="ojbConcreteClass"/>
+	<slot name="description"/>
 	<slot name="employee.person.name"/>
 </schema>
 
