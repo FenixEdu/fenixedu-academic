@@ -10,7 +10,7 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterExce
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.research.result.ResultParticipation;
-import net.sourceforge.fenixedu.domain.research.result.ResultPatent;
+import net.sourceforge.fenixedu.domain.research.result.patent.ResultPatent;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
@@ -24,6 +24,12 @@ public class ResultPatentsManagementAction extends FenixDispatchAction {
 
     public ActionForward listPatents(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
+        List<ResultPatent> resultPatents = new ArrayList<ResultPatent>();
+        
+        for(ResultParticipation participation : getUserView(request).getPerson().getPersonParticipationsWithPatents()) {
+            resultPatents.add((ResultPatent)participation.getResult());
+        }
+        request.setAttribute("resultPatents", resultPatents);
         
         return mapping.findForward("listPatents");
     }
@@ -66,8 +72,8 @@ public class ResultPatentsManagementAction extends FenixDispatchAction {
     
     public ActionForward preparePatentDetails(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
-        Integer participationId = Integer.valueOf(request.getParameter("oid"));
-        ResultPatent patent = (ResultPatent) readResultParticipationByOid(participationId).getResult();
+        Integer resultId = Integer.valueOf(request.getParameter("oid"));
+        ResultPatent patent = (ResultPatent) readPatentByOid(resultId);
         
         request.setAttribute("patent", patent);
        
@@ -87,12 +93,12 @@ public class ResultPatentsManagementAction extends FenixDispatchAction {
     public ActionForward deletePatent(ActionMapping mapping, ActionForm actionForm,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
         Object[] args = { Integer.valueOf(request.getParameter("resultId")) };
-
+        
         try {
             ServiceManagerServiceFactory.executeService(getUserView(request), "DeleteResultPatent", args);
         } catch (FenixServiceException e) {
             ActionMessages actionMessages = new ActionMessages();
-            actionMessages.add("", new ActionMessage(e.getMessage()));
+            actionMessages.add("Erro", new ActionMessage(e.getMessage()));
             saveMessages(request, actionMessages);
         }
 
