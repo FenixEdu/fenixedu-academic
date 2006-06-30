@@ -172,15 +172,15 @@
 
 
 <!-- SCHEMAS FOR PATENTS MANAGEMENT -->
-<schema name="patent-default" type="net.sourceforge.fenixedu.domain.research.result.ResultPatent" bundle="RESEARCHER_RESOURCES">
+<schema name="patent-default" type="net.sourceforge.fenixedu.domain.research.result.patent.ResultPatent" bundle="RESEARCHER_RESOURCES">
 	<slot name="resultParticipations" layout="tabular-list">
 		<property name="subLayout" value="values"/>
 		<property name="subSchema" value="result.participations"/>
 	</slot>
 	<slot name="title" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/> 
-	<slot name="note" layout="area">
+	<slot name="note" layout="longText">
 		<property name="rows" value="5"/>
-		<property name="columns" value="75"/>
+		<property name="columns" value="60"/>
 	</slot>
 	<slot name="patentType"/>
 	<slot name="patentStatus"/>
@@ -196,11 +196,11 @@
 	<slot name="url"/>
 </schema>
 
-<schema name="patent.create" extends="patent-default" type="net.sourceforge.fenixedu.domain.research.result.ResultPatent" bundle="RESEARCHER_RESOURCES">
+<schema name="patent.create" extends="patent-default" type="net.sourceforge.fenixedu.domain.research.result.patent.ResultPatent" bundle="RESEARCHER_RESOURCES">
 	<remove name="resultParticipations"/>
 </schema>
 
-<schema name="patent.viewEditData" extends="patent-default" type="net.sourceforge.fenixedu.domain.research.result.ResultPatent" bundle="RESEARCHER_RESOURCES">
+<schema name="patent.viewEditData" extends="patent-default" type="net.sourceforge.fenixedu.domain.research.result.patent.ResultPatent" bundle="RESEARCHER_RESOURCES">
 	<remove name="resultParticipations"/>
 	<slot name="note"/>
 	<slot name="country" layout="format">
@@ -208,11 +208,11 @@
 	</slot>
 </schema>
 
-<schema name="result.patentShortList" type="net.sourceforge.fenixedu.domain.research.result.ResultParticipation">
-	<slot name="result.title" layout="link">
+<schema name="result.patentShortList" type="net.sourceforge.fenixedu.domain.research.result.patent.ResultPatent">
+	<slot name="title" layout="link">
 		<property name="viewPage" value="/patents/patentsManagement.do?method=preparePatentDetails"/>	
 	</slot>
-	<slot name="result.registrationDate"/>
+	<slot name="registrationDate"/>
 </schema>
 
 <schema name="result.creator.name" type="net.sourceforge.fenixedu.domain.Person" bundle="RESEARCHER_RESOURCES">
@@ -263,7 +263,7 @@
 		<property name="minChars" value="4"/>
 	</slot>
 </schema>
-<!-- 
+
 <schema name="resultEventAssociation.summary" type="net.sourceforge.fenixedu.domain.research.result.ResultEventAssociation" bundle="RESEARCHER_RESOURCES">
 	<slot name="event.name"/>
 	<slot name="role"/>
@@ -318,7 +318,7 @@
 	</slot>
 	<slot name="role" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
 </schema>
--->
+
 <!-- END SCHEMAS FOR PATENTS MANAGEMENT -->
 
 
