@@ -182,8 +182,7 @@ public class PaymentsManagementDispatchAction extends FenixDispatchAction {
     public ActionForward prepareShowReceipt(ActionMapping mapping, ActionForm actionForm,
             HttpServletRequest request, HttpServletResponse response) {
 
-        final DynaActionForm form = (DynaActionForm) actionForm;
-        final Integer receiptID = (Integer) form.get("receiptID");
+        final Integer receiptID = (Integer) request.getAttribute("receiptID");
 
         final Receipt receipt = rootDomainObject.readReceiptByOID(receiptID);
         if (receipt == null) {
