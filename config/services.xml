@@ -9993,7 +9993,16 @@
 		<filterChains>
 			<chain name="MasterDegreeAdministrativeOfficeAuthorization" />
 		</filterChains>
-	</service>		
+	</service>
+	<service>
+		<name>CreateReceiptVersion</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.accounting.CreateReceiptVersion</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		<filterChains>
+			<chain name="MasterDegreeAdministrativeOfficeAuthorization" />
+		</filterChains>
+	</service>
 	<service>
 		<name>EditPrecedentDegreeInformation</name>
 		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.candidacy.EditPrecedentDegreeInformation</implementationClass>
