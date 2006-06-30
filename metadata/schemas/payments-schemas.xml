@@ -1,16 +1,32 @@
 <schema name="entryDTO.edit" type="net.sourceforge.fenixedu.dataTransferObject.accounting.EntryDTO">
-	<slot name="selected" key="label.masterDegree.administrativeOffice.payments.guides.selected"/>
-	<slot name="description" read-only="true" key="label.masterDegree.administrativeOffice.payments.guides.entryType"/>
-	<slot name="totalAmount" read-only="true" key="label.masterDegree.administrativeOffice.payments.guides.totalAmount"/>
-	<slot name="payedAmount" read-only="true" key="label.masterDegree.administrativeOffice.payments.guides.payedAmount"/>
-	<slot name="amountToPay" key="label.masterDegree.administrativeOffice.payments.guides.amountToPay"/>
+	<slot name="selected" key="label.masterDegree.administrativeOffice.payments.selected"/>
+	<slot name="entryType" read-only="true" key="label.masterDegree.administrativeOffice.payments.entryType"/>
+	<slot name="description" read-only="true" key="label.masterDegree.administrativeOffice.payments.description"/>
+	<slot name="totalAmount" read-only="true" key="label.masterDegree.administrativeOffice.payments.totalAmount"/>
+	<slot name="payedAmount" read-only="true" key="label.masterDegree.administrativeOffice.payments.payedAmount"/>
+	<slot name="amountToPay" key="label.masterDegree.administrativeOffice.payments.amountToPay"/>
 </schema>
 
 <schema name="entry.view" type="net.sourceforge.fenixedu.domain.accounting.Entry">
-	<slot name="amount" />
-	<slot name="whenBooked" />
 	<slot name="entryType" />
+	<slot name="description" />
+	<slot name="whenBooked" />
+	<slot name="amount" />
 </schema>
 
+<schema name="entryDTO.view-guide" type="net.sourceforge.fenixedu.dataTransferObject.accounting.EntryDTO">
+	<slot name="entryType" read-only="true" key="label.masterDegree.administrativeOffice.payments.entryType"/>
+	<slot name="description" read-only="true" key="label.masterDegree.administrativeOffice.payments.description"/>
+	<slot name="amountToPay" key="label.masterDegree.administrativeOffice.payments.amountToPay"/>
+</schema>
 
+<schema name="receipt.view" type="net.sourceforge.fenixedu.domain.accounting.Receipt">
+	<slot name="number"/>
+	<slot name="year"/>
+</schema>
 
+<schema name="contributor.view" type="net.sourceforge.fenixedu.domain.Contributor">
+	<slot name="contributorName"/>
+	<slot name="contributorAddress"/>
+	<slot name="contributorNumber>"/>
+</schema>
