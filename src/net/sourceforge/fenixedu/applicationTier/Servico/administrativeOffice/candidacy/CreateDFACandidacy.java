@@ -4,7 +4,6 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.candidacy.DFACandidacy;
-import net.sourceforge.fenixedu.domain.candidacy.StandByCandidacySituation;
 import net.sourceforge.fenixedu.domain.candidacy.DFACandidacyEvent;
 import net.sourceforge.fenixedu.domain.person.Gender;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;

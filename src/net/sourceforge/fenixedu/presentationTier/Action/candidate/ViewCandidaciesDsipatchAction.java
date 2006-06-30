@@ -9,11 +9,15 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.candidacy.CandidacyDocumentUploadBean;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.candidacy.Candidacy;
 import net.sourceforge.fenixedu.domain.candidacy.CandidacyDocument;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
+import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 
 import org.apache.struts.action.ActionForm;
@@ -48,14 +52,13 @@ public class ViewCandidaciesDsipatchAction extends FenixDispatchAction {
     }
 
     public ActionForward uploadDocuments(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) {
+            HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 
         List<CandidacyDocumentUploadBean> beans = (List<CandidacyDocumentUploadBean>) RenderUtils
                 .getViewState("candidacyDocuments").getMetaObject().getObject();
 
-        for (CandidacyDocumentUploadBean bean : beans) {
-             
-        }
+        Object[] args = { beans };
+        ServiceUtils.executeService(SessionUtils.getUserView(request), "SaveCandidacyDocumentFiles", args);
         
         return null;
     }

@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.domain.candidacy;
 
-import pt.utl.ist.fenix.tools.file.FileDescriptor;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
 
@@ -12,11 +11,12 @@ public class CandidacyDocumentFile extends CandidacyDocumentFile_Base {
         setOjbConcreteClass(this.getClass().getName());
     }
 
-    public CandidacyDocumentFile(String filename, FileDescriptor fileDescriptor, Group permittedGroup) {
+    public CandidacyDocumentFile(String filename, String displayName, String mimeType, String checksum,
+            String checksumAlgorithm, Integer size, String externalStorageIdentification,
+            Group permittedGroup) {
         this();
-        init(filename, filename, fileDescriptor.getMimeType(), fileDescriptor.getChecksum(),
-                fileDescriptor.getChecksumAlgorithm(), fileDescriptor.getSize(), fileDescriptor
-                        .getUniqueId(), permittedGroup);
+        init(filename, filename, mimeType, checksum, checksumAlgorithm, size,
+                externalStorageIdentification, permittedGroup);
     }
 
     public void delete() {

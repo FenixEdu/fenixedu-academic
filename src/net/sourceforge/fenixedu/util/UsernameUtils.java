@@ -155,7 +155,7 @@ public class UsernameUtils extends FenixUtil {
                 return "L" + student.getNumber();
             }
             throw new DomainException("error.person.addingInvalidRole", RoleType.ALUMNI.getName());
-        } else if (roleType.equals(RoleType.MASTER_DEGREE_CANDIDATE)) {
+        } else if (roleType.equals(RoleType.MASTER_DEGREE_CANDIDATE) || roleType.equals(RoleType.CANDIDATE)) {
             return "C" + person.getIdInternal();
         } else if (roleType.equals(RoleType.PERSON)) {
             return "P" + person.getIdInternal();

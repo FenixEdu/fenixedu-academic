@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.domain.candidacy;
 
+import java.util.ResourceBundle;
+
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -22,19 +24,18 @@ public class DFACandidacy extends DFACandidacy_Base {
         setPerson(person);
         new PreCandidacySituation(this);
         setPrecedentDegreeInformation(new PrecedentDegreeInformation());
-        
+
         addCandidacyDocuments(new CandidacyDocument("curriculum.vitae"));
         addCandidacyDocuments(new CandidacyDocument("habilitation.certificate"));
         addCandidacyDocuments(new CandidacyDocument("second.habilitation.certificate"));
         addCandidacyDocuments(new CandidacyDocument("interest.letter"));
-        
-    }
 
+    }
 
     @Override
     public String getDescription() {
-        return "Candidatura a Diploma de Formação Avançada - "
-                + getExecutionDegree().getDegreeCurricularPlan().getName() + " - "
+        return ResourceBundle.getBundle("resources.CandidateResources").getString("label.dfaCandidacy")
+                + " - " + getExecutionDegree().getDegreeCurricularPlan().getName() + " - "
                 + getExecutionDegree().getExecutionYear().getYear();
     }
 
