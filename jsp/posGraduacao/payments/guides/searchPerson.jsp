@@ -43,7 +43,7 @@
 		<html:options collection="documentTypes" property="value" labelProperty="label" />
 	</html:select>
 	<br/>
-	<bean:message key="label.masterDegree.administrativeOffice.payments.documentNumberNumber" />:
+	<bean:message key="label.masterDegree.administrativeOffice.payments.documentNumber" />:
 	<html:text property="documentNumber"/>
 	<br/><br/>
 	<html:submit styleClass="inputbutton" onclick="this.form.method.value='searchPersonByDocumentIDandDocumentType'"><bean:message key="label.masterDegree.administrativeOffice.payments.search"/></html:submit>

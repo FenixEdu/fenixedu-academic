@@ -162,22 +162,17 @@ class net.sourceforge.fenixedu.domain.accounting.Account extends net.sourceforge
 
 class net.sourceforge.fenixedu.domain.accounting.AccountingTransaction extends net.sourceforge.fenixedu.domain.DomainObject {
     DateTime whenRegisted;
+    Integer keyEvent;
+    Integer keyResponsibleUser;
 }
 
 class net.sourceforge.fenixedu.domain.accounting.Entry extends net.sourceforge.fenixedu.domain.DomainObject {
     Integer keyAccount;
     Integer keyAccountingTransaction;
-    Integer keyEvent;
     Integer keyReceipt;
     DateTime whenBooked;
     BigDecimal amount;
     EntryType entryType;
-}
-
-class net.sourceforge.fenixedu.domain.accounting.Receipt extends net.sourceforge.fenixedu.domain.DomainObject {
-    Integer keyParty;
-    Integer version;
-    DateTime whenRegisted;
 }
 
 class net.sourceforge.fenixedu.domain.accounting.Event extends net.sourceforge.fenixedu.domain.DomainObject {
@@ -185,23 +180,25 @@ class net.sourceforge.fenixedu.domain.accounting.Event extends net.sourceforge.f
     AccountingEventType eventType;
     DateTime whenOccured;
     Boolean closed;
+    Integer keyParty;
 }
-	class net.sourceforge.fenixedu.domain.accounting.DebtEvent extends net.sourceforge.fenixedu.domain.accounting.Event {
-   	 	Integer keyParty;
-	}
-		class net.sourceforge.fenixedu.domain.candidacy.DFACandidacyEvent extends net.sourceforge.fenixedu.domain.accounting.DebtEvent {
-		    Integer keyCandidacy;
-		}
-		
-	class net.sourceforge.fenixedu.domain.accounting.PaymentEvent extends net.sourceforge.fenixedu.domain.accounting.Event {
-   	 	Integer keyDebtEvent;
+	class net.sourceforge.fenixedu.domain.candidacy.DFACandidacyEvent extends net.sourceforge.fenixedu.domain.accounting.Event {
+	    Integer keyCandidacy;
 	}
 	
-	class net.sourceforge.fenixedu.domain.accounting.ReimbursementEvent extends net.sourceforge.fenixedu.domain.accounting.Event {
-   	 	Integer keyPaymentEvent;
-   	 	Integer keyEmployee;
-	}
+class net.sourceforge.fenixedu.domain.accounting.Receipt extends net.sourceforge.fenixedu.domain.DomainObject {
+    Integer keyParty;
+    Integer keyContributor;
+    Integer number;
+    Integer year;
+}
 
+class net.sourceforge.fenixedu.domain.accounting.ReceiptVersion extends net.sourceforge.fenixedu.domain.DomainObject {
+    DateTime whenCreated;
+    Integer keyReceipt;
+    Integer keyEmployee;
+}
+	
 class net.sourceforge.fenixedu.domain.teacher.Advise extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer keyStartExecutionPeriod;
 	Integer keyEndExecutionPeriod;
@@ -2461,8 +2458,8 @@ class net.sourceforge.fenixedu.domain.teacher.TeacherServiceItem extends net.sou
 	}
 	
 	class net.sourceforge.fenixedu.domain.teacher.InstitutionWorkTime extends net.sourceforge.fenixedu.domain.teacher.TeacherServiceItem {
-		HourMinuteSecond startTimeHourMinuteSecond;
-		HourMinuteSecond endTimeHourMinuteSecond;
+	HourMinuteSecond startTimeHourMinuteSecond;
+	HourMinuteSecond endTimeHourMinuteSecond;
 		WeekDay weekDay;
 	}	
 	
@@ -8707,23 +8704,9 @@ relation AccountEntry {
 	}
 }
 
-relation PartyDebtEvent {
+relation PartyEvent {
 	net.sourceforge.fenixedu.domain.organizationalStructure.Party playsRole party;
-	net.sourceforge.fenixedu.domain.accounting.DebtEvent playsRole debtEvents {
-		multiplicity *;
-	}
-}
-
-relation EventEntry {
-	net.sourceforge.fenixedu.domain.accounting.Event playsRole event;
-	net.sourceforge.fenixedu.domain.accounting.Entry playsRole entries {
-		multiplicity *;
-	}
-}
-
-relation ReceiptEntry {
-	net.sourceforge.fenixedu.domain.accounting.Receipt playsRole receipt;
-	net.sourceforge.fenixedu.domain.accounting.Entry playsRole entries {
+	net.sourceforge.fenixedu.domain.accounting.Event playsRole events {
 		multiplicity *;
 	}
 }
@@ -8731,6 +8714,20 @@ relation ReceiptEntry {
 relation AccountTransactionEntry {
 	net.sourceforge.fenixedu.domain.accounting.AccountingTransaction playsRole accountingTransaction;
 	net.sourceforge.fenixedu.domain.accounting.Entry playsRole entries {
+		multiplicity *;
+	}
+}
+
+relation AccountingTransactionEvent {
+	net.sourceforge.fenixedu.domain.accounting.Event playsRole event;
+	net.sourceforge.fenixedu.domain.accounting.AccountingTransaction playsRole accountingTransactions {
+		multiplicity *;
+	}
+}
+
+relation AccountTransactionUser {
+	net.sourceforge.fenixedu.domain.User playsRole responsibleUser;
+	net.sourceforge.fenixedu.domain.accounting.AccountingTransaction playsRole accountingTransactions {
 		multiplicity *;
 	}
 }
@@ -8749,30 +8746,37 @@ relation RootDomainObjectReceipt {
 	}
 }
 
-relation PartyReceipt {
+relation ReceiptEntry {
+	net.sourceforge.fenixedu.domain.accounting.Receipt playsRole receipt;
+	net.sourceforge.fenixedu.domain.accounting.Entry playsRole entries {
+		multiplicity *;
+	}
+}
+
+relation ReceiptParty {
 	net.sourceforge.fenixedu.domain.organizationalStructure.Party playsRole party;
 	net.sourceforge.fenixedu.domain.accounting.Receipt playsRole receipts {
 		multiplicity *;
 	}
 }
 
-relation DebtEventPaymentEvent {
-	net.sourceforge.fenixedu.domain.accounting.DebtEvent playsRole debtEvent;
-	net.sourceforge.fenixedu.domain.accounting.PaymentEvent playsRole paymentEvents {
+relation ReceiptContributor {
+	net.sourceforge.fenixedu.domain.Contributor playsRole contributor;
+	net.sourceforge.fenixedu.domain.accounting.Receipt playsRole receipts {
 		multiplicity *;
 	}
 }
 
-relation PaymentEventReimbursementEvent {
-	net.sourceforge.fenixedu.domain.accounting.PaymentEvent playsRole paymentEvent;
-	net.sourceforge.fenixedu.domain.accounting.ReimbursementEvent playsRole reimbursementEvents {
-		multiplicity *;
-	}
-}
-
-relation ReimbursementEventEmployee {
+relation ReceiptVersionEmployee {
 	net.sourceforge.fenixedu.domain.Employee playsRole employee;
-	net.sourceforge.fenixedu.domain.accounting.ReimbursementEvent playsRole reimbursementEvents {
+	net.sourceforge.fenixedu.domain.accounting.ReceiptVersion playsRole receiptsVersions {
+		multiplicity *;
+	}
+}
+
+relation ReceiptVersionReceipt {
+	net.sourceforge.fenixedu.domain.accounting.Receipt playsRole receipt;
+	net.sourceforge.fenixedu.domain.accounting.ReceiptVersion playsRole receiptsVersions {
 		multiplicity *;
 	}
 }

@@ -9948,4 +9948,13 @@
 		<filterChains>
 		</filterChains>
 	</service>	
+	<service>
+		<name>CreatePaymentsForEvents</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.accounting.CreatePaymentsForEvents</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		<filterChains>
+			<chain name="MasterDegreeAdministrativeOfficeAuthorization" />
+		</filterChains>
+	</service>	
 </serviceDefinitions>

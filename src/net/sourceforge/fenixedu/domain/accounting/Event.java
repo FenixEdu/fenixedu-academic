@@ -2,13 +2,16 @@ package net.sourceforge.fenixedu.domain.accounting;
 
 import java.math.BigDecimal;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.dataTransferObject.accounting.EntryDTO;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.User;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 
 import org.joda.time.DateTime;
 
@@ -20,19 +23,20 @@ public abstract class Event extends Event_Base {
         setOjbConcreteClass(getClass().getName());
     }
 
-    protected void init(EventType eventType, DateTime whenOccured) {
-        checkParameters(eventType, whenOccured);
+    protected void init(EventType eventType, Party party) {
+        checkParameters(eventType, party);
         super.setEventType(eventType);
-        super.setWhenOccured(whenOccured);
+        super.setWhenOccured(new DateTime());
         super.setClosed(Boolean.FALSE);
+        super.setParty(party);
     }
 
-    private void checkParameters(EventType eventType, DateTime whenOccured) throws DomainException {
+    private void checkParameters(EventType eventType, Party party) throws DomainException {
         if (eventType == null) {
             throw new DomainException("error.accounting.event.invalid.eventType");
         }
-        if (whenOccured == null) {
-            throw new DomainException("error.accounting.event.invalid.dateTime");
+        if (party == null) {
+            throw new DomainException("error.accounting.event.party.cannot.be.null");
         }
     }
 
@@ -42,24 +46,24 @@ public abstract class Event extends Event_Base {
     }
 
     // TODO: to remove after create agreement and posting rules
-    protected void makeAccountingTransaction(Entry debit, Entry credit) {
-        new AccountingTransaction(debit, credit);
+    protected void makeAccountingTransaction(User responsibleUser, Entry debit, Entry credit) {
+        new AccountingTransaction(responsibleUser, this, debit, credit);
     }
 
     // TODO: to remove after create agreement and posting rules
-    protected void makeAccountingTransaction(Account from, Account to, EntryType entryType,
-            BigDecimal amount) {
-        new AccountingTransaction(makeEntry(entryType, amount.negate(), from), makeEntry(entryType,
-                amount, to));
+    protected void makeAccountingTransaction(User responsibleUser, Event event, Account from,
+            Account to, EntryType entryType, BigDecimal amount) {
+        new AccountingTransaction(responsibleUser, event, makeEntry(entryType, amount.negate(), from),
+                makeEntry(entryType, amount, to));
     }
 
     public boolean isClosed() {
         return getClosed().booleanValue();
     }
 
-    public final void process(List<EntryDTO> entryDTOs) {
+    public final void process(User responsibleUser, List<EntryDTO> entryDTOs) {
         if (!isClosed()) {
-            internalProcess(entryDTOs);
+            internalProcess(responsibleUser, entryDTOs);
         }
     }
 
@@ -67,31 +71,31 @@ public abstract class Event extends Event_Base {
         super.setClosed(Boolean.TRUE);
     }
 
-    protected abstract void internalProcess(List<EntryDTO> entryDTOs);
+    protected abstract void internalProcess(User responsibleUser, List<EntryDTO> entryDTOs);
 
     @Override
-    public void addEntries(Entry entries) {
-        throw new DomainException("error.accounting.event.cannot.add.entries");
+    public void addAccountingTransactions(AccountingTransaction accountingTransactions) {
+        throw new DomainException("error.accounting.event.cannot.add.accountingTransactions");
     }
 
     @Override
-    public List<Entry> getEntries() {
-        return Collections.unmodifiableList(super.getEntries());
+    public List<AccountingTransaction> getAccountingTransactions() {
+        return Collections.unmodifiableList(super.getAccountingTransactions());
     }
 
     @Override
-    public Iterator<Entry> getEntriesIterator() {
-        return getEntriesSet().iterator();
+    public Set<AccountingTransaction> getAccountingTransactionsSet() {
+        return Collections.unmodifiableSet(super.getAccountingTransactionsSet());
     }
 
     @Override
-    public Set<Entry> getEntriesSet() {
-        return Collections.unmodifiableSet(super.getEntriesSet());
+    public Iterator<AccountingTransaction> getAccountingTransactionsIterator() {
+        return getAccountingTransactionsSet().iterator();
     }
 
     @Override
-    public void removeEntries(Entry entries) {
-        throw new DomainException("error.accounting.event.cannot.remove.entries");
+    public void removeAccountingTransactions(AccountingTransaction accountingTransactions) {
+        throw new DomainException("error.accounting.event.cannot.remove.accountingTransactions");
     }
 
     @Override
@@ -108,5 +112,33 @@ public abstract class Event extends Event_Base {
     public void setWhenOccured(DateTime whenOccured) {
         throw new DomainException("error.accounting.event.cannot.modify.occuredDateTime");
     }
+
+    @Override
+    public void setParty(Party party) {
+        throw new DomainException("error.accounting.event.cannot.modify.party");
+    }
+
+    protected boolean canCloseEvent() {
+        return calculateAmountToPay().equals(calculatePayedAmount());
+    }
+
+    public Set<Entry> getEntries() {
+        Set<Entry> result = new HashSet<Entry>();
+        for (final AccountingTransaction transaction : getAccountingTransactions()) {
+            result.add(transaction.getEntryByAccount(getToAccount()));
+        }
+
+        return result;
+    }
+
+    public abstract Account getToAccount();
+
+    public abstract List<EntryDTO> calculateEntries();
+
+    protected abstract BigDecimal calculateAmountToPay();
+
+    protected abstract BigDecimal calculatePayedAmount();
+
+    public abstract String getDescriptionEntryType(EntryType entryType);
 
 }

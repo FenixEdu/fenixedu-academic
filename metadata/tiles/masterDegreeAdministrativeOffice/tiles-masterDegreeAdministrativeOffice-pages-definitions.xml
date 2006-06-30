@@ -223,20 +223,18 @@
 	</definition>
 
 	<!-- ************* Payments ************* -->
-	<definition name="show.guides.management.searchPerson" extends="definition.masterDegreeAdministrativeOffice.masterPage">
-		<put name="navLocal" value="/posGraduacao/payments/paymentsMenu.jsp" />
-		<put name="body" value="/posGraduacao/payments/guides/searchPerson.jsp"/>
+	<definition name="payments.management.searchPerson" extends="definition.masterDegreeAdministrativeOffice.masterPage">
+		<put name="body" value="/posGraduacao/payments/searchPerson.jsp"/>
 	</definition>
 	
-	<definition name="show.guides.management.showEvents" extends="definition.masterDegreeAdministrativeOffice.masterPage">
-		<put name="navLocal" value="/posGraduacao/payments/paymentsMenu.jsp" />
-		<put name="body" value="/posGraduacao/payments/guides/showEvents.jsp"/>
+	<definition name="payments.management.showEvents" extends="definition.masterDegreeAdministrativeOffice.masterPage">
+		<put name="body" value="/posGraduacao/payments/showEvents.jsp"/>
 	</definition>
 	
-	<definition name="show.receipts.management.searchPerson" extends="definition.masterDegreeAdministrativeOffice.masterPage">
-		<put name="navLocal" value="/posGraduacao/payments/paymentsMenu.jsp" />
-		<put name="body" value="/commons/blank.jsp"/>
+	<definition name="payments.management.showOperations" extends="definition.masterDegreeAdministrativeOffice.masterPage">
+		<put name="body" value="/posGraduacao/payments/showOperations.jsp"/>
 	</definition>
+		
 	
 	<!-- ************* DFA candidacy ************* -->	
 	<definition name="df.page.chooseDFAExecutionDegree" extends="definition.masterDegreeAdministrativeOffice.masterPage">

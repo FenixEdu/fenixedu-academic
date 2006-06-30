@@ -797,6 +797,11 @@
    	    <slot name="fileChecksum"/>
 	</schema>
 	
+	<schema name="person.view-with-name-and-email" type="net.sourceforge.fenixedu.domain.Person" bundle="DEFAULT">
+		<slot name="name" />
+		<slot name="email" />
+	</schema>
+	
 	&researcher;
 	&markSheet;
 	&messaging;

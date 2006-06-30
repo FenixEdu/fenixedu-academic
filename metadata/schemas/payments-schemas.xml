@@ -1,7 +1,8 @@
-<schema name="payments-guides-entry" type="net.sourceforge.fenixedu.dataTransferObject.accounting.EntryDTO">
+<schema name="payment-entry" type="net.sourceforge.fenixedu.dataTransferObject.accounting.EntryDTO">
 	<slot name="selected" key="label.masterDegree.administrativeOffice.payments.guides.selected"/>
-	<slot name="entryType" read-only="true" key="label.masterDegree.administrativeOffice.payments.guides.entryType"/>
+	<slot name="description" read-only="true" key="label.masterDegree.administrativeOffice.payments.guides.entryType"/>
 	<slot name="totalAmount" read-only="true" key="label.masterDegree.administrativeOffice.payments.guides.totalAmount"/>
 	<slot name="payedAmount" read-only="true" key="label.masterDegree.administrativeOffice.payments.guides.payedAmount"/>
 	<slot name="amountToPay" key="label.masterDegree.administrativeOffice.payments.guides.amountToPay"/>
 </schema>
+

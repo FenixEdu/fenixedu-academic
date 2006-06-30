@@ -2559,31 +2559,14 @@
 	  <!-- Payments -->
 	  <action path="/payments"
 		      parameter="method"
-              type="net.sourceforge.fenixedu.presentationTier.Action.commons.VoidAction"
-			  >
-	         <forward name="Success" path="/payments/indexPayments.jsp"/> 
+              type="net.sourceforge.fenixedu.presentationTier.Action.masterDegree.payments.PaymentsManagementDispatchAction"
+   		      name="paymentsForm"
+   		      scope="request">
+	         <forward name="searchPerson" path="payments.management.searchPerson"/> 
+   	         <forward name="chooseOperation" path="payments.management.showOperations"/> 
+   	         <forward name="showEvents" path="payments.management.showEvents"/> 
       </action>
       
-      <action path="/guidesManagement"
-		      parameter="method"
-		      name="paymentsForm"
-		      scope="request"
-              type="net.sourceforge.fenixedu.presentationTier.Action.masterDegree.payments.GuidesManagementDispatchAction"
-			  >
-	         <forward name="success" path="show.guides.management.searchPerson"/>
-	         <forward name="showEvents" path="show.guides.management.showEvents"/>
-	         <forward name="printGuide" path="/payments/guides/printGuidePage.jsp"/>
-      </action>
-      
-      <action path="/receiptsManagement"
-		      parameter="method"
-		      name="paymentsForm"
-		      scope="request"
-              type="net.sourceforge.fenixedu.presentationTier.Action.masterDegree.payments.ReceiptsManagementDispatchAction"
-			  >
-	         <forward name="success" path="show.receipts.management.searchPerson"/> 
-      </action>
-
 
 	<!-- DFACandidacy -->
 	  <action path="/dfaCandidacy"
@@ -2609,6 +2592,7 @@
 	<message-resources parameter="resources.ApplicationResources" key="DEFAULT" null="false"/>
     <message-resources parameter="resources.EnumerationResources" key="ENUMERATION_RESOURCES" null="false"/>
     <message-resources parameter="resources.AdminOffice" key="ADMIN_OFFICE_RESOURCES" null="false"/>    
+
    
     <!-- ========== Plug Ins Configuration ================================= -->
     <plug-in className="org.apache.struts.validator.ValidatorPlugIn">

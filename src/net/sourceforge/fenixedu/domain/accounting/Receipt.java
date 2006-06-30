@@ -1,41 +1,60 @@
 package net.sourceforge.fenixedu.domain.accounting;
 
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
-import org.joda.time.DateTime;
-
+import net.sourceforge.fenixedu.domain.Contributor;
+import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 
 public class Receipt extends Receipt_Base {
 
+    public static Comparator<Receipt> COMPARATOR_BY_YEAR_AND_NUMBER = new Comparator<Receipt>() {
+        public int compare(Receipt receipt, Receipt otherReceipt) {
+            Integer yearComparationResult = receipt.getYear().compareTo(otherReceipt.getYear());
+            if (yearComparationResult == 0) {
+                return receipt.getNumber().compareTo(otherReceipt.getNumber());
+            }
+            return yearComparationResult;
+        }
+    };
+
     private Receipt() {
         super();
         super.setRootDomainObject(RootDomainObject.getInstance());
-        super.setVersion(1);
-        super.setWhenRegisted(new DateTime());
     }
 
-    public Receipt(Party party, Entry... entries) {
+    Receipt(Party party, Contributor contributor, Integer year, Integer version, Entry... entries) {
         this();
-        init(party, entries);
+        init(party, contributor, year, entries);
     }
 
-    private void init(Party party, Entry... entries) {
-        checkParameters(party);
-        setParty(party);
+    private void init(Party party, Contributor contributor, Integer year, Entry... entries) {
+        checkParameters(party, contributor, year);
+        super.setParty(party);
+        super.setNumber(generateReceiptNumber());
+        super.setContributor(contributor);
+        super.setYear(year);
+
         for (final Entry entry : entries) {
             entry.setReceipt(this);
         }
     }
 
-    private void checkParameters(Party party) {
+    private void checkParameters(Party party, Contributor contributor, Integer year) {
         if (party == null) {
-            throw new DomainException("error.accounting.receipt.invalid.party");
+            throw new DomainException("error.accouting.receipt.party.cannot.be.null");
+        }
+        if (contributor == null) {
+            throw new DomainException("error.accounting.receipt.contributor.cannot.be.null");
+        }
+        if (year == null) {
+            throw new DomainException("error.accounting.receipt.year.cannot.be.null");
         }
     }
 
@@ -65,12 +84,33 @@ public class Receipt extends Receipt_Base {
     }
 
     @Override
-    public void setVersion(Integer version) {
-        throw new DomainException("error.accounting.receipt.cannot.modify.version");
+    public void setNumber(Integer number) {
+        throw new DomainException("error.accounting.receipt.cannot.modify.number");
     }
 
     @Override
-    public void setWhenRegisted(DateTime whenRegisted) {
-        throw new DomainException("error.accounting.receipt.cannot.modify.registedDateTime");
+    public void removeReceiptsVersions(ReceiptVersion receiptsVersions) {
+        throw new DomainException("error.accounting.receipt.cannot.remove.receiptVersions");
     }
+
+    @Override
+    public void setParty(Party party) {
+        throw new DomainException("error.accounting.receipt.cannot.modify.party");
+    }
+
+    @Override
+    public void setYear(Integer year) {
+        throw new DomainException("error.accounting.receipt.cannot.modify.year");
+    }
+
+    private Integer generateReceiptNumber() {
+        return Collections.max(RootDomainObject.getInstance().getReceipts(),
+                Receipt.COMPARATOR_BY_YEAR_AND_NUMBER).getNumber() + 1;
+
+    }
+
+    public ReceiptVersion createReceiptVersion(Employee employee) {
+        return new ReceiptVersion(this, employee);
+    }
+
 }

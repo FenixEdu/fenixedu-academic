@@ -12,7 +12,7 @@
     <li><html:link page="/listingSection.do"><bean:message key="link.masterDegree.administrativeOffice.listing" /></html:link></li>
     <!-- <li><html:link page="/dfaCandidacy.do?method=prepareCreateCandidacy"><bean:message key="link.masterDegree.administrativeOffice.dfaCandidacy" bundle="ADMIN_OFFICE_RESOURCES"/></html:link></li> -->    
     <%-- 
-    <li><html:link page="/payments.do"><bean:message key="link.masterDegree.administrativeOffice.payments" /></html:link></li>
+    <li><html:link page="/payments.do?method=prepareSearchPerson"><bean:message key="link.masterDegree.administrativeOffice.payments" /></html:link></li>
     --%>
 </ul>   
      

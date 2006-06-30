@@ -26,7 +26,6 @@ public class Entry extends Entry_Base {
         super.setEntryType(entryType);
         super.setAmount(amount);
         super.setAccount(account);
-        super.setEvent(event);
     }
 
     private void checkParameters(DateTime whenBooked, EntryType entryType, BigDecimal amount,
@@ -60,11 +59,6 @@ public class Entry extends Entry_Base {
     }
 
     @Override
-    public void removeEvent() {
-        throw new DomainException("error.accounting.entry.cannot.remove.event");
-    }
-
-    @Override
     public void setAccount(Account account) {
         throw new DomainException("error.accounting.entry.cannot.modify.account");
     }
@@ -77,11 +71,6 @@ public class Entry extends Entry_Base {
     @Override
     public void setAmount(BigDecimal amount) {
         throw new DomainException("error.accounting.entry.cannot.modify.amount");
-    }
-
-    @Override
-    public void setEvent(Event event) {
-        throw new DomainException("error.accounting.entry.cannot.modify.event");
     }
 
     @Override
@@ -101,6 +90,10 @@ public class Entry extends Entry_Base {
         } else {
             super.setReceipt(receipt);
         }
+    }
+
+    public String getDescription() {       
+        return getAccountingTransaction().getEvent().getDescriptionEntryType(getEntryType());
     }
 
 }

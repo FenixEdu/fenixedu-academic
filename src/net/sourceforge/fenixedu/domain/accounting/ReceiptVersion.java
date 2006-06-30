@@ -1,0 +1,53 @@
+package net.sourceforge.fenixedu.domain.accounting;
+
+import net.sourceforge.fenixedu.domain.Employee;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+
+import org.joda.time.DateTime;
+
+public class ReceiptVersion extends ReceiptVersion_Base {
+
+    private ReceiptVersion() {
+        super();
+    }
+
+    ReceiptVersion(Receipt receipt, Employee employee) {
+        init(receipt, employee);
+
+    }
+
+    private void init(Receipt receipt, Employee employee) {
+        checkParameters(receipt, employee);
+        super.setWhenCreated(new DateTime());
+        super.setReceipt(receipt);
+        super.setEmployee(employee);
+
+    }
+
+    private void checkParameters(Receipt receipt, Employee employee) {
+        if (receipt == null) {
+            throw new DomainException("error.accounting.receiptVersion.receipt.cannot.be.null");
+        }
+
+        if (employee == null) {
+            throw new DomainException("error.accounting.receiptVersion.employee.cannot.be.null");
+        }
+
+    }
+
+    @Override
+    public void setEmployee(Employee employee) {
+        throw new DomainException("error.accounting.receiptVersion.cannot.modify.employee");
+    }
+
+    @Override
+    public void setReceipt(Receipt receipt) {
+        throw new DomainException("error.accounting.receiptVersion.cannot.modify.receipt");
+    }
+
+    @Override
+    public void setWhenCreated(DateTime whenCreated) {
+        throw new DomainException("error.accounting.receiptVersion.cannot.modify.whenCreated");
+    }
+
+}
