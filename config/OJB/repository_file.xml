@@ -12,3 +12,5 @@
 <class-descriptor class="net.sourceforge.fenixedu.domain.ProjectSubmissionFile" table="FILE">
 </class-descriptor>
 
+<class-descriptor class="net.sourceforge.fenixedu.domain.candidacy.CandidacyDocumentFile" table="FILE">
+</class-descriptor>

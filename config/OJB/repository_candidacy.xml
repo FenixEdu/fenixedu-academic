@@ -38,3 +38,9 @@
 <class-descriptor class="net.sourceforge.fenixedu.domain.candidacy.StandByFilledDataCandidacySituation" table="CANDIDACY_SITUATION">
 
 </class-descriptor>
+
+<!-- ************************************************************************************************************ -->
+<!-- Definitions for net.sourceforge.fenixedu.domain.candidacy.CandidacyDocument -->
+<!-- ************************************************************************************************************ -->
+<class-descriptor class="net.sourceforge.fenixedu.domain.candidacy.CandidacyDocument" table="CANDIDACY_DOCUMENT">
+</class-descriptor>

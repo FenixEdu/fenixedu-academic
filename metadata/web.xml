@@ -297,9 +297,13 @@
             <param-value>/WEB-INF/conf/struts-publico.xml</param-value>
         </init-param>
         <init-param>
-            <param-name>config/candidato</param-name>
+            <param-name>config/candidate</param-name>
             <param-value>/WEB-INF/conf/struts-candidate.xml</param-value>
         </init-param>
+        <init-param>
+            <param-name>config/candidato</param-name>
+            <param-value>/WEB-INF/conf/struts-masterDegreeCandidate.xml</param-value>
+        </init-param>        
         <init-param>
             <param-name>config/posGraduacao</param-name>
             <param-value>/WEB-INF/conf/struts-masterDegreeAdministrativeOffice.xml</param-value>

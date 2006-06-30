@@ -2,51 +2,8 @@
 <!-- Definitions for net.sourceforge.fenixedu.domain.Student -->
 <!-- ************************************************************************************************************ -->
 <class-descriptor class="net.sourceforge.fenixedu.domain.Student" table="STUDENT">
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-			
-	
-	
-	
-	
-	
-	
-	 
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 </class-descriptor>
+
+<class-descriptor class="net.sourceforge.fenixedu.domain.student.PrecedentDegreeInformation" table="PRECEDENT_DEGREE_INFORMATION">
+</class-descriptor>
+

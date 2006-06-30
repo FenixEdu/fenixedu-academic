@@ -27,5 +27,6 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Candidacy Operations" candidacyOperations.sql
 execute "Creating Accounting Tables" CreateAccountingTables.sql
 execute "Create ResultEventAssociation and ResultUnitAssociation Tables" createResultEventAndResultUnitAssociationTables.sql

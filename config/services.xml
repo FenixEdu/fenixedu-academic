@@ -9982,8 +9982,9 @@
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains>
+			<chain name="MasterDegreeAdministrativeOfficeAuthorization" />
 		</filterChains>
-	</service>	
+	</service>
 	<service>
 		<name>CreatePaymentsForEvents</name>
 		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.accounting.CreatePaymentsForEvents</implementationClass>
@@ -9992,5 +9993,21 @@
 		<filterChains>
 			<chain name="MasterDegreeAdministrativeOfficeAuthorization" />
 		</filterChains>
+	</service>		
+	<service>
+		<name>EditPrecedentDegreeInformation</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.candidacy.EditPrecedentDegreeInformation</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		<filterChains>
+		</filterChains>		
+	</service>	
+	<service>
+		<name>StateMachineRunner</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.commons.StateMachineRunner</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		<filterChains>
+		</filterChains>		
 	</service>	
 </serviceDefinitions>
