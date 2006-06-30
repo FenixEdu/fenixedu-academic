@@ -23,7 +23,7 @@
 	<h3><bean:message
 		key="label.masterDegree.administrativeOffice.payments.searchByCandidacyNumber" /></h3>
 	<bean:message
-		key="label.masterDegree.administrativeOffice.payments.candidacyNumber" />:
+		key="label.masterDegree.administrativeOffice.payments.number" />:
 	<html:text property="candidacyNumber" />
 	<br />
 	<br />
