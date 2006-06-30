@@ -30,39 +30,40 @@
 	<h2><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.result.participations.useCaseTitle"/></h2>
 	
 	<%-- Participation List --%>
-
 	<bean:define id="resultId" name="result" property="idInternal" />
-	<fr:edit name="result" property="resultParticipations" schema="<%=newParticipationsSchema%>" layout="tabular-editable"
-		action="<%= "/result/resultParticipationManagement.do?method=prepareEditParticipation&resultId=" + resultId %>">
-		<fr:layout>
-			<fr:property name="sortBy" value="personOrder"/>
-			<fr:property name="link(moveDown)" value="<%= "/result/resultParticipationManagement.do?method=changePersonsOrder" +
-				        								  "&resultId=" + resultId.toString() +
-				        								  "&offset=1" %>"/>
-			<fr:property name="param(moveDown)" value="idInternal/oid"/>
-			<fr:property name="key(moveDown)" value="link.moveDown"/>
-			<fr:property name="bundle(moveDown)" value="RESEARCHER_RESOURCES"/>
-			<fr:property name="order(moveDown)" value="1"/>
-			<fr:property name="excludedFromLast(moveDown)" value="true"/>
-			
-							
-			<fr:property name="link(moveUp)" value="<%= "/result/resultParticipationManagement.do?method=changePersonsOrder" + 
-			        									"&resultId=" + resultId.toString() +
-			        									"&offset=-1" %>"/>
-			<fr:property name="param(moveUp)" value="idInternal/oid"/>
-			<fr:property name="key(moveUp)" value="link.moveUp"/>
-			<fr:property name="bundle(moveUp)" value="RESEARCHER_RESOURCES"/>
-			<fr:property name="order(moveUp)" value="2"/>
-			<fr:property name="excludedFromFirst(moveUp)" value="true"/>
-
-			<fr:property name="link(removeParticipation)" value="<%="/result/resultParticipationManagement.do?method=removeParticipation&resultId=" + resultId %>"/>
-			<fr:property name="param(removeParticipation)" value="idInternal/participationId"/>
-			<fr:property name="key(removeParticipation)" value="link.remove"/>
-			<fr:property name="bundle(removeParticipation)" value="RESEARCHER_RESOURCES"/>
-			<fr:property name="order(removeParticipation)" value="3"/>								
-			
-		</fr:layout>
- 	</fr:edit>
+	<logic:notEmpty name="result" property="resultParticipations">
+		<fr:edit name="result" property="resultParticipations" schema="<%=newParticipationsSchema%>" layout="tabular-editable"
+			action="<%= "/result/resultParticipationManagement.do?method=prepareEditParticipation&resultId=" + resultId %>">
+			<fr:layout>
+				<fr:property name="sortBy" value="personOrder"/>
+				<fr:property name="link(moveDown)" value="<%= "/result/resultParticipationManagement.do?method=changePersonsOrder" +
+					        								  "&resultId=" + resultId.toString() +
+					        								  "&offset=1" %>"/>
+				<fr:property name="param(moveDown)" value="idInternal/oid"/>
+				<fr:property name="key(moveDown)" value="link.moveDown"/>
+				<fr:property name="bundle(moveDown)" value="RESEARCHER_RESOURCES"/>
+				<fr:property name="order(moveDown)" value="1"/>
+				<fr:property name="excludedFromLast(moveDown)" value="true"/>
+				
+								
+				<fr:property name="link(moveUp)" value="<%= "/result/resultParticipationManagement.do?method=changePersonsOrder" + 
+				        									"&resultId=" + resultId.toString() +
+				        									"&offset=-1" %>"/>
+				<fr:property name="param(moveUp)" value="idInternal/oid"/>
+				<fr:property name="key(moveUp)" value="link.moveUp"/>
+				<fr:property name="bundle(moveUp)" value="RESEARCHER_RESOURCES"/>
+				<fr:property name="order(moveUp)" value="2"/>
+				<fr:property name="excludedFromFirst(moveUp)" value="true"/>
+	
+				<fr:property name="link(removeParticipation)" value="<%="/result/resultParticipationManagement.do?method=removeParticipation&resultId=" + resultId %>"/>
+				<fr:property name="param(removeParticipation)" value="idInternal/participationId"/>
+				<fr:property name="key(removeParticipation)" value="link.remove"/>
+				<fr:property name="bundle(removeParticipation)" value="RESEARCHER_RESOURCES"/>
+				<fr:property name="order(removeParticipation)" value="3"/>								
+				
+			</fr:layout>
+	 	</fr:edit>
+ 	</logic:notEmpty>
 
 	
 	<logic:notPresent name="external">
