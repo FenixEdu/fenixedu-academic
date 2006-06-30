@@ -25,7 +25,7 @@
 	</fr:view>
 	
 	<h3><bean:message bundle="RESEARCHER_RESOURCES" key="label.data"/></h3>	
-	<fr:create 	id="createPatent" type="net.sourceforge.fenixedu.domain.research.result.ResultPatent" 
+	<fr:create 	id="createPatent" type="net.sourceforge.fenixedu.domain.research.result.patent.ResultPatent" 
 				schema="patent.create"
 				action="/patents/patentsManagement.do?method=listPatents">
 		<fr:hidden slot="participations" multiple="true" name="participationsList"/>
