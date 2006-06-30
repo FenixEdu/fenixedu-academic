@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.renderers;
 
 import net.sourceforge.fenixedu.presentationTier.renderers.components.TinyMceEditor;
+import net.sourceforge.fenixedu.presentationTier.renderers.htmlEditor.SafeHtmlConverter;
 import net.sourceforge.fenixedu.renderers.components.HtmlSimpleValueComponent;
 
 /**
@@ -12,7 +13,22 @@ import net.sourceforge.fenixedu.renderers.components.HtmlSimpleValueComponent;
 public class MultiLanguageRichTextInputRenderer extends MultiLanguageTextInputRenderer {
 
     private String config;
+    private boolean safe;
     
+    public boolean isSafe() {
+        return safe;
+    }
+
+    /**
+     * If this property is set to <tt>true</tt> then the input will be filtered and any
+     * unsupported HTML will be removed or escaped to the corresponding entities. 
+     * 
+     * @property
+     */
+    public void setSafe(boolean safe) {
+        this.safe = safe;
+    }
+
     public String getConfig() {
         return this.config;
     }
@@ -35,6 +51,10 @@ public class MultiLanguageRichTextInputRenderer extends MultiLanguageTextInputRe
         editor.setConfig(getConfig());
         editor.setColumns(getColumns());
         editor.setRows(getRows());
+        
+        if (isSafe()) {
+            editor.setConverter(new SafeHtmlConverter());
+        }
         
         return editor;
     }
