@@ -4,6 +4,7 @@
 package net.sourceforge.fenixedu.dataTransferObject.accounting;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,7 +37,7 @@ public class PaymentsManagementDTO implements Serializable {
         return entryDTOs;
     }
 
-    private void setEntryDTOs(List<EntryDTO> entryDTOs) {
+    public void setEntryDTOs(List<EntryDTO> entryDTOs) {
         this.entryDTOs = entryDTOs;
     }
 
@@ -46,6 +47,14 @@ public class PaymentsManagementDTO implements Serializable {
             if (each.isSelected()) {
                 result.add(each);
             }
+        }
+        return result;
+    }
+    
+    public BigDecimal getTotalAmountToPay() {
+        BigDecimal result = new BigDecimal("0");
+        for (final EntryDTO entryDTO : getSelectedEntries()) {
+            result = result.add(entryDTO.getAmountToPay());
         }
         return result;
     }
