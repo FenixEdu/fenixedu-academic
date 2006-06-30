@@ -870,4 +870,16 @@
         <description/>
         <isTransactional>true</isTransactional>
     </filter>        
+    <filter>
+        <name>CreateMarkSheetAuthorization</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Filtro.degreeAdministrativeOffice.CreateMarkSheetAuthorizationFilter</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+    </filter>            
+    <filter>
+        <name>CreateRectificationMarkSheetAuthorization</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Filtro.degreeAdministrativeOffice.CreateRectificationMarkSheetAuthorizationFilter</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+    </filter>                
 </filterDefinitions>

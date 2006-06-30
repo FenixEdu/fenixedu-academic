@@ -1041,6 +1041,20 @@
         <invocationTiming>1</invocationTiming>
         <filterClass>net.sourceforge.fenixedu.applicationTier.Filtro.AccessControlFilter</filterClass>
     </filterChain>
+    <filterChain>
+        <name>CreateMarkSheetAuthorization</name>
+        <expression>CreateMarkSheetAuthorization</expression>
+        <description/>
+        <invocationTiming>1</invocationTiming>
+        <filterClass>net.sourceforge.fenixedu.applicationTier.Filtro.AccessControlFilter</filterClass>
+    </filterChain>
+    <filterChain>
+        <name>CreateRectificationMarkSheetAuthorization</name>
+        <expression>CreateRectificationMarkSheetAuthorization</expression>
+        <description/>
+        <invocationTiming>1</invocationTiming>
+        <filterClass>net.sourceforge.fenixedu.applicationTier.Filtro.AccessControlFilter</filterClass>
+    </filterChain>        
      <filterChain>
         <name>CreditsServicesAuthorization</name>
         <expression> ScientificCouncilAuthorization || DepartmentMemberAuthorization || DepartmentAdministrativeOfficeAuthorization </expression>
