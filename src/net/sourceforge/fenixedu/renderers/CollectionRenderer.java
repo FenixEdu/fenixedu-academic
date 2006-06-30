@@ -506,6 +506,50 @@ public class CollectionRenderer extends OutputRenderer {
         this.checkboxValue = checkboxValue;
     }
 
+    public String getLinkFormat(String name) {
+        return getTableLink(name).getLinkFormat();
+    }
+
+    /**
+     * The linkFormat property indicates the format of the control link. The
+     * params should be inserted in format. When this property is set, the link
+     * and param properties are ignored
+     * 
+     * <p>
+     * Example 1:
+     * 
+     * <pre>
+     *              someAction.do?method=viewDetails&amp;idInternal=${idInternal}
+     * </pre>
+     * 
+     * <p>
+     * Example 2:
+     * 
+     * <pre>
+     *            someAction/${someProperty}/${otherProperty}
+     * </pre>
+     * 
+     * @property
+     */
+    public void setLinkFormat(String name, String value) {
+        getTableLink(name).setLinkFormat(value);
+    }
+
+    public String getContextRelative(String name) {
+        return Boolean.toString(getTableLink(name).isContextRelative());
+    }
+
+    /**
+     * The contextRelative property indicates if the specified link is relative
+     * to the current context or is an external link (e.g.
+     * https://anotherserver.com/anotherScript)
+     * 
+     * @property
+     */
+    public void setContextRelative(String name, String value) {
+        getTableLink(name).setContextRelative(Boolean.parseBoolean(value));
+    }
+
     protected int getNumberOfLinks() {
         return this.links.size();
     }
@@ -700,11 +744,21 @@ public class CollectionRenderer extends OutputRenderer {
             }
             
             HtmlLink link = new HtmlLink();
-            link.setUrl(tableLink.getLink());
-            link.setModule(tableLink.getModule());
+
+            if (tableLink.isContextRelativeSet()) {
+                link.setContextRelative(tableLink.isContextRelative());
+            }
+
             link.setText(getLinkText(tableLink));
-            setLinkParameters(object, link, tableLink);
-            
+            link.setModule(tableLink.getModule());
+
+            if (tableLink.getLinkFormat() != null) {
+                link.setUrl(RenderUtils.getFormatedProperties(tableLink.getLinkFormat(), object.getObject()));
+            } else {
+                link.setUrl(tableLink.getLink());
+                setLinkParameters(object, link, tableLink);
+            }
+
             return link;
         }
 
@@ -823,7 +877,9 @@ public class CollectionRenderer extends OutputRenderer {
         private String order;
         private boolean excludeFromFirst;
         private boolean excludeFromLast;
-        
+        private String linkFormat;
+        private Boolean contextRelative;
+
         public TableLink() {
             super();
             
@@ -913,6 +969,26 @@ public class CollectionRenderer extends OutputRenderer {
 
         public void setExcludeFromLast(boolean excludeFromLast) {
             this.excludeFromLast = excludeFromLast;
+        }
+
+        public String getLinkFormat() {
+            return linkFormat;
+        }
+
+        public void setLinkFormat(String linkFormat) {
+            this.linkFormat = linkFormat;
+        }
+
+        public Boolean isContextRelative() {
+            return contextRelative;
+        }
+
+        public void setContextRelative(Boolean contextRelative) {
+            this.contextRelative = contextRelative;
+        }
+
+        public boolean isContextRelativeSet() {
+            return this.contextRelative != null;
         }
 
         public int compareTo(TableLink other) {
