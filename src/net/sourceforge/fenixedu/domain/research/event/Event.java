@@ -46,7 +46,7 @@ public class Event extends Event_Base {
      *if not, the object is deleted.
      */
     public void sweep(){
-        if (!(this.hasAnyAssociatedProjects() || this.hasAnyEventParticipations())){
+        if (!(this.hasAnyAssociatedProjects() || this.hasAnyEventParticipations() || this.hasAnyResultEventAssociations())){
             delete();
         }
     }
