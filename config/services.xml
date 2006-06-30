@@ -10010,4 +10010,12 @@
 		<filterChains>
 		</filterChains>		
 	</service>	
+	<service>
+		<name>SaveCandidacyDocumentFiles</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.candidacy.SaveCandidacyDocumentFiles</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		<filterChains>
+		</filterChains>		
+	</service>		
 </serviceDefinitions>
