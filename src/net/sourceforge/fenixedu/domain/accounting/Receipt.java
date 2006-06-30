@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.domain.accounting;
 
+import java.math.BigDecimal;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
@@ -111,6 +112,25 @@ public class Receipt extends Receipt_Base {
 
     public ReceiptVersion createReceiptVersion(Employee employee) {
         return new ReceiptVersion(this, employee);
+    }
+
+    public ReceiptVersion getMostRecentReceiptVersion() {
+
+        ReceiptVersion result = null;
+        for (final ReceiptVersion receiptVersion : getReceiptsVersionsSet()) {
+            if (result == null || receiptVersion.getWhenCreated().isAfter(result.getWhenCreated())) {
+                result = receiptVersion;
+            }
+        }
+        return result;
+    }
+
+    public BigDecimal getTotalAmount() {
+        BigDecimal result = new BigDecimal("0");
+        for (final Entry entry : getEntriesSet()) {
+            result = result.add(entry.getAmount());
+        }
+        return result;
     }
 
 }
