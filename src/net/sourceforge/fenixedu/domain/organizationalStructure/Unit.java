@@ -35,7 +35,13 @@ public class Unit extends Unit_Base {
 	public static final Comparator UNIT_COMPARATOR_BY_NAME = new BeanComparator("name", Collator.getInstance());
 
     public Unit() {
-        super();        
+        super();
+    }
+    
+    public Unit(String unitName, PartyTypeEnum partyType) {
+        super();
+        setName(unitName);
+        setType(partyType);
     }
 
     public List<Unit> getTopUnits() {

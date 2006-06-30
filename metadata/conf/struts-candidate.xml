@@ -1,91 +1,15 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="ISO-8859-1"?>
 <!DOCTYPE struts-config PUBLIC
-      "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
-      "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+	"-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+	"http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
 <struts-config>
-    
     <!-- ========== Data Source Configuration =============================== -->
-    <data-sources />
     
     <!-- ========== Form Bean Definitions ================================== -->
     <form-beans type="org.apache.struts.action.ActionFormBean">
-      
-
-      <form-bean name="errorMailForm" 
-                 type="org.apache.struts.validator.DynaValidatorForm"
-                 dynamic="true">
-        <form-property name="email" type="java.lang.String" />
-        <form-property name="subject" type="java.lang.String" />
-        <form-property name="body" type="java.lang.String" />
-      </form-bean>
-
-	  <!-- bean dynaform for the application documents submission -->
-      <form-bean name="insertApplicationDocumentsForm"
-				type="org.apache.struts.validator.DynaValidatorForm"
-      			dynamic="true">
-		<form-property name="username" type="java.lang.String"/>
-		<form-property name="method" type="java.lang.String"/>
-		<form-property name="cvFile" type="org.apache.struts.upload.FormFile"/>
-		<form-property name="cmiFile" type="org.apache.struts.upload.FormFile"/>
-		<form-property name="chFile" type="org.apache.struts.upload.FormFile"/>
-		<form-property name="chFile2" type="org.apache.struts.upload.FormFile"/>
-		<form-property name="candidateID" type="java.lang.Integer"/>		
-		<form-property name="page" type="java.lang.Integer"/>
-	  </form-bean>
-
-      <!-- Bean for change of Application Information -->
-      <form-bean name="changeApplicationInfoForm" 
-                 type="org.apache.struts.validator.DynaValidatorForm"
-                 dynamic="true">
-
-            <form-property name="page" type="java.lang.Integer" />
-        	<form-property name="average" type="java.lang.String" />
-        	<form-property name="majorDegree" type="java.lang.String" />
-        	<form-property name="majorDegreeSchool" type="java.lang.String" />
-        	<form-property name="majorDegreeYear" type="java.lang.Integer" />
-        	<form-property name="specializationArea" type="java.lang.String" />
-        	
-        	<form-property name="identificationDocumentType" type="java.lang.String" />
-        	<form-property name="identificationDocumentNumber" type="java.lang.String" />
-        	<form-property name="identificationDocumentIssuePlace" type="java.lang.String" />		
-        	<form-property name="name" type="java.lang.String" />
-        	<form-property name="sex" type="java.lang.String" />
-        	<form-property name="maritalStatus" type="java.lang.String" />
-        	<form-property name="nationality" type="java.lang.String" />
-        	<form-property name="fatherName" type="java.lang.String" />
-        	<form-property name="motherName" type="java.lang.String" />
-        	<form-property name="birthPlaceParish" type="java.lang.String" />
-        	<form-property name="birthPlaceMunicipality" type="java.lang.String" />
-        	<form-property name="birthPlaceDistrict" type="java.lang.String" />
-        	<form-property name="address" type="java.lang.String" />
-        	<form-property name="place" type="java.lang.String" />
-        	<form-property name="postCode" type="java.lang.String" />
-        	<form-property name="addressParish" type="java.lang.String" />
-        	<form-property name="addressMunicipality" type="java.lang.String" />
-        	<form-property name="addressDistrict" type="java.lang.String" />
-        	<form-property name="telephone" type="java.lang.String" />
-        	<form-property name="mobilePhone" type="java.lang.String" />
-        	<form-property name="email" type="java.lang.String" />
-        	<form-property name="webSite" type="java.lang.String" />
-        	<form-property name="contributorNumber" type="java.lang.String" />
-        	<form-property name="occupation" type="java.lang.String" />
-        	<form-property name="birthDay" type="java.lang.String" /> 
-            <form-property name="birthMonth" type="java.lang.String" /> 
-        	<form-property name="birthYear" type="java.lang.String" /> 
-        	<form-property name="idIssueDateDay" type="java.lang.String" /> 
-            <form-property name="idIssueDateMonth" type="java.lang.String" /> 
-        	<form-property name="idIssueDateYear" type="java.lang.String" /> 
-        	<form-property name="idExpirationDateDay" type="java.lang.String" /> 
-            <form-property name="idExpirationDateMonth" type="java.lang.String" /> 
-        	<form-property name="idExpirationDateYear" type="java.lang.String" /> 
-        	<form-property name="username" type="java.lang.String" /> 
-        	<form-property name="areaOfAreaCode" type="java.lang.String" /> 
-        	<form-property name="candidateID" type="java.lang.Integer" />
-        	
-      </form-bean>
 
     </form-beans>
-    
+
     <!-- ========== Global Exception Definitions ============================== -->
 	<global-exceptions>
         <exception
@@ -99,115 +23,53 @@
 			handler="net.sourceforge.fenixedu.presentationTier.config.FenixContainerExceptionHandler"
 			/>
 	</global-exceptions>
-    
+
     <!-- ========== Global Forward Definitions =============================== -->
     <global-forwards type="org.apache.struts.action.ActionForward">
-	  <forward name="index" path="index.do" redirect="true"/>
-      <forward name="Candidate" path="/indexCand.jsp" contextRelative="true" redirect="true" />
-      <forward name="firstPage" path="/index.do"/>
-      <forward name="logoff" path="/logoff.do" contextRelative="true"/>
-      <forward name="redirect" path="/redirect.do" contextRelative="true"/>
     </global-forwards>
     
     <!-- ========== Action Mapping Definitions =============================== -->
     <action-mappings type="org.apache.struts.action.ActionMapping">
-      <!-- page fronting actions -->
-      <action path="/naoExecutado" forward="/error.jsp"/>
-      <action path="/naoAutorizado" forward="/notAuthorizedError.jsp"/>      
-      <action path="/home" forward="/switchAction.do?prefix=&amp;page=/mainPortalPage.jsp"/>
-      <action path="/switchAction" type="org.apache.struts.actions.SwitchAction" />
-      
+        <action path="/index" type="net.sourceforge.fenixedu.presentationTier.Action.commons.VoidAction">
+            <forward name="Success" path="index"/>
+        </action>
 
-      <action path="/index"
-      	      type="net.sourceforge.fenixedu.presentationTier.Action.masterDegree.candidate.ReadPersonCandidatesAction">
-      	  <forward name="ChooseCandidate" path="/chooseCandidatePage.jsp"/>      	      
-          <forward name="Success" path="/indexCand.jsp"/>      	      
-      </action>     
-      
-      <action path="/chooseCandidate"
-   	         input="/startPage.jsp"
-      	      type="net.sourceforge.fenixedu.presentationTier.Action.masterDegree.candidate.ChooseCandidateAction">
-      	  <forward name="Success" path="/indexCand.jsp"/>      	      
-      </action>     
-      
-     <action path="/backErrorPage"
-          type="net.sourceforge.fenixedu.presentationTier.Action.commons.VoidAction"
-    	  >
-         <forward name="Success" path="/backErrorPage.jsp"/> 
-      </action>
+		<action path="/changePersonalData"
+				scope="request"		
+		        parameter="method"
+			    type="net.sourceforge.fenixedu.presentationTier.Action.candidate.ChangePersonalDataDispatchAction">
+			<forward name="change" path="changePersonalData"/>
+			<forward name="cannotChange" path="cannotChangePersonalData"/>
+			<forward name="changeSuccess" path="changeSuccessPersonalData"/>
+		</action>
+		
+		<action path="/viewCandidacies"
+				scope="request"		
+		        parameter="method"
+			    type="net.sourceforge.fenixedu.presentationTier.Action.candidate.ViewCandidaciesDsipatchAction">
+			<forward name="view" path="viewCandidacies"/>
+			<forward name="viewDetail" path="viewCandidacyDetails"/>			
+		</action>		
 	
-      <!-- Action for Visualization Of the Candidate's Application Information -->
-      <action path="/visualizeApplicationInfo"
-      	      type="net.sourceforge.fenixedu.presentationTier.Action.masterDegree.candidate.VisualizeCandidateAction">
-      	  <forward name="Success" path="/visualizeApplicationInfo.jsp"/>
-      </action>     
-
-      <!-- Action for Visualization Of the Candidate's Application Information -->
-      <action path="/insertApplicationDocuments"
-	     attribute="insertApplicationDocumentsForm"
-	          name="insertApplicationDocumentsForm"
-	         input="/insertApplicationDocuments.do?method=prepare"
-	      validate="true"
-	      parameter="method"
-      	      type="net.sourceforge.fenixedu.presentationTier.Action.masterDegree.candidate.InsertApplicationDocumentsAction">
-      	  <forward name="chooseFile" path="/insertApplicationDocuments.jsp"/>
-      </action>
-
-      <!-- Dispatch Action to Change the Candidate's Application Information -->
-      <action path="/changeApplicationInfoDispatchAction"
-	     attribute="changeApplicationInfoForm"
-	          name="changeApplicationInfoForm"
-	         input="/changeApplicationInfoDispatchAction.do?method=prepare&amp;page=0&amp;error=1"
-	      validate="true"
-		 parameter="method"
-      	      type="net.sourceforge.fenixedu.presentationTier.Action.masterDegree.candidate.ChangeApplicationInfoDispatchAction">
-      	  <forward name="Success" path="/changeSuccess.jsp"/>
-      	  <forward name="Unchangeable" path="/changeUnsuccess.jsp"/>
-      	  <forward name="prepareReady" path="/changeApplicationInfo.jsp"/>
-      	  <forward name="BackError" path="/backErrorPage.do"/>
-      </action>
-
-
-      	<!-- ExceptionHandling -->   
-      <action parameter="method"
-              name="errorMailForm" 
-              path="/exceptionHandling"
-              scope="request"
-              type="net.sourceforge.fenixedu.presentationTier.Action.ExceptionHandlingAction"     
-              >
-      </action>
-
-
-	<!-- Action for show candidate's application documents -->
-      <action path="/showApplicationDocuments"
-	      input="/showApplicationDocuments.do"
-	      validate="true"
-	      parameter="method"
-   	      type="net.sourceforge.fenixedu.presentationTier.Action.masterDegree.candidate.ShowApplicationDocumentDispatchAction">
-      	  <forward name="showApplicationDocumentsList" path="/showApplicationDocuments.jsp"/>
-      	  <forward name="notOK" path="/showApplicationDocuments.do?method=prepare"/>
-      </action>
-
-	<!-- Action show candidate's study plan -->
-      <action path="/showStudyPlanForCandidate"
-	      input="/showStudyPlanForCandidate.do"
-	      validate="true"
-   	      type="net.sourceforge.fenixedu.presentationTier.Action.masterDegree.candidate.ShowStudyPlanForCandidateAction">
-   	      <forward name="Sucess" path="/showStudyPlanForCandidate.jsp"/>
-      </action>
-
     </action-mappings>
-    
+
     <!-- ========== Controller Configuration ================================ -->
-    <controller processorClass="net.sourceforge.fenixedu.presentationTier.processor.FenixRequestProcessor"/>
+    <controller processorClass="net.sourceforge.fenixedu.presentationTier.processor.FenixRequestProcessorWithTiles"/>
     
     <!-- ========== Message Resources Definitions ============================ -->
-    
+	<message-resources parameter="resources.GlobalResources" key="GLOBAL_RESOURCES" null="false"/>
+    <message-resources parameter="resources.ApplicationResources" key="APPLICATION_RESOURCES" null="false"/>	
+	<message-resources parameter="resources.CandidateResources" null="false" />
+
     <!-- ========== Plug Ins Configuration ================================= -->
     <plug-in className="org.apache.struts.validator.ValidatorPlugIn">
       <set-property property="pathnames" 
-                    value="/WEB-INF/validator-rules.xml,/WEB-INF/fenix-validator-rules.xml,/WEB-INF/conf/validation-candidate.xml"/>
+                    value="/WEB-INF/validator-rules.xml,/WEB-INF/conf/validation-candidate.xml"/>
+    </plug-in>    
+    <plug-in className="org.apache.struts.tiles.TilesPlugin" >
+        <set-property property="definitions-config" 
+            value="/WEB-INF/tiles/layouts/tiles-layout-definitions.xml,/WEB-INF/tiles/candidate/tiles-candidate-definitions.xml,/WEB-INF/tiles/candidate/tiles-candidate-pages-definitions.xml" />
+        <set-property property="moduleAware" value="true" />
+        <set-property property="definitions-parser-validate" value="true" />
     </plug-in>
-    
 </struts-config>
-

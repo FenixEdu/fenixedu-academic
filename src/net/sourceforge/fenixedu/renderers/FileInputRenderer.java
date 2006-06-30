@@ -11,6 +11,8 @@ import net.sourceforge.fenixedu.renderers.components.converters.ConversionExcept
 import net.sourceforge.fenixedu.renderers.components.converters.Converter;
 import net.sourceforge.fenixedu.renderers.components.state.IViewState;
 import net.sourceforge.fenixedu.renderers.layouts.Layout;
+import net.sourceforge.fenixedu.renderers.model.MetaObject;
+import net.sourceforge.fenixedu.renderers.model.MetaSlot;
 import net.sourceforge.fenixedu.renderers.model.MetaSlotKey;
 import net.sourceforge.fenixedu.renderers.plugin.RenderersRequestProcessor;
 import net.sourceforge.fenixedu.renderers.plugin.upload.UploadedFile;
@@ -104,6 +106,7 @@ public class FileInputRenderer extends InputRenderer {
                 file.setTargetSlot((MetaSlotKey) getInputContext().getMetaObject().getKey());
        
                 file.setController(new UpdateFilePropertiesController(
+                        ((MetaSlot) getInputContext().getMetaObject()).getMetaObject(), 
                         getFileNameSlot(), getFileSizeSlot(), getFileContentTypeSlot()));
                 file.setConverter(new FileConverter(file));
                 return file;
@@ -121,11 +124,13 @@ public class FileInputRenderer extends InputRenderer {
 
     private static class UpdateFilePropertiesController extends HtmlController {
 
+        private MetaObject object;
         private String fileNameSlot;
         private String fileSizeSlot;
         private String fileContentTypeSlot;
 
-        public UpdateFilePropertiesController(String fileNameSlot, String fileSizeSlot, String fileContentTypeSlot) {
+        public UpdateFilePropertiesController(MetaObject object, String fileNameSlot, String fileSizeSlot, String fileContentTypeSlot) {
+            this.object = object;
             this.fileNameSlot = fileNameSlot;
             this.fileSizeSlot = fileSizeSlot;
             this.fileContentTypeSlot = fileContentTypeSlot;
@@ -133,13 +138,13 @@ public class FileInputRenderer extends InputRenderer {
 
         @Override
         public void execute(IViewState viewState) {
-            Object object = viewState.getMetaObject().getObject();
-            
             HtmlSimpleValueComponent component = (HtmlSimpleValueComponent) getControlledComponent();
             String name = component.getName();
             
             UploadedFile file = RenderersRequestProcessor.getUploadedFile(name);
             if (file != null) { // if has file
+                Object object = this.object.getObject();
+                
                 setPropertyIgnoringErrors(object, this.fileNameSlot, file.getName());
                 setPropertyIgnoringErrors(object, this.fileSizeSlot, file.getSize());
                 setPropertyIgnoringErrors(object, this.fileContentTypeSlot, file.getContentType());

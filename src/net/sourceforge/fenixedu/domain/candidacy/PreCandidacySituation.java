@@ -9,7 +9,7 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 public class PreCandidacySituation extends PreCandidacySituation_Base {
     
-    public  PreCandidacySituation(Candidacy candidacy) {
+	public  PreCandidacySituation(Candidacy candidacy) {
         super();
         setCandidacy(candidacy);
         Employee employee = AccessControl.getUserView().getPerson().getEmployee();
@@ -29,9 +29,14 @@ public class PreCandidacySituation extends PreCandidacySituation_Base {
 	public  void checkConditionsToForward() {
     	//TODO: check if the candidate has already payed emulamento
 	}
-
-    public void checkConditionsToForward(String nextState) {
+	
+	public void checkConditionsToForward(String nextState) {
         checkConditionsToForward();
+    }
+    
+    //FIXME: METHOD TO REMOVE!!
+    public boolean canChangePersonalData(){
+        return true;
     }
 
     public Set<String> getValidNextStates() {

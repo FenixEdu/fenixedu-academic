@@ -15,19 +15,18 @@ public class CreateDFACandidacy extends Service {
             String identificationDocumentNumber, IDDocumentType identificationDocumentType) {
         Person person = Person.readByDocumentIdNumberAndIdDocumentType(identificationDocumentNumber,
                 identificationDocumentType);
-        if (person == null) {
+		if(person == null) {
             person = new Person(name, identificationDocumentNumber, identificationDocumentType,
                     Gender.MALE, "T" + System.currentTimeMillis());
-        }
-
-        person.addPersonRoleByRoleType(RoleType.MASTER_DEGREE_CANDIDATE);
+		} 
+		
+        person.addPersonRoleByRoleType(RoleType.CANDIDATE);
         person.addPersonRoleByRoleType(RoleType.PERSON);
 
 		DFACandidacy candidacy = new DFACandidacy(person, executionDegree);
-	
+
         new DFACandidacyEvent(person, candidacy);
-		
-		
+
 		return candidacy;
 	}
 }

@@ -48,4 +48,5 @@ public abstract class Candidacy extends Candidacy_Base {
         return null;
     }
     
+    public abstract String getDescription();
 }

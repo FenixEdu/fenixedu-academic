@@ -79,7 +79,9 @@ public enum RoleType {
     
     MESSAGING,
 
-    PEDAGOGICAL_COUNCIL;
+    PEDAGOGICAL_COUNCIL,
+    
+    CANDIDATE;
 
     public String getName() {
         return name();    
