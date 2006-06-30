@@ -85,6 +85,7 @@ public class DataInitializer {
         new Role(RoleType.RESEARCHER, "/researcher", "/index.do", "portal.researcher");
         new Role(RoleType.ALUMNI, "/alumin", "/index.do", "portal.alumni");
         new Role(RoleType.MESSAGING, "/messaging", "/index.do", "portal.messaging");
+        new Role(RoleType.CANDIDATE, "/candidate", "/index.do", "portal.candidate");
     }
 
     private static void createCurricularYearsAndSemesters() {
