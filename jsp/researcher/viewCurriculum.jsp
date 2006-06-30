@@ -137,8 +137,10 @@
 				<fr:property name="eachSchema" value="person.result"/>
 			</fr:layout>
 		</fr:view>
---%>		
-
+		<logic:empty name="resultPatents">
+			<p><em><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.result.patent.listPatentsUseCase.emptyList"/></em></p>
+		</logic:empty>
+--%>	
 </logic:present>
 		
 <br/>
