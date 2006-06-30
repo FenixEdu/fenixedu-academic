@@ -5,7 +5,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.dataTransferObject.research.result.ResultParticipationFullCreationBean;
 import net.sourceforge.fenixedu.dataTransferObject.research.result.ResultParticipationSimpleCreationBean;
-import net.sourceforge.fenixedu.domain.research.result.ResultPatent;
+import net.sourceforge.fenixedu.domain.research.result.patent.ResultPatent;
 import net.sourceforge.fenixedu.domain.research.result.Result;
 import net.sourceforge.fenixedu.domain.research.result.ResultPublication;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
@@ -24,6 +24,10 @@ public class ResultParticipationManagementAction extends FenixDispatchAction {
         
         //verify if field bookRole is to be active
         Result result = rootDomainObject.readResultByOID(resultId);
+        
+        if(result==null) {
+            return mapping.findForward("editParticipation");    
+        }
         request.setAttribute("result", result);
         /*if((result instanceof ResultPublication) && (((ResultPublication)result).getResultPublicationType() != null))
         {
@@ -52,10 +56,19 @@ public class ResultParticipationManagementAction extends FenixDispatchAction {
             HttpServletRequest request, HttpServletResponse response) throws Exception {
         
         final Integer participationId = Integer.parseInt(request.getParameter("participationId"));
+        final Integer resultId = Integer.parseInt(request.getParameter("resultId"));
+        final String resultClassName = rootDomainObject.readResultByOID(resultId).getClass().getName();
         
         Object[] args = { participationId };
         ServiceUtils.executeService(getUserView(request), "DeleteResultParticipation", args);
       
+        final Result result = rootDomainObject.readResultByOID(resultId);
+        
+        if (result == null) {
+            request.setAttribute("resultClassName", resultClassName);
+            return backToResult(mapping,form,request,response);
+        }
+        
         return prepareEditParticipation(mapping,form,request,response);
     }
     
@@ -157,7 +170,19 @@ public class ResultParticipationManagementAction extends FenixDispatchAction {
             HttpServletRequest request, HttpServletResponse response) throws Exception {
         
         final Integer resultId = Integer.valueOf(request.getParameter("resultId"));
-        Result result = rootDomainObject.readResultByOID(resultId);
+        final Result result = rootDomainObject.readResultByOID(resultId);
+        
+        if(result==null){
+            final String resultClassName = request.getAttribute("resultClassName").toString();
+            if (!(resultClassName == null || resultClassName.equals(""))) {
+                if(resultClassName.compareTo(ResultPatent.class.getCanonicalName())==0){
+                    return mapping.findForward("listPatents");
+                }
+                else {
+                    return mapping.findForward("ListPublications");
+                }
+            }
+        }
         
         if (result instanceof ResultPatent){
             request.setAttribute("patentId", resultId);
@@ -167,6 +192,7 @@ public class ResultParticipationManagementAction extends FenixDispatchAction {
             request.setAttribute("publicationId", resultId);
             return mapping.findForward("viewEditPublication");
         }
+
         return null;
     }
     
