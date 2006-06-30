@@ -48,9 +48,9 @@ public class PaymentsManagementDispatchAction extends FenixDispatchAction {
             return prepareSearchPerson(mapping, actionForm, request, response);
         }
 
-        request.setAttribute("paymentsManagementDTO", searchNotPayedEventsForPerson(candidacy
-                .getPerson()));
-        return mapping.findForward("showEvents");
+        request.setAttribute("person", candidacy.getPerson());
+
+        return mapping.findForward("chooseOperation");
     }
 
     public ActionForward searchPersonByUsername(ActionMapping mapping, ActionForm actionForm,
@@ -65,8 +65,9 @@ public class PaymentsManagementDispatchAction extends FenixDispatchAction {
             return prepareSearchPerson(mapping, actionForm, request, response);
         }
 
-        request.setAttribute("paymentsManagementDTO", searchNotPayedEventsForPerson(person));
-        return mapping.findForward("showEvents");
+        request.setAttribute("person", person);
+
+        return mapping.findForward("chooseOperation");
     }
 
     public ActionForward searchPersonByDocumentIDandDocumentType(ActionMapping mapping,
@@ -83,8 +84,9 @@ public class PaymentsManagementDispatchAction extends FenixDispatchAction {
             return prepareSearchPerson(mapping, actionForm, request, response);
         }
 
-        request.setAttribute("paymentsManagementDTO", searchNotPayedEventsForPerson(person));
-        return mapping.findForward("showEvents");
+        request.setAttribute("person", person);
+
+        return mapping.findForward("chooseOperation");
     }
 
     protected Integer getCandidacyNumber(final DynaActionForm form) {
@@ -113,6 +115,32 @@ public class PaymentsManagementDispatchAction extends FenixDispatchAction {
         }
 
         return paymentsManagementDTO;
+    }
+
+    public ActionForward showEvents(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
+        final PaymentsManagementDTO paymentsManagementDTO = searchNotPayedEventsForPerson(getPerson(request));
+
+        request.setAttribute("paymentsManagementDTO", paymentsManagementDTO);
+
+        return mapping.findForward("showEvents");
+    }
+
+    public ActionForward showPerformedPayments(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) {
+
+        return null;
+    }
+
+    public ActionForward showReceipts(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) {
+
+        return null;
+    }
+
+    private Person getPerson(HttpServletRequest request) {
+        return (Person) rootDomainObject
+                .readPartyByOID(getRequestParameterAsInteger(request, "personId"));
     }
 
 }
