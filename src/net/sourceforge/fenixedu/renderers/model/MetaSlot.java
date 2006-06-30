@@ -227,8 +227,6 @@ public class MetaSlot extends MetaObject {
     }
 
     public void setUser(UserIdentity user) {
-        super.setUser(user);
-        
         // When we are using a slot directly instead of accessing it though the base meta object
         if (getMetaObject() != null) {
             UserIdentity metaObjetUser = getMetaObject().getUser();
@@ -240,6 +238,16 @@ public class MetaSlot extends MetaObject {
         
         if (this.valueMetaObject != null) {
             this.valueMetaObject.setUser(user);
+        }
+    }
+
+    @Override
+    public UserIdentity getUser() {
+        if (getMetaObject() != null) {
+            return getMetaObject().getUser();
+        }
+        else {
+            return null;
         }
     }
 

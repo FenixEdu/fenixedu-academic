@@ -54,10 +54,12 @@ public class MetaObjectCollection extends MetaObject {
     /**
      * @return <code>ArrayList.class</code>
      */
+    @Override
     public Class getType() {
         return ArrayList.class;
     }
 
+    @Override
     public List<MetaSlot> getSlots() {
         List<MetaSlot> slots = new ArrayList<MetaSlot>();
         
@@ -68,17 +70,21 @@ public class MetaObjectCollection extends MetaObject {
         return slots;
     }
 
+    @Override
     public void addSlot(MetaSlot slot) {
     }
 
+    @Override
     public boolean removeSlot(MetaSlot slot) {
         return false;
     }
 
+    @Override
     public MetaObjectKey getKey() {
         return null;
     }
 
+    @Override
     public List<MetaSlot> getHiddenSlots() {
         List<MetaSlot> slots = new ArrayList<MetaSlot>();
         
@@ -89,9 +95,11 @@ public class MetaObjectCollection extends MetaObject {
         return slots;
     }
 
+    @Override
     public void addHiddenSlot(MetaSlot slot) {
     }
 
+    @Override
     public void commit() {
         for (MetaObject metaObject : getAllMetaObjects()) {
             metaObject.commit();

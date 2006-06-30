@@ -81,10 +81,6 @@ public abstract class MetaObject implements Serializable {
         }
         
         this.user = user;
-        
-        for (MetaSlot slot : getAllSlots()) {
-            slot.setUser(user);
-        }
     }
 
     public List<MetaSlot> getSlots() {
