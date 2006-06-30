@@ -13,6 +13,7 @@ import net.sourceforge.fenixedu.domain.User;
 import net.sourceforge.fenixedu.domain.accounting.Account;
 import net.sourceforge.fenixedu.domain.accounting.AccountType;
 import net.sourceforge.fenixedu.domain.accounting.Event;
+import net.sourceforge.fenixedu.domain.candidacy.DFACandidacyEvent;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 
 public class CreatePaymentsForEvents extends Service {
@@ -25,20 +26,22 @@ public class CreatePaymentsForEvents extends Service {
             throws FenixServiceException {
 
         // TODO: remove account creation code
-        final Unit unit = (Unit) rootDomainObject.readPartyByOID(66309);
-        final Account unitAccount = unit.getAccountBy(AccountType.INTERNAL);
-        if (unitAccount == null) {
-            unit.createAccount(AccountType.INTERNAL);
-        }
-
-        final Account personAccount = person.getAccountBy(AccountType.EXTERNAL);
-        if (personAccount == null) {
-            person.createAccount(AccountType.EXTERNAL);
-        }
 
         final Map<Event, List<EntryDTO>> entryDTOsByEvent = splitEntryDTOsByEvent(entryDTOs);
 
         for (final Map.Entry<Event, List<EntryDTO>> entry : entryDTOsByEvent.entrySet()) {
+            final Unit unit = ((DFACandidacyEvent) entry.getKey()).getCandidacy().getExecutionDegree()
+                    .getDegreeCurricularPlan().getDegree().getUnit();
+            final Account unitAccount = unit.getAccountBy(AccountType.INTERNAL);
+            if (unitAccount == null) {
+                unit.createAccount(AccountType.INTERNAL);
+            }
+
+            final Account personAccount = person.getAccountBy(AccountType.EXTERNAL);
+            if (personAccount == null) {
+                person.createAccount(AccountType.EXTERNAL);
+            }
+
             entry.getKey().process(responsibleUser, entry.getValue());
         }
 
