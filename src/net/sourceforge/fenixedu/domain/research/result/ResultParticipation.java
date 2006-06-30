@@ -9,10 +9,18 @@ public class ResultParticipation extends ResultParticipation_Base {
         setRootDomainObject(RootDomainObject.getInstance());
     }
     
+    /** 
+     * This method is responsible for deleting the object.
+     */
     public void delete() {
-        removePerson();
-        removeResult();
-        removeRootDomainObject();
+        final Result result = this.getResult(); 
+            
+        this.removePerson();
+        this.removeResult();
+        
+        result.sweep();
+        
+        this.removeRootDomainObject();
         deleteDomainObject();
     }
 }
