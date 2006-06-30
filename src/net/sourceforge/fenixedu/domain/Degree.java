@@ -8,6 +8,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.Set;
+import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriod;
 import net.sourceforge.fenixedu.domain.degree.BolonhaDegreeType;
@@ -543,7 +544,7 @@ public class Degree extends Degree_Base {
     }
 
     public Collection<Teacher> getResponsibleCoordinatorsTeachers(ExecutionYear executionYear) {
-        Set<Teacher> result = new HashSet<Teacher>();
+        Set<Teacher> result = new TreeSet<Teacher>(Teacher.TEACHER_COMPARATOR_BY_CATEGORY_AND_NUMBER);
         for (final DegreeCurricularPlan degreeCurricularPlan : getDegreeCurricularPlans()) {
             final ExecutionDegree executionDegree = degreeCurricularPlan.getExecutionDegreeByYear(executionYear);
             if (executionDegree != null) {
