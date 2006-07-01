@@ -14,6 +14,7 @@ public class ReceiptVersion extends ReceiptVersion_Base {
     }
 
     ReceiptVersion(Receipt receipt, Employee employee) {
+        this();
         init(receipt, employee);
 
     }
