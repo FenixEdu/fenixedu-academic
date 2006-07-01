@@ -42,5 +42,5 @@
 	</html:form>
 </logic:notEmpty>
 <logic:empty name="paymentsManagementDTO" property="selectedEntries">
-	<em><bean:message key="label.masterDegree.administrativeOffice.payments.not.found"/></em>
+	<span class="error"><bean:message key="label.masterDegree.administrativeOffice.payments.not.found"/></span>
 </logic:empty>
