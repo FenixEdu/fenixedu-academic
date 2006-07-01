@@ -16,13 +16,23 @@
 <br/>
 <strong><bean:message key="label.masterDegree.administrativeOffice.payments"/>:</strong>
 <logic:notEmpty name="paymentsManagementDTO" property="selectedEntries">
-	<fr:view name="paymentsManagementDTO" property="selectedEntries" schema="entryDTO.view-guide">
-		<fr:layout name="tabular" >
-			<fr:property name="classes" value="tstyle4"/>
-	        <fr:property name="columnClasses" value="listClasses,,"/>
-		</fr:layout>
-	</fr:view>
-	<strong><bean:message key="label.masterDegree.administrativeOffice.payments.totalAmount"/></strong>:<bean:write name="paymentsManagementDTO" property="totalAmountToPay" />&nbsp;<bean:message key="label.masterDegree.administrativeOffice.payments.currencySymbol"/>
+	<table>
+		<tr>
+			<td>
+				<fr:view name="paymentsManagementDTO" property="selectedEntries" schema="entryDTO.view-guide">
+					<fr:layout name="tabular" >
+						<fr:property name="classes" value="tstyle4"/>
+				        <fr:property name="columnClasses" value="listClasses,,"/>
+					</fr:layout>
+				</fr:view>
+			</td>
+		</tr>
+		<tr>
+			<td align="right">
+				<strong><bean:message key="label.masterDegree.administrativeOffice.payments.totalAmount"/></strong>:<bean:write name="paymentsManagementDTO" property="totalAmountToPay" />&nbsp;<bean:message key="label.masterDegree.administrativeOffice.payments.currencySymbol"/>
+			</td>
+		</tr>
+	</table>
 	<br/>
 	<html:form action="/payments.do" target="_blank">
 		<html:hidden property="method" />
