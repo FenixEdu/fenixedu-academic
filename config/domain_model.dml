@@ -8925,3 +8925,11 @@ relation ReceiptVersionReceipt {
 		multiplicity *;
 	}
 }
+
+relation RootDomainObjectReceiptVersion {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.accounting.ReceiptVersion playsRole receiptVersions {
+		multiplicity *;
+	}
+}
+

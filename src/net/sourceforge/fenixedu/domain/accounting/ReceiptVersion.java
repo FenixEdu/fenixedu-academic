@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.domain.accounting;
 
 import net.sourceforge.fenixedu.domain.Employee;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 import org.joda.time.DateTime;
@@ -9,6 +10,7 @@ public class ReceiptVersion extends ReceiptVersion_Base {
 
     private ReceiptVersion() {
         super();
+        setRootDomainObject(RootDomainObject.getInstance());
     }
 
     ReceiptVersion(Receipt receipt, Employee employee) {

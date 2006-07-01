@@ -20,17 +20,17 @@
 		</ul>
 		<br />
 	</logic:messagesPresent>
+	
+	<strong>METER AQUI</strong>
+	<fr:view name="createReceiptBean" property="party"
+		schema="party.view-with-name">
+		<fr:layout name="tabular">
+			<fr:property name="classes" value="tstyle4 thlight thright" />
+		</fr:layout>
+	</fr:view>
 
 
 	<logic:notEmpty name="createReceiptBean" property="entries">
-		<strong>METER AQUI</strong>
-		<fr:view name="createReceiptBean" property="party"
-			schema="party.view-with-name">
-			<fr:layout name="tabular">
-				<fr:property name="classes" value="tstyle4 thlight thright" />
-			</fr:layout>
-		</fr:view>
-
 
 		<strong>METER AQUI</strong>
 		<fr:edit id="createReceiptBean" name="createReceiptBean"
