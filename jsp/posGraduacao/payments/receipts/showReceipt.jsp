@@ -45,6 +45,7 @@
 		<fr:layout name="tabular" >
 			<fr:property name="classes" value="tstyle4"/>
 	        <fr:property name="columnClasses" value="listClasses,,"/>
+			<fr:property name="sortBy" value="whenBooked=desc"/>
 		</fr:layout>
 		</fr:view>
 	</td>

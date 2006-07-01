@@ -12,13 +12,14 @@
 		<fr:property name="classes" value="tstyle4" />
 	</fr:layout>
 </fr:view>
-
+<br/>
 <logic:notEmpty name="person" property="receipts">
 	<fr:view name="person" property="receipts" schema="receipt.view">
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle4 thlight thright" />
 		    <fr:property name="linkFormat(view)" value="/payments.do?method=prepareShowReceipt&receiptID=${idInternal}"/>
 			<fr:property name="key(view)" value="link.masterDegree.administrativeOffice.payments.show"/>
+			<fr:property name="sortBy" value="year=desc,number=desc"/>
 		</fr:layout>
 	</fr:view>
 </logic:notEmpty>

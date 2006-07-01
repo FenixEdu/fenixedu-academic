@@ -25,7 +25,7 @@
 	<fr:view name="createReceiptBean" property="person"
 		schema="person.view-with-name-and-idDocumentType-and-documentIdNumber">
 		<fr:layout name="tabular">
-			<fr:property name="classes" value="tstyle4 thlight thright" />
+			<fr:property name="classes" value="tstyle4" />
 		</fr:layout>
 	</fr:view>
 
@@ -36,7 +36,7 @@
 		<fr:edit id="createReceiptBean" name="createReceiptBean"
 			schema="createReceiptBean.create">
 			<fr:layout name="tabular">
-				<fr:property name="classes" value="tstyle4 thlight thright" />
+				<fr:property name="classes" value="tstyle4" />
 			</fr:layout>
 		</fr:edit>
 
@@ -44,7 +44,8 @@
 		<fr:edit id="createReceiptBean-entries-part" name="createReceiptBean"
 			property="entries" schema="selectableEntryBean.view">
 			<fr:layout name="tabular-editable">
-				<fr:property name="classes" value="tstyle4 thlight thright" />
+				<fr:property name="classes" value="tstyle4" />
+				<fr:property name="sortBy" value="entry.whenBooked=desc"/>
 			</fr:layout>
 		</fr:edit>
 		

@@ -110,7 +110,7 @@
 		<td>
 		<table align="right">
 
-			<logic:iterate id="entry" name="receipt" property="entries">
+			<logic:iterate id="entry" name="sortedEntries">
 				<tr>
 					<td><bean:message name="entry" property="entryType.name"
 						bundle="ENUMERATION_RESOURCES" /> &nbsp;<bean:write name="entry"

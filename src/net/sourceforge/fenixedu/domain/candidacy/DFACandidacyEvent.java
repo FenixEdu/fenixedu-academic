@@ -40,17 +40,18 @@ public class DFACandidacyEvent extends DFACandidacyEvent_Base {
 
     @Override
     protected void internalProcess(User user, List<EntryDTO> entryDTOs) {
-        final BigDecimal totalAmountToPay = calculateAmountToPay();
-        BigDecimal totalPayedAmount = calculatePayedAmount();
-        for (final EntryDTO entryDTO : entryDTOs) {
-            checkIfCanAddAmount(totalAmountToPay, totalPayedAmount, entryDTO.getAmountToPay());
-            makeAccountingTransaction(user, this, getCandidacy().getPerson().getAccountBy(
-                    AccountType.EXTERNAL), getToAccount(), entryDTO.getEntryType(), entryDTO
-                    .getAmountToPay());
 
-            totalPayedAmount = totalPayedAmount.add(entryDTO.getAmountToPay());
-
+        if (entryDTOs.size() != 1) {
+            throw new DomainException("error.candidacy.dfaCandidacyEvent.invalid.number.of.entryDTOs");
         }
+
+        final BigDecimal totalAmountToPay = calculateAmountToPay();
+        final EntryDTO entryDTO = entryDTOs.get(0);
+
+        checkIfCanAddAmount(totalAmountToPay, entryDTO.getAmountToPay());
+        makeAccountingTransaction(user, this, getCandidacy().getPerson().getAccountBy(
+                AccountType.EXTERNAL), getToAccount(), entryDTO.getEntryType(), entryDTO
+                .getAmountToPay());
 
         if (canCloseEvent()) {
             closeEvent();
@@ -63,11 +64,10 @@ public class DFACandidacyEvent extends DFACandidacyEvent_Base {
                 .getAccountBy(AccountType.INTERNAL);
     }
 
-    private void checkIfCanAddAmount(final BigDecimal totalAmountToPay,
-            final BigDecimal totalPayedAmount, final BigDecimal amountToPay) {
-        if (amountToPay.add(totalPayedAmount).compareTo(totalAmountToPay) > 0) {
+    private void checkIfCanAddAmount(final BigDecimal totalAmountToPay, final BigDecimal amountToPay) {
+        if (!amountToPay.equals(totalAmountToPay)) {
             throw new DomainException(
-                    "error.accounting.dfaCandidacyEvent.amount.being.payed.exceeds.total");
+                    "error.accounting.dfaCandidacyEvent.amount.being.payed.must.match.amount.to.pay");
         }
     }
 

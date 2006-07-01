@@ -63,6 +63,9 @@ public abstract class Event extends Event_Base {
     }
 
     public final void process(User responsibleUser, List<EntryDTO> entryDTOs) {
+        if (entryDTOs.isEmpty()) {
+            throw new DomainException("error.accounting.event.process.requires.entries.to.be.processed");
+        }
         if (!isClosed()) {
             internalProcess(responsibleUser, entryDTOs);
         }

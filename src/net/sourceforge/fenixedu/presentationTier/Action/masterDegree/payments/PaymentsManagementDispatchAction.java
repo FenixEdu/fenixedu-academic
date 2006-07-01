@@ -6,6 +6,8 @@ package net.sourceforge.fenixedu.presentationTier.Action.masterDegree.payments;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -294,8 +296,15 @@ public class PaymentsManagementDispatchAction extends FenixDispatchAction {
             HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
             FenixServiceException {
 
-        Receipt receipt = (Receipt) RenderUtils.getViewState("receipt").getMetaObject().getObject();
+        final Receipt receipt = (Receipt) RenderUtils.getViewState("receipt").getMetaObject()
+                .getObject();
+        final SortedSet<Entry> sortedEntries = new TreeSet<Entry>(
+                Entry.COMPARATOR_BY_MOST_RECENT_WHEN_BOOKED);
+        sortedEntries.addAll(receipt.getEntries());
+
         request.setAttribute("receipt", receipt);
+        request.setAttribute("sortedEntries", sortedEntries);
+
         try {
 
             ServiceUtils.executeService(getUserView(request), "CreateReceiptVersion", new Object[] {
@@ -305,9 +314,10 @@ public class PaymentsManagementDispatchAction extends FenixDispatchAction {
 
         } catch (InvalidArgumentsServiceException e) {
             addActionMessage(request, e.getMessage());
+
+            return prepareShowReceipt(mapping, actionForm, request, response);
         }
 
-        return prepareShowReceipt(mapping, actionForm, request, response);
     }
 
     public ActionForward prepareShowEventsInvalid(ActionMapping mapping, ActionForm form,

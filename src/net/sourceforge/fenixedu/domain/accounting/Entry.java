@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.domain.accounting;
 
 import java.math.BigDecimal;
+import java.util.Comparator;
 
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -8,6 +9,13 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import org.joda.time.DateTime;
 
 public class Entry extends Entry_Base {
+
+    public static final Comparator<Entry> COMPARATOR_BY_MOST_RECENT_WHEN_BOOKED = new Comparator<Entry>() {
+        public int compare(Entry entry, Entry otherEntry) {
+            return -(entry.getWhenBooked().compareTo(otherEntry.getWhenBooked()));
+        }
+
+    };
 
     private Entry() {
         super();
@@ -91,7 +99,7 @@ public class Entry extends Entry_Base {
         }
     }
 
-    public String getDescription() {       
+    public String getDescription() {
         return getAccountingTransaction().getEvent().getDescriptionEntryType(getEntryType());
     }
 

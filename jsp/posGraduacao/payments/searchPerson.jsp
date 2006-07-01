@@ -22,16 +22,27 @@
 
 	<h3><bean:message
 		key="label.masterDegree.administrativeOffice.payments.searchByCandidacyNumber" /></h3>
-	<bean:message
-		key="label.masterDegree.administrativeOffice.payments.number" />:
-	<html:text property="candidacyNumber" />
-	<br />
-	<br />
-	<html:submit styleClass="inputbutton"
-		onclick="this.form.method.value='searchPersonByCandidacyNumber'">
-		<bean:message
-			key="label.masterDegree.administrativeOffice.payments.search" />
-	</html:submit>
+	<table>
+		<tr>
+			<td>
+				<bean:message
+					key="label.masterDegree.administrativeOffice.payments.number" />:
+			</td>
+			<td>
+				<html:text property="candidacyNumber" />
+			</td>
+			<td>
+	    		&nbsp;
+	    	</td>
+			<td>
+				<html:submit styleClass="inputbutton"
+					onclick="this.form.method.value='searchPersonByCandidacyNumber'">
+					<bean:message
+						key="label.masterDegree.administrativeOffice.payments.search" />
+				</html:submit>
+			</td>
+		</tr>
+	</table>
 
 	<br />
 	<br />
@@ -39,42 +50,62 @@
 
 	<h3><bean:message
 		key="label.masterDegree.administrativeOffice.payments.searchByUsername" /></h3>
-	<bean:message
-		key="label.masterDegree.administrativeOffice.payments.username" />:
-	<html:text property="username" />
-	<br />
-	<br />
-	<html:submit styleClass="inputbutton"
-		onclick="this.form.method.value='searchPersonByUsername'">
-		<bean:message
-			key="label.masterDegree.administrativeOffice.payments.search" />
-	</html:submit>
+	<table>
+	  <tr>
+	    <td>
+	    	<bean:message key="label.masterDegree.administrativeOffice.payments.username" />:
+	    </td>
+	    <td>
+	    	<html:text property="username" />
+	    </td>
+	    <td>
+	    	&nbsp;
+	    </td>
+  	    <td>
+  	    	<html:submit styleClass="inputbutton" onclick="this.form.method.value='searchPersonByUsername'">
+			<bean:message key="label.masterDegree.administrativeOffice.payments.search" />
+			</html:submit>
+		</td>
+	  </tr>
+	</table>
 
 	<br />
 	<br />
 	<br />
 
 	<h3><bean:message
-		key="label.masterDegree.administrativeOffice.payments.searchByDocumentIDandType" /></h3>
-	<bean:message
-		key="label.masterDegree.administrativeOffice.payments.documentType" />:
-	<e:labelValues id="documentTypes"
-		enumeration="net.sourceforge.fenixedu.domain.person.IDDocumentType"
-		bundle="ENUMERATION_RESOURCES" />
-	<html:select property="documentType">
-		<html:options collection="documentTypes" property="value"
-			labelProperty="label" />
-	</html:select>
-	<br />
-	<bean:message
-		key="label.masterDegree.administrativeOffice.payments.documentNumber" />:
-	<html:text property="documentNumber" />
-	<br />
-	<br />
-	<html:submit styleClass="inputbutton"
-		onclick="this.form.method.value='searchPersonByDocumentIDandDocumentType'">
-		<bean:message
-			key="label.masterDegree.administrativeOffice.payments.search" />
-	</html:submit>
+		key="label.masterDegree.administrativeOffice.payments.searchByDocumentIDandType" /></h3>	
+	<table>
+	  <tr>
+	    <td>
+	    	<bean:message key="label.masterDegree.administrativeOffice.payments.documentType" />:
+	    </td>
+	    <td>
+	    	<e:labelValues id="documentTypes" 
+	    		enumeration="net.sourceforge.fenixedu.domain.person.IDDocumentType"
+	    		bundle="ENUMERATION_RESOURCES" />
+	    	<html:select property="documentType">
+				<html:options collection="documentTypes" property="value" labelProperty="label" />
+			</html:select>
+		</td>
+	  </tr>
+	  <tr>
+	    <td>
+	    	<bean:message key="label.masterDegree.administrativeOffice.payments.documentNumber" />:
+	    </td>
+	    <td>
+	    	<html:text property="documentNumber" />
+	    </td>
+	  </tr>
+	  <tr>
+	    <td align="left" colspan="2">
+			<html:submit styleClass="inputbutton"
+				onclick="this.form.method.value='searchPersonByDocumentIDandDocumentType'">
+				<bean:message
+					key="label.masterDegree.administrativeOffice.payments.search" />
+			</html:submit>
+	    </td>
+	  </tr>
+	</table>
 
 </html:form>
