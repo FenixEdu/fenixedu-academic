@@ -56,7 +56,7 @@ public class WorkWeek implements Serializable {
     }
 
     public boolean equals(WorkWeek workWeek) {
-        return workWeek.getDays().containsAll(getDays());
+        return workWeek.getDays().containsAll(getDays()) && getDays().containsAll(workWeek.getDays());
     }
 
     // This work week contains workWeek
