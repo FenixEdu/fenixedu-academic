@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.accounting.EntryDTO;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.User;
 import net.sourceforge.fenixedu.domain.accounting.Account;
 import net.sourceforge.fenixedu.domain.accounting.AccountType;
@@ -12,7 +13,6 @@ import net.sourceforge.fenixedu.domain.accounting.AccountingTransaction;
 import net.sourceforge.fenixedu.domain.accounting.EntryType;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.domain.util.StateMachine;
 
 public class DFACandidacyEvent extends DFACandidacyEvent_Base {
@@ -21,13 +21,13 @@ public class DFACandidacyEvent extends DFACandidacyEvent_Base {
         super();
     }
 
-    public DFACandidacyEvent(Party party, DFACandidacy candidacy) {
+    public DFACandidacyEvent(Person person, DFACandidacy candidacy) {
         this();
-        init(party, candidacy);
+        init(person, candidacy);
     }
 
-    private void init(Party party, DFACandidacy candidacy) {
-        init(EventType.CANDIDACY_ENROLMENT, party);
+    private void init(Person person, DFACandidacy candidacy) {
+        init(EventType.CANDIDACY_ENROLMENT, person);
         checkParameters(candidacy);
         super.setCandidacy(candidacy);
     }
@@ -114,7 +114,7 @@ public class DFACandidacyEvent extends DFACandidacyEvent_Base {
     @Override
     public void closeEvent() {
         StateMachine.execute(getCandidacy().getActiveCandidacySituation());
-        
+
         super.closeEvent();
     }
 

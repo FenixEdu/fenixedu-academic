@@ -146,7 +146,7 @@ public class PaymentsManagementDispatchAction extends FenixDispatchAction {
         final List<SelectableEntryBean> selectableEntryBeans = getSelectableEntryBeans(person
                 .getPaymentsWithoutReceipt());
         final CreateReceiptBean receiptBean = new CreateReceiptBean();
-        receiptBean.setParty(person);
+        receiptBean.setPerson(person);
         receiptBean.setEntries(selectableEntryBeans);
 
         request.setAttribute("createReceiptBean", receiptBean);
@@ -167,7 +167,7 @@ public class PaymentsManagementDispatchAction extends FenixDispatchAction {
         try {
             final Receipt receipt = (Receipt) ServiceUtils
                     .executeService(getUserView(request), "CreateReceipt", new Object[] {
-                            createReceiptBean.getParty(), createReceiptBean.getContributor(),
+                            createReceiptBean.getPerson(), createReceiptBean.getContributor(),
                             createReceiptBean.getSelectedEntries() });
 
             request.setAttribute("receiptID", receipt.getIdInternal());
@@ -196,7 +196,7 @@ public class PaymentsManagementDispatchAction extends FenixDispatchAction {
     public ActionForward showReceipts(ActionMapping mapping, ActionForm actionForm,
             HttpServletRequest request, HttpServletResponse response) {
 
-        request.setAttribute("receiptsFromParty", getPerson(request).getReceipts());
+        request.setAttribute("person", getPerson(request));
         return mapping.findForward("showReceipts");
     }
 
@@ -206,17 +206,28 @@ public class PaymentsManagementDispatchAction extends FenixDispatchAction {
         final PaymentsManagementDTO paymentsManagementDTO = (PaymentsManagementDTO) RenderUtils
                 .getViewState("paymentsManagementDTO").getMetaObject().getObject();
 
-        final List<EntryDTO> selectedEntries = (List<EntryDTO>) RenderUtils.getViewState(
-                "payment-entries").getMetaObject().getObject();
-
-        // TODO: render is misconfigured, this was supposed to be done
+        // TODO: render bug, this was supposed to be done
         // automatically
-        paymentsManagementDTO.setEntryDTOs(selectedEntries);
+        paymentsManagementDTO.setEntryDTOs((List<EntryDTO>) RenderUtils.getViewState("payment-entries")
+                .getMetaObject().getObject());
+
+        if (paymentsManagementDTO.getSelectedEntries().isEmpty()) {
+            addActionMessage(request,
+                    "error.masterDegreeAdministrativeOffice.payments.payment.entries.selection.is.required");
+
+            request.setAttribute("paymentsManagementDTO", paymentsManagementDTO);
+
+            return mapping.findForward("showEvents");
+        }
 
         try {
             ServiceUtils.executeService(getUserView(request), "CreatePaymentsForEvents", new Object[] {
-                    paymentsManagementDTO.getPerson(), getUserView(request).getPerson().getUser(),
+                    getUserView(request).getPerson().getUser(),
                     paymentsManagementDTO.getSelectedEntries() });
+
+            request.setAttribute("personId", paymentsManagementDTO.getPerson().getIdInternal());
+
+            return showPaymentsWithoutReceipt(mapping, form, request, response);
         } catch (DomainException ex) {
             addActionMessage(request, ex.getKey(), ex.getArgs());
 
@@ -225,9 +236,6 @@ public class PaymentsManagementDispatchAction extends FenixDispatchAction {
             return mapping.findForward("showEvents");
         }
 
-        request.setAttribute("personId", paymentsManagementDTO.getPerson().getIdInternal());
-
-        return showPaymentsWithoutReceipt(mapping, form, request, response);
     }
 
     private Person getPerson(HttpServletRequest request) {
@@ -238,12 +246,24 @@ public class PaymentsManagementDispatchAction extends FenixDispatchAction {
     public ActionForward preparePrintGuide(ActionMapping mapping, ActionForm actionForm,
             HttpServletRequest request, HttpServletResponse response) {
 
-        PaymentsManagementDTO managementDTO = (PaymentsManagementDTO) RenderUtils.getViewState(
+        final PaymentsManagementDTO managementDTO = (PaymentsManagementDTO) RenderUtils.getViewState(
                 "paymentsManagementDTO").getMetaObject().getObject();
+
+        // TODO: render bug, this was supposed to be done
+        // automatically
         managementDTO.setEntryDTOs((List<EntryDTO>) RenderUtils.getViewState("payment-entries")
                 .getMetaObject().getObject());
+
         request.setAttribute("paymentsManagementDTO", managementDTO);
-        return mapping.findForward("showGuide");
+
+        if (managementDTO.getSelectedEntries().isEmpty()) {
+            addActionMessage(request,
+                    "error.masterDegreeAdministrativeOffice.payments.guide.entries.selection.is.required");
+
+            return mapping.findForward("showEvents");
+        } else {
+            return mapping.findForward("showGuide");
+        }
     }
 
     public ActionForward printGuide(ActionMapping mapping, ActionForm actionForm,
@@ -258,7 +278,7 @@ public class PaymentsManagementDispatchAction extends FenixDispatchAction {
     public ActionForward prepareShowReceipt(ActionMapping mapping, ActionForm actionForm,
             HttpServletRequest request, HttpServletResponse response) {
 
-        final Integer receiptID = Integer.valueOf(getFromRequest(request,"receiptID").toString());
+        final Integer receiptID = Integer.valueOf(getFromRequest(request, "receiptID").toString());
 
         final Receipt receipt = rootDomainObject.readReceiptByOID(receiptID);
         if (receipt == null) {
@@ -286,6 +306,17 @@ public class PaymentsManagementDispatchAction extends FenixDispatchAction {
         } catch (InvalidArgumentsServiceException e) {
             addActionMessage(request, e.getMessage());
         }
+
         return prepareShowReceipt(mapping, actionForm, request, response);
     }
+
+    public ActionForward prepareShowEventsInvalid(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) {
+
+        request.setAttribute("paymentsManagementDTO", RenderUtils.getViewState("paymentsManagementDTO")
+                .getMetaObject().getObject());
+
+        return mapping.findForward("showEvents");
+    }
+
 }

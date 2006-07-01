@@ -9,6 +9,7 @@ import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.Contributor;
 import net.sourceforge.fenixedu.domain.Employee;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
@@ -33,14 +34,14 @@ public class Receipt extends Receipt_Base {
         super.setRootDomainObject(RootDomainObject.getInstance());
     }
 
-    public Receipt(Party party, Contributor contributor, List<Entry> entries) {
+    public Receipt(Person person, Contributor contributor, List<Entry> entries) {
         this();
-        init(party, contributor, entries);
+        init(person, contributor, entries);
     }
 
-    private void init(Party party, Contributor contributor, List<Entry> entries) {
-        checkParameters(party, contributor, entries);
-        super.setParty(party);
+    private void init(Person person, Contributor contributor, List<Entry> entries) {
+        checkParameters(person, contributor, entries);
+        super.setPerson(person);
         super.setYear(new DateTime().getYear());
         super.setContributor(contributor);
 
@@ -101,8 +102,8 @@ public class Receipt extends Receipt_Base {
     }
 
     @Override
-    public void setParty(Party party) {
-        throw new DomainException("error.accounting.receipt.cannot.modify.party");
+    public void setPerson(Person person) {
+        throw new DomainException("error.accounting.receipt.cannot.modify.person");
     }
 
     @Override

@@ -21,9 +21,9 @@
 		<br />
 	</logic:messagesPresent>
 	
-	<strong><bean:message key="label.masterDegree.administrativeOffice.payments.receiptOwner" /></strong>:
-	<fr:view name="createReceiptBean" property="party"
-		schema="party.view-with-name">
+	<strong><bean:message key="label.masterDegree.administrativeOffice.payments.person" /></strong>:
+	<fr:view name="createReceiptBean" property="person"
+		schema="person.view-with-name-and-idDocumentType-and-documentIdNumber">
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle4 thlight thright" />
 		</fr:layout>

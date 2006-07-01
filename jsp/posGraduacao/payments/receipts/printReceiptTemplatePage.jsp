@@ -61,9 +61,16 @@
 						<td width="80%">&nbsp;</td>
 					</tr>
 					<tr>
-						<td><bean:message
-							key="label.masterDegree.administrativeOffice.payments.name" /></td>
-						<td><bean:write name="receipt" property="party.name" /></td>
+					  <td> <bean:message key="label.net.sourceforge.fenixedu.domain.Person.name" /> </td>
+					  <td> <bean:write name="receipt" property="person.name"/> </td>
+					</tr>
+					<tr>
+					  <td> <bean:message key="label.net.sourceforge.fenixedu.domain.Person.idDocumentType" /> </td>
+					  <td> <bean:message name="receipt" property="person.idDocumentType.name" bundle="ENUMERATION_RESOURCES"/> </td>
+					</tr>
+					<tr>
+					  <td> <bean:message key="label.net.sourceforge.fenixedu.domain.Person.documentIdNumber" /> </td>
+					  <td> <bean:write name="receipt" property="person.documentIdNumber"/> </td>
 					</tr>
 					<tr>
 						<td>&nbsp;</td>

@@ -21,6 +21,10 @@ public enum IDDocumentType {
     
     MILITARY_IDENTITY_CARD,
     
-    EXTERNAL
+    EXTERNAL;
+    
+    public String getName() {
+        return name();
+    }
     
 }

@@ -4,7 +4,7 @@
 	<slot name="description" read-only="true" key="label.masterDegree.administrativeOffice.payments.description"/>
 	<slot name="totalAmount" read-only="true" key="label.masterDegree.administrativeOffice.payments.totalAmount"/>
 	<slot name="payedAmount" read-only="true" key="label.masterDegree.administrativeOffice.payments.payedAmount"/>
-	<slot name="amountToPay" key="label.masterDegree.administrativeOffice.payments.amountToPay"/>
+	<slot name="amountToPay" key="label.masterDegree.administrativeOffice.payments.amountToPay" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
 </schema>
 
 <schema name="entry.view" type="net.sourceforge.fenixedu.domain.accounting.Entry">

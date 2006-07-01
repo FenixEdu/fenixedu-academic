@@ -17,6 +17,8 @@ import net.sourceforge.fenixedu.applicationTier.security.PasswordEncryptor;
 import net.sourceforge.fenixedu.applicationTier.utils.GeneratePassword;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
 import net.sourceforge.fenixedu.domain.accessControl.PersonGroup;
+import net.sourceforge.fenixedu.domain.accounting.Entry;
+import net.sourceforge.fenixedu.domain.accounting.Event;
 import net.sourceforge.fenixedu.domain.candidacy.Candidacy;
 import net.sourceforge.fenixedu.domain.candidacy.DFACandidacy;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
@@ -32,8 +34,8 @@ import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.projectsManagement.ProjectAccess;
 import net.sourceforge.fenixedu.domain.research.result.Result;
 import net.sourceforge.fenixedu.domain.research.result.ResultParticipation;
-import net.sourceforge.fenixedu.domain.research.result.patent.ResultPatent;
 import net.sourceforge.fenixedu.domain.research.result.ResultPublication;
+import net.sourceforge.fenixedu.domain.research.result.patent.ResultPatent;
 import net.sourceforge.fenixedu.domain.sms.SentSms;
 import net.sourceforge.fenixedu.domain.sms.SmsDeliveryType;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.StudentCurricularPlanState;
@@ -835,7 +837,7 @@ public class Person extends Person_Base {
             case DELEGATE:
                 return person.hasRole(RoleType.STUDENT);
             case MASTER_DEGREE_CANDIDATE:
-            case CANDIDATE:                
+            case CANDIDATE:
                 return true;
             case PERSON:
                 return true;
@@ -1380,6 +1382,28 @@ public class Person extends Person_Base {
             }
         }
         return false;
+    }
+
+    public Set<Event> getNotPayedEvents() {
+        final Set<Event> result = new HashSet<Event>();
+
+        for (Event event : getEventsSet()) {
+            if (!event.isClosed()) {
+                result.add(event);
+            }
+        }
+
+        return result;
+    }
+
+    public Set<Entry> getPaymentsWithoutReceipt() {
+        final Set<Entry> result = new HashSet<Entry>();
+
+        for (final Event event : getEventsSet()) {
+            result.addAll(event.getEntriesWithoutReceipt());
+        }
+
+        return result;
     }
 
 }

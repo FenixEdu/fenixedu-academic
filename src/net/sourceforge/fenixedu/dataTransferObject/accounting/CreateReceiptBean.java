@@ -6,12 +6,12 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.domain.Contributor;
 import net.sourceforge.fenixedu.domain.DomainReference;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accounting.Entry;
-import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 
 public class CreateReceiptBean implements Serializable {
 
-    private DomainReference<Party> party;
+    private DomainReference<Person> person;
 
     private DomainReference<Contributor> contributor;
 
@@ -21,8 +21,8 @@ public class CreateReceiptBean implements Serializable {
 
     }
 
-    public CreateReceiptBean(Party party, Contributor contributor, List<SelectableEntryBean> entries) {
-        setParty(party);
+    public CreateReceiptBean(Person person, Contributor contributor, List<SelectableEntryBean> entries) {
+        setPerson(person);
         setContributor(contributor);
         setEntries(entries);
     }
@@ -35,12 +35,12 @@ public class CreateReceiptBean implements Serializable {
         this.contributor = (contributor != null) ? new DomainReference<Contributor>(contributor) : null;
     }
 
-    public void setParty(Party party) {
-        this.party = (party != null) ? new DomainReference<Party>(party) : null;
+    public void setPerson(Person person) {
+        this.person = (person != null) ? new DomainReference<Person>(person) : null;
     }
 
-    public Party getParty() {
-        return (this.party != null) ? this.party.getObject() : null;
+    public Person getPerson() {
+        return (this.person != null) ? this.person.getObject() : null;
     }
 
     public List<SelectableEntryBean> getEntries() {

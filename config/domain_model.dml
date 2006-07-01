@@ -183,7 +183,7 @@ class net.sourceforge.fenixedu.domain.accounting.Event extends net.sourceforge.f
     AccountingEventType eventType;
     DateTime whenOccured;
     Boolean closed;
-    Integer keyParty;
+    Integer keyPerson;
 }
 
 class net.sourceforge.fenixedu.domain.candidacy.DFACandidacyEvent extends net.sourceforge.fenixedu.domain.accounting.Event {
@@ -191,7 +191,7 @@ class net.sourceforge.fenixedu.domain.candidacy.DFACandidacyEvent extends net.so
 }
 
 class net.sourceforge.fenixedu.domain.accounting.Receipt extends net.sourceforge.fenixedu.domain.DomainObject {
-    Integer keyParty;
+    Integer keyPerson;
     Integer keyContributor;
     Integer number;
     Integer year;
@@ -8849,8 +8849,8 @@ relation AccountEntry {
 	}
 }
 
-relation PartyEvent {
-	net.sourceforge.fenixedu.domain.organizationalStructure.Party playsRole party;
+relation PersonAccountingEvent {
+	net.sourceforge.fenixedu.domain.Person playsRole person;
 	net.sourceforge.fenixedu.domain.accounting.Event playsRole events {
 		multiplicity *;
 	}
@@ -8898,8 +8898,8 @@ relation ReceiptEntry {
 	}
 }
 
-relation ReceiptParty {
-	net.sourceforge.fenixedu.domain.organizationalStructure.Party playsRole party;
+relation ReceiptPerson {
+	net.sourceforge.fenixedu.domain.Person playsRole person;
 	net.sourceforge.fenixedu.domain.accounting.Receipt playsRole receipts {
 		multiplicity *;
 	}

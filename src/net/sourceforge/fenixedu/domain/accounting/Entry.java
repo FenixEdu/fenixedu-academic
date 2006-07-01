@@ -14,14 +14,13 @@ public class Entry extends Entry_Base {
         setRootDomainObject(RootDomainObject.getInstance());
     }
 
-    Entry(EntryType entryType, BigDecimal amount, Account account, Event event) {
+    Entry(EntryType entryType, BigDecimal amount, Account account) {
         this();
-        init(new DateTime(), entryType, amount, account, event);
+        init(new DateTime(), entryType, amount, account);
     }
 
-    private void init(DateTime whenBooked, EntryType entryType, BigDecimal amount, Account account,
-            Event event) {
-        checkParameters(whenBooked, entryType, amount, account, event);
+    private void init(DateTime whenBooked, EntryType entryType, BigDecimal amount, Account account) {
+        checkParameters(whenBooked, entryType, amount, account);
         super.setWhenBooked(whenBooked);
         super.setEntryType(entryType);
         super.setAmount(amount);
@@ -29,7 +28,7 @@ public class Entry extends Entry_Base {
     }
 
     private void checkParameters(DateTime whenBooked, EntryType entryType, BigDecimal amount,
-            Account account, Event event) {
+            Account account) {
         if (whenBooked == null) {
             throw new DomainException("error.accounting.entry.invalid.whenBooked");
         }
@@ -39,8 +38,8 @@ public class Entry extends Entry_Base {
         if (amount == null) {
             throw new DomainException("error.accounting.entry.invalid.amount");
         }
-        if (account == null && event == null) {
-            throw new DomainException("error.accounting.entry.invalid.account.and.entry");
+        if (account == null) {
+            throw new DomainException("error.accounting.entry.invalid.account");
         }
     }
 

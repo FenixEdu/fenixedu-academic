@@ -21,9 +21,9 @@
 		<br />
 	</logic:messagesPresent>
 
-
+	<strong><bean:message key="label.masterDegree.administrativeOffice.payments.person" /></strong>:
 	<fr:view name="paymentsManagementDTO" property="person"
-		schema="person.view-with-name-address-and-fiscalCode">
+		schema="person.view-with-name-and-idDocumentType-and-documentIdNumber">
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle4 thlight thright" />
 		</fr:layout>
@@ -41,6 +41,7 @@
 				<fr:property name="classes" value="tstyle4" />
 				<fr:property name="columnClasses" value="listClasses,," />
 			</fr:layout>
+			<fr:destination name="invalid" path="/payments.do?method=prepareShowEventsInvalid"/>
 		</fr:edit>
 		<html:submit styleClass="inputbutton" onclick="this.form.method.value='preparePrintGuide';"><bean:message key="button.masterDegree.administrativeOffice.payments.guide"/></html:submit>
 		<html:submit styleClass="inputbutton" onclick="this.form.method.value='doPayment';"><bean:message key="button.masterDegree.administrativeOffice.payments.pay"/></html:submit>

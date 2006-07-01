@@ -6,7 +6,7 @@
 <h2><bean:message key="label.masterDegree.administrativeOffice.payments.operations"/></h2>
 
 <fr:view name="person"
-	schema="person.view-with-name-address-and-fiscalCode">
+	schema="person.view-with-name-and-idDocumentType-and-documentIdNumber">
 	<fr:layout name="tabular">
 		<fr:property name="classes" value="tstyle4 thlight thright" />
 	</fr:layout>

@@ -8,10 +8,10 @@ import java.util.List;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.dataTransferObject.accounting.EntryDTO;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.User;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 
 import org.joda.time.DateTime;
 
@@ -23,26 +23,27 @@ public abstract class Event extends Event_Base {
         setOjbConcreteClass(getClass().getName());
     }
 
-    protected void init(EventType eventType, Party party) {
-        checkParameters(eventType, party);
+    protected void init(EventType eventType, Person person) {
+        checkParameters(eventType, person);
         super.setEventType(eventType);
         super.setWhenOccured(new DateTime());
         super.setClosed(Boolean.FALSE);
-        super.setParty(party);
+        super.setPerson(person);
     }
 
-    private void checkParameters(EventType eventType, Party party) throws DomainException {
+    private void checkParameters(EventType eventType, Person person) throws DomainException {
         if (eventType == null) {
             throw new DomainException("error.accounting.event.invalid.eventType");
         }
-        if (party == null) {
-            throw new DomainException("error.accounting.event.party.cannot.be.null");
+        if (person == null) {
+            throw new DomainException("error.accounting.person.cannot.be.null");
         }
+
     }
 
     // TODO: to remove after create agreement and posting rules
     protected Entry makeEntry(EntryType entryType, BigDecimal amount, Account account) {
-        return new Entry(entryType, amount, account, this);
+        return new Entry(entryType, amount, account);
     }
 
     // TODO: to remove after create agreement and posting rules
@@ -114,8 +115,8 @@ public abstract class Event extends Event_Base {
     }
 
     @Override
-    public void setParty(Party party) {
-        throw new DomainException("error.accounting.event.cannot.modify.party");
+    public void setPerson(Person person) {
+        throw new DomainException("error.accounting.event.cannot.modify.person");
     }
 
     protected boolean canCloseEvent() {

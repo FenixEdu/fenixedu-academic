@@ -5,8 +5,16 @@
 
 <h2><bean:message key="label.masterDegree.administrativeOffice.payments.receipts" /></h2>
 
-<logic:notEmpty name="receiptsFromParty">
-	<fr:view name="receiptsFromParty" schema="receipt.view">
+<strong><bean:message key="label.masterDegree.administrativeOffice.payments.person"/>:</strong>
+<fr:view name="person"
+	schema="person.view-with-name-and-idDocumentType-and-documentIdNumber">
+	<fr:layout name="tabular">
+		<fr:property name="classes" value="tstyle4" />
+	</fr:layout>
+</fr:view>
+
+<logic:notEmpty name="person" property="receipts">
+	<fr:view name="person" property="receipts" schema="receipt.view">
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle4 thlight thright" />
 		    <fr:property name="linkFormat(view)" value="/payments.do?method=prepareShowReceipt&receiptID=${idInternal}"/>
@@ -14,6 +22,6 @@
 		</fr:layout>
 	</fr:view>
 </logic:notEmpty>
-<logic:empty name="receiptsFromParty">
+<logic:empty name="person" property="receipts">
 		<span class="error"><bean:message key="label.masterDegree.administrativeOffice.payments.noReceipts"/></span>
 </logic:empty>

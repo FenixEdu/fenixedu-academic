@@ -797,16 +797,12 @@
    	    <slot name="fileChecksum"/>
 	</schema>
 	
-	<schema name="person.view-with-name-address-and-fiscalCode" type="net.sourceforge.fenixedu.domain.Person" bundle="DEFAULT">
+	<schema name="person.view-with-name-and-idDocumentType-and-documentIdNumber" type="net.sourceforge.fenixedu.domain.Person" bundle="DEFAULT">
 		<slot name="name"/>
-		<slot name="address"/>
-		<slot name="fiscalCode"/>
+		<slot name="idDocumentType"/>
+		<slot name="documentIdNumber"/>
 	</schema>
-	
-	<schema name="party.view-with-name" type="net.sourceforge.fenixedu.domain.organizationalStructure.Party" bundle="DEFAULT">
-		<slot name="name"/>
-	</schema>
-	
+		
 	&researcher;
 	&markSheet;
 	&messaging;
