@@ -5,18 +5,15 @@
 
 <h2><bean:message key="label.masterDegree.administrativeOffice.payments.receipts" /></h2>
 
-<br/>
-<table class="tstyle4">
-	<logic:iterate id="receipt" name="receiptsFromParty">
-		<tr>
-			<bean:define id="receiptId" name="receipt" property="idInternal"/>
-			<td><bean:message key="label.masterDegree.administrativeOffice.payments.number" />:&nbsp;<bean:write name="receipt" property="number"/></td>
-			<td><bean:message key="label.masterDegree.administrativeOffice.payments.year" />:&nbsp;<bean:write name="receipt" property="year"/></td>
-			<td>
-				<html:link action="<%="/payments.do?method=prepareShowReceipt&receiptID=" + receiptId %>">
-					<bean:message key="label.masterDegree.administrativeOffice.payments.show" />
-				</html:link>
-			</td>
-		</tr>
-	</logic:iterate>
-</table>
+<logic:notEmpty name="receiptsFromParty">
+	<fr:view name="receiptsFromParty" schema="receipt.view">
+		<fr:layout name="tabular">
+			<fr:property name="classes" value="tstyle4 thlight thright" />
+		    <fr:property name="linkFormat(view)" value="/payments.do?method=prepareShowReceipt&receiptID=${idInternal}"/>
+			<fr:property name="key(view)" value="link.masterDegree.administrativeOffice.payments.show"/>
+		</fr:layout>
+	</fr:view>
+</logic:notEmpty>
+<logic:empty name="receiptsFromParty">
+		<span class="error"><bean:message key="label.masterDegree.administrativeOffice.payments.noReceipts"/></span>
+</logic:empty>
