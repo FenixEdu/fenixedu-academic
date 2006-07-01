@@ -28,7 +28,7 @@
 <schema name="contributor.view" type="net.sourceforge.fenixedu.domain.Contributor">
 	<slot name="contributorName"/>
 	<slot name="contributorAddress"/>
-	<slot name="contributorNumber>"/>
+	<slot name="contributorNumber"/>
 </schema>
 
 <schema name="selectableEntryBean.view" type="net.sourceforge.fenixedu.dataTransferObject.accounting.SelectableEntryBean">

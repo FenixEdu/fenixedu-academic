@@ -242,7 +242,14 @@
 	<definition name="payments.management.showGuide" extends="definition.masterDegreeAdministrativeOffice.masterPage">
 		<put name="body" value="/posGraduacao/payments/guides/showGuide.jsp"/>
 	</definition>
-		
+	
+	<definition name="payments.management.showReceipts" extends="definition.masterDegreeAdministrativeOffice.masterPage">
+		<put name="body" value="/posGraduacao/payments/receipts/showReceipts.jsp"/>
+	</definition>
+	
+	<definition name="payments.management.showReceipt" extends="definition.masterDegreeAdministrativeOffice.masterPage">
+		<put name="body" value="/posGraduacao/payments/receipts/showReceipt.jsp"/>
+	</definition>
 	
 	<!-- ************* DFA candidacy ************* -->
 	<definition name="df.page.dfaCandidacyIndex" extends="definition.masterDegreeAdministrativeOffice.dfaCandidacy">

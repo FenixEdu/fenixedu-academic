@@ -6,15 +6,17 @@
 <h2><bean:message key="label.masterDegree.administrativeOffice.payments.receipts" /></h2>
 
 <br/>
-
-<logic:iterate id="receipt" name="receiptsFromParty">
-
-	<bean:define id="receiptId" name="receipt" property="idInternal"/>
-	<html:link action="<%="/payments.do?method=prepareShowReceipt&receiptId=" + receiptId %>">
-		<bean:message key="label.masterDegree.administrativeOffice.payments.number" />:&nbsp;
-		<bean:write name="receipt" property="number" />
-		<bean:message key="label.masterDegree.administrativeOffice.payments.year" />:&nbsp;
-		<bean:write name="receipt" property="number" />
-	</html:link>
-	
-</logic:iterate>
+<table class="tstyle4">
+	<logic:iterate id="receipt" name="receiptsFromParty">
+		<tr>
+			<bean:define id="receiptId" name="receipt" property="idInternal"/>
+			<td><bean:message key="label.masterDegree.administrativeOffice.payments.number" />:&nbsp;<bean:write name="receipt" property="number"/></td>
+			<td><bean:message key="label.masterDegree.administrativeOffice.payments.year" />:&nbsp;<bean:write name="receipt" property="year"/></td>
+			<td>
+				<html:link action="<%="/payments.do?method=prepareShowReceipt&receiptID=" + receiptId %>">
+					<bean:message key="label.masterDegree.administrativeOffice.payments.show" />
+				</html:link>
+			</td>
+		</tr>
+	</logic:iterate>
+</table>
