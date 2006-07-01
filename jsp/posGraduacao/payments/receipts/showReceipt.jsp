@@ -54,7 +54,7 @@
   </tr>
 </table>
 
-<html:form action="/payments.do">
+<html:form action="/payments.do" target="_blank">
 	<html:hidden property="method" value="printReceipt" />
 	<br/>
 	<fr:edit id="receipt" name="receipt" visible="false" />
