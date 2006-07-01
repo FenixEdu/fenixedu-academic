@@ -21,7 +21,7 @@
 		<br />
 	</logic:messagesPresent>
 	
-	<strong>METER AQUI</strong>
+	<strong><bean:message key="label.masterDegree.administrativeOffice.payments.receiptOwner" /></strong>:
 	<fr:view name="createReceiptBean" property="party"
 		schema="party.view-with-name">
 		<fr:layout name="tabular">
@@ -32,7 +32,7 @@
 
 	<logic:notEmpty name="createReceiptBean" property="entries">
 
-		<strong>METER AQUI</strong>
+		<strong><bean:message key="label.masterDegree.administrativeOffice.payments.contributor" /></strong>:
 		<fr:edit id="createReceiptBean" name="createReceiptBean"
 			schema="createReceiptBean.create">
 			<fr:layout name="tabular">
@@ -40,7 +40,7 @@
 			</fr:layout>
 		</fr:edit>
 
-		<strong>METER AQUI</strong>
+		<strong><bean:message key="label.masterDegree.administrativeOffice.payments" /></strong>:
 		<fr:edit id="createReceiptBean-entries-part" name="createReceiptBean"
 			property="entries" schema="selectableEntryBean.view">
 			<fr:layout name="tabular-editable">
