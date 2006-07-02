@@ -18,7 +18,7 @@ public class DFACandidacy extends DFACandidacy_Base {
             throw new DomainException("person cannot be null");
         }
         if (person.getDFACandidacyByExecutionDegree(executionDegree) != null) {
-            throw new DomainException("person already has candidacy for this execution degree");
+            throw new DomainException("error.candidacy.already.created");
         }
         setExecutionDegree(executionDegree);
         setPerson(person);

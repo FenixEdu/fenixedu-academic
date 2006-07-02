@@ -44,6 +44,10 @@ public abstract class CandidacySituation extends CandidacySituation_Base impleme
     public boolean canChangePersonalData() {
         return false;
     }
+    
+    public boolean canCandidacyDataBeValidated() {
+        return false;
+    }
 
     public boolean canGeneratePass() {
         return true;

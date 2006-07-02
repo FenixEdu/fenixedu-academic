@@ -33,7 +33,7 @@ public class StandByCandidacySituation extends StandByCandidacySituation_Base {
 	}
 	
 	private boolean checkIfDataIsFilled() {
-		return false;
+		return true;
 	}
 
     @Override

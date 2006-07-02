@@ -18,14 +18,14 @@ public class CreateDFACandidacy extends Service {
             person = new Person(name, identificationDocumentNumber, identificationDocumentType,
                     Gender.MALE, "T" + System.currentTimeMillis());
 		} 
-		
+
         person.addPersonRoleByRoleType(RoleType.CANDIDATE);
         person.addPersonRoleByRoleType(RoleType.PERSON);
 
 		DFACandidacy candidacy = new DFACandidacy(person, executionDegree);
 
         new DFACandidacyEvent(person, candidacy);
-
+        
 		return candidacy;
 	}
 }

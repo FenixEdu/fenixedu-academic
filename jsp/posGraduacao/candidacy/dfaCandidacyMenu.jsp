@@ -16,9 +16,11 @@
 <ul>
 	<blockquote>
 		<li><html:link page="/dfaCandidacy.do?method=prepareCreateCandidacy"><bean:message key="link.masterDegree.administrativeOffice.dfaCandidacy" bundle="ADMIN_OFFICE_RESOURCES"/></html:link></li>
-	    <li><html:link page="/dfaCandidacy.do?method=prepareGenPass"><bean:message key="link.masterDegree.administrativeOffice.genPass" /></html:link></li>
-	    <li><html:link page="/dfaCandidacy.do?method=prepareValidateCandidacyData"><bean:message key="link.masterDegree.administrativeOffice.dfaCandidacy.validateData" /></html:link></li>		
+	    <li><html:link page="/dfaCandidacy.do?method=prepareGenPass"><bean:message key="link.masterDegree.administrativeOffice.genPass" bundle="ADMIN_OFFICE_RESOURCES"/></html:link></li>
+	    <li><html:link page="/dfaCandidacy.do?method=prepareValidateCandidacyData"><bean:message key="link.masterDegree.administrativeOffice.dfaCandidacy.validateData" bundle="ADMIN_OFFICE_RESOURCES"/></html:link></li>		
+	    <%--
 	    <li><html:link page="/listDFACandidacy.do?method=prepareListCandidacies"><bean:message key="link.masterDegree.administrativeOffice.dfaCandidacy.listCandidacies"/></html:link></li>
+	    --%>
 	</blockquote>
 </ul>    
 <ul>

@@ -20,8 +20,10 @@ public class ExecutionDegreesForDegreeCurricularPlan implements DataProvider {
         final List<ExecutionDegree> result = new ArrayList<ExecutionDegree>();
         if (dfaCandidacyBean.getDegree() != null && dfaCandidacyBean.getDegreeCurricularPlan() != null) {
             result.addAll(dfaCandidacyBean.getDegreeCurricularPlan().getExecutionDegreesSet());
+            Collections.sort(result, new BeanComparator("year"));
+        } else {
+            dfaCandidacyBean.setExecutionDegree(null);
         }
-        Collections.sort(result, new BeanComparator("year"));
         return result;
     }
 

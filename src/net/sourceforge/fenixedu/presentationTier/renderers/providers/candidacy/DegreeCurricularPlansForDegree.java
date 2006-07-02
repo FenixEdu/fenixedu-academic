@@ -20,8 +20,10 @@ public class DegreeCurricularPlansForDegree implements DataProvider {
         final List<DegreeCurricularPlan> result = new ArrayList<DegreeCurricularPlan>();
         if (dfaCandidacyBean.getDegree() != null) {
             result.addAll(dfaCandidacyBean.getDegree().getDegreeCurricularPlansSet());
+            Collections.sort(result, new BeanComparator("name"));
+        } else {
+            dfaCandidacyBean.setDegreeCurricularPlan(null);
         }
-        Collections.sort(result, new BeanComparator("name"));
         return result;
     }
 

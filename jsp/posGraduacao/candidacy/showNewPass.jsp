@@ -86,12 +86,11 @@
             <td> <bean:write name="candidate" property="person.username"/> </td>
           </tr>
           
-          <logic:present name="<%= SessionConstants.PRINT_PASSWORD %>">
-		      <tr>
-		        <td> <bean:message key="label.candidate.password"/> </td>
-		        <td> <font face="Verdana"><bean:write name="password" /> </font></td>
-		      </tr>
-	      </logic:present>
+	      <tr>
+	        <td> <bean:message key="label.candidate.password"/> </td>
+	        <td> <font face="Verdana"><bean:write name="password" /> </font></td>
+	      </tr>
+
           
           <tr>
             <td> <bean:message key="label.candidate.accessAddress"/> </td>

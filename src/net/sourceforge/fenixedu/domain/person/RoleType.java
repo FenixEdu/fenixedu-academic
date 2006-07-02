@@ -96,6 +96,7 @@ public enum RoleType {
         rolesImportance.add(RoleType.INSTITUCIONAL_PROJECTS_MANAGER);
         rolesImportance.add(RoleType.PROJECTS_MANAGER);
         rolesImportance.add(RoleType.MASTER_DEGREE_CANDIDATE);
+        rolesImportance.add(RoleType.CANDIDATE);
         rolesImportance.add(RoleType.ALUMNI);
         rolesImportance.add(RoleType.PERSON);
         return rolesImportance;

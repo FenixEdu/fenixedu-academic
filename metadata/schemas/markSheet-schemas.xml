@@ -18,6 +18,7 @@
 		<property name="choiceType"
 			value="net.sourceforge.fenixedu.domain.Degree" />
 		<property name="format" value="Licenciatura em ${name}" />
+		<property name="destination" value="postBack"/>
 	</slot>
 	<slot name="degreeCurricularPlan" key="label.degreeCurricularPlan"
 		layout="menu-select-postback"
@@ -27,6 +28,7 @@
 		<property name="choiceType"
 			value="net.sourceforge.fenixedu.domain.DegreeCurricularPlan" />
 		<property name="format" value="${name}" />
+		<property name="destination" value="postBack"/>
 	</slot>
 	<slot name="curricularCourse" key="label.curricularCourse"
 		layout="menu-select"

@@ -268,8 +268,24 @@
 		<put name="body" value="/posGraduacao/candidacy/prepareGenPass.jsp"/>
 	</definition>
 
+	<definition name="df.page.showCandidacyGeneratePass" extends="definition.masterDegreeAdministrativeOffice.dfaCandidacy">
+		<put name="body" value="/posGraduacao/candidacy/showCandidacyGeneratePass.jsp"/>
+	</definition>
+
 	<definition name="df.page.listCandidacies" extends="definition.masterDegreeAdministrativeOffice.dfaCandidacy">
 		<put name="body" value="/posGraduacao/candidacy/listCandidacies.jsp"/>
+	</definition>
+	
+	<definition name="df.page.viewCandidacyDetails" extends="definition.masterDegreeAdministrativeOffice.dfaCandidacy">
+		<put name="body" value="/posGraduacao/candidacy/viewCandidacyDetails.jsp"/>
+	</definition>
+	
+	<definition name="df.page.prepareValidateCandidacyData" extends="definition.masterDegreeAdministrativeOffice.dfaCandidacy">
+		<put name="body" value="/posGraduacao/candidacy/prepareValidateCandidacyData.jsp"/>
+	</definition>
+	
+	<definition name="df.page.showCandidacyValidateData" extends="definition.masterDegreeAdministrativeOffice.dfaCandidacy">
+		<put name="body" value="/posGraduacao/candidacy/showCandidacyValidateData.jsp"/>
 	</definition>
 	
 	<definition name="df.page.fillCandidateData" extends="definition.masterDegreeAdministrativeOffice.dfaCandidacy">

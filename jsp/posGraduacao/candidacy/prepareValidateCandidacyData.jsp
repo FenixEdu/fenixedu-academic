@@ -6,10 +6,10 @@
 	<span class="error"><bean:write name="message" /></span>
 	<br/>
 </html:messages>
-<h2><strong><bean:message key="label.generate.password" bundle="ADMIN_OFFICE_RESOURCES"/></strong></h2>
+<h2><strong><bean:message key="label.validate.candidacy.data" bundle="ADMIN_OFFICE_RESOURCES"/></strong></h2>
 <br/>
 <html:form action="/dfaCandidacy.do">
-	<html:hidden property="method" value="showCandidacyGeneratePass"/>
+	<html:hidden property="method" value="showCandidacyValidateData"/>
 	<table>
 		<tr>
 			<td>

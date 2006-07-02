@@ -10,10 +10,13 @@
 			 name="candidacyBean"
 			 type="net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.candidacy.CreateDFACandidacyBean"
 			 schema="candidacy.choose.executionDegree">
-		<fr:destination name="postBack" path="/listDFACandidacy.do?method=chooseExecutionDegreePostBack"/>
+		<fr:destination name="degreePostBack" path="/listDFACandidacy.do?method=chooseDegreePostBack"/>
+		<fr:destination name="degreeCurricularPlanPostBack" path="/listDFACandidacy.do?method=chooseDegreeCurricularPlanPostBack"/>		
+		<fr:destination name="executionDegreePostBack" path="/listDFACandidacy.do?method=chooseExecutionDegreePostBack"/>				
+		<fr:destination name="invalid" path="/listDFACandidacy.do?method=chooseExecutionDegreeInvalid"/>		
 		<fr:layout name="tabular" >
 				<fr:property name="classes" value="tstyle4"/>
-		        <fr:property name="columnClasses" value="listClasses,,"/>
+		        <fr:property name="columnClasses" value="listClasses,,,"/>
 		</fr:layout>
 	</fr:edit>	
 	<html:submit/>
@@ -28,10 +31,11 @@
 	<logic:notEmpty name="candidacies">
 		<fr:view name="candidacies" schema="candidacy.show.list.candidady">
 			<fr:layout name="tabular">
-		        <fr:property name="classes" value="tstyle2"/>
+		        <fr:property name="classes" value="tstyle4"/>
 		        <fr:property name="columnClasses" value=",,,acenter"/>
-		        <fr:property name="linkFormat(view)" value="/dfaCandidacy.do?method=viewCandidacy&candidacyID=${idInternal}"/>
+		        <fr:property name="linkFormat(view)" value="/listDFACandidacy.do?method=viewCandidacy&candidacyID=${idInternal}"/>
 				<fr:property name="key(view)" value="link.view"/>
+				<fr:property name="sortBy" value="number"/>
 		    </fr:layout>
 		</fr:view>
 	</logic:notEmpty>

@@ -3,7 +3,7 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
 
-<h2><strong><bean:message key="label.candidacy.created"/></strong></h2>
+<h2><strong><bean:message key="label.candidacy.created" bundle="ADMIN_OFFICE_RESOURCES"/></strong></h2>
 
 <fr:view name="candidacy" schema="candidacy.show.candidady">
 	<fr:layout name="tabular" >

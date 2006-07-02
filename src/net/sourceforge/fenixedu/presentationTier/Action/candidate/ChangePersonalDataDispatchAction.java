@@ -8,6 +8,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.commons.StateMachineRunner;
+import net.sourceforge.fenixedu.applicationTier.Servico.commons.StateMachineRunner.DefaultRunnerArgs;
+import net.sourceforge.fenixedu.applicationTier.Servico.commons.StateMachineRunner.RunnerArgs;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.candidacy.PrecedentDegreeInformationBean;
 import net.sourceforge.fenixedu.domain.candidacy.Candidacy;
@@ -70,8 +73,9 @@ public class ChangePersonalDataDispatchAction extends FenixDispatchAction {
             ServiceUtils.executeService(userView, "EditPrecedentDegreeInformation", argsInstitution);
         }
 
-        Object[] argsInstitution = { precedentDegreeInformation.getPrecedentDegreeInformation()
-                .getDfaCandidacy().getActiveCandidacySituation() };
+ 
+        Object[] argsInstitution = { new StateMachineRunner.DefaultRunnerArgs(precedentDegreeInformation.getPrecedentDegreeInformation()
+                .getDfaCandidacy().getActiveCandidacySituation()) };
         try {
             ServiceUtils.executeService(userView, "StateMachineRunner", argsInstitution);
         } catch (DomainException e) {
