@@ -616,5 +616,15 @@ public class Degree extends Degree_Base {
     public String constructSchoolClassPrefix(final Integer curricularYear) {
 	return isBolonhaDegree() ? StringAppender.append(getSigla(), "0", curricularYear.toString()) : "";
     }
+
+    public List<ExecutionYear> getDegreeCurricularPlansExecutionYears() {
+        Set<ExecutionYear> result = new TreeSet<ExecutionYear>();
+        for (final DegreeCurricularPlan degreeCurricularPlan : getDegreeCurricularPlansSet()) {
+            for (final ExecutionDegree executionDegree : degreeCurricularPlan.getExecutionDegreesSet()) {
+                result.add(executionDegree.getExecutionYear());
+            }
+        }
+        return new ArrayList<ExecutionYear>(result);
+    }
     
 }
