@@ -4,8 +4,8 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 
 
-<html:form action="/payments.do">
-	<html:hidden property="method" />
+<fr:form action="/payments.do">
+	<html:hidden name="paymentsForm" property="method" />
 
 	<h2>
 		<bean:message key="label.masterDegree.administrativeOffice.payments.events" />
@@ -33,7 +33,6 @@
 	<logic:notEmpty name="paymentsManagementDTO" property="entryDTOs">
 		<fr:edit id="paymentsManagementDTO" name="paymentsManagementDTO"
 			visible="false" />
-
 		<br />
 		<fr:edit id="payment-entries" name="paymentsManagementDTO"
 			property="entryDTOs" schema="entryDTO.edit">
@@ -52,4 +51,4 @@
 		<span class="error"><bean:message key="label.masterDegree.administrativeOffice.payments.events.noEvents" /></span>
 	</logic:empty>
 
-</html:form>
+</fr:form>
