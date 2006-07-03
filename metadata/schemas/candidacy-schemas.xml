@@ -155,7 +155,7 @@
 
 <schema name="candidacyDocuments.full" type="net.sourceforge.fenixedu.dataTransferObject.candidacy.CandidacyDocumentUploadBean">
 	<slot name="documentDescription" read-only="true" />
-	<slot name="fileUploadTime" read-only="true" />
+	<slot name="actualFile" read-only="true" />
 	<slot name="fileInputStream" >
 		<property name="fileNameSlot" value="filename"/>
 	</slot>	
