@@ -3,8 +3,7 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
-
-<em><bean:message key="title.assiduousness" /></em>
+<em class="invisible"><bean:message key="title.assiduousness" /></em>
 <h2><bean:message key="link.workSheet" /></h2>
 
 <div class="warning0">
@@ -33,7 +32,7 @@
 			</fr:layout>
 		</fr:edit>
 		<p>
-		<html:submit styleClass="invisible" >
+		<html:submit>
 			<bean:message key="button.submit" />
 		</html:submit>
 		</p>
@@ -46,8 +45,8 @@
 	<bean:message key="<%=month.toString()%>" bundle="ENUMERATION_RESOURCES"/>
 	<bean:write name="yearMonth" property="year"/>
 	</p>
+	<br/>
 	</div>
-	<span class="toprint"><br/></span>
 </logic:present>
 
 

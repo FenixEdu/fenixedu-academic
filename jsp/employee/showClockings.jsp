@@ -4,7 +4,7 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 
-<em><bean:message key="title.assiduousness" /></em>
+<em class="invisible"><bean:message key="title.assiduousness" /></em>
 <h2><bean:message key="link.clockings" /></h2>
 
 <logic:present name="employee">
@@ -40,6 +40,7 @@
 	<bean:message key="<%=month.toString()%>" bundle="ENUMERATION_RESOURCES"/>
 	<bean:write name="yearMonth" property="year"/>
 	</p>
+	<br/>
 	</div>
 </logic:present>
 

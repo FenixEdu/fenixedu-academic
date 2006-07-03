@@ -4,11 +4,9 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 
-<em><bean:message key="title.assiduousness" /></em>
+<em class="invisible"><bean:message key="title.assiduousness" /></em>
 <h2><bean:message key="label.schedule" /></h2>
-
-
-
+<span class="toprint"><br/></span>
 <logic:present name="employee">
 <div class="toprint">
 	<fr:view name="employee" schema="show.employeeInformation">
@@ -17,11 +15,12 @@
 		</fr:layout>
 	</fr:view>
 </div>
+<span class="toprint"><br/></span>
 </logic:present>
 
 
 <logic:present name="workScheduleDayList">
-	<table class="tstyle1b thtop thlight">
+	<table class="tstyle1b thtop thlight printborder">
 		<tr>
 			<th class="cornerleft"></th><th><b><bean:message key="MONDAY_ACRONYM"/></b></th><th><b><bean:message key="TUESDAY_ACRONYM"/></b></th><th><b><bean:message key="WEDNESDAY_ACRONYM"/></b></th><th><b><bean:message key="THURSDAY_ACRONYM"/></b></th><th><b><bean:message key="FRIDAY_ACRONYM"/></b></th>
 		</tr>
