@@ -89,7 +89,7 @@ public class ShowDegreeSiteAction extends FenixContextDispatchAction {
             final ExecutionYear firstExecutionYear = whenDegreeIsExecuted.get(0);
             final ExecutionYear lastExecutionYear = whenDegreeIsExecuted.get(whenDegreeIsExecuted.size() - 1);
             
-            if (whenDegreeIsExecuted.contains(whenDegreeIsExecuted)) {
+            if (whenDegreeIsExecuted.contains(currentExecutionYear)) {
                 return currentExecutionYear;
             } else {
                 if (currentExecutionYear.isBefore(firstExecutionYear)) {
