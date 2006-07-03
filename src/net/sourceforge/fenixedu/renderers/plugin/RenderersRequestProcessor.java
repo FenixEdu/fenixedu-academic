@@ -212,7 +212,6 @@ public class RenderersRequestProcessor extends TilesRequestProcessor {
                 if (action instanceof ExceptionHandler) {
                     	ExceptionHandler handler = (ExceptionHandler) action;
                     	
-                    	// TODO: ensure that a view state is present when an exception occurs
                     	IViewState viewState = RenderUtils.getViewState(); 
                     	ViewDestination destination = viewState.getInputDestination();
                     	ActionForward input = destination.getActionForward();
