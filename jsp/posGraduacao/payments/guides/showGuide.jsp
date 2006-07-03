@@ -38,7 +38,7 @@
 		<html:hidden property="method" />
 		<fr:edit id="paymentsManagementDTO" name="paymentsManagementDTO" visible="false"/>
 		<br/>
-		<html:submit styleClass="inputbutton" onclick="this.form.method.value='printGuide';"><bean:message key="button.masterDegree.administrativeOffice.payments.guide"/></html:submit>
+		<html:submit styleClass="inputbutton" onclick="this.form.method.value='printGuide';"><bean:message key="label.masterDegree.administrativeOffice.payments.print"/></html:submit>
 	</html:form>
 </logic:notEmpty>
 <logic:empty name="paymentsManagementDTO" property="selectedEntries">
