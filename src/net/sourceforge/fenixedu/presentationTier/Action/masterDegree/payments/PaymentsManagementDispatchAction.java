@@ -61,7 +61,7 @@ public class PaymentsManagementDispatchAction extends FenixDispatchAction {
                     request,
                     "error.masterDegreeAdministrativeOffice.payments.invalid.candidacyNumber.withNumber",
                     candidacyNumber.toString());
-            form.set("candidacyNumber", candidacyNumber);
+            form.set("candidacyNumber", candidacyNumber.toString());
             return prepareSearchPerson(mapping, actionForm, request, response);
         }
 
