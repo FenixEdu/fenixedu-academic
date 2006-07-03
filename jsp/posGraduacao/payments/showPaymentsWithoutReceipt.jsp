@@ -3,9 +3,8 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 
-
-<html:form action="/payments.do">
-	<html:hidden property="method" />
+<fr:form action="/payments.do">
+	<html:hidden name="paymentsForm" property="method" />
 
 	<h2><bean:message
 		key="label.masterDegree.administrativeOffice.payments.paymentsWithoutReceipt" /></h2>
@@ -38,6 +37,7 @@
 			<fr:layout name="tabular">
 				<fr:property name="classes" value="tstyle4" />
 			</fr:layout>
+			<fr:destination name="invalid" path="/payments.do?method=prepareShowPaymentsWithoutReceiptInvalid"/>
 		</fr:edit>
 
 		<strong><bean:message key="label.masterDegree.administrativeOffice.payments" /></strong>:
@@ -57,5 +57,4 @@
 			<bean:message key="label.masterDegree.administrativeOffice.payments.noPaymentsWithoutReceipt" />
 		</span>
 	</logic:empty>
-
-</html:form>
+</fr:form>
