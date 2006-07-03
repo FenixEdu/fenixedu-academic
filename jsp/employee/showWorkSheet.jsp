@@ -23,7 +23,7 @@
 </logic:present>
 
 <logic:present name="yearMonth">
-	<div class="mvert1">
+	<div class="mvert1 invisible">
 	<fr:form action="/assiduousnessRecords.do?method=showWorkSheet">
 		<fr:edit name="yearMonth" schema="choose.date">
 			<fr:layout>
