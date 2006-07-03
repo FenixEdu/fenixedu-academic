@@ -24,9 +24,7 @@
 	</blockquote>
 </ul>    
 <ul>
-    <%-- 
-    <li><html:link page="/payments.do"><bean:message key="link.masterDegree.administrativeOffice.payments" /></html:link></li>
-    --%>
+    <li><html:link page="/payments.do?method=prepareSearchPerson"><bean:message key="link.masterDegree.administrativeOffice.payments" /></html:link></li>
 </ul>
 	   
   	
