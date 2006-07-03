@@ -78,7 +78,7 @@ public class StudentInfoByUsername extends FenixAction {
         try {
             sendAnswer(response, result);
         } catch (IOException ex) {
-            throw new FenixActionException();
+            throw new FenixActionException(ex);
         }
 
         return null;
