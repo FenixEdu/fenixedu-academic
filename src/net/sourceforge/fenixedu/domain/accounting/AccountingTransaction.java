@@ -9,6 +9,7 @@ import java.util.Set;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.User;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.util.LabelFormatter;
 
 import org.joda.time.DateTime;
 
@@ -115,5 +116,9 @@ public class AccountingTransaction extends AccountingTransaction_Base {
         }
 
         return null;
+    }
+
+    public LabelFormatter getDescriptionForEntryType(EntryType entryType) {
+        return getEvent().getDescriptionForEntryType(entryType);
     }
 }

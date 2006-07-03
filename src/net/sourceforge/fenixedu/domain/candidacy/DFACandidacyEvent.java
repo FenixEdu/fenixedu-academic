@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.accounting.EntryDTO;
+import net.sourceforge.fenixedu.domain.Degree;
+import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.User;
 import net.sourceforge.fenixedu.domain.accounting.Account;
@@ -14,6 +16,7 @@ import net.sourceforge.fenixedu.domain.accounting.EntryType;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.util.StateMachine;
+import net.sourceforge.fenixedu.util.LabelFormatter;
 
 public class DFACandidacyEvent extends DFACandidacyEvent_Base {
 
@@ -78,7 +81,7 @@ public class DFACandidacyEvent extends DFACandidacyEvent_Base {
 
         result.add(new EntryDTO(EntryType.CANDIDACY_ENROLMENT_FEE, this, calculateAmountToPay(),
                 payedAmount, calculateAmountToPay().subtract(payedAmount),
-                getDescriptionEntryType(EntryType.CANDIDACY_ENROLMENT_FEE)));
+                getDescriptionForEntryType(EntryType.CANDIDACY_ENROLMENT_FEE)));
 
         return result;
     }
@@ -95,9 +98,25 @@ public class DFACandidacyEvent extends DFACandidacyEvent_Base {
     }
 
     @Override
-    public String getDescriptionEntryType(EntryType entryType) {
-        return getCandidacy().getExecutionDegree().getDegreeCurricularPlan().getDegree().getName() + " "
-                + getCandidacy().getExecutionDegree().getExecutionYear().getYear();
+    public LabelFormatter getDescriptionForEntryType(EntryType entryType) {
+        final LabelFormatter labelFormatter = new LabelFormatter();
+        labelFormatter.appendLabel(entryType.name(), "enum").appendLabel(" (").appendLabel(
+                getDegree().getBolonhaDegreeType().name(), "enum").appendLabel(" - ").appendLabel(
+                getDegree().getName()).appendLabel(" - ").appendLabel(
+                getExecutionDegree().getExecutionYear().getYear()).appendLabel(")");
+
+        return labelFormatter;
+
+    }
+
+    private ExecutionDegree getExecutionDegree() {
+        return getCandidacy().getExecutionDegree();
+
+    }
+
+    private Degree getDegree() {
+        return getExecutionDegree().getDegreeCurricularPlan().getDegree();
+
     }
 
     @Override

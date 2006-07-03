@@ -12,6 +12,7 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.User;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.util.LabelFormatter;
 
 import org.joda.time.DateTime;
 
@@ -155,6 +156,6 @@ public abstract class Event extends Event_Base {
 
     protected abstract BigDecimal calculatePayedAmount();
 
-    public abstract String getDescriptionEntryType(EntryType entryType);
+    public abstract LabelFormatter getDescriptionForEntryType(EntryType entryType);
 
 }

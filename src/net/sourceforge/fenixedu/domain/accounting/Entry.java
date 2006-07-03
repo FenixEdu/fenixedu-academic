@@ -5,6 +5,7 @@ import java.util.Comparator;
 
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.util.LabelFormatter;
 
 import org.joda.time.DateTime;
 
@@ -99,8 +100,8 @@ public class Entry extends Entry_Base {
         }
     }
 
-    public String getDescription() {
-        return getAccountingTransaction().getEvent().getDescriptionEntryType(getEntryType());
+    public LabelFormatter getDescription() {
+        return getAccountingTransaction().getDescriptionForEntryType(getEntryType());
     }
 
 }

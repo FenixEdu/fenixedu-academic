@@ -1,6 +1,5 @@
 <schema name="entryDTO.edit" type="net.sourceforge.fenixedu.dataTransferObject.accounting.EntryDTO">
 	<slot name="selected" key="label.masterDegree.administrativeOffice.payments.selected"/>
-	<slot name="entryType" read-only="true" key="label.masterDegree.administrativeOffice.payments.entryType"/>
 	<slot name="description" read-only="true" key="label.masterDegree.administrativeOffice.payments.description"/>
 	<slot name="totalAmount" read-only="true" key="label.masterDegree.administrativeOffice.payments.totalAmount"/>
 	<slot name="payedAmount" read-only="true" key="label.masterDegree.administrativeOffice.payments.payedAmount"/>
@@ -8,14 +7,12 @@
 </schema>
 
 <schema name="entry.view" type="net.sourceforge.fenixedu.domain.accounting.Entry">
-	<slot name="entryType" />
 	<slot name="description" />
 	<slot name="whenBooked" />
 	<slot name="amount" />
 </schema>
 
 <schema name="entryDTO.view-guide" type="net.sourceforge.fenixedu.dataTransferObject.accounting.EntryDTO">
-	<slot name="entryType" read-only="true" key="label.masterDegree.administrativeOffice.payments.entryType"/>
 	<slot name="description" read-only="true" key="label.masterDegree.administrativeOffice.payments.description"/>
 	<slot name="amountToPay" key="label.masterDegree.administrativeOffice.payments.amountToPay"/>
 </schema>
@@ -33,7 +30,6 @@
 
 <schema name="selectableEntryBean.view" type="net.sourceforge.fenixedu.dataTransferObject.accounting.SelectableEntryBean">
 	<slot name="selected" key="label.commons.emptySelected" />
-	<slot name="entry.entryType" read-only="true" key="label.net.sourceforge.fenixedu.domain.accounting.Entry.entryType"/>
 	<slot name="entry.description" read-only="true" key="label.net.sourceforge.fenixedu.domain.accounting.Entry.description" />
 	<slot name="entry.whenBooked" read-only="true" key="label.net.sourceforge.fenixedu.domain.accounting.Entry.whenBooked" />
 	<slot name="entry.amount" read-only="true" key="label.net.sourceforge.fenixedu.domain.accounting.Entry.amount" />

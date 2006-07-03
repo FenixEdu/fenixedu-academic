@@ -6,6 +6,7 @@ import java.math.BigDecimal;
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.accounting.EntryType;
 import net.sourceforge.fenixedu.domain.accounting.Event;
+import net.sourceforge.fenixedu.util.LabelFormatter;
 
 public class EntryDTO implements Serializable {
 
@@ -21,16 +22,17 @@ public class EntryDTO implements Serializable {
 
     private BigDecimal amountToPay;
 
-    private String description;
+    private LabelFormatter description;
 
     public EntryDTO(EntryType entryType, Event event, BigDecimal totalAmount, BigDecimal payedAmount,
-            BigDecimal amountToPay, String description) {
+            BigDecimal amountToPay, LabelFormatter description) {
         setEntryType(entryType);
         setEvent(event);
         setTotalAmount(totalAmount);
         setPayedAmount(payedAmount);
         setAmountToPay(amountToPay);
         setDescription(description);
+
     }
 
     public BigDecimal getTotalAmount() {
@@ -73,20 +75,20 @@ public class EntryDTO implements Serializable {
         this.amountToPay = amountToPay;
     }
 
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
     public Event getEvent() {
         return (this.event != null) ? this.event.getObject() : null;
     }
 
     public void setEvent(Event event) {
         this.event = (event != null) ? new DomainReference<Event>(event) : null;
+    }
+
+    public LabelFormatter getDescription() {
+        return description;
+    }
+
+    public void setDescription(LabelFormatter description) {
+        this.description = description;
     }
 
 }

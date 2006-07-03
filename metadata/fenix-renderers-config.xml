@@ -170,6 +170,14 @@ Documentation:
     <!--@ The default layout for a list really creates an html list were each object is presented in a list item. -->
     <renderer type="java.util.List" class="net.sourceforge.fenixedu.renderers.ListRenderer"/>
     
+    
+    <!--@ LabelFormatter output. -->
+    <renderer type="net.sourceforge.fenixedu.util.LabelFormatter" class="net.sourceforge.fenixedu.presentationTier.renderers.LabelFormatterRenderer">
+    	<property name="bundleName(application)" value="APPLICATION_RESOURCES"/>
+    	<property name="bundleName(enum)" value="ENUMERATION_RESOURCES"/>
+    	<property name="bundleName(default)" value="APPLICATION_RESOURCES"/>
+    </renderer>
+    
     <!-- input -->
 
     <!--@ The default layout for editing objects.  -->  
