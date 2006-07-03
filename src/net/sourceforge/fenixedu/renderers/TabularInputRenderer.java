@@ -146,6 +146,10 @@ public class TabularInputRenderer extends InputRenderer {
         return this.collectionRenderer.isExcludedFromLast(name);
     }
 
+    public String getVisibleIf(String name) {
+        return this.collectionRenderer.getVisibleIf(name);
+    }
+
     /**
      * @property
      */
@@ -316,6 +320,15 @@ public class TabularInputRenderer extends InputRenderer {
      */
     public void setExcludedFromLast(String name, String value) {
         this.collectionRenderer.setExcludedFromLast(name, value);
+    }
+
+    /**
+     * See {@link CollectionRenderer#setVisibleIf(String, String)}.
+     * 
+     * @property
+     */
+    public void setVisibleIf(String name, String value) {
+        this.collectionRenderer.setVisibleIf(name, value);
     }
 
     @Override

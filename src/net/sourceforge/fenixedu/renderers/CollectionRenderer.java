@@ -21,6 +21,7 @@ import net.sourceforge.fenixedu.renderers.model.MetaSlot;
 import net.sourceforge.fenixedu.renderers.schemas.Schema;
 import net.sourceforge.fenixedu.renderers.utils.RenderKit;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
+import net.sourceforge.fenixedu.renderers.utils.RendererPropertyUtils;
 
 import org.apache.commons.beanutils.PropertyUtils;
 
@@ -438,6 +439,22 @@ public class CollectionRenderer extends OutputRenderer {
     }
 
     /**
+     * Specifies the name of the property that will consulted to determine if the
+     * link should be visible or not. By default all links are visible.
+     * <p>
+     * This can be used to have some links that depend on domain logic. 
+     * 
+     * @property
+     */
+    public void setVisibleIf(String name, String value) {
+        getTableLink(name).setVisibleIf(value);
+    }
+    
+    public String getVisibleIf(String name) {
+        return getTableLink(name).getVisibleIf();
+    }
+    
+    /**
      * This property allows you to exclude a control link from appearing 
      * in the last line of the generated table.
      * 
@@ -743,6 +760,20 @@ public class CollectionRenderer extends OutputRenderer {
                 return new HtmlText();
             }
             
+            Object realObject = object.getObject();
+
+            if (tableLink.getVisibleIf() != null) {
+                try {
+                    Boolean visible = (Boolean) RendererPropertyUtils.getProperty(realObject, tableLink.getVisibleIf(), false);
+                    
+                    if (visible != null && !visible) {
+                        return new HtmlText();
+                    }
+                } catch (ClassCastException e) {
+                    e.printStackTrace();
+                }
+            }
+            
             HtmlLink link = new HtmlLink();
 
             if (tableLink.isContextRelativeSet()) {
@@ -753,7 +784,7 @@ public class CollectionRenderer extends OutputRenderer {
             link.setModule(tableLink.getModule());
 
             if (tableLink.getLinkFormat() != null) {
-                link.setUrl(RenderUtils.getFormatedProperties(tableLink.getLinkFormat(), object.getObject()));
+                link.setUrl(RenderUtils.getFormatedProperties(tableLink.getLinkFormat(), realObject));
             } else {
                 link.setUrl(tableLink.getLink());
                 setLinkParameters(object, link, tableLink);
@@ -879,6 +910,7 @@ public class CollectionRenderer extends OutputRenderer {
         private boolean excludeFromLast;
         private String linkFormat;
         private Boolean contextRelative;
+        private String visibleIf;
 
         public TableLink() {
             super();
@@ -977,6 +1009,14 @@ public class CollectionRenderer extends OutputRenderer {
 
         public void setLinkFormat(String linkFormat) {
             this.linkFormat = linkFormat;
+        }
+
+        public String getVisibleIf() {
+            return this.visibleIf;
+        }
+
+        public void setVisibleIf(String visibleIf) {
+            this.visibleIf = visibleIf;
         }
 
         public Boolean isContextRelative() {
