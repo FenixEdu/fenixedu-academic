@@ -14,14 +14,24 @@ public class WorkScheduleDaySheet implements Serializable {
 
     WorkSchedule workSchedule;
 
-    String weekDaySchedule;
+    String schedule;
 
-    public String getWeekDaySchedule() {
-        return weekDaySchedule;
+    String weekDay;
+
+    public String getSchedule() {
+        return schedule;
     }
 
-    public void setWeekDaySchedule(String weekDaySchedule) {
-        this.weekDaySchedule = weekDaySchedule;
+    public void setSchedule(String schedule) {
+        this.schedule = schedule;
+    }
+
+    public String getWeekDay() {
+        return weekDay;
+    }
+
+    public void setWeekDay(String weekDay) {
+        this.weekDay = weekDay;
     }
 
     public String getNormalWorkPeriod() {
@@ -77,19 +87,19 @@ public class WorkScheduleDaySheet implements Serializable {
         String beginMealBreak = fmt.print(getWorkSchedule().getWorkScheduleType().getMeal()
                 .getBeginMealBreak());
         String endMealBreak = fmt.print(getWorkSchedule().getWorkScheduleType().getMeal()
-                .getEndMealBreak());        
+                .getEndMealBreak());
         StringBuilder result = new StringBuilder();
         result.append(beginMealBreak).append(" - ").append(endMealBreak);
         return result.toString();
     }
 
-    public String getMandatoryMealPeriods(){
-    	if (getWorkSchedule() == null || getWorkSchedule().getWorkScheduleType().getMeal() == null) {
+    public String getMandatoryMealPeriods() {
+        if (getWorkSchedule() == null || getWorkSchedule().getWorkScheduleType().getMeal() == null) {
             return "";
         }
-    	Chronology chronology = GregorianChronology.getInstanceUTC();
+        Chronology chronology = GregorianChronology.getInstanceUTC();
         DateTimeFormatter fmt = DateTimeFormat.forPattern("HH:mm");
-    	TimeOfDay time = new TimeOfDay(getWorkSchedule().getWorkScheduleType().getMeal()
+        TimeOfDay time = new TimeOfDay(getWorkSchedule().getWorkScheduleType().getMeal()
                 .getMinimumMealBreakInterval().getMillis(), chronology);
         String minimum = fmt.print(time);
         time = new TimeOfDay(getWorkSchedule().getWorkScheduleType().getMeal()
@@ -99,7 +109,7 @@ public class WorkScheduleDaySheet implements Serializable {
         result.append("Mín.: ").append(minimum).append("<br/>Obr.: ").append(mandatory);
         return result.toString();
     }
-    
+
     public WorkSchedule getWorkSchedule() {
         return workSchedule;
     }

@@ -77,6 +77,15 @@ public class Schedule extends Schedule_Base {
         return maxWorkWeek;
     }
 
+    public boolean hasFixedPeriod() {
+        for (WorkSchedule workSchedule : getWorkSchedulesSet()) {
+            if(workSchedule.getWorkScheduleType().getFixedWorkPeriod() != null) {
+                return true;
+            }
+        }
+        return false;
+    }
+    
     public void delete() {
         removeRootDomainObject();
         removeAssiduousness();

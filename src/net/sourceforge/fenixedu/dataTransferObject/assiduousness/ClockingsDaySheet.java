@@ -38,13 +38,9 @@ public class ClockingsDaySheet implements Serializable {
         getClockings().add(clocking);
     }
 
-    public String getDay() {
-        ResourceBundle bundle = ResourceBundle.getBundle("resources.EmployeeResources");
-        String day = "" + getDate().getDayOfMonth();
-        if (getDate().getDayOfMonth() < 10) {
-            day = "0".concat(day);
-        }
+    public String getWeekDay() {
+        ResourceBundle bundle = ResourceBundle.getBundle("resources.AssiduousnessResources");
         return bundle.getString(WeekDay.fromJodaTimeToWeekDay(getDate().toDateTimeAtMidnight())
-                        .toString()+"_ACRONYM") + " - " + day;
+                .toString() + "_ACRONYM");
     }
 }

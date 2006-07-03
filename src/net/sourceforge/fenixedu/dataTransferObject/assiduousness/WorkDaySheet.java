@@ -102,25 +102,12 @@ public class WorkDaySheet implements Serializable {
         }
         return result.toString();
     }    
-
-    public String getDay() {
-        if(getDate() == null) {
-            return "";
-        }
-        ResourceBundle bundle = ResourceBundle.getBundle("resources.EmployeeResources");
-        String day = "" + getDate().getDayOfMonth();
-        if (getDate().getDayOfMonth() < 10) {
-            day = "0".concat(day);
-        }
-        return  day + " - " + bundle.getString(WeekDay.fromJodaTimeToWeekDay(getDate().toDateTimeAtMidnight())
-                        .toString()+"_ACRONYM");
-    }
     
     public String getWeekDay() {
         if(getDate() == null) {
             return "";
         }
-        ResourceBundle bundle = ResourceBundle.getBundle("resources.EmployeeResources");
+        ResourceBundle bundle = ResourceBundle.getBundle("resources.AssiduousnessResources");
         return  bundle.getString(WeekDay.fromJodaTimeToWeekDay(getDate().toDateTimeAtMidnight())
                         .toString()+"_ACRONYM");
     }

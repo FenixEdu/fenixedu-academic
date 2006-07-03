@@ -23,12 +23,12 @@
 <logic:present name="workScheduleDayList">
 	<table class="tstyle1b thtop thlight">
 		<tr>
-			<th class="cornerleft"></th><th><b>2ª Feira</b></th><th><b>3ª Feira</b></th><th><b>4ª Feira</b></th><th><b>5ª Feira</b></th><th><b>6ª Feira</b></th>
+			<th class="cornerleft"></th><th><b><bean:message key="MONDAY_ACRONYM"/></b></th><th><b><bean:message key="TUESDAY_ACRONYM"/></b></th><th><b><bean:message key="WEDNESDAY_ACRONYM"/></b></th><th><b><bean:message key="THURSDAY_ACRONYM"/></b></th><th><b><bean:message key="FRIDAY_ACRONYM"/></b></th>
 		</tr>
 		<tr>
 			<th style="text-align: right;"><bean:message key="label.acronym"/>:</th>
 			<logic:iterate name="workScheduleDayList" id="workScheduleDay">
-				<td class="acenter"><bean:write name="workScheduleDay" property="weekDaySchedule"/></td>
+				<td class="acenter"><bean:write name="workScheduleDay" property="schedule"/></td>
 			</logic:iterate>
 		</tr>
 		<tr>
@@ -39,12 +39,14 @@
 		</tr>
 		
 
-		<tr>
-			<th style="text-align: right;"><bean:message key="label.fixedWorkPeriod"/>:</th>
-			<logic:iterate name="workScheduleDayList" id="workScheduleDay">
-				<td class="acenter"><bean:write name="workScheduleDay" property="fixedWorkPeriod" filter="false"/></td>
-			</logic:iterate>
-		</tr>
+		<logic:equal name="hasFixedPeriod" value="true">
+			<tr>
+				<th style="text-align: right;"><bean:message key="label.fixedWorkPeriod"/>:</th>
+				<logic:iterate name="workScheduleDayList" id="workScheduleDay">
+					<td class="acenter"><bean:write name="workScheduleDay" property="fixedWorkPeriod" filter="false"/></td>
+				</logic:iterate>
+			</tr>
+		</logic:equal>
 		
 		<tr>
 			<th style="text-align: right;"><bean:message key="label.mealPeriod"/>:</th>

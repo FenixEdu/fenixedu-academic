@@ -35,7 +35,8 @@
 
 <schema name="show.clockingsDaySheet"
 	type="net.sourceforge.fenixedu.dataTransferObject.assiduousness.ClockingsDaySheet">
-	<slot name="day" key="label.day" />
+	<slot name="date.dayOfMonth" key="label.day" />
+	<slot name="weekDay" key="label.weekDay" />	
 	<slot name="clockings" layout="flowLayout"
 		key="label.clockings/Units">
 		<property name="eachLayout" value="values" />
@@ -130,7 +131,7 @@
 	</slot>
 	<slot name="endMealBreak">
 		<property name="format" value="'-' HH:mm " />
-	</slot>	
+	</slot>
 	<slot name="minimumMealBreakInterval">
 		<property name="format" value="'(min:' HH:mm" />
 	</slot>

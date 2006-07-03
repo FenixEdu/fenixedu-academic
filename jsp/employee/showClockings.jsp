@@ -20,7 +20,7 @@
 
 <logic:present name="yearMonth">
 	<div class="mvert1">
-	<fr:form action="/assiduousnessRecords.do?method=showWorkSheet">
+	<fr:form action="/assiduousnessRecords.do?method=showClockings">
 		<fr:edit name="yearMonth" schema="choose.date">
 			<fr:layout>
 		        <fr:property name="classes" value="thlight thright"/>
@@ -52,7 +52,7 @@
 		<fr:view name="clockings" schema="show.clockingsDaySheet">
 			<fr:layout name="tabular">
 				<fr:property name="classes" value="tstyle1b" />
-				<fr:property name="columnClasses" value="aleft" />
+				<fr:property name="columnClasses" value="bgcolor3 acenter,acenter,aleft" />
 				<fr:property name="headerClasses" value="acenter" />
 			</fr:layout>
 		</fr:view>
