@@ -6,10 +6,9 @@ package net.sourceforge.fenixedu.dataTransferObject.candidacy;
 import java.io.InputStream;
 import java.io.Serializable;
 
-import org.joda.time.DateTime;
-
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.candidacy.CandidacyDocument;
+import net.sourceforge.fenixedu.domain.candidacy.CandidacyDocumentFile;
 import net.sourceforge.fenixedu.util.LabelFormatter;
 
 /**
@@ -22,19 +21,24 @@ public class CandidacyDocumentUploadBean implements Serializable {
 
     private String filename;
 
-    private DateTime fileUploadTime;
-
     private String documentDescription;
+
+    private String actualFile;
 
     private DomainReference<CandidacyDocument> candidacyDocument;
 
     public CandidacyDocumentUploadBean(CandidacyDocument candidacyDocument) {
         super();
+        CandidacyDocumentFile file = candidacyDocument.getFile();
         this.documentDescription = candidacyDocument.getDocumentDescription();
-        this.fileUploadTime = candidacyDocument.getFileUploadTime();
+        this.actualFile = (file != null) ? file.getFilename() + " - "
+                + file.getUploadTime().toString("dd/MM/yyyy hh:mm") : null;
         this.candidacyDocument = new DomainReference<CandidacyDocument>(candidacyDocument);
-        this.filename = (candidacyDocument.getFile() != null) ? candidacyDocument.getFile()
-                .getFilename() : null;
+    }
+
+    public String getActualFile() {
+        return (actualFile == null) ? new LabelFormatter().appendLabel("label.file.not.uploaded.yet",
+                "resources.CandidateResources").toString() : actualFile;
     }
 
     public CandidacyDocument getCandidacyDocument() {
@@ -62,18 +66,8 @@ public class CandidacyDocumentUploadBean implements Serializable {
                 "resources.CandidateResources").toString();
     }
 
-    public String getFileUploadTime() {
-
-        if (fileUploadTime != null) {
-            return fileUploadTime.toString("dd/MM/yyyy hh:mm");
-        }
-
-        return new LabelFormatter().appendLabel("label." + "file.not.uploaded.yet",
-                "resources.CandidateResources").toString();
-    }
-
     public boolean getIsFileUploaded() {
-        return fileUploadTime != null;
+        return actualFile != null;
     }
 
 }
