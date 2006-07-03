@@ -423,3 +423,13 @@ table.showborder td { border: 1px solid #aaa; }
 .printbold { font-weight: bold; }
 
 .toprint { display: block;}
+
+table.printborder { border-collapse: collapse; }
+table.printborder th, table.printborder td { padding: 0.25em 0.5em; border: 1px solid #888; }
+
+/*
+.tstyle1b { border-collapse: collapse; }
+.tstyle1b th, .tstyle1b td { padding: 0.25em 0.5em; }
+.tstyle1b th { border: 1px solid #888; }
+.tstyle1b td { border: 1px solid #888; }
+*/

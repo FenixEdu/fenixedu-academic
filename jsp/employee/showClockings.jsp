@@ -46,12 +46,12 @@
 
 <logic:present name="clockings">
 	<logic:empty name="clockings">
-		<bean:message key="message.employee.noClocking" />
+		<em><bean:message key="message.employee.noClocking" /></em>
 	</logic:empty>
 	<logic:notEmpty name="clockings">
 		<fr:view name="clockings" schema="show.clockingsDaySheet">
 			<fr:layout name="tabular">
-				<fr:property name="classes" value="tstyle1b" />
+				<fr:property name="classes" value="tstyle1b printborder" />
 				<fr:property name="columnClasses" value="bgcolor3 acenter,acenter,aleft" />
 				<fr:property name="headerClasses" value="acenter" />
 			</fr:layout>
