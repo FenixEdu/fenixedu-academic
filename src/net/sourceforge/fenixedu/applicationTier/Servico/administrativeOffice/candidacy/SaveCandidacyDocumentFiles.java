@@ -5,6 +5,8 @@ package net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.ca
 
 import java.util.List;
 
+import org.joda.time.DateTime;
+
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.candidacy.CandidacyDocumentUploadBean;
 import net.sourceforge.fenixedu.domain.Person;
@@ -55,7 +57,7 @@ public class SaveCandidacyDocumentFiles extends Service {
                 candidacyDocument.setFile(new CandidacyDocumentFile(filename, filename, fileDescriptor
                         .getMimeType(), fileDescriptor.getChecksum(), fileDescriptor
                         .getChecksumAlgorithm(), fileDescriptor.getSize(), fileDescriptor.getUniqueId(),
-                        new GroupUnion(permittedGroup, new PersonGroup(person))));
+                        new GroupUnion(permittedGroup, new PersonGroup(person))));                
 
             }
         }

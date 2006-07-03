@@ -68,6 +68,9 @@ public class ViewCandidaciesDsipatchAction extends FenixDispatchAction {
     }
 
     private void fillRequest(HttpServletRequest request, Candidacy candidacy) {
+        if (RenderUtils.getViewState("candidacyDocuments") != null) {
+            RenderUtils.invalidateViewState("candidacyDocuments");
+        }
         List<CandidacyDocumentUploadBean> candidacyDocuments = new ArrayList<CandidacyDocumentUploadBean>();
         for (CandidacyDocument candidacyDocument : candidacy.getCandidacyDocuments()) {
             candidacyDocuments.add(new CandidacyDocumentUploadBean(candidacyDocument));

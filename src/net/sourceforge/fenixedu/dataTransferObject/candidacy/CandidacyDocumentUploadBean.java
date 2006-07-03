@@ -33,6 +33,8 @@ public class CandidacyDocumentUploadBean implements Serializable {
         this.documentDescription = candidacyDocument.getDocumentDescription();
         this.fileUploadTime = candidacyDocument.getFileUploadTime();
         this.candidacyDocument = new DomainReference<CandidacyDocument>(candidacyDocument);
+        this.filename = (candidacyDocument.getFile() != null) ? candidacyDocument.getFile()
+                .getFilename() : null;
     }
 
     public CandidacyDocument getCandidacyDocument() {

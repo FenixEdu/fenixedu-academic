@@ -10,51 +10,34 @@ import net.sourceforge.fenixedu.renderers.model.MetaSlot;
 
 /**
  * This renderer allows to edit all objects of a collection at the same time.
- * The presentation is very similar to the one of {@link net.sourceforge.fenixedu.renderers.CollectionRenderer}
- * but instead of presentig the slot's value in each cell, the slot's editor
- * is shown.
+ * The presentation is very similar to the one of
+ * {@link net.sourceforge.fenixedu.renderers.CollectionRenderer} but instead of
+ * presentig the slot's value in each cell, the slot's editor is shown.
  * 
  * <p>
- * Example:
- * <table border="1">
- *  <thead>
- *      <th>Name</th>
- *      <th>Age</th>
- *      <th>Gender</th>
- *  </thead>
- *  <tr>
- *      <td><input type="text" value="Name A"/></td>
- *      <td><input type="text" value="20"/></td>
- *      <td>
- *          <select>
- *              <option>-- Please Select --</option>
- *              <option selected="selected">Female</option>
- *              <option>Male</option>
- *          </select>
- *      </td>
- *  </tr>
- *  <tr>
- *      <td><input type="text" value="Name B"/></td>
- *      <td><input type="text" value="22"/></td>
- *      <td>
- *          <select>
- *              <option>-- Please Select --</option>
- *              <option>Female</option>
- *              <option selected="selected">Male</option>
- *          </select>
- *      </td>
- *  </tr>
- *  <tr>
- *      <td><input type="text" value="Name C"/></td>
- *      <td><input type="text" value="21"/></td>
- *      <td>
- *          <select>
- *              <option>-- Please Select --</option>
- *              <option selected="selected">Female</option>
- *              <option>Male</option>
- *          </select>
- *      </td>
- *  </tr>
+ * Example: <table border="1"> <thead>
+ * <th>Name</th>
+ * <th>Age</th>
+ * <th>Gender</th>
+ * </thead>
+ * <tr>
+ * <td><input type="text" value="Name A"/></td>
+ * <td><input type="text" value="20"/></td>
+ * <td> <select> <option>-- Please Select --</option> <option
+ * selected="selected">Female</option> <option>Male</option> </select> </td>
+ * </tr>
+ * <tr>
+ * <td><input type="text" value="Name B"/></td>
+ * <td><input type="text" value="22"/></td>
+ * <td> <select> <option>-- Please Select --</option> <option>Female</option>
+ * <option selected="selected">Male</option> </select> </td>
+ * </tr>
+ * <tr>
+ * <td><input type="text" value="Name C"/></td>
+ * <td><input type="text" value="21"/></td>
+ * <td> <select> <option>-- Please Select --</option> <option
+ * selected="selected">Female</option> <option>Male</option> </select> </td>
+ * </tr>
  * </table>
  * 
  * @author cfgi
@@ -62,7 +45,7 @@ import net.sourceforge.fenixedu.renderers.model.MetaSlot;
 public class TabularInputRenderer extends InputRenderer {
 
     private CollectionRenderer collectionRenderer;
-    
+
     public TabularInputRenderer() {
         this.collectionRenderer = new CollectionRenderer() {
 
@@ -70,18 +53,18 @@ public class TabularInputRenderer extends InputRenderer {
             protected HtmlComponent renderSlot(MetaSlot slot) {
                 return TabularInputRenderer.this.renderSlot(slot);
             }
-            
+
         };
     }
-    
+
     public String getClasses() {
         return this.collectionRenderer.getClasses();
     }
-    
+
     public String getStyle() {
         return this.collectionRenderer.getStyle();
     }
-    
+
     public String getTitle() {
         return this.collectionRenderer.getTitle();
     }
@@ -89,7 +72,7 @@ public class TabularInputRenderer extends InputRenderer {
     public String getCaption() {
         return this.collectionRenderer.getCaption();
     }
-    
+
     public String getHeaderClasses() {
         return this.collectionRenderer.getHeaderClasses();
     }
@@ -97,7 +80,7 @@ public class TabularInputRenderer extends InputRenderer {
     public String getColumnClasses() {
         return this.collectionRenderer.getColumnClasses();
     }
-    
+
     public String getRowClasses() {
         return this.collectionRenderer.getRowClasses();
     }
@@ -150,6 +133,14 @@ public class TabularInputRenderer extends InputRenderer {
         return this.collectionRenderer.getVisibleIf(name);
     }
 
+    public String getLinkFormat(String name) {
+        return this.collectionRenderer.getLinkFormat(name);
+    }
+
+    public String getContextRelative(String name) {
+        return this.collectionRenderer.getContextRelative(name);
+    }
+
     /**
      * @property
      */
@@ -197,6 +188,7 @@ public class TabularInputRenderer extends InputRenderer {
     /**
      * The classes to be used in each row's cell. See
      * {@link CollectionRenderer#setColumnClasses(String)}.
+     * 
      * @property
      */
     public void setColumnClasses(String columnClasses) {
@@ -206,7 +198,7 @@ public class TabularInputRenderer extends InputRenderer {
     /**
      * The classes to be used in each row. See
      * {@link CollectionRenderer#setRowClasses(String)}.
-     *
+     * 
      * @property
      */
     public void setRowClasses(String rowClasses) {
@@ -232,8 +224,8 @@ public class TabularInputRenderer extends InputRenderer {
     }
 
     /**
-     * Allows you choose the order of the objects in the table. 
-     * See {@link CollectionRenderer#setSortBy(String)}.
+     * Allows you choose the order of the objects in the table. See
+     * {@link CollectionRenderer#setSortBy(String)}.
      * 
      * @property
      */
@@ -331,11 +323,30 @@ public class TabularInputRenderer extends InputRenderer {
         this.collectionRenderer.setVisibleIf(name, value);
     }
 
+    /**
+     * See {@link CollectionRenderer#setLinkFormat(String, String)}.
+     * 
+     * @property
+     */
+    public void setLinkFormat(String name, String value) {
+        this.collectionRenderer.setLinkFormat(name, value);
+    }
+
+    /**
+     * See {@link CollectionRenderer#setContextRelative(String, String)}.
+     * 
+     * @property
+     */
+    public void setContextRelative(String name, String value) {
+        this.collectionRenderer.setContextRelative(name, value);
+    }
+
     @Override
     protected Layout getLayout(Object object, Class type) {
         this.collectionRenderer.setContext(getContext());
 
-        final CollectionTabularLayout layout = (CollectionTabularLayout) this.collectionRenderer.getLayout(object, type);
+        final CollectionTabularLayout layout = (CollectionTabularLayout) this.collectionRenderer
+                .getLayout(object, type);
         return new TabularLayout() {
 
             @Override
@@ -361,21 +372,21 @@ public class TabularInputRenderer extends InputRenderer {
             @Override
             protected HtmlComponent getComponent(int rowIndex, int columnIndex) {
                 HtmlComponent component = layout.getComponent(rowIndex, columnIndex);
-                
+
                 Validatable validatable = findValidatableComponent(component);
                 if (validatable instanceof HtmlInputComponent) {
                     HtmlInputComponent input = (HtmlInputComponent) validatable;
-                    
+
                     String label = layout.getLabel(columnIndex);
-                    
+
                     if (label != null && label.length() > 0) {
                         input.setAlternateText(label);
                     }
                 }
-                
+
                 return component;
             }
-            
+
         };
     }
 
