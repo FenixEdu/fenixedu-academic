@@ -155,7 +155,7 @@
 
 <schema name="candidacyDocuments.full" type="net.sourceforge.fenixedu.dataTransferObject.candidacy.CandidacyDocumentUploadBean">
 	<slot name="documentDescription" read-only="true" />
-	<slot name="fileUploadTime" read-only="true"/>
+	<slot name="fileUploadTime" read-only="true" />
 	<slot name="fileInputStream" >
 		<property name="fileNameSlot" value="filename"/>
 	</slot>	
@@ -169,7 +169,7 @@
 	<slot name="gender"/>
 	<slot name="emissionLocationOfDocumentId"/>
 	<slot name="emissionDateOfDocumentIdYearMonthDay"/>
-	<slot name="dataValidadeDocumentoIdentificacao"/>
+	<slot name="expirationDateOfDocumentId"/>
 	<slot name="socialSecurityNumber"/>
 	<slot name="profession" />
 	<slot name="maritalStatus"/>  

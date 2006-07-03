@@ -6,8 +6,11 @@ package net.sourceforge.fenixedu.dataTransferObject.candidacy;
 import java.io.InputStream;
 import java.io.Serializable;
 
+import org.joda.time.DateTime;
+
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.candidacy.CandidacyDocument;
+import net.sourceforge.fenixedu.util.LabelFormatter;
 
 /**
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
@@ -19,7 +22,7 @@ public class CandidacyDocumentUploadBean implements Serializable {
 
     private String filename;
 
-    private String fileUploadTime;
+    private DateTime fileUploadTime;
 
     private String documentDescription;
 
@@ -28,7 +31,7 @@ public class CandidacyDocumentUploadBean implements Serializable {
     public CandidacyDocumentUploadBean(CandidacyDocument candidacyDocument) {
         super();
         this.documentDescription = candidacyDocument.getDocumentDescription();
-        this.fileUploadTime = candidacyDocument.getUploadTime();
+        this.fileUploadTime = candidacyDocument.getFileUploadTime();
         this.candidacyDocument = new DomainReference<CandidacyDocument>(candidacyDocument);
     }
 
@@ -45,7 +48,7 @@ public class CandidacyDocumentUploadBean implements Serializable {
     }
 
     public String getFilename() {
-        return getDocumentDescription();
+        return filename;
     }
 
     public void setFilename(String filename) {
@@ -53,11 +56,22 @@ public class CandidacyDocumentUploadBean implements Serializable {
     }
 
     public String getDocumentDescription() {
-        return documentDescription;
+        return new LabelFormatter().appendLabel("label." + documentDescription,
+                "resources.CandidateResources").toString();
     }
 
     public String getFileUploadTime() {
-        return fileUploadTime;
+
+        if (fileUploadTime != null) {
+            return fileUploadTime.toString("dd/MM/yyyy hh:mm");
+        }
+
+        return new LabelFormatter().appendLabel("label." + "file.not.uploaded.yet",
+                "resources.CandidateResources").toString();
+    }
+
+    public boolean getIsFileUploaded() {
+        return fileUploadTime != null;
     }
 
 }

@@ -39,7 +39,7 @@ public class SaveCandidacyDocumentFiles extends Service {
         for (CandidacyDocumentUploadBean candidacyDocumentUploadBean : candidacyDocuments) {
             if (candidacyDocumentUploadBean.getFileInputStream() != null) {
 
-                String filename = candidacyDocumentUploadBean.getFilename() + ".pdf";
+                String filename = candidacyDocumentUploadBean.getFilename();
                 CandidacyDocument candidacyDocument = candidacyDocumentUploadBean.getCandidacyDocument();
                 Candidacy candidacy = candidacyDocument.getCandidacy();
                 Person person = candidacy.getPerson();
@@ -47,6 +47,10 @@ public class SaveCandidacyDocumentFiles extends Service {
                 final FileDescriptor fileDescriptor = FileManagerFactory.getFileManager().saveFile(
                         getFilePath(candidacy), filename, true, fileMetadata,
                         candidacyDocumentUploadBean.getFileInputStream());
+                
+                if(candidacyDocument.getFile() != null){
+                    candidacyDocument.getFile().delete();
+                }
 
                 candidacyDocument.setFile(new CandidacyDocumentFile(filename, filename, fileDescriptor
                         .getMimeType(), fileDescriptor.getChecksum(), fileDescriptor

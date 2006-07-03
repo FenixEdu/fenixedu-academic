@@ -15,10 +15,4 @@ public class CandidacyDocument extends CandidacyDocument_Base {
         setDocumentDescription(description);
     }
     
-    public String getUploadTime(){
-        if(getFileUploadTime() != null){
-            return getFileUploadTime().toString("dd/MM/yyyy hh:mm");
-        }
-        return "file.not.uploaded.yet";
-    }
 }
