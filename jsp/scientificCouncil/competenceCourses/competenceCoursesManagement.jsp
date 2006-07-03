@@ -37,7 +37,7 @@
 			<h:outputText value="<br/><i>#{scouncilBundle['label.empty.group.members']}</i><br/>" escape="false" />
 		</h:panelGroup>
 
-	
+		<h:panelGroup rendered="#{!empty CompetenceCourseManagement.scientificAreaUnits}">	
 		<h:outputText value="<p class='mtop2 mbottom05'><b>Opções de listagem:</b></p>" escape="false"/>
 		<h:outputText value="<ul>" escape="false"/>
 		<h:outputText value="<li>" escape="false"/>
@@ -64,6 +64,7 @@
 			<h:outputText value="</li>" escape="false"/>
 		</h:panelGroup>
 		<h:outputText value="</ul>" escape="false"/>
+		</h:panelGroup>		
 
 		<h:dataTable value="#{CompetenceCourseManagement.scientificAreaUnits}" var="scientificAreaUnit"
 				rendered="#{!empty CompetenceCourseManagement.scientificAreaUnits}">
