@@ -1,6 +1,11 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
+<style>@import url(<%= request.getContextPath() %>/CSS/navlateralnew.css);</style>
 <ul>
+	<li class="navheader"><bean:message key="link.consult" /></li>
+	<li><html:link page="/viewAssiduousness.do?method=chooseEmployee&amp;action=showWorkSheet"><bean:message key="link.showEmployeeWorkSheet" /></html:link></li>
+    
+    <%-- 
     <li><bean:message key="link.consult" />
     	<ul>
 			<li><html:link page="/workByEmployee.do?method=prepareInputs"><bean:message key="link.work.employee.sheet" /></html:link></li>
@@ -13,4 +18,5 @@
 			<li><html:link page="/extraWorkByEmployee.do?method=prepareInputs"><bean:message key="link.extraWork.employee" /></html:link></li>
     	</ul>    
     </li>
+    --%>
 </ul>   

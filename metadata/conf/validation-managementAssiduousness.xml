@@ -2,34 +2,9 @@
 <!DOCTYPE form-validation PUBLIC "-//Apache Software Foundation//DTD Struts Validation Configuration 1.1//EN" "@validation.doctype.url@">
 <form-validation>
     <formset>
-	    <form name="moneyCostCenterFormBean">
-	      <field property="year" depends="required, integer" page="1" >
-	        <arg0 key="label.year" resource="true"/>
-	      </field>
-	    </form>
-	    <form name="extraWorkByEmployeeFormBean">
-	      <field property="moth" depends="required, integer" page="1" >
-	        <arg0 key="label.moth" resource="true"/>
-	      </field>
-	      <field property="year" depends="required, integer" page="1" >
-	        <arg0 key="label.year" resource="true"/>
-	      </field>
+	    <form name="employeeForm">
 	      <field property="employeeNumber" depends="required, integer" page="1" >
-	        <arg0 key="label.employee" resource="true"/>
-	      </field>
-	    </form>
-	    <form name="requestsExtraWorkFormBean">
-	      <field property="beginDate" depends="required" page="1" >
-	        <arg0 key="prompt.dataInicial" resource="true"/>
-	      </field>
-	      <field property="endDate" depends="required" page="1" >
-	        <arg0 key="prompt.dataFinal" resource="true"/>
-	      </field>
-	      <field property="cc" depends="required, integer" page="1" >
-	        <arg0 key="label.code.cost.center" resource="true"/>
-	      </field>
-	      <field property="ccMoney" depends="required, integer" page="1" >
-	        <arg0 key="label.code.cost.center" resource="true"/>
+	        <arg0 key="label.employeeNumber" resource="true"/>
 	      </field>
 	    </form>
     </formset>

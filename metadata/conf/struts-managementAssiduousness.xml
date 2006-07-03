@@ -8,42 +8,12 @@
 
 	<!-- ========== Form Bean Definitions ================================== -->
 	<form-beans type="org.apache.struts.action.ActionFormBean">
-		<form-bean name="moneyCostCenterFormBean"
-				type="org.apache.struts.validator.DynaValidatorForm"
-                dynamic="true">
-				<form-property name="page" type="java.lang.Integer" initial="0"/>
-				<form-property name="year" type="java.lang.Integer" />    
-				<form-property name="size" type="java.lang.Integer" />        
-		</form-bean>
-		<form-bean name="workByEmployeeFormBean"
-				type="org.apache.struts.validator.DynaValidatorForm"
-                dynamic="true">
-				<form-property name="page" type="java.lang.Integer" initial="0"/>
-				<form-property name="beginDate" type="java.lang.String" />
-				<form-property name="endDate" type="java.lang.String" />    
-				<form-property name="employeeNumber" type="java.lang.Integer" />  
-		</form-bean>
-		<form-bean name="extraWorkByEmployeeFormBean"
-				type="org.apache.struts.validator.DynaValidatorForm"
-                dynamic="true">
-				<form-property name="page" type="java.lang.Integer" initial="0"/>
-				<form-property name="moth" type="java.lang.Integer" />
-				<form-property name="year" type="java.lang.Integer" />    
-				<form-property name="employeeNumber" type="java.lang.Integer" /> 
-				<form-property name="compensation" type="java.lang.String" />      
-				<form-property name="size" type="java.lang.Integer" />      
-		</form-bean>
-		<form-bean name="requestsExtraWorkFormBean"
-				type="org.apache.struts.validator.DynaValidatorForm"
-                dynamic="true">
-				<form-property name="page" type="java.lang.Integer" initial="0"/>
-				<form-property name="beginDate" type="java.lang.String" />
-				<form-property name="endDate" type="java.lang.String" />    
-				<form-property name="cc" type="java.lang.String" />    
-				<form-property name="ccMoney" type="java.lang.String" />   
-				<form-property name="size" type="java.lang.Integer" />  
-				<form-property name="todo" type="java.lang.String" />  
-		</form-bean>
+		<form-bean name="employeeForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
+	    	<form-property name="employeeNumber" type="java.lang.String" />
+	    	<form-property name="method" type="java.lang.String" />
+	    	<form-property name="action" type="java.lang.String" />
+	    	<form-property name="page" type="java.lang.Integer"/>
+	    </form-bean>
 	</form-beans>
 	
 	<!-- ========== Global Forward Definitions =============================== -->
@@ -53,59 +23,16 @@
 		<action path="/index" 
 	      		  type="net.sourceforge.fenixedu.presentationTier.Action.base.FenixForwardAction" 
 	      		  forward="managementAssiduousnessWelcome"/>
-		<action path="/extraWork" 
-	      		  type="net.sourceforge.fenixedu.presentationTier.Action.base.FenixForwardAction" 
-	      		  forward="managementAssiduousnessWelcome.extraWork"/>
-		<action path="/managementMoneyCostCenter" 
-	      		type="net.sourceforge.fenixedu.presentationTier.Action.managementAssiduousness.ManagementMoneyCostCenterAction" 
-				name="moneyCostCenterFormBean"
-				parameter="method"
-				scope="request"
-				validate="true">
-			<forward name="inputYear" path="managementAssiduousnessWelcome.extraWork.inputYear"/>
-			<forward name="showMoneyCostCenterList" path="managementAssiduousnessWelcome.extraWork.moneyCostCenterList"/>
-			<forward name="showConfirmationMoneyCostCenterList" path="managementAssiduousnessWelcome.extraWork.confirmation.moneyCostCenterList"/>
-		</action>	
-		<action path="/workByEmployee" 
-	      		type="net.sourceforge.fenixedu.presentationTier.Action.managementAssiduousness.WorkByEmployeeAction" 
-				name="workByEmployeeFormBean"
-				parameter="method"
-				scope="request"
-				validate="true">
-				<forward name="inputDateAndEmployee" path="managementAssiduousnessWelcome.work.employee.input"/>
-				<forward name="workSheet" path="managementAssiduousnessWelcome.work.employee.sheet"/>
-		</action>
-		<action path="/extraWorkByEmployee" 
-	      		type="net.sourceforge.fenixedu.presentationTier.Action.managementAssiduousness.ExtraWorkByEmployeeAction" 
-				name="extraWorkByEmployeeFormBean"
-				parameter="method"
-				scope="request"
-				validate="true">
-				<forward name="inputDateAndEmployee" path="managementAssiduousnessWelcome.extraWork.employee.input"/>
-				<forward name="extraWorkSheet" path="managementAssiduousnessWelcome.extraWork.employee.sheet"/>
-		</action>	
-		<action path="/requestsExtraWork" 
-	      		type="net.sourceforge.fenixedu.presentationTier.Action.managementAssiduousness.RequestsExtraWorkAction" 
-				name="requestsExtraWorkFormBean"
+	    <action path="/viewAssiduousness" name="employeeForm"
+	    		type="net.sourceforge.fenixedu.presentationTier.Action.managementAssiduousness.ViewAssiduousnessDispatchAction" 
 				parameter="method"
 				scope="request"
 				validate="true"
-				input="/index.do">
-				<forward name="inputs" path="managementAssiduousnessWelcome.extraWork.requests.inputs"/>
-				<forward name="inputResquets" path="managementAssiduousnessWelcome.extraWork.requests.prepare"/>
-				<forward name="requestsExtraWorkConfirmation" path="managementAssiduousnessWelcome.extraWork.requests.confirmation"/>
-		</action>
-		<action path="/requestsExtraWorkManagement" 
-	      		type="net.sourceforge.fenixedu.presentationTier.Action.managementAssiduousness.RequestsExtraWorkAction" 
-				name="requestsExtraWorkFormBean"
-				parameter="method"
-				scope="request"
-				validate="true"
-				input="/requestsExtraWork.do?method=prepareInputs">
-				<forward name="inputs" path="managementAssiduousnessWelcome.extraWork.requests.inputs"/>
-				<forward name="inputResquets" path="managementAssiduousnessWelcome.extraWork.requests.prepare"/>
-				<forward name="requestsExtraWorkConfirmation" path="managementAssiduousnessWelcome.extraWork.requests.confirmation"/>
-		</action>
+				input="/viewAssiduousness.do?method=chooseEmployee&amp;page=0">
+			<forward name="index" path="managementAssiduousnessWelcome"/>
+			<forward name="choose-employee" path="choose-employee"/>
+			<forward name="show-employee-work-sheet" path="show-employee-work-sheet"/>
+		</action>	
  	</action-mappings>
 
 	<!-- ========== Controller Configuration ================================ -->
@@ -114,11 +41,9 @@
 	<!-- ========== Message Resources Definitions ============================ -->
 	<message-resources parameter="resources.AssiduousnessResources" null="false"/>
 	<message-resources parameter="resources.GlobalResources" key="GLOBAL_RESOURCES" null="false"/>
-	
 	<!-- ========== Plug Ins Configuration ================================= -->
 	<plug-in className="org.apache.struts.validator.ValidatorPlugIn">
-      <set-property property="pathnames" 
-		value="/WEB-INF/validator-rules.xml,/WEB-INF/fenix-validator-rules.xml,/WEB-INF/conf/validation-managementAssiduousness.xml"/>
+      <set-property property="pathnames" value="/WEB-INF/validator-rules.xml,/WEB-INF/fenix-validator-rules.xml,/WEB-INF/conf/validation-managementAssiduousness.xml"/>
 	</plug-in>
 
 	<plug-in className="org.apache.struts.tiles.TilesPlugin" >
@@ -127,4 +52,17 @@
 		<set-property property="moduleAware" value="true" />
 		<set-property property="definitions-parser-validate" value="true" />
 	</plug-in>    
+	<plug-in
+		className="net.sourceforge.fenixedu.renderers.plugin.RenderersPlugin">
+		<set-property property="config"
+			value="/WEB-INF/fenix-renderers-config.xml" />
+		<set-property property="schemas"
+			value="/WEB-INF/schemas/fenix-renderers-schemas.xml" />
+		<set-property property="metaObjectFactory"
+			value="net.sourceforge.fenixedu.presentationTier.renderers.factories.FenixMetaObjectFactory" />
+		<set-property property="userIdentityFactory"
+			value="net.sourceforge.fenixedu.presentationTier.renderers.factories.FenixUserIdentityFactory" />
+		<set-property property="schemaFactory"
+			value="net.sourceforge.fenixedu.presentationTier.renderers.factories.FenixSchemaFactory" />
+	</plug-in>
 </struts-config>
