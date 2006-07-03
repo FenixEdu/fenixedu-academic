@@ -41,6 +41,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.joda.time.DateTime;
 import org.joda.time.Duration;
+import org.joda.time.MutablePeriod;
 import org.joda.time.Period;
 import org.joda.time.TimeOfDay;
 import org.joda.time.YearMonthDay;
@@ -56,13 +57,12 @@ public class AssiduousnessDispatchAction extends FenixDispatchAction {
         Employee employee = userView.getPerson().getEmployee();
         if (employee == null) {
             // erro
-            System.out.println("não existe empregado");
             return mapping.findForward("index");
         }
         HashMap<String, WorkScheduleDaySheet> workScheduleDays = new HashMap<String, WorkScheduleDaySheet>();
         if (employee.getAssiduousness() != null) {
             if (employee.getAssiduousness().getCurrentSchedule() != null) {
-                ResourceBundle bundle = ResourceBundle.getBundle("resources.EmployeeResources");
+                ResourceBundle bundle = ResourceBundle.getBundle("resources.AssiduousnessResources");
                 WorkWeek workWeek = new WorkWeek(EnumSet.range(WeekDay.MONDAY, WeekDay.FRIDAY));
                 for (WorkSchedule workSchedule : employee.getAssiduousness().getCurrentSchedule()
                         .getWorkSchedules()) {
@@ -71,10 +71,11 @@ public class AssiduousnessDispatchAction extends FenixDispatchAction {
                 validateWorkScheduleDays(workScheduleDays, workWeek, bundle);
                 List<WorkScheduleDaySheet> workScheduleDaySheetList = new ArrayList<WorkScheduleDaySheet>(
                         workScheduleDays.values());
-                Collections.sort(workScheduleDaySheetList, new BeanComparator("weekDaySchedule"));
+                Collections.sort(workScheduleDaySheetList, new BeanComparator("weekDay"));
                 request.setAttribute("workScheduleDayList", workScheduleDaySheetList);
+                request.setAttribute("hasFixedPeriod", employee.getAssiduousness().getCurrentSchedule()
+                        .hasFixedPeriod());
             }
-            request.setAttribute("schedule", employee.getAssiduousness().getCurrentSchedule());
         }
         request.setAttribute("employee", employee);
         return mapping.findForward("show-employee-info");
@@ -85,7 +86,8 @@ public class AssiduousnessDispatchAction extends FenixDispatchAction {
         for (WeekDay weekDay : workWeek.getDays()) {
             if (workScheduleDays.get(weekDay.toString()) == null) {
                 WorkScheduleDaySheet workScheduleDaySheet = new WorkScheduleDaySheet();
-                workScheduleDaySheet.setWeekDaySchedule("");
+                workScheduleDaySheet.setSchedule("");
+                workScheduleDaySheet.setWeekDay(bundle.getString(weekDay.toString()+"_ACRONYM"));
                 workScheduleDays.put(weekDay.toString(), workScheduleDaySheet);
             }
         }
@@ -95,7 +97,8 @@ public class AssiduousnessDispatchAction extends FenixDispatchAction {
             HashMap<String, WorkScheduleDaySheet> workScheduleDays, ResourceBundle bundle) {
         for (WeekDay weekDay : workSchedule.getWorkWeek().getDays()) {
             WorkScheduleDaySheet workScheduleDaySheet = new WorkScheduleDaySheet();
-            workScheduleDaySheet.setWeekDaySchedule(workSchedule.getWorkScheduleType().getAcronym());
+            workScheduleDaySheet.setSchedule(workSchedule.getWorkScheduleType().getAcronym());
+            workScheduleDaySheet.setWeekDay(bundle.getString(weekDay.toString()+"_ACRONYM"));
             workScheduleDaySheet.setWorkSchedule(workSchedule);
             workScheduleDays.put(weekDay.toString(), workScheduleDaySheet);
         }
@@ -162,7 +165,6 @@ public class AssiduousnessDispatchAction extends FenixDispatchAction {
         Employee employee = userView.getPerson().getEmployee();
         if (employee == null) {
             // erro
-            System.out.println("não existe empregado");
             return mapping.findForward("index");
         }
         YearMonth yearMonth = null;
@@ -310,20 +312,13 @@ public class AssiduousnessDispatchAction extends FenixDispatchAction {
                         Collections.sort(clockings, new BeanComparator("date"));
                         DailyBalance dailyBalance = assiduousness.calculateDailyBalance(thisDay);
                         workDaySheet.setBalanceTime(dailyBalance.getTotalBalance().toPeriod());
-                        if (!thisDay.equals(today)
-                                || (thisDay.equals(today) && !workDaySheet.getBalanceTime().equals(
-                                        Duration.ZERO.minus(
-                                                workSchedule.getWorkScheduleType().getNormalWorkPeriod()
-                                                        .getWorkPeriodDuration()).toPeriod()))) {
-                            totalBalance = totalBalance.plus(dailyBalance.getTotalBalance());
-                        }
                         workDaySheet.setNotes(notes);
                         for (AssiduousnessRecord assiduousnessRecord : clockings) {
                             workDaySheet.addClockings(assiduousnessRecord.getDate().toTimeOfDay());
                         }
                         if (isDayHoliday) {
                             ResourceBundle bundle = ResourceBundle
-                                    .getBundle("resources.EmployeeResources");
+                                    .getBundle("resources.AssiduousnessResources");
                             workDaySheet.setWorkScheduleAcronym(bundle.getString("label.holiday"));
                         }
                         workDaySheet.setUnjustifiedTime(new Duration(0));
@@ -334,7 +329,11 @@ public class AssiduousnessDispatchAction extends FenixDispatchAction {
         }
         PeriodFormatter fmt = new PeriodFormatterBuilder().printZeroAlways().appendHours()
                 .appendSeparator(":").minimumPrintedDigits(2).appendMinutes().toFormatter();
-        request.setAttribute("totalBalance", fmt.print(totalBalance.toPeriod()));
+        MutablePeriod finalTotalBalance = new MutablePeriod(totalBalance.getMillis());
+        if (totalBalance.toPeriod().getMinutes() < 0) {
+            finalTotalBalance.setMinutes(-totalBalance.toPeriod().getMinutes());
+        }
+        request.setAttribute("totalBalance", fmt.print(finalTotalBalance));
         request.setAttribute("totalUnjustified", fmt.print(totalUnjustified.toPeriod()));
         request.setAttribute("subtitles", subtitles.values());
         return workSheet;
