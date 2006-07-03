@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.presentationTier.renderers;
 import net.sourceforge.fenixedu.presentationTier.renderers.components.TinyMceEditor;
 import net.sourceforge.fenixedu.presentationTier.renderers.htmlEditor.SafeHtmlConverter;
 import net.sourceforge.fenixedu.renderers.components.HtmlSimpleValueComponent;
+import net.sourceforge.fenixedu.renderers.components.converters.Converter;
 
 /**
  * This renderer has the same behaviour than {@link net.sourceforge.fenixedu.presentationTier.renderers.MultiLanguageTextInputRenderer}
@@ -52,10 +53,6 @@ public class MultiLanguageRichTextInputRenderer extends MultiLanguageTextInputRe
         editor.setColumns(getColumns());
         editor.setRows(getRows());
         
-        if (isSafe()) {
-            editor.setConverter(new SafeHtmlConverter());
-        }
-        
         return editor;
     }
 
@@ -66,4 +63,14 @@ public class MultiLanguageRichTextInputRenderer extends MultiLanguageTextInputRe
         textInput.setId(textInput.getName());
     }
 
+    @Override
+    protected Converter getConverter() {
+        if (isSafe()) {
+            return new MultiLanguageStringSafeHtmlConverter();
+        }
+        else {
+            return super.getConverter();
+        }
+    }
+    
 }

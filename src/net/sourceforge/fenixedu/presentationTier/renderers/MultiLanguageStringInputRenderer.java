@@ -214,6 +214,10 @@ public class MultiLanguageStringInputRenderer extends InputRenderer {
     protected void configureInputComponent(HtmlSimpleValueComponent textInput) {
     }
 
+    protected Converter getConverter() {
+        return new MultiLanguageStringConverter();
+    }
+
     @Override
     protected Layout getLayout(Object object, Class type) {
         MetaObject metaObject = getInputContext().getMetaObject();
@@ -271,7 +275,7 @@ public class MultiLanguageStringInputRenderer extends InputRenderer {
             HtmlHiddenField hiddenField = new HtmlHiddenField();
             hiddenField.setTargetSlot(key);
             hiddenField.setController(new MultiLanguageStringController());
-            hiddenField.setConverter(new MultiLanguageStringConverter());
+            hiddenField.setConverter(getConverter());
             container.addChild(hiddenField);           
             
             // add link
@@ -387,26 +391,6 @@ public class MultiLanguageStringInputRenderer extends InputRenderer {
             }
         }
 
-        private class MultiLanguageStringConverter extends Converter {
-
-            @Override
-            public Object convert(Class type, Object value) {
-                String text = (String) value;
-
-                MultiLanguageString mls = new MultiLanguageString();
-                
-                Collection<LanguageBean> allLanguageBean = LanguageBean.importAllFromString(text);
-                for (LanguageBean bean : allLanguageBean) {
-                    if (bean.value != null && bean.value.trim().length() != 0) {
-                        mls.setContent(bean.language, bean.value);
-                    }
-                }
-                
-                return mls;
-            }
-            
-        }
-
         private class UpdateLanguageController extends HtmlController {
             private final HtmlSimpleValueComponent input;
             private final Integer index;
@@ -482,6 +466,26 @@ public class MultiLanguageStringInputRenderer extends InputRenderer {
                 map.remove(this.index);
             }
             
+        }
+        
+    }
+
+    public static class MultiLanguageStringConverter extends Converter {
+
+        @Override
+        public Object convert(Class type, Object value) {
+            String text = (String) value;
+
+            MultiLanguageString mls = new MultiLanguageString();
+            
+            Collection<LanguageBean> allLanguageBean = LanguageBean.importAllFromString(text);
+            for (LanguageBean bean : allLanguageBean) {
+                if (bean.value != null && bean.value.trim().length() != 0) {
+                    mls.setContent(bean.language, bean.value);
+                }
+            }
+            
+            return mls;
         }
         
     }
