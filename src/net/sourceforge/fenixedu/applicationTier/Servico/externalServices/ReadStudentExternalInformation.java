@@ -41,6 +41,8 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.Transformer;
 
+import pt.utl.ist.fenix.tools.util.StringAppender;
+
 /**
  * @author <a href="mailto:goncalo@ist.utl.pt">Goncalo Luiz </a>
  * 
@@ -180,6 +182,13 @@ public class ReadStudentExternalInformation extends Service
 						InfoEnrolmentEvaluation infoEnrollmentEvaluation = getEnrollmentGrade.run(enrollment);
 						info.setFinalGrade(infoEnrollmentEvaluation.getGrade());
 						enrollments.add(info);
+						System.out.println(StringAppender.append("Adding: ",
+								info.getCourse().getName(),
+								" ", info.getFinalGrade(),
+								" ", info.getCourse().getCode(),
+								" ", info.getCourse().getCredits(),
+								" ", info.getCourse().getECTSCredits(),
+								" ", info.getCourse().getWeigth()));
 					}
 				}
 			}
