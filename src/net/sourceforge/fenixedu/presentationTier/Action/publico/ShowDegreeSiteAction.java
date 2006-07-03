@@ -6,13 +6,13 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
-import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeInfo;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.InfoOldInquiriesSummary;
@@ -83,7 +83,21 @@ public class ShowDegreeSiteAction extends FenixContextDispatchAction {
             
             return executionDegree.getExecutionYear();
         } else {
-            return ExecutionYear.readCurrentExecutionYear();
+            final ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();
+            
+            List<ExecutionYear> whenDegreeIsExecuted = degree.getDegreeCurricularPlansExecutionYears();
+            final ExecutionYear firstExecutionYear = whenDegreeIsExecuted.get(0);
+            final ExecutionYear lastExecutionYear = whenDegreeIsExecuted.get(whenDegreeIsExecuted.size() - 1);
+            
+            if (whenDegreeIsExecuted.contains(whenDegreeIsExecuted)) {
+                return currentExecutionYear;
+            } else {
+                if (currentExecutionYear.isBefore(firstExecutionYear)) {
+                    return firstExecutionYear;
+                } else {
+                    return lastExecutionYear;
+                }
+            }
         }
     }
 
@@ -91,12 +105,10 @@ public class ShowDegreeSiteAction extends FenixContextDispatchAction {
         // degree info
         DegreeInfo degreeInfoToShow = executionYearToShow.getDegreeInfo(degree);
         if (degreeInfoToShow == null) {
-            degreeInfoToShow = degree.getMostRecentDegreeInfo();
+            degreeInfoToShow = degree.getMostRecentDegreeInfo(executionYearToShow);
         }
         if (degreeInfoToShow != null) {
-            final InfoDegreeInfo infoDegreeInfo = InfoDegreeInfo.newInfoFromDomain(degreeInfoToShow);
-            infoDegreeInfo.prepareEnglishPresentation(getLocale(request));
-            request.setAttribute("infoDegreeInfo", infoDegreeInfo);
+            request.setAttribute("degreeInfo", degreeInfoToShow);
         }
         
         // campus

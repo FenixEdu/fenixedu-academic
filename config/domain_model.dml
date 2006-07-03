@@ -700,7 +700,7 @@ class net.sourceforge.fenixedu.domain.DegreeCurricularPlan extends net.sourcefor
 class net.sourceforge.fenixedu.domain.DegreeInfo extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer keyDegree;
 	Integer keyExecutionYear;
-/*
+
     MultiLanguageString description;
     MultiLanguageString history;
     MultiLanguageString objectives;
@@ -708,6 +708,10 @@ class net.sourceforge.fenixedu.domain.DegreeInfo extends net.sourceforge.fenixed
     MultiLanguageString professionalExits;
     MultiLanguageString operationalRegime;
     MultiLanguageString gratuity;
+    MultiLanguageString schoolCalendar;
+    MultiLanguageString candidacyPeriod;
+    MultiLanguageString selectionResultDeadline;
+    MultiLanguageString enrolmentPeriod;
     MultiLanguageString additionalInfo;
     MultiLanguageString links;
 
@@ -724,8 +728,8 @@ class net.sourceforge.fenixedu.domain.DegreeInfo extends net.sourceforge.fenixed
 
     MultiLanguageString qualificationLevel;
     MultiLanguageString recognitions;
-*/
 
+/*
     String description;
     String history;
     String objectives;
@@ -774,7 +778,8 @@ class net.sourceforge.fenixedu.domain.DegreeInfo extends net.sourceforge.fenixed
     String candidacyDocumentsEn;
 
     String qualificationLevelEn;
-    String recognitionsEn;
+    String recognitionsEn;    
+*/    
 }
 
 

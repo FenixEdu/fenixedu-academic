@@ -53,26 +53,26 @@
 	<bean:write name="executionYear" property="year" />
 </h2>
 
-<logic:notPresent name="infoDegreeInfo">
+<logic:notPresent name="degreeInfo">
 	<p><em><bean:message bundle="DEFAULT" key="error.public.DegreeInfoNotPresent"/></em></p>
 </logic:notPresent>
-<logic:present name="infoDegreeInfo">	
+<logic:present name="degreeInfo">	
 	<!-- QUALIFICATION LEVEL -->
-	<logic:notEmpty name="infoDegreeInfo" property="qualificationLevel">
+	<logic:notEmpty name="degreeInfo" property="qualificationLevel">
 		<h2 class="arrow_bullet"><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.qualificationLevel" /></h2>  
-		<p><bean:write name="infoDegreeInfo" property="qualificationLevel" filter="false" /></p>
+		<p><bean:write name="degreeInfo" property="qualificationLevel.content" filter="false" /></p>
 	</logic:notEmpty>
 	
 	<!-- RECOGNITIONS -->
-	<logic:notEmpty name="infoDegreeInfo" property="recognitions">
+	<logic:notEmpty name="degreeInfo" property="recognitions">
 		<h2 class="arrow_bullet"><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.recognitions" /></h2>  
-		<p><bean:write name="infoDegreeInfo" property="recognitions" filter="false" /></p>
+		<p><bean:write name="degreeInfo" property="recognitions.content" filter="false" /></p>
 	</logic:notEmpty>
   
 	<div class="clear"></div>
 
-	<logic:empty name="infoDegreeInfo" property="qualificationLevel">
-	<logic:empty name="infoDegreeInfo" property="recognitions">
+	<logic:empty name="degreeInfo" property="qualificationLevel">
+	<logic:empty name="degreeInfo" property="recognitions">
 		<p><i><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="not.available" /></i></p>
 	</logic:empty>
 	</logic:empty>

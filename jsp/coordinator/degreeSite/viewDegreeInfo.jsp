@@ -19,7 +19,12 @@
 	</logic:present>		
 
 	<logic:equal name="info" value="description">
-		<fr:edit type="net.sourceforge.fenixedu.domain.DegreeInfo" name="currentDegreeInfo" schema="degree.info.description" nested="true"/>
+		<fr:edit type="net.sourceforge.fenixedu.domain.DegreeInfo" name="currentDegreeInfo" schema="degree.info.description" nested="true">
+		    <fr:layout>
+	    	    <fr:property name="classes" value="style1"/>
+	        	<fr:property name="columnClasses" value="listClasses"/>
+		    </fr:layout>
+		</fr:edit>
 	</logic:equal>
 
 	<logic:equal name="info" value="acess">

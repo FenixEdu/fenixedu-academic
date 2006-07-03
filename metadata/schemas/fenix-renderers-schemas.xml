@@ -514,19 +514,7 @@
 			<property name="columns" value="75"/>
 			<property name="rows" value="30"/>
 		</slot>
-		<slot name="descriptionEn" layout="rich-text">
-			<property name="safe" value="true"/>
-			<property name="config" value="advanced"/>
-			<property name="columns" value="75"/>
-			<property name="rows" value="30"/>
-		</slot>
 		<slot name="history" layout="rich-text">
-			<property name="safe" value="true"/>
-			<property name="config" value="advanced"/>
-			<property name="columns" value="75"/>
-			<property name="rows" value="30"/>
-		</slot>
-		<slot name="historyEn" layout="rich-text">
 			<property name="safe" value="true"/>
 			<property name="config" value="advanced"/>
 			<property name="columns" value="75"/>
@@ -538,19 +526,7 @@
 			<property name="columns" value="75"/>
 			<property name="rows" value="30"/>
 		</slot>
-		<slot name="objectivesEn" layout="rich-text">
-			<property name="safe" value="true"/>
-			<property name="config" value="advanced"/>
-			<property name="columns" value="75"/>
-			<property name="rows" value="30"/>
-		</slot>
 		<slot name="designedFor" layout="rich-text">
-			<property name="safe" value="true"/>
-			<property name="config" value="advanced"/>
-			<property name="columns" value="75"/>
-			<property name="rows" value="30"/>
-		</slot>
-		<slot name="designedForEn" layout="rich-text">
 			<property name="safe" value="true"/>
 			<property name="config" value="advanced"/>
 			<property name="columns" value="75"/>
@@ -562,19 +538,7 @@
 			<property name="columns" value="75"/>
 			<property name="rows" value="30"/>			
 		</slot>
-		<slot name="professionalExitsEn" layout="rich-text">
-			<property name="safe" value="true"/>
-			<property name="config" value="advanced"/>
-			<property name="columns" value="75"/>
-			<property name="rows" value="30"/>
-		</slot>
 		<slot name="operationalRegime" layout="rich-text">
-			<property name="safe" value="true"/>
-			<property name="config" value="advanced"/>
-			<property name="columns" value="75"/>
-			<property name="rows" value="30"/>
-		</slot>
-		<slot name="operationalRegimeEn" layout="rich-text">
 			<property name="safe" value="true"/>
 			<property name="config" value="advanced"/>
 			<property name="columns" value="75"/>
@@ -586,18 +550,7 @@
 			<property name="columns" value="75"/>
 			<property name="rows" value="30"/>
 		</slot>
-		<slot name="gratuityEn" layout="rich-text">
-			<property name="safe" value="true"/>
-			<property name="config" value="advanced"/>
-			<property name="columns" value="75"/>
-			<property name="rows" value="30"/>
-		</slot>
 		<slot name="schoolCalendar" layout="rich-text">
-			<property name="safe" value="true"/>
-			<property name="config" value="advanced"/>
-			<property name="columns" value="75"/>
-		</slot>
-		<slot name="schoolCalendarEn" layout="rich-text">
 			<property name="safe" value="true"/>
 			<property name="config" value="advanced"/>
 			<property name="columns" value="75"/>
@@ -607,17 +560,7 @@
 			<property name="config" value="advanced"/>
 			<property name="columns" value="75"/>
 		</slot>
-		<slot name="candidacyPeriodEn" layout="rich-text">
-			<property name="safe" value="true"/>
-			<property name="config" value="advanced"/>
-			<property name="columns" value="75"/>
-		</slot>
 		<slot name="selectionResultDeadline" layout="rich-text">
-			<property name="safe" value="true"/>
-			<property name="config" value="advanced"/>
-			<property name="columns" value="75"/>
-		</slot>
-		<slot name="selectionResultDeadlineEn" layout="rich-text">
 			<property name="safe" value="true"/>
 			<property name="config" value="advanced"/>
 			<property name="columns" value="75"/>
@@ -627,27 +570,12 @@
 			<property name="config" value="advanced"/>
 			<property name="columns" value="75"/>
 		</slot>
-		<slot name="enrolmentPeriodEn" layout="rich-text">
-			<property name="safe" value="true"/>
-			<property name="config" value="advanced"/>
-			<property name="columns" value="75"/>
-		</slot>
 		<slot name="additionalInfo" layout="rich-text">
 			<property name="safe" value="true"/>
 			<property name="config" value="advanced"/>
 			<property name="columns" value="75"/>
 		</slot>
-		<slot name="additionalInfoEn" layout="rich-text">
-			<property name="safe" value="true"/>
-			<property name="config" value="advanced"/>
-			<property name="columns" value="75"/>
-		</slot>
 		<slot name="links" layout="rich-text">
-			<property name="safe" value="true"/>
-			<property name="config" value="advanced"/>
-			<property name="columns" value="75"/>
-		</slot>
-		<slot name="linksEn" layout="rich-text">
 			<property name="safe" value="true"/>
 			<property name="config" value="advanced"/>
 			<property name="columns" value="75"/>
@@ -660,17 +588,7 @@
 			<property name="config" value="advanced"/>
 			<property name="columns" value="75"/>
 		</slot>
-		<slot name="testIngressionEn" layout="rich-text">
-			<property name="safe" value="true"/>
-			<property name="config" value="advanced"/>
-			<property name="columns" value="75"/>
-		</slot>
 		<slot name="classifications" layout="rich-text">
-			<property name="safe" value="true"/>
-			<property name="config" value="advanced"/>
-			<property name="columns" value="75"/>
-		</slot>
-		<slot name="classificationsEn" layout="rich-text">
 			<property name="safe" value="true"/>
 			<property name="config" value="advanced"/>
 			<property name="columns" value="75"/>
@@ -680,17 +598,7 @@
 			<property name="config" value="advanced"/>
 			<property name="columns" value="75"/>
 		</slot>
-		<slot name="accessRequisitesEn" layout="rich-text">
-			<property name="safe" value="true"/>
-			<property name="config" value="advanced"/>
-			<property name="columns" value="75"/>
-		</slot>
 		<slot name="candidacyDocuments" layout="rich-text">
-			<property name="safe" value="true"/>
-			<property name="config" value="advanced"/>
-			<property name="columns" value="75"/>
-		</slot>
-		<slot name="candidacyDocumentsEn" layout="rich-text">
 			<property name="safe" value="true"/>
 			<property name="config" value="advanced"/>
 			<property name="columns" value="75"/>
@@ -722,19 +630,7 @@
 			<property name="columns" value="75"/>
 			<property name="rows" value="30"/>
 		</slot>
-		<slot name="qualificationLevelEn" layout="rich-text">
-			<property name="safe" value="true"/>
-			<property name="config" value="advanced"/>
-			<property name="columns" value="75"/>
-			<property name="rows" value="30"/>
-		</slot>
 		<slot name="recognitions" layout="rich-text">
-			<property name="safe" value="true"/>
-			<property name="config" value="advanced"/>
-			<property name="columns" value="75"/>
-			<property name="rows" value="30"/>
-		</slot>
-		<slot name="recognitionsEn" layout="rich-text">
 			<property name="safe" value="true"/>
 			<property name="config" value="advanced"/>
 			<property name="columns" value="75"/>

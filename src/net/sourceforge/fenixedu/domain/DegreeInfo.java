@@ -17,25 +17,19 @@ public class DegreeInfo extends DegreeInfo_Base {
 	    this(degreeInfo.getDegree(), executionYear);
         
         setDescription(degreeInfo.getDescription());
-        setObjectives(degreeInfo.getObjectives());
         setHistory(degreeInfo.getHistory());
+        setObjectives(degreeInfo.getObjectives());
+        setDesignedFor(degreeInfo.getDesignedFor());
         setProfessionalExits(degreeInfo.getProfessionalExits());
+        setOperationalRegime(degreeInfo.getOperationalRegime());
+        setGratuity(degreeInfo.getGratuity());
         setAdditionalInfo(degreeInfo.getAdditionalInfo());
         setLinks(degreeInfo.getLinks());
         
-        setDescriptionEn(degreeInfo.getDescriptionEn());
-        setObjectivesEn(degreeInfo.getObjectivesEn());
-        setHistoryEn(degreeInfo.getHistoryEn());
-        setProfessionalExitsEn(degreeInfo.getProfessionalExitsEn());
-        setAdditionalInfoEn(degreeInfo.getAdditionalInfoEn());
-        setLinksEn(degreeInfo.getLinksEn());
-        
         setTestIngression(degreeInfo.getTestIngression());
         setClassifications(degreeInfo.getClassifications());
-        
-        setTestIngressionEn(degreeInfo.getTestIngressionEn());
-        setClassificationsEn(degreeInfo.getClassificationsEn());
-        
+        setAccessRequisites(degreeInfo.getAccessRequisites());
+        setCandidacyDocuments(degreeInfo.getCandidacyDocuments());
         setDriftsInitial(degreeInfo.getDriftsInitial());
         setDriftsFirst(degreeInfo.getDriftsFirst());
         setDriftsSecond(degreeInfo.getDriftsSecond());
@@ -45,9 +39,20 @@ public class DegreeInfo extends DegreeInfo_Base {
         
         setQualificationLevel(degreeInfo.getQualificationLevel());
         setRecognitions(degreeInfo.getRecognitions());
-
+/*
+        setDescriptionEn(degreeInfo.getDescriptionEn());
+        setHistoryEn(degreeInfo.getHistoryEn());
+        setObjectivesEn(degreeInfo.getObjectivesEn());
+        setProfessionalExitsEn(degreeInfo.getProfessionalExitsEn());
+        setAdditionalInfoEn(degreeInfo.getAdditionalInfoEn());
+        setLinksEn(degreeInfo.getLinksEn());
+        
+        setTestIngressionEn(degreeInfo.getTestIngressionEn());
+        setClassificationsEn(degreeInfo.getClassificationsEn());
+        
         setQualificationLevelEn(degreeInfo.getQualificationLevelEn());
         setRecognitionsEn(degreeInfo.getRecognitionsEn());
+*/
     }
 
     public void delete() {
