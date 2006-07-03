@@ -197,41 +197,43 @@ public class RenderersRequestProcessor extends TilesRequestProcessor {
     protected ActionForward processActionPerform(HttpServletRequest request, HttpServletResponse response, Action action, ActionForm form, ActionMapping mapping) throws IOException, ServletException {
         HttpServletRequest initialRequest = RenderersRequestProcessor.currentRequest.get();
         
-        try {
-            if (hasViewState(initialRequest)) {
-     
+        if (hasViewState(initialRequest)) {
+            try {
                 setViewStateProcessed(request);
                 
                 ActionForward forward = ComponentLifeCycle.execute(initialRequest);
                 if (forward != null) {
                     return forward;
                 }
+    
+                return super.processActionPerform(request, response, action, form, mapping);
             }
-
-            // TODO: exception thrown here may cause unexpected behaviour
+            catch (Exception e) {
+                if (action instanceof ExceptionHandler) {
+                    	ExceptionHandler handler = (ExceptionHandler) action;
+                    	
+                    	// TODO: ensure that a view state is present when an exception occurs
+                    	IViewState viewState = RenderUtils.getViewState(); 
+                    	ViewDestination destination = viewState.getInputDestination();
+                    	ActionForward input = destination.getActionForward();
+                    	
+                    	ActionForward forward = handler.processException(request, mapping, input, e);
+                    	if (forward != null) {
+                    	    return forward;
+                    	}
+                    	else {
+                    	    return processException(request, response, e, form, mapping);
+                    	}
+                }
+                else {
+                    return processException(request, response, e, form, mapping);
+                }
+            }
+        }
+        else {
             return super.processActionPerform(request, response, action, form, mapping);
         }
-        catch (Exception e) {
-            if (action instanceof ExceptionHandler) {
-                	ExceptionHandler handler = (ExceptionHandler) action;
-                	
-                	// TODO: ensure that a view state is present when an exception occurs
-                	IViewState viewState = RenderUtils.getViewState(); 
-                	ViewDestination destination = viewState.getInputDestination();
-                	ActionForward input = destination.getActionForward();
-                	
-                	ActionForward forward = handler.processException(request, mapping, input, e);
-                	if (forward != null) {
-                	    return forward;
-                	}
-                	else {
-                	    return processException(request, response, e, form, mapping);
-                	}
-            }
-            else {
-                return processException(request, response, e, form, mapping);
-            }
-        }
+    
     }
 
     protected boolean hasViewState(HttpServletRequest request) {
