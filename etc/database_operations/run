@@ -27,5 +27,4 @@ function executeWithTempFile() {
 	echo
 }
 
-execute "MultiLanguageString DegreeInfo" multiLanguageStringDegreeInfo.sql
 execute "Alter File Table" alterFileTable.sql
