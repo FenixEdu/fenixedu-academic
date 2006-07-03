@@ -1,7 +1,9 @@
 package net.sourceforge.fenixedu.renderers.plugin;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.Collection;
+import java.util.Date;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
@@ -209,6 +211,8 @@ public class RenderersRequestProcessor extends TilesRequestProcessor {
                 return super.processActionPerform(request, response, action, form, mapping);
             }
             catch (Exception e) {
+            	System.out.println(SimpleDateFormat.getInstance().format(new Date()));
+            	e.printStackTrace();
                 if (action instanceof ExceptionHandler) {
                     	ExceptionHandler handler = (ExceptionHandler) action;
                     	
