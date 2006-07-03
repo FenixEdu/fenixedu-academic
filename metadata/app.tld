@@ -516,4 +516,51 @@
 
   </tag>  
   
+  <!-- Label formatter tag -->
+  <tag>
+  
+    <name>labelFormatter</name>
+    <tagclass>net.sourceforge.fenixedu.presentationTier.TagLib.LabelFormatterTagLib</tagclass>
+    <bodycontent>JSP</bodycontent>
+
+    <attribute>
+      <name>name</name>
+      <required>true</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    
+    <attribute>
+      <name>property</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    
+    <attribute>
+      <name>scope</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+  </tag>  
+  
+  <!-- Generic Property Tag -->
+  <tag>
+  
+    <name>property</name>
+    <tagclass>net.sourceforge.fenixedu.presentationTier.TagLib.PropertyTag</tagclass>
+    <bodycontent>empty</bodycontent>
+
+    <attribute>
+      <name>name</name>
+      <required>true</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    
+    <attribute>
+      <name>value</name>
+      <required>true</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  </tag>    
+  
 </taglib>

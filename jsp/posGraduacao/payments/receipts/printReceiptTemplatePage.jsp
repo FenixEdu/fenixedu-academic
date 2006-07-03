@@ -2,6 +2,7 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
+<%@ taglib uri="/WEB-INF/app.tld" prefix="app" %>
 
 <html>
 <head>
@@ -109,14 +110,22 @@
 	<tr>
 		<td>
 		<table align="right">
-
+				<tr>
+					<td>&nbsp;</td>
+				</tr>
+				<tr>
+					<td>&nbsp;</td>
+				</tr>
 			<logic:iterate id="entry" name="sortedEntries">
 				<tr>
-					<td><bean:message name="entry" property="entryType.name"
-						bundle="ENUMERATION_RESOURCES" /> &nbsp;<bean:write name="entry"
-						property="description" /></td>
-					<td>.........................................</td>
-					&nbsp;
+					<td>
+						<app:labelFormatter name="entry" property="description">
+	      					<app:property name="enum" value="ENUMERATION_RESOURCES"/>
+        					<app:property name="application" value="APPLICATION_RESOURCES"/>
+							<app:property name="default" value="APPLICATION_RESOURCES"/>
+						</app:labelFormatter>
+					</td>
+					<td>.........................................&nbsp;</td>
 					<td><bean:define id="amount" name="entry" property="amount"
 						type="java.math.BigDecimal" /> <%=amount.toPlainString()%> &nbsp;<bean:message
 						key="label.currencySymbol" /></td>
@@ -129,8 +138,7 @@
 			</tr>
 			<tr>
 				<td><strong>A liquidar a importância de </strong></td>
-				<td>_____________________</td>
-				&nbsp;
+				<td>_____________________&nbsp;</td>
 				<td><strong><bean:define id="totalAmount" name="receipt"
 					property="totalAmount" type="java.math.BigDecimal" /><%=totalAmount.toPlainString()%>&nbsp;<bean:message
 					key="label.currencySymbol" /></strong></td>

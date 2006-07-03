@@ -2,6 +2,7 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
+<%@ taglib uri="/WEB-INF/app.tld" prefix="app" %>
 
 <html>
     <head>
@@ -79,14 +80,16 @@
 	 <tr>
 	 <td> 
 	   <table align="right">
-
         	<logic:iterate id="entryDTO" name="paymentsManagementDTO" property="entryDTOs" >
         		<tr>
         			<td>
-        				<bean:message name="entryDTO" property="entryType.name" bundle="ENUMERATION_RESOURCES" />
-        				&nbsp;<bean:write name="entryDTO" property="description"/>
+        				<app:labelFormatter name="entryDTO" property="description">
+        					<app:property name="enum" value="ENUMERATION_RESOURCES"/>
+        					<app:property name="application" value="APPLICATION_RESOURCES"/>
+							<app:property name="default" value="APPLICATION_RESOURCES"/>	
+        				</app:labelFormatter>
         			</td>
-        			<td>.........................................</td> &nbsp;
+        			<td>...................................&nbsp;</td>
         			<td> <bean:define id="amountToPay" name="entryDTO" property="amountToPay" type="java.math.BigDecimal" /> <%= amountToPay.toPlainString() %> &nbsp;<bean:message key="label.currencySymbol"/></td>
         		</tr>
         	</logic:iterate >
@@ -97,7 +100,7 @@
         </tr>
     	<tr>
     	  	<td><strong>A liquidar a importância de </strong></td>
-   			<td>_____________________</td>&nbsp;
+   			<td>_________________&nbsp;</td>
    			<td><strong><bean:define id="totalAmountToPay" name="paymentsManagementDTO" property="totalAmountToPay" type="java.math.BigDecimal"/><%= totalAmountToPay.toPlainString() %>&nbsp;<bean:message key="label.currencySymbol"/></strong></td>
     	</tr>
 	   </table>
@@ -139,7 +142,7 @@
 	 
      <tr>	 
 	 <td>
-		 <jsp:include page="./commons/footer.jsp" flush="true" />
+		 <jsp:include page="/posGraduacao/payments/commons/footer.jsp" flush="true" />
     </td>
     </tr>
     </table>
