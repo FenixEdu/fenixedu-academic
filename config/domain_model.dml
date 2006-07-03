@@ -1640,6 +1640,7 @@ class net.sourceforge.fenixedu.domain.File extends net.sourceforge.fenixedu.doma
   String checksumAlgorithm;
   Integer size;
   String externalStorageIdentification;
+  DateTime uploadTime;
   Group permittedGroup;
 }
 
@@ -3408,7 +3409,6 @@ class net.sourceforge.fenixedu.domain.candidacy.CandidacySituation extends net.s
 	
 class net.sourceforge.fenixedu.domain.candidacy.CandidacyDocument extends net.sourceforge.fenixedu.domain.DomainObject {
 	String documentDescription;
-	DateTime fileUploadTime;
 	Integer keyCandidacy;
 	Integer keyFile;	
 }

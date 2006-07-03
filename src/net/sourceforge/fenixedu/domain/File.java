@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.domain;
 
+import org.joda.time.DateTime;
+
 import net.sourceforge.fenixedu.domain.accessControl.Group;
 
 public abstract class File extends File_Base {
@@ -19,6 +21,7 @@ public abstract class File extends File_Base {
         setSize(size);
         setExternalStorageIdentification(externalStorageIdentification);
         setPermittedGroup(permittedGroup);
+        setUploadTime(new DateTime());
     }
 
     public boolean isPersonAllowedToAccess(Person person) {
