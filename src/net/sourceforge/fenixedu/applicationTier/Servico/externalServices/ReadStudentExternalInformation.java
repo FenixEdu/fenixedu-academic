@@ -36,6 +36,7 @@ import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
+import net.sourceforge.fenixedu.util.DateFormatUtil;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
@@ -260,7 +261,7 @@ public class ReadStudentExternalInformation extends Service
 	{
 		InfoExternalPersonInfo info = new InfoExternalPersonInfo();
 		info.setAddress(this.buildInfoExternalAdressInfo(person));
-		info.setBirthday(person.getNascimento().toString());
+		info.setBirthday(DateFormatUtil.format("yyyy-MM-dd", person.getNascimento());
 		info.setCelularPhone(person.getTelemovel());
 		info.setCitizenship(this.builsExternalCitizenshipInfo(person));
 		info.setEmail(person.getEmail());
@@ -285,11 +286,11 @@ public class ReadStudentExternalInformation extends Service
 		info.setNumber(person.getNumeroDocumentoIdentificacao());
 		if (person.getDataEmissaoDocumentoIdentificacao() != null)
 		{
-			info.setEmitionDate(person.getDataEmissaoDocumentoIdentificacao().toString());
+			info.setEmitionDate(DateFormatUtil.format("yyyy-MM-dd HH:mm:ss.sss", person.getDataEmissaoDocumentoIdentificacao()));
 		}
 		if (person.getDataValidadeDocumentoIdentificacao() != null)
 		{
-			info.setExpiryDate(person.getDataValidadeDocumentoIdentificacao().toString());
+			info.setExpiryDate(DateFormatUtil.format("yyyy-MM-dd HH:mm:ss.sss", person.getDataValidadeDocumentoIdentificacao()));
 		}
 		if (person.getLocalEmissaoDocumentoIdentificacao() != null)
 		{
