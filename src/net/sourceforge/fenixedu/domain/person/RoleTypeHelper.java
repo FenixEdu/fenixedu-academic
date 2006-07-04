@@ -1,5 +1,8 @@
 package net.sourceforge.fenixedu.domain.person;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class RoleTypeHelper {
 
 	private RoleTypeHelper() {
@@ -40,5 +43,25 @@ public class RoleTypeHelper {
 		}
 		retval.append("\"}");
 		return retval.toString();
+	}
+	
+	public static List<String> enumRoleTypeNames()
+	{
+		ArrayList<String> retVal=new ArrayList<String>(RoleType.values().length);
+		for(RoleType r:RoleType.values())
+		{
+			retVal.add(r.name());
+		}
+		return retVal;
+	}
+	
+	public static List<String> enumRoleTypeLabels()
+	{
+		ArrayList<String> retVal=new ArrayList<String>(RoleType.values().length);
+		for(RoleType r:RoleType.values())
+		{
+			retVal.add(r.getDefaultLabel());
+		}
+		return retVal;
 	}
 }
