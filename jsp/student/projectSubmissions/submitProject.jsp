@@ -24,8 +24,8 @@
 <bean:define id="attendsId" name="attends" property="idInternal" />
 <bean:define id="projectId" name="project" property="idInternal" />
 
-<fr:create id="createProjectSubmission"
-	type="net.sourceforge.fenixedu.dataTransferObject.projectSubmission.CreateProjectSubmissionBean"
+<fr:edit id="createProjectSubmission"
+	name="projectSubmission"
 	schema="projectSubmission.create"
 	action="<%="/projectSubmission.do?method=submitProject&attendsId=" + attendsId + "&projectId=" + projectId%>">
 
@@ -39,4 +39,4 @@
 	<fr:hidden slot="person" name="person" />
 	
     <fr:destination name="cancel" path="<%= "/projectSubmission.do?method=viewProjectSubmissions&attendsId=" + attendsId  + "&projectId="+ projectId%>"/>
-</fr:create>
+</fr:edit>

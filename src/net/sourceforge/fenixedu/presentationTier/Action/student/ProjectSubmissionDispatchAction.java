@@ -102,6 +102,7 @@ public class ProjectSubmissionDispatchAction extends FenixDispatchAction {
         request.setAttribute("project", getProject(request));
         request.setAttribute("studentGroup", studentGroup);
         request.setAttribute("person", getUserView(request).getPerson());
+        request.setAttribute("projectSubmission", new CreateProjectSubmissionBean());
 
         return mapping.findForward("submitProject");
 
