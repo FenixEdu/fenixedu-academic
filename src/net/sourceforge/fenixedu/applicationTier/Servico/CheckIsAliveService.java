@@ -48,9 +48,10 @@ public class CheckIsAliveService extends Service {
             if (CHECK_DB) {
                 checkFenixDatabaseOps();
             }
-            if (CHECK_SLIDE) {
-                checkSlideDatabaseOps();
-            }
+// Don't check slide db. The data has been moved to the dspace repository.
+//            if (CHECK_SLIDE) {
+//                checkSlideDatabaseOps();
+//            }
             return Boolean.TRUE;
         } catch (Throwable t) {
         	t.printStackTrace();
