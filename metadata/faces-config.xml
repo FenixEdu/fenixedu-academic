@@ -2157,7 +2157,7 @@
 		<from-view-id>/manager/bolonha/competenceCourses/showCompetenceCourse.jsp</from-view-id>
 		<navigation-case>
 			<from-outcome>competenceCoursesManagement</from-outcome>
-			<to-view-id>/bolonhaManager/competenceCourses/competenceCoursesManagement.jsp</to-view-id>
+			<to-view-id>/manager/bolonha/competenceCourses/competenceCoursesManagement.jsp</to-view-id>
 		</navigation-case>
 	</navigation-rule>
 	<navigation-rule>
