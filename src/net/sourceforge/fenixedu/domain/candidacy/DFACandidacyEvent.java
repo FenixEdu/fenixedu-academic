@@ -2,7 +2,9 @@ package net.sourceforge.fenixedu.domain.candidacy;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import net.sourceforge.fenixedu.dataTransferObject.accounting.EntryDTO;
 import net.sourceforge.fenixedu.domain.Degree;
@@ -12,6 +14,7 @@ import net.sourceforge.fenixedu.domain.User;
 import net.sourceforge.fenixedu.domain.accounting.Account;
 import net.sourceforge.fenixedu.domain.accounting.AccountType;
 import net.sourceforge.fenixedu.domain.accounting.AccountingTransaction;
+import net.sourceforge.fenixedu.domain.accounting.Entry;
 import net.sourceforge.fenixedu.domain.accounting.EntryType;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -42,7 +45,7 @@ public class DFACandidacyEvent extends DFACandidacyEvent_Base {
     }
 
     @Override
-    protected void internalProcess(User user, List<EntryDTO> entryDTOs) {
+    protected Set<Entry> internalProcess(User user, List<EntryDTO> entryDTOs) {
 
         if (entryDTOs.size() != 1) {
             throw new DomainException("error.candidacy.dfaCandidacyEvent.invalid.number.of.entryDTOs");
@@ -52,13 +55,18 @@ public class DFACandidacyEvent extends DFACandidacyEvent_Base {
         final EntryDTO entryDTO = entryDTOs.get(0);
 
         checkIfCanAddAmount(totalAmountToPay, entryDTO.getAmountToPay());
-        makeAccountingTransaction(user, this, getCandidacy().getPerson().getAccountBy(
-                AccountType.EXTERNAL), getToAccount(), entryDTO.getEntryType(), entryDTO
-                .getAmountToPay());
+        final AccountingTransaction accountingTransaction = makeAccountingTransaction(user, this,
+                getCandidacy().getPerson().getAccountBy(AccountType.EXTERNAL), getToAccount(), entryDTO
+                        .getEntryType(), entryDTO.getAmountToPay());
+
+        final Set<Entry> resultingEntries = new HashSet<Entry>();
+        resultingEntries.add(accountingTransaction.getEntryByAccount(getToAccount()));
 
         if (canCloseEvent()) {
             closeEvent();
         }
+
+        return resultingEntries;
     }
 
     @Override

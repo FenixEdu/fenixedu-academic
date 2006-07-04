@@ -53,22 +53,24 @@ public abstract class Event extends Event_Base {
     }
 
     // TODO: to remove after create agreement and posting rules
-    protected void makeAccountingTransaction(User responsibleUser, Event event, Account from,
-            Account to, EntryType entryType, BigDecimal amount) {
-        new AccountingTransaction(responsibleUser, event, makeEntry(entryType, amount.negate(), from),
-                makeEntry(entryType, amount, to));
+    protected AccountingTransaction makeAccountingTransaction(User responsibleUser, Event event,
+            Account from, Account to, EntryType entryType, BigDecimal amount) {
+        return new AccountingTransaction(responsibleUser, event, makeEntry(entryType, amount.negate(),
+                from), makeEntry(entryType, amount, to));
     }
 
     public boolean isClosed() {
         return getClosed().booleanValue();
     }
 
-    public final void process(User responsibleUser, List<EntryDTO> entryDTOs) {
+    public final Set<Entry> process(User responsibleUser, List<EntryDTO> entryDTOs) {
         if (entryDTOs.isEmpty()) {
             throw new DomainException("error.accounting.event.process.requires.entries.to.be.processed");
         }
         if (!isClosed()) {
-            internalProcess(responsibleUser, entryDTOs);
+            return internalProcess(responsibleUser, entryDTOs);
+        } else {
+            throw new DomainException("error.accounting.event.is.already.closed");
         }
     }
 
@@ -76,7 +78,7 @@ public abstract class Event extends Event_Base {
         super.setClosed(Boolean.TRUE);
     }
 
-    protected abstract void internalProcess(User responsibleUser, List<EntryDTO> entryDTOs);
+    protected abstract Set<Entry> internalProcess(User responsibleUser, List<EntryDTO> entryDTOs);
 
     @Override
     public void addAccountingTransactions(AccountingTransaction accountingTransactions) {

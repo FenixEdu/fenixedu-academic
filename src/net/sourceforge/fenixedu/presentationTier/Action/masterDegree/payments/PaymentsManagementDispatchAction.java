@@ -4,6 +4,7 @@
 package net.sourceforge.fenixedu.presentationTier.Action.masterDegree.payments;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.SortedSet;
@@ -144,14 +145,21 @@ public class PaymentsManagementDispatchAction extends FenixDispatchAction {
         return mapping.findForward("showEvents");
     }
 
+    @SuppressWarnings("unchecked")
     public ActionForward showPaymentsWithoutReceipt(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) {
 
         final Person person = getPerson(request);
         final CreateReceiptBean receiptBean = new CreateReceiptBean();
 
+        Set<Entry> entriesToSelect = (Set<Entry>) request.getAttribute("entriesToSelect");
+        if (entriesToSelect == null) {
+            entriesToSelect = new HashSet<Entry>();
+        }
+
         receiptBean.setPerson(person);
-        receiptBean.setEntries(getSelectableEntryBeans(person.getPaymentsWithoutReceipt()));
+        receiptBean.setEntries(getSelectableEntryBeans(person.getPaymentsWithoutReceipt(),
+                entriesToSelect));
 
         request.setAttribute("createReceiptBean", receiptBean);
 
@@ -184,10 +192,12 @@ public class PaymentsManagementDispatchAction extends FenixDispatchAction {
         }
     }
 
-    private List<SelectableEntryBean> getSelectableEntryBeans(final Set<Entry> entries) {
+    private List<SelectableEntryBean> getSelectableEntryBeans(final Set<Entry> entries,
+            final Set<Entry> entriesToSelect) {
         final List<SelectableEntryBean> selectableEntryBeans = new ArrayList<SelectableEntryBean>();
         for (final Entry entry : entries) {
-            selectableEntryBeans.add(new SelectableEntryBean(false, entry));
+            selectableEntryBeans.add(new SelectableEntryBean(entriesToSelect.contains(entry) ? true
+                    : false, entry));
         }
         return selectableEntryBeans;
     }
@@ -214,11 +224,14 @@ public class PaymentsManagementDispatchAction extends FenixDispatchAction {
         }
 
         try {
-            ServiceUtils.executeService(getUserView(request), "CreatePaymentsForEvents", new Object[] {
-                    getUserView(request).getPerson().getUser(),
-                    paymentsManagementDTO.getSelectedEntries() });
+            final Set<Entry> resultingEntries = (Set<Entry>) ServiceUtils.executeService(
+                    getUserView(request), "CreatePaymentsForEvents", new Object[] {
+                            getUserView(request).getPerson().getUser(),
+                            paymentsManagementDTO.getSelectedEntries() });
 
             request.setAttribute("personId", paymentsManagementDTO.getPerson().getIdInternal());
+            request.setAttribute("entriesToSelect", resultingEntries);
+            
             return showPaymentsWithoutReceipt(mapping, form, request, response);
 
         } catch (DomainException ex) {
