@@ -5,24 +5,25 @@
 <%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="dt"%>
 
 <bean:define id="hoursPattern">HH : mm</bean:define>
-
 <bean:define id="teacher" name="professorship" property="teacher" scope="request" />
 <bean:define id="teacherId" name="teacher" property="idInternal" />
 <bean:define id="executionCourse" name="professorship" property="executionCourse" scope="request" />
 <bean:define id="executionPeriodId" name="executionCourse" property="executionPeriod.idInternal" />
 
-<p class="infoselected">
-	<b><bean:message key="label.teacher.name" />:</b> <bean:write name="teacher" property="person.nome"/><br />
-	<bean:define id="teacherNumber" name="teacher" property="teacherNumber"/>
-	<b><bean:message key="label.teacher.number" />:</b> <bean:write name="teacherNumber"/> <br />
+<h2><bean:message key="label.teaching.service.alter" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></h2>
 
-	<b> <bean:message key="label.execution-course.name" />:</b> <bean:write name="executionCourse" property="nome"/> <br />
-	<b><bean:message key="label.execution-period" />:</b> <bean:write name="executionCourse" property="executionPeriod.name"/> - <bean:write name="executionCourse" property="executionPeriod.executionYear.year"/> <br />	
-</p>
+<div class="infoop mtop2 mbottom1">
+	<p class="mvert025"><b><bean:message key="label.teacher.name" />:</b> <bean:write name="teacher" property="person.nome"/></p>
+	<p class="mvert025"><bean:define id="teacherNumber" name="teacher" property="teacherNumber"/><b><bean:message key="label.teacher.number" />:</b> <bean:write name="teacherNumber"/></p>
+	<p class="mvert025"><b> <bean:message key="label.execution-course.name" />:</b> <bean:write name="executionCourse" property="nome"/></p>
+	<p class="mvert025"><b><bean:message key="label.execution-period" />:</b> <bean:write name="executionCourse" property="executionPeriod.name"/> - <bean:write name="executionCourse" property="executionPeriod.executionYear.year"/></p>
+</div>
 
-<p>
+
+<p class="infoop2">
 <bean:message key="label.teaching.service.help.top" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>
 </p>
+
 
 <span class="error"><html:errors/></span>
 <html:messages id="message" message="true">
@@ -30,6 +31,8 @@
 		<bean:write name="message" filter="false"/>
 	</span>
 </html:messages>
+
+<p class="mbottom0"><strong>Disciplinas Leccionadas em Licenciatura - Aulas</strong></p>
 
 <html:form action="/degreeTeachingServiceManagement">
 	<html:hidden property="teacherNumber" value="<%= teacherNumber.toString() %>"/>
@@ -39,7 +42,7 @@
 	<html:hidden property="professorshipID"/>
 	<html:hidden property="method" value="updateTeachingServices"/>
 
-	<table class="tstyle4">
+	<table class="tstyle4 mtop1">
 		<%-- ********************************* HEADER *********************************************** --%>
 		<tr>
 			<th rowspan="2" width="10%"><bean:message key="label.shift"/></th>
@@ -143,8 +146,10 @@
 				</logic:notEqual>	
 		</logic:iterate>
 	</table>
-	<p class="mtop0"><bean:message key="label.teaching.service.help.bottom" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></p>
-	<p>
+	
+	<p class="mtop05"><bean:message key="label.teaching.service.help.bottom" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></p>
+	
+	<p class="mtop2">
 	<html:submit styleClass="inputbutton">
 		<bean:message key="button.save"/>
 	</html:submit>

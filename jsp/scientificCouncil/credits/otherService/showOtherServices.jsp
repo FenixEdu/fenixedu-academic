@@ -4,23 +4,29 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 
 <logic:present role="SCIENTIFIC_COUNCIL">	
+
+<h2><bean:message key="label.teaching.service.alter" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></h2>
 			
-	<p class="infoselected">
-		<b><bean:message key="label.teacher.name"  bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></b> <bean:write name="teacher" property="person.nome"/><br />
-		<b><bean:message key="label.teacher.number" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></b> <bean:write name="teacher" property="teacherNumber"/> <br />
-		<b><bean:message key="label.execution-period" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></b> <bean:write name="executionPeriod" property="name"/> - <bean:write name="executionPeriod" property="executionYear.year"/><br/>
-		<bean:define id="executionPeriodId" name="executionPeriod" property="idInternal"/>	
-	</p>
+<div class="infoop mtop2 mbottom1">
+	<p class="mvert025"><b><bean:message key="label.teacher.name"  bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>:</b> <bean:write name="teacher" property="person.nome"/></p>
+	<p class="mvert025"><b><bean:message key="label.teacher.number" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>:</b> <bean:write name="teacher" property="teacherNumber"/></p>
+	<p class="mvert025"><b><bean:message key="label.execution-period" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>:</b> <bean:write name="executionPeriod" property="name"/> - <bean:write name="executionPeriod" property="executionYear.year"/></p>
+	<bean:define id="executionPeriodId" name="executionPeriod" property="idInternal"/>	
+</div>
 	
 	<bean:define id="link">
 		/otherServiceManagement.do?executionPeriodId=<bean:write name="executionPeriod" property="idInternal"/>&amp;teacherId=<bean:write name="teacher" property="idInternal"/>&amp;
 	</bean:define>
-	
-	<html:link page='<%= link + "&amp;page=0&amp;method=prepareEditOtherService" %>' >
-		<bean:message key="link.otherTypeCreditLine.create" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>	
-	</html:link>
-	<br/><br/>
-	
+
+<ul>	
+	<li>
+	<bean:define id="link2">/showFullTeacherCreditsSheet.do?method=showTeacherCredits&amp;executionPeriodId=<bean:write name="executionPeriod" property="idInternal"/>&amp;teacherId=<bean:write name="teacher" property="idInternal"/></bean:define>
+	<html:link page='<%= link2 %>'><bean:message key="return"/></html:link>
+	</li>
+	<li>
+	<html:link page='<%= link + "&amp;page=0&amp;method=prepareEditOtherService" %>'><bean:message key="link.otherTypeCreditLine.create" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></html:link>
+	</li>
+</ul>
 	
 	<logic:present name="otherServices">
 		<table class="tstyle4">
@@ -54,11 +60,4 @@
 		<span class="error"><bean:message key="message.otherTypeCreditLine.noRegists" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></span>
 		<br/>
 	</logic:notPresent>
-	<br/>
-	<bean:define id="link2">
-		/showFullTeacherCreditsSheet.do?method=showTeacherCredits&amp;executionPeriodId=<bean:write name="executionPeriod" property="idInternal"/>&amp;teacherId=<bean:write name="teacher" property="idInternal"/>
-	</bean:define>
-	<html:link page='<%= link2 %>'>
-		<bean:message key="return"/>
-	</html:link>
 </logic:present>	

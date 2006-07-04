@@ -35,10 +35,12 @@
 	}		
 </style>
 
-<h2><bean:message key="label.teacherService.credits"/></h2>
-<div class="infoselected">
-	<p><bean:message key="label.teacherService.credits.explanation"/></p>
-	<p><em><bean:message key="label.teacherService.credits.diferentCategories.explanation"/></em></p>
+<em><bean:message key="label.teacherService.credits"/></em>
+<h2><bean:message key="label.teacherService.credits.resume"/></h2>
+
+<div class="infoop2">
+	<bean:message key="label.teacherService.credits.explanation"/><br/>
+	<em><bean:message key="label.teacherService.credits.diferentCategories.explanation"/></em>
 </div>
 
 <p class="mbottom05"><strong><bean:message key="label.teacher.name"/>: </strong><bean:write name="teacher" property="person.name"/></p>
@@ -47,12 +49,15 @@
 	<p class="mtop05"><strong><bean:message key="department"/>: </strong><bean:write name="department"/></p>
 </logic:present>
 
+
 <bean:define id="teacherID" name="teacher" property="idInternal" />
 <logic:empty name="creditsLines">
 	<span class="error"><bean:message key="message.teacherCredit.notFound"/></span>
 </logic:empty>
+
+
 <logic:notEmpty name="creditsLines">
-	<table class="ts01" cellpadding="3" cellspacing="1">
+	<table class="ts01">
 		<tr>
 			<th></th>
 			<th colspan="8"><bean:message key="label.teacherService.credits.resume" /></th>
@@ -145,12 +150,12 @@
 			</logic:notEqual>
 		</tr>
 	</logic:iterate>
-	</table>	
-	<p><span class="asterisk01">*</span><bean:message key="label.credits.pastCredits.code.definition" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></p>
-	<br />
+	</table>
+	
+	
+	<p class="mtop0"><span class="asterisk01">*</span> <em><bean:message key="label.credits.pastCredits.code.definition" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></em></p>
 
-	<p><strong><bean:message key="label.credits.legenda" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>:</strong></p>
-	<p>
+	<p><strong><bean:message key="label.credits.legenda" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>:</strong><br/>
 	<bean:message key="label.credits.lessons.code" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/> - <bean:message key="label.credits.lessons.code.definition" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>,&nbsp;
 	<bean:message key="label.credits.supportLessons.code" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/> - <bean:message key="label.credits.supportLessons.code.explanation" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>,&nbsp;
 	<bean:message key="label.credits.masterDegreeLessons.code" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/> - <bean:message key="label.credits.masterDegreeLessons.code.explanation" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>,&nbsp;	

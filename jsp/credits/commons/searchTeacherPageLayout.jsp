@@ -6,30 +6,40 @@
 <%@ page import="org.apache.struts.Globals" %>
 
 <tiles:useAttribute id="searchTitle" name="searchTitle"/>
+
+<em><bean:message key="label.teacherService.credits"/></em>
 <h2><bean:message name="searchTitle"/></h2>
+
+<%--<h3><bean:message name="searchTitle"/></h3>--%>
+<%--<h2><bean:message key="label.teacherService.credits.resume"/></h2>--%>
 
 <tiles:useAttribute id="searchInfo" name="searchInfo"/>
 <p class="infoop">
 	<bean:message name="searchInfo"/>
 </p>
 
-<span class="error"><html:errors/></span>
+<p><span class="error"><html:errors/></span></p>
 
 <logic:present name="teacherNotFound">
+<p>
 <span class="error">
-<hr/><u><b><bean:message key="message.indicates.error"/>:</b></u>
+<bean:message key="message.indicates.error"/>:
 	<ul>
-		<li><i><bean:message key="message.teacher.not-found-or-not-belong-to-department"/></i></li>
+		<li><bean:message key="message.teacher.not-found-or-not-belong-to-department"/></li>
 	</ul>
-<hr/>
-</span class="error">
+</span>
+</p>
 </logic:present>
+
+<%--
+<p class="mbottom05"><strong><bean:message name="searchTitle"/>:</strong></p>
+--%>
 
 <bean:define id="path" name="<%= Globals.MAPPING_KEY %>" property="path" type="java.lang.String"/>
 <html:form action="<%= path %>" focus="teacherNumber">
 	<html:hidden property="method"/>
 	<input type="hidden" name="page" value="0"/>
-	<bean:message key="label.teacher.number"/> <html:text property="teacherNumber"	/>
+	<bean:message key="label.teacher.number"/>: <html:text property="teacherNumber"	size="6" maxlength="7"/>
 	<html:submit styleClass="inputbutton">
 		<bean:message key="button.ok"/>
 	</html:submit>

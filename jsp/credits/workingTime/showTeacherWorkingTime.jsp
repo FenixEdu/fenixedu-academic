@@ -7,12 +7,13 @@
 <bean:define id="hoursPattern">HH:mm</bean:define>
 <bean:define id="executionPeriodId" name="executionPeriod" property="idInternal" />
 
-<p class="infoselected">
-	<b><bean:message key="label.teacher.name" />:</b> <bean:write name="teacher" property="person.nome"/><br />
-	<bean:define id="teacherNumber" name="teacher" property="teacherNumber"/>
-	<b><bean:message key="label.teacher.number" />:</b> <bean:write name="teacherNumber"/> <br />
-	<b><bean:message key="label.execution-period" />:</b> <bean:write name="executionPeriod" property="name"/> - <bean:write name="executionPeriod" property="executionYear.year"/><br />	
-</p>
+<h2><bean:message key="label.teaching.service.alter" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></h2>
+
+<div class="infoop mtop2 mbottom1">
+	<p class="mvert025"><b><bean:message key="label.teacher.name" />:</b> <bean:write name="teacher" property="person.nome"/></p>
+	<p class="mvert025"><bean:define id="teacherNumber" name="teacher" property="teacherNumber"/><b><bean:message key="label.teacher.number" />:</b> <bean:write name="teacherNumber"/></p>
+	<p class="mvert025"><b><bean:message key="label.execution-period" />:</b> <bean:write name="executionPeriod" property="name"/> - <bean:write name="executionPeriod" property="executionYear.year"/></p>
+</div>
 
 <span class="error"><html:errors/></span>
 <html:messages id="message" message="true">
@@ -21,19 +22,23 @@
 	</span>
 </html:messages>
 
-<h3>
-	<bean:message key="label.teacher-institution-working-time.management"/>
-</h3>
+
 <bean:define id="editLink" type="java.lang.String">
 	/institutionWorkingTimeManagement.do?method=prepareEdit&amp;page=0&amp;teacherId=<bean:write name="teacher" property="idInternal"/>
 	&amp;executionPeriodId=<bean:write name="executionPeriod" property="idInternal"/>
 </bean:define>
 
-<html:link page="<%= editLink %>">
-	<bean:message key="link.teacher-institution-working-time.create"/>
-</html:link>
-<br />
-<br />
+<ul>
+	<li>
+	<bean:define id="link2">/showFullTeacherCreditsSheet.do?method=showTeacherCredits&amp;executionPeriodId=<bean:write name="executionPeriod" property="idInternal"/>&amp;teacherId=<bean:write name="teacher" property="idInternal"/></bean:define>
+	<html:link page='<%= link2 %>'><bean:message key="link.return"/></html:link>
+	</li>
+	<li>
+	<html:link page="<%= editLink %>"><bean:message key="link.teacher-institution-working-time.create"/></html:link>
+	</li>
+</ul>
+
+<p class="mbottom0"><strong><bean:message key="label.teacher-institution-working-time.management"/></strong></p>
 
 <logic:notPresent name="institutionWorkTimeList">
 	<br />
@@ -86,11 +91,3 @@
 		</logic:iterate>
 	</table>	
 </logic:present>
-
-<br/>
-<bean:define id="link2">
-	/showFullTeacherCreditsSheet.do?method=showTeacherCredits&amp;executionPeriodId=<bean:write name="executionPeriod" property="idInternal"/>&amp;teacherId=<bean:write name="teacher" property="idInternal"/>
-</bean:define>
-<html:link page='<%= link2 %>'>
-	<bean:message key="link.return"/>
-</html:link>

@@ -1,4 +1,4 @@
-<%@ page language="java" %>
+<%@ page languag e="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
@@ -8,7 +8,7 @@
 <bean:define id="datePattern" value="dd-MM-yyyy"/>
 
 
-<h2>Créditos</h2>
+<h2><bean:message key="label.teacherService.credits"/></h2>
 
 <bean:define id="executionPeriodId" name="executionPeriod" property="idInternal" />
 
@@ -20,11 +20,11 @@
 	/schedulesPrint.do?method=showSchedulesPrint&amp;teacherId=<bean:write name="teacher" property="idInternal"/>&amp;executionPeriodId=<bean:write name="executionPeriodId"/>
 </bean:define>
 
-<p class="infoselected">
-	<b><bean:message key="label.teacher.name.short"  bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>:</b> <bean:write name="teacher" property="person.nome"/><br />
-	<b><bean:message key="label.teacher.number.short" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>:</b> <bean:write name="teacher" property="teacherNumber"/> <br />
-	<b><bean:message key="label.execution-period" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>:</b> <bean:write name="executionPeriod" property="name"/> - <bean:write name="executionPeriod" property="executionYear.year"/><br/>
-</p>
+<div class="infoop">
+	<p class="mvert05"><b><bean:message key="label.teacher.name.short"  bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>:</b> <bean:write name="teacher" property="person.nome"/></p>
+	<p class="mvert05"><b><bean:message key="label.teacher.number.short" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>:</b> <bean:write name="teacher" property="teacherNumber"/></p>
+	<p class="mvert05"><b><bean:message key="label.execution-period" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>:</b> <bean:write name="executionPeriod" property="name"/> - <bean:write name="executionPeriod" property="executionYear.year"/></p>
+</div>
 
 <ul>
 	<li>
@@ -45,7 +45,7 @@
 
 <%-- ========================== PROFESSOR SHIPS ========================================== --%>
 
-<h3 class="barra"><span>1) <bean:message key="label.teacherCreditsSheet.professorships" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></span></h3>
+<h3 class="mtop1"><span style="border-bottom: 2px solid #fb5;">1) <bean:message key="label.teacherCreditsSheet.professorships" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></span></h3>
 
 <logic:notEmpty name="professorshipDTOs">
 	<logic:iterate id="professorshipDTO" name="professorshipDTOs">
@@ -70,7 +70,7 @@
 		<p class="mbottom0"><b><bean:message key="label.teacherCreditsSheet.shiftProfessorships" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>:</b></p>
 			
 		<logic:notEmpty name="degreeTeachingServices">
-			<table class="tstyle4">
+			<table class="tstyle4 mbottom05">
 					<tr>
 						<th rowspan="2"><bean:message key="label.shift" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></th>
 						<th rowspan="2"><bean:message key="label.shift.type" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></th>
@@ -152,7 +152,7 @@
 				</table>					
 		</logic:notEmpty>
 		<logic:empty name="degreeTeachingServices">
-			<table class="tstyle4">
+			<table class="tstyle4 mbottom05">
 				<tr>
 					<td colspan="7"> 
 						<i><bean:message key="label.teacherCreditsSheet.noLessons" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></i>						
@@ -172,7 +172,7 @@
 		<bean:define id="supportLessonList" name="professorship" property="supportLessonsOrderedByStartTimeAndWeekDay"/>
 		<p class="mbottom0"><b><bean:message key="label.teacherCreditsSheet.supportLessons" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>:</b></p>				
 		<logic:notEmpty name="supportLessonList">
-			<table class="tstyle4">
+			<table class="tstyle4 mbottom05">
 				<tr>
 					<th><bean:message key="label.support-lesson.weekday" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></th>			
 					<th><bean:message key="label.support-lesson.start-time" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></th>						
@@ -202,7 +202,7 @@
 			</table>			
 			</logic:notEmpty>
 			<logic:empty name="supportLessonList">
-				<table class="tstyle4">
+				<table class="tstyle4 mbottom05">
 					<tr>
 						<td colspan="4">
 							<i><bean:message key="label.teacherCreditsSheet.noSupportLessons" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></i>			
@@ -218,7 +218,7 @@
 	</logic:iterate>	
 </logic:notEmpty>
 <logic:empty name="professorshipDTOs">
-	<table class="tstyle4">
+	<table class="tstyle4 mbottom05">
 		<tr>
 			<td colspan="2">
 				<i><bean:message key="label.teacherCreditsSheet.noProfessorships" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></i>
@@ -229,10 +229,10 @@
 <%-- ================================================================================== --%>
 
 <%-- ========================== MASTER DEGREE PROFESSORSHIPS =============================== --%>
-<h3 class="barra"><span>2) <bean:message key="label.teacherCreditsSheet.masterDegreeProfessorships" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></span></h3>
+<h3 class="mtop2"><span style="border-bottom: 2px solid #fb5;">2) <bean:message key="label.teacherCreditsSheet.masterDegreeProfessorships" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></span></h3>
 
 <logic:notEmpty name="masterDegreeServices">
-	<table class="tstyle4">
+	<table class="tstyle4 mbottom05">
 		<tr>
 			<th>
 				<bean:message key="label.masterDegree.curricularPlans" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>
@@ -278,7 +278,7 @@
 	</table>
 </logic:notEmpty>
 <logic:empty name="masterDegreeServices">
-	<table class="tstyle4">
+	<table class="tstyle4 mbottom05">
 		<tr>
 			<td colspan="2">
 				<i><bean:message key="label.teacherCreditsSheet.noMasterDegreeProfessorships" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></i>		
@@ -289,7 +289,7 @@
 
 <logic:notEmpty name="teacherServiceNotes">		
 	<logic:notEmpty name="teacherServiceNotes" property="masterDegreeTeachingNotes">		
-		<table class="tstyle4">
+		<table class="tstyle4 mbottom05">
 				<tr>
 					<th><bean:message key="label.notes" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></th>
 				</tr>
@@ -311,11 +311,11 @@
 <%-- ================================================================================== --%>
 
 <%-- ============================== ADVISES TFC ======================================= --%>
-<h3 class="barra"><span>3) <bean:message key="label.teacherCreditsSheet.degreeFinalProjectStudents" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></span></h3>
+<h3 class="mtop2"><span style="border-bottom: 2px solid #fb5;">3) <bean:message key="label.teacherCreditsSheet.degreeFinalProjectStudents" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></span></h3>
 <p class="mbottom0"><strong><bean:message key="label.teacherCreditsSheet.degreeFinalProjectStudents.items" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>:</strong></p>
 
 <logic:notEmpty name="adviseServices">
-	<table class="tstyle4">
+	<table class="tstyle4 mbottom05">
 			<tr>
 				<th>
 					<bean:message key="label.teacher-dfp-student.student-number" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>
@@ -343,7 +343,7 @@
 		</table>		
 </logic:notEmpty>
 <logic:empty name="adviseServices">
-	<table class="tstyle4">
+	<table class="tstyle4 mbottom05">
 		<tr>
 			<td colspan="2">
 				<i><bean:message key="label.teacherCreditsSheet.noDegreeFinalProjectStudents" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></i>		
@@ -361,12 +361,12 @@
 <%-- ======================================================================================== --%>
 
 <%-- ========================== TEACHER INSTITUTION WORKING TIME ============================ --%>
-<h3 class="barra"><span>4) <bean:message key="label.teacherCreditsSheet.institutionWorkingTime" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></span></h3>
+<h3 class="mtop2"><span style="border-bottom: 2px solid #fb5;">4) <bean:message key="label.teacherCreditsSheet.institutionWorkingTime" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></span></h3>
 
 <p class="mbottom0"><strong><bean:message key="label.teacherCreditsSheet.institutionWorkingTime.items" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>:</strong></p>
 
 <logic:present name="institutionWorkTimeList">
-	<table class="tstyle4">
+	<table class="tstyle4 mbottom05">
 		<tr>
 			<th><bean:message key="label.teacher-institution-working-time.weekday" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></th>			
 			<th><bean:message key="label.teacher-institution-working-time.start-time" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></th>						
@@ -392,7 +392,7 @@
 	</table>		
 </logic:present>
 <logic:notPresent name="institutionWorkTimeList">
-	<table class="tstyle4">
+	<table class="tstyle4 mbottom05">
 		<tr>
 			<td colspan="3">
 				<i><bean:message key="label.teacherCreditsSheet.noInstitutionWorkingTime" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></i>			
@@ -409,13 +409,13 @@
 
 <%-- ================================================================================== --%>
 <%-- ========================== FUNCTIONS_ACCUMULATING ================================ --%>
-<h3 class="barra"><span>5) <bean:message key="label.teacherCreditsSheet.functionsAccumulation" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></span></h3>
+<h3 class="mtop2"><span style="border-bottom: 2px solid #fb5;">5) <bean:message key="label.teacherCreditsSheet.functionsAccumulation" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></span></h3>
 
 <p class="mbottom0"><strong><bean:message key="label.teacherCreditsSheet.functionsAccumulation" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>:</strong></p>
 	
 <logic:notEmpty name="teacherServiceNotes">
 	<logic:notEmpty name="teacherServiceNotes" property="functionsAccumulation">
-		<table class="tstyle4">
+		<table class="tstyle4 mbottom05">
 				<tr>
 					<th><bean:message key="label.notes" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></th>
 				</tr>
@@ -428,7 +428,7 @@
 		</table>
 	</logic:notEmpty>
 	<logic:empty name="teacherServiceNotes" property="functionsAccumulation">
-		<table class="tstyle4">
+		<table class="tstyle4 mbottom05">
 			<tr>
 				<td colspan="2"> 
 					<i><bean:message key="message.functionsAccumulation.noRegists" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></i>						
@@ -438,7 +438,7 @@
 	</logic:empty>
 </logic:notEmpty>
 <logic:empty name="teacherServiceNotes">	
-	<table class="tstyle4">
+	<table class="tstyle4 mbottom05">
 		<tr>
 			<td colspan="2"> 
 				<i><bean:message key="message.functionsAccumulation.noRegists" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></i>						
@@ -455,13 +455,13 @@
 
 <%-- ================================================================================== --%>
 <%-- ========================== OTHER SERVICES CREDTIS ================================ --%>
-<h3 class="barra"><span>6) <bean:message key="label.teacherCreditsSheet.otherTypeCreditLines" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></span></h3>
+<h3 class="mtop2"><span style="border-bottom: 2px solid #fb5;">6) <bean:message key="label.teacherCreditsSheet.otherTypeCreditLines" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></span></h3>
 
 <p class="mbottom0"><strong><bean:message key="label.teacherCreditsSheet.otherTypeCreditLines" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>:</strong></p>
 	
 
 <logic:notEmpty name="otherServices">
-	<table class="tstyle4">
+	<table class="tstyle4 mbottom05">
 		<tr>
 			<th><bean:message key="label.otherTypeCreditLine.credits" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></th>
 			<th><bean:message key="label.otherTypeCreditLine.reason" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></th>
@@ -479,7 +479,7 @@
 	</table>	
 </logic:notEmpty>
 <logic:empty name="otherServices">
-	<table class="tstyle4">
+	<table class="tstyle4 mbottom05">
 		<tr>
 			<td colspan="2"> 
 				<i><bean:message key="message.otherTypeCreditLine.noRegists" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></i>						
@@ -490,7 +490,7 @@
 
 <logic:notEmpty name="teacherServiceNotes">
 	<logic:notEmpty name="teacherServiceNotes" property="othersNotes">
-		<table class="tstyle4">
+		<table class="tstyle4 mbottom05">
 				<tr>
 					<th><bean:message key="label.notes" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></th>
 				</tr>
@@ -510,12 +510,12 @@
 </p>
 
 <%-- ========================== Management Position Lines =============================== --%>
-<h3 class="barra"><span>7) <bean:message key="label.teacherCreditsSheet.managementPositionLines" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></span></h3>
+<h3 class="mtop2"><span style="border-bottom: 2px solid #fb5;">7) <bean:message key="label.teacherCreditsSheet.managementPositionLines" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></span></h3>
 
 <p class="mbottom0"><strong><bean:message key="label.teacherCreditsSheet.managementPositionLines" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>:</strong></p>
 	
 <logic:notEmpty name="personFunctions">
-	<table class="tstyle4">
+	<table class="tstyle4 mbottom05">
 		<tr>
 			<th><bean:message key="label.managementPosition.position" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></th>
 			<th><bean:message key="label.managementPosition.unit" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></th>										
@@ -561,7 +561,7 @@
 	</table>	
 </logic:notEmpty>
 <logic:empty name="personFunctions">
-	<table class="tstyle4">
+	<table class="tstyle4 mbottom05">
 		<tr>
 			<td colspan="4"> 
 				<i><bean:message key="message.managementPositions.noRegists" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></i>						
@@ -572,7 +572,7 @@
 
 <logic:notEmpty name="teacherServiceNotes">
 	<logic:notEmpty name="teacherServiceNotes" property="managementFunctionNotes">
-		<table class="tstyle4">
+		<table class="tstyle4 mbottom05">
 				<tr>
 					<th><bean:message key="label.notes" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></th>
 				</tr>
@@ -592,12 +592,12 @@
 </p>
 
 <%-- ============================ SERVICE EXEMPTIONS ================================= --%>
-<h3 class="barra"><span>8) <bean:message key="label.teacherCreditsSheet.serviceExemptionLines" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></span></h3>
+<h3 class="mtop2"><span style="border-bottom: 2px solid #fb5;">8) <bean:message key="label.teacherCreditsSheet.serviceExemptionLines" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></span></h3>
 
 <p class="mbottom0"><strong><bean:message key="label.teacherCreditsSheet.serviceExemptionLines" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>:</strong></p>
 
 <logic:notEmpty name="serviceExemptions">
-	<table class="tstyle4">
+	<table class="tstyle4 mbottom05">
 		<tr>
 			<th><bean:message key="label.serviceExemption.type" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></th>
 			<th><bean:message key="label.serviceExemption.organization" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></th>			
@@ -637,7 +637,7 @@
 	</table>	
 </logic:notEmpty>
 <logic:empty name="serviceExemptions">
-	<table class="tstyle4">
+	<table class="tstyle4 mbottom05">
 			<tr>
 				<td colspan="3"> 
 					<i><bean:message key="message.serviceExemptions.noRegists" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></i>						
@@ -648,7 +648,7 @@
 
 <logic:notEmpty name="teacherServiceNotes">
 	<logic:notEmpty name="teacherServiceNotes" property="serviceExemptionNotes">
-		<table class="tstyle4">
+		<table class="tstyle4 mbottom05">
 				<tr>
 					<th><bean:message key="label.notes" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></th>
 				</tr>
@@ -667,8 +667,13 @@
 	</html:link>
 </p>
 
-<br/>	
+<%--
+<br/>
 <html:link page='<%= link %>'>
-	<bean:message key="link.return"/>
+<ul>
+	<li><bean:message key="link.return"/></li>
+</ul>
 </html:link>
+--%>
+
 <%-- ================================================================================== --%>

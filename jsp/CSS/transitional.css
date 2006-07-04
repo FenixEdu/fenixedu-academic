@@ -1,4 +1,5 @@
 
+
 /* transitional.css - 09.01.2006 
    by João Alfaiate @ Fenix */
 
@@ -7,8 +8,9 @@
  ---- Headings ----------
 ----------------------- */
 
+
+h2 { margin: 0.5em 0 0.75em 0; }
 /*
-h2 { margin: 0.5em 0 0.5em 0; }
 h3 { margin: 1.5em 0 0.5em 0; }
 */
 
@@ -378,6 +380,7 @@ margin-left: 10.5em;
 .mleft0 { margin-left: 0; }
 .mleft1 { margin-left: 1em; }
 .mvert0 { margin-top: 0; margin-bottom: 0; }
+.mvert025 { margin-top: 0.25em; margin-bottom: 0.25em; }
 .mvert05 { margin-top: 0.5em; margin-bottom: 0.5em; }
 .mvert1 { margin-top: 1em; margin-bottom: 1em; }
 .mvert2 { margin-top: 2em; margin-bottom: 2em; }

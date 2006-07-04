@@ -6,22 +6,28 @@
 
 <bean:define id="executionPeriodId" name="executionPeriod" property="idInternal" />
 
+<h2><bean:message key="label.teaching.service.alter" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></h2>
 
-<p class="infoselected">
-	<b><bean:message key="label.teacher.name" /></b> <bean:write name="teacher" property="person.nome"/><br />
-	<bean:define id="teacherNumber" name="teacher" property="teacherNumber"/>
-	<b><bean:message key="label.teacher.number" /></b> <bean:write name="teacherNumber"/> <br />
-	<b><bean:message key="label.execution-period" /></b> <bean:write name="executionPeriod" property="name"/> - <bean:write name="executionPeriod" property="executionYear.year"/><br/>	
-</p>
+<div class="infoop mtop2 mbottom1">
+	<p class="mvert025"><b><bean:message key="label.teacher.name" /></b> <bean:write name="teacher" property="person.nome"/></p>
+	<p class="mvert025"><bean:define id="teacherNumber" name="teacher" property="teacherNumber"/><b><bean:message key="label.teacher.number" /></b> <bean:write name="teacherNumber"/></p>
+	<p class="mvert025"><b><bean:message key="label.execution-period" /></b> <bean:write name="executionPeriod" property="name"/> - <bean:write name="executionPeriod" property="executionYear.year"/></p>
+</div>
 
-<h3>
+
+<p class="mtop2 mbottom05">
+	<strong>
 	<logic:present name="toCreate">
 		<bean:message key="label.teacher-institution-working-time.create"/>
 	</logic:present>
 	<logic:notPresent name="toCreate">
 		<bean:message key="label.teacher-institution-working-time.edit"/>			
 	</logic:notPresent>
-</h3>
+	</strong>
+</p>
+
+
+
 <logic:messagesPresent>
 	<span class="error"><html:errors/></span>
 </logic:messagesPresent>

@@ -5,12 +5,14 @@
 
 <logic:present role="SCIENTIFIC_COUNCIL">
 
-	<p class="infoselected">
-		<b><bean:message key="label.teacher.name"  bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></b> <bean:write name="teacher" property="person.nome"/><br />
-		<b><bean:message key="label.teacher.number" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></b> <bean:write name="teacher" property="teacherNumber"/> <br />
-		<b><bean:message key="label.execution-period" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></b> <bean:write name="executionPeriod" property="name"/> - <bean:write name="executionPeriod" property="executionYear.year"/><br/>
-		<bean:define id="executionPeriodId" name="executionPeriod" property="idInternal"/>
-	</p>
+<h2><bean:message key="label.teaching.service.alter" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></h2>
+
+<div class="infoop mtop2 mbottom1">
+	<p class="mvert025"><b><bean:message key="label.teacher.name"  bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>:</b> <bean:write name="teacher" property="person.nome"/></p>
+	<p class="mvert025"><b><bean:message key="label.teacher.number" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>:</b> <bean:write name="teacher" property="teacherNumber"/></p>
+	<p class="mvert025"><b><bean:message key="label.execution-period" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>:</b> <bean:write name="executionPeriod" property="name"/> - <bean:write name="executionPeriod" property="executionYear.year"/></p>
+	<bean:define id="executionPeriodId" name="executionPeriod" property="idInternal"/>
+</div>
 	
 	<logic:messagesPresent>		
 		<span class="error"><html:errors/></span>			
@@ -21,7 +23,8 @@
 			<bean:write name="message"/>
 			<br/>
 		</span>
-	</html:messages>		
+	</html:messages>	
+		
 	<html:form action="/otherServiceManagement">
 		<html:hidden property="idInternal"/>
 		<html:hidden property="otherServiceID"/>

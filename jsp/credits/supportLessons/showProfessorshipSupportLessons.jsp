@@ -9,35 +9,40 @@
 <bean:define id="executionCourse" name="professorship" property="executionCourse" scope="request" />
 <bean:define id="executionPeriod" name="professorship" property="executionCourse.executionPeriod" scope="request" />
 <bean:define id="professorship" name="professorship" scope="request" />
-
 <bean:define id="executionPeriodId" name="executionCourse" property="executionPeriod.idInternal" />
 
-<p class="infoselected">
-	<b><bean:message key="label.teacher.name" /></b> <bean:write name="teacher" property="person.nome"/><br />
-	<bean:define id="teacherNumber" name="teacher" property="teacherNumber"/>
-	<b><bean:message key="label.teacher.number" /></b> <bean:write name="teacherNumber"/> <br />
+<h2><bean:message key="label.teaching.service.alter" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></h2>
 
-	<b> <bean:message key="label.execution-course.name" /></b> <bean:write name="executionCourse" property="nome"/> <br />
-	<b> <bean:message key="label.execution-period" /></b> <bean:write name="executionPeriod" property="name"/> - <bean:write name="executionPeriod" property="executionYear.year"/><br />
-</p>
+<div class="infoop mtop2 mbottom1">
+	<p class="mvert025"><b><bean:message key="label.teacher.name" /></b> <bean:write name="teacher" property="person.nome"/></p>
+	<p class="mvert025"><bean:define id="teacherNumber" name="teacher" property="teacherNumber"/><b><bean:message key="label.teacher.number" /></b> <bean:write name="teacherNumber"/></p>
+	<p class="mvert025"><b><bean:message key="label.execution-course.name" /></b> <bean:write name="executionCourse" property="nome"/></p>
+	<p class="mvert025"><b><bean:message key="label.execution-period" /></b> <bean:write name="executionPeriod" property="name"/> - <bean:write name="executionPeriod" property="executionYear.year"/></p>
+</div>
+
 <span class="error"><html:errors/></span>
 <html:messages id="message" message="true">
 	<span class="error">
 		<bean:write name="message" filter="false"/>
 	</span>
 </html:messages>
-<h3><bean:message key="label.support-lessons.management"/></h3>
 
-<bean:define id="link" type="java.lang.String">
-	/supportLessonsManagement.do?method=prepareEdit&amp;page=0&amp;professorshipID=<bean:write name="professorship" property="idInternal"/>
-</bean:define>
-<html:link page="<%= link %>">
-	<bean:message key="link.support-lesson.create"/>
-</html:link>
-<br />
-<br />
+
+<ul>
+	<li>
+		<bean:define id="link">/showFullTeacherCreditsSheet.do?method=showTeacherCredits&amp;executionPeriodId=<bean:write name="executionPeriod" property="idInternal"/>&amp;teacherId=<bean:write name="teacher" property="idInternal"/></bean:define>
+		<html:link page='<%= link %>'><bean:message key="link.return"/></html:link>
+	</li>
+	<li>	
+		<bean:define id="link" type="java.lang.String">/supportLessonsManagement.do?method=prepareEdit&amp;page=0&amp;professorshipID=<bean:write name="professorship" property="idInternal"/></bean:define>
+		<html:link page="<%= link %>"><bean:message key="link.support-lesson.create"/></html:link>
+	</li>
+</ul>
+
+
+<p class="mtop2 mbottom0"><strong><bean:message key="label.support-lessons.management"/></strong></p>
+
 <span class="error"><html:errors/></span>
-
 <logic:empty name="supportLessonList">
 	<br />
 	<span class="error"><bean:message key="message.support-lessons-list.empty"/></span>
@@ -90,10 +95,3 @@
 		</logic:iterate>
 	</table>	
 </logic:notEmpty>
-<br/>
-<bean:define id="link">
-	/showFullTeacherCreditsSheet.do?method=showTeacherCredits&amp;executionPeriodId=<bean:write name="executionPeriod" property="idInternal"/>&amp;teacherId=<bean:write name="teacher" property="idInternal"/>	
-</bean:define>
-<html:link page='<%= link %>'>
-	<bean:message key="link.return"/>
-</html:link>

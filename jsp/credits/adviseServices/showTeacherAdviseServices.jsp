@@ -5,16 +5,29 @@
 
 <bean:define id="executionPeriodId" name="executionPeriod" property="idInternal"/>
 
-<p class="infoselected">
-	<b><bean:message key="label.teacher.name" /></b> <bean:write name="teacher" property="person.nome"/><br />
-	<bean:define id="teacherNumber" name="teacher" property="teacherNumber"/>
-	<b><bean:message key="label.teacher.number" /></b> <bean:write name="teacherNumber"/> <br />
-	<b><bean:message key="label.execution-period" /></b> <bean:write name="executionPeriod" property="name"/> - <bean:write name="executionPeriod" property="executionYear.year"/><br />	
-</p>
+<h2><bean:message key="label.teaching.service.alter" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></h2>
 
-<p><bean:message key="label.teacher.advise.service.help" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></p>	
+<div class="infoop mtop2 mbottom1">
+	<p class="mvert025"><b><bean:message key="label.teacher.name"/>:</b> <bean:write name="teacher" property="person.nome"/></p>
+	<p class="mvert025"><bean:define id="teacherNumber" name="teacher" property="teacherNumber"/><b><bean:message key="label.teacher.number"/>:</b> <bean:write name="teacherNumber"/></p>
+	<p class="mvert025"><b><bean:message key="label.execution-period"/>:</b> <bean:write name="executionPeriod" property="name"/> - <bean:write name="executionPeriod" property="executionYear.year"/></p>
+</div>
 
-<h3><bean:message key="label.teacher-dfp-student.add-student"/></h3>
+<ul>
+	<li>
+	<bean:define id="link">/showFullTeacherCreditsSheet.do?method=showTeacherCredits&amp;executionPeriodId=<bean:write name="executionPeriod" property="idInternal"/>&amp;teacherId=<bean:write name="teacher" property="idInternal"/></bean:define>
+	<html:link page='<%= link %>'><bean:message key="link.return"/></html:link>
+	</li>
+</ul>
+
+
+<p class="infoop2">
+	<bean:message key="label.teacher.advise.service.help" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>
+</p>	
+
+
+<p class="mbottom05 mtop1"><strong><bean:message key="label.teacher-dfp-student.add-student"/></strong></p>
+
 
 <span class="error"><html:errors /></span>
 <logic:messagesPresent message="true">
@@ -73,9 +86,9 @@
 </logic:notPresent>
 
 <logic:present name="adviseServices">	
-	<h3>
-		<bean:message key="label.teacher-dfp-student.associated-students"/>
-	</h3>
+	<p>
+		<strong><bean:message key="label.teacher-dfp-student.associated-students"/></strong>
+	</p>
 	<table class="tstyle4 mvert0">
 		<tr>
 			<th>
@@ -115,9 +128,3 @@
 	</table>
 </logic:present>
 <br/>
-<bean:define id="link">
-	/showFullTeacherCreditsSheet.do?method=showTeacherCredits&amp;executionPeriodId=<bean:write name="executionPeriod" property="idInternal"/>&amp;teacherId=<bean:write name="teacher" property="idInternal"/>
-</bean:define>
-<html:link page='<%= link %>'>
-	<bean:message key="link.return"/>
-</html:link>
