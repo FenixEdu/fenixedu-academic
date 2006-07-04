@@ -104,8 +104,12 @@ public class PaymentsManagementDispatchAction extends FenixDispatchAction {
 
     protected Integer getCandidacyNumber(final DynaActionForm form) {
         final String candidacyNumberString = (String) form.get("candidacyNumber");
-        return (candidacyNumberString != null && !candidacyNumberString.equals("")) ? Integer
-                .valueOf(candidacyNumberString) : null;
+        try {
+            return (candidacyNumberString != null && !candidacyNumberString.equals("")) ? Integer
+                    .valueOf(candidacyNumberString) : null;
+        } catch (NumberFormatException ex) {
+            return null;
+        }
     }
 
     protected Person getPersonByUsername(String username) {
@@ -145,7 +149,7 @@ public class PaymentsManagementDispatchAction extends FenixDispatchAction {
 
         final Person person = getPerson(request);
         final CreateReceiptBean receiptBean = new CreateReceiptBean();
-        
+
         receiptBean.setPerson(person);
         receiptBean.setEntries(getSelectableEntryBeans(person.getPaymentsWithoutReceipt()));
 
@@ -167,12 +171,13 @@ public class PaymentsManagementDispatchAction extends FenixDispatchAction {
                             createReceiptBean.getPerson(), createReceiptBean.getContributor(),
                             createReceiptBean.getSelectedEntries() });
 
+            request.setAttribute("personId", receipt.getPerson().getIdInternal());
             request.setAttribute("receiptID", receipt.getIdInternal());
 
             return prepareShowReceipt(mapping, form, request, response);
 
         } catch (DomainException ex) {
-            
+
             addActionMessage(request, ex.getKey(), ex.getArgs());
             request.setAttribute("createReceiptBean", createReceiptBean);
             return mapping.findForward("showPaymentsWithoutReceipt");
@@ -201,7 +206,7 @@ public class PaymentsManagementDispatchAction extends FenixDispatchAction {
                 .getViewState("paymentsManagementDTO").getMetaObject().getObject();
 
         if (paymentsManagementDTO.getSelectedEntries().isEmpty()) {
-            
+
             addActionMessage(request,
                     "error.masterDegreeAdministrativeOffice.payments.payment.entries.selection.is.required");
             request.setAttribute("paymentsManagementDTO", paymentsManagementDTO);
@@ -217,7 +222,7 @@ public class PaymentsManagementDispatchAction extends FenixDispatchAction {
             return showPaymentsWithoutReceipt(mapping, form, request, response);
 
         } catch (DomainException ex) {
-            
+
             addActionMessage(request, ex.getKey(), ex.getArgs());
             request.setAttribute("paymentsManagementDTO", paymentsManagementDTO);
             return mapping.findForward("showEvents");
@@ -241,7 +246,7 @@ public class PaymentsManagementDispatchAction extends FenixDispatchAction {
             addActionMessage(request,
                     "error.masterDegreeAdministrativeOffice.payments.guide.entries.selection.is.required");
             return mapping.findForward("showEvents");
-            
+
         } else {
             return mapping.findForward("showGuide");
         }
@@ -259,14 +264,23 @@ public class PaymentsManagementDispatchAction extends FenixDispatchAction {
     public ActionForward prepareShowReceipt(ActionMapping mapping, ActionForm actionForm,
             HttpServletRequest request, HttpServletResponse response) {
 
+        final Person person = getPerson(request);
         final Integer receiptID = Integer.valueOf(getFromRequest(request, "receiptID").toString());
-
         final Receipt receipt = rootDomainObject.readReceiptByOID(receiptID);
+
         if (receipt == null) {
             addActionMessage(request,
                     "error.masterDegreeAdministrativeOffice.payments.receipt.not.found");
+            request.setAttribute("person", person);
+            return mapping.findForward("showReceipts");
         }
-        
+        if (! person.getReceiptsSet().contains(receipt)) {
+            addActionMessage(request,
+                    "error.masterDegreeAdministrativeOffice.payments.person.doesnot.contain.receipt");
+            request.setAttribute("person", person);
+            return mapping.findForward("showReceipts");
+        }
+
         request.setAttribute("receipt", receipt);
         return mapping.findForward("showReceipt");
     }
