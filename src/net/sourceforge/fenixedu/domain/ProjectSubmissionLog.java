@@ -7,10 +7,12 @@ import org.joda.time.DateTime;
 public class ProjectSubmissionLog extends ProjectSubmissionLog_Base {
 
     public static Comparator<ProjectSubmissionLog> COMPARATOR_BY_MOST_RECENT_SUBMISSION_DATE = new Comparator<ProjectSubmissionLog>() {
-        public int compare(ProjectSubmissionLog projectSubmissionLog,
-                ProjectSubmissionLog otherProjectSubmissionLog) {
-            return -projectSubmissionLog.getSubmissionDateTime().compareTo(
-                    otherProjectSubmissionLog.getSubmissionDateTime());
+        public int compare(ProjectSubmissionLog leftProjectSubmissionLog,
+                ProjectSubmissionLog rightProjectSubmissionLog) {
+            int comparationResult = leftProjectSubmissionLog.getSubmissionDateTime().compareTo(
+                    rightProjectSubmissionLog.getSubmissionDateTime());
+            return (comparationResult == 0) ? leftProjectSubmissionLog.getIdInternal().compareTo(
+                    rightProjectSubmissionLog.getIdInternal()) : -(comparationResult);
         }
     };
 

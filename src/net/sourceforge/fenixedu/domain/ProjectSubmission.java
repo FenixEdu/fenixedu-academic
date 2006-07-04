@@ -44,8 +44,10 @@ public class ProjectSubmission extends ProjectSubmission_Base {
 
     public static Comparator<ProjectSubmission> COMPARATOR_BY_MOST_RECENT_SUBMISSION_DATE = new Comparator<ProjectSubmission>() {
         public int compare(ProjectSubmission projectSubmission, ProjectSubmission otherProjectSubmission) {
-            return -projectSubmission.getSubmissionDateTime().compareTo(
+            int comparationResult = projectSubmission.getSubmissionDateTime().compareTo(
                     otherProjectSubmission.getSubmissionDateTime());
+            return (comparationResult == 0) ? projectSubmission.getIdInternal().compareTo(
+                    otherProjectSubmission.getIdInternal()) : -(comparationResult);
         }
     };
 
@@ -70,7 +72,7 @@ public class ProjectSubmission extends ProjectSubmission_Base {
         setAttends(attends);
         setProjectSubmissionFile(projectSubmissionFile);
         setProject(project);
-                
+
     }
 
     public void delete() {

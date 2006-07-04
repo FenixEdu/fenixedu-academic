@@ -11,11 +11,12 @@ import org.joda.time.DateTime;
 
 public class Entry extends Entry_Base {
 
-    public static final Comparator<Entry> COMPARATOR_BY_MOST_RECENT_WHEN_BOOKED = new Comparator<Entry>() {
-        public int compare(Entry entry, Entry otherEntry) {
-            return -(entry.getWhenBooked().compareTo(otherEntry.getWhenBooked()));
+    public static Comparator<Entry> COMPARATOR_BY_MOST_RECENT_WHEN_BOOKED = new Comparator<Entry>() {
+        public int compare(Entry leftEntry, Entry rightEntry) {
+            int comparationResult = leftEntry.getWhenBooked().compareTo(rightEntry.getWhenBooked());
+            return (comparationResult == 0) ? leftEntry.getIdInternal().compareTo(
+                    rightEntry.getIdInternal()) : comparationResult;
         }
-
     };
 
     private Entry() {
