@@ -2153,6 +2153,27 @@
 			<to-view-id>/manager/bolonha/curricularPlans/buildCurricularPlan.jsp</to-view-id>
 		</navigation-case>
 	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/manager/bolonha/competenceCourses/showCompetenceCourse.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>competenceCoursesManagement</from-outcome>
+			<to-view-id>/bolonhaManager/competenceCourses/competenceCoursesManagement.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/manager/bolonha/competenceCourses/editCompetenceCourseMainPage.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>competenceCoursesManagement</from-outcome>
+			<to-view-id>/manager/bolonha/competenceCourses/competenceCoursesManagement.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/manager/bolonha/competenceCourses/editCompetenceCourse.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>editCompetenceCourseMainPage</from-outcome>
+			<to-view-id>/manager/bolonha/competenceCourses/editCompetenceCourseMainPage.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
 	<!-- END: MANAGER - Bolonha Navigation Rules -->
 
 	<!-- Custom Components -->

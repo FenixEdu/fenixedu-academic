@@ -945,4 +945,19 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
         this.getViewState().setAttribute("transferToCompetenceCourseGroupUnitID", transferToCompetenceCourseGroupUnitID);
     }
 
+    public String editAcronym() {
+        try {
+            final Object args[] = { getCompetenceCourseID(), getAcronym() };
+            ServiceUtils.executeService(getUserView(), "EditCompetenceCourse", args);
+            return "editCompetenceCourseMainPage";
+        } catch (FenixFilterException e) {
+            addErrorMessage(bolonhaResources.getString("error.editingCompetenceCourse"));
+        } catch (FenixServiceException e) {
+            addErrorMessage(bolonhaResources.getString(e.getMessage()));
+        } catch (DomainException e) {
+            addErrorMessages(domainResources, e.getMessage(), e.getArgs());
+        }
+        return "";
+    }   
+    
 }

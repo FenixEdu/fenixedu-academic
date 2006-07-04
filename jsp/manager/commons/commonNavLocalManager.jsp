@@ -42,9 +42,9 @@
 <br />
 <li class="navheader">Gestão da Estrutura de Ensino</li>
 <li> 
-		<html:link module="/manager" module="/manager" page="/readDegrees.do">
-			<bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="label.manager.readDegrees" />
-		</html:link>
+	<html:link module="/manager" module="/manager" page="/readDegrees.do">
+		<bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="label.manager.readDegrees" />
+	</html:link>
 </li>
 <li> 
 	<html:link module="/manager" module="/manager" page="/competenceCourseManagement.do?method=prepare">
@@ -52,14 +52,19 @@
 	</html:link>
 </li>
 <li> 
-	  	<html:link module="/manager" module="/manager" page="/curricularPlans/chooseCurricularPlan.faces">
-		  	<bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="label.manager.oldCurricularPlans" />
-	  	</html:link>  
+  	<html:link module="/manager" module="/manager" page="/curricularPlans/chooseCurricularPlan.faces">
+	  	<bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="label.manager.oldCurricularPlans" />
+  	</html:link>  
 </li>
 <li> 
-	  	<html:link module="/manager" page="/bolonha/curricularPlans/curricularPlansManagement.faces">
-	  		<bean:message bundle="MANAGER_RESOURCES" key="label.manager.bolonhaCurricularPlansManagement" />
-	  	</html:link>  
+  	<html:link module="/manager" page="/bolonha/curricularPlans/curricularPlansManagement.faces">
+  		<bean:message bundle="MANAGER_RESOURCES" key="label.manager.bolonhaCurricularPlansManagement" />
+  	</html:link>  
+</li>
+<li> 
+  	<html:link module="/manager" page="/bolonha/competenceCourses/competenceCoursesManagement.faces">
+  		<bean:message bundle="MANAGER_RESOURCES" key="label.manager.bolonhaCompetenceCoursesManagement" />
+  	</html:link>  
 </li>
 
 <br />

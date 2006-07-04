@@ -68,7 +68,7 @@ public class CompetenceCourse extends CompetenceCourse_Base {
                     "acronym", 
                     (Set<CompetenceCourse>) CompetenceCourse.readBolonhaCompetenceCourses(), 
                     true);
-            competenceCourseInformation.setAcronym(uniqueAcronymCreator.create(this));
+            competenceCourseInformation.setAcronym((String) uniqueAcronymCreator.create(this));
         } catch (Exception e) {
             throw new DomainException("competence.course.unable.to.create.acronym");
         }
@@ -159,10 +159,23 @@ public class CompetenceCourse extends CompetenceCourse_Base {
                     "acronym", 
                     (Set<CompetenceCourse>) CompetenceCourse.readBolonhaCompetenceCourses(), 
                     true);
-            acronym = uniqueAcronymCreator.create(this);
+            acronym = (String) uniqueAcronymCreator.create(this);
         } catch (Exception e) {
             throw new DomainException("competence.course.unable.to.create.acronym");
         }
+        getRecentCompetenceCourseInformation().setAcronym(acronym);
+    }
+
+    public void editAcronym(String acronym) {
+        Set<CompetenceCourse> bolonhaCompetenceCourses = (Set<CompetenceCourse>) CompetenceCourse.readBolonhaCompetenceCourses();
+        for (final CompetenceCourse competenceCourse : bolonhaCompetenceCourses) {
+            if (!competenceCourse.equals(this) && competenceCourse.getAcronym().equalsIgnoreCase(acronym.trim())) {
+                throw new DomainException("competenceCourse.existing.acronym", 
+                        competenceCourse.getName(),
+                        competenceCourse.getDepartmentUnit().getDepartment().getRealName());
+            }
+        }
+        
         getRecentCompetenceCourseInformation().setAcronym(acronym);
     }
 

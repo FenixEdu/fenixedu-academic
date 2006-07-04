@@ -26,6 +26,11 @@ public class EditCompetenceCourse extends Service {
         competenceCourse.edit(name, nameEn, basic, competenceCourseLevel, curricularStage);
     }
     
+    public void run(Integer competenceCourseID, String acronym) throws FenixServiceException {
+        final CompetenceCourse competenceCourse = readCompetenceCourse(competenceCourseID);
+        competenceCourse.editAcronym(acronym);
+    }
+    
     public void run(Integer competenceCourseID, CurricularStage curricularStage) throws FenixServiceException {
         final CompetenceCourse competenceCourse = readCompetenceCourse(competenceCourseID);
         competenceCourse.changeCurricularStage(curricularStage);
