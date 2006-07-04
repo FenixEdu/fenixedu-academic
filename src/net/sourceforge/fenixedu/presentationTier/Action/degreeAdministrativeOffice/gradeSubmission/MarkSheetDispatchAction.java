@@ -25,6 +25,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -203,17 +204,17 @@ public class MarkSheetDispatchAction extends FenixDispatchAction {
         if (form.get("ccID") != null) {
             stringBuilder.append("&ccID=").append(form.get("ccID"));
         }
-        if(form.get("tn") != null) {
-            stringBuilder.append("&tn=").append(form.get("tn"));
+        if(! StringUtils.isEmpty(form.getString("tn"))) {
+            stringBuilder.append("&tn=").append(form.getString("tn"));
         }
-        if(form.get("ed") != null) {
-            stringBuilder.append("&ed=").append(form.get("ed"));
+        if(! StringUtils.isEmpty(form.getString("ed"))) {
+            stringBuilder.append("&ed=").append(form.getString("ed"));
         }
-        if (form.get("mss") != null) {
-            stringBuilder.append("&mss=").append(form.get("mss"));
+        if (! StringUtils.isEmpty(form.getString("mss"))) {
+            stringBuilder.append("&mss=").append(form.getString("mss"));
         }
-        if (form.get("mst") != null) {
-            stringBuilder.append("&mst=").append(form.get("mst"));
+        if (! StringUtils.isEmpty(form.getString("mst"))) {
+            stringBuilder.append("&mst=").append(form.getString("mst"));
         }
         return stringBuilder.toString();
     }
