@@ -5,83 +5,83 @@ import java.util.List;
 
 public enum RoleType {
 
-    PERSON,
+    PERSON("Person"),
 
-    STUDENT,
+    STUDENT("Student"),
 
-    TEACHER,
+    TEACHER("Teacher"),
     
-    DEPARTMENT_MEMBER,
+    DEPARTMENT_MEMBER("Department Member"),
 
-    TIME_TABLE_MANAGER,
+    TIME_TABLE_MANAGER("Timetable Management"),
 
-    MASTER_DEGREE_CANDIDATE,
+    MASTER_DEGREE_CANDIDATE("Master Degree Candidate"),
 
-    MASTER_DEGREE_ADMINISTRATIVE_OFFICE,
+    MASTER_DEGREE_ADMINISTRATIVE_OFFICE("Master Degree Administrative Office"),
 
-    TREASURY,
+    TREASURY("Treasury"),
 
-    COORDINATOR,
+    COORDINATOR("Coordinator"),
 
-    EMPLOYEE,
+    EMPLOYEE("Employee"),
 
-    MANAGEMENT_ASSIDUOUSNESS,
+    MANAGEMENT_ASSIDUOUSNESS("Assiduousness Management"),
 
-    MANAGER,
+    MANAGER("Management"),
 
-    DEGREE_ADMINISTRATIVE_OFFICE,
+    DEGREE_ADMINISTRATIVE_OFFICE("Degree Administrative Office"),
 
-    CREDITS_MANAGER,
+    CREDITS_MANAGER("Credits Management"),
 
-    DEPARTMENT_CREDITS_MANAGER,
+    DEPARTMENT_CREDITS_MANAGER("Department Credits Management"),
 
-    ERASMUS,
+    ERASMUS("Erasmus"),
 
-    DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER,
+    DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER("Degree Administrative Office (Super User)"),
 
-    SCIENTIFIC_COUNCIL,
+    SCIENTIFIC_COUNCIL("Scientific Council"),
 
-    ADMINISTRATOR,
+    ADMINISTRATOR("Administration"),
 
-    OPERATOR,
+    OPERATOR("Operator"),
 
-    SEMINARIES_COORDINATOR,
+    SEMINARIES_COORDINATOR("Seminaries Coordination"),
 
-    WEBSITE_MANAGER,
+    WEBSITE_MANAGER("Website Management"),
 
-    GRANT_OWNER,
+    GRANT_OWNER("Grant Owner"),
 
-    GRANT_OWNER_MANAGER,
+    GRANT_OWNER_MANAGER("Grant Owner Management"),
 
-    DEPARTMENT_ADMINISTRATIVE_OFFICE,
+    DEPARTMENT_ADMINISTRATIVE_OFFICE("Department Administrative Office"),
 
-    GEP,
+    GEP("Planning and Studies Office"),
 
-    DIRECTIVE_COUNCIL,
+    DIRECTIVE_COUNCIL("Directive Council"),
 
-    DELEGATE,
+    DELEGATE("Delegate"),
 
-    FIRST_TIME_STUDENT,
+    FIRST_TIME_STUDENT("First time student"),
 
-    PROJECTS_MANAGER,
+    PROJECTS_MANAGER("Projects Management"),
 
-    INSTITUCIONAL_PROJECTS_MANAGER,    
+    INSTITUCIONAL_PROJECTS_MANAGER("Institutional Projects Management"),    
 
-    BOLONHA_MANAGER,
+    BOLONHA_MANAGER("Bolonha Process Management"),
 
-    CMS_MANAGER,
+    CMS_MANAGER("Content Management"),
 
-    SPACE_MANAGER,
+    SPACE_MANAGER("Space Management"),
     
-    RESEARCHER,
+    RESEARCHER("Researcher"),
     
-    ALUMNI,
+    ALUMNI("Alumni"),
     
-    MESSAGING,
+    MESSAGING("Messaging"),
 
-    PEDAGOGICAL_COUNCIL,
+    PEDAGOGICAL_COUNCIL("Pedagogical Council"),
     
-    CANDIDATE;
+    CANDIDATE("Candidate");
 
     public String getName() {
         return name();    
@@ -102,4 +102,21 @@ public enum RoleType {
         return rolesImportance;
     }
 
+    private String defaultLabel=null;
+
+    private RoleType(String defaultLabel)
+    {
+    	setDefaultLabel(defaultLabel);
+    }
+    
+    public String getDefaultLabel()
+    {
+    	return defaultLabel;
+    }
+    
+    private void setDefaultLabel(String defaultLabel)
+    {
+    	this.defaultLabel=defaultLabel;
+    }
 }
+
