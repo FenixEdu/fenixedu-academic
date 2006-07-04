@@ -10,22 +10,21 @@ import org.joda.time.Period;
 
 public class CronScriptInvocation extends CronScriptInvocation_Base {
 
-    public static final Comparator<CronScriptInvocation> COMPARATOR_BY_START_TIME =
-		new BeanComparator("startTime");
+	public static final Comparator<CronScriptInvocation> COMPARATOR_BY_START_TIME = new BeanComparator("startTime");
 
-    public CronScriptInvocation(final CronScriptState cronScriptState, final String serverID,
-    		final DateTime startTime, final DateTime endTime, final Boolean successful) {
-        super();
-        setRootDomainObject(RootDomainObject.getInstance());
-        setCronScriptState(cronScriptState);
-        setServerID(serverID);
-        setStartTime(startTime);
-        setEndTime(endTime);
-        setSuccessful(successful);
-    }
+	public CronScriptInvocation(final CronScriptState cronScriptState, final String serverID,
+			final DateTime startTime, final DateTime endTime, final Boolean successful) {
+		super();
+		setRootDomainObject(RootDomainObject.getInstance());
+		setCronScriptState(cronScriptState);
+		setServerID(serverID);
+		setStartTime(startTime);
+		setEndTime(endTime);
+		setSuccessful(successful);
+	}
 
-    public boolean hasReachedNextInvocationTime(final Period invocationPeriod) {
-	return !getStartTime().plus(invocationPeriod).isAfterNow();
-    }
+	public boolean hasReachedNextInvocationTime(final Period invocationPeriod) {
+		return !getStartTime().plus(invocationPeriod).isAfterNow();
+	}
 
 }

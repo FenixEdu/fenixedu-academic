@@ -576,4 +576,12 @@
 		<put name="body" value="/manager/showHolidays.jsp" />
 	</definition>
 
+	<definition name="df.show.cron.scripts" extends="definition.manager.masterPage" >
+		<put name="body" value="/manager/showCronScripts.jsp" />
+	</definition>
+
+	<definition name="df.show.cron.script" extends="definition.manager.masterPage" >
+		<put name="body" value="/manager/showCronScript.jsp" />
+	</definition>
+
 </tiles-definitions>

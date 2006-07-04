@@ -13,6 +13,7 @@
 	<!ENTITY payments SYSTEM "payments-schemas.xml">
 	<!ENTITY candidacy SYSTEM "candidacy-schemas.xml">
 	<!ENTITY execution SYSTEM "execution-schemas.xml">
+	<!ENTITY cron SYSTEM "cron-schemas.xml">
 ]>
 
 <schemas>
@@ -708,4 +709,5 @@
 	&payments;
 	&candidacy;
 	&execution;
+	&cron;
 </schemas>

@@ -1982,6 +1982,14 @@
 		<forward name="showHolidays" path="df.show.holidays" />
 	</action>
 
+	<action path="/cron"
+			input="/cron.do?method=showScripts&amp;page=0"
+			parameter="method"
+			type="net.sourceforge.fenixedu.presentationTier.Action.manager.CronDA">
+		<forward name="showCronScripts" path="df.show.cron.scripts"/>
+		<forward name="showCronScript" path="df.show.cron.script"/>
+	</action>
+
 	</action-mappings>
 
 	<!-- ========== Controller Configuration ================================ -->

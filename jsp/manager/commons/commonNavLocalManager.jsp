@@ -212,6 +212,11 @@
 		Kerberos Test
 	</html:link>
 </li>
+<li>
+	<html:link module="/manager" module="/manager" page="/cron.do?method=showScripts&amp;page=0">
+		Cron
+	</html:link>
+</li>
 
 <br />
 <li class="navheader">Frameworks</li>
