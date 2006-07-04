@@ -1199,7 +1199,7 @@ public class CurricularCourse extends CurricularCourse_Base {
 				return false;
 			}
 		} else {
-			if(executionDegree.getPeriodGradeSubmissionNormalSeasonFirstSemester() == null || executionDegree.getPeriodGradeSubmissionNormalSeasonSecondSemester().getEndYearMonthDay().isAfter(today)) {
+			if(executionDegree.getPeriodGradeSubmissionNormalSeasonSecondSemester() == null || executionDegree.getPeriodGradeSubmissionNormalSeasonSecondSemester().getEndYearMonthDay().isAfter(today)) {
 				return false;
 			}			
 		}
