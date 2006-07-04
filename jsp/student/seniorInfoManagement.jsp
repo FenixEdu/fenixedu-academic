@@ -3,7 +3,10 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="dt"%>
-<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
+
+<script language="JavaScript" type="text/javascript" src="<%= request.getContextPath() %>/javaScript/editor/html2xhtml.js"></script>
+<script language="JavaScript" type="text/javascript" src="<%= request.getContextPath() %>/javaScript/editor/richtext.js"></script>
+<script language="JavaScript" type="text/javascript" src="<%= request.getContextPath() %>/javaScript/editor/htmleditor.js"></script>
 
 <h2><bean:message key="label.title.seniorInfo"/></h2>
 <logic:equal name="seniorInfoForm" property="name" value="">
@@ -49,7 +52,7 @@
 					<td rowspan="3" valign="center" height="12px" width="5px" align="center">
 						<logic:equal name="seniorInfoForm" property="availablePhoto" value="true">
 							<bean:define id="personID" name="seniorInfoForm" property="personID"/>
-      						<html:img src="<%= request.getContextPath() +"/person/viewPhoto.do?personCode="+personID.toString()%>"/>
+      						<html:img align="middle" src="<%= request.getContextPath() +"/person/retrievePersonalPhoto.do?method=retrieveOwnPhoto" %>" />
 						</logic:equal>
 						<logic:equal name="seniorInfoForm" property="availablePhoto" value="false">
 							<html:img src="<%= request.getContextPath() +"/images/photoPlaceHolder.jpg"%>" />

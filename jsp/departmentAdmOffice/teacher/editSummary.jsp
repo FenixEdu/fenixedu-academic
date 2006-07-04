@@ -4,6 +4,10 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="dt"%>
 
+<script language="JavaScript" type="text/javascript" src="<%= request.getContextPath() %>/javaScript/editor/html2xhtml.js"></script>
+<script language="JavaScript" type="text/javascript" src="<%= request.getContextPath() %>/javaScript/editor/richtext.js"></script>
+<script language="JavaScript" type="text/javascript" src="<%= request.getContextPath() %>/javaScript/editor/htmleditor.js"></script>
+
 <bean:define id="component" name="siteView" property="commonComponent"/>
 <bean:define id="executionCourse" name="component" property="executionCourse"/>
 <bean:define id="objectCode" name="executionCourse" property="idInternal"/>
