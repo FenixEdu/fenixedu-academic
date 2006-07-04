@@ -80,7 +80,7 @@
 	 <tr>
 	 <td> 
 	   <table align="right">
-        	<logic:iterate id="entryDTO" name="paymentsManagementDTO" property="selectedEntryDTOs" >
+        	<logic:iterate id="entryDTO" name="paymentsManagementDTO" property="selectedEntries" >
         		<tr>
         			<td>
         				<app:labelFormatter name="entryDTO" property="description">
