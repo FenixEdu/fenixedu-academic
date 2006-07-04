@@ -261,7 +261,7 @@ public class ReadStudentExternalInformation extends Service
 	{
 		InfoExternalPersonInfo info = new InfoExternalPersonInfo();
 		info.setAddress(this.buildInfoExternalAdressInfo(person));
-		info.setBirthday(DateFormatUtil.format("yyyy-MM-dd", person.getNascimento());
+		info.setBirthday(DateFormatUtil.format("yyyy-MM-dd", person.getNascimento()));
 		info.setCelularPhone(person.getTelemovel());
 		info.setCitizenship(this.builsExternalCitizenshipInfo(person));
 		info.setEmail(person.getEmail());
@@ -286,11 +286,11 @@ public class ReadStudentExternalInformation extends Service
 		info.setNumber(person.getNumeroDocumentoIdentificacao());
 		if (person.getDataEmissaoDocumentoIdentificacao() != null)
 		{
-			info.setEmitionDate(DateFormatUtil.format("yyyy-MM-dd HH:mm:ss.sss", person.getDataEmissaoDocumentoIdentificacao()));
+			info.setEmitionDate(DateFormatUtil.format("yyyy-MM-dd", person.getDataEmissaoDocumentoIdentificacao()));
 		}
 		if (person.getDataValidadeDocumentoIdentificacao() != null)
 		{
-			info.setExpiryDate(DateFormatUtil.format("yyyy-MM-dd HH:mm:ss.sss", person.getDataValidadeDocumentoIdentificacao()));
+			info.setExpiryDate(DateFormatUtil.format("yyyy-MM-dd", person.getDataValidadeDocumentoIdentificacao()));
 		}
 		if (person.getLocalEmissaoDocumentoIdentificacao() != null)
 		{
