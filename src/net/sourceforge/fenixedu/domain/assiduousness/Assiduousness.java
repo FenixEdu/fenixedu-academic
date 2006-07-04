@@ -111,9 +111,9 @@ public class Assiduousness extends Assiduousness_Base {
                     dailyBalance.setComment(dayOccurrences.get(0).getJustificationMotive().getAcronym());
                 } else {
                     timeline.plotListInTimeline(clockings, leaves, attributesIt, day);
-                    if (!clockings.isEmpty()) {
-                        dailyBalance = workSchedule.calculateWorkingPeriods(day, timeline,
-                                getLeavesByType(leaves, JustificationType.TIME));
+                    List<Leave> timeLeaves = getLeavesByType(leaves, JustificationType.TIME);
+                    if (!clockings.isEmpty() || !timeLeaves.isEmpty()) {
+                        dailyBalance = workSchedule.calculateWorkingPeriods(day, timeline, timeLeaves);
                     }
                     if (dailyBalance == null) {
                         dailyBalance = new DailyBalance(day, workSchedule);

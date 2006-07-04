@@ -87,7 +87,7 @@ public class AssiduousnessDispatchAction extends FenixDispatchAction {
             if (workScheduleDays.get(weekDay.toString()) == null) {
                 WorkScheduleDaySheet workScheduleDaySheet = new WorkScheduleDaySheet();
                 workScheduleDaySheet.setSchedule("");
-                workScheduleDaySheet.setWeekDay(bundle.getString(weekDay.toString()+"_ACRONYM"));
+                workScheduleDaySheet.setWeekDay(bundle.getString(weekDay.toString() + "_ACRONYM"));
                 workScheduleDays.put(weekDay.toString(), workScheduleDaySheet);
             }
         }
@@ -98,7 +98,7 @@ public class AssiduousnessDispatchAction extends FenixDispatchAction {
         for (WeekDay weekDay : workSchedule.getWorkWeek().getDays()) {
             WorkScheduleDaySheet workScheduleDaySheet = new WorkScheduleDaySheet();
             workScheduleDaySheet.setSchedule(workSchedule.getWorkScheduleType().getAcronym());
-            workScheduleDaySheet.setWeekDay(bundle.getString(weekDay.toString()+"_ACRONYM"));
+            workScheduleDaySheet.setWeekDay(bundle.getString(weekDay.toString() + "_ACRONYM"));
             workScheduleDaySheet.setWorkSchedule(workSchedule);
             workScheduleDays.put(weekDay.toString(), workScheduleDaySheet);
         }
@@ -292,11 +292,7 @@ public class AssiduousnessDispatchAction extends FenixDispatchAction {
                         DailyBalance dailyBalance = assiduousness.calculateDailyBalance(thisDay);
                         workDaySheet
                                 .setBalanceTime(dailyBalance.getNormalWorkPeriodBalance().toPeriod());
-                        if (!thisDay.equals(today)
-                                || (thisDay.equals(today) && !workDaySheet.getBalanceTime().equals(
-                                        Duration.ZERO.minus(
-                                                workSchedule.getWorkScheduleType().getNormalWorkPeriod()
-                                                        .getWorkPeriodDuration()).toPeriod()))) {
+                        if (!thisDay.equals(today)) {
                             totalBalance = totalBalance.plus(dailyBalance.getNormalWorkPeriodBalance());
                         }
                         workDaySheet.setUnjustifiedTime(dailyBalance.getFixedPeriodAbsence());

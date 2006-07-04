@@ -113,7 +113,21 @@ public class WorkSchedule extends WorkSchedule_Base {
 
                     } else if (firstClockingDate != null
                             && firstClockingDate.isBefore(wsType.getMeal().getBeginMealBreak())) {
-                        workPeriod = workPeriod.minus(wsType.getMeal().getMandatoryMealDiscount());
+                        if (lastClockingDate != null
+                                && (lastClockingDate.isAfter(wsType.getMeal().getBeginMealBreak()) || lastClockingDate
+                                        .isEqual(wsType.getMeal().getBeginMealBreak()))) {
+                            if (wsType.getMeal().getEndOfMealBreakMinusDiscountInterval().contains(
+                                    lastClockingDate, false)) {
+                                // descontar periodo de tempo desde fim da refeicao menos periodo
+                                // obrigatorio de refeicao ate' 'a ultima marcacao do funcionario
+                                workPeriod = workPeriod.minus((new TimeInterval(wsType.getMeal()
+                                        .getEndOfMealBreakMinusMealDiscount(), lastClockingDate, false))
+                                        .getDurationMillis());
+                            } else if (lastClockingDate.isAfter(wsType.getMeal().getEndMealBreak())) {
+                                workPeriod = workPeriod.minus(wsType.getMeal()
+                                        .getMandatoryMealDiscount());
+                            }
+                        }
                     }
                     dailyBalance.setWorkedOnNormalWorkPeriod(workPeriod);
 
