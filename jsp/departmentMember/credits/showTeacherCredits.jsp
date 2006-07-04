@@ -24,7 +24,7 @@
 	<p class="mvert05"><b><bean:message key="label.execution-period" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>:</b> <bean:write name="executionPeriod" property="name"/> - <bean:write name="executionPeriod" property="executionYear.year"/></p>
 </div>
 
-<ul>
+<ul class="mvert1">
 	<li>
 		<html:link page='<%= link %>'>
 			<bean:message key="link.back"/>
@@ -43,7 +43,7 @@
 
 <%-- ========================== PROFESSOR SHIPS ========================================== --%>
 
-<h3 class="mtop1"><span style="border-bottom: 2px solid #fb5;">1) <bean:message key="label.teacherCreditsSheet.professorships" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></span></h3>
+<h3 class="mtop2"><span style="border-bottom: 2px solid #fb5;">1) <bean:message key="label.teacherCreditsSheet.professorships" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></span></h3>
 
 <logic:notEmpty name="professorshipDTOs">
 	<logic:iterate id="professorshipDTO" name="professorshipDTOs">

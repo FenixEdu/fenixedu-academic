@@ -43,7 +43,6 @@
 	<tiles:put name="creditLineDTO" beanName="creditLineDTO"/>
 </tiles:insert>
 
-<br/>
 
 <%-- ========================== PROFESSOR SHIPS ========================================== --%>
 
