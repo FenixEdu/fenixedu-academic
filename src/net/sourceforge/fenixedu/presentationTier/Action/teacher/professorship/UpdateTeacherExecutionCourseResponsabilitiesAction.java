@@ -26,6 +26,7 @@ public class UpdateTeacherExecutionCourseResponsabilitiesAction extends Action {
 
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
+        
         DynaActionForm teacherExecutionYearResponsabilitiesForm = (DynaActionForm) form;
         Integer[] executionCourseResponsabilities = (Integer[]) teacherExecutionYearResponsabilitiesForm
                 .get("executionCourseResponsability");

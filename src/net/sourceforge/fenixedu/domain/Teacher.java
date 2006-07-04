@@ -135,15 +135,16 @@ public class Teacher extends Teacher_Base {
 
         if (executionYearId == null || executionCourses == null)
             throw new NullPointerException();
-
+        
+        boolean responsible;
         for (final Professorship professorship : this.getProfessorships()) {
-            final ExecutionCourse executionCourse = professorship.getExecutionCourse();
-            ResponsibleForValidator.getInstance().validateResponsibleForList(this, executionCourse,
-                    professorship);
-            if (executionCourse.getExecutionPeriod().getExecutionYear().getIdInternal().equals(
-                    executionYearId)) {
-                professorship.setResponsibleFor(executionCourses.contains(executionCourse
-                        .getIdInternal()));
+            final ExecutionCourse executionCourse = professorship.getExecutionCourse();            
+            if (executionCourse.getExecutionPeriod().getExecutionYear().getIdInternal().equals(executionYearId)) {
+                responsible = executionCourses.contains(executionCourse.getIdInternal());
+                if(!professorship.getResponsibleFor().equals(Boolean.valueOf(responsible))) {
+                    ResponsibleForValidator.getInstance().validateResponsibleForList(this, executionCourse, professorship);
+                    professorship.setResponsibleFor(responsible);
+                }
             }
         }
     }
