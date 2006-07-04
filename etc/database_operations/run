@@ -27,3 +27,8 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Modify Table File" ModifyTableFile.sql
+execute "Alter table ProjectSubmission" AlterTableProjectSubmission.sql
+execute "Alter table ProjectSubmissionLog" AlterTableProjectSubmissionLog.sql
+
+
