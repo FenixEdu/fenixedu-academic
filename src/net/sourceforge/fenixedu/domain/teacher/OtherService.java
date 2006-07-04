@@ -19,5 +19,13 @@ public class OtherService extends OtherService_Base {
         removeTeacherService();
         super.delete();
     }
+
+    @Override
+    public Double getCredits() {        
+        return round(super.getCredits());
+    }
     
+    private Double round(double n) {
+        return Math.round((n * 100.0)) / 100.0;
+    }
 }

@@ -43,8 +43,7 @@ public class ShowTeacherCreditsDispatchAction extends FenixDispatchAction {
             Teacher teacher) {
 
         request.setAttribute("teacher", teacher);
-        request.setAttribute("executionPeriod", executionPeriod);
-        
+        request.setAttribute("executionPeriod", executionPeriod);        
 
         setTeachingServicesAndSupportLessons(request, teacher, executionPeriod);
 

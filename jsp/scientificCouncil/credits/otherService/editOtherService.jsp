@@ -39,7 +39,8 @@
 					<bean:message key="label.otherTypeCreditLine.credits" bundle="TEACHER_CREDITS_SHEET_RESOURCES" />:
 				</td>
 				<td>
-					<html:text property="credits" size="4"/>
+					<html:text property="credits" size="3"/>
+					<bean:message key="label.otherTypeCreditLine.credits.size" bundle="TEACHER_CREDITS_SHEET_RESOURCES" />
 				</td>
 			</tr>
 			<tr>

@@ -40,6 +40,13 @@ public class DegreeTeachingService extends DegreeTeachingService_Base {
         setProfessorship(professorship);
         setShift(shift);
 
+        Double availablePercentage = getShift().getAvailableShiftPercentageForTeacher(
+                getProfessorship().getTeacher());
+        
+        if(percentage > availablePercentage) {
+            throw new DomainException("message.exceeded.professorship.percentage");
+        }
+        
         if (percentage == 100) {
             verifyAnyOverLapPeriod();
         }
