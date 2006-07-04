@@ -68,7 +68,7 @@ public class CompetenceCourse extends CompetenceCourse_Base {
                     "acronym", 
                     (Set<CompetenceCourse>) CompetenceCourse.readBolonhaCompetenceCourses(), 
                     true);
-            competenceCourseInformation.setAcronym((String) uniqueAcronymCreator.create(this));
+            competenceCourseInformation.setAcronym((String) uniqueAcronymCreator.create(this).getLeft());
         } catch (Exception e) {
             throw new DomainException("competence.course.unable.to.create.acronym");
         }
@@ -159,7 +159,7 @@ public class CompetenceCourse extends CompetenceCourse_Base {
                     "acronym", 
                     (Set<CompetenceCourse>) CompetenceCourse.readBolonhaCompetenceCourses(), 
                     true);
-            acronym = (String) uniqueAcronymCreator.create(this);
+            acronym = (String) uniqueAcronymCreator.create(this).getLeft();
         } catch (Exception e) {
             throw new DomainException("competence.course.unable.to.create.acronym");
         }

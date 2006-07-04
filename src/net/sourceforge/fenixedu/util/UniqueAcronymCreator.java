@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 
+import net.sourceforge.fenixedu.dataTransferObject.GenericPair;
 import net.sourceforge.fenixedu.domain.DomainObject;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -31,28 +32,30 @@ public class UniqueAcronymCreator<T extends DomainObject> {
         this.logger.setLevel(Level.OFF);
     }
 
-    private static Map<Integer, String> existingAcronyms = new HashMap<Integer, String>();
+    private Map<String, T> existingAcronyms = new HashMap<String, T>();
 
     private void initialize() throws Exception {
         existingAcronyms.clear();
+        colisions.clear();
+
         for (final T object : objects) {
-            Integer objectId = (Integer) PropertyUtils.getProperty(object, "idInternal");
             String objectAcronym = (String) PropertyUtils.getProperty(object, acronymSlot);
             
             if (objectAcronym != null) {
-                if (existingAcronyms.containsValue(objectAcronym)) {
+                if (existingAcronyms.containsKey(objectAcronym)) {
                     throw new Exception("given object list doesn't have unique acronyms!");
                 }
                 
-                existingAcronyms.put(objectId, objectAcronym);    
+                existingAcronyms.put(objectAcronym, object);    
             }
         }
     }
     
-    private static Integer objectId;
+    private T object;
     private static String[] splitsName;
+    private Set<T> colisions = new HashSet<T>();
     
-    public String create(T object) throws Exception {
+    public GenericPair<String, Set<T>> create(T object) throws Exception {
         initialize();
         
         final String slotValue = (String) PropertyUtils.getProperty(object, slotName);
@@ -61,18 +64,18 @@ public class UniqueAcronymCreator<T extends DomainObject> {
         logger.info("slotValue -> " + slotValue);
         logger.info("slotValueWithNoAccents -> " + slotValueWithNoAccents);
 
-        objectId = (Integer) PropertyUtils.getProperty(object, "idInternal");
+        this.object = object;
         splitsName = slotValueWithNoAccents.split(" ");
         
         String acronym = constructBasicAcronym(new StringBuilder());
         
         if (canAccept(acronym)) {
-            return acronym;
+            return new GenericPair<String, Set<T>>(acronym, colisions);
         } else {
             acronym = constructExtendedAcronym(acronym);
             
             if (canAccept(acronym)) {
-                return acronym;
+                return new GenericPair<String, Set<T>>(acronym, colisions);
             } else {
                 int index = 3;
 
@@ -82,7 +85,7 @@ public class UniqueAcronymCreator<T extends DomainObject> {
                     acronym = acronymAux.toString();
                     
                     if (canAccept(acronym)) {
-                        return acronym;
+                        return new GenericPair<String, Set<T>>(acronym, colisions);
                     }
                     index++;
                 }
@@ -93,12 +96,21 @@ public class UniqueAcronymCreator<T extends DomainObject> {
     }
 
     private boolean canAccept(String acronym) {
-        if (!existingAcronyms.containsValue(acronym) || (existingAcronyms.get(objectId) != null && existingAcronyms.get(objectId).equals(acronym))) {
+        if (!existingAcronyms.containsKey(acronym)) {
             logger.info("canAccept, true -> " + acronym);
             return true;
+        } else {
+
+            if (existingAcronyms.get(acronym).equals(object)) {
+                logger.info("canAccept, true -> " + acronym);
+                return true;
+            } else {
+                colisions.add(existingAcronyms.get(acronym));
+                
+                logger.info("canAccept, false -> " + acronym);
+                return false;
+            }
         }
-        logger.info("canAccept, false -> " + acronym);
-        return false;
     }
 
     private static String constructBasicAcronym(StringBuilder acronym) {
