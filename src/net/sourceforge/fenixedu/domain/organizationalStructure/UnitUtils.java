@@ -6,7 +6,10 @@ package net.sourceforge.fenixedu.domain.organizationalStructure;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.ResourceBundle;
+
+import net.sourceforge.fenixedu._development.PropertiesManager;
 
 import org.joda.time.YearMonthDay;
 
@@ -71,7 +74,10 @@ public class UnitUtils {
     }
 
     private static String getLabel(String key) {
-        ResourceBundle bundle = ResourceBundle.getBundle("resources/ApplicationResources");
+    	final String language = PropertiesManager.getProperty("language");
+    	final String country = PropertiesManager.getProperty("location");
+    	final String variant = PropertiesManager.getProperty("variant");
+    	ResourceBundle bundle = ResourceBundle.getBundle("resources/ApplicationResources", new Locale(language, country, variant));   
         return bundle.getString(key);
     }
 
