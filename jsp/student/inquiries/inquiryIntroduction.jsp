@@ -3,7 +3,7 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ page import="net.sourceforge.fenixedu.util.InquiriesUtil" %>
-<%@ page import="pt.utl.ist.fenix.tools.util.StringAppender" %>
+<%@ page import="java.lang.StringBuilder" %>
 
 
 <style type="text/css">
@@ -32,7 +32,7 @@ margin-bottom: 0;
 		<ul>
 			<logic:iterate id="attends" name='<%= InquiriesUtil.STUDENT_ATTENDS %>' type="net.sourceforge.fenixedu.dataTransferObject.InfoFrequenta">
 				<li>
-					<html:link page='<%= StringAppender.append("/fillInquiries.do?method=prepare&amp;", InquiriesUtil.STUDENT_ATTENDS_ID, "=", attends.getIdInternal().toString()) %>'>
+					<html:link page='<%= new StringBuilder().append("/fillInquiries.do?method=prepare&amp;").append(InquiriesUtil.STUDENT_ATTENDS_ID).append("=").append(attends.getIdInternal().toString()).toString() %>'>
 						<bean:write name="attends" property="disciplinaExecucao.nome" />
 					</html:link>
 				</li>
