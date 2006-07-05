@@ -1,15 +1,16 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
+
+<style>@import url(<%= request.getContextPath() %>/CSS/navlateralnew.css);</style>
+
 <ul>
 	<li><html:link page="/candidateSection.do"><bean:message key="link.masterDegree.administrativeOffice.candidate" /></html:link></li>
 </ul>
-	<p><b><bean:message key="label.masterDegree.administrativeOffice.contributor" /></b></p>
-<ul>
-	<blockquote>
-		<li><html:link page="/createContributorDispatchAction.do?method=prepare"><bean:message key="link.masterDegree.administrativeOffice.createContributor" /></html:link></li>
-		<li><html:link page="/visualizeContributors.do?method=prepare&action=visualize&page=0"><bean:message key="link.masterDegree.administrativeOffice.visualizeContributor" /></html:link></li>
-		<li><html:link page="/editContributors.do?method=prepare&action=edit&page=0"><bean:message key="link.masterDegree.administrativeOffice.editContributor" /></html:link></li>
-	</blockquote>
+<ul style="margin-left: 2em; margin-top: 1em; margin-bottom: 1em;">
+	<li class="navheader"><bean:message key="label.masterDegree.administrativeOffice.contributor" /></li>
+	<li><html:link page="/createContributorDispatchAction.do?method=prepare"><bean:message key="link.masterDegree.administrativeOffice.createContributor" /></html:link></li>
+	<li><html:link page="/visualizeContributors.do?method=prepare&action=visualize&page=0"><bean:message key="link.masterDegree.administrativeOffice.visualizeContributor" /></html:link></li>
+	<li><html:link page="/editContributors.do?method=prepare&action=edit&page=0"><bean:message key="link.masterDegree.administrativeOffice.editContributor" /></html:link></li>
 </ul>
 <ul>	
 	<li><html:link page="/guideSection.do"><bean:message key="link.masterDegree.administrativeOffice.guide" /></html:link></li>

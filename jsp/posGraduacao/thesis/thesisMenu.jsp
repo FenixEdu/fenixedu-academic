@@ -3,6 +3,8 @@
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
 <%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoStudent" %>
 
+<style>@import url(<%= request.getContextPath() %>/CSS/navlateralnew.css);</style>
+
 <bean:define id="student" name="<%= SessionConstants.STUDENT %>" scope="request" />
 
 <%
@@ -40,15 +42,13 @@
 	<li><html:link page="/guideSection.do"><bean:message key="link.masterDegree.administrativeOffice.guide" /></html:link></li>
 	<li><html:link page="/studentSection.do"><bean:message key="label.coordinator.student" /></html:link></li>
 </ul>
-    <p><b><bean:message key="link.masterDegree.administrativeOffice.thesis.title" /></b></p>
-<ul>
-	<blockquote>
-	    <li><html:link page="/changeMasterDegreeThesis.do" name="parametersChange"><bean:message key="link.masterDegree.administrativeOffice.thesis.change" /></html:link></li>
-	    <li><html:link page="/visualizeMasterDegreeThesis.do" name="parametersVisuzalize"><bean:message key="link.masterDegree.administrativeOffice.thesis.visualize" /></html:link></li>
-	    <li><html:link page="/changeMasterDegreeProof.do" name="parametersChangeProof"><bean:message key="link.masterDegree.administrativeOffice.thesis.changeProof" /></html:link></li>
-	    <li><html:link page="/visualizeMasterDegreeProof.do" name="parametersVisuzalizeProof"><bean:message key="link.masterDegree.administrativeOffice.thesis.visualizeProof"/></html:link></li>
-	    <li><html:link page="/thesisSection.do"><bean:message key="link.masterDegree.administrativeOffice.thesis.changeStudent"/></html:link></li>
-	</blockquote>
+<ul style="margin-left: 2em; margin-top: 1em; margin-bottom: 1em;">
+	<li class="navheader"><bean:message key="link.masterDegree.administrativeOffice.thesis.title" /></li>
+    <li><html:link page="/changeMasterDegreeThesis.do" name="parametersChange"><bean:message key="link.masterDegree.administrativeOffice.thesis.change" /></html:link></li>
+    <li><html:link page="/visualizeMasterDegreeThesis.do" name="parametersVisuzalize"><bean:message key="link.masterDegree.administrativeOffice.thesis.visualize" /></html:link></li>
+    <li><html:link page="/changeMasterDegreeProof.do" name="parametersChangeProof"><bean:message key="link.masterDegree.administrativeOffice.thesis.changeProof" /></html:link></li>
+    <li><html:link page="/visualizeMasterDegreeProof.do" name="parametersVisuzalizeProof"><bean:message key="link.masterDegree.administrativeOffice.thesis.visualizeProof"/></html:link></li>
+    <li><html:link page="/thesisSection.do"><bean:message key="link.masterDegree.administrativeOffice.thesis.changeStudent"/></html:link></li>
 </ul>
 <ul>
 	<li><html:link page="/gratuitySection.do"><bean:message key="link.masterDegree.administrativeOffice.gratuity" /></html:link></li>

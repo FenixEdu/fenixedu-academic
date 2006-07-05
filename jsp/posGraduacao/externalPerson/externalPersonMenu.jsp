@@ -1,5 +1,8 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
+
+<style>@import url(<%= request.getContextPath() %>/CSS/navlateralnew.css);</style>
+
 <ul>
     <li><html:link page="/candidateSection.do"><bean:message key="link.masterDegree.administrativeOffice.candidate" /></html:link></li>
     <li><html:link page="/contributorSection.do"><bean:message key="link.masterDegree.administrativeOffice.contributor" /></html:link></li>
@@ -8,15 +11,13 @@
 	<li><html:link page="/thesisSection.do"><bean:message key="link.masterDegree.administrativeOffice.thesis.title" /></html:link></li>
 	<li><html:link page="/gratuitySection.do"><bean:message key="link.masterDegree.administrativeOffice.gratuity" /></html:link></li>
 </ul>
-    <p><b><bean:message key="link.masterDegree.administrativeOffice.externalPersons.title" /></b></p>
-<ul>
-	<blockquote>
-	    <li><html:link page="/insertExternalPerson.do?page=0&amp;method=prepare"><bean:message key="link.masterDegree.administrativeOffice.externalPersons.insert" /></html:link></li>
-	    <li><html:link page="/visualizeExternalPersons.do?page=0&amp;method=prepare"><bean:message key="link.masterDegree.administrativeOffice.externalPersons.visualize" /></html:link></li>
-		<li><html:link page="/findExternalPerson.do?page=0&amp;method=prepare"><bean:message key="link.masterDegree.administrativeOffice.externalPersons.find" /></html:link></li>		
-	    <li><html:link page="/insertInstitution.do?method=prepare&amp;page=0"><bean:message key="link.masterDegree.administrativeOffice.externalPersons.insertInstitution"/></html:link></li>
-	    <li><html:link page="/editInstitution.do?method=prepare&amp;page=0"><bean:message key="link.masterDegree.administrativeOffice.externalPersons.editInstitution"/></html:link></li>
-	</blockquote>
+<ul style="margin-left: 2em; margin-top: 1em; margin-bottom: 1em;">
+	<li class="navheader"><bean:message key="link.masterDegree.administrativeOffice.externalPersons.title" /></li>
+    <li><html:link page="/insertExternalPerson.do?page=0&amp;method=prepare"><bean:message key="link.masterDegree.administrativeOffice.externalPersons.insert" /></html:link></li>
+    <li><html:link page="/visualizeExternalPersons.do?page=0&amp;method=prepare"><bean:message key="link.masterDegree.administrativeOffice.externalPersons.visualize" /></html:link></li>
+	<li><html:link page="/findExternalPerson.do?page=0&amp;method=prepare"><bean:message key="link.masterDegree.administrativeOffice.externalPersons.find" /></html:link></li>		
+    <li><html:link page="/insertInstitution.do?method=prepare&amp;page=0"><bean:message key="link.masterDegree.administrativeOffice.externalPersons.insertInstitution"/></html:link></li>
+    <li><html:link page="/editInstitution.do?method=prepare&amp;page=0"><bean:message key="link.masterDegree.administrativeOffice.externalPersons.editInstitution"/></html:link></li>
 </ul>
 <ul>
     <li><html:link page="/marksManagement.do?method=prepareChooseMasterDegree"><bean:message key="link.masterDegree.administrativeOffice.marksManagement" /></html:link></li>
@@ -24,5 +25,3 @@
     <li><html:link page="/dfaCandidacySection.do"><bean:message key="link.masterDegree.administrativeOffice.dfaCandidacyManagement" bundle="ADMIN_OFFICE_RESOURCES"/> </html:link></li>
 	<li><html:link page="/payments.do?method=prepareSearchPerson"><bean:message key="link.masterDegree.administrativeOffice.payments" /></html:link></li>
 </ul>
-	   
-  	
