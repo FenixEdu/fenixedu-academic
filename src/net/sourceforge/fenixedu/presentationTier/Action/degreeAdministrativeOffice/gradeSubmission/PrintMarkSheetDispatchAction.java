@@ -1,6 +1,10 @@
 package net.sourceforge.fenixedu.presentationTier.Action.degreeAdministrativeOffice.gradeSubmission;
 
 import java.util.Arrays;
+import java.util.Collection;
+import java.util.Comparator;
+import java.util.Map;
+import java.util.TreeMap;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -9,6 +13,7 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterExce
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.UnableToPrintServiceException;
+import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.MarkSheet;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
@@ -31,8 +36,31 @@ public class PrintMarkSheetDispatchAction extends MarkSheetDispatchAction {
             ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) {
         String[] printerNames = PrinterManager.getFunctionPrinterNames("markSheet");
         request.setAttribute("printerNames", Arrays.asList(printerNames));
-        request.setAttribute("markSheetsCount", ExecutionPeriod.readActualExecutionPeriod().getWebMarkSheetsNotPrinted().size());
+        
+        ExecutionPeriod executionPeriod = ExecutionPeriod.readActualExecutionPeriod();
+        Collection<MarkSheet> webMarkSheetsNotPrinted = executionPeriod.getWebMarkSheetsNotPrinted();
+        
+        request.setAttribute("executionPeriod", executionPeriod);
+        request.setAttribute("curricularCourseMap", buildMapWithCurricularCoursesAndNumberOfMarkSheets(webMarkSheetsNotPrinted));
+        request.setAttribute("totalMarkSheetsCount", webMarkSheetsNotPrinted.size());
+        
         return mapping.findForward("choosePrinterMarkSheetsWeb");
+    }
+    
+    private Map<CurricularCourse, Integer> buildMapWithCurricularCoursesAndNumberOfMarkSheets(
+			Collection<MarkSheet> webMarkSheetsNotPrinted) {
+    	final Map<CurricularCourse, Integer> result = new TreeMap<CurricularCourse, Integer>(new Comparator<CurricularCourse>() {
+			public int compare(CurricularCourse o1, CurricularCourse o2) {
+				return o1.getDegreeCurricularPlan().getDegree().getName().compareTo(
+								o2.getDegreeCurricularPlan().getDegree().getName());
+			}
+    	});
+        for (final MarkSheet markSheet : webMarkSheetsNotPrinted) {
+        	Integer markSheetNumber = result.get(markSheet.getCurricularCourse());
+			result.put(markSheet.getCurricularCourse(), (markSheetNumber == null) ? Integer.valueOf(1)
+					: Integer.valueOf(markSheetNumber.intValue() + 1));
+        }
+        return result;
     }
     
     public ActionForward choosePrinterMarkSheet(ActionMapping mapping,

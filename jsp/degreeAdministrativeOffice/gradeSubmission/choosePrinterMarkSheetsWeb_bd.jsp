@@ -4,7 +4,7 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
 <%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="dt"%>
 
-<bean:define id="markSheets" name="markSheetsCount"/>
+<bean:define id="markSheets" name="totalMarkSheetsCount"/>
 <h2><bean:message key="label.markSheet.leftToPrint" arg0="<%= markSheets.toString() %>"/></h2>
 <br/>
 <h3><bean:message key="label.choosePrinter"/></h3>
@@ -40,3 +40,33 @@
 	<html:cancel onclick="this.form.method.value='searchMarkSheet';this.form.submit();" styleClass="inputbutton"><bean:message key="label.back"/></html:cancel>
 	<html:submit styleClass="inputbutton"><bean:message key="label.print"/></html:submit>
 </html:form>
+
+<logic:notEmpty name="curricularCourseMap">
+
+	<br/><br/><hr>
+	<h3><bean:write name="executionPeriod" property="executionYear.year"/> - <bean:write name="executionPeriod" property="semester"/>º Sem</h3>
+	<br/>
+	<strong><bean:message key="label.markSheet.printMarkSheetsWeb.markSheets.lefToPrint"/></strong>:
+	<br/>
+	<table class="tstyle4">
+		<tr>
+			<th><bean:message key="label.markSheet.printMarkSheetsWeb.degree"/></th>
+			<th><bean:message key="label.markSheet.printMarkSheetsWeb.degreeCurricularPlan"/></th>
+			<th><bean:message key="label.markSheet.printMarkSheetsWeb.curricularCourse"/></th>
+			<th><bean:message key="label.markSheet.printMarkSheetsWeb.numberOfMarkSheets"/></th>
+		</tr>
+	
+	<logic:iterate id="entry" name="curricularCourseMap">
+	
+		<bean:define id="curricularCourse" name="entry" property="key"/>
+		<bean:define id="numberOfMarkSheets" name="entry" property="value"/>
+		
+		<tr>
+			<td><bean:write name="curricularCourse" property="degreeCurricularPlan.degree.name"/></td>
+			<td><bean:write name="curricularCourse" property="degreeCurricularPlan.name"/></td>
+			<td><bean:write name="curricularCourse" property="name"/> - <bean:write name="curricularCourse" property="code"/></td>
+			<td align="center"><bean:write name="numberOfMarkSheets"/></td>
+		</tr>
+	</logic:iterate>
+	</table>
+</logic:notEmpty>
