@@ -100,7 +100,8 @@ public class TeacherService extends TeacherService_Base {
                 Teacher teacher = degreeTeachingService.getProfessorship().getTeacher();                
                 Category teacherCategory = teacher.getCategoryForCreditsByPeriod(executionPeriod);
                 if (teacherCategory != null 
-                        && teacherCategory.getCode().equals("AST") && teacherCategory.getLongName().equals("ASSISTENTE")
+                        && ((teacherCategory.getCode().equals("AST") && teacherCategory.getLongName().equals("ASSISTENTE")) ||
+                                (teacherCategory.getCode().equals("ASC") && teacherCategory.getLongName().equals("ASSISTENTE CONVIDADO")))
                         && degreeTeachingService.getShift().getTipo().equals(ShiftType.TEORICA)) {                    
                     double hours = degreeTeachingService.getShift().hours();
                     credits += (hours * (degreeTeachingService.getPercentage().doubleValue() / 100)) * 1.5;                    
