@@ -3375,6 +3375,7 @@ class net.sourceforge.fenixedu.domain.system.CronScriptInvocation extends net.so
 	DateTime startTime;
 	DateTime endTime;
 	Boolean successful;
+	String log;
 }
 
 class net.sourceforge.fenixedu.domain.candidacy.Candidacy extends net.sourceforge.fenixedu.domain.DomainObject {
