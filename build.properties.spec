@@ -916,58 +916,6 @@ application.filterBroker=pt.utl.ist.berserk.logic.filterManager.FilterBroker
 
 
 #------------------------------------------------------------------------------
-# Testing Configuration
-#------------------------------------------------------------------------------
-#
-#   JdbcAccessClass: implementation to use for accessing the data repository.
-#                    the default value is
-#                         org.apache.ojb.broker.accesslayer.JdbcAccessImpl
-#                    For testing the application with ClickUnit the following
-#                    implementation should be used:
-#                         net.sourceforge.fenixedu.persistence.persistenceTiercAccessRollbackImpl
-#                    This latter implementation stores the inverse operations
-#                    performed on the database, so that the database state can
-#                    be roled back to the initial state. In production env's
-#                    the default implementation must be used!!! Using this 
-#                    latter implementation in production is a major security
-#                    hole!
-#   roleback.filename: The filename to where the 
-#                         net.sourceforge.fenixedu.persistenceTier.AccessLayer.JdbcAccessRollbackImpl
-#                      implementation will write the inverse sql operations. This
-#                      file is generated in cronilogical order. When reverting 
-#                      database state, the sql instructions should be executed
-#                      starting from the end of the file.
-#
-# @message = Implementation to use for accessing the data repository.
-#                    For testing the application with ClickUnit the [Fenix Jdbc Rollback Impl] 
-#                    should be selected.
-#                    This latter implementation stores the inverse operations
-#                    performed on the database, so that the database state can
-#                    be roled back to the initial state. In production env's
-#                    the default implementation must be used!!! Using this 
-#                    latter implementation in production is a major security
-#                    hole!
-# @type = menu
-# @options = {"Default OJB jdbc access class","Fenix Jdbc Rollback Impl"}
-# @optionsValues = {"org.apache.ojb.broker.accesslayer.JdbcAccessImpl","net.sourceforge.fenixedu.persistenceTier.AccessLayer.JdbcAccessRollbackImpl"}
-test.jdbc.access.class=org.apache.ojb.broker.accesslayer.JdbcAccessImpl
-
-# @message = Implementation to use for accessing the data repository.
-#                    For testing the application with ClickUnit the [Fenix Jdbc Rollback Impl] 
-#                    should be selected.
-#                    This latter implementation stores the inverse operations
-#                    performed on the database, so that the database state can
-#                    be roled back to the initial state. In production env's
-#                    the default implementation must be used!!! Using this 
-#                    latter implementation in production is a major security
-#                    hole!
-# @type = file
-# @validateFile=false
-# @required=false
-# @depency=test.jdbc.access.class=net.sourceforge.fenixedu.persistenceTier.AccessLayer.JdbcAccessRollbackImpl
-test.rollback.filename=/tmp/roleback.sql
-
-#------------------------------------------------------------------------------
 # Validation/Verification Configuration
 #------------------------------------------------------------------------------
 #
@@ -1270,6 +1218,60 @@ filemanager.dspace.rmi.stream.bytes.max=8192
 # @dependency = filemanager.dspace.underlying.transport.class=pt.utl.ist.fenix.tools.file.dspace.DspaceRmiClient
 filemanager.dspace.rmi.stream.bytes.block=512
 
+
+#------------------------------------------------------------------------------
+# Testing Configuration
+#------------------------------------------------------------------------------
+#
+#   JdbcAccessClass: implementation to use for accessing the data repository.
+#                    the default value is
+#                         org.apache.ojb.broker.accesslayer.JdbcAccessImpl
+#                    For testing the application with ClickUnit the following
+#                    implementation should be used:
+#                         net.sourceforge.fenixedu.persistence.persistenceTiercAccessRollbackImpl
+#                    This latter implementation stores the inverse operations
+#                    performed on the database, so that the database state can
+#                    be roled back to the initial state. In production env's
+#                    the default implementation must be used!!! Using this 
+#                    latter implementation in production is a major security
+#                    hole!
+#   roleback.filename: The filename to where the 
+#                         net.sourceforge.fenixedu.persistenceTier.AccessLayer.JdbcAccessRollbackImpl
+#                      implementation will write the inverse sql operations. This
+#                      file is generated in cronilogical order. When reverting 
+#                      database state, the sql instructions should be executed
+#                      starting from the end of the file.
+#
+# @message = Implementation to use for accessing the data repository.
+#                    For testing the application with ClickUnit the [Fenix Jdbc Rollback Impl] 
+#                    should be selected.
+#                    This latter implementation stores the inverse operations
+#                    performed on the database, so that the database state can
+#                    be roled back to the initial state. In production env's
+#                    the default implementation must be used!!! Using this 
+#                    latter implementation in production is a major security
+#                    hole!
+# @type = menu
+# @options = {"Default OJB jdbc access class","Fenix Jdbc Rollback Impl"}
+# @optionsValues = {"org.apache.ojb.broker.accesslayer.JdbcAccessImpl","net.sourceforge.fenixedu.persistenceTier.AccessLayer.JdbcAccessRollbackImpl"}
+test.jdbc.access.class=org.apache.ojb.broker.accesslayer.JdbcAccessImpl
+
+# @message = Implementation to use for accessing the data repository.
+#                    For testing the application with ClickUnit the [Fenix Jdbc Rollback Impl] 
+#                    should be selected.
+#                    This latter implementation stores the inverse operations
+#                    performed on the database, so that the database state can
+#                    be roled back to the initial state. In production env's
+#                    the default implementation must be used!!! Using this 
+#                    latter implementation in production is a major security
+#                    hole!
+# @type = file
+# @validateFile=false
+# @required=false
+# @depency=test.jdbc.access.class=net.sourceforge.fenixedu.persistenceTier.AccessLayer.JdbcAccessRollbackImpl
+test.rollback.filename=/tmp/roleback.sql
+
+
 #------------------------------------------------------------------------------
 # Tests Configuration - ClickUnit
 #------------------------------------------------------------------------------
@@ -1277,24 +1279,24 @@ filemanager.dspace.rmi.stream.bytes.block=512
 ## @message = The host to test by click unit testing
 ## @type = hostname
 #### @validate = yes
-#clickunit.http.host=localhost
+#test.clickunit.http.host=localhost
 	
 ## @message = The http port of the host to test by click unit testing
 ## @type = integer
 #### @min = 1
 ## @max = 65535
-#clickunit.http.port=8080
+#test.clickunit.http.port=8080
 
 ## @message = The https (secure) port of the host to test by click unit testing
 ## @type = integer
 #### @min = 1
 ## @max = 65535
-#clickunit.https.port=443
+#test.clickunit.https.port=443
 
 ## @message = Login page url of the host to test by click unit testing
 ## @type = url
 #### @validate = yes
-#clickunit.login.page=https://${clickunit.http.host}:${clickunit.https.port}/${application.virtual.context}/privado
+#test.clickunit.login.page=https://${clickunit.http.host}:${clickunit.https.port}/${application.virtual.context}/privado
 
 #
 #------------------------------------------------------------------------------
