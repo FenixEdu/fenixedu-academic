@@ -10,7 +10,6 @@ import net.sourceforge.fenixedu.renderers.components.controllers.HtmlController;
 import net.sourceforge.fenixedu.renderers.components.controllers.HtmlSubmitButtonController;
 import net.sourceforge.fenixedu.renderers.components.state.ComponentLifeCycle;
 import net.sourceforge.fenixedu.renderers.components.state.IViewState;
-import net.sourceforge.fenixedu.renderers.components.state.ViewDestination;
 import net.sourceforge.fenixedu.renderers.components.tags.HtmlTag;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 
@@ -28,7 +27,7 @@ public class HtmlForm extends HtmlComponent implements Controllable {
     private HtmlComponent body;
     private List<HtmlHiddenField> hiddenFields;
     private HtmlSubmitButton submitButton;
-    private HtmlSubmitButton cancelButton;
+    private HtmlCancelButton cancelButton;
     
     private HtmlController controller;
     
@@ -37,18 +36,8 @@ public class HtmlForm extends HtmlComponent implements Controllable {
         
         this.hiddenFields = new ArrayList<HtmlHiddenField>();
         this.submitButton = new HtmlSubmitButton(RenderUtils.getResourceString("renderers.form.submit.name"));
-        this.cancelButton = new HtmlSubmitButton(RenderUtils.getResourceString("renderers.form.cancel.name"));
+        this.cancelButton = new HtmlCancelButton(RenderUtils.getResourceString("renderers.form.cancel.name"));
      
-        this.cancelButton.setName("$form.cancel"); // HACK: ?
-        this.cancelButton.setController(new HtmlSubmitButtonController() {
-
-            @Override
-            protected void buttonPressed(IViewState viewState, HtmlSubmitButton button) {
-                ComponentLifeCycle.doCancel(viewState);
-            }
-            
-        });
-        
         setEncoding(URL_ENCODED);
     }
 
@@ -92,11 +81,11 @@ public class HtmlForm extends HtmlComponent implements Controllable {
         this.hiddenFields.add(htmlHiddenField);
     }
     
-    public HtmlSubmitButton getCancelButton() {
+    public HtmlCancelButton getCancelButton() {
         return this.cancelButton;
     }
 
-    public void setCancelButton(HtmlSubmitButton cancelButton) {
+    public void setCancelButton(HtmlCancelButton cancelButton) {
         this.cancelButton = cancelButton;
     }
 

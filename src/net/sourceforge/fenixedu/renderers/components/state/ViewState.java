@@ -76,18 +76,23 @@ public class ViewState implements IViewState {
     
     private boolean postBack;
 
-    public ViewState(String id) {
+    public ViewState() {
         super();
-
-        this.id = id;
-
+        
         this.valid = true;
         this.skipUpdate = false;
         this.skipValidation = false;
         this.updateComponentTree = true;
         this.postBack = false;
+        this.visible = true;
         
         this.messages = new ArrayList<Message>();
+    }
+    
+    public ViewState(String id) {
+        this();
+
+        this.id = id;
     }
 
     public String getId() {

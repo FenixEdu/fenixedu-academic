@@ -18,11 +18,10 @@ import net.sourceforge.fenixedu.renderers.components.controllers.Controllable;
 import net.sourceforge.fenixedu.renderers.components.controllers.HtmlController;
 import net.sourceforge.fenixedu.renderers.contexts.InputContext;
 import net.sourceforge.fenixedu.renderers.model.MetaObject;
+import net.sourceforge.fenixedu.renderers.model.MetaObjectCollection;
 import net.sourceforge.fenixedu.renderers.model.MetaObjectFactory;
 import net.sourceforge.fenixedu.renderers.model.MetaSlot;
 import net.sourceforge.fenixedu.renderers.model.MetaSlotKey;
-import net.sourceforge.fenixedu.renderers.model.MetaObjectCollection;
-import net.sourceforge.fenixedu.renderers.model.UserIdentity;
 import net.sourceforge.fenixedu.renderers.utils.RenderKit;
 import net.sourceforge.fenixedu.renderers.validators.HtmlValidator;
 
@@ -52,9 +51,11 @@ public class ComponentLifeCycle {
                 collect(component);
                 
                 InputContext context = (InputContext) viewState.getContext();
-                collect(context.getForm().getSubmitButton());
-                collect(context.getForm().getCancelButton());
-        
+                if (context != null) {
+                    collect(context.getForm().getSubmitButton());
+                    collect(context.getForm().getCancelButton());
+                }
+                
                 addHiddenComponents(viewState);
             }
         }
@@ -356,33 +357,36 @@ public class ComponentLifeCycle {
     public HtmlComponent restoreComponent(IViewState viewState) throws InstantiationException, IllegalAccessException {
         viewState.setPostBack(true);
         
-        String layout = viewState.getLayout();
-        Properties properties = viewState.getProperties();
-        Class contextClass = viewState.getContextClass();
-        
-        InputContext context = (InputContext) contextClass.newInstance();
-        context.setLayout(layout);
-        context.setProperties(properties);
-        
-        context.setViewState(viewState);
-        viewState.setContext(context);
-
         MetaObject metaObject = viewState.getMetaObject();
         metaObject.setUser(viewState.getUser());
+    
+        Class contextClass = viewState.getContextClass();
+        if (contextClass != null) {
+            String layout = viewState.getLayout();
+            Properties properties = viewState.getProperties();
 
-        if (! viewState.isVisible()) {
-            return new HtmlText();
+            InputContext context = (InputContext) contextClass.newInstance();
+            context.setLayout(layout);
+            context.setProperties(properties);
+            
+            context.setViewState(viewState);
+            viewState.setContext(context);
+        
+            if (! viewState.isVisible()) {
+                return new HtmlText();
+            }
+        
+            if (isHiddenSlot(viewState)) {
+                viewState.setComponent(new HtmlText());
+            }
+            else {
+                Object object = metaObject.getObject();
+                viewState.setComponent(RenderKit.getInstance().render(context, object, metaObject.getType()));
+            }
         }
         
-        if (isHiddenSlot(viewState)) {
-            viewState.setComponent(new HtmlText());
-        }
-        else {
-            Object object = metaObject.getObject();
-            viewState.setComponent(RenderKit.getInstance().render(context, object, metaObject.getType()));
-        }
-
-        return viewState.getComponent();
+        HtmlComponent component = viewState.getComponent();
+        return component != null ? component : new HtmlText();
     }
 
     private void updateComponent(ComponentCollector collector, EditRequest editRequest) {

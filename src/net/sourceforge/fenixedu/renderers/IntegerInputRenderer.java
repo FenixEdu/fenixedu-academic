@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.renderers;
 
 import net.sourceforge.fenixedu.renderers.components.converters.ConversionException;
 import net.sourceforge.fenixedu.renderers.components.converters.Converter;
+import net.sourceforge.fenixedu.renderers.converters.IntegerNumberConverter;
 
 /**
  * This renderer provides a simple way of doing the input of a integer number.
@@ -40,36 +41,4 @@ public class IntegerInputRenderer extends NumberInputRenderer {
         return new IntegerNumberConverter(getBase());
     }
     
-    private class IntegerNumberConverter extends Converter {
-
-        private int base;
-        
-        public IntegerNumberConverter(int base) {
-            this.base = base;
-        }
-
-        public int getBase() {
-            return this.base;
-        }
-
-        public void setBase(int base) {
-            this.base = base;
-        }
-
-        @Override
-        public Object convert(Class type, Object value) {
-            String numberText = ((String) value).trim();
-
-            if (numberText.length() == 0) {
-                return null;
-            }
-            
-            try {
-                return Integer.parseInt(numberText.trim(), getBase());
-            } catch (NumberFormatException e) {
-                throw new ConversionException("renderers.converter.integer", e, true, value);
-            }
-        }
-        
-    }
 }

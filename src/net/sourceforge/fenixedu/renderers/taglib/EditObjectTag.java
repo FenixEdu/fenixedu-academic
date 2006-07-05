@@ -368,19 +368,23 @@ public class EditObjectTag extends BaseRenderObjectTag {
             MetaObject metaObject = createMetaObject(targetObject, schema);
             viewState.setMetaObject(metaObject);
             
-            viewState.setInputDestination(getInputDestination());
-
-            String currentPath = getCurrentPath();
-            ModuleConfig module = TagUtils.getInstance().getModuleConfig(pageContext);
-    
-            for (String name : this.destinations.keySet()) {
-                ViewDestination destination = this.destinations.get(name);
-                
-                viewState.addDestination(name, normalizeDestination(destination, currentPath, module.getPrefix()));
-            }
+            setViewStateDestinations(viewState);
         }
         
         return viewState;
+    }
+
+    protected void setViewStateDestinations(IViewState viewState) {
+        viewState.setInputDestination(getInputDestination());
+
+        String currentPath = getCurrentPath();
+        ModuleConfig module = TagUtils.getInstance().getModuleConfig(pageContext);
+   
+        for (String name : this.destinations.keySet()) {
+            ViewDestination destination = this.destinations.get(name);
+            
+            viewState.addDestination(name, normalizeDestination(destination, currentPath, module.getPrefix()));
+        }
     }
 
     protected Schema getComputedSchema(Object targetObject) {

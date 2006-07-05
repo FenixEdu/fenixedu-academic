@@ -9,6 +9,7 @@ import net.sourceforge.fenixedu.renderers.components.controllers.HtmlController;
 import net.sourceforge.fenixedu.renderers.components.converters.Converter;
 import net.sourceforge.fenixedu.renderers.components.converters.Convertible;
 import net.sourceforge.fenixedu.renderers.components.tags.HtmlTag;
+import net.sourceforge.fenixedu.renderers.model.MetaObject;
 import net.sourceforge.fenixedu.renderers.model.MetaSlot;
 import net.sourceforge.fenixedu.renderers.model.MetaSlotKey;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
@@ -125,6 +126,16 @@ public abstract class HtmlFormComponent extends HtmlComponent implements Convert
         this.slotKey = key;
     }
 
+    public void bind(MetaSlot slot) {
+        if (slot != null) {
+            setTargetSlot(slot.getKey());
+        }
+    }
+    
+    public void bind(MetaObject object, String slotName) {
+        bind(object.getSlot(slotName));
+    }
+    
     public String getNewName() {
         int number;
         

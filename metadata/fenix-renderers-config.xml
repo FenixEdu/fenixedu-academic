@@ -173,9 +173,9 @@ Documentation:
     
     <!--@ LabelFormatter output. -->
     <renderer type="net.sourceforge.fenixedu.util.LabelFormatter" class="net.sourceforge.fenixedu.presentationTier.renderers.LabelFormatterRenderer">
-    	<property name="bundleName(application)" value="APPLICATION_RESOURCES"/>
-    	<property name="bundleName(enum)" value="ENUMERATION_RESOURCES"/>
-    	<property name="bundleName(default)" value="APPLICATION_RESOURCES"/>
+    		<property name="bundleName(application)" value="APPLICATION_RESOURCES"/>
+    		<property name="bundleName(enum)" value="ENUMERATION_RESOURCES"/>
+    		<property name="bundleName(default)" value="APPLICATION_RESOURCES"/>
     </renderer>
     
     <!-- input -->
