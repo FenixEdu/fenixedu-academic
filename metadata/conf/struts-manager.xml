@@ -1988,6 +1988,7 @@
 			type="net.sourceforge.fenixedu.presentationTier.Action.manager.CronDA">
 		<forward name="showCronScripts" path="df.show.cron.scripts"/>
 		<forward name="showCronScript" path="df.show.cron.script"/>
+		<forward name="showCronScriptInvocationLog" path="df.show.cron.script.invocation.log"/>
 	</action>
 
 	</action-mappings>

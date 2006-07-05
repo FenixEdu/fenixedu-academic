@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.domain.system.CronRegistry;
+import net.sourceforge.fenixedu.domain.system.CronScriptInvocation;
 import net.sourceforge.fenixedu.domain.system.CronScriptState;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
@@ -43,6 +44,13 @@ public class CronDA extends FenixDispatchAction {
     	final CronScriptState cronScriptState = rootDomainObject.readCronScriptStateByOID(Integer.valueOf(cronScriptStateIDString));
     	request.setAttribute("cronScriptState", cronScriptState);
     	return mapping.findForward("showCronScript");
+    }
+
+    public ActionForward showScriptInvocationLog(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
+    	final String cronScriptInvocationIDString = request.getParameter("cronScriptInvocationID");
+    	final CronScriptInvocation cronScriptInvocation = rootDomainObject.readCronScriptInvocationByOID(Integer.valueOf(cronScriptInvocationIDString));
+    	request.setAttribute("cronScriptInvocation", cronScriptInvocation);
+    	return mapping.findForward("showCronScriptInvocationLog");
     }
 
 }

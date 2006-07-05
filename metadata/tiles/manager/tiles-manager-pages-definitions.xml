@@ -584,4 +584,8 @@
 		<put name="body" value="/manager/showCronScript.jsp" />
 	</definition>
 
+	<definition name="df.show.cron.script.invocation.log" extends="definition.manager.masterPage" >
+		<put name="body" value="/manager/showCronScriptInvocationLog.jsp" />
+	</definition>
+
 </tiles-definitions>
