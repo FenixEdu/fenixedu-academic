@@ -24,8 +24,9 @@
 	</fr:view>
 	<br/>
 	<logic:present name="cronScriptInvocation" property="log">
-		<str:replace replace="\n" with="<br/>">
-			<bean:write name="cronScriptInvocation" property="log"/>
+		<str:replace replace="
+" with="<br/>">
+			<bean:write name="cronScriptInvocation" property="log" filter="false"/>
 		</str:replace>
 	</logic:present>
 	<logic:notPresent name="cronScriptInvocation" property="log">
