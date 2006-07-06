@@ -34,5 +34,5 @@
 	</fr:view>
 </logic:notEmpty>
 <logic:empty name="person" property="receipts">
-		<span class="error"><bean:message key="label.masterDegree.administrativeOffice.payments.noReceipts"/></span>
+		<span class="error0"><bean:message key="label.masterDegree.administrativeOffice.payments.noReceipts"/></span>
 </logic:empty>
