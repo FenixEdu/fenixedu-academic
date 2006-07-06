@@ -53,7 +53,7 @@
 	</logic:notEmpty>
 
 	<logic:empty name="createReceiptBean" property="entries">
-		<span class="error">
+		<span class="error0">
 			<bean:message key="label.masterDegree.administrativeOffice.payments.noPaymentsWithoutReceipt" />
 		</span>
 	</logic:empty>
