@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.domain.assiduousness;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 
@@ -11,6 +12,7 @@ import net.sourceforge.fenixedu.domain.assiduousness.util.JustificationType;
 import net.sourceforge.fenixedu.domain.assiduousness.util.TimePoint;
 import net.sourceforge.fenixedu.domain.assiduousness.util.Timeline;
 
+import org.apache.commons.beanutils.BeanComparator;
 import org.joda.time.DateTime;
 import org.joda.time.Duration;
 import org.joda.time.Interval;
@@ -19,6 +21,8 @@ import org.joda.time.TimeOfDay;
 import org.joda.time.YearMonthDay;
 
 public class Leave extends Leave_Base {
+
+    public static final Comparator<Leave> COMPARATORY_BY_DATE = new BeanComparator("date");
 
     public Leave(Assiduousness assiduousness, DateTime date, Duration dateDuration,
             JustificationMotive justificationMotive, String notes, DateTime lastModificationDate,

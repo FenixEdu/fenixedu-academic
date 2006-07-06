@@ -147,7 +147,7 @@
 						height="110"
 						key="subreport-1"/>
 					<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource(((Collection)$F{workDaySheetList}))]]></dataSourceExpression>
-					<subreportExpression  class="java.lang.String"><![CDATA[$P{path}+"\\WEB-INF\\classes\\reports\\workDaySheet.jasper"]]></subreportExpression>
+					<subreportExpression  class="java.lang.String"><![CDATA[$P{path}+"WEB-INF/classes/reports/workDaySheet.jasper"]]></subreportExpression>
 				</subreport>
 				</elementGroup><!-- End 1 !-->
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >

@@ -1,11 +1,11 @@
 package net.sourceforge.fenixedu.domain.assiduousness;
 
-import org.joda.time.DateTime;
+import java.util.List;
+
+import org.joda.time.DateMidnight;
 import org.joda.time.Duration;
 import org.joda.time.Period;
 import org.joda.time.YearMonthDay;
-
-import java.util.List;
 
 public class DailyBalance {
 
@@ -145,16 +145,8 @@ public class DailyBalance {
     public Duration getNormalWorkPeriodBalance() {
         Period normalWorkedPeriod = getWorkedOnNormalWorkPeriod().toPeriod();
         normalWorkedPeriod = normalWorkedPeriod.minusSeconds(normalWorkedPeriod.getSeconds());
-        Duration normalWorkPeriodBalance = new Duration(normalWorkedPeriod.toDurationFrom(new DateTime()
-                .toDateMidnight())).minus(getWorkSchedule().getWorkScheduleType().getNormalWorkPeriod()
-                .getWorkPeriodDuration());
-        Duration normalWorkPeriodAbsence = Duration.ZERO.minus(this.getWorkSchedule()
-                .getWorkScheduleType().getNormalWorkPeriod().getWorkPeriodDuration());
-        if (normalWorkPeriodBalance.isShorterThan(normalWorkPeriodAbsence)) {
-            return normalWorkPeriodAbsence;
-        } else {
-            return normalWorkPeriodBalance;
-        }
+        final Duration expectedWorkDuration = getWorkSchedule().getWorkScheduleType().getNormalWorkPeriod().getWorkPeriodDuration();
+        return normalWorkedPeriod.toDurationFrom(new DateMidnight()).minus(expectedWorkDuration);
     }
 
     public void discountBalanceLeaveInFixedPeriod(List<Leave> balanceLeaveList) {

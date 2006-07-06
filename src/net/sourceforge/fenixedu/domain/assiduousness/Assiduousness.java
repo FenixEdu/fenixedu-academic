@@ -29,6 +29,9 @@ import org.joda.time.YearMonthDay;
 
 public class Assiduousness extends Assiduousness_Base {
 
+    public static final TimeOfDay startTimeOfDay = new TimeOfDay(7, 30, 0, 0);
+    public static final TimeOfDay endTimeOfDay = new TimeOfDay(23, 59, 59, 99);
+
     public Assiduousness(Employee employee) {
         super();
         setRootDomainObject(RootDomainObject.getInstance());
@@ -85,8 +88,6 @@ public class Assiduousness extends Assiduousness_Base {
         List<Leave> leaves = getLeaves(day);
         Collections.sort(leaves, new BeanComparator("date"));
 
-        Iterator<AttributeType> attributesIt = DomainConstants.WORKED_ATTRIBUTES.getAttributes()
-                .iterator();
         if (schedule != null) {
             WorkSchedule workSchedule = schedule.workScheduleWithDate(day);
             boolean isDayHoliday = isHoliday(day);
@@ -111,6 +112,7 @@ public class Assiduousness extends Assiduousness_Base {
                     dailyBalance.setJustification(true); // ver o tipo de justificacao
                     dailyBalance.setComment(dayOccurrences.get(0).getJustificationMotive().getAcronym());
                 } else {
+                    Iterator<AttributeType> attributesIt = DomainConstants.WORKED_ATTRIBUTES.getAttributes().iterator();
                     timeline.plotListInTimeline(clockings, leaves, attributesIt, day);
                     List<Leave> timeLeaves = getLeavesByType(leaves, JustificationType.TIME);
                     if (!clockings.isEmpty() || !timeLeaves.isEmpty()) {
@@ -124,29 +126,28 @@ public class Assiduousness extends Assiduousness_Base {
                 }
             } else {
                 dailyBalance = new DailyBalance(day, null);
-                Duration worked = new Duration(0);
-                day.toDateMidnight().getDayOfWeek();
-                WeekDay dayOfWeek = WeekDay.fromJodaTimeToWeekDay(day.toDateTimeAtMidnight());
-                EnumSet<WeekDay> enumSetWeekDay = EnumSet.range(WeekDay.MONDAY, WeekDay.FRIDAY);
+                final WeekDay dayOfWeek = WeekDay.fromJodaTimeToWeekDay(day.toDateTimeAtMidnight());
+                final EnumSet<WeekDay> enumSetWeekDay = EnumSet.range(WeekDay.MONDAY, WeekDay.FRIDAY);
 
-                List<AssiduousnessRecord> clockings = getClockingsAndMissingClockings(day
+                final List<AssiduousnessRecord> clockings = getClockingsAndMissingClockings(day
                         .toDateTimeAtMidnight(), day.toDateTimeAtMidnight().plusDays(1));
-                if (enumSetWeekDay.contains(dayOfWeek) && !isDayHoliday && !clockings.isEmpty()) {
-                    Collections.sort(clockings, new BeanComparator("date"));
-                    Timeline timeline = new Timeline(day);
+                if (!isDayHoliday && !clockings.isEmpty() && enumSetWeekDay.contains(dayOfWeek)) {
+                    Collections.sort(clockings, AssiduousnessRecord.COMPARATORY_BY_DATE);
+                    final Timeline timeline = new Timeline(day);
+                    Iterator<AttributeType> attributesIt = DomainConstants.WORKED_ATTRIBUTES.getAttributes().iterator();
                     timeline.plotListInTimeline(clockings, leaves, attributesIt, day);
-                    worked = timeline.calculateDurationAllIntervalsByAttributes(
-                            DomainConstants.WORKED_ATTRIBUTES, new TimePoint(new TimeOfDay(7, 30, 0, 0),
-                                    AttributeType.NULL), new TimePoint(new TimeOfDay(23, 59, 59, 99),
-                                    AttributeType.NULL));
+                    final Duration worked = timeline.calculateDurationAllIntervalsByAttributes(
+                                DomainConstants.WORKED_ATTRIBUTES,
+                                new TimePoint(startTimeOfDay,AttributeType.NULL),
+                                new TimePoint(endTimeOfDay,AttributeType.NULL));
                     dailyBalance.setTotalBalance(worked);
                 } else {
-                    dailyBalance.setTotalBalance(new Duration(0));
+                    dailyBalance.setTotalBalance(Duration.ZERO);
                 }
             }
         } else {
             dailyBalance = new DailyBalance(day, null);
-            dailyBalance.setTotalBalance(new Duration(0));
+            dailyBalance.setTotalBalance(Duration.ZERO);
         }
         return dailyBalance;
     }
@@ -154,7 +155,7 @@ public class Assiduousness extends Assiduousness_Base {
     private List<Leave> getLeavesByType(List<Leave> leaves, JustificationType justificationType) {
         List<Leave> leavesByType = new ArrayList<Leave>();
         for (Leave leave : leaves) {
-            if (leave.getJustificationMotive().getJustificationType().equals(justificationType)) {
+            if (leave.getJustificationMotive().getJustificationType() == justificationType) {
                 leavesByType.add(leave);
             }
         }
@@ -165,11 +166,10 @@ public class Assiduousness extends Assiduousness_Base {
         List<Leave> leaves = new ArrayList<Leave>();
         for (AssiduousnessRecord assiduousnessRecord : getAssiduousnessRecords()) {
             if (assiduousnessRecord instanceof Leave
-                    && (assiduousnessRecord.getAnulation() == null || assiduousnessRecord.getAnulation()
-                            .getState().equals(AnulationState.INVALID))) {
+                    && (assiduousnessRecord.getAnulation() == null || assiduousnessRecord.getAnulation().getState() == AnulationState.INVALID)) {
                 Leave leave = (Leave) assiduousnessRecord;
                 if (leave.occuredInDate(day)) {
-                    leaves.add((Leave) assiduousnessRecord);
+                    leaves.add(leave);
                 }
             }
         }
@@ -181,9 +181,9 @@ public class Assiduousness extends Assiduousness_Base {
         List<AssiduousnessRecord> clockingsList = new ArrayList<AssiduousnessRecord>();
         for (AssiduousnessRecord assiduousnessRecord : getAssiduousnessRecords()) {
             if ((assiduousnessRecord instanceof Clocking || assiduousnessRecord instanceof MissingClocking)
-                    && interval.contains(assiduousnessRecord.getDate())
-                    && (assiduousnessRecord.getAnulation() == null || assiduousnessRecord.getAnulation()
-                            .getState().equals(AnulationState.INVALID))) {
+                    && (assiduousnessRecord.getAnulation() == null
+                            || assiduousnessRecord.getAnulation().getState() == AnulationState.INVALID)
+                    && interval.contains(assiduousnessRecord.getDate())) {
                 clockingsList.add(assiduousnessRecord);
             }
         }
@@ -195,9 +195,9 @@ public class Assiduousness extends Assiduousness_Base {
         List<Clocking> clockingsList = new ArrayList<Clocking>();
         for (AssiduousnessRecord assiduousnessRecord : getAssiduousnessRecords()) {
             if (assiduousnessRecord instanceof Clocking
-                    && interval.containsDate(assiduousnessRecord.getDate())
-                    && (assiduousnessRecord.getAnulation() == null || assiduousnessRecord.getAnulation()
-                            .getState().equals(AnulationState.INVALID))) {
+                    && (assiduousnessRecord.getAnulation() == null
+                            || assiduousnessRecord.getAnulation().getState() == AnulationState.INVALID)
+                    && interval.containsDate(assiduousnessRecord.getDate())) {
                 clockingsList.add((Clocking) assiduousnessRecord);
             }
         }
@@ -210,8 +210,8 @@ public class Assiduousness extends Assiduousness_Base {
         List<Leave> leavesList = new ArrayList<Leave>();
         for (AssiduousnessRecord assiduousnessRecord : getAssiduousnessRecords()) {
             if (assiduousnessRecord instanceof Leave
-                    && (assiduousnessRecord.getAnulation() == null || assiduousnessRecord.getAnulation()
-                            .getState().equals(AnulationState.INVALID))) {
+                    && (assiduousnessRecord.getAnulation() == null
+                            || assiduousnessRecord.getAnulation().getState() == AnulationState.INVALID)) {
                 Interval leaveInterval = new Interval(assiduousnessRecord.getDate(),
                         ((Leave) assiduousnessRecord).getEndDate());
                 if (leaveInterval.overlaps(interval)) {
@@ -270,15 +270,13 @@ public class Assiduousness extends Assiduousness_Base {
                 Interval interval = new Interval(beginDate.toDateMidnight(), endDate.toDateMidnight()
                         .plus(3600));
                 if (interval.overlaps(statusInterval)
-                        && assiduousnessStatusHistory.getAssiduousnessStatus().getState().equals(
-                                AssiduousnessState.ACTIVE)) {
+                        && assiduousnessStatusHistory.getAssiduousnessStatus().getState() == AssiduousnessState.ACTIVE) {
                     return true;
                 }
             } else {
                 if ((assiduousnessStatusHistory.getBeginDate().isBefore(endDate) || assiduousnessStatusHistory
                         .getBeginDate().isEqual(endDate))
-                        && assiduousnessStatusHistory.getAssiduousnessStatus().getState().equals(
-                                AssiduousnessState.ACTIVE)) {
+                        && assiduousnessStatusHistory.getAssiduousnessStatus().getState() == AssiduousnessState.ACTIVE) {
                     return true;
                 }
             }

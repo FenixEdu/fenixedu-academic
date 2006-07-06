@@ -703,39 +703,29 @@ public class Timeline {
         List<TimePoint> pointList = new ArrayList<TimePoint>();
 
         for (Leave leave : leaveList) {
-            //System.out.println("leave " + leave.getDate().toString());
             if (leave.getJustificationMotive().getJustificationType() != JustificationType.BALANCE) {
-                // TimePoint
                 pointList.addAll(leave.toTimePoints((AttributeType) attributesIt.next()));
             }
         }
 
         Iterator<AssiduousnessRecord> clockingIt = clockingList.iterator();
         while (clockingIt.hasNext()) {
-            AssiduousnessRecord clockIn = clockingIt.next();
+            final AssiduousnessRecord clockIn = clockingIt.next();
+            final AttributeType attribute = attributesIt.next();
+            final TimePoint timePointIn = constructTimePoint(clockIn, day, attribute);
+            pointList.add(timePointIn);
             if (clockingIt.hasNext()) {
-                AssiduousnessRecord clockOut = clockingIt.next();
-                AttributeType attribute = attributesIt.next();
-                TimeOfDay timeIn = new TimeOfDay(clockIn.getDate().toTimeOfDay().getHourOfDay(), clockIn
-                        .getDate().toTimeOfDay().getMinuteOfHour(), 0);
-                TimeOfDay timeOut = new TimeOfDay(clockOut.getDate().toTimeOfDay().getHourOfDay(),
-                        clockOut.getDate().toTimeOfDay().getMinuteOfHour(), 0);
-                TimePoint timePointIn = new TimePoint(timeIn, clockIn.getDate().toYearMonthDay()
-                        .isAfter(day), attribute);
-                TimePoint timePointOut = new TimePoint(timeOut, clockOut.getDate().toYearMonthDay()
-                        .isAfter(day), attribute);
-                pointList.add(timePointIn);
+                final AssiduousnessRecord clockOut = clockingIt.next();
+                final TimePoint timePointOut = constructTimePoint(clockOut, day, attribute);
                 pointList.add(timePointOut);
-            } else {
-                AttributeType attribute = attributesIt.next();
-                TimeOfDay timeIn = new TimeOfDay(clockIn.getDate().toTimeOfDay().getHourOfDay(), clockIn
-                        .getDate().toTimeOfDay().getMinuteOfHour(), 0);
-                TimePoint timePointIn = new TimePoint(timeIn, clockIn.getDate().toYearMonthDay()
-                        .isAfter(day), attribute);
-                pointList.add(timePointIn);
             }
         }
         plotList(pointList);
+    }
+
+    private TimePoint constructTimePoint(AssiduousnessRecord clockIn, YearMonthDay day, AttributeType attribute) {
+        final TimeOfDay timeIn = new TimeOfDay(clockIn.getDate().getHourOfDay(), clockIn.getDate().getMinuteOfHour(), 0);
+        return new TimePoint(timeIn, clockIn.getDate().toYearMonthDay().isAfter(day), attribute);
     }
 
 }

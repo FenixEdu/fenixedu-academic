@@ -1,11 +1,10 @@
 package net.sourceforge.fenixedu.dataTransferObject.assiduousness;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
-import net.sourceforge.fenixedu.domain.Employee;
+import net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessRecord;
 import net.sourceforge.fenixedu.util.WeekDay;
 
 import org.joda.time.Duration;
@@ -16,6 +15,8 @@ import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
 public class WorkDaySheet implements Serializable {
+    private static final DateTimeFormatter fmt = DateTimeFormat.forPattern("HH:mm");
+
     YearMonthDay date;
 
     String workScheduleAcronym;
@@ -26,7 +27,7 @@ public class WorkDaySheet implements Serializable {
 
     String notes;
 
-    List<TimeOfDay> clockings = new ArrayList<TimeOfDay>();
+    List<AssiduousnessRecord> assiduousnessRecords;
 
     public Period getBalanceTime() {
         return balanceTime;
@@ -34,18 +35,6 @@ public class WorkDaySheet implements Serializable {
 
     public void setBalanceTime(Period balanceTime) {
         this.balanceTime = balanceTime;
-    }
-
-    public List<TimeOfDay> getClockings() {
-        return clockings;
-    }
-
-    public void setClockings(List<TimeOfDay> clockings) {
-        this.clockings = clockings;
-    }
-
-    public void addClockings(TimeOfDay clocking) {
-        this.clockings.add(clocking);
     }
 
     public YearMonthDay getDate() {
@@ -126,13 +115,16 @@ public class WorkDaySheet implements Serializable {
     }
 
     public String getClockingsFormatted() {
-        DateTimeFormatter fmt = DateTimeFormat.forPattern("HH:mm");
-        StringBuffer result = new StringBuffer();
-        for (TimeOfDay timeOfDay : getClockings()) {
-            if (result.length() != 0) {
-                result.append(", ");
+        final StringBuilder result = new StringBuilder();
+        final List<AssiduousnessRecord> assiduousnessRecords = getAssiduousnessRecords();
+        if (assiduousnessRecords != null) {
+            for (final AssiduousnessRecord assiduousnessRecord : assiduousnessRecords) {
+                final TimeOfDay timeOfDay = assiduousnessRecord.getDate().toTimeOfDay();
+                if (result.length() != 0) {
+                    result.append(", ");
+                }
+                result.append(fmt.print(timeOfDay));
             }
-            result.append(fmt.print(timeOfDay));
         }
         return result.toString();
     }
@@ -143,7 +135,18 @@ public class WorkDaySheet implements Serializable {
         }
         ResourceBundle bundle = ResourceBundle.getBundle("resources.AssiduousnessResources");
         return bundle.getString(WeekDay.fromJodaTimeToWeekDay(getDate().toDateTimeAtMidnight())
-                .toString()
-                + "_ACRONYM");
+                .toString() + "_ACRONYM");
+    }
+
+    public void setAssiduousnessRecord(final List<AssiduousnessRecord> assiduousnessRecord) {
+        this.assiduousnessRecords = assiduousnessRecord;
+    }
+
+    public List<AssiduousnessRecord> getAssiduousnessRecords() {
+        return assiduousnessRecords;
+    }
+
+    public void setAssiduousnessRecords(List<AssiduousnessRecord> assiduousnessRecords) {
+        this.assiduousnessRecords = assiduousnessRecords;
     }
 }

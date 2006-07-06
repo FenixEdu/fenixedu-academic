@@ -65,14 +65,11 @@ public class ReadEmployeeWorkSheet extends Service {
 
                     List<AssiduousnessRecord> clockings = assiduousness.getClockingsAndMissingClockings(
                             init, end);
-
-                    Collections.sort(clockings, new BeanComparator("date"));
-                    for (AssiduousnessRecord assiduousnessRecord : (List<AssiduousnessRecord>) clockings) {
-                        workDaySheet.addClockings(assiduousnessRecord.getDate().toTimeOfDay());
-                    }
+                    Collections.sort(clockings, AssiduousnessRecord.COMPARATORY_BY_DATE);
+                    workDaySheet.setAssiduousnessRecord(clockings);
 
                     List<Leave> leaves = new ArrayList<Leave>(assiduousness.getLeaves(thisDay));
-                    Collections.sort(leaves, new BeanComparator("date"));
+                    Collections.sort(leaves, Leave.COMPARATORY_BY_DATE);
                     for (Leave leave : leaves) {
                         if (notes.length() != 0) {
                             notes = notes.concat(" / ");
@@ -95,13 +92,11 @@ public class ReadEmployeeWorkSheet extends Service {
                     DateTime end = thisDay.toDateTime(new TimeOfDay(23, 59, 59, 99));
                     List<AssiduousnessRecord> clockings = assiduousness.getClockingsAndMissingClockings(
                             init, end);
-                    Collections.sort(clockings, new BeanComparator("date"));
+                    Collections.sort(clockings, AssiduousnessRecord.COMPARATORY_BY_DATE);
+                    workDaySheet.setAssiduousnessRecord(clockings);
                     DailyBalance dailyBalance = assiduousness.calculateDailyBalance(thisDay);
                     workDaySheet.setBalanceTime(dailyBalance.getTotalBalance().toPeriod());
                     workDaySheet.setNotes(notes);
-                    for (AssiduousnessRecord assiduousnessRecord : clockings) {
-                        workDaySheet.addClockings(assiduousnessRecord.getDate().toTimeOfDay());
-                    }
                     if (isDayHoliday) {
                         ResourceBundle bundle = ResourceBundle
                                 .getBundle("resources.AssiduousnessResources");

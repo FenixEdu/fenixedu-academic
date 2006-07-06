@@ -33,15 +33,19 @@ import org.apache.struts.action.ActionMapping;
 import org.joda.time.YearMonthDay;
 
 public class ExportAssiduousnessDispatchAction extends FenixDispatchAction {
-    // public ActionForward choosePrinter(ActionMapping mapping, ActionForm actionForm,
+    // public ActionForward choosePrinter(ActionMapping mapping, ActionForm
+    // actionForm,
     // HttpServletRequest request, HttpServletResponse response) {
-    // String[] printerNames = PrinterManager.getFunctionPrinterNames("assiduousness");
+    // String[] printerNames =
+    // PrinterManager.getFunctionPrinterNames("assiduousness");
     // request.setAttribute("printerNames", Arrays.asList(printerNames));
     // return mapping.findForward("choose-printer");
     // }
     //
-    // public ActionForward printWorkDaySheet(ActionMapping mapping, ActionForm actionForm,
-    // HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
+    // public ActionForward printWorkDaySheet(ActionMapping mapping, ActionForm
+    // actionForm,
+    // HttpServletRequest request, HttpServletResponse response) throws
+    // FenixFilterException,
     // FenixServiceException {
     // DynaActionForm form = (DynaActionForm) actionForm;
     // String printerName = form.getString("printerName");
@@ -58,8 +62,7 @@ public class ExportAssiduousnessDispatchAction extends FenixDispatchAction {
     }
 
     public ActionForward exportToPDFWorkDaySheet(ActionMapping mapping, ActionForm actionForm,
-            HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
-            FenixActionException {
+            HttpServletRequest request, HttpServletResponse response) throws Exception {
         YearMonth yearMonth = null;
         ViewState viewState = (ViewState) RenderUtils.getViewState();
         if (viewState != null) {
@@ -91,17 +94,15 @@ public class ExportAssiduousnessDispatchAction extends FenixDispatchAction {
         ResourceBundle bundleEnumeration = ResourceBundle.getBundle("resources.EnumerationResources");
         String month = bundleEnumeration.getString(yearMonth.getMonth().toString());
         StringBuilder stringBuilder = new StringBuilder(month).append(" ").append(yearMonth.getYear());
-        
-        parameters.put("yearMonth",stringBuilder.toString());
+
+        parameters.put("yearMonth", stringBuilder.toString());
         String path = getServlet().getServletContext().getRealPath("/");
-        parameters.put("path",path);
-        
-        try {
-            Object[] args = { beginDate, endDate };
-            employeeWorkSheetList = (List<EmployeeWorkSheet>) ServiceUtils.executeService(userView,
-                    "ReadAllAssiduousnessWorkSheets", args);
-        } catch (FenixServiceException e) {
-        }
+        parameters.put("path", path);
+
+        Object[] args = { beginDate, endDate };
+        employeeWorkSheetList = (List<EmployeeWorkSheet>) ServiceUtils.executeService(userView,
+                "ReadAllAssiduousnessWorkSheets", args);
+
         ComparatorChain comparatorChain = new ComparatorChain();
         comparatorChain.addComparator(new BeanComparator("unitCode"));
         comparatorChain.addComparator(new BeanComparator("employee.employeeNumber"));
@@ -109,18 +110,15 @@ public class ExportAssiduousnessDispatchAction extends FenixDispatchAction {
         response.setContentType("application/pdf");
         response.addHeader("Content-Disposition", "attachment; filename=verbetes.pdf");
 
-        try {
-            byte[] data = ReportsUtils.exportToPdf("assiduousness.workDaySheet", parameters, bundle,
-                    employeeWorkSheetList);
-            response.setContentLength(data.length);
-            ServletOutputStream writer = response.getOutputStream();
-            writer.write(data);
-            writer.flush();
-            writer.close();
-            response.flushBuffer();
-        } catch (Exception e) {
-            e.printStackTrace(System.out);
-        }
+        byte[] data = ReportsUtils.exportToPdf("assiduousness.workDaySheet", parameters, bundle,
+                employeeWorkSheetList);
+        response.setContentLength(data.length);
+        ServletOutputStream writer = response.getOutputStream();
+        writer.write(data);
+        writer.flush();
+        writer.close();
+        response.flushBuffer();
+
         return mapping.findForward("");
     }
 }

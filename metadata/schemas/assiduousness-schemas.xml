@@ -28,9 +28,7 @@
 		<property name="format" value="HH:mm" />
 	</slot>
 	<slot name="notes" key="label.notes" />
-	<slot name="clockings" layout="flowLayout" key="link.clockings">
-		<property name="htmlSeparator" value="," />
-	</slot>
+	<slot name="clockingsFormatted" key="link.clockings"/>
 </schema>
 
 <schema name="show.clockingsDaySheet"
