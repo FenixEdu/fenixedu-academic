@@ -19,6 +19,8 @@ public class EmployeeWorkSheet implements Serializable {
 
     String unitCode;
 
+    Unit unit;
+
     List<WorkDaySheet> workDaySheetList;
 
     Duration totalBalance;
@@ -62,6 +64,14 @@ public class EmployeeWorkSheet implements Serializable {
 
     public void setUnitCode(String unitCode) {
         this.unitCode = unitCode;
+    }
+
+    public Unit getUnit() {
+        return unit;
+    }
+
+    public void setUnit(Unit unit) {
+        this.unit = unit;
     }
 
     public Duration getTotalBalance() {

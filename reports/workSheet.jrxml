@@ -32,8 +32,8 @@
 	<field name="employee.employeeNumber" class="java.lang.Integer"/>
 	<field name="employee.person.name" class="java.lang.String"/>
 	<field name="workDaySheetList" class="java.util.ArrayList"/>
-	<field name="employee.currentWorkingPlace.name" class="java.lang.String"/>
-	<field name="employee.currentWorkingPlace.costCenterCode" class="java.lang.Integer"/>
+	<field name="unit.name" class="java.lang.String"/>
+	<field name="unit.costCenterCode" class="java.lang.Integer"/>
 	<field name="totalBalanceString" class="java.lang.String"/>
 	<field name="unjustifiedBalanceString" class="java.lang.String"/>
 
@@ -100,7 +100,7 @@
 					</textElement>
 				<textFieldExpression   class="java.lang.String"><![CDATA[$F{employee.person.name}]]></textFieldExpression>
 				</textField>
-				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+				<textField isStretchWithOverflow="false" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						x="273"
 						y="59"
@@ -111,9 +111,9 @@
 					<textElement>
 						<font fontName="Verdana" size="10"/>
 					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA[$F{employee.currentWorkingPlace.name}]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{unit.name}]]></textFieldExpression>
 				</textField>
-				<textField isStretchWithOverflow="false" pattern="" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+				<textField isStretchWithOverflow="false" pattern="" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						x="402"
 						y="86"
@@ -124,7 +124,7 @@
 					<textElement>
 						<font fontName="Verdana" size="10"/>
 					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA[" C.C. "+($F{employee.currentWorkingPlace.costCenterCode}).toString()]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.String"><![CDATA[" C.C. "+($F{unit.costCenterCode}).toString()]]></textFieldExpression>
 				</textField>
 				<staticText>
 					<reportElement
