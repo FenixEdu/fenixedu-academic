@@ -3,14 +3,13 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 
-
-<fr:form action="/payments.do">
+<bean:define id="personId" name="paymentsManagementDTO" property="person.idInternal" />
+<fr:form action='<%= "/payments.do?personId=" + personId %>'>
 	<html:hidden name="paymentsForm" property="method" />
 
-	<h2>
-		<bean:message key="label.masterDegree.administrativeOffice.payments.events" />
-	</h2>
+	<h2><bean:message key="label.masterDegree.administrativeOffice.payments.currentEvents" /></h2>
 	
+	<hr><br/>
 	
 	<logic:messagesPresent message="true">
 		<ul>
@@ -42,13 +41,14 @@
 			</fr:layout>
 			<fr:destination name="invalid" path="/payments.do?method=prepareShowEventsInvalid"/>
 		</fr:edit>
+		<br/>
 		<html:submit styleClass="inputbutton" onclick="this.form.method.value='preparePrintGuide';"><bean:message key="button.masterDegree.administrativeOffice.payments.guide"/></html:submit>
-		<html:submit styleClass="inputbutton" onclick="this.form.method.value='doPayment';"><bean:message key="button.masterDegree.administrativeOffice.payments.pay"/></html:submit>
+		<html:submit styleClass="inputbutton" onclick="this.form.method.value='doPayment';"><bean:message key="button.masterDegree.administrativeOffice.payments.payment"/></html:submit>
+		<html:submit styleClass="inputbutton" onclick="this.form.method.value='backToShowOperations';"><bean:message key="button.masterDegree.administrativeOffice.payments.back"/></html:submit>
 	</logic:notEmpty>
 
-
 	<logic:empty name="paymentsManagementDTO" property="entryDTOs">
-		<span class="error"><bean:message key="label.masterDegree.administrativeOffice.payments.events.noEvents" /></span>
+		<span class="error0"><bean:message key="label.masterDegree.administrativeOffice.payments.events.noEvents" /></span>
 	</logic:empty>
 
 </fr:form>
