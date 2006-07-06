@@ -77,50 +77,37 @@ public class ReadStudentExternalInformation extends Service
 		return result;
 	}
 
-	private Collection buildAvailableRemainingCourses(final Student student)
-	{
-
-		Collection allCourses = student.getActiveStudentCurricularPlan().getDegreeCurricularPlan().getCurricularCourses();
-		Collection available = CollectionUtils.select(allCourses, new Predicate()
-		{
-			public boolean evaluate(Object arg0)
-			{
-				boolean availableToEnroll = true;
-				boolean atLeastOnOpenScope = false;
-				CurricularCourse course = (CurricularCourse) arg0;
-				for (CurricularCourseScope scope : course.getScopes())
-				{
-					atLeastOnOpenScope |= scope.isActive().booleanValue();
-				}
-
-				for (StudentCurricularPlan plan : student.getStudentCurricularPlans())
-				{
-					availableToEnroll &= plan.isCurricularCourseApproved(course);
-				}
-
-				availableToEnroll &= atLeastOnOpenScope;
-				return availableToEnroll;
-			}
-		}
-
-		);
-
-		Collection availableInfos = CollectionUtils.collect(available, new Transformer()
-		{
-			public Object transform(Object arg0)
-			{
-				CurricularCourse course = (CurricularCourse) arg0;
-				InfoExternalCurricularCourseInfo info = InfoExternalCurricularCourseInfo.newFromDomain(course);
-				return info;
-
-			}
-		}
-
-		);
+	private Collection buildAvailableRemainingCourses(final Student student) {
+		final Collection<CurricularCourse> allCourses = student.getActiveStudentCurricularPlan().getDegreeCurricularPlan().getCurricularCourses();
+        final Collection<InfoExternalCurricularCourseInfo> availableInfos = new ArrayList<InfoExternalCurricularCourseInfo>();
+        for (final CurricularCourse curricularCourse : allCourses) {
+            if (hasActiveScope(curricularCourse) && studentIsNotApprovedInCurricularCourse(student, curricularCourse)) {
+                final InfoExternalCurricularCourseInfo infoExternalCurricularCourseInfo = InfoExternalCurricularCourseInfo.newFromDomain(curricularCourse);
+                availableInfos.add(infoExternalCurricularCourseInfo);
+            }
+        }
 		return availableInfos;
 	}
 
-	/**
+	private boolean studentIsNotApprovedInCurricularCourse(final Student student, final CurricularCourse curricularCourse) {
+        for (final StudentCurricularPlan studentCurricularPlan : student.getStudentCurricularPlansSet()) {
+            if (studentCurricularPlan.isCurricularCourseApproved(curricularCourse)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private boolean hasActiveScope(final CurricularCourse curricularCourse) {
+        for (final CurricularCourseScope curricularCourseScope : curricularCourse.getScopesSet()) {
+            if (curricularCourseScope.isActive().booleanValue()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
 	 * @param student
 	 * @return
 	 * @throws FenixServiceException
