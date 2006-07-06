@@ -80,7 +80,9 @@
 				<bean:write name="infoLesson" property="diaSemana" />
 				<dt:format pattern="HH:mm"><bean:write name="infoLesson" property="inicio.timeInMillis"/></dt:format>
 				- <dt:format pattern="HH:mm"><bean:write name="infoLesson" property="fim.timeInMillis"/></dt:format>
-				<bean:write name="infoLesson" property="infoSala.nome" />
+				<logic:notEmpty name="infoLesson" property="infoSala.nome">
+					<bean:write name="infoLesson" property="infoSala.nome" />
+				</logic:notEmpty>	
 			:</td>
 			<logic:present name="verEditor">
 				<td><html:radio name="infoSummary" property="lesson" value="<%= lessonId.toString() %>" onclick="this.form.method.value='prepareEditSummary';this.form.forHidden.value='true';this.form.page.value=0;this.form.summaryText.value=update();this.form.submit();"/></td>

@@ -81,7 +81,9 @@
 				<bean:write name="infoLesson" property="diaSemana" />
 				<dt:format pattern="HH:mm"><bean:write name="infoLesson" property="inicio.timeInMillis"/></dt:format>
 				- <dt:format pattern="HH:mm"><bean:write name="infoLesson" property="fim.timeInMillis"/></dt:format>
-				<bean:write name="infoLesson" property="infoSala.nome" />
+				<logic:notEmpty name="infoLesson" property="infoSala.nome">
+					<bean:write name="infoLesson" property="infoSala.nome" />
+				</logic:notEmpty>	
 			:</td>
 			<logic:present name="checked">
 				<logic:present name="verEditor">	

@@ -36,4 +36,9 @@ public class BuildingInformation extends BuildingInformation_Base {
     	return buildingFactoryEditor;
     }
 
+    @Override
+    public String getPresentationName() {        
+        return getName();
+    }
+
 }

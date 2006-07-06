@@ -49,4 +49,10 @@ public class RoomInformation extends RoomInformation_Base {
     	return roomFactoryEditor;
     }
 
+    @Override
+    public String getPresentationName() {
+        return (getIdentification() != null) ? getIdentification() + ((getDescription() != null) ? " " + getDescription() : "") 
+                : ((getDescription() != null) ? getDescription() : ""); 
+    }
+
 }

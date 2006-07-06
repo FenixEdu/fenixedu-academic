@@ -49,16 +49,16 @@
 			</td>
 			<td class="listClasses">
 				<logic:equal name="selectedSpaceInformation" property="space.class.name" value="net.sourceforge.fenixedu.domain.space.Campus">
-					<bean:write name="selectedSpaceInformation" property="name"/>
+					<bean:write name="selectedSpaceInformation" property="presentationName"/>
 				</logic:equal>
 				<logic:equal name="selectedSpaceInformation" property="space.class.name" value="net.sourceforge.fenixedu.domain.space.Building">
-					<bean:write name="selectedSpaceInformation" property="name"/>
+					<bean:write name="selectedSpaceInformation" property="presentationName"/>
 				</logic:equal>
 				<logic:equal name="selectedSpaceInformation" property="space.class.name" value="net.sourceforge.fenixedu.domain.space.Floor">
-					<bean:write name="selectedSpaceInformation" property="level"/>
+					<bean:write name="selectedSpaceInformation" property="presentationName"/>
 				</logic:equal>
 				<logic:equal name="selectedSpaceInformation" property="space.class.name" value="net.sourceforge.fenixedu.domain.space.Room">
-					<bean:write name="selectedSpaceInformation" property="description"/>
+					<bean:write name="selectedSpaceInformation" property="presentationName"/>
 				</logic:equal>
 			</td>
 			<td class="listClasses">
@@ -177,16 +177,16 @@
 				<td class="listClasses">
 					<html:link page="/manageSpaces.do?method=manageSpace&page=0" paramId="spaceInformationID" paramName="space" paramProperty="spaceInformation.idInternal">
 						<logic:equal name="space" property="class.name" value="net.sourceforge.fenixedu.domain.space.Campus">
-							<bean:write name="space" property="spaceInformation.name"/>
+							<bean:write name="space" property="spaceInformation.presentationName"/>
 						</logic:equal>
 						<logic:equal name="space" property="class.name" value="net.sourceforge.fenixedu.domain.space.Building">
-							<bean:write name="space" property="spaceInformation.name"/>
+							<bean:write name="space" property="spaceInformation.presentationName"/>
 						</logic:equal>
 						<logic:equal name="space" property="class.name" value="net.sourceforge.fenixedu.domain.space.Floor">
-							<bean:write name="space" property="spaceInformation.level"/>
+							<bean:write name="space" property="spaceInformation.presentationName"/>
 						</logic:equal>
 						<logic:equal name="space" property="class.name" value="net.sourceforge.fenixedu.domain.space.Room">
-							<bean:write name="space" property="spaceInformation.description"/>
+							<bean:write name="space" property="spaceInformation.presentationName"/>
 						</logic:equal>
 					</html:link>
 				</td>

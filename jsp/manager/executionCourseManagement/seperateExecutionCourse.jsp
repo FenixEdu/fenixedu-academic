@@ -123,7 +123,9 @@
 							<dt:format pattern="HH:mm">
 								<bean:write name="infoLesson" property="fim.timeInMillis"/>
 							</dt:format> -
-							<bean:write name="infoLesson" property="infoSala.nome"/>
+							<logic:notEmpty name="infoLesson" property="infoSala.nome">
+								<bean:write name="infoLesson" property="infoSala.nome"/>
+							</logic:notEmpty>	
 						</logic:iterate>
 					</td>
 				</tr>

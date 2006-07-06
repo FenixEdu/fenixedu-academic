@@ -24,46 +24,49 @@ public class EditLesson extends Service {
 
     public Object run(InfoLesson aulaAntiga, InfoLesson aulaNova, InfoShift infoShift)
             throws FenixServiceException, ExcepcaoPersistencia {
-        InfoLessonServiceResult result = null;
-
-        OldRoom salaNova = OldRoom.findOldRoomByName(aulaNova.getInfoSala().getNome());
+        
+        InfoLessonServiceResult result = null;        
+        OldRoom salaNova = null;
+        if(aulaNova.getInfoSala() != null) {
+            salaNova = OldRoom.findOldRoomByName(aulaNova.getInfoSala().getNome());
+        }
+        
         Lesson aula = rootDomainObject.readLessonByOID(aulaAntiga.getIdInternal());
         Shift shift = aula.getShift();
-
         RoomOccupation roomOccupation = aula.getRoomOccupation();
 
         if (aula != null) {
+            
             result = valid(aulaNova.getInicio(), aulaNova.getFim());
             if (result.getMessageType() == 1) {
                 throw new InvalidTimeIntervalServiceException();
             }
-            boolean resultB = validNoInterceptingLesson(
-                    aulaNova.getInfoRoomOccupation().getStartTime(),
-                    aulaNova.getInfoRoomOccupation().getEndTime(), 
-                    aulaNova.getInfoRoomOccupation().getDayOfWeek(), 
-                    aulaNova.getInfoRoomOccupation().getFrequency(), 
-                    aulaNova.getInfoRoomOccupation().getWeekOfQuinzenalStart(),
-                    salaNova,
-                    roomOccupation);
-
+            
+            boolean resultB = true;
+            if(aulaNova.getInfoRoomOccupation() != null) {
+                resultB = validNoInterceptingLesson(                    
+                        aulaNova.getInfoRoomOccupation().getStartTime(),
+                        aulaNova.getInfoRoomOccupation().getEndTime(), 
+                        aulaNova.getInfoRoomOccupation().getDayOfWeek(), 
+                        aulaNova.getInfoRoomOccupation().getFrequency(), 
+                        aulaNova.getInfoRoomOccupation().getWeekOfQuinzenalStart(), salaNova, roomOccupation);
+            }
+            
             InfoShiftServiceResult infoShiftServiceResult = valid(shift, aula.getIdInternal(), aulaNova.getInicio(), aulaNova.getFim());
             if (result.isSUCESS() && resultB && infoShiftServiceResult.isSUCESS()) {
-                aula.getShift();
-
-                aula.setDiaSemana(aulaNova.getDiaSemana());
-                aula.setInicio(aulaNova.getInicio());
-                aula.setFim(aulaNova.getFim());
-                aula.setTipo(aulaNova.getTipo());
-                aula.setSala(salaNova);
-                
-                roomOccupation.setDayOfWeek(aulaNova.getDiaSemana());
-                roomOccupation.setStartTime(aulaNova.getInicio());
-                roomOccupation.setEndTime(aulaNova.getFim());
-                roomOccupation.setRoom(salaNova);
-
-                roomOccupation.setFrequency(aulaNova.getInfoRoomOccupation().getFrequency());
-                roomOccupation.setWeekOfQuinzenalStart(aulaNova.getInfoRoomOccupation()
-                        .getWeekOfQuinzenalStart());
+         
+                aula.edit(aulaNova.getDiaSemana(), aulaNova.getInicio(), aulaNova.getFim(), aulaNova.getTipo(),
+                        salaNova, aulaNova.getFrequency(), aulaNova.getWeekOfQuinzenalStart());
+                                
+                if(salaNova != null) {
+                    if(roomOccupation == null) {
+                        roomOccupation = new RoomOccupation();
+                    }
+                    roomOccupation.setDayOfWeek(aulaNova.getDiaSemana());
+                    roomOccupation.setStartTime(aulaNova.getInicio());
+                    roomOccupation.setEndTime(aulaNova.getFim());
+                    roomOccupation.setRoom(salaNova);
+                }
 
             } else if (!infoShiftServiceResult.isSUCESS()) {
                 throw new InvalidLoadException(infoShiftServiceResult.toString());
@@ -85,8 +88,8 @@ public class EditLesson extends Service {
     private boolean validNoInterceptingLesson(Calendar startTime, Calendar endTime,
             DiaSemana dayOfWeek, Integer frequency, Integer week, OldRoom room, RoomOccupation oldroomOccupation)
             throws FenixServiceException, ExcepcaoPersistencia {
+        
         final List<RoomOccupation> roomOccupations = room.getRoomOccupations();
-
         for (final RoomOccupation roomOccupation : roomOccupations) {
             if (roomOccupation != oldroomOccupation && 
                     roomOccupation.roomOccupationForDateAndTime(

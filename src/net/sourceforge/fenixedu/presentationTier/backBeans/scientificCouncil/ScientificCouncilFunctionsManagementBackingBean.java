@@ -21,16 +21,8 @@ import org.joda.time.YearMonthDay;
 public class ScientificCouncilFunctionsManagementBackingBean extends ManagerFunctionsManagementBackingBean {
 
     public String getUnits() throws FenixFilterException, FenixServiceException, ExcepcaoPersistencia {
-
         StringBuilder buffer = new StringBuilder();
-        List<Unit> allUnits = UnitUtils.readAllUnitsWithoutParents();
-        
-        for (Unit unit : allUnits) {
-            if (unit.getName().equals(UnitUtils.IST_UNIT_NAME) && unit.isActive(new YearMonthDay())) {
-                getUnitTree(buffer, unit);
-            }
-        }
-
+        getUnitTree(buffer, UnitUtils.readInstitutionUnit());
         return buffer.toString();
     }
 

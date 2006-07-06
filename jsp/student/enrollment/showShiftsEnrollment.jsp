@@ -350,7 +350,9 @@ width: 98%;
 							</dt:format>
 						</td>
 						<td style="text-align:center">
-							<bean:write name="infoLesson" property="infoSala.nome" />
+							<logic:notEmpty name="infoLesson" property="infoSala.nome">
+								<bean:write name="infoLesson" property="infoSala.nome" />
+							</logic:notEmpty>	
 						</td>
 					</tr>			
 				</logic:iterate>

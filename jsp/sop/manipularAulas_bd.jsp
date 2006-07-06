@@ -48,8 +48,12 @@
         <td class="listClasses"><bean:write name="elem" property="diaSemana" /></td>
        	<td class="listClasses"><%= iH.toString()%> : <%= iM.toString() + appendStartMinute %></td>
         <td class="listClasses"><%= fH.toString()%> : <%= fM.toString() + appendEndMinute %></td>
-        <td class="listClasses"><%= ((InfoLesson) iA.get(i)).getTipo().toString()%></td>
-        <td class="listClasses"><bean:write name="elem" property="infoSala.nome"/></td>
+        <td class="listClasses"><%= ((InfoLesson) iA.get(i)).getTipo().toString()%></td>        
+        <td class="listClasses">
+        	<logic:notEmpty name="elem" property="infoSala.nome">
+	        	<bean:write name="elem" property="infoSala.nome"/>
+	        </logic:notEmpty>	
+        </td>
    	</tr>
        	<% i++; %>
 </logic:iterate>           

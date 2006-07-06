@@ -65,19 +65,20 @@ public class LerAulasDeTurma extends Service {
                 infoLesson.getInfoShiftList().add(infoShift);
 
                 final RoomOccupation roomOccupation = lesson.getRoomOccupation();
-                final InfoRoomOccupation infoRoomOccupation = InfoRoomOccupation
-                        .newInfoFromDomain(roomOccupation);
-                infoLesson.setInfoRoomOccupation(infoRoomOccupation);
-
-                final OldRoom room = roomOccupation.getRoom();
-                final InfoRoom infoRoom = InfoRoom.newInfoFromDomain(room);
-                infoRoomOccupation.setInfoRoom(infoRoom);
-                infoLesson.setInfoSala(infoRoom);
-
-                final OccupationPeriod period = roomOccupation.getPeriod();
-                final InfoPeriod infoPeriod = InfoPeriod.newInfoFromDomain(period);
-                infoRoomOccupation.setInfoPeriod(infoPeriod);
-
+                if(roomOccupation != null){
+                    final InfoRoomOccupation infoRoomOccupation = InfoRoomOccupation
+                            .newInfoFromDomain(roomOccupation);
+                    infoLesson.setInfoRoomOccupation(infoRoomOccupation);
+    
+                    final OldRoom room = roomOccupation.getRoom();
+                    final InfoRoom infoRoom = InfoRoom.newInfoFromDomain(room);
+                    infoRoomOccupation.setInfoRoom(infoRoom);
+                    infoLesson.setInfoSala(infoRoom);
+    
+                    final OccupationPeriod period = roomOccupation.getPeriod();
+                    final InfoPeriod infoPeriod = InfoPeriod.newInfoFromDomain(period);
+                    infoRoomOccupation.setInfoPeriod(infoPeriod);
+                }
                 infoLessons.add(infoLesson);
                 infoLessonList.add(infoLesson);
             }

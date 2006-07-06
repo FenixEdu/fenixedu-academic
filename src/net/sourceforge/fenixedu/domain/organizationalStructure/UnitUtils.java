@@ -22,7 +22,6 @@ public class UnitUtils {
 
     public static List<Unit> readAllExternalInstitutionUnits() {
         List<Unit> allExternalUnits = new ArrayList<Unit>();
-
         for (Unit unit : Unit.readAllUnits()) {
             if (unit.getType() != null && unit.getType().equals(PartyTypeEnum.EXTERNAL_INSTITUTION)) {
                 allExternalUnits.add(unit);
@@ -51,9 +50,7 @@ public class UnitUtils {
     }
 
     public static List<Unit> readAllUnitsWithoutParents() {
-
-        List<Unit> allUnitsWithoutParent = new ArrayList<Unit>();
-        
+        List<Unit> allUnitsWithoutParent = new ArrayList<Unit>();        
         for (Unit unit : Unit.readAllUnits()) {
             if (unit.getParentUnits().isEmpty()) {
                 allUnitsWithoutParent.add(unit);

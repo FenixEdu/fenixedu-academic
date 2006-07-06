@@ -971,8 +971,10 @@ public class FillInquiryAction extends FenixDispatchAction {
 			(List<InfoLesson>) ServiceUtils.executeService(userView, "LerAulasDeDisciplinaExecucao", argsAttendingCourse);
 		List<InfoRoomWithInfoInquiriesRoom> attendingCourseRooms = new ArrayList<InfoRoomWithInfoInquiriesRoom>();
         for (InfoLesson lesson : attendingClassLessons) {
-            if (!attendingCourseRooms.contains(lesson.getInfoSala())) {
-				attendingCourseRooms.add(new InfoRoomWithInfoInquiriesRoom(lesson.getInfoSala()));
+            if(lesson.getInfoSala() != null) {
+                if (!attendingCourseRooms.contains(lesson.getInfoSala())) {
+    				attendingCourseRooms.add(new InfoRoomWithInfoInquiriesRoom(lesson.getInfoSala()));
+                }
             }
         }
 		//sort by class room name

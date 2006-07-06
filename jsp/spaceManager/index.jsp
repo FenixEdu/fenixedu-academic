@@ -48,10 +48,10 @@
 					<td class="listClasses">
 						<html:link page="/manageSpaces.do?method=manageSpace&page=0" paramId="spaceInformationID" paramName="space" paramProperty="spaceInformation.idInternal">
 							<logic:equal name="space" property="class.name" value="net.sourceforge.fenixedu.domain.space.Campus">
-								<bean:write name="space" property="spaceInformation.name"/>
+								<bean:write name="space" property="spaceInformation.presentationName"/>
 							</logic:equal>
 							<logic:equal name="space" property="class.name" value="net.sourceforge.fenixedu.domain.space.Building">
-								<bean:write name="space" property="spaceInformation.name"/>
+								<bean:write name="space" property="spaceInformation.presentationName"/>
 							</logic:equal>
 						</html:link>
 					</td>

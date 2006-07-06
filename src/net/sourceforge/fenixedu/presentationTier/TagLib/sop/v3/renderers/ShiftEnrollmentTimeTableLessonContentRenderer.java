@@ -48,7 +48,10 @@ public class ShiftEnrollmentTimeTableLessonContentRenderer implements LessonSlot
                     .append("</a>");
             strBuffer.append("&nbsp;(").append(lesson.getTipo().getSiglaTipoAula()).append(")&nbsp;");
 
-            strBuffer.append(lesson.getInfoRoomOccupation().getInfoRoom().getNome()).append("</span>");
+            if(lesson.getInfoRoomOccupation() != null) {
+                strBuffer.append(lesson.getInfoRoomOccupation().getInfoRoom().getNome());
+            }
+            strBuffer.append("</span>");
             return strBuffer;
         }
         return new StringBuilder("");

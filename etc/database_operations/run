@@ -26,3 +26,6 @@ function executeWithTempFile() {
 	rm tmp.sql
 	echo
 }
+
+execute "Alter Lesson Table" alterLessonTable.sql
+executeWithTempFile "Fill Lesson Attributes" fillLessonAttributes.sql

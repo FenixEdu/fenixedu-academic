@@ -76,19 +76,8 @@ public class ManagerFunctionsManagementBackingBean extends FunctionsManagementBa
     }
 
     public String getUnits() throws FenixFilterException, FenixServiceException, ExcepcaoPersistencia {
-
         StringBuilder buffer = new StringBuilder();
-        List<Unit> allUnits = UnitUtils.readAllUnitsWithoutParents();
-
-        Collections.sort(allUnits, new BeanComparator("name"));
-
-        YearMonthDay currentDate = new YearMonthDay();
-        for (Unit unit : allUnits) {
-            if (unit.getName().equals(UnitUtils.IST_UNIT_NAME) && unit.isActive(currentDate)) {
-                getUnitTree(buffer, unit);
-            }
-        }
-
+        getUnitTree(buffer, UnitUtils.readInstitutionUnit());       
         return buffer.toString();
     }
 

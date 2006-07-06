@@ -30,7 +30,8 @@ public class Lesson extends Lesson_Base {
     }
 
     public Lesson(DiaSemana diaSemana, Calendar inicio, Calendar fim, ShiftType tipo, OldRoom sala,
-            RoomOccupation roomOccupation, Shift shift) {
+            RoomOccupation roomOccupation, Shift shift, Integer weekOfQuinzenalStart, Integer frequency) {
+        
         this();
         setDiaSemana(diaSemana);
         setInicio(inicio);
@@ -39,6 +40,20 @@ public class Lesson extends Lesson_Base {
         setSala(sala);
         setRoomOccupation(roomOccupation);
         setShift(shift);
+        setFrequency(frequency);
+        setWeekOfQuinzenalStart(weekOfQuinzenalStart);
+    }
+    
+    public void edit(DiaSemana diaSemana, Calendar inicio, Calendar fim, ShiftType tipo,  
+            OldRoom salaNova, Integer frequency, Integer weekOfQuinzenalStart) {
+        
+       setDiaSemana(diaSemana);
+       setInicio(inicio);
+       setFim(fim);
+       setTipo(tipo);
+       setSala(salaNova);
+       setFrequency(frequency);
+       setWeekOfQuinzenalStart(weekOfQuinzenalStart);
     }
 
     public void delete() {

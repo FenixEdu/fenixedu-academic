@@ -37,10 +37,11 @@ public class ClassTimeTableWithoutLinksLessonContentRenderer implements LessonSl
                     strBuffer.append("(").append(lesson.getTipo().getSiglaTipoAula()).append(")&nbsp;");
                 }
 
-                strBuffer.append(lesson.getInfoRoomOccupation().getInfoRoom().getNome());
+                if(lesson.getInfoRoomOccupation() != null) {
+                    strBuffer.append(lesson.getInfoRoomOccupation().getInfoRoom().getNome());
+                }
 
-                if (lesson.getInfoRoomOccupation().getFrequency() != null
-                        && lesson.getInfoRoomOccupation().getFrequency().intValue() == RoomOccupation.QUINZENAL) {
+                if (lesson.getFrequency().intValue() == RoomOccupation.QUINZENAL) {
                     strBuffer.append("&nbsp;&nbsp;[Q]");
                 }
             }

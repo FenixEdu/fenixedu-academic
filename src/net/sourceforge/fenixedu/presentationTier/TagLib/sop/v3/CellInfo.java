@@ -49,7 +49,9 @@ public class CellInfo {
                 buffer = buffer.append(infoLesson.getInfoShift().getInfoDisciplinaExecucao().getSigla());
                 buffer = buffer.append(" (").append(infoLesson.getTipo().getSiglaTipoAula());
                 buffer = buffer.append(") ");
-                buffer = buffer.append(infoLesson.getInfoRoomOccupation().getInfoRoom().getNome());
+                if(infoLesson.getInfoRoomOccupation() != null) {
+                    buffer = buffer.append(infoLesson.getInfoRoomOccupation().getInfoRoom().getNome());
+                }
                 if (iterator.hasNext()) {
                     buffer.append("<br/>");
                 }

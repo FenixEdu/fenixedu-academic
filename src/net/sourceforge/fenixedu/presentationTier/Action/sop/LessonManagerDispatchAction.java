@@ -34,6 +34,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstan
 import net.sourceforge.fenixedu.presentationTier.Action.utils.ContextUtils;
 import net.sourceforge.fenixedu.util.DiaSemana;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
@@ -215,9 +216,12 @@ public class LessonManagerDispatchAction extends
             fim.set(Calendar.HOUR_OF_DAY, Integer.parseInt((String) editarAulaForm.get("horaFim")));
             fim.set(Calendar.MINUTE, Integer.parseInt((String) editarAulaForm.get("minutosFim")));
             fim.set(Calendar.SECOND, 0);
-
-            InfoRoom infoSala = new InfoRoom();
-            infoSala.setNome((String) editarAulaForm.get("nomeSala"));
+            
+            InfoRoom infoSala = null;
+            if(editarAulaForm.get("nomeSala") != null && !StringUtils.isEmpty((String) editarAulaForm.get("nomeSala"))) {
+                infoSala = new InfoRoom();
+                infoSala.setNome((String) editarAulaForm.get("nomeSala"));
+            }
 
             DiaSemana diaSemana = new DiaSemana(new Integer(formDay2EnumerateDay((String) editarAulaForm
                     .get("diaSemana"))));
@@ -226,26 +230,31 @@ public class LessonManagerDispatchAction extends
             InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) request
                     .getAttribute(SessionConstants.EXECUTION_DEGREE);
 
-            InfoRoomOccupation infoRoomOccupation = new InfoRoomOccupation();
-            infoRoomOccupation.setDayOfWeek(diaSemana);
-            infoRoomOccupation.setEndTime(fim);
-            infoRoomOccupation.setStartTime(inicio);
-            infoRoomOccupation.setInfoRoom(infoSala);
-
+            InfoRoomOccupation infoRoomOccupation = null;
+            if(infoSala != null) {
+                infoRoomOccupation = new InfoRoomOccupation();
+                infoRoomOccupation.setDayOfWeek(diaSemana);
+                infoRoomOccupation.setEndTime(fim);
+                infoRoomOccupation.setStartTime(inicio);
+                infoRoomOccupation.setInfoRoom(infoSala);
+            }
+            
             String initials = (String) editarAulaForm.get("courseInitials");
             InfoExecutionCourse courseView = RequestUtils.getExecutionCourseBySigla(request, initials);
-
-            InfoPeriod infoPeriod = null;
-            if (courseView.getInfoExecutionPeriod().getSemester().equals(new Integer(1))) {
-                infoPeriod = infoExecutionDegree.getInfoPeriodLessonsFirstSemester();
-            } else {
-                infoPeriod = infoExecutionDegree.getInfoPeriodLessonsSecondSemester();
-            }
-            if (infoPeriod == null) {
-                throw new FenixActionException(
-                        "Info Execution Degree doesn't have a Lessons Info OccupationPeriod");
-            }
-            infoRoomOccupation.setInfoPeriod(infoPeriod);
+            
+            if(infoRoomOccupation != null) {
+                InfoPeriod infoPeriod = null;
+                if (courseView.getInfoExecutionPeriod().getSemester().equals(new Integer(1))) {
+                    infoPeriod = infoExecutionDegree.getInfoPeriodLessonsFirstSemester();
+                } else {
+                    infoPeriod = infoExecutionDegree.getInfoPeriodLessonsSecondSemester();
+                }
+                if (infoPeriod == null) {
+                    throw new FenixActionException(
+                            "Info Execution Degree doesn't have a Lessons Info OccupationPeriod");
+                }
+                infoRoomOccupation.setInfoPeriod(infoPeriod);   
+            }            
             /** ****** */
 
             //            RoomKey kSalaAntiga = new
@@ -358,7 +367,9 @@ public class LessonManagerDispatchAction extends
             editarAulaForm.set("horaFim", String.valueOf(infoAula.getFim().get(Calendar.HOUR_OF_DAY)));
             editarAulaForm.set("minutosFim", String.valueOf(infoAula.getFim().get(Calendar.MINUTE)));
             editarAulaForm.set("tipoAula", String.valueOf(infoAula.getTipo()));
-            editarAulaForm.set("nomeSala", infoAula.getInfoRoomOccupation().getInfoRoom().getNome());
+            if(infoAula.getInfoRoomOccupation() != null) {
+                editarAulaForm.set("nomeSala", infoAula.getInfoRoomOccupation().getInfoRoom().getNome());
+            }
 
             RequestUtils.setLessonTypes(request);
 

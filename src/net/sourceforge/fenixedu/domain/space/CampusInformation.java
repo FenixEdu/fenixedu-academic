@@ -36,4 +36,9 @@ public class CampusInformation extends CampusInformation_Base {
     	return campusFactoryEditor;
     }
 
+    @Override
+    public String getPresentationName() {
+        return getName();
+    }
+
 }

@@ -1785,6 +1785,8 @@ class net.sourceforge.fenixedu.domain.Lesson extends net.sourceforge.fenixedu.do
     ShiftType tipo;
 	HourMinuteSecond beginHourMinuteSecond;
 	HourMinuteSecond endHourMinuteSecond;
+	Integer weekOfQuinzenalStart;
+	Integer frequency;
 }
 
 class net.sourceforge.fenixedu.domain.Locality extends net.sourceforge.fenixedu.domain.DomainObject {
@@ -2438,9 +2440,7 @@ class net.sourceforge.fenixedu.domain.space.SpaceOccupation extends net.sourcefo
 	}
 
 	class net.sourceforge.fenixedu.domain.space.RoomOccupation extends net.sourceforge.fenixedu.domain.DomainObject {
-		Integer weekOfQuinzenalStart;
 		Integer keyRoom;
-		Integer frequency;
 		Integer keyPeriod;
 	    DiaSemana dayOfWeek;
 		HourMinuteSecond startTimeDateHourMinuteSecond;
@@ -2485,8 +2485,8 @@ class net.sourceforge.fenixedu.domain.teacher.TeacherServiceItem extends net.sou
 	}
 	
 	class net.sourceforge.fenixedu.domain.teacher.InstitutionWorkTime extends net.sourceforge.fenixedu.domain.teacher.TeacherServiceItem {
-	HourMinuteSecond startTimeHourMinuteSecond;
-	HourMinuteSecond endTimeHourMinuteSecond;
+		HourMinuteSecond startTimeHourMinuteSecond;
+		HourMinuteSecond endTimeHourMinuteSecond;
 		WeekDay weekDay;
 	}	
 	

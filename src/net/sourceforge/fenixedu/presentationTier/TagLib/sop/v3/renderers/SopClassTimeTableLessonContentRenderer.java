@@ -58,13 +58,14 @@ public class SopClassTimeTableLessonContentRenderer implements LessonSlotContent
                                 lesson.getTipo().getSiglaTipoAula()).append("</a>").append(")&nbsp;");
             }
 
-            strBuffer.append(" <a href='pesquisarSala.do?name=").append(
-                    lesson.getInfoRoomOccupation().getInfoRoom().getNome()).append("'>").append(
-                    lesson.getInfoRoomOccupation().getInfoRoom().getNome()).append("</a>");
-
+            if(lesson.getInfoRoomOccupation() != null) {
+                strBuffer.append(" <a href='pesquisarSala.do?name=").append(
+                        lesson.getInfoRoomOccupation().getInfoRoom().getNome()).append("'>").append(
+                        lesson.getInfoRoomOccupation().getInfoRoom().getNome()).append("</a>");
+            }
             //TODO(rspl): Will it stay like this the interface for showing
             // it is a quinzenal lesson?
-            if (lesson.getInfoRoomOccupation().getFrequency() != null && lesson.getInfoRoomOccupation().getFrequency().intValue() == RoomOccupation.QUINZENAL) {
+            if (lesson.getFrequency().intValue() == RoomOccupation.QUINZENAL) {
                 strBuffer.append("&nbsp;&nbsp;[Q]");
             }
         } else if (showOccupation instanceof InfoExam) {

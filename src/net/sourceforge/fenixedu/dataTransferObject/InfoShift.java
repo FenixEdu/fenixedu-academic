@@ -138,7 +138,9 @@ public class InfoShift extends InfoObject {
                 stringBuilder.append("-");
                 stringBuilder.append(hourFormat.format(infoLesson.getFim().getTime()));
                 stringBuilder.append(") ");
-                stringBuilder.append(infoLesson.getInfoSala().getNome().toString());
+                if(infoLesson.getInfoSala() != null) {
+                    stringBuilder.append(infoLesson.getInfoSala().getNome().toString());
+                }
 
                 int last = (infoLessonsList.size());
                 if (index != last || (index != 1 && index != last)) {

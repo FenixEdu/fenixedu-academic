@@ -20,30 +20,30 @@
 
 <% if (pageContext.findAttribute("currentSpace") == pageContext.findAttribute("selectedSpace")) { %>
 	<logic:equal name="currentSpace" property="class.name" value="net.sourceforge.fenixedu.domain.space.Campus">
-		<bean:write name="currentSpace" property="spaceInformation.name"/>
+		<bean:write name="currentSpace" property="spaceInformation.presentationName"/>
 	</logic:equal>
 	<logic:equal name="currentSpace" property="class.name" value="net.sourceforge.fenixedu.domain.space.Building">
-		<bean:write name="currentSpace" property="spaceInformation.name"/>
+		<bean:write name="currentSpace" property="spaceInformation.presentationName"/>
 	</logic:equal>
 	<logic:equal name="currentSpace" property="class.name" value="net.sourceforge.fenixedu.domain.space.Floor">
-		<bean:write name="currentSpace" property="spaceInformation.level"/>
+		<bean:write name="currentSpace" property="spaceInformation.presentationName"/>
 	</logic:equal>
 	<logic:equal name="currentSpace" property="class.name" value="net.sourceforge.fenixedu.domain.space.Room">
-		<bean:write name="currentSpace" property="spaceInformation.description"/>
+		<bean:write name="currentSpace" property="spaceInformation.presentationName"/>
 	</logic:equal>
 <% } else { %>
 	<html:link page="/manageSpaces.do?method=manageSpace&page=0" paramId="spaceInformationID" paramName="currentSpace" paramProperty="spaceInformation.idInternal">
 		<logic:equal name="currentSpace" property="class.name" value="net.sourceforge.fenixedu.domain.space.Campus">
-			<bean:write name="currentSpace" property="spaceInformation.name"/>
+			<bean:write name="currentSpace" property="spaceInformation.presentationName"/>
 		</logic:equal>
 		<logic:equal name="currentSpace" property="class.name" value="net.sourceforge.fenixedu.domain.space.Building">
-			<bean:write name="currentSpace" property="spaceInformation.name"/>
+			<bean:write name="currentSpace" property="spaceInformation.presentationName"/>
 		</logic:equal>
 		<logic:equal name="currentSpace" property="class.name" value="net.sourceforge.fenixedu.domain.space.Floor">
-			<bean:write name="currentSpace" property="spaceInformation.level"/>
+			<bean:write name="currentSpace" property="spaceInformation.presentationName"/>
 		</logic:equal>
 		<logic:equal name="currentSpace" property="class.name" value="net.sourceforge.fenixedu.domain.space.Room">
-			<bean:write name="currentSpace" property="spaceInformation.description"/>
+			<bean:write name="currentSpace" property="spaceInformation.presentationName"/>
 		</logic:equal>
 	</html:link>
 <% } %>

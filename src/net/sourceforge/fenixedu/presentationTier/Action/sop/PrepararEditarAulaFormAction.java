@@ -74,7 +74,9 @@ public class PrepararEditarAulaFormAction extends
             editarAulaForm.set("horaFim", String.valueOf(infoAula.getFim().get(Calendar.HOUR_OF_DAY)));
             editarAulaForm.set("minutosFim", String.valueOf(infoAula.getFim().get(Calendar.MINUTE)));
             editarAulaForm.set("tipoAula", infoAula.getTipo().toString());
-            editarAulaForm.set("nomeSala", infoAula.getInfoRoomOccupation().getInfoRoom().getNome());
+            if(infoAula.getInfoRoomOccupation() != null) {
+                editarAulaForm.set("nomeSala", infoAula.getInfoRoomOccupation().getInfoRoom().getNome());
+            }
 
             RequestUtils.setLessonTypes(request);
 

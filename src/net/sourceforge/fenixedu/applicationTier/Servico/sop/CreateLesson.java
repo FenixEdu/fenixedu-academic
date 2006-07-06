@@ -45,29 +45,37 @@ public class CreateLesson extends Service {
         if (result.getMessageType() == 1) {
             throw new InvalidTimeIntervalServiceException();
         }
-        boolean resultB = validNoInterceptingLesson(infoLesson.getInfoRoomOccupation());
+        
+        boolean resultB = true;
+        if(infoLesson.getInfoRoomOccupation() != null) {
+             resultB = validNoInterceptingLesson(infoLesson.getInfoRoomOccupation());
+        }
+        
         if (result.isSUCESS() && resultB) {
-
                 InfoShiftServiceResult infoShiftServiceResult = valid(shift, infoLesson);
                 if (infoShiftServiceResult.isSUCESS()) {
-                    RoomOccupation roomOccupation = new RoomOccupation();
-                    roomOccupation.setDayOfWeek(infoLesson.getInfoRoomOccupation().getDayOfWeek());
-                    roomOccupation.setStartTime(infoLesson.getInfoRoomOccupation().getStartTime());
-                    roomOccupation.setEndTime(infoLesson.getInfoRoomOccupation().getEndTime());
-                    roomOccupation.setFrequency(infoLesson.getInfoRoomOccupation().getFrequency());
-                    roomOccupation.setWeekOfQuinzenalStart(infoLesson.getInfoRoomOccupation()
-                            .getWeekOfQuinzenalStart());
-
-                    final OldRoom sala = OldRoom.findOldRoomByName(infoLesson.getInfoSala().getNome());
-                    roomOccupation.setRoom(sala);
-
-                    final OccupationPeriod period = rootDomainObject.readOccupationPeriodByOID(
-                            infoLesson.getInfoRoomOccupation().getInfoPeriod().getIdInternal());
-                    roomOccupation.setPeriod(period);
-
+                    
+                    RoomOccupation roomOccupation = null;
+                    if(infoLesson.getInfoRoomOccupation() != null) { 
+                        roomOccupation = new RoomOccupation();
+                        roomOccupation.setDayOfWeek(infoLesson.getInfoRoomOccupation().getDayOfWeek());
+                        roomOccupation.setStartTime(infoLesson.getInfoRoomOccupation().getStartTime());
+                        roomOccupation.setEndTime(infoLesson.getInfoRoomOccupation().getEndTime());                       
+                    }
+                   
+                    OldRoom sala = null;
+                    if(infoLesson.getInfoSala() != null) {
+                        sala = OldRoom.findOldRoomByName(infoLesson.getInfoSala().getNome());                       
+                    }
+                    
+                    if(roomOccupation != null) {
+                        roomOccupation.setRoom(sala);                        
+                        final OccupationPeriod period = rootDomainObject.readOccupationPeriodByOID(infoLesson.getInfoRoomOccupation().getInfoPeriod().getIdInternal());
+                        roomOccupation.setPeriod(period);
+                    }
                     Lesson aula2 = new Lesson(infoLesson.getDiaSemana(), infoLesson
                             .getInicio(), infoLesson.getFim(), infoLesson.getTipo(), sala,
-                            roomOccupation, shift);
+                            roomOccupation, shift, infoLesson.getWeekOfQuinzenalStart(), infoLesson.getFrequency());
 
                     aula2.setExecutionPeriod(executionPeriod);
                 } else {

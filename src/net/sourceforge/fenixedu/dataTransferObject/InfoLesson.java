@@ -47,6 +47,10 @@ public class InfoLesson extends InfoShowOccupation implements ISmsDTO, Comparabl
 
     protected InfoRoomOccupation infoRoomOccupation;
 
+    protected Integer _frequency;
+    
+    protected Integer _weekOfQuinzenalStart;
+    
     private List infoShiftList = new ArrayList();
 
     public InfoLesson() {
@@ -74,8 +78,10 @@ public class InfoLesson extends InfoShowOccupation implements ISmsDTO, Comparabl
                     && (getFim().get(Calendar.HOUR_OF_DAY) == infoAula.getFim()
                             .get(Calendar.HOUR_OF_DAY))
                     && (getFim().get(Calendar.MINUTE) == infoAula.getFim().get(Calendar.MINUTE))
-                    && (getInfoSala().equals(infoAula.getInfoSala()))
-                    && (getInfoRoomOccupation().equals(infoAula.getInfoRoomOccupation()));
+                    && ((getInfoSala() == null && infoAula.getInfoSala() == null) || 
+                            (getInfoSala() != null && getInfoSala().equals(infoAula.getInfoSala())))
+                    && ((getInfoRoomOccupation() == null && infoAula.getInfoRoomOccupation() == null) 
+                            || (getInfoRoomOccupation() != null && getInfoRoomOccupation().equals(infoAula.getInfoRoomOccupation())));
         }
         return resultado;
     }
@@ -128,6 +134,22 @@ public class InfoLesson extends InfoShowOccupation implements ISmsDTO, Comparabl
         _tipo = tipo;
     }
 
+    public Integer getFrequency() {        
+        return _frequency;
+    }
+    
+    public void setFrequency(Integer frequency) {
+        _frequency = frequency;      
+    }
+    
+    public Integer getWeekOfQuinzenalStart() {
+        return _weekOfQuinzenalStart;
+    }
+    
+    public void setWeekOfQuinzenalStart(Integer weekOfQuinzenalStart) {
+        _weekOfQuinzenalStart = weekOfQuinzenalStart;
+    }
+    
     public String getWeekDay() {
         String result = getDiaSemana().getDiaSemana().toString();
         if (result != null && result.equals("7")) {
@@ -174,6 +196,8 @@ public class InfoLesson extends InfoShowOccupation implements ISmsDTO, Comparabl
             setFim(lesson.getFim());
             setInicio(lesson.getInicio());
             setTipo(lesson.getTipo());
+            setFrequency(lesson.getFrequency());
+            setWeekOfQuinzenalStart(lesson.getWeekOfQuinzenalStart());
         }
     }
 

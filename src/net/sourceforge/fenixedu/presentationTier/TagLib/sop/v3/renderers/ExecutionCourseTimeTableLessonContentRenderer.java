@@ -24,20 +24,22 @@ public class ExecutionCourseTimeTableLessonContentRenderer implements LessonSlot
             InfoLesson lesson = (InfoLesson) showOccupation;
 
             strBuffer.append(lesson.getTipo().getSiglaTipoAula()).append("&nbsp;");
-            strBuffer.append("<a href='siteViewer.do?method=roomViewer&amp;roomName=");
-            strBuffer.append(lesson.getInfoRoomOccupation().getInfoRoom().getNome()).append(
-                    "&amp;objectCode=");
-            strBuffer.append(lesson.getInfoShift().getInfoDisciplinaExecucao().getInfoExecutionPeriod()
-                    .getIdInternal());
-            strBuffer.append("&amp;executionPeriodOID=");
-            strBuffer.append(
-                    lesson.getInfoShift().getInfoDisciplinaExecucao().getInfoExecutionPeriod()
-                            .getIdInternal()).append("'>");
-            strBuffer.append(lesson.getInfoRoomOccupation().getInfoRoom().getNome()).append("</a>");
-
+            
+            if(lesson.getInfoRoomOccupation() != null) {
+                strBuffer.append("<a href='siteViewer.do?method=roomViewer&amp;roomName=");
+                strBuffer.append(lesson.getInfoRoomOccupation().getInfoRoom().getNome()).append(
+                        "&amp;objectCode=");
+                strBuffer.append(lesson.getInfoShift().getInfoDisciplinaExecucao().getInfoExecutionPeriod()
+                        .getIdInternal());
+                strBuffer.append("&amp;executionPeriodOID=");
+                strBuffer.append(
+                        lesson.getInfoShift().getInfoDisciplinaExecucao().getInfoExecutionPeriod()
+                                .getIdInternal()).append("'>");               
+                strBuffer.append(lesson.getInfoRoomOccupation().getInfoRoom().getNome()).append("</a>");
+            }
             // TODO(rspl): Will it stay like this the interface for showing
             // it is a quinzenal lesson?
-            if (lesson.getInfoRoomOccupation().getFrequency().intValue() == RoomOccupation.QUINZENAL) {
+            if (lesson.getFrequency().intValue() == RoomOccupation.QUINZENAL) {
                 strBuffer.append("&nbsp;&nbsp;[Q]");
             }
         } else if (showOccupation instanceof InfoExam) {

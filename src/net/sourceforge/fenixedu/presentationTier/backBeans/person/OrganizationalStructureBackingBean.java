@@ -238,7 +238,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 	 }
     public List<Unit> getAllUnitsWithoutParent() throws FenixFilterException, FenixServiceException,
             ExcepcaoPersistencia {
-        Unit istUnit = UnitUtils.readUnitWithoutParentstByName(UnitUtils.IST_UNIT_NAME);
+        Unit istUnit = UnitUtils.readInstitutionUnit();
         if (istUnit == null) {
             return new ArrayList();
         }
@@ -350,7 +350,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 
     public String getInstituitionName() throws ExcepcaoPersistencia, FenixServiceException {
 
-        Unit institution = UnitUtils.readUnitWithoutParentstByName(UnitUtils.IST_UNIT_NAME);
+        Unit institution = UnitUtils.readInstitutionUnit();
         if (institution != null) {
             return institution.getName();
         }

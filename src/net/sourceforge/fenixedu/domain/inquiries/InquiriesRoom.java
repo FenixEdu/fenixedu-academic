@@ -38,5 +38,4 @@ public class InquiriesRoom extends InquiriesRoom_Base {
         this.setSpaceAdequation(infoInquiriesRoom.getSpaceAdequation());
 		
 	}
-
 }

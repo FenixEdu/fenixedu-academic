@@ -389,8 +389,10 @@ public class InfoSummary extends InfoObject implements Comparable {
                             result += "0";
                         }
                         result += endLesson.get(Calendar.MINUTE);
-                        result += " ";
-                        result += lesson.getInfoSala().getNome();
+                        if(lesson.getInfoSala() != null) {
+                            result += " ";
+                            result += lesson.getInfoSala().getNome();
+                        }
                     }
                 }
             }

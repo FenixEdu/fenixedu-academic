@@ -133,7 +133,9 @@
 						</td>
 							
 		               	<td class="listClasses">
-							<bean:write name="infoLesson" property="infoSala.nome"/>
+		               		<logic:notEmpty name="infoLesson" property="infoSala.nome">
+								<bean:write name="infoLesson" property="infoSala.nome"/>
+							</logic:notEmpty>	
 				 		</td>
 				 		
 				 		 <td class="listClasses" rowspan="<%=((InfoShift) infoShift).getInfoLessons().size()%>">
@@ -171,7 +173,9 @@
 								<%= fH.toString()%> : <%= fM.toString()%><% if (fM.intValue() == 0) { %>0<% } %>
 							</td>
 							<td class="listClasses">
-								<bean:write name="infoLesson" property="infoSala.nome"/>
+								<logic:notEmpty name="infoLesson" property="infoSala.nome">
+									<bean:write name="infoLesson" property="infoSala.nome"/>
+								</logic:notEmpty>	
 							</td>
 						</tr>
 					

@@ -200,7 +200,9 @@ function cleanSelect(checkboxes) {
 									text += lesson.getInicio().get(Calendar.MINUTE) + "-";
 									text += lesson.getFim().get(Calendar.HOUR_OF_DAY) + ":";
 									text += lesson.getFim().get(Calendar.MINUTE) + " ";
-									text += lesson.getInfoSala().getNome();
+									if(lesson.getInfoSala() != null){
+										text += lesson.getInfoSala().getNome();
+									}
 									if (iterator.hasNext())
 										text += " ;";
 								}

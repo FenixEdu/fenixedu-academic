@@ -64,9 +64,11 @@
 						<%= fH.toString()%>:<%= fM.toString()%><% if (fM.intValue() == 0) { %>0<% } %>								
 					</td>
 					<td>
-						<a href='siteViewer.do?method=roomViewer&amp;roomName=<bean:write name="infoLesson" property="infoSala.nome"/>&amp;objectCode=<bean:write name="executionPeriodCode" />&amp;executionPeriodOID=<%= request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID).toString() %>'>
-							<bean:write name="infoLesson" property="infoSala.nome"/>
-						</a>
+					    <logic:notEmpty name="infoLesson" property="infoSala.nome">
+							<a href='siteViewer.do?method=roomViewer&amp;roomName=<bean:write name="infoLesson" property="infoSala.nome"/>&amp;objectCode=<bean:write name="executionPeriodCode" />&amp;executionPeriodOID=<%= request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID).toString() %>'>
+								<bean:write name="infoLesson" property="infoSala.nome"/>
+							</a>
+						</logic:notEmpty>
 					</td>
 					<td rowspan=<%=((InfoShiftWithAssociatedInfoClassesAndInfoLessons) infoShift).getInfoLessons().size() %>>
 						<logic:iterate id="infoClass" name="infoShift" property="infoClasses">
@@ -96,9 +98,11 @@
 						<%= fH.toString()%>:<%= fM.toString()%><% if (fM.intValue() == 0) { %>0<% } %>
 					</td>
 					<td>
-						<a href='siteViewer.do?method=roomViewer&amp;roomName=<bean:write name="infoLesson" property="infoSala.nome"/>&amp;objectCode=<bean:write name="executionPeriodCode" />&amp;executionPeriodOID=<%= request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID).toString() %>'>
-							<bean:write name="infoLesson" property="infoSala.nome"/>
-						</a>
+					    <logic:notEmpty name="infoLesson" property="infoSala.nome">
+							<a href='siteViewer.do?method=roomViewer&amp;roomName=<bean:write name="infoLesson" property="infoSala.nome"/>&amp;objectCode=<bean:write name="executionPeriodCode" />&amp;executionPeriodOID=<%= request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID).toString() %>'>
+								<bean:write name="infoLesson" property="infoSala.nome"/>
+							</a>
+						</logic:notEmpty>	
 					</td>
 				</tr>
 			</logic:iterate>

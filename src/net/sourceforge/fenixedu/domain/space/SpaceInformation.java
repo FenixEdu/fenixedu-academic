@@ -10,6 +10,8 @@ public abstract class SpaceInformation extends SpaceInformation_Base implements 
 
 	private transient YearMonthDay validFrom;
 
+    public abstract String getPresentationName();
+    
     protected SpaceInformation() {
         super();
         setRootDomainObject(RootDomainObject.getInstance());

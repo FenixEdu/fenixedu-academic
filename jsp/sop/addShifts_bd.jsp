@@ -165,10 +165,14 @@
 					</dt:format>
 				</td>
 				<td class="listClasses">
-					<bean:write name="infoLesson" property="infoSala.nome"/>
+				    <logic:notEmpty name="infoLesson" property="infoSala.nome">
+						<bean:write name="infoLesson" property="infoSala.nome"/>
+					</logic:notEmpty>	
 				</td>
 				<td class="listClasses">
-					<bean:write name="infoLesson" property="infoSala.capacidadeNormal"/>
+				    <logic:notEmpty name="infoLesson" property="infoSala.nome">
+						<bean:write name="infoLesson" property="infoSala.capacidadeNormal"/>
+					</logic:notEmpty>	
 				</td>
 	        </logic:iterate>
 		</tr>
@@ -188,10 +192,14 @@
 						</dt:format>
 					</td>
 					<td class="listClasses">
-						<bean:write name="infoLesson" property="infoSala.nome"/>
+						<logic:notEmpty name="infoLesson" property="infoSala.nome">
+							<bean:write name="infoLesson" property="infoSala.nome"/>
+						</logic:notEmpty>	
 					</td>
 					<td class="listClasses">
-						<bean:write name="infoLesson" property="infoSala.capacidadeNormal"/>
+						<logic:notEmpty name="infoLesson" property="infoSala.nome">
+							<bean:write name="infoLesson" property="infoSala.capacidadeNormal"/>
+						</logic:notEmpty>	
 					</td>
 				</tr>
 	        </logic:iterate>

@@ -77,7 +77,9 @@
                             	<%= ((InfoLesson) iA.get(i)).getTipo().toString()%>
                             </td>
                             <td class="listClasses">
-                                <bean:write name="elem" property="infoSala.nome"/>
+	                            <logic:notEmpty name="elem" property="infoSala.nome">
+    	                            <bean:write name="elem" property="infoSala.nome"/>
+      	                        </logic:notEmpty>   
                             </td>
                         </tr>
                         <% i++; %>

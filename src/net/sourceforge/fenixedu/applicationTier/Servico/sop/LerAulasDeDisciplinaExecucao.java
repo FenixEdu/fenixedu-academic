@@ -46,8 +46,10 @@ public class LerAulasDeDisciplinaExecucao extends Service {
                 infoLesson.setInfoShift(infoShift);
 
                 final OldRoom room = lesson.getSala();
-                final InfoRoom infoRoom = InfoRoom.newInfoFromDomain(room);
-                infoLesson.setInfoSala(infoRoom);
+                if(room != null) {
+                    final InfoRoom infoRoom = InfoRoom.newInfoFromDomain(room);
+                    infoLesson.setInfoSala(infoRoom);
+                }
             }
         }
 

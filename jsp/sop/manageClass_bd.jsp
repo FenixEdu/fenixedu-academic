@@ -263,10 +263,14 @@ Turnos associados a turma:
 					</dt:format>
 				</td>
 				<td class="listClasses">
-					<bean:write name="infoLesson" property="infoSala.nome"/>
+					<logic:notEmpty name="infoLesson" property="infoSala.nome">	
+						<bean:write name="infoLesson" property="infoSala.nome"/>
+					</logic:notEmpty>	
 				</td>
 				<td class="listClasses">
-					<bean:write name="infoLesson" property="infoSala.capacidadeNormal"/>
+					<logic:notEmpty name="infoLesson" property="infoSala.nome">
+						<bean:write name="infoLesson" property="infoSala.capacidadeNormal"/>
+					</logic:notEmpty>	
 				</td>
 	        </logic:iterate>
 			<logic:equal name="numberOfLessons" value="0">
@@ -317,10 +321,14 @@ Turnos associados a turma:
 						</dt:format>
 					</td>
 					<td class="listClasses">
-						<bean:write name="infoLesson" property="infoSala.nome"/>
+						<logic:notEmpty name="infoLesson" property="infoSala.nome">
+							<bean:write name="infoLesson" property="infoSala.nome"/>
+						</logic:notEmpty>	
 					</td>
 					<td class="listClasses">
-						<bean:write name="infoLesson" property="infoSala.capacidadeNormal"/>
+						<logic:notEmpty name="infoLesson" property="infoSala.nome">
+							<bean:write name="infoLesson" property="infoSala.capacidadeNormal"/>
+						</logic:notEmpty>	
 					</td>
 				</tr>
 	        </logic:iterate>

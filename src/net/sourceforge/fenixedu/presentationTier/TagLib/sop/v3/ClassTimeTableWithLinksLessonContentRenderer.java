@@ -44,7 +44,9 @@ public class ClassTimeTableWithLinksLessonContentRenderer implements LessonSlotC
                 strBuffer.append("&nbsp;(").append(lesson.getTipo().getSiglaTipoAula()).append(")&nbsp;");
             }
 
-            strBuffer.append(lesson.getInfoRoomOccupation().getInfoRoom().getNome());
+            if(lesson.getInfoRoomOccupation() != null) {
+                strBuffer.append(lesson.getInfoRoomOccupation().getInfoRoom().getNome());
+            }
             return strBuffer;
         }
         return new StringBuilder("");

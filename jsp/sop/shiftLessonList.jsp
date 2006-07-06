@@ -74,10 +74,14 @@ Aulas já atribuidas ao turno
 						</dt:format>
 					</td>
 					<td class="listClasses">
-						<bean:write name="lesson" property="infoSala.nome"/>
+						<logic:notEmpty name="lesson" property="infoSala.nome">
+							<bean:write name="lesson" property="infoSala.nome"/>
+						</logic:notEmpty>	
 					</td>
 					<td class="listClasses">
-						<bean:write name="lesson" property="infoSala.capacidadeNormal"/>
+						<logic:notEmpty name="lesson" property="infoSala.nome">
+							<bean:write name="lesson" property="infoSala.capacidadeNormal"/>
+						</logic:notEmpty>
 					</td>
 					<td class="listClasses">
 	               		<html:link page="<%= "/manageLesson.do?method=prepareEdit&amp;page=0&amp;"

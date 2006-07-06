@@ -33,4 +33,8 @@ public class FloorInformation extends FloorInformation_Base {
     	return floorFactoryEditor;
     }
 
+    @Override
+    public String getPresentationName() {       
+        return String.valueOf(getLevel());
+    }
 }
