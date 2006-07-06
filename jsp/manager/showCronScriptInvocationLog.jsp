@@ -2,6 +2,7 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
+<%@ taglib uri="/WEB-INF/taglibs-string.tld" prefix="str" %>
 
 <logic:present name="cronScriptInvocation">
 	<fr:view name="cronScriptInvocation" property="cronScriptState"
@@ -23,7 +24,9 @@
 	</fr:view>
 	<br/>
 	<logic:present name="cronScriptInvocation" property="log">
-		<bean:write name="cronScriptInvocation" property="log"/>
+		<str:replace replace="\n" with="<br/>">
+			<bean:write name="cronScriptInvocation" property="log"/>
+		</str:replace>
 	</logic:present>
 	<logic:notPresent name="cronScriptInvocation" property="log">
 		<bean:message bundle="MANAGER_RESOURCES" key="message.log.not.present"/>
