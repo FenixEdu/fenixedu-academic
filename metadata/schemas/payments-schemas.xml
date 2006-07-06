@@ -21,6 +21,13 @@
 <schema name="receipt.view" type="net.sourceforge.fenixedu.domain.accounting.Receipt">
 	<slot name="number"/>
 	<slot name="year"/>
+	<slot name="whenCreated"/>
+	<slot name="totalAmount"/>
+</schema>
+
+<schema name="receipt.view-with-number-and-year" type="net.sourceforge.fenixedu.domain.accounting.Receipt">
+	<slot name="number"/>
+	<slot name="year"/>
 </schema>
 
 <schema name="contributor.view" type="net.sourceforge.fenixedu.domain.Contributor">
