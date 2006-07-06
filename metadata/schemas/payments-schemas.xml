@@ -1,5 +1,6 @@
 <schema name="entryDTO.edit" type="net.sourceforge.fenixedu.dataTransferObject.accounting.EntryDTO">
 	<slot name="selected" key="label.masterDegree.administrativeOffice.payments.selected"/>
+	<slot name="event.whenOccured" key="label.masterDegree.administrativeOffice.payments.eventDate" read-only="true"/>
 	<slot name="description" read-only="true" key="label.masterDegree.administrativeOffice.payments.description"/>
 	<slot name="totalAmount" read-only="true" key="label.masterDegree.administrativeOffice.payments.totalAmount"/>
 	<slot name="payedAmount" read-only="true" key="label.masterDegree.administrativeOffice.payments.payedAmount"/>
