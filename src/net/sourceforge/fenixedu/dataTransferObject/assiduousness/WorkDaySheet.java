@@ -5,12 +5,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.util.WeekDay;
 
 import org.joda.time.Duration;
 import org.joda.time.Period;
 import org.joda.time.TimeOfDay;
 import org.joda.time.YearMonthDay;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 
 public class WorkDaySheet implements Serializable {
     YearMonthDay date;
@@ -78,7 +81,7 @@ public class WorkDaySheet implements Serializable {
     }
 
     public String getDateFormatted() {
-        if(getDate() == null) {
+        if (getDate() == null) {
             return "";
         }
         return getDate().toString("dd/MM/yyyy");
@@ -101,14 +104,46 @@ public class WorkDaySheet implements Serializable {
             result.append(balancePeriod.getMinutes());
         }
         return result.toString();
-    }    
-    
+    }
+
+    public String getUnjustifiedTimeFormatted() {
+        Period unjustifiedPeriod = getUnjustifiedTime().toPeriod();
+        StringBuffer result = new StringBuffer();
+        result.append(unjustifiedPeriod.getHours());
+        result.append(":");
+        if (unjustifiedPeriod.getMinutes() > -10 && unjustifiedPeriod.getMinutes() < 10) {
+            result.append("0");
+        }
+        if (unjustifiedPeriod.getMinutes() < 0) {
+            result.append((-unjustifiedPeriod.getMinutes()));
+            if (!result.toString().startsWith("-")) {
+                result = new StringBuffer("-").append(result);
+            }
+        } else {
+            result.append(unjustifiedPeriod.getMinutes());
+        }
+        return result.toString();
+    }
+
+    public String getClockingsFormatted() {
+        DateTimeFormatter fmt = DateTimeFormat.forPattern("HH:mm");
+        StringBuffer result = new StringBuffer();
+        for (TimeOfDay timeOfDay : getClockings()) {
+            if (result.length() != 0) {
+                result.append(", ");
+            }
+            result.append(fmt.print(timeOfDay));
+        }
+        return result.toString();
+    }
+
     public String getWeekDay() {
-        if(getDate() == null) {
+        if (getDate() == null) {
             return "";
         }
         ResourceBundle bundle = ResourceBundle.getBundle("resources.AssiduousnessResources");
-        return  bundle.getString(WeekDay.fromJodaTimeToWeekDay(getDate().toDateTimeAtMidnight())
-                        .toString()+"_ACRONYM");
+        return bundle.getString(WeekDay.fromJodaTimeToWeekDay(getDate().toDateTimeAtMidnight())
+                .toString()
+                + "_ACRONYM");
     }
 }

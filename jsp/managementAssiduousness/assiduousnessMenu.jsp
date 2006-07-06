@@ -4,7 +4,7 @@
 <ul>
 	<li class="navheader"><bean:message key="link.consult" /></li>
 	<li><html:link page="/viewAssiduousness.do?method=chooseEmployee&amp;action=showWorkSheet"><bean:message key="link.showEmployeeWorkSheet" /></html:link></li>
-    
+    <li><html:link page="/exportAssiduousness.do?method=chooseYearMonth"><bean:message key="link.exportWorkSheets" /></html:link></li>
     <%-- 
     <li><bean:message key="link.consult" />
     	<ul>

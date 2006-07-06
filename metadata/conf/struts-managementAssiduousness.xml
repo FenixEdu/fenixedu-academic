@@ -33,6 +33,13 @@
 			<forward name="choose-employee" path="choose-employee"/>
 			<forward name="show-employee-work-sheet" path="show-employee-work-sheet"/>
 		</action>	
+		<action path="/exportAssiduousness"
+	    		type="net.sourceforge.fenixedu.presentationTier.Action.managementAssiduousness.ExportAssiduousnessDispatchAction" 
+				parameter="method"
+				scope="request"
+				validate="true">
+				<forward name="choose-year-month" path="choose-year-month"/>
+		</action>	
  	</action-mappings>
 
 	<!-- ========== Controller Configuration ================================ -->

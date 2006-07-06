@@ -10,6 +10,7 @@ import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.Holiday;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.assiduousness.util.AnulationState;
+import net.sourceforge.fenixedu.domain.assiduousness.util.AssiduousnessState;
 import net.sourceforge.fenixedu.domain.assiduousness.util.AttributeType;
 import net.sourceforge.fenixedu.domain.assiduousness.util.DateInterval;
 import net.sourceforge.fenixedu.domain.assiduousness.util.DomainConstants;
@@ -258,6 +259,32 @@ public class Assiduousness extends Assiduousness_Base {
             }
         }
         return null;
+    }
+
+    public boolean isStatusActive(YearMonthDay beginDate, YearMonthDay endDate) {
+        for (AssiduousnessStatusHistory assiduousnessStatusHistory : getAssiduousnessStatusHistories()) {
+            if (assiduousnessStatusHistory.getEndDate() != null) {
+                Interval statusInterval = new Interval(assiduousnessStatusHistory.getBeginDate()
+                        .toDateMidnight(), assiduousnessStatusHistory.getEndDate().toDateMidnight()
+                        .plus(3600));
+                Interval interval = new Interval(beginDate.toDateMidnight(), endDate.toDateMidnight()
+                        .plus(3600));
+                if (interval.overlaps(statusInterval)
+                        && assiduousnessStatusHistory.getAssiduousnessStatus().getState().equals(
+                                AssiduousnessState.ACTIVE)) {
+                    return true;
+                }
+            } else {
+                if ((assiduousnessStatusHistory.getBeginDate().isBefore(endDate) || assiduousnessStatusHistory
+                        .getBeginDate().isEqual(endDate))
+                        && assiduousnessStatusHistory.getAssiduousnessStatus().getState().equals(
+                                AssiduousnessState.ACTIVE)) {
+                    return true;
+                }
+            }
+
+        }
+        return false;
     }
 
 }

@@ -11,4 +11,7 @@
 	<definition name="show-employee-work-sheet" extends="definition.managementAssiduousness.masterPage">
 		<put name="body" value="/managementAssiduousness/showWorkSheet.jsp"/>
 	</definition>
+	<definition name="choose-year-month" extends="definition.managementAssiduousness.masterPage">
+		<put name="body" value="/managementAssiduousness/chooseYearMonth.jsp"/>
+	</definition>
 </tiles-definitions>

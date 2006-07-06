@@ -10036,4 +10036,20 @@
 		<filterChains>
 		</filterChains>		
 	</service>		
+	<service>
+		<name>ReadEmployeeWorkSheet</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.assiduousness.ReadEmployeeWorkSheet</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		<filterChains>
+		</filterChains>		
+	</service>
+	<service>
+		<name>ReadAllAssiduousnessWorkSheets</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.assiduousness.ReadAllAssiduousnessWorkSheets</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		<filterChains>
+		</filterChains>		
+	</service>
 </serviceDefinitions>

@@ -14,21 +14,16 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.assiduousness.ClockingsDaySheet;
-import net.sourceforge.fenixedu.dataTransferObject.assiduousness.WorkDaySheet;
+import net.sourceforge.fenixedu.dataTransferObject.assiduousness.EmployeeWorkSheet;
 import net.sourceforge.fenixedu.dataTransferObject.assiduousness.WorkScheduleDaySheet;
 import net.sourceforge.fenixedu.dataTransferObject.assiduousness.YearMonth;
 import net.sourceforge.fenixedu.domain.Employee;
-import net.sourceforge.fenixedu.domain.assiduousness.Assiduousness;
-import net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessRecord;
 import net.sourceforge.fenixedu.domain.assiduousness.Clocking;
-import net.sourceforge.fenixedu.domain.assiduousness.DailyBalance;
 import net.sourceforge.fenixedu.domain.assiduousness.Justification;
-import net.sourceforge.fenixedu.domain.assiduousness.JustificationMotive;
-import net.sourceforge.fenixedu.domain.assiduousness.Leave;
-import net.sourceforge.fenixedu.domain.assiduousness.Schedule;
 import net.sourceforge.fenixedu.domain.assiduousness.WorkSchedule;
 import net.sourceforge.fenixedu.domain.assiduousness.WorkWeek;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
 import net.sourceforge.fenixedu.renderers.components.state.ViewState;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
@@ -39,14 +34,7 @@ import org.apache.commons.beanutils.BeanComparator;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import org.joda.time.DateTime;
-import org.joda.time.Duration;
-import org.joda.time.MutablePeriod;
-import org.joda.time.Period;
-import org.joda.time.TimeOfDay;
 import org.joda.time.YearMonthDay;
-import org.joda.time.format.PeriodFormatter;
-import org.joda.time.format.PeriodFormatterBuilder;
 
 public class AssiduousnessDispatchAction extends FenixDispatchAction {
 
@@ -228,117 +216,17 @@ public class AssiduousnessDispatchAction extends FenixDispatchAction {
                 && yearMonth.getMonth().ordinal() + 1 == new YearMonthDay().getMonthOfYear()) {
             endDay = new YearMonthDay().getDayOfMonth();
         }
-
         YearMonthDay endDate = new YearMonthDay(yearMonth.getYear(), yearMonth.getMonth().ordinal() + 1,
                 endDay);
-        request.setAttribute("workSheet", getWorkDaySheet(employee.getAssiduousness(), beginDate,
-                endDate, request));
+        try {
+            Object[] args = { employee.getAssiduousness(), beginDate, endDate };
+            EmployeeWorkSheet employeeWorkSheet = (EmployeeWorkSheet) ServiceUtils.executeService(
+                    userView, "ReadEmployeeWorkSheet", args);
+            request.setAttribute("employeeWorkSheet", employeeWorkSheet);
+        } catch (FenixServiceException e) {
+        }
         request.setAttribute("yearMonth", yearMonth);
-        request.setAttribute("employee", employee);
         return mapping.findForward("show-work-sheet");
     }
 
-    protected List<WorkDaySheet> getWorkDaySheet(Assiduousness assiduousness, YearMonthDay beginDate,
-            YearMonthDay endDate, HttpServletRequest request) {
-        List<WorkDaySheet> workSheet = new ArrayList<WorkDaySheet>();
-        YearMonthDay today = new YearMonthDay();
-        Duration totalBalance = new Duration(0);
-        Duration totalUnjustified = new Duration(0);
-        HashMap<String, String> subtitles = new HashMap<String, String>();
-        for (YearMonthDay thisDay = beginDate; thisDay.isBefore(endDate.plusDays(1)); thisDay = thisDay
-                .plusDays(1)) {
-            WorkDaySheet workDaySheet = new WorkDaySheet();
-            workDaySheet.setDate(thisDay);
-            String notes = "";
-            if (assiduousness != null) {
-
-                Schedule schedule = assiduousness.getSchedule(thisDay);
-                boolean isDayHoliday = assiduousness.isHoliday(thisDay);
-
-                if (schedule == null) {
-                    workDaySheet.setNotes(notes);
-                    workDaySheet.setBalanceTime(new Period(0));
-                    workDaySheet.setUnjustifiedTime(new Duration(0));
-                    workSheet.add(workDaySheet);
-                } else {
-                    WorkSchedule workSchedule = schedule.workScheduleWithDate(thisDay);
-                    if (workSchedule != null && !isDayHoliday) {
-                        DateTime init = thisDay.toDateTime(workSchedule.getWorkScheduleType()
-                                .getWorkTime());
-                        DateTime end = thisDay.toDateTime(workSchedule.getWorkScheduleType()
-                                .getWorkEndTime());
-                        if (workSchedule.getWorkScheduleType().isWorkTimeNextDay()) {
-                            end = end.plusDays(1);
-                        }
-
-                        List<AssiduousnessRecord> clockings = assiduousness
-                                .getClockingsAndMissingClockings(init, end);
-
-                        Collections.sort(clockings, new BeanComparator("date"));
-                        for (AssiduousnessRecord assiduousnessRecord : (List<AssiduousnessRecord>) clockings) {
-                            workDaySheet.addClockings(assiduousnessRecord.getDate().toTimeOfDay());
-                        }
-
-                        List<Leave> leaves = new ArrayList<Leave>(assiduousness.getLeaves(thisDay));
-                        Collections.sort(leaves, new BeanComparator("date"));
-                        for (Leave leave : leaves) {
-                            if (notes.length() != 0) {
-                                notes = notes.concat(" / ");
-                            }
-                            notes = notes.concat(leave.getJustificationMotive().getAcronym());
-                            putSubtitle(subtitles, leave.getJustificationMotive());
-                        }
-                        workDaySheet.setNotes(notes);
-                        DailyBalance dailyBalance = assiduousness.calculateDailyBalance(thisDay);
-                        workDaySheet
-                                .setBalanceTime(dailyBalance.getNormalWorkPeriodBalance().toPeriod());
-                        if (!thisDay.equals(today)) {
-                            totalBalance = totalBalance.plus(dailyBalance.getNormalWorkPeriodBalance());
-                        }
-                        workDaySheet.setUnjustifiedTime(dailyBalance.getFixedPeriodAbsence());
-                        totalUnjustified = totalUnjustified.plus(workDaySheet.getUnjustifiedTime());
-                        workDaySheet.setWorkScheduleAcronym(workSchedule.getWorkScheduleType()
-                                .getAcronym());
-                        workSheet.add(workDaySheet);
-                    } else {
-                        DateTime init = thisDay.toDateTime(new TimeOfDay(7, 30, 0, 0));
-                        DateTime end = thisDay.toDateTime(new TimeOfDay(23, 59, 59, 99));
-                        List<AssiduousnessRecord> clockings = assiduousness
-                                .getClockingsAndMissingClockings(init, end);
-                        Collections.sort(clockings, new BeanComparator("date"));
-                        DailyBalance dailyBalance = assiduousness.calculateDailyBalance(thisDay);
-                        workDaySheet.setBalanceTime(dailyBalance.getTotalBalance().toPeriod());
-                        workDaySheet.setNotes(notes);
-                        for (AssiduousnessRecord assiduousnessRecord : clockings) {
-                            workDaySheet.addClockings(assiduousnessRecord.getDate().toTimeOfDay());
-                        }
-                        if (isDayHoliday) {
-                            ResourceBundle bundle = ResourceBundle
-                                    .getBundle("resources.AssiduousnessResources");
-                            workDaySheet.setWorkScheduleAcronym(bundle.getString("label.holiday"));
-                        }
-                        workDaySheet.setUnjustifiedTime(new Duration(0));
-                        workSheet.add(workDaySheet);
-                    }
-                }
-            }
-        }
-        PeriodFormatter fmt = new PeriodFormatterBuilder().printZeroAlways().appendHours()
-                .appendSeparator(":").minimumPrintedDigits(2).appendMinutes().toFormatter();
-        MutablePeriod finalTotalBalance = new MutablePeriod(totalBalance.getMillis());
-        if (totalBalance.toPeriod().getMinutes() < 0) {
-            finalTotalBalance.setMinutes(-totalBalance.toPeriod().getMinutes());
-        }
-        request.setAttribute("totalBalance", fmt.print(finalTotalBalance));
-        request.setAttribute("totalUnjustified", fmt.print(totalUnjustified.toPeriod()));
-        request.setAttribute("subtitles", subtitles.values());
-        return workSheet;
-    }
-
-    private void putSubtitle(HashMap<String, String> subtitles, JustificationMotive justificationMotive) {
-        if (subtitles.get(justificationMotive.getAcronym()) == null) {
-            subtitles.put(justificationMotive.getAcronym(), justificationMotive.getAcronym() + " - "
-                    + justificationMotive.getDescription());
-        }
-    }
 }
