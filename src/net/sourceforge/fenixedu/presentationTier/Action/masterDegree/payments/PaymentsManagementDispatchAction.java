@@ -145,7 +145,6 @@ public class PaymentsManagementDispatchAction extends FenixDispatchAction {
         return mapping.findForward("showEvents");
     }
 
-    @SuppressWarnings("unchecked")
     public ActionForward showPaymentsWithoutReceipt(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) {
 
@@ -333,5 +332,12 @@ public class PaymentsManagementDispatchAction extends FenixDispatchAction {
                 .getMetaObject().getObject());
         return mapping.findForward("showPaymentsWithoutReceipt");
     }
+    
+    public ActionForward backToShowOperations(ActionMapping mapping, ActionForm actionForm,
+			HttpServletRequest request, HttpServletResponse response) {
+
+		request.setAttribute("person", getPerson(request));
+		return mapping.findForward("showOperations");
+	}
 
 }
