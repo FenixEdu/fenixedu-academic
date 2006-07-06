@@ -28,3 +28,5 @@ function executeWithTempFile() {
 }
 
 execute "Alter table CronScriptInvocation" alterTableCronScriptInvocation.sql
+execute "Alter Lesson Table" alterLessonTable.sql
+executeWithTempFile "Fill Lesson Attributes" fillLessonAttributes.sql
