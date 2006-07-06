@@ -2587,6 +2587,7 @@
    	         <forward name="showReceipt" path="payments.management.showReceipt"/>
    	         <forward name="printReceipt" path="/payments/receipts/printReceiptPage.jsp"/>
    	         <forward name="showPaymentsWithoutReceipt" path="payments.management.showPaymentsWithoutReceipt"/> 
+   	         <forward name="confirmCreateReceipt" path="payments.management.confirmCreateReceipt"/> 
       </action>
       
 
