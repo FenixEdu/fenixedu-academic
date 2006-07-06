@@ -5,11 +5,11 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.accounting.Receipt;
-import net.sourceforge.fenixedu.domain.accounting.ReceiptVersion;
+import net.sourceforge.fenixedu.domain.accounting.ReceiptPrintVersion;
 
 public class CreateReceiptVersion extends Service {
 
-    public ReceiptVersion run(final Receipt receipt, final Employee employee) throws FenixServiceException {
+    public ReceiptPrintVersion run(final Receipt receipt, final Employee employee) throws FenixServiceException {
         
         if (receipt == null) {
             throw new InvalidArgumentsServiceException("error.masterDegreeAdministrativeOffice.payments.receipt.not.found");
