@@ -43,6 +43,6 @@
 <!-- ************************************************************************************************************ -->
 <!-- Definitions for net.sourceforge.fenixedu.domain.accounting.ReceiptVersion -->
 <!-- ************************************************************************************************************ -->
-<class-descriptor class="net.sourceforge.fenixedu.domain.accounting.ReceiptVersion" table="RECEIPT_VERSION">
+<class-descriptor class="net.sourceforge.fenixedu.domain.accounting.ReceiptPrintVersion" table="RECEIPT_PRINT_VERSION">
 
 </class-descriptor>
