@@ -6,17 +6,16 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 import org.joda.time.DateTime;
 
-public class ReceiptVersion extends ReceiptVersion_Base {
+public class ReceiptPrintVersion extends ReceiptPrintVersion_Base {
 
-    private ReceiptVersion() {
+    private ReceiptPrintVersion() {
         super();
         setRootDomainObject(RootDomainObject.getInstance());
     }
 
-    ReceiptVersion(Receipt receipt, Employee employee) {
+    ReceiptPrintVersion(Receipt receipt, Employee employee) {
         this();
         init(receipt, employee);
-
     }
 
     private void init(Receipt receipt, Employee employee) {
