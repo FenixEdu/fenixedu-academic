@@ -16,13 +16,13 @@
 		<bean:message key="link.coordinator.approveCandidates" />
 	</html:link></li>
 	
-	<li><html:link
+	<li><html:link titleKey="link.masterDegree.administrativeOffice.makeStudyPlan.title" 
 		page='<%= "/displayCandidateListToMakeStudyPlan.do?method=prepareSelectCandidates&amp;page=0&degreeCurricularPlanID=" + degreeCurricularPlanID %>'>
-		<bean:message
+		<bean:message 
 			key="link.masterDegree.administrativeOffice.makeStudyPlan" />
 	</html:link></li>
 	
-	<li><html:link
+	<li><html:link titleKey="link.masterDegree.candidateListFilter.printListAllCandidatesFilterMenu.title" 
 		page='<%= "/printAllCandidatesList.do?method=prepare&degreeCurricularPlanID=" + degreeCurricularPlanID %>'>
 		<bean:message
 			key="link.masterDegree.candidateListFilter.printListAllCandidatesFilterMenu" />

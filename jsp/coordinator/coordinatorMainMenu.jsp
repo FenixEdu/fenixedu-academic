@@ -107,7 +107,7 @@
 		        	<bean:define id="displayCandidateListToMakeStudyPlanLink">
 		  					<bean:write name="link2"/><bean:write name="degreeCurricularPlanID"/>
 		  				</bean:define> 	
-					<html:link page="<%= pageContext.findAttribute("displayCandidateListToMakeStudyPlanLink").toString() %>">
+					<html:link titleKey="link.masterDegree.administrativeOffice.makeStudyPlan.title" page="<%= pageContext.findAttribute("displayCandidateListToMakeStudyPlanLink").toString() %>">
 					<bean:message key="link.masterDegree.administrativeOffice.makeStudyPlan" /></html:link>
 				</li>
 				<li>
@@ -116,7 +116,7 @@
 		        	<bean:define id="printAllCandidatesListLink">
 		  					<bean:write name="link3"/><bean:write name="degreeCurricularPlanID"/>
 		  				</bean:define> 	
-					<html:link page="<%= pageContext.findAttribute("printAllCandidatesListLink").toString() %>">
+					<html:link titleKey="link.masterDegree.candidateListFilter.printListAllCandidatesFilterMenu.title" page="<%= pageContext.findAttribute("printAllCandidatesListLink").toString() %>">
 					<bean:message key="link.masterDegree.candidateListFilter.printListAllCandidatesFilterMenu"/></html:link>
 				</li>
 		
