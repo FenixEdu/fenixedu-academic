@@ -164,6 +164,24 @@ public class PaymentsManagementDispatchAction extends FenixDispatchAction {
 
         return mapping.findForward("showPaymentsWithoutReceipt");
     }
+    
+    public ActionForward confirmCreateReceipt(ActionMapping mapping, ActionForm actionForm,
+			HttpServletRequest request, HttpServletResponse response) {
+    	
+    	final CreateReceiptBean createReceiptBean = (CreateReceiptBean) RenderUtils.getViewState("createReceiptBean").getMetaObject().getObject();
+		
+		
+		if (createReceiptBean.getSelectedEntries().isEmpty()) {
+            addActionMessage(request,
+                    "error.masterDegreeAdministrativeOffice.payments.receipt.entries.selection.is.required");
+            
+            request.setAttribute("personId", createReceiptBean.getPerson().getIdInternal());
+            return showPaymentsWithoutReceipt(mapping, actionForm, request, response);
+        }
+		
+		request.setAttribute("createReceiptBean", createReceiptBean);
+		return mapping.findForward("confirmCreateReceipt");
+	}
 
     public ActionForward createReceipt(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
@@ -187,7 +205,7 @@ public class PaymentsManagementDispatchAction extends FenixDispatchAction {
 
             addActionMessage(request, ex.getKey(), ex.getArgs());
             request.setAttribute("createReceiptBean", createReceiptBean);
-            return mapping.findForward("showPaymentsWithoutReceipt");
+            return mapping.findForward("confirmCreateReceipt");
         }
     }
 
