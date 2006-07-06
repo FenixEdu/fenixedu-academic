@@ -26,3 +26,8 @@ function executeWithTempFile() {
 	rm tmp.sql
 	echo
 }
+
+execute "Rename table Receipt Version to ReceiptPrintVersion" renameTableReceiptVersion.sql
+execute "Add column whenCreated to Receipt table" alterTableReceiptAddColumn.sql
+executeWithTempFile "Update whenCreated date to existing Receipts" updateTableReceipt.sql
+execute "Alter table whenCreated to Not Null" alterTableReceiptAlterColumn.sql
