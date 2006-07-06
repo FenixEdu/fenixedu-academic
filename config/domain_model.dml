@@ -195,9 +195,10 @@ class net.sourceforge.fenixedu.domain.accounting.Receipt extends net.sourceforge
     Integer keyContributor;
     Integer number;
     Integer year;
+    DateTime whenCreated;
 }
 
-class net.sourceforge.fenixedu.domain.accounting.ReceiptVersion extends net.sourceforge.fenixedu.domain.DomainObject {
+class net.sourceforge.fenixedu.domain.accounting.ReceiptPrintVersion extends net.sourceforge.fenixedu.domain.DomainObject {
     DateTime whenCreated;
     Integer keyReceipt;
     Integer keyEmployee;
@@ -8918,23 +8919,23 @@ relation ReceiptContributor {
 	}
 }
 
-relation ReceiptVersionEmployee {
+relation ReceiptPrintVersionEmployee {
 	net.sourceforge.fenixedu.domain.Employee playsRole employee;
-	net.sourceforge.fenixedu.domain.accounting.ReceiptVersion playsRole receiptsVersions {
+	net.sourceforge.fenixedu.domain.accounting.ReceiptPrintVersion playsRole receiptsVersions {
 		multiplicity *;
 	}
 }
 
-relation ReceiptVersionReceipt {
+relation ReceiptPrintVersionReceipt {
 	net.sourceforge.fenixedu.domain.accounting.Receipt playsRole receipt;
-	net.sourceforge.fenixedu.domain.accounting.ReceiptVersion playsRole receiptsVersions {
+	net.sourceforge.fenixedu.domain.accounting.ReceiptPrintVersion playsRole receiptsVersions {
 		multiplicity *;
 	}
 }
 
-relation RootDomainObjectReceiptVersion {
+relation RootDomainObjectReceiptPrintVersion {
 	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
-	net.sourceforge.fenixedu.domain.accounting.ReceiptVersion playsRole receiptVersions {
+	net.sourceforge.fenixedu.domain.accounting.ReceiptPrintVersion playsRole receiptVersions {
 		multiplicity *;
 	}
 }
