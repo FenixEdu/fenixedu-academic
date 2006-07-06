@@ -4,18 +4,27 @@
 <style>@import url(<%= request.getContextPath() %>/CSS/navlateralnew.css);</style> <!-- Import new CSS for this section: #navlateral  -->
 
 <ul>
-	<li class="navheader"><bean:message key="link.student.portalTitle"/></li>
-	<li><html:link href='<%= request.getContextPath() + "/dotIstPortal.do?prefix=/student&amp;page=/index.do" %>'><bean:message key="link.student.portal.home"/></html:link></li>
+	<li class="navheader"><bean:message key="consult"/></li>
   	<li><html:link page="/viewCurriculum.do?method=getStudentCP" titleKey="link.title.curriculum"><bean:message key="link.student.curriculum"/></html:link></li>
 	<li><html:link page="/studentTimeTable.do" target="_blank" titleKey="link.title.timetable"><bean:message key="link.my.timetable"/></html:link></li>
 	<li><html:link page="/studentCalendar.faces" titleKey="link.title.calendar"><bean:message key="link.title.calendar"/></html:link></li>
-	<li><html:link page="/studentTests.do?method=viewStudentExecutionCoursesWithTests" ><bean:message key="link.tests"/></html:link></li>
-	<li><html:link page="/studentGaugingTestResults.do" titleKey="link.title.results.test"><bean:message key="link.results.test"/></html:link></li>
-	<li><html:link page="/fillInquiries.do?method=prepareCourses&amp;page=0" titleKey="link.title.inquiry.students.courses"><bean:message key="link.inquiries" bundle="INQUIRIES_RESOURCES"/></html:link></li>
-	<li><html:link page="/weeklyWorkLoad.do?method=prepare" titleKey="link.weekly.work.load"><bean:message key="link.weekly.work.load"/></html:link></li>
+<%--
+	<li><html:link page="/blablabla" titleKey="documents.requirement.link.title"><bean:message key="documents.requirement"/></html:link></li>
+--%>
+		
+	<li class="navheader"><bean:message key="participate"/></li>
 	<li><html:link page="/viewExecutionCourseForuns.do?method=prepare" titleKey="link.viewExecutionCourseForuns"><bean:message key="link.viewExecutionCourseForuns"/></html:link></li>
-	<li><html:link page="/projectSubmission.do?method=viewProjectsWithOnlineSubmission" titleKey="link.projectSubmissions"><bean:message key="link.projectSubmissions"/></html:link></li>
-	<li class="navheader"><bean:message key="link.student.enrollmentTitle"/></li>
+	<li><html:link page="/weeklyWorkLoad.do?method=prepare" titleKey="link.weekly.work.load"><bean:message key="link.weekly.work.load"/></html:link></li>
+	<li><html:link page="/fillInquiries.do?method=prepareCourses&amp;page=0" titleKey="link.title.inquiry.students.courses"><bean:message key="link.inquiries" bundle="INQUIRIES_RESOURCES"/></html:link></li>
+
+	<li class="navheader"><bean:message key="submit"/></li>
+	<li><html:link page="/studentTests.do?method=viewStudentExecutionCoursesWithTests" titleKey="link.testsSubmissions"><bean:message key="link.tests"/></html:link></li>
+	<li><html:link page="/projectSubmission.do?method=viewProjectsWithOnlineSubmission" titleKey="link.projectSubmissions"><bean:message key="projects"/></html:link></li>
+<%--
+		<li><html:link page="/studentGaugingTestResults.do" titleKey="link.title.results.test"><bean:message key="link.results.test"/></html:link></li>
+--%>
+	
+	<li class="navheader"><bean:message key="enroll"/></li>
 	<li><html:link page="/warningFirst.do" titleKey="link.title.student.enrollment"><bean:message key="link.student.enrollment"/></html:link></li>
 	<li><html:link page="/studentShiftEnrollmentManager.do?method=prepareStartViewWarning" titleKey="link.title.shift.enrolment"><bean:message key="link.shift.enrolment"/></html:link></li>
 	<li><html:link page="/viewEnroledExecutionCourses.do" titleKey="link.title.groupEnrolment"><bean:message key="link.groupEnrolment" /></html:link></li>	
