@@ -19,7 +19,7 @@
 	<table>
 		<tr>
 			<td>
-				<fr:view name="paymentsManagementDTO" property="selectedEntries" schema="entryDTO.view-guide">
+				<fr:view name="paymentsManagementDTO" property="selectedEntries" schema="entryDTO.view">
 					<fr:layout name="tabular" >
 						<fr:property name="classes" value="tstyle4"/>
 				        <fr:property name="columnClasses" value="listClasses,,"/>

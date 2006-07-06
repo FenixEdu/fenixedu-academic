@@ -43,7 +43,7 @@
 		</fr:edit>
 		<br/>
 		<html:submit styleClass="inputbutton" onclick="this.form.method.value='preparePrintGuide';"><bean:message key="button.masterDegree.administrativeOffice.payments.guide"/></html:submit>
-		<html:submit styleClass="inputbutton" onclick="this.form.method.value='doPayment';"><bean:message key="button.masterDegree.administrativeOffice.payments.payment"/></html:submit>
+		<html:submit styleClass="inputbutton" onclick="this.form.method.value='preparePayment';"><bean:message key="button.masterDegree.administrativeOffice.payments.preparePayment"/></html:submit>
 		<html:submit styleClass="inputbutton" onclick="this.form.method.value='backToShowOperations';"><bean:message key="button.masterDegree.administrativeOffice.payments.back"/></html:submit>
 	</logic:notEmpty>
 

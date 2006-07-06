@@ -48,27 +48,29 @@ public abstract class Event extends Event_Base {
     }
 
     // TODO: to remove after create agreement and posting rules
-    protected void makeAccountingTransaction(User responsibleUser, Entry debit, Entry credit) {
-        new AccountingTransaction(responsibleUser, this, debit, credit);
-    }
-
-    // TODO: to remove after create agreement and posting rules
     protected AccountingTransaction makeAccountingTransaction(User responsibleUser, Event event,
-            Account from, Account to, EntryType entryType, BigDecimal amount) {
+            Account from, Account to, EntryType entryType, BigDecimal amount, PaymentMode paymentMode,
+            DateTime whenRegistered) {
         return new AccountingTransaction(responsibleUser, event, makeEntry(entryType, amount.negate(),
-                from), makeEntry(entryType, amount, to));
+                from), makeEntry(entryType, amount, to), paymentMode, whenRegistered);
     }
 
     public boolean isClosed() {
         return getClosed().booleanValue();
     }
 
-    public final Set<Entry> process(User responsibleUser, List<EntryDTO> entryDTOs) {
+    public final Set<Entry> process(User responsibleUser, List<EntryDTO> entryDTOs,
+            PaymentMode paymentMode) {
+        return process(responsibleUser, entryDTOs, paymentMode, new DateTime());
+    }
+
+    public final Set<Entry> process(User responsibleUser, List<EntryDTO> entryDTOs,
+            PaymentMode paymentMode, DateTime whenRegistered) {
         if (entryDTOs.isEmpty()) {
             throw new DomainException("error.accounting.event.process.requires.entries.to.be.processed");
         }
         if (!isClosed()) {
-            return internalProcess(responsibleUser, entryDTOs);
+            return internalProcess(responsibleUser, entryDTOs, paymentMode, whenRegistered);
         } else {
             throw new DomainException("error.accounting.event.is.already.closed");
         }
@@ -78,7 +80,8 @@ public abstract class Event extends Event_Base {
         super.setClosed(Boolean.TRUE);
     }
 
-    protected abstract Set<Entry> internalProcess(User responsibleUser, List<EntryDTO> entryDTOs);
+    protected abstract Set<Entry> internalProcess(User responsibleUser, List<EntryDTO> entryDTOs,
+            PaymentMode paymentMode, DateTime whenRegistered);
 
     @Override
     public void addAccountingTransactions(AccountingTransaction accountingTransactions) {
@@ -125,8 +128,8 @@ public abstract class Event extends Event_Base {
         throw new DomainException("error.accounting.event.cannot.modify.person");
     }
 
-    protected boolean canCloseEvent() {
-        return calculateAmountToPay().equals(calculatePayedAmount());
+    protected boolean canCloseEvent(DateTime whenRegistered) {
+        return calculateAmountToPay(whenRegistered).equals(calculatePayedAmount());
     }
 
     public Set<Entry> getEntries() {
@@ -150,13 +153,21 @@ public abstract class Event extends Event_Base {
         return result;
     }
 
+    protected BigDecimal calculatePayedAmount() {
+        BigDecimal payedAmount = new BigDecimal("0");
+        final Account account = getToAccount();
+        for (final AccountingTransaction transaction : getAccountingTransactions()) {
+            payedAmount = payedAmount.add(transaction.getAmountByAccount(account));
+        }
+
+        return payedAmount;
+    }
+
     public abstract Account getToAccount();
 
     public abstract List<EntryDTO> calculateEntries();
 
-    protected abstract BigDecimal calculateAmountToPay();
-
-    protected abstract BigDecimal calculatePayedAmount();
+    protected abstract BigDecimal calculateAmountToPay(DateTime whenRegistered);
 
     public abstract LabelFormatter getDescriptionForEntryType(EntryType entryType);
 

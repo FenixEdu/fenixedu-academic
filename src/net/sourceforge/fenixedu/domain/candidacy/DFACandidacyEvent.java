@@ -17,9 +17,12 @@ import net.sourceforge.fenixedu.domain.accounting.AccountingTransaction;
 import net.sourceforge.fenixedu.domain.accounting.Entry;
 import net.sourceforge.fenixedu.domain.accounting.EntryType;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
+import net.sourceforge.fenixedu.domain.accounting.PaymentMode;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.util.StateMachine;
 import net.sourceforge.fenixedu.util.LabelFormatter;
+
+import org.joda.time.DateTime;
 
 public class DFACandidacyEvent extends DFACandidacyEvent_Base {
 
@@ -45,24 +48,25 @@ public class DFACandidacyEvent extends DFACandidacyEvent_Base {
     }
 
     @Override
-    protected Set<Entry> internalProcess(User user, List<EntryDTO> entryDTOs) {
+    protected Set<Entry> internalProcess(User user, List<EntryDTO> entryDTOs, PaymentMode paymentMode,
+            DateTime whenRegistered) {
 
         if (entryDTOs.size() != 1) {
             throw new DomainException("error.candidacy.dfaCandidacyEvent.invalid.number.of.entryDTOs");
         }
 
-        final BigDecimal totalAmountToPay = calculateAmountToPay();
+        final BigDecimal totalAmountToPay = calculateAmountToPay(whenRegistered);
         final EntryDTO entryDTO = entryDTOs.get(0);
 
         checkIfCanAddAmount(totalAmountToPay, entryDTO.getAmountToPay());
         final AccountingTransaction accountingTransaction = makeAccountingTransaction(user, this,
                 getCandidacy().getPerson().getAccountBy(AccountType.EXTERNAL), getToAccount(), entryDTO
-                        .getEntryType(), entryDTO.getAmountToPay());
+                        .getEntryType(), entryDTO.getAmountToPay(), paymentMode, whenRegistered);
 
         final Set<Entry> resultingEntries = new HashSet<Entry>();
         resultingEntries.add(accountingTransaction.getEntryByAccount(getToAccount()));
 
-        if (canCloseEvent()) {
+        if (canCloseEvent(whenRegistered)) {
             closeEvent();
         }
 
@@ -84,11 +88,16 @@ public class DFACandidacyEvent extends DFACandidacyEvent_Base {
 
     @Override
     public List<EntryDTO> calculateEntries() {
+        return calculateEntries(new DateTime());
+
+    }
+
+    private List<EntryDTO> calculateEntries(DateTime when) {
         final List<EntryDTO> result = new ArrayList<EntryDTO>();
         final BigDecimal payedAmount = calculatePayedAmount();
 
-        result.add(new EntryDTO(EntryType.CANDIDACY_ENROLMENT_FEE, this, calculateAmountToPay(),
-                payedAmount, calculateAmountToPay().subtract(payedAmount),
+        result.add(new EntryDTO(EntryType.CANDIDACY_ENROLMENT_FEE, this, calculateAmountToPay(when),
+                payedAmount, calculateAmountToPay(when).subtract(payedAmount),
                 getDescriptionForEntryType(EntryType.CANDIDACY_ENROLMENT_FEE)));
 
         return result;
@@ -96,7 +105,7 @@ public class DFACandidacyEvent extends DFACandidacyEvent_Base {
 
     // TODO: remove after posting rules?
     @Override
-    protected BigDecimal calculateAmountToPay() {
+    protected BigDecimal calculateAmountToPay(DateTime when) {
         return new BigDecimal("100");
     }
 
@@ -125,17 +134,6 @@ public class DFACandidacyEvent extends DFACandidacyEvent_Base {
     private Degree getDegree() {
         return getExecutionDegree().getDegreeCurricularPlan().getDegree();
 
-    }
-
-    @Override
-    protected BigDecimal calculatePayedAmount() {
-        BigDecimal payedAmount = new BigDecimal("0");
-        final Account account = getToAccount();
-        for (final AccountingTransaction transaction : getAccountingTransactions()) {
-            payedAmount = payedAmount.add(transaction.getAmountByAccount(account));
-        }
-
-        return payedAmount;
     }
 
     @Override

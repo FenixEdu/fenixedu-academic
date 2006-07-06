@@ -22,6 +22,7 @@ import net.sourceforge.fenixedu.dataTransferObject.accounting.SelectableEntryBea
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accounting.Entry;
 import net.sourceforge.fenixedu.domain.accounting.Event;
+import net.sourceforge.fenixedu.domain.accounting.PaymentMode;
 import net.sourceforge.fenixedu.domain.accounting.Receipt;
 import net.sourceforge.fenixedu.domain.candidacy.Candidacy;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -34,6 +35,7 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
+import org.joda.time.DateTime;
 
 public class PaymentsManagementDispatchAction extends FenixDispatchAction {
 
@@ -226,11 +228,32 @@ public class PaymentsManagementDispatchAction extends FenixDispatchAction {
         return mapping.findForward("showReceipts");
     }
 
+    public ActionForward preparePayment(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) {
+
+        final PaymentsManagementDTO paymentsManagementDTO = (PaymentsManagementDTO) RenderUtils
+                .getViewState("paymentsManagementDTO").getMetaObject().getObject();
+
+        paymentsManagementDTO.setPaymentDate(new DateTime());
+
+        request.setAttribute("paymentsManagementDTO", paymentsManagementDTO);
+
+        if (paymentsManagementDTO.getSelectedEntries().isEmpty()) {
+            addActionMessage(request,
+                    "error.masterDegreeAdministrativeOffice.payments.payment.entries.selection.is.required");
+            return mapping.findForward("showEvents");
+
+        } else {
+            return mapping.findForward("preparePayment");
+        }
+
+    }
+
     public ActionForward doPayment(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 
         final PaymentsManagementDTO paymentsManagementDTO = (PaymentsManagementDTO) RenderUtils
-                .getViewState("paymentsManagementDTO").getMetaObject().getObject();
+                .getViewState("paymentsManagementDTO-edit").getMetaObject().getObject();
 
         if (paymentsManagementDTO.getSelectedEntries().isEmpty()) {
 
@@ -244,11 +267,13 @@ public class PaymentsManagementDispatchAction extends FenixDispatchAction {
             final Set<Entry> resultingEntries = (Set<Entry>) ServiceUtils.executeService(
                     getUserView(request), "CreatePaymentsForEvents", new Object[] {
                             getUserView(request).getPerson().getUser(),
-                            paymentsManagementDTO.getSelectedEntries() });
+                            paymentsManagementDTO.getSelectedEntries(), PaymentMode.CASH,
+                            paymentsManagementDTO.isDifferedPayment(),
+                            paymentsManagementDTO.getPaymentDate() });
 
             request.setAttribute("personId", paymentsManagementDTO.getPerson().getIdInternal());
             request.setAttribute("entriesToSelect", resultingEntries);
-            
+
             return showPaymentsWithoutReceipt(mapping, form, request, response);
 
         } catch (DomainException ex) {
@@ -304,7 +329,7 @@ public class PaymentsManagementDispatchAction extends FenixDispatchAction {
             request.setAttribute("person", person);
             return mapping.findForward("showReceipts");
         }
-        if (! person.getReceiptsSet().contains(receipt)) {
+        if (!person.getReceiptsSet().contains(receipt)) {
             addActionMessage(request,
                     "error.masterDegreeAdministrativeOffice.payments.person.doesnot.contain.receipt");
             request.setAttribute("person", person);
@@ -322,7 +347,7 @@ public class PaymentsManagementDispatchAction extends FenixDispatchAction {
         final Receipt receipt = (Receipt) RenderUtils.getViewState("receipt").getMetaObject()
                 .getObject();
         final SortedSet<Entry> sortedEntries = new TreeSet<Entry>(
-                Entry.COMPARATOR_BY_MOST_RECENT_WHEN_BOOKED);
+                Entry.COMPARATOR_BY_MOST_RECENT_WHEN_REGISTERED);
         sortedEntries.addAll(receipt.getEntries());
 
         request.setAttribute("receipt", receipt);
@@ -350,13 +375,20 @@ public class PaymentsManagementDispatchAction extends FenixDispatchAction {
                 .getMetaObject().getObject());
         return mapping.findForward("showPaymentsWithoutReceipt");
     }
-    
+
+    public ActionForward preparePaymentInvalid(ActionMapping mapping, ActionForm actionForm,
+            HttpServletRequest request, HttpServletResponse response) {
+
+        request.setAttribute("paymentsManagementDTO", RenderUtils.getViewState(
+                "paymentsManagementDTO-edit").getMetaObject().getObject());
+        return mapping.findForward("preparePayment");
+    }
 
     public ActionForward backToShowOperations(ActionMapping mapping, ActionForm actionForm,
-			HttpServletRequest request, HttpServletResponse response) {
+            HttpServletRequest request, HttpServletResponse response) {
 
-		request.setAttribute("person", getPerson(request));
-			return mapping.findForward("showOperations");
-	}
+        request.setAttribute("person", getPerson(request));
+        return mapping.findForward("showOperations");
+    }
 
 }

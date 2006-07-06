@@ -40,7 +40,7 @@
 		<fr:layout name="tabular" >
 			<fr:property name="classes" value="tstyle4"/>
 	        <fr:property name="columnClasses" value="listClasses,,"/>
-			<fr:property name="sortBy" value="whenBooked=desc"/>
+			<fr:property name="sortBy" value="entry.whenRegistered=desc"/>
 		</fr:layout>
 		</fr:view>
 	</td>
@@ -60,5 +60,5 @@
 	<span class="warning0"><bean:message key="label.masterDegree.administrativeOffice.payments.confirmCreateReceiptQuestion"/></span>
 	<br/><br/>
 	<html:submit styleClass="inputbutton" onclick="this.form.method.value='createReceipt';"><bean:message key="button.masterDegree.administrativeOffice.payments.createReceipt"/></html:submit>
-	<html:submit styleClass="inputbutton" onclick="this.form.method.value='backToShowOperations';"><bean:message key="button.masterDegree.administrativeOffice.payments.back"/></html:submit>
+	<html:cancel styleClass="inputbutton" onclick="this.form.method.value='backToShowOperations';"><bean:message key="button.masterDegree.administrativeOffice.payments.back"/></html:cancel>
 </fr:form>

@@ -8,13 +8,20 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.joda.time.DateTime;
+
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Person;
 
 public class PaymentsManagementDTO implements Serializable {
 
     private DomainReference<Person> person;
+
     private List<EntryDTO> entryDTOs;
+
+    private DateTime paymentDate;
+
+    private boolean differedPayment;
 
     public PaymentsManagementDTO(Person person) {
         setPerson(person);
@@ -41,6 +48,22 @@ public class PaymentsManagementDTO implements Serializable {
         this.entryDTOs = entryDTOs;
     }
 
+    public DateTime getPaymentDate() {
+        return paymentDate;
+    }
+
+    public void setPaymentDate(DateTime paymentDate) {
+        this.paymentDate = paymentDate;
+    }
+
+    public boolean isDifferedPayment() {
+        return differedPayment;
+    }
+
+    public void setDifferedPayment(boolean differedPayment) {
+        this.differedPayment = differedPayment;
+    }
+
     public List<EntryDTO> getSelectedEntries() {
         final List<EntryDTO> result = new ArrayList<EntryDTO>();
         for (final EntryDTO each : getEntryDTOs()) {
@@ -50,7 +73,7 @@ public class PaymentsManagementDTO implements Serializable {
         }
         return result;
     }
-    
+
     public BigDecimal getTotalAmountToPay() {
         BigDecimal result = new BigDecimal("0");
         for (final EntryDTO entryDTO : getSelectedEntries()) {

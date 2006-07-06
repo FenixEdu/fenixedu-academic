@@ -13,6 +13,9 @@ import net.sourceforge.fenixedu.dataTransferObject.accounting.EntryDTO;
 import net.sourceforge.fenixedu.domain.User;
 import net.sourceforge.fenixedu.domain.accounting.Entry;
 import net.sourceforge.fenixedu.domain.accounting.Event;
+import net.sourceforge.fenixedu.domain.accounting.PaymentMode;
+
+import org.joda.time.DateTime;
 
 public class CreatePaymentsForEvents extends Service {
 
@@ -20,14 +23,21 @@ public class CreatePaymentsForEvents extends Service {
         super();
     }
 
-    public Set<Entry> run(final User responsibleUser, final List<EntryDTO> entryDTOs)
+    public Set<Entry> run(final User responsibleUser, final List<EntryDTO> entryDTOs,
+            final PaymentMode paymentMode, final boolean differedPayment, final DateTime whenRegistered)
             throws FenixServiceException {
 
         final Map<Event, List<EntryDTO>> entryDTOsByEvent = splitEntryDTOsByEvent(entryDTOs);
         final Set<Entry> resultingEntries = new HashSet<Entry>();
 
         for (final Map.Entry<Event, List<EntryDTO>> entry : entryDTOsByEvent.entrySet()) {
-            resultingEntries.addAll(entry.getKey().process(responsibleUser, entry.getValue()));
+            if (differedPayment) {
+                resultingEntries.addAll(entry.getKey().process(responsibleUser, entry.getValue(),
+                        paymentMode, whenRegistered));
+            } else {
+                resultingEntries.addAll(entry.getKey().process(responsibleUser, entry.getValue(),
+                        paymentMode));
+            }
         }
 
         return resultingEntries;

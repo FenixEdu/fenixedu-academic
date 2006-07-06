@@ -26,21 +26,26 @@ public class AccountingTransaction extends AccountingTransaction_Base {
         setRootDomainObject(RootDomainObject.getInstance());
     }
 
-    AccountingTransaction(User responsibleUser, Event event, Entry debit, Entry credit) {
+    AccountingTransaction(User responsibleUser, Event event, Entry debit, Entry credit,
+            PaymentMode paymentMode, DateTime whenRegistered) {
         this();
-        init(responsibleUser, event, debit, credit);
+        init(responsibleUser, event, debit, credit, paymentMode, whenRegistered);
     }
 
-    private void init(User responsibleUser, Event event, Entry debit, Entry credit) {
-        checkParameters(responsibleUser, event, debit, credit);
-        super.setWhenRegisted(credit.getWhenBooked());
+    private void init(User responsibleUser, Event event, Entry debit, Entry credit,
+            PaymentMode paymentMode, DateTime whenRegistered) {
+        checkParameters(responsibleUser, event, debit, credit, paymentMode);
+        super.setWhenRegistered(whenRegistered);
+        super.setWhenProcessed(new DateTime());
         super.setEvent(event);
         super.setResponsibleUser(responsibleUser);
         super.addEntries(debit);
         super.addEntries(credit);
+        super.setPaymentMode(paymentMode);
     }
 
-    private void checkParameters(User responsibleUser, Event event, Entry debit, Entry credit) {
+    private void checkParameters(User responsibleUser, Event event, Entry debit, Entry credit,
+            PaymentMode paymentMode) {
         if (event == null) {
             throw new DomainException("error.accounting.accountingTransaction.event.cannot.be.null");
         }
@@ -53,6 +58,10 @@ public class AccountingTransaction extends AccountingTransaction_Base {
         }
         if (credit == null) {
             throw new DomainException("error.accounting.accountingTransaction.credit.cannot.be.null");
+        }
+        if (paymentMode == null) {
+            throw new DomainException(
+                    "error.accounting.accountingTransaction.paymentMode.cannot.be.null");
         }
     }
 
@@ -82,9 +91,13 @@ public class AccountingTransaction extends AccountingTransaction_Base {
     }
 
     @Override
-    public void setWhenRegisted(DateTime whenRegisted) {
-        throw new DomainException(
-                "error.accounting.accountingTransaction.cannot.modify.registedDateTime");
+    public void setWhenRegistered(DateTime whenRegistered) {
+        throw new DomainException("error.accounting.accountingTransaction.cannot.modify.whenRegistered");
+    }
+
+    @Override
+    public void setWhenProcessed(DateTime whenProcessed) {
+        throw new DomainException("error.accounting.accountingTransaction.cannot.modify.whenProcessed");
     }
 
     @Override

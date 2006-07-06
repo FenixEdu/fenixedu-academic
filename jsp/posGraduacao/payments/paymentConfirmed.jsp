@@ -4,21 +4,11 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 
 <bean:define id="personId" name="paymentsManagementDTO" property="person.idInternal"/>
-<fr:form action="<%="/payments.do?personId=" + personId %>">
-	
-	<html:hidden name="paymentsForm" property="method" />
-	<h2><bean:message key="label.masterDegree.administrativeOffice.payments.preparePayment" /></h2>
-	<hr/>
+<html:form action="<%="/payments.do?personId=" + personId %>">
+	<html:hidden property="method" />
+	<h2><bean:message key="label.masterDegree.administrativeOffice.payments.payment" /></h2>
+	<fr:edit id="paymentsManagementDTO" name="paymentsManagementDTO" visible="false" nested="true"/>
 	<br />
-
-	<logic:messagesPresent message="true">
-		<ul>
-			<html:messages id="messages" message="true">
-				<li><span class="error0"><bean:write name="messages" /></span></li>
-			</html:messages>
-		</ul>
-		<br />
-	</logic:messagesPresent>
 	
 	<strong><bean:message key="label.masterDegree.administrativeOffice.payments.person"/>:</strong>
 	<fr:view name="paymentsManagementDTO" property="person"
@@ -27,13 +17,6 @@
 			<fr:property name="classes" value="tstyle4" />
 		</fr:layout>
 	</fr:view>
-	
-	<fr:edit id="paymentsManagementDTO-edit" name="paymentsManagementDTO" schema="paymentsManagementDTO.edit-with-paymentDate">
-		<fr:layout name="tabular">
-			<fr:property name="classes" value="tstyle4" />
-		</fr:layout>
-		<fr:destination name="invalid" path="/payments.do?method=preparePaymentInvalid"/>
-	</fr:edit>
 	
 	<table>
 		<tr>
@@ -53,6 +36,7 @@
 		</tr>
 	</table>
 	
-	<html:submit styleClass="inputbutton" onclick="this.form.method.value='doPayment';"><bean:message key="button.masterDegree.administrativeOffice.payments.pay"/></html:submit>
-	<html:cancel styleClass="inputbutton" onclick="this.form.method.value='backToShowOperations';"><bean:message key="button.masterDegree.administrativeOffice.payments.back"/></html:cancel>
-</fr:form>
+	<fr:edit id="paymentsManagementDTO" name="paymentsManagementDTO" visible="false"/>
+	<html:submit styleClass="inputbutton" onclick="this.form.method.value='showPaymentsWithoutReceipt';"><bean:message key="button.masterDegree.administrativeOffice.payments.payment"/></html:submit>
+	<html:submit styleClass="inputbutton" onclick="this.form.method.value='backToShowOperations';"><bean:message key="button.masterDegree.administrativeOffice.payments.back"/></html:submit>
+</html:form>

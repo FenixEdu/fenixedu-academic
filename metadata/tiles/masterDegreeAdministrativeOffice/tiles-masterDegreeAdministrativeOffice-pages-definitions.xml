@@ -250,9 +250,13 @@
 	<definition name="payments.management.showReceipt" extends="definition.masterDegreeAdministrativeOffice.masterPage">
 		<put name="body" value="/posGraduacao/payments/receipts/showReceipt.jsp"/>
 	</definition>
-	
+
 	<definition name="payments.management.confirmCreateReceipt" extends="definition.masterDegreeAdministrativeOffice.masterPage">
 		<put name="body" value="/posGraduacao/payments/receipts/confirmCreateReceipt.jsp"/>
+	</definition>
+	
+	<definition name="payments.management.preparePayment" extends="definition.masterDegreeAdministrativeOffice.masterPage">
+		<put name="body" value="/posGraduacao/payments/preparePayment.jsp"/>
 	</definition>
 	
 	<!-- ************* DFA candidacy ************* -->

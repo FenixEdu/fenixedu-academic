@@ -142,6 +142,7 @@ valueType net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseLevel 
 valueType net.sourceforge.fenixedu.domain.accounting.AccountType     as AccountType;
 valueType net.sourceforge.fenixedu.domain.accounting.EventType     as AccountingEventType;
 valueType net.sourceforge.fenixedu.domain.accounting.EntryType     as EntryType;
+valueType net.sourceforge.fenixedu.domain.accounting.PaymentMode   as PaymentMode;
 
 
 /*
@@ -164,16 +165,17 @@ class net.sourceforge.fenixedu.domain.accounting.Account extends net.sourceforge
 }
 
 class net.sourceforge.fenixedu.domain.accounting.AccountingTransaction extends net.sourceforge.fenixedu.domain.DomainObject {
-    DateTime whenRegisted;
+    DateTime whenRegistered;
+    DateTime whenProcessed;
     Integer keyEvent;
     Integer keyResponsibleUser;
+    PaymentMode paymentMode;
 }
 
 class net.sourceforge.fenixedu.domain.accounting.Entry extends net.sourceforge.fenixedu.domain.DomainObject {
     Integer keyAccount;
     Integer keyAccountingTransaction;
     Integer keyReceipt;
-    DateTime whenBooked;
     BigDecimal amount;
     EntryType entryType;
 }
@@ -2486,8 +2488,8 @@ class net.sourceforge.fenixedu.domain.teacher.TeacherServiceItem extends net.sou
 	}
 	
 	class net.sourceforge.fenixedu.domain.teacher.InstitutionWorkTime extends net.sourceforge.fenixedu.domain.teacher.TeacherServiceItem {
-		HourMinuteSecond startTimeHourMinuteSecond;
-		HourMinuteSecond endTimeHourMinuteSecond;
+	HourMinuteSecond startTimeHourMinuteSecond;
+	HourMinuteSecond endTimeHourMinuteSecond;
 		WeekDay weekDay;
 	}	
 	

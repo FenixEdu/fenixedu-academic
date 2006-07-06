@@ -3,7 +3,8 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 
-<fr:form action="/payments.do">
+<bean:define id="personId" name="createReceiptBean" property="person.idInternal"/>
+<fr:form action="<%="/payments.do?personId=" + personId%>">
 	<html:hidden name="paymentsForm" property="method" />
 
 	<h2><bean:message
@@ -43,14 +44,15 @@
 
 		<strong><bean:message key="label.masterDegree.administrativeOffice.payments" /></strong>:
 		<fr:edit id="createReceiptBean-entries-part" name="createReceiptBean"
-			property="entries" schema="selectableEntryBean.view">
+			property="entries" schema="selectableEntryBean.view-selectable">
 			<fr:layout name="tabular-editable">
 				<fr:property name="classes" value="tstyle4" />
-				<fr:property name="sortBy" value="entry.whenBooked=desc"/>
+				<fr:property name="sortBy" value="entry.whenRegistered=desc"/>
 			</fr:layout>
 		</fr:edit>
 		
 		<html:submit styleClass="inputbutton" onclick="this.form.method.value='confirmCreateReceipt';"><bean:message key="button.masterDegree.administrativeOffice.payments.continue"/></html:submit>
+		<html:cancel styleClass="inputbutton" onclick="this.form.method.value='backToShowOperations';"><bean:message key="button.masterDegree.administrativeOffice.payments.back"/></html:cancel>
 	</logic:notEmpty>
 
 	<logic:empty name="createReceiptBean" property="entries">

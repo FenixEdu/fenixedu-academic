@@ -42,7 +42,7 @@ public class Account extends Account_Base {
     public BigDecimal balance(Interval interval) {
         BigDecimal result = new BigDecimal("0");
         for (final Entry entry : super.getEntriesSet()) {
-            if (interval.contains(entry.getWhenBooked())) {
+            if (interval.contains(entry.getWhenRegistered())) {
                 result = result.add(entry.getAmount());
             }
         }
@@ -52,7 +52,7 @@ public class Account extends Account_Base {
     public BigDecimal deposits(Interval interval) {
         BigDecimal result = new BigDecimal("0");
         for (final Entry entry : super.getEntriesSet()) {
-            if (interval.contains(entry.getWhenBooked()) && entry.getAmount().signum() == 1) {
+            if (interval.contains(entry.getWhenRegistered()) && entry.getAmount().signum() == 1) {
                 result = result.add(entry.getAmount());
             }
         }
@@ -62,7 +62,7 @@ public class Account extends Account_Base {
     public BigDecimal withdraws(Interval interval) {
         BigDecimal result = new BigDecimal("0");
         for (final Entry entry : super.getEntriesSet()) {
-            if (interval.contains(entry.getWhenBooked()) && entry.getAmount().signum() == -1) {
+            if (interval.contains(entry.getWhenRegistered()) && entry.getAmount().signum() == -1) {
                 result = result.add(entry.getAmount());
             }
         }

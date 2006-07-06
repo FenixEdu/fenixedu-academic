@@ -11,9 +11,10 @@ import org.joda.time.DateTime;
 
 public class Entry extends Entry_Base {
 
-    public static Comparator<Entry> COMPARATOR_BY_MOST_RECENT_WHEN_BOOKED = new Comparator<Entry>() {
+    public static Comparator<Entry> COMPARATOR_BY_MOST_RECENT_WHEN_REGISTERED = new Comparator<Entry>() {
         public int compare(Entry leftEntry, Entry rightEntry) {
-            int comparationResult = leftEntry.getWhenBooked().compareTo(rightEntry.getWhenBooked());
+            int comparationResult = leftEntry.getWhenRegistered().compareTo(
+                    rightEntry.getWhenRegistered());
             return (comparationResult == 0) ? leftEntry.getIdInternal().compareTo(
                     rightEntry.getIdInternal()) : comparationResult;
         }
@@ -26,22 +27,17 @@ public class Entry extends Entry_Base {
 
     Entry(EntryType entryType, BigDecimal amount, Account account) {
         this();
-        init(new DateTime(), entryType, amount, account);
+        init(entryType, amount, account);
     }
 
-    private void init(DateTime whenBooked, EntryType entryType, BigDecimal amount, Account account) {
-        checkParameters(whenBooked, entryType, amount, account);
-        super.setWhenBooked(whenBooked);
+    private void init(EntryType entryType, BigDecimal amount, Account account) {
+        checkParameters(entryType, amount, account);
         super.setEntryType(entryType);
         super.setAmount(amount);
         super.setAccount(account);
     }
 
-    private void checkParameters(DateTime whenBooked, EntryType entryType, BigDecimal amount,
-            Account account) {
-        if (whenBooked == null) {
-            throw new DomainException("error.accounting.entry.invalid.whenBooked");
-        }
+    private void checkParameters(EntryType entryType, BigDecimal amount, Account account) {
         if (entryType == null) {
             throw new DomainException("error.accounting.entry.invalid.entryType");
         }
@@ -83,13 +79,16 @@ public class Entry extends Entry_Base {
     }
 
     @Override
-    public void setWhenBooked(DateTime whenBooked) {
-        throw new DomainException("error.accounting.entry.cannot.modify.bookedDateTime");
-    }
-
-    @Override
     public void setEntryType(EntryType entryType) {
         throw new DomainException("error.accounting.entry.cannot.modify.entryType");
+    }
+
+    public DateTime getWhenRegistered() {
+        return getAccountingTransaction().getWhenRegistered();
+    }
+
+    public DateTime getWhenProcessed() {
+        return getAccountingTransaction().getWhenProcessed();
     }
 
     @Override

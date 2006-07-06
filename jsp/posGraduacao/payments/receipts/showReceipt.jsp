@@ -20,50 +20,50 @@
   <tr>
   	<td colspan="2" align="right">
   		<fr:view name="receipt" schema="receipt.view-with-number-and-year">
-			<fr:layout name="tabular">
-				<fr:property name="classes" value="tstyle4" />
-			</fr:layout>
-		</fr:view>
+	<fr:layout name="tabular">
+		<fr:property name="classes" value="tstyle4" />
+	</fr:layout>
+</fr:view>
   	</td>
   </tr>
   <tr>
     <td>
-    	<strong><bean:message key="label.masterDegree.administrativeOffice.payments.person" /></strong>:
-		<fr:view name="receipt" property="person" schema="person.view-with-name-and-idDocumentType-and-documentIdNumber">
-			<fr:layout name="tabular">
-				<fr:property name="classes" value="tstyle4" />
-			</fr:layout>
-		</fr:view>
+<strong><bean:message key="label.masterDegree.administrativeOffice.payments.person" /></strong>:
+<fr:view name="receipt" property="person" schema="person.view-with-name-and-idDocumentType-and-documentIdNumber">
+	<fr:layout name="tabular">
+		<fr:property name="classes" value="tstyle4" />
+	</fr:layout>
+</fr:view>
     </td>
     <td>
-    	<strong><bean:message key="label.masterDegree.administrativeOffice.payments.contributor" /></strong>:
-		<fr:view name="receipt" property="contributor" schema="contributor.view">
-			<fr:layout name="tabular">
-				<fr:property name="classes" value="tstyle4" />
-			</fr:layout>
-		</fr:view>
+<strong><bean:message key="label.masterDegree.administrativeOffice.payments.contributor" /></strong>:
+<fr:view name="receipt" property="contributor" schema="contributor.view">
+	<fr:layout name="tabular">
+		<fr:property name="classes" value="tstyle4" />
+	</fr:layout>
+</fr:view>
     </td>
   </tr>
   <tr>
   	<td colspan="2">
-  		<br/>
-  		<strong><bean:message key="label.masterDegree.administrativeOffice.payments" /></strong>:
-		<table>
-		  <tr>
-		  	<td>
-			  	<fr:view name="receipt" property="entries" schema="entry.view">
-				<fr:layout name="tabular" >
-					<fr:property name="classes" value="tstyle4"/>
-			        <fr:property name="columnClasses" value="listClasses,,"/>
-					<fr:property name="sortBy" value="whenBooked=desc"/>
-				</fr:layout>
-				</fr:view>
-			</td>
-		  </tr>
-		  <tr>
-		    <td  align="right"><strong><bean:message key="label.masterDegree.administrativeOffice.payments.totalAmount"/></strong>:<bean:define id="totalAmount" name="receipt" property="totalAmount" type="java.math.BigDecimal"/>&nbsp;<%= totalAmount.toPlainString() %>&nbsp;<bean:message key="label.masterDegree.administrativeOffice.payments.currencySymbol"/></td>
-		  </tr>
-		</table>
+<br/>
+<strong><bean:message key="label.masterDegree.administrativeOffice.payments" /></strong>:
+<table>
+  <tr>
+  	<td>
+	  	<fr:view name="receipt" property="entries" schema="entry.view">
+		<fr:layout name="tabular" >
+			<fr:property name="classes" value="tstyle4"/>
+	        <fr:property name="columnClasses" value="listClasses,,"/>
+			<fr:property name="sortBy" value="whenRegistered=desc"/>
+		</fr:layout>
+		</fr:view>
+	</td>
+  </tr>
+  <tr>
+    <td  align="right"><strong><bean:message key="label.masterDegree.administrativeOffice.payments.totalAmount"/></strong>:<bean:define id="totalAmount" name="receipt" property="totalAmount" type="java.math.BigDecimal"/>&nbsp;<%= totalAmount.toPlainString() %>&nbsp;<bean:message key="label.masterDegree.administrativeOffice.payments.currencySymbol"/></td>
+  </tr>
+</table>
   	</td>
   </tr>
 </table>
