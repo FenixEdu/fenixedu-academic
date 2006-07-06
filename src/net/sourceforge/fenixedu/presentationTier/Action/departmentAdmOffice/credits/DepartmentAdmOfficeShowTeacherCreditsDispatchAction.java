@@ -11,6 +11,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.Teacher;
+import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.presentationTier.Action.credits.ShowTeacherCreditsDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
 
@@ -40,6 +41,7 @@ public class DepartmentAdmOfficeShowTeacherCreditsDispatchAction extends ShowTea
             return mapping.findForward("teacher-not-found");
         }
 
+        showLinks(request, executionPeriod, RoleType.DEPARTMENT_ADMINISTRATIVE_OFFICE);
         getAllTeacherCredits(request, executionPeriod, teacher);
         return mapping.findForward("show-teacher-credits");
     }

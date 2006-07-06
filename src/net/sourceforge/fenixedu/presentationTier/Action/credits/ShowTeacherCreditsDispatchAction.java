@@ -16,7 +16,9 @@ import net.sourceforge.fenixedu.dataTransferObject.teacher.professorship.Profess
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Teacher;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
+import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.teacher.AdviseType;
 import net.sourceforge.fenixedu.domain.teacher.Category;
 import net.sourceforge.fenixedu.domain.teacher.InstitutionWorkTime;
@@ -54,7 +56,7 @@ public class ShowTeacherCreditsDispatchAction extends FenixDispatchAction {
             setAdviseServices(request, teacherService);
             setInstitutionWorkTimes(request, teacherService);           
             request.setAttribute("otherServices", teacherService.getOtherServices());
-            request.setAttribute("teacherServiceNotes", teacherService.getTeacherServiceNotes());
+            request.setAttribute("teacherServiceNotes", teacherService.getTeacherServiceNotes());            
         }
 
         List<TeacherServiceExemption> serviceExemptions = teacher
@@ -158,4 +160,14 @@ public class ShowTeacherCreditsDispatchAction extends FenixDispatchAction {
             request.setAttribute("adviseServices", tfcAdvises);
         }
     }
+    
+    protected void showLinks(HttpServletRequest request, ExecutionPeriod executionPeriod, RoleType roleType) {
+        boolean showLinks = true;
+        try {            
+            executionPeriod.checkValidCreditsPeriod(roleType);   
+        } catch (DomainException e) {
+            showLinks = false;
+        }
+        request.setAttribute("showLinks", showLinks);
+    }          
 }
