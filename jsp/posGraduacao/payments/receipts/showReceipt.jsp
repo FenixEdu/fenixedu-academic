@@ -4,6 +4,8 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
 
 <h2><bean:message key="label.masterDegree.administrativeOffice.payments.receipt" /></h2>
+<hr>
+<br/>
 
 <logic:messagesPresent message="true">
 		<ul>
@@ -14,50 +16,64 @@
 		<br />
 </logic:messagesPresent>
 
-<br/>
-<fr:view name="receipt" schema="receipt.view">
-	<fr:layout name="tabular">
-		<fr:property name="classes" value="tstyle4" />
-	</fr:layout>
-</fr:view>
-<br/>
-<strong><bean:message key="label.masterDegree.administrativeOffice.payments.person" /></strong>:
-<fr:view name="receipt" property="person" schema="person.view-with-name-and-idDocumentType-and-documentIdNumber">
-	<fr:layout name="tabular">
-		<fr:property name="classes" value="tstyle4" />
-	</fr:layout>
-</fr:view>
-
-<br/>
-<strong><bean:message key="label.masterDegree.administrativeOffice.payments.contributor" /></strong>:
-<fr:view name="receipt" property="contributor" schema="contributor.view">
-	<fr:layout name="tabular">
-		<fr:property name="classes" value="tstyle4" />
-	</fr:layout>
-</fr:view>
-
-<br/>
-<strong><bean:message key="label.masterDegree.administrativeOffice.payments" /></strong>:
 <table>
   <tr>
-  	<td>
-	  	<fr:view name="receipt" property="entries" schema="entry.view">
-		<fr:layout name="tabular" >
-			<fr:property name="classes" value="tstyle4"/>
-	        <fr:property name="columnClasses" value="listClasses,,"/>
-			<fr:property name="sortBy" value="whenBooked=desc"/>
-		</fr:layout>
+  	<td colspan="2" align="right">
+  		<fr:view name="receipt" schema="receipt.view-with-number-and-year">
+			<fr:layout name="tabular">
+				<fr:property name="classes" value="tstyle4" />
+			</fr:layout>
 		</fr:view>
-	</td>
+  	</td>
   </tr>
   <tr>
-    <td  align="right"><strong><bean:message key="label.masterDegree.administrativeOffice.payments.totalAmount"/></strong>:<bean:define id="totalAmount" name="receipt" property="totalAmount" type="java.math.BigDecimal"/>&nbsp;<%= totalAmount.toPlainString() %>&nbsp;<bean:message key="label.masterDegree.administrativeOffice.payments.currencySymbol"/></td>
+    <td>
+    	<strong><bean:message key="label.masterDegree.administrativeOffice.payments.person" /></strong>:
+		<fr:view name="receipt" property="person" schema="person.view-with-name-and-idDocumentType-and-documentIdNumber">
+			<fr:layout name="tabular">
+				<fr:property name="classes" value="tstyle4" />
+			</fr:layout>
+		</fr:view>
+    </td>
+    <td>
+    	<strong><bean:message key="label.masterDegree.administrativeOffice.payments.contributor" /></strong>:
+		<fr:view name="receipt" property="contributor" schema="contributor.view">
+			<fr:layout name="tabular">
+				<fr:property name="classes" value="tstyle4" />
+			</fr:layout>
+		</fr:view>
+    </td>
+  </tr>
+  <tr>
+  	<td colspan="2">
+  		<br/>
+  		<strong><bean:message key="label.masterDegree.administrativeOffice.payments" /></strong>:
+		<table>
+		  <tr>
+		  	<td>
+			  	<fr:view name="receipt" property="entries" schema="entry.view">
+				<fr:layout name="tabular" >
+					<fr:property name="classes" value="tstyle4"/>
+			        <fr:property name="columnClasses" value="listClasses,,"/>
+					<fr:property name="sortBy" value="whenBooked=desc"/>
+				</fr:layout>
+				</fr:view>
+			</td>
+		  </tr>
+		  <tr>
+		    <td  align="right"><strong><bean:message key="label.masterDegree.administrativeOffice.payments.totalAmount"/></strong>:<bean:define id="totalAmount" name="receipt" property="totalAmount" type="java.math.BigDecimal"/>&nbsp;<%= totalAmount.toPlainString() %>&nbsp;<bean:message key="label.masterDegree.administrativeOffice.payments.currencySymbol"/></td>
+		  </tr>
+		</table>
+  	</td>
   </tr>
 </table>
 
-<html:form action="/payments.do" target="_blank">
+<bean:define id="personId" name="receipt" property="person.idInternal"/>
+
+<html:form action='<%= "/payments.do?personId=" + personId %>' target="_blank">
 	<html:hidden property="method" value="printReceipt" />
 	<br/>
 	<fr:edit id="receipt" name="receipt" visible="false" />
 	<html:submit styleClass="inputbutton"><bean:message key="label.masterDegree.administrativeOffice.payments.print"/></html:submit>
+	<%--<html:submit styleClass="inputbutton" onclick="this.form.method.value='backToShowOperations';"><bean:message key="button.masterDegree.administrativeOffice.payments.no"/></html:submit> --%>
 </html:form>

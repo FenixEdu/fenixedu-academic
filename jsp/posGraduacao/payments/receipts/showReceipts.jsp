@@ -4,6 +4,8 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
 
 <h2><bean:message key="label.masterDegree.administrativeOffice.payments.receipts" /></h2>
+<hr>
+<br/>
 
 <logic:messagesPresent message="true">
 	<ul>
@@ -36,3 +38,9 @@
 <logic:empty name="person" property="receipts">
 		<span class="error0"><bean:message key="label.masterDegree.administrativeOffice.payments.noReceipts"/></span>
 </logic:empty>
+
+<bean:define id="personId" name="person" property="idInternal"/>
+<html:form action='<%= "/payments.do?method=backToShowOperations&personId=" + personId %>'>
+	<br/>
+	<html:submit styleClass="inputbutton"><bean:message key="button.masterDegree.administrativeOffice.payments.back"/></html:submit>
+</html:form>

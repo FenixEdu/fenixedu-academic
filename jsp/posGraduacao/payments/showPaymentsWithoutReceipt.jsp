@@ -8,7 +8,8 @@
 
 	<h2><bean:message
 		key="label.masterDegree.administrativeOffice.payments.paymentsWithoutReceipt" /></h2>
-	<br />
+	<hr>
+	<br/>
 	
 	
 	<logic:messagesPresent message="true">
@@ -49,7 +50,7 @@
 			</fr:layout>
 		</fr:edit>
 		
-		<html:submit styleClass="inputbutton" onclick="this.form.method.value='createReceipt';"><bean:message key="button.masterDegree.administrativeOffice.payments.receipt"/></html:submit>
+		<html:submit styleClass="inputbutton" onclick="this.form.method.value='confirmCreateReceipt';"><bean:message key="button.masterDegree.administrativeOffice.payments.continue"/></html:submit>
 	</logic:notEmpty>
 
 	<logic:empty name="createReceiptBean" property="entries">
