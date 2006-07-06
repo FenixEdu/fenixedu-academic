@@ -32,6 +32,7 @@ public class Receipt extends Receipt_Base {
         super();
         super.setNumber(generateReceiptNumber());
         super.setRootDomainObject(RootDomainObject.getInstance());
+        super.setWhenCreated(new DateTime());
     }
 
     public Receipt(Person person, Contributor contributor, List<Entry> entries) {
@@ -97,7 +98,7 @@ public class Receipt extends Receipt_Base {
     }
 
     @Override
-    public void removeReceiptsVersions(ReceiptVersion receiptsVersions) {
+    public void removeReceiptsVersions(ReceiptPrintVersion receiptsVersions) {
         throw new DomainException("error.accounting.receipt.cannot.remove.receiptVersions");
     }
 
@@ -110,6 +111,11 @@ public class Receipt extends Receipt_Base {
     public void setYear(Integer year) {
         throw new DomainException("error.accounting.receipt.cannot.modify.year");
     }
+    
+    @Override
+    public void setWhenCreated(DateTime whenCreated) {
+    	throw new DomainException("error.accounting.receipt.cannot.modify.creation.date");
+    }
 
     private Integer generateReceiptNumber() {
         final List<Receipt> receipts = RootDomainObject.getInstance().getReceipts();
@@ -117,14 +123,14 @@ public class Receipt extends Receipt_Base {
                 .getNumber() + 1;
     }
 
-    public ReceiptVersion createReceiptVersion(Employee employee) {
-        return new ReceiptVersion(this, employee);
+    public ReceiptPrintVersion createReceiptVersion(Employee employee) {
+        return new ReceiptPrintVersion(this, employee);
     }
 
-    public ReceiptVersion getMostRecentReceiptVersion() {
+    public ReceiptPrintVersion getMostRecentReceiptPrintVersion() {
 
-        ReceiptVersion result = null;
-        for (final ReceiptVersion receiptVersion : getReceiptsVersionsSet()) {
+        ReceiptPrintVersion result = null;
+        for (final ReceiptPrintVersion receiptVersion : getReceiptsVersionsSet()) {
             if (result == null || receiptVersion.getWhenCreated().isAfter(result.getWhenCreated())) {
                 result = receiptVersion;
             }
