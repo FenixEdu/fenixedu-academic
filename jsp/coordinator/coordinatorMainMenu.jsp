@@ -132,34 +132,38 @@
 					<html:link page="<%= pageContext.findAttribute("listStudentsForCoordinator").toString() %>">
 					<bean:message key="link.sendEmailToAllStudents" /></html:link>
 				</li>			
-				<li>
-					<bean:define id="link2">/listStudentsForCoordinator.do?method=getStudentsFromDCP&page=0&degreeCurricularPlanID=
-			      		</bean:define>
-			       	<bean:define id="listStudentsForCoordinator">
-			 					<bean:write name="link2"/><bean:write name="degreeCurricularPlanID"/>
-			 				</bean:define> 	
-					<html:link page="<%= pageContext.findAttribute("listStudentsForCoordinator").toString() %>">
-					<bean:message key="link.coordinator.studentListByDegree" /></html:link>
+				<li class="sub">Listagens
+					<ul>
+						<li>
+							<bean:define id="link2">/listStudentsForCoordinator.do?method=getStudentsFromDCP&page=0&degreeCurricularPlanID=
+					      		</bean:define>
+					       	<bean:define id="listStudentsForCoordinator">
+					 					<bean:write name="link2"/><bean:write name="degreeCurricularPlanID"/>
+					 				</bean:define> 	
+							<html:link titleKey="link.coordinator.studentListByDegree.title" page="<%= pageContext.findAttribute("listStudentsForCoordinator").toString() %>">
+							<bean:message key="link.coordinator.studentListByDegree" /></html:link>
+						</li>
+						<li>				
+							<bean:define id="link2">/studentListByDegree.do?method=getCurricularCourses&jspTitle=title.studentListByCourse&page=0&degreeCurricularPlanID=
+				       		</bean:define>
+				        	<bean:define id="studentListByDegree">
+				  					<bean:write name="link2"/><bean:write name="degreeCurricularPlanID"/>
+				  				</bean:define> 	
+							<html:link titleKey="link.coordinator.studentListByCourse.title" page="<%= pageContext.findAttribute("studentListByDegree").toString() %>">
+							<bean:message key="link.coordinator.studentListByCourse" /></html:link>					
+						</li>
+						<li>
+							<html:link titleKey="link.coordinator.studentAndGratuityListByDegree.title" page='<%= "/studentsGratuityList.do?method=coordinatorStudentsGratuityList&amp;order=studentNumber&amp;degreeCurricularPlanID=" + degreeCurricularPlanID.toString()%>'>
+								<bean:message key="link.coordinator.studentAndGratuityListByDegree"/>
+							</html:link>
+						</li>
+						<li>
+							<html:link titleKey="link.coordinator.studentByThesis.title" page='<%= "/student/displayStudentThesisList.faces?degreeCurricularPlanID=" + degreeCurricularPlanID.toString()%>'>
+								<bean:message key="link.coordinator.studentByThesis"/>
+							</html:link>
+						</li>
+					</ul>
 				</li>
-				<li>				
-					<bean:define id="link2">/studentListByDegree.do?method=getCurricularCourses&jspTitle=title.studentListByCourse&page=0&degreeCurricularPlanID=
-		       		</bean:define>
-		        	<bean:define id="studentListByDegree">
-		  					<bean:write name="link2"/><bean:write name="degreeCurricularPlanID"/>
-		  				</bean:define> 	
-					<html:link page="<%= pageContext.findAttribute("studentListByDegree").toString() %>">
-					<bean:message key="link.studentListByCourse" /></html:link>					
-				</li>
-				<li>
-					<html:link page='<%= "/studentsGratuityList.do?method=coordinatorStudentsGratuityList&amp;order=studentNumber&amp;degreeCurricularPlanID=" + degreeCurricularPlanID.toString()%>'>
-						<bean:message key="link.coordinator.studentAndGratuityListByDegree"/>
-					</html:link>
-				</li>
-				<li>
-					<html:link page='<%= "/student/displayStudentThesisList.faces?degreeCurricularPlanID=" + degreeCurricularPlanID.toString()%>'>
-						<bean:message key="link.coordinator.studentByThesis"/>
-					</html:link>
-				</li>			
 			</logic:equal>
 			
 			<%-- Start of Degree Coordinator Options --%>
