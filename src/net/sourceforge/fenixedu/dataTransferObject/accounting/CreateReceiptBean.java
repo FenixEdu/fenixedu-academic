@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.dataTransferObject.accounting;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -60,6 +61,14 @@ public class CreateReceiptBean implements Serializable {
             }
         }
 
+        return result;
+    }
+    
+    public BigDecimal getTotalAmount() {
+        BigDecimal result = new BigDecimal("0");
+        for (final Entry entry : getSelectedEntries()) {
+            result = result.add(entry.getAmount());
+        }
         return result;
     }
 
