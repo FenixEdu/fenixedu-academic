@@ -351,11 +351,12 @@ public class PaymentsManagementDispatchAction extends FenixDispatchAction {
         return mapping.findForward("showPaymentsWithoutReceipt");
     }
     
+
     public ActionForward backToShowOperations(ActionMapping mapping, ActionForm actionForm,
 			HttpServletRequest request, HttpServletResponse response) {
 
 		request.setAttribute("person", getPerson(request));
-		return mapping.findForward("showOperations");
+			return mapping.findForward("showOperations");
 	}
 
 }
