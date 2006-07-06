@@ -33,17 +33,26 @@ public class DomainMetaObject extends SimpleMetaObject {
     public DomainMetaObject(DomainObject object) {
         this();
         
-        this.object = object;
-        this.type = object.getClass();
-        this.oid = object.getIdInternal().intValue();
+        setObject(object);
     }
     
+    @Override
     public Object getObject() {
         if (this.object == null) {
             this.object = getPersistentObject();
         }
         
         return this.object;
+    }
+
+    @Override
+    protected void setObject(Object object) {
+        this.object = (DomainObject) object;
+        
+        if (this.object != null) {
+            this.type = this.object.getClass();
+            this.oid = this.object.getIdInternal().intValue();
+        }
     }
 
     protected DomainObject getPersistentObject() {
@@ -61,7 +70,8 @@ public class DomainMetaObject extends SimpleMetaObject {
     protected void setOid(int oid) {
         this.oid = oid;
     }
-    
+
+    @Override
     public Class getType() {
         return type;
     }
@@ -70,10 +80,12 @@ public class DomainMetaObject extends SimpleMetaObject {
         this.type = type;
     }
 
+    @Override
     public MetaObjectKey getKey() {
         return new MetaObjectKey(getType(), getOid());
     }
 
+    @Override
     public void commit() {
         List<ObjectChange> changes = new ArrayList<ObjectChange>();
         
