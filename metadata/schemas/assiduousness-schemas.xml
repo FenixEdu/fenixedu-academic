@@ -24,9 +24,7 @@
 	<slot name="weekDay" key="label.weekDay" />
 	<slot name="workScheduleAcronym" key="label.schedule" />
 	<slot name="balanceTimeFormatted" key="label.balance" />
-	<slot name="unjustifiedTime" key="label.unjustified">
-		<property name="format" value="HH:mm" />
-	</slot>
+	<slot name="unjustifiedTimeFormatted" key="label.unjustified"/>
 	<slot name="notes" key="label.notes" />
 	<slot name="clockingsFormatted" key="link.clockings"/>
 </schema>

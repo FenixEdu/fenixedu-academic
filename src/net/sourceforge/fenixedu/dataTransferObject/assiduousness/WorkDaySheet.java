@@ -27,7 +27,7 @@ public class WorkDaySheet implements Serializable {
 
     String notes;
 
-    List<AssiduousnessRecord> assiduousnessRecords;
+    String clockings;
 
     public Period getBalanceTime() {
         return balanceTime;
@@ -103,20 +103,28 @@ public class WorkDaySheet implements Serializable {
         if (unjustifiedPeriod.getMinutes() > -10 && unjustifiedPeriod.getMinutes() < 10) {
             result.append("0");
         }
-        if (unjustifiedPeriod.getMinutes() < 0) {
-            result.append((-unjustifiedPeriod.getMinutes()));
-            if (!result.toString().startsWith("-")) {
-                result = new StringBuffer("-").append(result);
-            }
-        } else {
-            result.append(unjustifiedPeriod.getMinutes());
-        }
+
+        result.append(unjustifiedPeriod.getMinutes());
+
         return result.toString();
     }
 
     public String getClockingsFormatted() {
+        return clockings;
+    }
+
+    public String getWeekDay() {
+        if (getDate() == null) {
+            return "";
+        }
+        ResourceBundle bundle = ResourceBundle.getBundle("resources.AssiduousnessResources");
+        return bundle.getString(WeekDay.fromJodaTimeToWeekDay(getDate().toDateTimeAtMidnight())
+                .toString()
+                + "_ACRONYM");
+    }
+
+    public void setAssiduousnessRecords(final List<AssiduousnessRecord> assiduousnessRecords) {
         final StringBuilder result = new StringBuilder();
-        final List<AssiduousnessRecord> assiduousnessRecords = getAssiduousnessRecords();
         if (assiduousnessRecords != null) {
             for (final AssiduousnessRecord assiduousnessRecord : assiduousnessRecords) {
                 final TimeOfDay timeOfDay = assiduousnessRecord.getDate().toTimeOfDay();
@@ -126,27 +134,7 @@ public class WorkDaySheet implements Serializable {
                 result.append(fmt.print(timeOfDay));
             }
         }
-        return result.toString();
+        clockings = result.toString();
     }
 
-    public String getWeekDay() {
-        if (getDate() == null) {
-            return "";
-        }
-        ResourceBundle bundle = ResourceBundle.getBundle("resources.AssiduousnessResources");
-        return bundle.getString(WeekDay.fromJodaTimeToWeekDay(getDate().toDateTimeAtMidnight())
-                .toString() + "_ACRONYM");
-    }
-
-    public void setAssiduousnessRecord(final List<AssiduousnessRecord> assiduousnessRecord) {
-        this.assiduousnessRecords = assiduousnessRecord;
-    }
-
-    public List<AssiduousnessRecord> getAssiduousnessRecords() {
-        return assiduousnessRecords;
-    }
-
-    public void setAssiduousnessRecords(List<AssiduousnessRecord> assiduousnessRecords) {
-        this.assiduousnessRecords = assiduousnessRecords;
-    }
 }
