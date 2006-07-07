@@ -35,6 +35,9 @@ public class EmployeeWorkSheet implements Serializable {
         MutablePeriod finalTotalBalance = new MutablePeriod(getTotalBalance().getMillis());
         if (getTotalBalance().toPeriod().getMinutes() < 0) {
             finalTotalBalance.setMinutes(-getTotalBalance().toPeriod().getMinutes());
+            if (getTotalBalance().toPeriod().getHours() == 0) {
+                finalTotalBalance.setHours(-getTotalBalance().toPeriod().getHours());
+            }
         }
         return fmt.print(finalTotalBalance);
     }
