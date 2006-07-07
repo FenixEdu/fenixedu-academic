@@ -250,7 +250,7 @@
 	<definition name="payments.management.showReceipt" extends="definition.masterDegreeAdministrativeOffice.masterPage">
 		<put name="body" value="/posGraduacao/payments/receipts/showReceipt.jsp"/>
 	</definition>
-
+	
 	<definition name="payments.management.confirmCreateReceipt" extends="definition.masterDegreeAdministrativeOffice.masterPage">
 		<put name="body" value="/posGraduacao/payments/receipts/confirmCreateReceipt.jsp"/>
 	</definition>
@@ -300,8 +300,20 @@
 		<put name="body" value="/posGraduacao/candidacy/showCandidacyValidateData.jsp"/>
 	</definition>
 	
+	<definition name="df.page.showCandidacyAlterData" extends="definition.masterDegreeAdministrativeOffice.dfaCandidacy">
+		<put name="body" value="/posGraduacao/candidacy/showCandidacyAlterData.jsp"/>
+	</definition>
+
+	<definition name="df.page.alterSuccessPersonalData" extends="definition.masterDegreeAdministrativeOffice.dfaCandidacy">
+		<put name="body" value="/posGraduacao/candidacy/alterSuccessPersonalData.jsp"/>
+	</definition>
+
 	<definition name="df.page.fillCandidateData" extends="definition.masterDegreeAdministrativeOffice.dfaCandidacy">
 		<put name="body" value="/posGraduacao/candidacy/fillCandidateData.jsp"/>
+	</definition>
+
+	<definition name="df.page.chooseCandidacy" extends="definition.masterDegreeAdministrativeOffice.dfaCandidacy">
+		<put name="body" value="/posGraduacao/candidacy/chooseCandidacy.jsp"/>
 	</definition>
 	
 </tiles-definitions>

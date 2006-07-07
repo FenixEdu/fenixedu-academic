@@ -9,11 +9,10 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.StateMachineRunner;
-import net.sourceforge.fenixedu.applicationTier.Servico.commons.StateMachineRunner.DefaultRunnerArgs;
-import net.sourceforge.fenixedu.applicationTier.Servico.commons.StateMachineRunner.RunnerArgs;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.candidacy.PrecedentDegreeInformationBean;
 import net.sourceforge.fenixedu.domain.candidacy.Candidacy;
+import net.sourceforge.fenixedu.domain.candidacy.CandidacySituationType;
 import net.sourceforge.fenixedu.domain.candidacy.DFACandidacy;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.PrecedentDegreeInformation;
@@ -73,11 +72,10 @@ public class ChangePersonalDataDispatchAction extends FenixDispatchAction {
             ServiceUtils.executeService(userView, "EditPrecedentDegreeInformation", argsInstitution);
         }
 
- 
-        Object[] argsInstitution = { new StateMachineRunner.DefaultRunnerArgs(precedentDegreeInformation.getPrecedentDegreeInformation()
-                .getDfaCandidacy().getActiveCandidacySituation()) };
+        Object[] argsStateMachine = { new StateMachineRunner.RunnerArgs(precedentDegreeInformation.getPrecedentDegreeInformation()
+                .getDfaCandidacy().getActiveCandidacySituation(), CandidacySituationType.STAND_BY_FILLED_DATA.toString()) };
         try {
-            ServiceUtils.executeService(userView, "StateMachineRunner", argsInstitution);
+            ServiceUtils.executeService(userView, "StateMachineRunner", argsStateMachine);
         } catch (DomainException e) {
             // Didn't move to next state
         }

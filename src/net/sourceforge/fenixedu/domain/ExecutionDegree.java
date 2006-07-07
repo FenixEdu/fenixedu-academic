@@ -34,17 +34,18 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable 
 
     public static final Comparator<ExecutionDegree> EXECUTION_DEGREE_COMPARATORY_BY_DEGREE_TYPE_AND_NAME;
     public static final Comparator<ExecutionDegree> EXECUTION_DEGREE_COMPARATORY_BY_DEGREE_TYPE_AND_NAME_AND_EXECUTION_YEAR;
+    public static final Comparator<ExecutionDegree> EXECUTION_DEGREE_COMPARATORY_BY_YEAR;
     static {
         final Comparator degreeTypeComparator = new BeanComparator("degreeCurricularPlan.degree.tipoCurso");
         final Comparator degreeNameComparator = new BeanComparator("degreeCurricularPlan.degree.nome");
-        final Comparator executionYearComparator = new BeanComparator("executionYear.year");
+        EXECUTION_DEGREE_COMPARATORY_BY_YEAR = new BeanComparator("executionYear.year");
     	EXECUTION_DEGREE_COMPARATORY_BY_DEGREE_TYPE_AND_NAME = new ComparatorChain();
     	((ComparatorChain) EXECUTION_DEGREE_COMPARATORY_BY_DEGREE_TYPE_AND_NAME).addComparator(degreeTypeComparator);
     	((ComparatorChain) EXECUTION_DEGREE_COMPARATORY_BY_DEGREE_TYPE_AND_NAME).addComparator(degreeNameComparator);
         EXECUTION_DEGREE_COMPARATORY_BY_DEGREE_TYPE_AND_NAME_AND_EXECUTION_YEAR = new ComparatorChain();
         ((ComparatorChain) EXECUTION_DEGREE_COMPARATORY_BY_DEGREE_TYPE_AND_NAME_AND_EXECUTION_YEAR).addComparator(degreeTypeComparator);
         ((ComparatorChain) EXECUTION_DEGREE_COMPARATORY_BY_DEGREE_TYPE_AND_NAME_AND_EXECUTION_YEAR).addComparator(degreeNameComparator);
-        ((ComparatorChain) EXECUTION_DEGREE_COMPARATORY_BY_DEGREE_TYPE_AND_NAME_AND_EXECUTION_YEAR).addComparator(executionYearComparator);
+        ((ComparatorChain) EXECUTION_DEGREE_COMPARATORY_BY_DEGREE_TYPE_AND_NAME_AND_EXECUTION_YEAR).addComparator(EXECUTION_DEGREE_COMPARATORY_BY_YEAR);
     }
 
     private ExecutionDegree() {

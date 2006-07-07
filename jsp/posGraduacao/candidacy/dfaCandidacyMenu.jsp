@@ -16,13 +16,12 @@
 </ul>
 <ul style="margin-left: 2em; margin-top: 1em; margin-bottom: 1em;">
 	<li class="navheader"><bean:message key="link.masterDegree.administrativeOffice.dfaCandidacyManagement" bundle="ADMIN_OFFICE_RESOURCES"/></li>
-	<li><html:link page="/dfaCandidacy.do?method=prepareCreateCandidacy"><bean:message key="link.masterDegree.administrativeOffice.dfaCandidacy" bundle="ADMIN_OFFICE_RESOURCES"/></html:link></li>
-    <li><html:link page="/dfaCandidacy.do?method=prepareGenPass"><bean:message key="link.masterDegree.administrativeOffice.genPass" bundle="ADMIN_OFFICE_RESOURCES"/></html:link></li>
-    <li><html:link page="/dfaCandidacy.do?method=prepareValidateCandidacyData"><bean:message key="link.masterDegree.administrativeOffice.dfaCandidacy.validateData" bundle="ADMIN_OFFICE_RESOURCES"/></html:link></li>		
-    <%--
-    <li><html:link page="/listDFACandidacy.do?method=prepareListCandidacies"><bean:message key="link.masterDegree.administrativeOffice.dfaCandidacy.listCandidacies"/></html:link></li>
-    --%>
-</ul>
+	<li><html:link page="/dfaCandidacy.do?method=prepareCreateCandidacy"><bean:message key="link.masterDegree.administrativeOffice.dfaCandidacy.createCandidacy" bundle="ADMIN_OFFICE_RESOURCES"/></html:link></li>
+	<li><html:link page="/dfaCandidacy.do?method=prepareChooseCandidacy"><bean:message key="link.masterDegree.administrativeOffice.dfaCandidacy.viewCandidacy" bundle="ADMIN_OFFICE_RESOURCES"/></html:link></li>
+    <li><html:link page="/listDFACandidacy.do?method=prepareListCandidacies"><bean:message key="link.masterDegree.administrativeOffice.dfaCandidacy.listCandidacies" bundle="ADMIN_OFFICE_RESOURCES"/></html:link></li>
+</ul>    
 <ul>
     <li><html:link page="/payments.do?method=prepareSearchPerson"><bean:message key="link.masterDegree.administrativeOffice.payments" /></html:link></li>
 </ul>
+	   
+  	

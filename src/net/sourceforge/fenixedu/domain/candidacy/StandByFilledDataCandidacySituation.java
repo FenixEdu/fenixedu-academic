@@ -62,7 +62,7 @@ public class StandByFilledDataCandidacySituation extends StandByFilledDataCandid
     }
 
     @Override
-    public boolean canCandidacyDataBeValidated() {
+    public boolean getCanCandidacyDataBeValidated() {
         return true;
     }
     

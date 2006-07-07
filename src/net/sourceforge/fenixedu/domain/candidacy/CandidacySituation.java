@@ -45,11 +45,11 @@ public abstract class CandidacySituation extends CandidacySituation_Base impleme
         return false;
     }
     
-    public boolean canCandidacyDataBeValidated() {
+    public boolean getCanCandidacyDataBeValidated() {
         return false;
     }
 
-    public boolean canGeneratePass() {
+    public boolean getCanGeneratePass() {
         return true;
     }
 }

@@ -16,7 +16,6 @@
 			 schema="candidacy.choose.executionDegree">
 		<fr:destination name="degreePostBack" path="/dfaCandidacy.do?method=chooseDegreePostBack"/>
 		<fr:destination name="degreeCurricularPlanPostBack" path="/dfaCandidacy.do?method=chooseDegreeCurricularPlanPostBack"/>		
-		<fr:destination name="executionDegreePostBack" path="/dfaCandidacy.do?method=chooseExecutionDegreePostBack"/>				
 		<fr:destination name="invalid" path="/dfaCandidacy.do?method=chooseExecutionDegreeInvalid"/>		
 		<fr:layout name="tabular">
 				<fr:property name="classes" value="tstyle4"/>

@@ -55,7 +55,7 @@ public class PreCandidacySituation extends PreCandidacySituation_Base {
     }
     
     @Override
-    public boolean canGeneratePass() {
+    public boolean getCanGeneratePass() {
         return false;
     }
 

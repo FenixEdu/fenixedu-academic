@@ -3,7 +3,7 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
 
-<h2><strong><bean:message key="label.searchMarkSheet"/></strong></h2>
+<h2><strong><bean:message key="link.masterDegree.administrativeOffice.dfaCandidacy.listCandidacies" bundle="ADMIN_OFFICE_RESOURCES"/></strong></h2>
 
 <fr:form action="/listDFACandidacy.do?method=listCandidacies">
 	<fr:edit id="executionDegree"
@@ -19,16 +19,18 @@
 		        <fr:property name="columnClasses" value="listClasses,,,"/>
 		</fr:layout>
 	</fr:edit>	
-	<html:submit/>
+	<html:submit><bean:message key="button.submit" /></html:submit>
 </fr:form>
 <br/>
 <br/>
 <br/>
 <logic:present name="candidacies">
 	<logic:empty name="candidacies">
-		<bean:message key="label.noCandidacies.found"/>
+		<bean:message key="label.noCandidacies.found" bundle="ADMIN_OFFICE_RESOURCES" />
 	</logic:empty>
 	<logic:notEmpty name="candidacies">
+		<bean:size id="numberOfCandidacies" name="candidacies" />
+		<bean:message key="label.numberOfFoundCandidacies" bundle="ADMIN_OFFICE_RESOURCES"/>: <bean:write name="numberOfCandidacies" />
 		<fr:view name="candidacies" schema="candidacy.show.list.candidady">
 			<fr:layout name="tabular">
 		        <fr:property name="classes" value="tstyle4"/>

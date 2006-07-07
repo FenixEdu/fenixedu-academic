@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.domain.candidacy;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.accessControl.AccessControl;
@@ -43,8 +44,10 @@ public class StandByConfirmedDataCandidacySituation extends StandByConfirmedData
 
     @Override
     public Set<String> getValidNextStates() {
-        // TODO Auto-generated method stub
-        return null;
+        Set<String> nextStates = new HashSet<String>();
+        nextStates.add(CandidacySituationType.STAND_BY_CONFIRMED_DATA.toString());
+        nextStates.add(CandidacySituationType.STAND_BY.toString());        
+        return nextStates;
     }
 
     @Override
