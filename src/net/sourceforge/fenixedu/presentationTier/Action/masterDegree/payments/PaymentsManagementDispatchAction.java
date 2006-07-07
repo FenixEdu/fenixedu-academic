@@ -20,6 +20,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgume
 import net.sourceforge.fenixedu.dataTransferObject.accounting.CreateReceiptBean;
 import net.sourceforge.fenixedu.dataTransferObject.accounting.PaymentsManagementDTO;
 import net.sourceforge.fenixedu.dataTransferObject.accounting.SelectableEntryBean;
+import net.sourceforge.fenixedu.domain.Contributor;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accounting.Entry;
 import net.sourceforge.fenixedu.domain.accounting.Event;
@@ -174,6 +175,21 @@ public class PaymentsManagementDispatchAction extends FenixDispatchAction {
 
         final CreateReceiptBean createReceiptBean = (CreateReceiptBean) RenderUtils.getViewState(
                 "createReceiptBean").getMetaObject().getObject();
+
+        if (createReceiptBean.getContributor() == null) {
+            final Contributor contributor = Contributor.readByContributorNumber(Integer
+                    .valueOf(createReceiptBean.getContributorNumber()));
+            if (contributor == null) {
+                addActionMessage(request,
+                        "error.masterDegreeAdministrativeOffice.payments.receipt.contributor.does.not.exist");
+
+                request.setAttribute("personId", createReceiptBean.getPerson().getIdInternal());
+                return showPaymentsWithoutReceipt(mapping, actionForm, request, response);
+
+            } else {
+                createReceiptBean.setContributor(contributor);
+            }
+        }
 
         if (createReceiptBean.getSelectedEntries().isEmpty()) {
             addActionMessage(request,

@@ -51,7 +51,7 @@
 </schema>
 
 <schema name="createReceiptBean.create" type="net.sourceforge.fenixedu.dataTransferObject.accounting.CreateReceiptBean">
-	<slot name="contributor" layout="autoComplete"  validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+	<slot name="contributor" layout="autoComplete" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
 		<property name="size" value="70"/>
 		<property name="labelField" value="contributorNumber"/>
 		<property name="format" value="${contributorNumber} - ${contributorName}"/>
@@ -61,6 +61,7 @@
 		<property name="className" value="net.sourceforge.fenixedu.domain.Contributor"/>
 		<property name="minChars" value="1"/>
 		<property name="maxCount" value="20"/>
+		<property name="rawSlotName" value="contributorNumber" />
 	</slot>
 </schema>
 

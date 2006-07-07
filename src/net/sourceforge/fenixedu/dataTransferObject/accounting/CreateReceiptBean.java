@@ -18,6 +18,8 @@ public class CreateReceiptBean implements Serializable {
 
     private List<SelectableEntryBean> entries;
 
+    private String contributorNumber;
+
     public CreateReceiptBean() {
 
     }
@@ -52,6 +54,14 @@ public class CreateReceiptBean implements Serializable {
         this.entries = entries;
     }
 
+    public String getContributorNumber() {
+        return contributorNumber;
+    }
+
+    public void setContributorNumber(String contributorNumber) {
+        this.contributorNumber = contributorNumber;
+    }
+
     public List<Entry> getSelectedEntries() {
         final List<Entry> result = new ArrayList<Entry>();
 
@@ -63,7 +73,7 @@ public class CreateReceiptBean implements Serializable {
 
         return result;
     }
-    
+
     public BigDecimal getTotalAmount() {
         BigDecimal result = new BigDecimal("0");
         for (final Entry entry : getSelectedEntries()) {
