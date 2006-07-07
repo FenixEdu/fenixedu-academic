@@ -181,7 +181,9 @@ public class Unit extends Unit_Base {
                 && (!hasAnyParents() || (this.getParentUnits().size() == 1 && this.getParents().size() == 1))
                 && !hasAnyFunctions() && !hasAnyWorkingContracts() && !hasAnyMailingContracts()
                 && !hasAnySalaryContracts() && !hasAnyCompetenceCourses() && !hasAnyExternalPersons()
-                && !hasAnyAssociatedNonAffiliatedTeachers()) {
+                && !hasAnyAssociatedNonAffiliatedTeachers()
+                && !hasAnyProjectParticipations()
+                && !hasAnyEventParticipations()) {
 
             if (hasAnyParentUnits()) {
                 this.getParents().get(0).delete();
