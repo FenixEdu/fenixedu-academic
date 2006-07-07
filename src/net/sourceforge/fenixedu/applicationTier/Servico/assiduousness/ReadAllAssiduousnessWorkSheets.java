@@ -117,7 +117,6 @@ public class ReadAllAssiduousnessWorkSheets extends Service {
                 employeeWorkSheet.setTotalBalance(totalBalance);
                 employeeWorkSheet.setUnjustifiedBalance(totalUnjustified);
                 employeeWorkSheetList.add(employeeWorkSheet);
-                break;
             }
         }
 
