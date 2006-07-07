@@ -197,14 +197,20 @@ public class RoomOccupation extends RoomOccupation_Base {
         return false;
     }
 
-    public Integer getFrequency() {        
-        return getLesson() != null ? getLesson().getFrequency() : null;
+    public Integer getFrequency() {
+        if (getLesson() != null) {
+            return getLesson().getFrequency();
+        }
+        if (getWrittenEvaluation() != null) {
+            return DIARIA;
+        }
+        return null;
     }
     
     public void setFrequency(Integer frequency) {
         if(getLesson() != null) {
             getLesson().setFrequency(frequency); 
-        }        
+        }
     }
     
     public Integer getWeekOfQuinzenalStart() {
