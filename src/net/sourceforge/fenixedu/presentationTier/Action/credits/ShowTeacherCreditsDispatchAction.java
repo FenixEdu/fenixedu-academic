@@ -3,6 +3,7 @@
  */
 package net.sourceforge.fenixedu.presentationTier.Action.credits;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
@@ -42,7 +43,7 @@ import org.joda.time.YearMonthDay;
 public class ShowTeacherCreditsDispatchAction extends FenixDispatchAction {
 
     protected void getAllTeacherCredits(HttpServletRequest request, ExecutionPeriod executionPeriod,
-            Teacher teacher) {
+            Teacher teacher) throws ParseException {
 
         request.setAttribute("teacher", teacher);
         request.setAttribute("teacherCategory", teacher.getCategoryForCreditsByPeriod(executionPeriod));

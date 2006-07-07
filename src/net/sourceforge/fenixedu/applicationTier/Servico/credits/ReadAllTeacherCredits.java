@@ -3,6 +3,7 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.credits;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,10 +26,10 @@ import org.apache.commons.collections.Predicate;
 
 public class ReadAllTeacherCredits extends Service {
 
-    public List<CreditLineDTO> run(Integer teacherID) throws ExcepcaoPersistencia {
+    public List<CreditLineDTO> run(Integer teacherID) throws ExcepcaoPersistencia, ParseException {
 
         final Teacher teacher = rootDomainObject.readTeacherByOID(teacherID);        
-        ExecutionPeriod executionPeriod = ExecutionPeriod.readBySemesterAndExecutionYear(2, "2002/2003");        
+        ExecutionPeriod executionPeriod = TeacherService.getStartExecutionPeriodForCredits();        
 
         List<Category> categories = rootDomainObject.getCategorys();
         List<Category> monitorCategories = (List<Category>) CollectionUtils.select(categories, new Predicate(){

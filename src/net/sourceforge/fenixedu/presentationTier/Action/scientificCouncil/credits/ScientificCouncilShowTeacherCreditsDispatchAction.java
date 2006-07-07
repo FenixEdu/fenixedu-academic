@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.Action.scientificCouncil.credits;
 
+import java.text.ParseException;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -18,7 +20,7 @@ public class ScientificCouncilShowTeacherCreditsDispatchAction extends ShowTeach
         
     public ActionForward showTeacherCredits(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws NumberFormatException,
-            FenixFilterException, FenixServiceException {
+            FenixFilterException, FenixServiceException, ParseException {
 
         DynaActionForm teacherCreditsForm = (DynaActionForm) form;
         ExecutionPeriod executionPeriod = rootDomainObject

@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.domain;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -756,36 +757,12 @@ public class Teacher extends Teacher_Base {
         }
 
         return result;
-    }
+    }    
 
-    public double getCreditsBetweenExecutionPeriods(ExecutionPeriod startExecutionPeriod,
-            ExecutionPeriod endExecutionPeriod) {
-
-        double totalCredits = 0.0;
-        ExecutionPeriod firstExecutionPeriod1Semester = ExecutionPeriod.readBySemesterAndExecutionYear(1, "2002/2003");
-        ExecutionPeriod firstExecutionPeriod2Semester = ExecutionPeriod.readBySemesterAndExecutionYear(2, "2002/2003");
-        
-        ExecutionPeriod startPeriod = startExecutionPeriod;
-        if (startPeriod.equals(firstExecutionPeriod1Semester)) {
-            startPeriod = firstExecutionPeriod2Semester;
-        }
-
-        if (firstExecutionPeriod2Semester.equals(startExecutionPeriod)) {
-            TeacherService firstTeacherService = getTeacherServiceByExecutionPeriod(firstExecutionPeriod2Semester);
-            if (firstTeacherService != null) {
-                totalCredits = firstTeacherService.getPastServiceCredits();
-            }
-            startPeriod = startExecutionPeriod.getNextExecutionPeriod();
-        }
-
-        totalCredits = sumCreditsBetweenPeriods(startPeriod, endExecutionPeriod, totalCredits);
-        return totalCredits;
-    }
-
-    public double getBalanceOfCreditsUntil(ExecutionPeriod executionPeriod) {
+    public double getBalanceOfCreditsUntil(ExecutionPeriod executionPeriod) throws ParseException {
         
         double balanceCredits = 0.0;
-        ExecutionPeriod firstExecutionPeriod = ExecutionPeriod.readBySemesterAndExecutionYear(2, "2002/2003");
+        ExecutionPeriod firstExecutionPeriod = TeacherService.getStartExecutionPeriodForCredits();
                 
         TeacherService firstTeacherService = getTeacherServiceByExecutionPeriod(firstExecutionPeriod);
         if (firstTeacherService != null) {
@@ -799,8 +776,7 @@ public class Teacher extends Teacher_Base {
         return balanceCredits;
     }
 
-    private double sumCreditsBetweenPeriods(ExecutionPeriod startPeriod,
-            ExecutionPeriod endExecutionPeriod, double totalCredits) {
+    private double sumCreditsBetweenPeriods(ExecutionPeriod startPeriod, ExecutionPeriod endExecutionPeriod, double totalCredits) throws ParseException {
 
         ExecutionPeriod executionPeriodAfterEnd = endExecutionPeriod.getNextExecutionPeriod();
         while (startPeriod != executionPeriodAfterEnd) {
@@ -808,8 +784,7 @@ public class Teacher extends Teacher_Base {
             if (teacherService != null) {
                 totalCredits += getManagementFunctionsCredits(startPeriod);
                 totalCredits += getServiceExemptionCredits(startPeriod);
-                totalCredits += teacherService.getCredits();
-                totalCredits += teacherService.getPastServiceCredits();
+                totalCredits += teacherService.getCredits();                
                 totalCredits -= getMandatoryLessonHours(startPeriod);
             }
             startPeriod = startPeriod.getNextExecutionPeriod();

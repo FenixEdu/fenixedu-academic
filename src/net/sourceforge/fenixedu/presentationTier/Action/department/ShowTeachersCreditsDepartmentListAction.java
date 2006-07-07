@@ -3,6 +3,7 @@
  */
 package net.sourceforge.fenixedu.presentationTier.Action.department;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -46,7 +47,7 @@ public class ShowTeachersCreditsDepartmentListAction extends FenixAction {
 
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws NumberFormatException, FenixFilterException,
-            FenixServiceException {
+            FenixServiceException, ParseException {
 
         DynaActionForm dynaActionForm = (DynaActionForm) form;
         IUserView userView = SessionUtils.getUserView(request);

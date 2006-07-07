@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.presentationTier.Action.departmentAdmOffice.credits;
 
+import java.text.ParseException;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -24,7 +25,7 @@ public class DepartmentAdmOfficeShowTeacherCreditsDispatchAction extends ShowTea
     
     public ActionForward showTeacherCredits(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws NumberFormatException,
-            FenixFilterException, FenixServiceException {
+            FenixFilterException, FenixServiceException, ParseException {
 
         DynaActionForm teacherCreditsForm = (DynaActionForm) form;
         ExecutionPeriod executionPeriod = rootDomainObject

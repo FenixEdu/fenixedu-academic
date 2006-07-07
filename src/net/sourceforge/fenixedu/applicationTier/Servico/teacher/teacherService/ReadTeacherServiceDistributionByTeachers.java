@@ -3,14 +3,12 @@ package net.sourceforge.fenixedu.applicationTier.Servico.teacher.teacherService;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.distribution.DistributionTeacherServicesByTeachersDTO;
@@ -24,9 +22,9 @@ import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
+import net.sourceforge.fenixedu.domain.teacher.TeacherService;
 import net.sourceforge.fenixedu.domain.teacher.TeacherServiceExemption;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.util.DateFormatUtil;
 
 /**
  * 
@@ -41,9 +39,8 @@ public class ReadTeacherServiceDistributionByTeachers extends Service {
 		for(Integer executionPeriodID : executionPeriodsIDs){
 			executionPeriodList.add(rootDomainObject.readExecutionPeriodByOID(executionPeriodID));
 		}
-		
-		final List<ExecutionPeriod> allExecutionPeriods = rootDomainObject.getExecutionPeriods();
-		final ExecutionPeriod startPeriod = findStartPeriod(allExecutionPeriods);
+			
+		final ExecutionPeriod startPeriod = TeacherService.getStartExecutionPeriodForCredits();
 		
 		ExecutionPeriod endPeriod = findEndPeriod(executionPeriodList, startPeriod); 
 		
@@ -61,7 +58,7 @@ public class ReadTeacherServiceDistributionByTeachers extends Service {
 					continue;
 				}
 				
-				Double accumulatedCredits = (startPeriod == null ? 0.0 : teacher.getCreditsBetweenExecutionPeriods(startPeriod, endPeriod)); 
+				Double accumulatedCredits = teacher.getBalanceOfCreditsUntil(endPeriod); 
 				
 				if(returnDTO.isTeacherPresent(teacher.getIdInternal())){
 					returnDTO.addHoursToTeacher(teacher.getIdInternal(), teacher.getHoursByCategory(executionPeriodEntry));
@@ -160,16 +157,4 @@ public class ReadTeacherServiceDistributionByTeachers extends Service {
 		}
 		return endPeriod;
 	}
-
-	private ExecutionPeriod findStartPeriod(final List<ExecutionPeriod> executionPeriods) throws ParseException {
-		final String firstActiveExecutionPeriodString = PropertiesManager.getProperty("teacherServiceDistributionFirstActiveExecutionPeriodBeginDate");
-		final Date firstActiveExecutionPeriod = DateFormatUtil.parse("yyyy-MM-dd", firstActiveExecutionPeriodString);
-		for (final ExecutionPeriod executionPeriod : executionPeriods) {
-			if (DateFormatUtil.equalDates("yyyy-MM-dd", firstActiveExecutionPeriod, executionPeriod.getBeginDate())) {
-				return executionPeriod;
-			}
-		}
-		return null;
-	}
-
 }

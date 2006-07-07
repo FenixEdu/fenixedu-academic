@@ -3,6 +3,8 @@
  */
 package net.sourceforge.fenixedu.dataTransferObject.credits;
 
+import java.text.ParseException;
+
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.teacher.TeacherService;
@@ -39,7 +41,7 @@ public class CreditLineDTO {
     private ExecutionPeriod executionPeriod;
 
     public CreditLineDTO(ExecutionPeriod executionPeriod, TeacherService teacherService,
-            double managementCredits, double exemptionCredits, int lessonHours, Teacher teacher) {
+            double managementCredits, double exemptionCredits, int lessonHours, Teacher teacher) throws ParseException {
         
         setExecutionPeriod(executionPeriod);
         if (teacherService != null) {

@@ -3,6 +3,7 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.scientificCouncil.credits;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -31,7 +32,7 @@ import org.apache.commons.collections.comparators.ComparatorChain;
 public class ReadTeachersCreditsResumeByPeriodAndUnit extends Service {
 
     public List<TeacherCreditsReportDTO> run(Unit department, ExecutionPeriod fromExecutionPeriod,
-            ExecutionPeriod untilExecutionPeriod) throws ExcepcaoPersistencia {
+            ExecutionPeriod untilExecutionPeriod) throws ExcepcaoPersistencia, ParseException {
 
         List<ExecutionPeriod> executionPeriodsBetween = getExecutionPeriodsBetween(fromExecutionPeriod,
                 untilExecutionPeriod);
@@ -103,7 +104,7 @@ public class ReadTeachersCreditsResumeByPeriodAndUnit extends Service {
     }
 
     private void updateCreditLine(Teacher teacher, ExecutionPeriod executionPeriod,
-            TeacherCreditsReportDTO creditLine, boolean countCredits) {
+            TeacherCreditsReportDTO creditLine, boolean countCredits) throws ParseException {
 
         double totalCredits = 0.0;
         if (countCredits) {

@@ -1,9 +1,11 @@
 package net.sourceforge.fenixedu.domain.teacher;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
@@ -80,7 +82,7 @@ public class TeacherService extends TeacherService_Base {
         return null;
     }
 
-    public Double getCredits() {
+    public Double getCredits() throws ParseException {
         double credits = getMasterDegreeServiceCredits();
         credits += getTeachingDegreeCredits();
         // credits += getPastServiceCredits();
@@ -89,9 +91,9 @@ public class TeacherService extends TeacherService_Base {
         return round(credits);
     }
 
-    public Double getTeachingDegreeCredits() {
+    public Double getTeachingDegreeCredits() throws ParseException {
         double credits = 0;
-        ExecutionYear executionYear20062007 = ExecutionYear.readExecutionYearByName("2006/2007");
+        ExecutionYear executionYear20062007 = getStartExecutionYearForOptionalCurricularCoursesWithLessTenEnrolments();
         for (DegreeTeachingService degreeTeachingService : getDegreeTeachingServices()) {
             ExecutionCourse executionCourse = degreeTeachingService.getProfessorship().getExecutionCourse();
             ExecutionPeriod executionPeriod = executionCourse.getExecutionPeriod();
@@ -279,6 +281,27 @@ public class TeacherService extends TeacherService_Base {
         });
     }
 
+    public static ExecutionPeriod getStartExecutionPeriodForCredits() throws ParseException {
+        final String year = PropertiesManager.getProperty("startYearForCredits");
+        final Integer semester = Integer.valueOf(PropertiesManager.getProperty("startSemesterForCredits"));        
+        for (final ExecutionPeriod executionPeriod : RootDomainObject.getInstance().getExecutionPeriods()) {
+            if(executionPeriod.getExecutionYear().getYear().equals(year) && executionPeriod.getSemester().equals(semester)) {
+                return executionPeriod;
+            }
+        }
+        return null;               
+    }
+        
+    private ExecutionYear getStartExecutionYearForOptionalCurricularCoursesWithLessTenEnrolments() throws ParseException {
+        final String year = PropertiesManager.getProperty("startExecutionYearForAllOptionalCurricularCoursesWithLessTenEnrolments");             
+        for (final ExecutionYear executionYear : RootDomainObject.getInstance().getExecutionYears()) {
+            if(executionYear.getYear().equals(year)) {
+                return executionYear;
+            }
+        }
+        return null;               
+    }
+        
     private Double round(double n) {
         return Math.round((n * 100.0)) / 100.0;
     }
