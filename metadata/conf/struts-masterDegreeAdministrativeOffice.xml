@@ -2589,6 +2589,7 @@
    	         <forward name="preparePayment" path="payments.management.preparePayment"/> 
    	         <forward name="showPaymentsWithoutReceipt" path="payments.management.showPaymentsWithoutReceipt"/> 
    	         <forward name="confirmCreateReceipt" path="payments.management.confirmCreateReceipt"/> 
+   	         <forward name="paymentConfirmed" path="payments.management.paymentConfirmed"/> 
       </action>
       
 

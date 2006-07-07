@@ -4,6 +4,7 @@
 package net.sourceforge.fenixedu.presentationTier.Action.masterDegree.payments;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -29,6 +30,9 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
+import net.sourceforge.fenixedu.renderers.components.state.IViewState;
+import net.sourceforge.fenixedu.renderers.components.state.ViewState;
+import net.sourceforge.fenixedu.renderers.model.MetaObject;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 
 import org.apache.struts.action.ActionForm;
@@ -152,38 +156,36 @@ public class PaymentsManagementDispatchAction extends FenixDispatchAction {
 
         final Person person = getPerson(request);
         final CreateReceiptBean receiptBean = new CreateReceiptBean();
-
-        Set<Entry> entriesToSelect = (Set<Entry>) request.getAttribute("entriesToSelect");
-        if (entriesToSelect == null) {
-            entriesToSelect = new HashSet<Entry>();
-        }
+        final IViewState viewState = RenderUtils.getViewState("entriesToSelect");
+        final Collection<Entry> entriesToSelect = (Collection<Entry>) ((viewState != null) ? viewState
+                .getMetaObject().getObject() : null);
 
         receiptBean.setPerson(person);
         receiptBean.setEntries(getSelectableEntryBeans(person.getPaymentsWithoutReceipt(),
-                entriesToSelect));
+                (entriesToSelect != null) ? entriesToSelect : new HashSet<Entry>()));
 
         request.setAttribute("createReceiptBean", receiptBean);
 
         return mapping.findForward("showPaymentsWithoutReceipt");
     }
-    
+
     public ActionForward confirmCreateReceipt(ActionMapping mapping, ActionForm actionForm,
-			HttpServletRequest request, HttpServletResponse response) {
-    	
-    	final CreateReceiptBean createReceiptBean = (CreateReceiptBean) RenderUtils.getViewState("createReceiptBean").getMetaObject().getObject();
-		
-		
-		if (createReceiptBean.getSelectedEntries().isEmpty()) {
+            HttpServletRequest request, HttpServletResponse response) {
+
+        final CreateReceiptBean createReceiptBean = (CreateReceiptBean) RenderUtils.getViewState(
+                "createReceiptBean").getMetaObject().getObject();
+
+        if (createReceiptBean.getSelectedEntries().isEmpty()) {
             addActionMessage(request,
                     "error.masterDegreeAdministrativeOffice.payments.receipt.entries.selection.is.required");
-            
+
             request.setAttribute("personId", createReceiptBean.getPerson().getIdInternal());
             return showPaymentsWithoutReceipt(mapping, actionForm, request, response);
         }
-		
-		request.setAttribute("createReceiptBean", createReceiptBean);
-		return mapping.findForward("confirmCreateReceipt");
-	}
+
+        request.setAttribute("createReceiptBean", createReceiptBean);
+        return mapping.findForward("confirmCreateReceipt");
+    }
 
     public ActionForward createReceipt(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
@@ -212,7 +214,7 @@ public class PaymentsManagementDispatchAction extends FenixDispatchAction {
     }
 
     private List<SelectableEntryBean> getSelectableEntryBeans(final Set<Entry> entries,
-            final Set<Entry> entriesToSelect) {
+            final Collection<Entry> entriesToSelect) {
         final List<SelectableEntryBean> selectableEntryBeans = new ArrayList<SelectableEntryBean>();
         for (final Entry entry : entries) {
             selectableEntryBeans.add(new SelectableEntryBean(entriesToSelect.contains(entry) ? true
@@ -264,17 +266,17 @@ public class PaymentsManagementDispatchAction extends FenixDispatchAction {
         }
 
         try {
-            final Set<Entry> resultingEntries = (Set<Entry>) ServiceUtils.executeService(
+            final Collection<Entry> resultingEntries = (Collection<Entry>) ServiceUtils.executeService(
                     getUserView(request), "CreatePaymentsForEvents", new Object[] {
                             getUserView(request).getPerson().getUser(),
                             paymentsManagementDTO.getSelectedEntries(), PaymentMode.CASH,
                             paymentsManagementDTO.isDifferedPayment(),
                             paymentsManagementDTO.getPaymentDate() });
 
-            request.setAttribute("personId", paymentsManagementDTO.getPerson().getIdInternal());
+            request.setAttribute("person", paymentsManagementDTO.getPerson());
             request.setAttribute("entriesToSelect", resultingEntries);
 
-            return showPaymentsWithoutReceipt(mapping, form, request, response);
+            return mapping.findForward("paymentConfirmed");
 
         } catch (DomainException ex) {
 

@@ -259,6 +259,10 @@
 		<put name="body" value="/posGraduacao/payments/preparePayment.jsp"/>
 	</definition>
 	
+	<definition name="payments.management.paymentConfirmed" extends="definition.masterDegreeAdministrativeOffice.masterPage">
+		<put name="body" value="/posGraduacao/payments/paymentConfirmed.jsp"/>
+	</definition>
+	
 	<!-- ************* DFA candidacy ************* -->
 	<definition name="df.page.dfaCandidacyIndex" extends="definition.masterDegreeAdministrativeOffice.dfaCandidacy">
 		<put name="body" value="/posGraduacao/welcomeScreen.jsp"/>

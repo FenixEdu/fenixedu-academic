@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.accounting;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -23,12 +24,12 @@ public class CreatePaymentsForEvents extends Service {
         super();
     }
 
-    public Set<Entry> run(final User responsibleUser, final List<EntryDTO> entryDTOs,
+    public Collection<Entry> run(final User responsibleUser, final List<EntryDTO> entryDTOs,
             final PaymentMode paymentMode, final boolean differedPayment, final DateTime whenRegistered)
             throws FenixServiceException {
 
         final Map<Event, List<EntryDTO>> entryDTOsByEvent = splitEntryDTOsByEvent(entryDTOs);
-        final Set<Entry> resultingEntries = new HashSet<Entry>();
+        final Collection<Entry> resultingEntries = new HashSet<Entry>();
 
         for (final Map.Entry<Event, List<EntryDTO>> entry : entryDTOsByEvent.entrySet()) {
             if (differedPayment) {
