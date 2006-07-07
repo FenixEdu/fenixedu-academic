@@ -170,6 +170,154 @@
 	<slot name="role" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
 </schema>
 
+<!-- SCHEMAS FOR EVENTS MANAGEMENT  -->
+<schema name="event.summary" type="net.sourceforge.fenixedu.domain.research.event.Event">
+	<slot name="name"/>
+</schema>
+
+<schema name="eventParticipation.summary" bundle="RESEARCHER_RESOURCES" type="net.sourceforge.fenixedu.domain.research.event.EventParticipation">
+	<slot name="party.name"/>
+	<slot name="role"/>
+</schema>
+
+<schema name="event.edit-defaults" bundle="RESEARCHER_RESOURCES" type="net.sourceforge.fenixedu.domain.research.event.Event">
+	<slot name="name" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredMultiLanguageStringValidator">
+		<property name="size" value="75"/>
+	</slot>
+	<slot name="eventType"/>
+	<slot name="eventLocation"/>	
+	<slot name="startDate" layout="year-month-day" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+	<slot name="endDate" layout="year-month-day"/> 
+	<slot name="fee"/>
+</schema>
+
+<schema name="event.view-defaults" bundle="RESEARCHER_RESOURCES" extends="event.edit-defaults" type="net.sourceforge.fenixedu.domain.research.event.Event">
+	<slot name="name"/>
+</schema>
+
+<schema name="eventProjectAssociation.project-summary" bundle="RESEARCHER_RESOURCES" type="net.sourceforge.fenixedu.domain.research.project.ProjectEventAssociation">
+	<slot name="project.title"/>
+	<slot name="role"/>
+</schema>
+
+<schema name="eventUnitParticipation.summary" bundle="RESEARCHER_RESOURCES" type="net.sourceforge.fenixedu.domain.research.event.EventParticipation">
+	<slot name="party.name"/>
+	<slot name="role"/>
+</schema>
+
+<schema name="eventParticipation.create-defaults" bundle="RESEARCHER_RESOURCES" type="net.sourceforge.fenixedu.domain.research.event.EventParticipation">
+	<slot name="event.name" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredMultiLanguageStringValidator">
+		<property name="size" value="75"/>
+	</slot>
+	<slot name="event.eventType"/>
+	<slot name="event.eventLocation"/>
+	<slot name="event.startDate" layout="year-month" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+	<slot name="event.endDate" layout="year-month"/> 
+	<slot name="event.fee"/> 
+	<slot name="role" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+</schema>
+
+<schema name="event.edit-defaults" bundle="RESEARCHER_RESOURCES" type="net.sourceforge.fenixedu.domain.research.event.Event">
+	<slot name="name" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredMultiLanguageStringValidator">
+		<property name="size" value="75"/>
+	</slot>
+	<slot name="eventType"/>
+	<slot name="eventLocation"/>
+	<slot name="startDate" layout="year-month" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+	<slot name="endDate" layout="year-month"/> 
+	<slot name="fee"/> 
+</schema>
+
+<schema name="eventParticipants.edit-role" bundle="RESEARCHER_RESOURCES" type="net.sourceforge.fenixedu.domain.research.event.EventParticipation">
+	<slot name="party.name" read-only="true"/>
+	<slot name="role"/>
+</schema>
+
+<schema name="eventParticipation.internalPerson.creation" type="net.sourceforge.fenixedu.dataTransferObject.research.event.EventParticipantSimpleCreationBean" bundle="RESEARCHER_RESOURCES">
+	<slot name="person" layout="autoComplete" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredAutoCompleteSelectionValidator">
+		<property name="size" value="70"/>
+		<property name="rawSlotName" value="personName"/>
+		<property name="labelField" value="name"/>
+		<property name="indicatorShown" value="true"/>
+		<property name="serviceName" value="SearchObjects"/>
+		<property name="serviceArgs" value="slot=name"/>
+		<property name="className" value="net.sourceforge.fenixedu.domain.Person"/>				
+		<property name="minChars" value="4"/>
+	</slot>
+	<slot name="role" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+</schema>
+
+<schema name="eventParticipation.externalPerson.simpleCreation" type="net.sourceforge.fenixedu.dataTransferObject.research.event.EventParticipantSimpleCreationBean" bundle="RESEARCHER_RESOURCES">
+	<slot name="externalPerson" layout="autoComplete" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		<property name="size" value="70"/>
+		<property name="rawSlotName" value="personName"/>
+		<property name="labelField" value="person.name"/>
+		<property name="format" value="${person.name} - ${person.externalPerson.institutionUnit.name}"/>
+		<property name="indicatorShown" value="true"/>		
+		<property name="serviceName" value="SearchObjects"/>
+		<property name="serviceArgs" value="slot=person.name"/>
+		<property name="className" value="net.sourceforge.fenixedu.domain.ExternalPerson"/>				
+		<property name="minChars" value="4"/>
+	</slot>
+	<slot name="role" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+</schema>
+
+<schema name="eventParticipation.externalPerson.fullCreation" type="net.sourceforge.fenixedu.dataTransferObject.research.event.EventParticipantFullCreationBean" bundle="RESEARCHER_RESOURCES">
+	<slot name="personName" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" read-only="true"/>
+	<slot name="organization" layout="autoComplete" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		<property name="size" value="40"/>
+		<property name="rawSlotName" value="organizationName"/>
+		<property name="labelField" value="name"/>
+		<property name="indicatorShown" value="true"/>		
+		<property name="serviceName" value="SearchExternalUnits"/>
+		<property name="serviceArgs" value="slot=name"/>
+		<property name="className" value="net.sourceforge.fenixedu.domain.organizationalStructure.Unit"/>				
+		<property name="minChars" value="4"/>
+	</slot>
+	<slot name="role" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+</schema>
+
+<schema name="eventUnitParticipation.creation" type="net.sourceforge.fenixedu.dataTransferObject.research.event.EventParticipantUnitCreationBean" bundle="RESEARCHER_RESOURCES">
+	<slot name="unit" layout="autoComplete" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		<property name="size" value="50"/>
+		<property name="rawSlotName" value="unitName"/>
+		<property name="labelField" value="name"/>
+		<property name="indicatorShown" value="true"/>		
+		<property name="serviceName" value="SearchObjects"/>
+		<property name="serviceArgs" value="slot=name"/>
+		<property name="className" value="net.sourceforge.fenixedu.domain.organizationalStructure.Unit"/>				
+		<property name="minChars" value="5"/>
+	</slot>
+	<slot name="role" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+</schema>
+
+<schema name="eventProjectAssociations.edit-role" bundle="RESEARCHER_RESOURCES" type="net.sourceforge.fenixedu.domain.research.project.ProjectEventAssociation">
+	<slot name="project.title" read-only="true"/>
+	<slot name="project.projectType" read-only="true"/>
+	<slot name="role"/>
+</schema>
+
+<schema name="eventProjectAssociation.simpleCreation" type="net.sourceforge.fenixedu.dataTransferObject.research.event.EventProjectAssociationSimpleCreationBean" bundle="RESEARCHER_RESOURCES">
+	<slot name="project" layout="autoComplete" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		<property name="size" value="50"/>
+		<property name="rawSlotName" value="projectTitle"/>
+		<property name="labelField" value="text"/>
+		<property name="indicatorShown" value="true"/>		
+		<property name="serviceName" value="SearchObjectsByMultiLanguageString"/>
+		<property name="serviceArgs" value="slot=title"/>
+		<property name="className" value="net.sourceforge.fenixedu.domain.research.project.Project"/>				
+		<property name="minChars" value="5"/>
+	</slot>
+	<slot name="role" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+</schema>
+
+<schema name="eventProjectAssociation.fullCreation" type="net.sourceforge.fenixedu.dataTransferObject.research.event.EventProjectAssociationFullCreationBean" bundle="RESEARCHER_RESOURCES">
+	<slot name="projectTitle" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" read-only="true"/>
+	<slot name="projectType" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>	
+	<slot name="role" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+</schema>
+
+
 
 <!-- SCHEMAS FOR PATENTS MANAGEMENT -->
 <schema name="patent-default" type="net.sourceforge.fenixedu.domain.research.result.patent.ResultPatent" bundle="RESEARCHER_RESOURCES">

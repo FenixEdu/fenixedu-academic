@@ -60,6 +60,8 @@
             <forward name="Success" path="viewCurriculum"/>
         </action>
         
+   		<!--  INTERESTS  -->
+        
         <action path="/interests/interestsManagement"
                 parameter="method" 
                 type="net.sourceforge.fenixedu.presentationTier.Action.research.interest.InterestsManagementDispatchAction">
@@ -68,9 +70,10 @@
 		    <forward name="InsertNewInterest" path="interests.insert.interest"/>
 		</action>
 
+		<!--  PROJECTS  -->
+
         <action path="/projects/projectsManagement" parameter="method" type="net.sourceforge.fenixedu.presentationTier.Action.research.project.ProjectsManagementDispatchAction">
 		    <forward name="Success" path="projects.projectsManagement"/>
-		    <forward name="ProjectSelected" path="projects.editProject"/>
 		</action>
         
 		<action path="/projects/viewProject"
@@ -78,7 +81,6 @@
 				scope="request"
 				parameter="method">
 			<forward name="ViewProject" path="projects.viewProject"/>
-		    <forward name="Success" path="projects.editProject"/>
 		</action>
 
 		<action path="/projects/createProject"
@@ -99,13 +101,35 @@
 			<forward name="EditProjectParticipantUnits" path="projects.editProjectParticipantUnits"/>
 		</action>
 		
-		<action path="/events/eventsManagement" 
-				type="net.sourceforge.fenixedu.presentationTier.Action.research.event.EventsManagementAction"
-				parameter="method">
-			<forward name="Success" path="events.viewEvents"/>
-			<forward name="new" path="events.newEvent"/>
-			<forward name="edit" path="events.edit.editEvent"/>
+		<!--  EVENTS  -->
+		<action path="/events/eventsManagement" parameter="method" type="net.sourceforge.fenixedu.presentationTier.Action.research.event.EventsManagementDispatchAction">
+		    <forward name="Success" path="events.eventsManagement"/>
 		</action>
+		
+		<action path="/events/viewEvent"
+				type="net.sourceforge.fenixedu.presentationTier.Action.research.event.ViewEventDispatchAction"
+				scope="request"
+				parameter="method">
+			<forward name="ViewEvent" path="events.viewEvent"/>
+		</action>
+
+		<action path="/events/createEvent"
+				type="net.sourceforge.fenixedu.presentationTier.Action.research.event.CreateEventDispatchAction"
+				scope="request"
+				parameter="method">
+			<forward name="CreateEvent" path="events.createEvent"/>
+		    <forward name="Success" path="events.eventsManagement"/>
+		</action>
+
+		<action path="/events/editEvent"
+				type="net.sourceforge.fenixedu.presentationTier.Action.research.event.EditEventDispatchAction"
+				scope="request"
+				parameter="method">
+			<forward name="EditEventData" path="events.editEventData"/>
+			<forward name="EditEventParticipants" path="events.editEventParticipants"/>
+			<forward name="EditEventProjectAssociations" path="events.editEventProjectAssociations"/>
+			<forward name="EditEventParticipantUnits" path="events.editEventParticipantUnits"/>
+		</action>		
 		
         <!-- Result Patents Management Action Mapping -->
 		<action path="/patents/patentsManagement"

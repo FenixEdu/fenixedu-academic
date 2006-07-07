@@ -23,5 +23,13 @@ public class EventParticipation extends EventParticipation_Base {
         General_Chair,
         Invited_Speaker,
         Reviewer;
+        
+        public static EventParticipationRole getDefaultUnitRoleType(){
+            return Invited_Speaker;
+        }
+        
+        public static EventParticipationRole getDefaultPersonRoleType(){
+            return Invited_Speaker;
+        }
     }
 }

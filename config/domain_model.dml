@@ -3314,12 +3314,12 @@ class net.sourceforge.fenixedu.domain.research.project.ProjectParticipation exte
 }
 
 class net.sourceforge.fenixedu.domain.research.event.Event extends net.sourceforge.fenixedu.domain.DomainObject{
+	MultiLanguageString name;
+	EventType eventType;
 	String eventLocation;
 	YearMonthDay startDate;
 	YearMonthDay endDate;
 	Boolean fee;
-	EventType eventType;
-	MultiLanguageString name;
 }
 
 class net.sourceforge.fenixedu.domain.research.event.EventParticipation extends net.sourceforge.fenixedu.domain.DomainObject{

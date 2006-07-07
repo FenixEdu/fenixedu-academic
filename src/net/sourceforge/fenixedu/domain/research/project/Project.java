@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.util.MultiLanguageString;
 
 import org.joda.time.Period;
 
@@ -24,6 +25,13 @@ public class Project extends Project_Base {
         super();
         //Only internal projects are created
         this.setProjectType(ProjectType.INTERNAL_PROJECT);
+        setRootDomainObject(RootDomainObject.getInstance());
+    }
+   
+    public  Project(MultiLanguageString title, ProjectType type) {
+        super();
+        this.setProjectType(type);
+        this.setTitle(title);
         setRootDomainObject(RootDomainObject.getInstance());
     }
     

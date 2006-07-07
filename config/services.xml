@@ -9596,6 +9596,51 @@
 		</filterChains>
 	</service> 
 	<service>
+		<name>DeleteResearchEvent</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.research.event.DeleteResearchEvent</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		<filterChains>
+			<chain name="ResearcherAuthorization" />
+		</filterChains>
+	</service> 
+	<service>
+		<name>CreateEventParticipant</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.research.event.CreateEventParticipant</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		<filterChains>
+			<chain name="ResearcherAuthorization" />
+		</filterChains>
+	</service> 
+	<service>
+		<name>DeleteEventParticipant</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.research.event.DeleteEventParticipant</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		<filterChains>
+			<chain name="ResearcherAuthorization" />
+		</filterChains>
+	</service> 
+	<service>
+		<name>DeleteEventProjectAssociation</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.research.event.DeleteEventProjectAssociation</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		<filterChains>
+			<chain name="ResearcherAuthorization" />
+		</filterChains>
+	</service> 
+	<service>
+		<name>CreateEventProjectAssociation</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.research.event.CreateEventProjectAssociation</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		<filterChains>
+			<chain name="ResearcherAuthorization" />
+		</filterChains>
+	</service> 
+	<service>
 		<name>ChangeResearchInterestOrder</name>
 		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.research.interest.ChangeResearchInterestOrder</implementationClass>
 		<description />
