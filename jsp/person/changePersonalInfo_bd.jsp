@@ -251,7 +251,7 @@
           <!-- Work Phome -->
           <tr>
             <td width="15%"><bean:message key="label.person.workPhone" /></td>
-            <td><html:text property="workPhone"/>&nbsp;
+            <td><html:text property="workPhone" maxlength="20"/>&nbsp;
 			<bean:message key="label.person.publicData" /></td>
           </tr>
           <!-- E-Mail -->
