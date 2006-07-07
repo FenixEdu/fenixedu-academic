@@ -81,7 +81,7 @@
     <slot name="nome">
         <validator class="net.sourceforge.fenixedu.renderers.validators.RegexpValidator">
             <property name="regexp" value="\p{Space}*[^ ]+\p{Space}+[^ ]+.*"/>
-            <property name="message" value="Escreva pelo menos o primeiro e último nome"/>
+            <property name="message" value="Escreva pelo menos o primeiro e Ãºltimo nome"/>
             <property name="key" value="false"/>
         </validator>
         <property name="size" value="50"/>
@@ -103,7 +103,7 @@
     <slot name="nome">
         <validator class="net.sourceforge.fenixedu.renderers.validators.RegexpValidator">
             <property name="regexp" value="\p{Space}*[^ ]+\p{Space}+[^ ]+.*"/>
-            <property name="message" value="Escreva pelo menos o primeiro e último nome"/>
+            <property name="message" value="Escreva pelo menos o primeiro e Ãºltimo nome"/>
             <property name="key" value="false"/>
         </validator>
         <property name="size" value="50"/>
@@ -120,7 +120,7 @@
     <slot name="nome">
         <validator class="net.sourceforge.fenixedu.renderers.validators.RegexpValidator">
             <property name="regexp" value="\p{Space}*[^ ]+\p{Space}+[^ ]+.*"/>
-            <property name="message" value="Escreva pelo menos o primeiro e último nome"/>
+            <property name="message" value="Escreva pelo menos o primeiro e Ãºltimo nome"/>
             <property name="key" value="false"/>
         </validator>
         <property name="size" value="50"/>
@@ -334,7 +334,7 @@
 				<property name="regexp"
 					value="\p{Space}*[^ ]+\p{Space}+[^ ]+.*" />
 				<property name="message"
-					value="Escreva pelo menos o primeiro e último nome" />
+					value="Escreva pelo menos o primeiro e Ãºltimo nome" />
 				<property name="key" value="false" />
 			</validator>
 			<property name="size" value="50" />
@@ -512,74 +512,100 @@
 		<slot name="description" layout="rich-text">
 			<property name="safe" value="true"/>
 			<property name="config" value="advanced"/>
-			<property name="columns" value="75"/>
-			<property name="rows" value="30"/>
+			<property name="columns" value="60"/>
+			<property name="rows" value="20"/>
+    	    <property name="eachClasses" value="multi-language-line"/>	
+    	    <property name="classes" value="pbottom3"/>
 		</slot>
 		<slot name="history" layout="rich-text">
 			<property name="safe" value="true"/>
 			<property name="config" value="advanced"/>
-			<property name="columns" value="75"/>
-			<property name="rows" value="30"/>
+			<property name="columns" value="60"/>
+			<property name="rows" value="20"/>
+    	    <property name="eachClasses" value="multi-language-line"/>
+    	    <property name="classes" value="pbottom3"/>
 		</slot>
 		<slot name="objectives" layout="rich-text">
 			<property name="safe" value="true"/>
 			<property name="config" value="advanced"/>
-			<property name="columns" value="75"/>
-			<property name="rows" value="30"/>
+			<property name="columns" value="60"/>
+			<property name="rows" value="20"/>
+    	    <property name="eachClasses" value="multi-language-line"/>
+    	    <property name="classes" value="pbottom3"/>
 		</slot>
 		<slot name="designedFor" layout="rich-text">
 			<property name="safe" value="true"/>
 			<property name="config" value="advanced"/>
-			<property name="columns" value="75"/>
-			<property name="rows" value="30"/>
+			<property name="columns" value="60"/>
+			<property name="rows" value="20"/>
+    	    <property name="eachClasses" value="multi-language-line"/>
+    	    <property name="classes" value="pbottom3"/>
 		</slot>
 		<slot name="professionalExits" layout="rich-text">
 			<property name="safe" value="true"/>
 			<property name="config" value="advanced"/>
-			<property name="columns" value="75"/>
-			<property name="rows" value="30"/>			
+			<property name="columns" value="60"/>
+			<property name="rows" value="20"/>
+    	    <property name="eachClasses" value="multi-language-line"/>
+    	    <property name="classes" value="pbottom3"/>
 		</slot>
 		<slot name="operationalRegime" layout="rich-text">
 			<property name="safe" value="true"/>
 			<property name="config" value="advanced"/>
-			<property name="columns" value="75"/>
-			<property name="rows" value="30"/>
+			<property name="columns" value="60"/>
+			<property name="rows" value="20"/>
+    	    <property name="eachClasses" value="multi-language-line"/>
+    	    <property name="classes" value="pbottom3"/>
 		</slot>
 		<slot name="gratuity" layout="rich-text">
 			<property name="safe" value="true"/>
 			<property name="config" value="advanced"/>
-			<property name="columns" value="75"/>
-			<property name="rows" value="30"/>
+			<property name="columns" value="60"/>
+			<property name="rows" value="20"/>
+    	    <property name="eachClasses" value="multi-language-line"/>
+    	    <property name="classes" value="pbottom3"/>
 		</slot>
 		<slot name="schoolCalendar" layout="rich-text">
 			<property name="safe" value="true"/>
 			<property name="config" value="advanced"/>
-			<property name="columns" value="75"/>
+			<property name="columns" value="60"/>
+    	    <property name="eachClasses" value="multi-language-line"/>
+    	    <property name="classes" value="pbottom3"/>
 		</slot>
 		<slot name="candidacyPeriod" layout="rich-text">
 			<property name="safe" value="true"/>
 			<property name="config" value="advanced"/>
-			<property name="columns" value="75"/>
+			<property name="columns" value="60"/>
+    	    <property name="eachClasses" value="multi-language-line"/>
+    	    <property name="classes" value="pbottom3"/>
 		</slot>
 		<slot name="selectionResultDeadline" layout="rich-text">
 			<property name="safe" value="true"/>
 			<property name="config" value="advanced"/>
-			<property name="columns" value="75"/>
+			<property name="columns" value="60"/>
+    	    <property name="eachClasses" value="multi-language-line"/>
+    	    <property name="classes" value="pbottom3"/>
 		</slot>
 		<slot name="enrolmentPeriod" layout="rich-text">
 			<property name="safe" value="true"/>
 			<property name="config" value="advanced"/>
-			<property name="columns" value="75"/>
+			<property name="columns" value="60"/>
+    	    <property name="eachClasses" value="multi-language-line"/>~
+    	    <property name="classes" value="pbottom3"/>
 		</slot>
 		<slot name="additionalInfo" layout="rich-text">
 			<property name="safe" value="true"/>
 			<property name="config" value="advanced"/>
-			<property name="columns" value="75"/>
+			<property name="columns" value="60"/>
+    	    <property name="eachClasses" value="multi-language-line"/>
+    	    <property name="classes" value="pbottom3"/>
 		</slot>
 		<slot name="links" layout="rich-text">
 			<property name="safe" value="true"/>
 			<property name="config" value="advanced"/>
-			<property name="columns" value="75"/>
+			<property name="columns" value="60"/>
+    	    <property name="eachClasses" value="multi-language-line"/>
+    	    <property name="classes" value="pbottom3"/>
 		</slot>
 	</schema>
 
@@ -587,22 +613,30 @@
 		<slot name="testIngression" layout="rich-text">
 			<property name="safe" value="true"/>
 			<property name="config" value="advanced"/>
-			<property name="columns" value="75"/>
+			<property name="columns" value="60"/>
+    	    <property name="eachClasses" value="multi-language-line"/>
+    	    <property name="classes" value="pbottom3"/>
 		</slot>
 		<slot name="classifications" layout="rich-text">
 			<property name="safe" value="true"/>
 			<property name="config" value="advanced"/>
-			<property name="columns" value="75"/>
+			<property name="columns" value="60"/>
+			<property name="eachClasses" value="multi-language-line"/>
+    	    <property name="classes" value="pbottom3"/>
 		</slot>
 		<slot name="accessRequisites" layout="rich-text">
 			<property name="safe" value="true"/>
 			<property name="config" value="advanced"/>
-			<property name="columns" value="75"/>
+			<property name="columns" value="60"/>
+			<property name="eachClasses" value="multi-language-line"/>
+    	    <property name="classes" value="pbottom3"/>
 		</slot>
 		<slot name="candidacyDocuments" layout="rich-text">
 			<property name="safe" value="true"/>
 			<property name="config" value="advanced"/>
-			<property name="columns" value="75"/>
+			<property name="columns" value="60"/>
+			<property name="eachClasses" value="multi-language-line"/>
+    	    <property name="classes" value="pbottom3"/>
 		</slot>
 		<slot name="driftsInitial" layout="rich-text">
 	        <property name="size" value="3"/>
@@ -628,14 +662,18 @@
 		<slot name="qualificationLevel" layout="rich-text">
 			<property name="safe" value="true"/>
 			<property name="config" value="advanced"/>
-			<property name="columns" value="75"/>
-			<property name="rows" value="30"/>
+			<property name="columns" value="60"/>
+			<property name="rows" value="20"/>
+			<property name="eachClasses" value="multi-language-line"/>
+    	    <property name="classes" value="pbottom3"/>
 		</slot>
 		<slot name="recognitions" layout="rich-text">
 			<property name="safe" value="true"/>
 			<property name="config" value="advanced"/>
-			<property name="columns" value="75"/>
-			<property name="rows" value="30"/>
+			<property name="columns" value="60"/>
+			<property name="rows" value="20"/>
+			<property name="eachClasses" value="multi-language-line"/>
+    	    <property name="classes" value="pbottom3"/>
 		</slot>
 	</schema>
 
@@ -643,14 +681,18 @@
 		<slot name="description" layout="rich-text">
 			<property name="safe" value="true"/>
 			<property name="config" value="advanced"/>
-			<property name="columns" value="75"/>
-			<property name="rows" value="30"/>
+			<property name="columns" value="60"/>
+			<property name="rows" value="20"/>
+			<property name="eachClasses" value="multi-language-line"/>
+    	    <property name="classes" value="pbottom3"/>
 		</slot>
 		<slot name="descriptionEn" layout="rich-text">
 			<property name="safe" value="true"/>
 			<property name="config" value="advanced"/>
-			<property name="columns" value="75"/>
-			<property name="rows" value="30"/>
+			<property name="columns" value="60"/>
+			<property name="rows" value="20"/>
+			<property name="eachClasses" value="multi-language-line"/>
+    	    <property name="classes" value="pbottom3"/>
 		</slot>
 	</schema>
 
@@ -709,5 +751,4 @@
 	&payments;
 	&candidacy;
 	&execution;
-	&cron;
 </schemas>

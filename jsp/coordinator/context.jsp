@@ -9,12 +9,12 @@
 <logic:present name="<%= SessionConstants.MASTER_DEGREE %>"  >
 
 	<bean:define id="infoExecutionDegree" name="<%= SessionConstants.MASTER_DEGREE %>" scope="session"/>
-		<p><em class="infoop4">
+		<em>
 		<bean:message bundle="ENUMERATION_RESOURCES" key="<%=((InfoExecutionDegree)infoExecutionDegree).getInfoDegreeCurricularPlan().getInfoDegree().getTipoCurso().toString()%>" />
 		<bean:message bundle="GLOBAL_RESOURCES" key="in"/>
 		<bean:write name="infoExecutionDegree" property="infoDegreeCurricularPlan.infoDegree.nome" />&nbsp;&nbsp;>&nbsp;&nbsp;
 		<bean:write name="infoExecutionDegree" property="infoDegreeCurricularPlan.name" />
-		</em></p>
+		</em>
 
 	<logic:equal name="infoExecutionDegree" property="bolonha" value="false">
 		<logic:equal name="infoExecutionDegree" property="infoDegreeCurricularPlan.infoDegree.tipoCurso" value="<%= DegreeType.MASTER_DEGREE.toString() %>">

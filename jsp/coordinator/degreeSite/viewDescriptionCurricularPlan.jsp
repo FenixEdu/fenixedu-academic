@@ -4,7 +4,7 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 
-<h2><bean:message key="title.coordinator.degreeSite.edit"/></h2>
+<h2 class="mbottom2"><bean:message key="title.coordinator.degreeSite.edit"/></h2>
 
 <p>
 	<span class="error">
@@ -20,7 +20,12 @@
         <bean:define id="degreeCurricularPlanID" name="degreeCurricularPlanID" scope="request" />
 		<html:hidden property="degreeCurricularPlanID" value="<%=  degreeCurricularPlanID.toString() %>" />	
 		
-		<fr:edit name="degreeCurricularPlan" type="net.sourceforge.fenixedu.domain.DegreeCurricularPlan" schema="degree.curricular.plan.description" nested="true"/>
+		<fr:edit name="degreeCurricularPlan" type="net.sourceforge.fenixedu.domain.DegreeCurricularPlan" schema="degree.curricular.plan.description" nested="true">
+		    <fr:layout>
+	    	    <fr:property name="classes" value="thtop width8em"/>
+	        	<fr:property name="columnClasses" value=",pbottom1,valigntop"/>
+		    </fr:layout>
+		</fr:edit>
 	
 		<p style="margin-top: 2em;">
 			<html:submit styleClass="inputbutton">

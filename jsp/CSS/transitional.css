@@ -427,7 +427,17 @@ margin: 0;
 .width8em { width: 8em; } /*used in forums*/
 
 .toprint { display: none;}
-.lowlight1 { /*font-size: 0.8em;*/ color: #999; }
+.lowlight1 { color: #999; }
 .bgcolor1 { background-color: #fcfcf0; }
 .bgcolor2 { background-color: #fbfbdd; }
 .bgcolor3 { background-color: #fafaf6; }
+.bgcolor4 { background-color: #f8f8f8; }
+
+
+/* Multi Language */
+.multi-language-line {
+margin-bottom: 2em;
+}
+.multi-language-line select {
+margin-top: 0.5em;
+}
