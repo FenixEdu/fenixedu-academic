@@ -10,6 +10,7 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 
 import org.joda.time.Duration;
 import org.joda.time.MutablePeriod;
+import org.joda.time.PeriodType;
 import org.joda.time.format.PeriodFormatter;
 import org.joda.time.format.PeriodFormatterBuilder;
 
@@ -32,7 +33,7 @@ public class EmployeeWorkSheet implements Serializable {
     public String getTotalBalanceString() {
         PeriodFormatter fmt = new PeriodFormatterBuilder().printZeroAlways().appendHours()
                 .appendSeparator(":").minimumPrintedDigits(2).appendMinutes().toFormatter();
-        MutablePeriod finalTotalBalance = new MutablePeriod(getTotalBalance().getMillis());
+        MutablePeriod finalTotalBalance = new MutablePeriod(getTotalBalance().getMillis(), PeriodType.time());
         if (getTotalBalance().toPeriod().getMinutes() < 0) {
             finalTotalBalance.setMinutes(-getTotalBalance().toPeriod().getMinutes());
             if (getTotalBalance().toPeriod().getHours() == 0) {
@@ -45,7 +46,7 @@ public class EmployeeWorkSheet implements Serializable {
     public String getUnjustifiedBalanceString() {
         PeriodFormatter fmt = new PeriodFormatterBuilder().printZeroAlways().appendHours()
                 .appendSeparator(":").minimumPrintedDigits(2).appendMinutes().toFormatter();
-        MutablePeriod finalUnjustifiedBalance = new MutablePeriod(getUnjustifiedBalance().getMillis());
+        MutablePeriod finalUnjustifiedBalance = new MutablePeriod(getUnjustifiedBalance().getMillis(), PeriodType.time());
         return fmt.print(finalUnjustifiedBalance);
     }
 
