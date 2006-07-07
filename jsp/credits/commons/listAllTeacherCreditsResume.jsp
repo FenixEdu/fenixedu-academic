@@ -77,17 +77,16 @@
 			<th><bean:message key="label.teacherService.credits.mandatory"/></th>						
 			<th><bean:message key="label.teacherService.credits.final"/></th>		
 			<th><bean:message key="label.teacherService.credits.total"/></th>			
-		</tr>
-	<% double totalCreditsBalance = 0; %>		
+		</tr>	
 	<logic:iterate id="creditLineDTO" name="creditsLines" indexId="nrLine">
 		<tr>			
 			<bean:define id="executionPeriod" name="creditLineDTO" property="executionPeriod"/>		
+			<bean:define id="balanceOfCredits" name="creditLineDTO" property="balanceOfCredits"/>	
 			<logic:equal name="nrLine" value="0">
 				<td class="aleft">										
 					<bean:message key="label.teacherService.credits.until"/> <bean:write name="executionPeriod" property="executionYear.year"/>
 				</td>
-				<bean:define id="pastCredits" name="creditLineDTO" property="pastServiceCredits"/>							
-				<% totalCreditsBalance = ((Double)pastCredits).doubleValue(); %>
+				<bean:define id="pastCredits" name="creditLineDTO" property="pastServiceCredits"/>															
 				<td></td>
 				<td></td>
 				<td></td>
@@ -100,8 +99,8 @@
 				<td></td>
 				<td></td>
 				<td class="aright"><span class="asterisk01">*</span>								
-					<fmt:formatNumber minFractionDigits="2" pattern="###.##">
-						<%= totalCreditsBalance %>
+					<fmt:formatNumber pattern="###.##">
+						<%= ((Double)pastCredits).doubleValue() %>
 					</fmt:formatNumber>
 				</td>			
 			</logic:equal>
@@ -126,27 +125,28 @@
 						<%= ((Integer)mandatoryLessonHours).intValue() %>
 					</fmt:formatNumber>
 				</td>
-				<% totalCreditsBalance += ((Double)totalLineCredits).doubleValue() - ((Integer)mandatoryLessonHours).intValue(); %>		
+				<% double totalCredits = (Math.round(((((Double)totalLineCredits).doubleValue() - ((Integer)mandatoryLessonHours).intValue()) * 100.0))) / 100.0; %>				
 				<td>
 					<fmt:formatNumber minFractionDigits="2" pattern="###.##">
-						<%= (Math.round(((((Double)totalLineCredits).doubleValue() - ((Integer)mandatoryLessonHours).intValue()) * 100.0))) / 100.0 %>
+						<%= totalCredits %>
 					</fmt:formatNumber>
 				</td>
 				<logic:equal name="creditsLinesSize" value='<%= (new Integer(nrLine.intValue() + 1)).toString() %>'>
 					<td class="highlight01 aright">	
 						<bean:message key="label.teacherService.credits.totalSum"/>
-						<fmt:formatNumber minFractionDigits="2" pattern="###.##">							
-							<%= (Math.round((totalCreditsBalance * 100.0))) / 100.0 %>
+						<fmt:formatNumber minFractionDigits="2" pattern="###.##">
+							<%= ((Math.round(((((Double)balanceOfCredits).doubleValue() + totalCredits) * 100.0))) / 100.0) %>
 						</fmt:formatNumber>
 					</td>
 				</logic:equal>
 				<logic:notEqual name="creditsLinesSize" value='<%= (new Integer(nrLine.intValue() + 1)).toString() %>'>
 					<td class="aright">						
 						<fmt:formatNumber minFractionDigits="2" pattern="###.##">
-							<%= (Math.round((totalCreditsBalance * 100.0))) / 100.0 %>
+							<%= ((Math.round(((((Double)balanceOfCredits).doubleValue() + totalCredits) * 100.0))) / 100.0) %>
 						</fmt:formatNumber>
 					</td>
-				</logic:notEqual>				
+				</logic:notEqual>
+				
 			</logic:notEqual>
 		</tr>
 	</logic:iterate>

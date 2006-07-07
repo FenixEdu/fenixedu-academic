@@ -4,6 +4,7 @@
 package net.sourceforge.fenixedu.dataTransferObject.credits;
 
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.teacher.TeacherService;
 
 /**
@@ -30,13 +31,15 @@ public class CreditLineDTO {
     private double serviceExemptionCredits = 0;
 
     private double pastServiceCredits = 0;
+    
+    private double balanceOfCredits = 0;
 
-    private int mandatoryLessonHours = 0;
+    private int mandatoryLessonHours = 0;       
 
     private ExecutionPeriod executionPeriod;
 
     public CreditLineDTO(ExecutionPeriod executionPeriod, TeacherService teacherService,
-            double managementCredits, double exemptionCredits, int lessonHours) {
+            double managementCredits, double exemptionCredits, int lessonHours, Teacher teacher) {
         
         setExecutionPeriod(executionPeriod);
         if (teacherService != null) {
@@ -46,8 +49,9 @@ public class CreditLineDTO {
             setTfcAdviseCredits(teacherService.getTeacherAdviseServiceCredits());
             setOtherCredits(teacherService.getOtherServiceCredits());
             setInstitutionWorkingHours(teacherService.getInstitutionWorkingHours());
-            setPastServiceCredits(teacherService.getPastServiceCredits());
-        }
+            setPastServiceCredits(teacherService.getPastServiceCredits());            
+        }       
+        setBalanceOfCredits(teacher.getBalanceOfCreditsUntil(executionPeriod.getPreviousExecutionPeriod()));
         setMandatoryLessonHours(lessonHours);
         setManagementCredits(managementCredits);
         setServiceExemptionCredits(exemptionCredits);
@@ -150,5 +154,13 @@ public class CreditLineDTO {
 
     public void setMasterDegreeCredits(double masterDegreeCredits) {
         this.masterDegreeCredits = masterDegreeCredits;
+    }
+
+    public double getBalanceOfCredits() {
+        return balanceOfCredits;
+    }
+
+    public void setBalanceOfCredits(double balanceOfCredits) {
+        this.balanceOfCredits = balanceOfCredits;
     }
 }

@@ -2,6 +2,38 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-tiles.tld" prefix="tiles" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt" %>
+
+<style>
+	table.ts01 {
+	border-collapse: collapse;
+	margin: 1em 0;
+	}
+	table.ts01 th {
+	border: 1px solid #ccc;
+	background-color: #eee;
+	padding: 0.5em;
+	text-align: center;
+	}
+	table.ts01 td {
+	border: 1px solid #ccc;
+	background-color: #fff;
+	padding: 0.5em;
+	text-align: center;
+	}
+	table.ts01 .highlight01 {
+	background-color: #ffc;
+	}
+	table.ts01 .aleft {
+	text-align: left;
+	}
+	table.ts01 .aright {
+	text-align: right;
+	}
+	.asterisk01 {
+	color: #d42;
+	}		
+</style>
 
 <h2><bean:message key="label.departmentTeachersList.title"/></h2>
 <h3>
@@ -32,30 +64,41 @@
 <bean:define id="teachersCreditsListSize" name="teachersCreditsListSize"/>
 <u><bean:message key="label.departmentTeachersList.teachersFound" arg0="<%= teachersCreditsListSize.toString() %>"/></u>
 <br />
-<table class="tstyle1c">
+<table class="ts01">
 	<tr>
+		<th colspan="3"><bean:message key="label.teacher" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></th>		
+		<th colspan="8"><bean:message key="label.teacherService.credits.resume"/></th>				
+		<th colspan="4"><bean:message key="label.teacherService.credits"/></th>	
+		<th></th>
+	</tr>
+	<tr>		
 		<th>
 			<html:link page="/prepareListDepartmentTeachersCredits.do?sortBy=number" paramProperty="executionPeriodId">
 				<bean:message key="label.departmentTeachersList.teacherNumber" />
 			</html:link>
 		</th>
-		<th class="aleft">
+		<th>
 			<html:link page="/prepareListDepartmentTeachersCredits.do?sortBy=name" paramProperty="executionPeriodId">
 				<bean:message key="label.departmentTeachersList.teacherName" />
 			</html:link>
 		</th>
-		<th>			
-			<bean:message key="label.departmentTeachersList.teacherCategory" />
-		</th>
-		<th>
-			<bean:message key="label.credits.resume" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>
-		</th>
-		<th>
-			<bean:message key="label.departmentTeachersList.teacherCreditsSheet.details" />
-		</th>
-		
+		<th><bean:message key="label.departmentTeachersList.teacherCategory" /></th>		
+		<th><bean:message key="label.credits.lessons.simpleCode" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></th>			
+		<th><bean:message key="label.credits.supportLessons.simpleCode" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></th>
+		<th><bean:message key="label.credits.masterDegreeLessons.simpleCode" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></th>			
+		<th><bean:message key="label.credits.degreeFinalProjectStudents.simpleCode" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></th>
+		<th><bean:message key="label.credits.institutionWorkTime.simpleCode" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></th>
+		<th><bean:message key="label.credits.otherTypeCreditLine.simpleCode" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></th>
+		<th><bean:message key="label.credits.managementPositions.simpleCode" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></th>
+		<th><bean:message key="label.credits.serviceExemptionSituations.simpleCode" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></th>
+		<th><bean:message key="label.teacherService.credits.obtained"/></th>
+		<th><bean:message key="label.teacherService.credits.mandatory"/></th>						
+		<th><bean:message key="label.teacherService.credits.final"/></th>		
+		<th><bean:message key="label.teacherService.credits.total"/></th>	
+		<th><bean:message key="label.departmentTeachersList.teacherCreditsSheet.details" /></th>
 	</tr>
-	<logic:iterate id="teachersCredits" name="teachersCreditsList">
+	<logic:iterate id="teachersCredits" name="teachersCreditsList">	
+		<bean:define id="executionPeriod" name="teachersCredits" property="creditLineDTO.executionPeriod"/>	
 		<tr>	
 			<td>
 				<bean:write name="teachersCredits" property="teacher.teacherNumber"/>
@@ -73,16 +116,60 @@
 					--
 				</logic:notPresent>
 			</td>
-			<td>
-				<tiles:insert definition="creditsResumeLine" flush="false">
+			<bean:define id="totalLineCredits" name="teachersCredits" property="creditLineDTO.totalCredits"/>
+			<bean:define id="balanceOfCredits" name="teachersCredits" property="creditLineDTO.balanceOfCredits"/>
+			<bean:define id="mandatoryLessonHours" name="teachersCredits" property="creditLineDTO.mandatoryLessonHours"/>
+						
+			<% int mandatoryHours = ((Integer)mandatoryLessonHours).intValue(); %>	
+					
+			<logic:notEqual name="executionPeriod" property="executionYear.year" value="2002/2003">					
+				<tiles:insert definition="creditsResumeTableLine" flush="false">
 					<tiles:put name="creditLineDTO" beanName="teachersCredits" beanProperty="creditLineDTO"/>
-				</tiles:insert>
-			</td>
-			<td>
-				<html:link page='<%= "/showFullTeacherCreditsSheet.do?method=showTeacherCredits&page=1&amp;executionPeriodId=" + executionPeriodId %>' paramId="teacherId" paramName="teachersCredits" paramProperty="teacher.idInternal">
-					<bean:message key="link.view"/>
-				</html:link>
-			</td>
+				</tiles:insert>				
+				<td>
+					<fmt:formatNumber minFractionDigits="2" pattern="###.##">
+						<bean:write name="totalLineCredits"/>
+					</fmt:formatNumber>
+				</td>				
+				<td>
+					<fmt:formatNumber minFractionDigits="2" pattern="###.##">
+						<%= mandatoryHours %>
+					</fmt:formatNumber>
+				</td>																				
+				<% double totalCredits = (Math.round(((((Double)totalLineCredits).doubleValue() - mandatoryHours) * 100.0))) / 100.0; %>
+				<td>
+					<fmt:formatNumber minFractionDigits="2" pattern="###.##">					
+						<%= totalCredits %>
+					</fmt:formatNumber>
+				</td>	
+				<td>					
+					<fmt:formatNumber minFractionDigits="2" pattern="###.##">
+						<%= ((Math.round(((((Double)balanceOfCredits).doubleValue() + totalCredits) * 100.0))) / 100.0) %>
+					</fmt:formatNumber>
+				</td>
+				<td>
+					<html:link page='<%= "/showFullTeacherCreditsSheet.do?method=showTeacherCredits&page=1&amp;executionPeriodId=" + executionPeriodId %>' paramId="teacherId" paramName="teachersCredits" paramProperty="teacher.idInternal">
+						<bean:message key="link.view"/>
+					</html:link>
+				</td>				
+			</logic:notEqual>
+			<logic:equal name="executionPeriod" property="executionYear.year" value="2002/2003">				
+				<td style="text-align: center;">--</td>
+				<td style="text-align: center;">--</td>
+				<td style="text-align: center;">--</td>
+				<td style="text-align: center;">--</td>
+				<td style="text-align: center;">--</td>
+				<td style="text-align: center;">--</td>
+				<td style="text-align: center;">--</td>
+				<td style="text-align: center;">--</td>
+				<td style="text-align: center;">--</td>
+				<td style="text-align: center;">--</td>
+				<td style="text-align: center;">--</td>
+				<td>
+					<%= ((Math.round((((Double)balanceOfCredits).doubleValue() * 100.0))) / 100.0) %>
+				</td>
+				<td style="text-align: center;">--</td>																		
+			</logic:equal>
 		</tr>
 	</logic:iterate>
 </table>

@@ -98,7 +98,7 @@ public class ShowTeacherCreditsDispatchAction extends FenixDispatchAction {
         }
 
         CreditLineDTO creditLineDTO = new CreditLineDTO(executionPeriod, teacherService,
-                managementCredits, serviceExemptionCredits, mandatoryLessonHours);
+                managementCredits, serviceExemptionCredits, mandatoryLessonHours, teacher);
 
         request.setAttribute("creditLineDTO", creditLineDTO);
     } 

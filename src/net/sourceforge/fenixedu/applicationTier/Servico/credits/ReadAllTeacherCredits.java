@@ -25,19 +25,10 @@ import org.apache.commons.collections.Predicate;
 
 public class ReadAllTeacherCredits extends Service {
 
-    private static final Integer POINT_ZERO_EP_ID = 1;
-
     public List<CreditLineDTO> run(Integer teacherID) throws ExcepcaoPersistencia {
 
-        final Teacher teacher = rootDomainObject.readTeacherByOID(teacherID);
-        List<ExecutionPeriod> allExecutionPeriods = rootDomainObject.getExecutionPeriods();
-        ExecutionPeriod executionPeriod = (ExecutionPeriod) CollectionUtils.find(allExecutionPeriods,
-                new Predicate() {
-                    public boolean evaluate(Object arg0) {
-                        ExecutionPeriod executionPeriod = (ExecutionPeriod) arg0;
-                        return executionPeriod.getIdInternal().equals(POINT_ZERO_EP_ID);
-                    }
-                });
+        final Teacher teacher = rootDomainObject.readTeacherByOID(teacherID);        
+        ExecutionPeriod executionPeriod = ExecutionPeriod.readBySemesterAndExecutionYear(2, "2002/2003");        
 
         List<Category> categories = rootDomainObject.getCategorys();
         List<Category> monitorCategories = (List<Category>) CollectionUtils.select(categories, new Predicate(){
@@ -58,7 +49,7 @@ public class ReadAllTeacherCredits extends Service {
             }                      
             TeacherService teacherService = teacher.getTeacherServiceByExecutionPeriod(tempExecutionPeriod);
             CreditLineDTO creditLineDTO = new CreditLineDTO(tempExecutionPeriod, teacherService,
-                    managementCredits, serviceExemptionsCredits, mandatoryLessonHours);
+                    managementCredits, serviceExemptionsCredits, mandatoryLessonHours, teacher);
             creditLines.add(creditLineDTO);
             if (tempExecutionPeriod.getState().equals(PeriodState.CURRENT)) {
                 break;

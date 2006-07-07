@@ -88,7 +88,7 @@ public class ShowTeachersCreditsDepartmentListAction extends FenixAction {
                 TeacherService teacherService = teacher
                         .getTeacherServiceByExecutionPeriod(executionPeriod);
                 CreditLineDTO creditLineDTO = new CreditLineDTO(executionPeriod, teacherService,
-                        managementCredits, serviceExemptionsCredits, mandatoryLessonHours);
+                        managementCredits, serviceExemptionsCredits, mandatoryLessonHours, teacher);
                 TeacherWithCreditsDTO teacherWithCreditsDTO = new TeacherWithCreditsDTO(teacher,
                         category, creditLineDTO);
                 teachersCredits.add(teacherWithCreditsDTO);
