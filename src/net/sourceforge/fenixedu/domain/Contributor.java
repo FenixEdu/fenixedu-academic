@@ -27,6 +27,11 @@ public class Contributor extends Contributor_Base {
         this.setContributorAddress(contributorAddress);
     }    
 
+    public void delete() {
+        removeRootDomainObject();
+        super.deleteDomainObject();
+    }
+    
     public static Contributor readByContributorNumber(final Integer contributorNumber) {
         for (final Contributor contributor : RootDomainObject.getInstance().getContributors()) {
             if (contributor.getContributorNumber().equals(contributorNumber)) {
@@ -35,5 +40,5 @@ public class Contributor extends Contributor_Base {
         }
         return null;
     }
-
+    
 }
