@@ -128,7 +128,7 @@
 			<param-value>/@app.context@/</param-value>
 		</init-param>
 	</filter>
-<!--	<filter>
+	<filter>
 		<filter-name>DegreeForwardFilter</filter-name>
 		<filter-class>net.sourceforge.fenixedu.presentationTier.servlets.filters.DegreeForwardFilter</filter-class>
 		<init-param>
@@ -147,7 +147,7 @@
 			<param-name>app</param-name>
 			<param-value>/@app.context@/</param-value>
 		</init-param>
-	</filter>-->
+	</filter>
 	<filter>
 		<filter-name>CASFilter</filter-name>
 		<filter-class>net.sourceforge.fenixedu.presentationTier.servlets.filters.authentication.cas.CASFilter</filter-class>
@@ -226,10 +226,10 @@
 		<filter-name>ExamsForwardFilter</filter-name>
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
-<!-- 	<filter-mapping>
+ 	<filter-mapping>
 		<filter-name>DegreeForwardFilter</filter-name>
 		<url-pattern>/*</url-pattern>
-	</filter-mapping> -->
+	</filter-mapping>
 	<filter-mapping>
 		<filter-name>CheckUserViewFilter</filter-name>
 		<url-pattern>*.do</url-pattern>
