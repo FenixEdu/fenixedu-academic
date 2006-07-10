@@ -13,10 +13,6 @@
 <bean:define id="pageTitle" ><tiles:getAsString name="title" ignore="true" /></bean:define>
 <title><bean:message key="dot.title" bundle="GLOBAL_RESOURCES"/> - <bean:message name="pageTitle" bundle="GLOBAL_RESOURCES"/></title>
 
-<script language="JavaScript" type="text/javascript" src="<%= request.getContextPath() %>/javaScript/editor/html2xhtml.js"></script>
-<script language="JavaScript" type="text/javascript" src="<%= request.getContextPath() %>/javaScript/editor/richtext.js"></script>
-<script language="JavaScript" type="text/javascript" src="<%= request.getContextPath() %>/javaScript/editor/htmleditor.js"></script>
-
 </head>
 <body>
 <%-- Layout component parameters : title, context, header, navGeral, navLocal, body, footer --%>

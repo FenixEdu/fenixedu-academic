@@ -13,10 +13,6 @@
 <link href="<%= request.getContextPath() %>/CSS/transitional.css" rel="stylesheet" media="screen" type="text/css" />
 <script type="text/javascript" src="<%= request.getContextPath() %>/script/gesdis-scripting.js"></script>
 
-<script language="JavaScript" type="text/javascript" src="<%= request.getContextPath() %>/javaScript/editor/html2xhtml.js"></script>
-<script language="JavaScript" type="text/javascript" src="<%= request.getContextPath() %>/javaScript/editor/richtext.js"></script>
-<script language="JavaScript" type="text/javascript" src="<%= request.getContextPath() %>/javaScript/editor/htmleditor.js"></script>
-
 </head>
 <body>
 <%-- Layout component parameters : header, navLocal, body --%>
