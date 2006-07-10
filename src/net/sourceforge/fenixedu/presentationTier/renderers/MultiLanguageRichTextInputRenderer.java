@@ -1,7 +1,8 @@
 package net.sourceforge.fenixedu.presentationTier.renderers;
 
 import net.sourceforge.fenixedu.presentationTier.renderers.components.TinyMceEditor;
-import net.sourceforge.fenixedu.presentationTier.renderers.htmlEditor.SafeHtmlConverter;
+import net.sourceforge.fenixedu.renderers.components.HtmlActionLink;
+import net.sourceforge.fenixedu.renderers.components.HtmlContainer;
 import net.sourceforge.fenixedu.renderers.components.HtmlSimpleValueComponent;
 import net.sourceforge.fenixedu.renderers.components.converters.Converter;
 
@@ -61,6 +62,13 @@ public class MultiLanguageRichTextInputRenderer extends MultiLanguageTextInputRe
         super.configureInputComponent(textInput);
         
         textInput.setId(textInput.getName());
+    }
+
+    @Override
+    protected void configureLanguageContainer(HtmlContainer languageContainer, HtmlSimpleValueComponent input, HtmlSimpleValueComponent languageComponent, HtmlActionLink removeLink) {
+        languageContainer.addChild(languageComponent);
+        languageContainer.addChild(input);
+        languageContainer.addChild(removeLink);
     }
 
     @Override

@@ -213,6 +213,12 @@ public class MultiLanguageStringInputRenderer extends InputRenderer {
     
     protected void configureInputComponent(HtmlSimpleValueComponent textInput) {
     }
+    
+    protected void configureLanguageContainer(HtmlContainer languageContainer, HtmlSimpleValueComponent input, HtmlSimpleValueComponent languageComponent, HtmlActionLink removeLink) {
+        languageContainer.addChild(input);
+        languageContainer.addChild(languageComponent);
+        languageContainer.addChild(removeLink);
+    }
 
     protected Converter getConverter() {
         return new MultiLanguageStringConverter();
@@ -350,7 +356,6 @@ public class MultiLanguageStringInputRenderer extends InputRenderer {
             
             textInput.setName(getLocalName("text/" + index));
             textInput.setValue(value);
-            inputContainer.addChild(textInput);
 
             configureInputComponent(textInput);
             
@@ -363,13 +368,13 @@ public class MultiLanguageStringInputRenderer extends InputRenderer {
             languageComponent.setController(new UpdateLanguageController(textInput, index));
             languageComponent.setTargetSlot(null);
             languageComponent.setName(getLocalName("language/" + index));
-            inputContainer.addChild(languageComponent);
-                       
+
             HtmlActionLink removeLink = new HtmlActionLink(RenderUtils.getResourceString("renderers.language.remove"));
             removeLink.setVisible(allowRemove);
             removeLink.setName(getLocalName("remove/" + index));
             removeLink.setController(new RemoveLanguageController(container, inputContainer, index));
-            inputContainer.addChild(removeLink);
+            
+            configureLanguageContainer(inputContainer, textInput, languageComponent, removeLink);
 
             container.getChildren().add(container.getChildren().size() - 2, inputContainer);
             
