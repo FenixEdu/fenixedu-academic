@@ -11,12 +11,12 @@ import net.sourceforge.fenixedu.dataTransferObject.assiduousness.EmployeeWorkShe
 import net.sourceforge.fenixedu.dataTransferObject.assiduousness.WorkDaySheet;
 import net.sourceforge.fenixedu.domain.assiduousness.Assiduousness;
 import net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessRecord;
-import net.sourceforge.fenixedu.domain.assiduousness.DailyBalance;
 import net.sourceforge.fenixedu.domain.assiduousness.JustificationMotive;
 import net.sourceforge.fenixedu.domain.assiduousness.Leave;
 import net.sourceforge.fenixedu.domain.assiduousness.Schedule;
 import net.sourceforge.fenixedu.domain.assiduousness.WorkSchedule;
 
+import org.joda.time.DateMidnight;
 import org.joda.time.DateTime;
 import org.joda.time.Duration;
 import org.joda.time.Period;
@@ -27,7 +27,7 @@ public class ReadEmployeeWorkSheet extends Service {
 
     public EmployeeWorkSheet run(Assiduousness assiduousness, YearMonthDay beginDate,
             YearMonthDay endDate) {
-        
+
         if (assiduousness == null) {
             return null;
         }
@@ -55,6 +55,7 @@ public class ReadEmployeeWorkSheet extends Service {
             } else {
                 WorkSchedule workSchedule = schedule.workScheduleWithDate(thisDay);
                 if (workSchedule != null && !isDayHoliday) {
+                    workDaySheet.setWorkSchedule(workSchedule);
                     DateTime init = thisDay.toDateTime(workSchedule.getWorkScheduleType().getWorkTime());
                     DateTime end = thisDay.toDateTime(workSchedule.getWorkScheduleType()
                             .getWorkEndTime());
@@ -69,6 +70,8 @@ public class ReadEmployeeWorkSheet extends Service {
 
                     List<Leave> leaves = new ArrayList<Leave>(assiduousness.getLeaves(thisDay));
                     Collections.sort(leaves, Leave.COMPARATORY_BY_DATE);
+                    workDaySheet.setLeaves(leaves);
+
                     for (Leave leave : leaves) {
                         if (notes.length() != 0) {
                             notes = notes.concat(" / ");
@@ -77,12 +80,12 @@ public class ReadEmployeeWorkSheet extends Service {
                         putSubtitle(subtitles, leave.getJustificationMotive());
                     }
                     workDaySheet.setNotes(notes);
-                    DailyBalance dailyBalance = assiduousness.calculateDailyBalance(thisDay);
-                    workDaySheet.setBalanceTime(dailyBalance.getNormalWorkPeriodBalance().toPeriod());
+                    workDaySheet = assiduousness.calculateDailyBalance(workDaySheet, thisDay,
+                            isDayHoliday);
                     if (!thisDay.equals(today)) {
-                        totalBalance = totalBalance.plus(dailyBalance.getNormalWorkPeriodBalance());
+                        totalBalance = totalBalance.plus(workDaySheet.getBalanceTime().toDurationFrom(
+                                new DateMidnight()));
                     }
-                    workDaySheet.setUnjustifiedTime(dailyBalance.getFixedPeriodAbsence());
                     totalUnjustified = totalUnjustified.plus(workDaySheet.getUnjustifiedTime());
                     workDaySheet.setWorkScheduleAcronym(workSchedule.getWorkScheduleType().getAcronym());
                     workSheet.add(workDaySheet);
@@ -93,8 +96,9 @@ public class ReadEmployeeWorkSheet extends Service {
                             init, end);
                     Collections.sort(clockings, AssiduousnessRecord.COMPARATORY_BY_DATE);
                     workDaySheet.setAssiduousnessRecords(clockings);
-                    DailyBalance dailyBalance = assiduousness.calculateDailyBalance(thisDay);
-                    workDaySheet.setBalanceTime(dailyBalance.getTotalBalance().toPeriod());
+                    workDaySheet.setLeaves(new ArrayList<Leave>());
+                    workDaySheet = assiduousness.calculateDailyBalance(workDaySheet, thisDay,
+                            isDayHoliday);
                     workDaySheet.setNotes(notes);
                     if (isDayHoliday) {
                         ResourceBundle bundle = ResourceBundle
@@ -112,7 +116,7 @@ public class ReadEmployeeWorkSheet extends Service {
         employeeWorkSheet.setTotalBalance(totalBalance);
         employeeWorkSheet.setUnjustifiedBalance(totalUnjustified);
         employeeWorkSheet.setJustificationMotives(subtitles.values());
-        return employeeWorkSheet;      
+        return employeeWorkSheet;
     }
 
     private void putSubtitle(HashMap<Integer, JustificationMotive> subtitles,
