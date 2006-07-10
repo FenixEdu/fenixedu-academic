@@ -1,11 +1,11 @@
 package net.sourceforge.fenixedu.domain.assiduousness;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.EnumSet;
 import java.util.Iterator;
 import java.util.List;
 
+import net.sourceforge.fenixedu.dataTransferObject.assiduousness.WorkDaySheet;
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.Holiday;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
@@ -20,7 +20,7 @@ import net.sourceforge.fenixedu.domain.assiduousness.util.Timeline;
 import net.sourceforge.fenixedu.domain.space.Campus;
 import net.sourceforge.fenixedu.util.WeekDay;
 
-import org.apache.commons.beanutils.BeanComparator;
+import org.joda.time.DateMidnight;
 import org.joda.time.DateTime;
 import org.joda.time.Duration;
 import org.joda.time.Interval;
@@ -30,6 +30,7 @@ import org.joda.time.YearMonthDay;
 public class Assiduousness extends Assiduousness_Base {
 
     public static final TimeOfDay startTimeOfDay = new TimeOfDay(7, 30, 0, 0);
+
     public static final TimeOfDay endTimeOfDay = new TimeOfDay(23, 59, 59, 99);
 
     public Assiduousness(Employee employee) {
@@ -82,74 +83,55 @@ public class Assiduousness extends Assiduousness_Base {
         }
     }
 
-    public DailyBalance calculateDailyBalance(YearMonthDay day) {
-        Schedule schedule = getSchedule(day);
-        DailyBalance dailyBalance = null;
-        List<Leave> leaves = getLeaves(day);
-        Collections.sort(leaves, new BeanComparator("date"));
+    public WorkDaySheet calculateDailyBalance(WorkDaySheet workDaySheet, YearMonthDay day,
+            boolean isDayHoliday) {
+        if (workDaySheet.getWorkSchedule() != null && !isDayHoliday) {
+            Timeline timeline = new Timeline(workDaySheet.getWorkSchedule().getWorkScheduleType());
 
-        if (schedule != null) {
-            WorkSchedule workSchedule = schedule.workScheduleWithDate(day);
-            boolean isDayHoliday = isHoliday(day);
-            if (workSchedule != null && !isDayHoliday) {
-                Timeline timeline = new Timeline(workSchedule.getWorkScheduleType());
+            List<Leave> dayOccurrences = getLeavesByType(workDaySheet.getLeaves(),
+                    JustificationType.OCCURRENCE);
 
-                DateTime init = day.toDateTime(workSchedule.getWorkScheduleType().getWorkTime());
-                DateTime end = day.toDateTime(workSchedule.getWorkScheduleType().getWorkEndTime());
-
-                if (workSchedule.getWorkScheduleType().isWorkTimeNextDay()) {
-                    end = end.plusDays(1);
-                }
-
-                List<AssiduousnessRecord> clockings = getClockingsAndMissingClockings(init, end);
-                Collections.sort(clockings, new BeanComparator("date"));
-                List<Leave> dayOccurrences = getLeavesByType(leaves, JustificationType.OCCURRENCE);
-
-                if (!dayOccurrences.isEmpty()) {
-                    dailyBalance = new DailyBalance(day, workSchedule);
-                    dailyBalance.setWorkedOnNormalWorkPeriod(workSchedule.getWorkScheduleType()
-                            .getNormalWorkPeriod().getWorkPeriodDuration());
-                    dailyBalance.setJustification(true); // ver o tipo de justificacao
-                    dailyBalance.setComment(dayOccurrences.get(0).getJustificationMotive().getAcronym());
+            if (dayOccurrences.isEmpty()) {
+                List<Leave> timeLeaves = getLeavesByType(workDaySheet.getLeaves(),
+                        JustificationType.TIME);
+                List<Leave> balanceLeaves = getLeavesByType(workDaySheet.getLeaves(),
+                        JustificationType.BALANCE);
+                if (!workDaySheet.getAssiduousnessRecords().isEmpty() || !timeLeaves.isEmpty()) {
+                    Iterator<AttributeType> attributesIt = DomainConstants.WORKED_ATTRIBUTES
+                            .getAttributes().iterator();
+                    timeline.plotListInTimeline(workDaySheet.getAssiduousnessRecords(), workDaySheet
+                            .getLeaves(), attributesIt, day);
+                    workDaySheet = workDaySheet.getWorkSchedule().calculateWorkingPeriods(workDaySheet,
+                            day, timeline, timeLeaves);
                 } else {
-                    Iterator<AttributeType> attributesIt = DomainConstants.WORKED_ATTRIBUTES.getAttributes().iterator();
-                    timeline.plotListInTimeline(clockings, leaves, attributesIt, day);
-                    List<Leave> timeLeaves = getLeavesByType(leaves, JustificationType.TIME);
-                    if (!clockings.isEmpty() || !timeLeaves.isEmpty()) {
-                        dailyBalance = workSchedule.calculateWorkingPeriods(day, timeline, timeLeaves);
+                    workDaySheet
+                            .setBalanceTime(workDaySheet.getWorkSchedule().getWorkPeriodBalance(
+                                    workDaySheet.getBalanceTime().toDurationFrom(new DateMidnight()))
+                                    .toPeriod());
+                    if (balanceLeaves.isEmpty()) {
+                        workDaySheet.setNotes(workDaySheet.getNotes().concat("FALTA INJ"));
                     }
-                    if (dailyBalance == null) {
-                        dailyBalance = new DailyBalance(day, workSchedule);
-                    }
-                    dailyBalance.discountBalanceLeaveInFixedPeriod(getLeavesByType(leaves,
-                            JustificationType.BALANCE));
                 }
-            } else {
-                dailyBalance = new DailyBalance(day, null);
-                final WeekDay dayOfWeek = WeekDay.fromJodaTimeToWeekDay(day.toDateTimeAtMidnight());
-                final EnumSet<WeekDay> enumSetWeekDay = EnumSet.range(WeekDay.MONDAY, WeekDay.FRIDAY);
-
-                final List<AssiduousnessRecord> clockings = getClockingsAndMissingClockings(day
-                        .toDateTimeAtMidnight(), day.toDateTimeAtMidnight().plusDays(1));
-                if (!isDayHoliday && !clockings.isEmpty() && enumSetWeekDay.contains(dayOfWeek)) {
-                    Collections.sort(clockings, AssiduousnessRecord.COMPARATORY_BY_DATE);
-                    final Timeline timeline = new Timeline(day);
-                    Iterator<AttributeType> attributesIt = DomainConstants.WORKED_ATTRIBUTES.getAttributes().iterator();
-                    timeline.plotListInTimeline(clockings, leaves, attributesIt, day);
-                    final Duration worked = timeline.calculateDurationAllIntervalsByAttributes(
-                                DomainConstants.WORKED_ATTRIBUTES,
-                                new TimePoint(startTimeOfDay,AttributeType.NULL),
-                                new TimePoint(endTimeOfDay,AttributeType.NULL));
-                    dailyBalance.setTotalBalance(worked);
-                } else {
-                    dailyBalance.setTotalBalance(Duration.ZERO);
-                }
+                workDaySheet.discountBalanceLeaveInFixedPeriod(balanceLeaves);
             }
         } else {
-            dailyBalance = new DailyBalance(day, null);
-            dailyBalance.setTotalBalance(Duration.ZERO);
+            final WeekDay dayOfWeek = WeekDay.fromJodaTimeToWeekDay(day.toDateTimeAtMidnight());
+            final EnumSet<WeekDay> enumSetWeekDay = EnumSet.range(WeekDay.MONDAY, WeekDay.FRIDAY);
+
+            if (!isDayHoliday && !workDaySheet.getAssiduousnessRecords().isEmpty()
+                    && enumSetWeekDay.contains(dayOfWeek)) {
+                final Timeline timeline = new Timeline(day);
+                Iterator<AttributeType> attributesIt = DomainConstants.WORKED_ATTRIBUTES.getAttributes()
+                        .iterator();
+                timeline.plotListInTimeline(workDaySheet.getAssiduousnessRecords(), workDaySheet
+                        .getLeaves(), attributesIt, day);
+                final Duration worked = timeline.calculateDurationAllIntervalsByAttributes(
+                        DomainConstants.WORKED_ATTRIBUTES, new TimePoint(startTimeOfDay,
+                                AttributeType.NULL), new TimePoint(endTimeOfDay, AttributeType.NULL));
+                workDaySheet.setBalanceTime(worked.toPeriod());
+            }
         }
-        return dailyBalance;
+        return workDaySheet;
     }
 
     private List<Leave> getLeavesByType(List<Leave> leaves, JustificationType justificationType) {
@@ -166,7 +148,8 @@ public class Assiduousness extends Assiduousness_Base {
         List<Leave> leaves = new ArrayList<Leave>();
         for (AssiduousnessRecord assiduousnessRecord : getAssiduousnessRecords()) {
             if (assiduousnessRecord instanceof Leave
-                    && (assiduousnessRecord.getAnulation() == null || assiduousnessRecord.getAnulation().getState() == AnulationState.INVALID)) {
+                    && (assiduousnessRecord.getAnulation() == null || assiduousnessRecord.getAnulation()
+                            .getState() == AnulationState.INVALID)) {
                 Leave leave = (Leave) assiduousnessRecord;
                 if (leave.occuredInDate(day)) {
                     leaves.add(leave);
@@ -181,8 +164,8 @@ public class Assiduousness extends Assiduousness_Base {
         List<AssiduousnessRecord> clockingsList = new ArrayList<AssiduousnessRecord>();
         for (AssiduousnessRecord assiduousnessRecord : getAssiduousnessRecords()) {
             if ((assiduousnessRecord instanceof Clocking || assiduousnessRecord instanceof MissingClocking)
-                    && (assiduousnessRecord.getAnulation() == null
-                            || assiduousnessRecord.getAnulation().getState() == AnulationState.INVALID)
+                    && (assiduousnessRecord.getAnulation() == null || assiduousnessRecord.getAnulation()
+                            .getState() == AnulationState.INVALID)
                     && interval.contains(assiduousnessRecord.getDate())) {
                 clockingsList.add(assiduousnessRecord);
             }
@@ -195,8 +178,8 @@ public class Assiduousness extends Assiduousness_Base {
         List<Clocking> clockingsList = new ArrayList<Clocking>();
         for (AssiduousnessRecord assiduousnessRecord : getAssiduousnessRecords()) {
             if (assiduousnessRecord instanceof Clocking
-                    && (assiduousnessRecord.getAnulation() == null
-                            || assiduousnessRecord.getAnulation().getState() == AnulationState.INVALID)
+                    && (assiduousnessRecord.getAnulation() == null || assiduousnessRecord.getAnulation()
+                            .getState() == AnulationState.INVALID)
                     && interval.containsDate(assiduousnessRecord.getDate())) {
                 clockingsList.add((Clocking) assiduousnessRecord);
             }
@@ -210,8 +193,8 @@ public class Assiduousness extends Assiduousness_Base {
         List<Leave> leavesList = new ArrayList<Leave>();
         for (AssiduousnessRecord assiduousnessRecord : getAssiduousnessRecords()) {
             if (assiduousnessRecord instanceof Leave
-                    && (assiduousnessRecord.getAnulation() == null
-                            || assiduousnessRecord.getAnulation().getState() == AnulationState.INVALID)) {
+                    && (assiduousnessRecord.getAnulation() == null || assiduousnessRecord.getAnulation()
+                            .getState() == AnulationState.INVALID)) {
                 Interval leaveInterval = new Interval(assiduousnessRecord.getDate(),
                         ((Leave) assiduousnessRecord).getEndDate());
                 if (leaveInterval.overlaps(interval)) {

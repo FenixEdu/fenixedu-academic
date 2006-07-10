@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessRecord;
+import net.sourceforge.fenixedu.domain.assiduousness.Leave;
+import net.sourceforge.fenixedu.domain.assiduousness.WorkSchedule;
 import net.sourceforge.fenixedu.util.WeekDay;
 
 import org.joda.time.Duration;
@@ -19,6 +21,8 @@ public class WorkDaySheet implements Serializable {
 
     YearMonthDay date;
 
+    WorkSchedule workSchedule;
+
     String workScheduleAcronym;
 
     Period balanceTime;
@@ -27,7 +31,16 @@ public class WorkDaySheet implements Serializable {
 
     String notes;
 
+    List<AssiduousnessRecord> assiduousnessRecords;
+
     String clockings;
+
+    List<Leave> leaves;
+
+    public WorkDaySheet() {
+        setBalanceTime(Duration.ZERO.toPeriod());
+        setUnjustifiedTime(Duration.ZERO);
+    }
 
     public Period getBalanceTime() {
         return balanceTime;
@@ -124,6 +137,7 @@ public class WorkDaySheet implements Serializable {
     }
 
     public void setAssiduousnessRecords(final List<AssiduousnessRecord> assiduousnessRecords) {
+        this.assiduousnessRecords = assiduousnessRecords;
         final StringBuilder result = new StringBuilder();
         if (assiduousnessRecords != null) {
             for (final AssiduousnessRecord assiduousnessRecord : assiduousnessRecords) {
@@ -137,4 +151,36 @@ public class WorkDaySheet implements Serializable {
         clockings = result.toString();
     }
 
+    public List<AssiduousnessRecord> getAssiduousnessRecords() {
+        return assiduousnessRecords;
+    }
+
+    public List<Leave> getLeaves() {
+        return leaves;
+    }
+
+    public void setLeaves(List<Leave> leaves) {
+        this.leaves = leaves;
+    }
+
+    public WorkSchedule getWorkSchedule() {
+        return workSchedule;
+    }
+
+    public void setWorkSchedule(WorkSchedule workSchedule) {
+        this.workSchedule = workSchedule;
+    }
+
+    public void discountBalanceLeaveInFixedPeriod(List<Leave> balanceLeaveList) {
+        Duration balance = Duration.ZERO;
+        for (Leave balanceLeave : balanceLeaveList) {
+            balance = balance.plus(balanceLeave.getDuration());
+        }
+        Duration newFixedPeriodAbsence = getUnjustifiedTime().minus(balance);
+        if (newFixedPeriodAbsence.isShorterThan(Duration.ZERO)) {
+            setUnjustifiedTime(Duration.ZERO);
+        } else {
+            setUnjustifiedTime(newFixedPeriodAbsence);
+        }
+    }
 }
