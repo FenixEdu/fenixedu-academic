@@ -106,63 +106,116 @@ a:hover {
 	site-wide navigation
 */
 
-#navgeral {
-	position: relative;
-	left: 0;
-	height: 20px;
-	background: #C0A488;
-	margin: 0;
-	padding: 5px 0 0 150px ;
-	border-bottom: 2px solid #223D4A; 
-   }
 
-	
-#navgeral li {
-	display: inline;
-	list-style-type: none;
+
+
+
+
+
+
+
+
+
+#navgeral ul {
 	margin: 0;
 	padding: 0;
 	}
-
-#navgeral a:link, #navgeral a:visited {
+#navgeral ul li {
+	margin: 0;
+	padding: 0;
+	}
+#navgeral {
 	float: left;
-	font-family: "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif;
+	width: 100%;
 	font-size: 1.0em;
-	line-height: 1.25em;
-	color: #223D4A;
+	padding-top: 0.25em;
+	}
+#navgeral ul {
+	margin: 0;
+	margin-left: 150px;
+	list-style: none;
+	}
+#navgeral li {
+	float: left;
+	margin: 0;
+	padding: 0;
+	}
+#navgeral li a {
+	font-family: "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif;
+	float: left;
+	margin: 0 9px 0 9px;
+	padding: 0.25em 0 0.15em 0;
+	font-size: 100%;
+	font-weight: normal;
 	text-decoration: none;
-	margin: 0px 10px 0px 10px;
-	padding-bottom: 6px;
+	white-space: nowrap;
 	}
+#navgeral span {	
+	float: left;
+	margin: 0 1px 0 0;
+	padding: 0.75em 1em;
+	font-size: 100%;
+	font-weight: normal;
+	text-decoration: none;
+	}
+#navgeral {
+border-bottom: 2px solid #223D4A;
+background: #c0a488;  
+}
+#navgeral li a {
+color: #223d4a;
+border-bottom: 4px solid #c0a488;
+}
+#navgeral li a:hover {
+text-decoration: underline  /* show to IE5 */
+/* check bottom of the page for the hack */
+}
+#navgeral a.active, #navgeral a.active {
+border-bottom: 4px solid #223D4A;
+}
+/* IE5 navgeral bug correction */
 
-#navgeral a:link.active, #navgeral a:visited.active {
-	border-bottom: 4px solid #223D4A;
-	padding-bottom: 2px;
-	}
+body {
+voice-family: "\"}\""; 
+voice-family: inherit;
+}
+#navgeral li a:hover {
+text-decoration: none;
+border-bottom: 4px solid #369; 
+}
 
-#navgeral a:hover {
-	border-bottom: 4px solid #369;
-	padding-bottom: 2px;
-	}
+
+div.clear { clear: both; }
 
 /*
 	end site-wide navigation
 */
 
+
 #logged {
+	clear: both;
+	float: left; width: 100%; /* show to IE5 */
+	background: #cc9;
 	font-size: 0.9em;
 	color: #666;
-	background: #cc9;
 	border-bottom: 1px solid #C0A488;
 	margin: 0;
 	padding: 5px 10px 5px 10px;
+	voice-family: "\"}\"";
+	voice-family:inherit;
+	float: none;
+	width: auto;
 	}
+
+#logged * {  margin: 0; padding: 0; } /* duplicate line because of IE5 filter */
+#logged * {  margin: 0; padding: 0; }
 
 .user {
 	float: left;
 	width: 300px;
 	margin: 0;
 	padding: 0;
+	/*background: #f00;*/
 	}
 	
 .info {
@@ -172,7 +225,18 @@ a:hover {
 	vertical-align: top;
 	margin: 0;
 	padding: 0;
+	/*background: #f00;*/
 	}
+
+
+
+
+
+
+
+
+
+
 
 #bodycontent {
 }

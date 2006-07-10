@@ -7,9 +7,9 @@
 
 <logic:present name="<%= Globals.MODULE_KEY %>">
 	<bean:define id="modulePrefix" name="<%= Globals.MODULE_KEY %>" property="prefix" type="java.lang.String"/>
-	<ul id="navgeral">
+	<div id="navgeral">
+	<ul>
 		<bean:define id="userView" name="<%= SessionConstants.U_VIEW %>" scope="session"/>
-	
 		<logic:iterate id="role" name="userView" property="roles">
 			<logic:notEqual name="role" property="roleType" value="net.sourceforge.fenixedu.domain.person.RoleType.GRANT_OWNER_MANAGER">
 				<logic:notEqual name="role" property="roleType" value="net.sourceforge.fenixedu.domain.person.RoleType.CREDITS_MANAGER">
@@ -46,8 +46,8 @@
 				</logic:notEqual>
 			</li>
 		</logic:present>
-
-	</ul>	
+	</ul>
+	</div>
 </logic:present>
 <logic:notPresent name="<%= Globals.MODULE_KEY %>">
 	<span class="error">Não passou pelo RequestProcessor</span>
