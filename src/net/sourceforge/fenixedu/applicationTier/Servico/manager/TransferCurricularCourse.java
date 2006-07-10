@@ -25,20 +25,19 @@ public class TransferCurricularCourse extends Service {
         final ExecutionCourse sourceExecutionCourse = rootDomainObject.readExecutionCourseByOID(sourceExecutionCourseId);
         final ExecutionCourse destinationExecutionCourse = rootDomainObject.readExecutionCourseByOID(destinationExecutionCourseId);
 
-        final CurricularCourse curricularCourse = (CurricularCourse) CollectionUtils.find(
-                sourceExecutionCourse.getAssociatedCurricularCourses(), new Predicate() {
-                    public boolean evaluate(Object arg0) {
-                        CurricularCourse curricularCourse = (CurricularCourse) arg0;
-                        return (curricularCourseId == curricularCourse.getIdInternal());
-                    }
-                });
+        CurricularCourse curricularCourse = null;
+        for (final CurricularCourse curricularCourseOther : sourceExecutionCourse.getAssociatedCurricularCoursesSet()) {
+            if (curricularCourseOther.getIdInternal().equals(curricularCourseId)) {
+                curricularCourse = curricularCourseOther;
+                break;
+            }
+        }
 
         deleteShiftStudents(sourceExecutionCourse, curricularCourse);
         
         Set<Integer> transferedStudents = new HashSet<Integer>();
         transferAttends(destinationExecutionCourseId, sourceExecutionCourse, destinationExecutionCourse,
                 curricularCourse, transferedStudents);
-        
 
         sourceExecutionCourse.removeAssociatedCurricularCourses(curricularCourse);
         destinationExecutionCourse.addAssociatedCurricularCourses(curricularCourse);

@@ -384,14 +384,15 @@ public class EditExecutionCourseDispatchAction extends FenixDispatchAction {
                     .get("executionCourseId")));
             infoExecutionCourse.setNome((String) editExecutionCourseForm.get("name"));
             infoExecutionCourse.setSigla((String) editExecutionCourseForm.get("code"));
-            infoExecutionCourse.setTheoreticalHours(new Double((String) editExecutionCourseForm
-                    .get("theoreticalHours")));
-            infoExecutionCourse.setTheoPratHours(new Double((String) editExecutionCourseForm
-                    .get("theoPratHours")));
-            infoExecutionCourse.setPraticalHours(new Double((String) editExecutionCourseForm
-                    .get("praticalHours")));
-            infoExecutionCourse
-                    .setLabHours(new Double((String) editExecutionCourseForm.get("labHours")));
+            infoExecutionCourse.setTheoreticalHours(new Double((String) editExecutionCourseForm.get("theoreticalHours")));
+            infoExecutionCourse.setTheoPratHours(new Double((String) editExecutionCourseForm.get("theoPratHours")));
+            infoExecutionCourse.setPraticalHours(new Double((String) editExecutionCourseForm.get("praticalHours")));
+            infoExecutionCourse.setLabHours(new Double((String) editExecutionCourseForm.get("labHours")));            
+            infoExecutionCourse.setSeminaryHours(new Double((String) editExecutionCourseForm.get("seminaryHours")));
+            infoExecutionCourse.setProblemsHours(new Double((String) editExecutionCourseForm.get("problemsHours")));
+            infoExecutionCourse.setFieldWorkHours(new Double((String) editExecutionCourseForm.get("fieldWorkHours")));
+            infoExecutionCourse.setTrainingPeriodHours(new Double((String) editExecutionCourseForm.get("trainingPeriodHours")));
+            infoExecutionCourse.setTutorialOrientationHours(new Double((String) editExecutionCourseForm.get("tutorialOrientationHours")));
             infoExecutionCourse.setComment((String) editExecutionCourseForm.get("comment"));
         } catch (Exception e) {
             e.printStackTrace();
@@ -417,6 +418,21 @@ public class EditExecutionCourseDispatchAction extends FenixDispatchAction {
         }
         if (infoExecutionCourse.getLabHours() != null) {
             executionCourseForm.set("labHours", infoExecutionCourse.getLabHours().toString());
+        }
+        if (infoExecutionCourse.getSeminaryHours() != null) {
+            executionCourseForm.set("seminaryHours", infoExecutionCourse.getSeminaryHours().toString());
+        }
+        if (infoExecutionCourse.getPraticalHours() != null) {
+            executionCourseForm.set("problemsHours", infoExecutionCourse.getProblemsHours().toString());
+        }
+        if (infoExecutionCourse.getFieldWorkHours() != null) {
+            executionCourseForm.set("fieldWorkHours", infoExecutionCourse.getFieldWorkHours().toString());
+        }
+        if (infoExecutionCourse.getTrainingPeriodHours() != null) {
+            executionCourseForm.set("trainingPeriodHours", infoExecutionCourse.getTrainingPeriodHours().toString());
+        }
+        if (infoExecutionCourse.getTutorialOrientationHours() != null) {
+            executionCourseForm.set("tutorialOrientationHours", infoExecutionCourse.getTutorialOrientationHours().toString());
         }
         executionCourseForm.set("comment", infoExecutionCourse.getComment());
     }

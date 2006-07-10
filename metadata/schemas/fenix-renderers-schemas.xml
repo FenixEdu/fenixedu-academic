@@ -751,4 +751,5 @@
 	&payments;
 	&candidacy;
 	&execution;
+	&cron;
 </schemas>
