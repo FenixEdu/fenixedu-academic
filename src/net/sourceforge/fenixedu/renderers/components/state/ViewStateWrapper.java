@@ -18,9 +18,17 @@ public class ViewStateWrapper implements IViewState {
     
     public ViewStateWrapper(IViewState viewState, String attributesPrefix) {
         this.viewState = viewState;
-        this.attributesPrefix = attributesPrefix + "/";
+        this.attributesPrefix = attributesPrefix;
     }
 
+    public String getPrefix() {
+        return this.attributesPrefix;
+    }
+
+    public IViewState getWrappedViewState() {
+        return this.viewState;
+    }
+    
     public Object getAttribute(String name) {
         return this.viewState.getAttribute(name);
     }
@@ -34,15 +42,15 @@ public class ViewStateWrapper implements IViewState {
     }
 
     public void setLocalAttribute(String name, Object value) {
-        viewState.setAttribute(attributesPrefix + name, value);
+        viewState.setAttribute(attributesPrefix + "/" + name, value);
     }
 
     public Object getLocalAttribute(String name) {
-        return viewState.getAttribute(attributesPrefix + name);
+        return viewState.getAttribute(attributesPrefix + "/" + name);
     }
 
     public void removeLocalAttribute(String name) {
-        viewState.removeAttribute(attributesPrefix + name);
+        viewState.removeAttribute(attributesPrefix + "/" + name);
     }
 
     public String getId() {

@@ -31,7 +31,21 @@ public class InputContext extends PresentationContext {
             MetaObjectKey key = getMetaObject().getKey();
             
             if (key != null) {
-                return new ViewStateWrapper(viewState, key.toString());
+                String prefix = key.toString();
+                
+                if (viewState instanceof ViewStateWrapper) {
+                    ViewStateWrapper wrapper = (ViewStateWrapper) viewState;
+                    
+                    if (prefix.equals(wrapper.getPrefix())) {
+                        return wrapper;
+                    }
+                    else {
+                        return new ViewStateWrapper(viewState, prefix);
+                    }
+                }
+                else {
+                    return new ViewStateWrapper(viewState, prefix);
+                }
             }
             else {
                 return viewState;
