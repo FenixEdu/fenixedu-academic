@@ -236,7 +236,7 @@ public class EditObjectTag extends BaseRenderObjectTag {
             hiddenFields.add(htmlViewStateField);
         }
         
-        if (isNested() || hasFormParent() || getSlot() != null) {
+        if (isNested() || hasFormParent()) {
             HtmlInlineContainer container = new HtmlInlineContainer();
             
             for (HtmlHiddenField field : hiddenFields) {
