@@ -17,7 +17,6 @@ import net.sourceforge.fenixedu.domain.assiduousness.Leave;
 import net.sourceforge.fenixedu.domain.assiduousness.Schedule;
 import net.sourceforge.fenixedu.domain.assiduousness.WorkSchedule;
 
-import org.apache.commons.beanutils.BeanComparator;
 import org.joda.time.DateTime;
 import org.joda.time.Duration;
 import org.joda.time.Period;
@@ -66,7 +65,7 @@ public class ReadEmployeeWorkSheet extends Service {
                     List<AssiduousnessRecord> clockings = assiduousness.getClockingsAndMissingClockings(
                             init, end);
                     Collections.sort(clockings, AssiduousnessRecord.COMPARATORY_BY_DATE);
-                    workDaySheet.setAssiduousnessRecord(clockings);
+                    workDaySheet.setAssiduousnessRecords(clockings);
 
                     List<Leave> leaves = new ArrayList<Leave>(assiduousness.getLeaves(thisDay));
                     Collections.sort(leaves, Leave.COMPARATORY_BY_DATE);
@@ -93,7 +92,7 @@ public class ReadEmployeeWorkSheet extends Service {
                     List<AssiduousnessRecord> clockings = assiduousness.getClockingsAndMissingClockings(
                             init, end);
                     Collections.sort(clockings, AssiduousnessRecord.COMPARATORY_BY_DATE);
-                    workDaySheet.setAssiduousnessRecord(clockings);
+                    workDaySheet.setAssiduousnessRecords(clockings);
                     DailyBalance dailyBalance = assiduousness.calculateDailyBalance(thisDay);
                     workDaySheet.setBalanceTime(dailyBalance.getTotalBalance().toPeriod());
                     workDaySheet.setNotes(notes);

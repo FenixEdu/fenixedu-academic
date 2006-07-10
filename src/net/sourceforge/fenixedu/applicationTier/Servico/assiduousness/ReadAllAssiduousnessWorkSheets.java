@@ -19,7 +19,6 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import org.joda.time.DateTime;
 import org.joda.time.Duration;
 import org.joda.time.Period;
-import org.joda.time.TimeOfDay;
 import org.joda.time.YearMonthDay;
 
 public class ReadAllAssiduousnessWorkSheets extends Service {
@@ -63,7 +62,7 @@ public class ReadAllAssiduousnessWorkSheets extends Service {
                             final List<AssiduousnessRecord> clockings = assiduousness
                                     .getClockingsAndMissingClockings(init, end);
                             Collections.sort(clockings, AssiduousnessRecord.COMPARATORY_BY_DATE);
-                            workDaySheet.setAssiduousnessRecord(clockings);
+                            workDaySheet.setAssiduousnessRecords(clockings);
 
                             final StringBuilder notes = new StringBuilder();
                             for (final Leave leave : assiduousness.getLeaves(thisDay)) {
@@ -93,7 +92,7 @@ public class ReadAllAssiduousnessWorkSheets extends Service {
                             DailyBalance dailyBalance = assiduousness.calculateDailyBalance(thisDay);
                             workDaySheet.setBalanceTime(dailyBalance.getTotalBalance().toPeriod());
                             workDaySheet.setNotes("");
-                            workDaySheet.setAssiduousnessRecord(clockings);
+                            workDaySheet.setAssiduousnessRecords(clockings);
                             if (isDayHoliday) {
                                 ResourceBundle bundle = ResourceBundle
                                         .getBundle("resources.AssiduousnessResources");
