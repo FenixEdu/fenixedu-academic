@@ -52,9 +52,9 @@ public abstract class PaymentTransaction extends PaymentTransaction_Base {
     public void delete() {
         if (this instanceof GratuityTransaction) {
             GratuityTransaction gratuityTransaction = (GratuityTransaction) this;
+            GratuitySituation gratuitySituation = gratuityTransaction.getGratuitySituation();
             gratuityTransaction.removeGratuitySituation();
             
-            GratuitySituation gratuitySituation = gratuityTransaction.getGratuitySituation();
             double guideEntryValue = getGuideEntry().getPrice() * getGuideEntry().getQuantity();
             gratuitySituation.setRemainingValue(gratuitySituation.getRemainingValue() + guideEntryValue);
         }
