@@ -5,24 +5,18 @@ package net.sourceforge.fenixedu.applicationTier.Servico.scientificCouncil.credi
 
 import java.text.ParseException;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
+import java.util.SortedSet;
 import java.util.TreeMap;
+import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
-import net.sourceforge.fenixedu.domain.OccupationPeriod;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
-import net.sourceforge.fenixedu.domain.teacher.Category;
-import net.sourceforge.fenixedu.domain.teacher.TeacherLegalRegimen;
 import net.sourceforge.fenixedu.domain.teacher.TeacherService;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.util.LegalRegimenType;
-
-import org.apache.commons.beanutils.BeanComparator;
-import org.apache.commons.collections.comparators.ComparatorChain;
 
 /**
  * @author Ricardo Rodrigues
@@ -34,7 +28,7 @@ public class ReadTeachersCreditsResumeByPeriodAndUnit extends Service {
     public List<TeacherCreditsReportDTO> run(Unit department, ExecutionPeriod fromExecutionPeriod,
             ExecutionPeriod untilExecutionPeriod) throws ExcepcaoPersistencia, ParseException {
 
-        List<ExecutionPeriod> executionPeriodsBetween = getExecutionPeriodsBetween(fromExecutionPeriod,
+        SortedSet<ExecutionPeriod> executionPeriodsBetween = getExecutionPeriodsBetween(fromExecutionPeriod,
                 untilExecutionPeriod);
         
         List<Teacher> teachers = department.getTeachers(fromExecutionPeriod.getBeginDateYearMonthDay(),
@@ -42,9 +36,9 @@ public class ReadTeachersCreditsResumeByPeriodAndUnit extends Service {
         
         List<TeacherCreditsReportDTO> creditLines = new ArrayList<TeacherCreditsReportDTO>();
         for (Teacher teacher : teachers) {            
-            if (!verifyIfTeacherIsMonitor(teacher, executionPeriodsBetween)
-                    && !verifyIfTeacherIsInactive(teacher, executionPeriodsBetween) 
-                    && !verifyIfTeacherIsDeath(teacher)) {                
+            if (!teacher.isMonitor(executionPeriodsBetween.last())
+                    && !teacher.isInactive(executionPeriodsBetween.last()) 
+                    && !teacher.isDeceased()) {                
                 Unit workingUnit = teacher.getLastWorkingUnit(untilExecutionPeriod.getBeginDateYearMonthDay(), untilExecutionPeriod.getEndDateYearMonthDay());
                 Unit workingUnitDepartment = (workingUnit != null) ? workingUnit.getDepartmentUnit() : null;
                 if(workingUnitDepartment != null && workingUnitDepartment.getDepartment().equals(department.getDepartment())) {               
@@ -60,47 +54,6 @@ public class ReadTeachersCreditsResumeByPeriodAndUnit extends Service {
             }
         }
         return creditLines;
-    }
-    
-    private boolean verifyIfTeacherIsDeath(Teacher teacher) {
-        for (TeacherLegalRegimen legalRegimen : teacher.getLegalRegimens()) {
-            if (legalRegimen.getLegalRegimenType().equals(LegalRegimenType.DEATH)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    private boolean verifyIfTeacherIsInactive(Teacher teacher, List<ExecutionPeriod> executionPeriodsBetween) {
-
-        if (!executionPeriodsBetween.isEmpty()) {
-            ExecutionPeriod lastExecutionPeriod = executionPeriodsBetween.get(executionPeriodsBetween.size() - 1);
-            OccupationPeriod occupationPeriod = lastExecutionPeriod.getLessonsPeriod();  
-            if(occupationPeriod != null) {
-                List<TeacherLegalRegimen> allLegalRegimens = teacher
-                        .getAllLegalRegimensWithoutEndSituations(occupationPeriod.getStartYearMonthDay(),
-                                occupationPeriod.getEndYearMonthDay());
-                if (allLegalRegimens.isEmpty()) {
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
-
-    private boolean verifyIfTeacherIsMonitor(Teacher teacher,
-            List<ExecutionPeriod> executionPeriodsBetween) {
-
-        if (!executionPeriodsBetween.isEmpty()) {
-            Category category = teacher.getCategoryForCreditsByPeriod(executionPeriodsBetween
-                    .get(executionPeriodsBetween.size() - 1));
-            if (category != null
-                    && (category.getCode().equalsIgnoreCase("MNT") || category.getCode()
-                            .equalsIgnoreCase("MNL"))) {
-                return true;
-            }
-        }
-        return false;
     }
 
     private void updateCreditLine(Teacher teacher, ExecutionPeriod executionPeriod,
@@ -119,9 +72,12 @@ public class ReadTeachersCreditsResumeByPeriodAndUnit extends Service {
         creditLine.getCreditsByExecutionPeriod().put(executionPeriod, totalCredits);
     }
 
-    private List<ExecutionPeriod> getExecutionPeriodsBetween(ExecutionPeriod fromExecutionPeriod,
+    private SortedSet<ExecutionPeriod> getExecutionPeriodsBetween(ExecutionPeriod fromExecutionPeriod,
             ExecutionPeriod untilExecutionPeriod) {
-        List<ExecutionPeriod> executionPeriodsBetween = new ArrayList<ExecutionPeriod>();
+        
+        SortedSet<ExecutionPeriod> executionPeriodsBetween = new TreeSet<ExecutionPeriod>(ExecutionPeriod.
+                EXECUTION_PERIOD_COMPARATOR_BY_SEMESTER_AND_YEAR);
+        
         ExecutionPeriod tempExecutionPeriod = fromExecutionPeriod;
         while (tempExecutionPeriod != untilExecutionPeriod) {
             executionPeriodsBetween.add(tempExecutionPeriod);
@@ -132,13 +88,8 @@ public class ReadTeachersCreditsResumeByPeriodAndUnit extends Service {
     }
 
     public static class TeacherCreditsReportDTO {
-        private static final Comparator comparator_ = new ComparatorChain();                
-        static {
-            ((ComparatorChain)comparator_).addComparator(new BeanComparator("executionYear.year"));
-            ((ComparatorChain)comparator_).addComparator(new BeanComparator("semester"));            
-        }
-             
-        Map<ExecutionPeriod, Double> creditsByExecutionPeriod = new TreeMap<ExecutionPeriod, Double>(comparator_);
+                     
+        Map<ExecutionPeriod, Double> creditsByExecutionPeriod = new TreeMap<ExecutionPeriod, Double>(ExecutionPeriod.EXECUTION_PERIOD_COMPARATOR_BY_SEMESTER_AND_YEAR);
 
         Teacher teacher;
 

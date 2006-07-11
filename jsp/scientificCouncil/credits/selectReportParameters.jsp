@@ -8,8 +8,7 @@
 <p><span class="error"><html:errors/></span></p>
 
 <html:form action="/creditsReport">
-
-	<html:hidden property="method" value="viewCreditsReport"/>
+	<html:hidden property="method"/>
 	
 	<p><bean:message key="label.credits.choose.Period"/>:</p>
 	<bean:message key="label.credits.from"/> 
@@ -30,8 +29,11 @@
 		<html:options collection="departments" property="idInternal" labelProperty="realName"/>
 	</html:select>
 		
-	<br/><br/>
-	<html:submit styleClass="inputbutton">
-		<bean:message key="visualize"/>
+	<br/><br/>	
+	<html:submit onclick="this.form.method.value='viewDetailedCreditsReport';" styleClass="inputbuttonSmall">
+		<bean:message key="button.detailed.credits.report"/>
+	</html:submit>
+	<html:submit onclick="this.form.method.value='viewGlobalCreditsReport';" styleClass="inputbuttonSmall">
+		<bean:message key="button.global.credits.report"/>
 	</html:submit>
 </html:form>	

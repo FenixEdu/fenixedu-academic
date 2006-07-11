@@ -4,6 +4,7 @@
 package net.sourceforge.fenixedu.presentationTier.Action.scientificCouncil.credits;
 
 import java.io.IOException;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
@@ -14,6 +15,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.SortedMap;
 import java.util.TreeMap;
 
 import javax.servlet.ServletOutputStream;
@@ -23,12 +25,14 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.scientificCouncil.credits.ReadDepartmentTotalCreditsByPeriod.PeriodCreditsReportDTO;
 import net.sourceforge.fenixedu.applicationTier.Servico.scientificCouncil.credits.ReadTeachersCreditsResumeByPeriodAndUnit.TeacherCreditsReportDTO;
 import net.sourceforge.fenixedu.commons.OrderedIterator;
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
+import net.sourceforge.fenixedu.domain.teacher.TeacherService;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
@@ -68,7 +72,7 @@ public class ViewTeacherCreditsReportDispatchAction extends FenixDispatchAction 
         return mapping.findForward("prepare");
     }
 
-    public ActionForward viewCreditsReport(ActionMapping mapping, ActionForm form,
+    public ActionForward viewDetailedCreditsReport(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
             FenixServiceException, InvalidPeriodException {
 
@@ -77,7 +81,14 @@ public class ViewTeacherCreditsReportDispatchAction extends FenixDispatchAction 
 
         Integer fromExecutionYearID = Integer.parseInt(dynaForm.getString("fromExecutionYearID"));
         Integer untilExecutionYearID = Integer.parseInt(dynaForm.getString("untilExecutionYearID"));
+        Integer departmentID = (Integer) dynaForm.get("departmentID");
+        
+        getDetailedTeachersCreditsMap(request, userView, fromExecutionYearID, untilExecutionYearID, departmentID);
+        return mapping.findForward("showCreditsReport");
+    }
 
+    private Map<Department, Map<Unit, List>> getDetailedTeachersCreditsMap(HttpServletRequest request, IUserView userView, Integer fromExecutionYearID, Integer untilExecutionYearID, Integer departmentID) throws InvalidPeriodException, FenixServiceException, FenixFilterException {
+        
         request.setAttribute("fromExecutionYearID", fromExecutionYearID);
         request.setAttribute("untilExecutionYearID", untilExecutionYearID);
 
@@ -91,8 +102,7 @@ public class ViewTeacherCreditsReportDispatchAction extends FenixDispatchAction 
             throw new InvalidPeriodException();
         }
 
-        List<TeacherCreditsReportDTO> teacherCreditsReportList = new ArrayList<TeacherCreditsReportDTO>();
-        Integer departmentID = (Integer) dynaForm.get("departmentID");
+        List<TeacherCreditsReportDTO> teacherCreditsReportList = new ArrayList<TeacherCreditsReportDTO>();        
         Map<Department, List<TeacherCreditsReportDTO>> teachersCreditsByDepartment = new HashMap<Department, List<TeacherCreditsReportDTO>>();
         if (departmentID == 0) {
             Collection<Department> departments = rootDomainObject.getDepartments();
@@ -142,12 +152,52 @@ public class ViewTeacherCreditsReportDispatchAction extends FenixDispatchAction 
                         .getCreditsByExecutionPeriod());
             }
             request.setAttribute("teachersCreditsDisplayMap", teachersCreditsDisplayMap);
-        }
-        return mapping.findForward("showCreditsReport");
+            return teachersCreditsDisplayMap;
+        }               
+        return null;
+    }
+    
+    public ActionForward viewGlobalCreditsReport(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
+            FenixServiceException, InvalidPeriodException, ParseException {
+
+        IUserView userView = SessionUtils.getUserView(request);
+        DynaActionForm dynaForm = (DynaActionForm) form;
+
+        Integer fromExecutionYearID = Integer.parseInt(dynaForm.getString("fromExecutionYearID"));
+        Integer untilExecutionYearID = Integer.parseInt(dynaForm.getString("untilExecutionYearID"));
+        Integer departmentID = (Integer) dynaForm.get("departmentID");
+        
+        getGlobalDepartmentCreditsMap(request, userView, fromExecutionYearID, untilExecutionYearID, departmentID);
+
+        return mapping.findForward("showDepartmentCreditsReport");
     }
 
-    private boolean validExecutionPeriodsChoice(ExecutionPeriod fromExecutionPeriod,
-            ExecutionPeriod untilExecutionPeriod) {
+    private void setTotals(HttpServletRequest request, ExecutionYear untilExecutionYear, SortedMap<Department, 
+            Map<ExecutionYear, PeriodCreditsReportDTO>> departmentTotalCredits) {
+        
+        int totalTeachersSize = 0;
+        SortedMap<ExecutionYear, Double> executionYearTotals = new TreeMap<ExecutionYear, Double>(ExecutionYear.EXECUTION_YEAR_COMPARATOR_BY_YEAR);                
+        for (Department department : departmentTotalCredits.keySet()) {            
+            for (ExecutionYear executionYear : departmentTotalCredits.get(department).keySet()) {
+                if(!executionYearTotals.containsKey(executionYear)) {
+                    executionYearTotals.put(executionYear, 0.0);                    
+                }
+                executionYearTotals.put(executionYear, round(departmentTotalCredits.get(department).get(executionYear).getCredits()
+                        + executionYearTotals.get(executionYear)));
+                
+                if(executionYear.equals(untilExecutionYear)) {
+                    totalTeachersSize += departmentTotalCredits.get(department).get(executionYear).getTeachersSize();                    
+                }
+            }         
+        }  
+               
+        request.setAttribute("totalTeachersSize", totalTeachersSize);
+        request.setAttribute("totalBalance", round(executionYearTotals.get(untilExecutionYear) / totalTeachersSize));
+        request.setAttribute("executionYearTotals", executionYearTotals);
+    }
+    
+    private boolean validExecutionPeriodsChoice(ExecutionPeriod fromExecutionPeriod, ExecutionPeriod untilExecutionPeriod) {        
         ExecutionPeriod tempExecutionPeriod = fromExecutionPeriod;
         if (fromExecutionPeriod == untilExecutionPeriod) {
             return true;
@@ -161,11 +211,156 @@ public class ViewTeacherCreditsReportDispatchAction extends FenixDispatchAction 
         return false;
     }
 
+    public ActionForward exportGlobalToExcel(ActionMapping mapping, ActionForm actionForm,
+            HttpServletRequest request, HttpServletResponse response) throws FenixServiceException,
+            FenixFilterException, InvalidPeriodException, ParseException {
+
+        IUserView userView = SessionUtils.getUserView(request);
+        
+        Integer fromExecutionYearID = Integer.parseInt(request.getParameter("fromExecutionYearID"));
+        Integer untilExecutionYearID = Integer.parseInt(request.getParameter("untilExecutionYearID"));
+        Integer departmentID = Integer.parseInt(request.getParameter("departmentID"));
+        
+        SortedMap<Department, Map<ExecutionYear, PeriodCreditsReportDTO>> teachersCreditsByDepartment = 
+            getGlobalDepartmentCreditsMap(request, userView, fromExecutionYearID, untilExecutionYearID, departmentID);
+
+        try {
+            String filename = "RelatorioCreditos:" + getFileName(Calendar.getInstance().getTime());
+            response.setContentType("application/vnd.ms-excel");
+            response.setHeader("Content-disposition", "attachment; filename=" + filename + ".xls");
+
+            ServletOutputStream writer = response.getOutputStream();
+            exportGlobalToXls(request, teachersCreditsByDepartment, writer);
+
+            writer.flush();
+            response.flushBuffer();
+
+        } catch (IOException e) {
+            throw new FenixServiceException();
+        }
+        return null;
+    }
+    
+    private void exportGlobalToXls(HttpServletRequest request, SortedMap<Department, Map<ExecutionYear, PeriodCreditsReportDTO>> teachersCreditsByDepartment,
+            ServletOutputStream outputStream) throws IOException {
+        
+        final Spreadsheet spreadsheet = new Spreadsheet("Relatório de Créditos");
+        
+        final HSSFWorkbook workbook = new HSSFWorkbook();
+        final ExcelStyle excelStyle = new ExcelStyle(workbook);
+
+        setGlobalHeaders(teachersCreditsByDepartment, spreadsheet);
+        
+        for (Department department : teachersCreditsByDepartment.keySet()) {
+            Row row = spreadsheet.addRow();
+            row.setCell(department.getRealName());
+            ExecutionYear lastExecutionYear = null;
+            for (ExecutionYear executionYear : teachersCreditsByDepartment.get(department).keySet()) {
+                row.setCell(String.valueOf(teachersCreditsByDepartment.get(department).get(executionYear).getCredits()).replace('.', ','));
+                lastExecutionYear = executionYear;
+            }
+            row.setCell(String.valueOf(teachersCreditsByDepartment.get(department).get(lastExecutionYear).getTeachersSize()));
+            row.setCell(String.valueOf(teachersCreditsByDepartment.get(department).get(lastExecutionYear).getBalance()).replace('.', ','));            
+        }
+        
+        if(teachersCreditsByDepartment.keySet().size() > 1) {
+            Row row = spreadsheet.addRow();
+            row.setCell("Totais");
+            SortedMap<ExecutionYear, Double> executionYearTotals = (SortedMap<ExecutionYear, Double>) request.getAttribute("executionYearTotals");
+            for (Double value : executionYearTotals.values()) {
+                row.setCell(String.valueOf(value).replace('.', ','));
+            }
+            row.setCell(String.valueOf(request.getAttribute("totalTeachersSize")));
+            row.setCell(String.valueOf(request.getAttribute("totalBalance")).replace('.', ','));            
+        }
+        
+        spreadsheet.exportToXLSSheet(workbook, excelStyle.getHeaderStyle(), excelStyle.getStringStyle());
+        spreadsheet.setRows(new ArrayList<Row>());
+        workbook.write(outputStream);
+    }
+
+    private void setGlobalHeaders(SortedMap<Department, Map<ExecutionYear, PeriodCreditsReportDTO>> teachersCreditsByDepartment, final Spreadsheet spreadsheet) {
+        spreadsheet.setName("Relatório de Créditos Global");                        
+        final Row initialRow = spreadsheet.addRow();
+        initialRow.setCell("Departamento");
+        
+        for (Department department : teachersCreditsByDepartment.keySet()) {
+            for (ExecutionYear executionYear : teachersCreditsByDepartment.get(department).keySet()) {
+                initialRow.setCell(executionYear.getYear());
+            }                   
+            break;
+        }
+                          
+        initialRow.setCell("Nº Docentes");
+        initialRow.setCell("Saldo per capita");
+    }
+       
+    private SortedMap<Department, Map<ExecutionYear, PeriodCreditsReportDTO>> getGlobalDepartmentCreditsMap(HttpServletRequest request, IUserView userView, 
+            Integer fromExecutionYearID, Integer untilExecutionYearID, Integer departmentID) throws ParseException, 
+            InvalidPeriodException, FenixServiceException, FenixFilterException {
+    
+        request.setAttribute("fromExecutionYearID", fromExecutionYearID);
+        request.setAttribute("untilExecutionYearID", untilExecutionYearID);
+    
+        ExecutionYear fromExecutionYear = rootDomainObject.readExecutionYearByOID(fromExecutionYearID);
+        ExecutionYear untilExecutionYear = rootDomainObject.readExecutionYearByOID(untilExecutionYearID);
+    
+        ExecutionPeriod fromExecutionPeriod = null;
+        if(fromExecutionYear.getPreviousExecutionYear().equals(TeacherService.getStartExecutionPeriodForCredits().getExecutionYear())) {
+            fromExecutionPeriod = TeacherService.getStartExecutionPeriodForCredits();
+        } else {
+            fromExecutionPeriod = fromExecutionYear.getPreviousExecutionYear().readExecutionPeriodForSemester(1);
+        }
+        
+        ExecutionPeriod untilExecutionPeriod = untilExecutionYear.readExecutionPeriodForSemester(2);
+    
+        if (!validExecutionPeriodsChoice(fromExecutionPeriod, untilExecutionPeriod)) {
+            throw new InvalidPeriodException();
+        }
+    
+        Map<ExecutionYear, PeriodCreditsReportDTO> departmentPeriodTotalCredits = new HashMap<ExecutionYear, PeriodCreditsReportDTO>();
+        SortedMap<Department, Map<ExecutionYear, PeriodCreditsReportDTO>> departmentTotalCredits = new TreeMap<Department, Map<ExecutionYear, PeriodCreditsReportDTO>>(
+                new BeanComparator("code"));
+                     
+        if (departmentID == 0) {
+            Collection<Department> departments = rootDomainObject.getDepartments();
+            for (Department department : departments) {
+                Unit unit = department.getDepartmentUnit();
+                departmentPeriodTotalCredits = (Map<ExecutionYear, PeriodCreditsReportDTO>) ServiceUtils.executeService(
+                        userView, "ReadDepartmentTotalCreditsByPeriod", new Object[] { unit,
+                                fromExecutionPeriod, untilExecutionPeriod });
+                departmentTotalCredits.put(department, departmentPeriodTotalCredits);
+            }
+            request.setAttribute("departmentID", 0);
+        } else {            
+            Department department = rootDomainObject.readDepartmentByOID(departmentID);
+            Unit departmentUnit = department.getDepartmentUnit();
+            departmentPeriodTotalCredits = (Map<ExecutionYear, PeriodCreditsReportDTO>) ServiceUtils.executeService(
+                    userView, "ReadDepartmentTotalCreditsByPeriod", new Object[] { departmentUnit,
+                            fromExecutionPeriod, untilExecutionPeriod });
+            
+            departmentTotalCredits.put(department, departmentPeriodTotalCredits);            
+            request.setAttribute("department", department);
+            request.setAttribute("departmentID", department.getIdInternal());
+        }              
+                
+        setTotals(request, untilExecutionYear, departmentTotalCredits);
+        request.setAttribute("departmentTotalCredits", departmentTotalCredits);
+        return departmentTotalCredits;
+    }
+    
     public ActionForward exportToExcel(ActionMapping mapping, ActionForm actionForm,
             HttpServletRequest request, HttpServletResponse response) throws FenixServiceException,
-            FenixFilterException {
+            FenixFilterException, InvalidPeriodException {
 
-        Map<Department, Map<Unit, List>> teachersCreditsByDepartment = getTeachersCreditsMap(request);
+        IUserView userView = SessionUtils.getUserView(request);
+
+        Integer fromExecutionYearID = Integer.parseInt(request.getParameter("fromExecutionYearID"));
+        Integer untilExecutionYearID = Integer.parseInt(request.getParameter("untilExecutionYearID"));
+        Integer departmentID = Integer.parseInt(request.getParameter("departmentID"));
+        
+        Map<Department, Map<Unit, List>> teachersCreditsByDepartment = 
+            getDetailedTeachersCreditsMap(request, userView, fromExecutionYearID, untilExecutionYearID, departmentID);
 
         try {
             String filename = "RelatorioCreditos:" + getFileName(Calendar.getInstance().getTime());
@@ -186,8 +381,9 @@ public class ViewTeacherCreditsReportDispatchAction extends FenixDispatchAction 
 
     private void exportToXls(Map<Department, Map<Unit, List>> teachersCreditsByDepartment,
             ServletOutputStream outputStream) throws IOException {
+        
         final Spreadsheet spreadsheet = new Spreadsheet("Relatório de Créditos");
-
+        
         final HSSFWorkbook workbook = new HSSFWorkbook();
         final ExcelStyle excelStyle = new ExcelStyle(workbook);
 
@@ -222,6 +418,7 @@ public class ViewTeacherCreditsReportDispatchAction extends FenixDispatchAction 
 
     private Double fillSpreadSheet(final List<TeacherCreditsReportDTO> allListElements,
             final Spreadsheet spreadsheet) {
+        
         Double listTotalCredits = 0.0;
         int numberOfCells = 0;
         for (final TeacherCreditsReportDTO teacherCreditsReportDTO : allListElements) {
@@ -261,9 +458,7 @@ public class ViewTeacherCreditsReportDispatchAction extends FenixDispatchAction 
         final Row row = spreadsheet.addRow();
         row.setCell("Número");
         row.setCell("Nome");
-        row.setCell("Saldo até "
-                + executionPeriods.iterator().next().getPreviousExecutionPeriod().getExecutionYear()
-                        .getYear());
+        row.setCell("Saldo até " + executionPeriods.iterator().next().getPreviousExecutionPeriod().getExecutionYear().getYear());
         for (ExecutionPeriod executionPeriod : executionPeriods) {
             String semester = null;
             if (executionPeriod.getName().equalsIgnoreCase("1 Semestre")) {
@@ -279,71 +474,7 @@ public class ViewTeacherCreditsReportDispatchAction extends FenixDispatchAction 
             }
         }
     }
-
-    private Map<Department, Map<Unit, List>> getTeachersCreditsMap(HttpServletRequest request)
-            throws FenixFilterException, FenixServiceException {
-
-        IUserView userView = SessionUtils.getUserView(request);
-
-        Integer fromExecutionYearID = Integer.parseInt(request.getParameter("fromExecutionYearID"));
-        Integer untilExecutionYearID = Integer.parseInt(request.getParameter("untilExecutionYearID"));
-
-        ExecutionYear fromExecutionYear = rootDomainObject.readExecutionYearByOID(fromExecutionYearID);
-        ExecutionYear untilExecutionYear = rootDomainObject.readExecutionYearByOID(untilExecutionYearID);
-
-        ExecutionPeriod fromExecutionPeriod = fromExecutionYear.readExecutionPeriodForSemester(1);
-        ExecutionPeriod untilExecutionPeriod = untilExecutionYear.readExecutionPeriodForSemester(2);
-
-        List<TeacherCreditsReportDTO> teacherCreditsReportList = new ArrayList<TeacherCreditsReportDTO>();
-        Integer departmentID = Integer.parseInt(request.getParameter("departmentID"));
-        Map<Department, List<TeacherCreditsReportDTO>> teachersCreditsByDepartment = new HashMap<Department, List<TeacherCreditsReportDTO>>();
-        if (departmentID == 0) {
-            Collection<Department> departments = rootDomainObject.getDepartments();
-            for (Department department : departments) {
-                Unit unit = department.getDepartmentUnit();
-                teacherCreditsReportList = (List<TeacherCreditsReportDTO>) ServiceUtils.executeService(
-                        userView, "ReadTeachersCreditsResumeByPeriodAndUnit", new Object[] { unit,
-                                fromExecutionPeriod, untilExecutionPeriod });
-                teachersCreditsByDepartment.put(department, teacherCreditsReportList);
-            }
-        } else {
-            Department department = rootDomainObject.readDepartmentByOID(departmentID);
-            Unit unit = department.getDepartmentUnit();
-
-            teacherCreditsReportList = (List<TeacherCreditsReportDTO>) ServiceUtils.executeService(
-                    userView, "ReadTeachersCreditsResumeByPeriodAndUnit", new Object[] { unit,
-                            fromExecutionPeriod, untilExecutionPeriod });
-
-            teachersCreditsByDepartment.put(department, teacherCreditsReportList);
-            request.setAttribute("department", department);
-        }
-
-        if (teachersCreditsByDepartment != null && !teachersCreditsByDepartment.isEmpty()) {
-            Map<Department, Map<Unit, List>> teachersCreditsDisplayMap = new TreeMap<Department, Map<Unit, List>>(
-                    new BeanComparator("name"));
-            for (Department department : teachersCreditsByDepartment.keySet()) {
-                Map<Unit, List> teachersCreditsByUnit = new TreeMap(new BeanComparator("name"));
-                List<TeacherCreditsReportDTO> list = teachersCreditsByDepartment.get(department);
-                for (TeacherCreditsReportDTO creditsReportDTO : list) {
-                    List mapLineList = teachersCreditsByUnit.get(creditsReportDTO.getUnit());
-                    if (mapLineList == null) {
-                        mapLineList = new ArrayList<TeacherCreditsReportDTO>();
-                        mapLineList.add(creditsReportDTO);
-                        teachersCreditsByUnit.put(creditsReportDTO.getUnit(), mapLineList);
-                    } else {
-                        mapLineList.add(creditsReportDTO);
-                    }
-                }
-                for (List teachersCreditMapLine : teachersCreditsByUnit.values()) {
-                    Collections.sort(teachersCreditMapLine, new BeanComparator("teacher.teacherNumber"));
-                }
-                teachersCreditsDisplayMap.put(department, teachersCreditsByUnit);
-            }
-            return teachersCreditsDisplayMap;
-        }
-        return null;
-    }
-
+ 
     private List filterExecutionYears(Collection<ExecutionYear> executionYears) {
         List filteredExecutionYears = new ArrayList();
         ExecutionYear executionYear0304 = ExecutionYear.readExecutionYearByName("2003/2004");
@@ -369,5 +500,9 @@ public class ViewTeacherCreditsReportDispatchAction extends FenixDispatchAction 
     }
 
     public class InvalidPeriodException extends FenixActionException {
+    }
+        
+    private Double round(double n) {
+        return Math.round((n * 100.0)) / 100.0;
     }
 }

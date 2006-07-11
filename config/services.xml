@@ -9466,6 +9466,15 @@
         </filterChains>     
     </service>
     <service>
+   	 	<name>ReadDepartmentTotalCreditsByPeriod</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.scientificCouncil.credits.ReadDepartmentTotalCreditsByPeriod</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>  
+        <filterChains>
+        	<chain name="ScientificCouncilAuthorization"></chain>
+        </filterChains>     
+    </service>
+    <service>
     	<name>ChangeEnrolmentPeriodValues</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.manager.ChangeEnrolmentPeriodValues</implementationClass>
         <description></description>

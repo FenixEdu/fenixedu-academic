@@ -41,6 +41,7 @@ import net.sourceforge.fenixedu.domain.teacher.TeacherLegalRegimen;
 import net.sourceforge.fenixedu.domain.teacher.TeacherPersonalExpectation;
 import net.sourceforge.fenixedu.domain.teacher.TeacherService;
 import net.sourceforge.fenixedu.domain.teacher.TeacherServiceExemption;
+import net.sourceforge.fenixedu.util.LegalRegimenType;
 import net.sourceforge.fenixedu.util.OldPublicationType;
 import net.sourceforge.fenixedu.util.OrientationType;
 import net.sourceforge.fenixedu.util.PeriodState;
@@ -685,6 +686,41 @@ public class Teacher extends Teacher_Base {
         return Math.round((n * 100.0)) / 100.0;
     }
     
+    public boolean isDeceased() {
+        for (TeacherLegalRegimen legalRegimen : getLegalRegimens()) {
+            if (legalRegimen.getLegalRegimenType().equals(LegalRegimenType.DEATH)) {
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    public boolean isInactive(ExecutionPeriod executionPeriod) {
+        if (executionPeriod != null) {            
+            OccupationPeriod occupationPeriod = executionPeriod.getLessonsPeriod();  
+            if(occupationPeriod != null) {
+                List<TeacherLegalRegimen> allLegalRegimens = getAllLegalRegimensWithoutEndSituations(occupationPeriod.getStartYearMonthDay(),
+                                occupationPeriod.getEndYearMonthDay());
+                if (allLegalRegimens.isEmpty()) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+    
+    public boolean isMonitor(ExecutionPeriod executionPeriod) {
+        if (executionPeriod != null) {
+            Category category = getCategoryForCreditsByPeriod(executionPeriod);
+            if (category != null
+                    && (category.getCode().equalsIgnoreCase("MNT") || category.getCode()
+                            .equalsIgnoreCase("MNL"))) {
+                return true;
+            }
+        }
+        return false;
+    }
+    
     public TeacherServiceExemption getDominantServiceExemption(ExecutionPeriod executionPeriod) {        
         OccupationPeriod occupationPeriod = executionPeriod.getLessonsPeriod();
         List<TeacherServiceExemption> serviceExemptions = getServiceExemptionsWithoutMedicalSituations(
@@ -781,12 +817,12 @@ public class Teacher extends Teacher_Base {
         ExecutionPeriod executionPeriodAfterEnd = endExecutionPeriod.getNextExecutionPeriod();
         while (startPeriod != executionPeriodAfterEnd) {
             TeacherService teacherService = getTeacherServiceByExecutionPeriod(startPeriod);
-            if (teacherService != null) {
-                totalCredits += getManagementFunctionsCredits(startPeriod);
-                totalCredits += getServiceExemptionCredits(startPeriod);
-                totalCredits += teacherService.getCredits();                
-                totalCredits -= getMandatoryLessonHours(startPeriod);
+            if (teacherService != null) {                
+                totalCredits += teacherService.getCredits();                                
             }
+            totalCredits += getManagementFunctionsCredits(startPeriod);
+            totalCredits += getServiceExemptionCredits(startPeriod);
+            totalCredits -= getMandatoryLessonHours(startPeriod);
             startPeriod = startPeriod.getNextExecutionPeriod();
         }
         return totalCredits;

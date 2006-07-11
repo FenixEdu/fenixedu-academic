@@ -44,6 +44,9 @@
     </definition>    
     <definition name="show-teacher-credits-report" extends="scientificCouncil.masterPage">
         <put name="body" value="/scientificCouncil/credits/showTeachersCreditsReport.jsp"></put>
+    </definition> 
+    <definition name="show-department-global-credits-report" extends="scientificCouncil.masterPage">
+        <put name="body" value="/scientificCouncil/credits/showDepartmentGlobalCreditsReport.jsp"></put>
     </definition>        
     
     <!-- Other Services -->	
