@@ -28,8 +28,6 @@ public class EmployeeWorkSheet implements Serializable {
 
     Duration unjustifiedBalance;
 
-    Collection<JustificationMotive> justificationMotives;
-
     public String getTotalBalanceString() {
         PeriodFormatter fmt = new PeriodFormatterBuilder().printZeroAlways().appendHours()
                 .appendSeparator(":").minimumPrintedDigits(2).appendMinutes().toFormatter();
@@ -48,10 +46,6 @@ public class EmployeeWorkSheet implements Serializable {
                 .appendSeparator(":").minimumPrintedDigits(2).appendMinutes().toFormatter();
         MutablePeriod finalUnjustifiedBalance = new MutablePeriod(getUnjustifiedBalance().getMillis(), PeriodType.time());
         return fmt.print(finalUnjustifiedBalance);
-    }
-
-    public Collection<JustificationMotive> getSubtitles() {
-        return justificationMotives;
     }
 
     public Employee getEmployee() {
@@ -102,13 +96,4 @@ public class EmployeeWorkSheet implements Serializable {
     public void setWorkDaySheetList(List<WorkDaySheet> workDaySheetList) {
         this.workDaySheetList = workDaySheetList;
     }
-
-    public Collection<JustificationMotive> getJustificationMotives() {
-        return justificationMotives;
-    }
-
-    public void setJustificationMotives(Collection<JustificationMotive> justificationMotives) {
-        this.justificationMotives = justificationMotives;
-    }
-
 }

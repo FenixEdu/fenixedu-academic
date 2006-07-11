@@ -55,9 +55,14 @@ public class ViewAssiduousnessDispatchAction extends FenixDispatchAction {
             yearMonth = new YearMonth();
             yearMonth.setYear(new YearMonthDay().getYear());
             yearMonth.setMonth(Month.values()[new YearMonthDay().getMonthOfYear() - 1]);
-        } else if (yearMonth.getYear() > new YearMonthDay().getYear()) {
-            // erro - não pode ver nos anos futuros
-            System.out.println("erro - não pode ver nos anos futuros");
+        } else if (yearMonth.getYear() > new YearMonthDay().getYear()
+                || (yearMonth.getYear() == new YearMonthDay().getYear() && yearMonth.getMonth()
+                        .compareTo(Month.values()[new YearMonthDay().getMonthOfYear() - 1]) > 0)) {
+            saveErrors(request, employee, yearMonth,"error.invalidFutureDate");
+            return mapping.findForward("show-employee-work-sheet");
+        } else if (yearMonth.getYear() < 2006) {            
+            saveErrors(request, employee, yearMonth,"error.invalidPastDate");            
+            return mapping.findForward("show-employee-work-sheet");
         }
 
         YearMonthDay beginDate = new YearMonthDay(yearMonth.getYear(),
@@ -71,15 +76,22 @@ public class ViewAssiduousnessDispatchAction extends FenixDispatchAction {
         YearMonthDay endDate = new YearMonthDay(yearMonth.getYear(), yearMonth.getMonth().ordinal() + 1,
                 endDay);
 
-        try {
-            Object[] args = { employee.getAssiduousness(), beginDate, endDate };
-            EmployeeWorkSheet employeeWorkSheet = (EmployeeWorkSheet) ServiceUtils.executeService(
-                    userView, "ReadEmployeeWorkSheet", args);
-            request.setAttribute("employeeWorkSheet", employeeWorkSheet);
-        } catch (FenixServiceException e) {
-        }
+        Object[] args = { employee.getAssiduousness(), beginDate, endDate };
+        EmployeeWorkSheet employeeWorkSheet = (EmployeeWorkSheet) ServiceUtils.executeService(userView,
+                "ReadEmployeeWorkSheet", args);
+        request.setAttribute("employeeWorkSheet", employeeWorkSheet);
 
         request.setAttribute("yearMonth", yearMonth);
         return mapping.findForward("show-employee-work-sheet");
+    }
+
+    private void saveErrors(HttpServletRequest request, Employee employee, YearMonth yearMonth, String message) {
+        ActionMessages actionMessages = new ActionMessages();
+        actionMessages.add("message", new ActionMessage(message));
+        saveMessages(request, actionMessages);
+        request.setAttribute("yearMonth", yearMonth);
+        EmployeeWorkSheet employeeWorkSheet = new EmployeeWorkSheet();
+        employeeWorkSheet.setEmployee(employee);
+        request.setAttribute("employeeWorkSheet", employeeWorkSheet);
     }
 }

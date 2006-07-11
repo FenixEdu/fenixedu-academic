@@ -18,6 +18,12 @@
 </div>
 </logic:present>
 
+<logic:messagesPresent message="true">
+	<html:messages id="message" message="true">
+		<p><span class="error0"><bean:write name="message" /></span></p>
+	</html:messages>
+</logic:messagesPresent>
+	
 <logic:present name="yearMonth">
 	<div class="mvert1 invisible">
 	<fr:form action="/assiduousnessRecords.do?method=showClockings">

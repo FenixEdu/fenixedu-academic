@@ -18,6 +18,7 @@ import net.sourceforge.fenixedu.dataTransferObject.assiduousness.EmployeeWorkShe
 import net.sourceforge.fenixedu.dataTransferObject.assiduousness.WorkScheduleDaySheet;
 import net.sourceforge.fenixedu.dataTransferObject.assiduousness.YearMonth;
 import net.sourceforge.fenixedu.domain.Employee;
+import net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessRecord;
 import net.sourceforge.fenixedu.domain.assiduousness.Clocking;
 import net.sourceforge.fenixedu.domain.assiduousness.Justification;
 import net.sourceforge.fenixedu.domain.assiduousness.WorkSchedule;
@@ -34,6 +35,8 @@ import org.apache.commons.beanutils.BeanComparator;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.apache.struts.action.ActionMessage;
+import org.apache.struts.action.ActionMessages;
 import org.joda.time.YearMonthDay;
 
 public class AssiduousnessDispatchAction extends FenixDispatchAction {
@@ -44,8 +47,10 @@ public class AssiduousnessDispatchAction extends FenixDispatchAction {
         final IUserView userView = SessionUtils.getUserView(request);
         Employee employee = userView.getPerson().getEmployee();
         if (employee == null) {
-            // erro
-            return mapping.findForward("index");
+            ActionMessages actionMessages = new ActionMessages();
+            actionMessages.add("message", new ActionMessage("error.invalidEmployee"));
+            saveMessages(request, actionMessages);
+            return mapping.getInputForward();
         }
         HashMap<String, WorkScheduleDaySheet> workScheduleDays = new HashMap<String, WorkScheduleDaySheet>();
         if (employee.getAssiduousness() != null) {
@@ -98,9 +103,10 @@ public class AssiduousnessDispatchAction extends FenixDispatchAction {
         final IUserView userView = SessionUtils.getUserView(request);
         Employee employee = userView.getPerson().getEmployee();
         if (employee == null) {
-            // erro
-            System.out.println("não existe empregado");
-            return mapping.findForward("index");
+            ActionMessages actionMessages = new ActionMessages();
+            actionMessages.add("message", new ActionMessage("error.invalidEmployee"));
+            saveMessages(request, actionMessages);
+            return mapping.getInputForward();
         }
         YearMonth yearMonth = null;
         ViewState viewState = (ViewState) RenderUtils.getViewState();
@@ -111,17 +117,25 @@ public class AssiduousnessDispatchAction extends FenixDispatchAction {
             yearMonth = new YearMonth();
             yearMonth.setYear(new YearMonthDay().getYear());
             yearMonth.setMonth(Month.values()[new YearMonthDay().getMonthOfYear() - 1]);
-        } else if (yearMonth.getYear() > new YearMonthDay().getYear()) {
-            // erro - não pode ver nos anos futuros
-            System.out.println("erro - não pode ver nos anos futuros");
+        } else if (yearMonth.getYear() > new YearMonthDay().getYear()
+                || (yearMonth.getYear() == new YearMonthDay().getYear() && yearMonth.getMonth()
+                        .compareTo(Month.values()[new YearMonthDay().getMonthOfYear() - 1]) > 0)) {
+            saveErrors(request, yearMonth,"error.invalidFutureDate");
+            request.setAttribute("employee", employee);
+            return mapping.findForward("show-clockings");
+        } else if (yearMonth.getYear() < 2006) {            
+            saveErrors(request, yearMonth,"error.invalidPastDate"); 
+            request.setAttribute("employee", employee);
+            return mapping.findForward("show-clockings");
         }
+        
         YearMonthDay beginDate = new YearMonthDay(yearMonth.getYear(),
                 yearMonth.getMonth().ordinal() + 1, 01);
         YearMonthDay endDate = new YearMonthDay(yearMonth.getYear(), yearMonth.getMonth().ordinal() + 1,
                 beginDate.dayOfMonth().getMaximumValue());
         if (employee.getAssiduousness() != null) {
             List<Clocking> clockings = employee.getAssiduousness().getClockings(beginDate, endDate);
-            Collections.sort(clockings, new BeanComparator("date"));
+            Collections.sort(clockings, AssiduousnessRecord.COMPARATORY_BY_DATE);
             HashMap<YearMonthDay, ClockingsDaySheet> clockingsDaySheetList = new HashMap<YearMonthDay, ClockingsDaySheet>();
             for (Clocking clocking : clockings) {
                 if (clockingsDaySheetList.containsKey(clocking.getDate().toYearMonthDay())) {
@@ -152,8 +166,10 @@ public class AssiduousnessDispatchAction extends FenixDispatchAction {
         final IUserView userView = SessionUtils.getUserView(request);
         Employee employee = userView.getPerson().getEmployee();
         if (employee == null) {
-            // erro
-            return mapping.findForward("index");
+            ActionMessages actionMessages = new ActionMessages();
+            actionMessages.add("message", new ActionMessage("error.invalidEmployee"));
+            saveMessages(request, actionMessages);
+            return mapping.getInputForward();
         }
         YearMonth yearMonth = null;
         ViewState viewState = (ViewState) RenderUtils.getViewState();
@@ -164,10 +180,18 @@ public class AssiduousnessDispatchAction extends FenixDispatchAction {
             yearMonth = new YearMonth();
             yearMonth.setYear(new YearMonthDay().getYear());
             yearMonth.setMonth(Month.values()[new YearMonthDay().getMonthOfYear() - 1]);
-        } else if (yearMonth.getYear() > new YearMonthDay().getYear()) {
-            // erro - não pode ver nos anos futuros
-            System.out.println("erro - não pode ver nos anos futuros");
+        } else if (yearMonth.getYear() > new YearMonthDay().getYear()
+                || (yearMonth.getYear() == new YearMonthDay().getYear() && yearMonth.getMonth()
+                        .compareTo(Month.values()[new YearMonthDay().getMonthOfYear() - 1]) > 0)) {
+            saveErrors(request, yearMonth,"error.invalidFutureDate");
+            request.setAttribute("employee", employee);
+            return mapping.findForward("show-justifications");
+        } else if (yearMonth.getYear() < 2006) {            
+            saveErrors(request, yearMonth,"error.invalidPastDate");
+            request.setAttribute("employee", employee);
+            return mapping.findForward("show-justifications");
         }
+        
         if (employee.getAssiduousness() != null) {
             YearMonthDay beginDate = new YearMonthDay(yearMonth.getYear(), yearMonth.getMonth()
                     .ordinal() + 1, 01);
@@ -177,7 +201,7 @@ public class AssiduousnessDispatchAction extends FenixDispatchAction {
             justifications.addAll(employee.getAssiduousness().getLeaves(beginDate, endDate));
             justifications.addAll(employee.getAssiduousness().getMissingClockings(beginDate, endDate));
             List<Justification> orderedJustifications = new ArrayList<Justification>(justifications);
-            Collections.sort(orderedJustifications, new BeanComparator("date"));
+            Collections.sort(orderedJustifications, AssiduousnessRecord.COMPARATORY_BY_DATE);
             request.setAttribute("justifications", orderedJustifications);
         }
         request.setAttribute("yearMonth", yearMonth);
@@ -191,9 +215,10 @@ public class AssiduousnessDispatchAction extends FenixDispatchAction {
         final IUserView userView = SessionUtils.getUserView(request);
         Employee employee = userView.getPerson().getEmployee();
         if (employee == null) {
-            // erro
-            System.out.println("não existe empregado");
-            return mapping.findForward("index");
+            ActionMessages actionMessages = new ActionMessages();
+            actionMessages.add("message", new ActionMessage("error.invalidEmployee"));
+            saveMessages(request, actionMessages);
+            return mapping.getInputForward();
         }
         YearMonth yearMonth = null;
         ViewState viewState = (ViewState) RenderUtils.getViewState();
@@ -204,9 +229,20 @@ public class AssiduousnessDispatchAction extends FenixDispatchAction {
             yearMonth = new YearMonth();
             yearMonth.setYear(new YearMonthDay().getYear());
             yearMonth.setMonth(Month.values()[new YearMonthDay().getMonthOfYear() - 1]);
-        } else if (yearMonth.getYear() > new YearMonthDay().getYear()) {
-            // erro - não pode ver nos anos futuros
-            System.out.println("erro - não pode ver nos anos futuros");
+        } else if (yearMonth.getYear() > new YearMonthDay().getYear()
+                || (yearMonth.getYear() == new YearMonthDay().getYear() && yearMonth.getMonth()
+                        .compareTo(Month.values()[new YearMonthDay().getMonthOfYear() - 1]) > 0)) {
+            saveErrors(request, yearMonth,"error.invalidFutureDate");
+            EmployeeWorkSheet employeeWorkSheet = new EmployeeWorkSheet();
+            employeeWorkSheet.setEmployee(employee);
+            request.setAttribute("employeeWorkSheet", employeeWorkSheet);
+            return mapping.findForward("show-work-sheet");
+        } else if (yearMonth.getYear() < 2006) {            
+            saveErrors(request, yearMonth,"error.invalidPastDate");   
+            EmployeeWorkSheet employeeWorkSheet = new EmployeeWorkSheet();
+            employeeWorkSheet.setEmployee(employee);
+            request.setAttribute("employeeWorkSheet", employeeWorkSheet);
+            return mapping.findForward("show-work-sheet");
         }
 
         YearMonthDay beginDate = new YearMonthDay(yearMonth.getYear(),
@@ -218,15 +254,20 @@ public class AssiduousnessDispatchAction extends FenixDispatchAction {
         }
         YearMonthDay endDate = new YearMonthDay(yearMonth.getYear(), yearMonth.getMonth().ordinal() + 1,
                 endDay);
-        try {
-            Object[] args = { employee.getAssiduousness(), beginDate, endDate };
-            EmployeeWorkSheet employeeWorkSheet = (EmployeeWorkSheet) ServiceUtils.executeService(
-                    userView, "ReadEmployeeWorkSheet", args);
-            request.setAttribute("employeeWorkSheet", employeeWorkSheet);
-        } catch (FenixServiceException e) {
-        }
+
+        Object[] args = { employee.getAssiduousness(), beginDate, endDate };
+        EmployeeWorkSheet employeeWorkSheet = (EmployeeWorkSheet) ServiceUtils.executeService(userView,
+                "ReadEmployeeWorkSheet", args);
+        request.setAttribute("employeeWorkSheet", employeeWorkSheet);
+
         request.setAttribute("yearMonth", yearMonth);
         return mapping.findForward("show-work-sheet");
     }
 
+    private void saveErrors(HttpServletRequest request, YearMonth yearMonth, String message) {
+        ActionMessages actionMessages = new ActionMessages();
+        actionMessages.add("message", new ActionMessage(message));
+        saveMessages(request, actionMessages);
+        request.setAttribute("yearMonth", yearMonth);        
+    }
 }

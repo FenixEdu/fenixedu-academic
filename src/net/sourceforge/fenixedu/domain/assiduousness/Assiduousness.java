@@ -29,9 +29,8 @@ import org.joda.time.YearMonthDay;
 
 public class Assiduousness extends Assiduousness_Base {
 
-    public static final TimeOfDay startTimeOfDay = new TimeOfDay(7, 30, 0, 0);
-
-    public static final TimeOfDay endTimeOfDay = new TimeOfDay(23, 59, 59, 99);
+    public static final TimeOfDay defaultStartWorkDay = new TimeOfDay(7, 30, 0, 0);
+    public static final TimeOfDay defaultEndWorkDay = new TimeOfDay(23, 59, 59, 99);
 
     public Assiduousness(Employee employee) {
         super();
@@ -126,9 +125,9 @@ public class Assiduousness extends Assiduousness_Base {
                 timeline.plotListInTimeline(workDaySheet.getAssiduousnessRecords(), workDaySheet
                         .getLeaves(), attributesIt, day);
                 final Duration worked = timeline.calculateDurationAllIntervalsByAttributes(
-                        DomainConstants.WORKED_ATTRIBUTES, new TimePoint(startTimeOfDay,
-                                AttributeType.NULL), new TimePoint(endTimeOfDay, AttributeType.NULL));
-                workDaySheet.setBalanceTime(worked.toPeriod());
+                        DomainConstants.WORKED_ATTRIBUTES, new TimePoint(defaultStartWorkDay,
+                                AttributeType.NULL), new TimePoint(defaultStartWorkDay, AttributeType.NULL));
+                workDaySheet.setBalanceTime(worked.toPeriod());            
             }
         }
         return workDaySheet;
@@ -188,7 +187,7 @@ public class Assiduousness extends Assiduousness_Base {
     }
 
     public List<Leave> getLeaves(YearMonthDay beginDate, YearMonthDay endDate) {
-        Interval interval = new Interval(beginDate.toDateTimeAtMidnight(), new TimeOfDay(23, 59, 59)
+        Interval interval = new Interval(beginDate.toDateTimeAtMidnight(), defaultEndWorkDay
                 .toDateTime(endDate.toDateMidnight()));
         List<Leave> leavesList = new ArrayList<Leave>();
         for (AssiduousnessRecord assiduousnessRecord : getAssiduousnessRecords()) {
