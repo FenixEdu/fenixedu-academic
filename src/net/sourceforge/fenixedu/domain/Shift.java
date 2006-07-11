@@ -65,7 +65,8 @@ public class Shift extends Shift_Base {
 	public boolean canBeDeleted() {
 	    if (hasAnyAssociatedSummaries()
                 || hasAnyAssociatedStudentGroups()
-                || hasAnyStudents()) {
+                || hasAnyStudents()
+                || hasAnyDegreeTeachingServices()) {
             return false;
         }
         return true;
