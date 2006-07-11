@@ -7,7 +7,7 @@
 		<html:link page="/readCurricularCourses.do">
 			<bean:message key="link.delegate.coursesEvalutation"/>
 		</html:link>
-		<br/>
-		<br/>
 	</li>
 </ul>
+
+<br/>

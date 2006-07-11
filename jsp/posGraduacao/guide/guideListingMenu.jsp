@@ -1,24 +1,22 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 
-<style>@import url(<%= request.getContextPath() %>/CSS/navlateralnew.css);</style>
 
 <ul>
 	<li><html:link page="/candidateSection.do"><bean:message key="link.masterDegree.administrativeOffice.candidate" /></html:link></li>
 	<li><html:link page="/contributorSection.do"><bean:message key="link.masterDegree.administrativeOffice.contributor" /></html:link></li>
-</ul>
-<ul style="margin-left: 2em; margin-top: 1em; margin-bottom: 1em;">
-	<li class="navheader"><bean:message key="label.masterDegree.administrativeOffice.guide" /></li>
-	<li><html:link page="/chooseDataToCreateGuide.do?method=chooseDegreeFromList"><bean:message key="link.masterDegree.administrativeOffice.createGuide" /></html:link></li>
-	<li><html:link page="/chooseGuideDispatchAction.do?method=prepareChoose&page=0&action=visualize"><bean:message key="link.masterDegree.administrativeOffice.visualizeGuide" /></html:link></li>
-</ul>
-<ul style="margin-left: 4em; margin-top: 1em; margin-bottom: 1em;">
-	<li class="navheader"><bean:message key="link.masterDegree.administrativeOffice.guideListing" /></li>
-	<li><html:link page="/guideListingByYear.do?method=prepareChooseYear"><bean:message key="link.masterDegree.administrativeOffice.guideListingByYear" /></html:link></li>
-	<li><html:link page="/guideListingByPerson.do?method=prepareChoosePerson&amp;page=0"><bean:message key="link.masterDegree.administrativeOffice.guideListingByPerson" /></html:link></li>
-	<li><html:link page="/guideListingByState.do?method=prepareChooseState&amp;page=0"><bean:message key="link.masterDegree.administrativeOffice.guideListingByState" /></html:link></li>
-</ul>
-<ul>
+		<li class="navheader"><bean:message key="label.masterDegree.administrativeOffice.guide" /></li>
+		<li><html:link page="/chooseDataToCreateGuide.do?method=chooseDegreeFromList"><bean:message key="link.masterDegree.administrativeOffice.createGuide" /></html:link></li>
+		<li><html:link page="/chooseGuideDispatchAction.do?method=prepareChoose&page=0&action=visualize"><bean:message key="link.masterDegree.administrativeOffice.visualizeGuide" /></html:link></li>
+		<li class="sub">
+			<ul>
+			<li class="navheader"><bean:message key="link.masterDegree.administrativeOffice.guideListing" /></li>
+			<li><html:link page="/guideListingByYear.do?method=prepareChooseYear"><bean:message key="link.masterDegree.administrativeOffice.guideListingByYear" /></html:link></li>
+			<li><html:link page="/guideListingByPerson.do?method=prepareChoosePerson&amp;page=0"><bean:message key="link.masterDegree.administrativeOffice.guideListingByPerson" /></html:link></li>
+			<li><html:link page="/guideListingByState.do?method=prepareChooseState&amp;page=0"><bean:message key="link.masterDegree.administrativeOffice.guideListingByState" /></html:link></li>
+			</ul>
+		</li>
+	<br/>
 	<li><html:link page="/studentSection.do"><bean:message key="label.coordinator.student" /></html:link></li>
     <li><html:link page="/thesisSection.do"><bean:message key="link.masterDegree.administrativeOffice.thesis.title" /></html:link></li>
 	<li><html:link page="/gratuitySection.do"><bean:message key="link.masterDegree.administrativeOffice.gratuity" /></html:link></li>

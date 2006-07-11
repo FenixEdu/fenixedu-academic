@@ -4,21 +4,17 @@
 	<img alt=""  src="<%= request.getContextPath() %>/images/logo-fenix.gif" width="100" height="100"/>
 </center>
 
-<div style="font-size: 1.20em;">
-
-<p><strong>&raquo; 
+<ul>
+	<li>
 	<html:link module="/manager" page="/teachersManagement.do?method=mainPage">
 		<bean:message bundle="MANAGER_RESOURCES" key="label.manager.mainPage" />
 	</html:link>
-</strong></p>
-
-<h2><bean:message bundle="MANAGER_RESOURCES" key="label.manageFiles"/></h2>
-
-<p><strong>&raquo;
+	</li>
+	<li class="navheader"><bean:message bundle="MANAGER_RESOURCES" key="label.manageFiles"/></li>
+	<li>
 	<html:link module="/manager" page="/uploadFiles.do?method=prepareChooseForUploadFiles&amp;file=sibs">
 		<bean:message bundle="MANAGER_RESOURCES" key="label.uploadFiles.SIBS" />
 	</html:link>
-</strong></p>
-
-</div>
+	</li>
+</ul>
 

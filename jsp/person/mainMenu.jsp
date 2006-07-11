@@ -3,7 +3,6 @@
 
 <style>@import url(<%= request.getContextPath() %>/CSS/navlateralnew.css);</style> <!-- Import new CSS for this section: #navlateral  -->
 
-
 <ul>
 	<li class="navheader"><bean:message key="label.navheader.person"  /></li>
 	<li><html:link page="/visualizePersonalInfo.do" titleKey="link.title.visualizeInformation"  ><bean:message key="label.person.visualizeInformation"  /></html:link></li>

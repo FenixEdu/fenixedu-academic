@@ -13,7 +13,6 @@
 			    <bean:message key="link.weekly.work.load"/>
 			</html:link>
 		</li>
-		<br/>
 		<li class="navheader">
 			<bean:message bundle="PEDAGOGICAL_COUNCIL" key="bolonha.process"/>
 		</li>
@@ -22,7 +21,6 @@
 				<bean:message bundle="PEDAGOGICAL_COUNCIL" key="navigation.competenceCoursesManagement"/>
 			</html:link>
 		</li>
-
 		<li>
 			<html:link page="/curricularPlans/curricularPlansManagement.faces">
 				<bean:message bundle="PEDAGOGICAL_COUNCIL" key="navigation.curricularPlansManagement"/>

@@ -15,7 +15,6 @@ if (degreeCurricularPlanID == null) {
 <logic:present name="<%= SessionConstants.MASTER_DEGREE %>"  >
 	<bean:define id="infoExecutionDegree" name="<%= SessionConstants.MASTER_DEGREE %>" scope="session" type="InfoExecutionDegree" />
 	<br/>
-	<hr/>
 	<ul>
 		<li class="navheader">
 			<bean:message key="link.coordinator.degreeCurricularPlan.management"/>

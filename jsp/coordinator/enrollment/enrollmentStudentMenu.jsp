@@ -8,9 +8,7 @@
 	<bean:define id="infoExecutionDegree" name="<%= SessionConstants.MASTER_DEGREE %>" scope="session"/>
 	<bean:define id="infoExecutionDegreeID" name="infoExecutionDegree" property="idInternal"/>
 	<bean:define id="degreeCurricularPlanID" name="degreeCurricularPlanID" scope="request"/>
-	
 	<br/>
-	<hr/>
 	<ul>
 		<li class="navheader">
 			<bean:message key="label.coordinator.studentInformation"/>
@@ -24,5 +22,4 @@
 			    <bean:message key="link.student.enrollment" /></html:link>
 		</li>		
 	</ul>
-
 </logic:present>

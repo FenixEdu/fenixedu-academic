@@ -3,10 +3,9 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <br />
-<br />
 <logic:present name="infoCostCenterList">
-	<p><strong><bean:message key="title.costCenter" /></strong></p>
 	<ul>
+		<li class="navheader"><bean:message key="title.costCenter" /></li>
 		<logic:iterate id="costCenter" name="infoCostCenterList">
 			<bean:define id="code" name="costCenter" property="code"/>
 			<li><html:link page="<%="/index.do?costCenter=" + code%>">
@@ -14,6 +13,5 @@
 			</html:link></li>
 		</logic:iterate>
 	</ul>
-	<br />
 	<br />
 </logic:present>

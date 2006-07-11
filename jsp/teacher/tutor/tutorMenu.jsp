@@ -3,9 +3,8 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 
 <br/>
-<hr/>
-<ul><li class="navheader"><bean:message key="label.teacher.tutor.operations"/></li></ul>
 <ul>
+	<li class="navheader"><bean:message key="label.teacher.tutor.operations"/></li>
 	<li>
 		<html:link page="<%= "/viewStudentsByTutor.do?method=execute"%>">
 			<bean:message key="link.students.tutor" /></html:link> 

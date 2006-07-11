@@ -1,38 +1,37 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 
-<div style="font-size: 1.20em;">
-
-<strong>Gestão de CMS</strong>
-<p><strong>&raquo; 
+<ul>
+	<li class="navheader">Gestão de CMS</li>
+	<li>
 	<html:link module="/cms" action="/personalGroupsManagement.do?method=prepare" titleKey="person.userGroupsManagement.label.title">
 		<bean:message bundle="CMS_RESOURCES" key="link.userGroupsManagement" />
 	</html:link>
-	</strong></p>
-<p><strong>&raquo;
+	</li>
+	<li>
 	<html:link module="/cms" action="/cmsConfigurationManagement.do?method=prepare" titleKey="person.userGroupsManagement.label.title">
 		<bean:message bundle="CMS_RESOURCES" key="link.cmsConfiguration" />
-	</html:link>	
-</strong></p>
-<p><strong>&raquo;
+	</html:link>
+	</li>
+	<li>
 	<html:link module="/cms" action="/executionCourseWebsiteManagement?method=viewAll" >
 		<bean:message bundle="CMS_RESOURCES" key="cms.executionCourseWebsite.label" />
-	</html:link>	
-</strong></p>
-<p><strong>&raquo;
+	</html:link>
+	</li>
+	<li>
     <html:link module="/cms" action="/websiteTypeManagement?method=start" >
         <bean:message bundle="CMS_RESOURCES" key="cms.websiteTypeManagement.label" />
-    </html:link>    
-</strong></p>
-<p><strong>&raquo;
+    </html:link>  
+	</li>
+	<li>
     <html:link module="/cms" action="/functionalityLinkManagement?method=start" >
         <bean:message bundle="CMS_RESOURCES" key="cms.functionalityLinkManagement.label" />
-    </html:link>    
-</strong></p>
-<p><strong>&raquo;
+    </html:link>
+	</li>
+	<li>
     <html:link module="/cms" action="/mailSender?method=start" >
         <bean:message bundle="CMS_RESOURCES" key="cms.mailSender.label" />
-    </html:link>    
-</strong></p>
+    </html:link> 
+	</li>
+</ul>
 
-</div>

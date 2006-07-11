@@ -2,12 +2,9 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
-<p class="invisible">
-	<strong>
-		&raquo; Gest&atilde;o de Horários
-	</strong>
-</p>
+
 <ul>
+  <li class="navheader">&raquo; Gest&atilde;o de Horários</li>
   <li>
   	<html:link page="<%= "/chooseContext.do?method=prepare&amp;"
   							+ SessionConstants.EXECUTION_PERIOD_OID
@@ -16,14 +13,7 @@
   		<bean:message key="link.schedules.chooseContext"/>
   	</html:link>
   </li>
-</ul>
-
-<p class="invisible">
-	<strong>
-		&raquo; Listagens de Horários
-	</strong>
-</p>
-<ul>
+  <li class="navheader">&raquo; Listagens de Horários</li>
   <li>
   	<html:link page="<%= "/viewAllClassesSchedulesDA.do?method=choose&amp;"
   							+ SessionConstants.EXECUTION_PERIOD_OID

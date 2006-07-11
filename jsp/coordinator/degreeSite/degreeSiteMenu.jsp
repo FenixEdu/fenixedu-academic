@@ -9,9 +9,7 @@
 	<bean:define id="infoExecutionDegreeID" name="infoExecutionDegree" property="idInternal"/>
 	<bean:define id="infoDegreeID" name="infoExecutionDegree" property="infoDegreeCurricularPlan.infoDegree.idInternal"/>
 	<bean:define id="degreeCurricularPlanID" name="degreeCurricularPlanID" scope="request" />
-
 	<br/>
-	<hr/>
 	<ul>
 		<li class="navheader">
 			<bean:message key="link.coordinator.degreeSite.management"/>
