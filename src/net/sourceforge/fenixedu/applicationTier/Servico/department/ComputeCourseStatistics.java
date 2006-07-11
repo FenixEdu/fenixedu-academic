@@ -12,7 +12,6 @@ import net.sourceforge.fenixedu.dataTransferObject.department.CourseStatisticsDT
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.EnrolmentEvaluation;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
-import net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationType;
 import net.sourceforge.fenixedu.domain.curriculum.GradeFactory;
 import net.sourceforge.fenixedu.domain.curriculum.IGrade;
 
@@ -50,7 +49,7 @@ public abstract class ComputeCourseStatistics extends Service {
             if (enrollment.isFirstTime()) {
                 firstEnrolledCount++;
              
-                if (evaluation.getEnrollmentStateByGrade().equals(EnrollmentState.APROVED)) {
+                if (evaluation.getEnrollmentStateByGrade() == EnrollmentState.APROVED) {
                     firstApprovedCount++;
                     IGrade grade = evaluation.getGradeWrapper();
                     firstApprovedGrades.add(grade);
@@ -59,7 +58,7 @@ public abstract class ComputeCourseStatistics extends Service {
                 }
             } else {
 	            restEnrolledCount++;
-	            if (evaluation.getEnrollmentStateByGrade().equals(EnrollmentState.APROVED)) {
+	            if (evaluation.getEnrollmentStateByGrade() == EnrollmentState.APROVED) {
 	                restApprovedCount++;
 	                IGrade grade = evaluation.getGradeWrapper();
 	                restApprovedGrades.add(grade);
