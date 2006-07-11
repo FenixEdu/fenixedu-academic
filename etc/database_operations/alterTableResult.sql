@@ -30,3 +30,4 @@ alter table RESULT add column THESIS_TYPE varchar(50) default NULL;
 alter table RESULT add column TYPE varchar(250) default NULL;
 alter table RESULT add column HOW_PUBLISHED varchar(250) default NULL;
 alter table RESULT add column OTHER_PUBLICATION_TYPE varchar(250) default NULL;
+alter table RESULT add column MONTH varchar(50) default NULL;
