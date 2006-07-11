@@ -49,7 +49,7 @@ public abstract class ComputeCourseStatistics extends Service {
             if (enrollment.isFirstTime()) {
                 firstEnrolledCount++;
              
-                if (evaluation.getEnrollmentStateByGrade() == EnrollmentState.APROVED) {
+                if (evaluation != null && evaluation.getEnrollmentStateByGrade() == EnrollmentState.APROVED) {
                     firstApprovedCount++;
                     IGrade grade = evaluation.getGradeWrapper();
                     firstApprovedGrades.add(grade);
@@ -58,7 +58,7 @@ public abstract class ComputeCourseStatistics extends Service {
                 }
             } else {
 	            restEnrolledCount++;
-	            if (evaluation.getEnrollmentStateByGrade() == EnrollmentState.APROVED) {
+	            if (evaluation != null && evaluation.getEnrollmentStateByGrade() == EnrollmentState.APROVED) {
 	                restApprovedCount++;
 	                IGrade grade = evaluation.getGradeWrapper();
 	                restApprovedGrades.add(grade);
