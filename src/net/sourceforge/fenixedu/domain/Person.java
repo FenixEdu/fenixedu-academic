@@ -639,8 +639,8 @@ public class Person extends Person_Base {
         return result;
     }
 
-    public PersonFunction addPersonFunction(Function function) {
-        return new PersonFunction(function.getUnit(), this, function);
+    public PersonFunction addPersonFunction(Function function, YearMonthDay begin, YearMonthDay end, Double credits) {
+        return new PersonFunction(function.getUnit(), this, function, begin, end, credits);        
     }
 
     /**

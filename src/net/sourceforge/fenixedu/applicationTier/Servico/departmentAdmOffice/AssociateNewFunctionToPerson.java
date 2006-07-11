@@ -9,7 +9,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Function;
-import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
 import net.sourceforge.fenixedu.domain.organizationalStructure.RulesRepository;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
@@ -34,8 +33,7 @@ public class AssociateNewFunctionToPerson extends Service {
         }
         
         if(RulesRepository.isElegible(person, function.getUnit(), function.getName())){                      
-            PersonFunction personFunction = person.addPersonFunction(function);                        
-            personFunction.edit(function, begin, end, credits);                      
+            person.addPersonFunction(function, begin, end, credits);                                                  
         }
         else{
             throw new FenixServiceException("error.associateFunction");
