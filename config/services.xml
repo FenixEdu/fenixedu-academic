@@ -10092,7 +10092,7 @@
 	</service>		
 	<service>
 		<name>ReadEmployeeWorkSheet</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.assiduousness.ReadEmployeeWorkSheet</implementationClass>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.assiduousness.ReadAssiduousnessWorkSheet</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains>
@@ -10100,7 +10100,7 @@
 	</service>
 	<service>
 		<name>ReadAllAssiduousnessWorkSheets</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.assiduousness.ReadAllAssiduousnessWorkSheets</implementationClass>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.assiduousness.ReadAssiduousnessWorkSheet</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains>
