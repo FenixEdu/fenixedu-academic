@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.persistenceTier.Conversores;
 
-import net.sourceforge.fenixedu.domain.research.result.ScopeType;
+import net.sourceforge.fenixedu.domain.research.result.publication.ResultPublication.ScopeType;
 
 import org.apache.ojb.broker.accesslayer.conversions.ConversionException;
 import org.apache.ojb.broker.accesslayer.conversions.FieldConversion;

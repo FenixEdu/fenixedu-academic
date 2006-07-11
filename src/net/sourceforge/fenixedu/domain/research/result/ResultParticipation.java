@@ -23,4 +23,13 @@ public class ResultParticipation extends ResultParticipation_Base {
         this.removeRootDomainObject();
         deleteDomainObject();
     }
+    
+    public enum ResultParticipationRole {
+        AUTHOR,
+        EDITOR;
+        
+        public static ResultParticipationRole getDefaultResultParticipationRole() {
+            return AUTHOR;
+        }
+    }
 }

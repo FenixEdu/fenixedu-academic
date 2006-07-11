@@ -1,12 +1,36 @@
 <!-- Definitions for net.sourceforge.fenixedu.domain.research.result.Result -->
 <class-descriptor class="net.sourceforge.fenixedu.domain.research.result.Result" table="RESULT">
-  <extent-class class-ref="net.sourceforge.fenixedu.domain.research.result.ResultPublication" />
+  <extent-class class-ref="net.sourceforge.fenixedu.domain.research.result.publication.ResultPublication" />
   <extent-class class-ref="net.sourceforge.fenixedu.domain.research.result.patent.ResultPatent" />
 </class-descriptor>
 	
 <class-descriptor class="net.sourceforge.fenixedu.domain.research.result.patent.ResultPatent" table="RESULT" />
 
-<class-descriptor class="net.sourceforge.fenixedu.domain.research.result.ResultPublication" table="RESULT"/>
+<class-descriptor class="net.sourceforge.fenixedu.domain.research.result.publication.ResultPublication" table="RESULT">
+  <extent-class class-ref="net.sourceforge.fenixedu.domain.research.result.publication.Book" />
+  <extent-class class-ref="net.sourceforge.fenixedu.domain.research.result.publication.BookPart" />
+  <extent-class class-ref="net.sourceforge.fenixedu.domain.research.result.publication.Article" />
+  <extent-class class-ref="net.sourceforge.fenixedu.domain.research.result.publication.Inproceedings" />
+  <extent-class class-ref="net.sourceforge.fenixedu.domain.research.result.publication.Proceedings" />
+  <extent-class class-ref="net.sourceforge.fenixedu.domain.research.result.publication.Thesis" />
+  <extent-class class-ref="net.sourceforge.fenixedu.domain.research.result.publication.Manual" />
+  <extent-class class-ref="net.sourceforge.fenixedu.domain.research.result.publication.TechnicalReport" />
+  <extent-class class-ref="net.sourceforge.fenixedu.domain.research.result.publication.Booklet" />
+  <extent-class class-ref="net.sourceforge.fenixedu.domain.research.result.publication.Misc" />
+  <extent-class class-ref="net.sourceforge.fenixedu.domain.research.result.publication.Unpublished" />
+</class-descriptor>
+
+<class-descriptor class="net.sourceforge.fenixedu.domain.research.result.publication.Book" table="RESULT"/>
+<class-descriptor class="net.sourceforge.fenixedu.domain.research.result.publication.BookPart" table="RESULT"/>
+<class-descriptor class="net.sourceforge.fenixedu.domain.research.result.publication.Article" table="RESULT"/>
+<class-descriptor class="net.sourceforge.fenixedu.domain.research.result.publication.Inproceedings" table="RESULT"/>
+<class-descriptor class="net.sourceforge.fenixedu.domain.research.result.publication.Proceedings" table="RESULT"/>
+<class-descriptor class="net.sourceforge.fenixedu.domain.research.result.publication.Thesis" table="RESULT"/>
+<class-descriptor class="net.sourceforge.fenixedu.domain.research.result.publication.Manual" table="RESULT"/>
+<class-descriptor class="net.sourceforge.fenixedu.domain.research.result.publication.TechnicalReport" table="RESULT"/>
+<class-descriptor class="net.sourceforge.fenixedu.domain.research.result.publication.Booklet" table="RESULT"/>
+<class-descriptor class="net.sourceforge.fenixedu.domain.research.result.publication.Misc" table="RESULT"/>
+<class-descriptor class="net.sourceforge.fenixedu.domain.research.result.publication.Unpublished" table="RESULT"/>
 
 <class-descriptor class="net.sourceforge.fenixedu.domain.research.result.ResultParticipation" table="RESULT_PARTICIPATION"/>
 

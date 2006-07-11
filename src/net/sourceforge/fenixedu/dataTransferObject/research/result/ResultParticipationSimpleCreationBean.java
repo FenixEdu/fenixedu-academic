@@ -5,12 +5,13 @@ import java.io.Serializable;
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.ExternalPerson;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.research.result.publication.BookRole;
+import net.sourceforge.fenixedu.domain.research.result.ResultParticipation.ResultParticipationRole;
+
 
 public class ResultParticipationSimpleCreationBean implements Serializable {
     private DomainReference<Person> person;
     private String personName;
-    private BookRole bookRole;
+    private ResultParticipationRole resultParticipationRole;
 
     public String getPersonName() {
         return personName;
@@ -20,12 +21,12 @@ public class ResultParticipationSimpleCreationBean implements Serializable {
         this.personName = name;
     }
     
-    public BookRole getBookRole() {
-        return bookRole;
+    public ResultParticipationRole getResultParticipationRole() {
+        return resultParticipationRole;
     }
 
-    public void setBookRole(BookRole bookRole) {
-        this.bookRole = bookRole;
+    public void setResultParticipationRole(ResultParticipationRole resultParticipationRole) {
+        this.resultParticipationRole = resultParticipationRole;
     }
 
     public Person getPerson() {

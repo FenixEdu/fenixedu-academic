@@ -1,15 +1,17 @@
 package net.sourceforge.fenixedu.persistenceTier.Conversores;
 
-import net.sourceforge.fenixedu.domain.research.result.publication.PublicationType;
+
+import net.sourceforge.fenixedu.domain.research.result.publication.BookPart.BookPartType;
+
 import org.apache.ojb.broker.accesslayer.conversions.ConversionException;
 import org.apache.ojb.broker.accesslayer.conversions.FieldConversion;
 
-public class PublicationType2SqlPublicationTypeConversion implements FieldConversion {
+public class BookPartType2SqlBookPartTypeConversion implements FieldConversion {
 
     public Object javaToSql(Object source) throws ConversionException {
 
-        if (source instanceof PublicationType) {
-            PublicationType s = (PublicationType) source;
+        if (source instanceof BookPartType) {
+            BookPartType s = (BookPartType) source;
             return s.name();
         }
         return source;
@@ -21,7 +23,7 @@ public class PublicationType2SqlPublicationTypeConversion implements FieldConver
           }            
           else if (source instanceof String) {            
             String src = (String) source;            
-            return PublicationType.valueOf(src);
+            return BookPartType.valueOf(src);
         }
         return source;
     }

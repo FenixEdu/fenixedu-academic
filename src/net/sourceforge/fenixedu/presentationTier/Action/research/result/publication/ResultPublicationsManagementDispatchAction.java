@@ -1,5 +1,7 @@
-package net.sourceforge.fenixedu.presentationTier.Action.research.result;
+package net.sourceforge.fenixedu.presentationTier.Action.research.result.publication;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.ArrayList;
 
@@ -8,7 +10,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 
-import net.sourceforge.fenixedu.domain.research.result.ResultPublication;
+import net.sourceforge.fenixedu.domain.research.result.publication.*;
+import net.sourceforge.fenixedu.domain.research.result.publication.ResultPublication.ResultPublicationType;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
@@ -26,56 +29,27 @@ public class ResultPublicationsManagementDispatchAction extends FenixDispatchAct
         ResultPublication publication = null;
 
         List<ResultPublication> books = new ArrayList<ResultPublication>();
-        List<ResultPublication> bookParts = new ArrayList<ResultPublication>();
+/*        List<ResultPublication> bookParts = new ArrayList<ResultPublication>();
         List<ResultPublication> articles = new ArrayList<ResultPublication>();
         List<ResultPublication> thesis = new ArrayList<ResultPublication>();
         List<ResultPublication> conferences = new ArrayList<ResultPublication>();
         List<ResultPublication> technicalReports = new ArrayList<ResultPublication>();
         List<ResultPublication> otherPublications = new ArrayList<ResultPublication>();
-        List<ResultPublication> unstructureds = new ArrayList<ResultPublication>();
-/*
-        for (Authorship authorship : userView.getPerson().getPersonAuthorshipsWithPublications()) {
-            publication = (ResultPublication) authorship.getResult();
-
-            if(publication.getResultPublicationType() != null)
-            {
-                switch (publication.getResultPublicationType().getPublicationType()) {
-                case BOOK:
-                    books.add(publication);
-                    break;
-                case BOOK_PART:
-                    bookParts.add(publication);
-                    break;
-                case ARTICLE:
-                    articles.add(publication);
-                    break;
-                case THESIS:
-                    thesis.add(publication);
-                    break;
-                case CONFERENCE:
-                    conferences.add(publication);
-                    break;
-                case TECHNICAL_REPORT:
-                    technicalReports.add(publication);
-                    break;
-                case OTHER_PUBLICATION:
-                    otherPublications.add(publication);
-                    break;
-                case UNSTRUCTURED:
-                    unstructureds.add(publication);
-                    break;
-                }
-                publications.add(publication);
+        List<ResultPublication> unstructureds = new ArrayList<ResultPublication>();*/
+        
+        for (ResultPublication resultPublication : userView.getPerson().getResultPublications()) {
+            if(resultPublication instanceof Book) {
+                books.add(resultPublication);
             }
+              
         }
-        // request.setAttribute("publications", publications);
 
         //comparator by year in descendent order
         Comparator YearComparator = new Comparator()
         {
             public int compare(Object o1, Object o2) {
-                Integer publication1Year = ((Publication) o1).getYear();
-                Integer publication2Year = ((Publication) o2).getYear();
+                Integer publication1Year = ((ResultPublication) o1).getYear();
+                Integer publication2Year = ((ResultPublication) o2).getYear();
                 if (publication1Year == null) {
                     return 1;
                 } else if (publication2Year == null) {
@@ -86,22 +60,15 @@ public class ResultPublicationsManagementDispatchAction extends FenixDispatchAct
         };
         //order publications
         Collections.sort(books, YearComparator);
-        Collections.sort(bookParts, YearComparator);
-        Collections.sort(articles, YearComparator);
-        Collections.sort(thesis, YearComparator);
-        Collections.sort(conferences, YearComparator);
-        Collections.sort(technicalReports, YearComparator);
-        Collections.sort(otherPublications, YearComparator);
-        Collections.sort(otherPublications, YearComparator);
-*/
+
         request.setAttribute("books", books);
-        request.setAttribute("bookParts", bookParts);
+        /*request.setAttribute("bookParts", bookParts);
         request.setAttribute("articles", articles);
         request.setAttribute("thesis", thesis);
         request.setAttribute("conferences", conferences);
         request.setAttribute("technicalReports", technicalReports);
         request.setAttribute("otherPublications", otherPublications);
-        request.setAttribute("unstructureds", unstructureds);
+        request.setAttribute("unstructureds", unstructureds);*/
         return mapping.findForward("ListPublications");
     }
 
@@ -111,9 +78,12 @@ public class ResultPublicationsManagementDispatchAction extends FenixDispatchAct
         String publicationId = (String) request.getParameter("oid");
         ResultPublication publication = (ResultPublication) rootDomainObject.readResultByOID(Integer.valueOf(publicationId));
         request.setAttribute("publication", publication);
-        /*if((publication.getPublicationType().equals(PublicationType.BOOK)) || (publication.getPublicationType().equals(PublicationType.BOOK_PART)))
-            request.setAttribute("authorshipsSchema","result.authorshipsWithRole");*/
-
+        
+        ResultPublicationType resultPublicationType = publication.getResultPublicationType();
+        request.setAttribute("resultPublicationType", resultPublicationType.toString());
+        if(publication.haveResultPublicationRole())
+            request.setAttribute("participationsSchema","result.participationsWithRole");
+        
         return mapping.findForward("ViewPublication");
     }
     
@@ -133,40 +103,72 @@ public class ResultPublicationsManagementDispatchAction extends FenixDispatchAct
         
         ResultPublication publication = (ResultPublication) rootDomainObject.readResultByOID(publicationId);
         request.setAttribute("publication", publication);
-        /*if((publication.getPublicationType().equals(PublicationType.BOOK)) || (publication.getPublicationType().equals(PublicationType.BOOK_PART)))
-            request.setAttribute("authorshipsSchema","result.authorshipsWithRole");*/
+        
+        ResultPublicationType resultPublicationType = publication.getResultPublicationType();
+        request.setAttribute("resultPublicationType", resultPublicationType.toString());
+        if(publication.haveResultPublicationRole())
+            request.setAttribute("participationsSchema","result.participationsWithRole");
 
         return mapping.findForward("ViewEditPublication");
+    }
+    
+    private String getAssociatedClassString(ResultPublicationType resultPublicationType)
+    {
+        String className="";
+        switch (resultPublicationType) {
+        case Book:
+            className=Book.class.getName();
+            break;
+        case BookPart:
+            className=BookPart.class.getName();
+            break;
+        case Article:
+            className=Article.class.getName();
+            break;
+        case Inproceedings:
+            className=Inproceedings.class.getName();
+            break;
+        case Proceedings:
+            className=Proceedings.class.getName();
+            break;
+        case Thesis:
+            className=Thesis.class.getName();
+            break;
+        case Manual:
+            className=Manual.class.getName();
+            break;
+        case TechnicalReport:
+            className=TechnicalReport.class.getName();
+            break;
+        case Booklet:
+            className=Booklet.class.getName();
+            break;
+        case Misc:
+            className=Misc.class.getName();
+            break;
+        case Unpublished:
+            className=Unpublished.class.getName();
+            break;
+        default:
+            break;
+        }
+        return className;
     }
     
     public ActionForward prepareCreatePublication(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
        
-/*        List<ResultPublicationType> publicationTypes = rootDomainObject.getResultPublicationType();
-        List<ResultPublicationType> publicationTypesPossibleToCreate = new ArrayList<ResultPublicationType>();
-        ResultPublicationType resultPublicationType = null;
-        
-        for (ResultPublicationType publicationType : publicationTypes) {
-            if(publicationType.getPublicationType().equals(PublicationType.BOOK))
-            {
-                resultPublicationType = publicationType;
-            }
-            if(!publicationType.getPublicationType().equals(PublicationType.UNSTRUCTURED))
-            {
-                publicationTypesPossibleToCreate.add(publicationType);
-            }
-        }
-        
-        String resultPublicationTypeId = request.getParameter("resultPublicationTypeId");
-        if (resultPublicationTypeId != null)
+        String resultPublicationType = request.getParameter("resultPublicationType");
+        if (resultPublicationType != null)
         {
-            resultPublicationType = rootDomainObject.readResultPublicationTypeByOID(Integer.valueOf(resultPublicationTypeId));
+            request.setAttribute("resultPublicationType",resultPublicationType);
+            request.setAttribute("className",getAssociatedClassString(ResultPublicationType.valueOf(resultPublicationType)));
         }
-        request.setAttribute("resultPublicationType",resultPublicationType);
-        
-        Collections.sort(publicationTypesPossibleToCreate,new BeanComparator("idInternal"));
-        request.setAttribute("publicationTypes",publicationTypesPossibleToCreate);
-        */
+        else
+        {
+            request.setAttribute("resultPublicationType",ResultPublicationType.getDefaultResultPublicationType().toString());
+            request.setAttribute("className",getAssociatedClassString(ResultPublicationType.getDefaultResultPublicationType()));
+        }
         
         request.setAttribute("participator", getUserView(request).getPerson());
         return mapping.findForward("PreparedToCreate");
@@ -180,6 +182,10 @@ public class ResultPublicationsManagementDispatchAction extends FenixDispatchAct
                 .valueOf(publicationId));
 
         request.setAttribute("publication", publication);
+        
+        ResultPublicationType resultPublicationType = publication.getResultPublicationType();
+        request.setAttribute("resultPublicationType", resultPublicationType.toString());
+        
         return mapping.findForward("PreparedToEdit");
     }
 
@@ -189,8 +195,11 @@ public class ResultPublicationsManagementDispatchAction extends FenixDispatchAct
         String publicationId = (String) request.getParameter("publicationId");
         ResultPublication publication = (ResultPublication) rootDomainObject.readResultByOID(Integer.valueOf(publicationId));
         request.setAttribute("publication", publication);
-        /*if((publication.getPublicationType().equals(PublicationType.BOOK)) || (publication.getPublicationType().equals(PublicationType.BOOK_PART)))
-            request.setAttribute("authorshipsSchema","result.authorshipsWithRole");*/
+        
+        ResultPublicationType resultPublicationType = publication.getResultPublicationType();
+        request.setAttribute("resultPublicationType", resultPublicationType.toString());
+        if(publication.haveResultPublicationRole())
+            request.setAttribute("participationsSchema","result.participationsWithRole");
 
         return mapping.findForward("PreparedToDelete");
     }

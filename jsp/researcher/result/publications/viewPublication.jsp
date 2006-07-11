@@ -5,24 +5,24 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 
 <logic:present role="RESEARCHER">
-	<bean:define id="publicationTypeString" name="publication" property="publicationTypeString" type="java.lang.String"/>
-	<bean:define id="newAuthorshipsSchema" value="result.authorships" type="java.lang.String"/>
-	<logic:present name="authorshipsSchema">
-		<bean:define id="newAuthorshipsSchema" name="authorshipsSchema" type="java.lang.String"/>
+	<bean:define id="resultPublicationType" name="resultPublicationType" type="java.lang.String"/>
+	<bean:define id="newParticipationsSchema" value="result.participations" type="java.lang.String"/>
+	<logic:present name="participationsSchema">
+		<bean:define id="newParticipationsSchema" name="participationsSchema" type="java.lang.String"/>
 	</logic:present>
 
-	<%-- Authorships --%>
-	<h3><bean:message bundle="RESEARCHER_RESOURCES" key="label.resultAuthorships"/></h3>
-	<fr:view name="publication" property="resultAuthorships" schema="<%=newAuthorshipsSchema%>" layout="tabular">
+	<%-- Participations --%>
+	<h3><bean:message bundle="RESEARCHER_RESOURCES" key="label.resultParticipations"/></h3>
+	<fr:view name="publication" property="resultParticipations" schema="<%=newParticipationsSchema%>" layout="tabular">
 		<fr:layout>
-			<fr:property name="sortBy" value="authorOrder"/>
+			<fr:property name="sortBy" value="personOrder"/>
 		</fr:layout>
 	</fr:view>
 	<br/>
 
 	<h3><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.result.publication"/>
-	&nbsp;(<bean:message bundle="RESEARCHER_RESOURCES" key="<%="researcher.result.publication.publicationType."+publicationTypeString.toLowerCase()%>"/>)</h3>
- 	<fr:view name="publication" layout="tabular" schema="<%="result.publication.details."+publicationTypeString.toLowerCase() %>">
+	&nbsp;(<bean:message bundle="RESEARCHER_RESOURCES" key="<%="researcher.result.publication.publicationType."+resultPublicationType%>"/>)</h3>
+ 	<fr:view name="publication" layout="tabular" schema="<%="result.publication.details."+resultPublicationType %>">
  		<fr:layout name="tabular">
         	<fr:property name="classes" value="style1"/>
 	       	<fr:property name="columnClasses" value="listClasses,,"/>

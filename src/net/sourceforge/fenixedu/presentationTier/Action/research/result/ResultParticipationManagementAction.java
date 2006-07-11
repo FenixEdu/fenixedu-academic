@@ -7,7 +7,8 @@ import net.sourceforge.fenixedu.dataTransferObject.research.result.ResultPartici
 import net.sourceforge.fenixedu.dataTransferObject.research.result.ResultParticipationSimpleCreationBean;
 import net.sourceforge.fenixedu.domain.research.result.patent.ResultPatent;
 import net.sourceforge.fenixedu.domain.research.result.Result;
-import net.sourceforge.fenixedu.domain.research.result.ResultPublication;
+import net.sourceforge.fenixedu.domain.research.result.publication.ResultPublication;
+import net.sourceforge.fenixedu.domain.research.result.publication.ResultPublication.ResultPublicationType;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
@@ -22,19 +23,19 @@ public class ResultParticipationManagementAction extends FenixDispatchAction {
             HttpServletRequest request, HttpServletResponse response) throws Exception {
         final Integer resultId = Integer.valueOf(request.getParameter("resultId"));
         
-        //verify if field bookRole is to be active
+        //verify if field resultParticipationRole is to be active
         Result result = rootDomainObject.readResultByOID(resultId);
         
         if(result==null) {
             return mapping.findForward("editParticipation");    
         }
         request.setAttribute("result", result);
-        /*if((result instanceof ResultPublication) && (((ResultPublication)result).getResultPublicationType() != null))
+        
+        if(result instanceof ResultPublication)
         {
-            PublicationType publicationType = ((ResultPublication)result).getPublicationType();
-            if((publicationType.equals(PublicationType.BOOK)) || (publicationType.equals(PublicationType.BOOK_PART)))
-                request.setAttribute("authorshipsSchema","result.authorships.editRole");
-        }*/
+            if(((ResultPublication)result).haveResultPublicationRole())
+                request.setAttribute("participationsSchema","result.participationsWithRole");
+        }
         
         return mapping.findForward("editParticipation");
     }
@@ -79,22 +80,22 @@ public class ResultParticipationManagementAction extends FenixDispatchAction {
         request.setAttribute("simpleBean", simpleBean);
         mantainExternalStatus(request);
         
-        //verify if field bookRole is to be active
+        //verify if field resultParticipationRole is to be active
         final Integer resultId = Integer.valueOf(request.getParameter("resultId"));
         Result result = rootDomainObject.readResultByOID(resultId);
-        /*if((result instanceof ResultPublication) && (((ResultPublication)result).getResultPublicationType() != null))
-        {
-            PublicationType publicationType = ((ResultPublication)result).getPublicationType();
-            final String external = request.getParameter("external");
-            if((publicationType.equals(PublicationType.BOOK)) || (publicationType.equals(PublicationType.BOOK_PART)))
-            {
-                if(external.equals("false"))
-                    request.setAttribute("schemaInternalPersonCreation","resultAuthorship.internalPerson.creationWithBookRole");
-                else
-                    request.setAttribute("schemaExternalPersonSimpleCreation","resultAuthorship.externalPerson.simpleCreationWithBookRole");
-            }
-        }*/
         
+        if(result instanceof ResultPublication)
+        {
+            if(((ResultPublication)result).haveResultPublicationRole())
+            {
+                final String external = request.getParameter("external");
+                if(external.equals("false"))
+                    request.setAttribute("schemaInternalPersonCreation","resultParticipation.internalPerson.creationWithRole");
+                else
+                    request.setAttribute("schemaExternalPersonSimpleCreation","resultParticipation.externalPerson.simpleCreationWithRole");
+            }
+        }
+
         return prepareEditParticipation(mapping,form,request,response);
     }
     
@@ -105,15 +106,16 @@ public class ResultParticipationManagementAction extends FenixDispatchAction {
         request.setAttribute("fullBean", fullBean);
         mantainExternalStatus(request);
         
-        //verify if field bookRole is to be active
+        //verify if field resultParticipationRole is to be active
         final Integer resultId = Integer.valueOf(request.getParameter("resultId"));
         Result result = rootDomainObject.readResultByOID(resultId);
-        /*if((result instanceof ResultPublication) && (((ResultPublication)result).getResultPublicationType() != null))
+        if(result instanceof ResultPublication)
         {
-            PublicationType publicationType = ((ResultPublication)result).getPublicationType();
-            if((publicationType.equals(PublicationType.BOOK)) || (publicationType.equals(PublicationType.BOOK_PART)))
-                request.setAttribute("schemaExternalPersonFullCreation","resultAuthorship.externalPerson.fullCreationWithBookRole");
-        }*/
+            if(((ResultPublication)result).haveResultPublicationRole())
+            {
+                request.setAttribute("schemaExternalPersonFullCreation","resultParticipation.externalPerson.fullCreationWithRole");
+            }
+        }
         
         return prepareEditParticipation(mapping,form,request,response);  
     }
@@ -152,9 +154,20 @@ public class ResultParticipationManagementAction extends FenixDispatchAction {
             else {
                 ResultParticipationFullCreationBean fullBean = new ResultParticipationFullCreationBean();
                 fullBean.setPersonName(simpleBean.getPersonName());
+                fullBean.setResultParticipationRole(simpleBean.getResultParticipationRole());
                 request.setAttribute("fullBean", fullBean);
-                
                 mantainExternalStatus(request);
+                
+                //verify if field resultParticipationRole is to be active
+                final Integer resultId = Integer.valueOf(request.getParameter("resultId"));
+                Result result = rootDomainObject.readResultByOID(resultId);
+                if(result instanceof ResultPublication)
+                {
+                    if(((ResultPublication)result).haveResultPublicationRole())
+                    {
+                        request.setAttribute("schemaExternalPersonFullCreation","resultParticipation.externalPerson.fullCreationWithRole");
+                    }
+                }
                 
                 return prepareEditParticipation(mapping,form,request,response);                
             }

@@ -44,6 +44,7 @@ public class CreateResultParticipation extends Service {
             ResultParticipation resultParticipation = new ResultParticipation();
             resultParticipation.setPerson(bean.getPerson());
             resultParticipation.setPersonOrder(result.getResultParticipations().size());
+            resultParticipation.setResultParticipationRole(bean.getResultParticipationRole());
             resultParticipation.setResult(result);
         }
     }
@@ -84,6 +85,7 @@ public class CreateResultParticipation extends Service {
             ResultParticipation resultParticipation = new ResultParticipation();
             resultParticipation.setPerson(externalPerson.getPerson());
             resultParticipation.setPersonOrder(result.getResultParticipations().size());
+            resultParticipation.setResultParticipationRole(bean.getResultParticipationRole());
             resultParticipation.setResult(result);
         }
     }    

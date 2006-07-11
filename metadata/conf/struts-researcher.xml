@@ -174,7 +174,7 @@
 		<action path="/publications/publicationsManagement"
 	        	 name="publicationsForm"
 	        	 parameter="method"
-	        	 type="net.sourceforge.fenixedu.presentationTier.Action.research.result.ResultPublicationsManagementDispatchAction">
+	        	 type="net.sourceforge.fenixedu.presentationTier.Action.research.result.publication.ResultPublicationsManagementDispatchAction">
 		    <forward name="ListPublications" path="publications.publicationsManagement"/>
 		    <forward name="ViewPublication" path="publications.viewPublication"/>
 		    <forward name="ViewEditPublication" path="publications.viewEditPublication"/>

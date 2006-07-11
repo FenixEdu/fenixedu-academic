@@ -4,13 +4,13 @@ import java.io.Serializable;
 
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
-import net.sourceforge.fenixedu.domain.research.result.publication.BookRole;
+import net.sourceforge.fenixedu.domain.research.result.ResultParticipation.ResultParticipationRole;
 
 public class ResultParticipationFullCreationBean implements Serializable{
     private DomainReference<Unit> organization;
     private String personName;
     private String organizationName;
-    private BookRole bookRole;
+    private ResultParticipationRole resultParticipationRole;
 
     public String getPersonName() {
         return personName;
@@ -20,12 +20,12 @@ public class ResultParticipationFullCreationBean implements Serializable{
         this.personName = name;
     }
     
-    public BookRole getBookRole() {
-        return bookRole;
+    public ResultParticipationRole getResultParticipationRole() {
+        return resultParticipationRole;
     }
 
-    public void setBookRole(BookRole bookRole) {
-        this.bookRole = bookRole;
+    public void setResultParticipationRole(ResultParticipationRole resultParticipationRole) {
+        this.resultParticipationRole = resultParticipationRole;
     }
 
     public String getOrganizationName() {

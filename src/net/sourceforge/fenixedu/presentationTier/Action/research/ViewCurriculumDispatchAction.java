@@ -1,6 +1,8 @@
 package net.sourceforge.fenixedu.presentationTier.Action.research;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -12,7 +14,7 @@ import net.sourceforge.fenixedu.domain.research.project.Project;
 import net.sourceforge.fenixedu.domain.research.project.ProjectParticipation;
 import net.sourceforge.fenixedu.domain.research.result.ResultParticipation;
 import net.sourceforge.fenixedu.domain.research.result.patent.ResultPatent;
-import net.sourceforge.fenixedu.domain.research.result.ResultPublication;
+import net.sourceforge.fenixedu.domain.research.result.publication.ResultPublication;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
 import org.apache.struts.action.ActionForm;
@@ -39,6 +41,22 @@ public class ViewCurriculumDispatchAction extends FenixDispatchAction {
         request.setAttribute("researchInterests", researchInterests);
         
         List<ResultPublication> resultPublications = getUserView(request).getPerson().getResultPublications();
+        //comparator by year in descendent order
+        Comparator YearComparator = new Comparator()
+        {
+            public int compare(Object o1, Object o2) {
+                Integer publication1Year = ((ResultPublication) o1).getYear();
+                Integer publication2Year = ((ResultPublication) o2).getYear();
+                if (publication1Year == null) {
+                    return 1;
+                } else if (publication2Year == null) {
+                    return -1;
+                }
+                return (-1) * publication1Year.compareTo(publication2Year);
+            }
+        };
+        //order publications
+        Collections.sort(resultPublications, YearComparator);
         request.setAttribute("resultPublications", resultPublications);
         
         List<ResultPatent> resultPatents = new ArrayList<ResultPatent>();

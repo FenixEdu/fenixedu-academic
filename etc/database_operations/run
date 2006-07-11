@@ -28,3 +28,4 @@ function executeWithTempFile() {
 }
 
 execute "Adding Indexes to Accounting Tables" AddIndexesToAccountingTables.sql
+execute "Alter table Result" alterTableResult.sql

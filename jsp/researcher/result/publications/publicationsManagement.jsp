@@ -80,15 +80,17 @@
 
 	<html:link page="/publications/publicationsManagement.do?method=prepareCreatePublication"><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.result.publication.publicationsManagement.insertPublication" /></html:link>
 	
-	<h3 id='books' class='cd_heading'/> <span> <bean:message bundle="RESEARCHER_RESOURCES" key="researcher.result.publication.books"/> </span> </h3>
-	<logic:iterate id="book" name="books">
-		<fr:view name="book" layout="tabular" schema="result.publication.resume.book"/>
- 		<bean:define id="bookId" name="book" property="idInternal"/>
- 		<html:link page="<%="/publications/publicationsManagement.do?method=prepareViewEditPublication&publicationId="+ bookId%>"><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.result.publication.publicationsDetails" /></html:link>&nbsp;&nbsp;&nbsp;
- 		<html:link page="<%="/publications/publicationsManagement.do?method=prepareDeletePublication&publicationId="+ bookId%>"><bean:message bundle="RESEARCHER_RESOURCES" key="link.remove" /></html:link>
-  		<br /><br />
-	</logic:iterate>
-	
+	<logic:notEmpty name="books">
+		<h3 id='books' class='cd_heading'/> <span> <bean:message bundle="RESEARCHER_RESOURCES" key="researcher.result.publication.books"/> </span> </h3>
+		<logic:iterate id="book" name="books">
+			<fr:view name="book" layout="tabular" schema="result.publication.resume.Book"/>
+	 		<bean:define id="bookId" name="book" property="idInternal"/>
+	 		<html:link page="<%="/publications/publicationsManagement.do?method=prepareViewEditPublication&publicationId="+ bookId%>"><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.result.publication.publicationsDetails" /></html:link>&nbsp;&nbsp;&nbsp;
+	 		<html:link page="<%="/publications/publicationsManagement.do?method=prepareDeletePublication&publicationId="+ bookId%>"><bean:message bundle="RESEARCHER_RESOURCES" key="link.remove" /></html:link>
+	  		<br /><br />
+		</logic:iterate>
+	</logic:notEmpty>
+<%--
 	<h3 id='booksParts' class='cd_heading'/> <span> <bean:message bundle="RESEARCHER_RESOURCES" key="researcher.result.publication.bookParts"/> </span> </h3>
 	<logic:iterate id="bookPart" name="bookParts">
 		<fr:view name="bookPart" layout="tabular" schema="result.publication.resume.book_part"/>
@@ -152,7 +154,7 @@
 		<br /><br />
 	</logic:iterate>
 		
-
+--%>
     <%--   
 		<logic:iterate id="publication" name="publications">
 			<bean:define id="resultType" name="publication" property="publicationType" type="net.sourceforge.fenixedu.domain.research.result.publication.PublicationType"/>
@@ -163,10 +165,6 @@
 	--%>
 
 
-<!-- TODO:
-
-Nao existir create para unstructured publications
---> 
 
 	<br />	<br />
 	<html:link page="/publications/publicationsManagement.do?method=prepareCreatePublication"><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.result.publication.publicationsManagement.insertPublication" /></html:link>

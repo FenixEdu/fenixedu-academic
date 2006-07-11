@@ -14,18 +14,18 @@
 	<logic:present name="schemaInternalPersonCreation">
 		<bean:define id="newSchemaInternalPersonCreation" name="schemaInternalPersonCreation" type="java.lang.String"/>
 	</logic:present>
-		<bean:define id="newSchemaExternalPersonSimpleCreation" value="resultParticipation.externalPerson.simpleCreation" type="java.lang.String"/>
+	<bean:define id="newSchemaExternalPersonSimpleCreation" value="resultParticipation.externalPerson.simpleCreation" type="java.lang.String"/>
 	<logic:present name="schemaExternalPersonSimpleCreation">
 		<bean:define id="newSchemaExternalPersonSimpleCreation" name="schemaExternalPersonSimpleCreation" type="java.lang.String"/>
 	</logic:present>
-		<bean:define id="newSchemaExternalPersonFullCreation" value="resultParticipation.externalPerson.fullCreation" type="java.lang.String"/>
+	<bean:define id="newSchemaExternalPersonFullCreation" value="resultParticipation.externalPerson.fullCreation" type="java.lang.String"/>
 	<logic:present name="schemaExternalPersonFullCreation">
 		<bean:define id="newSchemaExternalPersonFullCreation" name="schemaExternalPersonFullCreation" type="java.lang.String"/>
 	</logic:present>
 	
 	
 	<em><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.result.superUseCaseTitle"/></em>
-	
+
 	<%-- TITLE --%>		
 	<h2><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.result.participations.useCaseTitle"/></h2>
 	

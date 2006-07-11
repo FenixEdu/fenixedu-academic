@@ -34,7 +34,7 @@ import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.projectsManagement.ProjectAccess;
 import net.sourceforge.fenixedu.domain.research.result.Result;
 import net.sourceforge.fenixedu.domain.research.result.ResultParticipation;
-import net.sourceforge.fenixedu.domain.research.result.ResultPublication;
+import net.sourceforge.fenixedu.domain.research.result.publication.ResultPublication;
 import net.sourceforge.fenixedu.domain.research.result.patent.ResultPatent;
 import net.sourceforge.fenixedu.domain.sms.SentSms;
 import net.sourceforge.fenixedu.domain.sms.SmsDeliveryType;
@@ -374,22 +374,6 @@ public class Person extends Person_Base {
                 resultPublications.add((ResultPublication) result);
             }
         }
-
-        // comparator by year in descendent order
-        Comparator YearComparator = new Comparator() {
-            public int compare(Object o1, Object o2) {
-                Integer publication1Year = ((ResultPublication) o1).getYear();
-                Integer publication2Year = ((ResultPublication) o2).getYear();
-                if (publication1Year == null) {
-                    return 1;
-                } else if (publication2Year == null) {
-                    return -1;
-                }
-                return (-1) * publication1Year.compareTo(publication2Year);
-            }
-        };
-        // order publications
-        Collections.sort(resultPublications, YearComparator);
         return resultPublications;
     }
 
