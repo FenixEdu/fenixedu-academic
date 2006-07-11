@@ -69,6 +69,8 @@ public class ReadStudentTimeTable extends Service {
             infoLesson.setInicio(lesson.getInicio());
             infoLesson.setTipo(lesson.getTipo());
             infoLesson.setInfoSala(copyISala2InfoRoom(lesson.getSala()));
+			infoLesson.setFrequency(lesson.getFrequency());
+			infoLesson.setWeekOfQuinzenalStart(lesson.getWeekOfQuinzenalStart());
 
             RoomOccupation roomOccupation = lesson.getRoomOccupation();
             InfoRoomOccupation infoRoomOccupation = InfoRoomOccupation.newInfoFromDomain(roomOccupation);

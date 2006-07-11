@@ -138,6 +138,8 @@ public class PublicSiteComponentBuilder {
             infoLesson.setFim(lesson.getFim());
             infoLesson.setInicio(lesson.getInicio());
             infoLesson.setTipo(lesson.getTipo());
+			infoLesson.setFrequency(lesson.getFrequency());
+			infoLesson.setWeekOfQuinzenalStart(lesson.getWeekOfQuinzenalStart());
             // infoLesson.setInfoSala(copyISala2InfoRoom(lesson.getSala()));
 
             RoomOccupation roomOccupation = lesson.getRoomOccupation();

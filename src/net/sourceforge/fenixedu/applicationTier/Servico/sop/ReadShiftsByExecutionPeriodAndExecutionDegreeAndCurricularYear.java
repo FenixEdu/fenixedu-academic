@@ -68,6 +68,8 @@ public class ReadShiftsByExecutionPeriodAndExecutionDegreeAndCurricularYear exte
                 infoLesson.setTipo(lesson.getTipo());
                 infoLesson.setInfoSala(infoRoom);
                 infoLesson.setInfoRoomOccupation(infoRoomOccupation);
+    			infoLesson.setFrequency(lesson.getFrequency());
+    			infoLesson.setWeekOfQuinzenalStart(lesson.getWeekOfQuinzenalStart());
 
                 infoLesson.setInfoShift(infoShift);
                 infoShift.getInfoLessons().add(infoLesson);

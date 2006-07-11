@@ -442,6 +442,8 @@ public class ExecutionCourseSiteComponentBuilder {
 			infoLesson.setFim(lesson.getFim());
 			infoLesson.setInicio(lesson.getInicio());
 			infoLesson.setTipo(lesson.getTipo());
+			infoLesson.setFrequency(lesson.getFrequency());
+			infoLesson.setWeekOfQuinzenalStart(lesson.getWeekOfQuinzenalStart());
 
 			InfoRoomOccupation infoRoomOccupation = InfoRoomOccupation.newInfoFromDomain(lesson
 					.getRoomOccupation());

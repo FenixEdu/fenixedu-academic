@@ -65,6 +65,10 @@ public class InfoLesson extends InfoShowOccupation implements ISmsDTO, Comparabl
         setInfoSala(infoSala);
         setInfoRoomOccupation(infoRoomOccupation);
         setInfoShift(shift);
+        if (infoRoomOccupation != null) {
+        	setFrequency(infoRoomOccupation.getFrequency());
+        	setWeekOfQuinzenalStart(infoRoomOccupation.getWeekOfQuinzenalStart());
+        }
     }
 
     public boolean equals(Object obj) {
