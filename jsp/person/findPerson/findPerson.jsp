@@ -378,7 +378,7 @@ else
 				<logic:match name="infoStudent" property="infoDegreeCurricularPlan.infoDegree.tipoCurso" location="start" value="MASTER_DEGREE"> 
 				<td class="ppright"> <bean:message key="link.master"/> <bean:write name="degreeName" /></td>
 				</logic:match>
-			</tr>		      
+			</tr><td class="ppleft2"> </td>      
 			</logic:iterate>
 		</logic:present>
 	</table>
