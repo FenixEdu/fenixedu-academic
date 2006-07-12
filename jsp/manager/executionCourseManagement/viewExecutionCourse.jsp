@@ -73,6 +73,46 @@
 		</tr>
 		<tr>
 			<td>
+				<b><bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="message.manager.seminaryHours"/></b>
+			</td>
+			<td>
+				<bean:write name="<%=SessionConstants.EXECUTION_COURSE%>" property="seminaryHours" />
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<b><bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="message.manager.problemsHours"/></b>
+			</td>
+			<td>
+				<bean:write name="<%=SessionConstants.EXECUTION_COURSE%>" property="problemsHours" />
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<b><bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="message.manager.fieldWorkHours"/></b>
+			</td>
+			<td>
+				<bean:write name="<%=SessionConstants.EXECUTION_COURSE%>" property="fieldWorkHours" />
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<b><bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="message.manager.trainingPeriodHours"/></b>
+			</td>
+			<td>
+				<bean:write name="<%=SessionConstants.EXECUTION_COURSE%>" property="trainingPeriodHours" />
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<b><bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="message.manager.tutorialOrientationHours"/></b>
+			</td>
+			<td>
+				<bean:write name="<%=SessionConstants.EXECUTION_COURSE%>" property="tutorialOrientationHours" />
+			</td>
+		</tr>
+		<tr>
+			<td>
 				<b><bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="message.manager.execution.course.comment"/></b>
 			</td>
 			<td>

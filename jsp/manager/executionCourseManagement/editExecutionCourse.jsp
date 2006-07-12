@@ -81,6 +81,46 @@
 			</tr>
 			<tr>
 				<td>
+					<bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="message.manager.seminaryHours"/>
+				</td>
+				<td>
+					<html:text size="5" property="seminaryHours" />
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="message.manager.problemsHours"/>
+				</td>
+				<td>
+					<html:text size="5" property="problemsHours" />
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="message.manager.fieldWorkHours"/>
+				</td>
+				<td>
+					<html:text size="5" property="fieldWorkHours" />
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="message.manager.trainingPeriodHours"/>
+				</td>
+				<td>
+					<html:text size="5" property="trainingPeriodHours" />
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="message.manager.tutorialOrientationHours"/>
+				</td>
+				<td>
+					<html:text size="5" property="tutorialOrientationHours" />
+				</td>
+			</tr>
+			<tr>
+				<td>
 					<bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="message.manager.execution.course.comment"/>
 				</td>
 				<td>

@@ -8,6 +8,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu._development.MetadataManager;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -31,6 +32,10 @@ import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.Transformer;
 import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.commons.lang.StringUtils;
+import org.apache.ojb.broker.PersistenceBroker;
+import org.apache.ojb.broker.PersistenceBrokerFactory;
+import org.apache.ojb.broker.accesslayer.ConnectionFactoryFactory;
+import org.apache.ojb.broker.accesslayer.ConnectionFactoryPooledImpl;
 import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
@@ -402,7 +407,6 @@ public class EditExecutionCourseDispatchAction extends FenixDispatchAction {
     }
 
     private void fillForm(ActionForm form, InfoExecutionCourse infoExecutionCourse) {
-
         DynaActionForm executionCourseForm = (DynaActionForm) form;
         executionCourseForm.set("name", infoExecutionCourse.getNome());
         executionCourseForm.set("code", infoExecutionCourse.getSigla());
@@ -422,7 +426,7 @@ public class EditExecutionCourseDispatchAction extends FenixDispatchAction {
         if (infoExecutionCourse.getSeminaryHours() != null) {
             executionCourseForm.set("seminaryHours", infoExecutionCourse.getSeminaryHours().toString());
         }
-        if (infoExecutionCourse.getPraticalHours() != null) {
+        if (infoExecutionCourse.getProblemsHours() != null) {
             executionCourseForm.set("problemsHours", infoExecutionCourse.getProblemsHours().toString());
         }
         if (infoExecutionCourse.getFieldWorkHours() != null) {
