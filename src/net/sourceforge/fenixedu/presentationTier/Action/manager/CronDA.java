@@ -3,6 +3,8 @@ package net.sourceforge.fenixedu.presentationTier.Action.manager;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Set;
+import java.util.SortedSet;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -15,6 +17,8 @@ import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+
+import pt.utl.ist.fenix.tools.util.CollectionPager;
 
 public class CronDA extends FenixDispatchAction {
 
@@ -43,6 +47,16 @@ public class CronDA extends FenixDispatchAction {
     	final String cronScriptStateIDString = request.getParameter("cronScriptStateID");
     	final CronScriptState cronScriptState = rootDomainObject.readCronScriptStateByOID(Integer.valueOf(cronScriptStateIDString));
     	request.setAttribute("cronScriptState", cronScriptState);
+
+        final String pageNumberString = request.getParameter("pageNumber");
+        final Integer pageNumber = pageNumberString != null && pageNumberString.length() > 0 ? Integer.valueOf(pageNumberString) : Integer.valueOf(1);
+        request.setAttribute("pageNumber", pageNumber);
+
+        final SortedSet<CronScriptInvocation> cronScriptInvocations = cronScriptState.getCronScriptInvocationsSetSortedByInvocationStartTime();
+        final CollectionPager<CronScriptInvocation> cronScriptInvocationPager = new CollectionPager<CronScriptInvocation>(cronScriptInvocations, 200);
+        request.setAttribute("cronScriptInvocationsPage", cronScriptInvocationPager.getPage(pageNumber.intValue()));
+        request.setAttribute("numberOfPages", Integer.valueOf(cronScriptInvocationPager.getNumberOfPages()));
+
     	return mapping.findForward("showCronScript");
     }
 

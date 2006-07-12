@@ -9,6 +9,7 @@ import java.io.Serializable;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Set;
+import java.util.SortedSet;
 
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -122,7 +123,7 @@ public class CronScriptState extends CronScriptState_Base {
 		return lastCronScriptInvocation == null ? null : lastCronScriptInvocation.getStartTime().plus(getInvocationPeriod());
 	}
 
-	public Set<CronScriptInvocation> getCronScriptInvocationsSetSortedByInvocationStartTime() {
+	public SortedSet<CronScriptInvocation> getCronScriptInvocationsSetSortedByInvocationStartTime() {
 		return CollectionUtils.constructSortedSet(getCronScriptInvocationsSet(), CronScriptInvocation.COMPARATOR_BY_START_TIME);
 	}
 
