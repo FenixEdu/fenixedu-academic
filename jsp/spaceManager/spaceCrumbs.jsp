@@ -4,6 +4,7 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 
 <logic:present name="space">
+
 	<bean:define id="currentSpace" name="space"/>
 
 	<logic:notPresent name="space" property="suroundingSpace">
@@ -14,10 +15,10 @@
 	<logic:present name="space" property="suroundingSpace">
 		<bean:define id="space" name="space" property="suroundingSpace" toScope="request"/>
 		<jsp:include page="spaceCrumbs.jsp"/>
-	</logic:present>
+	</logic:present>	
 
 	>
-
+	
 <% if (pageContext.findAttribute("currentSpace") == pageContext.findAttribute("selectedSpace")) { %>
 	<logic:equal name="currentSpace" property="class.name" value="net.sourceforge.fenixedu.domain.space.Campus">
 		<bean:write name="currentSpace" property="spaceInformation.presentationName"/>

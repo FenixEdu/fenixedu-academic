@@ -111,22 +111,24 @@
 		<br/>
 	</logic:equal>
 
-	<logic:iterate id="spaceOccupation" name="selectedSpaceInformation" property="space.spaceOccupations">
-		<logic:equal name="spaceOccupation" property="class.name" value="net.sourceforge.fenixedu.domain.space.PersonSpaceOccupation">
-			<bean:define id="person" name="spaceOccupation" property="person"/>
-			<logic:present name="person" property="teacher">
-				<bean:write name="person" property="teacher.teacherNumber"/>
+	<logic:iterate id="spaceOccupation" name="selectedSpaceInformation" property="space.activePersonSpaceOccupations">
+		<bean:define id="person" name="spaceOccupation" property="person"/>
+		<logic:present name="person" property="teacher">
+			<bean:write name="person" property="teacher.teacherNumber"/>
+		</logic:present>
+		<logic:notPresent name="person" property="teacher">
+			<logic:present name="person" property="employee">
+				<bean:write name="person" property="employee.employeeNumber"/>
 			</logic:present>
-			<logic:notPresent name="person" property="teacher">
-				<logic:present name="person" property="employee">
-					<bean:write name="person" property="employee.employeeNumber"/>
-				</logic:present>
-			</logic:notPresent>
-			<bean:write name="person" property="name"/>
-			<br/>
-		</logic:equal>
+		</logic:notPresent>
+		<bean:write name="person" property="name"/>
+		<br/>
 	</logic:iterate>
 	<br/>
+
+	<html:link page="/manageSpaceOccupations.do?method=showSpaceOccupations&page=0" paramId="spaceInformationID" paramName="selectedSpaceInformation" paramProperty="idInternal">
+		<bean:message bundle="SPACE_RESOURCES" key="link.manage.occupations"/>
+	</html:link>
 
 	<html:link page="/manageSpaces.do?method=showCreateSubSpaceForm&page=0" paramId="spaceInformationID" paramName="selectedSpaceInformation" paramProperty="idInternal">
 		<bean:message bundle="SPACE_RESOURCES" key="link.create.subspace"/>

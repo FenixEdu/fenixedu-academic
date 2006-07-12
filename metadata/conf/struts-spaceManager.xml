@@ -12,6 +12,14 @@
 				dynamic="true">
 			<form-property name="classname" type="java.lang.String"/>
 		</form-bean>
+		<form-bean name="manageSpaceOccupationsForm"
+				type="org.apache.struts.validator.DynaValidatorForm"
+				dynamic="true">
+			<form-property name="method" type="java.lang.String"/>
+			<form-property name="beginDate" type="java.lang.String"/>
+			<form-property name="endDate" type="java.lang.String"/>
+			<form-property name="personUsername" type="java.lang.String"/>			
+		</form-bean>
     </form-beans>
 
     <!-- ========== Global Exception Definitions ============================== -->
@@ -48,6 +56,13 @@
             <forward name="EditSpace" path="show-edit-space-form"/>
             <forward name="CreateSpaceInformation" path="show-create-space-information-form"/>
             <forward name="ViewSpaceInformation" path="show-space-information"/>
+        </action>
+        
+        <action path="/manageSpaceOccupations"
+        		name="manageSpaceOccupationsForm"
+        		type="net.sourceforge.fenixedu.presentationTier.Action.spaceManager.ManageSpaceOccupationsDA"
+        		parameter="method">                		
+       		<forward name="showSpaceOccupations" path="show-space-occupations"/>        		        	
         </action>
 
         <action path="/showCreateSpaceForm"

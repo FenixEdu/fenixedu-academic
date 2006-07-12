@@ -72,3 +72,17 @@
 	<slot name="presentationCode"/>
 	<slot name="name"/>
 </schema>
+<schema name="PersonOccupations" type="net.sourceforge.fenixedu.domain.space.PersonSpaceOccupation">
+	<slot name="person.name"/>
+	<slot name="begin"/>
+	<slot name="end"/>
+</schema>
+<schema name="AddPersonOccupation" type="net.sourceforge.fenixedu.domain.space.PersonSpaceOccupation">
+	<slot name="begin">
+		<validator class="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" />
+	</slot>
+	<slot name="end"/>
+	<slot name="person" layout="username-as-person">
+		<validator class="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" />			
+	</slot>
+</schema>

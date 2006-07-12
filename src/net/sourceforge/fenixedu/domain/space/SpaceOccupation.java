@@ -8,6 +8,5 @@ public class SpaceOccupation extends SpaceOccupation_Base {
         super();
         setOjbConcreteClass(this.getClass().getName());
         setRootDomainObject(RootDomainObject.getInstance());
-    }
-    
+    }       
 }

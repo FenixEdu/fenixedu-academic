@@ -61,6 +61,28 @@ public abstract class Space extends Space_Base {
     	}
     	return spaceInformations;
     }
+    
+    public SortedSet<PersonSpaceOccupation> getActivePersonSpaceOccupations(){
+        SortedSet<PersonSpaceOccupation> personSpaceOccupations = new TreeSet<PersonSpaceOccupation>(PersonSpaceOccupation.PERSON_SPACE_OCCUPATION_COMPARATOR_BY_PERSON_NAME);
+        YearMonthDay current = new YearMonthDay();
+        for (SpaceOccupation spaceOccupation : getSpaceOccupations()) {
+            if(spaceOccupation instanceof PersonSpaceOccupation && ((PersonSpaceOccupation)spaceOccupation).isActive(current)) {
+                personSpaceOccupations.add((PersonSpaceOccupation)spaceOccupation);
+            }
+        }        
+        return personSpaceOccupations;
+    }
+    
+    public SortedSet<PersonSpaceOccupation> getInactivePersonSpaceOccupations(){
+        SortedSet<PersonSpaceOccupation> personSpaceOccupations = new TreeSet<PersonSpaceOccupation>(PersonSpaceOccupation.PERSON_SPACE_OCCUPATION_COMPARATOR_BY_PERSON_NAME);
+        YearMonthDay current = new YearMonthDay();
+        for (SpaceOccupation spaceOccupation : getSpaceOccupations()) {
+            if(spaceOccupation instanceof PersonSpaceOccupation && !((PersonSpaceOccupation)spaceOccupation).isActive(current)) {
+                personSpaceOccupations.add((PersonSpaceOccupation)spaceOccupation);
+            }
+        }        
+        return personSpaceOccupations;
+    }
 
     public void delete() {
         for (final List<Space> containedSpaces = getContainedSpaces();

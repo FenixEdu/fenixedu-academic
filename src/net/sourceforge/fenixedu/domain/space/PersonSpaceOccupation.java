@@ -1,12 +1,18 @@
 package net.sourceforge.fenixedu.domain.space;
 
+import java.text.Collator;
+import java.util.Comparator;
+
+import org.apache.commons.beanutils.BeanComparator;
 import org.joda.time.YearMonthDay;
 
 import net.sourceforge.fenixedu.domain.Person;
 
 public class PersonSpaceOccupation extends PersonSpaceOccupation_Base {
     
-    protected PersonSpaceOccupation() {
+    public static final Comparator PERSON_SPACE_OCCUPATION_COMPARATOR_BY_PERSON_NAME = new BeanComparator("person.name", Collator.getInstance());
+    
+    public PersonSpaceOccupation() {
         super();
     }
 
@@ -17,5 +23,8 @@ public class PersonSpaceOccupation extends PersonSpaceOccupation_Base {
         setBegin(begin);
         setEnd(end);
     }
-
+    
+    public boolean isActive(YearMonthDay currentDate) {
+        return (this.getEnd() == null || !this.getEnd().isBefore(currentDate));
+    }
 }
