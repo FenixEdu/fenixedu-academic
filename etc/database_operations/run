@@ -26,3 +26,6 @@ function executeWithTempFile() {
 	rm tmp.sql
 	echo
 }
+
+
+execute "Changing AssiduousnessRecord column name" AlterTableAssiduousnessRecord.sql
