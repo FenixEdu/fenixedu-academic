@@ -5,7 +5,7 @@
 <!-- ******************************************************************************************************************************* -->
 <!-- Definitions for net.sourceforge.fenixedu.domain.transactions.PaymentTransaction -->
 <!-- ******************************************************************************************************************************* -->
-<class-descriptor class="net.sourceforge.fenixedu.domain.transactions.PaymentTransaction">
+<class-descriptor class="net.sourceforge.fenixedu.domain.transactions.PaymentTransaction" table="PAYMENT_TRANSACTION">
     <extent-class class-ref="net.sourceforge.fenixedu.domain.transactions.GratuityTransaction" />
     <extent-class class-ref="net.sourceforge.fenixedu.domain.transactions.SmsTransaction" />	
     <extent-class class-ref="net.sourceforge.fenixedu.domain.transactions.InsuranceTransaction" />	

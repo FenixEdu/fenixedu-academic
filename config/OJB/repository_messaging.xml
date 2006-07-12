@@ -47,11 +47,11 @@
 <!-- *************************************************************************************************************** -->
 <!-- Definitions for net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard -->
 <!-- *************************************************************************************************************** -->
-<class-descriptor class="net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard">
+<class-descriptor class="net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard" table="ANNOUNCEMENT_BOARD">
 	<extent-class class-ref="net.sourceforge.fenixedu.domain.messaging.PartyAnnouncementBoard" />        
 </class-descriptor>
 
-<class-descriptor class="net.sourceforge.fenixedu.domain.messaging.PartyAnnouncementBoard">
+<class-descriptor class="net.sourceforge.fenixedu.domain.messaging.PartyAnnouncementBoard" table="ANNOUNCEMENT_BOARD">
     <extent-class class-ref="net.sourceforge.fenixedu.domain.messaging.UnitAnnouncementBoard" />    
 </class-descriptor>
 
