@@ -3235,7 +3235,7 @@ class net.sourceforge.fenixedu.domain.assiduousness.MissingClocking extends net.
 
 class net.sourceforge.fenixedu.domain.assiduousness.Anulation extends net.sourceforge.fenixedu.domain.assiduousness.Justification {
 	AnulationState state;
-	Integer keyAssiduousnessRecord;
+	Integer keyAnulatedAssiduousnessRecord;
 }
 
 class net.sourceforge.fenixedu.domain.assiduousness.Leave extends net.sourceforge.fenixedu.domain.assiduousness.Justification {
