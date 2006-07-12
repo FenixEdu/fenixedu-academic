@@ -30,7 +30,7 @@
 				<bean:define id="filename" name="infoFileItem" property="filename" type="java.lang.String"/>
 				<bean:define id="fileItemId" name="infoFileItem" property="idInternal" type="java.lang.Integer"/>
 					<tr>
-						<td><img src="<%= request.getContextPath() %>/images/list-bullet.gif" alt="" /></td>
+						<td><img src="<%= request.getContextPath() %>/images/list-bullet.gif" alt="<bean:message key="list-bullet" bundle="IMAGE_RESOURCES" />" /></td>
 						<td>
 							<html:link href="<%= pageContext.findAttribute("fileDownloadUrlFormat") + "/" + externalStorageIdentification + "/" + filename %>" ><bean:write name="infoFileItem" property="displayName"/></html:link>
 						</td>

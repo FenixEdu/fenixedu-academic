@@ -21,7 +21,7 @@
 	<br />
 	<logic:lessEqual  name="curricularCoursesSize" value="0">
 		<br />
-		<img src="<%= request.getContextPath() %>/images/icon_arrow.gif" />&nbsp;<bean:message key="message.no.curricular.courses.noname" bundle="DEGREE_ADM_OFFICE"/>
+		<img src="<%= request.getContextPath() %>/images/icon_arrow.gif" alt="<bean:message key="icon_arrow" bundle="IMAGE_RESOURCES" />" />&nbsp;<bean:message key="message.no.curricular.courses.noname" bundle="DEGREE_ADM_OFFICE"/>
 		<br /><br />
 	</logic:lessEqual >
 	<html:form action="/courseEnrolmentWithoutRulesManagerDA">

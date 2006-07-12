@@ -19,7 +19,7 @@
           <table border="0" width="100%" height="104" align="center" cellpadding="0" cellspacing="0">
             <tr> 
               <td width="50" height="100">
-               <img src="<%= request.getContextPath() %>/images/LogoIST.gif" width="50" height="104" border="0"/> 
+               <img src="<%= request.getContextPath() %>/images/LogoIST.gif" alt="<bean:message key="LogoIST" bundle="IMAGE_RESOURCES" />" width="50" height="104" border="0"/> 
               </td>
               <td>
                 &nbsp;

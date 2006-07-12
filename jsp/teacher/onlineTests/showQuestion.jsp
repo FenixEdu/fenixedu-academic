@@ -179,7 +179,7 @@
 						<bean:define id="button" value="true"/>
 						<logic:notEmpty name="correctResponse">
 							<logic:equal name="correctResponse" property="response" value="<%= new Integer(indexOption.intValue()+1).toString() %>">
-								<td><img src="<%= request.getContextPath() %>/images/radioButtonUnselected.gif" alt="" /></td>
+								<td><img src="<%= request.getContextPath() %>/images/radioButtonUnselected.gif" alt="<bean:message key="radioButtonUnselected" bundle="IMAGE_RESOURCES" />" /></td>
 								<bean:define id="button" value="false"/>
 							</logic:equal>
 						</logic:notEmpty>
@@ -194,7 +194,7 @@
 							<bean:define id="condition" name="correctResponse" property="condition"/>
 								<%if(((Integer)condition).intValue() ==1){%>
 									<logic:equal name="correctResponse" property="response" value="<%= new Integer(indexOption.intValue()+1).toString() %>">
-										<td><img src="<%= request.getContextPath() %>/images/checkButtonUnselected.gif" alt="" /></td>
+										<td><img src="<%= request.getContextPath() %>/images/checkButtonUnselected.gif" alt="<bean:message key="checkButtonUnselected" bundle="IMAGE_RESOURCES" />" /></td>
 										<bean:define id="button" value="false"/>
 									</logic:equal>
 								<%}%>

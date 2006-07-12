@@ -2,7 +2,7 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <logic:notPresent name="infoCostCenter" scope="request">
-	<html:img altKey="title.progectsManagement" src="<%= request.getContextPath() + "/images/projectsManagement.gif"%>" />
+	<html:img altKey="title.progectsManagement" src="<%= request.getContextPath() + "/images/projectsManagement.gif"%>" alt="<bean:message key="projectsManagement" bundle="IMAGE_RESOURCES" />" />
 </logic:notPresent>
 <logic:present name="infoCostCenter" scope="request">
 	<html:img altKey="title.institucionalProgectsManagement" src="<%= request.getContextPath() + "/images/institucionalProjectsManagement.gif"%>" />

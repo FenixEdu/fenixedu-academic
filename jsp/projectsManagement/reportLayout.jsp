@@ -32,8 +32,8 @@
 </div>
 <bean:define id="supportLink" type="java.lang.String">mailto:<bean:message key="suporte.mail" bundle="GLOBAL_RESOURCES" />
 </bean:define>
-<div id="hdr-nav"><a href="<%= supportLink %>"><img alt="Suporte" src="<%= request.getContextPath() %>/images/sup-bar.gif" /></a><a
-	href="<%= request.getContextPath() %>/logoff.do"><img alt="Logout" src="<%= request.getContextPath() %>/images/logoff-bar.gif" /></a></div>
+<div id="hdr-nav"><a href="<%= supportLink %>"><img alt="Suporte" src="<%= request.getContextPath() %>/images/sup-bar.gif" alt="<bean:message key="sup-bar" bundle="IMAGE_RESOURCES" />" /></a><a
+	href="<%= request.getContextPath() %>/logoff.do"><img alt="Logout" src="<%= request.getContextPath() %>/images/logoff-bar.gif" alt="<bean:message key="logoff-bar" bundle="IMAGE_RESOURCES" />" /></a></div>
 <!-- End Header -->
 <!-- NavGeral -->
 <tiles:insert attribute="navGeral" />

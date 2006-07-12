@@ -76,7 +76,7 @@
 <br />  
 <table width="100%">
 	<tr>
-		<td><img src="<%= request.getContextPath() %>/images/dotist_info.gif" alt="" />
+		<td><img src="<%= request.getContextPath() %>/images/dotist_info.gif" alt="<bean:message key="dotist_info" bundle="IMAGE_RESOURCES" />" />
 		</td>
 		<td class="px9">
 		<bean:message key="message.gesdis.info" />

@@ -1,12 +1,12 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
-<p><img height="36" src="<%= request.getContextPath() %>/images/intranetSOP.gif" width="239" /></p>
+<p><img height="36" src="<%= request.getContextPath() %>/images/intranetSOP.gif" alt="<bean:message key="intranetSOP" bundle="IMAGE_RESOURCES" />" width="239" /></p>
 
 <bean:define id="dotTitle"type="java.lang.String"><bean:message key="dot.title" bundle="GLOBAL_RESOURCES"/></bean:define>
 <bean:message key="introduction.message" arg0="<%= dotTitle %>"/>
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
   <tr>
-    <td nowrap="nowrap" class="infoIcons"><img alt="" height="15" src="<%= request.getContextPath() %>/images/info.gif" width="15"> 
+    <td nowrap="nowrap" class="infoIcons"><img alt="" height="15" src="<%= request.getContextPath() %>/images/info.gif" alt="<bean:message key="info" bundle="IMAGE_RESOURCES" />" width="15"> 
     </td>
     <td class="infoop"><html:link page="/manageExecutionCourses.do?method=prepareSearch&page=0&"><strong>Gest&atilde;o de Disciplinas</strong></html:link></td>
   </tr>
@@ -16,7 +16,7 @@
 <br />
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
   <tr>
-    <td nowrap="nowrap" class="infoIcons"><img alt="" height="15" src="<%= request.getContextPath() %>/images/info.gif" width="15"> 
+    <td nowrap="nowrap" class="infoIcons"><img alt="" height="15" src="<%= request.getContextPath() %>/images/info.gif" alt="<bean:message key="info" bundle="IMAGE_RESOURCES" />" width="15"> 
     </td>
     <td class="infoop"><html:link page="/chooseExecutionPeriod.do?method=prepare"><strong>Gest&atilde;o de Hor&aacute;rios</strong></html:link></td>
   </tr>
@@ -28,7 +28,7 @@ e alterar aulas).</p>
 <br />
 <table width="100%" border="0" cellpadding="0" cellspacing="0">
   <tr>
-    <td nowrap="nowrap" class="infoIcons"><img alt="" height="15" src="<%= request.getContextPath() %>/images/info.gif" width="15"> 
+    <td nowrap="nowrap" class="infoIcons"><img alt="" height="15" src="<%= request.getContextPath() %>/images/info.gif" alt="<bean:message key="info" bundle="IMAGE_RESOURCES" />" width="15"> 
     </td>
     <td class="infoop"><html:link page="/principalSalas.do"><strong>Gest&atilde;o de Salas</strong></html:link></td>
   </tr>
@@ -38,7 +38,7 @@ e alterar aulas).</p>
 <br />
 <table width="100%" border="0" cellpadding="0" cellspacing="0">
   <tr>
-    <td nowrap="nowrap" class="infoIcons"><img alt="" height="15" src="<%= request.getContextPath() %>/images/info.gif" width="15"> 
+    <td nowrap="nowrap" class="infoIcons"><img alt="" height="15" src="<%= request.getContextPath() %>/images/info.gif" alt="<bean:message key="info" bundle="IMAGE_RESOURCES" />" width="15"> 
     </td>
     <td class="infoop">
 		<html:link page="/mainExamsNew.do?method=prepare"><strong><bean:message key="link.writtenEvaluationManagement"/></strong></html:link>
@@ -49,7 +49,7 @@ e alterar aulas).</p>
 <br />
 <table width="100%" border="0" cellpadding="0" cellspacing="0">
   <tr>
-    <td nowrap="nowrap" class="infoIcons"><img alt="" height="15" src="<%= request.getContextPath() %>/images/info.gif" width="15"> 
+    <td nowrap="nowrap" class="infoIcons"><img alt="" height="15" src="<%= request.getContextPath() %>/images/info.gif" alt="<bean:message key="info" bundle="IMAGE_RESOURCES" />" width="15"> 
     </td>
     <td class="infoop">
 		<strong><html:link page="/chooseExecutionYearAndDegreeCurricularPlan.do?method=prepare"><bean:message key="link.curriculumHistoric" bundle="CURRICULUM_HISTORIC_RESOURCES"/></html:link></strong></li>

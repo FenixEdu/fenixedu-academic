@@ -22,7 +22,7 @@
 
 	<p>
 		<div class="gen-button">
-			<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="" /> 
+			<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" /> 
 			<html:link page="/createBibliographicReference.do?method=prepareCreateBibliographicReference" paramId="executionCourseID" paramName="executionCourse" paramProperty="idInternal">
 				<bean:message key="label.insertBibliographicReference"/>                   		     
 			</html:link>

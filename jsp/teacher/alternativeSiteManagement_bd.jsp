@@ -17,7 +17,7 @@
 <br />
 <table width="100%" cellpadding="0" cellspacing="0">
 	<tr>
-		<td class="infoop"><img src="<%= request.getContextPath() %>/images/number_1.gif" alt="" />
+		<td class="infoop"><img src="<%= request.getContextPath() %>/images/number_1.gif" alt="<bean:message key="number_1" bundle="IMAGE_RESOURCES" />" />
 		</td>
 		<td class="infoop"><bean:message key="message.siteandmail.information" />
 		</td>
@@ -71,7 +71,7 @@
 <br />
 <table width="100%" cellpadding="0" cellspacing="0">
 <tr>
-	<td class="infoop"><img src="<%= request.getContextPath() %>/images/number_2.gif" alt="" />
+	<td class="infoop"><img src="<%= request.getContextPath() %>/images/number_2.gif" alt="<bean:message key="number_2" bundle="IMAGE_RESOURCES" />" />
 	</td>
 	<td class="infoop">
 	  <bean:message key="message.initialStatement.explanation" />
@@ -91,7 +91,7 @@
 <br />
 <table width="100%" cellpadding="0" cellspacing="0">
 <tr>
-	<td class="infoop"><img src="<%= request.getContextPath() %>/images/number_3.gif" alt="" />
+	<td class="infoop"><img src="<%= request.getContextPath() %>/images/number_3.gif" alt="<bean:message key="number_3" bundle="IMAGE_RESOURCES" />" alt="" />
 	</td>
 	<td class="infoop">
 	  <bean:message key="message.introduction.explanation" />

@@ -15,7 +15,7 @@
 	<tr> 
 		<td>
 			<div class="gen-button">
-			<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="" /> 
+			<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" /> 
 				<html:link page="<%= "/editSection.do?method=prepareEditSection&amp;objectCode=" + pageContext.findAttribute("objectCode") + "&amp;currentSectionCode=" + currentSectionCode %>">		
 					<bean:message key="button.editSection"/>
 				</html:link>
@@ -23,7 +23,7 @@
 		</td>
 		<td>
 			<div class="gen-button">
-			<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="" /> 
+			<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" /> 
 				<bean:define id="sectionName" name="section" property="name"/>
 				<logic:notEmpty name="section" property="superiorInfoSection">
 					<bean:define id="superiorSection" name="section" property="superiorInfoSection"/>
@@ -42,7 +42,7 @@
 											
 		<td>
 			<div class="gen-button">
-				<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="" /> 
+				<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" /> 
 				<%-- <bean:define id="sectionCode" name="section" property="idInternal"/> --%>
 				<html:link page="<%= "/sectionManagement.do?method=prepareCreateRegularSection&amp;objectCode=" + pageContext.findAttribute("objectCode") + "&amp;currentSectionCode=" + currentSectionCode %>">
 					<bean:message key="button.insertSubSection"/>
@@ -51,7 +51,7 @@
 		</td>
 		<td>
 			<div class="gen-button">
-				<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="" /> 
+				<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" /> 
 				<html:link page="<%= "/insertItem.do?method=prepareInsertItem&amp;objectCode=" + pageContext.findAttribute("objectCode") + "&amp;currentSectionCode=" + currentSectionCode %>">
 					<bean:message key="button.insertItem"/>
 				</html:link>
@@ -70,7 +70,7 @@
 	<tr>			
 		<td>
 			<div class="gen-button">
-			<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="" /> 
+			<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" /> 
 				<html:link page="<%= "/editItem.do?method=prepareEditItem&amp;objectCode=" + pageContext.findAttribute("objectCode") + "&amp;itemCode=" + itemCode %>">
 					<bean:message key="button.editItem"/>
 				</html:link>
@@ -78,7 +78,7 @@
 		</td>
 		<td>
 			<div class="gen-button">
-			<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="" /> 
+			<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" /> 
 				<html:link page="<%= "/deleteItem.do?method=deleteItem&amp;objectCode=" + pageContext.findAttribute("objectCode") + "&amp;itemCode=" + itemCode + "&amp;currentSectionCode=" + currentSectionCode%>" onclick="return confirm('Tem a certeza que deseja apagar este item?')">
 					<bean:message key="button.deleteItem"/>
 				</html:link>
@@ -86,7 +86,7 @@
 		</td>
 		<td>
 			<div class="gen-button">
-			<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="" /> 
+			<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" /> 
 				<html:link page="<%="/prepareFileUpload.do?method=prepareFileUpload&objectCode=" + pageContext.findAttribute("objectCode") + "&amp;itemCode=" + itemCode + "&amp;currentSectionCode=" + currentSectionCode%>">
 					Inserir Ficheiro
 				</html:link>
@@ -111,12 +111,12 @@
 		<bean:define id="fileItemId" name="infoFileItem" property="idInternal" type="java.lang.Integer"/>
 		<bean:define id="permittedGroupType" name="infoFileItem" property="permittedGroupType" type="net.sourceforge.fenixedu.domain.FileItemPermittedGroupType"/>
 		<td>
-			<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="" />
+			<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" />
 		</td>
 		<td>
 			<html:link href="<%= pageContext.findAttribute("fileDownloadUrlFormat") + "/" + externalStorageIdentification + "/" + filename %>" ><bean:write name="displayName"/>&nbsp;&nbsp;(<bean:message key="<%=permittedGroupType.toString() %>" bundle="ENUMERATION_RESOURCES"/>)</html:link>
 		</td>
-		<td>&nbsp;&nbsp;<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="" />
+		<td>&nbsp;&nbsp;<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" />
 		</td>
 		<td>
 			<html:link page="<%= "/fileDelete.do?method=deleteFile&objectCode=" + pageContext.findAttribute("objectCode") + "&amp;itemCode=" + itemCode + "&amp;currentSectionCode=" + currentSectionCode + "&fileItemId=" + fileItemId %>"   onclick="<%= "return confirm('Tem a certeza que deseja apagar o ficheiro "+displayName+"?')"%>" ><bean:message key="label.teacher.siteAdministration.viewSection.deleteItemFile"/></html:link>

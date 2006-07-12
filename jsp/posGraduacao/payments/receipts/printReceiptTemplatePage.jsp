@@ -22,6 +22,7 @@
 					<tr>
 						<td width="50" height="100"><img
 							src="<%= request.getContextPath() %>/images/LogoIST.gif"
+							alt="<bean:message key="LogoIST" bundle="IMAGE_RESOURCES" />"
 							width="50" height="104" border="0" /></td>
 						<td>&nbsp;</td>
 						<td>

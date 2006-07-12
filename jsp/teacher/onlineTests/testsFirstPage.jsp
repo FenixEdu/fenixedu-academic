@@ -9,4 +9,4 @@
 <p><b><bean:message key="message.tests.contact" /></b></p>
 <br/>
 <br/>
-<img src="<%= request.getContextPath()%>/images/prodep.gif" alt="" />
+<img src="<%= request.getContextPath()%>/images/prodep.gif" alt="<bean:message key="prodep" bundle="IMAGE_RESOURCES" />" />

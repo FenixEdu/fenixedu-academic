@@ -21,7 +21,7 @@
 <div class="infoselected">		
 <bean:message key="message.showShiftsToEnroll.instructions0" />
 	<ul>
-	<li><bean:message key="message.showShiftsToEnroll.instructions1" /> <img src="<%= request.getContextPath() + "/images/add1.gif" %>" /> <bean:message key="message.showShiftsToEnroll.instructions2" /> <img src="<%= request.getContextPath() + "/images/remove1.gif" %>" /> <bean:message key="message.showShiftsToEnroll.instructions3" /></li>
+	<li><bean:message key="message.showShiftsToEnroll.instructions1" /> <img src="<%= request.getContextPath() + "/images/add1.gif" %>" alt="<bean:message key="add1" bundle="IMAGE_RESOURCES" />" /> <bean:message key="message.showShiftsToEnroll.instructions2" /> <img src="<%= request.getContextPath() + "/images/remove1.gif" %>" alt="<bean:message key="remove1" bundle="IMAGE_RESOURCES" />" /> <bean:message key="message.showShiftsToEnroll.instructions3" /></li>
 	<li><bean:message key="message.showShiftsToEnroll.instructions4" /></li>
 	</ul>
 </div>

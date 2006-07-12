@@ -211,14 +211,14 @@ function remove(i){
 		</logic:equal>
 		<logic:greaterThan name="optionNumber" value="1">
 			<td align='center'><html:link href='<%="javascript:remove("+new Integer(i-1)+")"%>'>
-					<img border='0' src="<%= request.getContextPath()%>/images/remove.gif" alt=""/></td></tr>
+					<img border='0' src="<%= request.getContextPath()%>/images/remove.gif" alt="<bean:message key="remove" bundle="IMAGE_RESOURCES" />"/></td></tr>
 				</html:link></td>
 		</logic:greaterThan>
 		</tr>
 	<%}%>
 	<logic:lessThan name="optionNumber" value="99">
 		<tr><td><html:link href="javascript:add();">
-			<img border='0' src="<%= request.getContextPath()%>/images/add.gif" alt=""/>
+			<img border='0' src="<%= request.getContextPath()%>/images/add.gif" alt="<bean:message key="add" bundle="IMAGE_RESOURCES" />"/>
 		</html:link></td></tr>
 	</logic:lessThan>
 </table>
@@ -291,7 +291,7 @@ function remove(i){
 			<td align='center'><html:text size="20" property="correctOptions" value="<%=value.toString()%>"/></td>
 			<logic:greaterThan name="optionNumber" value="1">
 			<td><html:link href='<%="javascript:remove("+new Integer(i-1)+")"%>'>
-				<img border='0' src="<%= request.getContextPath()%>/images/remove.gif" alt=""/></td></tr>
+				<img border='0' src="<%= request.getContextPath()%>/images/remove.gif" alt="<bean:message key="remove" bundle="IMAGE_RESOURCES" />"/></td></tr>
 			</html:link></td>
 			</logic:greaterThan>
 		</logic:equal>
@@ -307,7 +307,7 @@ function remove(i){
 		<logic:lessThan name="optionNumber" value="99">
 			<tr><td>
 			<html:link href="javascript:add();">
-				<img border='0' src="<%= request.getContextPath()%>/images/add.gif" alt=""/></td></tr>
+				<img border='0' src="<%= request.getContextPath()%>/images/add.gif" alt="<bean:message key="add" bundle="IMAGE_RESOURCES" />"/></td></tr>
 			</html:link>
 			</td></tr>
 		</logic:lessThan>

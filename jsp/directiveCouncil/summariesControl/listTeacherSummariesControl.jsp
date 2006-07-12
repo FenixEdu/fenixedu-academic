@@ -44,7 +44,7 @@
 			&nbsp;&nbsp;&nbsp;
 			
 			<html:link page="<%= url2 %>">			
-				<html:img border="0" src="<%= request.getContextPath() + "/images/icon_csv.gif"%>"/>
+				<html:img border="0" src="<%= request.getContextPath() + "/images/icon_csv.gif"%>" alt="<bean:message key="icon_csv" bundle="IMAGE_RESOURCES" />"/>
 				<bean:message key="link.export.to.csv"/>						
 			</html:link></p>
 			

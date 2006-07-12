@@ -18,10 +18,10 @@
 <div id="hdr-nav">
 	<bean:define id="supportMail" type="java.lang.String">mailto:<bean:message key="suporte.mail" bundle="GLOBAL_RESOURCES"/></bean:define>
 	<a href="<%= supportMail %>">
-		<img alt="Icon de Suporte" src="<%= request.getContextPath() %>/images/sup-bar.gif" />
+		<img src="<%= request.getContextPath() %>/images/sup-bar.gif" alt="<bean:message key="sup-bar" bundle="IMAGE_RESOURCES" />" />
 	</a>
 	<a href="logoff.do">
-		<img alt="Icon de Logout" src="<%= request.getContextPath() %>/images/logoff-bar.gif" />
+		<img src="<%= request.getContextPath() %>/images/logoff-bar.gif" alt="<bean:message key="logoff-bar" bundle="IMAGE_RESOURCES" />" />
 	</a>
 </div>
 <!-- End Header -->

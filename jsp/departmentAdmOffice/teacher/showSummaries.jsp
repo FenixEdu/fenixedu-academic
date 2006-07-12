@@ -59,7 +59,7 @@
 </html:form>
 
 <div class="gen-button">
-	<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="" />
+	<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" />
 	<html:link page="<%= "/summariesManager.do?method=prepareInsertSummary&amp;page=0&amp;objectCode=" + pageContext.findAttribute("objectCode") + "&amp;teacherNumber=" + pageContext.findAttribute("teacherNumber")%>">
 			<bean:message key="label.insertSummary" />
 	</html:link>
@@ -159,13 +159,13 @@
 		<tr>
 		  	<td>
 				<div class="gen-button">
-					<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="" />
+					<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" />
 					<html:link page="<%= "/summariesManager.do?method=prepareEditSummary&amp;page=0&amp;objectCode=" + pageContext.findAttribute("objectCode") + "&amp;summaryCode=" + summaryCode + "&amp;teacherNumber=" + pageContext.findAttribute("teacherNumber") %>">
 						<bean:message key="button.edit" /> 
 					</html:link>
 				</div>
 				<div class="gen-button">
-					<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="" />
+					<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" />
 					<html:link page="<%= "/summariesManager.do?method=deleteSummary&amp;page=0&amp;objectCode=" + pageContext.findAttribute("objectCode") + "&amp;summaryCode=" + summaryCode + "&amp;teacherNumber=" + pageContext.findAttribute("teacherNumber")%>" onclick="return confirm('Tem a certeza que deseja apagar este sumário?')">
 						<bean:message key="button.delete" />
 					</html:link>

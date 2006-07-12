@@ -109,7 +109,7 @@ function invertSelect(){
 				<td class="listClasses-header">
 				<div class="gen-button"><logic:equal name="order" value="description">
 					<logic:equal name="asc" value="true">
-						<img hspace="5" border="0" src="<%= request.getContextPath() %>/images/gray_square.gif" alt="" />
+						<img hspace="5" border="0" src="<%= request.getContextPath() %>/images/gray_square.gif" alt="<bean:message key="gray_square" bundle="IMAGE_RESOURCES" />" />
 						<html:link
 							page="<%= "/questionsManagement.do?method=showAvailableQuestions&amp;objectCode=" + pageContext.findAttribute("objectCode")+ "&amp;testCode=" + pageContext.findAttribute("testCode")+ "&amp;order=description&amp;asc=false"%>"
 							titleKey="label.orderByDescription">
@@ -117,11 +117,11 @@ function invertSelect(){
 						</html:link>
 						<html:link
 							page="<%= "/questionsManagement.do?method=showAvailableQuestions&amp;objectCode=" + pageContext.findAttribute("objectCode")+ "&amp;testCode=" + pageContext.findAttribute("testCode")+ "&amp;order=description&amp;asc=false"%>">
-							<img hspace="5" border="0" src="<%= request.getContextPath() %>/images/upArrow.gif" alt="" />
+							<img hspace="5" border="0" src="<%= request.getContextPath() %>/images/upArrow.gif" alt="<bean:message key="upArrow" bundle="IMAGE_RESOURCES" />" />
 						</html:link>
 					</logic:equal>
 					<logic:notEqual name="asc" value="true">
-						<img hspace="5" border="0" src="<%= request.getContextPath() %>/images/gray_square.gif" alt="" />
+						<img hspace="5" border="0" src="<%= request.getContextPath() %>/images/gray_square.gif" alt="<bean:message key="gray_square" bundle="IMAGE_RESOURCES" />" />
 						<html:link
 							page="<%= "/questionsManagement.do?method=showAvailableQuestions&amp;objectCode=" + pageContext.findAttribute("objectCode")+ "&amp;testCode=" + pageContext.findAttribute("testCode")+ "&amp;order=description"%>"
 							titleKey="label.orderByDescription">
@@ -129,23 +129,23 @@ function invertSelect(){
 						</html:link>
 						<html:link
 							page="<%= "/questionsManagement.do?method=showAvailableQuestions&amp;objectCode=" + pageContext.findAttribute("objectCode")+ "&amp;testCode=" + pageContext.findAttribute("testCode")+ "&amp;order=description"%>">
-							<img hspace="5" border="0" src="<%= request.getContextPath() %>/images/downArrow.gif" alt="" />
+							<img hspace="5" border="0" src="<%= request.getContextPath() %>/images/downArrow.gif" alt="<bean:message key="downArrow" bundle="IMAGE_RESOURCES" />" />
 						</html:link>
 					</logic:notEqual>
 				</logic:equal> <logic:notEqual name="order" value="description">
-					<img hspace="5" border="0" src="<%= request.getContextPath() %>/images/gray_square.gif" alt="" />
+					<img hspace="5" border="0" src="<%= request.getContextPath() %>/images/gray_square.gif" alt="<bean:message key="gray_square" bundle="IMAGE_RESOURCES" />" />
 					<html:link
 						page="<%= "/questionsManagement.do?method=showAvailableQuestions&amp;objectCode=" + pageContext.findAttribute("objectCode")+ "&amp;testCode=" + pageContext.findAttribute("testCode")+ "&amp;order=description"%>"
 						titleKey="label.orderByDescription">
 						<bean:message key="label.description" />
 					</html:link>
-					<img hspace="5" border="0" src="<%= request.getContextPath() %>/images/gray_square.gif" alt="" />
+					<img hspace="5" border="0" src="<%= request.getContextPath() %>/images/gray_square.gif" alt="<bean:message key="gray_square" bundle="IMAGE_RESOURCES" />" />
 				</logic:notEqual></div>
 				</td>
 				<td class="listClasses-header">
 				<div class="gen-button"><logic:equal name="order" value="mainSubject">
 					<logic:equal name="asc" value="true">
-						<img hspace="5" border="0" src="<%= request.getContextPath() %>/images/gray_square.gif" alt="" />
+						<img hspace="5" border="0" src="<%= request.getContextPath() %>/images/gray_square.gif" alt="<bean:message key="gray_square" bundle="IMAGE_RESOURCES" />" />
 						<html:link
 							page="<%= "/questionsManagement.do?method=showAvailableQuestions&amp;objectCode=" + pageContext.findAttribute("objectCode")+ "&amp;testCode=" + pageContext.findAttribute("testCode")+ "&amp;order=mainSubject&amp;asc=false"%>"
 							titleKey="label.orderByMateriaPrincipal">
@@ -153,11 +153,11 @@ function invertSelect(){
 						</html:link>
 						<html:link
 							page="<%= "/questionsManagement.do?method=showAvailableQuestions&amp;objectCode=" + pageContext.findAttribute("objectCode")+ "&amp;testCode=" + pageContext.findAttribute("testCode")+ "&amp;order=mainSubject&amp;asc=false"%>">
-							<img hspace="5" border="0" src="<%= request.getContextPath() %>/images/upArrow.gif" alt="" />
+							<img hspace="5" border="0" src="<%= request.getContextPath() %>/images/upArrow.gif" alt="<bean:message key="upArrow" bundle="IMAGE_RESOURCES" />" />
 						</html:link>
 					</logic:equal>
 					<logic:notEqual name="asc" value="true">
-						<img hspace="5" border="0" src="<%= request.getContextPath() %>/images/gray_square.gif" alt="" />
+						<img hspace="5" border="0" src="<%= request.getContextPath() %>/images/gray_square.gif" alt="<bean:message key="gray_square" bundle="IMAGE_RESOURCES" />" />
 						<html:link
 							page="<%= "/questionsManagement.do?method=showAvailableQuestions&amp;objectCode=" + pageContext.findAttribute("objectCode")+ "&amp;testCode=" + pageContext.findAttribute("testCode")+ "&amp;order=mainSubject"%>"
 							titleKey="label.orderByMateriaPrincipal">
@@ -165,23 +165,23 @@ function invertSelect(){
 						</html:link>
 						<html:link
 							page="<%= "/questionsManagement.do?method=showAvailableQuestions&amp;objectCode=" + pageContext.findAttribute("objectCode")+ "&amp;testCode=" + pageContext.findAttribute("testCode")+ "&amp;order=mainSubject"%>">
-							<img hspace="5" border="0" src="<%= request.getContextPath() %>/images/downArrow.gif" alt="" />
+							<img hspace="5" border="0" src="<%= request.getContextPath() %>/images/downArrow.gif" alt="<bean:message key="downArrow" bundle="IMAGE_RESOURCES" />" />
 						</html:link>
 					</logic:notEqual>
 				</logic:equal> <logic:notEqual name="order" value="mainSubject">
-					<img hspace="5" border="0" src="<%= request.getContextPath() %>/images/gray_square.gif" alt="" />
+					<img hspace="5" border="0" src="<%= request.getContextPath() %>/images/gray_square.gif" alt="<bean:message key="gray_square" bundle="IMAGE_RESOURCES" />" />
 					<html:link
 						page="<%= "/questionsManagement.do?method=showAvailableQuestions&amp;objectCode=" + pageContext.findAttribute("objectCode")+ "&amp;testCode=" + pageContext.findAttribute("testCode")+ "&amp;order=mainSubject"%>"
 						titleKey="label.orderByMateriaPrincipal">
 						<bean:message key="label.test.materiaPrincipal" />
 					</html:link>
-					<img hspace="5" border="0" src="<%= request.getContextPath() %>/images/gray_square.gif" alt="" />
+					<img hspace="5" border="0" src="<%= request.getContextPath() %>/images/gray_square.gif" alt="<bean:message key="gray_square" bundle="IMAGE_RESOURCES" />" />
 				</logic:notEqual></div>
 				</td>
 				<td class="listClasses-header">
 				<div class="gen-button"><logic:equal name="order" value="difficulty">
 					<logic:equal name="asc" value="true">
-						<img hspace="5" border="0" src="<%= request.getContextPath() %>/images/gray_square.gif" alt="" />
+						<img hspace="5" border="0" src="<%= request.getContextPath() %>/images/gray_square.gif" alt="<bean:message key="gray_square" bundle="IMAGE_RESOURCES" />" />
 						<html:link
 							page="<%= "/questionsManagement.do?method=showAvailableQuestions&amp;objectCode=" + pageContext.findAttribute("objectCode")+ "&amp;testCode=" + pageContext.findAttribute("testCode")+ "&amp;order=difficulty&amp;asc=false"%>"
 							titleKey="label.orderByDifficulty">
@@ -189,11 +189,11 @@ function invertSelect(){
 						</html:link>
 						<html:link
 							page="<%= "/questionsManagement.do?method=showAvailableQuestions&amp;objectCode=" + pageContext.findAttribute("objectCode")+ "&amp;testCode=" + pageContext.findAttribute("testCode")+ "&amp;order=difficulty&amp;asc=false"%>">
-							<img hspace="5" border="0" src="<%= request.getContextPath() %>/images/upArrow.gif" alt="" />
+							<img hspace="5" border="0" src="<%= request.getContextPath() %>/images/upArrow.gif" alt="<bean:message key="upArrow" bundle="IMAGE_RESOURCES" />" />
 						</html:link>
 					</logic:equal>
 					<logic:notEqual name="asc" value="true">
-						<img hspace="5" border="0" src="<%= request.getContextPath() %>/images/gray_square.gif" alt="" />
+						<img hspace="5" border="0" src="<%= request.getContextPath() %>/images/gray_square.gif" alt="<bean:message key="gray_square" bundle="IMAGE_RESOURCES" />" />
 						<html:link
 							page="<%= "/questionsManagement.do?method=showAvailableQuestions&amp;objectCode=" + pageContext.findAttribute("objectCode")+ "&amp;testCode=" + pageContext.findAttribute("testCode")+ "&amp;order=difficulty"%>"
 							titleKey="label.orderByDifficulty">
@@ -201,17 +201,17 @@ function invertSelect(){
 						</html:link>
 						<html:link
 							page="<%= "/questionsManagement.do?method=showAvailableQuestions&amp;objectCode=" + pageContext.findAttribute("objectCode")+ "&amp;testCode=" + pageContext.findAttribute("testCode")+ "&amp;order=difficulty"%>">
-							<img hspace="5" border="0" src="<%= request.getContextPath() %>/images/downArrow.gif" alt="" />
+							<img hspace="5" border="0" src="<%= request.getContextPath() %>/images/downArrow.gif" alt="<bean:message key="downArrow" bundle="IMAGE_RESOURCES" />" />
 						</html:link>
 					</logic:notEqual>
 				</logic:equal> <logic:notEqual name="order" value="difficulty">
-					<img hspace="5" border="0" src="<%= request.getContextPath() %>/images/gray_square.gif" alt="" />
+					<img hspace="5" border="0" src="<%= request.getContextPath() %>/images/gray_square.gif" alt="<bean:message key="gray_square" bundle="IMAGE_RESOURCES" />" />
 					<html:link
 						page="<%= "/questionsManagement.do?method=showAvailableQuestions&amp;objectCode=" + pageContext.findAttribute("objectCode")+ "&amp;testCode=" + pageContext.findAttribute("testCode")+ "&amp;order=difficulty"%>"
 						titleKey="label.orderByDifficulty">
 						<bean:message key="label.test.difficulty" />
 					</html:link>
-					<img hspace="5" border="0" src="<%= request.getContextPath() %>/images/gray_square.gif" alt="" />
+					<img hspace="5" border="0" src="<%= request.getContextPath() %>/images/gray_square.gif" alt="<bean:message key="gray_square" bundle="IMAGE_RESOURCES" />" />
 				</logic:notEqual></div>
 				</td>
 				<td width="90" class="listClasses-header">
@@ -224,7 +224,7 @@ function invertSelect(){
 						</html:link>
 						<html:link
 							page="<%= "/questionsManagement.do?method=showAvailableQuestions&amp;objectCode=" + pageContext.findAttribute("objectCode")+ "&amp;testCode=" + pageContext.findAttribute("testCode")+ "&amp;order=numberOfMembers&amp;asc=false"%>">
-							<img hspace="5" border="0" src="<%= request.getContextPath() %>/images/upArrow.gif" alt="" />
+							<img hspace="5" border="0" src="<%= request.getContextPath() %>/images/upArrow.gif" alt="<bean:message key="upArrow" bundle="IMAGE_RESOURCES" />" />
 						</html:link>
 					</logic:equal>
 					<logic:notEqual name="asc" value="true">
@@ -235,7 +235,7 @@ function invertSelect(){
 						</html:link>
 						<html:link
 							page="<%= "/questionsManagement.do?method=showAvailableQuestions&amp;objectCode=" + pageContext.findAttribute("objectCode")+ "&amp;testCode=" + pageContext.findAttribute("testCode")+ "&amp;order=numberOfMembers"%>">
-							<img hspace="5" border="0" src="<%= request.getContextPath() %>/images/downArrow.gif" alt="" />
+							<img hspace="5" border="0" src="<%= request.getContextPath() %>/images/downArrow.gif" alt="<bean:message key="downArrow" bundle="IMAGE_RESOURCES" />" />
 						</html:link>
 					</logic:notEqual>
 				</logic:equal> <logic:notEqual name="order" value="numberOfMembers">
@@ -244,7 +244,7 @@ function invertSelect(){
 						titleKey="label.orderByQuantidadeExercicios">
 						<bean:message key="label.test.quantidadeExercicios" />
 					</html:link>
-					<img hspace="5" border="0" src="<%= request.getContextPath() %>/images/gray_square.gif" alt="" />
+					<img hspace="5" border="0" src="<%= request.getContextPath() %>/images/gray_square.gif" alt="<bean:message key="gray_square" bundle="IMAGE_RESOURCES" />" />
 				</logic:notEqual></div>
 				</td>
 			</tr>

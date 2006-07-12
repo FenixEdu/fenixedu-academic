@@ -166,10 +166,10 @@
 										<logic:notEmpty name="testQuestion" property="response.isCorrect">
 											<logic:notEmpty name="testQuestion" property='<%="response.isCorrect["+responseIndex+"]"%>'>
 												<logic:equal name="testQuestion" property='<%="response.isCorrect["+responseIndex+"]"%>' value="true">
-													</td><td><img src="<%= request.getContextPath() %>/images/correct.gif" alt="" />
+													</td><td><img src="<%= request.getContextPath() %>/images/correct.gif" alt="<bean:message key="correct" bundle="IMAGE_RESOURCES" />" />
 												</logic:equal>
 												<logic:notEqual name="testQuestion" property='<%="response.isCorrect["+responseIndex+"]"%>' value="true">
-													</td><td><img src="<%= request.getContextPath() %>/images/incorrect.gif" alt="" />
+													</td><td><img src="<%= request.getContextPath() %>/images/incorrect.gif" alt="<bean:message key="incorrect" bundle="IMAGE_RESOURCES" />" />
 												</logic:notEqual>
 											</logic:notEmpty>
 										</logic:notEmpty>	
@@ -192,19 +192,19 @@
 														<bean:define id="questionValue" value='<%="question"+ optionOrder%>'/>
 															<%if(((Integer)cardinality).intValue()==1 ){ %>  <%--CardinalityType.SINGLE--%>
 																<logic:equal name="isResponsed" value="true">
-																	<img src="<%= request.getContextPath() %>/images/radioButtonSelected.gif" alt="" />
+																	<img src="<%= request.getContextPath() %>/images/radioButtonSelected.gif" alt="<bean:message key="radioButtonSelected" bundle="IMAGE_RESOURCES" />" />
 																	<html:hidden property="<%=questionValue%>" value="<%= indexOption.toString() %>"/>
 																</logic:equal>
 																<logic:notEqual name="isResponsed" value="true">
-																	<img src="<%= request.getContextPath() %>/images/radioButtonUnselected.gif" alt="" />
+																	<img src="<%= request.getContextPath() %>/images/radioButtonUnselected.gif" alt="<bean:message key="radioButtonUnselected" bundle="IMAGE_RESOURCES" />" />
 																</logic:notEqual>
 															<%}else if(((Integer)cardinality).intValue()==2 ){ %>  <%--CardinalityType.MULTIPLE--%>
 																<logic:equal name="isResponsed" value="true">
-																	<img src="<%= request.getContextPath() %>/images/checkButtonSelected.gif" alt="" />
+																	<img src="<%= request.getContextPath() %>/images/checkButtonSelected.gif" alt="<bean:message key="checkButtonSelected" bundle="IMAGE_RESOURCES" />" />
 																	<html:hidden property="<%=questionValue%>" value="<%= indexOption.toString() %>"/>
 																</logic:equal>
 																<logic:notEqual name="isResponsed" value="true">
-																	<img src="<%= request.getContextPath() %>/images/checkButtonUnselected.gif" alt="" />
+																	<img src="<%= request.getContextPath() %>/images/checkButtonUnselected.gif" alt="<bean:message key="checkButtonUnselected" bundle="IMAGE_RESOURCES" />" />
 																</logic:notEqual>
 															<%}%>
 															<bean:define id="button" value="false"/>
@@ -351,10 +351,10 @@
 									<logic:notEmpty name="testQuestion" property="response.isCorrect">
 										<logic:notEmpty name="testQuestion" property='<%="response.isCorrect["+responseIndex+"]"%>'>
 											<logic:equal name="testQuestion" property='<%="response.isCorrect["+responseIndex+"]"%>' value="true">
-												</td><td><img src="<%= request.getContextPath() %>/images/correct.gif" alt="" />
+												</td><td><img src="<%= request.getContextPath() %>/images/correct.gif" alt="<bean:message key="correct" bundle="IMAGE_RESOURCES" />" />
 											</logic:equal>
 											<logic:notEqual name="testQuestion" property='<%="response.isCorrect["+responseIndex+"]"%>' value="true">
-												</td><td><img src="<%= request.getContextPath() %>/images/incorrect.gif" alt="" />
+												</td><td><img src="<%= request.getContextPath() %>/images/incorrect.gif" alt="<bean:message key="incorrect" bundle="IMAGE_RESOURCES" />" />
 											</logic:notEqual>
 										</logic:notEmpty>
 									</logic:notEmpty>
@@ -371,10 +371,10 @@
 						<logic:notEmpty name="testQuestion" property="response.response">
 							<logic:notEmpty name="testQuestion" property="response.isCorrect">
 								<logic:equal name="testQuestion" property='<%="response.isCorrect"%>' value="true">
-									<img src="<%= request.getContextPath() %>/images/correct.gif" alt="" />
+									<img src="<%= request.getContextPath() %>/images/correct.gif" alt="<bean:message key="correct" bundle="IMAGE_RESOURCES" />" />
 								</logic:equal>
 								<logic:notEqual name="testQuestion" property='<%="response.isCorrect"%>' value="true">
-									<img src="<%= request.getContextPath() %>/images/incorrect.gif" alt="" />
+									<img src="<%= request.getContextPath() %>/images/incorrect.gif" alt="<bean:message key="incorrect" bundle="IMAGE_RESOURCES" />" />
 								</logic:notEqual>
 							</logic:notEmpty>
 						</logic:notEmpty>
