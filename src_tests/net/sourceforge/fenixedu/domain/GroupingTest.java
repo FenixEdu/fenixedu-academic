@@ -342,7 +342,7 @@ public class GroupingTest extends DomainTestBase {
 
     private void setupCreateStudentAndDeleteGrouping() {
 
-        shift2 = new Shift();
+//        shift2 = new Shift();
 
         grouping = new Grouping();
         grouping.setIdInternal(0);
@@ -467,7 +467,7 @@ public class GroupingTest extends DomainTestBase {
         otherExportGrouping.setGrouping(otherGrouping);
         otherExportGrouping.setProposalState(new ProposalState(ProposalState.ACEITE));
 
-        shift = new Shift();
+//        shift = new Shift();
         shift.setIdInternal(1);
 
         StudentGroup studentGroup1 = new StudentGroup();

@@ -13,9 +13,9 @@ public class ShiftTest extends DomainTestBase {
     protected void setUp() throws Exception {
         super.setUp();
 
-        schoolClass = new SchoolClass();
-        schoolClass.setIdInternal(0);        
-        shift = new Shift();
+//        schoolClass = new SchoolClass();
+//        schoolClass.setIdInternal(0);        
+//        shift = new Shift();
         shift.setIdInternal(0);        
     }
 

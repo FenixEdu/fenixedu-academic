@@ -47,38 +47,38 @@ public class TeacherTest extends DomainTestBase {
         teacher = new Teacher();
         teacher.setPerson(person1);
         
-        publication = new Publication();
-        publication.addResultAuthorships(new Authorship(publication, person1, 1));
-        
-        publication2 = new Publication();
-        publication2.addResultAuthorships(new Authorship(publication2, person1, 1));
-        
-        publication3 = new Publication();
-        publication3.addResultAuthorships(new Authorship(publication3, person1, 1));
-        
-        publication4 = new Publication();
-        publication4.addResultAuthorships(new Authorship(publication4, person1, 1));
-        
-        publication5 = new Publication();
-        publication5.addResultAuthorships(new Authorship(publication5, person1, 1));
-        
-        publication6 = new Publication();
-        publication6.addResultAuthorships(new Authorship(publication6, person1, 1));
-        
-        publication7 = new Publication();
-        publication7.addResultAuthorships(new Authorship(publication7, person1, 1));
-        
-        teacher2 = new Teacher();
-        teacher2.setPerson(person2);
-        
-        publication8 = new Publication();
-        publication8.addResultAuthorships(new Authorship(publication8, person2, 1));
-        
-        publication9 = new Publication();
-        publication9.addResultAuthorships(new Authorship(publication9, person2, 1));
-        
-        new PublicationTeacher(publication8, teacher2, PublicationArea.CIENTIFIC);
-        new PublicationTeacher(publication9, teacher2, PublicationArea.DIDATIC);
+//        publication = new Publication();
+//        publication.addResultAuthorships(new Authorship(publication, person1, 1));
+//        
+//        publication2 = new Publication();
+//        publication2.addResultAuthorships(new Authorship(publication2, person1, 1));
+//        
+//        publication3 = new Publication();
+//        publication3.addResultAuthorships(new Authorship(publication3, person1, 1));
+//        
+//        publication4 = new Publication();
+//        publication4.addResultAuthorships(new Authorship(publication4, person1, 1));
+//        
+//        publication5 = new Publication();
+//        publication5.addResultAuthorships(new Authorship(publication5, person1, 1));
+//        
+//        publication6 = new Publication();
+//        publication6.addResultAuthorships(new Authorship(publication6, person1, 1));
+//        
+//        publication7 = new Publication();
+//        publication7.addResultAuthorships(new Authorship(publication7, person1, 1));
+//        
+//        teacher2 = new Teacher();
+//        teacher2.setPerson(person2);
+//        
+//        publication8 = new Publication();
+//        publication8.addResultAuthorships(new Authorship(publication8, person2, 1));
+//        
+//        publication9 = new Publication();
+//        publication9.addResultAuthorships(new Authorship(publication9, person2, 1));
+//        
+//        new PublicationTeacher(publication8, teacher2, PublicationArea.CIENTIFIC);
+//        new PublicationTeacher(publication9, teacher2, PublicationArea.DIDATIC);
     }
 
     public void testUpdateResponsabilitiesFor() {

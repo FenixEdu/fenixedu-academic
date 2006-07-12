@@ -47,10 +47,10 @@ public class InquiriesTest extends DomainTestBase {
 		super.setUp();
 		
 		executionCourse = new ExecutionCourse();
-		executionDegreeStudent = new ExecutionDegree();
-		executionDegreeCourse = new ExecutionDegree();
-		executionPeriod = new ExecutionPeriod();
-		schoolClass = new SchoolClass();
+//		executionDegreeStudent = new ExecutionDegree();
+//		executionDegreeCourse = new ExecutionDegree();
+//		executionPeriod = new ExecutionPeriod();
+//		schoolClass = new SchoolClass();
 		
 		infoInquiriesCourse = new InfoInquiriesCourse();
 		

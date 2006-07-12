@@ -52,56 +52,56 @@ public class DegreeTest extends DomainTestBase {
 		DegreeCurricularPlan dcp1 = new DegreeCurricularPlan();
 		degreeNotToDelete.addDegreeCurricularPlans(dcp1);
 		
-		DegreeInfo di1 = new DegreeInfo();
-		degreeToDelete.addDegreeInfos(di1);
-		
-		DegreeInfo di2 = new DegreeInfo();
-		degreeNotToDelete.addDegreeInfos(di2);
-		
-		ExecutionPeriod ep1 = new ExecutionPeriod();
-		ExecutionYear ey1 = new ExecutionYear();
-		
-		Student student1 = new Student();
-		Teacher teacher1 = new Teacher();
-		Delegate d1 = new Delegate();
-		d1.setStudent(student1);
-		d1.setExecutionYear(ey1);
-		degreeToDelete.addDelegate(d1);
-		delegatesToDelete.add(d1);
-		
-		Delegate d2 = new Delegate();
-		d2.setStudent(student1);
-		d2.setExecutionYear(ey1);
-		degreeNotToDelete.addDelegate(d2);
-		
-		OldInquiriesCoursesRes oicr1 = new OldInquiriesCoursesRes();
-		oicr1.setExecutionPeriod(ep1);
-		
-		OldInquiriesCoursesRes oicr2 = new OldInquiriesCoursesRes();
-		oicr2.setExecutionPeriod(ep1);
-		degreeToDelete.addAssociatedOldInquiriesCoursesRes(oicr1);
-		oldInquiriesCoursesResToDelete.add(oicr1);
-		degreeNotToDelete.addAssociatedOldInquiriesCoursesRes(oicr2);
-		
-		OldInquiriesTeachersRes oitr1 = new OldInquiriesTeachersRes();
-		oitr1.setExecutionPeriod(ep1);
-		oitr1.setTeacher(teacher1);
-		
-		OldInquiriesTeachersRes oitr2 = new OldInquiriesTeachersRes();
-		oitr2.setExecutionPeriod(ep1);
-		oitr2.setTeacher(teacher1);
-		degreeToDelete.addAssociatedOldInquiriesTeachersRes(oitr1);
-		oldInquiriesTeachersResToDelete.add(oitr1);
-		degreeNotToDelete.addAssociatedOldInquiriesTeachersRes(oitr2);
-		
-		OldInquiriesSummary ois1 = new OldInquiriesSummary();
-		ois1.setExecutionPeriod(ep1);
-		
-		OldInquiriesSummary ois2 = new OldInquiriesSummary();
-		ois2.setExecutionPeriod(ep1);
-		degreeToDelete.addAssociatedOldInquiriesSummaries(ois1);
-		oldInquiriesSummaryToDelete.add(ois1);
-		degreeNotToDelete.addAssociatedOldInquiriesSummaries(ois2);
+//		DegreeInfo di1 = new DegreeInfo();
+//		degreeToDelete.addDegreeInfos(di1);
+//		
+//		DegreeInfo di2 = new DegreeInfo();
+//		degreeNotToDelete.addDegreeInfos(di2);
+//		
+//		ExecutionPeriod ep1 = new ExecutionPeriod();
+//		ExecutionYear ey1 = new ExecutionYear();
+//		
+//		Student student1 = new Student();
+//		Teacher teacher1 = new Teacher();
+//		Delegate d1 = new Delegate();
+//		d1.setStudent(student1);
+//		d1.setExecutionYear(ey1);
+//		degreeToDelete.addDelegate(d1);
+//		delegatesToDelete.add(d1);
+//		
+//		Delegate d2 = new Delegate();
+//		d2.setStudent(student1);
+//		d2.setExecutionYear(ey1);
+//		degreeNotToDelete.addDelegate(d2);
+//		
+//		OldInquiriesCoursesRes oicr1 = new OldInquiriesCoursesRes();
+//		oicr1.setExecutionPeriod(ep1);
+//		
+//		OldInquiriesCoursesRes oicr2 = new OldInquiriesCoursesRes();
+//		oicr2.setExecutionPeriod(ep1);
+//		degreeToDelete.addAssociatedOldInquiriesCoursesRes(oicr1);
+//		oldInquiriesCoursesResToDelete.add(oicr1);
+//		degreeNotToDelete.addAssociatedOldInquiriesCoursesRes(oicr2);
+//		
+//		OldInquiriesTeachersRes oitr1 = new OldInquiriesTeachersRes();
+//		oitr1.setExecutionPeriod(ep1);
+//		oitr1.setTeacher(teacher1);
+//		
+//		OldInquiriesTeachersRes oitr2 = new OldInquiriesTeachersRes();
+//		oitr2.setExecutionPeriod(ep1);
+//		oitr2.setTeacher(teacher1);
+//		degreeToDelete.addAssociatedOldInquiriesTeachersRes(oitr1);
+//		oldInquiriesTeachersResToDelete.add(oitr1);
+//		degreeNotToDelete.addAssociatedOldInquiriesTeachersRes(oitr2);
+//		
+//		OldInquiriesSummary ois1 = new OldInquiriesSummary();
+//		ois1.setExecutionPeriod(ep1);
+//		
+//		OldInquiriesSummary ois2 = new OldInquiriesSummary();
+//		ois2.setExecutionPeriod(ep1);
+//		degreeToDelete.addAssociatedOldInquiriesSummaries(ois1);
+//		oldInquiriesSummaryToDelete.add(ois1);
+//		degreeNotToDelete.addAssociatedOldInquiriesSummaries(ois2);
 	}
 
 	private void setUpEdit() {

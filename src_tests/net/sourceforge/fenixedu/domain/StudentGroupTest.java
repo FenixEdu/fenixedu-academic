@@ -16,10 +16,10 @@ public class StudentGroupTest extends DomainTestBase {
     protected void setUp() throws Exception {
         super.setUp();
     
-        shift = new Shift();
-        shift.setIdInternal(0);
-        
-        shift2 = new Shift();
+//        shift = new Shift();
+//        shift.setIdInternal(0);
+//        
+//        shift2 = new Shift();
         shift2.setIdInternal(0);
         shift2.setTipo(ShiftType.LABORATORIAL);
         

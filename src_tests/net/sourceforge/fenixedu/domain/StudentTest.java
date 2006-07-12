@@ -24,7 +24,7 @@ public class StudentTest extends DomainTestBase {
 	private void setUpForNewStudentCase() {
 		person = new Person();
 		studentNumber = 49555;
-		studentKind = new StudentKind();
+//		studentKind = new StudentKind();
 		studentKind.setStudentType(StudentType.NORMAL);
 		studentState = new StudentState(StudentState.INSCRITO);
 		payedTuition = true;

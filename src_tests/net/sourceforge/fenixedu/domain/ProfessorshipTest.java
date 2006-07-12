@@ -37,7 +37,7 @@ public class ProfessorshipTest extends DomainTestBase {
         shiftProfessorship = new ShiftProfessorship();
         shiftProfessorship.setIdInternal(0); 
         
-        supportLesson = new SupportLesson();
+//        supportLesson = new SupportLesson();
         supportLesson.setIdInternal(0);        
     }
 

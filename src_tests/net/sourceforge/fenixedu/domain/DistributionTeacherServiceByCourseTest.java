@@ -43,176 +43,176 @@ public class DistributionTeacherServiceByCourseTest extends DomainTestBase {
         
 /* Create Theoretical Shift 1 */
 		
-		Shift shiftTeorica1 = new Shift();
-		shiftTeorica1.setIdInternal(0);
-		
-		shiftTeorica1.setTipo(ShiftType.TEORICA);
-		
-		Lesson lesson = new Lesson();
-			
-		Calendar beginLessonDate = Calendar.getInstance();
-		
-		beginLessonDate.set(2005, 10, 31, 10, 0);
-		
-		lesson.setInicio(beginLessonDate);
-		
-		beginLessonDate = Calendar.getInstance();
-		
-		beginLessonDate.set(2005, 10, 31, 11, 30);
-		
-		lesson.setFim(beginLessonDate);
-		
-		shiftTeorica1.addAssociatedLessons(lesson);
-		
-		/* Create Theoretical Shift 2 */		
-		
-		Shift shiftTeorica2 = new Shift();
-				
-		shiftTeorica2.setTipo(ShiftType.TEORICA);
-		
-		lesson = new Lesson();
-				
-		beginLessonDate = Calendar.getInstance();
-		
-		beginLessonDate.set(2005, 10, 31, 14, 0);
-		
-		lesson.setInicio(beginLessonDate);
-		
-		beginLessonDate = Calendar.getInstance();
-		
-		beginLessonDate.set(2005, 10, 31, 15, 30);
-		
-		lesson.setFim(beginLessonDate);
-		
-		shiftTeorica2.addAssociatedLessons(lesson);
-		
-		/* Create Pratical Shift 1 */
-		
-		Shift shiftPratica1 = new Shift();
-		
-		
-		shiftPratica1.setTipo(ShiftType.PRATICA);
-		
-		lesson = new Lesson();
-				
-		beginLessonDate = Calendar.getInstance();
-		
-		beginLessonDate.set(2005, 10, 31, 14, 0);
-		
-		lesson.setInicio(beginLessonDate);
-		
-		beginLessonDate = Calendar.getInstance();
-		
-		beginLessonDate.set(2005, 10, 31, 16, 0);
-		
-		lesson.setFim(beginLessonDate);
-		
-		shiftPratica1.addAssociatedLessons(lesson);
-		
-		/* Create Pratical Shift 2 */
-		Shift shiftPratica2 = new Shift();
-		
-		
-		shiftPratica2.setTipo(ShiftType.PRATICA);
-		
-		lesson = new Lesson();
-		
-		
-		beginLessonDate = Calendar.getInstance();
-		
-		beginLessonDate.set(2005, 10, 31, 9, 0);
-		
-		lesson.setInicio(beginLessonDate);
-		
-		beginLessonDate = Calendar.getInstance();
-		
-		beginLessonDate.set(2005, 10, 31, 11, 0);
-		
-		lesson.setFim(beginLessonDate);
-		
-		shiftPratica2.addAssociatedLessons(lesson);
-
-		/* Create Pratical Shift 3 */
-		
-		Shift shiftPratica3 = new Shift();
-		
-		
-		shiftPratica3.setTipo(ShiftType.PRATICA);
-		
-		lesson = new Lesson();
-		
-		
-		beginLessonDate = Calendar.getInstance();
-		
-		beginLessonDate.set(2005, 10, 31, 17, 30);
-		
-		lesson.setInicio(beginLessonDate);
-		
-		beginLessonDate = Calendar.getInstance();
-		
-		beginLessonDate.set(2005, 10, 31, 19, 30);
-		
-		lesson.setFim(beginLessonDate);
-		
-		shiftPratica3.addAssociatedLessons(lesson);
-
-		/* Create Laboratorial Shift 1 */
-		Shift shiftLaboratorio1 = new Shift();
-
-		
-		shiftLaboratorio1.setTipo(ShiftType.LABORATORIAL);
-		
-		lesson = new Lesson();
-		
-		
-		beginLessonDate = Calendar.getInstance();
-		
-		beginLessonDate.set(2005, 10, 31, 8, 0);
-		
-		lesson.setInicio(beginLessonDate);
-		
-		beginLessonDate = Calendar.getInstance();
-		
-		beginLessonDate.set(2005, 10, 31, 10, 0);
-		
-		lesson.setFim(beginLessonDate);
-		
-		shiftLaboratorio1.addAssociatedLessons(lesson);
-		
-		/* Create Laboratorial Shift 2 */	
-		Shift shiftLaboratorio2 = new Shift();
-		shiftLaboratorio2.setIdInternal(6);
-		
-		shiftLaboratorio2.setTipo(ShiftType.LABORATORIAL);
-		
-		lesson = new Lesson();
-		
-		
-		beginLessonDate = Calendar.getInstance();
-		
-		beginLessonDate.set(2005, 10, 31, 10, 0);
-		
-		lesson.setInicio(beginLessonDate);
-		
-		beginLessonDate = Calendar.getInstance();
-		
-		beginLessonDate.set(2005, 10, 31, 12, 0);
-		
-		lesson.setFim(beginLessonDate);
-		
-		shiftLaboratorio2.addAssociatedLessons(lesson);
-		
-		// Associate shifts to executionCourse
-		
-		executionCourse.addAssociatedShifts(shiftTeorica1);
-		executionCourse.addAssociatedShifts(shiftTeorica2);
-		executionCourse.addAssociatedShifts(shiftPratica1);
-		executionCourse.addAssociatedShifts(shiftPratica2);
-		executionCourse.addAssociatedShifts(shiftPratica3);
-		executionCourse.addAssociatedShifts(shiftLaboratorio1);
-		executionCourse.addAssociatedShifts(shiftLaboratorio2);
-        
-        
+//		Shift shiftTeorica1 = new Shift();
+//		shiftTeorica1.setIdInternal(0);
+//		
+//		shiftTeorica1.setTipo(ShiftType.TEORICA);
+//		
+//		Lesson lesson = new Lesson();
+//			
+//		Calendar beginLessonDate = Calendar.getInstance();
+//		
+//		beginLessonDate.set(2005, 10, 31, 10, 0);
+//		
+//		lesson.setInicio(beginLessonDate);
+//		
+//		beginLessonDate = Calendar.getInstance();
+//		
+//		beginLessonDate.set(2005, 10, 31, 11, 30);
+//		
+//		lesson.setFim(beginLessonDate);
+//		
+//		shiftTeorica1.addAssociatedLessons(lesson);
+//		
+//		/* Create Theoretical Shift 2 */		
+//		
+//		Shift shiftTeorica2 = new Shift();
+//				
+//		shiftTeorica2.setTipo(ShiftType.TEORICA);
+//		
+//		lesson = new Lesson();
+//				
+//		beginLessonDate = Calendar.getInstance();
+//		
+//		beginLessonDate.set(2005, 10, 31, 14, 0);
+//		
+//		lesson.setInicio(beginLessonDate);
+//		
+//		beginLessonDate = Calendar.getInstance();
+//		
+//		beginLessonDate.set(2005, 10, 31, 15, 30);
+//		
+//		lesson.setFim(beginLessonDate);
+//		
+//		shiftTeorica2.addAssociatedLessons(lesson);
+//		
+//		/* Create Pratical Shift 1 */
+//		
+//		Shift shiftPratica1 = new Shift();
+//		
+//		
+//		shiftPratica1.setTipo(ShiftType.PRATICA);
+//		
+//		lesson = new Lesson();
+//				
+//		beginLessonDate = Calendar.getInstance();
+//		
+//		beginLessonDate.set(2005, 10, 31, 14, 0);
+//		
+//		lesson.setInicio(beginLessonDate);
+//		
+//		beginLessonDate = Calendar.getInstance();
+//		
+//		beginLessonDate.set(2005, 10, 31, 16, 0);
+//		
+//		lesson.setFim(beginLessonDate);
+//		
+//		shiftPratica1.addAssociatedLessons(lesson);
+//		
+//		/* Create Pratical Shift 2 */
+//		Shift shiftPratica2 = new Shift();
+//		
+//		
+//		shiftPratica2.setTipo(ShiftType.PRATICA);
+//		
+//		lesson = new Lesson();
+//		
+//		
+//		beginLessonDate = Calendar.getInstance();
+//		
+//		beginLessonDate.set(2005, 10, 31, 9, 0);
+//		
+//		lesson.setInicio(beginLessonDate);
+//		
+//		beginLessonDate = Calendar.getInstance();
+//		
+//		beginLessonDate.set(2005, 10, 31, 11, 0);
+//		
+//		lesson.setFim(beginLessonDate);
+//		
+//		shiftPratica2.addAssociatedLessons(lesson);
+//
+//		/* Create Pratical Shift 3 */
+//		
+//		Shift shiftPratica3 = new Shift();
+//		
+//		
+//		shiftPratica3.setTipo(ShiftType.PRATICA);
+//		
+//		lesson = new Lesson();
+//		
+//		
+//		beginLessonDate = Calendar.getInstance();
+//		
+//		beginLessonDate.set(2005, 10, 31, 17, 30);
+//		
+//		lesson.setInicio(beginLessonDate);
+//		
+//		beginLessonDate = Calendar.getInstance();
+//		
+//		beginLessonDate.set(2005, 10, 31, 19, 30);
+//		
+//		lesson.setFim(beginLessonDate);
+//		
+//		shiftPratica3.addAssociatedLessons(lesson);
+//
+//		/* Create Laboratorial Shift 1 */
+//		Shift shiftLaboratorio1 = new Shift();
+//
+//		
+//		shiftLaboratorio1.setTipo(ShiftType.LABORATORIAL);
+//		
+//		lesson = new Lesson();
+//		
+//		
+//		beginLessonDate = Calendar.getInstance();
+//		
+//		beginLessonDate.set(2005, 10, 31, 8, 0);
+//		
+//		lesson.setInicio(beginLessonDate);
+//		
+//		beginLessonDate = Calendar.getInstance();
+//		
+//		beginLessonDate.set(2005, 10, 31, 10, 0);
+//		
+//		lesson.setFim(beginLessonDate);
+//		
+//		shiftLaboratorio1.addAssociatedLessons(lesson);
+//		
+//		/* Create Laboratorial Shift 2 */	
+//		Shift shiftLaboratorio2 = new Shift();
+//		shiftLaboratorio2.setIdInternal(6);
+//		
+//		shiftLaboratorio2.setTipo(ShiftType.LABORATORIAL);
+//		
+//		lesson = new Lesson();
+//		
+//		
+//		beginLessonDate = Calendar.getInstance();
+//		
+//		beginLessonDate.set(2005, 10, 31, 10, 0);
+//		
+//		lesson.setInicio(beginLessonDate);
+//		
+//		beginLessonDate = Calendar.getInstance();
+//		
+//		beginLessonDate.set(2005, 10, 31, 12, 0);
+//		
+//		lesson.setFim(beginLessonDate);
+//		
+//		shiftLaboratorio2.addAssociatedLessons(lesson);
+//		
+//		// Associate shifts to executionCourse
+//		
+//		executionCourse.addAssociatedShifts(shiftTeorica1);
+//		executionCourse.addAssociatedShifts(shiftTeorica2);
+//		executionCourse.addAssociatedShifts(shiftPratica1);
+//		executionCourse.addAssociatedShifts(shiftPratica2);
+//		executionCourse.addAssociatedShifts(shiftPratica3);
+//		executionCourse.addAssociatedShifts(shiftLaboratorio1);
+//		executionCourse.addAssociatedShifts(shiftLaboratorio2);
+//        
+//        
     }
 
     

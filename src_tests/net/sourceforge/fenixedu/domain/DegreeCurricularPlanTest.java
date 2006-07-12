@@ -98,10 +98,10 @@ public class DegreeCurricularPlanTest extends DomainTestBase {
 		curricularCourse1.setDegreeCurricularPlan(dcpWithAll);
 		curricularCourse2.setDegreeCurricularPlan(dcpWithCurricularCourses);
 		
-		ExecutionDegree executionDegree1 = new ExecutionDegree();
-		ExecutionDegree executionDegree2 = new ExecutionDegree();
-		executionDegree1.setDegreeCurricularPlan(dcpWithAll);
-		executionDegree2.setDegreeCurricularPlan(dcpWithExecutionDegrees);
+//		ExecutionDegree executionDegree1 = new ExecutionDegree();
+//		ExecutionDegree executionDegree2 = new ExecutionDegree();
+//		executionDegree1.setDegreeCurricularPlan(dcpWithAll);
+//		executionDegree2.setDegreeCurricularPlan(dcpWithExecutionDegrees);
 		
 		Branch branch1 = new Branch();
 		Branch branch2 = new Branch();
