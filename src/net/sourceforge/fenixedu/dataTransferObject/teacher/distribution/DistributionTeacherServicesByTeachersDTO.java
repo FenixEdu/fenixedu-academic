@@ -237,22 +237,22 @@ public class DistributionTeacherServicesByTeachersDTO extends DataTranferObject 
 			return teacherNumber;
 		}
 		
-		private String getFormattedValue(Double value){
+		private String getFormattedValue(Double value, int fractionDigitsNumber){
 			StringBuilder sb = new StringBuilder();
 			Formatter formatter = new Formatter(sb);
 			
-			formatter.format("%.1f", value);
+			formatter.format("%." + fractionDigitsNumber + "f", value);
 			return sb.toString();
 		}
 		
 		public String getFormattedTeacherSpentCredits() {
 
-			return getFormattedValue(getTeacherSpentCredits());
+			return getFormattedValue(getTeacherSpentCredits(), 1);
 		}
 		
 		public String getFormattedTeacherAccumulatedCredits() {
 
-			return getFormattedValue(getAccumulatedCredits());
+			return getFormattedValue(getAccumulatedCredits(), 2);
 		}
 		
 		public Integer getTotalLecturedHours() {

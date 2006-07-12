@@ -56,14 +56,13 @@ public class ReadTeacherServiceDistributionByTeachers extends Service {
 			for (Teacher teacher : teachers) {
 				if(teacher.getCategory() == null){
 					continue;
-				}
-				
-				Double accumulatedCredits = teacher.getBalanceOfCreditsUntil(endPeriod); 
+				} 
 				
 				if(returnDTO.isTeacherPresent(teacher.getIdInternal())){
 					returnDTO.addHoursToTeacher(teacher.getIdInternal(), teacher.getHoursByCategory(executionPeriodEntry));
 					returnDTO.addCreditsToTeacher(teacher.getIdInternal(), teacher.getServiceExemptionCredits(executionPeriodEntry) + teacher.getManagementFunctionsCredits(executionPeriodEntry));					
 				} else {
+					Double accumulatedCredits = teacher.getBalanceOfCreditsUntil(endPeriod);
 					returnDTO.addTeacher(teacher.getIdInternal(), teacher.getTeacherNumber(), teacher
 							.getCategory().getCode(), teacher.getPerson().getNome(), teacher.getHoursByCategory(executionPeriodEntry), 
 							teacher.getServiceExemptionCredits(executionPeriodEntry) + teacher.getManagementFunctionsCredits(executionPeriodEntry), accumulatedCredits);
