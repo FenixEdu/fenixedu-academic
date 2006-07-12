@@ -32,6 +32,7 @@ import org.joda.time.YearMonthDay;
 public class Unit extends Unit_Base {
 
 	public static final Comparator UNIT_COMPARATOR_BY_NAME = new BeanComparator("name", Collator.getInstance());
+	
 
     public Unit() {
         super();
@@ -106,6 +107,21 @@ public class Unit extends Unit_Base {
             }
         }
         return allActiveSubUnits;
+    }
+    
+    public List<Unit> getActiveOrganizationalStructureSubUnits(){
+    	List<Unit> allUnits = new ArrayList<Unit>();
+    	YearMonthDay current = new YearMonthDay();
+    	for (Accountability accountability : getChilds()) {
+    		if (accountability.getChildParty() instanceof Unit) {
+				Unit subUnit = (Unit) accountability.getChildParty();
+				if(accountability.getAccountabilityType().getType().equals(AccountabilityTypeEnum.ORGANIZATIONAL_STRUCTURE)
+						&& subUnit.isActive(current)){
+					allUnits.add(subUnit);
+				}					
+			}            
+    	}
+    	return allUnits;
     }
 
     public List<Unit> getAllInactiveSubUnits(YearMonthDay currentDate) {
