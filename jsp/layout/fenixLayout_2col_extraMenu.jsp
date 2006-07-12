@@ -23,6 +23,7 @@
 </div>
 <bean:define id="supportLink" type="java.lang.String">mailto:<bean:message key="suporte.mail" bundle="GLOBAL_RESOURCES"/></bean:define>
 <div id="hdr-nav"><a href="<%= supportLink %>"><img alt="Suporte" src="<%= request.getContextPath() %>/images/sup-bar.gif" /></a><a href="<%= request.getContextPath() %>/logoff.do"><img alt="Logout" src="<%= request.getContextPath() %>/images/logoff-bar.gif" /></a></div>
+<div></div> <%-- hack to make "hdr-nav" appear in IE --%>
 <!-- End Header -->
 <!-- NavGeral -->
 <tiles:insert attribute="navGeral" />
