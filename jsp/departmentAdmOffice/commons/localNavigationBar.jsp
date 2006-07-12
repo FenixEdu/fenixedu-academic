@@ -4,17 +4,12 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>	
 
-<!-- Import new CSS for this section: #navlateral  -->
-<style>@import url(<%= request.getContextPath() %>/CSS/navlateralnew.css);</style>
-
 <logic:present role="DEPARTMENT_ADMINISTRATIVE_OFFICE">
 	<ul>
 		<li class="navheader">
-			<strong><bean:message key="link.group.view.title"/></strong>
+			<bean:message key="link.group.view.title"/>
 		</li>
-	</ul>
-	
-	<ul>
+
 		<li>
 			<html:link page="/chooseExecutionYearAndDegreeCurricularPlan.do?method=prepare">
 				<bean:message key="link.curriculumHistoric" bundle="CURRICULUM_HISTORIC_RESOURCES"/>
@@ -28,13 +23,11 @@
 	</ul>
 
 	<logic:present role="DEPARTMENT_CREDITS_MANAGER">
-		<ul>
+
 			<li class="navheader">
 				<strong><bean:message key="link.group.teacher.title"/></strong>
 			</li>
-		</ul>
-		
-		<ul>
+
 			<li>
 				<html:link page="/teacherSearchForExecutionCourseAssociation.do?method=searchForm&amp;page=0">
 					<bean:message key="link.teacherExecutionCourseAssociation"/>
@@ -68,24 +61,20 @@
 		</ul>
 	</logic:present>
 
-	<ul>
 		<li class="navheader">
 			<strong><bean:message key="link.group.managementGroups.title"/></strong>
 		</li>
-	</ul>
-	<ul>
+
 		<li>
 			<html:link page="/managementGroups/competenceCoursesManagementGroup.faces">
 				<bean:message key="link.competenceCoursesManagementGroup"/>
 			</html:link>
 		</li>
-	</ul>
-	<ul>
+
 		<li class="navheader">
 			<strong><bean:message key="title.final.degree.works"/></strong>
 		</li>
-	</ul>
-	<ul>
+
        	<li>
         	<html:link page="/manageFinalDegreeWork.do?method=showChooseExecutionDegreeFormForDepartment">
 				<bean:message key="link.manage.final.degree.works"/>

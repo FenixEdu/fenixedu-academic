@@ -1,5 +1,4 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %><%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %><%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
-<style>@import url(<%= request.getContextPath() %>/CSS/navlateralnew.css);</style>
 
 <ul>
 <%--

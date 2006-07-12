@@ -1,8 +1,6 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 
-<style>@import url(<%= request.getContextPath() %>/CSS/navlateralnew.css);</style> <!-- Import new CSS for this section: #navlateral  -->
-	
 <ul>
   <li>
   	<html:link href="<%= request.getContextPath() + "/teacher/showProfessorships.do?method=list" %>">

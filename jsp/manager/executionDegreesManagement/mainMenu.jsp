@@ -1,13 +1,13 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
-<style>@import url(<%= request.getContextPath() %>/CSS/navlateralnew.css);</style>
 
 <center>
 	<img alt=""  src="<%= request.getContextPath() %>/images/logo-fenix.gif" alt="<bean:message key="logo-fenix" bundle="IMAGE_RESOURCES" />" width="100" height="100"/>
 </center>
 
+<br/>
+	
 <ul>
-	<br/>
 	<li>
 		<html:link module="/manager" page="/index.do">
 			<bean:message bundle="MANAGER_RESOURCES" key="label.manager.mainPage" />

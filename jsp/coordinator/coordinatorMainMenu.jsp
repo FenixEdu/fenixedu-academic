@@ -6,9 +6,6 @@
 <%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree" %>
 <%@ page import="net.sourceforge.fenixedu.domain.degree.DegreeType" %>
 
-<!-- Import new CSS for this section: #navlateral  -->
-<style>@import url(<%= request.getContextPath() %>/CSS/navlateralnew.css);</style>
-
 <logic:present name="<%= SessionConstants.MASTER_DEGREE %>"  >
 	<bean:define id="infoExecutionDegree" name="<%= SessionConstants.MASTER_DEGREE %>" scope="session" type="InfoExecutionDegree" />
 	<bean:define id="infoDegreeCurricularPlan" name="infoExecutionDegree" property="infoDegreeCurricularPlan" />
@@ -205,10 +202,7 @@
 					    <bean:message key="link.weekly.work.load"/>
 					</html:link>			
 				</li>
-			</logic:notEqual> 
-
+			</logic:notEqual>
 		</logic:equal>
-		
 	</ul>
-	
 </logic:present>

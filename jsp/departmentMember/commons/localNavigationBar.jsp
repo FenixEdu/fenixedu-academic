@@ -4,12 +4,7 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>	
 
-
-<!-- Import new CSS for this section: #navlateral  -->
-<style>@import url(<%= request.getContextPath() %>/CSS/navlateralnew.css);</style>
-
 <logic:present role="DEPARTMENT_MEMBER">
-	
 	<!-- Temporary solution (until we make expectations available for all departments) DEI Code = 28 -->
 	<ul>
 		<li>
@@ -50,7 +45,6 @@
 		  	</html:link>  
 		</li> 				
 		</logic:equal>
-		<br/>
 	</ul>
 	
 	<br />

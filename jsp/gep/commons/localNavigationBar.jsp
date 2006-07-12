@@ -3,13 +3,10 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 
-<style>@import url(<%= request.getContextPath() %>/CSS/navlateralnew.css);</style> <!-- Import new CSS for this section: #navlateral  -->
-
 <ul>
 	<li class="navheader">
 		<%-- POR NO RESOURCES --%>
 		<bean:message key="label.gep.portal.tilte"  bundle="GEP_RESOURCES" />
-		
 	</li>
 	<li>
 		<html:link page="/searchCoursesInformation.do?method=doBeforeSearch">

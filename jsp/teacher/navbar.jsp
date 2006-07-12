@@ -4,7 +4,6 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
 
-<style>@import url(<%= request.getContextPath() %>/CSS/navlateralnew.css);</style> <!-- Import new CSS for this section: #navlateral  -->
 <logic:present name="siteView">
 	<bean:define id="component" name="siteView" property="commonComponent" />
 	<bean:define id="executionCourse" name="component" property="executionCourse" />

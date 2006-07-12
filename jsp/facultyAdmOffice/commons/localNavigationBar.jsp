@@ -3,12 +3,8 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 
-<!-- Import new CSS for this section: #navlateral  -->
-<style>@import url(<%= request.getContextPath() %>/CSS/navlateralnew.css);</style>
-
 <logic:present role="GRANT_OWNER_MANAGER">
 	<%-- GRANT OWNER MANAGEMENT APPLICATIONS  --%>
-	
 	<ul>
 		<li class="navheader"><bean:message key="link.group.grantsManagement.title"/></li>
 		<li>

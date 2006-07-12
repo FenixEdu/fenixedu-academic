@@ -3,10 +3,6 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 
-
-<!-- Import new CSS for this section: #navlateral  -->
-<style>@import url(<%= request.getContextPath() %>/CSS/navlateralnew.css);</style>
-
 <logic:present role="RESEARCHER">
 	<ul>
 		<li>

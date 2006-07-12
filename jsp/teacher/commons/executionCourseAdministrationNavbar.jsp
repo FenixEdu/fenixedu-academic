@@ -10,7 +10,6 @@
 	</logic:present>
 </logic:notPresent>
 
-<style>@import url(<%= request.getContextPath() %>/CSS/navlateralnew.css);</style>
 <logic:present name="executionCourse">
 	<ul>
 		<li>

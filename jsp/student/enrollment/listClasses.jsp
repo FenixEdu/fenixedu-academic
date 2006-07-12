@@ -3,7 +3,6 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 
-<style>@import url(<%= request.getContextPath() + "/CSS/navlateralnew.css" %>);</style> <!-- Import new CSS for this section: #navlateral  -->
 <logic:present name="executionCourseID">
 <ul>
 	<li class="navheader">Visualizar:</li>

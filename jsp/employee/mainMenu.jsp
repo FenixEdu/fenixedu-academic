@@ -1,7 +1,6 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
-<style>@import url(<%= request.getContextPath() %>/CSS/navlateralnew.css);</style>
-<!-- Import new CSS for this section: #navlateral  -->
+
 <%--
 <ul>
 	<li class="navheader"><bean:message key="title.assiduousness"  /></li>
@@ -23,4 +22,4 @@
 		<bean:message key="link.justifications" />
 	</html:link></li>
 </ul>
-	--%>
+--%>
