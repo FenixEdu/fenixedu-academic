@@ -3,8 +3,8 @@
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
 <!-- NOTA: Não foram incluidas tags do beans tipo <bean:message key="title.listClasses"/> -->
 
-<p><strong>&raquo; Gest&atilde;o de Turmas</strong></p>
 <ul>
+  <li class="navheader">Gest&atilde;o de Turmas</li>
   <li>
   	<html:link page="<%= "/ClassManagerDA.do?method=createClass&amp;"
   							+ SessionConstants.EXECUTION_PERIOD_OID
@@ -37,10 +37,7 @@
   		Listar turmas
   	</html:link>
   </li>
-</ul>
-
-<p><strong>&raquo; Gest&atilde;o de Turnos</strong></p>
-<ul>
+  <li class="navheader">Gest&atilde;o de Turnos</li>
   <li>
   	<html:link page="<%= "/prepararCriarTurno.do?"
   							+ SessionConstants.EXECUTION_PERIOD_OID
@@ -73,10 +70,7 @@
   		Listar turnos por disciplina
   	</html:link>
   </li>
-</ul>
-
-<p><strong>&raquo; Gest&atilde;o de Aulas</strong></p>
-<ul>
+  <li class="navheader">Gest&atilde;o de Aulas</li>
   <li>
   	<html:link page="<%= "/prepararAula.do?"
   							+ SessionConstants.EXECUTION_PERIOD_OID

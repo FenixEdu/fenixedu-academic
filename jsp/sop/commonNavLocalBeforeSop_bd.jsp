@@ -4,7 +4,7 @@
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
 
 <ul>
-  <li class="navheader">&raquo; Gest&atilde;o de Horários</li>
+  <li class="navheader">Gest&atilde;o de Horários</li>
   <li>
   	<html:link page="<%= "/chooseContext.do?method=prepare&amp;"
   							+ SessionConstants.EXECUTION_PERIOD_OID
@@ -13,7 +13,7 @@
   		<bean:message key="link.schedules.chooseContext"/>
   	</html:link>
   </li>
-  <li class="navheader">&raquo; Listagens de Horários</li>
+  <li class="navheader">Listagens de Horários</li>
   <li>
   	<html:link page="<%= "/viewAllClassesSchedulesDA.do?method=choose&amp;"
   							+ SessionConstants.EXECUTION_PERIOD_OID

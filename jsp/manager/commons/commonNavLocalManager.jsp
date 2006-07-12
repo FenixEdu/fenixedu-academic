@@ -26,7 +26,7 @@
 		Envio de E-mails
 	</html:link>
 </li>
-<br />
+
 <li class="navheader"><bean:message bundle="MANAGER_RESOURCES" key="title.manager.organizationalStructureManagement"/></li>
 <li> 
 	<html:link module="/manager" page="/organizationalStructureManagament/listAllUnits.faces">
@@ -39,7 +39,6 @@
 	</html:link>
 </li>
 
-<br />
 <li class="navheader">Gestão da Estrutura de Ensino</li>
 <li> 
 	<html:link module="/manager" module="/manager" page="/readDegrees.do">
@@ -67,7 +66,6 @@
   	</html:link>  
 </li>
 
-<br />
 <li class="navheader">Gestão de Execuções</li>
 <li> 
 	<html:link module="/manager" module="/manager" page="/manageExecutionPeriods.do?method=prepare">
@@ -90,7 +88,6 @@
 	</html:link>
 </li>
 
-<br />
 <li class="navheader">Gestão de Pessoal</li>
 <li> 
 	<html:link module="/manager" module="/manager" page="/teachersManagement.do?method=firstPage">
@@ -115,7 +112,6 @@
 	</html:link>
 </li>
 
-<br />
 <li class="navheader"><bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="label.manageFiles"/></li>
 <li>
 	<html:link module="/manager" module="/manager" page="/generateFiles.do?method=firstPage">
@@ -128,7 +124,6 @@
 	</html:link>
 </li>
 
-<br />
 <li class="navheader"><bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="label.manageFinance"/></li>
 <li>
 	<html:link module="/manager" module="/manager" page="/guideManagement.do?method=firstPage">
@@ -141,7 +136,6 @@
 	</html:link>
 </li>
 
-<br/>
 <li class="navheader">Gestão de CMS</li>
 <li> 
 	<html:link module="/cms" action="/personalGroupsManagement.do?method=prepare" titleKey="person.userGroupsManagement.label.title">
@@ -159,7 +153,6 @@
 	</html:link>	
 </li>
 
-<br />
 <li class="navheader">Gestão do Suporte</li>
 <li>
 	<html:link module="/manager" module="/manager" page="/manageGlossary.do?method=prepare">
@@ -172,7 +165,6 @@
 	</html:link>
 </li>
 
-<br />
 <li class="navheader">Gestão de Objectos</li>
 <li> 
 	<html:link module="/manager" page="/manageCache.do?method=prepare">
@@ -185,7 +177,6 @@
 	</html:link>
 </li>
 
-<br />
 <li class="navheader">Gestão do Sistema</li>
 <li> 
 	<html:link module="/manager" module="/manager" page="/monitorServices.do?method=monitor">
@@ -218,7 +209,6 @@
 	</html:link>
 </li>
 
-<br />
 <li class="navheader">Frameworks</li>
 <li>
 	<html:link module="/manager" page="/someStrutsPage.do?method=showFirstPage">
