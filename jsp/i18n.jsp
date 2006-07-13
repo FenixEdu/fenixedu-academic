@@ -12,13 +12,13 @@
 		<logic:notEqual name="<%= org.apache.struts.Globals.LOCALE_KEY %>" property="language" value="pt">
 			<INPUT type="image"
 					src="<%= request.getContextPath() %>/images/flags/pt.gif"
-					alt="Português"
+					alt="<bean:message key="pt" bundle="IMAGE_RESOURCES" />"
 					title="Português"
 					value="PT"
 					onclick="this.form.newLanguage.value='pt';this.form.newCountry.value='PT';this.form.newVariant.value='<%= net.sourceforge.fenixedu._development.PropertiesManager.getProperty("variant") %>';this.form.windowLocation.value=window.location;this.form.submit();" />
 			<INPUT class="activeflag"
 					type="image" src="<%= request.getContextPath() %>/images/flags/en.gif"
-					alt="English"
+					alt="<bean:message key="en" bundle="IMAGE_RESOURCES" />"
 					title="English"
 					value="EN" 
 					onclick="this.form.newLanguage.value='en';this.form.newCountry.value='EN';this.form.newVariant.value='<%= net.sourceforge.fenixedu._development.PropertiesManager.getProperty("variant") %>';this.form.windowLocation.value=window.location;this.form.submit();"/>
@@ -27,12 +27,12 @@
 		<logic:notEqual name="<%= org.apache.struts.Globals.LOCALE_KEY %>" property="language" value="en">			
 			<INPUT class="activeflag"
 					type="image" src="<%= request.getContextPath() %>/images/flags/pt.gif"
-					alt="Português"
+					alt="<bean:message key="pt" bundle="IMAGE_RESOURCES" />"
 					title="Português"
 					value="PT"
 					onclick="this.form.newLanguage.value='pt';this.form.newCountry.value='PT';this.form.newVariant.value='<%= net.sourceforge.fenixedu._development.PropertiesManager.getProperty("variant") %>';this.form.windowLocation.value=window.location;this.form.submit();" />
 			<INPUT type="image" src="<%= request.getContextPath() %>/images/flags/en.gif"
-					alt="English"
+					alt="<bean:message key="en" bundle="IMAGE_RESOURCES" />"
 					title="English"
 					value="EN" 
 					onclick="this.form.newLanguage.value='en';this.form.newCountry.value='EN';this.form.newInstitution.value='<%= net.sourceforge.fenixedu._development.PropertiesManager.getProperty("variant") %>';this.form.windowLocation.value=window.location;this.form.submit();"/>

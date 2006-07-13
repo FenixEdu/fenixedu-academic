@@ -19,7 +19,7 @@
 		<tr>
 			<td>
 				<center>
-					<img alt="Logo dotist" src="<%= request.getContextPath() %>/images/logo-fenix.gif" alt="<bean:message key="logo-fenix" bundle="IMAGE_RESOURCES" />"/>
+					<img src="<%= request.getContextPath() %>/images/logo-fenix.gif" alt="<bean:message key="logo-fenix" bundle="IMAGE_RESOURCES" />"/>
 				</center>
 			</td>
 			<td>

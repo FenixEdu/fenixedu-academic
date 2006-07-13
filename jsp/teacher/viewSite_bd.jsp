@@ -2,7 +2,7 @@
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
-<%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>	 
+<%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 
 <p>
 <span class="error"><html:errors/></span>
@@ -15,6 +15,6 @@
 </logic:messagesPresent>
 
 <logic:messagesNotPresent property="error.exception.notAuthorized">
-	<img alt="Administração de disciplina" src="<%= request.getContextPath() %>/images/title_adminDisc.gif" alt="<bean:message key="title_adminDisc" bundle="IMAGE_RESOURCES" />" />
+	<img src="<%= request.getContextPath() %>/images/title_adminDisc.gif" alt="<bean:message key="title_adminDisc" bundle="IMAGE_RESOURCES" />" />
 	<p><bean:message key="label.instructions" /></p>
 </logic:messagesNotPresent>

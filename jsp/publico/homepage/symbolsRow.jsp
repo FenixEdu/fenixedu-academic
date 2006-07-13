@@ -11,7 +11,7 @@
 
 <div id="logoist">
 	<a href="<%= institutionUrl %>">
-		<img alt="[Logo] <bean:message key="institution.name" bundle="GLOBAL_RESOURCES"/> width="234" height="51" border="0" src="<bean:message bundle="GLOBAL_RESOURCES" key="university.logo.public" arg0="<%= request.getContextPath() %>"/>"/
+		<img alt="<bean:message key="dotist-id" bundle="IMAGE_RESOURCES" />" bundle="GLOBAL_RESOURCES"/> width="234" height="51" border="0" src="<bean:message bundle="GLOBAL_RESOURCES" key="university.logo.public" arg0="<%= request.getContextPath() %>"/>"/
 	</a>
 </div>
 
