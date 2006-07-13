@@ -16,7 +16,7 @@
 	<table width="100%" border="0" cellspacing="0" cellpadding="0">
 	  <tr>
 	    <td nowrap="nowrap" class="infoIcons">
-	    	<img src="<%= request.getContextPath() %>/images/square-bullet.gif" alt="<bean:message key="square-bullet" bundle="IMAGE_RESOURCES" />"> 
+	    	<img src="<%= request.getContextPath() %>/images/square-bullet.gif" alt="<bean:message key="square-bullet" bundle="IMAGE_RESOURCES" />"/> 
 	    </td>
 	    <td class="infoop">
 	    	<strong><html:link page='<%= link %>'><bean:message name="bundleKeyPageName" bundle="PORTAL_RESOURCES"/></html:link></strong>

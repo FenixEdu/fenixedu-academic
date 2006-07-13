@@ -266,7 +266,7 @@
 				<h:outputText value="#{bundle['label.person.photo']}" />
 			</f:facet>
 			<h:form>
-				<h:outputText value="<img src='#{CoordinatorStudentsBackingBean.contextPath}/person/retrievePersonalPhoto.do?method=retrieveByID&personCode=#{studentCurricularPlan.student.person.idInternal}'/>" escape="false"/>
+				<h:outputText value="<img src='#{CoordinatorStudentsBackingBean.contextPath}/person/retrievePersonalPhoto.do?method=retrieveByID&personCode=#{studentCurricularPlan.student.person.idInternal}'/> alt='<bean:message key='personPhoto' bundle='IMAGE_RESOURCES' />'" escape="false"/>
 			</h:form>
 		</h:column>
 	</h:dataTable>
