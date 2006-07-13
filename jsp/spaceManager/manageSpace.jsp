@@ -102,7 +102,7 @@
 	</logic:iterate>
 	<br/>
 
-	<html:img align="middle" src="<%= request.getContextPath() +"/images/clip_image002.jpg"%>"/>
+	<html:img align="middle" src="<%= request.getContextPath() +"/images/clip_image002.jpg"%>" alt="<bean:message key="clip_image002" bundle="IMAGE_RESOURCES" />" />
 	<br/>
 
 	<logic:equal name="selectedSpaceInformation" property="space.class.name" value="net.sourceforge.fenixedu.domain.space.Room">

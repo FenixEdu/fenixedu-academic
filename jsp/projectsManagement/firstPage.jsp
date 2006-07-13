@@ -19,12 +19,12 @@
 <%--WIDTH="600" BORDER="0" align="center" CELLPADDING="0" CELLSPACING="0" --%>
 <table cellspacing="0" cellpadding="0" align="center">
 	<tr>
-		<td><html:img src="<%= request.getContextPath() + "/images/imagemCentral_01.jpg"%>" /></td>
-		<td><html:img src="<%= request.getContextPath() + "/images/imagemCentral_02.jpg"%>" /></td>
+		<td><html:img src="<%= request.getContextPath() + "/images/imagemCentral_01.jpg"%>" alt="<bean:message key="imagemCentral_01" bundle="IMAGE_RESOURCES" />" /></td>
+		<td><html:img src="<%= request.getContextPath() + "/images/imagemCentral_02.jpg"%>" alt="<bean:message key="imagemCentral_02" bundle="IMAGE_RESOURCES" />" /></td>
 	</tr>
 	<tr>
-		<td><html:img src="<%= request.getContextPath() + "/images/imagemCentral_03.jpg"%>" /></td>
-		<td><html:img src="<%= request.getContextPath() + "/images/imagemCentral_04.jpg"%>" /></td>
+		<td><html:img src="<%= request.getContextPath() + "/images/imagemCentral_03.jpg"%>" alt="<bean:message key="imagemCentral_03" bundle="IMAGE_RESOURCES" />" /></td>
+		<td><html:img src="<%= request.getContextPath() + "/images/imagemCentral_04.jpg"%>" alt="<bean:message key="imagemCentral_04" bundle="IMAGE_RESOURCES" />" /></td>
 	</tr>
 </table>
 <br />
