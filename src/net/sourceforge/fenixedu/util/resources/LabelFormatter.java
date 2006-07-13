@@ -1,14 +1,13 @@
-package net.sourceforge.fenixedu.util;
+package net.sourceforge.fenixedu.util.resources;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.ResourceBundle;
 
 public class LabelFormatter implements Serializable {
 
-    public static class Label implements Serializable {
+    private static class Label implements Serializable {
         private String key;
 
         private String bundle;
@@ -68,17 +67,22 @@ public class LabelFormatter implements Serializable {
 
     @Override
     public String toString() {
+        return toString(new DefaultResourceBundleProvider());
+    }
+
+    public String toString(IMessageResourceProvider messageResourceProvider) {
         final StringBuilder result = new StringBuilder();
 
         for (final Label label : getLabels()) {
             if (label.isUseBundle()) {
-                result.append(ResourceBundle.getBundle(label.getBundle()).getString(label.getKey()));
+                result.append(messageResourceProvider.getMessage(label.getKey(), label.getBundle()));
             } else {
                 result.append(label.getKey());
             }
         }
 
         return result.toString();
+
     }
 
     public List<Label> getLabels() {

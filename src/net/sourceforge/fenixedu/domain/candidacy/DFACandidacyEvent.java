@@ -1,8 +1,5 @@
 package net.sourceforge.fenixedu.domain.candidacy;
 
-import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -13,14 +10,14 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.User;
 import net.sourceforge.fenixedu.domain.accounting.Account;
 import net.sourceforge.fenixedu.domain.accounting.AccountType;
-import net.sourceforge.fenixedu.domain.accounting.AccountingTransaction;
 import net.sourceforge.fenixedu.domain.accounting.Entry;
 import net.sourceforge.fenixedu.domain.accounting.EntryType;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
 import net.sourceforge.fenixedu.domain.accounting.PaymentMode;
+import net.sourceforge.fenixedu.domain.accounting.PostingRule;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.util.StateMachine;
-import net.sourceforge.fenixedu.util.LabelFormatter;
+import net.sourceforge.fenixedu.util.resources.LabelFormatter;
 
 import org.joda.time.DateTime;
 
@@ -48,65 +45,14 @@ public class DFACandidacyEvent extends DFACandidacyEvent_Base {
     }
 
     @Override
-    protected Set<Entry> internalProcess(User user, List<EntryDTO> entryDTOs, PaymentMode paymentMode,
-            DateTime whenRegistered) {
-
-        if (entryDTOs.size() != 1) {
-            throw new DomainException("error.candidacy.dfaCandidacyEvent.invalid.number.of.entryDTOs");
-        }
-
-        final BigDecimal totalAmountToPay = calculateAmountToPay(whenRegistered);
-        final EntryDTO entryDTO = entryDTOs.get(0);
-
-        checkIfCanAddAmount(totalAmountToPay, entryDTO.getAmountToPay());
-        final AccountingTransaction accountingTransaction = makeAccountingTransaction(user, this,
-                getCandidacy().getPerson().getAccountBy(AccountType.EXTERNAL), getToAccount(), entryDTO
-                        .getEntryType(), entryDTO.getAmountToPay(), paymentMode, whenRegistered);
-
-        final Set<Entry> resultingEntries = new HashSet<Entry>();
-        resultingEntries.add(accountingTransaction.getEntryByAccount(getToAccount()));
-
-        if (canCloseEvent(whenRegistered)) {
-            closeEvent();
-        }
-
-        return resultingEntries;
-    }
-
-    @Override
     public Account getToAccount() {
         return getCandidacy().getExecutionDegree().getDegreeCurricularPlan().getDegree().getUnit()
                 .getAccountBy(AccountType.INTERNAL);
     }
 
-    private void checkIfCanAddAmount(final BigDecimal totalAmountToPay, final BigDecimal amountToPay) {
-        if (!amountToPay.equals(totalAmountToPay)) {
-            throw new DomainException(
-                    "error.accounting.dfaCandidacyEvent.amount.being.payed.must.match.amount.to.pay");
-        }
-    }
-
     @Override
-    public List<EntryDTO> calculateEntries() {
-        return calculateEntries(new DateTime());
-
-    }
-
-    private List<EntryDTO> calculateEntries(DateTime when) {
-        final List<EntryDTO> result = new ArrayList<EntryDTO>();
-        final BigDecimal payedAmount = calculatePayedAmount();
-
-        result.add(new EntryDTO(EntryType.CANDIDACY_ENROLMENT_FEE, this, calculateAmountToPay(when),
-                payedAmount, calculateAmountToPay(when).subtract(payedAmount),
-                getDescriptionForEntryType(EntryType.CANDIDACY_ENROLMENT_FEE)));
-
-        return result;
-    }
-
-    // TODO: remove after posting rules?
-    @Override
-    protected BigDecimal calculateAmountToPay(DateTime when) {
-        return new BigDecimal("100");
+    public List<EntryDTO> calculateEntries(DateTime when) {
+        return getPostingRule(when).calculateEntries(this, when);
     }
 
     @Override
@@ -141,6 +87,20 @@ public class DFACandidacyEvent extends DFACandidacyEvent_Base {
         StateMachine.execute(getCandidacy().getActiveCandidacySituation());
 
         super.closeEvent();
+    }
+
+    @Override
+    protected PostingRule getPostingRule(DateTime whenRegistered) {
+        return getExecutionDegree().getDegreeCurricularPlan().getServiceAgreementTemplate()
+                .findPostingRuleByEventTypeAndDate(getEventType(), whenRegistered);
+    }
+
+    @Override
+    protected Set<Entry> internalProcess(User responsibleUser, List<EntryDTO> entryDTOs,
+            PaymentMode paymentMode, DateTime whenRegistered) {
+        return getPostingRule(whenRegistered).process(responsibleUser, entryDTOs, paymentMode,
+                whenRegistered, this, getCandidacy().getPerson().getAccountBy(AccountType.EXTERNAL),
+                getToAccount());
     }
 
 }

@@ -9,7 +9,7 @@ import java.util.Set;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.User;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.util.LabelFormatter;
+import net.sourceforge.fenixedu.util.resources.LabelFormatter;
 
 import org.joda.time.DateTime;
 
@@ -29,11 +29,18 @@ public class AccountingTransaction extends AccountingTransaction_Base {
     AccountingTransaction(User responsibleUser, Event event, Entry debit, Entry credit,
             PaymentMode paymentMode, DateTime whenRegistered) {
         this();
-        init(responsibleUser, event, debit, credit, paymentMode, whenRegistered);
+        init(responsibleUser, event, debit, credit, paymentMode, whenRegistered, null);
+    }
+
+    private AccountingTransaction(User responsibleUser, Entry debit, Entry credit,
+            PaymentMode paymentMode, DateTime whenRegistered, AccountingTransaction transactionToAdjust) {
+        this();
+        init(responsibleUser, transactionToAdjust.getEvent(), debit, credit, paymentMode,
+                whenRegistered, transactionToAdjust);
     }
 
     private void init(User responsibleUser, Event event, Entry debit, Entry credit,
-            PaymentMode paymentMode, DateTime whenRegistered) {
+            PaymentMode paymentMode, DateTime whenRegistered, AccountingTransaction transactionToAdjust) {
         checkParameters(responsibleUser, event, debit, credit, paymentMode);
         super.setWhenRegistered(whenRegistered);
         super.setWhenProcessed(new DateTime());
@@ -42,6 +49,7 @@ public class AccountingTransaction extends AccountingTransaction_Base {
         super.addEntries(debit);
         super.addEntries(credit);
         super.setPaymentMode(paymentMode);
+        super.setAdjustedTransaction(transactionToAdjust);
     }
 
     private void checkParameters(User responsibleUser, Event event, Entry debit, Entry credit,
@@ -110,6 +118,18 @@ public class AccountingTransaction extends AccountingTransaction_Base {
         throw new DomainException("error.accounting.accountingTransaction.cannot.modify.responsibleUser");
     }
 
+    @Override
+    public void setAdjustedTransaction(AccountingTransaction adjustedTransaction) {
+        throw new DomainException(
+                "error.accounting.accountingTransaction.cannot.modify.adjustedTransaction");
+    }
+
+    @Override
+    public void setAdjustmentTransaction(AccountingTransaction adjustementTransaction) {
+        throw new DomainException(
+                "error.accounting.accountingTransaction.cannot.modify.adjustmentTransaction");
+    }
+
     public BigDecimal getAmountByAccount(Account account) {
         final Entry entryFromAccount = getEntryByAccount(account);
 
@@ -117,7 +137,7 @@ public class AccountingTransaction extends AccountingTransaction_Base {
             throw new DomainException(
                     "error.accounting.accountingTransaction.amount.not.available.because.account.does.not.participate.in.transaction");
         } else {
-            return entryFromAccount.getAmount();
+            return entryFromAccount.getOriginalAmount();
         }
     }
 
@@ -134,4 +154,37 @@ public class AccountingTransaction extends AccountingTransaction_Base {
     public LabelFormatter getDescriptionForEntryType(EntryType entryType) {
         return getEvent().getDescriptionForEntryType(entryType);
     }
+
+    public Account getFromAccount() {
+        return getAccount(false);
+
+    }
+
+    public Account getToAccount() {
+        return getAccount(true);
+
+    }
+
+    private Account getAccount(boolean positive) {
+        for (final Entry entry : getEntriesSet()) {
+            if (entry.isPositiveAmount() == positive) {
+                return entry.getAccount();
+            }
+        }
+
+        throw new DomainException("error.accounting.accountingTransaction.transaction.data.is.corrupted");
+    }
+
+    public AccountingTransaction reimburse(User responsibleUser, PaymentMode paymentMode,
+            BigDecimal amountToReimburse) {
+        final AccountingTransaction transaction = new AccountingTransaction(responsibleUser, new Entry(
+                EntryType.ADJUSTMENT, amountToReimburse.negate(), this.getToAccount()), new Entry(
+                EntryType.ADJUSTMENT, amountToReimburse, this.getFromAccount()), paymentMode,
+                new DateTime(), this);
+        
+        getEvent().recalculateState(getWhenRegistered());
+
+        return transaction;
+    }
+
 }

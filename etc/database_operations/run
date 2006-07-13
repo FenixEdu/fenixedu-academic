@@ -27,3 +27,10 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Create Service Agreement Tables" CreateServiceAgreementTables.sql
+execute "Altering table AccountingEntry" AlterTableAccountingEntry.sql
+execute "Altering table Account" AlterTableAccount.sql
+execute "Altering table AccountingTransaction" AlterTableAccountingTransaction.sql
+execute "Dropping duplicate indexes on Accounting Tables" DropDuplicateIndexesOnAccountingTables.sql
+execute "Altering table degree curricular plan" AlterTableDegreeCurricularPlan.sql
+execute "Changing table AccountingEvent" AlterAccountingEvent.sql

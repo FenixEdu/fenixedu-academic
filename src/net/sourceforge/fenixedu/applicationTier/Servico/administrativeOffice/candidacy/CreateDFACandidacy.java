@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.ca
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.accounting.serviceAgreements.DegreeCurricularPlanServiceAgreement;
 import net.sourceforge.fenixedu.domain.candidacy.DFACandidacy;
 import net.sourceforge.fenixedu.domain.candidacy.DFACandidacyEvent;
 import net.sourceforge.fenixedu.domain.person.Gender;
@@ -14,18 +15,20 @@ public class CreateDFACandidacy extends Service {
             String identificationDocumentNumber, IDDocumentType identificationDocumentType) {
         Person person = Person.readByDocumentIdNumberAndIdDocumentType(identificationDocumentNumber,
                 identificationDocumentType);
-		if(person == null) {
+        if (person == null) {
             person = new Person(name, identificationDocumentNumber, identificationDocumentType,
                     Gender.MALE, "T" + System.currentTimeMillis());
-		} 
-
+        }
+        
         person.addPersonRoleByRoleType(RoleType.CANDIDATE);
         person.addPersonRoleByRoleType(RoleType.PERSON);
 
-		DFACandidacy candidacy = new DFACandidacy(person, executionDegree);
+        final DFACandidacy candidacy = new DFACandidacy(person, executionDegree);
 
         new DFACandidacyEvent(person, candidacy);
-        
-		return candidacy;
-	}
+        new DegreeCurricularPlanServiceAgreement(person, executionDegree.getDegreeCurricularPlan()
+                .getServiceAgreementTemplate());
+
+        return candidacy;
+    }
 }

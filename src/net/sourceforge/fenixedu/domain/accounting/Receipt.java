@@ -111,10 +111,10 @@ public class Receipt extends Receipt_Base {
     public void setYear(Integer year) {
         throw new DomainException("error.accounting.receipt.cannot.modify.year");
     }
-    
+
     @Override
     public void setWhenCreated(DateTime whenCreated) {
-    	throw new DomainException("error.accounting.receipt.cannot.modify.creation.date");
+        throw new DomainException("error.accounting.receipt.cannot.modify.creation.date");
     }
 
     private Integer generateReceiptNumber() {
@@ -141,7 +141,7 @@ public class Receipt extends Receipt_Base {
     public BigDecimal getTotalAmount() {
         BigDecimal result = new BigDecimal("0");
         for (final Entry entry : getEntriesSet()) {
-            result = result.add(entry.getAmount());
+            result = result.add(entry.getAmountWithAdjustment());
         }
         return result;
     }

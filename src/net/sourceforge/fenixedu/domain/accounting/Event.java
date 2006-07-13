@@ -12,7 +12,7 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.User;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.util.LabelFormatter;
+import net.sourceforge.fenixedu.util.resources.LabelFormatter;
 
 import org.joda.time.DateTime;
 
@@ -20,21 +20,21 @@ public abstract class Event extends Event_Base {
 
     protected Event() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
-        setOjbConcreteClass(getClass().getName());
+        super.setRootDomainObject(RootDomainObject.getInstance());
+        super.setOjbConcreteClass(getClass().getName());
+        super.setWhenOccured(new DateTime());
+        super.setEventState(EventState.OPEN);
     }
 
     protected void init(EventType eventType, Person person) {
         checkParameters(eventType, person);
         super.setEventType(eventType);
-        super.setWhenOccured(new DateTime());
-        super.setClosed(Boolean.FALSE);
         super.setPerson(person);
     }
 
     private void checkParameters(EventType eventType, Person person) throws DomainException {
         if (eventType == null) {
-            throw new DomainException("error.accounting.event.invalid.eventType");
+            throw new DomainException("error.accounting.Event.invalid.eventType");
         }
         if (person == null) {
             throw new DomainException("error.accounting.person.cannot.be.null");
@@ -42,21 +42,16 @@ public abstract class Event extends Event_Base {
 
     }
 
-    // TODO: to remove after create agreement and posting rules
-    protected Entry makeEntry(EntryType entryType, BigDecimal amount, Account account) {
-        return new Entry(entryType, amount, account);
-    }
-
-    // TODO: to remove after create agreement and posting rules
-    protected AccountingTransaction makeAccountingTransaction(User responsibleUser, Event event,
-            Account from, Account to, EntryType entryType, BigDecimal amount, PaymentMode paymentMode,
-            DateTime whenRegistered) {
-        return new AccountingTransaction(responsibleUser, event, makeEntry(entryType, amount.negate(),
-                from), makeEntry(entryType, amount, to), paymentMode, whenRegistered);
+    public boolean isOpen() {
+        return (getEventState() == EventState.OPEN);
     }
 
     public boolean isClosed() {
-        return getClosed().booleanValue();
+        return (getEventState() == EventState.CLOSED);
+    }
+
+    public boolean isCancelled() {
+        return (getEventState() == EventState.CANCELLED);
     }
 
     public final Set<Entry> process(User responsibleUser, List<EntryDTO> entryDTOs,
@@ -67,25 +62,29 @@ public abstract class Event extends Event_Base {
     public final Set<Entry> process(User responsibleUser, List<EntryDTO> entryDTOs,
             PaymentMode paymentMode, DateTime whenRegistered) {
         if (entryDTOs.isEmpty()) {
-            throw new DomainException("error.accounting.event.process.requires.entries.to.be.processed");
+            throw new DomainException("error.accounting.Event.process.requires.entries.to.be.processed");
         }
         if (!isClosed()) {
-            return internalProcess(responsibleUser, entryDTOs, paymentMode, whenRegistered);
+            final Set<Entry> result = internalProcess(responsibleUser, entryDTOs, paymentMode,
+                    whenRegistered);
+
+            if (canCloseEvent(whenRegistered)) {
+                closeEvent();
+            }
+
+            return result;
         } else {
-            throw new DomainException("error.accounting.event.is.already.closed");
+            throw new DomainException("error.accounting.Event.is.already.closed");
         }
     }
 
-    public void closeEvent() {
-        super.setClosed(Boolean.TRUE);
+    protected void closeEvent() {
+        super.setEventState(EventState.CLOSED);
     }
-
-    protected abstract Set<Entry> internalProcess(User responsibleUser, List<EntryDTO> entryDTOs,
-            PaymentMode paymentMode, DateTime whenRegistered);
 
     @Override
     public void addAccountingTransactions(AccountingTransaction accountingTransactions) {
-        throw new DomainException("error.accounting.event.cannot.add.accountingTransactions");
+        throw new DomainException("error.accounting.Event.cannot.add.accountingTransactions");
     }
 
     @Override
@@ -105,27 +104,27 @@ public abstract class Event extends Event_Base {
 
     @Override
     public void removeAccountingTransactions(AccountingTransaction accountingTransactions) {
-        throw new DomainException("error.accounting.event.cannot.remove.accountingTransactions");
+        throw new DomainException("error.accounting.Event.cannot.remove.accountingTransactions");
     }
 
     @Override
     public void setEventType(EventType eventType) {
-        throw new DomainException("error.accounting.event.cannot.modify.eventType");
-    }
-
-    @Override
-    public void setClosed(Boolean closed) {
-        throw new DomainException("error.accounting.event.cannot.modify.processed.value");
+        throw new DomainException("error.accounting.Event.cannot.modify.eventType");
     }
 
     @Override
     public void setWhenOccured(DateTime whenOccured) {
-        throw new DomainException("error.accounting.event.cannot.modify.occuredDateTime");
+        throw new DomainException("error.accounting.Event.cannot.modify.occuredDateTime");
     }
 
     @Override
     public void setPerson(Person person) {
-        throw new DomainException("error.accounting.event.cannot.modify.person");
+        throw new DomainException("error.accounting.Event.cannot.modify.person");
+    }
+
+    @Override
+    public void setEventState(EventState eventState) {
+        throw new DomainException("error.accounting.Event.cannot.modify.eventState");
     }
 
     protected boolean canCloseEvent(DateTime whenRegistered) {
@@ -154,6 +153,11 @@ public abstract class Event extends Event_Base {
     }
 
     protected BigDecimal calculatePayedAmount() {
+        if (isCancelled()) {
+            throw new DomainException(
+                    "error.accounting.Event.cannot.calculatePayedAmount.on.invalid.events");
+        }
+
         BigDecimal payedAmount = new BigDecimal("0");
         final Account account = getToAccount();
         for (final AccountingTransaction transaction : getAccountingTransactions()) {
@@ -163,12 +167,31 @@ public abstract class Event extends Event_Base {
         return payedAmount;
     }
 
+    void recalculateState(DateTime whenRegistered) {
+        if (canCloseEvent(whenRegistered)) {
+            super.setEventState(EventState.CLOSED);
+        }
+    }
+
+    private BigDecimal calculateAmountToPay(DateTime whenRegistered) {
+        return getPostingRule(whenRegistered).calculateTotalAmountToPay();
+
+    }
+
+    public List<EntryDTO> calculateEntries() {
+        return calculateEntries(new DateTime());
+
+    }
+
     public abstract Account getToAccount();
 
-    public abstract List<EntryDTO> calculateEntries();
-
-    protected abstract BigDecimal calculateAmountToPay(DateTime whenRegistered);
+    public abstract List<EntryDTO> calculateEntries(DateTime when);
 
     public abstract LabelFormatter getDescriptionForEntryType(EntryType entryType);
+
+    protected abstract PostingRule getPostingRule(DateTime whenRegistered);
+
+    protected abstract Set<Entry> internalProcess(User responsibleUser, List<EntryDTO> entryDTOs,
+            PaymentMode paymentMode, DateTime whenRegistered);
 
 }

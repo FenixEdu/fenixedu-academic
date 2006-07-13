@@ -639,8 +639,9 @@ public class Person extends Person_Base {
         return result;
     }
 
-    public PersonFunction addPersonFunction(Function function, YearMonthDay begin, YearMonthDay end, Double credits) {
-        return new PersonFunction(function.getUnit(), this, function, begin, end, credits);        
+    public PersonFunction addPersonFunction(Function function, YearMonthDay begin, YearMonthDay end,
+            Double credits) {
+        return new PersonFunction(function.getUnit(), this, function, begin, end, credits);
     }
 
     /**
@@ -1371,8 +1372,8 @@ public class Person extends Person_Base {
     public Set<Event> getNotPayedEvents() {
         final Set<Event> result = new HashSet<Event>();
 
-        for (Event event : getEventsSet()) {
-            if (!event.isClosed()) {
+        for (final Event event : getEventsSet()) {
+            if (event.isOpen()) {
                 result.add(event);
             }
         }

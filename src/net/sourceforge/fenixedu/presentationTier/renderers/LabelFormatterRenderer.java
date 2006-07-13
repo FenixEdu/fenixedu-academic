@@ -1,22 +1,23 @@
 package net.sourceforge.fenixedu.presentationTier.renderers;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.Properties;
 
+import net.sourceforge.fenixedu.presentationTier.renderers.util.RendererMessageResourceProvider;
 import net.sourceforge.fenixedu.renderers.OutputRenderer;
 import net.sourceforge.fenixedu.renderers.components.HtmlComponent;
 import net.sourceforge.fenixedu.renderers.components.HtmlText;
 import net.sourceforge.fenixedu.renderers.layouts.Layout;
-import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
-import net.sourceforge.fenixedu.util.LabelFormatter;
+import net.sourceforge.fenixedu.util.resources.LabelFormatter;
 
 public class LabelFormatterRenderer extends OutputRenderer {
 
-    private Map<String, String> bundleNameMapping;
+    private Properties bundleMappings;
 
     public LabelFormatterRenderer() {
         super();
-        this.bundleNameMapping = new HashMap<String, String>();
+
+        this.bundleMappings = new Properties();
+
     }
 
     @Override
@@ -26,24 +27,9 @@ public class LabelFormatterRenderer extends OutputRenderer {
             @Override
             public HtmlComponent createComponent(Object object, Class type) {
 
-                final LabelFormatter labelFormatter = (LabelFormatter) object;
-                final StringBuilder result = new StringBuilder();
-
-                for (final LabelFormatter.Label label : labelFormatter.getLabels()) {
-                    if (label.isUseBundle()) {
-                        if (containsBundle(label.getBundle())) {
-                            result.append(RenderUtils.getResourceString(getBundle(label.getBundle()),
-                                    label.getKey()));
-                        } else {
-                            result.append(RenderUtils.getResourceString(label.getBundle(), label
-                                    .getKey()));
-                        }
-                    } else {
-                        result.append(label.getKey());
-                    }
-                }
-
-                return new HtmlText(result.toString());
+                return new HtmlText(((LabelFormatter) object)
+                        .toString(new RendererMessageResourceProvider(
+                                LabelFormatterRenderer.this.bundleMappings)));
             }
 
         };
@@ -55,19 +41,11 @@ public class LabelFormatterRenderer extends OutputRenderer {
      * @property
      */
     public void setBundleName(String bundle, String name) {
-        this.bundleNameMapping.put(bundle, name);
+        this.bundleMappings.put(bundle, name);
     }
 
     public String getBundleName(String bundle) {
-        return this.bundleNameMapping.get(bundle);
-    }
-
-    private boolean containsBundle(String bundle) {
-        return this.bundleNameMapping.containsKey(bundle);
-    }
-
-    private String getBundle(String bundle) {
-        return this.bundleNameMapping.get(bundle);
+        return this.bundleMappings.getProperty(bundle);
     }
 
 }

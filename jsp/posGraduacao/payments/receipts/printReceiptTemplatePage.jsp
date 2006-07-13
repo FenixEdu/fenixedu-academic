@@ -127,7 +127,7 @@
 						</app:labelFormatter>
 					</td>
 					<td>.........................................&nbsp;</td>
-					<td><bean:define id="amount" name="entry" property="amount"
+					<td><bean:define id="amount" name="entry" property="amountWithAdjustment"
 						type="java.math.BigDecimal" /> <%=amount.toPlainString()%> &nbsp;<bean:message
 						key="label.currencySymbol" /></td>
 				</tr>

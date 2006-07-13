@@ -10,7 +10,7 @@
 <schema name="entry.view" type="net.sourceforge.fenixedu.domain.accounting.Entry">
 	<slot name="description" />
 	<slot name="whenRegistered" />
-	<slot name="amount" />
+	<slot name="amountWithAdjustment" />
 </schema>
 
 <schema name="entryDTO.view" type="net.sourceforge.fenixedu.dataTransferObject.accounting.EntryDTO">
@@ -40,14 +40,14 @@
 <schema name="selectableEntryBean.view" type="net.sourceforge.fenixedu.dataTransferObject.accounting.SelectableEntryBean">
 	<slot name="entry.description" read-only="true" key="label.net.sourceforge.fenixedu.domain.accounting.Entry.description" />
 	<slot name="entry.whenRegistered" read-only="true" key="label.net.sourceforge.fenixedu.domain.accounting.Entry.whenRegistered" />
-	<slot name="entry.amount" read-only="true" key="label.net.sourceforge.fenixedu.domain.accounting.Entry.amount" />
+	<slot name="entry.amountWithAdjustment" read-only="true" key="label.net.sourceforge.fenixedu.domain.accounting.Entry.amountWithAdjustment" />
 </schema>
 
 <schema name="selectableEntryBean.view-selectable" type="net.sourceforge.fenixedu.dataTransferObject.accounting.SelectableEntryBean">
 	<slot name="selected" key="label.commons.emptySelected" />
 	<slot name="entry.description" read-only="true" key="label.net.sourceforge.fenixedu.domain.accounting.Entry.description" />
 	<slot name="entry.whenRegistered" read-only="true" key="label.net.sourceforge.fenixedu.domain.accounting.Entry.whenRegistered" />
-	<slot name="entry.amount" read-only="true" key="label.net.sourceforge.fenixedu.domain.accounting.Entry.amount" />
+	<slot name="entry.amountWithAdjustment" read-only="true" key="label.net.sourceforge.fenixedu.domain.accounting.Entry.amountWithAdjustment" />
 </schema>
 
 <schema name="createReceiptBean.create" type="net.sourceforge.fenixedu.dataTransferObject.accounting.CreateReceiptBean">

@@ -77,7 +77,7 @@ public class CreateReceiptBean implements Serializable {
     public BigDecimal getTotalAmount() {
         BigDecimal result = new BigDecimal("0");
         for (final Entry entry : getSelectedEntries()) {
-            result = result.add(entry.getAmount());
+            result = result.add(entry.getAmountWithAdjustment());
         }
         return result;
     }

@@ -33,3 +33,4 @@ executeWithTempFile "Update whenCreated date to existing Receipts" updateTableRe
 execute "Alter table whenCreated to Not Null" alterTableReceiptAlterColumn.sql
 execute "Changing Accounting Transaction Table" AlterTableAccountingTransaction.sql
 execute "Changing Accounting Entry Table" AlterTableAccountingEntry.sql
+execute "Adding Index to accounting tables" AddIndexesToAccountingTables.sql

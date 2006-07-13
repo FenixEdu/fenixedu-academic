@@ -5,7 +5,7 @@ import java.util.Comparator;
 
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.util.LabelFormatter;
+import net.sourceforge.fenixedu.util.resources.LabelFormatter;
 
 import org.joda.time.DateTime;
 
@@ -33,24 +33,24 @@ public class Entry extends Entry_Base {
     private void init(EntryType entryType, BigDecimal amount, Account account) {
         checkParameters(entryType, amount, account);
         super.setEntryType(entryType);
-        super.setAmount(amount);
+        super.setOriginalAmount(amount);
         super.setAccount(account);
     }
 
     private void checkParameters(EntryType entryType, BigDecimal amount, Account account) {
         if (entryType == null) {
-            throw new DomainException("error.accounting.entry.invalid.entryType");
+            throw new DomainException("error.accounting.entry.entryType.cannot.be.null");
         }
         if (amount == null) {
-            throw new DomainException("error.accounting.entry.invalid.amount");
+            throw new DomainException("error.accounting.entry.originalAmount.cannot.be.null");
         }
         if (account == null) {
-            throw new DomainException("error.accounting.entry.invalid.account");
+            throw new DomainException("error.accounting.entry.account.cannot.be.null");
         }
     }
 
     public boolean isPositiveAmount() {
-        return getAmount().signum() > 0;
+        return getOriginalAmount().signum() > 0;
     }
 
     @Override
@@ -74,8 +74,8 @@ public class Entry extends Entry_Base {
     }
 
     @Override
-    public void setAmount(BigDecimal amount) {
-        throw new DomainException("error.accounting.entry.cannot.modify.amount");
+    public void setOriginalAmount(BigDecimal amount) {
+        throw new DomainException("error.accounting.entry.cannot.modify.originalAmount");
     }
 
     @Override
@@ -102,6 +102,18 @@ public class Entry extends Entry_Base {
 
     public LabelFormatter getDescription() {
         return getAccountingTransaction().getDescriptionForEntryType(getEntryType());
+    }
+
+    public boolean isAdjustement() {
+        return (this.getAccountingTransaction().hasAdjustedTransaction());
+    }
+
+    public boolean isAdjusted() {
+        return (this.getAccountingTransaction().hasAdjustmentTransaction());
+    }
+
+    public BigDecimal getAmountWithAdjustment() {
+        return getOriginalAmount();
     }
 
 }

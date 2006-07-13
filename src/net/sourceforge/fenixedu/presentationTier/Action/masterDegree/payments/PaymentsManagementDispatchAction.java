@@ -28,12 +28,12 @@ import net.sourceforge.fenixedu.domain.accounting.PaymentMode;
 import net.sourceforge.fenixedu.domain.accounting.Receipt;
 import net.sourceforge.fenixedu.domain.candidacy.Candidacy;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.exceptions.accounting.PostingRuleDomainException;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
+import net.sourceforge.fenixedu.presentationTier.util.struts.StrutsMessageResourceProvider;
 import net.sourceforge.fenixedu.renderers.components.state.IViewState;
-import net.sourceforge.fenixedu.renderers.components.state.ViewState;
-import net.sourceforge.fenixedu.renderers.model.MetaObject;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 
 import org.apache.struts.action.ActionForm;
@@ -294,6 +294,11 @@ public class PaymentsManagementDispatchAction extends FenixDispatchAction {
 
             return mapping.findForward("paymentConfirmed");
 
+        } catch (PostingRuleDomainException ex) {
+            addActionMessage(request, ex.getKey(), ex.getLabelFormatterArgs().toString(
+                    getMessageResourceProvider(request)));
+            request.setAttribute("paymentsManagementDTO", paymentsManagementDTO);
+            return mapping.findForward("showEvents");
         } catch (DomainException ex) {
 
             addActionMessage(request, ex.getKey(), ex.getArgs());
@@ -301,6 +306,15 @@ public class PaymentsManagementDispatchAction extends FenixDispatchAction {
             return mapping.findForward("showEvents");
         }
 
+    }
+
+    private StrutsMessageResourceProvider getMessageResourceProvider(HttpServletRequest request) {
+        final StrutsMessageResourceProvider strutsMessageResourceProvider = new StrutsMessageResourceProvider(
+                getLocale(request), getServlet().getServletContext(), request);
+        strutsMessageResourceProvider.addMapping("enum", "ENUMERATION_RESOURCES");
+        strutsMessageResourceProvider.addMapping("application", "DEFAULT");
+
+        return strutsMessageResourceProvider;
     }
 
     private Person getPerson(HttpServletRequest request) {

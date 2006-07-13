@@ -9,7 +9,7 @@ import java.io.Serializable;
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.candidacy.CandidacyDocument;
 import net.sourceforge.fenixedu.domain.candidacy.CandidacyDocumentFile;
-import net.sourceforge.fenixedu.util.LabelFormatter;
+import net.sourceforge.fenixedu.util.resources.LabelFormatter;
 
 /**
  * @author - Shezad Anavarali (shezad@ist.utl.pt)

@@ -1,0 +1,36 @@
+drop table if exists SERVICE_AGREEMENT;
+create table SERVICE_AGREEMENT (
+  ID_INTERNAL int(11) NOT NULL auto_increment,
+  CREATION_DATE datetime NOT NULL,
+  OJB_CONCRETE_CLASS varchar(250) NOT NULL,
+  KEY_ROOT_DOMAIN_OBJECT int(11) NOT NULL,
+  KEY_PERSON int(11) NOT NULL,
+  KEY_SERVICE_AGREEMENT_TEMPLATE int(11) NOT NULL,
+  primary key (ID_INTERNAL)
+) type=InnoDB ;
+
+
+drop table if exists POSTING_RULE;
+create table POSTING_RULE (
+  ID_INTERNAL int(11) NOT NULL auto_increment,
+  OJB_CONCRETE_CLASS varchar(250) NOT NULL,
+  EVENT_TYPE varchar(250) NOT NULL,
+  ENTRY_TYPE varchar(250) NOT NULL,
+  AMOUNT varchar(250) NOT NULL,
+  CREATION_DATE datetime NOT NULL,
+  START_DATE datetime NOT NULL,
+  END_DATE datetime,
+  KEY_ROOT_DOMAIN_OBJECT int(11) NOT NULL,
+  KEY_SERVICE_AGREEMENT_TEMPLATE int(11) NOT NULL,
+  primary key (ID_INTERNAL)
+) type=InnoDB ;
+
+drop table if exists SERVICE_AGREEMENT_TEMPLATE;
+create table SERVICE_AGREEMENT_TEMPLATE (
+  ID_INTERNAL int(11) NOT NULL auto_increment,
+  CREATION_DATE datetime NOT NULL,
+  OJB_CONCRETE_CLASS varchar(250) NOT NULL,
+  KEY_ROOT_DOMAIN_OBJECT int(11) NOT NULL,
+  KEY_DEGREE int(11) NULL,
+  primary key (ID_INTERNAL)
+) type=InnoDB ;

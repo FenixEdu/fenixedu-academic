@@ -10,12 +10,14 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 
+import org.joda.time.DateTime;
 import org.joda.time.Interval;
 
 public class Account extends Account_Base {
 
     private Account() {
         super();
+        super.setCreationDate(new DateTime());
         setRootDomainObject(RootDomainObject.getInstance());
     }
 
@@ -43,7 +45,7 @@ public class Account extends Account_Base {
         BigDecimal result = new BigDecimal("0");
         for (final Entry entry : super.getEntriesSet()) {
             if (interval.contains(entry.getWhenRegistered())) {
-                result = result.add(entry.getAmount());
+                result = result.add(entry.getOriginalAmount());
             }
         }
         return result;
@@ -52,8 +54,8 @@ public class Account extends Account_Base {
     public BigDecimal deposits(Interval interval) {
         BigDecimal result = new BigDecimal("0");
         for (final Entry entry : super.getEntriesSet()) {
-            if (interval.contains(entry.getWhenRegistered()) && entry.getAmount().signum() == 1) {
-                result = result.add(entry.getAmount());
+            if (interval.contains(entry.getWhenRegistered()) && entry.getOriginalAmount().signum() == 1) {
+                result = result.add(entry.getOriginalAmount());
             }
         }
         return result;
@@ -62,8 +64,8 @@ public class Account extends Account_Base {
     public BigDecimal withdraws(Interval interval) {
         BigDecimal result = new BigDecimal("0");
         for (final Entry entry : super.getEntriesSet()) {
-            if (interval.contains(entry.getWhenRegistered()) && entry.getAmount().signum() == -1) {
-                result = result.add(entry.getAmount());
+            if (interval.contains(entry.getWhenRegistered()) && entry.getOriginalAmount().signum() == -1) {
+                result = result.add(entry.getOriginalAmount());
             }
         }
         return result;
@@ -102,6 +104,11 @@ public class Account extends Account_Base {
     @Override
     public void setParty(Party party) {
         throw new DomainException("error.accounting.account.cannot.modify.party");
+    }
+
+    @Override
+    public void setCreationDate(DateTime creationDate) {
+        throw new DomainException("error.accounting.account..cannot.modify.creationDate");
     }
 
 }

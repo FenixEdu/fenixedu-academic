@@ -1,0 +1,1 @@
+alter table ACCOUNTING_ENTRY change column AMOUNT ORIGINAL_AMOUNT varchar(250) NOT NULL;

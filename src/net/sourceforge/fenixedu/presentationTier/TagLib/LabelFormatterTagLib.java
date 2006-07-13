@@ -1,13 +1,16 @@
 package net.sourceforge.fenixedu.presentationTier.TagLib;
 
 import java.io.IOException;
+import java.util.Locale;
 import java.util.Properties;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.tagext.BodyTagSupport;
 
-import net.sourceforge.fenixedu.util.LabelFormatter;
+import net.sourceforge.fenixedu.presentationTier.util.struts.StrutsMessageResourceProvider;
+import net.sourceforge.fenixedu.util.resources.LabelFormatter;
 
 import org.apache.struts.taglib.TagUtils;
 
@@ -22,11 +25,12 @@ public class LabelFormatterTagLib extends BodyTagSupport implements PropertyCont
     private String scope;
 
     public LabelFormatterTagLib() {
+
         this.properties = new Properties();
     }
 
     public void addProperty(String name, String value) {
-        this.properties.setProperty(name, value);
+        this.properties.put(name, value);
     }
 
     @Override
@@ -35,24 +39,12 @@ public class LabelFormatterTagLib extends BodyTagSupport implements PropertyCont
         final LabelFormatter labelFormatter = (LabelFormatter) TagUtils.getInstance().lookup(
                 this.pageContext, this.name, this.property, this.scope);
 
-        final StringBuilder result = new StringBuilder();
-
-        for (final LabelFormatter.Label label : labelFormatter.getLabels()) {
-            if (label.isUseBundle()) {
-                if (containsBundle(label.getBundle())) {
-                    result.append(getMessageFromBundle(label.getKey(),getBundle(label.getBundle())));
-                } else {
-                    result.append(getMessageFromBundle(label.getKey(),label.getBundle()));
-                }
-            } else {
-                result.append(label.getKey());
-            }
-        }
-
         final JspWriter out = this.pageContext.getOut();
 
         try {
-            out.write(result.toString());
+            out.write(labelFormatter.toString(new StrutsMessageResourceProvider(this.properties,
+                    getUserLocale(), this.pageContext.getServletContext(),
+                    (HttpServletRequest) this.pageContext.getRequest())));
         } catch (IOException e) {
             throw new JspException(e);
         }
@@ -60,17 +52,8 @@ public class LabelFormatterTagLib extends BodyTagSupport implements PropertyCont
         return EVAL_PAGE;
     }
 
-    private String getMessageFromBundle(String key, String bundle) throws JspException {
-        return TagUtils.getInstance().message(this.pageContext, bundle,
-                TagUtils.getInstance().getUserLocale(this.pageContext, null).toString(), key);
-    }
-
-    private String getBundle(String bundle) {
-        return this.properties.getProperty(bundle);
-    }
-
-    private boolean containsBundle(String bundle) {
-        return this.properties.containsKey(bundle);
+    private Locale getUserLocale() {
+        return TagUtils.getInstance().getUserLocale(this.pageContext, null);
     }
 
     @Override
