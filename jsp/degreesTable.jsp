@@ -14,7 +14,6 @@
 <BR/>
 
 <TABLE>
-	
 	<logic:iterate id="degree" name="degrees" type="net.sourceforge.fenixedu.domain.Degree">
 		<logic:equal name="degree" property="degreeType" value="<%= degreeType.toString() %>">
 			<%if ((renderBolonha.equals("false") && !degree.isBolonhaDegree())|| (renderBolonha.equals("true") && degree.isBolonhaDegree())) { %>

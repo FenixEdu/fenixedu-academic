@@ -6,10 +6,6 @@
 <html:html locale="true">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-<%--
-<link rel="stylesheet" type="text/css" media="screen" href="http://www.ist.utl.pt/css/iststyle.css" />
-<link rel="stylesheet" type="text/css" media="screen" href="<%= request.getContextPath() %>/CSS/iststyle.css" />
---%>
 <link rel="stylesheet" type="text/css" media="print" href="<%= request.getContextPath() %>/CSS/dotist_print.css" />
 <link rel="stylesheet" type="text/css" media="print" href="<%= request.getContextPath() %>/CSS/print.css" />
 <link rel="stylesheet" type="text/css" media="screen" href="<%= request.getContextPath() %>/CSS/homepage_screen.css" />
@@ -18,15 +14,6 @@
 
 </head>
 <body>
-
-<%--
-<tiles:insert attribute="symbols_row" ignore="true"/>
-<tiles:insert attribute="profile_navigation" ignore="true"/>
-<tiles:insert attribute="main_navigation" ignore="true"/>
-<tiles:getAsString name="body-inline" ignore="true"/>
-<tiles:insert attribute="footer" ignore="true"/>
---%>
-
 
 
 <!-- START HEADER -->
@@ -72,23 +59,6 @@
 		</html:form>
 	</div> 
 		
-	<%--
-	<div id="photo_holder">
-		<img src="img/pasantos.jpg" alt="[Foto] Pedro Santos at IST Mathematical Department" width="150" height="100" />
-	</div>
-	
-	<div id="bio_info">
-		<h1 id="no">Pedro Alexandre Simões dos Santos</h1>
-		<p>Unidade: Departamento de Informática</p>
-		<p>Categoria: Professor Associado</p>
-		<p>E-mail: something@ist.utl.pt</p>
-		<p>Telefone: 213872828</p>
-		<p>Telefone móvel: 916756453</p>
-		<p>Página alternativa: <a href="">http://www.something.com</a></p>
-    </div>
-
-	--%>
-
 	<div id="bio_info">
 	<tiles:insert attribute="body" ignore="true"/>
 	</div>
