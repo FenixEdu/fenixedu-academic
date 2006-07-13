@@ -24,7 +24,7 @@
 		</span>
 	</logic:messagesPresent>
 	
-	<h3><bean:message key="label.active.occupations" bundle="SPACE_RESOURCES"/></h3>
+	<h3><bean:message key="label.active.occupations" bundle="SPACE_RESOURCES"/>:</h3>
 	<fr:view schema="PersonOccupations" name="selectedSpaceInformation" property="space.activePersonSpaceOccupations">
 		<fr:layout name="tabular">      			
    			<fr:property name="rowClasses" value="listClasses"/>	
@@ -44,7 +44,7 @@
     	</fr:layout>
 	</fr:view>			
 
-	<br/><br/>	
+	<br/>
 	<bean:define id="exceptionParams" value="<%="/manageSpaceOccupations.do?method=showSpaceOccupations&spaceInformationID="+ selectedSpaceInformationId %>" />		
 	<logic:empty name="personSpaceOccupation">
 		<h3><bean:message key="label.add.person" bundle="SPACE_RESOURCES"/>:</h3>		
@@ -55,15 +55,14 @@
 	</logic:empty>
 	<logic:notEmpty name="personSpaceOccupation">	
 		<h3><bean:message key="label.edit.occupation" bundle="SPACE_RESOURCES"/>:</h3>							
-		<bean:write name="personSpaceOccupation" property="person.name"/> ->
-		<bean:write name="personSpaceOccupation" property="person.username"/>
+		<p><i><bean:write name="personSpaceOccupation" property="person.name"/> -> <bean:write name="personSpaceOccupation" property="person.username"/></i></p>
 		<fr:edit name="personSpaceOccupation" action="<%= exceptionParams %>" schema="EditPersonOccupation">	   				
 			<fr:destination name="exception" path="<%= exceptionParams %>" />
 		</fr:edit>	
 	</logic:notEmpty>
-	<br/><br/>
+	<br/>
 		
-	<h3><bean:message key="label.inactive.occupations" bundle="SPACE_RESOURCES"/></h3>
+	<h3><bean:message key="label.inactive.occupations" bundle="SPACE_RESOURCES"/>:</h3>
 	<fr:view schema="PersonOccupations" name="selectedSpaceInformation" property="space.inactivePersonSpaceOccupations">
 		<fr:layout name="tabular">      			
    			<fr:property name="rowClasses" value="listClasses"/>	
