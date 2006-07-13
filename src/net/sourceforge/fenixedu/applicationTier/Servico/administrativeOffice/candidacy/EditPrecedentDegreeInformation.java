@@ -5,7 +5,6 @@ package net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.ca
 
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.candidacy.PrecedentDegreeInformationBean;
-import net.sourceforge.fenixedu.domain.organizationalStructure.PartyTypeEnum;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.student.PrecedentDegreeInformation;
 
@@ -18,9 +17,8 @@ public class EditPrecedentDegreeInformation extends Service {
     public void run(PrecedentDegreeInformationBean precedentDegreeInformationBean) {
 
         String newInstitutionName = precedentDegreeInformationBean.getNewInstitutionName();
-        Unit newInstitution = (newInstitutionName != null && newInstitutionName.length() > 0) ? new Unit(
-                newInstitutionName, PartyTypeEnum.EXTERNAL_INSTITUTION)
-                : precedentDegreeInformationBean.getInstitution();
+        Unit newInstitution = (newInstitutionName != null && newInstitutionName.length() > 0) ? 
+                Unit.createNewExternalInstitution(newInstitutionName) : precedentDegreeInformationBean.getInstitution();
 
         PrecedentDegreeInformation precedentDegreeInformation = precedentDegreeInformationBean
                 .getPrecedentDegreeInformation();

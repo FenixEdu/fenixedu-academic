@@ -83,7 +83,7 @@ public abstract class Space extends Space_Base {
         }        
         return personSpaceOccupations;
     }
-
+    
     public void delete() {
         for (final List<Space> containedSpaces = getContainedSpaces();
                 !containedSpaces.isEmpty(); containedSpaces.get(0).delete());

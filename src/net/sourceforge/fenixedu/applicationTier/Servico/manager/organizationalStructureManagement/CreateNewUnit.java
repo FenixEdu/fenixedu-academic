@@ -7,6 +7,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.manager.organizationalS
 import java.util.Date;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.Department;
@@ -22,32 +23,44 @@ public class CreateNewUnit extends Service {
     public void run(Integer unitID, Integer parentUnitID, String unitName, String unitCostCenter,
             String acronym, Date beginDate, Date endDate, PartyTypeEnum type, Integer departmentID,
             Integer degreeID, AccountabilityType accountabilityType, String webAddress) throws ExcepcaoPersistencia,
-            FenixServiceException, DomainException {
+            FenixServiceException, DomainException, FenixFilterException {
 
         Unit unit = null;
-        if (unitID == null) {
-            if(unitName == null) {
-                throw new FenixServiceException("error.unit.empty.name");
-            }
-            unit = new Unit();
+        
+        Unit parentUnit = getParentUnit(parentUnitID);        
+        Integer costCenterCode = getCostCenterCode(unitCostCenter);        
+        
+        if (unitID == null) {      
+            unit = Unit.createNewUnit(unitName, costCenterCode, acronym, beginDate, endDate, type, parentUnit,
+                    accountabilityType, webAddress);    
         } else {
             unit = (Unit) rootDomainObject.readPartyByOID(unitID);
             if (unit == null) {
                 throw new FenixServiceException("error.noUnit");
             }
+            parentUnit = checkAndRemoveParentUnitIfNecessary(parentUnit, unit); 
+            unit.edit(unitName, costCenterCode, acronym, beginDate, endDate, type, parentUnit,
+                    accountabilityType, webAddress);
         }
+                            
+        setDepartment(departmentID, unit);
+        setDegree(degreeID, unit);
+    }
 
-        Unit parentUnit = setParentUnits(parentUnitID, unit);
+    private Integer getCostCenterCode(String unitCostCenter) {
         Integer costCenterCode = null;
         if (unitCostCenter != null && !unitCostCenter.equals("")) {
             costCenterCode = (Integer.valueOf(unitCostCenter));
         }
+        return costCenterCode;
+    }
 
-        unit.edit(unitName, costCenterCode, acronym, beginDate, endDate, type, parentUnit,
-                accountabilityType, webAddress);
-
-        setDepartment(departmentID, unit);
-        setDegree(degreeID, unit);
+    private Unit getParentUnit(Integer parentUnitID) {
+        Unit parentUnit = null;
+        if (parentUnitID != null) {
+            parentUnit = (Unit) rootDomainObject.readPartyByOID(parentUnitID);
+        }
+        return parentUnit;
     }
 
     private void setDegree(Integer degreeID, Unit unit) throws ExcepcaoPersistencia {
@@ -65,7 +78,7 @@ public class CreateNewUnit extends Service {
     }
 
     private void setDepartment(Integer departmentID, Unit unit) throws ExcepcaoPersistencia {
-
+        
         Department department = null;
         if (departmentID != null && unit.getType() != null
                 && unit.getType().equals(PartyTypeEnum.DEPARTMENT)) {
@@ -78,12 +91,10 @@ public class CreateNewUnit extends Service {
         }
     }
 
-    private Unit setParentUnits(Integer parentUnitID, Unit unit) throws ExcepcaoPersistencia,
+    private Unit checkAndRemoveParentUnitIfNecessary(Unit parentUnit, Unit unit) throws ExcepcaoPersistencia,
             FenixServiceException {
-
-        Unit parentUnit = null;
-        if (parentUnitID != null) {
-            parentUnit = (Unit) rootDomainObject.readPartyByOID(parentUnitID);
+        
+        if (parentUnit != null && unit != null) {            
             if (parentUnit.equals(unit)) {
                 throw new FenixServiceException("error.same.unit");
             }

@@ -15,6 +15,8 @@ import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
+import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.CompetenceCourse;
 import net.sourceforge.fenixedu.domain.Contract;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
@@ -33,18 +35,7 @@ import org.joda.time.YearMonthDay;
 public class Unit extends Unit_Base {
 
 	public static final Comparator UNIT_COMPARATOR_BY_NAME = new BeanComparator("name", Collator.getInstance());
-	
-
-    public Unit() {
-        super();
-    }
-    
-    public Unit(String unitName, PartyTypeEnum partyType) {
-        super();
-        setName(unitName);
-        setType(partyType);
-    }
-
+	    
     public List<Unit> getTopUnits() {
         Unit unit = this;
         List<Unit> allTopUnits = new ArrayList<Unit>();
@@ -144,10 +135,24 @@ public class Unit extends Unit_Base {
         }
         return new ArrayList<Unit>(allActiveSubUnits);
     }
-
+    
+    private void checkCostCenterCode(Integer costCenterCode) throws FenixFilterException, FenixServiceException {
+        if(costCenterCode != null) {
+            List<Unit> allUnits = readAllUnits();
+            for (Unit unit : allUnits) {
+                if (!unit.equals(this) && unit.getCostCenterCode() != null 
+                        && unit.getCostCenterCode().equals(costCenterCode)) {
+                    throw new DomainException("error.costCenter.alreadyExists");                
+                }
+            }        
+        }
+    }
+    
     public void edit(String unitName, Integer unitCostCenter, String acronym, Date beginDate,
-            Date endDate, PartyTypeEnum type, Unit parentUnit, AccountabilityType accountabilityType, String webAddress) {
-
+            Date endDate, PartyTypeEnum type, Unit parentUnit, AccountabilityType accountabilityType, String webAddress) 
+            throws FenixFilterException, FenixServiceException {
+        
+        checkCostCenterCode(unitCostCenter);
         this.setName(unitName);
         this.setBeginDate(beginDate);
         this.setEndDate(endDate);
@@ -511,6 +516,18 @@ public class Unit extends Unit_Base {
         return result;
     }
     
+    public static Unit createNewUnit(String unitName, Integer costCenterCode, String acronym, Date beginDate,
+            Date endDate, PartyTypeEnum type, Unit parentUnit, AccountabilityType accountabilityType, String webAddress) 
+            throws FenixFilterException, FenixServiceException {
+        
+        if(unitName == null) {
+            throw new DomainException("error.unit.empty.name");
+        }
+        Unit unit = new Unit();
+        unit.edit(unitName, costCenterCode, acronym, beginDate, endDate, type, parentUnit, accountabilityType, webAddress);
+        return unit;
+    }
+    
     public static Unit createNewExternalInstitution(String unitName) {
         
         if(unitName == null) {
@@ -528,6 +545,7 @@ public class Unit extends Unit_Base {
         institutionUnit.setType(PartyTypeEnum.EXTERNAL_INSTITUTION);
         institutionUnit.addParent(externalInstitutionUnit, 
                 AccountabilityType.readAccountabilityTypeByType(AccountabilityTypeEnum.ORGANIZATIONAL_STRUCTURE));
+        
         return institutionUnit;
     }
 }

@@ -134,58 +134,67 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
             }
         }
         return allInherentFunctions;
-    }
-
-    private List<Unit> readAllUnits() throws FenixServiceException, FenixFilterException {
-        return Unit.readAllUnits();
-    }
+    }  
 
     public String getAllUnitsToChooseParentUnit() throws FenixFilterException, FenixServiceException,
             ExcepcaoPersistencia {
         StringBuilder buffer = new StringBuilder();
+        YearMonthDay currentDate = new YearMonthDay();
         List<Unit> allUnitsWithoutParent = UnitUtils.readAllUnitsWithoutParents();
         Collections.sort(allUnitsWithoutParent, new BeanComparator("name"));
         for (Unit unit : allUnitsWithoutParent) {
             if (!unit.equals(this.getUnit())) {
-                getUnitTreeToChooseParentUnit(buffer, unit);
+                getUnitTreeToChooseParentUnit(buffer, unit, currentDate);
             }
         }
         return buffer.toString();
     }
 
-    public void getUnitTreeToChooseParentUnit(StringBuilder buffer, Unit parentUnit)
+    public void getUnitTreeToChooseParentUnit(StringBuilder buffer, Unit parentUnit, YearMonthDay currentDate)
             throws FenixFilterException, FenixServiceException {
         buffer.append("<ul class='padding1 nobullet'>");
-        getUnitsListToChooseParentUnit(parentUnit, buffer);
+        getUnitsListToChooseParentUnit(parentUnit, buffer, currentDate);
         closeULTag(buffer);
     }
 
-    private void getUnitsListToChooseParentUnit(Unit parentUnit, StringBuilder buffer)
+    private void getUnitsListToChooseParentUnit(Unit parentUnit, StringBuilder buffer, YearMonthDay currentDate)
             throws FenixFilterException, FenixServiceException {
 
         openLITag(buffer);
-
-        if (parentUnit.hasAnySubUnits()) {
+        
+        List<Unit> subUnits = null;
+        if(this.getUnit().isActive(currentDate)) {
+            subUnits = parentUnit.getActiveSubUnits(currentDate); 
+        } else {
+            subUnits = parentUnit.getInactiveSubUnits(currentDate);
+        }
+                        
+        if (!subUnits.isEmpty()) {
             putImage(parentUnit, buffer);
         }
-
+          
         buffer.append("<a href=\"").append(getContextPath()).append(
                 "/manager/organizationalStructureManagament/").append("chooseParentUnit.faces?").append(
                 "unitID=").append(this.getUnit().getIdInternal()).append("&chooseUnitID=").append(
                 parentUnit.getIdInternal()).append("\">").append(parentUnit.getName()).append("</a>")
-                .append("</li>");
+                .append("</li>");        
+         
+        writeSubUnitsList(parentUnit, buffer, currentDate, subUnits);                     
+    }
 
-        if (parentUnit.hasAnySubUnits()) {
+    private void writeSubUnitsList(Unit parentUnit, StringBuilder buffer, YearMonthDay currentDate, 
+            List<Unit> subUnits) throws FenixFilterException, FenixServiceException {
+        
+        if (!subUnits.isEmpty()) {
             openULTag(parentUnit, buffer);
+            Collections.sort(subUnits, new BeanComparator("name"));
         }
-
-        for (Unit subUnit : parentUnit.getSubUnits()) {
+        for (Unit subUnit : subUnits) {
             if (!subUnit.equals(this.getUnit())) {
-                getUnitsListToChooseParentUnit(subUnit, buffer);
+                getUnitsListToChooseParentUnit(subUnit, buffer, currentDate);
             }
         }
-
-        if (parentUnit.hasAnySubUnits()) {
+        if (!subUnits.isEmpty()) {
             closeULTag(buffer);
         }
     }
@@ -463,10 +472,6 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 
     public String createTopUnit() throws FenixFilterException, FenixServiceException {
 
-        if (verifyCostCenterCode()) {
-            return "";
-        }
-
         PrepareDatesResult datesResult = prepareDates(this.getUnitBeginDate(), this.getUnitEndDate());
         if (datesResult.isTest()) {
             return "";
@@ -490,10 +495,6 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
             return "";
         }
 
-        if (verifyCostCenterCode()) {
-            return "";
-        }
-
         PrepareDatesResult datesResult = prepareDates(this.getUnitBeginDate(), this.getUnitEndDate());
         if (datesResult.isTest()) {
             return "";
@@ -514,10 +515,6 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
     }
 
     public String editUnit() throws FenixFilterException, FenixServiceException {
-
-        if (verifyCostCenterCode()) {
-            return "";
-        }
 
         PrepareDatesResult datesResult = prepareDates(this.getUnitBeginDate(), this.getUnitEndDate());
         if (datesResult.isTest()) {
@@ -1023,20 +1020,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 
     public void setChooseUnitIDHidden(HtmlInputHidden chooseUnitIDHidden) {
         this.chooseUnitIDHidden = chooseUnitIDHidden;
-    }
-
-    private boolean verifyCostCenterCode() throws FenixFilterException, FenixServiceException {
-        List<Unit> allUnits = readAllUnits();
-        for (Unit unit : allUnits) {
-            if (unit.getCostCenterCode() != null && !unit.equals(this.getChooseUnit())
-                    && this.getUnitCostCenter().equals(String.valueOf(unit.getCostCenterCode()))
-                    && unit.isActive(new YearMonthDay())) {
-                setErrorMessage("error.costCenter.alreadyExists");
-                return true;
-            }
-        }
-        return false;
-    }
+    }   
 
     public HtmlInputHidden getFunctionIDHidden() {
         if (this.functionIDHidden == null) {

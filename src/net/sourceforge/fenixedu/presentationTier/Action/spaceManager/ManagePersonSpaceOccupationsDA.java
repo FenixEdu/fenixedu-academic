@@ -15,7 +15,7 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
-public class ManageSpaceOccupationsDA extends FenixDispatchAction {
+public class ManagePersonSpaceOccupationsDA extends FenixDispatchAction {
 
     public ActionForward showSpaceOccupations(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {        
         final SpaceInformation spaceInformation = getSpaceInformationFromParameter(request);

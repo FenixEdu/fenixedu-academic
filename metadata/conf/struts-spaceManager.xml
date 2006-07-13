@@ -12,7 +12,7 @@
 				dynamic="true">
 			<form-property name="classname" type="java.lang.String"/>
 		</form-bean>
-		<form-bean name="manageSpaceOccupationsForm"
+		<form-bean name="managePersonSpaceOccupationsForm"
 				type="org.apache.struts.validator.DynaValidatorForm"
 				dynamic="true">
 			<form-property name="method" type="java.lang.String"/>
@@ -58,11 +58,11 @@
             <forward name="ViewSpaceInformation" path="show-space-information"/>
         </action>
         
-        <action path="/manageSpaceOccupations"
-        		name="manageSpaceOccupationsForm"
-        		type="net.sourceforge.fenixedu.presentationTier.Action.spaceManager.ManageSpaceOccupationsDA"
+        <action path="/managePersonSpaceOccupations"
+        		name="managePersonSpaceOccupationsForm"
+        		type="net.sourceforge.fenixedu.presentationTier.Action.spaceManager.ManagePersonSpaceOccupationsDA"
         		parameter="method">                		
-       		<forward name="showSpaceOccupations" path="show-space-occupations"/>        		        	
+       		<forward name="showSpaceOccupations" path="show-person-space-occupations"/>        		        	
         </action>
 
         <action path="/showCreateSpaceForm"

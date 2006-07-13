@@ -42,7 +42,7 @@ public abstract class SpaceInformation extends SpaceInformation_Base implements 
 			return getValidUntil().compareTo(spaceInformation.getValidUntil());
 		}
 	}
-
+    
 	public YearMonthDay getValidFrom() {
 		return validFrom;
 	}

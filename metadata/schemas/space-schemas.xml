@@ -25,7 +25,7 @@
 <schema name="FloorInformation" type="net.sourceforge.fenixedu.domain.space.FloorInformation">
 	<slot name="level"/>
 </schema>
-<schema name="RoomFactoryCreator" type="net.sourceforge.fenixedu.domain.space.Room$RoomFactoryCreator">
+<schema name="RoomFactoryCreator" type="net.sourceforge.fenixedu.domain.space.Room$RoomFactoryCreator" bundle="SPACE_RESOURCES">
 	<slot name="blueprintNumber"/>
 	<slot name="identification"/>
 	<slot name="description"/>
@@ -38,7 +38,7 @@
 	<slot name="ageQuality"/>
 	<slot name="observations"/>
 </schema>
-<schema name="RoomFactoryEditor" type="net.sourceforge.fenixedu.domain.space.Room$RoomFactoryEditor">
+<schema name="RoomFactoryEditor" type="net.sourceforge.fenixedu.domain.space.Room$RoomFactoryEditor" bundle="SPACE_RESOURCES">
 	<slot name="blueprintNumber"/>
 	<slot name="identification"/>
 	<slot name="description"/>
@@ -51,7 +51,7 @@
 	<slot name="ageQuality"/>
 	<slot name="observations"/>
 </schema>
-<schema name="RoomInformation" type="net.sourceforge.fenixedu.domain.space.RoomInformation">
+<schema name="RoomInformation" type="net.sourceforge.fenixedu.domain.space.RoomInformation" bundle="SPACE_RESOURCES">
 	<slot name="blueprintNumber"/>
 	<slot name="identification"/>
 	<slot name="description"/>
@@ -72,19 +72,25 @@
 	<slot name="presentationCode"/>
 	<slot name="name"/>
 </schema>
-<schema name="PersonOccupations" type="net.sourceforge.fenixedu.domain.space.PersonSpaceOccupation">
+<schema name="PersonSpaceOccupations" type="net.sourceforge.fenixedu.domain.space.PersonSpaceOccupation">
 	<slot name="person.name"/>
 	<slot name="begin"/>
 	<slot name="end"/>
 </schema>
-<schema name="EditPersonOccupation" type="net.sourceforge.fenixedu.domain.space.PersonSpaceOccupation" bundle="SPACE_RESOURCES">	
+<schema name="PersonSpaceOccupationsWithUsername" type="net.sourceforge.fenixedu.domain.space.PersonSpaceOccupation">
+	<slot name="person.name"/>	
+	<slot name="person">
+		<property name="format" value="(${username})"/>		
+	</slot>
+</schema>
+<schema name="EditPersonSpaceOccupation" type="net.sourceforge.fenixedu.domain.space.PersonSpaceOccupation" bundle="SPACE_RESOURCES">	
 	<slot name="begin" key="label.begin.date">
 		<validator class="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" />
 	</slot>
 	<slot name="end" key="label.end.date"/>
 	<setter signature="setOccupationInterval(begin, end)"/>
 </schema>
-<schema name="AddPersonOccupation" type="net.sourceforge.fenixedu.domain.space.PersonSpaceOccupation" 
+<schema name="AddPersonSpaceOccupation" type="net.sourceforge.fenixedu.domain.space.PersonSpaceOccupation" 
 		constructor="space, person, begin, end" bundle="SPACE_RESOURCES">
 	<slot name="space" hidden="true"/>
 	<slot name="begin" key="label.begin.date">
