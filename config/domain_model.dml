@@ -218,15 +218,15 @@ class net.sourceforge.fenixedu.domain.accounting.ServiceAgreement extends net.so
 }
 	class net.sourceforge.fenixedu.domain.accounting.serviceAgreements.DegreeCurricularPlanServiceAgreement extends net.sourceforge.fenixedu.domain.accounting.ServiceAgreement {
 	}
-
+	
 class net.sourceforge.fenixedu.domain.accounting.ServiceAgreementTemplate extends net.sourceforge.fenixedu.domain.DomainObject {
     String ojbConcreteClass;
     DateTime creationDate;
 }
 	class net.sourceforge.fenixedu.domain.accounting.serviceAgreementTemplates.DegreeCurricularPlanServiceAgreementTemplate extends net.sourceforge.fenixedu.domain.accounting.ServiceAgreementTemplate {
-		Integer keyDegree;
+		Integer keyDegreeCurricularPlan;
 	}
-
+	
 class net.sourceforge.fenixedu.domain.accounting.PostingRule extends net.sourceforge.fenixedu.domain.DomainObject {
     String ojbConcreteClass;
     AccountingEventType eventType;
