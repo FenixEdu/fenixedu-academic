@@ -1,4 +1,0 @@
-truncate ciapl.EXECUTION_DEGREE;
-	insert into ciapl.EXECUTION_DEGREE (ID_INTERNAL, ACADEMIC_YEAR, KEY_DEGREE)
-	select  ID_INTERNAL , "2002/2003", ID_INTERNAL
-	from ciapl.DEGREE;
