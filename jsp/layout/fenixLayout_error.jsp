@@ -21,7 +21,7 @@
 <!--End Context -->
 <!-- Header -->
 <div id="header">	
-	<img alt="<bean:message key="dotist-id" bundle="IMAGE_RESOURCES" />" src="<bean:message key="dot.logo" bundle="GLOBAL_RESOURCES" arg0="<%= request.getContextPath() %>"/>"/>
+	<img alt="<bean:message key="institution.logo" bundle="IMAGE_RESOURCES" />" src="<bean:message key="dot.logo" bundle="GLOBAL_RESOURCES" arg0="<%= request.getContextPath() %>"/>"/>
 	<bean:define id="pageServiceName" ><tiles:getAsString name="serviceName" ignore="true" /></bean:define>
     <p><bean:message name="pageServiceName" bundle="GLOBAL_RESOURCES"/></p>
 </div>

@@ -26,7 +26,7 @@
 <tiles:insert attribute="context" ignore="true" />
 <!--End Context -->
 <!-- Header -->
-<div id="header"><img alt="<bean:message key="dotist-id" bundle="IMAGE_RESOURCES" />"
+<div id="header"><img alt="<bean:message key="institution.logo" bundle="IMAGE_RESOURCES" />"
 	src="<bean:message key="dot.logo" bundle="GLOBAL_RESOURCES" arg0="<%= request.getContextPath() %>"/>" />
 <p><bean:message key="<%=title%>" /></p>
 </div>

@@ -6,7 +6,7 @@
 
 <div id="logoist">
 	<a href="<%= institutionUrl %>">
-		<img alt="<bean:message key="dotist-id" bundle="IMAGE_RESOURCES" />" width="234" height="51" border="0"
+		<img alt="<bean:message key="institution.logo" bundle="IMAGE_RESOURCES" />" width="234" height="51" border="0"
 			src="<bean:message key="university.logo.public" bundle="GLOBAL_RESOURCES" arg0="<%= request.getContextPath() %>"/>"/>
 	</a>
 </div>

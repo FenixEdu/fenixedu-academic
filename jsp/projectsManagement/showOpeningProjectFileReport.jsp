@@ -7,7 +7,7 @@
 	<br />
 	<table>
 		<tr>
-			<td rowspan="3"><img height="110" alt="<bean:message key="dotist-id" bundle="IMAGE_RESOURCES" />"
+			<td rowspan="3"><img height="110" alt="<bean:message key="institution.logo" bundle="IMAGE_RESOURCES" />"
 				src="<bean:message key="university.logo" bundle="GLOBAL_RESOURCES" arg0="<%= request.getContextPath() %>"/>" /></td>
 		</tr>
 		<tr>
