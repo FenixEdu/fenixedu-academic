@@ -27,3 +27,6 @@ function executeWithTempFile() {
 	echo
 }
 
+
+execute "Changing AssiduousnessRecord column name" AlterTableAssiduousnessRecord.sql
+execute "Changing Party column address" AlterPartyAddress.sql
