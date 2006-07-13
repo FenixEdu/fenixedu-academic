@@ -46,7 +46,12 @@ public class UpdateObjects extends Service {
         try {
             setter.invoke(object, values);
         } catch (InvocationTargetException e) {
-            throw new RuntimeException("error while invoking specialized setter", e.getTargetException());
+            if (e.getCause() != null && e.getCause() instanceof RuntimeException) {
+                throw (RuntimeException) e.getCause();
+            }
+            else {
+                throw new RuntimeException("error while invoking specialized setter", e.getTargetException());
+            }
         } catch (Exception e) {
             throw new RuntimeException("error while invoking specialized setter", e);
         }

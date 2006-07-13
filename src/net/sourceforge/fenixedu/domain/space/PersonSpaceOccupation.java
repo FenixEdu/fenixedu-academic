@@ -49,7 +49,7 @@ public class PersonSpaceOccupation extends PersonSpaceOccupation_Base {
         super.setEnd(end);
     }
 
-    public void edit(final YearMonthDay begin, final YearMonthDay end) {               
+    public void setOccupationInterval(final YearMonthDay begin, final YearMonthDay end) {               
         checkPersonSpaceOccupationIntersection(begin, end, getPerson(), getSpace());
         super.setBegin(begin);
         super.setEnd(end);

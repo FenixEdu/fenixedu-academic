@@ -82,6 +82,7 @@
 		<validator class="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" />
 	</slot>
 	<slot name="end" key="label.end.date"/>
+	<setter signature="setOccupationInterval(begin, end)"/>
 </schema>
 <schema name="AddPersonOccupation" type="net.sourceforge.fenixedu.domain.space.PersonSpaceOccupation" 
 		constructor="space, person, begin, end" bundle="SPACE_RESOURCES">
