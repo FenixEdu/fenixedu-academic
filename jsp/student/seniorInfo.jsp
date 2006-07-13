@@ -15,7 +15,7 @@
 					<td rowspan="3" valign="center" height="12px" width="5px" align="center">
 						<logic:equal name="seniorInfoForm" property="availablePhoto" value="true">
 							<bean:define id="personID" name="seniorInfoForm" property="personID"/>
-      						<html:img src="<%= request.getContextPath() +"/person/viewPhoto.do?personCode="+personID.toString()%>"/>
+      						<html:img src="<%= request.getContextPath() +"/person/viewPhoto.do?personCode="+personID.toString()%>" altKey="personPhoto" bundle="IMAGE_RESOURCES"/>
 						</logic:equal>
 					</td>
 		        </tr>

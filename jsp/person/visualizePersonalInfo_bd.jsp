@@ -10,7 +10,7 @@
  	<tr valign="bottom">
  		<td><h2><bean:message key="label.person.title.personalConsult" /></h2></td>
  		<td align="right">
- 			<html:img align="middle" src="<%= request.getContextPath() +"/person/retrievePersonalPhoto.do?method=retrieveOwnPhoto" %>" />
+ 			<html:img align="middle" src="<%= request.getContextPath() +"/person/retrievePersonalPhoto.do?method=retrieveOwnPhoto" %>" altKey="personPhoto" bundle="IMAGE_RESOURCES" />
  		</td>
  	</tr>
  </table>

@@ -45,7 +45,7 @@
 				Integer personCode = infoScp.getInfoStudent().getInfoPerson().getIdInternal();
 		%>
 		
-	    <html:img align="middle" height="100" width="100" src="<%= request.getContextPath() +"/person/viewPhoto.do?personCode="+personCode.toString()%>"/>
+	    <html:img align="middle" height="100" width="100" src="<%= request.getContextPath() +"/person/viewPhoto.do?personCode="+personCode.toString()%>" altKey="personPhoto" bundle="IMAGE_RESOURCES" />
 	    
 		<br/>
 		<br/>

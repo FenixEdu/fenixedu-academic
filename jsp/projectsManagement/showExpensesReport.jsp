@@ -32,12 +32,12 @@
 					</logic:present>
 					<td class="infoop" width="20"><html:link
 						page="<%="/projectReport.do?method=exportToExcel&amp;reportType=expensesReport&amp;projectCode="+projectCode+rubric2url+code%>">
-						<html:img border="0" src="<%= request.getContextPath() + "/images/excel.bmp"%>" altKey="link.exportToExcel" align="right" />
+						<html:img border="0" src="<%= request.getContextPath() + "/images/excel.bmp"%>" altKey="excel" bundle="IMAGE_RESOURCES" align="right" />
 					</html:link></td>
 					<%--
 					<td class="infoop" width="20"><html:link target="_blank"
 						page="<%="/projectReport.do?method=getReport&amp;reportType=expensesReport&amp;projectCode="+projectCode+"&amp;print=true"+rubric2url%>">
-						<html:img border="0" src="<%= request.getContextPath() + "/images/printer.gif"%>" altKey="label.print" align="right" />
+						<html:img border="0" src="<%= request.getContextPath() + "/images/printer.gif"%>" altKey="printer" bundle="IMAGE_RESOURCES" align="right" />
 					</html:link></td>
 					--%>
 				</logic:notEmpty>

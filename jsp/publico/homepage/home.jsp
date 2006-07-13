@@ -70,7 +70,7 @@ vertical-align: top;
 		<!-- photo -->
 		<logic:equal name="homepage" property="showPhoto" value="true">
 			<bean:define id="homepageID" name="homepage" property="idInternal"/>
-			<tr><th></th><td><html:img src="<%= request.getContextPath() +"/publico/viewHomepage.do?method=retrievePhoto&homepageID=" + homepageID.toString() %>" style="padding: 1em 0;" alt="<bean:message key="personPhoto" bundle="IMAGE_RESOURCES" />"/></td></tr>
+			<tr><th></th><td><html:img src="<%= request.getContextPath() +"/publico/viewHomepage.do?method=retrievePhoto&homepageID=" + homepageID.toString() %>" style="padding: 1em 0;" altKey="personPhoto" bundle="IMAGE_RESOURCES" /></td></tr>
 		</logic:equal>
 
 		<!-- units -->
@@ -280,7 +280,7 @@ vertical-align: top;
 				<% final String appContext = net.sourceforge.fenixedu._development.PropertiesManager.getProperty("app.context"); %>
 				<% final String context = (appContext != null && appContext.length() > 0) ? "/" + appContext : ""; %>
 				<bean:define id="emailURL" type="java.lang.String"><%= request.getScheme() %>://<%= request.getServerName() %>:<%= request.getServerPort() %><%= context %>/publico/viewHomepage.do?method=emailPng&personID=<bean:write name="homepage" property="person.idInternal"/></bean:define>
-				<html:img align="middle" src="<%= emailURL %>"/>
+				<html:img align="middle" src="<%= emailURL %>" altKey="email" bundle="IMAGE_RESOURCES"/>
 			</td>
 		</tr>
 		</logic:equal>

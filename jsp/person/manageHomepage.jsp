@@ -261,7 +261,7 @@ width: 0.5em;
 				<html:checkbox property="showPhoto" value="true"/>
 			</td>
 			<td>
-				<html:img align="middle" src="<%= request.getContextPath() +"/person/retrievePersonalPhoto.do?method=retrieveOwnPhoto" %>" />
+				<html:img align="middle" src="<%= request.getContextPath() +"/person/retrievePersonalPhoto.do?method=retrieveOwnPhoto" %>" altKey="personPhoto" bundle="IMAGE_RESOURCES" />
 			</td>
 		</tr>
 

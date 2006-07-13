@@ -274,7 +274,7 @@ else
 	       
        	<logic:equal name="viewPhoto" value="true">
 		  	<bean:define id="personID" name="personalInfo" property="idInternal"/>	  	    		  	  	
-  			<html:img src="<%= request.getContextPath() +"/person/retrievePersonalPhoto.do?method=retrieveByID&personCode="+personID.toString()%>"/>
+  			<html:img src="<%= request.getContextPath() +"/person/retrievePersonalPhoto.do?method=retrieveByID&personCode="+personID.toString()%>" altKey="personPhoto" bundle="IMAGE_RESOURCES" />
 	   	</logic:equal>
 
 	      
@@ -372,13 +372,15 @@ else
 				<td class="ppleft2"><bean:message key="label.degree.name" />:</td>  
 				<logic:iterate id="infoStudent" name="personalInfo" property="infoStudentCurricularPlanList">		
 				<bean:define id="degreeName" name="infoStudent" property="infoDegreeCurricularPlan.infoDegree.nome"/>
-				<logic:match name="infoStudent" property="infoDegreeCurricularPlan.infoDegree.tipoCurso" location="start" value="DEGREE"> 
-				<td class="ppright"> <bean:message key="link.degree"/> <bean:write name="degreeName" /></td>		 
-				</logic:match>
-				<logic:match name="infoStudent" property="infoDegreeCurricularPlan.infoDegree.tipoCurso" location="start" value="MASTER_DEGREE"> 
-				<td class="ppright"> <bean:message key="link.master"/> <bean:write name="degreeName" /></td>
-				</logic:match>
-			</tr><td class="ppleft2"> </td>      
+				<td class="ppright"> 
+					<logic:match name="infoStudent" property="infoDegreeCurricularPlan.infoDegree.tipoCurso" location="start" value="DEGREE"> 
+					<bean:message key="link.degree"/> <bean:write name="degreeName" /><br/>
+					</logic:match>
+					<logic:match name="infoStudent" property="infoDegreeCurricularPlan.infoDegree.tipoCurso" location="start" value="MASTER_DEGREE"> 
+					<bean:message key="link.master"/> <bean:write name="degreeName" />
+					</logic:match>
+				</td>
+			</tr>
 			</logic:iterate>
 		</logic:present>
 	</table>

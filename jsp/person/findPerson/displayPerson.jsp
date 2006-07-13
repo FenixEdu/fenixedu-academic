@@ -51,7 +51,7 @@
 		  	<logic:equal name="viewPhoto" value="true">
 			  	<logic:equal name="personalInfo" property="availablePhoto" value="true">
 					<td rowspan="4" width="100">	  	    		  	  	
-	      				<html:img align="middle" height="100" width="100" src="<%= request.getContextPath() +"/person/viewPhoto.do?personCode="+personID.toString()%>"/>
+	      				<html:img align="middle" height="100" width="100" src="<%= request.getContextPath() +"/person/viewPhoto.do?personCode="+personID.toString()%>" altKey="personPhoto" bundle="IMAGE_RESOURCES" />
 	      			</td>
 	      		</logic:equal>
 	      	</logic:equal>

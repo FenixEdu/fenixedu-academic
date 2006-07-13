@@ -13,7 +13,7 @@
  		<td align="right">
  			<logic:present name="personalInfo">
  				<bean:define id="personID" name="personalInfo" property="idInternal"/>
- 				<html:img align="middle" height="100" width="100" src="<%= request.getContextPath() +"/person/viewPhoto.do?personCode="+personID.toString()%>"/>
+ 				<html:img align="middle" height="100" width="100" src="<%= request.getContextPath() +"/person/viewPhoto.do?personCode="+personID.toString()%>" altKey="personPhoto" bundle="IMAGE_RESOURCES" />
  			</logic:present>
  		</td>
  	</tr>

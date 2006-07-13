@@ -28,7 +28,7 @@
 			<logic:notEmpty name="infoSummaryReport" property="lines">
 				<td class="infoop" width="20"><html:link
 					page="<%="/projectReport.do?method=exportToExcel&amp;reportType=summaryReport&amp;coordinatorCode="+coodinatorCode+code%>">
-					<html:img border="0" src="<%= request.getContextPath() + "/images/excel.bmp"%>" altKey="link.exportToExcel" align="right" />
+					<html:img border="0" src="<%= request.getContextPath() + "/images/excel.bmp"%>" altKey="excel" bundle="IMAGE_RESOURCES" align="right" />
 				</html:link></td>
 			</logic:notEmpty>
 		</tr>

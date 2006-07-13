@@ -355,7 +355,7 @@ function cleanSelect(checkboxes) {
 						<bean:define id="aluno" name="attendacy" property="aluno"/>
 						<bean:define id="infoPerson" name="aluno" property="infoPerson"/>			
 						<bean:define id="personID" name="infoPerson" property="idInternal"/>
-		      			<html:img align="middle" src="<%= request.getContextPath() +"/person/retrievePersonalPhoto.do?method=retrieveByID&personCode="+personID.toString()%>"/>
+		      			<html:img align="middle" src="<%= request.getContextPath() +"/person/retrievePersonalPhoto.do?method=retrieveByID&personCode="+personID.toString()%>" altKey="personPhoto" bundle="IMAGE_RESOURCES"/>
 					</td>
 				</logic:equal>
 				<td class="listClasses">

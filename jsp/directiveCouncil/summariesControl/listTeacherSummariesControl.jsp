@@ -37,14 +37,14 @@
 			<bean:define id="url2" type="java.lang.String">/summariesControl.do?method=exportToCSV&department=<bean:write name="summariesControlForm" property="department"/>&executionPeriod=<bean:write name="summariesControlForm" property="executionPeriod"/></bean:define> 						
 			
 			<p><html:link page="<%= url %>">
-				<html:img border="0" src="<%= request.getContextPath() + "/images/excel.bmp"%>"/>
+				<html:img border="0" src="<%= request.getContextPath() + "/images/excel.bmp"%>" altKey="excel" bundle="IMAGE_RESOURCES" />
 				<bean:message key="link.export.to.excel"/>						
 			</html:link>
 			
 			&nbsp;&nbsp;&nbsp;
 			
 			<html:link page="<%= url2 %>">			
-				<html:img border="0" src="<%= request.getContextPath() + "/images/icon_csv.gif"%>" alt="<bean:message key="icon_csv" bundle="IMAGE_RESOURCES" />"/>
+				<html:img border="0" src="<%= request.getContextPath() + "/images/icon_csv.gif"%>" altKey="excel" bundle="IMAGE_RESOURCES" />
 				<bean:message key="link.export.to.csv"/>						
 			</html:link></p>
 			

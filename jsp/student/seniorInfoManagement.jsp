@@ -52,7 +52,7 @@
 					<td rowspan="3" valign="center" height="12px" width="5px" align="center">
 						<logic:equal name="seniorInfoForm" property="availablePhoto" value="true">
 							<bean:define id="personID" name="seniorInfoForm" property="personID"/>
-      						<html:img align="middle" src="<%= request.getContextPath() +"/person/retrievePersonalPhoto.do?method=retrieveOwnPhoto" %>" />
+      						<html:img align="middle" src="<%= request.getContextPath() +"/person/retrievePersonalPhoto.do?method=retrieveOwnPhoto" %>" altKey="personPhoto" bundle="IMAGE_RESOURCES" />
 						</logic:equal>
 						<logic:equal name="seniorInfoForm" property="availablePhoto" value="false">
 							<html:img src="<%= request.getContextPath() +"/images/photoPlaceHolder.jpg"%>" altKey="<bean:message key="photoPlaceHolder" bundle="IMAGE_RESOURCES" />"/>

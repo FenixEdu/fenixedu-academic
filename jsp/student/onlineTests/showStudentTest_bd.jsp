@@ -41,7 +41,7 @@
 			<bean:define id="questionLabel" name="questionBody" property="label"/>	
 			<%if (((String)questionLabel).startsWith("image/")){%>
 				<bean:define id="index" value="<%= (new Integer(Integer.parseInt(index)+1)).toString() %>"/>
-				<html:img align="middle" src="<%= request.getContextPath() + "/student/studentTests.do?method=showImage&amp;testCode="+testCode.toString()+"&amp;exerciseCode=" + questionCode+"&amp;imgCode="+index.toString() +"&amp;imgType="+questionLabel.toString()%>"/>
+				<html:img align="middle" src="<%= request.getContextPath() + "/student/studentTests.do?method=showImage&amp;testCode="+testCode.toString()+"&amp;exerciseCode=" + questionCode+"&amp;imgCode="+index.toString() +"&amp;imgType="+questionLabel.toString()%>" altKey="questionLabel" bundle="IMAGE_RESOURCES"/>
 				<logic:equal name="imageLabel" value="true">
 					</td><td>
 				</logic:equal>
@@ -76,7 +76,7 @@
 			<bean:define id="optionLabel" name="optionBody" property="label"/>
 			<%if (((String)optionLabel).startsWith("image/")){ %>
 				<bean:define id="index" value="<%= (new Integer(Integer.parseInt(index)+1)).toString() %>"/>
-				<html:img align="middle" src="<%= request.getContextPath() + "/student/studentTests.do?method=showImage&amp;testCode="+testCode.toString()+"&amp;exerciseCode="+ questionCode +"&amp;imgCode="+index.toString() +"&amp;imgType="+optionLabel.toString()%>"/>
+				<html:img align="middle" src="<%= request.getContextPath() + "/student/studentTests.do?method=showImage&amp;testCode="+testCode.toString()+"&amp;exerciseCode="+ questionCode +"&amp;imgCode="+index.toString() +"&amp;imgType="+optionLabel.toString()%>" altKey="optionLabel" bundle="IMAGE_RESOURCES"/>
 				<logic:equal name="imageLabel" value="true">
 					</td><td>
 				</logic:equal>
@@ -346,7 +346,7 @@
 											<bean:define id="feedbackLabel" name="feedback" property="label"/>
 											<%if (((String)feedbackLabel).startsWith("image/")){%>
 												<bean:define id="index" value="<%= (new Integer(Integer.parseInt(index)+1)).toString() %>"/>
-												<html:img align="middle" src="<%= request.getContextPath() + "/student/studentTests.do?method=showImage&amp;testCode="+testCode.toString()+"&amp;exerciseCode="+ questionCode +"&amp;imgCode="+index.toString() +"&amp;feedbackCode="+responseProcessingIndex.toString() +" &amp;imgType="+feedbackLabel.toString()%>"/>
+												<html:img align="middle" src="<%= request.getContextPath() + "/student/studentTests.do?method=showImage&amp;testCode="+testCode.toString()+"&amp;exerciseCode="+ questionCode +"&amp;imgCode="+index.toString() +"&amp;feedbackCode="+responseProcessingIndex.toString() +" &amp;imgType="+feedbackLabel.toString()%>" altKey="feedbackLabel" bundle="IMAGE_RESOURCES"/>
 												<logic:equal name="imageLabel" value="true">
 													</td><td>
 												</logic:equal>
