@@ -77,11 +77,9 @@
 	<slot name="begin"/>
 	<slot name="end"/>
 </schema>
-<schema name="PersonSpaceOccupationsWithUsername" type="net.sourceforge.fenixedu.domain.space.PersonSpaceOccupation">
+<schema name="PersonSpaceOccupationsWithUsername" type="net.sourceforge.fenixedu.domain.space.PersonSpaceOccupation" bundle="SPACE_RESOURCES">
 	<slot name="person.name"/>	
-	<slot name="person">
-		<property name="format" value="(${username})"/>		
-	</slot>
+	<slot name="person.username"/>
 </schema>
 <schema name="EditPersonSpaceOccupation" type="net.sourceforge.fenixedu.domain.space.PersonSpaceOccupation" bundle="SPACE_RESOURCES">	
 	<slot name="begin" key="label.begin.date">
