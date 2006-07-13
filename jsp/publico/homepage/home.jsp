@@ -70,7 +70,7 @@ vertical-align: top;
 		<!-- photo -->
 		<logic:equal name="homepage" property="showPhoto" value="true">
 			<bean:define id="homepageID" name="homepage" property="idInternal"/>
-			<tr><th></th><td><html:img src="<%= request.getContextPath() +"/publico/viewHomepage.do?method=retrievePhoto&homepageID=" + homepageID.toString() %>" style="padding: 1em 0;" alt=""/></td></tr>
+			<tr><th></th><td><html:img src="<%= request.getContextPath() +"/publico/viewHomepage.do?method=retrievePhoto&homepageID=" + homepageID.toString() %>" style="padding: 1em 0;" alt="<bean:message key="personPhoto" bundle="IMAGE_RESOURCES" />"/></td></tr>
 		</logic:equal>
 
 		<!-- units -->

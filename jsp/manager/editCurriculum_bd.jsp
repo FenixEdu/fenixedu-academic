@@ -8,9 +8,6 @@
 <table>
 	<tr>
 		<td>
-			<img alt="" src="<%= request.getContextPath() %>/images/england-flag.gif" alt="<bean:message key="england-flag" bundle="IMAGE_RESOURCES" />" width="30" height="20"/>
-		</td>
-		<td>
 			<html:link module="/manager" page="<%="/editCurriculum.do?method=prepareEdit&amp;degreeId=" + request.getParameter("degreeId").toString() + "&amp;degreeCurricularPlanId=" + request.getParameter("degreeCurricularPlanId").toString() + "&amp;curricularCourseId=" + request.getParameter("curricularCourseId").toString() + "&amp;language=English"%>"><bean:message bundle="MANAGER_RESOURCES" key="label.manager.edit.curriculum.english"/></html:link>
 		</td>
 	</tr>

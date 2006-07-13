@@ -33,7 +33,6 @@
 									<br />
 								</td>								
 								<td width="5%">
-									<%-- <img alt="" src="<%= request.getContextPath() %>/images/portugal-flag.gif" width="30" height="20"/> --%>
 									<br />
 								</td>
 								<td width="20%">

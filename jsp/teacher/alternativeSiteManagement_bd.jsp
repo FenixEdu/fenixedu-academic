@@ -91,7 +91,7 @@
 <br />
 <table width="100%" cellpadding="0" cellspacing="0">
 <tr>
-	<td class="infoop"><img src="<%= request.getContextPath() %>/images/number_3.gif" alt="<bean:message key="number_3" bundle="IMAGE_RESOURCES" />" alt="" />
+	<td class="infoop"><img src="<%= request.getContextPath() %>/images/number_3.gif" alt="<bean:message key="number_3" bundle="IMAGE_RESOURCES" />" />
 	</td>
 	<td class="infoop">
 	  <bean:message key="message.introduction.explanation" />

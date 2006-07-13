@@ -25,7 +25,7 @@
 	    	</td>
 		</logic:iterate>	
 		<td width="20%" nowrap class="centerContent">
-			<html:link forward="logoff"><img alt="" border="0" src="<%= request.getContextPath() %>/images/logout.gif" alt="<bean:message key="logout" bundle="IMAGE_RESOURCES" />"></html:link>
+			<html:link forward="logoff"><img border="0" src="<%= request.getContextPath() %>/images/logout.gif" alt="<bean:message key="logout" bundle="IMAGE_RESOURCES" />"></html:link>
 		</td>		
   </tr>
 </table>
