@@ -63,10 +63,10 @@ public abstract class Space extends Space_Base {
     }
     
     public SortedSet<PersonSpaceOccupation> getActivePersonSpaceOccupations(){
-        SortedSet<PersonSpaceOccupation> personSpaceOccupations = new TreeSet<PersonSpaceOccupation>(PersonSpaceOccupation.PERSON_SPACE_OCCUPATION_COMPARATOR_BY_PERSON_NAME);
+        SortedSet<PersonSpaceOccupation> personSpaceOccupations = new TreeSet<PersonSpaceOccupation>(PersonSpaceOccupation.COMPARATOR_BY_PERSON_NAME_AND_OCCUPATION_INTERVAL);
         YearMonthDay current = new YearMonthDay();
         for (SpaceOccupation spaceOccupation : getSpaceOccupations()) {
-            if(spaceOccupation instanceof PersonSpaceOccupation && ((PersonSpaceOccupation)spaceOccupation).isActive(current)) {
+            if(spaceOccupation instanceof PersonSpaceOccupation && ((PersonSpaceOccupation)spaceOccupation).contains(current)) {
                 personSpaceOccupations.add((PersonSpaceOccupation)spaceOccupation);
             }
         }        
@@ -74,10 +74,10 @@ public abstract class Space extends Space_Base {
     }
     
     public SortedSet<PersonSpaceOccupation> getInactivePersonSpaceOccupations(){
-        SortedSet<PersonSpaceOccupation> personSpaceOccupations = new TreeSet<PersonSpaceOccupation>(PersonSpaceOccupation.PERSON_SPACE_OCCUPATION_COMPARATOR_BY_PERSON_NAME);
+        SortedSet<PersonSpaceOccupation> personSpaceOccupations = new TreeSet<PersonSpaceOccupation>(PersonSpaceOccupation.COMPARATOR_BY_PERSON_NAME_AND_OCCUPATION_INTERVAL);
         YearMonthDay current = new YearMonthDay();
         for (SpaceOccupation spaceOccupation : getSpaceOccupations()) {
-            if(spaceOccupation instanceof PersonSpaceOccupation && !((PersonSpaceOccupation)spaceOccupation).isActive(current)) {
+            if(spaceOccupation instanceof PersonSpaceOccupation && !((PersonSpaceOccupation)spaceOccupation).contains(current)) {
                 personSpaceOccupations.add((PersonSpaceOccupation)spaceOccupation);
             }
         }        

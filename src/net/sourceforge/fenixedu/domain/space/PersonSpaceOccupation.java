@@ -5,6 +5,7 @@ import java.util.Comparator;
 import java.util.List;
 
 import org.apache.commons.beanutils.BeanComparator;
+import org.apache.commons.collections.comparators.ComparatorChain;
 import org.joda.time.YearMonthDay;
 
 import net.sourceforge.fenixedu.domain.Person;
@@ -12,7 +13,12 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 public class PersonSpaceOccupation extends PersonSpaceOccupation_Base {
     
-    public static final Comparator PERSON_SPACE_OCCUPATION_COMPARATOR_BY_PERSON_NAME = new BeanComparator("person.name", Collator.getInstance());
+    public static final Comparator COMPARATOR_BY_PERSON_NAME_AND_OCCUPATION_INTERVAL = new  ComparatorChain();
+    static {
+        ((ComparatorChain)COMPARATOR_BY_PERSON_NAME_AND_OCCUPATION_INTERVAL).addComparator(new BeanComparator("person.name", Collator.getInstance()));
+        ((ComparatorChain)COMPARATOR_BY_PERSON_NAME_AND_OCCUPATION_INTERVAL).addComparator(new BeanComparator("begin"));
+        ((ComparatorChain)COMPARATOR_BY_PERSON_NAME_AND_OCCUPATION_INTERVAL).addComparator(new BeanComparator("end"));
+    }            
     
     public PersonSpaceOccupation() {
         super();
@@ -79,8 +85,9 @@ public class PersonSpaceOccupation extends PersonSpaceOccupation_Base {
         }
     }
 
-    public boolean isActive(YearMonthDay currentDate) {
-        return (this.getEnd() == null || !this.getEnd().isBefore(currentDate));
+    public boolean contains(YearMonthDay currentDate) {
+        return (!this.getBegin().isBefore(currentDate) && 
+                (this.getEnd() == null || !this.getEnd().isBefore(currentDate)));
     }
     
     private boolean intersect(YearMonthDay begin, YearMonthDay end) {
