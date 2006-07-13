@@ -86,7 +86,7 @@ public class PersonSpaceOccupation extends PersonSpaceOccupation_Base {
     }
 
     public boolean contains(YearMonthDay currentDate) {
-        return (!this.getBegin().isBefore(currentDate) && 
+        return (!this.getBegin().isAfter(currentDate) && 
                 (this.getEnd() == null || !this.getEnd().isBefore(currentDate)));
     }
     
