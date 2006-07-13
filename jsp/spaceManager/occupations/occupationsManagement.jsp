@@ -54,8 +54,7 @@
 		</fr:create>
 	</logic:empty>
 	<logic:notEmpty name="personSpaceOccupation">	
-		<h3><bean:message key="label.edit.occupation" bundle="SPACE_RESOURCES"/>:</h3>					
-		<bean:define id="exceptionParams" value="<%="/manageSpaceOccupations.do?method=editSpacePersonOccupation&spaceInformationID="+ selectedSpaceInformationId %>" />		
+		<h3><bean:message key="label.edit.occupation" bundle="SPACE_RESOURCES"/>:</h3>							
 		<bean:write name="personSpaceOccupation" property="person.name"/> ->
 		<bean:write name="personSpaceOccupation" property="person.username"/>
 		<fr:edit name="personSpaceOccupation" action="<%= exceptionParams %>" schema="EditPersonOccupation">	   				

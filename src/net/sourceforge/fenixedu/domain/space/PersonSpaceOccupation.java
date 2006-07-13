@@ -72,7 +72,8 @@ public class PersonSpaceOccupation extends PersonSpaceOccupation_Base {
         checkPersonSpaceOccupationInterval(begin, end);   
         List<PersonSpaceOccupation> personSpaceOccupations = person.getPersonSpaceOccupations();        
         for (PersonSpaceOccupation personSpaceOccupation : personSpaceOccupations) {
-            if(personSpaceOccupation.getSpace().equals(space) && personSpaceOccupation.intersect(begin, end)) {
+            if(!personSpaceOccupation.equals(this) &&
+                    personSpaceOccupation.getSpace().equals(space) && personSpaceOccupation.intersect(begin, end)) {
                 throw new DomainException("error.person.space.occupation.intersection");
             }
         }

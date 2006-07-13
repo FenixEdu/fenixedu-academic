@@ -10114,12 +10114,4 @@
 		<filterChains>
 		</filterChains>		
 	</service>
-		<service>
-		<name>EditPersonSpaceOccupation</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.space.EditPersonSpaceOccupation</implementationClass>
-		<description />
-		<isTransactional>true</isTransactional>
-		<filterChains>
-		</filterChains>		
-	</service>
 </serviceDefinitions>
