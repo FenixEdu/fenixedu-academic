@@ -201,17 +201,14 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
                     && (unit.isActive(currentDate) || !unit.getAllActiveSubUnits(currentDate).isEmpty())) {
                 getUnitTree(buffer, unit, unit.getActiveSubUnits(currentDate), currentDate, true);
             } else if (this.getListingTypeValueToUnitsHidden().getValue().toString().equals("1")
-                    && (!unit.isActive(currentDate) || !unit.getAllInactiveSubUnits(currentDate)
-                            .isEmpty())) {
+                    && (!unit.isActive(currentDate) || !unit.getAllInactiveSubUnits(currentDate).isEmpty())) {
                 getUnitTree(buffer, unit, unit.getInactiveSubUnits(currentDate), currentDate, false);
             }
         }
-
         return buffer.toString();
     }
 
-    public void getUnitTree(StringBuilder buffer, Unit parentUnit, List<Unit> subUnits,
-            YearMonthDay currentDate, boolean active) {
+    public void getUnitTree(StringBuilder buffer, Unit parentUnit, List<Unit> subUnits, YearMonthDay currentDate, boolean active) {
         buffer.append("<ul class='padding1 nobullet'>");
         getUnitsList(parentUnit, subUnits, buffer, currentDate, active);
         buffer.append("</ul>");
@@ -233,10 +230,9 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 
         if (!subUnits.isEmpty()) {
             openULTag(parentUnit, buffer);
+            Collections.sort(subUnits, new BeanComparator("name"));
         }
-
-        Collections.sort(subUnits, new BeanComparator("name"));
-
+        
         for (Unit subUnit : subUnits) {
             if (active) {
                 getUnitsList(subUnit, subUnit.getActiveSubUnits(currentDate), buffer, currentDate,
@@ -247,13 +243,14 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
             }
         }
 
-        if (parentUnit.hasAnySubUnits()) {
+        if (!subUnits.isEmpty()) {
             closeULTag(buffer);
         }
     }
 
     public String getUnitsToChoosePrincipalFunction() throws FenixFilterException,
             FenixServiceException, ExcepcaoPersistencia {
+
         StringBuilder buffer = new StringBuilder();
         List<Unit> allUnitsWithoutParent = UnitUtils.readAllUnitsWithoutParents();
         Collections.sort(allUnitsWithoutParent, new BeanComparator("name"));

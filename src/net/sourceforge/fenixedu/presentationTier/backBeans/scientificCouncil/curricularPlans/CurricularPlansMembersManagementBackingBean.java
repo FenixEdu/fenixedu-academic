@@ -107,7 +107,7 @@ public class CurricularPlansMembersManagementBackingBean extends FenixBackingBea
 
         Department department = getDepartment();
         if (department != null) {
-            List<Employee> employees = new ArrayList<Employee>(getDepartment().getCurrentActiveWorkingEmployees());
+            List<Employee> employees = new ArrayList<Employee>(getDepartment().getAllCurrentActiveWorkingEmployees());
             ComparatorChain chainComparator = new ComparatorChain();
             chainComparator.addComparator(new BeanComparator("person.name"), false);
             chainComparator.addComparator(new BeanComparator("employeeNumber"), false);

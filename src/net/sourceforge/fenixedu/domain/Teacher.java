@@ -237,13 +237,23 @@ public class Teacher extends Teacher_Base {
     }
 
     public List<TeacherLegalRegimen> getAllLegalRegimensWithoutEndSituations(YearMonthDay beginDate, YearMonthDay endDate) {
-        List<TeacherLegalRegimen> legalRegimens = new ArrayList<TeacherLegalRegimen>();
+        Set<TeacherLegalRegimen> legalRegimens = new HashSet<TeacherLegalRegimen>();
         for (TeacherLegalRegimen legalRegimen : this.getLegalRegimens()) {
             if (!legalRegimen.isEndSituation() && legalRegimen.belongsToPeriod(beginDate, endDate)) {
                 legalRegimens.add(legalRegimen);
             }
         }
-        return legalRegimens;
+        return new ArrayList<TeacherLegalRegimen>(legalRegimens);
+    }
+    
+    public List<TeacherLegalRegimen> getAllLegalRegimensWithoutEndSituations() {
+        Set<TeacherLegalRegimen> legalRegimens = new HashSet<TeacherLegalRegimen>();
+        for (TeacherLegalRegimen legalRegimen : getLegalRegimens()) {
+            if (!legalRegimen.isEndSituation()) {
+                legalRegimens.add(legalRegimen);
+            }
+        }
+        return new ArrayList<TeacherLegalRegimen>(legalRegimens);
     }
 
     public TeacherPersonalExpectation getTeacherPersonalExpectationByExecutionYear(

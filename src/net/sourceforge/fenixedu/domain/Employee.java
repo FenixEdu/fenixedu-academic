@@ -129,7 +129,7 @@ public class Employee extends Employee_Base {
         if (unit.getType() != null
                 && unit.getType().equals(PartyTypeEnum.DEPARTMENT)
                 && unit.getDepartment() != null
-                && (!onlyActiveEmployees || unit.getDepartment().getCurrentActiveWorkingEmployees()
+                && (!onlyActiveEmployees || unit.getDepartment().getAllCurrentActiveWorkingEmployees()
                         .contains(this))) {
             return true;
         }

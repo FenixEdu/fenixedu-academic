@@ -31,7 +31,7 @@ public class ReadTeachersCreditsResumeByPeriodAndUnit extends Service {
         SortedSet<ExecutionPeriod> executionPeriodsBetween = getExecutionPeriodsBetween(fromExecutionPeriod,
                 untilExecutionPeriod);
         
-        List<Teacher> teachers = department.getTeachers(fromExecutionPeriod.getBeginDateYearMonthDay(),
+        List<Teacher> teachers = department.getAllTeachers(fromExecutionPeriod.getBeginDateYearMonthDay(),
                 untilExecutionPeriod.getEndDateYearMonthDay());
         
         List<TeacherCreditsReportDTO> creditLines = new ArrayList<TeacherCreditsReportDTO>();

@@ -131,7 +131,7 @@ public class SearchPerson extends Service {
 
         if ((roleBd.getRoleType() == RoleType.TEACHER) && (searchParameters.getDepartment() != null)) {
             persons = new ArrayList<Person>();
-            teachers = searchParameters.getDepartment().getCurrentTeachers();
+            teachers = searchParameters.getDepartment().getAllCurrentTeachers();
             for (Teacher teacher : teachers) {
                 persons.add(teacher.getPerson());
             }

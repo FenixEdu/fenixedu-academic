@@ -45,7 +45,7 @@ public class ReadProfessorshipsAndResponsibilitiesByDepartment extends Service {
         }
         //Departement
         Department department = rootDomainObject.readDepartmentByOID(departmentId);
-        List teachers = department.getCurrentTeachers();
+        List teachers = department.getAllCurrentTeachers();
         Iterator iter = teachers.iterator();
        
         List<Professorship> professorships = new ArrayList<Professorship>();

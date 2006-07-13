@@ -45,7 +45,7 @@ public class ReadProfessorshipsAndResponsibilitiesByDepartmentAndExecutionPeriod
             throw new FenixServiceException("error.noDepartment");
         } 
         
-        final List<Teacher> teachers = department.getCurrentTeachers();
+        final List<Teacher> teachers = department.getAllCurrentTeachers();
 
         Iterator iter = teachers.iterator();
       

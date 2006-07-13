@@ -136,7 +136,7 @@ public class SummariesControlAction extends FenixDispatchAction {
         ;
 
         List<Teacher> allDepartmentTeachers = (department != null && executionPeriod != null) ? department
-                .getTeachers(executionPeriod.getBeginDateYearMonthDay(), executionPeriod.getEndDateYearMonthDay())
+                .getAllTeachers(executionPeriod.getBeginDateYearMonthDay(), executionPeriod.getEndDateYearMonthDay())
                 : new ArrayList<Teacher>();
 
         List<SummariesControlElementDTO> allListElements = new ArrayList<SummariesControlElementDTO>();

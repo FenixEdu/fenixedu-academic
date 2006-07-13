@@ -339,6 +339,7 @@ Documentation:
 
     <renderer mode="input" type="java.lang.String" layout="allow-case-change" class="net.sourceforge.fenixedu.renderers.StringCaseChangerRenderer"/>
     
+    <!--@ The layout username-as-person allows you to insert a person given a username   -->
     <renderer mode="input" type="net.sourceforge.fenixedu.domain.Person" layout="username-as-person" class="net.sourceforge.fenixedu.presentationTier.renderers.PersonUsernameStringInputRenderer"/>
     
 </renderers-config>

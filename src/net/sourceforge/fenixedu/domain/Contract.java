@@ -24,7 +24,8 @@ public class Contract extends Contract_Base {
     }
 
     public boolean isActive(YearMonthDay currentDate) {
-        return (this.getEndDateYearMonthDay() == null || !this.getEndDateYearMonthDay().isBefore(currentDate));            
+        return (!this.getBeginDateYearMonthDay().isAfter(currentDate) &&
+                (this.getEndDateYearMonthDay() == null || !this.getEndDateYearMonthDay().isBefore(currentDate)));            
     }
 
     public void delete() {

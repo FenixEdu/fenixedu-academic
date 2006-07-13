@@ -22,7 +22,7 @@ public class ReadDepartmentTotalCreditsByPeriod extends Service {
         List<ExecutionPeriod> executionPeriodsBetween = getExecutionPeriodsBetween(fromExecutionPeriod,
                 untilExecutionPeriod);
         
-        List<Teacher> teachers = department.getTeachers(fromExecutionPeriod.getBeginDateYearMonthDay(),
+        List<Teacher> teachers = department.getAllTeachers(fromExecutionPeriod.getBeginDateYearMonthDay(),
                 untilExecutionPeriod.getEndDateYearMonthDay());
         
         SortedMap<ExecutionYear, PeriodCreditsReportDTO> departmentGlobalCredits = new TreeMap<ExecutionYear, PeriodCreditsReportDTO>(ExecutionYear.EXECUTION_YEAR_COMPARATOR_BY_YEAR);

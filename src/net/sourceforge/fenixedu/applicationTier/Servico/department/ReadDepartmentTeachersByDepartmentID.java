@@ -21,7 +21,7 @@ public class ReadDepartmentTeachersByDepartmentID extends Service {
         List<InfoTeacher> result = new ArrayList<InfoTeacher>();
         Department department = rootDomainObject.readDepartmentByOID( departmentID);
 
-        List teachers = department.getCurrentTeachers();
+        List teachers = department.getAllCurrentTeachers();
 
         for (int i = 0; i < teachers.size(); i++) {
 

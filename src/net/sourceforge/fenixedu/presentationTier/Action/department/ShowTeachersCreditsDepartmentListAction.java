@@ -75,7 +75,7 @@ public class ShowTeachersCreditsDepartmentListAction extends FenixAction {
         List<TeacherWithCreditsDTO> teachersCredits = new ArrayList<TeacherWithCreditsDTO>();
         for (Department department : userView.getPerson().getManageableDepartmentCredits()) {
             
-            List<Teacher> teachers = department.getTeachers(executionPeriod.getBeginDateYearMonthDay(),
+            List<Teacher> teachers = department.getAllTeachers(executionPeriod.getBeginDateYearMonthDay(),
                     executionPeriod.getEndDateYearMonthDay());
                     
             for (Teacher teacher : teachers) {

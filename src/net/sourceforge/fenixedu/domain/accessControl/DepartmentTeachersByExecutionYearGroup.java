@@ -23,7 +23,7 @@ public class DepartmentTeachersByExecutionYearGroup extends DepartmentByExecutio
     @Override
     public Set<Person> getElements() {
         Set<Person> elements = super.buildSet();
-        Collection<Teacher> departmentTeachers = getDepartment().getTeachers(
+        Collection<Teacher> departmentTeachers = getDepartment().getAllTeachers(
                 getExecutionYear().getBeginDateYearMonthDay(), getExecutionYear().getEndDateYearMonthDay());
 
         for (Teacher teacher : departmentTeachers) {

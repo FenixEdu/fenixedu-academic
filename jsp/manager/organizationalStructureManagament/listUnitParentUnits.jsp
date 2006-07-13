@@ -47,15 +47,15 @@
 					<h:outputText value="#{bundle['message.unitBeginDate']}" />
 				</f:facet>				
 				<h:outputFormat value="{0, date, dd/MM/yyyy}">
-					<f:param value="#{organizationalStructureBackingBean.unit.beginDate}"/>
+					<f:param value="#{unit.beginDate}"/>
 				</h:outputFormat>
 			</h:column>
 			<h:column>	
 				<f:facet name="header">
 					<h:outputText value="#{bundle['message.unitEndDate']}" />
 				</f:facet>								
-				<h:outputFormat value="{0, date, dd/MM/yyyy}" rendered="#{!empty organizationalStructureBackingBean.unit.endDate}">
-					<f:param value="#{organizationalStructureBackingBean.unit.endDate}"/>
+				<h:outputFormat value="{0, date, dd/MM/yyyy}" rendered="#{!empty unit.endDate}">
+					<f:param value="#{unit.endDate}"/>
 				</h:outputFormat>					
 			</h:column>
 			<h:column>	

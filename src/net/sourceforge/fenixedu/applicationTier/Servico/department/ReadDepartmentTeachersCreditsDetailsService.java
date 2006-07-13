@@ -62,7 +62,7 @@ public class ReadDepartmentTeachersCreditsDetailsService extends Service {
 
     protected List<Teacher> doSearch(HashMap searchParameters) {
         final Integer departmentId = Integer.valueOf((String) searchParameters.get("idInternal"));
-        return rootDomainObject.readDepartmentByOID(departmentId).getCurrentTeachers();
+        return rootDomainObject.readDepartmentByOID(departmentId).getAllCurrentTeachers();
     }
 
 }

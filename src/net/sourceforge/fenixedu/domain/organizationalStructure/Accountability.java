@@ -34,8 +34,9 @@ public class Accountability extends Accountability_Base {
                 .isBefore(begin)));
     }
 
-    public boolean isActive(YearMonthDay current) {
-        return (this.getEndDate() == null || !this.getEndDate().isBefore(current));
+    public boolean isActive(YearMonthDay currentDate) {
+        return (!this.getBeginDate().isAfter(currentDate) &&
+                (this.getEndDate() == null || !this.getEndDate().isBefore(currentDate)));
     }
 
     public Boolean isPersonFunction() {

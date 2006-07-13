@@ -51,7 +51,7 @@ public class DepartmentManagementBackingBean extends FenixBackingBean {
         if (department != null) {
             YearMonthDay today = new YearMonthDay();
             YearMonthDay tomorrow = today.plusDays(1);
-            result.addAll(department.getTeachers(today, tomorrow));
+            result.addAll(department.getAllTeachers(today, tomorrow));
         }
 
         return new ArrayList<Teacher>(result);

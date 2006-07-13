@@ -12,13 +12,10 @@ package net.sourceforge.fenixedu.domain;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
-import net.sourceforge.fenixedu.domain.teacher.TeacherLegalRegimen;
 import net.sourceforge.fenixedu.domain.teacher.TeacherPersonalExpectation;
 
 import org.joda.time.YearMonthDay;
@@ -30,119 +27,43 @@ public class Department extends Department_Base {
 		setRootDomainObject(RootDomainObject.getInstance());
 	}
 
-	public List<Employee> getCurrentActiveWorkingEmployees() {
+	public List<Employee> getAllCurrentActiveWorkingEmployees() {
+        Unit departmentUnit = this.getDepartmentUnit();        
+        return (departmentUnit != null) ? departmentUnit.getAllCurrentActiveWorkingEmployees() : new ArrayList<Employee>();
+    }
 
+    public List<Employee> getAllWorkingEmployees(YearMonthDay begin, YearMonthDay end) {
         Unit departmentUnit = this.getDepartmentUnit();
-        Set<Employee> employees = new HashSet<Employee>();
-        YearMonthDay currentDate = new YearMonthDay();
-
-        if (departmentUnit != null) {
-            readAndSaveEmployees(departmentUnit, employees, currentDate);
-        }
-        return new ArrayList<Employee>(employees);
+        return (departmentUnit != null) ? departmentUnit.getAllWorkingEmployees(begin, end) : new ArrayList<Employee>();
     }
-
-    private void readAndSaveEmployees(Unit unit, Set<Employee> employees, YearMonthDay currentDate) {
-        for (Contract contract : unit.getWorkingContracts()) {
-            Employee employee = contract.getEmployee();
-            if (employee.getActive().booleanValue() && contract.isActive(currentDate)) {
-                employees.add(employee);
-            }
-        }
-        for (Unit subUnit : unit.getSubUnits()) {
-            readAndSaveEmployees(subUnit, employees, currentDate);
-        }
-    }
-
-    public List<Employee> getWorkingEmployees(YearMonthDay begin, YearMonthDay end) {
-
+    
+    public List<Employee> getAllWorkingEmployees() {
         Unit departmentUnit = this.getDepartmentUnit();
-        Set<Employee> employees = new HashSet<Employee>();
-
-        if (departmentUnit != null) {
-            readAndSaveEmployees(departmentUnit, employees, begin, end);
-        }
-        return new ArrayList<Employee>(employees);
+        return (departmentUnit != null) ? departmentUnit.getAllWorkingEmployees() : new ArrayList<Employee>();
     }
 
-    private void readAndSaveEmployees(Unit unit, Set<Employee> employees, YearMonthDay begin, YearMonthDay end) {
-        for (Contract contract : unit.getWorkingContracts(begin, end)) {
-            employees.add(contract.getEmployee());
-        }
-        for (Unit subUnit : unit.getSubUnits()) {
-            readAndSaveEmployees(subUnit, employees, begin, end);
-        }
+    public List<Teacher> getAllCurrentTeachers() {
+        Unit departmentUnit = this.getDepartmentUnit();
+        return (departmentUnit != null) ? departmentUnit.getAllCurrentTeachers() : new ArrayList<Teacher>();
     }
 
-    public List<Teacher> getCurrentTeachers() {
-        YearMonthDay currentDate = new YearMonthDay();
-        List<Teacher> teachers = new ArrayList<Teacher>();
-        List<Employee> employees = this.getCurrentActiveWorkingEmployees();
-
-        for (Employee employee : employees) {
-            Teacher teacher = employee.getPerson().getTeacher();
-            if (teacher != null) {
-                TeacherLegalRegimen legalRegimen = teacher
-                        .getLastLegalRegimenWithoutEndSituations();
-                if (legalRegimen != null && legalRegimen.isActive(currentDate)) {
-                    teachers.add(teacher);
-                }
-            }
-        }
-        return teachers;
+    public List<Teacher> getAllTeachers() {
+        Unit departmentUnit = this.getDepartmentUnit();
+        return (departmentUnit != null) ? departmentUnit.getAllTeachers() : new ArrayList<Teacher>();
     }
 
-    public List<Teacher> getTeachersHistoric() {
-        Unit unit = this.getDepartmentUnit();
-        Set<Employee> allEmployees = new HashSet<Employee>();
-        List<Teacher> allTeachers = new ArrayList<Teacher>();
-        if (unit != null) {
-            for (Contract contract : unit.getWorkingContracts()) {
-                allEmployees.add(contract.getEmployee());
-            }
-            for (Unit subUnit : unit.getSubUnits()) {
-                for (Contract contract : subUnit.getWorkingContracts()) {
-                    allEmployees.add(contract.getEmployee());
-                }
-            }
-            addTeachers(allTeachers, new ArrayList(allEmployees));
-        }
-        return allTeachers;
-    }
-
-    public List<Teacher> getTeachers(YearMonthDay begin, YearMonthDay end) {
-        List<Teacher> teachers = new ArrayList<Teacher>();
-        List<Employee> employees = this.getWorkingEmployees(begin, end);
-        for (Employee employee : employees) {
-            Teacher teacher = employee.getPerson().getTeacher();
-            if (teacher != null
-                    && !teacher.getAllLegalRegimensWithoutEndSituations(begin,
-                            end).isEmpty()) {
-                teachers.add(teacher);
-            }
-        }
-        return teachers;
+    public List<Teacher> getAllTeachers(YearMonthDay begin, YearMonthDay end) {
+        Unit departmentUnit = this.getDepartmentUnit();
+        return (departmentUnit != null) ? departmentUnit.getAllTeachers(begin, end) : new ArrayList<Teacher>();
     }
 
     public Teacher getTeacherByPeriod(Integer teacherNumber, YearMonthDay begin, YearMonthDay end) {
-        for (Employee employee : getWorkingEmployees(begin, end)) {
-            Teacher teacher = employee.getPerson().getTeacher();
-            if (teacher != null
-                    && teacher.getTeacherNumber().equals(teacherNumber)
-                    && !teacher.getAllLegalRegimensWithoutEndSituations(begin,
-                            end).isEmpty()) {
+        for (Teacher teacher : getAllTeachers(begin, end)) {            
+            if (teacher.getTeacherNumber().equals(teacherNumber)) {
                 return teacher;
             }
         }
         return null;
-    }
-
-    private void addTeachers(List<Teacher> teachers, List<Employee> employees) {
-        for (Employee employee : employees) {
-            Teacher teacher = employee.getPerson().getTeacher();
-            if (teacher != null)
-                teachers.add(teacher);
-        }
     }
 
     public void createTeacherExpectationDefinitionPeriod(ExecutionYear executionYear, Date startDate,
@@ -209,7 +130,7 @@ public class Department extends Department_Base {
 
     public List<TeacherPersonalExpectation> getTeachersPersonalExpectationsByExecutionYear(
             ExecutionYear executionYear) {
-        List<Teacher> teachersFromDepartment = getTeachers(executionYear.getBeginDateYearMonthDay(), executionYear
+        List<Teacher> teachersFromDepartment = getAllTeachers(executionYear.getBeginDateYearMonthDay(), executionYear
                 .getEndDateYearMonthDay());
         List<TeacherPersonalExpectation> personalExpectations = new ArrayList<TeacherPersonalExpectation>();
 
