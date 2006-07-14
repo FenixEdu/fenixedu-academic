@@ -10,6 +10,7 @@
 			<th colspan="2">
 				<bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="label.manager.executionCourseManagement.executionPeriod" />: 
 				<html:select property="executionPeriodID" size="1">
+					<html:option value=""></html:option>
 					<html:options collection="executionPeriods" property="idInternal" labelProperty="description"/>
 				</html:select>
 			</th>
