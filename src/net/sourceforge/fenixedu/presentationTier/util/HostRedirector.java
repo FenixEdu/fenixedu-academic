@@ -11,12 +11,17 @@ import net.sourceforge.fenixedu._development.PropertiesManager;
 
 import org.apache.commons.lang.StringUtils;
 
-public class IndexHostRedirector {
+public class HostRedirector {
 
-    private static final Map<String, String> redirectPageMap = new HashMap<String, String>();
+    private static final Map<String, String> redirectPageIndexMap = new HashMap<String, String>();
+    private static final Map<String, String> redirectPageLoginMap = new HashMap<String, String>();
 
     static {
-        final String propertiesFilename = "/.indexRedirectHostnames.properties";
+        constructRedirectMap("/.indexRedirectHostnames.properties", redirectPageIndexMap, 16);
+        constructRedirectMap("/.loginRedirectHostnames.properties", redirectPageLoginMap, 16);
+    }
+
+    private static void constructRedirectMap(final String propertiesFilename, final Map<String, String> redirectPageMap, final int propertyOffSet) {
         try {
             final Properties properties = new Properties();
             PropertiesManager.loadProperties(properties, propertiesFilename);
@@ -34,14 +39,27 @@ public class IndexHostRedirector {
         }
     }
 
-    public static String getRedirectPage(final String requestURL) {
+    public static String getRedirectPageIndex(final String requestURL) {
+        return getRedirectPageIndex(redirectPageIndexMap, requestURL);
+    }
+
+    public static String getRedirectPageLogin(final String requestURL) {
+        return getRedirectPageIndex(redirectPageLoginMap, requestURL);
+    }
+
+    private static String getRedirectPageIndex(final Map<String, String> redirectPageMap, final String requestURL) {
         for (final Entry<String, String> entry : redirectPageMap.entrySet()) {
             final String hostname = entry.getKey();
-            if (StringUtils.substringAfter(requestURL, "://").startsWith(hostname)) {
+            final String urlHostname = StringUtils.substringAfter(requestURL, "://");
+            final int hostnameLengrh = hostname.length();
+            if (urlHostname.startsWith(hostname) &&
+                    (urlHostname.length() == hostnameLengrh
+                            || urlHostname.charAt(hostnameLengrh) == '.'
+                            || urlHostname.charAt(hostnameLengrh) == ':'
+                            || urlHostname.charAt(hostnameLengrh) == '/')) {
                 return entry.getValue();
             }
         }
         return "publico/index.html";
     }
-
 }

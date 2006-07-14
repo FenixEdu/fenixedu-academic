@@ -570,6 +570,10 @@ script.isAlive.check.slide=${script.isAlive.check.slide}
 		<generateHostDependentProperties prefix="index.html.link" destfile=".indexRedirectHostnames.properties"/>
 	</target>
 
+	<target name="write-login-redirect-hostnames-configuration-file">
+		<generateHostDependentProperties prefix="login.html.link" destfile=".loginRedirectHostnames.properties"/>
+	</target>
+
 	<target name="write-filter-hostnames-configuration-file">
 		<generateHostDependentProperties prefix="filter.hostname" destfile=".authenticationServiceHostnamesFiltering.properties"/>
 	</target>
@@ -577,7 +581,7 @@ script.isAlive.check.slide=${script.isAlive.check.slide}
 	<target name="write-cas-serviceUrl-hostnames-configuration-file">
 		<generateHostDependentProperties prefix="cas.serviceUrl" destfile=".casServiceUrlHostnames.properties"/>
 	</target>
-	
+
 	<target name="write-path-access-control-configuration-file">
 		<copy encoding="${encoding}" file="build.properties" tofile="${build.home.webinf.classes}/.hostAccessControl.properties">
 			<filterchain>

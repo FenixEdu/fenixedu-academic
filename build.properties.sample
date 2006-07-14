@@ -20,6 +20,8 @@ index.html.link.localhost=siteMap.do
 index.html.link.localhost.localdomain=siteMap.do
 index.html.link.salad21=loginPage.jsp
 index.html.link.salad21.ist.utl.pt=loginPage.jsp
+login.html.link.localhost=https://localhost:8080/ciapl/privado
+login.html.link.salad21=https://salad21:8080/ciapl/privado
 login.page=https://localhost:8080/ciapl/privado
 institution.url=http://www.ist.utl.pt
 

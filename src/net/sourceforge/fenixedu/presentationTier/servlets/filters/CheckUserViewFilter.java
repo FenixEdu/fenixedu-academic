@@ -19,10 +19,9 @@ import javax.servlet.http.HttpSession;
 import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
+import net.sourceforge.fenixedu.presentationTier.util.HostRedirector;
 
 public class CheckUserViewFilter implements Filter {
-
-    private static final String REDIRECT = PropertiesManager.getProperty("login.page");
 
     private static final int APP_CONTEXT_LENGTH = PropertiesManager.getProperty("app.context").length() + 1;
 
@@ -66,7 +65,7 @@ public class CheckUserViewFilter implements Filter {
         	}
         	httpSession.setAttribute("ORIGINAL_ATTRIBUTE_MAP", attributeMap);
 
-            response.sendRedirect(REDIRECT);
+            response.sendRedirect(HostRedirector.getRedirectPageLogin(uri));
         } else {
             filterChain.doFilter(request, response);
         }
