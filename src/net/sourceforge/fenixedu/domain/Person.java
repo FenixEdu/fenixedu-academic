@@ -658,34 +658,28 @@ public class Person extends Person_Base {
      * 
      * @return true if the person have been deleted, false otherwise
      */
-    public boolean delete() {
-
-        if (canBeDeleted()) {
-            if (hasPersonalPhoto()) {
-                getPersonalPhoto().delete();
-            }
-            // JCACHOPO: Can this for loop be replaced with the clear below?
-            // for (Role role : getPersonRoles()) {
-            // PersonRole.forceRemove(this, role);
-            // }
-            getPersonRoles().clear();
-
-            getManageableDepartmentCredits().clear();
-            getAdvisories().clear();
-            removeCms();
-            removePais();
-            getUser().delete();
-            RootDomainObject.getInstance().removePartys(this);
-            removeRootDomainObject();
-            deleteDomainObject();
-            return true;
+    public void delete() {
+        if (!canBeDeleted()) {
+            throw new DomainException("error.person.cannot.be.deleted");
         }
-
-        return false;
+        
+        if (hasPersonalPhoto()) {
+            getPersonalPhoto().delete();
+        }
+        // JCACHOPO: Can this for loop be replaced with the clear below?
+        // for (Role role : getPersonRoles()) {
+        // PersonRole.forceRemove(this, role);
+        // }
+        getPersonRoles().clear();
+        getManageableDepartmentCredits().clear();
+        getAdvisories().clear();
+        removeCms();
+        removePais();
+        getUser().delete();            
+        super.delete();       
     }
 
     private boolean canBeDeleted() {
-
         if (getStudentsCount() > 0) {
             return false;
         }
@@ -728,7 +722,6 @@ public class Person extends Person_Base {
         if (getPersonAuthorshipsCount() > 0) {
             return false;
         }
-
         if (getEmployee() != null) {
             return false;
         }

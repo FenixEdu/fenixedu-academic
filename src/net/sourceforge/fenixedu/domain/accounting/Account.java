@@ -108,7 +108,19 @@ public class Account extends Account_Base {
 
     @Override
     public void setCreationDate(DateTime creationDate) {
-        throw new DomainException("error.accounting.account..cannot.modify.creationDate");
+        throw new DomainException("error.accounting.account.cannot.modify.creationDate");
     }
 
+    public void delete() {
+        if(!canBeDeleted()) {
+            throw new DomainException("error.accounting.account.cannot.be.deleted");                       
+        }
+        super.setParty(null);
+        removeRootDomainObject();
+        deleteDomainObject();        
+    }
+
+    private boolean canBeDeleted() {
+        return getEntriesCount() == 0;               
+    }
 }

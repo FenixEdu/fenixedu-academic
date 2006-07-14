@@ -8,7 +8,6 @@ import java.util.Date;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Function;
 import net.sourceforge.fenixedu.domain.organizationalStructure.FunctionType;
@@ -20,28 +19,24 @@ public class CreateNewFunction extends Service {
     public void run(Integer functionID, Integer unitID, String functionName, Date beginDate,
             Date endDate, FunctionType type, Integer parentInherentFunctionID)
             throws ExcepcaoPersistencia, FenixServiceException, DomainException {
-
-        Function function = null;
+               
+        Function parentInherentFunction = null;
+        if (parentInherentFunctionID != null) {
+            parentInherentFunction = (Function) rootDomainObject.readAccountabilityTypeByOID(parentInherentFunctionID);            
+        }
+        
         if (functionID == null) {
-            function = new Function();
+            Unit unit = null;
+            if (unitID != null) {
+                unit = (Unit) rootDomainObject.readPartyByOID(unitID);            
+            }
+            new Function(functionName, beginDate, endDate, type, unit, parentInherentFunction);
         } else {
-            function = (Function) rootDomainObject.readAccountabilityTypeByOID(functionID);
+            Function function = (Function) rootDomainObject.readAccountabilityTypeByOID(functionID);
             if (function == null) {
                 throw new FenixServiceException("error.noFunction");
             }
-        }        
-
-        Unit unit = null;
-        if (unitID != null) {
-            unit = (Unit) rootDomainObject.readPartyByOID(unitID);            
-        }
-
-        Function parentInherentFunction = null;
-        if (parentInherentFunctionID != null) {
-            parentInherentFunction = (Function) rootDomainObject
-                    .readAccountabilityTypeByOID(parentInherentFunctionID);            
-        }
-        
-        function.edit(functionName, beginDate, endDate, type, unit, parentInherentFunction);
+            function.edit(functionName, beginDate, endDate, type, parentInherentFunction);
+        }                      
     }
 }

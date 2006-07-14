@@ -10,6 +10,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class CreateResultUnitAssociation extends Service {
     public ResultUnitAssociation run(ResultUnitAssociationCreateBean bean, Integer resultId) throws ExcepcaoPersistencia, FenixServiceException {
+        
         ResultUnitAssociation association = null;
         final Unit unit;
         boolean newUnit = false;
@@ -20,8 +21,7 @@ public class CreateResultUnitAssociation extends Service {
         }
         
         if (bean.getUnit() == null) {
-            unit = new Unit();
-            unit.setName(bean.getUnitName());
+            unit = Unit.createNewExternalInstitution(bean.getUnitName());            
             newUnit=true;
         }
         else{

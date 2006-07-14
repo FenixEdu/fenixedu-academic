@@ -25,8 +25,7 @@ public class CreateNewUnit extends Service {
             Integer degreeID, AccountabilityType accountabilityType, String webAddress) throws ExcepcaoPersistencia,
             FenixServiceException, DomainException, FenixFilterException {
 
-        Unit unit = null;
-        
+        Unit unit = null;        
         Unit parentUnit = getParentUnit(parentUnitID);        
         Integer costCenterCode = getCostCenterCode(unitCostCenter);        
         

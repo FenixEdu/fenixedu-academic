@@ -35,7 +35,11 @@ import org.joda.time.YearMonthDay;
 public class Unit extends Unit_Base {
 
 	public static final Comparator UNIT_COMPARATOR_BY_NAME = new BeanComparator("name", Collator.getInstance());
-	    
+	
+    private Unit() {
+        super();
+    }
+    
     public List<Unit> getTopUnits() {
         Unit unit = this;
         List<Unit> allTopUnits = new ArrayList<Unit>();
@@ -153,19 +157,23 @@ public class Unit extends Unit_Base {
             throws FenixFilterException, FenixServiceException {
         
         checkCostCenterCode(unitCostCenter);
+        checkUnitDates(beginDate, endDate);
+        if (acronym != null && !acronym.equals("") && this.getType() != null) {
+            checkAcronym(acronym, this.getType());
+        }
         this.setName(unitName);
         this.setBeginDate(beginDate);
         this.setEndDate(endDate);
         this.setType(type);        
         this.setCostCenterCode(unitCostCenter);
-        this.setWebAddress(webAddress);
-        if (acronym != null && !acronym.equals("") && this.getType() != null) {
-            checkAcronym(acronym, this.getType());
-        }
+        this.setWebAddress(webAddress);               
         this.setAcronym(acronym);
         if (parentUnit != null && accountabilityType != null) {
             this.addParent(parentUnit, accountabilityType);
-        }
+        }        
+    }
+
+    private void checkUnitDates(Date beginDate, Date endDate) {
         if (endDate != null && endDate.before(beginDate)) {
             throw new DomainException("error.endDateBeforeBeginDate");
         }
@@ -184,26 +192,24 @@ public class Unit extends Unit_Base {
     }
 
     public void delete() {
-        if (!hasAnyChilds()
-                && (!hasAnyParents() || (this.getParentUnits().size() == 1 && this.getParents().size() == 1))
-                && !hasAnyFunctions() && !hasAnyWorkingContracts() && !hasAnyMailingContracts()
-                && !hasAnySalaryContracts() && !hasAnyCompetenceCourses() && !hasAnyExternalPersons()
-                && !hasAnyAssociatedNonAffiliatedTeachers() && !hasAnyProjectParticipations() && !hasAnyEventParticipations()) {
-
-            if (hasAnyParentUnits()) {
-                this.getParents().get(0).delete();
-            }
-
-            for (; !getParticipatingAnyCurricularCourseCurricularRules().isEmpty(); getParticipatingAnyCurricularCourseCurricularRules()
-                    .get(0).delete());
-            
-            removeDepartment();
-            removeDegree();
-            removeRootDomainObject();
-            deleteDomainObject();
-        } else {
-            throw new DomainException("error.delete.unit");
+        if (!canBeDeleted()) {
+            throw new DomainException("error.unit.cannot.be.deleted");
         }
+        
+        if (hasAnyParentUnits()) {
+            this.getParents().get(0).delete();
+        }
+        for (; !getParticipatingAnyCurricularCourseCurricularRules().isEmpty(); getParticipatingAnyCurricularCourseCurricularRules().get(0).delete());           
+        removeDepartment();
+        removeDegree();
+        super.delete();                   
+    }
+    
+    private boolean canBeDeleted() {
+        return (!hasAnyParents() || (this.getParentUnits().size() == 1 && this.getParents().size() == 1))
+            && !hasAnyFunctions() && !hasAnyWorkingContracts() && !hasAnyMailingContracts()
+            && !hasAnySalaryContracts() && !hasAnyCompetenceCourses() && !hasAnyExternalPersons()
+            && !hasAnyAssociatedNonAffiliatedTeachers();                   
     }
 
     public List<Contract> getWorkingContracts(YearMonthDay begin, YearMonthDay end) {
@@ -523,6 +529,7 @@ public class Unit extends Unit_Base {
         if(unitName == null) {
             throw new DomainException("error.unit.empty.name");
         }
+        
         Unit unit = new Unit();
         unit.edit(unitName, costCenterCode, acronym, beginDate, endDate, type, parentUnit, accountabilityType, webAddress);
         return unit;

@@ -19,6 +19,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.MergeSlotDTO;
 import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
@@ -181,13 +182,11 @@ public class MergePersonsDispatchAction extends FenixDispatchAction {
         Integer personID = Integer.valueOf(request.getParameter("personID"));
 
         Object[] args = { personID };
-        Boolean success = (Boolean) ServiceUtils.executeService(userView, "DeletePersonByOID", args);
-
-        if (success) {
-            return mapping.findForward("choosePersons");
-        }
-
-        return choosePersons(mapping, form, request, response);
+        try {
+            ServiceUtils.executeService(userView, "DeletePersonByOID", args);
+        } catch (DomainException e) {
+            return choosePersons(mapping, form, request, response);
+        }               
+        return mapping.findForward("choosePersons");              
     }
-
 }

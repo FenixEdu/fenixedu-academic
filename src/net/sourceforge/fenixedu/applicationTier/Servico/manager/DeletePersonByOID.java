@@ -15,8 +15,7 @@ public class DeletePersonByOID extends Service {
     
     public boolean run(Integer personID) throws ExcepcaoPersistencia{
         Person person = (Person) rootDomainObject.readPartyByOID(personID);        
-        return person.delete();
-        
+        person.delete();
+        return true;
     }
-
 }

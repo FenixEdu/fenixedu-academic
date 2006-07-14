@@ -10,28 +10,45 @@ import org.joda.time.YearMonthDay;
 
 public class Function extends Function_Base {
 
-    public boolean isInherentFunction() {
-        return (this.getParentInherentFunction() != null);
-    }
-
-    public void edit(String functionName, Date beginDate, Date endDate, FunctionType type, Unit unit,
+    public Function(String functionName, Date beginDate, Date endDate, FunctionType type, Unit unit,
             Function parentInherentFunction) {
+        
+        super();
+        checkParameters(functionName, beginDate, endDate);
+        checkFunctionUnit(unit);                    
+        setName(functionName);        
+        setBeginDate(beginDate);        
+        setEndDate(endDate);
+        setFunctionType(type);
+        setUnit(unit);
+        setParentInherentFunction(parentInherentFunction);
+        setType(AccountabilityTypeEnum.MANAGEMENT_FUNCTION);
+    }    
+    
+    public void edit(String functionName, Date beginDate, Date endDate, FunctionType type, Function parentInherentFunction) {       
+        checkParameters(functionName, beginDate, endDate);        
+        this.setName(functionName);        
+        this.setBeginDate(beginDate);        
+        this.setEndDate(endDate);
+        this.setFunctionType(type);        
+        this.setParentInherentFunction(parentInherentFunction);        
+    }       
 
+    private void checkParameters(String functionName, Date beginDate, Date endDate) {
         if(functionName == null && functionName.equals("")){
             throw new DomainException("error.no.function.name");
         }
-        this.setName(functionName);        
-        this.setBeginDate(beginDate);
         if (endDate != null && endDate.before(beginDate)) {
             throw new DomainException("error.endDateBeforeBeginDate");
         }
-        this.setEndDate(endDate);
-        this.setFunctionType(type);
-        this.setUnit(unit);
-        this.setParentInherentFunction(parentInherentFunction);
-        this.setType(AccountabilityTypeEnum.MANAGEMENT_FUNCTION);
     }
-
+    
+    private void checkFunctionUnit(Unit unit) {
+        if(unit == null) {
+            throw new DomainException("error.function.no.unit");
+        }
+    }
+  
     public boolean isActive(YearMonthDay currentDate) {
         return (!this.getBeginDateYearMonthDay().isAfter(currentDate) &&
                 (this.getEndDateYearMonthDay() == null || !this.getEndDateYearMonthDay().isBefore(currentDate)));
@@ -59,5 +76,9 @@ public class Function extends Function_Base {
             personFunctions.add((PersonFunction) accountability);
         }
         return personFunctions;
+    }
+    
+    public boolean isInherentFunction() {
+        return (this.getParentInherentFunction() != null);
     }
 }

@@ -39,4 +39,18 @@ public abstract class Party extends Party_Base {
         return null;
     }
 
+    protected void delete() { 
+        if(!canBeDeleted()) {
+            throw new DomainException("error.party.cannot.be.deleted");
+        }
+        
+        for (; !getAccounts().isEmpty(); getAccounts().get(0).delete());
+        removeRootDomainObject();
+        deleteDomainObject();         
+    }         
+    
+    private boolean canBeDeleted() {
+        return !hasAnyResearchInterests() && !hasAnyProjectParticipations() 
+            && !hasAnyEventParticipations() && !hasAnyBoards() && !hasAnyChilds();  
+    }
 }

@@ -32,6 +32,6 @@ public class EditPersonFunction extends Service {
             throw new FenixServiceException("erro.noFunction");
         }
 
-        person_Function.edit(function, beginDate, endDate, credits);
+        person_Function.edit(beginDate, endDate, credits);
     }
 }
