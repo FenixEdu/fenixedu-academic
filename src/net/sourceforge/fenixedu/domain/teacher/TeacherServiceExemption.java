@@ -4,15 +4,37 @@
  */
 package net.sourceforge.fenixedu.domain.teacher;
 
+import java.util.Date;
+
 import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.Teacher;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 import org.joda.time.YearMonthDay;
 
 public class TeacherServiceExemption extends TeacherServiceExemption_Base {
 
-    public TeacherServiceExemption() {
+    public TeacherServiceExemption(Teacher teacher, Date beginDate, Date endDate, ServiceExemptionType type, String institution) {
         super();
         setRootDomainObject(RootDomainObject.getInstance());
+        checkParameters(teacher, beginDate, endDate, type);
+        setEnd(endDate);
+        setStart(beginDate);
+        setTeacher(teacher);
+        setType(type);
+        setInstitution(institution);
+    }
+    
+    private void checkParameters(Teacher teacher, Date beginDate, Date endDate, ServiceExemptionType type) {
+        if(teacher == null) {
+            throw new DomainException("error.serviceExemption.no.teacher");
+        }
+        if(type == null) {
+            throw new DomainException("error.serviceExemption.no.type");
+        }
+        if (endDate != null && endDate.before(beginDate)) {
+            throw new DomainException("error.endDateBeforeBeginDate");
+        }      
     }
 
     public void delete() {
