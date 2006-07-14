@@ -1,10 +1,10 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <%@ taglib uri="/WEB-INF/struts-tiles.tld" prefix="tiles" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 
-<html:html locale="true">
+<html:html xhtml="true" locale="true">
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 		<meta name="keywords" content="ensino, ensino superior, universidade, instituto, ciência, instituto superior técnico, investigação e desenvolvimento" />
@@ -27,7 +27,32 @@
 
 			<div class="breadcumbs"> </div><br/><br/>
 
-			&nbsp;&nbsp;<A href="loginPage.jsp">Login Page</A><br/><br/>
+			&nbsp;&nbsp;<A href="loginPage.jsp">Login Page</A>
+<!--
+			&nbsp;&nbsp;<A href="#degrees">Degrees</A>
+			&nbsp;&nbsp;<A href="#units">Units</A>
+			&nbsp;&nbsp;<A href="#people">People</A>
+			&nbsp;&nbsp;<A href="#infrastructures">Infra-structures</A>
+-->
+			<hr style="margin-top: 2em; margin-bottom: 2em"/>
+
+<!--
+			<a name="degrees"></a>
+			<h2>&nbsp;&nbsp;&nbsp;&nbsp;Degrees</h2>
+			<hr style="margin-top: 2em; margin-bottom: 2em"/>
+
+			<a name="units"></a>
+			<h2>&nbsp;&nbsp;&nbsp;&nbsp;Units</h2>
+			<hr style="margin-top: 2em; margin-bottom: 2em"/>
+
+			<a name="people"></a>
+			<h2>&nbsp;&nbsp;&nbsp;&nbsp;People</h2>
+			<hr style="margin-top: 2em; margin-bottom: 2em"/>
+
+			<a name="infrastructures"></a>
+			<h2>&nbsp;&nbsp;&nbsp;&nbsp;Infra-structures</h2>
+			<hr style="margin-top: 2em; margin-bottom: 2em"/>
+-->
 
 			<!-- PRE-BOLONHA DEGREES -->
 			<h2><bean:message key="old.degrees" bundle="GLOBAL_RESOURCES"/></h2>
