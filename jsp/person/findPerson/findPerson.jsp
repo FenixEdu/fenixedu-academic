@@ -367,21 +367,21 @@ else
 		</logic:equal>
 
 		<logic:present  name="personalInfo" property="infoStudentCurricularPlanList" >
-		<!-- Local de Trabalho -->   
+		<!-- Curso -->   
 			<tr>   
-				<td class="ppleft2"><bean:message key="label.degree.name" />:</td>  
-				<logic:iterate id="infoStudent" name="personalInfo" property="infoStudentCurricularPlanList">		
-				<bean:define id="degreeName" name="infoStudent" property="infoDegreeCurricularPlan.infoDegree.nome"/>
-				<td class="ppright"> 
-					<logic:match name="infoStudent" property="infoDegreeCurricularPlan.infoDegree.tipoCurso" location="start" value="DEGREE"> 
-					<bean:message key="link.degree"/> <bean:write name="degreeName" /><br/>
-					</logic:match>
-					<logic:match name="infoStudent" property="infoDegreeCurricularPlan.infoDegree.tipoCurso" location="start" value="MASTER_DEGREE"> 
-					<bean:message key="link.master"/> <bean:write name="degreeName" />
-					</logic:match>
+				<td class="ppleft2" style="vertical-align: top;"><bean:message key="label.degree.name" />:</td>  
+				<td class="ppright">
+					<logic:iterate id="infoStudent" name="personalInfo" property="infoStudentCurricularPlanList">		
+					<bean:define id="degreeName" name="infoStudent" property="infoDegreeCurricularPlan.infoDegree.nome"/>
+						<logic:match name="infoStudent" property="infoDegreeCurricularPlan.infoDegree.tipoCurso" location="start" value="MASTER_DEGREE">
+						<bean:message key="link.master"/> <bean:write name="degreeName" /><br/>
+						</logic:match>
+						<logic:match name="infoStudent" property="infoDegreeCurricularPlan.infoDegree.tipoCurso" location="start" value="DEGREE"> 
+						<bean:message key="link.degree"/> <bean:write name="degreeName" /><br/>
+						</logic:match>
+					</logic:iterate>
 				</td>
 			</tr>
-			</logic:iterate>
 		</logic:present>
 	</table>
 </div>
