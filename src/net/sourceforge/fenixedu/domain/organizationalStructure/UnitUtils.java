@@ -17,7 +17,6 @@ public class UnitUtils {
 
     public static final String IST_UNIT_NAME = getLabel("ist.unit.name");
     public static final String IST_UNIT_ACRONYM = getLabel("ist.unit.acronym");
-
     public static final String EXTERNAL_INSTITUTION_UNIT_NAME = getLabel("external.instituions.name");
 
     public static List<Unit> readAllExternalInstitutionUnits() {
@@ -87,6 +86,10 @@ public class UnitUtils {
         return null;
     }
 
+    public static Unit readExternalInstitutionUnit() {
+        return readUnitWithoutParentstByName(EXTERNAL_INSTITUTION_UNIT_NAME);
+    }
+    
     public static Unit readInstitutionUnit() {
         return readUnitWithoutParentstByName(IST_UNIT_NAME);
     }
