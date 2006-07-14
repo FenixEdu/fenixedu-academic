@@ -6,7 +6,7 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ page
 	import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants"%>
-<html:html locale="true">
+<html:html xhtml="true" locale="true">
 
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />

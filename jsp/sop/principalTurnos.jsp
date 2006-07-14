@@ -3,7 +3,7 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 
-<html:html>
+<html:html xhtml="true">
     <head>
         <title> <bean:message key="title.manage.turnos"/> </title>
     </head>

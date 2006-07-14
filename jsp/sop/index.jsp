@@ -2,7 +2,7 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/app.tld" prefix="app" %>
 
-<html:html>
+<html:html xhtml="true">
     <app:checkLogon/>
     <head>
       <title> Serviço de Organização Pedagógica </title>

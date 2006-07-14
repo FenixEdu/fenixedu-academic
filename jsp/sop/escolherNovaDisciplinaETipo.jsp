@@ -2,7 +2,7 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 
-<html:html>
+<html:html xhtml="true">
 
 <head>
 <title> <bean:message key="title.choose.disciplineAndType"/> </title>

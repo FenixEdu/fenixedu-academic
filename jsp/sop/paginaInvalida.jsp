@@ -6,7 +6,7 @@
     myAction = (String)request.getAttribute("lastMainActionPerformed");
 %>
 
-<html:html>
+<html:html xhtml="true">
     <app:checkLogon/>
     <head>
         <title> Página Inválida </title>

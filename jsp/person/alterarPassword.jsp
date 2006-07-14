@@ -3,7 +3,7 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/app.tld" prefix="app" %>
-<html:html>
+<html:html xhtml="true">
 <head>
 <title><bean:message key="alterarPassword.titulo"/></title>
 <html:base/>
