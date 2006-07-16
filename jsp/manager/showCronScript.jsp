@@ -27,7 +27,7 @@
 	       if (i == 1 && i != pageNumber) {
 	%>
 				<bean:define id="url1" type="java.lang.String">/cron.do?amp;page=0&pageNumber=<%= Integer.toString(pageNumber - 1) %>&cronScriptStateID=<bean:write name="cronScriptState" property="idInternal"/>&method=showScript</bean:define>
-				<html:link page="<%= url1 %>"><<</html:link>
+				<html:link page="<%= url1 %>"><bean:message bundle="MANAGER_RESOURCES" key="label.previous"/></html:link>
 	<%         
 	       }
 	       if (i != pageNumber) {
@@ -43,7 +43,7 @@
 	       if (i == lastPage && i != pageNumber) {
 	%>
 				<bean:define id="url2" type="java.lang.String">/cron.do?amp;page=0&pageNumber=<%= Integer.toString(pageNumber + 1) %>&cronScriptStateID=<bean:write name="cronScriptState" property="idInternal"/>&method=showScript</bean:define>
-				<html:link page="<%= url2 %>">>></html:link>
+				<html:link page="<%= url2 %>"><bean:message bundle="MANAGER_RESOURCES" key="label.next"/></html:link>
 	<%     }
        }
 	%>
