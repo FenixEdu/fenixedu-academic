@@ -225,13 +225,20 @@
             <forward name="teacher-not-found" path="/showAllTeacherCreditsResume.do?method=showTeacherCreditsResume&amp;page=0"/>
 		</action>
 		
+		<!-- Assiduousness Responsible -->    
+		<action path="/assiduousnessResponsible" scope="request" parameter="method"
+			type="net.sourceforge.fenixedu.presentationTier.Action.employee.AssiduousnessResponsibleDispatchAction"
+			validate="true" input="show-employee-list">
+			<forward name="show-employee-list" path="show-employee-list" />
+			<forward name="show-employee-work-sheet" path="show-employee-work-sheet" />
+		</action>
     </action-mappings>
     <!-- ========== Controller Configuration ================================ -->
     <controller processorClass="net.sourceforge.fenixedu.presentationTier.processor.FenixRequestProcessorWithTiles"/>
     <!-- ========== Message Resources Definitions ============================ -->
     <message-resources parameter="resources.DepartmentMemberResources" null="false"/>
 	<message-resources parameter="resources.GlobalResources" key="GLOBAL_RESOURCES" null="false"/>
-
+	<message-resources parameter="resources.AssiduousnessResources" key="ASSIDUOUSNESS_RESOURCES" null="false" />
     <!-- ========== Plug Ins Configuration ================================= -->
     <plug-in className="org.apache.struts.validator.ValidatorPlugIn">
         <set-property property="pathnames" 

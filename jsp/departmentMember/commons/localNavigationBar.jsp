@@ -3,6 +3,7 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>	
+<%@ page import="net.sourceforge.fenixedu.applicationTier.IUserView"%>
 
 <logic:present role="DEPARTMENT_MEMBER">
 	<!-- Temporary solution (until we make expectations available for all departments) DEI Code = 28 -->
@@ -48,6 +49,16 @@
 		  	</html:link>  
 		</li> 				
 		<% } %>
+		<%-- 
+		<%IUserView user = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+            if (user.getPerson().hasFunctionType(net.sourceforge.fenixedu.domain.organizationalStructure.FunctionType.ASSIDUOUSNESS_RESPONSIBLE)) {%>
+            <br/>
+			<li class="navheader"><bean:message key="title.assiduousnessResponsible" bundle="ASSIDUOUSNESS_RESOURCES"/></li>
+			<li><html:link page="/assiduousnessResponsible.do?method=showEmployeeList">
+				<bean:message key="link.showEmployeeWorkSheet" bundle="ASSIDUOUSNESS_RESOURCES"/>
+			</html:link></li>
+		<% } %>
+		--%>
 	</ul>
 	
 	<br />

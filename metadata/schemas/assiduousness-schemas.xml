@@ -1,40 +1,46 @@
+<schema name="show.employeePersonalInformation2"
+	type="net.sourceforge.fenixedu.domain.Employee">
+	<slot name="employeeNumber" key="label.employeeNumber" bundle="ASSIDUOUSNESS_RESOURCES"/>
+	<slot name="person.name" key="label.employee.name" bundle="ASSIDUOUSNESS_RESOURCES"/>
+</schema>
+
 <schema name="show.employeeInformation"
 	type="net.sourceforge.fenixedu.domain.Employee">
 	<slot name="person" schema="show.employeePersonalInformation"
-		layout="values-dash" key="label.employee" />
+		layout="values-dash" key="label.employee" bundle="ASSIDUOUSNESS_RESOURCES"/>
 	<slot name="currentWorkingPlace" schema="show.employeeUnit"
-		layout="values-dash" key="label.unit" />
+		layout="values-dash" key="label.unit" bundle="ASSIDUOUSNESS_RESOURCES"/>
 </schema>
 
 <schema name="show.employeePersonalInformation"
 	type="net.sourceforge.fenixedu.domain.Person">
-	<slot name="employee.employeeNumber" key="label.number" />
-	<slot name="name" key="label.name" />
+	<slot name="employee.employeeNumber" key="label.employeeNumber" bundle="ASSIDUOUSNESS_RESOURCES"/>
+	<slot name="name" key="label.employee.name" bundle="ASSIDUOUSNESS_RESOURCES"/>
 </schema>
 
 <schema name="show.employeeUnit"
 	type="net.sourceforge.fenixedu.domain.organizationalStructure.Unit">
-	<slot name="costCenterCode" />
-	<slot name="name" />
+	<slot name="costCenterCode" bundle="ASSIDUOUSNESS_RESOURCES"/>
+	<slot name="name" bundle="ASSIDUOUSNESS_RESOURCES"/>
 </schema>
 
 <schema name="show.workDaySheet"
 	type="net.sourceforge.fenixedu.dataTransferObject.assiduousness.WorkDaySheet">
-	<slot name="date.dayOfMonth" key="label.day" />
-	<slot name="weekDay" key="label.weekDay" />
-	<slot name="workScheduleAcronym" key="label.schedule" />
-	<slot name="balanceTimeFormatted" key="label.balance" />
-	<slot name="unjustifiedTimeFormatted" key="label.unjustified"/>
-	<slot name="notes" key="label.notes" />
-	<slot name="clockingsFormatted" key="link.clockings"/>
+	<slot name="date.dayOfMonth" key="label.day" bundle="ASSIDUOUSNESS_RESOURCES"/>
+	<slot name="weekDay" key="label.weekDay" bundle="ASSIDUOUSNESS_RESOURCES"/>
+	<slot name="workScheduleAcronym" key="label.schedule" bundle="ASSIDUOUSNESS_RESOURCES"/>
+	<slot name="balanceTimeFormatted" key="label.balance" bundle="ASSIDUOUSNESS_RESOURCES"/>
+	<slot name="unjustifiedTimeFormatted" key="label.unjustified" bundle="ASSIDUOUSNESS_RESOURCES"/>
+	<slot name="notes" key="label.notes" bundle="ASSIDUOUSNESS_RESOURCES"/>
+	<slot name="clockingsFormatted" key="link.clockings" bundle="ASSIDUOUSNESS_RESOURCES"/>
 </schema>
 
 <schema name="show.clockingsDaySheet"
 	type="net.sourceforge.fenixedu.dataTransferObject.assiduousness.ClockingsDaySheet">
 	<slot name="date.dayOfMonth" key="label.day" />
-	<slot name="weekDay" key="label.weekDay" />	
+	<slot name="weekDay" key="label.weekDay" bundle="ASSIDUOUSNESS_RESOURCES"/>	
 	<slot name="clockings" layout="flowLayout"
-		key="label.clockings/Units">
+		key="label.clockings/Units" bundle="ASSIDUOUSNESS_RESOURCES">
 		<property name="eachLayout" value="values" />
 		<property name="htmlSeparator" value="," />
 		<property name="eachSchema" value="show.clocking" />
@@ -53,27 +59,27 @@
 
 <schema name="show.clockUnit"
 	type="net.sourceforge.fenixedu.domain.assiduousness.ClockUnit">
-	<slot name="acronym" key="label.clockUnit" />
+	<slot name="acronym" key="label.clockUnit" bundle="ASSIDUOUSNESS_RESOURCES"/>
 </schema>
 
 
 <schema name="show.justifications"
 	type="net.sourceforge.fenixedu.domain.assiduousness.Justification">
-	<slot name="partialDate" key="label.beginDate" />
-	<slot name="partialEndDate" key="label.endDateOrDuration" />
+	<slot name="partialDate" key="label.beginDate" bundle="ASSIDUOUSNESS_RESOURCES"/>
+	<slot name="partialEndDate" key="label.endDateOrDuration" bundle="ASSIDUOUSNESS_RESOURCES"/>
 	<slot name="justificationMotive.description"
-		key="label.justification" />
+		key="label.justification" bundle="ASSIDUOUSNESS_RESOURCES"/>
 </schema>
 
 <schema name="choose.date"
 	type="net.sourceforge.fenixedu.dataTransferObject.assiduousness.YearMonth">
 	<slot name="year"
-		validator="net.sourceforge.fenixedu.renderers.validators.NumberValidator">
+		validator="net.sourceforge.fenixedu.renderers.validators.NumberValidator"  bundle="ASSIDUOUSNESS_RESOURCES">
 		<property name="maxLength" value="4" />
 		<property name="size" value="4" />
 	</slot>
 	<slot name="month" layout="menu-select"
-		validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"  bundle="ASSIDUOUSNESS_RESOURCES">
 		<property name="choiceType"
 			value="net.sourceforge.fenixedu.util.Month" />
 		<property name="eachLayout" value="this-does-not-exist" />
@@ -82,8 +88,8 @@
 
 <schema name="show.schedule"
 	type="net.sourceforge.fenixedu.domain.assiduousness.Schedule">
-	<slot name="beginDate" key="label.beginDate" />
-	<slot name="workSchedules" key="label.schedule"
+	<slot name="beginDate" key="label.beginDate" bundle="ASSIDUOUSNESS_RESOURCES"/>
+	<slot name="workSchedules" key="label.schedule" bundle="ASSIDUOUSNESS_RESOURCES"
 		schema="show.workSchedule" layout="tabular-list">
 		<property name="subLayout" value="tabular" />
 		<property name="subSchema" value="show.workSchedule" />
@@ -93,15 +99,15 @@
 
 <schema name="show.workSchedule"
 	type="net.sourceforge.fenixedu.domain.assiduousness.WorkSchedule">
-	<slot name="workScheduleType.acronym" key="label.acronym" />
+	<slot name="workScheduleType.acronym" key="label.acronym" bundle="ASSIDUOUSNESS_RESOURCES"/>
 	<!-- 	<slot name="periodicity.workWeekNumber" key="label.week" /> -->
-	<slot name="workWeek.days" key="label.days" />
+	<slot name="workWeek.days" key="label.days" bundle="ASSIDUOUSNESS_RESOURCES"/>
 	<slot name="workScheduleType.normalWorkPeriod"
-		schema="show.WorkPeriod" layout="values" key="label.normalWorkPeriod" />
+		schema="show.WorkPeriod" layout="values" key="label.normalWorkPeriod" bundle="ASSIDUOUSNESS_RESOURCES"/>
 	<slot name="workScheduleType.fixedWorkPeriod"
-		schema="show.WorkPeriod" layout="values" key="label.fixedWorkPeriod" />
+		schema="show.WorkPeriod" layout="values" key="label.fixedWorkPeriod" bundle="ASSIDUOUSNESS_RESOURCES"/>
 	<slot name="workScheduleType.meal" schema="show.MealBreak"
-		layout="values" key="label.mealPeriod" />
+		layout="values" key="label.mealPeriod" bundle="ASSIDUOUSNESS_RESOURCES"/>
 </schema>
 
 <schema name="show.WorkPeriod"

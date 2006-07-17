@@ -18,4 +18,10 @@
 	<definition name="show-work-sheet" extends="definition.employee.two-column">
 		<put name="body" value="/employee/showWorkSheet.jsp" />
 	</definition>
+	<definition name="show-employee-list" extends="definition.employee.two-column">
+		<put name="body" value="/assiduousnessResponsible/showEmployeeList.jsp" />
+	</definition>
+	<definition name="show-employee-work-sheet" extends="definition.employee.two-column">
+		<put name="body" value="/assiduousnessResponsible/showWorkSheet.jsp" />
+	</definition>
 </tiles-definitions>

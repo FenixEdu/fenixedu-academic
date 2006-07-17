@@ -864,6 +864,13 @@
         <invocationTiming>1</invocationTiming>
         <filterClass>net.sourceforge.fenixedu.applicationTier.Filtro.AccessControlFilter</filterClass>
     </filterChain>
+    <filterChain>
+        <name>AssiduousnessResponsibleAuthorization</name>
+        <expression>AssiduousnessResponsibleAuthorization</expression>
+        <description/>
+        <invocationTiming>1</invocationTiming>
+        <filterClass>net.sourceforge.fenixedu.applicationTier.Filtro.AccessControlFilter</filterClass>
+    </filterChain>
 	<filterChain>
 		<name>ExecutionPeriodsEnrollmentFenix</name>
 		<expression>ExecutionPeriodsEnrollmentFenix</expression>

@@ -54,5 +54,11 @@
         <put name="body" value="/credits/notes/listCreditsNotes.jsp"/>
     </definition>
     
-        
+    <!-- Assiduousness Responsible -->    
+    <definition name="show-employee-list" extends="departmentMember.masterPage">
+		<put name="body" value="/assiduousnessResponsible/showEmployeeList.jsp" />
+	</definition>
+	<definition name="show-employee-work-sheet" extends="departmentMember.masterPage">
+		<put name="body" value="/assiduousnessResponsible/showWorkSheet.jsp" />
+	</definition>
 </tiles-definitions>

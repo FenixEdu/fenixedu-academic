@@ -797,6 +797,12 @@
         <isTransactional>false</isTransactional>
     </filter>
     <filter>
+        <name>AssiduousnessResponsibleAuthorization</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Filtro.AssiduousnessResponsibleAuthorizationFilter</implementationClass>
+        <description/>
+        <isTransactional>false</isTransactional>
+    </filter>
+    <filter>
         <name>ExecutionPeriodsEnrollmentFenix</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Filtro.ExecutionPeriodsEnrollmentFenix</implementationClass>
         <description/>

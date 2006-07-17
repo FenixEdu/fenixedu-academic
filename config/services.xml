@@ -10104,6 +10104,16 @@
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains>
+			<chain name="ManagementAssiduousnessAuthorization" />
+		</filterChains>		
+	</service>
+	<service>
+		<name>ReadAssiduousnessResponsibleWorkSheet</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.assiduousness.ReadAssiduousnessWorkSheet</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		<filterChains>
+			<chain name="AssiduousnessResponsibleAuthorization" />
 		</filterChains>		
 	</service>
 	<service>

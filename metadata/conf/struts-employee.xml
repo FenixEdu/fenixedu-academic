@@ -53,14 +53,22 @@
 				path="show-justifications" />
 			<forward name="show-work-sheet" path="show-work-sheet" />
 		</action>
+		
+		<action path="/assiduousnessResponsible" scope="request" parameter="method"
+			type="net.sourceforge.fenixedu.presentationTier.Action.employee.AssiduousnessResponsibleDispatchAction"
+			validate="true" input="show-employee-list">
+			<forward name="show-employee-list" path="show-employee-list" />
+			<forward name="show-employee-work-sheet" path="show-employee-work-sheet" />
+		</action>
 	</action-mappings>
 
 	<!-- ========== Controller Configuration ================================ -->
 	<controller
 		processorClass="net.sourceforge.fenixedu.presentationTier.processor.FenixRequestProcessorWithTiles" />
 	<!-- ========== Message Resources Definitions ============================ -->
+	<message-resources parameter="resources.AssiduousnessResources" null="false" />
 	<message-resources parameter="resources.AssiduousnessResources"
-		null="false" />
+		key="ASSIDUOUSNESS_RESOURCES" null="false" />
 	<message-resources parameter="resources.GlobalResources"
 		key="GLOBAL_RESOURCES" null="false" />
 	<message-resources parameter="resources.EnumerationResources"
