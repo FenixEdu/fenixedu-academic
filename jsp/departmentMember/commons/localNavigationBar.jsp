@@ -38,13 +38,16 @@
 			</html:link>
 		</li>
 		</logic:equal>
-		<logic:equal scope="session" name='<%=SessionConstants.U_VIEW%>' property="person.username" value="D2023">
+
+		<!-- Temporary solution until department defines criteria for access to personal expectations -->		
+		<bean:define id="username" name="userView" property="person.username" type="java.lang.String" />
+		<% if (username.equalsIgnoreCase("D2023") || username.equalsIgnoreCase("D1416")) { %>
   		<li>
 		  	<html:link page="/viewDepartmentTeachersExpectations.do?method=prepare">
 		  		<bean:message key="link.departmentTeachersExpectations"/>
 		  	</html:link>  
 		</li> 				
-		</logic:equal>
+		<% } %>
 	</ul>
 	
 	<br />
