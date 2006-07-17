@@ -111,8 +111,7 @@ public class CreateGuideDispatchAction extends DispatchAction {
             Iterator iterator = result.iterator();
             while (iterator.hasNext()) {
                 InfoContributor infoContributor = (InfoContributor) iterator.next();
-                contributorList.add(new LabelValueBean(infoContributor.getContributorName(),
-                        infoContributor.getContributorNumber().toString()));
+                contributorList.add(new LabelValueBean("Nr. " + infoContributor.getContributorNumber() + ", " + infoContributor.getContributorName(), infoContributor.getContributorNumber()));
             }
             request.setAttribute(SessionConstants.CONTRIBUTOR_LIST, contributorList);
 

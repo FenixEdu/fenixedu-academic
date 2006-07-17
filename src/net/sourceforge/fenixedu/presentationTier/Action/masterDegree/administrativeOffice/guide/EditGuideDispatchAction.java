@@ -204,8 +204,7 @@ public class EditGuideDispatchAction extends DispatchAction {
             Iterator iterator = contributors.iterator();
             while (iterator.hasNext()) {
                 InfoContributor infoContributor = (InfoContributor) iterator.next();
-                contributorList.add(new LabelValueBean(infoContributor.getContributorName(),
-                        infoContributor.getContributorNumber().toString()));
+                contributorList.add(new LabelValueBean("Nr. " + infoContributor.getContributorNumber() + ", " + infoContributor.getContributorName(), infoContributor.getContributorNumber()));
             }
 
             session.setAttribute(SessionConstants.GUIDE, infoGuide);
