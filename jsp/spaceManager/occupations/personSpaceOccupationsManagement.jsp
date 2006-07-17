@@ -81,5 +81,13 @@
             <fr:property name="order(delete)" value="0"/>               
     	</fr:layout>
 	</fr:view>	
+	
+	<br/>
+	<bean:define id="backLink">
+		/manageSpaces.do?method=manageSpace&page=0&spaceInformationID=<bean:write name="selectedSpaceInformationId"/>
+	</bean:define>	
 		
+	<html:link page="<%= backLink %>">
+		<bean:message key="link.return" bundle="SPACE_RESOURCES"/>
+	</html:link>	
 </logic:present>
