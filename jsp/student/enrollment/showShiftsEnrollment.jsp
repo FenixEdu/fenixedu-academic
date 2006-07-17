@@ -311,7 +311,7 @@ width: 98%;
 				</logic:present>
 				<%-- SHIFTS --%>
 				<tr>
-					<td class="listClasses-header" style="text-align:left" colspan='6'>
+					<th class="listClasses-header" style="text-align:left" colspan='6'>
 						<bean:message key="property.turno" />:</b>&nbsp;
 						<bean:write name="infoShift" property="nome" />
 						<bean:define id="infoShiftId" name="infoShift" property="idInternal" />

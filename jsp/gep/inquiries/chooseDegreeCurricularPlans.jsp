@@ -86,7 +86,8 @@
 				<td class="listClasses-header">
 					<bean:message key="table.header.acronym" bundle="INQUIRIES_RESOURCES"/>
 				</td>
-				<td class="listClasses-header" />
+				<td class="listClasses-header">
+				</td>
 			</tr>
 			
 
