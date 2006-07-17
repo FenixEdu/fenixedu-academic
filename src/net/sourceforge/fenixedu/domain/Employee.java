@@ -44,7 +44,7 @@ public class Employee extends Employee_Base {
     }
 
     public Unit getCurrentWorkingPlace() {
-        Contract contract = getLastContract();
+        Contract contract = getCurrentContract();
         if (contract != null) {
             return contract.getWorkingUnit();
         }
