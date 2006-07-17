@@ -1,0 +1,16 @@
+<schema name="certificateRequestPRDTO.edit" type="net.sourceforge.fenixedu.dataTransferObject.accounting.postingRules.serviceRequests.CertificateRequestPRDTO">
+	<slot name="baseAmount" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		<property name="maxLength" value="7"/>
+	</slot>
+	<slot name="amountPerUnit" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		<property name="maxLength" value="7"/>
+	</slot>
+	<slot name="amountPerPage" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		<property name="maxLength" value="7"/>
+	</slot>
+</schema>
+
+
+
+
+

@@ -192,8 +192,12 @@ class net.sourceforge.fenixedu.domain.accounting.Event extends net.sourceforge.f
     Integer keyPerson;
 }
 
-	class net.sourceforge.fenixedu.domain.candidacy.DFACandidacyEvent extends net.sourceforge.fenixedu.domain.accounting.Event {
+	class net.sourceforge.fenixedu.domain.accounting.events.candidacy.DFACandidacyEvent extends net.sourceforge.fenixedu.domain.accounting.Event {
 	    Integer keyCandidacy;
+	}
+	
+	class net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.CertificateRequestEvent extends net.sourceforge.fenixedu.domain.accounting.Event {
+	/*TODO add key to certificate request*/
 	}
 
 class net.sourceforge.fenixedu.domain.accounting.Receipt extends net.sourceforge.fenixedu.domain.DomainObject {
@@ -227,6 +231,10 @@ class net.sourceforge.fenixedu.domain.accounting.ServiceAgreementTemplate extend
 		Integer keyDegreeCurricularPlan;
 	}
 	
+	class net.sourceforge.fenixedu.domain.accounting.serviceAgreementTemplates.UnitServiceAgreementTemplate extends net.sourceforge.fenixedu.domain.accounting.ServiceAgreementTemplate {
+		Integer keyUnit;
+	}
+	
 class net.sourceforge.fenixedu.domain.accounting.PostingRule extends net.sourceforge.fenixedu.domain.DomainObject {
     String ojbConcreteClass;
     AccountingEventType eventType;
@@ -236,12 +244,26 @@ class net.sourceforge.fenixedu.domain.accounting.PostingRule extends net.sourcef
     Integer keyServiceAgreementTemplate;
 }
 
-	class net.sourceforge.fenixedu.domain.accounting.postingRules.FixedAmountPR extends net.sourceforge.fenixedu.domain.accounting.PostingRule {   
-		BigDecimal amount;
+	class net.sourceforge.fenixedu.domain.accounting.postingRules.GenericSingleEntryTypePR extends net.sourceforge.fenixedu.domain.accounting.PostingRule {   
 		EntryType entryType;
 	}
-	
 
+		class net.sourceforge.fenixedu.domain.accounting.postingRules.FixedAmountPR extends net.sourceforge.fenixedu.domain.accounting.postingRules.GenericSingleEntryTypePR {   
+			BigDecimal fixedAmount;
+		}
+		
+		class net.sourceforge.fenixedu.domain.accounting.postingRules.BaseAmountPlusAmountPerUnitPR extends net.sourceforge.fenixedu.domain.accounting.postingRules.GenericSingleEntryTypePR {
+			BigDecimal baseAmount;
+			BigDecimal amountPerUnit;
+		}
+		
+			class net.sourceforge.fenixedu.domain.accounting.postingRules.BaseAmountPlusAmountPerUnitGreaterThanOnePR extends net.sourceforge.fenixedu.domain.accounting.postingRules.BaseAmountPlusAmountPerUnitPR {
+			}
+			
+				class net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.CertificateRequestPR extends net.sourceforge.fenixedu.domain.accounting.postingRules.BaseAmountPlusAmountPerUnitGreaterThanOnePR {
+					BigDecimal amountPerPage;
+				}
+		
 class net.sourceforge.fenixedu.domain.teacher.Advise extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer keyStartExecutionPeriod;
 	Integer keyEndExecutionPeriod;
@@ -2828,6 +2850,7 @@ class net.sourceforge.fenixedu.domain.organizationalStructure.Party extends net.
 		Integer keyDegree;
 		YearMonthDay beginDateYearMonthDay;
 		YearMonthDay endDateYearMonthDay;
+		Integer keyServiceAgreementTemplate;
 	}
 
 	class net.sourceforge.fenixedu.domain.Person extends net.sourceforge.fenixedu.domain.organizationalStructure.Party {
@@ -7108,6 +7131,12 @@ relation DegreeCurricularPlanServiceAgreementTemplateDegreeCurricularPlan {
 	net.sourceforge.fenixedu.domain.accounting.serviceAgreementTemplates.DegreeCurricularPlanServiceAgreementTemplate playsRole serviceAgreementTemplate;
 }
 
+relation UnitServiceAgreementTemplateUnit {
+	net.sourceforge.fenixedu.domain.organizationalStructure.Unit playsRole unit;
+	net.sourceforge.fenixedu.domain.accounting.serviceAgreementTemplates.UnitServiceAgreementTemplate playsRole serviceAgreementTemplate;
+}
+
+
 
 /*
  * Relations definitions of relations to RootDomainObject
@@ -9071,7 +9100,7 @@ relation AccountTransactionAdjustedTransaction {
 
 relation DFACandidacyEventCandidacy {
 	net.sourceforge.fenixedu.domain.candidacy.DFACandidacy playsRole candidacy;
-	net.sourceforge.fenixedu.domain.candidacy.DFACandidacyEvent playsRole candidacyEvents {
+	net.sourceforge.fenixedu.domain.accounting.events.candidacy.DFACandidacyEvent playsRole candidacyEvents {
 		multiplicity *;
 	}
 }

@@ -23,13 +23,21 @@
 <!-- Definitions for net.sourceforge.fenixedu.domain.accounting.Event -->
 <!-- ************************************************************************************************************ -->
 <class-descriptor class="net.sourceforge.fenixedu.domain.accounting.Event" table="ACCOUNTING_EVENT">
-	<extent-class class-ref="net.sourceforge.fenixedu.domain.candidacy.DFACandidacyEvent" />
+	<extent-class class-ref="net.sourceforge.fenixedu.domain.accounting.events.candidacy.DFACandidacyEvent" />
+	<extent-class class-ref="net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.CertificateRequestEvent" />
 </class-descriptor>
 
 	<!-- ************************************************************************************************************ -->
-	<!-- Definitions for net.sourceforge.fenixedu.domain.candidacy.DFACandidacyEvent -->
+	<!-- Definitions for net.sourceforge.fenixedu.domain.accounting.events.candidacy.DFACandidacyEvent -->
 	<!-- ************************************************************************************************************ -->
-	<class-descriptor class="net.sourceforge.fenixedu.domain.candidacy.DFACandidacyEvent" table="ACCOUNTING_EVENT">
+	<class-descriptor class="net.sourceforge.fenixedu.domain.accounting.events.candidacy.DFACandidacyEvent" table="ACCOUNTING_EVENT">
+	
+	</class-descriptor>
+	
+	<!-- ************************************************************************************************************ -->
+	<!-- Definitions for net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.CertificateRequestEvent -->
+	<!-- ************************************************************************************************************ -->
+	<class-descriptor class="net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.CertificateRequestEvent" table="ACCOUNTING_EVENT">
 	
 	</class-descriptor>
 
@@ -51,15 +59,45 @@
 <!-- Definitions for net.sourceforge.fenixedu.domain.accounting.PostingRule -->
 <!-- ************************************************************************************************************ -->
 <class-descriptor class="net.sourceforge.fenixedu.domain.accounting.PostingRule" table="POSTING_RULE">
-	<extent-class class-ref="net.sourceforge.fenixedu.domain.accounting.postingRules.FixedAmountPR" />
+	<extent-class class-ref="net.sourceforge.fenixedu.domain.accounting.postingRules.GenericSingleEntryTypePR" />
 </class-descriptor>
 
 	<!-- ************************************************************************************************************ -->
-	<!-- Definitions for net.sourceforge.fenixedu.domain.accounting.postingRules.FixedAmountPR -->
+	<!-- Definitions for net.sourceforge.fenixedu.domain.accounting.postingRules.GenericSingleEntryTypePR -->
 	<!-- ************************************************************************************************************ -->
-	<class-descriptor class="net.sourceforge.fenixedu.domain.accounting.postingRules.FixedAmountPR" table="POSTING_RULE">
-
+	<class-descriptor class="net.sourceforge.fenixedu.domain.accounting.postingRules.GenericSingleEntryTypePR" table="POSTING_RULE">
+		<extent-class class-ref="net.sourceforge.fenixedu.domain.accounting.postingRules.FixedAmountPR" />
+		<extent-class class-ref="net.sourceforge.fenixedu.domain.accounting.postingRules.BaseAmountPlusAmountPerUnitPR" />
 	</class-descriptor>
+
+		<!-- ************************************************************************************************************ -->
+		<!-- Definitions for net.sourceforge.fenixedu.domain.accounting.postingRules.FixedAmountPR -->
+		<!-- ************************************************************************************************************ -->
+		<class-descriptor class="net.sourceforge.fenixedu.domain.accounting.postingRules.FixedAmountPR" table="POSTING_RULE">
+
+		</class-descriptor>
+	
+		<!-- ************************************************************************************************************ -->
+		<!-- Definitions for net.sourceforge.fenixedu.domain.accounting.postingRules.BaseAmountPlusAmountPerUnitPR -->
+		<!-- ************************************************************************************************************ -->
+		<class-descriptor class="net.sourceforge.fenixedu.domain.accounting.postingRules.BaseAmountPlusAmountPerUnitPR" table="POSTING_RULE">
+				<extent-class class-ref="net.sourceforge.fenixedu.domain.accounting.postingRules.BaseAmountPlusAmountPerUnitGreaterThanOnePR" />
+				<extent-class class-ref="net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.CertificateRequestPR" />
+		</class-descriptor>	
+		
+			<!-- ************************************************************************************************************ -->
+			<!-- Definitions for net.sourceforge.fenixedu.domain.accounting.postingRules.BaseAmountPlusAmountPerUnitGreaterThanOnePR -->
+			<!-- ************************************************************************************************************ -->
+			<class-descriptor class="net.sourceforge.fenixedu.domain.accounting.postingRules.BaseAmountPlusAmountPerUnitGreaterThanOnePR" table="POSTING_RULE">
+	
+			</class-descriptor>
+			
+			<!-- ************************************************************************************************************ -->
+			<!-- Definitions for net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.CertificateRequestPR -->
+			<!-- ************************************************************************************************************ -->
+			<class-descriptor class="net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.CertificateRequestPR" table="POSTING_RULE">
+	
+			</class-descriptor>
 
 <!-- ************************************************************************************************************ -->
 <!-- Definitions for net.sourceforge.fenixedu.domain.accounting.ServiceAgreement -->
@@ -81,12 +119,20 @@
 <!-- ************************************************************************************************************ -->
 <class-descriptor class="net.sourceforge.fenixedu.domain.accounting.ServiceAgreementTemplate" table="SERVICE_AGREEMENT_TEMPLATE">
 	<extent-class class-ref="net.sourceforge.fenixedu.domain.accounting.serviceAgreementTemplates.DegreeCurricularPlanServiceAgreementTemplate" />
+	<extent-class class-ref="net.sourceforge.fenixedu.domain.accounting.serviceAgreementTemplates.UnitServiceAgreementTemplate" />
 </class-descriptor>
 
 	<!-- ************************************************************************************************************ -->
 	<!-- Definitions for net.sourceforge.fenixedu.domain.accounting.serviceAgreementTemplates.DegreeCurricularPlanServiceAgreementTemplate -->
 	<!-- ************************************************************************************************************ -->
 	<class-descriptor class="net.sourceforge.fenixedu.domain.accounting.serviceAgreementTemplates.DegreeCurricularPlanServiceAgreementTemplate" table="SERVICE_AGREEMENT_TEMPLATE">
+	
+	</class-descriptor>
+	
+	<!-- ************************************************************************************************************ -->
+	<!-- Definitions for net.sourceforge.fenixedu.domain.accounting.serviceAgreementTemplates.UnitServiceAgreementTemplate -->
+	<!-- ************************************************************************************************************ -->
+	<class-descriptor class="net.sourceforge.fenixedu.domain.accounting.serviceAgreementTemplates.UnitServiceAgreementTemplate" table="SERVICE_AGREEMENT_TEMPLATE">
 	
 	</class-descriptor>
 

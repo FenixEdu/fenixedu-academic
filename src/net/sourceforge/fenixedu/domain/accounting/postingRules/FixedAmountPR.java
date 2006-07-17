@@ -13,6 +13,7 @@ import net.sourceforge.fenixedu.domain.accounting.EntryType;
 import net.sourceforge.fenixedu.domain.accounting.Event;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
 import net.sourceforge.fenixedu.domain.accounting.PaymentMode;
+import net.sourceforge.fenixedu.domain.accounting.PostingRule;
 import net.sourceforge.fenixedu.domain.accounting.ServiceAgreementTemplate;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.exceptions.accounting.PostingRuleDomainException;
@@ -26,29 +27,24 @@ public class FixedAmountPR extends FixedAmountPR_Base {
     }
 
     public FixedAmountPR(EntryType entryType, EventType eventType, DateTime startDate, DateTime endDate,
-            ServiceAgreementTemplate serviceAgreementTemplate, BigDecimal amount) {
+            ServiceAgreementTemplate serviceAgreementTemplate, BigDecimal fixedAmount) {
         this();
-        init(entryType, eventType, startDate, endDate, serviceAgreementTemplate, amount);
+        init(entryType, eventType, startDate, endDate, serviceAgreementTemplate, fixedAmount);
     }
 
-    private void checkParameters(EntryType entryType, BigDecimal amount) {
-        if (entryType == null) {
+    private void checkParameters(BigDecimal fixedAmount) {
+        if (fixedAmount == null) {
             throw new DomainException(
-                    "error.accounting.postingRules.FixedAmountPR.entryType.cannot.be.null");
-        }
-        if (amount == null) {
-            throw new DomainException(
-                    "error.accounting.postingRules.FixedAmountPR.amount.cannot.be.null");
+                    "error.accounting.postingRules.FixedAmountPR.fixedAmount.cannot.be.null");
         }
 
     }
 
     protected void init(EntryType entryType, EventType eventType, DateTime startDate, DateTime endDate,
-            ServiceAgreementTemplate serviceAgreementTemplate, BigDecimal amount) {
-        super.init(eventType, startDate, endDate, serviceAgreementTemplate);
-        checkParameters(entryType, amount);
-        super.setAmount(amount);
-        super.setEntryType(entryType);
+            ServiceAgreementTemplate serviceAgreementTemplate, BigDecimal fixedAmount) {
+        super.init(entryType, eventType, startDate, endDate, serviceAgreementTemplate);
+        checkParameters(fixedAmount);
+        super.setFixedAmount(fixedAmount);
     }
 
     @Override
@@ -70,12 +66,13 @@ public class FixedAmountPR extends FixedAmountPR_Base {
     }
 
     @Override
-    public void setAmount(BigDecimal amount) {
-        throw new DomainException("error.accounting.postingRules.FixedAmountPR.cannot.modify.amount");
+    public void setFixedAmount(BigDecimal fixedAmount) {
+        throw new DomainException(
+                "error.accounting.postingRules.FixedAmountPR.cannot.modify.fixedAmount");
     }
 
     private void checkIfCanAddAmount(final BigDecimal amountToPay, final Event event) {
-        if (!amountToPay.equals(getAmount())) {
+        if (!amountToPay.equals(getFixedAmount())) {
             throw new PostingRuleDomainException(
                     "error.accounting.postingRules.FixedAmountPR.amount.being.payed.must.match.amount.to.pay",
                     event.getDescriptionForEntryType(getEntryType()));
@@ -84,13 +81,15 @@ public class FixedAmountPR extends FixedAmountPR_Base {
 
     @Override
     public List<EntryDTO> calculateEntries(Event event, DateTime when) {
-        return Collections.singletonList(new EntryDTO(getEntryType(), event, getAmount(),
-                new BigDecimal("0"), getAmount(), event.getDescriptionForEntryType(getEntryType())));
+        return Collections
+                .singletonList(new EntryDTO(getEntryType(), event, getFixedAmount(),
+                        new BigDecimal("0"), getFixedAmount(), event
+                                .getDescriptionForEntryType(getEntryType())));
     }
 
     @Override
-    public BigDecimal calculateTotalAmountToPay() {
-        return getAmount();
+    public BigDecimal calculateTotalAmountToPay(Event event, DateTime when) {
+        return getFixedAmount();
     }
 
 }

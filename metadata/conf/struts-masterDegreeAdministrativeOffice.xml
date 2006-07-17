@@ -2575,7 +2575,7 @@
 	  <!-- Payments -->
 	  <action path="/payments"
 		      parameter="method"
-              type="net.sourceforge.fenixedu.presentationTier.Action.masterDegree.payments.PaymentsManagementDispatchAction"
+              type="net.sourceforge.fenixedu.presentationTier.Action.masterDegree.administrativeOffice.payments.PaymentsManagementDispatchAction"
    		      name="paymentsForm"
    		      scope="request">
 	         <forward name="searchPerson" path="payments.management.searchPerson"/> 
@@ -2625,6 +2625,16 @@
    	         <forward name="viewCandidacyDetails" path="df.page.viewCandidacyDetails"/>   	         
    	         
 	  </action>
+	  
+	  
+	  <!-- Price Management -->
+	  <action path="/pricesManagement"
+		      parameter="method"
+              type="net.sourceforge.fenixedu.presentationTier.Action.masterDegree.administrativeOffice.pricesManagement.PricesManagementDispatchAction"
+   		      scope="request">
+   	         <forward name="viewPrices" path="prices.management.viewPrices"/>
+	         <forward name="editPrice" path="prices.management.editPrice"/>
+      </action>
 	  
 	
 	

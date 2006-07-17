@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.domain.accounting;
 
 import java.math.BigDecimal;
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -15,6 +16,15 @@ import org.joda.time.DateTime;
 import dml.runtime.RelationAdapter;
 
 public abstract class PostingRule extends PostingRule_Base {
+
+    public static Comparator<PostingRule> COMPARATOR_BY_EVENT_TYPE = new Comparator<PostingRule>() {
+        public int compare(PostingRule leftPostingRule, PostingRule rightPostingRule) {
+            int comparationResult = leftPostingRule.getEventType().compareTo(
+                    rightPostingRule.getEventType());
+            return (comparationResult == 0) ? leftPostingRule.getIdInternal().compareTo(
+                    rightPostingRule.getIdInternal()) : comparationResult;
+        }
+    };
 
     static {
         ServiceAgreementTemplatePostingRule
@@ -99,8 +109,12 @@ public abstract class PostingRule extends PostingRule_Base {
         if (getStartDate().isAfter(when)) {
             return false;
         } else {
-            return (getEndDate() != null) ? !when.isAfter(getEndDate()) : true;
+            return (hasEndDate()) ? !when.isAfter(getEndDate()) : true;
         }
+    }
+
+    public boolean hasEndDate() {
+        return getEndDate() != null;
     }
 
     public boolean overlaps(PostingRule postingRule) {
@@ -120,6 +134,20 @@ public abstract class PostingRule extends PostingRule_Base {
     }
 
     @Override
+    public void setStartDate(DateTime startDate) {
+        throw new DomainException("error.accounting.PostingRule.cannot.modify.startDate");
+    }
+
+    @Override
+    public void setEndDate(DateTime endDate) {
+        if (hasEndDate()) {
+            throw new DomainException("error.accounting.PostingRule.endDate.is.already.set");
+        }
+
+        super.setEndDate(endDate);
+    }
+
+    @Override
     public void setServiceAgreementTemplate(ServiceAgreementTemplate serviceAgreementTemplate) {
         throw new DomainException(
                 "error.accounting.agreement.postingRule.cannot.modify.serviceAgreementTemplate");
@@ -136,7 +164,7 @@ public abstract class PostingRule extends PostingRule_Base {
                 from), makeEntry(entryType, amount, to), paymentMode, whenRegistered);
     }
 
-    public abstract BigDecimal calculateTotalAmountToPay();
+    public abstract BigDecimal calculateTotalAmountToPay(Event event, DateTime when);
 
     public abstract List<EntryDTO> calculateEntries(Event event, DateTime when);
 

@@ -316,4 +316,13 @@
 		<put name="body" value="/posGraduacao/candidacy/chooseCandidacy.jsp"/>
 	</definition>
 	
+	<!-- ************* Prices Management ************* -->
+	<definition name="prices.management.editPrice" extends="definition.masterDegreeAdministrativeOffice.masterPage">
+		<put name="body" value="/posGraduacao/pricesManagement/editPrice.jsp"/>
+	</definition>
+
+	<definition name="prices.management.viewPrices" extends="definition.masterDegreeAdministrativeOffice.masterPage">
+		<put name="body" value="/posGraduacao/pricesManagement/viewPrices.jsp"/>
+	</definition>
+	
 </tiles-definitions>

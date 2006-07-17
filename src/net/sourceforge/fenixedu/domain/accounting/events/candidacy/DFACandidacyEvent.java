@@ -1,4 +1,4 @@
-package net.sourceforge.fenixedu.domain.candidacy;
+package net.sourceforge.fenixedu.domain.accounting.events.candidacy;
 
 import java.util.List;
 import java.util.Set;
@@ -15,6 +15,8 @@ import net.sourceforge.fenixedu.domain.accounting.EntryType;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
 import net.sourceforge.fenixedu.domain.accounting.PaymentMode;
 import net.sourceforge.fenixedu.domain.accounting.PostingRule;
+import net.sourceforge.fenixedu.domain.candidacy.Candidacy;
+import net.sourceforge.fenixedu.domain.candidacy.DFACandidacy;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.util.StateMachine;
 import net.sourceforge.fenixedu.util.resources.LabelFormatter;

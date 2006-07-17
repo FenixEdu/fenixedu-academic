@@ -1,7 +1,7 @@
 /*
  * Created on Jun 26, 2006
  */
-package net.sourceforge.fenixedu.presentationTier.Action.masterDegree.payments;
+package net.sourceforge.fenixedu.presentationTier.Action.masterDegree.administrativeOffice.payments;
 
 import java.util.ArrayList;
 import java.util.Collection;

@@ -10124,4 +10124,13 @@
 		<filterChains>
 		</filterChains>		
 	</service>
+	<service>
+		<name>EditCertificateRequestPR</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.accounting.postingRules.serviceRequests.EditCertificateRequestPR</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		<filterChains>
+			<chain name="MasterDegreeAdministrativeOfficeAuthorization" />
+		</filterChains>
+	</service>	
 </serviceDefinitions>

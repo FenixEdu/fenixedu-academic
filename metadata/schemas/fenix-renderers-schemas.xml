@@ -14,6 +14,7 @@
 	<!ENTITY candidacy SYSTEM "candidacy-schemas.xml">
 	<!ENTITY execution SYSTEM "execution-schemas.xml">
 	<!ENTITY cron SYSTEM "cron-schemas.xml">
+	<!ENTITY prices SYSTEM "prices-schemas.xml">
 ]>
 
 <schemas>
@@ -752,4 +753,5 @@
 	&candidacy;
 	&execution;
 	&cron;
+	&prices;
 </schemas>

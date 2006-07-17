@@ -1,0 +1,2 @@
+alter table PARTY add column KEY_SERVICE_AGREEMENT_TEMPLATE int(11) NULL;
+

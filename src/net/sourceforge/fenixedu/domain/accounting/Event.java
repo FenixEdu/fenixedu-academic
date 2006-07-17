@@ -174,7 +174,7 @@ public abstract class Event extends Event_Base {
     }
 
     private BigDecimal calculateAmountToPay(DateTime whenRegistered) {
-        return getPostingRule(whenRegistered).calculateTotalAmountToPay();
+        return getPostingRule(whenRegistered).calculateTotalAmountToPay(this, whenRegistered);
 
     }
 

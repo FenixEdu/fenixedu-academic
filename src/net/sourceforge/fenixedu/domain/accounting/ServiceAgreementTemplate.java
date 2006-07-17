@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.domain.accounting;
 
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
@@ -46,9 +47,24 @@ public abstract class ServiceAgreementTemplate extends ServiceAgreementTemplate_
                 "error.accounting.agreement.ServiceAgreementTemplate.cannot.modify.creationDate");
     }
 
-    public PostingRule findPostingRuleByEventTypeAndDate(EventType eventType, DateTime when) {
+    public Set<PostingRule> getActivePostingRules() {
+        return getActivePostingRules(new DateTime());
+    }
+
+    public Set<PostingRule> getActivePostingRules(DateTime when) {
+        final Set<PostingRule> activePostingRules = new HashSet<PostingRule>();
         for (final PostingRule postingRule : getPostingRules()) {
-            if (postingRule.getEventType() == eventType && postingRule.isActiveForDate(when)) {
+            if (postingRule.isActiveForDate(when)) {
+                activePostingRules.add(postingRule);
+            }
+        }
+
+        return activePostingRules;
+    }
+
+    public PostingRule findPostingRuleByEventTypeAndDate(EventType eventType, DateTime when) {
+        for (final PostingRule postingRule : getActivePostingRules(when)) {
+            if (postingRule.getEventType() == eventType) {
                 return postingRule;
             }
         }
