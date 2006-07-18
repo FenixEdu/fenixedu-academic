@@ -36,7 +36,7 @@ public class ManagerFunctionsManagementBackingBean extends FunctionsManagementBa
     public String associateNewFunction() throws FenixFilterException, FenixServiceException,
             ParseException {
 
-        if (this.getPerson().containsActiveFunction(this.getFunction())) {
+        if (this.getPerson().containsActivePersonFunction(this.getFunction())) {
             setErrorMessage("error.duplicate.function");
         } else {
 
@@ -77,21 +77,25 @@ public class ManagerFunctionsManagementBackingBean extends FunctionsManagementBa
 
     public String getUnits() throws FenixFilterException, FenixServiceException, ExcepcaoPersistencia {
         StringBuilder buffer = new StringBuilder();
-        getUnitTree(buffer, UnitUtils.readInstitutionUnit());       
+        YearMonthDay currentDate = new YearMonthDay();
+        getUnitTree(buffer, UnitUtils.readInstitutionUnit(), currentDate);       
         return buffer.toString();
     }
 
-    public void getUnitTree(StringBuilder buffer, Unit parentUnit) {
+    protected void getUnitTree(StringBuilder buffer, Unit parentUnit, YearMonthDay currentDate) {
         buffer.append("<ul class='padding1 nobullet'>");
-        getUnitsList(parentUnit, buffer);
+        getUnitsList(parentUnit, buffer, currentDate);
         buffer.append("</ul>");
     }
 
-    private void getUnitsList(Unit parentUnit, StringBuilder buffer) {
+    protected void getUnitsList(Unit parentUnit, StringBuilder buffer, YearMonthDay currentDate) {
 
         openLITag(buffer);
 
-        if (parentUnit.hasAnySubUnits()) {
+        List<Unit> subUnits = new ArrayList<Unit>(getSubUnits(parentUnit, currentDate));
+        Collections.sort(subUnits, new BeanComparator("name"));
+        
+        if (!subUnits.isEmpty()) {
             putImage(parentUnit, buffer);
         }
 
@@ -100,21 +104,15 @@ public class ManagerFunctionsManagementBackingBean extends FunctionsManagementBa
                 "&unitID=").append(parentUnit.getIdInternal()).append("\">")
                 .append(parentUnit.getName()).append("</a>").append("</li>");
 
-        if (parentUnit.hasAnySubUnits()) {
+        if (!subUnits.isEmpty()) {
             openULTag(parentUnit, buffer);
+        }       
+
+        for (Unit subUnit : subUnits) {            
+           getUnitsList(subUnit, buffer, currentDate);            
         }
 
-        List<Unit> subUnits = new ArrayList<Unit>();
-        subUnits.addAll(parentUnit.getSubUnits());
-        Collections.sort(subUnits, new BeanComparator("name"));
-
-        for (Unit subUnit : subUnits) {
-            if (subUnit.isActive(new YearMonthDay())) {
-                getUnitsList(subUnit, buffer);
-            }
-        }
-
-        if (parentUnit.hasAnySubUnits()) {
+        if (!subUnits.isEmpty()) {
             closeULTag(buffer);
         }
     }
@@ -123,7 +121,7 @@ public class ManagerFunctionsManagementBackingBean extends FunctionsManagementBa
 
         if (this.activeFunctions == null) {
             Person person = this.getPerson();
-            List<PersonFunction> activeFunctions = person.getActiveFunctions();
+            List<PersonFunction> activeFunctions = person.getActivePersonFunctions();
             Collections.sort(activeFunctions, new BeanComparator("endDate"));
             this.activeFunctions = activeFunctions;
         }
@@ -135,7 +133,7 @@ public class ManagerFunctionsManagementBackingBean extends FunctionsManagementBa
 
         if (this.inactiveFunctions == null) {
             Person person = this.getPerson();
-            List<PersonFunction> inactiveFunctions = person.getInactiveFunctions();
+            List<PersonFunction> inactiveFunctions = person.getInactivePersonFunctions();
             Collections.sort(inactiveFunctions, new BeanComparator("endDate"));
             this.inactiveFunctions = inactiveFunctions;
         }
@@ -144,7 +142,7 @@ public class ManagerFunctionsManagementBackingBean extends FunctionsManagementBa
 
     public List<Function> getInherentFunctions() throws FenixFilterException, FenixServiceException {
         if (this.inherentFunctions == null) {
-            this.inherentFunctions = this.getPerson().getActiveInherentFunctions();
+            this.inherentFunctions = this.getPerson().getActiveInherentPersonFunctions();
         }
         return inherentFunctions;
     }

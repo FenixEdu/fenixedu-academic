@@ -8,59 +8,41 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
-import net.sourceforge.fenixedu.domain.organizationalStructure.UnitUtils;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.presentationTier.backBeans.manager.personManagement.ManagerFunctionsManagementBackingBean;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.joda.time.YearMonthDay;
 
-public class ScientificCouncilFunctionsManagementBackingBean extends ManagerFunctionsManagementBackingBean {
+public class ScientificCouncilFunctionsManagementBackingBean extends
+        ManagerFunctionsManagementBackingBean {
 
-    public String getUnits() throws FenixFilterException, FenixServiceException, ExcepcaoPersistencia {
-        StringBuilder buffer = new StringBuilder();
-        getUnitTree(buffer, UnitUtils.readInstitutionUnit());
-        return buffer.toString();
-    }
+    protected void getUnitsList(Unit parentUnit, StringBuilder buffer, YearMonthDay currentDate) {
 
-    public void getUnitTree(StringBuilder buffer, Unit parentUnit) {
-        buffer.append("<ul class='padding1 nobullet'>");
-        getUnitsList(parentUnit, buffer);
-        buffer.append("</ul>");
-    }
-
-    private void getUnitsList(Unit parentUnit, StringBuilder buffer) {
-        
         openLITag(buffer);
 
-        if (parentUnit.hasAnySubUnits()) {
+        List<Unit> subUnits = new ArrayList<Unit>(getSubUnits(parentUnit, currentDate));
+        Collections.sort(subUnits, new BeanComparator("name"));
+
+        if (!subUnits.isEmpty()) {
             putImage(parentUnit, buffer);
         }
 
         buffer.append("<a href=\"").append(getContextPath()).append(
-                "/scientificCouncil/functionsManagement/chooseFunction.faces?personID=").append(
-                personID).append("&unitID=").append(parentUnit.getIdInternal()).append("\">").append(
-                parentUnit.getName()).append("</a>").append("</li>");
+                "/scientificCouncil/functionsManagement/chooseFunction.faces?personID=")
+                .append(personID).append("&unitID=").append(parentUnit.getIdInternal()).append("\">")
+                .append(parentUnit.getName()).append("</a>").append("</li>");
 
-        if (parentUnit.hasAnySubUnits()) {
+        if (!subUnits.isEmpty()) {
             openULTag(parentUnit, buffer);
         }
 
-        List<Unit> subUnits = new ArrayList<Unit>();
-        subUnits.addAll(parentUnit.getSubUnits());
-        Collections.sort(subUnits, new BeanComparator("name"));
-        
         for (Unit subUnit : subUnits) {
-            if (subUnit.isActive(new YearMonthDay())) {
-                getUnitsList(subUnit, buffer);
-            }
+            getUnitsList(subUnit, buffer, currentDate);
         }
 
-        if (parentUnit.hasAnySubUnits()) {
+        if (!subUnits.isEmpty()) {
             closeULTag(buffer);
-        }              
+        }
     }
 }

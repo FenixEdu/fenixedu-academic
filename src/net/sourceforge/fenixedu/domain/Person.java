@@ -24,8 +24,8 @@ import net.sourceforge.fenixedu.domain.candidacy.DFACandidacy;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Accountability;
+import net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityTypeEnum;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Function;
-import net.sourceforge.fenixedu.domain.organizationalStructure.FunctionType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
 import net.sourceforge.fenixedu.domain.person.Gender;
@@ -583,37 +583,37 @@ public class Person extends Person_Base {
         getPersonRoles().addAll(roles);
     }
 
-    public List<PersonFunction> getActiveFunctions() {
+    public List<PersonFunction> getActivePersonFunctions() {
         List<PersonFunction> activeFunctions = new ArrayList<PersonFunction>();
-        for (Accountability accountability : getParents()) {
-            if (accountability.isPersonFunction() && accountability.isActive(new YearMonthDay())) {
-                activeFunctions.add((PersonFunction) accountability);
+        for (PersonFunction personFunction : getPersonFunctions()) {
+            if (personFunction.isActive(new YearMonthDay())) {
+                activeFunctions.add(personFunction);
             }
         }
         return activeFunctions;
     }
 
-    public List<PersonFunction> getInactiveFunctions() {
+    public List<PersonFunction> getInactivePersonFunctions() {
         List<PersonFunction> inactiveFunctions = new ArrayList<PersonFunction>();
-        for (Accountability accountability : getParents()) {
-            if (accountability.isPersonFunction() && !accountability.isActive(new YearMonthDay())) {
-                inactiveFunctions.add((PersonFunction) accountability);
+        for (PersonFunction personFunction : getPersonFunctions()) {
+            if (!personFunction.isActive(new YearMonthDay())) {
+                inactiveFunctions.add(personFunction);
             }
         }
         return inactiveFunctions;
     }
 
-    public List<Function> getActiveInherentFunctions() {
+    public List<Function> getActiveInherentPersonFunctions() {
         List<Function> inherentFunctions = new ArrayList<Function>();
-        for (PersonFunction accountability : getActiveFunctions()) {
+        for (PersonFunction accountability : getActivePersonFunctions()) {
             inherentFunctions.addAll(accountability.getFunction().getInherentFunctions());
         }
         return inherentFunctions;
     }
 
-    public boolean containsActiveFunction(Function function) {
-        for (PersonFunction accountability : getActiveFunctions()) {
-            if (accountability.getFunction().equals(function)) {
+    public boolean containsActivePersonFunction(Function function) {
+        for (PersonFunction personFunction : getActivePersonFunctions()) {
+            if (personFunction.getFunction().equals(function)) {
                 return true;
             }
         }
@@ -622,8 +622,8 @@ public class Person extends Person_Base {
 
     public List<PersonFunction> getPersonFuntions(YearMonthDay begin, YearMonthDay end) {
         List<PersonFunction> result = new ArrayList<PersonFunction>();
-        for (Accountability accountability : getParents()) {
-            if (accountability.isPersonFunction() && accountability.belongsToPeriod(begin, end)) {
+        for (Accountability accountability : getPersonFunctions()) {
+            if (accountability.belongsToPeriod(begin, end)) {
                 result.add((PersonFunction) accountability);
             }
         }
@@ -631,24 +631,10 @@ public class Person extends Person_Base {
     }
 
     public List<PersonFunction> getPersonFunctions() {
-        List<PersonFunction> result = new ArrayList<PersonFunction>();
-        for (Accountability accountability : getParents()) {
-            if (accountability.isPersonFunction()) {
-                result.add((PersonFunction) accountability);
-            }
-        }
-        return result;
+        return new ArrayList(getParentAccountabilities(AccountabilityTypeEnum.MANAGEMENT_FUNCTION,
+                PersonFunction.class));
     }
-    
-    public boolean hasFunctionType(FunctionType functionType) {
-        for (PersonFunction accountability : getActiveFunctions()) {
-            if (accountability.getFunction().getFunctionType() == functionType) {
-                return true;
-            }
-        }
-        return false;
-    }
-
+   
     public PersonFunction addPersonFunction(Function function, YearMonthDay begin, YearMonthDay end,
             Double credits) {
         return new PersonFunction(function.getUnit(), this, function, begin, end, credits);
@@ -672,7 +658,7 @@ public class Person extends Person_Base {
         if (!canBeDeleted()) {
             throw new DomainException("error.person.cannot.be.deleted");
         }
-        
+
         if (hasPersonalPhoto()) {
             getPersonalPhoto().delete();
         }
@@ -685,8 +671,8 @@ public class Person extends Person_Base {
         getAdvisories().clear();
         removeCms();
         removePais();
-        getUser().delete();            
-        super.delete();       
+        getUser().delete();
+        super.delete();
     }
 
     private boolean canBeDeleted() {

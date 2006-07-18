@@ -150,7 +150,7 @@ public class Shift extends Shift_Base {
     }
 
     public SortedSet<Lesson> getLessonsOrderedByWeekDayAndStartTime() {
-        final SortedSet<Lesson> lessons = new TreeSet<Lesson>(Lesson.LESSON_COMPARATOR_BY_WEEKDAY_AND_STARTTIME_AND_ROOMNAME);
+        final SortedSet<Lesson> lessons = new TreeSet<Lesson>(Lesson.LESSON_COMPARATOR_BY_WEEKDAY_AND_STARTTIME);
         lessons.addAll(getAssociatedLessonsSet());
         return lessons;
     }
@@ -159,8 +159,7 @@ public class Shift extends Shift_Base {
         final StringBuilder stringBuilder = new StringBuilder();
         for (final Lesson lesson : getLessonsOrderedByWeekDayAndStartTime()) {
             stringBuilder.append(lesson.getDiaSemana().getDiaSemana().toString());
-            stringBuilder.append(lesson.getBeginHourMinuteSecond().toString());
-            stringBuilder.append(lesson.getRoomOccupation().getRoom().getName().toString());
+            stringBuilder.append(lesson.getBeginHourMinuteSecond().toString());            
         }       
         return stringBuilder.toString();
     }

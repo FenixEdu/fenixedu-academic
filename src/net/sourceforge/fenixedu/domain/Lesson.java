@@ -17,11 +17,10 @@ import net.sourceforge.fenixedu.util.date.TimePeriod;
 
 public class Lesson extends Lesson_Base {
 
-    public static final Comparator LESSON_COMPARATOR_BY_WEEKDAY_AND_STARTTIME_AND_ROOMNAME = new ComparatorChain();
+    public static final Comparator LESSON_COMPARATOR_BY_WEEKDAY_AND_STARTTIME = new ComparatorChain();
     static {
-        ((ComparatorChain) LESSON_COMPARATOR_BY_WEEKDAY_AND_STARTTIME_AND_ROOMNAME).addComparator(new BeanComparator("diaSemana.diaSemana"));
-        ((ComparatorChain) LESSON_COMPARATOR_BY_WEEKDAY_AND_STARTTIME_AND_ROOMNAME).addComparator(new BeanComparator("beginHourMinuteSecond"));
-        ((ComparatorChain) LESSON_COMPARATOR_BY_WEEKDAY_AND_STARTTIME_AND_ROOMNAME).addComparator(new BeanComparator("roomOccupation.room.name"));
+        ((ComparatorChain) LESSON_COMPARATOR_BY_WEEKDAY_AND_STARTTIME).addComparator(new BeanComparator("diaSemana.diaSemana"));
+        ((ComparatorChain) LESSON_COMPARATOR_BY_WEEKDAY_AND_STARTTIME).addComparator(new BeanComparator("beginHourMinuteSecond"));                        
     }
 
     public Lesson() {

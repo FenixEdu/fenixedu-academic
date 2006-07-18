@@ -32,8 +32,11 @@ public class TeacherServiceExemption extends TeacherServiceExemption_Base {
         if(type == null) {
             throw new DomainException("error.serviceExemption.no.type");
         }
+        if(beginDate == null) {
+            throw new DomainException("error.serviceExemption.no.beginDate");
+        }
         if (endDate != null && endDate.before(beginDate)) {
-            throw new DomainException("error.endDateBeforeBeginDate");
+            throw new DomainException("error.serviceExemption.endDateBeforeBeginDate");
         }      
     }
 

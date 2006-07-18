@@ -8735,8 +8735,26 @@
         <isTransactional>true</isTransactional>    
     </service>   
     <service>
-    	<name>CreateNewUnit</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.manager.organizationalStructureManagement.CreateNewUnit</implementationClass>
+    	<name>CreateUnit</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.manager.organizationalStructureManagement.CreateUnit</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>  
+        <filterChains>
+        	<chain name="ManagerAuthorization"></chain>
+        </filterChains>
+    </service>   
+     <service>
+    	<name>EditUnit</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.manager.organizationalStructureManagement.EditUnit</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>  
+        <filterChains>
+        	<chain name="ManagerAuthorization"></chain>
+        </filterChains>
+    </service>   
+     <service>
+    	<name>AssociateParentUnit</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.manager.organizationalStructureManagement.AssociateParentUnit</implementationClass>
         <description></description>
         <isTransactional>true</isTransactional>  
         <filterChains>
@@ -8744,8 +8762,44 @@
         </filterChains>
     </service>   
     <service>
-    	<name>CreateNewFunction</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.manager.organizationalStructureManagement.CreateNewFunction</implementationClass>
+    	<name>DisassociateParentUnit</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.manager.organizationalStructureManagement.DisassociateParentUnit</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>  
+        <filterChains>
+        	<chain name="ManagerAuthorization"></chain>
+        </filterChains>
+    </service>   
+    <service>
+    	<name>CreateFunction</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.manager.organizationalStructureManagement.CreateFunction</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>  
+        <filterChains>
+        	<chain name="ManagerAuthorization"></chain>
+        </filterChains>
+    </service> 
+    <service>
+    	<name>EditFunction</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.manager.organizationalStructureManagement.EditFunction</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>  
+        <filterChains>
+        	<chain name="ManagerAuthorization"></chain>
+        </filterChains>
+    </service> 
+    <service>
+    	<name>AddParentInherentFunction</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.manager.organizationalStructureManagement.AddParentInherentFunction</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>  
+        <filterChains>
+        	<chain name="ManagerAuthorization"></chain>
+        </filterChains>
+    </service> 
+     <service>
+    	<name>RemoveParentInherentFunction</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.manager.organizationalStructureManagement.RemoveParentInherentFunction</implementationClass>
         <description></description>
         <isTransactional>true</isTransactional>  
         <filterChains>

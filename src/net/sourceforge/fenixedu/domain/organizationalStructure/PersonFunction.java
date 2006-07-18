@@ -39,8 +39,14 @@ public class PersonFunction extends PersonFunction_Base {
     }    
 
     private void checkPersonFunctionDates(YearMonthDay begin, YearMonthDay end) {
+        if(begin == null) {
+            throw new DomainException("error.personFunction.no.beginDate");
+        }
+        if(end == null) {
+            throw new DomainException("error.personFunction.no.endDate");
+        }
         if (end != null && end.isBefore(begin)) {
-            throw new DomainException("error.endDateBeforeBeginDate");
+            throw new DomainException("error.personFunction.endDateBeforeBeginDate");
         }
     }
     

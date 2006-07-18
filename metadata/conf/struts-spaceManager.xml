@@ -64,6 +64,12 @@
         		parameter="method">                		
        		<forward name="showSpaceOccupations" path="show-person-space-occupations"/>        		        	
         </action>
+        
+        <action path="/manageSpaceResponsability"        		
+        		type="net.sourceforge.fenixedu.presentationTier.Action.spaceManager.ManageSpaceResponsabilityDA"
+        		parameter="method">                		
+       		<forward name="showSpaceResponsability" path="show-space-responsability"/>        		        	
+        </action>
 
         <action path="/showCreateSpaceForm"
         		type="net.sourceforge.fenixedu.presentationTier.Action.commons.VoidAction"

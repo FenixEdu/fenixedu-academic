@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.space.OldBuilding;
 import net.sourceforge.fenixedu.domain.space.OldRoom;
 import net.sourceforge.fenixedu.domain.space.Space;
@@ -19,6 +20,8 @@ import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.apache.struts.action.ActionMessage;
+import org.apache.struts.action.ActionMessages;
 
 public class ManageSpacesDA extends FenixDispatchAction {
 
@@ -132,10 +135,19 @@ public class ManageSpacesDA extends FenixDispatchAction {
     	final Space space = spaceInformation.getSpace();
 
     	final Object[] args = { spaceInformation };
-        executeService(request, "DeleteSpaceInformation", args);
+        try {
+            executeService(request, "DeleteSpaceInformation", args);
+        } catch (DomainException e) {
+            saveMessages(request, e);
+        }        
 
         final SpaceInformation previousSpaceInformation = space.getOrderedSpaceInformations().last();
         return manageSpace(mapping, request, previousSpaceInformation);
     }
 
+    private void saveMessages(HttpServletRequest request, DomainException e) {
+        ActionMessages actionMessages = new ActionMessages();
+        actionMessages.add("", new ActionMessage(e.getMessage(), e.getArgs()));
+        saveMessages(request, actionMessages);
+    }
 }

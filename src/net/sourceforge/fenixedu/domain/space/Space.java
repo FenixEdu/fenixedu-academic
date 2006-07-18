@@ -93,7 +93,7 @@ public abstract class Space extends Space_Base {
         setSuroundingSpace(null);
         removeRootDomainObject();
         deleteDomainObject();
-    }
+    }      
 
     public static class SpaceSpaceInformationListener extends RelationAdapter<Space, SpaceInformation> {
 

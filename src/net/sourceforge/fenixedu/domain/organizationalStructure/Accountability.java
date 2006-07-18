@@ -35,12 +35,12 @@ public class Accountability extends Accountability_Base {
     }
 
     public boolean isActive(YearMonthDay currentDate) {
-        return (!this.getBeginDate().isAfter(currentDate) &&
-                (this.getEndDate() == null || !this.getEndDate().isBefore(currentDate)));
+        return (!this.getBeginDate().isAfter(currentDate) && (this.getEndDate() == null || !this
+                .getEndDate().isBefore(currentDate)));
     }
 
     public Boolean isPersonFunction() {
-        return this.getAccountabilityType().getType().equals(AccountabilityTypeEnum.MANAGEMENT_FUNCTION)
+        return this.getAccountabilityType() instanceof Function && this.getParentParty() instanceof Unit
                 && this instanceof PersonFunction;
     }
 

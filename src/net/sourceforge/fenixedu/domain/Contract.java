@@ -36,8 +36,11 @@ public class Contract extends Contract_Base {
         if(employee == null) {
             throw new DomainException("error.contract.no.employee");
         }
+        if(beginDate == null) {
+            throw new DomainException("error.contract.no.beginDate");
+        }
         if (endDate != null && endDate.before(beginDate)) {
-            throw new DomainException("error.endDateBeforeBeginDate");
+            throw new DomainException("error.contract.endDateBeforeBeginDate");
         }
     }
 

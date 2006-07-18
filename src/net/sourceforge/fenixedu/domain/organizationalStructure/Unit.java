@@ -96,6 +96,16 @@ public class Unit extends Unit_Base {
         return allInactiveSubUnits;
     }
 
+    public List<Unit> getInactiveSubUnits(YearMonthDay currentDate, AccountabilityTypeEnum accountabilityTypeEnum) {
+        List<Unit> allInactiveSubUnits = new ArrayList<Unit>();
+        for (Unit subUnit : this.getSubUnits(accountabilityTypeEnum)) {
+            if (!subUnit.isActive(currentDate)) {
+                allInactiveSubUnits.add(subUnit);
+            }
+        }
+        return allInactiveSubUnits;
+    }
+    
     public List<Unit> getActiveSubUnits(YearMonthDay currentDate) {
         List<Unit> allActiveSubUnits = new ArrayList<Unit>();
         for (Unit subUnit : this.getSubUnits()) {
@@ -105,22 +115,16 @@ public class Unit extends Unit_Base {
         }
         return allActiveSubUnits;
     }
-
-    public List<Unit> getActiveOrganizationalStructureSubUnits() {
-        List<Unit> allUnits = new ArrayList<Unit>();
-        YearMonthDay current = new YearMonthDay();
-        for (Accountability accountability : getChilds()) {
-            if (accountability.getChildParty() instanceof Unit) {
-                Unit subUnit = (Unit) accountability.getChildParty();
-                if (accountability.getAccountabilityType().getType().equals(
-                        AccountabilityTypeEnum.ORGANIZATIONAL_STRUCTURE)
-                        && subUnit.isActive(current)) {
-                    allUnits.add(subUnit);
-                }
+    
+    public List<Unit> getActiveSubUnits(YearMonthDay currentDate, AccountabilityTypeEnum accountabilityTypeEnum) {
+        List<Unit> allActiveSubUnits = new ArrayList<Unit>();
+        for (Unit subUnit : this.getSubUnits(accountabilityTypeEnum)) {
+            if (subUnit.isActive(currentDate)) {
+                allActiveSubUnits.add(subUnit);
             }
         }
-        return allUnits;
-    }
+        return allActiveSubUnits;
+    }  
 
     public List<Unit> getAllInactiveSubUnits(YearMonthDay currentDate) {
         Set<Unit> allInactiveSubUnits = new HashSet<Unit>();
@@ -131,7 +135,7 @@ public class Unit extends Unit_Base {
         }
         return new ArrayList<Unit>(allInactiveSubUnits);
     }
-
+        
     public List<Unit> getAllActiveSubUnits(YearMonthDay currentDate) {
         Set<Unit> allActiveSubUnits = new HashSet<Unit>();
         List<Unit> activeSubUnits = getActiveSubUnits(currentDate);
@@ -142,6 +146,26 @@ public class Unit extends Unit_Base {
         return new ArrayList<Unit>(allActiveSubUnits);
     }
 
+    public List<Unit> getAllActiveSubUnits(YearMonthDay currentDate, AccountabilityTypeEnum accountabilityTypeEnum) {
+        Set<Unit> allActiveSubUnits = new HashSet<Unit>();
+        List<Unit> activeSubUnits = getActiveSubUnits(currentDate, accountabilityTypeEnum);
+        allActiveSubUnits.addAll(activeSubUnits);
+        for (Unit subUnit : activeSubUnits) {
+            allActiveSubUnits.addAll(subUnit.getAllActiveSubUnits(currentDate));
+        }
+        return new ArrayList<Unit>(allActiveSubUnits);
+    }
+
+    public List<Unit> getAllInactiveSubUnits(YearMonthDay currentDate, AccountabilityTypeEnum accountabilityTypeEnum) {
+        Set<Unit> allInactiveSubUnits = new HashSet<Unit>();
+        List<Unit> inactiveSubUnits = getInactiveSubUnits(currentDate, accountabilityTypeEnum);
+        allInactiveSubUnits.addAll(inactiveSubUnits);
+        for (Unit subUnit : inactiveSubUnits) {
+            allInactiveSubUnits.addAll(subUnit.getAllInactiveSubUnits(currentDate));
+        }
+        return new ArrayList<Unit>(allInactiveSubUnits);
+    }
+    
     private void checkCostCenterCode(Integer costCenterCode) {
         if (costCenterCode != null) {
             List<Unit> allUnits = readAllUnits();
@@ -155,8 +179,7 @@ public class Unit extends Unit_Base {
     }
 
     public void edit(String unitName, Integer unitCostCenter, String acronym, Date beginDate,
-            Date endDate, PartyTypeEnum type, Unit parentUnit, AccountabilityType accountabilityType,
-            String webAddress) {
+            Date endDate, PartyTypeEnum type, String webAddress) {
 
         checkCostCenterCode(unitCostCenter);
         checkUnitDates(beginDate, endDate);
@@ -170,14 +193,14 @@ public class Unit extends Unit_Base {
         this.setCostCenterCode(unitCostCenter);
         this.setWebAddress(webAddress);
         this.setAcronym(acronym);
-        if (parentUnit != null && accountabilityType != null) {
-            this.addParent(parentUnit, accountabilityType);
-        }
     }
 
     private void checkUnitDates(Date beginDate, Date endDate) {
+        if(beginDate == null) {
+            throw new DomainException("error.unit.no.beginDate");
+        }
         if (endDate != null && endDate.before(beginDate)) {
-            throw new DomainException("error.endDateBeforeBeginDate");
+            throw new DomainException("error.unit.endDateBeforeBeginDate");
         }
     }
 
@@ -380,65 +403,54 @@ public class Unit extends Unit_Base {
     }
 
     public List<Unit> getParentUnits() {
-        Set<Unit> allParentUnits = new HashSet<Unit>();
-        List<Accountability> allParents = this.getParents();
-        for (Accountability accountability : allParents) {
-            if (accountability.getParentParty() instanceof Unit) {
-                allParentUnits.add((Unit) accountability.getParentParty());
-            }
-        }
-        return new ArrayList<Unit>(allParentUnits);
+        return new ArrayList(getParentParties(getClass()));        
     }
 
+    public List<Unit> getParentUnits(AccountabilityTypeEnum accountabilityTypeEnum) {
+        return new ArrayList(getParentParties(accountabilityTypeEnum, getClass()));        
+    }
+    
     public List<Unit> getSubUnits() {
-        Set<Unit> allChildsUnits = new HashSet<Unit>();
-        List<Accountability> allChilds = this.getChilds();
-        for (Accountability accountability : allChilds) {
-            if (accountability.getChildParty() instanceof Unit) {
-                allChildsUnits.add((Unit) accountability.getChildParty());
-            }
-        }
-        return new ArrayList<Unit>(allChildsUnits);
+        return new ArrayList(getChildParties(getClass()));
     }
-
+    
+    public List<Unit> getSubUnits(AccountabilityTypeEnum accountabilityTypeEnum) {
+        return new ArrayList(getChildParties(accountabilityTypeEnum, getClass()));        
+    }
+     
     public boolean hasAnyParentUnits() {
-        List<Accountability> allParents = this.getParents();
-        for (Accountability accountability : allParents) {
-            if (accountability.getParentParty() instanceof Unit) {
-                return true;
-            }
-        }
-        return false;
-    }
-
+        return !getParentUnits().isEmpty();
+    }    
+    
     public boolean hasAnySubUnits() {
-        List<Accountability> allChilds = this.getChilds();
-        for (Accountability accountability : allChilds) {
-            if (accountability.getChildParty() instanceof Unit) {
-                return true;
-            }
-        }
-        return false;
+        return !getSubUnits().isEmpty();
     }
 
-    public Accountability addParent(Unit parentUnit, AccountabilityType accountabilityType) {
+    public Accountability addParentUnit(Unit parentUnit, AccountabilityType accountabilityType) {
+        if (parentUnit == null) {
+            throw new DomainException("error.unit.inexistent.parentUnit");
+        }
+        if (parentUnit.equals(this)) {
+            throw new DomainException("error.unit.equals.parentUnit");
+        }
         checkIfCanAddParent(accountabilityType);
         return new Accountability(parentUnit, this, accountabilityType);
     }
 
     private void checkIfCanAddParent(AccountabilityType accountabilityType) {
         if ((accountabilityType.getType() == AccountabilityTypeEnum.ACADEMIC_MANAGEMENT)
-                && getParentsByAccountabilityType(accountabilityType.getType()).size() == 1) {
+                && getParentParties(accountabilityType.getType(), getClass())
+                        .size() == 1) {
             throw new DomainException(
                     "error.organizationalStructure.Unit.parent.with.accountability.type.already.exists");
         }
     }
 
-    public Accountability addChild(Unit childUnit, AccountabilityType accountabilityType) {
+    public Accountability addSubUnit(Unit childUnit, AccountabilityType accountabilityType) {
         return new Accountability(this, childUnit, accountabilityType);
     }
 
-    public void removeParent(Unit parentUnit) {
+    public void removeParentUnit(Unit parentUnit) {
         for (Accountability accountability : this.getParents()) {
             if (accountability.getParentParty().equals(parentUnit)) {
                 accountability.delete();
@@ -447,7 +459,7 @@ public class Unit extends Unit_Base {
         }
     }
 
-    public void removeChild(Unit childUnit) {
+    public void removeSubUnit(Unit childUnit) {
         for (Accountability accountability : this.getChilds()) {
             if (accountability.getChildParty().equals(childUnit)) {
                 accountability.delete();
@@ -464,21 +476,7 @@ public class Unit extends Unit_Base {
         }
         return null;
     }
-
-    public AccountabilityTypeEnum getRelationType(Unit withUnit) {
-        for (Accountability accountability : getParents()) {
-            if (accountability.getParentParty().equals(withUnit)) {
-                return accountability.getAccountabilityType().getType();
-            }
-        }
-        for (Accountability accountability : getChilds()) {
-            if (accountability.getChildParty().equals(withUnit)) {
-                return accountability.getAccountabilityType().getType();
-            }
-        }
-        return null;
-    }
-
+   
     public Unit getChildUnitByAcronym(String acronym) {
         for (Unit subUnit : getSubUnits()) {
             if ((subUnit.getAcronym() != null) && (subUnit.getAcronym().equals(acronym))) {
@@ -516,22 +514,6 @@ public class Unit extends Unit_Base {
         return null;
     }
 
-    public Set<Unit> getParentByOrganizationalStructureAccountabilityType() {
-        return getParentsByAccountabilityType(AccountabilityTypeEnum.ORGANIZATIONAL_STRUCTURE);
-    }
-
-    public Set<Unit> getParentsByAccountabilityType(AccountabilityTypeEnum accountabilityTypeEnum) {
-        final Set<Unit> result = new HashSet<Unit>();
-        for (final Accountability accountability : getParentsSet()) {
-            if (accountability.getAccountabilityType().getType() == accountabilityTypeEnum
-                    && accountability.getParentParty() instanceof Unit) {
-                result.add((Unit) accountability.getParentParty());
-            }
-        }
-
-        return result;
-    }
-
     public List<CompetenceCourse> getDepartmentUnitCompetenceCourses(CurricularStage curricularStage) {
         List<CompetenceCourse> result = new ArrayList<CompetenceCourse>();
         if (isUnitDepartment(this)) {
@@ -559,8 +541,10 @@ public class Unit extends Unit_Base {
         }
 
         Unit unit = new Unit();
-        unit.edit(unitName, costCenterCode, acronym, beginDate, endDate, type, parentUnit,
-                accountabilityType, webAddress);
+        unit.edit(unitName, costCenterCode, acronym, beginDate, endDate, type, webAddress);
+        if (parentUnit != null && accountabilityType != null) {
+            unit.addParentUnit(parentUnit, accountabilityType);
+        }
         return unit;
     }
 
@@ -580,7 +564,7 @@ public class Unit extends Unit_Base {
         institutionUnit.setName(unitName);
         institutionUnit.setBeginDate(Calendar.getInstance().getTime());
         institutionUnit.setType(PartyTypeEnum.EXTERNAL_INSTITUTION);
-        institutionUnit.addParent(externalInstitutionUnit, AccountabilityType
+        institutionUnit.addParentUnit(externalInstitutionUnit, AccountabilityType
                 .readAccountabilityTypeByType(AccountabilityTypeEnum.ORGANIZATIONAL_STRUCTURE));
 
         return institutionUnit;

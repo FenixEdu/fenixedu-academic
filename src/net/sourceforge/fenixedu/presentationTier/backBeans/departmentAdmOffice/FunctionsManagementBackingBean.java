@@ -11,9 +11,11 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.Set;
 
 import javax.faces.component.html.HtmlInputHidden;
 import javax.faces.model.SelectItem;
@@ -35,6 +37,7 @@ import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.grant.owner.GrantOwner;
+import net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityTypeEnum;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Function;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
@@ -118,7 +121,7 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
             setErrorMessage("error.invalid.unit");
         } else if (!this.getUnit().getFunctions().contains(this.getFunction())) {
             setErrorMessage("error.invalid.function");
-        } else if (this.getPerson().containsActiveFunction(this.getFunction())) {
+        } else if (this.getPerson().containsActivePersonFunction(this.getFunction())) {
             setErrorMessage("error.duplicate.function");
         } else {
 
@@ -177,8 +180,8 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
                 return "";
             }
 
-            if (this.getPerson().getInactiveFunctions().contains(this.getPersonFunction())
-                    && this.getPerson().containsActiveFunction(this.getFunction())
+            if (this.getPerson().getInactivePersonFunctions().contains(this.getPersonFunction())
+                    && this.getPerson().containsActivePersonFunction(this.getFunction())
                     && (DateFormatUtil.isAfter("yyyyMMdd", endDate_, Calendar.getInstance().getTime()) || DateFormatUtil
                             .equalDates("yyyyMMdd", endDate_, Calendar.getInstance().getTime()))) {
 
@@ -224,7 +227,7 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
     public List<PersonFunction> getActiveFunctions() throws FenixFilterException, FenixServiceException {
         if (this.activeFunctions == null) {
             Person person = this.getPerson();
-            List<PersonFunction> activeFunctions = person.getActiveFunctions();
+            List<PersonFunction> activeFunctions = person.getActivePersonFunctions();
             this.activeFunctions = new ArrayList<PersonFunction>();
 
             addValidFunctions(activeFunctions, this.activeFunctions);
@@ -238,7 +241,7 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
 
         if (this.inactiveFunctions == null) {
             Person person = this.getPerson();
-            List<PersonFunction> inactiveFunctions = person.getInactiveFunctions();
+            List<PersonFunction> inactiveFunctions = person.getInactivePersonFunctions();
             this.inactiveFunctions = new ArrayList<PersonFunction>();
 
             addValidFunctions(inactiveFunctions, this.inactiveFunctions);
@@ -279,7 +282,7 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
 
     public String verifyFunction() throws FenixFilterException, FenixServiceException {
 
-        if (this.getPerson().containsActiveFunction(this.getFunction())) {
+        if (this.getPerson().containsActivePersonFunction(this.getFunction())) {
             setErrorMessage("error.duplicate.function");
             return "";
         }
@@ -494,24 +497,43 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
         }
     }
 
+    protected Set<Unit> getSubUnits(Unit unit, YearMonthDay currentDate) {        
+        Set<Unit> units = new HashSet();
+        for (AccountabilityTypeEnum accountabilityTypeEnum : getAccountabilityTypes()) {
+            units.addAll(unit.getActiveSubUnits(currentDate, accountabilityTypeEnum));
+        }                   
+        return units;
+    }
+
+    protected AccountabilityTypeEnum[] getAccountabilityTypes() {
+        AccountabilityTypeEnum[] accountabilityTypeEnums = {
+                AccountabilityTypeEnum.ORGANIZATIONAL_STRUCTURE,
+                AccountabilityTypeEnum.ACADEMIC_STRUCTURE };
+        return accountabilityTypeEnums;
+    }   
+    
     public String getUnits() throws FenixFilterException, FenixServiceException, ExcepcaoPersistencia {
         StringBuilder buffer = new StringBuilder();
+        YearMonthDay currentDate = new YearMonthDay();
         buffer.append("<ul class='padding nobullet'>");
         if (this.getEmployeeDepartmentUnit() != null
                 && this.getEmployeeDepartmentUnit().isActive(new YearMonthDay())) {
-            getUnitsList(this.getEmployeeDepartmentUnit(), buffer);
+            getUnitsList(this.getEmployeeDepartmentUnit(), buffer, currentDate);
         } else {
             return "";
         }
         buffer.append("</ul>");
         return buffer.toString();
-    }
+    } 
 
-    private void getUnitsList(Unit parentUnit, StringBuilder buffer) {
+    private void getUnitsList(Unit parentUnit, StringBuilder buffer, YearMonthDay currentDate) {
 
         openLITag(buffer);
 
-        if (parentUnit.hasAnySubUnits()) {
+        List<Unit> subUnits = new ArrayList<Unit>(getSubUnits(parentUnit, currentDate));
+        Collections.sort(subUnits, new BeanComparator("name"));
+        
+        if (!subUnits.isEmpty()) {
             putImage(parentUnit, buffer);
         }
 
@@ -520,17 +542,15 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
                 personID).append("&unitID=").append(parentUnit.getIdInternal()).append("\">").append(
                 parentUnit.getName()).append("</a>").append("</li>");
 
-        if (parentUnit.hasAnySubUnits()) {
+        if (!subUnits.isEmpty()) {
             openULTag(parentUnit, buffer);
         }
 
-        for (Unit subUnit : parentUnit.getSubUnits()) {
-            if (subUnit.isActive(new YearMonthDay())) {
-                getUnitsList(subUnit, buffer);
-            }
+        for (Unit subUnit : subUnits) {            
+            getUnitsList(subUnit, buffer, currentDate);           
         }
 
-        if (parentUnit.hasAnySubUnits()) {
+        if (!subUnits.isEmpty()) {
             closeULTag(buffer);
         }
     }
@@ -686,7 +706,8 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
                 && (this.beginDateHidden == null || this.beginDateHidden.getValue() == null)
                 && this.getExecutionPeriod() != null) {
 
-            ExecutionPeriod executionPeriod = rootDomainObject.readExecutionPeriodByOID(this.executionPeriod);
+            ExecutionPeriod executionPeriod = rootDomainObject
+                    .readExecutionPeriodByOID(this.executionPeriod);
 
             this.beginDate = (executionPeriod != null) ? DateFormatUtil.format("dd/MM/yyyy",
                     executionPeriod.getBeginDate()) : null;

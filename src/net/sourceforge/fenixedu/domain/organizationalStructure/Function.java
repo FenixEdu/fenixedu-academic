@@ -10,33 +10,28 @@ import org.joda.time.YearMonthDay;
 
 public class Function extends Function_Base {
 
-    public Function(String functionName, Date beginDate, Date endDate, FunctionType type, Unit unit,
-            Function parentInherentFunction) {
-        
-        super();
-        checkParameters(functionName, beginDate, endDate);
-        checkFunctionUnit(unit);                    
-        setName(functionName);        
-        setBeginDate(beginDate);        
-        setEndDate(endDate);
-        setFunctionType(type);
-        setUnit(unit);
-        setParentInherentFunction(parentInherentFunction);
+    public Function(String functionName, Date beginDate, Date endDate, FunctionType type, Unit unit) {        
+        super();              
+        edit(functionName, beginDate, endDate, type);
+        checkFunctionUnit(unit);   
+        setUnit(unit);                               
         setType(AccountabilityTypeEnum.MANAGEMENT_FUNCTION);
     }    
     
-    public void edit(String functionName, Date beginDate, Date endDate, FunctionType type, Function parentInherentFunction) {       
+    public void edit(String functionName, Date beginDate, Date endDate, FunctionType type) {       
         checkParameters(functionName, beginDate, endDate);        
         this.setName(functionName);        
         this.setBeginDate(beginDate);        
         this.setEndDate(endDate);
-        this.setFunctionType(type);        
-        this.setParentInherentFunction(parentInherentFunction);        
+        this.setFunctionType(type);                       
     }       
 
     private void checkParameters(String functionName, Date beginDate, Date endDate) {
         if(functionName == null && functionName.equals("")){
             throw new DomainException("error.no.function.name");
+        }
+        if(beginDate == null) {
+            throw new DomainException("error.function.no.beginDate");
         }
         if (endDate != null && endDate.before(beginDate)) {
             throw new DomainException("error.endDateBeforeBeginDate");
@@ -62,7 +57,7 @@ public class Function extends Function_Base {
     public void delete() {
         if (!hasAnyAccountabilities() && !hasAnyInherentFunctions()) {
             removeParentInherentFunction();
-            removeUnit();
+            removeUnit();           
             removeRootDomainObject();
             deleteDomainObject();
         } else {
@@ -81,4 +76,5 @@ public class Function extends Function_Base {
     public boolean isInherentFunction() {
         return (this.getParentInherentFunction() != null);
     }
+           
 }

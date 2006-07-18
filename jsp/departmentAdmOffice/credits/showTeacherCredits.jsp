@@ -123,7 +123,12 @@
 											</dt:format>
 										</td>
 										<td>
-											<bean:write name="lesson" property="sala.nome"/>
+											<logic:notEmpty name="lesson" property="sala">
+												<bean:write name="lesson" property="sala.nome"/>
+											</logic:notEmpty>
+											<logic:empty name="lesson" property="sala">
+												-
+											</logic:empty>
 										</td>
 										<td style="text-align: right;" rowspan="<%= numberOfLessons %>">
 											<bean:write name="degreeTeachingService" property="percentage"/>
@@ -146,7 +151,12 @@
 											</dt:format>
 										</td>
 										<td>
-											<bean:write name="lesson" property="sala.nome"/>
+											<logic:notEmpty name="lesson" property="sala">
+												<bean:write name="lesson" property="sala.nome"/>
+											</logic:notEmpty>
+											<logic:empty name="lesson" property="sala">
+												-
+											</logic:empty>
 										</td>
 									</tr>
 								</logic:notEqual>

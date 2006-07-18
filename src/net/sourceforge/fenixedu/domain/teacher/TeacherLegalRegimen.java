@@ -42,8 +42,11 @@ public class TeacherLegalRegimen extends TeacherLegalRegimen_Base {
         if(teacher == null) {
             throw new DomainException("error.teacherLegalRegimen.no.teacher");
         }
+        if(beginDate == null) {
+            throw new DomainException("error.teacherLegalRegimen.no.beginDate");
+        }
         if (endDate != null && endDate.before(beginDate)) {
-            throw new DomainException("error.endDateBeforeBeginDate");
+            throw new DomainException("error.teacherLegalRegimen.endDateBeforeBeginDate");
         }
     }
 

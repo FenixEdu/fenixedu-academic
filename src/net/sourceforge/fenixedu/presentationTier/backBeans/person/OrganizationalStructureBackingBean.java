@@ -20,6 +20,7 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterExce
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Accountability;
+import net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityTypeEnum;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Function;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PartyTypeEnum;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
@@ -111,8 +112,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
         PartyTypeEnum partyType = null;
         boolean flag = false;
         boolean flag1 = false;
-        boolean subUnitIsEmpty = true;
-
+   
         for (Unit unit : allUnits) {
 
             if (unit.isActive(currentDate)) {
@@ -154,9 +154,8 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
        
                 }
 
-                buffer.append("<ul class='padding nobullet'>\r\n");
-
-                if (unit.getActiveOrganizationalStructureSubUnits().size() != 0) {
+                buffer.append("<ul class='padding nobullet'>\r\n");                
+                if (unit.getActiveSubUnits(new YearMonthDay(), AccountabilityTypeEnum.ORGANIZATIONAL_STRUCTURE).size() != 0) {
                     if (unit.getType() != null) {
                         if (!unit.getType().equals(PartyTypeEnum.ACADEMIC_UNIT)) {
 
@@ -211,8 +210,8 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
     }
     
 	 public boolean ValidEmptyType (Unit unit){
-		 if (!unit.getActiveOrganizationalStructureSubUnits().isEmpty()){
-			 if(unit.getActiveOrganizationalStructureSubUnits().get(0).getType() != null){
+		 if (!unit.getActiveSubUnits(new YearMonthDay(), AccountabilityTypeEnum.ORGANIZATIONAL_STRUCTURE).isEmpty()){
+			 if(unit.getActiveSubUnits(new YearMonthDay(), AccountabilityTypeEnum.ORGANIZATIONAL_STRUCTURE).get(0).getType() != null){
 				 return false;
 			 }
 		 }
@@ -225,16 +224,15 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
             return new ArrayList();
         }
         List<Unit> unitsIst = new ArrayList();
-        unitsIst.addAll(istUnit.getActiveOrganizationalStructureSubUnits());
+        unitsIst.addAll(istUnit.getActiveSubUnits(new YearMonthDay(), AccountabilityTypeEnum.ORGANIZATIONAL_STRUCTURE));
         return unitsIst;
     }
 
     public void getDepartment(StringBuilder buffer, Unit unit) throws FenixFilterException,
             FenixServiceException {
-        YearMonthDay currentDate = new YearMonthDay();
-
-        if (unit.getActiveOrganizationalStructureSubUnits().size() > 0) {
-            List<Unit> departmentUnitList = unit.getActiveOrganizationalStructureSubUnits();
+    
+        if (unit.getActiveSubUnits(new YearMonthDay(), AccountabilityTypeEnum.ORGANIZATIONAL_STRUCTURE).size() > 0) {
+            List<Unit> departmentUnitList = unit.getActiveSubUnits(new YearMonthDay(), AccountabilityTypeEnum.ORGANIZATIONAL_STRUCTURE);
             Collections.sort(departmentUnitList, new BeanComparator("name"));
             Integer i = 0;
             for (Unit subUnit : departmentUnitList) {
@@ -263,11 +261,10 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
         }
     }
 
-    public void getUnitTree(StringBuilder buffer, Unit parentUnit) {
-        YearMonthDay currentDate = new YearMonthDay();
+    public void getUnitTree(StringBuilder buffer, Unit parentUnit) {        
         int parentUnitId = 0;
         boolean past = false;
-        if (parentUnit.getActiveOrganizationalStructureSubUnits().size() > 0) {
+        if (parentUnit.getActiveSubUnits(new YearMonthDay(), AccountabilityTypeEnum.ORGANIZATIONAL_STRUCTURE).size() > 0) {
             buffer.append("\t<ul class='mvert0' id=\"").append("aa").append(parentUnit.getIdInternal())
                     .append("\" ").append("style='display:none'>\r\n");
             parentUnitId = parentUnit.getIdInternal().intValue();
@@ -278,15 +275,14 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 
     private void getUnitsList(Unit parentUnit, int index, StringBuilder buffer, int parentUnitId,
             boolean past) {
-        
-        YearMonthDay currentDate = new YearMonthDay();
+                
         if (parentUnit.getIdInternal() != parentUnitId) {
             buffer.append("\t\t<li>").append("<a href=\"").append(getContextPath()).append(
                     "/person/organizationalStructure/chooseUnit.faces?unitID=").append(parentUnitId)
                     .append("&amp;subUnit=").append(parentUnit.getIdInternal()).append("#").append(
                             parentUnit.getIdInternal()).append("\">").append(parentUnit.getName())
                     .append("</a>").append("</li>\r\n");
-            if (parentUnit.getActiveOrganizationalStructureSubUnits().size() > 0) {
+            if (parentUnit.getActiveSubUnits(new YearMonthDay(), AccountabilityTypeEnum.ORGANIZATIONAL_STRUCTURE).size() > 0) {
                 past = true;
                 buffer.append("\t\t<ul class='mvert0'>\r\n");
             } else {
@@ -294,7 +290,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
             }
         }
 
-        for (Unit subUnit : parentUnit.getActiveOrganizationalStructureSubUnits()) {
+        for (Unit subUnit : parentUnit.getActiveSubUnits(new YearMonthDay(), AccountabilityTypeEnum.ORGANIZATIONAL_STRUCTURE)) {
             getUnitsList(subUnit, index + 1, buffer, parentUnitId, past);
         }
         if (past == true) {
@@ -332,8 +328,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
     public String getFunctions() throws FenixFilterException, FenixServiceException {
 
         StringBuffer buffer = new StringBuffer();
-        YearMonthDay currentDate = new YearMonthDay();
-
+     
         buffer.append("<ul class='mtop3'>\r\n");
         if (this.subUnit.intValue() == this.getUnit().getIdInternal().intValue()) {
             buffer.append("\t<li><strong class='eo_highlight'id=\"").append(
@@ -356,7 +351,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
         }
         buffer.append("\t</li>\r\n\t</ul>\r\n");
 
-        List<Unit> activeSubUnit = this.getUnit().getActiveOrganizationalStructureSubUnits();
+        List<Unit> activeSubUnit = this.getUnit().getActiveSubUnits(new YearMonthDay(), AccountabilityTypeEnum.ORGANIZATIONAL_STRUCTURE);
 
         for (Unit unit : (List<Unit>) activeSubUnit) {
             buffer.append("<ul>\r\n");
@@ -377,7 +372,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
                     buffer.append("\t</ul>\r\n");
                 }
             }
-            for (Unit subUnit : (List<Unit>) unit.getActiveOrganizationalStructureSubUnits()) {
+            for (Unit subUnit : (List<Unit>) unit.getActiveSubUnits(new YearMonthDay(), AccountabilityTypeEnum.ORGANIZATIONAL_STRUCTURE)) {
                 buffer.append("\t<ul>\r\n");
                 if (this.subUnit.intValue() == subUnit.getIdInternal().intValue()) {
                     buffer.append("\t<li><strong class='eo_highlight'id=\"").append(
