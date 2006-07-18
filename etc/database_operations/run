@@ -27,7 +27,5 @@ function executeWithTempFile() {
 	echo
 }
 
-execute "Changing table Party" AlterTableParty.sql
-execute "Changing table ServiceAgreementTemplate" AlterTableServiceAgreementTemplate.sql
-execute "Changing table PostingRule" AlterTablePostingRule.sql
+execute "Updating table AccountabilityType" UpdateTableAccountabilityType.sql
 

@@ -8,7 +8,8 @@ public enum AccountabilityTypeEnum {
 
     MANAGEMENT_FUNCTION,
     ACADEMIC_STRUCTURE,
-    ORGANIZATIONAL_STRUCTURE;
+    ORGANIZATIONAL_STRUCTURE,
+    ACADEMIC_MANAGEMENT;
         
     public String getName() {
         return name();
