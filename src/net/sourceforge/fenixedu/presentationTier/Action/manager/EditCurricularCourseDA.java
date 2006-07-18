@@ -63,10 +63,11 @@ public class EditCurricularCourseDA extends FenixDispatchAction {
         dynaForm.set("mandatory", oldInfoCurricularCourse.getMandatory().toString());
         dynaForm.set("basic", oldInfoCurricularCourse.getBasic().toString());
 
-        dynaForm.set("credits", oldInfoCurricularCourse.getCredits().toString());
+        dynaForm.set("credits", (oldInfoCurricularCourse.getCredits() == null) ? ""
+                : oldInfoCurricularCourse.getCredits().toString());
         dynaForm.set("ectsCredits", (oldInfoCurricularCourse.getEctsCredits() == null) ? ""
                 : oldInfoCurricularCourse.getEctsCredits().toString());
-        if (oldInfoCurricularCourse.getTheoreticalHours() != null) { 
+        if (oldInfoCurricularCourse.getTheoreticalHours() != null) {
             dynaForm.set("theoreticalHours", oldInfoCurricularCourse.getTheoreticalHours().toString());
         }
         if (oldInfoCurricularCourse.getPraticalHours() != null) {
@@ -87,9 +88,9 @@ public class EditCurricularCourseDA extends FenixDispatchAction {
         dynaForm.set("mandatoryEnrollment", oldInfoCurricularCourse.getMandatoryEnrollment().toString());
         dynaForm.set("enrollmentAllowed", oldInfoCurricularCourse.getEnrollmentAllowed().toString());
         dynaForm.set("enrollmentWeigth", oldInfoCurricularCourse.getEnrollmentWeigth().toString());
-        
-        if(oldInfoCurricularCourse.getGradeScale() != null) {
-        	dynaForm.set("gradeType", oldInfoCurricularCourse.getGradeScale().toString());
+
+        if (oldInfoCurricularCourse.getGradeScale() != null) {
+            dynaForm.set("gradeType", oldInfoCurricularCourse.getGradeScale().toString());
         }
 
         return mapping.findForward("editCurricularCourse");
@@ -168,11 +169,11 @@ public class EditCurricularCourseDA extends FenixDispatchAction {
                 .get("enrollmentAllowed")));
         newInfoCurricularCourse.setEnrollmentWeigth(new Integer((String) dynaForm
                 .get("enrollmentWeigth")));
-        
+
         String gradeTypeString = (String) dynaForm.get("gradeType");
         GradeScale gradeScale = null;
-        if(gradeTypeString != null && gradeTypeString.length() > 0) {
-        	gradeScale = GradeScale.valueOf(gradeTypeString);
+        if (gradeTypeString != null && gradeTypeString.length() > 0) {
+            gradeScale = GradeScale.valueOf(gradeTypeString);
         }
         newInfoCurricularCourse.setGradeScale(gradeScale);
 
