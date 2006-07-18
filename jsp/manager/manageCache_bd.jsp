@@ -14,9 +14,13 @@
 		<bean:message bundle="MANAGER_RESOURCES" key="label.cache.refresh"/>
 	</html:link>
 	<br />
+<%--
 	<html:link module="/manager" page="/manageCache.do?method=clearCache">
+--%>
 		<bean:message bundle="MANAGER_RESOURCES" key="label.cache.clear"/>
+<%--
 	</html:link>
+--%>
 </logic:present>
 
 <logic:notPresent name="<%= SessionConstants.NUMBER_CACHED_ITEMS %>" scope="request">
@@ -57,3 +61,10 @@
 </logic:present>
 <logic:notPresent name="<%= SessionConstants.NUMBER_CACHED_RESPONSES %>" scope="request">
 </logic:notPresent>
+
+<br/>
+<br />
+<html:link module="/manager" page="/manageCache.do?method=loadAllObjectsToCache">
+	<bean:message bundle="MANAGER_RESOURCES" key="label.cache.load.all.objects"/>
+</html:link>
+<br />
