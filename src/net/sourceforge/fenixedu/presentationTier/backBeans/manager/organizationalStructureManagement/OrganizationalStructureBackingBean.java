@@ -550,7 +550,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 
         final Object[] argsToRead = { this.getUnit().getIdInternal(),
                 this.getChooseUnit().getIdInternal(), this.getUnit().getName(), costCenterCodeString,
-                this.getUnitAcronym(), this.getUnit().getBeginDate(), this.getUnit().getEndDate(),
+                this.getUnit().getAcronym(), this.getUnit().getBeginDate(), this.getUnit().getEndDate(),
                 this.getUnit().getType(), parameters.getDepartmentID(), parameters.getDegreeID(),
                 accountabilityType, this.getUnit().getWebAddress() };
 
@@ -565,7 +565,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 
         final Object[] argsToRead = { this.getUnit().getIdInternal(),
                 this.getChooseUnit().getIdInternal(), this.getUnit().getName(), costCenterCodeString,
-                this.getUnitAcronym(), this.getUnit().getBeginDate(), this.getUnit().getEndDate(),
+                this.getUnit().getAcronym(), this.getUnit().getBeginDate(), this.getUnit().getEndDate(),
                 this.getUnit().getType(), parameters.getDepartmentID(), parameters.getDegreeID(), null,
                 this.getUnit().getWebAddress() };
 
