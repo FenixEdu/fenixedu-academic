@@ -5,11 +5,11 @@
 
 package net.sourceforge.fenixedu.applicationTier.Filtro.projectsManagement;
 
+import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.AuthorizationByRoleFilter;
 import net.sourceforge.fenixedu.applicationTier.Filtro.Filtro;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
 import net.sourceforge.fenixedu.domain.Employee;
-import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.person.RoleType;
@@ -31,19 +31,20 @@ public class ProjectsManagerAuthorizationFilter extends AuthorizationByRoleFilte
         return instance;
     }
 
-    public void execute(ServiceRequest request, ServiceResponse response) throws FilterException, Exception {
+    public void execute(ServiceRequest request, ServiceResponse response) throws FilterException,
+            Exception {
 
-        String username = (String) request.getServiceParameters().parametersArray()[0];
+        final IUserView userView = getRemoteUser(request);
         String costCenter = (String) request.getServiceParameters().parametersArray()[1];
 
         ServiceParameters s = request.getServiceParameters();
 
-        Teacher teacher = Teacher.readTeacherByUsername(username);
+        Teacher teacher = Teacher.readTeacherByUsername(userView.getUtilizador());
         Integer userNumber = null;
         if (teacher != null)
             userNumber = teacher.getTeacherNumber();
         else {
-            Employee employee = Person.readPersonByUsername(username).getEmployee();
+            Employee employee = userView.getPerson().getEmployee();
             if (employee != null)
                 userNumber = employee.getEmployeeNumber();
         }
@@ -55,7 +56,8 @@ public class ProjectsManagerAuthorizationFilter extends AuthorizationByRoleFilte
             Role role = Role.getRoleByRoleType(RoleType.INSTITUCIONAL_PROJECTS_MANAGER);
             if (!costCenter.equals(role.getPortalSubApplication())) {
                 PersistentSuportOracle p = PersistentSuportOracle.getInstance();
-                if (p.getIPersistentProjectUser().getCCNameByCoordinatorAndCC(userNumber, new Integer(costCenter))!=null) {
+                if (p.getIPersistentProjectUser().getCCNameByCoordinatorAndCC(userNumber,
+                        new Integer(costCenter)) != null) {
                     s.addParameter("userNumber", costCenter, s.parametersArray().length - 1);
                 }
             }

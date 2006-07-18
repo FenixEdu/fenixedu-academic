@@ -20,7 +20,7 @@ import net.sourceforge.fenixedu.persistenceTierOracle.Oracle.PersistentSuportOra
  */
 public class ReadUserCostCenters extends Service {
 
-    public List run(String username, String costCenter, String userNumber) throws ExcepcaoPersistencia {
+    public List run(Person person, String costCenter, String userNumber) throws ExcepcaoPersistencia {
         List<InfoRubric> infoCostCenterList = new ArrayList<InfoRubric>();
 
         PersistentSuportOracle p = PersistentSuportOracle.getInstance();
@@ -28,8 +28,7 @@ public class ReadUserCostCenters extends Service {
                 new Integer(userNumber));
 
         List<Integer> projectCodes = new ArrayList<Integer>();
-        Person person = Person.readPersonByUsername(username);
-        List<ProjectAccess> accesses = ProjectAccess.getAllByPersonUsername(person);
+        List<ProjectAccess> accesses = ProjectAccess.getAllByPerson(person);
         for (ProjectAccess access : accesses) {
             Integer keyCostCenter = access.getKeyProjectCoordinator();
 

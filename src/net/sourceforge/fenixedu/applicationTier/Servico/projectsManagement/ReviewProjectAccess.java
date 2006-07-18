@@ -23,22 +23,25 @@ import net.sourceforge.fenixedu.persistenceTierOracle.Oracle.PersistentSuportOra
  */
 public class ReviewProjectAccess extends Service {
 
-    public void run(String username, String costCenter, String userNumber) throws FenixServiceException, ExcepcaoPersistencia {
-        Person person = Person.readPersonByUsername(username);
+    public void run(Person person, String costCenter, String userNumber) throws FenixServiceException,
+            ExcepcaoPersistencia {
         Role role = Role.getRoleByRoleType(RoleType.PROJECTS_MANAGER);
         if (ProjectAccess.getAllByPersonAndCostCenter(person, false, true).size() == 0) {
             Teacher teacher = person.getTeacher();
             if (teacher == null) {
                 Employee employee = person.getEmployee();
                 if (employee != null) {
-                    IPersistentSuportOracle persistentSupportOracle = PersistentSuportOracle.getInstance();
-                    if ((persistentSupportOracle.getIPersistentProject().countUserProject(employee.getEmployeeNumber()) == 0)) {
-                        List<ProjectAccess> accessesToDelete = ProjectAccess.getAllByPersonAndCostCenter(person, false, false);
+                    IPersistentSuportOracle persistentSupportOracle = PersistentSuportOracle
+                            .getInstance();
+                    if ((persistentSupportOracle.getIPersistentProject().countUserProject(
+                            employee.getEmployeeNumber()) == 0)) {
+                        List<ProjectAccess> accessesToDelete = ProjectAccess
+                                .getAllByPersonAndCostCenter(person, false, false);
 
                         for (ProjectAccess access : accessesToDelete) {
                             access.delete();
                         }
-                        
+
                         person.removePersonRoles(role);
                     }
                 } else
@@ -52,14 +55,17 @@ public class ReviewProjectAccess extends Service {
             if (teacher == null) {
                 Employee employee = person.getEmployee();
                 if (employee != null) {
-                    IPersistentSuportOracle persistentSupportOracle = PersistentSuportOracle.getInstance();
-                    if ((persistentSupportOracle.getIPersistentProject().countUserProject(employee.getEmployeeNumber()) == 0)) {
-                        List<ProjectAccess> accessesToDelete = ProjectAccess.getAllByPersonAndCostCenter(person, true, false);
+                    IPersistentSuportOracle persistentSupportOracle = PersistentSuportOracle
+                            .getInstance();
+                    if ((persistentSupportOracle.getIPersistentProject().countUserProject(
+                            employee.getEmployeeNumber()) == 0)) {
+                        List<ProjectAccess> accessesToDelete = ProjectAccess
+                                .getAllByPersonAndCostCenter(person, true, false);
 
                         for (ProjectAccess access : accessesToDelete) {
                             access.delete();
                         }
-                        
+
                         person.removePersonRoles(role);
                     }
                 } else

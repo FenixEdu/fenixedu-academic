@@ -226,7 +226,7 @@ public class ProjectAccess extends ProjectAccess_Base {
         return result;
     }
 
-    public static List<ProjectAccess> getAllByPersonUsername(Person person) {
+    public static List<ProjectAccess> getAllByPerson(Person person) {
         List<ProjectAccess> result = new ArrayList<ProjectAccess>();
 
         DateTime currentDate = new DateTime();

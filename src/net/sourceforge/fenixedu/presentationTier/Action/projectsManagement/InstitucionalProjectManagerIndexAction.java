@@ -27,15 +27,16 @@ import org.apache.struts.action.ActionMapping;
  */
 public class InstitucionalProjectManagerIndexAction extends FenixAction {
 
-    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-            throws FenixFilterException, FenixServiceException {
+    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 
         final IUserView userView = SessionUtils.getUserView(request);
 
-        ServiceManagerServiceFactory.executeService(userView, "ReviewProjectAccess", new Object[] { userView.getUtilizador(),
-                mapping.getModuleConfig().getPrefix() });
-        List<InfoRubric> infoCostCenterList = (List) ServiceManagerServiceFactory.executeService(userView, "ReadUserCostCenters", new Object[] {
-                userView.getUtilizador(), mapping.getModuleConfig().getPrefix() });
+        ServiceManagerServiceFactory.executeService(userView, "ReviewProjectAccess", new Object[] {
+                userView.getPerson(), mapping.getModuleConfig().getPrefix() });
+        List<InfoRubric> infoCostCenterList = (List) ServiceManagerServiceFactory.executeService(
+                userView, "ReadUserCostCenters", new Object[] { userView.getPerson(),
+                        mapping.getModuleConfig().getPrefix() });
         request.setAttribute("infoCostCenterList", infoCostCenterList);
         request.setAttribute("infoCostCenter", new InfoRubric());
         return mapping.findForward("success");
