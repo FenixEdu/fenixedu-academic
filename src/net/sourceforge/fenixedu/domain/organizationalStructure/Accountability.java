@@ -14,7 +14,7 @@ public class Accountability extends Accountability_Base {
         setOjbConcreteClass(getClass().getName());
     }
 
-    public Accountability(Party parentParty, Party childParty, AccountabilityType accountabilityType) {
+    Accountability(Party parentParty, Party childParty, AccountabilityType accountabilityType) {
         this();
         setParentParty(parentParty);
         setChildParty(childParty);

@@ -422,7 +422,16 @@ public class Unit extends Unit_Base {
     }
 
     public Accountability addParent(Unit parentUnit, AccountabilityType accountabilityType) {
+        checkIfCanAddParent(accountabilityType);
         return new Accountability(parentUnit, this, accountabilityType);
+    }
+
+    private void checkIfCanAddParent(AccountabilityType accountabilityType) {
+        if ((accountabilityType.getType() == AccountabilityTypeEnum.ACADEMIC_MANAGEMENT)
+                && getParentsByAccountabilityType(accountabilityType.getType()).size() == 1) {
+            throw new DomainException(
+                    "error.organizationalStructure.Unit.parent.with.accountability.type.already.exists");
+        }
     }
 
     public Accountability addChild(Unit childUnit, AccountabilityType accountabilityType) {
@@ -508,13 +517,18 @@ public class Unit extends Unit_Base {
     }
 
     public Set<Unit> getParentByOrganizationalStructureAccountabilityType() {
+        return getParentsByAccountabilityType(AccountabilityTypeEnum.ORGANIZATIONAL_STRUCTURE);
+    }
+
+    public Set<Unit> getParentsByAccountabilityType(AccountabilityTypeEnum accountabilityTypeEnum) {
         final Set<Unit> result = new HashSet<Unit>();
         for (final Accountability accountability : getParentsSet()) {
-            if (accountability.getAccountabilityType().getType() == AccountabilityTypeEnum.ORGANIZATIONAL_STRUCTURE
+            if (accountability.getAccountabilityType().getType() == accountabilityTypeEnum
                     && accountability.getParentParty() instanceof Unit) {
                 result.add((Unit) accountability.getParentParty());
             }
         }
+
         return result;
     }
 
