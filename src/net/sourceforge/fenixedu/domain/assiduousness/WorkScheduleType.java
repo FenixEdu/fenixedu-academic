@@ -6,6 +6,7 @@ import net.sourceforge.fenixedu.domain.assiduousness.util.Timeline;
 
 import org.joda.time.DateTime;
 import org.joda.time.Duration;
+import org.joda.time.Interval;
 import org.joda.time.TimeOfDay;
 import org.joda.time.YearMonthDay;
 
@@ -106,5 +107,10 @@ public class WorkScheduleType extends WorkScheduleType_Base {
         Duration maxDuration = new Duration(getClockingTime().toDateTime(now).getMillis(), now.plusDays(
                 1).getMillis());
         return (getClockingTimeDuration().compareTo(maxDuration) >= 0);
+    }
+
+    public static Interval getDefaultWorkTime(YearMonthDay workDay) {
+        return new Interval(workDay.toDateTime(new TimeOfDay(3, 0, 0, 0)), workDay.toDateTime(
+                new TimeOfDay(6, 0, 0, 0)).plusDays(1));
     }
 }

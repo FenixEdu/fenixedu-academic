@@ -13,7 +13,6 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFi
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.assiduousness.EmployeeWorkSheet;
 import net.sourceforge.fenixedu.dataTransferObject.assiduousness.UnitEmployees;
-import net.sourceforge.fenixedu.dataTransferObject.assiduousness.WorkDaySheet;
 import net.sourceforge.fenixedu.dataTransferObject.assiduousness.YearMonth;
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.organizationalStructure.FunctionType;
@@ -73,7 +72,6 @@ public class AssiduousnessResponsibleDispatchAction extends FenixDispatchAction 
         List<UnitEmployees> unitEmployeesList = new ArrayList<UnitEmployees>();
         for (PersonFunction personFunction : userView.getPerson().getPersonFuntions(beginDate, endDate)) {
             if (personFunction.getFunction().getFunctionType() == FunctionType.ASSIDUOUSNESS_RESPONSIBLE) {
-                // tenho acesso as pessoas numa nidade.... mas a função pode ter outro prazo!
                 List<Employee> employeeList = personFunction.getFunction().getUnit()
                         .getAllWorkingEmployees(beginDate, endDate);
                 if (!employeeList.isEmpty()) {
@@ -143,7 +141,7 @@ public class AssiduousnessResponsibleDispatchAction extends FenixDispatchAction 
         if (yearMonth.getYear() == new YearMonthDay().getYear()
                 && yearMonth.getMonth().ordinal() + 1 == new YearMonthDay().getMonthOfYear()) {
             endDay = new YearMonthDay().getDayOfMonth();
-            request.setAttribute("displayCurrentDayNote","true");
+            request.setAttribute("displayCurrentDayNote", "true");
         }
         YearMonthDay endDate = new YearMonthDay(yearMonth.getYear(), yearMonth.getMonth().ordinal() + 1,
                 endDay);

@@ -14,6 +14,7 @@ import net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessRecord;
 import net.sourceforge.fenixedu.domain.assiduousness.Leave;
 import net.sourceforge.fenixedu.domain.assiduousness.Schedule;
 import net.sourceforge.fenixedu.domain.assiduousness.WorkSchedule;
+import net.sourceforge.fenixedu.domain.assiduousness.WorkScheduleType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 
 import org.joda.time.DateMidnight;
@@ -207,27 +208,16 @@ public class ReadAssiduousnessWorkSheet extends Service {
         return employeeWorkSheet;
     }
 
-    //if returns false the clocking belongs to the clocking date
-    //if returns true it may belong to the clocking date or the day before
+    // if returns false the clocking belongs to the clocking date
+    // if returns true it may belong to the clocking date or the day before
     private boolean overlapsSchedule(DateTime clocking,
             HashMap<YearMonthDay, WorkSchedule> workScheduleMap) {
         WorkSchedule thisDaySchedule = workScheduleMap.get(clocking.toYearMonthDay());
         WorkSchedule dayBeforeSchedule = workScheduleMap.get(clocking.toYearMonthDay().minusDays(1));
-        if (thisDaySchedule == null && dayBeforeSchedule != null) {
-            DateTime beginDayBeforeWorkTime = clocking.toYearMonthDay().toDateTime(
-                    dayBeforeSchedule.getWorkScheduleType().getWorkTime()).minusDays(1);
-            DateTime endDayBeforeWorkTime = clocking.toYearMonthDay().toDateTime(
-                    dayBeforeSchedule.getWorkScheduleType().getWorkEndTime()).minusDays(1);
-            if (dayBeforeSchedule.getWorkScheduleType().isWorkTimeNextDay()) {
-                endDayBeforeWorkTime = endDayBeforeWorkTime.plusDays(1);
-            }
 
-            Interval dayBeforeWorkTimeInterval = new Interval(beginDayBeforeWorkTime,
-                    endDayBeforeWorkTime);
-            if (!dayBeforeWorkTimeInterval.contains(clocking)) {
-                return false;
-            }
-        } else if (thisDaySchedule != null && dayBeforeSchedule != null) {
+        Interval thisDayWorkTimeInterval = WorkScheduleType
+                .getDefaultWorkTime(clocking.toYearMonthDay());
+        if (thisDaySchedule != null) {
             DateTime beginThisDayWorkTime = clocking.toYearMonthDay().toDateTime(
                     thisDaySchedule.getWorkScheduleType().getWorkTime());
             DateTime endThisDayWorkTime = clocking.toYearMonthDay().toDateTime(
@@ -235,8 +225,11 @@ public class ReadAssiduousnessWorkSheet extends Service {
             if (thisDaySchedule.getWorkScheduleType().isWorkTimeNextDay()) {
                 endThisDayWorkTime = endThisDayWorkTime.plusDays(1);
             }
-            Interval thisDayWorkTimeInterval = new Interval(beginThisDayWorkTime, endThisDayWorkTime);
-
+            thisDayWorkTimeInterval = new Interval(beginThisDayWorkTime, endThisDayWorkTime);
+        }
+        Interval dayBeforeWorkTimeInterval = WorkScheduleType.getDefaultWorkTime(clocking
+                .toYearMonthDay().minusDays(1));
+        if (dayBeforeSchedule != null) {
             DateTime beginDayBeforeWorkTime = clocking.toYearMonthDay().toDateTime(
                     dayBeforeSchedule.getWorkScheduleType().getWorkTime()).minusDays(1);
             DateTime endDayBeforeWorkTime = clocking.toYearMonthDay().toDateTime(
@@ -245,14 +238,13 @@ public class ReadAssiduousnessWorkSheet extends Service {
                 endDayBeforeWorkTime = endDayBeforeWorkTime.plusDays(1);
             }
 
-            Interval nextDayWorkTimeInterval = new Interval(beginDayBeforeWorkTime, endDayBeforeWorkTime);
-
-            if (!thisDayWorkTimeInterval.overlaps(nextDayWorkTimeInterval)) {
-                return false;
-            }
+            dayBeforeWorkTimeInterval = new Interval(beginDayBeforeWorkTime, endDayBeforeWorkTime);
+        }
+        Interval overlapResult = thisDayWorkTimeInterval.overlap(dayBeforeWorkTimeInterval);
+        if (overlapResult == null
+                || (!overlapResult.contains(clocking) && clocking.isAfter(overlapResult.getStart()))) {
+            return false;
         }
         return true;
-
     }
-
 }
