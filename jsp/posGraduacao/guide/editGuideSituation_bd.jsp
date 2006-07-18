@@ -176,7 +176,7 @@
 				</tr>
    				<tr>
    					<td>
-   						<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.Alterar" property="Alterar">Alterar Situaï¿½ï¿½o</html:submit>
+   						<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.Alterar" property="Alterar">Alterar Situação</html:submit>
    						<html:reset bundle="HTMLALT_RESOURCES" altKey="reset.Reset" property="Reset">Dados Originais</html:reset>
    					</td>
    				</tr>

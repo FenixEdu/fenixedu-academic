@@ -87,7 +87,7 @@
 		</table>
 		<br />
 		<table width="100%" cellpadding="0" cellspacing="0">
-          <!-- Filiaï¿½ï¿½o -->
+          <!-- Filiação -->
           <tr>
           	<td class="infoop" width="25"><span class="emphasis-box">2</span></td>
           	<td class="infoop"><strong><bean:message key="label.person.title.filiation" /></strong></td>

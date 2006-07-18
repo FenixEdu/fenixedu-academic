@@ -8,7 +8,7 @@
 	<div align="center" style="text-align: center;">
 	<h4 class="registration"><bean:message key="label.registration.title" /></h4>
 	<div class="infoop" style="text-align: justify; width: 70%; margin: 0 14%;">
-		<p><strong>Leia com atenï¿½ï¿½o:</strong></p>
+		<p><strong>Leia com atenção:</strong></p>
 		<p><bean:message key="label.registration.info1" />:</p>
 		<ul style="list-style: none;">
 		<li><bean:message key="label.registration.info.step1" /></li>

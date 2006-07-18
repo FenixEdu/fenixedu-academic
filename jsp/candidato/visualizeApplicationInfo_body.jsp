@@ -75,7 +75,7 @@
 	          <!-- Situacao -->
 	          <tr>
 				<bean:define id="supportMail" type="java.lang.String">mailto:<bean:message key="suporte.mail" bundle="GLOBAL_RESOURCES"/>?subject=Situacao Indefinida (pos-graduacao)</bean:define>
-	            <td colspan="2"><span class="error">Nï¿½o tem situaï¿½ï¿½o activa. Contacte-nos clicando <a href="<%= supportMail %>">aqui</a></span></td>
+	            <td colspan="2"><span class="error">Não tem situação activa. Contacte-nos clicando <a href="<%= supportMail %>">aqui</a></span></td>
 	          </tr>
 	
 	      </logic:notPresent>

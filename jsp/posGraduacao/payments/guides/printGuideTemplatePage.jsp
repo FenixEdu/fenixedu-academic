@@ -28,8 +28,8 @@
               <td>
                 <table border="0" width="100%" height="100%">
                   <tr align="left"> 
-                    <td>&nbsp;<b>INSTITUTO SUPERIOR Tï¿½CNICO</b><br/>
-                      &nbsp;<b>Secretaria da Pï¿½s-Graduaï¿½ï¿½o</b><br/>
+                    <td>&nbsp;<b>INSTITUTO SUPERIOR TÉCNICO</b><br/>
+                      &nbsp;<b>Secretaria da Pós-Graduação</b><br/>
                       &nbsp;<b>Centro de Custo 0212</b>
                       <hr size="1">
                     </td>

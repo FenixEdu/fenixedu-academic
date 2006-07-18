@@ -84,7 +84,7 @@ dia <bean:write name="<%=SessionConstants.EXAM_DATEANDTIME_STR%>"/>
 	</logic:iterate>
 	
 	<logic:notPresent name="<%=SessionConstants.AVAILABLE_ROOMS%>">
-		Nï¿½o existem salas disponï¿½veis.
+		Não existem salas disponï¿½veis.
 	</logic:notPresent>
 
 <logic:present name="<%= SessionConstants.EXAM_OID %>">

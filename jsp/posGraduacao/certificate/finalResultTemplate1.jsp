@@ -29,7 +29,7 @@
  <br />  
  <table class="apura-final" width="90%" cellspacing="0">
 	<tr>
-		<td style="color: #333; background: #ccc; padding: 5px; border-bottom: 1px solid #333;">Informaï¿½ï¿½o</td>
+		<td style="color: #333; background: #ccc; padding: 5px; border-bottom: 1px solid #333;">Informação</td>
 	</tr>
     <tr>
     	<td style="padding: 5px;"><p class="apura-pt9">Concluiu a parte escolar do curso de <bean:message name="infoStudentCurricularPlan" property="specialization.name" bundle="ENUMERATION_RESOURCES"/> em <bean:write name="conclusionDate"/> com a mï¿½dia final de 

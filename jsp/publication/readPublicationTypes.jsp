@@ -7,7 +7,7 @@
 <h2><bean:message key="title.publications.Management"/></h2>
 <html:form action="/prepareSearchPerson">
 <logic:notPresent name="publicationTypesList">
-	Nï¿½o existem os tipos
+	Não existem os tipos
 </logic:notPresent>
 <logic:present name="publicationTypesList">
 <br/>

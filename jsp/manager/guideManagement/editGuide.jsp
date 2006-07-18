@@ -174,7 +174,7 @@
 				- <bean:write name="guideSituation" property="idInternal" />
 				- <bean:write name="guideSituation" property="situation.name" />
 				- <bean:write name="guideSituation" property="state" />
-				- <html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" value="Apagar Situaï¿½ï¿½o" onclick="<%= behavior %>" />	</td>	
+				- <html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" value="Apagar Situação" onclick="<%= behavior %>" />	</td>	
 			</tr>		
 		</logic:iterate>
 		
@@ -182,7 +182,7 @@
 			<td>&nbsp;</td>
 		</tr>
 		<tr>
-			<td><b>Nova Situaï¿½ï¿½o:</b></td>
+			<td><b>Nova Situação:</b></td>
 		</tr>
 		<tr>
 			<td>&nbsp;</td>
@@ -190,7 +190,7 @@
 		<tr>
 			<td ><b>Descriï¿½ï¿½o:</b></td>
 			<td colspan="2"><b>Data: </b></td>
-			<td colspan="2"><b>Situaï¿½ï¿½o: </b></td>			
+			<td colspan="2"><b>Situação: </b></td>			
 		</tr>
 			<td ><html:text bundle="HTMLALT_RESOURCES" altKey="text.newSituationRemarks" size="30" property="newSituationRemarks" /></td>
 			<td colspan="2"> 				
@@ -217,7 +217,7 @@
 			</html:select></td>
 		</tr>		
 		<tr>
-			<td><html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" value="Adicionar Situaï¿½ï¿½o"
+			<td><html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" value="Adicionar Situação"
 				onclick="this.form.method.value='addGuideSituation'" /></td>
 		</tr>
 

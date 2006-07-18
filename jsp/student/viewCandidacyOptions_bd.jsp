@@ -51,5 +51,5 @@
     <html:errors/>
  </logic:notEmpty>
  <logic:empty name="equivalencies">
- 	<span class="error">Nï¿½o existem opï¿½ï¿½es disponï¿½veis para a sua licenciatura neste ciclo de seminï¿½rios.</span>
+ 	<span class="error">Não existem opï¿½ï¿½es disponï¿½veis para a sua licenciatura neste ciclo de seminï¿½rios.</span>
  </logic:empty>

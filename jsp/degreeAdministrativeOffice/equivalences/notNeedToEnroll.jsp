@@ -3,7 +3,7 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 
-<h2>Disciplinas que o aluno nï¿½o necessita de fazer</h2>
+<h2>Disciplinas que o aluno não necessita de fazer</h2>
 <br/><br/>
 <html:form action="showNotNeedToEnroll">
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="prepareNotNeedToEnroll"/>

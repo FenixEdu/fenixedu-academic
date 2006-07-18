@@ -64,7 +64,7 @@
       </html:form>
       <hr width="250" noshade>
       <div align="center" style="color:#000080; font-size:14px">
-        &copy;2002 - Nï¿½cleo de Aplicaï¿½ï¿½es do CIIST
+        &copy;2002 - Núcleo de Aplicações do CIIST
       </div>
     </td>
   </tr>

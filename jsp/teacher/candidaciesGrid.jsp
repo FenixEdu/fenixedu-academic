@@ -323,7 +323,7 @@
 											Sim
 										</logic:equal>
 										<logic:notEqual name="candidacy" property="approved" value="true">
-											Nï¿½o
+											Não
 										</logic:notEqual>
 									</td>
 									<td class="listClasses">

@@ -45,7 +45,7 @@
                 <table align="center" border='1' cellpadding='5''>
                     <tr align="center">
                         <td>
-                            <font color='red'> Nï¿½o existem turmas </font>
+                            <font color='red'> Não existem turmas </font>
                         </td>
                     </tr>
                 </table>

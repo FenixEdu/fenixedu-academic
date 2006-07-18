@@ -172,7 +172,7 @@
 									Sim
 								</logic:equal> 
 								<logic:notEqual name="tempExamMap" value="true">
-									Nï¿½o
+									Não
 								</logic:notEqual>
 							</logic:present>
 						</logic:notEmpty>

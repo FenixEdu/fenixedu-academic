@@ -8,8 +8,8 @@
 		
 <h2>Selecionar Salas</h2>
 
-Preencher apenas os campos necessï¿½rios. <br/>
-Se quiser ver todas as salas nï¿½o preencha nenhum.
+Preencher apenas os campos necessï¿?rios. <br/>
+Se quiser ver todas as salas não preencha nenhum.
 <%-- clique 
 <html:link page="<%= "/roomExamSearch.do?method=search" %>">aqui</html:link>. 
 --%>

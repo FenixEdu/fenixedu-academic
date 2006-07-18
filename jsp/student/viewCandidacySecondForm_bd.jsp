@@ -14,7 +14,7 @@
 				<bean:define id="hiddenSelectedCases" type="java.util.List" scope="request" name="hiddenSelectedCases"/>
 				<bean:size id="selectedCasesSize" scope="request" name="selectedCases"/>
 				<h2><bean:message key="label.candidacyFormTitle"/></h2>
-				<h2 class="redtxt">Informaï¿½ï¿½o:</h2><p><bean:message key="message.seminaries.selectCaseStudy"/></p>
+				<h2 class="redtxt">Informação:</h2><p><bean:message key="message.seminaries.selectCaseStudy"/></p>
 				<html:form action="manageCaseStudyChoices.do" method="post">
 				<table width="100%" align="center" border="0">
 					<tr>

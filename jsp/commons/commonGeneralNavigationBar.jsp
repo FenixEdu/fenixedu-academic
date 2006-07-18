@@ -51,7 +51,7 @@
 	</div>
 </logic:present>
 <logic:notPresent name="<%= Globals.MODULE_KEY %>">
-	<span class="error">Nï¿½o passou pelo RequestProcessor</span>
+	<span class="error">Não passou pelo RequestProcessor</span>
 </logic:notPresent>
 
 

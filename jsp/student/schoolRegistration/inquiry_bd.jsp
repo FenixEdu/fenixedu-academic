@@ -13,7 +13,7 @@
 <tr>
 	<td></td>
 	<td>Sim</td> 
-	<td>Nï¿½o</td>
+	<td>Não</td>
 </tr>
 <html:form action="/residenceCandidacy?method=residenceCandidacy">
  <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="4"/>

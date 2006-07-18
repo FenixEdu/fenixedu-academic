@@ -15,7 +15,7 @@
 		</html:link>
 	</li>
 	
-	<li class="navheader">Gestï¿½o de <bean:message bundle="MANAGER_RESOURCES" key="label.manager.executionDegreeManagement"/></li>
+	<li class="navheader">Gestão de <bean:message bundle="MANAGER_RESOURCES" key="label.manager.executionDegreeManagement"/></li>
 	<li>
 	  	<html:link module="/manager" page="/degree/chooseDegreeType.faces">
 	  		<bean:message bundle="MANAGER_RESOURCES" key="label.manager.createExecutionDegrees"/>

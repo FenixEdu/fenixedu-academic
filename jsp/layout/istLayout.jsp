@@ -6,8 +6,8 @@
 <html:html xhtml="true" locale="true">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-<meta name="keywords" content="ensino,  ensino superior, universidade, instituto, ciï¿½ncia, instituto superior tï¿½cnico, investigaï¿½ï¿½o e desenvolvimento" />
-<meta name="description" content="O Instituto Superior Tï¿½cnico ï¿½ a maior escola de engenharia, ciï¿½ncia e tecnologia em Portugal." />
+<meta name="keywords" content="ensino,  ensino superior, universidade, instituto, ciência, instituto superior técnico, investigaï¿½ï¿½o e desenvolvimento" />
+<meta name="description" content="O Instituto Superior Técnico ï¿½ a maior escola de engenharia, ciência e tecnologia em Portugal." />
 
 <link rel="stylesheet" type="text/css" media="screen" href="<%= request.getContextPath() %>/CSS/iststyle.css" />
 <link rel="stylesheet" type="text/css" media="screen" href="<%= request.getContextPath() %>/CSS/dotist_timetables.css" />

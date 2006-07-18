@@ -70,7 +70,7 @@
                 <table align="center" border='1' cellpadding='5'>
                     <tr align="center">
                         <td>
-                            <font color='red'> Nï¿½o existem aulas da disciplina e tipo escolhidos </font>
+                            <font color='red'> Não existem aulas da disciplina e tipo escolhidos </font>
                         </td>
                     </tr>
                 </table>

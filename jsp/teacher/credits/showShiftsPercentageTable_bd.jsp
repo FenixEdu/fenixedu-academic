@@ -39,7 +39,7 @@
 					<tr>
 						<td class="listClasses"><bean:write name="infoShiftPercentage" property="shift.nome"/></td>
 						<td class="listClasses"><bean:write name="infoShiftPercentage" property="shift.tipo.siglaTipoAula"/></td>
-						<td class="listClasses" colspan="7"> Nï¿½o tem aulas </td>
+						<td class="listClasses" colspan="7"> Não tem aulas </td>
 					</tr>
 				</logic:equal>
 				<logic:notEqual name="lessonsSize" value="0">

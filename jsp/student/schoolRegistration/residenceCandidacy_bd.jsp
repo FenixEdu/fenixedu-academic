@@ -18,7 +18,7 @@
 	<p>
 	<bean:message key="label.schoolRegistration.residenceCandidate"/>
 	<span style="padding-left: 1em;">Sim<html:radio bundle="HTMLALT_RESOURCES" altKey="radio.residenceCandidate" property="residenceCandidate" value="true" /></span>
-	<span>Nï¿½o<html:radio bundle="HTMLALT_RESOURCES" altKey="radio.residenceCandidate" property="residenceCandidate" value="false" /></span>
+	<span>Não<html:radio bundle="HTMLALT_RESOURCES" altKey="radio.residenceCandidate" property="residenceCandidate" value="false" /></span>
 	</p>
 
 	<p>

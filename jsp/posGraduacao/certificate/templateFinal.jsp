@@ -7,6 +7,6 @@
 <br />
 <br />
 <div align="right" style="margin-right: 100px;">Dr. Nuno Riscado</div>
-<div align="right" style="margin-right: 100px;">(Coordenador do Nï¿½cleo de Pï¿½s-Graduaï¿½ï¿½o e Formaï¿½ï¿½o Contï¿½nua)</div>
+<div align="right" style="margin-right: 100px;">(Coordenador do Núcleo de Pós-Graduação e Formaï¿½ï¿½o Contï¿½nua)</div>
 <br />
 <p><bean:write name="<%= SessionConstants.DATE %>" /></p>

@@ -23,10 +23,10 @@
 					<span class="emphasis-box">info</span>
 				</td>
 				<td class="infoop">
-					<strong>Nota: ï¿½ normal a existï¿½ncia de dois planos curriculares para o mesmo curso.</strong><br/>
-					O plano curricular com a data mais antiga (ano da sua entrada no IST), contem o seu currï¿½culo tal e qual como o pode visionar no ponto habitual acedido atravï¿½s da pï¿½gina do IST.<br/>
-					O plano curricular com a data mais recente (este ano lectivo), contem o seu currï¿½culo como se o tivesse iniciado este ano, ou seja, apenas com as disciplinas em que se encontra inscrito a partir deste ano lectivo.<br/>
-					A razï¿½o desta separaï¿½ï¿½o ï¿½ dar a hipï¿½tese de verificar a correcï¿½ï¿½o do seu currï¿½culo passado para, mais tarde (e depois de ter a certeza de que estï¿½ tudo em ordem), juntar toda a informaï¿½ï¿½o num sï¿½ plano curricular.
+					<strong>Nota: ï¿? normal a existï¿?ncia de dois planos curriculares para o mesmo curso.</strong><br/>
+					O plano curricular com a data mais antiga (ano da sua entrada no IST), contem o seu currï¿?culo tal e qual como o pode visionar no ponto habitual acedido atravï¿?s da pï¿?gina do IST.<br/>
+					O plano curricular com a data mais recente (este ano lectivo), contem o seu currï¿?culo como se o tivesse iniciado este ano, ou seja, apenas com as disciplinas em que se encontra inscrito a partir deste ano lectivo.<br/>
+					A razï¿?o desta separaï¿?ï¿?o ï¿? dar a hipï¿?tese de verificar a correcï¿?ï¿?o do seu currï¿?culo passado para, mais tarde (e depois de ter a certeza de que estï¿? tudo em ordem), juntar toda a informação num sï¿? plano curricular.
 				</td>
 			</tr>
 		</table>

@@ -6,7 +6,7 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="dt" %>
 <%@ page import="java.util.List"%>
-<h2>Gestï¿½o de Disciplinas</h2>
+<h2>Gestão de Disciplinas</h2>
 <br />
 <span class="error"><html:errors /></span>
 <html:form action="/manageExecutionCourses" focus="executionDegreeOID">

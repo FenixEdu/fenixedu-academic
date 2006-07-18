@@ -26,6 +26,6 @@
 
 </logic:present>
 <logic:notPresent name="<%= Global.MODULE_KEY %>">
-	<span class="error">Nï¿½o passou pelo RequestProcessor</span>
+	<span class="error">Não passou pelo RequestProcessor</span>
 </logic:notPresent>
 --%>

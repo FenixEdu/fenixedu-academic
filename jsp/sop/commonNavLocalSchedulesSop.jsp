@@ -3,7 +3,7 @@
 <html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
-<!-- NOTA: Nï¿½o foram incluidas tags do beans tipo <bean:message key="title.listClasses"/> -->
+<!-- NOTA: Não foram incluidas tags do beans tipo <bean:message key="title.listClasses"/> -->
 
 <ul>
 	<li>

@@ -43,9 +43,9 @@
 	<br/>
 	<fieldset class="lfloat2">
 	<p><label>Nome do Remetente:</label><html:text bundle="HTMLALT_RESOURCES" altKey="text.fromPersonalName" property="fromPersonalName" size="50"/></p>	
-	<p><label>Endereï¿½o do Remetente:</label> <html:text bundle="HTMLALT_RESOURCES" altKey="text.fromAddress" property="fromAddress" size="50"/></p>
-	<p><label>Cï¿½pia para:</label> <html:text bundle="HTMLALT_RESOURCES" altKey="text.copyTo" property="copyTo" size="50"/><font size="-2"> (separe os endereï¿½os por vï¿½rgulas)</font></p>
-	<p><label>Cï¿½pia para o remetente</label><html:checkbox bundle="HTMLALT_RESOURCES" altKey="checkbox.copyToSender" property="copyToSender"/>(assinale caso deseje receber uma cï¿½pia da mensagem no endereï¿½o do remetente)</p> 
+	<p><label>Endereço do Remetente:</label> <html:text bundle="HTMLALT_RESOURCES" altKey="text.fromAddress" property="fromAddress" size="50"/></p>
+	<p><label>Cópia para:</label> <html:text bundle="HTMLALT_RESOURCES" altKey="text.copyTo" property="copyTo" size="50"/><font size="-2"> (separe os endereï¿½os por vï¿½rgulas)</font></p>
+	<p><label>Cópia para o remetente</label><html:checkbox bundle="HTMLALT_RESOURCES" altKey="checkbox.copyToSender" property="copyToSender"/>(assinale caso deseje receber uma cï¿½pia da mensagem no endereï¿½o do remetente)</p> 
 	<p><label>Assunto:</label> <html:text bundle="HTMLALT_RESOURCES" altKey="text.subject" property="subject" size="50"/></p>
 	<p><label>Mensagem:</label> <html:textarea bundle="HTMLALT_RESOURCES" altKey="textarea.message" rows="20" cols="100" property="message"/></p>
 	</fieldset>

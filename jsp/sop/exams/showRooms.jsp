@@ -59,7 +59,7 @@
 		</table>
 	</logic:present>
 	<logic:notPresent name="<%=SessionConstants.AVAILABLE_ROOMS%>">
-		Nï¿½o existem salas disponï¿½veis.
+		Não existem salas disponï¿½veis.
 	</logic:notPresent>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.day" property="day" />
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.month" property="month" />

@@ -97,7 +97,7 @@
 				</tr>
 			</table>
 			<br />
-			<!--Filiaï¿½ï¿½o -->
+			<!--Filiação -->
 			<table width="100%" cellspacing="0">
 				<tr>
 					<td class="infoop" width="50px"><span class="emphasis-box">2</span></td>
@@ -159,7 +159,7 @@
 			
 			</table>
 			<br />
-			<!-- Residï¿½ncia -->
+			<!-- Residência -->
 			<table width="100%" cellspacing="0">
 				<tr>
 					<td class="infoop" width="50px"><span class="emphasis-box">3</span></td>

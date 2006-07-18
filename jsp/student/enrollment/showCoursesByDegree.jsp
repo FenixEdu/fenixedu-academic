@@ -11,14 +11,14 @@
 	<h2><bean:message key="title.student.shift.enrollment" /></h2>
 	<span class="error"><html:errors/></span>
 
-	<p class="left">Aqui pode, <strong>a tï¿½tulo condicional</strong>, escolher disciplinas em que nï¿½o se encontra inscrito curricularmente  mas nas quais pretende efectuar reserva de turma/turnos. Por exemplo, sobre as seguintes condiï¿½ï¿½es:</p>
+	<p class="left">Aqui pode, <strong>a tï¿?tulo condicional</strong>, escolher disciplinas em que não se encontra inscrito curricularmente  mas nas quais pretende efectuar reserva de turma/turnos. Por exemplo, sobre as seguintes condiï¿?ï¿?es:</p>
 	
 	<ul class="left" style="margin-left: 4em">
 	<li>Alunos Externos</li>
 	<li>Melhorias de Nota</li>
-	<li>Alunos inscritos em ï¿½poca Especial 2003/2004</li>
-	<li>Alunos cuja inscriï¿½ï¿½o ï¿½ efectuada pelo Coordenador de Licenciatura/Tutor</li>
-	<li>Alunos com processos de Equivalï¿½ncia em curso</li>
+	<li>Alunos inscritos em ï¿?poca Especial 2003/2004</li>
+	<li>Alunos cuja inscriï¿?ï¿?o ï¿? efectuada pelo Coordenador de Licenciatura/Tutor</li>
+	<li>Alunos com processos de Equivalï¿?ncia em curso</li>
 	</ul>
 
 <div class="infoselected left">

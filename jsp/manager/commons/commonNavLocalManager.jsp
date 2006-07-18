@@ -16,7 +16,7 @@
 <li class="navheader">Mensagens e Avisos</li>
 <li> 
 	<html:link module="/manager" page="/advisoriesManagement/listCurrentAdvisories.faces">
-		Gestï¿½o de Avisos
+		Gestão de Avisos
 	</html:link>
 </li>
 <li> 
@@ -37,7 +37,7 @@
 	</html:link>
 </li>
 
-<li class="navheader">Gestï¿½o da Estrutura de Ensino</li>
+<li class="navheader">Gestão da Estrutura de Ensino</li>
 <li> 
 	<html:link module="/manager" module="/manager" page="/readDegrees.do">
 		<bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="label.manager.readDegrees" />
@@ -64,7 +64,7 @@
   	</html:link>  
 </li>
 
-<li class="navheader">Gestï¿½o de Execuï¿½ï¿½es</li>
+<li class="navheader">Gestão de Execuï¿½ï¿½es</li>
 <li> 
 	<html:link module="/manager" module="/manager" page="/manageExecutionPeriods.do?method=prepare">
 		Periodos Execuï¿½ï¿½o
@@ -86,7 +86,7 @@
 	</html:link>
 </li>
 
-<li class="navheader">Gestï¿½o de Pessoal</li>
+<li class="navheader">Gestão de Pessoal</li>
 <li> 
 	<html:link module="/manager" module="/manager" page="/teachersManagement.do?method=firstPage">
 		<bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="link.manager.teachersManagement" />
@@ -134,7 +134,7 @@
 	</html:link>
 </li>
 
-<li class="navheader">Gestï¿½o de CMS</li>
+<li class="navheader">Gestão de CMS</li>
 <li> 
 	<html:link module="/cms" action="/personalGroupsManagement.do?method=prepare" titleKey="person.userGroupsManagement.label.title">
 		<bean:message bundle="MANAGER_RESOURCES" key="link.userGroupsManagement" />
@@ -151,22 +151,22 @@
 	</html:link>	
 </li>
 
-<li class="navheader">Gestï¿½o do Suporte</li>
+<li class="navheader">Gestão do Suporte</li>
 <li>
 	<html:link module="/manager" module="/manager" page="/manageGlossary.do?method=prepare">
-		Gestï¿½o de Glossï¿½rio
+		Gestão de Glossï¿½rio
 	</html:link>
 </li>
 <li>
 	<html:link module="/manager" module="/manager" page="/manageFAQs.do?method=prepare">
-		Gestï¿½o de FAQ's
+		Gestão de FAQ's
 	</html:link>
 </li>
 
-<li class="navheader">Gestï¿½o de Objectos</li>
+<li class="navheader">Gestão de Objectos</li>
 <li> 
 	<html:link module="/manager" page="/manageCache.do?method=prepare">
-		Gestï¿½o da Cache
+		Gestão da Cache
 	</html:link>
 </li>
 <li>
@@ -175,7 +175,7 @@
 	</html:link>
 </li>
 
-<li class="navheader">Gestï¿½o do Sistema</li>
+<li class="navheader">Gestão do Sistema</li>
 <li> 
 	<html:link module="/manager" module="/manager" page="/monitorServices.do?method=monitor">
 		Monitorizaï¿½ï¿½o de Serviï¿½os

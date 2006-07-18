@@ -3,7 +3,7 @@
 <html:xhtml/>
 
 <ul>
-	<li class="navheader">Gestï¿½o de CMS</li>
+	<li class="navheader">Gestão de CMS</li>
 	<li>
 	<html:link module="/cms" action="/personalGroupsManagement.do?method=prepare" titleKey="person.userGroupsManagement.label.title">
 		<bean:message bundle="CMS_RESOURCES" key="link.userGroupsManagement" />

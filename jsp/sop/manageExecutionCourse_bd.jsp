@@ -14,7 +14,7 @@
 	</tr>
 </table>
 
-<h2>Gestï¿½o de Disciplinas</h2>
+<h2>Gestão de Disciplinas</h2>
 <br />
 <span class="error"><html:errors /></span>
 <br />

@@ -62,6 +62,6 @@
 	
 </ul>
 <%--
-Devido ï¿½s inscriï¿½ï¿½es, as funcionalidades do portal GEP estï¿½o temporariamente desactivadas para nï¿½o causar sobrecarga no servidor.
-As nossas desculpas pelo incï¿½modo.
+Devido ï¿?s inscriï¿?ï¿?es, as funcionalidades do portal GEP estï¿?o temporariamente desactivadas para não causar sobrecarga no servidor.
+As nossas desculpas pelo incï¿?modo.
 --%>

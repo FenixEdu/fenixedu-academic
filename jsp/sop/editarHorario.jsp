@@ -40,7 +40,7 @@
                 <table align="center" border=1 cellpadding='5'>
                     <tr align="center">
                         <td width='200'>
-                            <font color='red'> Nï¿½o existem turnos </font>
+                            <font color='red'> Não existem turnos </font>
                         </td>
                     </tr>
                 </table>

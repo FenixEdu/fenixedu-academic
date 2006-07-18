@@ -23,7 +23,7 @@
 			              <td>
 			                <table border="0" width="100%" height="100%">
 			                  <tr valign="top" align="left"> 
-			                    <td>&nbsp;<b>INSTITUTO SUPERIOR Tï¿½CNICO</b><br>
+			                    <td>&nbsp;<b>INSTITUTO SUPERIOR TÉCNICO</b><br>
 				                    &nbsp;<b>Curso: <bean:write name="infoExecutionDegree" property="infoDegreeCurricularPlan.infoDegree.nome"/><br>
 				                    &nbsp;<b>Ano Lectivo: <bean:write name="infoExecutionDegree" property="infoExecutionYear.year"/><br>
 			                      <hr size="1">
@@ -53,7 +53,7 @@
 					<tr>      
 						<td>      
 							<logic:iterate id="group" name="infoGroup" >
-								<h2>Situaï¿½ï¿½o: <bean:write name="group" property="situationName"/></h2>
+								<h2>Situação: <bean:write name="group" property="situationName"/></h2>
 						  		<table width="100%">
 						        	<logic:iterate id="candidate" name="group" property="candidates">
 						        		<tr width="100%">

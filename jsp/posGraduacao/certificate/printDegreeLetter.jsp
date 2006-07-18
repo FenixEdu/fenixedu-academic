@@ -51,7 +51,7 @@ font-size: 18px;
 <span class="hide">e de</span> <bean:write name="infoStudentCurricularPlan" property="infoStudent.infoPerson.nomeMae"/><br/>
 <span class="hide">natural de</span> <%= birth %> <span class="hide">tendo frequentado com aproveitamento</span><br/>
 <span class="hide">o curso de mestrado em</span> <bean:write name="infoStudentCurricularPlan" property="infoDegreeCurricularPlan.infoDegree.nome"/><br/>
-<span class="hide">no Instituto Superior Tï¿½cnico desta Universidade e defendido, perante um jï¿½ri legalmente constituï¿½do, a disserta-</span><br/>
+<span class="hide">no Instituto Superior Técnico desta Universidade e defendido, perante um jï¿½ri legalmente constituï¿½do, a disserta-</span><br/>
 <p style="margin-bottom: 1.00cm;"><span class="hide">ï¿½ï¿½o com o tï¿½tulo &nbsp;&nbsp;</span> <bean:write name="infoThesisDataVersion" property="dissertationTitle"/></p>
  
 <div style="margin:0; padding:0; position: relative;">

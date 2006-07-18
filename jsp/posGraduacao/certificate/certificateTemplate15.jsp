@@ -10,7 +10,7 @@
 <tr>
 <td align="center">
 	<h2 class='diploma_posGrad'>DIPLOMA</h2>
-	<h3 class='diploma_posGrad'>O Instituto Superior Tï¿½cnico certifica que</h3>
+	<h3 class='diploma_posGrad'>O Instituto Superior Técnico certifica que</h3>
 	<p class="diplomado">
 		<bean:write name="infoStudentCurricularPlan" property="infoStudent.infoPerson.nome"/>
 	</p>
@@ -20,5 +20,5 @@
     	<h3 class='diploma_posGrad'>com a mï¿½dia de <bean:write name="infoFinalResult" property="finalAverage"/> valores.</h3>
 <div class="dipl_signature">    	
     	<h4  class='diploma_posGrad'><bean:write name="<%= SessionConstants.DATE %>" /></h4>
-    	<h4 class='diploma_posGrad'>O Presidente do Instituto Superior Tï¿½cnico</h4>
+    	<h4 class='diploma_posGrad'>O Presidente do Instituto Superior Técnico</h4>
 </div>

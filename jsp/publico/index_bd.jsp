@@ -19,12 +19,12 @@
 <bean:message key="message.public.index.degree.consult"/>
 </p>
 <br />--%>
-	<p><strong><font color="#FF0000">Atenï¿½ï¿½o&nbsp;-&nbsp;</font>Se pretende consultar informaï¿½ï¿½o relativa a disciplinas de 4ï¿½ ou 5ï¿½ em 2003/2004 ou 5ï¿½ em 2004/2005 do curso de Informï¿½tica - Alameda, deve seleccionar o plano curricular "Licenciatura em Engenharia Informï¿½tica e de Computadores - LEIC - Currï¿½culo Antigo"</strong></p>
-	<p>	<strong><font color="#FF0000">Atenï¿½ï¿½o&nbsp;-&nbsp;</font>Devido ï¿½ alteraï¿½ï¿½o do calendï¿½rio das Licenciaturas em Engenharia Civil, em Engenharia do Territï¿½rio, e em Arquitectura (despacho do Conselho Directivo do passado dia 29 de Julho), as salas de aula dessas trï¿½s Licenciaturas foram alteradas</strong></p>
+	<p><strong><font color="#FF0000">Atenï¿?ï¿?o&nbsp;-&nbsp;</font>Se pretende consultar informação relativa a disciplinas de 4ï¿? ou 5ï¿? em 2003/2004 ou 5ï¿? em 2004/2005 do curso de Informï¿?tica - Alameda, deve seleccionar o plano curricular "Licenciatura em Engenharia Informï¿?tica e de Computadores - LEIC - Currï¿?culo Antigo"</strong></p>
+	<p>	<strong><font color="#FF0000">Atenï¿?ï¿?o&nbsp;-&nbsp;</font>Devido ï¿? alteraï¿?ï¿?o do calendï¿?rio das Licenciaturas em Engenharia Civil, em Engenharia do Territï¿?rio, e em Arquitectura (despacho do Conselho Directivo do passado dia 29 de Julho), as salas de aula dessas trï¿?s Licenciaturas foram alteradas</strong></p>
 	
 <%--	<strong><font color="#FF0000">Aviso:</font></strong>
 	<br />
-	<strong>Jï¿½ estï¿½o disponï¿½veis os <font color="#FF0000">horï¿½rios provisï¿½rios</font> para o 1ï¿½ semestre de 2004/2005 </strong>
+	<strong>Jï¿? estï¿?o disponï¿?veis os <font color="#FF0000">horï¿?rios provisï¿?rios</font> para o 1ï¿? semestre de 2004/2005 </strong>
 	<br />
 --%>	
 	<br />

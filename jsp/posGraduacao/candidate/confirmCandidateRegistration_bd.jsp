@@ -63,9 +63,9 @@
 		<br />
 		<div class="infoop">
 			<span class="error"><strong>Nota:</strong></span>
-			<br />&nbsp;&nbsp;&nbsp;&nbsp;Caso este Aluno tenha um nï¿½mero de Pï¿½s-Graduaï¿½ï¿½o que lhe foi atribuido antes do ano lectivo de <strong>2002/2003</strong> introduza-o aqui. 
-			<br />&nbsp;&nbsp;&nbsp;&nbsp;Caso este Aluno  ainda nï¿½o tenha um nï¿½mero atribuido ou que essa atribuiï¿½ï¿½o tenha sido feita no decorrer do ano lectivo de <strong>2002/2003</strong> 
-			<br />&nbsp;&nbsp;&nbsp;&nbsp;deixe este campo vazio que o programa atribuirï¿½ um novo nï¿½mero ou associarï¿½ o aluno ao seu respectivo nï¿½mero.
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;Caso este Aluno tenha um nï¿?mero de Pï¿?s-Graduaï¿?ï¿?o que lhe foi atribuido antes do ano lectivo de <strong>2002/2003</strong> introduza-o aqui. 
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;Caso este Aluno  ainda não tenha um nï¿?mero atribuido ou que essa atribuiï¿?ï¿?o tenha sido feita no decorrer do ano lectivo de <strong>2002/2003</strong> 
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;deixe este campo vazio que o programa atribuirï¿? um novo nï¿?mero ou associarï¿? o aluno ao seu respectivo nï¿?mero.
 			
 		</div>
 		<br />

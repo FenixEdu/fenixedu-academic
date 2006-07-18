@@ -7,6 +7,6 @@
   </head>
   <body>
     <html:errors/>
-    Nï¿½o Autorizado
+    Não Autorizado
   </body>
 </html>

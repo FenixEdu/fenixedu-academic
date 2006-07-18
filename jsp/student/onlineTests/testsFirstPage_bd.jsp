@@ -67,5 +67,5 @@
 </logic:present>
 
 <logic:notPresent name="infoSiteStudentDistributedTests">
-	Nï¿½o hï¿½!!!
+	Não hï¿½!!!
 </logic:notPresent>

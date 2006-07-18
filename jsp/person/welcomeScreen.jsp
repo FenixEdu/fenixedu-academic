@@ -52,4 +52,4 @@
 	</table>
 	</logic:notEqual>
 </logic:present>
-<p>Bem-vindo ï¿½ sua ï¿½rea pessoal.<br /> Poderï¿½ visualizar e alterar a sua informaï¿½ï¿½o pessoal, proceder ï¿½ alteraï¿½ï¿½o da sua password ler os avisos que lhe sï¿½o enviados pelos orgï¿½os de gestï¿½o da escola.</p>
+<p>Bem-vindo ï¿? sua ï¿?rea pessoal.<br /> Poderï¿? visualizar e alterar a sua informação pessoal, proceder ï¿? alteraï¿?ï¿?o da sua password ler os avisos que lhe sï¿?o enviados pelos orgï¿?os de gestï¿?o da escola.</p>

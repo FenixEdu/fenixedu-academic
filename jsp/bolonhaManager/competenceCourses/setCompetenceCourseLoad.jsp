@@ -77,7 +77,7 @@
 				<h:outputText value="<p><label>#{bolonhaBundle['lessonHours']}: </label>" escape="false"/>				
 				<h:panelGrid columns="2" style="background-color: #fff; padding: 0.5em; border: 1px solid #ccc;" headerClass="pbottom1">
 					<f:facet name="header">					
-						<h:outputText value="<strong>#{courseLoad.order}ï¿½ #{bolonhaBundle['semester']}</strong>" escape="false"
+						<h:outputText value="<strong>#{courseLoad.order}º #{bolonhaBundle['semester']}</strong>" escape="false"
 							rendered="#{CompetenceCourseManagement.regime == 'ANUAL' && CompetenceCourseManagement.numberOfPeriods == 2}"/>		
 					</f:facet>			
 					
@@ -135,7 +135,7 @@
 				<h:outputText value="<p><label>#{bolonhaBundle['ectsCredits']}: </label>" escape="false"/>
 				<h:inputText alt="#{htmlAltBundle['inputText.ectsCredits']}" id="ectsCredits" required="true" maxlength="5" size="5" value="#{courseLoad.ectsCredits}"/>
 				<h:outputText value=" (#{bolonhaBundle['by']} #{bolonhaBundle['semester']})" rendered="#{CompetenceCourseManagement.regime == 'ANUAL' && CompetenceCourseManagement.numberOfPeriods == 1}"/>
-				<h:outputText value=" (#{courseLoad.order}ï¿½ #{bolonhaBundle['semester']})" rendered="#{CompetenceCourseManagement.regime == 'ANUAL' && CompetenceCourseManagement.numberOfPeriods == 2}"/>
+				<h:outputText value=" (#{courseLoad.order}º #{bolonhaBundle['semester']})" rendered="#{CompetenceCourseManagement.regime == 'ANUAL' && CompetenceCourseManagement.numberOfPeriods == 2}"/>
 				<h:message styleClass="error0" for="ectsCredits" />
 				<h:outputText value="</p>" escape="false"/>
 			</h:column>

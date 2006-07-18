@@ -88,7 +88,7 @@ function cleanSelect() {
 	</table>
 </logic:present>
 <logic:notPresent name="<%=SessionConstants.ROOMS_LIST%>">
-	Nï¿½o existem salas com as caracteristicas especificadas.<br/>
+	Não existem salas com as caracteristicas especificadas.<br/>
 </logic:notPresent>
 <br/>
 	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton" onclick="cleanSelect()">

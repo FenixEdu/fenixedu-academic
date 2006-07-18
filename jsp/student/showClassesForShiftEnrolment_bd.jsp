@@ -61,7 +61,7 @@
 	</tr>
 </table>
 <br />
-	<logic:notPresent name="infoStudentShiftEnrolment" property="lessons">Nï¿½o estï¿½ inscrito em nenhum turno...</logic:notPresent>
+	<logic:notPresent name="infoStudentShiftEnrolment" property="lessons">Não estï¿½ inscrito em nenhum turno...</logic:notPresent>
 	<logic:present name="infoStudentShiftEnrolment" property="lessons">
 <table width="70%" align="center">
 	<tr>
@@ -99,7 +99,7 @@
 <div align="center"><app:gerarHorario name="infoLessons" type="<%= TimeTableType.CLASS_TIMETABLE_WITHOUT_LINKS %>"/></div><br />
 </logic:present>
 <logic:notPresent name="infoStudentShiftEnrolment" property="allowedClasses">
-<div class="error" align="center">Nï¿½o existem turmas disponï¿½veis.</div>
+<div class="error" align="center">Não existem turmas disponï¿½veis.</div>
 </logic:notPresent>
 <br />
 

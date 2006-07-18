@@ -27,7 +27,7 @@
 	<tr>
 		<td></td>
 		<td>Sim</td>
-		<td>Nï¿½o</td>
+		<td>Não</td>
 	</tr>
 	<tr>
 		<td><bean:message key="label.enrollment.dislocatedStudent.dislocated"/></td>

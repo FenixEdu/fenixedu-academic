@@ -70,7 +70,7 @@
 					<tr>
 						<td><bean:write name="shift" property="nome"/></td>
 						<td><bean:write name="shift" property="tipo.siglaTipoAula"/></td>
-						<td colspan="7"> Nï¿½o tem aulas </td>
+						<td colspan="7"> Não tem aulas </td>
 					</tr>
 				</logic:equal>
 

@@ -5,12 +5,12 @@
 <table align="center" border="0" cellpadding='20' cellspacing='10'>
   <tr align="center">
     <td>
-      <html:link page="/prepararEscolherContexto.do"> Gestï¿½o de Horï¿½rios </html:link>
+      <html:link page="/prepararEscolherContexto.do"> Gestão de Horï¿½rios </html:link>
     </td>
   </tr>
   <tr align="center">
     <td>
-      <html:link page="/principalSalas.do"> Gestï¿½o de Salas </html:link>
+      <html:link page="/principalSalas.do"> Gestão de Salas </html:link>
     </td>
   </tr>
 </table>

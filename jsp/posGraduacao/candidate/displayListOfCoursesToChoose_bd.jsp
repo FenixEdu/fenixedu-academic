@@ -136,8 +136,8 @@
 			
 			<div class="infoop">
 				<span class="error"><strong>Nota:</strong></span>
-				<br />&nbsp;&nbsp;&nbsp;&nbsp;O nome das ï¿½reas Cientï¿½ficas aparecem por baixo do nome da disciplina e ligeiramente mais ï¿½ frente. Nesse caso a opï¿½ï¿½o ï¿½ feita no quadrado ï¿½ frente da ï¿½rea cientï¿½fica.
-				<br />&nbsp;&nbsp;&nbsp;&nbsp;Caso a disciplina nï¿½o pertenï¿½a a nenhuma ï¿½rea Cientï¿½fica, a opï¿½ï¿½o para a sua selecï¿½ï¿½o aparecerï¿½ imediatamente antes do seu nome. 
+				<br />&nbsp;&nbsp;&nbsp;&nbsp;O nome das ï¿?reas Cientï¿?ficas aparecem por baixo do nome da disciplina e ligeiramente mais ï¿? frente. Nesse caso a opï¿?ï¿?o ï¿? feita no quadrado ï¿? frente da ï¿?rea cientï¿?fica.
+				<br />&nbsp;&nbsp;&nbsp;&nbsp;Caso a disciplina não pertenï¿?a a nenhuma ï¿?rea Cientï¿?fica, a opï¿?ï¿?o para a sua selecï¿?ï¿?o aparecerï¿? imediatamente antes do seu nome. 
 			</div>
 	
 			<br />
