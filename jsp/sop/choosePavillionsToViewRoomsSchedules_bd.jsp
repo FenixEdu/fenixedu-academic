@@ -5,7 +5,7 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ page import="org.apache.struts.Globals" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
-<h2>Listagem de Horï¿½rios por Salas</h2>
+<h2>Listagem de Horários por Salas</h2>
 <span class="error"><html:errors/></span>
 <html:form action="/viewAllRoomsSchedulesDA">
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>

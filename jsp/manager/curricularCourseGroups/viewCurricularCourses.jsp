@@ -10,7 +10,7 @@
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.groupId" property="groupId" value="<%= groupId.toString() %>"/>
 <%--	
 	<bean:define id="degreeCurricularPlanId" name="degreeCurricularPlanId"/>
-	<html:link module="/manager" module="/manager" page='<%= "/manageCurricularCourseGroups.do?method=viewCurricularCourseGroups&degreeCurricularPlanId=" + degreeCurricularPlanId.toString() %>'>Voltar Atrï¿½s</html:link>
+	<html:link module="/manager" module="/manager" page='<%= "/manageCurricularCourseGroups.do?method=viewCurricularCourseGroups&degreeCurricularPlanId=" + degreeCurricularPlanId.toString() %>'>Voltar Atrás</html:link>
 --%>
 <br/>
 <br/>

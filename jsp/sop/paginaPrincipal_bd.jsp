@@ -13,7 +13,7 @@
   </tr>
 </table>
 <p>Na &aacute;rea da Gest&atilde;o de Disciplinas pode efectuar algumas opera&ccedil;&otilde;es sobre <strong>disciplinas de execu&ccedil;&atilde;o</strong> 
-	(agrupar disciplinas de execu&ccedil;&atilde;o e gerir cargas horï¿½rias).</p>
+	(agrupar disciplinas de execu&ccedil;&atilde;o e gerir cargas horárias).</p>
 <br />
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
   <tr>

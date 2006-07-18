@@ -2,8 +2,8 @@
 <html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <h2>Gestão de Exames</h2>
-<p>Seleccione a opï¿½ï¿½o pretendida para criar, editar ou visualisar a calendarizaï¿½ï¿½o dos exames. <br />
-DevNote: Deveria de haver uma descriï¿½ï¿½o do que se pretende fazer, e o que estï¿½ envolvido, na marcaï¿½ï¿½o de exames.</p>
+<p>Seleccione a opção pretendida para criar, editar ou visualisar a calendarização dos exames. <br />
+DevNote: Deveria de haver uma descrição do que se pretende fazer, e o que está envolvido, na marcação de exames.</p>
 <span class="error"><html:errors /></span>
 <html:form action="/mainExams">
 <table border="0" cellspacing="0" cellpadding="0">

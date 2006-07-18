@@ -32,7 +32,7 @@
 
 <span class="error"><html:errors /></span>
 <logic:messagesPresent message="true">
-	<hr class="error"/><u><b>Para prosseguir deverï¿½ corrigir os seguintes erros:</b></u><br/>		
+	<hr class="error"/><u><b>Para prosseguir deverá corrigir os seguintes erros:</b></u><br/>		
 	<ul>
 		<html:messages id="msg" message="true">
 			<span class="error"><li><i><bean:write name="msg"/></i></li></span>

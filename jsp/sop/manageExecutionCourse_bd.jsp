@@ -18,8 +18,8 @@
 <br />
 <span class="error"><html:errors /></span>
 <br />
-Aviso: A alteraï¿½ï¿½o das cargas horï¿½rias pode tornar os dados incoerentes.
-Sempre que se altere as cargas ï¿½ necessï¿½rio confirmar que os turnos da disciplina
+Aviso: A alteração das cargas horárias pode tornar os dados incoerentes.
+Sempre que se altere as cargas ï¿½ necessário confirmar que os turnos da disciplina
 obdecem ï¿½ nova carga definida.
 <br />
 <html:form action="/manageExecutionCourse" focus="theoreticalHours">

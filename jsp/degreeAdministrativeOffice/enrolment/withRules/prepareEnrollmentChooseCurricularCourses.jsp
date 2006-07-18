@@ -179,8 +179,8 @@ input { font-size: 11px; }
 	</table>
 
 <ul>
-	<li><a href="@enrollment.faq.url@" target="_blank">FAQ Inscriï¿½ï¿½o em Disciplinas - Glossï¿½rio</a></li>
-	<li>Para mais esclarecimentos consultar <em>"II.7. Normas a observar na Inscriï¿½ï¿½o"</em> no documento <a href="http://www.ist.utl.pt/html/destaques/regulamento0506.pdf">Licenciaturas: Regulamentos e Calendï¿½rio Escolar 2005/2006 (.pdf)</a></li>
+	<li><a href="@enrollment.faq.url@" target="_blank">FAQ Inscrição em Disciplinas - Glossï¿½rio</a></li>
+	<li>Para mais esclarecimentos consultar <em>"II.7. Normas a observar na Inscrição"</em> no documento <a href="http://www.ist.utl.pt/html/destaques/regulamento0506.pdf">Licenciaturas: Regulamentos e Calendário Escolar 2005/2006 (.pdf)</a></li>
 </ul>
 
 

@@ -50,7 +50,7 @@
 			<h:outputText value="<fieldset class='lfloat3'>" escape="false"/>
 
 				<h:outputText value="<div class='simpleblock4'>" escape="false"/>
-				<h:outputText value="<p><label>Ano de execuï¿½ï¿½o:</label>" escape="false"/>
+				<h:outputText value="<p><label>Ano de execução:</label>" escape="false"/>
 					<h:selectOneMenu value="#{createExecutionDegrees.choosenExecutionYearID}" onchange="this.form.submit();" valueChangeListener="#{createExecutionDegrees.onChoosenExecutionYearChanged}">
 						<f:selectItems value="#{createExecutionDegrees.executionYears}" />
 					</h:selectOneMenu>
@@ -181,7 +181,7 @@
 				<h:outputText value="</div>" escape="false"/>
 
 				<h:outputText value="<div class='simpleblock4'>" escape="false"/>
-				<h:outputText value="<p><label><strong>ï¿½poca Especial</strong></label></p><br/>" escape="false"/>
+				<h:outputText value="<p><label><strong>Época Especial</strong></label></p><br/>" escape="false"/>
 				<h:outputText value="<p><label>Exames</label>" escape="false"/>
 					<h:selectOneMenu value="#{createExecutionDegrees.examsSpecialSeasonBeginDay}">
 						<f:selectItems value="#{createExecutionDegrees.days}" />

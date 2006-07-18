@@ -14,7 +14,7 @@
 			<input type="image"
 					src="<%= request.getContextPath() %>/images/flags/pt.gif"
 					alt="<bean:message key="pt" bundle="IMAGE_RESOURCES" />"
-					title="Portuguï¿½s"
+					title="Português"
 					value="PT"
 					onclick="this.form.newLanguage.value='pt';this.form.newCountry.value='PT';this.form.newVariant.value='<%= net.sourceforge.fenixedu._development.PropertiesManager.getProperty("variant") %>';this.form.windowLocation.value=window.location;this.form.submit();"/>
 			<input class="activeflag"
@@ -29,7 +29,7 @@
 			<input class="activeflag"
 					type="image" src="<%= request.getContextPath() %>/images/flags/pt.gif"
 					alt="<bean:message key="pt" bundle="IMAGE_RESOURCES" />"
-					title="Portuguï¿½s"
+					title="Português"
 					value="PT"
 					onclick="this.form.newLanguage.value='pt';this.form.newCountry.value='PT';this.form.newVariant.value='<%= net.sourceforge.fenixedu._development.PropertiesManager.getProperty("variant") %>';this.form.windowLocation.value=window.location;this.form.submit();"/>
 			<input type="image" src="<%= request.getContextPath() %>/images/flags/en.gif"

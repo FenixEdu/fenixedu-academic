@@ -14,7 +14,7 @@
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="chooseDegreesAndExecutionPeriod"/>
 	<br/>
-	<strong>Escolha o Perï¿½odo Execuï¿½ï¿½o</strong>
+	<strong>Escolha o Período Execução</strong>
 	<html:select bundle="HTMLALT_RESOURCES" altKey="select.executionPeriodId" property="executionPeriodId">
 		<logic:iterate id="executionPeriod" name="executionPeriods">
 			<bean:define id="executionPeriodId" name="executionPeriod" property="idInternal"/>

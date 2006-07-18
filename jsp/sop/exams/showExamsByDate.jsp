@@ -29,7 +29,7 @@
 		<tr>
 			<th class="listClasses-header">Disciplina</th>
 			<th class="listClasses-header">Curso</th>		
-			<th class="listClasses-header">ï¿½poca</th>
+			<th class="listClasses-header">Época</th>
 			<th class="listClasses-header">Hora</th>
 			<th class="listClasses-header">Salas</th>
 			<th class="listClasses-header">Nï¿½ Alunos</th>	

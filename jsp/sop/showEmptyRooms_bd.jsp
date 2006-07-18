@@ -22,7 +22,7 @@
 				das <bean:write name="intervalStart" scope="request"/>
 				ï¿½s <bean:write name="intervalEnd" scope="request"/>
 				<br/>
-				Capacidade normal mï¿½nima de <bean:write name="minimumCapacity" scope="request"/> lugares.
+				Capacidade normal mínima de <bean:write name="minimumCapacity" scope="request"/> lugares.
 			</strong>
 		</td>
 	</tr>

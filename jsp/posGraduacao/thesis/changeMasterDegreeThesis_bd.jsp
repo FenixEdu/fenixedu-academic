@@ -155,9 +155,9 @@
 							<span class="emphasis-box">info</span>
 						</td>
 						<td class="infoop">
-							<strong>Nota:</strong> Na indicaï¿½ï¿½o do nome pode ser fornecido apenas parte do nome do orientador externo.<br/>
-							Exemplo 1: Para selecionar todos os orientadores externos que comeï¿½am com a letra "A" escreva <strong>A%</strong><br/>
-							Exemplo 2: Para selecionar todos os orientadores externos que comeï¿½am com a letra "A" e que tenham um segundo nome que comeï¿½am com a letra "M" escreva <strong>A% M%</strong>
+							<strong>Nota:</strong> Na indicaçãodo nome pode ser fornecido apenas parte do nome do orientador externo.<br/>
+							Exemplo 1: Para selecionar todos os orientadores externos que começam com a letra "A" escreva <strong>A%</strong><br/>
+							Exemplo 2: Para selecionar todos os orientadores externos que começam com a letra "A" e que tenham um segundo nome que começam com a letra "M" escreva <strong>A% M%</strong>
 						</td>
 					</tr>
 				</table></td>	
@@ -310,9 +310,9 @@
 							<span class="emphasis-box">info</span>
 						</td>
 						<td class="infoop">
-							<strong>Nota:</strong> Na indicaï¿½ï¿½o do nome pode ser fornecido apenas parte do nome do co-orientador externo.<br/>
-							Exemplo 1: Para selecionar todos os co-orientadores externos que comeï¿½am com a letra "A" escreva <strong>A%</strong><br/>
-							Exemplo 2: Para selecionar todos os co-orientadores externos que comeï¿½am com a letra "A" e que tenham um segundo nome que comeï¿½a com a letra "M" escreva <strong>A% M%</strong>
+							<strong>Nota:</strong> Na indicaçãodo nome pode ser fornecido apenas parte do nome do co-orientador externo.<br/>
+							Exemplo 1: Para selecionar todos os co-orientadores externos que começam com a letra "A" escreva <strong>A%</strong><br/>
+							Exemplo 2: Para selecionar todos os co-orientadores externos que começam com a letra "A" e que tenham um segundo nome que começa com a letra "M" escreva <strong>A% M%</strong>
 						</td>
 					</tr>
 				</table></td>	

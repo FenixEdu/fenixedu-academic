@@ -80,7 +80,7 @@
         <table align="center">
             <tr align="center">
                 <td>
-                    <html:link page="/viewRoomOcupation.do"> Ver Ocupaï¿½ï¿½o </html:link>
+                    <html:link page="/viewRoomOcupation.do"> Ver Ocupação </html:link>
                 </td>
             </tr>
         </table>

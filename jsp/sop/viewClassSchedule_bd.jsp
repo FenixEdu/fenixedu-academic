@@ -107,7 +107,7 @@
 </html:form>
 
 <br />
-	<h2>Horï¿½rio da Turma</h2>
+	<h2>Horário da Turma</h2>
 	<div align="center">
 		<app:gerarHorario name="<%= SessionConstants.LESSON_LIST_ATT %>"
 						  type="<%= TimeTableType.SOP_CLASS_TIMETABLE %>"/>

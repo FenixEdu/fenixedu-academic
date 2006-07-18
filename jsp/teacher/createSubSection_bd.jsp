@@ -4,7 +4,7 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 
 <span class="error"><html:errors property="error.default" /></span>
-<h2>Inserir Sub-Secï¿½ï¿½o</h2>
+<h2>Inserir Sub-Secção</h2>
 <br />
 
 <logic:present name="siteView">

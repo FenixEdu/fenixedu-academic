@@ -10,8 +10,8 @@
 </logic:empty>
 <logic:notEmpty name="listSeminaries" >
 	<span class="error"><html:errors /></span>
-	<h2 class="redtxt">Informaï¿½ï¿½es de utilizaï¿½ï¿½o:</h2>
-	<p>Existem vï¿½rias modalidades de inscriï¿½ï¿½o. Para mais informaï¿½ï¿½es consultar regulamento do seminï¿½rio.</p>
+	<h2 class="redtxt">Informações de utilização:</h2>
+	<p>Existem várias modalidades de inscrição. Para mais informações consultar regulamento do seminário.</p>
 	<h2><bean:message key="label.seminariesToEnroll"/></h2>
 	<table width="90%" align="center">
 	<tr>

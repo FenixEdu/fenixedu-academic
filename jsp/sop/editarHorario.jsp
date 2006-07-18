@@ -6,13 +6,13 @@
 <html:html xhtml="true">
     <app:checkLogon/>
     <head>
-        <title> Editar Horï¿½rio </title>
+        <title> Editar Horário </title>
     </head>
     <body>
        <jsp:include page="context.jsp"/><br/>
        
         <br/>
-        <center><font color='#034D7A' size='5'> <b> Editar Horï¿½rio </b> </font></center>
+        <center><font color='#034D7A' size='5'> <b> Editar Horário </b> </font></center>
         <br/>
         <br/>
         <html:errors/>

@@ -3,7 +3,7 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <h2>Gest&atilde;o de Exames</h2>
 <p>Seleccione a op&ccedil;&atilde;o pretendida para criar, editar ou visualisar a calendariza&ccedil&atilde;o dos exames. <br />
-Pode alterar em baixo o perï¿½odo de execu&ccedil&atilde;o seleccionado.</p>
+Pode alterar em baixo o período de execu&ccedil&atilde;o seleccionado.</p>
 <span class="error"><html:errors /></span>
 <html:form action="/mainExamsNew">
 <table border="0" cellspacing="0" cellpadding="0">

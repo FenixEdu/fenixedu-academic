@@ -7,7 +7,7 @@
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.masterDegree.coordinator.PrintAllCandidatesListDispatchAction" %>
 <h2>Imprimir lista de todos os candidatos</h2>
 <br/>
-<p>Esta opï¿½ï¿½o permite-lhe imprimir uma lista de todos os candidatos associados ao plano curricular escolhido</p>
+<p>Esta opção permite-lhe imprimir uma lista de todos os candidatos associados ao plano curricular escolhido</p>
 <p>Mostrar sï¿½ : 
 <!-- first option-->
 <logic:notPresent name="filterNextSelectOptions">

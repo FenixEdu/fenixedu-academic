@@ -7,8 +7,8 @@
 <span class="error">
 	<html:errors/>
 </span>
-<p><strong><font color="#FF0000">Atenção&nbsp;-&nbsp;</font>Se pretende consultar informação relativa a disciplinas de 4ï¿½ ou 5ï¿½ em 2003/2004 ou 5ï¿½ em 2004/2005 do curso de Informï¿½tica - Alameda, deve seleccionar o plano curricular "Licenciatura em Engenharia Informï¿½tica e de Computadores - LEIC - Currï¿½culo Antigo"</strong></p>
-<p>	<strong><font color="#FF0000">Atenção&nbsp;-&nbsp;</font>Devido ï¿½ alteraï¿½ï¿½o do calendï¿½rio das Licenciaturas em Engenharia Civil, em Engenharia do Territï¿½rio, e em Arquitectura (despacho do Conselho Directivo do passado dia 29 de Julho), as salas de aula dessas trï¿½s Licenciaturas foram alteradas</strong></p>
+<p><strong><font color="#FF0000">Atenção&nbsp;-&nbsp;</font>Se pretende consultar informação relativa a disciplinas de 4ï¿½ ou 5ï¿½ em 2003/2004 ou 5ï¿½ em 2004/2005 do curso de Informï¿½tica - Alameda, deve seleccionar o plano curricular "Licenciatura em Engenharia Informï¿½tica e de Computadores - LEIC - Currículo Antigo"</strong></p>
+<p>	<strong><font color="#FF0000">Atenção&nbsp;-&nbsp;</font>Devido ï¿½ alteração do calendário das Licenciaturas em Engenharia Civil, em Engenharia do Territï¿½rio, e em Arquitectura (despacho do Conselho Directivo do passado dia 29 de Julho), as salas de aula dessas três Licenciaturas foram alteradas</strong></p>
 
 <bean:define id="path" type="java.lang.String" scope="request" property="path" name="<%= Globals.MAPPING_KEY %>" />
 <bean:parameter id="nextPage" name="nextPage" />

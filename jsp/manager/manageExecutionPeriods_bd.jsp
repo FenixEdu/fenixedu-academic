@@ -20,7 +20,7 @@ processar.
 	scope="request">
 	<%--
 	<html:form action="/createExecutionPeriodForm">
-		Criar Periodo Execuï¿½ï¿½o: 
+		Criar Periodo Execução: 
 		<span class="error"><html:errors /></span>
 		<br />
 		<table>

@@ -14,5 +14,5 @@ emitido em <bean:write name="infoStudentCurricularPlan" property="infoStudent.in
 &nbsp; <bean:write name="infoStudentCurricularPlan" property="infoStudent.infoPerson.localidade"/>. 
 </p>
 <p>
-Declaro que estï¿½ matriculado(a) neste Instituto desde o ano lectivo de <bean:write name="anoLectivo"/>.
+Declaro que está matriculado(a) neste Instituto desde o ano lectivo de <bean:write name="anoLectivo"/>.
 </p>

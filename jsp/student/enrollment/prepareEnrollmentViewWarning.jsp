@@ -16,8 +16,8 @@
 	<ul>
 		<li>Alunos Externos</li>
 		<li>Melhorias de Nota</li>
-		<li>Alunos inscritos em ï¿½poca Especial 2003/2004</li>
-		<li>Alunos cuja inscriï¿½ï¿½o ï¿½ efectuada pelo Coordenador de Licenciatura/Tutor</li>
+		<li>Alunos inscritos em Época Especial 2003/2004</li>
+		<li>Alunos cuja inscrição ï¿½ efectuada pelo Coordenador de Licenciatura/Tutor</li>
 		<li>Alunos com processos de Equivalï¿½ncia em curso</li>
 	</ul>
 	<li><bean:message key="message.warning.student.enrolmentClasses.notEnroll.chooseCourse" /> <html:link page="<%= "/studentShiftEnrollmentManager.do?method=start&selectCourses=true" %>"><bean:message key="message.warning.student.enrolmentClasses.notEnroll.chooseCourse.link" /></html:link></li>

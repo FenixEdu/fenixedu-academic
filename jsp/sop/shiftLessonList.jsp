@@ -7,7 +7,7 @@
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
 <br />
 <br />
-Aulas jï¿½ atribuidas ao turno
+Aulas já atribuidas ao turno
 <br />
 	<logic:present name="shift" property="infoLessons">
   <html:form action="/manageShiftMultipleItems">

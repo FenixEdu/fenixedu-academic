@@ -64,10 +64,10 @@
   	</html:link>  
 </li>
 
-<li class="navheader">Gestão de Execuï¿½ï¿½es</li>
+<li class="navheader">Gestão de Execuções</li>
 <li> 
 	<html:link module="/manager" module="/manager" page="/manageExecutionPeriods.do?method=prepare">
-		Periodos Execuï¿½ï¿½o
+		Periodos Execução
 	</html:link>
 </li>
 <li> 
@@ -193,7 +193,7 @@
 </li>
 <li> 
 	<html:link module="/manager" module="/manager" page="/monitorSystem.do?method=monitor">
-		Informaï¿½ï¿½es do Sistema
+		Informações do Sistema
 	</html:link>
 </li>
 <li>

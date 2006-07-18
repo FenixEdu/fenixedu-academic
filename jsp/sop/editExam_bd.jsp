@@ -120,7 +120,7 @@
             </td>
             <td nowrap="nowrap" align="left">
             	<html:select bundle="HTMLALT_RESOURCES" altKey="select.season" property="season">
-                  	<option value="" selected="selected">[ï¿½poca]</option>           
+                  	<option value="" selected="selected">[Época]</option>           
 		            <html:options collection="<%= SessionConstants.LABLELIST_SEASONS %>" property="value" labelProperty="label"/>                  	             
                 </html:select>
             </td>

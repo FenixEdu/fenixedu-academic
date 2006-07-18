@@ -3,5 +3,5 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 
 <center><strong>
-Bem Vindo ï¿½ secï¿½ï¿½o de delegados.
+Bem Vindo ï¿½ secção de delegados.
 </strong></center>

@@ -29,12 +29,12 @@
 				<logic:notEmpty name="section" property="superiorInfoSection">
 					<bean:define id="superiorSection" name="section" property="superiorInfoSection"/>
 					<bean:define id="superiorSectionCode" name="superiorSection" property="idInternal"/>
-					<html:link page="<%= "/deleteSection.do?method=deleteSection&amp;objectCode=" + pageContext.findAttribute("objectCode") + "&amp;currentSectionCode=" + currentSectionCode + "&amp;superiorSectionCode=" + superiorSectionCode %>" onclick="<%= "return confirm('Tem a certeza que deseja apagar a secï¿½ï¿½o " + sectionName + " ?')"%>">		
+					<html:link page="<%= "/deleteSection.do?method=deleteSection&amp;objectCode=" + pageContext.findAttribute("objectCode") + "&amp;currentSectionCode=" + currentSectionCode + "&amp;superiorSectionCode=" + superiorSectionCode %>" onclick="<%= "return confirm('Tem a certeza que deseja apagar a secção " + sectionName + " ?')"%>">		
 						<bean:message key="button.deleteSection"/>
 					</html:link>
 				</logic:notEmpty>
 				<logic:empty name="section" property="superiorInfoSection">
-					<html:link page="<%= "/deleteSection.do?method=deleteSection&amp;objectCode=" + pageContext.findAttribute("objectCode") + "&amp;currentSectionCode=" + currentSectionCode %>" onclick="<%= "return confirm('Tem a certeza que deseja apagar a secï¿½ï¿½o " + sectionName + " ?')"%>">		
+					<html:link page="<%= "/deleteSection.do?method=deleteSection&amp;objectCode=" + pageContext.findAttribute("objectCode") + "&amp;currentSectionCode=" + currentSectionCode %>" onclick="<%= "return confirm('Tem a certeza que deseja apagar a secção " + sectionName + " ?')"%>">		
 						<bean:message key="button.deleteSection"/>
 					</html:link>
 				</logic:empty>

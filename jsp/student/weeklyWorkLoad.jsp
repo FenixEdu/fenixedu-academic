@@ -97,7 +97,7 @@ padding: 0.5em;
 
 
 
-<p class="mbottom0"><span class="attention">Atenção:</span> Deve submeter uma disciplina de cada vez e preencher os trï¿½s campos (Contacto, Trabalho Autï¿½nomo e Outro).</p>
+<p class="mbottom0"><span class="attention">Atenção:</span> Deve submeter uma disciplina de cada vez e preencher os três campos (Contacto, Trabalho Autï¿½nomo e Outro).</p>
 
 
 	<logic:present name="firstAttends" property="responseWeek">

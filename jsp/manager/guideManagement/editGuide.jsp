@@ -82,7 +82,7 @@
 			<td>&nbsp;</td>
 		</tr>
 	<tr>
-		<td><b>Tipo</b></td><td><b>Descriï¿½ï¿½o</b></td><td><b>Quantidade</b></td><td><b>Preï¿½o</b></td>
+		<td><b>Tipo</b></td><td><b>Descrição</b></td><td><b>Quantidade</b></td><td><b>Preço</b></td>
 	</tr>
 		
 			<logic:iterate id="guideEntry" name="guide"
@@ -131,9 +131,9 @@
 		</tr>
 		<tr>
 			<td ><b>Tipo de Documento: </b></td>
-			<td><b>Descriï¿½ï¿½o: </b></td>
+			<td><b>Descrição: </b></td>
 			<td><b>Quantidade: </b></td>
-			<td><b>Preï¿½o: </b></td>
+			<td><b>Preço: </b></td>
 		</tr>
 		<tr>
 			<td>
@@ -188,7 +188,7 @@
 			<td>&nbsp;</td>
 		</tr>
 		<tr>
-			<td ><b>Descriï¿½ï¿½o:</b></td>
+			<td ><b>Descrição:</b></td>
 			<td colspan="2"><b>Data: </b></td>
 			<td colspan="2"><b>Situação: </b></td>			
 		</tr>

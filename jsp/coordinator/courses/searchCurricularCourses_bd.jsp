@@ -11,9 +11,9 @@
 <table border="0" cellspacing="0" cellpadding="0">
 	<tr>
 		<td colspan="2" class="infoop">
-			Nota: Na indicaï¿½ï¿½o do nome pode ser fornecido apenas parte do nome da disciplina.<br/>
-			Exemplo 1: Para selecionar todas as disciplinas que comeï¿½am com a letra "A" escreva <strong>A%</strong><br />
-			Exemplo 2: Para selecionar todas as disciplinas que comeï¿½am com a letra "A" e que tenham um segundo nome que comeï¿½a com a letra "M" escreva <strong>A% M%</strong><br />
+			Nota: Na indicaçãodo nome pode ser fornecido apenas parte do nome da disciplina.<br/>
+			Exemplo 1: Para selecionar todas as disciplinas que começam com a letra "A" escreva <strong>A%</strong><br />
+			Exemplo 2: Para selecionar todas as disciplinas que começam com a letra "A" e que tenham um segundo nome que começa com a letra "M" escreva <strong>A% M%</strong><br />
 		</td>
 	</tr>
 	<tr><td colspan="2"><br /><br /></td></tr>
