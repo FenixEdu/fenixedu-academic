@@ -36,7 +36,7 @@ public class ReadProfessorshipsAndResponsibilitiesByDepartmentAndExecutionPeriod
         }
         
         final ExecutionPeriod executionPeriod = executionYear.readExecutionPeriodForSemester(semester);
-        if (executionPeriod == null) {
+        if (semester.intValue() != 0 && executionPeriod == null) {
             throw new FenixServiceException("error.noExecutionPeriod");
         }
 
