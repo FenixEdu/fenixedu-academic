@@ -225,17 +225,17 @@
 		   </logic:present>
 		   <logic:greaterThan value="0" name="theoreticalHours" >
           <th class="listClasses-header" >
-             Teï¿½rico
+             Teórico
           </th>
          </logic:greaterThan>
          <logic:greaterThan value="0" name="praticalHours" >
           <th class="listClasses-header" >
-             Prï¿½tico
+             Prático
           </th>
          </logic:greaterThan>
          <logic:greaterThan value="0" name="theoPratHours" >
           <th class="listClasses-header" >
-             Teï¿½rico-Prï¿½tico
+             Teórico-Prático
           </th>
          </logic:greaterThan>
          <logic:greaterThan value="0" name="labHours" >
@@ -417,8 +417,8 @@
 		<logic:equal name="index" value="0">
 			<tr><td><strong>Resumo:</strong></td></tr>
 			<tr>
-				<th class="listClasses-header">Nï¿½mero de inscriï¿½ï¿½es</th>
-				<th class="listClasses-header">Nï¿½mero de Alunos</th>
+				<th class="listClasses-header">Número de inscrições</th>
+				<th class="listClasses-header">Número de Alunos</th>
 			</tr>
 		</logic:equal>
 		<tr>

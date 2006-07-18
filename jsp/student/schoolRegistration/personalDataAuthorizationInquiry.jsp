@@ -4,7 +4,7 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ page import="net.sourceforge.fenixedu.util.StudentPersonalDataAuthorizationChoice" %>
 
-<p><strong>Pï¿½gina 3 de 6</strong></p>
+<p><strong>Página 3 de 6</strong></p>
 
 <div style="width:79%; margin: 0 10%;">
 

@@ -230,7 +230,7 @@ else
 	</logic:equal>
 
 <logic:present name="pages" >
-<p>Pï¿½ginas:
+<p>Páginas:
 	<logic:iterate id="pages" name="pages" indexId="pageIndex">	
 		<bean:define id="indexPageId" value="<%= String.valueOf(pageIndex.intValue() + 1) %>" />		
 		<bean:define id="actualPage" value="<%= pageContext.findAttribute("startIndex").toString()%>"/>

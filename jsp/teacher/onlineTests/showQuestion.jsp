@@ -149,7 +149,7 @@
 	<bean:define id="index" value="<%=firstOptionImage.toString()%>"/>
 	<tr>
 	<logic:equal name="rpIndex" value="0">
-		<td><b>Cotaï¿½ï¿½o</b></td>
+		<td><b>Cotação</b></td>
 		<td><b>Resposta</b></td>
 		<td><b>Feedback</b></td>
 		<td><b>Fenix</b></td>

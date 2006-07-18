@@ -29,7 +29,7 @@
 <ul id="nav">
 	<li style="list-style: none; padding-top: 3em; "><b>Geral</b></li>
 	<tiles:insert attribute="profile_navigation" ignore="true"/>
-	<li style="list-style: none; padding-top: 2em; "><b>Pï¿½gina Pessoal</b></li>
+	<li style="list-style: none; padding-top: 2em; "><b>Página Pessoal</b></li>
 	<tiles:insert attribute="main_navigation" ignore="true"/>
 </ul>
 <!-- END NAV -->

@@ -10,7 +10,7 @@
 <%-- <html:form action="<%= "/viewEnrollments?method=declarations&amp;degreeName="+ request.getAttribute("degreeName")%>"> --%>
 <html:form action="/declaration.do?method=logOff" >
 
-<p><strong>Pï¿½gina 6 de 6</strong></p>
+<p><strong>Página 6 de 6</strong></p>
 
 <p align="center"><span class="error"><html:errors/></span></p>
 

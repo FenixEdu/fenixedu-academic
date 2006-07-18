@@ -83,7 +83,7 @@
 	
 <div class="lfloat mtop2">
 	<p><b>Deve optar por:</b></p>
-	<p>a) Filtrar as listas por "Data Inï¿½cio/Fim"</p>
+	<p>a) Filtrar as listas por "Data Início/Fim"</p>
 	<p><label><bean:message key="label.list.byCriteria.grant.owner.dateBegin"/>:</label><html:text bundle="HTMLALT_RESOURCES" altKey="text.beginContract" property="beginContract" size="10"/>&nbsp;<bean:message key="label.dateformat"/></p>
 	<p><label><bean:message key="label.list.byCriteria.grant.owner.dateEnd"/>:</label><html:text bundle="HTMLALT_RESOURCES" altKey="text.endContract" property="endContract" size="10"/>&nbsp;<bean:message key="label.dateformat"/></p>
 	<p class="mtop1">b) ou por "Activas ï¿½ data"</p>

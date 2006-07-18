@@ -15,7 +15,7 @@
         <br/>
         <html:errors/>
         <html:form action="/adicionarAulasTmp">
-            <center> <b> Aulas disponï¿½veis </b> </center>
+            <center> <b> Aulas disponíveis </b> </center>
             <br/>
             <!-- Cria a tabela das aulas -->
             <logic:present name="listaAulasDeDisciplinaETipoBean" scope="request">
@@ -29,7 +29,7 @@
                             Dia da Semana
                         </th>
                         <th>
-                            Inï¿½cio
+                            Início
                         </th>
                         <th>
                             Fim

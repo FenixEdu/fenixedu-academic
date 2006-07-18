@@ -47,7 +47,7 @@
      	<td class="cell-last"><bean:write name="infoStudentCurricularPlan" property="givenCredits" /></td>  	
      </logic:present>
 	<tr>
-		<td class="results" align="right"><b>Total de crï¿½ditos:</b></td>
+		<td class="results" align="right"><b>Total de créditos:</b></td>
 		<td class="results">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
 		<td class="results" align="center"><b><bean:write name="total"/></b></td>
 	</tr>

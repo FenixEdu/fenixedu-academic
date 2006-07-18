@@ -1,7 +1,7 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%><html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 
- <strong>Pï¿½gina 7 de 7</strong>
+ <strong>Página 7 de 7</strong>
 <p align="center"><span class="error"><html:errors/></span></p>
 
 <html:form action="/declaration.do?method=logOff" >

@@ -7,8 +7,8 @@
 <span class="error"><html:errors/></span>
     <html:form action="/displayListToSelectCandidates.do?method=next">
         <h2>AVISO:<br />
-        O nï¿½mero de candidatos aceites excede o limite de vagas.
-        Deseja confirmar esta selecï¿½ï¿½o?</h2>
+        O número de candidatos aceites excede o limite de vagas.
+        Deseja confirmar esta selecção?</h2>
         <br />
     	<logic:iterate id="candidate" name="candidatesID" indexId="indexCandidate">
 	        <html:hidden alt='<%= "candidatesID[" + indexCandidate + "]" %>' property='<%= "candidatesID[" + indexCandidate + "]" %>' />					

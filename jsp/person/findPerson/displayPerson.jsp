@@ -30,7 +30,7 @@
 	</bean:define>
 	<logic:lessThan name="startIndex" value="<%= pageContext.findAttribute("totalFindedPersons").toString()%>">
 		<logic:equal name="numberFindedPersons" value="<%= limitFindedPersons %>">    
-				<html:link page="<%= "/findPerson.do?method=findPerson&amp;name=" + pageContext.findAttribute("name") + "&amp;startIndex=" + pageContext.findAttribute("startIndex")+ "&amp;roleType=" + pageContext.findAttribute("roleType") + "&amp;degreeId=" + pageContext.findAttribute("degreeId") + "&amp;degreeType=" + pageContext.findAttribute("degreeType")+ "&amp;departmentId=" + pageContext.findAttribute("departmentId")%>"> prï¿½ximos </html:link>			
+				<html:link page="<%= "/findPerson.do?method=findPerson&amp;name=" + pageContext.findAttribute("name") + "&amp;startIndex=" + pageContext.findAttribute("startIndex")+ "&amp;roleType=" + pageContext.findAttribute("roleType") + "&amp;degreeId=" + pageContext.findAttribute("degreeId") + "&amp;degreeType=" + pageContext.findAttribute("degreeType")+ "&amp;departmentId=" + pageContext.findAttribute("departmentId")%>"> próximos </html:link>			
 		</logic:equal>
 	</logic:lessThan>
 	
@@ -203,7 +203,7 @@
 	</logic:greaterThan>
 	<logic:lessThan name="startIndex" value="<%= pageContext.findAttribute("totalFindedPersons").toString()%>">	
 		<logic:equal name="numberFindedPersons" value="<%= limitFindedPersons %>">
-			<html:link page="<%= "/findPerson.do?method=findPerson&amp;name=" + pageContext.findAttribute("name") + "&amp;startIndex=" + pageContext.findAttribute("startIndex")+ "&amp;roleType=" + pageContext.findAttribute("roleType") + "&amp;degreeId=" + pageContext.findAttribute("degreeId") + "&amp;degreeType=" + pageContext.findAttribute("degreeType")+ "&amp;departmentId=" + pageContext.findAttribute("departmentId")%>"> prï¿½ximos </html:link>	
+			<html:link page="<%= "/findPerson.do?method=findPerson&amp;name=" + pageContext.findAttribute("name") + "&amp;startIndex=" + pageContext.findAttribute("startIndex")+ "&amp;roleType=" + pageContext.findAttribute("roleType") + "&amp;degreeId=" + pageContext.findAttribute("degreeId") + "&amp;degreeType=" + pageContext.findAttribute("degreeType")+ "&amp;departmentId=" + pageContext.findAttribute("departmentId")%>"> próximos </html:link>	
 		</logic:equal>
 	</logic:lessThan>
 

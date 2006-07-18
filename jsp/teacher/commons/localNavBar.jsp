@@ -5,6 +5,6 @@
 
 <bean:define id="executionCourseIdInternal" name="<%= SessionConstants.INFO_SITE %>" property="infoExecutionCourse.idInternal" />
 <ul>
-  <li><html:link page="/viewSite.do">Administrar pï¿½gina da disciplina</html:link></li>
-  <li><html:link page='<%= "/executionCourseShiftsPercentageManager.do?method=show&amp;executionCourseInternalCode=" + executionCourseIdInternal.toString() %>'>Administraï¿½ï¿½o de crï¿½ditos</html:link></li>
+  <li><html:link page="/viewSite.do">Administrar página da disciplina</html:link></li>
+  <li><html:link page='<%= "/executionCourseShiftsPercentageManager.do?method=show&amp;executionCourseInternalCode=" + executionCourseIdInternal.toString() %>'>Administração de créditos</html:link></li>
 </ul>

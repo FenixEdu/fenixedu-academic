@@ -26,7 +26,7 @@
 			</td>
 		</tr>
 		<tr>
-			<td><b>Nï¿½mero:</b> <bean:write name="guide" property="number" /></td>
+			<td><b>Número:</b> <bean:write name="guide" property="number" /></td>
 		</tr>
 		<tr>
 			<td><b>Ano:</b> <bean:write name="guide" property="year" /></td>

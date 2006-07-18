@@ -13,7 +13,7 @@
 			<br>
 <table>
 
-  			<tr><th>Estes sï¿½o os turnos onde estava inscrito atï¿½ agora:</th></tr>
+  			<tr><th>Estes sï¿½o os turnos onde estava inscrito até agora:</th></tr>
    	 		<logic:iterate name="infoStudentShiftEnrolment" id="shift" property="currentEnrolment">
 			<tr>
    				 <td class="listClasses">Turno:<bean:write name="shift" property="nome"/> 

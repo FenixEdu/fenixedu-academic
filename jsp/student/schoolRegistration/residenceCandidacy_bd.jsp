@@ -6,7 +6,7 @@
 <html:form action="/enrollStudent?method=enrollStudent">
 <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="6"/>
 
-<p><strong>Pï¿½gina 5 de 6</strong></p>
+<p><strong>Página 5 de 6</strong></p>
 
  <h2 style="text-align: center;"><bean:message key="schoolRegistration.Header.residenceTitle"/></h2>
 	<p align="center"><span class="error"><html:errors property="residenceCandidate"/></span></p>	

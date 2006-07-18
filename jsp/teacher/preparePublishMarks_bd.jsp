@@ -35,7 +35,7 @@
 					<span class="error"><html:errors property="sendSMS"/></span>
 				</td>
 				<td>
-				<span class="error">Serviï¿½o Indisponï¿½vel</span>
+				<span class="error">Serviço Indisponível</span>
 				</td>
 			</tr>
 		</table>

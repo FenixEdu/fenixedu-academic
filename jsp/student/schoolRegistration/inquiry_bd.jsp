@@ -3,7 +3,7 @@
 <html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %> 
 
-<strong>Pï¿½gina 3 de 6</strong>
+<strong>Página 3 de 6</strong>
 <p align="center"><span class="error"><html:errors /></span></p>
 <table cellpadding="10">
 <tr align="center"><td><h2><bean:message key="schoolRegistrationHeader.title"/></h2></td></tr>

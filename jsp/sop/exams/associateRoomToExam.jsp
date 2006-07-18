@@ -70,7 +70,7 @@ dia <bean:write name="<%=SessionConstants.EXAM_DATEANDTIME_STR%>"/>
 					 <bean:define id="tipo" name="infoRoom" property="tipo"/>
 					 <logic:equal name="tipo" value="A">Anfiteatro</logic:equal>
 					 <logic:equal name="tipo" value="P">Plana</logic:equal>
-					 <logic:equal name="tipo" value="L">Laboratï¿½rio</logic:equal>)<br/>
+					 <logic:equal name="tipo" value="L">Laboratório</logic:equal>)<br/>
 				</logic:iterate>
 				<br/>
 	</logic:present>
@@ -84,7 +84,7 @@ dia <bean:write name="<%=SessionConstants.EXAM_DATEANDTIME_STR%>"/>
 	</logic:iterate>
 	
 	<logic:notPresent name="<%=SessionConstants.AVAILABLE_ROOMS%>">
-		Não existem salas disponï¿½veis.
+		Não existem salas disponíveis.
 	</logic:notPresent>
 
 <logic:present name="<%= SessionConstants.EXAM_OID %>">

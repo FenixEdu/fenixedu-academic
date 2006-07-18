@@ -40,7 +40,7 @@
 					 <bean:define id="tipo" name="infoRoom" property="tipo"/>
 					 <logic:equal name="tipo" value="A">Anfiteatro</logic:equal>
 					 <logic:equal name="tipo" value="P">Plana</logic:equal>
-					 <logic:equal name="tipo" value="L">Laboratï¿½rio</logic:equal>
+					 <logic:equal name="tipo" value="L">Laboratório</logic:equal>
 				</td>
 				<td>
 					 <bean:write name="infoRoom" property="edificio"/>
@@ -59,7 +59,7 @@
 		</table>
 	</logic:present>
 	<logic:notPresent name="<%=SessionConstants.AVAILABLE_ROOMS%>">
-		Não existem salas disponï¿½veis.
+		Não existem salas disponíveis.
 	</logic:notPresent>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.day" property="day" />
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.month" property="month" />

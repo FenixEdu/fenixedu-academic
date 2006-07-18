@@ -14,7 +14,7 @@ width: 20em;
 }
 </style>
 
-<p><strong>Pï¿½gina 2 de 6</strong></p>
+<p><strong>Página 2 de 6</strong></p>
 
  <br/>
  <h2><bean:message key="label.person.title.personalConsult" bundle="DEFAULT" /></h2>

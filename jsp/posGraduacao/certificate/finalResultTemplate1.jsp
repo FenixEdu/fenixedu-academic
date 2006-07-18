@@ -10,7 +10,7 @@
 <bean:define id="infoStudentCurricularPlan" name="<%= SessionConstants.INFO_STUDENT_CURRICULAR_PLAN%>" />
 <table class="apura-final" width="90%" cellspacing="0">
 	<tr>
-		<td colspan="2" style="color: #333; background: #ccc; padding: 5px; border-bottom: 1px solid #333;">Atribuiï¿½ï¿½o de mï¿½dia</td>
+		<td colspan="2" style="color: #333; background: #ccc; padding: 5px; border-bottom: 1px solid #333;">Atribuição de mï¿½dia</td>
 		</td>
 	</tr>
 	<tr> 
@@ -34,7 +34,7 @@
     <tr>
     	<td style="padding: 5px;"><p class="apura-pt9">Concluiu a parte escolar do curso de <bean:message name="infoStudentCurricularPlan" property="specialization.name" bundle="ENUMERATION_RESOURCES"/> em <bean:write name="conclusionDate"/> com a mï¿½dia final de 
     		<bean:write name="infoFinalResult" property="finalAverage" /> valores.</p>
-    		<p class="apura-pt9">Secretaria dos Serviï¿½os Acadï¿½micos, em <bean:write name="date"/></p><br /><br />
+    		<p class="apura-pt9">Secretaria dos Serviços Acadï¿½micos, em <bean:write name="date"/></p><br /><br />
     	</td>
     </tr>
     <tr>

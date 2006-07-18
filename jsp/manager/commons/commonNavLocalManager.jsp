@@ -178,7 +178,7 @@
 <li class="navheader">Gestão do Sistema</li>
 <li> 
 	<html:link module="/manager" module="/manager" page="/monitorServices.do?method=monitor">
-		Monitorizaï¿½ï¿½o de Serviï¿½os
+		Monitorizaï¿½ï¿½o de Serviços
 	</html:link>
 </li>
 <li> 

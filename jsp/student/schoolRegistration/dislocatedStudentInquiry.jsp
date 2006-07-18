@@ -3,7 +3,7 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 
-<p><strong>Pï¿½gina 4 de 6</strong></p>
+<p><strong>Página 4 de 6</strong></p>
 
 <div style="width:70%; margin: 0 15%;">
 

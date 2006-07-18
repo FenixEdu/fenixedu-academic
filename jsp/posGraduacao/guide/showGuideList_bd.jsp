@@ -40,7 +40,7 @@
                 <% if (((InfoGuideSituation) guideSituation).getState().equals(new State(State.ACTIVE))) { %>
                 	<tr>
                         <td><html:link page='<%= pageContext.findAttribute("guideLink").toString() %>'>
-                			Guia Nï¿½mero <bean:write name="guide" property="number" />
+                			Guia Número <bean:write name="guide" property="number" />
                             </html:link>
                         </td>
 			            <logic:present name="guideSituation" property="date" >

@@ -69,7 +69,7 @@ function cleanSelect() {
 					<bean:define id="tipo" name="infoRoom" property="tipo"/>
 					<logic:equal name="tipo" value="A">Anfiteatro</logic:equal>
 					<logic:equal name="tipo" value="P">Plana</logic:equal>
-					<logic:equal name="tipo" value="L">Laboratï¿½rio</logic:equal>
+					<logic:equal name="tipo" value="L">Laboratório</logic:equal>
 				</td>
 				<td>
 					<bean:write name="infoRoom" property="edificio"/>

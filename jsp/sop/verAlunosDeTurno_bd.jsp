@@ -24,7 +24,7 @@
                 <tr align="center">
                     <td>
                         <font color='#034D7A'>
-                            Nï¿½mero
+                            Número
                         </font>
                     </td>
                     <td>

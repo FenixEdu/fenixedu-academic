@@ -9,7 +9,7 @@
 	<tr>
 		<td bgcolor="#FFFFFF" class="infoselected">
 <bean:define id="testslink" type="java.lang.String"><bean:message key="link.gauging.physics.test" bundle="GLOBAL_RESOURCES"/></bean:define>
-Os enunciados e as respectivas chaves de correcï¿½ï¿½o estï¿½o disponï¿½veis em <html:link href="<%= testslink %>" target="about_blank"><%= testslink %></html:link>
+Os enunciados e as respectivas chaves de correcï¿½ï¿½o estï¿½o disponíveis em <html:link href="<%= testslink %>" target="about_blank"><%= testslink %></html:link>
 </td></tr>
 </table>
 <br/>
@@ -20,9 +20,9 @@ Os enunciados e as respectivas chaves de correcï¿½ï¿½o estï¿½o disponï¿½veis em 
 <table width="90%">
 <tr>
 <th class="listClasses-header">Enunciado</th>
-<th class="listClasses-header">Nï¿½mero de Respostas em branco</th>
-<th class="listClasses-header">Nï¿½mero de Respostas correctas</th>
-<th class="listClasses-header">Nï¿½mero de Respostas erradas</th>
+<th class="listClasses-header">Número de Respostas em branco</th>
+<th class="listClasses-header">Número de Respostas correctas</th>
+<th class="listClasses-header">Número de Respostas erradas</th>
 <th class="listClasses-header">Classificaï¿½ï¿½o Final</th>
 </tr>
 <tr>

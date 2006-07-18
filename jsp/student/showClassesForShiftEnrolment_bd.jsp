@@ -19,7 +19,7 @@
 <br />	
 	<table width="70%" align="center">
 		<tr>
-			<td colspan="3"><h2 class="redtxt">Informaï¿½ï¿½es de utilizaï¿½ï¿½o:</h2><p>Na lista abaixo estï¿½o as turmas que dispï¿½em de vagas nas disciplinas a que pretende frequentar. Para facilitar a escolha, encontram-se ordenadas, por ordem decrescente, de nï¿½mero de disciplinas que se pretende frequentar. Seleccione, por favor, a turma desejada.</p><h2>Turmas</h2></td>
+			<td colspan="3"><h2 class="redtxt">Informaï¿½ï¿½es de utilizaï¿½ï¿½o:</h2><p>Na lista abaixo estï¿½o as turmas que dispï¿½em de vagas nas disciplinas a que pretende frequentar. Para facilitar a escolha, encontram-se ordenadas, por ordem decrescente, de número de disciplinas que se pretende frequentar. Seleccione, por favor, a turma desejada.</p><h2>Turmas</h2></td>
 		</tr>
 		<tr>
 			<th class="listClasses-header">Ano</th>
@@ -99,7 +99,7 @@
 <div align="center"><app:gerarHorario name="infoLessons" type="<%= TimeTableType.CLASS_TIMETABLE_WITHOUT_LINKS %>"/></div><br />
 </logic:present>
 <logic:notPresent name="infoStudentShiftEnrolment" property="allowedClasses">
-<div class="error" align="center">Não existem turmas disponï¿½veis.</div>
+<div class="error" align="center">Não existem turmas disponíveis.</div>
 </logic:notPresent>
 <br />
 

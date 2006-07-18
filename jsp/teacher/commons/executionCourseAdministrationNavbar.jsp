@@ -119,7 +119,7 @@
 		<br/>
 		<li>
 			<html:link href="<%= request.getContextPath()+"/publico/viewSiteExecutionCourse.do?method=firstPage" %>" paramId="objectCode" paramName="executionCourse" paramProperty="idInternal" target="_blank">
-				Ver Pï¿½gina da Disciplina
+				Ver Página da Disciplina
 			</html:link>
 		</li>
 	</ul>
