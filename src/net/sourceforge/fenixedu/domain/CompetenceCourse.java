@@ -24,6 +24,7 @@ import net.sourceforge.fenixedu.domain.degreeStructure.RegimeType;
 import net.sourceforge.fenixedu.domain.degreeStructure.BibliographicReferences.BibliographicReference;
 import net.sourceforge.fenixedu.domain.degreeStructure.BibliographicReferences.BibliographicReferenceType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.organizationalStructure.PartyTypeEnum;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.util.UniqueAcronymCreator;
 
@@ -56,6 +57,10 @@ public class CompetenceCourse extends CompetenceCourse_Base {
      
         this();
         super.setCurricularStage(curricularStage);
+        
+        if (unit.getType() != PartyTypeEnum.COMPETENCE_COURSE_GROUP) {
+            throw new DomainException("");
+        }
         super.setCompetenceCourseGroupUnit(unit);
 
         CompetenceCourseInformation competenceCourseInformation = new CompetenceCourseInformation(name.trim(), nameEn.trim(), basic, regimeType, competenceCourseLevel, null);
