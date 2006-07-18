@@ -78,7 +78,7 @@ public class PersistentProjectUser implements IPersistentProjectUser {
 
         if (ccCodes != null && ccCodes.size() != 0) {
             StringBuilder stringBuffer = new StringBuilder();
-            stringBuffer.append("select ID_COORD_CC, CC_NAME from v_responsavel_cc where ID_COORD_CC IN (");
+            stringBuffer.append("select distinct(ID_COORD_CC), CC_NAME from v_responsavel_cc where ID_COORD_CC IN (");
             for (int i = 0; i < ccCodes.size(); i++) {
                 if (i != 0)
                     stringBuffer.append(", ");

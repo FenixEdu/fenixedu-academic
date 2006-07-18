@@ -14,6 +14,8 @@ import net.sourceforge.fenixedu.domain.Login;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 
+import org.joda.time.DateTime;
+
 /**
  * @author Susana Fernandes
  * 
@@ -21,11 +23,11 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 public class ProjectAccess extends ProjectAccess_Base {
 
     public ProjectAccess() {
-		super();
-		setRootDomainObject(RootDomainObject.getInstance());
-	}
+        super();
+        setRootDomainObject(RootDomainObject.getInstance());
+    }
 
-	/**
+    /**
      * @return Returns the beginDate.
      */
     public Calendar getBeginDate() {
@@ -43,7 +45,7 @@ public class ProjectAccess extends ProjectAccess_Base {
      */
     public void setBeginDate(Calendar beginDate) {
         if (beginDate != null) {
-            this.setBegin(beginDate.getTime());    
+            this.setBegin(beginDate.getTime());
         } else {
             this.setBegin(null);
         }
@@ -56,7 +58,7 @@ public class ProjectAccess extends ProjectAccess_Base {
         if (this.getEnd() != null) {
             Calendar result = Calendar.getInstance();
             result.setTime(this.getEnd());
-            return result;    
+            return result;
         }
         return null;
     }
@@ -67,7 +69,7 @@ public class ProjectAccess extends ProjectAccess_Base {
      */
     public void setEndDate(Calendar endDate) {
         if (endDate != null) {
-            this.setEnd(endDate.getTime());            
+            this.setEnd(endDate.getTime());
         } else {
             this.setEnd(null);
         }
@@ -79,176 +81,165 @@ public class ProjectAccess extends ProjectAccess_Base {
         deleteDomainObject();
     }
 
-    private static List<ProjectAccess> getAllByPersonUsernameAndCoordinatorOrCostCenterOrProject(String username, Integer coordinatorCode, Integer costCenter, Integer projectCode, boolean all) {
+    private static List<ProjectAccess> getAllByPersonUsernameAndCoordinatorOrCostCenterOrProject(
+            String username, Integer coordinatorCode, Integer costCenter, Integer projectCode,
+            boolean all) {
         List<ProjectAccess> result = new ArrayList<ProjectAccess>();
 
         Date currentDate = Calendar.getInstance().getTime();
-        
-        outter:
-        for (ProjectAccess projectAccess : RootDomainObject.getInstance().getProjectAccesss()) {
-    
+
+        outter: for (ProjectAccess projectAccess : RootDomainObject.getInstance().getProjectAccesss()) {
+
             if (projectCode != null && !projectCode.equals(projectAccess.getKeyProject())) {
                 continue;
             }
-            
-            if (coordinatorCode != null && !coordinatorCode.equals(projectAccess.getKeyProjectCoordinator())) {
+
+            if (coordinatorCode != null
+                    && !coordinatorCode.equals(projectAccess.getKeyProjectCoordinator())) {
                 continue;
             }
-            
+
             if (costCenter != null) {
-                if (! costCenter.equals(projectAccess.getKeyProjectCoordinator())) {
+                if (!costCenter.equals(projectAccess.getKeyProjectCoordinator())) {
                     continue;
                 }
-                
-                if (! projectAccess.getCostCenter()) {
+
+                if (!projectAccess.getCostCenter()) {
                     continue;
                 }
-            }
-            else {
+            } else {
                 if (coordinatorCode == null && projectCode == null && projectAccess.getCostCenter()) {
                     continue;
                 }
             }
-            
+
             if (projectAccess.getEnd().before(currentDate)) {
                 continue;
             }
-            
+
             // skip projects accesses that begin in the future
             if (!all && projectAccess.getBegin().after(currentDate)) {
                 continue;
             }
 
-            for (Identification identification : projectAccess.getPerson().getUser().getIdentifications()) {
-                if (! (identification instanceof Login)) {
+            for (Identification identification : projectAccess.getPerson().getUser()
+                    .getIdentifications()) {
+                if (!(identification instanceof Login)) {
                     continue outter;
                 }
-                
+
                 Login login = (Login) identification;
-                
-                if (! username.equals(login.getUsername())) {
+
+                if (!username.equals(login.getUsername())) {
                     continue outter;
                 }
             }
-            
+
             result.add(projectAccess);
         }
-        
+
         return result;
     }
-    
-    public static List<ProjectAccess> getAllByPersonUsernameAndCoordinator(String username, Integer coordinatorCode, boolean all) {
-        return getAllByPersonUsernameAndCoordinatorOrCostCenterOrProject(username, coordinatorCode, null, null, all); 
+
+    public static List<ProjectAccess> getAllByPersonUsernameAndCoordinator(String username,
+            Integer coordinatorCode, boolean all) {
+        return getAllByPersonUsernameAndCoordinatorOrCostCenterOrProject(username, coordinatorCode,
+                null, null, all);
     }
 
-    public static List<ProjectAccess> getAllByPersonUsernameAndDatesAndCostCenter(String username, String costCenter) {
-        Integer costCenterCode = costCenter == null || costCenter.length() == 0 ? null : new Integer(costCenter);
-        
-        return getAllByPersonUsernameAndCoordinatorOrCostCenterOrProject(username, null, costCenterCode, null, false);
+    public static List<ProjectAccess> getAllByPersonUsernameAndDatesAndCostCenter(String username,
+            String costCenter) {
+        Integer costCenterCode = costCenter == null || costCenter.length() == 0 ? null : new Integer(
+                costCenter);
+
+        return getAllByPersonUsernameAndCoordinatorOrCostCenterOrProject(username, null, costCenterCode,
+                null, false);
     }
 
     public static ProjectAccess getByPersonAndProject(Person person, Integer projectCode) {
         List<ProjectAccess> projectAccesses = person.getProjectAccesses();
-        
+
         for (ProjectAccess access : projectAccesses) {
             if (projectCode.equals(access.getKeyProject())) {
                 return access;
             }
         }
-        
+
         return null;
     }
 
     public static ProjectAccess getByUsernameAndProjectCode(String username, Integer projectCode) {
-        List<ProjectAccess> result = getAllByPersonUsernameAndCoordinatorOrCostCenterOrProject(username, null, null, projectCode, false);
-        
+        List<ProjectAccess> result = getAllByPersonUsernameAndCoordinatorOrCostCenterOrProject(username,
+                null, null, projectCode, false);
+
         if (result.isEmpty()) {
             return null;
         }
-        
+
         return result.get(0);
     }
 
     public static List<ProjectAccess> getAllByCoordinator(Integer coordinatorCode) {
         List<ProjectAccess> result = new ArrayList<ProjectAccess>();
-        
+
         Date currentDate = Calendar.getInstance().getTime();
-        
+
         for (ProjectAccess access : RootDomainObject.getInstance().getProjectAccesss()) {
             if (access.getEnd().before(currentDate)) {
                 continue;
             }
-            
-            if (! access.getKeyProjectCoordinator().equals(coordinatorCode)) {
+
+            if (!access.getKeyProjectCoordinator().equals(coordinatorCode)) {
                 continue;
             }
-            
+
             result.add(access);
         }
-        
+
         return result;
     }
 
-    public static List<ProjectAccess> getAllByPersonAndCostCenter(Person person, boolean isCostCenter, boolean limitDates) {
+    public static List<ProjectAccess> getAllByPersonAndCostCenter(Person person, boolean isCostCenter,
+            boolean limitDates) {
         List<ProjectAccess> result = new ArrayList<ProjectAccess>();
-        
+
         Date currentDate = Calendar.getInstance().getTime();
-        
+
         for (ProjectAccess access : person.getProjectAccesses()) {
             if (limitDates) {
                 if (access.getBegin().after(currentDate)) {
                     continue;
                 }
-                
+
                 if (access.getEnd().before(currentDate)) {
                     continue;
                 }
             }
 
-            if (! new Boolean(isCostCenter).equals(access.getCostCenter())) {
+            if (!new Boolean(isCostCenter).equals(access.getCostCenter())) {
                 continue;
             }
-            
+
             result.add(access);
         }
-        
+
         return result;
     }
 
-    public static List<ProjectAccess> getAllByPersonUsername(String username) {
+    public static List<ProjectAccess> getAllByPersonUsername(Person person) {
         List<ProjectAccess> result = new ArrayList<ProjectAccess>();
 
-        Date currentDate = Calendar.getInstance().getTime();
-        
-        outter:
-        for (ProjectAccess projectAccess : RootDomainObject.getInstance().getProjectAccesss()) {
-            if (projectAccess.getCostCenter()) {
-                continue;
-            }
-        
-            if (projectAccess.getEnd().before(currentDate)) {
-                continue;
-            }
-            
-            if (projectAccess.getBegin().after(currentDate)) {
-                continue;
-            }
+        DateTime currentDate = new DateTime();
 
-            for (Identification identification : projectAccess.getPerson().getUser().getIdentifications()) {
-                if (! (identification instanceof Login)) {
-                    continue outter;
-                }
-                
-                Login login = (Login) identification;
-                
-                if (! username.equals(login.getUsername())) {
-                    continue outter;
+        for (ProjectAccess projectAccess : RootDomainObject.getInstance().getProjectAccesss()) {
+            if (projectAccess.getEndDateTime().isAfter(currentDate)
+                    && projectAccess.getBeginDateTime().isBefore(currentDate)) {
+
+                if (projectAccess.getPerson().equals(person)) {
+                    result.add(projectAccess);
                 }
             }
-            
-            result.add(projectAccess);
         }
-        
         return result;
     }
 

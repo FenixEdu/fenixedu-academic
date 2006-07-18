@@ -9,6 +9,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.projectsManagement.InfoRubric;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.projectsManagement.IRubric;
 import net.sourceforge.fenixedu.domain.projectsManagement.ProjectAccess;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -23,25 +24,27 @@ public class ReadUserCostCenters extends Service {
         List<InfoRubric> infoCostCenterList = new ArrayList<InfoRubric>();
 
         PersistentSuportOracle p = PersistentSuportOracle.getInstance();
-        List<IRubric> costCenterList = p.getIPersistentProjectUser().getInstitucionalProjectCoordId(new Integer(userNumber));
+        List<IRubric> costCenterList = p.getIPersistentProjectUser().getInstitucionalProjectCoordId(
+                new Integer(userNumber));
 
         List<Integer> projectCodes = new ArrayList<Integer>();
-        
-        List<ProjectAccess> accesses = ProjectAccess.getAllByPersonUsername(username);
+        Person person = Person.readPersonByUsername(username);
+        List<ProjectAccess> accesses = ProjectAccess.getAllByPersonUsername(person);
         for (ProjectAccess access : accesses) {
             Integer keyCostCenter = access.getKeyProjectCoordinator();
-            
-            if (! projectCodes.contains(keyCostCenter)) {
+
+            if (!projectCodes.contains(keyCostCenter)) {
                 projectCodes.add(keyCostCenter);
             }
         }
-        
-        costCenterList.addAll(p.getIPersistentProjectUser().getInstitucionalProjectByCCIDs(projectCodes));
+
+        costCenterList
+                .addAll(p.getIPersistentProjectUser().getInstitucionalProjectByCCIDs(projectCodes));
 
         for (IRubric cc : costCenterList) {
             infoCostCenterList.add(InfoRubric.newInfoFromDomain(cc));
         }
-        
+
         return infoCostCenterList;
     }
 }
