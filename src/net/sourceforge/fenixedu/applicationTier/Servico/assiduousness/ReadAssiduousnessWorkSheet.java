@@ -207,11 +207,13 @@ public class ReadAssiduousnessWorkSheet extends Service {
         return employeeWorkSheet;
     }
 
-    private Boolean overlapsSchedule(DateTime clocking,
+    //if returns false the clocking belongs to the clocking date
+    //if returns true it may belong to the clocking date or the day before
+    private boolean overlapsSchedule(DateTime clocking,
             HashMap<YearMonthDay, WorkSchedule> workScheduleMap) {
         WorkSchedule thisDaySchedule = workScheduleMap.get(clocking.toYearMonthDay());
         WorkSchedule dayBeforeSchedule = workScheduleMap.get(clocking.toYearMonthDay().minusDays(1));
-        if (thisDaySchedule == null) {
+        if (thisDaySchedule == null && dayBeforeSchedule != null) {
             DateTime beginDayBeforeWorkTime = clocking.toYearMonthDay().toDateTime(
                     dayBeforeSchedule.getWorkScheduleType().getWorkTime()).minusDays(1);
             DateTime endDayBeforeWorkTime = clocking.toYearMonthDay().toDateTime(
@@ -222,10 +224,10 @@ public class ReadAssiduousnessWorkSheet extends Service {
 
             Interval dayBeforeWorkTimeInterval = new Interval(beginDayBeforeWorkTime,
                     endDayBeforeWorkTime);
-            if (dayBeforeWorkTimeInterval.contains(clocking)) {
-                return true;
+            if (!dayBeforeWorkTimeInterval.contains(clocking)) {
+                return false;
             }
-        } else if (dayBeforeSchedule != null) {
+        } else if (thisDaySchedule != null && dayBeforeSchedule != null) {
             DateTime beginThisDayWorkTime = clocking.toYearMonthDay().toDateTime(
                     thisDaySchedule.getWorkScheduleType().getWorkTime());
             DateTime endThisDayWorkTime = clocking.toYearMonthDay().toDateTime(
@@ -245,13 +247,12 @@ public class ReadAssiduousnessWorkSheet extends Service {
 
             Interval nextDayWorkTimeInterval = new Interval(beginDayBeforeWorkTime, endDayBeforeWorkTime);
 
-            if (thisDayWorkTimeInterval.overlap(nextDayWorkTimeInterval) != null) {
-                return true;
+            if (!thisDayWorkTimeInterval.overlaps(nextDayWorkTimeInterval)) {
+                return false;
             }
-        } else {
-            return true;
         }
-        return false;
+        return true;
+
     }
 
 }
