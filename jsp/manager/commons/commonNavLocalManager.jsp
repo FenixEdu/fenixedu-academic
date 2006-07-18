@@ -13,15 +13,15 @@
 		<bean:message bundle="MANAGER_RESOURCES" key="label.manager.mainPage" />
 	</html:link>
 </li>
-<li class="navheader">Mensagens e Avisos</li>
+<li class="navheader"><bean:message bundle="MANAGER_RESOURCES" key="title.messages.and.notices" /></li>
 <li> 
 	<html:link module="/manager" page="/advisoriesManagement/listCurrentAdvisories.faces">
-		Gestão de Avisos
+		<bean:message bundle="MANAGER_RESOURCES" key="title.notices" />
 	</html:link>
 </li>
 <li> 
 	<html:link module="/manager" page="/sendMail.faces">
-		Envio de E-mails
+		<bean:message bundle="MANAGER_RESOURCES" key="title.emails" />
 	</html:link>
 </li>
 
@@ -37,7 +37,7 @@
 	</html:link>
 </li>
 
-<li class="navheader">Gestão da Estrutura de Ensino</li>
+<li class="navheader"><bean:message bundle="MANAGER_RESOURCES" key="title.teaching.structure" /></li>
 <li> 
 	<html:link module="/manager" module="/manager" page="/readDegrees.do">
 		<bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="label.manager.readDegrees" />
@@ -64,10 +64,10 @@
   	</html:link>  
 </li>
 
-<li class="navheader">Gestão de Execuções</li>
+<li class="navheader"><bean:message bundle="MANAGER_RESOURCES" key="title.executions"/></li>
 <li> 
 	<html:link module="/manager" module="/manager" page="/manageExecutionPeriods.do?method=prepare">
-		Periodos Execução
+		<bean:message bundle="MANAGER_RESOURCES" key="title.execution.periods"/>
 	</html:link>
 </li>
 <li> 
@@ -86,7 +86,7 @@
 	</html:link>
 </li>
 
-<li class="navheader">Gestão de Pessoal</li>
+<li class="navheader"><bean:message bundle="MANAGER_RESOURCES" key="title.people"/></li>
 <li> 
 	<html:link module="/manager" module="/manager" page="/teachersManagement.do?method=firstPage">
 		<bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="link.manager.teachersManagement" />
@@ -130,11 +130,11 @@
 </li>
 <li>
 	<html:link module="/manager" module="/manager" page="/gratuity/updateGratuitySituations.faces">
-		Actualizar Situaï¿½ï¿½es de Propina
+		<bean:message bundle="MANAGER_RESOURCES" key="title.gratuity.situations"/>
 	</html:link>
 </li>
 
-<li class="navheader">Gestão de CMS</li>
+<li class="navheader"><bean:message bundle="MANAGER_RESOURCES" key="title.cms"/></li>
 <li> 
 	<html:link module="/cms" action="/personalGroupsManagement.do?method=prepare" titleKey="person.userGroupsManagement.label.title">
 		<bean:message bundle="MANAGER_RESOURCES" key="link.userGroupsManagement" />
@@ -151,34 +151,34 @@
 	</html:link>	
 </li>
 
-<li class="navheader">Gestão do Suporte</li>
+<li class="navheader"><bean:message bundle="MANAGER_RESOURCES" key="title.support"/></li>
 <li>
 	<html:link module="/manager" module="/manager" page="/manageGlossary.do?method=prepare">
-		Gestão de Glossï¿½rio
+		<bean:message bundle="MANAGER_RESOURCES" key="title.glossary"/>
 	</html:link>
 </li>
 <li>
 	<html:link module="/manager" module="/manager" page="/manageFAQs.do?method=prepare">
-		Gestão de FAQ's
+		<bean:message bundle="MANAGER_RESOURCES" key="title.faqs"/>
 	</html:link>
 </li>
 
-<li class="navheader">Gestão de Objectos</li>
+<li class="navheader"><bean:message bundle="MANAGER_RESOURCES" key="title.objects"/></li>
 <li> 
 	<html:link module="/manager" page="/manageCache.do?method=prepare">
-		Gestão da Cache
+		<bean:message bundle="MANAGER_RESOURCES" key="title.cache"/>
 	</html:link>
 </li>
 <li>
 	<html:link module="/manager"page="/domainObjectStringPropertyFormatter.do?method=prepare">
-		Formataï¿½ï¿½o de Propriedades
+		<bean:message bundle="MANAGER_RESOURCES" key="title.properties"/>
 	</html:link>
 </li>
 
-<li class="navheader">Gestão do Sistema</li>
+<li class="navheader"><bean:message bundle="MANAGER_RESOURCES" key="title.system"/></li>
 <li> 
 	<html:link module="/manager" module="/manager" page="/monitorServices.do?method=monitor">
-		Monitorizaï¿½ï¿½o de Serviços
+		<bean:message bundle="MANAGER_RESOURCES" key="title.services"/>
 	</html:link>
 </li>
 <li> 
@@ -188,48 +188,52 @@
 </li>
 <li> 
 	<html:link module="/manager" module="/manager" page="/monitorUsers.do?method=monitor">
-		Monitorizaï¿½ï¿½o de Utilizadores
+		<bean:message bundle="MANAGER_RESOURCES" key="title.users"/>
 	</html:link>
 </li>
 <li> 
 	<html:link module="/manager" module="/manager" page="/monitorSystem.do?method=monitor">
-		Informações do Sistema
+		<bean:message bundle="MANAGER_RESOURCES" key="title.system.information"/>
 	</html:link>
 </li>
 <li>
 	<html:link module="/manager" module="/manager" page="/changePasswordForward.do">
-		Kerberos Test
+		<bean:message bundle="MANAGER_RESOURCES" key="title.kerberos.test"/>
 	</html:link>
 </li>
 <li>
 	<html:link module="/manager" module="/manager" page="/cron.do?method=showScripts&amp;page=0">
-		Cron
+		<bean:message bundle="MANAGER_RESOURCES" key="title.cron"/>
 	</html:link>
 </li>
 
-<li class="navheader">Frameworks</li>
+<li class="navheader"><bean:message bundle="MANAGER_RESOURCES" key="title.frameworks"/></li>
 <li>
 	<html:link module="/manager" page="/someStrutsPage.do?method=showFirstPage">
-		Struts Example
+		<bean:message bundle="MANAGER_RESOURCES" key="title.struts"/>
 	</html:link>
 </li>
 <li> 
     <html:link module="/manager" page="/reloadStruts.do">
-        Reload Struts Configuration
+    	<bean:message bundle="MANAGER_RESOURCES" key="title.relaod.struts"/>
     </html:link>
 </li>
 <br/>
 <li> 
 	<html:link module="/manager" module="/manager" page="/somePage.faces">
-		Java Server Faces Example
+		<bean:message bundle="MANAGER_RESOURCES" key="title.faces"/>
 	</html:link>
 </li>
 <br/>
 <li>
-    <html:link module="/manager" page="/renderers/index.do">Exemplos Renderers</html:link>
+    <html:link module="/manager" page="/renderers/index.do">
+	    <bean:message bundle="MANAGER_RESOURCES" key="title.renderers"/>
+    </html:link>
 </li>
 <li>
-    <html:link module="/manager" page="/renderers/reload.do">Reler Configuraï¿½ï¿½o Renderers</html:link>
+    <html:link module="/manager" page="/renderers/reload.do">
+	    <bean:message bundle="MANAGER_RESOURCES" key="title.reload.renderers"/>
+    </html:link>
 </li>
 
 </ul>

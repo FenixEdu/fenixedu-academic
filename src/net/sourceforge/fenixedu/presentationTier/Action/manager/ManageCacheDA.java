@@ -4,9 +4,16 @@
  */
 package net.sourceforge.fenixedu.presentationTier.Action.manager;
 
+import java.lang.reflect.Method;
+import java.util.Collection;
+import java.util.Iterator;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu._development.MetadataManager;
+import net.sourceforge.fenixedu.domain.DomainObject;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
@@ -17,6 +24,10 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
+
+import dml.DomainModel;
+import dml.DomainRelation;
+import dml.Role;
 
 /**
  * @author Luis Crus & Sara Ribeiro
@@ -84,5 +95,39 @@ public class ManageCacheDA extends FenixDispatchAction {
 
         return mapping.findForward("CacheCleared");
     }
+
+    public ActionForward loadAllObjectsToCache(ActionMapping mapping, ActionForm form, 
+    		HttpServletRequest request, HttpServletResponse response) throws Exception {
+
+    	final DomainModel domainModel = MetadataManager.getDomainModel();
+
+    	for (final Iterator<DomainRelation> domainRelationIterator = domainModel.getRelations();
+    			domainRelationIterator.hasNext(); ) {
+
+    		final DomainRelation domainRelation = domainRelationIterator.next();
+    		final Role firstRole = domainRelation.getFirstRole();
+    		final Role secondRole = domainRelation.getSecondRole();
+
+    		if (firstRole.getType().getFullName().equals(RootDomainObject.class.getName())) {
+    			loadDomainObjects(secondRole);
+    		} else if (secondRole.getType().getFullName().equals(RootDomainObject.class.getName())) {
+    			loadDomainObjects(firstRole);
+    		}
+    	}
+
+        return prepare(mapping, form, request, response);
+    }
+
+	private void loadDomainObjects(final Role role) throws Exception {
+		final String roleName = role.getName();
+		final String methodName = "get" + Character.toUpperCase(roleName.charAt(0)) + roleName.substring(1);
+		try {
+			final Method method = RootDomainObject.class.getMethod(methodName, (Class[]) null);
+			final Collection<DomainObject> domainObjects = (Collection<DomainObject>) method.invoke(rootDomainObject, (Object[]) null);
+			System.out.println("Read " + domainObjects.size() + " objects from method: " + methodName);
+		} catch (Throwable t) {
+			System.out.println("Unable to load objects with method: " + methodName);
+		}
+	}
 
 }
