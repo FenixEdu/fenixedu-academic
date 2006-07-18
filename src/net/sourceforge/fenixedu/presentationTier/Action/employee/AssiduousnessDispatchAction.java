@@ -251,6 +251,7 @@ public class AssiduousnessDispatchAction extends FenixDispatchAction {
         if (yearMonth.getYear() == new YearMonthDay().getYear()
                 && yearMonth.getMonth().ordinal() + 1 == new YearMonthDay().getMonthOfYear()) {
             endDay = new YearMonthDay().getDayOfMonth();
+            request.setAttribute("displayCurrentDayNote","true");
         }
         YearMonthDay endDate = new YearMonthDay(yearMonth.getYear(), yearMonth.getMonth().ordinal() + 1,
                 endDay);

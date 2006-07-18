@@ -40,6 +40,10 @@
 			</fr:layout>
 		</fr:view>
 			
+		<logic:notEmpty name="displayCurrentDayNote">
+			<bean:message key="message.employee.currentDayIgnored"/>
+		</logic:notEmpty>
+		
 		<logic:present name="employeeWorkSheet" property="totalBalance">
 			<p class="mvert05"><bean:message key="label.totalBalance" bundle="ASSIDUOUSNESS_RESOURCES"/>: <b><bean:write name="employeeWorkSheet" property="totalBalanceString"/></b></p>
 		</logic:present>
