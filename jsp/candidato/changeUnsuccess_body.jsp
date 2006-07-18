@@ -1,5 +1,6 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
@@ -9,7 +10,7 @@
 
     <div align="center">
       <font color="#023264" size="-1">
-        <h2>          A sua situação actual não lhe permite alterar a informação da sua candidatura !         </h2>
+        <h2>          A sua situaï¿½ï¿½o actual nï¿½o lhe permite alterar a informaï¿½ï¿½o da sua candidatura !         </h2>
       </font>
       <hr>
     </div>  

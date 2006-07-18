@@ -1,4 +1,5 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
@@ -15,15 +16,15 @@
 </logic:messagesPresent>
 <br/>
 <html:form action="/printMarkSheetWeb.do">
-	<html:hidden property="method" value="printMarkSheets"/>
-	<html:hidden property="markSheet" value="all"/>
-	<html:hidden property="page" value="1"/>	
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="printMarkSheets"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.markSheet" property="markSheet" value="all"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>	
 	<table>
 		<tr>
 			<td>
 				<ul>
 				<logic:iterate id="name"  name="printerNames">
-					<li><html:radio property="printerName" value='<%= name.toString() %>'>
+					<li><html:radio bundle="HTMLALT_RESOURCES" altKey="radio.printerName" property="printerName" value='<%= name.toString() %>'>
 						<bean:write name="name"/>
 					</html:radio></li>
 				</logic:iterate>
@@ -37,14 +38,14 @@
 		</tr>
 	</table>
 	<br/>
-	<html:cancel onclick="this.form.method.value='searchMarkSheet';this.form.submit();" styleClass="inputbutton"><bean:message key="label.back"/></html:cancel>
-	<html:submit styleClass="inputbutton"><bean:message key="label.print"/></html:submit>
+	<html:cancel bundle="HTMLALT_RESOURCES" altKey="cancel.cancel" onclick="this.form.method.value='searchMarkSheet';this.form.submit();" styleClass="inputbutton"><bean:message key="label.back"/></html:cancel>
+	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton"><bean:message key="label.print"/></html:submit>
 </html:form>
 
 <logic:notEmpty name="curricularCourseMap">
 
 	<br/><br/><hr>
-	<h3><bean:write name="executionPeriod" property="executionYear.year"/> - <bean:write name="executionPeriod" property="semester"/>º Sem</h3>
+	<h3><bean:write name="executionPeriod" property="executionYear.year"/> - <bean:write name="executionPeriod" property="semester"/>ï¿½ Sem</h3>
 	<br/>
 	<strong><bean:message key="label.markSheet.printMarkSheetsWeb.markSheets.lefToPrint"/></strong>:
 	<br/>

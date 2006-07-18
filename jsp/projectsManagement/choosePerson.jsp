@@ -1,4 +1,5 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <h2><bean:message key="title.accessDelegation" /> <logic:present name="infoCostCenter" scope="request">
@@ -23,17 +24,17 @@
 	<br />
 	<br />
 	<html:form action="/projectAccess" focus="username">
-		<html:hidden property="method" value="showPersonAccesses" />
-		<html:hidden property="page" value="0" />
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="showPersonAccesses" />
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="0" />
 		<logic:present name="infoCostCenter" scope="request">
 			<bean:define id="cc" name="infoCostCenter" property="code" scope="request" />
-			<html:hidden property="costCenter" value="<%=cc.toString()%>" />
+			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.costCenter" property="costCenter" value="<%=cc.toString()%>" />
 		</logic:present>
 		<table>
 			<tr>
 				<td><bean:message key="label.username" /></td>
-				<td><html:text property="username" size="25" /></td>
-				<td><html:submit styleClass="inputbutton">
+				<td><html:text bundle="HTMLALT_RESOURCES" altKey="text.username" property="username" size="25" /></td>
+				<td><html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton">
 					<bean:message key="label.find" />
 				</html:submit></td>
 			</tr>

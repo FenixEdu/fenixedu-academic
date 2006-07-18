@@ -1,5 +1,6 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ page import="org.apache.struts.Globals" %>
@@ -306,7 +307,7 @@
 		<tr>
 			<td>
 			<bean:message key="label.masterDegree.studyPlan.givenCreditsRemarks"/><br/>
-				<html:textarea disabled="true" name="masterDegreeCandidate" property="givenCreditsRemarks"/>
+				<html:textarea bundle="HTMLALT_RESOURCES" altKey="textarea.givenCreditsRemarks" disabled="true" name="masterDegreeCandidate" property="givenCreditsRemarks"/>
 			</td>
 		</tr>
 		<tr>
@@ -346,7 +347,7 @@
 <table>
     <tr>
         <td>
-            <bean:message key="label.masterDegree.studyPlan.isClassAssistant"/><html:checkbox disabled="true" name="masterDegreeCandidate" property="courseAssistant"/>
+            <bean:message key="label.masterDegree.studyPlan.isClassAssistant"/><html:checkbox bundle="HTMLALT_RESOURCES" altKey="checkbox.courseAssistant" disabled="true" name="masterDegreeCandidate" property="courseAssistant"/>
         </td>
     </tr>
     <tr>
@@ -356,7 +357,7 @@
     </tr>
     <tr>
         <td>
-            <html:textarea disabled="true" name="masterDegreeCandidate" property="coursesToAssist" cols="40" rows="2"/>
+            <html:textarea bundle="HTMLALT_RESOURCES" altKey="textarea.coursesToAssist" disabled="true" name="masterDegreeCandidate" property="coursesToAssist" cols="40" rows="2"/>
         </td>
     </tr>
 </table>
@@ -386,12 +387,12 @@
     </tr>
     <tr>
         <td>
-            <html:radio disabled="true" name="masterDegreeCandidate" property="hasGuider" value="true"/><bean:message key="label.masterDegree.studyPlan.advisor"/>
+            <html:radio bundle="HTMLALT_RESOURCES" altKey="radio.hasGuider" disabled="true" name="masterDegreeCandidate" property="hasGuider" value="true"/><bean:message key="label.masterDegree.studyPlan.advisor"/>
         </td>
     </tr>
     <tr>
         <td>
-            <html:radio disabled="true" name="masterDegreeCandidate" property="hasGuider" value="false"/><bean:message key="label.masterDegree.studyPlan.coordinator"/>
+            <html:radio bundle="HTMLALT_RESOURCES" altKey="radio.hasGuider" disabled="true" name="masterDegreeCandidate" property="hasGuider" value="false"/><bean:message key="label.masterDegree.studyPlan.coordinator"/>
         </td>
     </tr>
 </table>

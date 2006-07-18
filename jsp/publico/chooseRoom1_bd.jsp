@@ -1,6 +1,6 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
-<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %><html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/app.tld" prefix="app" %>
 <%@ page import="java.util.ArrayList" %>
@@ -14,29 +14,29 @@
    <br/>
   <span class="error"><html:errors/></span>	
 		<html:form action="/viewRoomNew.do">
-	<html:hidden property="<%=SessionConstants.EXECUTION_PERIOD_OID%>" value="<%= ""+request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID)%>" />
-	<html:hidden property="<%= SessionConstants.EXECUTION_PERIOD %>" value="<%=""+ pageContext.findAttribute("executionLabel") %>" />
+	<html:hidden alt="<%=SessionConstants.EXECUTION_PERIOD_OID%>" property="<%=SessionConstants.EXECUTION_PERIOD_OID%>" value="<%= ""+request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID)%>" />
+	<html:hidden alt="<%= SessionConstants.EXECUTION_PERIOD %>" property="<%= SessionConstants.EXECUTION_PERIOD %>" value="<%=""+ pageContext.findAttribute("executionLabel") %>" />
 	
-			<html:hidden name="roomForm" property="name"/>
-			<html:hidden name="roomForm" property="building"/>
-			<html:hidden name="roomForm" property="floor"/>
-			<html:hidden name="roomForm" property="type"/>
-			<html:hidden name="roomForm" property="capacityNormal"/>
-			<html:hidden name="roomForm" property="capacityExame"/>
+			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.name" name="roomForm" property="name"/>
+			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.building" name="roomForm" property="building"/>
+			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.floor" name="roomForm" property="floor"/>
+			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.type" name="roomForm" property="type"/>
+			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.capacityNormal" name="roomForm" property="capacityNormal"/>
+			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.capacityExame" name="roomForm" property="capacityExame"/>
 
 			<table border='0' cellpadding='10' cellspacing='1' width="60%">		
                 <tr>
-                    <td class="listClasses-header" width="10%">&nbsp;</td>
-                    <td class="listClasses-header" width="15%">Nome</td>
-                    <td class="listClasses-header" width="10%">Tipo</td>                    
-                    <td class="listClasses-header">Capacidade Normal</td>
+                    <th class="listClasses-header" width="10%">&nbsp;</th>
+                    <th class="listClasses-header" width="15%">Nome</th>
+                    <th class="listClasses-header" width="10%">Tipo</th>                    
+                    <th class="listClasses-header">Capacidade Normal</th>
 
                 </tr>
 			
 			<logic:iterate id="infoRoom" name="publico.infoRooms" indexId="infoRoomIndex" >
                 <tr>
                     <td class="listClasses">
-	                    <html:radio idName="infoRoom" property="roomName" value="nome"/>
+	                    <html:radio bundle="HTMLALT_RESOURCES" altKey="radio.roomName" idName="infoRoom" property="roomName" value="nome"/>
                     </td>
                     <td class="listClasses">
 	                    <bean:write name="infoRoom" property="nome"/>
@@ -53,9 +53,9 @@
 		</table>
 		<br/>
 		<bean:define id="infoExecutionPeriodCode" name="objectCode" />
-		<html:hidden property="objectCode" value="<%= infoExecutionPeriodCode.toString() %>" />
-		<html:hidden  property="method" value="roomViewer" />	
-		<html:submit styleClass="inputbutton">
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.objectCode" property="objectCode" value="<%= infoExecutionPeriodCode.toString() %>" />
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method"  property="method" value="roomViewer" />	
+		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton">
 			<bean:message key="label.choose"/>
 		</html:submit>
 	</html:form>

@@ -1,5 +1,5 @@
 <%@ page language="java" %>
-<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
+<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%><html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="dt"%>
@@ -31,11 +31,11 @@
 		<logic:notEmpty name="infoSiteTeacherInformation" property="infoQualifications">
 			<table width="100%" border="0" cellspacing="1" style="margin-top:10px">	
 				<tr>
-					<td class="listClasses-header"><bean:message key="message.teacherInformation.year" bundle="GEP_RESOURCES" /></td>
-					<td class="listClasses-header"><bean:message key="message.teacherInformation.school" bundle="GEP_RESOURCES"/></td>
-					<td class="listClasses-header"><bean:message key="message.teacherInformation.qualificationsDegree" bundle="GEP_RESOURCES"/></td>
-					<td class="listClasses-header"><bean:message key="message.teacherInformation.qualificationsTitle" bundle="GEP_RESOURCES"/></td>
-					<td class="listClasses-header"><bean:message key="message.teacherInformation.qualificationsMark" bundle="GEP_RESOURCES"/></td>
+					<th class="listClasses-header"><bean:message key="message.teacherInformation.year" bundle="GEP_RESOURCES" /></th>
+					<th class="listClasses-header"><bean:message key="message.teacherInformation.school" bundle="GEP_RESOURCES"/></th>
+					<th class="listClasses-header"><bean:message key="message.teacherInformation.qualificationsDegree" bundle="GEP_RESOURCES"/></th>
+					<th class="listClasses-header"><bean:message key="message.teacherInformation.qualificationsTitle" bundle="GEP_RESOURCES"/></th>
+					<th class="listClasses-header"><bean:message key="message.teacherInformation.qualificationsMark" bundle="GEP_RESOURCES"/></th>
 				</tr>
 				<logic:iterate id="infoQualification" name="infoSiteTeacherInformation" property="infoQualifications">
 					<tr>
@@ -66,9 +66,9 @@
 		<logic:notEmpty name="infoSiteTeacherInformation" property="infoTeachingCareers">
 			<table width="100%" border="0" cellspacing="1" style="margin-top:10px">	
 				<tr>
-					<td class="listClasses-header"><bean:message key="message.teacherInformation.years" bundle="GEP_RESOURCES" /></td>
-					<td class="listClasses-header"><bean:message key="message.teacherInformation.careerCategory" bundle="GEP_RESOURCES" /></td>
-					<td class="listClasses-header"><bean:message key="message.teacherInformation.careerPositions" bundle="GEP_RESOURCES" /></td>
+					<th class="listClasses-header"><bean:message key="message.teacherInformation.years" bundle="GEP_RESOURCES" /></th>
+					<th class="listClasses-header"><bean:message key="message.teacherInformation.careerCategory" bundle="GEP_RESOURCES" /></th>
+					<th class="listClasses-header"><bean:message key="message.teacherInformation.careerPositions" bundle="GEP_RESOURCES" /></th>
 				</tr>
 				<logic:iterate id="infoTeachingCareer" name="infoSiteTeacherInformation" property="infoTeachingCareers">
 				<tr>
@@ -97,9 +97,9 @@
 		<logic:notEmpty name="infoSiteTeacherInformation" property="infoProfessionalCareers">
 			<table width="100%" border="0" cellspacing="1" style="margin-top:10px">	
 				<tr>
-					<td class="listClasses-header"><bean:message key="message.teacherInformation.years" bundle="GEP_RESOURCES"/></td>
-					<td class="listClasses-header"><bean:message key="message.teacherInformation.entity" bundle="GEP_RESOURCES"/></td>
-					<td class="listClasses-header"><bean:message key="message.teacherInformation.functions" bundle="GEP_RESOURCES"/></td>
+					<th class="listClasses-header"><bean:message key="message.teacherInformation.years" bundle="GEP_RESOURCES"/></th>
+					<th class="listClasses-header"><bean:message key="message.teacherInformation.entity" bundle="GEP_RESOURCES"/></th>
+					<th class="listClasses-header"><bean:message key="message.teacherInformation.functions" bundle="GEP_RESOURCES"/></th>
 				</tr>
 				<logic:iterate id="infoProfessionalCareer" 
 							   name="infoSiteTeacherInformation" 
@@ -164,9 +164,9 @@
 				<bean:message key="message.teacherInformation.numberOfPublications" bundle="GEP_RESOURCES"/></p>
 		<table width="100%" border="0" cellspacing="1" style="margin-top:10px">
 			<tr>
-				<td class="listClasses-header"><bean:message key="message.teacherInformation.number" bundle="GEP_RESOURCES"/></td>
-				<td class="listClasses-header"><bean:message key="message.teacherInformation.national" bundle="GEP_RESOURCES"/></td>
-				<td class="listClasses-header"><bean:message key="message.teacherInformation.international" bundle="GEP_RESOURCES"/></td>
+				<th class="listClasses-header"><bean:message key="message.teacherInformation.number" bundle="GEP_RESOURCES"/></th>
+				<th class="listClasses-header"><bean:message key="message.teacherInformation.national" bundle="GEP_RESOURCES"/></th>
+				<th class="listClasses-header"><bean:message key="message.teacherInformation.international" bundle="GEP_RESOURCES"/></th>
 			</tr>
 			<tr>
 				<td class="listClasses"><bean:message key="message.teacherInformation.comunicationsPublications" bundle="GEP_RESOURCES"/></td>

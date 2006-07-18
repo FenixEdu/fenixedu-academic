@@ -1,5 +1,6 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 
@@ -19,12 +20,12 @@
 		
 	<logic:notEmpty name="infoStudentTestQuestionList">
 	<html:form action="/testDistribution">
-	<html:hidden property="method" value="showDistributedTests"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="showDistributedTests"/>
 	<bean:define id="studentCode" value="0" type="java.lang.Object"/>
 	<bean:define id="studentIndex" value="0"/>
 	<bean:define id="finalMark" value="0"/>
 	<bean:define id="questionNumber" name="distributedTest" property="numberOfQuestions"/>
-	<html:hidden property="objectCode" value="<%= (pageContext.findAttribute("objectCode")).toString() %>"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.objectCode" property="objectCode" value="<%= (pageContext.findAttribute("objectCode")).toString() %>"/>
 		<logic:iterate id="studentTestQuestion" name="infoStudentTestQuestionList" type="net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoStudentTestQuestionMark" indexId="index">
 			<logic:equal name="index" value="0">
 				<h2><bean:write name="distributedTest" property="title"/></h2>
@@ -49,14 +50,14 @@
 				<br/>
 				<table>
 					<tr>
-						<td class="listClasses-header"><bean:message key="label.number"/></td>
-						<td class="listClasses-header"><bean:message key="label.name"/></td>
+						<th class="listClasses-header"><bean:message key="label.number"/></th>
+						<th class="listClasses-header"><bean:message key="label.name"/></th>
 						<% for(int i=1; i<=new Integer(questionNumber.toString()).intValue();i++ ){
-							out.write(new String("<td class='listClasses-header'><b>P"+i+"</b></td>"));
+							out.write(new String("<th class='listClasses-header'><b>P"+i+"</b></th>"));
 						} %>
-						<td class="listClasses-header"><bean:message key="label.mark"/></td>
+						<th class="listClasses-header"><bean:message key="label.mark"/></th>
 						<logic:greaterThan name="maximumMark" value="0">
-							<td class="listClasses-header"><bean:message key="label.mark"/><bean:message key="label.percentage"/></td>
+							<th class="listClasses-header"><bean:message key="label.mark"/><bean:message key="label.percentage"/></th>
 						</logic:greaterThan>
 					</tr>
 			</logic:equal>
@@ -103,7 +104,7 @@
 	<br/>
 	<table align="center">
 	<tr>
-		<td><html:submit styleClass="inputbutton"><bean:message key="label.back"/></html:submit></td>
+		<td><html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton"><bean:message key="label.back"/></html:submit></td>
 	</tr>
 	</table>
 	</html:form>

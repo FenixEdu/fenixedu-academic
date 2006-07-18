@@ -1,53 +1,54 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="dt" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
 <br />
 <br />
-Aulas já atribuidas ao turno
+Aulas jï¿½ atribuidas ao turno
 <br />
 	<logic:present name="shift" property="infoLessons">
   <html:form action="/manageShiftMultipleItems">
 
-	<html:hidden property="method" value="deleteLessons"/>
-	<html:hidden property="page" value="1"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="deleteLessons"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
 
-	<html:hidden property="<%= SessionConstants.EXECUTION_PERIOD_OID %>"
+	<html:hidden alt="<%= SessionConstants.EXECUTION_PERIOD_OID %>" property="<%= SessionConstants.EXECUTION_PERIOD_OID %>"
 				 value="<%= pageContext.findAttribute("executionPeriodOID").toString() %>"/>
-	<html:hidden property="<%= SessionConstants.EXECUTION_DEGREE_OID %>"
+	<html:hidden alt="<%= SessionConstants.EXECUTION_DEGREE_OID %>" property="<%= SessionConstants.EXECUTION_DEGREE_OID %>"
 				 value="<%= pageContext.findAttribute("executionDegreeOID").toString() %>"/>
-	<html:hidden property="<%= SessionConstants.CURRICULAR_YEAR_OID %>"
+	<html:hidden alt="<%= SessionConstants.CURRICULAR_YEAR_OID %>" property="<%= SessionConstants.CURRICULAR_YEAR_OID %>"
 				 value="<%= pageContext.findAttribute("curricularYearOID").toString() %>"/>
-	<html:hidden property="<%= SessionConstants.EXECUTION_COURSE_OID %>"
+	<html:hidden alt="<%= SessionConstants.EXECUTION_COURSE_OID %>" property="<%= SessionConstants.EXECUTION_COURSE_OID %>"
 				 value="<%= pageContext.findAttribute("executionCourseOID").toString() %>"/>
-	<html:hidden property="<%= SessionConstants.SHIFT_OID %>"
+	<html:hidden alt="<%= SessionConstants.SHIFT_OID %>" property="<%= SessionConstants.SHIFT_OID %>"
 				 value="<%= pageContext.findAttribute("shiftOID").toString() %>"/>
 
 		<table>
 			<tr>
-				<td class="listClasses-header">
-				</td>
-				<td class="listClasses-header">
+				<th class="listClasses-header">
+				</th>
+				<th class="listClasses-header">
 					<bean:message key="property.weekday"/>
-				</td>
-				<td class="listClasses-header">
+				</th>
+				<th class="listClasses-header">
 					<bean:message key="property.time.start"/>
-				</td>
-		        <td class="listClasses-header">
+				</th>
+		        <th class="listClasses-header">
 		        	<bean:message key="property.time.end"/>
-	    	    </td>
-				<td class="listClasses-header">
+	    	    </th>
+				<th class="listClasses-header">
 					<bean:message key="property.room"/>
-				</td>
-				<td class="listClasses-header">
+				</th>
+				<th class="listClasses-header">
 		        	<bean:message key="property.capacity"/>
-		        </td>
-				<td class="listClasses-header">
-		        </td>
-				<td class="listClasses-header">
-		        </td>
+		        </th>
+				<th class="listClasses-header">
+		        </th>
+				<th class="listClasses-header">
+		        </th>
 			</tr>
 			<bean:define id="deleteConfirm">
 				return confirm('<bean:message key="message.confirm.delete.lesson"/>')
@@ -56,7 +57,7 @@ Aulas já atribuidas ao turno
 				<bean:define id="lessonOID" name="lesson" property="idInternal"/>
 				<tr align="center">
               		<td class="listClasses">
-						<html:multibox property="selectedItems">
+						<html:multibox bundle="HTMLALT_RESOURCES" altKey="multibox.selectedItems" property="selectedItems">
 							<bean:write name="lesson" property="idInternal"/>
 						</html:multibox>
 					</td>
@@ -143,7 +144,7 @@ Aulas já atribuidas ao turno
 				</tr>
 			</logic:iterate>
 		</table>
-		<html:submit styleClass="inputbutton" onclick='<%= pageContext.findAttribute("deleteConfirm").toString() %>'>
+		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton" onclick='<%= pageContext.findAttribute("deleteConfirm").toString() %>'>
 			<bean:message key="link.delete"/>
 		</html:submit>
 	  </html:form>

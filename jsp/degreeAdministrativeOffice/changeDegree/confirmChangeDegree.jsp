@@ -1,51 +1,52 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 
 <html:form action="/changeDegree">
-	<html:hidden property="method" value="change"/>
-	<html:hidden property="studentNumber"/>
-	<html:hidden property="executionDegreeToChangeTo"/>
-	<html:hidden property="newStudentCurricularPlanStartDate"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="change"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.studentNumber" property="studentNumber"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.executionDegreeToChangeTo" property="executionDegreeToChangeTo"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.newStudentCurricularPlanStartDate" property="newStudentCurricularPlanStartDate"/>
 
 	<logic:iterate id="enrolementId" type="java.lang.String" name="changeDegreeForm" property="enrolementsToTransfer">
-		<html:hidden property="enrolementsToTransfer" value="<%= enrolementId %>"/>
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.enrolementsToTransfer" property="enrolementsToTransfer" value="<%= enrolementId %>"/>
 	</logic:iterate>
 	<logic:iterate id="enrolementId" type="java.lang.String" name="changeDegreeForm" property="enrolementsToMaintain">
-		<html:hidden property="enrolementsToMaintain" value="<%= enrolementId %>"/>
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.enrolementsToMaintain" property="enrolementsToMaintain" value="<%= enrolementId %>"/>
 	</logic:iterate>
 	<logic:iterate id="enrolementId" type="java.lang.String" name="changeDegreeForm" property="enrolementsToDelete">
-		<html:hidden property="enrolementsToDelete" value="<%= enrolementId %>"/>
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.enrolementsToDelete" property="enrolementsToDelete" value="<%= enrolementId %>"/>
 	</logic:iterate>
 
 	<bean:message key="label.student.number"/>:
-	<html:text disabled="true" size="5" property="studentNumber"/>
+	<html:text bundle="HTMLALT_RESOURCES" altKey="text.studentNumber" disabled="true" size="5" property="studentNumber"/>
 
 	<br />
 	<br />
 
 	<table>
 		<tr>
-			<td class="listClasses-header">
+			<th class="listClasses-header">
 				<bean:message key="label.student.curricular.plan"/>
-			</td>
+			</th>
 			<td class="listClasses">
 				<bean:write name="activeInfoStudentCurricularPlan" property="infoStudent.infoPerson.nome"/>
 			</td>
 		</tr>
 		<tr>
-			<td class="listClasses-header">
+			<th class="listClasses-header">
 				<bean:message key="label.student.curricular.plan.state"/>
-			</td>
+			</th>
 			<td class="listClasses">
 				<%= net.sourceforge.fenixedu.domain.studentCurricularPlan.StudentCurricularPlanState.INCOMPLETE %> : <bean:write name="activeInfoStudentCurricularPlan" property="startDate"/>
 			</td>
 		</tr>
 		<tr>
-			<td class="listClasses-header">
+			<th class="listClasses-header">
 				<bean:message key="label.degree.name"/>
-			</td>
+			</th>
 			<td class="listClasses">
 				<bean:write name="activeInfoStudentCurricularPlan" property="infoDegreeCurricularPlan.infoDegree.nome"/>
 				<bean:write name="activeInfoStudentCurricularPlan" property="infoDegreeCurricularPlan.name"/>
@@ -54,12 +55,12 @@
 	</table>
 	<table>
 		<tr>
-			<td class="listClasses-header"><bean:message key="label.executionYear"/></td>
-			<td class="listClasses-header"><bean:message key="label.semester"/></td>
-			<td class="listClasses-header"><bean:message key="label.degree.code"/></td>
-			<td class="listClasses-header"><bean:message key="label.curricular.course.code"/></td>
-			<td class="listClasses-header"><bean:message key="label.curricular.course.name"/></td>
-			<td class="listClasses-header"><bean:message key="label.enrolement.grade"/></td>
+			<th class="listClasses-header"><bean:message key="label.executionYear"/></th>
+			<th class="listClasses-header"><bean:message key="label.semester"/></th>
+			<th class="listClasses-header"><bean:message key="label.degree.code"/></th>
+			<th class="listClasses-header"><bean:message key="label.curricular.course.code"/></th>
+			<th class="listClasses-header"><bean:message key="label.curricular.course.name"/></th>
+			<th class="listClasses-header"><bean:message key="label.enrolement.grade"/></th>
 		</tr>
 		<logic:iterate id="infoEnrolment" name="activeInfoStudentCurricularPlan" property="infoEnrolments">
 			<bean:define id="infoEnrolmentId" name="infoEnrolment" property="idInternal" type="java.lang.Integer"/>
@@ -82,25 +83,25 @@
 
 	<table>
 		<tr>
-			<td class="listClasses-header">
+			<th class="listClasses-header">
 				<bean:message key="label.student.curricular.plan"/>
-			</td>
+			</th>
 			<td class="listClasses">
 				<bean:write name="activeInfoStudentCurricularPlan" property="infoStudent.infoPerson.nome"/>
 			</td>
 			</tr>
 			<tr>
-			<td class="listClasses-header">
+			<th class="listClasses-header">
 				<bean:message key="label.student.curricular.plan.state"/>
-			</td>
+			</th>
 			<td class="listClasses">
 				<%= net.sourceforge.fenixedu.domain.studentCurricularPlan.StudentCurricularPlanState.ACTIVE %> : <bean:write name="changeDegreeForm" property="newStudentCurricularPlanStartDate"/>
 			</td>
 		</tr>
 		<tr>
-			<td class="listClasses-header">
+			<th class="listClasses-header">
 				<bean:message key="label.degree.name"/>
-			</td>
+			</th>
 			<td class="listClasses">
 				<bean:define id="executionDegreeToChangeToID" name="changeDegreeForm" property="executionDegreeToChangeTo" type="java.lang.String"/>
 				<logic:iterate id="executionDegreeLabelValue" name="availableExecutionDegrees">
@@ -114,12 +115,12 @@
 
 	<table>
 		<tr>
-			<td class="listClasses-header"><bean:message key="label.executionYear"/></td>
-			<td class="listClasses-header"><bean:message key="label.semester"/></td>
-			<td class="listClasses-header"><bean:message key="label.degree.code"/></td>
-			<td class="listClasses-header"><bean:message key="label.curricular.course.code"/></td>
-			<td class="listClasses-header"><bean:message key="label.curricular.course.name"/></td>
-			<td class="listClasses-header"><bean:message key="label.enrolement.grade"/></td>
+			<th class="listClasses-header"><bean:message key="label.executionYear"/></th>
+			<th class="listClasses-header"><bean:message key="label.semester"/></th>
+			<th class="listClasses-header"><bean:message key="label.degree.code"/></th>
+			<th class="listClasses-header"><bean:message key="label.curricular.course.code"/></th>
+			<th class="listClasses-header"><bean:message key="label.curricular.course.name"/></th>
+			<th class="listClasses-header"><bean:message key="label.enrolement.grade"/></th>
 		</tr>
 		<logic:iterate id="infoEnrolment" name="activeInfoStudentCurricularPlan" property="infoEnrolments">
 			<bean:define id="infoEnrolmentId" name="infoEnrolment" property="idInternal" type="java.lang.Integer"/>

@@ -6,8 +6,8 @@
 <html:html xhtml="true" locale="true">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-<meta name="keywords" content="ensino,  ensino superior, universidade, instituto, ciência, instituto superior técnico, investigação e desenvolvimento" />
-<meta name="description" content="O Instituto Superior Técnico é a maior escola de engenharia, ciência e tecnologia em Portugal." />
+<meta name="keywords" content="ensino,  ensino superior, universidade, instituto, ciï¿½ncia, instituto superior tï¿½cnico, investigaï¿½ï¿½o e desenvolvimento" />
+<meta name="description" content="O Instituto Superior Tï¿½cnico ï¿½ a maior escola de engenharia, ciï¿½ncia e tecnologia em Portugal." />
 
 <link rel="stylesheet" type="text/css" media="screen" href="<%= request.getContextPath() %>/CSS/iststyle.css" />
 <link rel="stylesheet" type="text/css" media="screen" href="<%= request.getContextPath() %>/CSS/dotist_timetables.css" />
@@ -65,20 +65,20 @@
 
 	 <div id="version">
 				<html:form action="/changeLocaleTo.do">
-					<html:hidden property="windowLocation" value=""/>
-					<html:hidden property="newLanguage" value=""/>
-					<html:hidden property="newCountry" value=""/>
-					<html:hidden property="newVariant" value=""/>
+					<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.windowLocation" property="windowLocation" value=""/>
+					<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.newLanguage" property="newLanguage" value=""/>
+					<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.newCountry" property="newCountry" value=""/>
+					<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.newVariant" property="newVariant" value=""/>
 			 
 	            <logic:notEqual name="<%= org.apache.struts.Globals.LOCALE_KEY %>" property="language" value="pt">
-					<input type="image" src="<%= request.getContextPath() %>/images/flags/pt.gif" alt="<bean:message key="pt" bundle="IMAGE_RESOURCES" />" title="Português" value="PT"
+					<input type="image" src="<%= request.getContextPath() %>/images/flags/pt.gif" alt="<bean:message key="pt" bundle="IMAGE_RESOURCES" />" title="Portuguï¿½s" value="PT"
 					 onclick="this.form.newLanguage.value='pt';this.form.newCountry.value='PT';this.form.newVariant.value='<%= net.sourceforge.fenixedu._development.PropertiesManager.getProperty("variant") %>';this.form.windowLocation.value=window.location;this.form.submit();" />
 					<input class="activeflag" type="image" src="<%= request.getContextPath() %>/images/flags/en.gif" alt="English" title="English" value="EN" 
 					onclick="this.form.newLanguage.value='en';this.form.newCountry.value='EN';this.form.newVariant.value='<%= net.sourceforge.fenixedu._development.PropertiesManager.getProperty("variant") %>';this.form.windowLocation.value=window.location;this.form.submit();"/>
 				</logic:notEqual>
 					
 	            <logic:notEqual name="<%= org.apache.struts.Globals.LOCALE_KEY %>" property="language" value="en">			
-					<input class="activeflag" type="image" src="<%= request.getContextPath() %>/images/flags/pt.gif" alt="Português" title="Português" value="PT"
+					<input class="activeflag" type="image" src="<%= request.getContextPath() %>/images/flags/pt.gif" alt="Portuguï¿½s" title="Portuguï¿½s" value="PT"
 					 onclick="this.form.newLanguage.value='pt';this.form.newCountry.value='PT';this.form.newVariant.value='<%= net.sourceforge.fenixedu._development.PropertiesManager.getProperty("variant") %>';this.form.windowLocation.value=window.location;this.form.submit();" />
 					<input type="image" src="<%= request.getContextPath() %>/images/flags/en.gif" alt="English" title="English" value="EN" 
 					onclick="this.form.newLanguage.value='en';this.form.newCountry.value='EN';this.form.newVariant.value='<%= net.sourceforge.fenixedu._development.PropertiesManager.getProperty("variant") %>';this.form.windowLocation.value=window.location;this.form.submit();"/>

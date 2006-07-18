@@ -1,4 +1,5 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <p><img height="36" src="<%= request.getContextPath() %>/images/intranetSOP.gif" alt="<bean:message key="intranetSOP" bundle="IMAGE_RESOURCES" />" width="239" /></p>
 
@@ -12,7 +13,7 @@
   </tr>
 </table>
 <p>Na &aacute;rea da Gest&atilde;o de Disciplinas pode efectuar algumas opera&ccedil;&otilde;es sobre <strong>disciplinas de execu&ccedil;&atilde;o</strong> 
-	(agrupar disciplinas de execu&ccedil;&atilde;o e gerir cargas horárias).</p>
+	(agrupar disciplinas de execu&ccedil;&atilde;o e gerir cargas horï¿½rias).</p>
 <br />
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
   <tr>

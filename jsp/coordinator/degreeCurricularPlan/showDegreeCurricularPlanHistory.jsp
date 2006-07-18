@@ -1,5 +1,5 @@
 <%@ page language="java" %>
-<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %><html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseScope" %>
@@ -15,24 +15,24 @@
 	</logic:iterate>
 	<table>
 		<tr>
-			<td class="listClasses-header"><bean:message key="label.manager.curricularCourseScope.curricularYear" bundle="MANAGER_RESOURCES" /></td>
-			<td class="listClasses-header"><bean:message key="label.manager.curricularCourseScope.curricularSemester" bundle="MANAGER_RESOURCES" /></td>
-			<td class="listClasses-header"><bean:message key="label.curricularCourse"/></td>
-			<td class="listClasses-header"><bean:message key="label.manager.curricularCourseScope.branch" bundle="MANAGER_RESOURCES" /></td>
-			<td class="listClasses-header"><bean:message key="label.manager.curricularCourseScope.beginDate" bundle="MANAGER_RESOURCES" /></td>
-			<td class="listClasses-header"><bean:message key="label.manager.curricularCourseScope.endDate" bundle="MANAGER_RESOURCES" /></td>
+			<th class="listClasses-header"><bean:message key="label.manager.curricularCourseScope.curricularYear" bundle="MANAGER_RESOURCES" /></th>
+			<th class="listClasses-header"><bean:message key="label.manager.curricularCourseScope.curricularSemester" bundle="MANAGER_RESOURCES" /></th>
+			<th class="listClasses-header"><bean:message key="label.curricularCourse"/></th>
+			<th class="listClasses-header"><bean:message key="label.manager.curricularCourseScope.branch" bundle="MANAGER_RESOURCES" /></th>
+			<th class="listClasses-header"><bean:message key="label.manager.curricularCourseScope.beginDate" bundle="MANAGER_RESOURCES" /></th>
+			<th class="listClasses-header"><bean:message key="label.manager.curricularCourseScope.endDate" bundle="MANAGER_RESOURCES" /></th>
 		</tr>
 		<bean:define id="equalScopesSize" value="0"/>
 		<logic:iterate id="curricularCourseScopeElem" name="allCurricularCourseScopes" type="InfoCurricularCourseScope">
 			<logic:equal name="equalScopesSize" value="0"> 
 				<logic:notEqual name="curricularCourseScopeElem" property="infoCurricularSemester.semester" value="<%= pageContext.findAttribute("currentSemester").toString()%>">
 					<tr>
-						<td class="listClasses-header"><bean:message key="label.manager.curricularCourseScope.curricularYear" bundle="MANAGER_RESOURCES" /></td>
-						<td class="listClasses-header"><bean:message key="label.manager.curricularCourseScope.curricularSemester" bundle="MANAGER_RESOURCES" /></td>
-						<td class="listClasses-header"><bean:message key="label.curricularCourse"/></td>
-						<td class="listClasses-header"><bean:message key="label.manager.curricularCourseScope.branch" bundle="MANAGER_RESOURCES" /></td>
-						<td class="listClasses-header"><bean:message key="label.manager.curricularCourseScope.beginDate" bundle="MANAGER_RESOURCES" /></td>
-						<td class="listClasses-header"><bean:message key="label.manager.curricularCourseScope.endDate" bundle="MANAGER_RESOURCES" /></td>
+						<th class="listClasses-header"><bean:message key="label.manager.curricularCourseScope.curricularYear" bundle="MANAGER_RESOURCES" /></th>
+						<th class="listClasses-header"><bean:message key="label.manager.curricularCourseScope.curricularSemester" bundle="MANAGER_RESOURCES" /></th>
+						<th class="listClasses-header"><bean:message key="label.curricularCourse"/></th>
+						<th class="listClasses-header"><bean:message key="label.manager.curricularCourseScope.branch" bundle="MANAGER_RESOURCES" /></th>
+						<th class="listClasses-header"><bean:message key="label.manager.curricularCourseScope.beginDate" bundle="MANAGER_RESOURCES" /></th>
+						<th class="listClasses-header"><bean:message key="label.manager.curricularCourseScope.endDate" bundle="MANAGER_RESOURCES" /></th>
 					</tr>
 					<bean:define id="currentSemester" name="curricularCourseScopeElem" property="infoCurricularSemester.semester"/>
 				</logic:notEqual>

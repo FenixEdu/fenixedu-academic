@@ -1,6 +1,7 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
 	<logic:present name="<%= SessionConstants.ENROLMENT_LIST%>">
@@ -52,5 +53,5 @@
 	<bean:define id="infoStudentCurricularPlan" name="<%= SessionConstants.INFO_STUDENT_CURRICULAR_PLAN%>"/>
 	<logic:notEmpty name="infoStudentCurricularPlan"  property="givenCredits" >
 		<br/>
-		Atribuição de Créditos:  <bean:write name="infoStudentCurricularPlan"  property="givenCredits" /> Créditos
+		Atribuiï¿½ï¿½o de Crï¿½ditos:  <bean:write name="infoStudentCurricularPlan"  property="givenCredits" /> Crï¿½ditos
 	</logic:notEmpty>

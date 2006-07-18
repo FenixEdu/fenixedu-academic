@@ -1,5 +1,6 @@
 <%@ page language="java"%>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <h2><bean:message key="title.showTests" /></h2>
@@ -26,10 +27,10 @@
 		<span class="error"><html:errors property="InvalidDistribution" /></span>
 		<table>
 			<tr>
-				<td class="listClasses-header"><bean:message key="label.test.title" /></td>
-				<td class="listClasses-header"><bean:message key="label.test.creationDate" /></td>
-				<td class="listClasses-header"><bean:message key="label.test.lastModifiedDate" /></td>
-				<td width="100" class="listClasses-header"><bean:message key="label.test.numberOfQuestions" /></td>
+				<th class="listClasses-header"><bean:message key="label.test.title" /></th>
+				<th class="listClasses-header"><bean:message key="label.test.creationDate" /></th>
+				<th class="listClasses-header"><bean:message key="label.test.lastModifiedDate" /></th>
+				<th width="100" class="listClasses-header"><bean:message key="label.test.numberOfQuestions" /></th>
 			</tr>
 			<logic:iterate id="tests" name="infoTestList" type="net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoTest">
 				<tr>

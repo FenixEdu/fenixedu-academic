@@ -1,4 +1,5 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
@@ -71,9 +72,9 @@
 <bean:define id="personId" name="receipt" property="person.idInternal"/>
 
 <html:form action='<%= "/payments.do?personId=" + personId %>' target="_blank">
-	<html:hidden property="method" value="printReceipt" />
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="printReceipt" />
 	<br/>
 	<fr:edit id="receipt" name="receipt" visible="false" />
-	<html:submit styleClass="inputbutton"><bean:message key="label.masterDegree.administrativeOffice.payments.print"/></html:submit>
-	<%--<html:submit styleClass="inputbutton" onclick="this.form.method.value='backToShowOperations';"><bean:message key="button.masterDegree.administrativeOffice.payments.no"/></html:submit> --%>
+	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton"><bean:message key="label.masterDegree.administrativeOffice.payments.print"/></html:submit>
+	<%--<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton" onclick="this.form.method.value='backToShowOperations';"><bean:message key="button.masterDegree.administrativeOffice.payments.no"/></html:submit> --%>
 </html:form>

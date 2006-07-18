@@ -1,6 +1,6 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
-<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %><html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <logic:notPresent name="infoShiftEnrollment" >
 	<span class="error"><bean:message key="error.notAuthorized.ShiftEnrollment" /></span>
@@ -11,14 +11,14 @@
 	<h2><bean:message key="title.student.shift.enrollment" /></h2>
 	<span class="error"><html:errors/></span>
 
-	<p class="left">Aqui pode, <strong>a título condicional</strong>, escolher disciplinas em que não se encontra inscrito curricularmente  mas nas quais pretende efectuar reserva de turma/turnos. Por exemplo, sobre as seguintes condições:</p>
+	<p class="left">Aqui pode, <strong>a tï¿½tulo condicional</strong>, escolher disciplinas em que nï¿½o se encontra inscrito curricularmente  mas nas quais pretende efectuar reserva de turma/turnos. Por exemplo, sobre as seguintes condiï¿½ï¿½es:</p>
 	
 	<ul class="left" style="margin-left: 4em">
 	<li>Alunos Externos</li>
 	<li>Melhorias de Nota</li>
-	<li>Alunos inscritos em Época Especial 2003/2004</li>
-	<li>Alunos cuja inscrição é efectuada pelo Coordenador de Licenciatura/Tutor</li>
-	<li>Alunos com processos de Equivalência em curso</li>
+	<li>Alunos inscritos em ï¿½poca Especial 2003/2004</li>
+	<li>Alunos cuja inscriï¿½ï¿½o ï¿½ efectuada pelo Coordenador de Licenciatura/Tutor</li>
+	<li>Alunos com processos de Equivalï¿½ncia em curso</li>
 	</ul>
 
 <div class="infoselected left">
@@ -46,22 +46,22 @@ table td { width: 50%; vertical-align: bottom; }
 <td class="infotable">
 <div style="overflow: hidden;">		
 	<html:form action="/studentShiftEnrollmentManager" >
-		<html:hidden property="method" value="start" />
-		<html:hidden property="studentId" value="<%= studentIdToEnrollment.toString() %>" />
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="start" />
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.studentId" property="studentId" value="<%= studentIdToEnrollment.toString() %>" />
 		<logic:present name="selectCourses">
-		<html:hidden property="selectCourses" value="<%= pageContext.findAttribute("selectCourses").toString() %>" />
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.selectCourses" property="selectCourses" value="<%= pageContext.findAttribute("selectCourses").toString() %>" />
 		</logic:present>
 		<p style="text-align:left;margin-bottom:0px"><b><bean:message key="label.chooseCourses" />:</b></p>			
-		<html:select property="degree" styleClass="degrees" size="1" onchange="this.form.method.value='start'; this.form.submit();" >
+		<html:select bundle="HTMLALT_RESOURCES" altKey="select.degree" property="degree" styleClass="degrees" size="1" onchange="this.form.method.value='start'; this.form.submit();" >
 		<html:optionsCollection name="infoShiftEnrollment" property="infoExecutionDegreesLabelsList"/>				
 		</html:select>
 	</html:form>
 	
 	<html:form action="/studentShiftEnrollmentManagerLoockup" >
-		<html:hidden property="studentId" value="<%= studentIdToEnrollment.toString() %>" />
-		<html:hidden property="degree" value="<%= degreeSelected.toString() %>" />
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.studentId" property="studentId" value="<%= studentIdToEnrollment.toString() %>" />
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.degree" property="degree" value="<%= degreeSelected.toString() %>" />
 		<logic:present name="selectCourses">
-		<html:hidden property="selectCourses" value="<%= pageContext.findAttribute("selectCourses").toString() %>" />
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.selectCourses" property="selectCourses" value="<%= pageContext.findAttribute("selectCourses").toString() %>" />
 		</logic:present>
 
 		<p style="text-align:left;margin-bottom:0px"><b><bean:message key="label.degreeSelected.courses" />:</b></p>
@@ -76,12 +76,12 @@ table td { width: 50%; vertical-align: bottom; }
 		
 		<logic:present name="infoShiftEnrollment" property="infoExecutionCoursesList">
 		<bean:define id="executionCourses" name="infoShiftEnrollment" property="infoExecutionCoursesList" />
-		<html:select property="wantedCourse" size="10" styleClass="courseEnroll">
+		<html:select bundle="HTMLALT_RESOURCES" altKey="select.wantedCourse" property="wantedCourse" size="10" styleClass="courseEnroll">
 			<html:options collection="executionCourses" labelProperty="nome" property="idInternal"/>
 		</html:select>
 		<p style="text-align:center;margin-top:5px">
 			<logic:lessThan name="wantedCoursesSize" value="8">			
-				<html:submit property="method" styleClass="inputbutton" style="width:13em">
+				<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.method" property="method" styleClass="inputbutton" style="width:13em">
 					<bean:message key="button.addCourse"/>
 				</html:submit>
 			</logic:lessThan>
@@ -97,11 +97,11 @@ table td { width: 50%; vertical-align: bottom; }
 	<div style="overflow: hidden;">
 		<p style="text-align:left; margin-bottom:0px"><b><bean:message key="label.attendCourses" />:</b></p>
 		<logic:present name="attendingCourses">
-			<html:select property="removedCourse" size="10" styleClass="courseEnroll">
+			<html:select bundle="HTMLALT_RESOURCES" altKey="select.removedCourse" property="removedCourse" size="10" styleClass="courseEnroll">
 				<html:options collection="attendingCourses" labelProperty="nome"  property="idInternal"/>
 			</html:select>
 			<logic:notEqual name="wantedCoursesSize" value="0">
-				<p style="text-align:center;margin-top:5px"><html:submit property="method" styleClass="inputbutton" style="width:13em" ><bean:message key="button.removeCourse"/></html:submit></p>
+				<p style="text-align:center;margin-top:5px"><html:submit bundle="HTMLALT_RESOURCES" altKey="submit.method" property="method" styleClass="inputbutton" style="width:13em" ><bean:message key="button.removeCourse"/></html:submit></p>
 			</logic:notEqual>
 		</logic:present>
 		<logic:notPresent name="attendingCourses">
@@ -117,11 +117,11 @@ table td { width: 50%; vertical-align: bottom; }
 	<br/>
 				
 	<logic:notEqual name="wantedCoursesSize" value="0">
-		<html:submit property="method" styleClass="inputbutton">
+		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.method" property="method" styleClass="inputbutton">
 			<bean:message key="button.continue.enrolment"/>
 		</html:submit>
 	</logic:notEqual>	
-	<html:submit property="method" styleClass="inputbutton">
+	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.method" property="method" styleClass="inputbutton">
 		<bean:message key="button.exit.shift.enrollment"/>
 	</html:submit>		
 	

@@ -37,7 +37,7 @@
                 </font>
               </td>
               <td align="left">
-                <html:password name="AlterarPasswordForm" property="passwordAntiga" size="16" maxlength="16" />
+                <html:password bundle="HTMLALT_RESOURCES" altKey="password.passwordAntiga" name="AlterarPasswordForm" property="passwordAntiga" size="16" maxlength="16" />
               </td>
             </tr>
 
@@ -48,7 +48,7 @@
                 </font>
               </td>
               <td align="left">
-                <html:password name="AlterarPasswordForm" property="passwordNova" size="16" maxlength="16" />
+                <html:password bundle="HTMLALT_RESOURCES" altKey="password.passwordNova" name="AlterarPasswordForm" property="passwordNova" size="16" maxlength="16" />
               </td>
             </tr>
            
@@ -59,7 +59,7 @@
                 </font>
               </td>
               <td align="left">
-                <html:password name="AlterarPasswordForm" property="passwordNovaConfirmacao" size="16" maxlength="16" />
+                <html:password bundle="HTMLALT_RESOURCES" altKey="password.passwordNovaConfirmacao" name="AlterarPasswordForm" property="passwordNovaConfirmacao" size="16" maxlength="16" />
               </td>
             </tr>
 
@@ -71,13 +71,13 @@
 
             <tr>
               <td align="center" colspan='2'>
-                <html:submit property="submit" style="color:#000080; width=75px; background-color:#B1BBD6; height=20px; font-size=10px">
+                <html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" property="submit" style="color:#000080; width=75px; background-color:#B1BBD6; height=20px; font-size=10px">
                     &nbsp;&nbsp;&nbsp;<bean:message key="botao.ok"/>&nbsp;&nbsp;&nbsp;
                 </html:submit>
-                <html:reset style="color:#000080; width=75px; background-color:#B1BBD6; height=20px; font-size=10px">
+                <html:reset bundle="HTMLALT_RESOURCES" altKey="reset.reset" style="color:#000080; width=75px; background-color:#B1BBD6; height=20px; font-size=10px">
                     <bean:message key="botao.apagar"/>
                 </html:reset>
-                <html:cancel style="color:#000080; width=75px; background-color:#B1BBD6; height=20px; font-size=10px">
+                <html:cancel bundle="HTMLALT_RESOURCES" altKey="cancel.cancel" style="color:#000080; width=75px; background-color:#B1BBD6; height=20px; font-size=10px">
                     <bean:message key="botao.cancelar"/>
                 </html:cancel>
               </td>

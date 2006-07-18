@@ -1,5 +1,6 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/enum.tld" prefix="e" %>
@@ -13,16 +14,16 @@
     <bean:define id="title" name="<%= SessionConstants.MASTER_DEGREE_CANDIDATE_ACTION %>" scope="session" />
     <bean:define id="path" type="java.lang.String" scope="request" property="path" name="<%= Globals.MAPPING_KEY %>" />
         <html:form action="<%=path%>">
-        <html:hidden property="executionYear"/>
-        <html:hidden property="executionDegreeOID" value="<%= pageContext.findAttribute("executionDegree").toString() %>" />
-        <html:hidden property="page" value="1"/>
-        <input type="hidden" value="getCandidates" name="method"/>
+        <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.executionYear" property="executionYear"/>
+        <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.executionDegreeOID" property="executionDegreeOID" value="<%= pageContext.findAttribute("executionDegree").toString() %>" />
+        <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
+        <input alt="input.method" type="hidden" value="getCandidates" name="method"/>
 <h2><bean:message name="title"/></h2>
 <table>    
     <!-- Degree   
        <tr>
          <td><bean:message key="label.masterDegree.administrativeOffice.degree"/></td>
-         <td><html:select property="degree">
+         <td><html:select bundle="HTMLALT_RESOURCES" altKey="select.degree" property="degree">
          		<option value="" selected="selected"><bean:message key="label.candidate.degree.default"/></option>
                 <html:options collection="degreeList" property="value" labelProperty="label"/>
              </html:select>
@@ -34,7 +35,7 @@
          <td><bean:message key="label.masterDegree.administrativeOffice.specialization"/></td>
          <td>
          	<e:labelValues id="values" enumeration="net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization" excludedFields="INTEGRATED_MASTER_DEGREE" bundle="ENUMERATION_RESOURCES"/>
-         	<html:select property="specialization">
+         	<html:select bundle="HTMLALT_RESOURCES" altKey="select.specialization" property="specialization">
                 <html:option key="dropDown.Default" value=""/>
                 <html:options collection="values" property="value" labelProperty="label"/>
              </html:select>
@@ -45,7 +46,7 @@
        <!-- Candidate Situation List -->
        <tr>
          <td><bean:message key="label.masterDegree.administrativeOffice.candidateSituation"/></td>
-         <td><html:select property="candidateSituation">
+         <td><html:select bundle="HTMLALT_RESOURCES" altKey="select.candidateSituation" property="candidateSituation">
                 <html:options collection="situationList" property="value" labelProperty="label"/>
              </html:select>
          </td>
@@ -54,12 +55,12 @@
        <!-- Candidate Number -->
        <tr>
          <td><bean:message key="label.masterDegree.administrativeOffice.candidateNumber"/></td>
-         <td><html:text property="candidateNumber"/></td>
+         <td><html:text bundle="HTMLALT_RESOURCES" altKey="text.candidateNumber" property="candidateNumber"/></td>
          </td>
        </tr>
 </table>
 <br />
-<html:submit value="Seguinte" styleClass="inputbutton" property="ok"/>
-<html:reset value="Limpar" styleClass="inputbutton"/>
+<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.ok" value="Seguinte" styleClass="inputbutton" property="ok"/>
+<html:reset bundle="HTMLALT_RESOURCES" altKey="reset.reset" value="Limpar" styleClass="inputbutton"/>
 </html:form>
 

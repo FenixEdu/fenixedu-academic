@@ -1,5 +1,6 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <h2><bean:message key="label.students.listMarks"/></h2>
@@ -22,20 +23,20 @@
 <br />
 <span class="error"><html:errors/></span>
 <html:form action="/changeMarkDispatchAction?method=chooseStudentMarks" focus="studentNumber">
-	<html:hidden property="courseId" value="<%= pageContext.findAttribute("courseId").toString() %>" />
-	<html:hidden property="objectCode" value="<%= pageContext.findAttribute("objectCode").toString() %>" />
-	<html:hidden property="degreeId" value="<%= pageContext.findAttribute("degreeId").toString() %>" />
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.courseId" property="courseId" value="<%= pageContext.findAttribute("courseId").toString() %>" />
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.objectCode" property="objectCode" value="<%= pageContext.findAttribute("objectCode").toString() %>" />
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.degreeId" property="degreeId" value="<%= pageContext.findAttribute("degreeId").toString() %>" />
 	<table>
     	<tr>
         	<td><bean:message key="label.number"/>: </td>
          	<td>
-         		<html:text property="studentNumber" value=""/>      
+         		<html:text bundle="HTMLALT_RESOURCES" altKey="text.studentNumber" property="studentNumber" value=""/>      
          	</td>
         </tr>
 	</table>
 	<br />
 	<br /><br />	
- 	<html:submit styleClass="inputbutton">
+ 	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton">
 		<bean:message key="label.next"/>
   	</html:submit>
 </html:form>

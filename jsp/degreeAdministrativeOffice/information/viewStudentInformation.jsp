@@ -1,5 +1,6 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/enum.tld" prefix="e"%>
@@ -24,7 +25,7 @@
 		<bean:define id="studentNumber" name="studentNumber" />
 <!--
 		<html:form action="<%= "/editInformation?method=prepare&personId=" + personID.toString() + "&studentNumber=" + studentNumber.toString() %>">
-			<html:submit styleClass="inputbutton">Editar dados</html:submit>
+			<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton">Editar dados</html:submit>
 -->
 		</html:form>
 		<table width="100%" cellpadding="0" cellspacing="0">
@@ -107,7 +108,7 @@
 		</table>
 		<br />
 		<table width="100%" cellpadding="0" cellspacing="0">
-          <!-- Filiação -->
+          <!-- Filiaï¿½ï¿½o -->
           <tr>
           	<td class="infoop" width="25"><span class="emphasis-box">2</span></td>
           	<td class="infoop"><strong><bean:message bundle="APPLICATION_RESOURCES" key="label.person.title.filiation"  /></strong></td>

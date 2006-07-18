@@ -1,4 +1,5 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/enum.tld" prefix="e" %>
@@ -12,7 +13,7 @@
 </html:messages>
 
 <html:form action="/rulesManagement">
-	<html:hidden property="method" />
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" />
 		
 	<p><h2><bean:message bundle="MANAGER_RESOURCES" key="title.rules.management"/></h2></p>		
 	<br/>

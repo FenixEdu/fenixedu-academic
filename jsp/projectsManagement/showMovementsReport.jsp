@@ -1,5 +1,6 @@
 <%@ page language="java"%>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/projectReports.tld" prefix="report"%>
@@ -84,12 +85,12 @@
 				<p class="noBreak"><strong><bean:message key="<%="label."+reportType%>" /></strong>
 				<table width="100%" cellspacing="0">
 					<tr>
-						<td class="listClasses-header"><strong><bean:message key="label.idMov" /></strong></td>
-						<td class="listClasses-header"><strong><bean:message key="label.rubric" /></strong></td>
-						<td class="listClasses-header"><strong><bean:message key="label.type" /></strong></td>
-						<td class="listClasses-header"><strong><bean:message key="label.date" /></strong></td>
-						<td class="listClasses-header" colspan="3"><strong><bean:message key="label.description" /></strong></td>
-						<td class="listClasses-header"><strong><bean:message key="label.value" /></strong></td>
+						<th class="listClasses-header"><strong><bean:message key="label.idMov" /></strong></th>
+						<th class="listClasses-header"><strong><bean:message key="label.rubric" /></strong></th>
+						<th class="listClasses-header"><strong><bean:message key="label.type" /></strong></th>
+						<th class="listClasses-header"><strong><bean:message key="label.date" /></strong></th>
+						<th class="listClasses-header" colspan="3"><strong><bean:message key="label.description" /></strong></th>
+						<th class="listClasses-header"><strong><bean:message key="label.value" /></strong></th>
 					</tr>
 					<tr>
 						<td class="listClasses" align="center"><bean:write name="parentLine" property="parentMovementId" /></td>

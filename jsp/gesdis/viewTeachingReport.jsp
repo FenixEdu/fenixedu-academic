@@ -1,6 +1,6 @@
 <%@ page language="java" %>
 <%@ page import="java.lang.Math" %>
-<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
+<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%><html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <h2><bean:message key="title.teachingReport"/></h2>
@@ -97,9 +97,9 @@
 	<h3 class="bluetxt"><bean:message key="message.teachingReport.approvalRates"/>*</h3>
 	<table width="50%">
 		<tr>
-			<td class="listClasses-header">&nbsp;</td>
-			<td class="listClasses-header"><bean:message key="message.teachingReport.AP/IN"/></td>
-			<td class="listClasses-header"><bean:message key="message.teachingReport.AP/AV"/></td>
+			<th class="listClasses-header">&nbsp;</th>
+			<th class="listClasses-header"><bean:message key="message.teachingReport.AP/IN"/></th>
+			<th class="listClasses-header"><bean:message key="message.teachingReport.AP/AV"/></th>
 		</tr>
 		<logic:iterate id="siteEvaluationStatistics" name="siteEvaluationInformation" property="infoSiteEvaluationHistory">
 			<bean:define id="evaluated" name="siteEvaluationStatistics" property="evaluated" type="java.lang.Integer"/>

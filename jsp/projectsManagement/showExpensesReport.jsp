@@ -1,5 +1,6 @@
 <%@ page language="java"%>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/projectReports.tld" prefix="report"%>
@@ -80,16 +81,16 @@
 			<br />
 			<br />
 			<html:form action="/projectReport">
-				<html:hidden property="method" value="getReport" />
-				<html:hidden property="reportType" value="expensesReport" />
-				<html:hidden property="projectCode" value="<%=(pageContext.findAttribute("projectCode")).toString()%>" />
+				<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="getReport" />
+				<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.reportType" property="reportType" value="expensesReport" />
+				<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.projectCode" property="projectCode" value="<%=(pageContext.findAttribute("projectCode")).toString()%>" />
 				<logic:present name="infoCostCenter" scope="request">
 					<bean:define id="cc" name="infoCostCenter" property="code" scope="request" />
-					<html:hidden property="costCenter" value="<%=cc.toString()%>" />
+					<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.costCenter" property="costCenter" value="<%=cc.toString()%>" />
 				</logic:present>
 				<table>
 					<tr>
-						<td><html:select property="rubric">
+						<td><html:select bundle="HTMLALT_RESOURCES" altKey="select.rubric" property="rubric">
 							<html:option value="">
 								<bean:message key="label.allRubrics" />
 							</html:option>
@@ -102,7 +103,7 @@
 								</html:option>
 							</logic:iterate>
 						</html:select></td>
-						<td><html:submit styleClass="inputbutton">
+						<td><html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton">
 							<bean:message key="label.select" />
 						</html:submit></td>
 					</tr>

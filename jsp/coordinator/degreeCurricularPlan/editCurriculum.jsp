@@ -1,5 +1,5 @@
 <%@ page language="java" %>
-<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %><html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/taglibs-string.tld" prefix="str" %>
@@ -9,11 +9,11 @@
 		<h2><str:upperCase><bean:message key="link.cooordinator.degreeCurricularPlan.edit.curriculum"/></str:upperCase>&nbsp;<str:upperCase><bean:message key="label.coordinator.degreeCurricularPlan.current.information"/></str:upperCase>&nbsp;-&nbsp;<bean:write name="infoCurriculum" property="infoCurricularCourse.name"/></h2>
 		<html:form action="/degreeCurricularPlanManagement">
 			<bean:define id="infoCurriculumId" name="infoCurriculum" property="idInternal"/>
-			<html:hidden property="method" value="editCurriculum"/>
-			<html:hidden property="infoCurriculumCode" value="<%=infoCurriculumId.toString()%>"/>
-			<html:hidden property="infoExecutionDegreeCode" value="<%=pageContext.findAttribute("infoExecutionDegreeCode").toString()%>"/>
-			<html:hidden property="infoCurricularCourseCode" value="<%=pageContext.findAttribute("infoCurricularCourseCode").toString()%>"/>
-			<html:hidden property="degreeCurricularPlanID" value="<%=pageContext.findAttribute("degreeCurricularPlanID").toString()%>"/>
+			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="editCurriculum"/>
+			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.infoCurriculumCode" property="infoCurriculumCode" value="<%=infoCurriculumId.toString()%>"/>
+			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.infoExecutionDegreeCode" property="infoExecutionDegreeCode" value="<%=pageContext.findAttribute("infoExecutionDegreeCode").toString()%>"/>
+			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.infoCurricularCourseCode" property="infoCurricularCourseCode" value="<%=pageContext.findAttribute("infoCurricularCourseCode").toString()%>"/>
+			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.degreeCurricularPlanID" property="degreeCurricularPlanID" value="<%=pageContext.findAttribute("degreeCurricularPlanID").toString()%>"/>
 			<table>
 				<tr>
 					<td>
@@ -49,7 +49,7 @@
 					</td>
 				</tr>
 				<tr>
-					<td><html:textarea property="generalObjectives" cols="80" rows="6"/></td>
+					<td><html:textarea bundle="HTMLALT_RESOURCES" altKey="textarea.generalObjectives" property="generalObjectives" cols="80" rows="6"/></td>
 				</tr>
 				<tr>
 					<td><br />
@@ -57,7 +57,7 @@
 					</td>
 				</tr>
 				<tr>
-					<td><html:textarea property="operacionalObjectives" cols="80" rows="6"/></td>
+					<td><html:textarea bundle="HTMLALT_RESOURCES" altKey="textarea.operacionalObjectives" property="operacionalObjectives" cols="80" rows="6"/></td>
 				</tr>
 				<tr>
 					<td><br />
@@ -65,7 +65,7 @@
 					</td>
 				</tr>
 				<tr>
-					<td><html:textarea property="program" cols="80" rows="6"/></td>
+					<td><html:textarea bundle="HTMLALT_RESOURCES" altKey="textarea.program" property="program" cols="80" rows="6"/></td>
 				</tr>
 <%--				<tr>
 					<td><br />
@@ -73,7 +73,7 @@
 					</td>
 				</tr>
 				<tr>
-					<td><html:textarea property="generalObjectivesEn" cols="80" rows="6"/></td>
+					<td><html:textarea bundle="HTMLALT_RESOURCES" altKey="textarea.generalObjectivesEn" property="generalObjectivesEn" cols="80" rows="6"/></td>
 				</tr>
 				<tr>
 					<td><br />
@@ -81,7 +81,7 @@
 					</td>
 				</tr>
 				<tr>
-					<td><html:textarea property="operacionalObjectivesEn" cols="80" rows="6"/></td>
+					<td><html:textarea bundle="HTMLALT_RESOURCES" altKey="textarea.operacionalObjectivesEn" property="operacionalObjectivesEn" cols="80" rows="6"/></td>
 				</tr>
 				<tr>
 					<td><br />
@@ -89,7 +89,7 @@
 					</td>
 				</tr>
 				<tr>
-					<td><html:textarea property="programEn" cols="80" rows="6"/><br /></td>
+					<td><html:textarea bundle="HTMLALT_RESOURCES" altKey="textarea.programEn" property="programEn" cols="80" rows="6"/><br /></td>
 				</tr>
 --%>				
 				<logic:notEmpty name="infoCurriculum" property="lastModificationDate">
@@ -105,9 +105,9 @@
 				</logic:notEmpty>
 			</table>
 			<br />
-			<html:submit styleClass="inputbutton"><bean:message key="button.save"/>                    		         	
+			<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton"><bean:message key="button.save"/>                    		         	
 			</html:submit> 
-			<html:reset styleClass="inputbutton"><bean:message key="label.clear"/>
+			<html:reset bundle="HTMLALT_RESOURCES" altKey="reset.reset" styleClass="inputbutton"><bean:message key="label.clear"/>
 			</html:reset>  
 		</html:form>
 	</logic:present>

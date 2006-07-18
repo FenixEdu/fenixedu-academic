@@ -5,6 +5,7 @@
 <%@ taglib uri="/WEB-INF/c.tld" prefix="c"%>
 
 <ft:tilesView definition="definition.manager.masterPage" attributeName="body-inline">
+	<f:loadBundle basename="resources/HtmlAltResources" var="htmlAltBundle"/>
 
 	<script language="JavaScript">
 	function check(e,v)
@@ -36,7 +37,7 @@
 		<h:outputText value="#{organizationalStructureBackingBean.unitsToChoosePrincipalFunction}" escape="false"/>
 		
 		<h:outputText value="<br/>" escape="false" />	
-		<h:commandButton action="backToUnitDetails" immediate="true" value="#{bundle['label.return']}" styleClass="inputbutton"/>								
+		<h:commandButton alt="#{htmlAltBundle['commandButton.return']}" action="backToUnitDetails" immediate="true" value="#{bundle['label.return']}" styleClass="inputbutton"/>								
 				
 	</h:form>
 </ft:tilesView>

@@ -1,5 +1,5 @@
 <%@ page language="java" %>
-<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %><html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/c.tld" prefix="c" %>
@@ -27,21 +27,21 @@
 		</strong></p>
 		
 	<html:form action="/sendEmailReminder">
-		<html:hidden property="method" value="sendEmails" />
-		<html:hidden property="page" value="1" />
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="sendEmails" />
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1" />
 
 		<font class="underline italic">
 			<bean:message key="title.inquiries.reminder.sender.name" bundle="INQUIRIES_RESOURCES"/>
 		</font>
 		&nbsp;
-		<html:text property="fromName"/>
+		<html:text bundle="HTMLALT_RESOURCES" altKey="text.fromName" property="fromName"/>
 		<br/>
 
 		<font class="underline italic">
 			<bean:message key="title.inquiries.reminder.sender.email" bundle="INQUIRIES_RESOURCES"/>
 		</font>
 		&nbsp;
-		<html:text property="fromAddress"/>
+		<html:text bundle="HTMLALT_RESOURCES" altKey="text.fromAddress" property="fromAddress"/>
 		<br/>
 
 		<p class="underline italic">
@@ -50,7 +50,7 @@
 		<bean:define id="subject">
 			<bean:message key="message.inquiries.email.reminder.subject" bundle="INQUIRIES_RESOURCES"/>
 		</bean:define>
-		<html:text property="bodyTextSubject" styleClass="reminder" value='<%= subject %>' />
+		<html:text bundle="HTMLALT_RESOURCES" altKey="text.bodyTextSubject" property="bodyTextSubject" styleClass="reminder" value='<%= subject %>' />
 			
 		<p class="underline italic">
 			<bean:message key="title.inquiries.reminder.body" bundle="INQUIRIES_RESOURCES"/>
@@ -58,7 +58,7 @@
 		<bean:define id="bodyIntro">
 			<bean:message key="message.inquiries.email.reminder.body.intro" bundle="INQUIRIES_RESOURCES"/>
 		</bean:define>
-		<html:textarea property="bodyTextIntro" styleClass="reminder" rows="10" value='<%= bodyIntro %>' />
+		<html:textarea bundle="HTMLALT_RESOURCES" altKey="textarea.bodyTextIntro" property="bodyTextIntro" styleClass="reminder" rows="10" value='<%= bodyIntro %>' />
 	
 		<br/>
 		<strong>
@@ -69,7 +69,7 @@
 		<bean:define id="bodyEnd">
 			<bean:message key="message.inquiries.email.reminder.body.end" bundle="INQUIRIES_RESOURCES"/>
 		</bean:define>
-		<html:textarea property="bodyTextEnd" styleClass="reminder" rows="5" value='<%= bodyEnd %>' />
+		<html:textarea bundle="HTMLALT_RESOURCES" altKey="textarea.bodyTextEnd" property="bodyTextEnd" styleClass="reminder" rows="5" value='<%= bodyEnd %>' />
 		<br/>
 		<br/>
 
@@ -80,14 +80,14 @@
 		<%--ul style="list-style-type: none;"--%>
 		<table>
 			<tr>
-				<td class="listClasses-header">
+				<th class="listClasses-header">
 					<bean:message key="table.header.curricular.plan" bundle="INQUIRIES_RESOURCES"/>
-				</td>
-				<td class="listClasses-header">
+				</th>
+				<th class="listClasses-header">
 					<bean:message key="table.header.acronym" bundle="INQUIRIES_RESOURCES"/>
-				</td>
-				<td class="listClasses-header">
-				</td>
+				</th>
+				<th class="listClasses-header">
+				</th>
 			</tr>
 			
 
@@ -104,7 +104,7 @@
 							<bean:write name="degreeCurricularPlan" property="infoDegree.sigla" />
 						</td>
 						<td class="listClasses">
-							<html:multibox property="degreeCurricularPlanIds">
+							<html:multibox bundle="HTMLALT_RESOURCES" altKey="multibox.degreeCurricularPlanIds" property="degreeCurricularPlanIds">
 								<bean:write name="degreeCurricularPlan" property="idInternal" />
 							</html:multibox>
 						</td>
@@ -120,7 +120,7 @@
 		<table class="reminder">
 			<tr>
 				<td align="right">
-					<html:submit styleClass="inputbuttonSmall">
+					<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbuttonSmall">
 						<bean:message key="button.inquiries.send.email.reminder" bundle="INQUIRIES_RESOURCES"/>
 					</html:submit>
 				</td>

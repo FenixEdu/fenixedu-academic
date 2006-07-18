@@ -1,5 +1,6 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
@@ -30,24 +31,24 @@
             <logic:present name="infoAulasDeDisciplinaExecucao" scope="request">
                 <table align="center"  cellpadding='5'>
                     <tr align='center'>
-                        <td class="listClasses-header">
+                        <th class="listClasses-header">
 							&nbsp;
-                        </td>
-                        <td class="listClasses-header">
+                        </th>
+                        <th class="listClasses-header">
                             <bean:message key="property.aula.weekDay"/>
-                        </td>
-                        <td class="listClasses-header">
+                        </th>
+                        <th class="listClasses-header">
                             <bean:message key="property.aula.time.begining"/>
-                        </td>
-                        <td class="listClasses-header">
+                        </th>
+                        <th class="listClasses-header">
                             <bean:message key="property.aula.time.end"/>
-                        </td>
-                        <td class="listClasses-header">
+                        </th>
+                        <th class="listClasses-header">
                             <bean:message key="property.aula.type"/>
-                        </td>
-                        <td class="listClasses-header">
+                        </th>
+                        <th class="listClasses-header">
                             <bean:message key="property.aula.sala"/>
-                        </td class="listClasses-header">
+                        </th class="listClasses-header">
                     </tr>
 
 		            <% int i = 0; %>
@@ -62,7 +63,7 @@
                        <% Integer fM = new Integer(((InfoLesson) iA.get(i)).getFim().get(Calendar.MINUTE)); %>
                        <tr align="center">
 					<td class="listClasses">
-						<html:multibox  property="lessonsList" value="<%=  idInternal.toString() %>" />
+						<html:multibox bundle="HTMLALT_RESOURCES" altKey="multibox.lessonsList"  property="lessonsList" value="<%=  idInternal.toString() %>" />
 					</td>
                             <td class="listClasses">
                                 <bean:write name="elem" property="diaSemana" />
@@ -97,18 +98,18 @@
 
                     <td>
 
-<html:hidden property="<%= SessionConstants.EXECUTION_PERIOD_OID %>"
+<html:hidden alt="<%= SessionConstants.EXECUTION_PERIOD_OID %>" property="<%= SessionConstants.EXECUTION_PERIOD_OID %>"
 			 value="<%= pageContext.findAttribute("executionPeriodOID").toString() %>"/>
-<html:hidden property="<%= SessionConstants.EXECUTION_DEGREE_OID %>"
+<html:hidden alt="<%= SessionConstants.EXECUTION_DEGREE_OID %>" property="<%= SessionConstants.EXECUTION_DEGREE_OID %>"
 			 value="<%= pageContext.findAttribute("executionDegreeOID").toString() %>"/>
-<html:hidden property="<%= SessionConstants.CURRICULAR_YEAR_OID %>"
+<html:hidden alt="<%= SessionConstants.CURRICULAR_YEAR_OID %>" property="<%= SessionConstants.CURRICULAR_YEAR_OID %>"
 			 value="<%= pageContext.findAttribute("curricularYearOID").toString() %>"/>
-<html:hidden property="<%= SessionConstants.EXECUTION_COURSE_OID %>"
+<html:hidden alt="<%= SessionConstants.EXECUTION_COURSE_OID %>" property="<%= SessionConstants.EXECUTION_COURSE_OID %>"
 			 value="<%= pageContext.findAttribute("executionCourseOID").toString() %>"/>
-<html:hidden property="<%= SessionConstants.SHIFT_OID %>"
+<html:hidden alt="<%= SessionConstants.SHIFT_OID %>" property="<%= SessionConstants.SHIFT_OID %>"
 			 value="<%= pageContext.findAttribute("shiftOID").toString() %>"/>
 
-                        <html:submit property="operation">
+                        <html:submit bundle="HTMLALT_RESOURCES" altKey="submit.operation" property="operation">
 
                             <bean:message key="label.aula.add"/>
 

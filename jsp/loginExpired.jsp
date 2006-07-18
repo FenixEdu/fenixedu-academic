@@ -54,39 +54,39 @@
 				</tr>
 			</table>
 			<html:form action="/loginExpired" focus="username" >
-				<html:hidden property="method" value="changePass"/>
-				<html:hidden property="page" value="1"/>
-				<html:hidden property="fromCAS"/>
+				<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="changePass"/>
+				<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
+				<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.fromCAS" property="fromCAS"/>
 				<table align="center" border="0" class="lp_table1">
 					<tr>
 						<td class="lp_leftcol"><bean:message key="label.username" bundle="GLOBAL_RESOURCES"/>:</td>
-						<td><html:text property="username" readonly="true"/></td>
+						<td><html:text bundle="HTMLALT_RESOURCES" altKey="text.username" property="username" readonly="true"/></td>
 					</tr>
 					<tr>
 						<td class="lp_leftcol"><bean:message key="label.password" bundle="GLOBAL_RESOURCES"/>:</td>
-						<td><html:password property="password" redisplay="false"/></td>
+						<td><html:password bundle="HTMLALT_RESOURCES" altKey="password.password" property="password" redisplay="false"/></td>
 					</tr>
 			   </table>					
 				<div style="margin: 0.5em 0; ">
 				<table align="center" border="0" class="lp_table2">
 			        <tr>
 				        <td class="lp_leftcol"><bean:message key="label.candidate.newPassword"/>:</td>
-				        <td><html:password property="newPassword"/></td>
+				        <td><html:password bundle="HTMLALT_RESOURCES" altKey="password.newPassword" property="newPassword"/></td>
 			        </tr>
 
 			   
 			       <!-- retype new password -->
 			       <tr>
 			           <td class="lp_leftcol"><bean:message key="label.candidate.reTypePassword"/>:</td>
-				       <td><html:password property="reTypeNewPassword"/></td>
+				       <td><html:password bundle="HTMLALT_RESOURCES" altKey="password.reTypeNewPassword" property="reTypeNewPassword"/></td>
 			       </tr>
 				</table>
 				<br />
 				<div class="wrapper">
-					<html:submit styleClass="button" property="ok">
+					<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.ok" styleClass="button" property="ok">
 						<bean:message key="button.submit" />
 					</html:submit>
-					<html:reset styleClass="button">
+					<html:reset bundle="HTMLALT_RESOURCES" altKey="reset.reset" styleClass="button">
 						<bean:message key="button.clean" />
 					</html:reset>
 				</div>

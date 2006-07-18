@@ -3,6 +3,7 @@
 <%@ taglib uri="/WEB-INF/html_basic.tld" prefix="h"%>
 
 <ft:tilesView definition="df.coordinator.evaluation-management" attributeName="body-inline">
+	<f:loadBundle basename="resources/HtmlAltResources" var="htmlAltBundle"/>
 
 <style>
 .alignright { text-align: right; }
@@ -29,7 +30,7 @@
 					<h:outputText value="#{bundle['label.name']}: " />
 				</h:panelGroup>	
 				<h:panelGroup>
-					<h:inputText id="name" required="true" maxlength="100" size="20" value="#{coordinatorProjectsManagementBackingBean.name}" />			
+					<h:inputText alt="#{htmlAltBundle['inputText.name']}" id="name" required="true" maxlength="100" size="20" value="#{coordinatorProjectsManagementBackingBean.name}" />			
 					<h:message for="name" styleClass="error"/>
 				</h:panelGroup>
 				<h:panelGroup>
@@ -37,10 +38,10 @@
 					<h:outputText value="#{bundle['label.publish.date']}: " />
 				</h:panelGroup>
 				<h:panelGroup>
-					<h:inputText id="beginDate" required="true" maxlength="10" size="10" value="#{coordinatorProjectsManagementBackingBean.beginDate}" />
+					<h:inputText alt="#{htmlAltBundle['inputText.beginDate']}" id="beginDate" required="true" maxlength="10" size="10" value="#{coordinatorProjectsManagementBackingBean.beginDate}" />
 					<h:outputText value=" #{bundle['label.date.instructions.small']} &nbsp&nbsp" escape="false"/>
 					<h:message for="beginDate" styleClass="error"/>
-					<h:inputText id="beginHour" required="true" maxlength="5" size="5" value="#{coordinatorProjectsManagementBackingBean.beginHour}" />
+					<h:inputText alt="#{htmlAltBundle['inputText.beginHour']}" id="beginHour" required="true" maxlength="5" size="5" value="#{coordinatorProjectsManagementBackingBean.beginHour}" />
 					<h:outputText value=" #{bundle['label.hour.instructions']}" />
 					<h:message for="beginHour" styleClass="error"/>
 				</h:panelGroup>
@@ -49,10 +50,10 @@
 					<h:outputText value="#{bundle['label.delivery.date']}: " />
 				</h:panelGroup>
 				<h:panelGroup>
-					<h:inputText id="endDate" required="true" maxlength="10" size="10" value="#{coordinatorProjectsManagementBackingBean.endDate}" />
+					<h:inputText alt="#{htmlAltBundle['inputText.endDate']}" id="endDate" required="true" maxlength="10" size="10" value="#{coordinatorProjectsManagementBackingBean.endDate}" />
 					<h:outputText value=" #{bundle['label.date.instructions.small']} &nbsp&nbsp" escape="false" />
 					<h:message for="endDate" styleClass="error"/>
-					<h:inputText id="endHour" required="true" maxlength="5" size="5" value="#{coordinatorProjectsManagementBackingBean.endHour}" />
+					<h:inputText alt="#{htmlAltBundle['inputText.endHour']}" id="endHour" required="true" maxlength="5" size="5" value="#{coordinatorProjectsManagementBackingBean.endHour}" />
 					<h:outputText value=" #{bundle['label.hour.instructions']}" />					
 					<h:message for="endHour" styleClass="error"/>
 				</h:panelGroup>				
@@ -64,9 +65,9 @@
 				</h:panelGroup>
 			</h:panelGrid>			
 			<h:outputText value="<br/>" escape="false" />
-			<h:commandButton action="#{coordinatorProjectsManagementBackingBean.createProject}"
+			<h:commandButton alt="#{htmlAltBundle['commandButton.create']}" action="#{coordinatorProjectsManagementBackingBean.createProject}"
 				styleClass="inputbutton" value="#{bundle['button.create']}"/>
-			<h:commandButton immediate="true" action="#{coordinatorProjectsManagementBackingBean.showProjectsForExecutionCourses}"
+			<h:commandButton alt="#{htmlAltBundle['commandButton.cancel']}" immediate="true" action="#{coordinatorProjectsManagementBackingBean.showProjectsForExecutionCourses}"
 				styleClass="inputbutton" value="#{bundle['button.cancel']}"/>
 		</h:form>
 </ft:tilesView>

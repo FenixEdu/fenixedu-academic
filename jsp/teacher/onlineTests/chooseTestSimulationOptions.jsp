@@ -1,5 +1,6 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 
@@ -67,12 +68,12 @@ function changeInformation(value) {
 </table>
 <br/>
 <html:form action="/studentTestManagement">
-<html:hidden property="page" value="1"/>
-<html:hidden property="method" value="prepareSimulateTest"/>
-<html:hidden property="objectCode" value="<%=(pageContext.findAttribute("objectCode")).toString()%>"/>
-<html:hidden property="testCode" value="<%=(pageContext.findAttribute("testCode")).toString()%>"/>
-<html:hidden property="inquiryInformation"/>
-<html:hidden property="notInquiryInformation"/>
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="prepareSimulateTest"/>
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.objectCode" property="objectCode" value="<%=(pageContext.findAttribute("objectCode")).toString()%>"/>
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.testCode" property="testCode" value="<%=(pageContext.findAttribute("testCode")).toString()%>"/>
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.inquiryInformation" property="inquiryInformation"/>
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.notInquiryInformation" property="notInquiryInformation"/>
 
 <table>
 	<tr>
@@ -81,7 +82,7 @@ function changeInformation(value) {
 	<logic:iterate id="testType" name="testTypeList" type="org.apache.struts.util.LabelValueBean">
 		<tr><td></td>
 			<td><bean:write name="testType" property="label"/></td>
-			<td><html:radio property="testType" value="<%=testType.getValue()%>" onclick="selectInquiry()"/></td>
+			<td><html:radio bundle="HTMLALT_RESOURCES" altKey="radio.testType" property="testType" value="<%=testType.getValue()%>" onclick="selectInquiry()"/></td>
 		</tr>
 	</logic:iterate>
 </table>
@@ -93,7 +94,7 @@ function changeInformation(value) {
 	<logic:iterate id="correctionAvailability" name="correctionAvailabilityList" type="org.apache.struts.util.LabelValueBean">
 		<tr><td></td>
 			<td><bean:write name="correctionAvailability" property="label"/></td>
-			<td><html:radio property="availableCorrection" value="<%=correctionAvailability.getValue()%>" onclick="selectAvailableCorrection()"/></td>
+			<td><html:radio bundle="HTMLALT_RESOURCES" altKey="radio.availableCorrection" property="availableCorrection" value="<%=correctionAvailability.getValue()%>" onclick="selectAvailableCorrection()"/></td>
 		</tr>
 	</logic:iterate>
 </table>
@@ -103,10 +104,10 @@ function changeInformation(value) {
 		<td><b><bean:message key="message.imsFeedback"/></b></td>
 	</tr>
 	<tr>
-		<td></td><td><bean:message key="message.yes"/></td><td><html:radio property="imsFeedback" value="true" onclick="selectImsFeedback()"/></td>
+		<td></td><td><bean:message key="message.yes"/></td><td><html:radio bundle="HTMLALT_RESOURCES" altKey="radio.imsFeedback" property="imsFeedback" value="true" onclick="selectImsFeedback()"/></td>
 	</tr>
 	<tr>
-		<td></td><td><bean:message key="message.no"/></td><td><html:radio property="imsFeedback" value="false" /></td>
+		<td></td><td><bean:message key="message.no"/></td><td><html:radio bundle="HTMLALT_RESOURCES" altKey="radio.imsFeedback" property="imsFeedback" value="false" /></td>
 	</tr>
 </table>
 <br/>
@@ -116,7 +117,7 @@ function changeInformation(value) {
 		<td><b><bean:message key="label.test.information"/></b></td>
 	</tr>
 	<tr>
-		<td><html:textarea rows="7" cols="45" property="testInformation"/></td>
+		<td><html:textarea bundle="HTMLALT_RESOURCES" altKey="textarea.testInformation" rows="7" cols="45" property="testInformation"/></td>
 	</tr>
 </table>
 <br/>
@@ -124,7 +125,7 @@ function changeInformation(value) {
 <br/>
 <table>
 	<tr>
-		<td><html:submit styleClass="inputbutton"><bean:message key="label.Simulate"/></html:submit></td>
+		<td><html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton"><bean:message key="label.Simulate"/></html:submit></td>
 	</tr>
 </table>
 </html:form>

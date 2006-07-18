@@ -1,15 +1,16 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 
-<h2>Disciplinas que o aluno não necessita de fazer</h2>
+<h2>Disciplinas que o aluno nï¿½o necessita de fazer</h2>
 <br/><br/>
 <html:form action="showNotNeedToEnroll">
-	<html:hidden property="method" value="prepareNotNeedToEnroll"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="prepareNotNeedToEnroll"/>
 	
-	<bean:message key="label.choose.student"/> <html:text size='6' property="studentNumber"/>
+	<bean:message key="label.choose.student"/> <html:text bundle="HTMLALT_RESOURCES" altKey='text.studentNumber' size='6' property="studentNumber"/>
 	<br/><br/>
-	<html:submit styleClass="inputbutton"><bean:message key="button.continue"/></html:submit>
+	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton"><bean:message key="button.continue"/></html:submit>
 	<br/><br/>
 	<logic:present name="infoStudentCurricularPlan">
 		<html:link page="/showNotNeedToEnroll.do?method=prepareNotNeedToEnroll&amp;insert=true" paramId="studentNumber" paramName="equivalencesForm" 
@@ -20,8 +21,8 @@
 		<h3><bean:message key="title.student.notNeedToEnroll.current"/></h3>
 		<table cellpadding=3>
 			<tr>
-				<td class="listClasses-header"><bean:message key="label.student.notNeedToEnroll.curricularPlan"/></td>
-				<td class="listClasses-header"><bean:message key="label.curricular.course.name"/></td>
+				<th class="listClasses-header"><bean:message key="label.student.notNeedToEnroll.curricularPlan"/></th>
+				<th class="listClasses-header"><bean:message key="label.curricular.course.name"/></th>
 				<td class="listClasses-header"></td>
 			</tr>
 		
@@ -44,13 +45,13 @@
 		
 		<logic:present name="insert">
 			<bean:define id="infoStudentCurricularPlanID" name="infoStudentCurricularPlan" property="idInternal" type="java.lang.Integer"/>
-			<html:hidden property="studentCurricularPlanID" value="<%= infoStudentCurricularPlanID.toString() %>"/>			
+			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.studentCurricularPlanID" property="studentCurricularPlanID" value="<%= infoStudentCurricularPlanID.toString() %>"/>			
 
 			<h3><bean:message key="title.student.notNeedToEnroll.toInsert"/></h3>
 			<table cellpadding=3>
 				<tr>
-					<td class="listClasses-header"><bean:message key="label.student.notNeedToEnroll.curricularPlan"/></td>
-					<td class="listClasses-header"><bean:message key="label.curricular.course.name"/></td>
+					<th class="listClasses-header"><bean:message key="label.student.notNeedToEnroll.curricularPlan"/></th>
+					<th class="listClasses-header"><bean:message key="label.curricular.course.name"/></th>
 					<td class="listClasses-header"></td>
 				</tr>
 			<logic:iterate id="infoCurricularCourse" name="infoDegreeCurricularPlan" property="curricularCourses" indexId="index">
@@ -60,7 +61,7 @@
 						<bean:write name="infoCurricularCourse" property="name"/> - <bean:write name="infoCurricularCourse" property="code"/>
 					</td>
 					<td class="listClasses">
-						<html:multibox property="curricularCoursesID">
+						<html:multibox bundle="HTMLALT_RESOURCES" altKey="multibox.curricularCoursesID" property="curricularCoursesID">
 							<bean:write name="infoCurricularCourse" property="idInternal"/> 
 						</html:multibox>
 					</td>
@@ -68,7 +69,7 @@
 			</logic:iterate>
 			</table>
 			<br/>
-			<html:submit styleClass="inputbutton" onclick="document.forms[0].method.value='insertNotNeedToEnroll'">
+			<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton" onclick="document.forms[0].method.value='insertNotNeedToEnroll'">
 				<bean:message key="button.insert"/></html:submit>
 		</logic:present>
 	</logic:present>

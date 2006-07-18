@@ -4,6 +4,7 @@
 <%@ taglib uri="/WEB-INF/html_basic.tld" prefix="h"%>
 
 <ft:tilesView definition="definition.manager.masterPage" attributeName="body-inline">
+	<f:loadBundle basename="resources/HtmlAltResources" var="htmlAltBundle"/>
 	<f:loadBundle basename="resources/ScientificCouncilResources" var="scouncilBundle"/>
 	<f:loadBundle basename="resources/EnumerationResources" var="enumerationBundle"/>
 	
@@ -13,7 +14,7 @@
 		<f:param value="#{scouncilBundle['curricularPlan']}"/>
 	</h:outputFormat>
 	<h:form>
-		<h:outputText escape="false" value="<input id='dcpId' name='dcpId' type='hidden' value='#{DegreeCurricularPlanManagement.dcpId}'/>"/>
+		<h:outputText escape="false" value="<input alt='input.dcpId' id='dcpId' name='dcpId' type='hidden' value='#{DegreeCurricularPlanManagement.dcpId}'/>"/>
 		<fc:viewState binding="#{DegreeCurricularPlanManagement.viewState}"/>
 		
 		<h:messages infoClass="success0" errorClass="error0" layout="table" globalOnly="true"/>
@@ -46,7 +47,7 @@
 		</h:panelGroup>
 		
 		<h:outputText value="<p><label>#{scouncilBundle['name']}:</label>" escape="false"/>
-		<h:inputText id="name" disabled="#{DegreeCurricularPlanManagement.curricularStage == 'APPROVED'}" value="#{DegreeCurricularPlanManagement.name}" required="true" maxlength="100" size="40"/>
+		<h:inputText alt="#{htmlAltBundle['inputText.name']}" id="name" disabled="#{DegreeCurricularPlanManagement.curricularStage == 'APPROVED'}" value="#{DegreeCurricularPlanManagement.name}" required="true" maxlength="100" size="40"/>
 		<h:message for="name" errorClass="error0" rendered="#{empty DegreeCurricularPlanManagement.errorMessage}"/>
 		<h:outputText value="</p>" escape="false"/>
 			
@@ -66,9 +67,9 @@
 		</h:panelGroup>
 		
 		<h:outputText value="<br/><p>" escape="false" />
-		<h:commandButton styleClass="inputbutton" value="#{scouncilBundle['button.save']}"
+		<h:commandButton alt="#{htmlAltBundle['commandButton.save']}" styleClass="inputbutton" value="#{scouncilBundle['button.save']}"
 			action="#{DegreeCurricularPlanManagement.editCurricularPlan}"/>
-		<h:commandButton immediate="true" styleClass="inputbutton" value="#{scouncilBundle['cancel']}"
+		<h:commandButton alt="#{htmlAltBundle['commandButton.cancel']}" immediate="true" styleClass="inputbutton" value="#{scouncilBundle['cancel']}"
 			action="curricularPlansManagement"/>
 		<h:outputText value="</p>" escape="false" />
 	</h:form>

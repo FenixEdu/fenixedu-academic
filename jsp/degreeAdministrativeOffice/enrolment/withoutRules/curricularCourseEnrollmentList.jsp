@@ -1,5 +1,5 @@
 <%@ page language="java" %>
-<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %><html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ page import="net.sourceforge.fenixedu.domain.curriculum.CurricularCourseType" %>
@@ -30,32 +30,32 @@
 	
 	<logic:greaterThan name="enrollmentsSize" value="0">
 		<html:form action="/courseEnrolmentWithoutRulesManagerDA">
-			<html:hidden property="method" value="unEnrollCourses"/>
-			<html:hidden property="page" value="1"/>
-			<html:hidden property="studentNumber" />
-			<html:hidden property="executionPeriod" />
-			<html:hidden property="degreeType" />
-			<html:hidden property="userType" />
+			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="unEnrollCourses"/>
+			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
+			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.studentNumber" property="studentNumber" />
+			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.executionPeriod" property="executionPeriod" />
+			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.degreeType" property="degreeType" />
+			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.userType" property="userType" />
 			<table >
 				<tr>
-					<td class="listClasses-header">
+					<th class="listClasses-header">
 						<bean:message key="label.curricular.course.name"/>
-					</td>
-					<td class="listClasses-header">
+					</th>
+					<th class="listClasses-header">
 						<bean:message key="label.degreeCurricularPlan"/>
-					</td>
-					<td class="listClasses-header">
+					</th>
+					<th class="listClasses-header">
 						<bean:message key="label.curricular.course.semester"/>
-					</td>
-					<td class="listClasses-header">
+					</th>
+					<th class="listClasses-header">
 						<bean:message key="label.course.enrollment.weight" bundle="STUDENT_RESOURCES"/>
-					</td>
-					<td class="listClasses-header">
+					</th>
+					<th class="listClasses-header">
 						<bean:message key="label.course.enrollment.acumulated.enrollments" bundle="STUDENT_RESOURCES"/>
-					</td>
-					<td class="listClasses-header">
+					</th>
+					<th class="listClasses-header">
 						<bean:message key="label.unenroll"/>
-					</td>
+					</th>
 				</tr>
 				<logic:iterate id="infoEnrollment" name="infoEnrollmentsWithStateEnrolled">
 					<bean:define id="infoEnrollmentId" name="infoEnrollment" property="idInternal" />
@@ -78,16 +78,16 @@
 						<td class="listClasses">
 							<bean:write name="infoEnrollment" property="accumulatedWeight"/>
 						</td>
-						<td class="listClasses"><html:multibox property="unenrollments" value="<%= infoEnrollmentId.toString() %>" /></td>
+						<td class="listClasses"><html:multibox bundle="HTMLALT_RESOURCES" altKey="multibox.unenrollments" property="unenrollments" value="<%= infoEnrollmentId.toString() %>" /></td>
 					</tr>
 				</logic:iterate>
 			</table>
 			<br/>
 			<br />
-			<html:submit styleClass="inputbutton">
+			<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton">
 				<bean:message key="button.unenroll"/>
 			</html:submit>
-			<html:reset styleClass="inputbutton">
+			<html:reset bundle="HTMLALT_RESOURCES" altKey="reset.reset" styleClass="inputbutton">
 				<bean:message key="button.clean"/>
 			</html:reset>			
 		</html:form>
@@ -104,15 +104,15 @@
 	</tr>
 </table>
 <html:form action="/courseEnrolmentWithoutRulesManagerDA">
-	<html:hidden property="method" value="prepareEnrollmentCourses"/>
-	<html:hidden property="page" value="1"/>
-	<html:hidden property="studentNumber" />
-	<html:hidden property="executionPeriod" />
-	<html:hidden property="degreeType" />
-	<html:hidden property="userType" />
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="prepareEnrollmentCourses"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.studentNumber" property="studentNumber" />
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.executionPeriod" property="executionPeriod" />
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.degreeType" property="degreeType" />
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.userType" property="userType" />
 	<bean:define id="studentCurricularPlan" name="infoStudentEnrolmentContext"  property="infoStudentCurricularPlan.infoDegreeCurricularPlan.name"/>
-	<html:hidden property="studentCurricularPlan" value="<%=studentCurricularPlan.toString()%>"/>
-	<html:submit styleClass="inputbutton">
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.studentCurricularPlan" property="studentCurricularPlan" value="<%=studentCurricularPlan.toString()%>"/>
+	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton">
 			<bean:message key="button.enroll" bundle="DEGREE_ADM_OFFICE"/>
 	</html:submit>
 </html:form>
@@ -120,14 +120,14 @@
 <br />
 <%-- HELP ANOTHER STUDENT OR CANCEL --%>
 <html:form action="/courseEnrolmentWithoutRulesManagerDA">
-	<html:hidden property="method" value="prepareEnrollmentChooseStudentAndExecutionYear"/>
-	<html:hidden property="page" value="0"/>
-	<html:hidden property="degreeType" />
-	<html:hidden property="userType" />
-	<html:submit styleClass="inputbutton">
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="prepareEnrollmentChooseStudentAndExecutionYear"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="0"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.degreeType" property="degreeType" />
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.userType" property="userType" />
+	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton">
 			<bean:message key="button.student.other" bundle="DEGREE_ADM_OFFICE"/>
 	</html:submit>
-	<html:cancel styleClass="inputbutton" onclick="this.form.method.value='exit';this.form.submit();">
+	<html:cancel bundle="HTMLALT_RESOURCES" altKey="cancel.cancel" styleClass="inputbutton" onclick="this.form.method.value='exit';this.form.submit();">
 		<bean:message key="button.exit" bundle="DEGREE_ADM_OFFICE"/>
 	</html:cancel>
 </html:form>

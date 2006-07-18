@@ -2,6 +2,7 @@
 
 <%@ page import="java.lang.String" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 
@@ -40,7 +41,7 @@
 
 <logic:notEmpty name="component" property="infoSiteStudentInformationList">
 <html:form action="/deleteStudentGroupMembers" method="get">
-<html:hidden property="page" value="1"/>
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
 <bean:message key="message.editStudentGroupMembers.RemoveMembers"/>
 
 <br>
@@ -49,21 +50,21 @@
 
 	
 	<tr>
-		<td class="listClasses-header">
-		</td>
-		<td class="listClasses-header"><bean:message key="label.teacher.StudentNumber" />
-		</td>
-		<td class="listClasses-header"><bean:message key="label.teacher.StudentName" />
-		</td>
-		<td class="listClasses-header"><bean:message key="label.teacher.StudentEmail" />
-		</td>
+		<th class="listClasses-header">
+		</th>
+		<th class="listClasses-header"><bean:message key="label.teacher.StudentNumber" />
+		</th>
+		<th class="listClasses-header"><bean:message key="label.teacher.StudentName" />
+		</th>
+		<th class="listClasses-header"><bean:message key="label.teacher.StudentEmail" />
+		</th>
 		
 	</tr>
 	
 	<logic:iterate id="infoSiteStudentInformation" name="component" property="infoSiteStudentInformationList">			
 		<tr>	
 			<td class="listClasses">
-			<html:multibox property="studentsToRemove">
+			<html:multibox bundle="HTMLALT_RESOURCES" altKey="multibox.studentsToRemove" property="studentsToRemove">
 			<bean:write name="infoSiteStudentInformation" property="username" />
 			</html:multibox>
 			</td>	
@@ -82,19 +83,19 @@
 </table>
 
 <br>
-<html:submit styleClass="inputbutton"><bean:message key="button.remove"/>                    		         	
+<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton"><bean:message key="button.remove"/>                    		         	
 </html:submit>
-<html:reset styleClass="inputbutton"><bean:message key="label.clear"/>
+<html:reset bundle="HTMLALT_RESOURCES" altKey="reset.reset" styleClass="inputbutton"><bean:message key="label.clear"/>
 </html:reset>
 <br>
 <br>
 
-<html:hidden property="method" value="deleteStudentGroupMembers"/>
-<html:hidden  property="objectCode" value="<%= pageContext.findAttribute("objectCode").toString() %>" />
-<html:hidden  property="groupPropertiesCode" value="<%= request.getParameter("groupPropertiesCode") %>" />
-<html:hidden  property="studentGroupCode" value="<%= request.getParameter("studentGroupCode") %>" />
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="deleteStudentGroupMembers"/>
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.objectCode"  property="objectCode" value="<%= pageContext.findAttribute("objectCode").toString() %>" />
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.groupPropertiesCode"  property="groupPropertiesCode" value="<%= request.getParameter("groupPropertiesCode") %>" />
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.studentGroupCode"  property="studentGroupCode" value="<%= request.getParameter("studentGroupCode") %>" />
 <logic:present name="shiftCode">
-<html:hidden  property="shiftCode" value="<%= request.getParameter("shiftCode") %>" />
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.shiftCode"  property="shiftCode" value="<%= request.getParameter("shiftCode") %>" />
 </logic:present>
 
 </html:form>
@@ -112,7 +113,7 @@
 <logic:present name="infoStudentList"> 
 		
 <html:form action="/insertStudentGroupMembers" method="get">
-<html:hidden property="page" value="1"/>
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
 
 <logic:empty name="infoStudentList"> 
 <h2>
@@ -129,21 +130,21 @@
 
 	
 	<tr>
-		<td class="listClasses-header">
-		</td>
-		<td class="listClasses-header"><bean:message key="label.teacher.StudentNumber" />
-		</td>
-		<td class="listClasses-header"><bean:message key="label.teacher.StudentName" />
-		</td>
-		<td class="listClasses-header"><bean:message key="label.teacher.StudentEmail" />
-		</td>
+		<th class="listClasses-header">
+		</th>
+		<th class="listClasses-header"><bean:message key="label.teacher.StudentNumber" />
+		</th>
+		<th class="listClasses-header"><bean:message key="label.teacher.StudentName" />
+		</th>
+		<th class="listClasses-header"><bean:message key="label.teacher.StudentEmail" />
+		</th>
 	</tr>
 
 
 	<logic:iterate id="infoStudent" name="infoStudentList">			
 		<tr>	
 			<td class="listClasses">
-			<html:multibox property="studentsToInsert">
+			<html:multibox bundle="HTMLALT_RESOURCES" altKey="multibox.studentsToInsert" property="studentsToInsert">
 			<bean:define id="infoPerson" name="infoStudent" property="infoPerson" />
 			<bean:write name="infoPerson" property="username"/>
 			</html:multibox>
@@ -162,18 +163,18 @@
 </table>
 <br>
 
-<html:hidden property="method" value="insertStudentGroupMembers"/>
-<html:hidden  property="objectCode" value="<%= pageContext.findAttribute("objectCode").toString() %>" />
-<html:hidden  property="groupPropertiesCode" value="<%= request.getParameter("groupPropertiesCode") %>" />
-<html:hidden  property="studentGroupCode" value="<%= request.getParameter("studentGroupCode") %>" />
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="insertStudentGroupMembers"/>
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.objectCode"  property="objectCode" value="<%= pageContext.findAttribute("objectCode").toString() %>" />
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.groupPropertiesCode"  property="groupPropertiesCode" value="<%= request.getParameter("groupPropertiesCode") %>" />
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.studentGroupCode"  property="studentGroupCode" value="<%= request.getParameter("studentGroupCode") %>" />
 <logic:present name="shiftCode">
-<html:hidden  property="shiftCode" value="<%= request.getParameter("shiftCode") %>" />
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.shiftCode"  property="shiftCode" value="<%= request.getParameter("shiftCode") %>" />
 </logic:present>
 
-<html:submit styleClass="inputbutton"><bean:message key="button.insert"/>                    		         	
+<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton"><bean:message key="button.insert"/>                    		         	
 </html:submit>       
 
-<html:reset styleClass="inputbutton"><bean:message key="label.clear"/>
+<html:reset bundle="HTMLALT_RESOURCES" altKey="reset.reset" styleClass="inputbutton"><bean:message key="label.clear"/>
 </html:reset>  
 
 </logic:notEmpty>

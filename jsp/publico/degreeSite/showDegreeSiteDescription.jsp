@@ -1,5 +1,5 @@
 <%@ page language="java" %>
-<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %><html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 
@@ -58,7 +58,7 @@
 			<bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.title.coordinator"/>&nbsp; 
 			<%-- <bean:write name="responsibleCoordinatorTeacher" property="category.name.content"/>&nbsp; --%>
 
-			<%-- FÉNIX HOMEPAGE --%>	
+			<%-- Fï¿½NIX HOMEPAGE --%>	
 			<logic:notEmpty name="responsibleCoordinatorTeacher" property="person.homepage">
 				<logic:equal name="responsibleCoordinatorTeacher" property="person.homepage.activated" value="true">
 					<bean:define id="userUId" name="responsibleCoordinatorTeacher" property="person.user.userUId" type="java.lang.String"/>

@@ -28,7 +28,7 @@
                 		</tr>
                 		<tr valign='center'>
                     		<td align='center' colspan='2' nowrap>
-                 	    		<html:select property="certidao" size="1">
+                 	    		<html:select bundle="HTMLALT_RESOURCES" altKey="select.certidao" property="certidao" size="1">
                         		<html:options collection="certidoes" property="value" labelProperty="label"/>
                         		</html:select>
                     		</td>

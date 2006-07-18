@@ -1,5 +1,6 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ page import="org.apache.struts.Globals" %>
@@ -41,7 +42,7 @@
                 <% if (((InfoGuideSituation) guideSituation).getState().equals(new State(State.ACTIVE))) { %>
                 	<tr>
                         <td><html:link page='<%= pageContext.findAttribute("versionLink").toString() %>'>
-                			Versão <bean:write name="version" property="version" />
+                			Versï¿½o <bean:write name="version" property="version" />
                             </html:link>
                         </td>
 			            <logic:present name="guideSituation" property="date" >

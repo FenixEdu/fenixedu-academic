@@ -1,6 +1,7 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ page import="java.util.Calendar" %>
 <%@ page import="java.util.ArrayList" %>
@@ -19,11 +20,11 @@
     <logic:present name="infoAulasDeTurno" scope="request">
 <table>
 	<tr>
-    	<td class="listClasses-header"><bean:message key="property.aula.weekDay"/></td>
-     	<td class="listClasses-header"><bean:message key="property.aula.time.begining"/></td>
-        <td class="listClasses-header"><bean:message key="property.aula.time.end"/></td>
-        <td class="listClasses-header"><bean:message key="property.aula.type"/></td>
-        <td class="listClasses-header"><bean:message key="property.aula.sala"/></td>
+    	<th class="listClasses-header"><bean:message key="property.aula.weekDay"/></th>
+     	<th class="listClasses-header"><bean:message key="property.aula.time.begining"/></th>
+        <th class="listClasses-header"><bean:message key="property.aula.time.end"/></th>
+        <th class="listClasses-header"><bean:message key="property.aula.type"/></th>
+        <th class="listClasses-header"><bean:message key="property.aula.sala"/></th>
  	</tr>
 	<% int i = 0; %>
     <logic:iterate id="elem" name="infoAulasDeTurno">

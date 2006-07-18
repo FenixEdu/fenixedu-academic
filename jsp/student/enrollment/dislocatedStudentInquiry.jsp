@@ -1,5 +1,6 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 
@@ -12,10 +13,10 @@
 <br />
 
 <html:form action="/dislocatedStudent.do">
-<html:hidden property="method" value="registerDislocatedStudentInquiryAnswers"/>
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="registerDislocatedStudentInquiryAnswers"/>
 
 <p><bean:message key="label.enrollment.dislocatedStudent.whereFrom"/></p>
-<html:select property="countryID">
+<html:select bundle="HTMLALT_RESOURCES" altKey="select.countryID" property="countryID">
 	<html:options collection="infoCountries" property="idInternal" labelProperty="name"/>
 </html:select>
 
@@ -26,12 +27,12 @@
 	<tr>
 		<td></td>
 		<td>Sim</td>
-		<td>Não</td>
+		<td>Nï¿½o</td>
 	</tr>
 	<tr>
 		<td><bean:message key="label.enrollment.dislocatedStudent.dislocated"/></td>
-		<td><html:radio property="dislocatedAnswer" value="true" onchange="this.form.method.value='prepareDislocatedStudentInquiry';this.form.submit();" /></td>
-		<td><html:radio property="dislocatedAnswer" value="false" onchange="this.form.method.value='prepareDislocatedStudentInquiry';this.form.submit();" /></td>
+		<td><html:radio bundle="HTMLALT_RESOURCES" altKey="radio.dislocatedAnswer" property="dislocatedAnswer" value="true" onchange="this.form.method.value='prepareDislocatedStudentInquiry';this.form.submit();" /></td>
+		<td><html:radio bundle="HTMLALT_RESOURCES" altKey="radio.dislocatedAnswer" property="dislocatedAnswer" value="false" onchange="this.form.method.value='prepareDislocatedStudentInquiry';this.form.submit();" /></td>
 	</tr>
 </table>
 <p><em><bean:message key="label.enrollment.dislocatedStudent.dislocated.explanation"/></em></p>
@@ -52,14 +53,14 @@
 </tr>
 <tr>
 	<td>
-		<html:select property="dislocatedCountryID" onchange="this.form.method.value='prepareDislocatedStudentInquiry';this.form.submit();">
+		<html:select bundle="HTMLALT_RESOURCES" altKey="select.dislocatedCountryID" property="dislocatedCountryID" onchange="this.form.method.value='prepareDislocatedStudentInquiry';this.form.submit();">
 			<html:option value=""/>
 			<html:options collection="infoCountries" property="idInternal" labelProperty="name"/>
 		</html:select>
 	</td>
 	<td>
 		<logic:present name="portugal">
-			<html:select property="districtID">
+			<html:select bundle="HTMLALT_RESOURCES" altKey="select.districtID" property="districtID">
 				<html:options collection="infoDistricts" property="idInternal" labelProperty="name"/>
 			</html:select>
 		</logic:present>
@@ -69,5 +70,5 @@
 <br/>
 </logic:present>	
 
-<html:submit styleClass="inputbutton"><bean:message key="button.continue"/></html:submit>
+<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton"><bean:message key="button.continue"/></html:submit>
 </html:form>

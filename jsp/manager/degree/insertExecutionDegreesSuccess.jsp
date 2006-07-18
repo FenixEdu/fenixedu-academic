@@ -4,6 +4,7 @@
 <%@ taglib uri="/WEB-INF/jsf_fenix_components.tld" prefix="fc"%>
 
 <ft:tilesView definition="df.executionDegreeManagement.default" attributeName="body-inline">
+	<f:loadBundle basename="resources/HtmlAltResources" var="htmlAltBundle"/>
 	<f:loadBundle basename="resources/ManagerResources" var="managerResources"/>
 
 	<h:outputText value="<h2>Criar #{managerResources['label.manager.executionDegreeManagement']}</h2>" escape="false"/>
@@ -19,7 +20,7 @@
 	
 	<h:form>
 	<p>
-		<h:commandButton action="back" value="#{managerResources['label.return']}" styleClass="inputbutton" />
+		<h:commandButton alt="#{htmlAltBundle['commandButton.return']}" action="back" value="#{managerResources['label.return']}" styleClass="inputbutton" />
 	</p>	
 	</h:form>
 

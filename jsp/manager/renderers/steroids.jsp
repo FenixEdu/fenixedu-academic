@@ -1,5 +1,6 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
 
 <!-- Title and TOC -->
@@ -217,7 +218,7 @@
                     </tr>
                 </table>
                 
-                <input type="submit"/>
+                <input alt="input.input" type="submit"/>
             </form>
         </div>
     </div>
@@ -299,7 +300,7 @@
                     </tr>
                 </table>
                 
-                <input type="submit"/>
+                <input alt="input.input" type="submit"/>
             </form>
         </div>
     </div>

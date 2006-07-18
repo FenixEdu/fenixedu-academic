@@ -3,12 +3,13 @@
 <%@ taglib uri="/WEB-INF/jsf_core.tld" prefix="f"%>
 
 <ft:tilesView definition="definition.manager.masterPage" attributeName="body-inline">
+	<f:loadBundle basename="resources/HtmlAltResources" var="htmlAltBundle"/>
 	<h:form>
 		<h:panelGrid columns="2">
 			<h:selectOneMenu value="#{createCourseReports.executionPeriodID}">
 				<f:selectItems value="#{createCourseReports.executionPeriods}"/>
 			</h:selectOneMenu>
-			<h:commandButton actionListener="#{createCourseReports.create}" value="Criar" />
+			<h:commandButton alt="#{htmlAltBundle['commandButton.Criar']}" actionListener="#{createCourseReports.create}" value="Criar" />
 		</h:panelGrid>	
 	</h:form>
 </ft:tilesView>

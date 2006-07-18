@@ -1,5 +1,6 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <h2><bean:message key="title.editTest"/></h2>
@@ -13,9 +14,9 @@
 <bean:define id="infoTestQuestionList" name="infoTest" property="infoTestQuestions"/>
 
 <html:form action="/testEdition">
-<html:hidden property="page" value="1"/>
-<html:hidden property="method" value="editTest"/>
-<html:hidden property="objectCode" value="<%=(pageContext.findAttribute("objectCode")).toString()%>"/>
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="editTest"/>
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.objectCode" property="objectCode" value="<%=(pageContext.findAttribute("objectCode")).toString()%>"/>
 <table>
 	<tr>
 		<td><b><bean:message key="label.title"/></b></td>

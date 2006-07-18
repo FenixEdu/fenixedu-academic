@@ -1,4 +1,4 @@
-<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
+<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%><html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <p><b><bean:message key="link.masterDegree.administrativeOffice.gratuity" /></b></p>
 <ul>

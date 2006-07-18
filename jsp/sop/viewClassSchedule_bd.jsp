@@ -2,6 +2,7 @@
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.TagLib.sop.v3.TimeTableType" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="dt" %>
@@ -23,19 +24,19 @@
 	<tr>
 		<td>
 			<html:form action="/manageClass">
-				<html:hidden property="method" value="prepareAddShifts"/>
-				<html:hidden property="page" value="0"/>
+				<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="prepareAddShifts"/>
+				<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="0"/>
 			
-				<html:hidden property="<%= SessionConstants.EXECUTION_PERIOD_OID %>"
+				<html:hidden alt="<%= SessionConstants.EXECUTION_PERIOD_OID %>" property="<%= SessionConstants.EXECUTION_PERIOD_OID %>"
 							 value="<%= pageContext.findAttribute("executionPeriodOID").toString() %>"/>
-				<html:hidden property="<%= SessionConstants.EXECUTION_DEGREE_OID %>"
+				<html:hidden alt="<%= SessionConstants.EXECUTION_DEGREE_OID %>" property="<%= SessionConstants.EXECUTION_DEGREE_OID %>"
 							 value="<%= pageContext.findAttribute("executionDegreeOID").toString() %>"/>
-				<html:hidden property="<%= SessionConstants.CURRICULAR_YEAR_OID %>"
+				<html:hidden alt="<%= SessionConstants.CURRICULAR_YEAR_OID %>" property="<%= SessionConstants.CURRICULAR_YEAR_OID %>"
 							 value="<%= pageContext.findAttribute("curricularYearOID").toString() %>"/>
-				<html:hidden property="<%= SessionConstants.CLASS_VIEW_OID %>"
+				<html:hidden alt="<%= SessionConstants.CLASS_VIEW_OID %>" property="<%= SessionConstants.CLASS_VIEW_OID %>"
 							 value="<%= pageContext.findAttribute("classOID").toString() %>"/>
 			
-				<html:submit styleClass="inputbutton">
+				<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton">
 					<bean:message key="label.shifts.add"/>
 				</html:submit>			
 			</html:form>
@@ -43,19 +44,19 @@
 		<td width="10"></td>
 		<td>
 			<html:form action="/manageClass">
-				<html:hidden property="method" value="prepare"/>
-				<html:hidden property="page" value="0"/>
+				<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="prepare"/>
+				<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="0"/>
 			
-				<html:hidden property="<%= SessionConstants.EXECUTION_PERIOD_OID %>"
+				<html:hidden alt="<%= SessionConstants.EXECUTION_PERIOD_OID %>" property="<%= SessionConstants.EXECUTION_PERIOD_OID %>"
 							 value="<%= pageContext.findAttribute("executionPeriodOID").toString() %>"/>
-				<html:hidden property="<%= SessionConstants.EXECUTION_DEGREE_OID %>"
+				<html:hidden alt="<%= SessionConstants.EXECUTION_DEGREE_OID %>" property="<%= SessionConstants.EXECUTION_DEGREE_OID %>"
 							 value="<%= pageContext.findAttribute("executionDegreeOID").toString() %>"/>
-				<html:hidden property="<%= SessionConstants.CURRICULAR_YEAR_OID %>"
+				<html:hidden alt="<%= SessionConstants.CURRICULAR_YEAR_OID %>" property="<%= SessionConstants.CURRICULAR_YEAR_OID %>"
 							 value="<%= pageContext.findAttribute("curricularYearOID").toString() %>"/>
-				<html:hidden property="<%= SessionConstants.CLASS_VIEW_OID %>"
+				<html:hidden alt="<%= SessionConstants.CLASS_VIEW_OID %>" property="<%= SessionConstants.CLASS_VIEW_OID %>"
 							 value="<%= pageContext.findAttribute("classOID").toString() %>"/>
 			
-				<html:submit styleClass="inputbutton">
+				<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton">
 					<bean:message key="label.view.shifts"/>
 				</html:submit>			
 			</html:form>
@@ -63,17 +64,17 @@
 		<td width="10"></td>
 		<td>
 			<html:form action="/manageClasses">
-				<html:hidden property="method" value="listClasses"/>
-				<html:hidden property="page" value="0"/>
+				<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="listClasses"/>
+				<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="0"/>
 
-				<html:hidden property="<%= SessionConstants.EXECUTION_PERIOD_OID %>"
+				<html:hidden alt="<%= SessionConstants.EXECUTION_PERIOD_OID %>" property="<%= SessionConstants.EXECUTION_PERIOD_OID %>"
 						 value="<%= pageContext.findAttribute("executionPeriodOID").toString() %>"/>
-				<html:hidden property="<%= SessionConstants.EXECUTION_DEGREE_OID %>"
+				<html:hidden alt="<%= SessionConstants.EXECUTION_DEGREE_OID %>" property="<%= SessionConstants.EXECUTION_DEGREE_OID %>"
 						 value="<%= pageContext.findAttribute("executionDegreeOID").toString() %>"/>
-				<html:hidden property="<%= SessionConstants.CURRICULAR_YEAR_OID %>"
+				<html:hidden alt="<%= SessionConstants.CURRICULAR_YEAR_OID %>" property="<%= SessionConstants.CURRICULAR_YEAR_OID %>"
 						 value="<%= pageContext.findAttribute("curricularYearOID").toString() %>"/>
 
-				<html:submit styleClass="inputbutton">
+				<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton">
 					<bean:message key="label.return"/>
 				</html:submit>			
 			</html:form>
@@ -84,29 +85,29 @@
 <br />
 <html:form action="/manageClass" focus="className">
 
-	<html:hidden property="<%= SessionConstants.EXECUTION_PERIOD_OID %>"
+	<html:hidden alt="<%= SessionConstants.EXECUTION_PERIOD_OID %>" property="<%= SessionConstants.EXECUTION_PERIOD_OID %>"
 				 value="<%= pageContext.findAttribute("executionPeriodOID").toString() %>"/>
-	<html:hidden property="<%= SessionConstants.EXECUTION_DEGREE_OID %>"
+	<html:hidden alt="<%= SessionConstants.EXECUTION_DEGREE_OID %>" property="<%= SessionConstants.EXECUTION_DEGREE_OID %>"
 				 value="<%= pageContext.findAttribute("executionDegreeOID").toString() %>"/>
-	<html:hidden property="<%= SessionConstants.CURRICULAR_YEAR_OID %>"
+	<html:hidden alt="<%= SessionConstants.CURRICULAR_YEAR_OID %>" property="<%= SessionConstants.CURRICULAR_YEAR_OID %>"
 				 value="<%= pageContext.findAttribute("curricularYearOID").toString() %>"/>
-	<html:hidden property="<%= SessionConstants.CLASS_VIEW_OID %>"
+	<html:hidden alt="<%= SessionConstants.CLASS_VIEW_OID %>" property="<%= SessionConstants.CLASS_VIEW_OID %>"
 				 value="<%= pageContext.findAttribute("classOID").toString() %>"/>
 
-	<html:hidden property="method" value="edit"/>
-	<html:hidden property="page" value= "1"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="edit"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value= "1"/>
 
 	<span class="error"><html:errors/></span>
    	<br />
-   	<html:text property="className"/>
+   	<html:text bundle="HTMLALT_RESOURCES" altKey="text.className" property="className"/>
    	<br />
-   	<html:submit styleClass="inputbuttonSmall">
+   	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbuttonSmall">
    		<bean:message key="label.change"/>
    	</html:submit>
 </html:form>
 
 <br />
-	<h2>Horário da Turma</h2>
+	<h2>Horï¿½rio da Turma</h2>
 	<div align="center">
 		<app:gerarHorario name="<%= SessionConstants.LESSON_LIST_ATT %>"
 						  type="<%= TimeTableType.SOP_CLASS_TIMETABLE %>"/>

@@ -4,6 +4,7 @@
 <%@ taglib uri="/WEB-INF/html_basic.tld" prefix="h"%>
 
 <ft:tilesView definition="definition.manager.masterPage" attributeName="body-inline">
+	<f:loadBundle basename="resources/HtmlAltResources" var="htmlAltBundle"/>
 	<f:loadBundle basename="resources/BolonhaManagerResources" var="bolonhaBundle"/>
 	<f:loadBundle basename="resources/EnumerationResources" var="enumerationBundle"/>
 <style>
@@ -89,7 +90,7 @@ padding-right: 10px;
 	<h:outputText value="#{enumerationBundle[CompetenceCourseManagement.competenceCourse.regime.name]}</li>" escape="false"/>	
 	<h:outputText value="<li><strong>#{bolonhaBundle['lessonHours']}: </strong>" escape="false"/>	
 	<fc:dataRepeater value="#{CompetenceCourseManagement.sortedCompetenceCourseLoads}" var="competenceCourseLoad" rowCountVar="numberOfElements">
-		<h:outputText value="<p class='mbotton0'><em>#{competenceCourseLoad.order}º #{bolonhaBundle['semester']}</em></p>" escape="false"
+		<h:outputText value="<p class='mbotton0'><em>#{competenceCourseLoad.order}ï¿½ #{bolonhaBundle['semester']}</em></p>" escape="false"
 			rendered="#{CompetenceCourseManagement.competenceCourse.regime.name == 'ANUAL' && numberOfElements == 2}"/>
 		
 		<h:outputText value="<ul class='mvert0'>" escape="false"/>
@@ -224,14 +225,14 @@ padding-right: 10px;
 	<h:outputText value="</div>" escape="false"/>
 
 	<h:form>
-		<h:outputText escape="false" value="<input id='competenceCourseID' name='competenceCourseID' type='hidden' value='#{CompetenceCourseManagement.competenceCourse.idInternal}'/>"/>
-		<h:outputText escape="false" value="<input id='action' name='action' type='hidden' value='#{CompetenceCourseManagement.action}'/>"/>
+		<h:outputText escape="false" value="<input alt='input.competenceCourseID' id='competenceCourseID' name='competenceCourseID' type='hidden' value='#{CompetenceCourseManagement.competenceCourse.idInternal}'/>"/>
+		<h:outputText escape="false" value="<input alt='input.action' id='action' name='action' type='hidden' value='#{CompetenceCourseManagement.action}'/>"/>
 		<h:panelGroup rendered="#{!empty CompetenceCourseManagement.action}">
-			<h:commandButton immediate="true" styleClass="inputbutton" action="competenceCoursesManagement" value="#{bolonhaBundle['back']}" />
+			<h:commandButton alt="#{htmlAltBundle['commandButton.back']}" immediate="true" styleClass="inputbutton" action="competenceCoursesManagement" value="#{bolonhaBundle['back']}" />
 		</h:panelGroup>
 		
 		<h:panelGroup rendered="#{empty CompetenceCourseManagement.action}">
-			<h:commandButton immediate="true" styleClass="inputbutton" onclick="window.close()" value="#{bolonhaBundle['close']}" />
+			<h:commandButton alt="#{htmlAltBundle['commandButton.close']}" immediate="true" styleClass="inputbutton" onclick="window.close()" value="#{bolonhaBundle['close']}" />
 		</h:panelGroup>
 	</h:form>
 </ft:tilesView>

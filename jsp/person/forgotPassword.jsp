@@ -44,7 +44,7 @@
                 <bean:message key="prompt.username"/> 
               </th>
               <td align="left">
-                <html:text style="width: 100px; color:#000080; font-size=10px; background-color:#f5e8bc" property="username" size="16" maxlength="16"/>
+                <html:text bundle="HTMLALT_RESOURCES" altKey="text.username" style="width: 100px; color:#000080; font-size=10px; background-color:#f5e8bc" property="username" size="16" maxlength="16"/>
               </td>
             </tr>
             <tr>
@@ -52,19 +52,19 @@
                 <bean:message key="prompt.numeroDocumentoIdentificacaoAbreviado"/>
               </th>
               <td align="left">
-                <html:password style="width: 100px; color:#000080; font-size=10px;background-color:#f5e8bc" property="numeroDocumentoIdentificacao" size="16" maxlength="16" redisplay="false"/>
+                <html:password bundle="HTMLALT_RESOURCES" altKey="password.numeroDocumentoIdentificacao" style="width: 100px; color:#000080; font-size=10px;background-color:#f5e8bc" property="numeroDocumentoIdentificacao" size="16" maxlength="16" redisplay="false"/>
               </td>
             </tr>            
           </table>
         </div>
         <br>
-        <html:submit value="Submit" style="color:#000080; width=75px; background-color:#B1BBD6; height=20px; font-size=10px"/>     
-        <html:reset style="color:#000080; width=75px; background-color:#B1BBD6; height=20px; font-size=10px"/>    
-        <html:cancel style="color:#000080; width=75px; background-color:#B1BBD6; height=20px; font-size=10px"/>
+        <html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" value="Submit" style="color:#000080; width=75px; background-color:#B1BBD6; height=20px; font-size=10px"/>     
+        <html:reset bundle="HTMLALT_RESOURCES" altKey="reset.reset" style="color:#000080; width=75px; background-color:#B1BBD6; height=20px; font-size=10px"/>    
+        <html:cancel bundle="HTMLALT_RESOURCES" altKey="cancel.cancel" style="color:#000080; width=75px; background-color:#B1BBD6; height=20px; font-size=10px"/>
       </html:form>
       <hr width="250" noshade>
       <div align="center" style="color:#000080; font-size:14px">
-        &copy;2002 - Núcleo de Aplicações do CIIST
+        &copy;2002 - Nï¿½cleo de Aplicaï¿½ï¿½es do CIIST
       </div>
     </td>
   </tr>

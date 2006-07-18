@@ -1,5 +1,6 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ page import="java.util.List" %>
@@ -27,11 +28,11 @@
         <table width="70%">
         	<tr>
         		<logic:equal name="viewPhoto" value="true">
-					<td class="listClasses-header"><bean:message key="label.photo" /></td>
+					<th class="listClasses-header"><bean:message key="label.photo" /></th>
 			 	</logic:equal>
-    			<td class="listClasses-header"><bean:message key="label.candidate.number" /></td>
-    			<td class="listClasses-header"><bean:message key="label.person.name" /></td>
-    			<td class="listClasses-header"><bean:message key="label.masterDegree.gratuity.SCPlan" /></td>
+    			<th class="listClasses-header"><bean:message key="label.candidate.number" /></th>
+    			<th class="listClasses-header"><bean:message key="label.person.name" /></th>
+    			<th class="listClasses-header"><bean:message key="label.masterDegree.gratuity.SCPlan" /></th>
     		</tr>
      	<logic:iterate id="studentCP" name="studentList">
         	<bean:define id="studentLink">
@@ -39,10 +40,10 @@
         	</bean:define>
         <tr>
 	        <logic:equal name="viewPhoto" value="true">
-				<td class="listClasses-header">
+				<th class="listClasses-header">
 					<bean:define id="personID" name="studentCP" property="infoStudent.infoPerson.idInternal"/>
 					<html:img align="middle" height="100" width="100" src="<%= request.getContextPath() +"/person/retrievePersonalPhoto.do?method=retrieveByID&personCode="+personID.toString()%>" altKey="personPhoto" bundle="IMAGE_RESOURCES" />
-			   </td>
+			   </th>
 			</logic:equal> 
         	<td class="listClasses">
         	<html:link page='<%= pageContext.findAttribute("studentLink").toString() %>'>

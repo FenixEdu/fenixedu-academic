@@ -5,6 +5,7 @@
 <%@ taglib uri="/WEB-INF/jsf_fenix_components.tld" prefix="fc"%>
 
 <ft:tilesView definition="definition.sop.examsPage" attributeName="body-inline">
+	<f:loadBundle basename="resources/HtmlAltResources" var="htmlAltBundle"/>
 
 <style>@import url(<%= request.getContextPath() %>/CSS/dotist_calendars.css);</style>
 
@@ -45,12 +46,12 @@
 	<h:panelGroup rendered="#{writtenEvaluationsByRoom.roomsToDisplayMap == null}">
 	<h:outputFormat value="<p>#{bundle['message.writtenEvaluation.by.room']}</p>" escape="false"/>
 	<h:form>
-		<h:outputText escape="false" value="<input id='submittedForm' name='submittedForm' type='hidden' value='true'/>"/>
-		<h:outputText escape="false" value="<input id='executionPeriodOID' name='executionPeriodOID' type='hidden' value='#{writtenEvaluationsByRoom.executionPeriodOID}'/>"/>
+		<h:outputText escape="false" value="<input alt='input.submittedForm' id='submittedForm' name='submittedForm' type='hidden' value='true'/>"/>
+		<h:outputText escape="false" value="<input alt='input.executionPeriodOID' id='executionPeriodOID' name='executionPeriodOID' type='hidden' value='#{writtenEvaluationsByRoom.executionPeriodOID}'/>"/>
 
 		<h:panelGrid columns="2">
 			<h:outputText value="#{bundle['property.room.name']}"/>
-			<h:inputText value="#{writtenEvaluationsByRoom.name}"/>
+			<h:inputText alt="#{htmlAltBundle['inputText.name']}" value="#{writtenEvaluationsByRoom.name}"/>
 
 			<h:outputText value="#{bundle['property.room.building']}"/>
 			<h:selectOneMenu id="building" value="#{writtenEvaluationsByRoom.building}">
@@ -59,7 +60,7 @@
 			</h:selectOneMenu>
 
 			<h:outputText value="#{bundle['property.room.floor']}"/>
-			<h:inputText value="#{writtenEvaluationsByRoom.floor}" size="3"/>
+			<h:inputText alt="#{htmlAltBundle['inputText.floor']}" value="#{writtenEvaluationsByRoom.floor}" size="3"/>
 
 			<h:outputText value="#{bundle['property.room.type']}"/>
 			<h:selectOneMenu id="type" value="#{writtenEvaluationsByRoom.type}">
@@ -68,24 +69,24 @@
 			</h:selectOneMenu>
 
 			<h:outputText value="#{bundle['property.room.capacity.normal']}"/>
-			<h:inputText value="#{writtenEvaluationsByRoom.normalCapacity}" size="3"/>
+			<h:inputText alt="#{htmlAltBundle['inputText.normalCapacity']}" value="#{writtenEvaluationsByRoom.normalCapacity}" size="3"/>
 
 			<h:outputText value="#{bundle['property.room.capacity.exame']}"/>
-			<h:inputText value="#{writtenEvaluationsByRoom.examCapacity}" size="3"/>
+			<h:inputText alt="#{htmlAltBundle['inputText.examCapacity']}" value="#{writtenEvaluationsByRoom.examCapacity}" size="3"/>
 
-			<h:commandButton styleClass="inputbutton" value="#{bundle['label.search']}"/>
+			<h:commandButton alt="#{htmlAltBundle['commandButton.search']}" styleClass="inputbutton" value="#{bundle['label.search']}"/>
 		</h:panelGrid>
 	</h:form>
 	<h:outputFormat value="<br/>" escape="false"/>
 	<h:panelGroup rendered="#{writtenEvaluationsByRoom.rooms != null}">
 	<h:form>
-		<h:outputText escape="false" value="<input id='executionPeriodOID' name='executionPeriodOID' type='hidden' value='#{writtenEvaluationsByRoom.executionPeriodOID}'/>"/>
+		<h:outputText escape="false" value="<input alt='input.executionPeriodOID' id='executionPeriodOID' name='executionPeriodOID' type='hidden' value='#{writtenEvaluationsByRoom.executionPeriodOID}'/>"/>
 		<h:dataTable value="#{writtenEvaluationsByRoom.rooms}" var="room"
 				headerClass="listClasses-header" rowClasses="listClasses" width="80%">
 			<h:column>
 				<f:facet name="header">
 				</f:facet>
-				<h:outputText escape="false" value="<input id='selectedRoomIDs' name='selectedRoomIDs' type='checkbox' value='#{room.idInternal}'/>"/>
+				<h:outputText escape="false" value="<input alt='input.selectedRoomIDs' id='selectedRoomIDs' name='selectedRoomIDs' type='checkbox' value='#{room.idInternal}'/>"/>
 			</h:column>
 			<h:column>
 				<f:facet name="header">
@@ -125,7 +126,7 @@
 			</h:column>
 		</h:dataTable>
 
-		<h:commandButton rendered="#{writtenEvaluationsByRoom.rooms != null}" styleClass="inputbutton" value="#{bundle['label.search']}"/>
+		<h:commandButton alt="#{htmlAltBundle['commandButton.search']}" rendered="#{writtenEvaluationsByRoom.rooms != null}" styleClass="inputbutton" value="#{bundle['label.search']}"/>
 	</h:form>
 	</h:panelGroup>
 	</h:panelGroup>

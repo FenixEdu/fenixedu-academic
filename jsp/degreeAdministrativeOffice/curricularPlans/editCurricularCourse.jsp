@@ -4,6 +4,7 @@
 <%@ taglib uri="/WEB-INF/html_basic.tld" prefix="h"%>
 
 <ft:tilesView definition="definition.degreeAdministrativeOffice.masterPage" attributeName="body-inline">
+	<f:loadBundle basename="resources/HtmlAltResources" var="htmlAltBundle"/>
 	<f:loadBundle basename="resources/BolonhaManagerResources" var="bolonhaBundle"/>
 	<f:loadBundle basename="resources/EnumerationResources" var="enumerationBundle"/>
 	
@@ -14,13 +15,13 @@
 	
 	<h:form>
 		<fc:viewState binding="#{CurricularCourseManagement.viewState}" />
-		<h:outputText escape="false" value="<input id='degreeCurricularPlanID' name='degreeCurricularPlanID' type='hidden' value='#{CurricularCourseManagement.degreeCurricularPlanID}'/>"/>
-		<h:outputText escape="false" value="<input id='curricularCourseID' name='curricularCourseID' type='hidden' value='#{CurricularCourseManagement.curricularCourseID}'/>"/>
-		<h:outputText escape="false" value="<input id='executionYearID' name='executionYearID' type='hidden' value='#{CurricularCourseManagement.executionYearID}'/>"/>
-		<h:outputText escape="false" value="<input id='organizeBy' name='organizeBy' type='hidden' value='#{CurricularCourseManagement.organizeBy}'/>"/>
-		<h:outputText escape="false" value="<input id='showRules' name='showRules' type='hidden' value='#{CurricularCourseManagement.showRules}'/>"/>
-		<h:outputText escape="false" value="<input id='hideCourses' name='hideCourses' type='hidden' value='#{CurricularCourseManagement.hideCourses}'/>"/>
-		<h:outputText escape="false" value="<input id='action' name='action' type='hidden' value='#{CurricularCourseManagement.action}'/>"/>
+		<h:outputText escape="false" value="<input alt='input.degreeCurricularPlanID' id='degreeCurricularPlanID' name='degreeCurricularPlanID' type='hidden' value='#{CurricularCourseManagement.degreeCurricularPlanID}'/>"/>
+		<h:outputText escape="false" value="<input alt='input.curricularCourseID' id='curricularCourseID' name='curricularCourseID' type='hidden' value='#{CurricularCourseManagement.curricularCourseID}'/>"/>
+		<h:outputText escape="false" value="<input alt='input.executionYearID' id='executionYearID' name='executionYearID' type='hidden' value='#{CurricularCourseManagement.executionYearID}'/>"/>
+		<h:outputText escape="false" value="<input alt='input.organizeBy' id='organizeBy' name='organizeBy' type='hidden' value='#{CurricularCourseManagement.organizeBy}'/>"/>
+		<h:outputText escape="false" value="<input alt='input.showRules' id='showRules' name='showRules' type='hidden' value='#{CurricularCourseManagement.showRules}'/>"/>
+		<h:outputText escape="false" value="<input alt='input.hideCourses' id='hideCourses' name='hideCourses' type='hidden' value='#{CurricularCourseManagement.hideCourses}'/>"/>
+		<h:outputText escape="false" value="<input alt='input.action' id='action' name='action' type='hidden' value='#{CurricularCourseManagement.action}'/>"/>
 		
 		<h:outputText value="<div class='simpleblock4'>" escape="false"/>
 		<h:outputText value="<h4 class='first'>#{bolonhaBundle['competenceCourse']}</h4>" escape="false"/>
@@ -51,12 +52,12 @@
 		
 		<h:panelGroup rendered="#{CurricularCourseManagement.selectedCurricularCourseType == 'OPTIONAL_COURSE'}">
 			<h:outputText value="<p><label>#{bolonhaBundle['name']} (pt):</label>" escape="false"/>
-			<h:inputText id="name" size="40" maxlength="40" required="true" value="#{CurricularCourseManagement.name}"/>
+			<h:inputText alt="#{htmlAltBundle['inputText.name']}" id="name" size="40" maxlength="40" required="true" value="#{CurricularCourseManagement.name}"/>
 			<h:message for="name" styleClass="error0"/>
 			<h:outputText value="</p>" escape="false"/>
 			
 			<h:outputText value="<p><label>#{bolonhaBundle['nameEn']} (en):</label>" escape="false"/>
-			<h:inputText id="nameEn" size="40" maxlength="40" required="true" value="#{CurricularCourseManagement.nameEn}"/>
+			<h:inputText alt="#{htmlAltBundle['inputText.nameEn']}" id="nameEn" size="40" maxlength="40" required="true" value="#{CurricularCourseManagement.nameEn}"/>
 			<h:message for="nameEn" styleClass="error0"/>
 			<h:outputText value="</p>" escape="false"/>	
 		</h:panelGroup>
@@ -65,7 +66,7 @@
 			<h:outputText value="<h4 class='first mtop1'>#{bolonhaBundle['curricularCourseInformation']}</h4>" escape="false"/>
 
 			<h:outputText value="<p><label>#{bolonhaBundle['weight']}:</label>" escape="false"/>
-			<h:inputText id="weight" maxlength="5" size="5" value="#{CurricularCourseManagement.weight}" />
+			<h:inputText alt="#{htmlAltBundle['inputText.weight']}" id="weight" maxlength="5" size="5" value="#{CurricularCourseManagement.weight}" />
 			<h:message for="weight" styleClass="error0"/>
 			<h:outputText value="</p>" escape="false"/>
 
@@ -78,7 +79,7 @@
 			<h:outputText value="</p>" escape="false"/>	
 		</h:panelGroup>
 		<h:outputText value="<p class='mtop1'><label class='lempty'>.</label>" escape="false"/>
-		<h:commandButton styleClass="inputbutton" value="#{bolonhaBundle['update']}" action="#{CurricularCourseManagement.editCurricularCourse}"/>
+		<h:commandButton alt="#{htmlAltBundle['commandButton.update']}" styleClass="inputbutton" value="#{bolonhaBundle['update']}" action="#{CurricularCourseManagement.editCurricularCourse}"/>
 		<h:outputText value="</p></fieldset></div>" escape="false"/>
 		
 		<h:outputText value="<div class='simpleblock4'>" escape="false"/>
@@ -131,10 +132,10 @@
 			<h:outputText value="</p>" escape="false"/>
 			
 			<h:outputText value="<p class='mtop05'><label class='lempty'>.</label>" escape="false"/>
-			<h:commandButton styleClass="inputbutton" value="#{bolonhaBundle['add']}"
+			<h:commandButton alt="#{htmlAltBundle['commandButton.add']}" styleClass="inputbutton" value="#{bolonhaBundle['add']}"
 				action="" actionListener="#{CurricularCourseManagement.addContext}"/>
 			<h:outputText value=" " escape="false"/>							
-			<h:commandButton styleClass="inputbutton" value="#{bolonhaBundle['cancel']}" immediate="true"
+			<h:commandButton alt="#{htmlAltBundle['commandButton.cancel']}" styleClass="inputbutton" value="#{bolonhaBundle['cancel']}" immediate="true"
 				action="#{CurricularCourseManagement.cancel}"/>
 			<h:outputText value="</p></fieldset>" escape="false"/>
 			<h:outputText value="<br/>" escape="false"/>
@@ -201,11 +202,11 @@
 					<h:outputText value="</p>" escape="false"/>
 					
 					<h:outputText value="<p class='mtop05'><label class='lempty'>.</label>" escape="false"/>
-					<h:outputText escape="false" value="<input id='contextID' name='contextID' type='hidden' value='#{CurricularCourseManagement.contextID}'/>"/>
-					<h:commandButton styleClass="inputbutton" value="#{bolonhaBundle['update']}"
+					<h:outputText escape="false" value="<input alt='input.contextID' id='contextID' name='contextID' type='hidden' value='#{CurricularCourseManagement.contextID}'/>"/>
+					<h:commandButton alt="#{htmlAltBundle['commandButton.update']}" styleClass="inputbutton" value="#{bolonhaBundle['update']}"
 							action="#{CurricularCourseManagement.editContext}"/>
 					<h:outputText value=" " escape="false"/>							
-					<h:commandButton styleClass="inputbutton" value="#{bolonhaBundle['cancel']}" immediate="true"
+					<h:commandButton alt="#{htmlAltBundle['commandButton.cancel']}" styleClass="inputbutton" value="#{bolonhaBundle['cancel']}" immediate="true"
 							action="#{CurricularCourseManagement.cancel}"/>
 					<h:outputText value="</p></fieldset>" escape="false"/>
 				</h:panelGroup>
@@ -213,7 +214,7 @@
 		</h:dataTable>
 		<h:outputText value="</div>" escape="false"/>
 
-		<h:commandButton immediate="true" styleClass="inputbutton" value="#{bolonhaBundle['back']}"
+		<h:commandButton alt="#{htmlAltBundle['commandButton.back']}" immediate="true" styleClass="inputbutton" value="#{bolonhaBundle['back']}"
 			action="buildCurricularPlan"/>
 	</h:form>
 </ft:tilesView>

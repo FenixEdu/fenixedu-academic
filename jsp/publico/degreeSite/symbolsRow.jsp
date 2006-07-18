@@ -18,11 +18,11 @@
 
 <div id="search">
 		<form method="get" action="http://www.google.com/u/wwwist">
-		<input type="hidden" name="ie" value="iso-8859-1" />
-		<input type="hidden" name="domains" value="ist.utl.pt" />
-		<input type="hidden" name="sitesearch" value="ist.utl.pt" />
+		<input alt="input.ie" type="hidden" name="ie" value="iso-8859-1" />
+		<input alt="input.domains" type="hidden" name="domains" value="ist.utl.pt" />
+		<input alt="input.sitesearch" type="hidden" name="sitesearch" value="ist.utl.pt" />
 		Pesquisar:
-		<input type="text" id="textfield" name="q" size="17" />
-		<input type="submit" id="submit" name="sa" value="Google" />
+		<input alt="input.q" type="text" id="textfield" name="q" size="17" />
+		<input alt="input.sa" type="submit" id="submit" name="sa" value="Google" />
 		</form>
 	</div>

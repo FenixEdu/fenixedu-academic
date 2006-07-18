@@ -1,5 +1,6 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
@@ -16,9 +17,9 @@
 	<h2><bean:message key="label.summaries" /></h2>
 
 	<html:form action="/viewSiteSummaries">
-		<html:hidden property="page" value="1"/>
-		<html:hidden property="method" value="summaries"/>
-		<html:hidden property="objectCode" value="<%= objectCode.toString() %>"/>
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="summaries"/>
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.objectCode" property="objectCode" value="<%= objectCode.toString() %>"/>
         
 
 
@@ -26,7 +27,7 @@
 			<tr>
 				<td><bean:message key="label.summary.lesson" />:</td>
 				<td>
-					<html:select property="bySummaryType" onchange="this.form.method.value='summaries';this.form.page.value=0;this.form.submit();">
+					<html:select bundle="HTMLALT_RESOURCES" altKey="select.bySummaryType" property="bySummaryType" onchange="this.form.method.value='summaries';this.form.page.value=0;this.form.submit();">
 						<html:option  value="0" key="label.showBy.all" />
 						<html:options collection="lessonTypes" property="name" labelProperty="fullNameTipoAula"/>
 					</html:select>		
@@ -35,7 +36,7 @@
 			<tr>
 				<td><bean:message key="label.shift" />:</td>
 				<td>
-					<html:select property="byShift" onchange="this.form.method.value='summaries';this.form.page.value=0;this.form.submit();">
+					<html:select bundle="HTMLALT_RESOURCES" altKey="select.byShift" property="byShift" onchange="this.form.method.value='summaries';this.form.page.value=0;this.form.submit();">
 						<html:option  value="0" key="label.showBy.all" />
 						<html:options collection="shifts" property="idInternal" labelProperty="lessons"/>
 					</html:select>		
@@ -44,7 +45,7 @@
 			<tr>
 				<td><bean:message key="label.teacher" />:</td>
 				<td>
-					<html:select property="byTeacher" onchange="this.form.method.value='summaries';this.form.page.value=0;this.form.submit();">
+					<html:select bundle="HTMLALT_RESOURCES" altKey="select.byTeacher" property="byTeacher" onchange="this.form.method.value='summaries';this.form.page.value=0;this.form.submit();">
 						<html:option  value="0" key="label.showBy.all" />
 						<html:options collection="professorships" property="idInternal" labelProperty="infoTeacher.infoPerson.nome"/>
 						<html:option  value="-1" key="label.others" />

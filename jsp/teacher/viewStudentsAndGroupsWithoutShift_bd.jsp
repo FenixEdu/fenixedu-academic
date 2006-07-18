@@ -1,5 +1,5 @@
 <%@ page language="java" %>
-<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
+<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%><html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/app.tld" prefix="app" %>
@@ -91,14 +91,14 @@
 	<br/>
 	
 	<tr>
-		<td class="listClasses-header" width="10%"><bean:message key="label.studentGroupNumber" />
-		</td>
-		<td class="listClasses-header" width="16%"><bean:message key="label.numberWord" />
-		</td>
-		<td class="listClasses-header" width="53%"><bean:message key="label.nameWord" />
-		</td>
-		<td class="listClasses-header" width="26%"><bean:message key="label.emailWord" />
-		</td>
+		<th class="listClasses-header" width="10%"><bean:message key="label.studentGroupNumber" />
+		</th>
+		<th class="listClasses-header" width="16%"><bean:message key="label.numberWord" />
+		</th>
+		<th class="listClasses-header" width="53%"><bean:message key="label.nameWord" />
+		</th>
+		<th class="listClasses-header" width="26%"><bean:message key="label.emailWord" />
+		</th>
 	</tr>
 			
 	<logic:iterate id="infoSiteStudentAndGroup" name="infoSiteStudentsAndGroups" property="infoSiteStudentsAndGroupsList">

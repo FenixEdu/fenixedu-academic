@@ -1,5 +1,6 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 
@@ -7,11 +8,11 @@
 
 <html:form action="/searchWrittenEvaluationsByDegreeAndYear" focus="executionDegreeID">
 
-	<html:hidden property="method" value="choose"/>
-	<html:hidden property="page" value="1"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="choose"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
 	
 	<bean:define id="executionPeriodOID" name="executionPeriodOID"/>
-	<html:hidden property="executionPeriodOID" value="<%= executionPeriodOID.toString() %>"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.executionPeriodOID" property="executionPeriodOID" value="<%= executionPeriodOID.toString() %>"/>
 
 	<span class="error"><html:errors/></span>
 
@@ -23,7 +24,7 @@
 		</tr>
 		<tr>
 			<td>
-				<html:select property="executionDegreeID" size="1">
+				<html:select bundle="HTMLALT_RESOURCES" altKey="select.executionDegreeID" property="executionDegreeID" size="1">
 					<html:option key="label.all" value=""/>
 			    	<html:options collection="executionDegreeLabelValueBeans" property="value" labelProperty="label"/>
 			    </html:select>
@@ -34,16 +35,16 @@
 
 	<bean:message key="property.context.curricular.year"/>::<br/>
 	<table>
-		<tr><td><html:multibox property="selectedCurricularYears">1</html:multibox></td><td>1</td></tr>
-		<tr><td><html:multibox property="selectedCurricularYears">2</html:multibox></td><td>2</td></tr>
-		<tr><td><html:multibox property="selectedCurricularYears">3</html:multibox></td><td>3</td></tr>
-		<tr><td><html:multibox property="selectedCurricularYears">4</html:multibox></td><td>4</td></tr>
-		<tr><td><html:multibox property="selectedCurricularYears">5</html:multibox></td><td>5</td></tr>
-		<tr><td colspan="2"><html:checkbox property="selectAllCurricularYears"><bean:message key="checkbox.show.all.curricular.years"/></html:checkbox></tr>
+		<tr><td><html:multibox bundle="HTMLALT_RESOURCES" altKey="multibox.selectedCurricularYears" property="selectedCurricularYears">1</html:multibox></td><td>1</td></tr>
+		<tr><td><html:multibox bundle="HTMLALT_RESOURCES" altKey="multibox.selectedCurricularYears" property="selectedCurricularYears">2</html:multibox></td><td>2</td></tr>
+		<tr><td><html:multibox bundle="HTMLALT_RESOURCES" altKey="multibox.selectedCurricularYears" property="selectedCurricularYears">3</html:multibox></td><td>3</td></tr>
+		<tr><td><html:multibox bundle="HTMLALT_RESOURCES" altKey="multibox.selectedCurricularYears" property="selectedCurricularYears">4</html:multibox></td><td>4</td></tr>
+		<tr><td><html:multibox bundle="HTMLALT_RESOURCES" altKey="multibox.selectedCurricularYears" property="selectedCurricularYears">5</html:multibox></td><td>5</td></tr>
+		<tr><td colspan="2"><html:checkbox bundle="HTMLALT_RESOURCES" altKey="checkbox.selectAllCurricularYears" property="selectAllCurricularYears"><bean:message key="checkbox.show.all.curricular.years"/></html:checkbox></tr>
 	</table>
 	<br/>
 
-	<html:submit styleClass="inputbutton">
+	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton">
 		<bean:message key="lable.choose"/>
 	</html:submit>
 

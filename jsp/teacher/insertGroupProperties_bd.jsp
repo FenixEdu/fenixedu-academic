@@ -1,4 +1,5 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/enum.tld" prefix="e" %>
@@ -20,7 +21,7 @@
 <span class="error"><html:errors/></span>
 
 <html:form action="/createGroupProperties">
-<html:hidden property="page" value="1"/>
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
 <u><bean:message key="message.insertGroupPropertiesData"/></u>
 <br>
 <br>
@@ -30,27 +31,27 @@
 		<tr>
 			<td><bean:message key="message.groupPropertiesName"/>
 			</td>
-			<td><html:text size="40" property="name" /></td>
+			<td><html:text bundle="HTMLALT_RESOURCES" altKey="text.name" size="40" property="name" /></td>
 		</tr>
 	    
 		<tr>
 			<td><bean:message key="message.groupPropertiesProjectDescription"/></td>
-			<td><html:textarea property="projectDescription" cols="30" rows="4"/></td>
+			<td><html:textarea bundle="HTMLALT_RESOURCES" altKey="textarea.projectDescription" property="projectDescription" cols="30" rows="4"/></td>
 		</tr>
 		
     	<tr>
 			<td><bean:message key="message.groupPropertiesEnrolmentBeginDay"/></td>
-			<td><html:text size="10" property="enrolmentBeginDay" />
+			<td><html:text bundle="HTMLALT_RESOURCES" altKey="text.enrolmentBeginDay" size="10" property="enrolmentBeginDay" />
 				<i><bean:message key="label.at" /></i>
-				<html:text size="5" property="enrolmentBeginHour"/>
+				<html:text bundle="HTMLALT_RESOURCES" altKey="text.enrolmentBeginHour" size="5" property="enrolmentBeginHour"/>
 				<i>(dd/mm/aaaa <bean:message key="label.at" /> hh:mm)</i><br />						
 			</td>			
 		</tr>
 		<tr>
 			<td><bean:message key="message.groupPropertiesEnrolmentEndDay"/></td>
-			<td><html:text size="10" property="enrolmentEndDay" />
+			<td><html:text bundle="HTMLALT_RESOURCES" altKey="text.enrolmentEndDay" size="10" property="enrolmentEndDay" />
 				<i><bean:message key="label.at" /></i>
-				<html:text size="5" property="enrolmentEndHour"/>
+				<html:text bundle="HTMLALT_RESOURCES" altKey="text.enrolmentEndHour" size="5" property="enrolmentEndHour"/>
 				<i>(dd/mm/aaaa <bean:message key="label.at" /> hh:mm)</i><br />	
 			</td>		
 			<%--<td><span class="error"><html:errors property="enrolmentEndDay"/></span></td>--%>
@@ -58,7 +59,7 @@
     
     	<tr>
 			<td><bean:message key="message.groupPropertiesEnrolmentPolicy"/></td>
-			<td><html:select property="enrolmentPolicy">
+			<td><html:select bundle="HTMLALT_RESOURCES" altKey="select.enrolmentPolicy" property="enrolmentPolicy">
 	    		<html:option key="option.groupProperties.enrolmentPolicy.atomic" value="true"/>
 	    		<html:option key="option.groupProperties.enrolmentPolicy.individual" value="false"/>
 	    		</html:select>
@@ -69,7 +70,7 @@
 		<tr>
 			<td><bean:message key="message.groupPropertiesShiftType"/></td>
 			<td>
-			<html:select property="shiftType" >
+			<html:select bundle="HTMLALT_RESOURCES" altKey="select.shiftType" property="shiftType" >
 				<html:options collection="shiftTypeValues" property="value" labelProperty="label"/>
 			</html:select>
 			</td>		
@@ -81,7 +82,7 @@
 			<br>
 			<br>
 			</td>
-			<td><html:text size="5" property="maximumCapacity" /></td>
+			<td><html:text bundle="HTMLALT_RESOURCES" altKey="text.maximumCapacity" size="5" property="maximumCapacity" /></td>
 			
 		</tr>	
     	<tr>
@@ -90,7 +91,7 @@
 			<br>
 			<br>
 			</td>
-			<td><html:text size="5" property="minimumCapacity" /></td>
+			<td><html:text bundle="HTMLALT_RESOURCES" altKey="text.minimumCapacity" size="5" property="minimumCapacity" /></td>
 			
 		</tr>
 		<tr>
@@ -99,13 +100,13 @@
 			<br>
 			<br>
 			</td>
-			<td><html:text size="5" property="idealCapacity" /></td>
+			<td><html:text bundle="HTMLALT_RESOURCES" altKey="text.idealCapacity" size="5" property="idealCapacity" /></td>
 			
 		</tr>
 
 		<tr>
 			<td><bean:message key="message.groupPropertiesGroupMaximumNumber"/></td>
-			<td><html:text size="5" property="groupMaximumNumber" /></td>
+			<td><html:text bundle="HTMLALT_RESOURCES" altKey="text.groupMaximumNumber" size="5" property="groupMaximumNumber" /></td>
 			
 		</tr>	
 
@@ -117,15 +118,15 @@
 <table>
 <tr>
 	<td>
-		<html:submit styleClass="inputbutton"><bean:message key="button.save"/>                    		         	
+		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton"><bean:message key="button.save"/>                    		         	
 		</html:submit>       
 	</td>
 	<td>
-		<html:reset styleClass="inputbutton"><bean:message key="label.clear"/>
+		<html:reset bundle="HTMLALT_RESOURCES" altKey="reset.reset" styleClass="inputbutton"><bean:message key="label.clear"/>
 		</html:reset>  
 	</td>
-		<html:hidden property="method" value="createGroupProperties"/>	
-		<html:hidden  property="objectCode" value="<%= pageContext.findAttribute("objectCode").toString() %>" />
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="createGroupProperties"/>	
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.objectCode"  property="objectCode" value="<%= pageContext.findAttribute("objectCode").toString() %>" />
 
 		</html:form>
 
@@ -134,11 +135,11 @@
 	
 		<html:form action="/viewExecutionCourseProjects" method="get">
 	<td>
-		<html:cancel styleClass="inputbutton"><bean:message key="button.cancel"/>                    		         	
+		<html:cancel bundle="HTMLALT_RESOURCES" altKey="cancel.cancel" styleClass="inputbutton"><bean:message key="button.cancel"/>                    		         	
 		</html:cancel>
 	</td>
-		<html:hidden property="method" value="prepareViewExecutionCourseProjects"/>
-		<html:hidden  property="objectCode" value="<%= pageContext.findAttribute("objectCode").toString() %>" />
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="prepareViewExecutionCourseProjects"/>
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.objectCode"  property="objectCode" value="<%= pageContext.findAttribute("objectCode").toString() %>" />
 		</html:form>
 	
 </tr>

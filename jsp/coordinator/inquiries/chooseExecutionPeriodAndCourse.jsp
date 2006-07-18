@@ -1,5 +1,5 @@
 <%@ page language="java" %>
-<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %><html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ page import = "java.util.Iterator" %>
@@ -20,10 +20,10 @@
     	
 		<td>
 			<html:form action="/viewOldInquiriesTeachersResults">
-				<html:hidden property="method" value="prepare"/>
-				<html:hidden property="degreeCurricularPlanID" value='<%= request.getParameter("degreeCurricularPlanID") %>'/>
+				<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="prepare"/>
+				<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.degreeCurricularPlanID" property="degreeCurricularPlanID" value='<%= request.getParameter("degreeCurricularPlanID") %>'/>
 			
-				<html:select property="executionPeriodId" onchange="this.form.submit()">
+				<html:select bundle="HTMLALT_RESOURCES" altKey="select.executionPeriodId" property="executionPeriodId" onchange="this.form.submit()">
 					<html:option key="label.inquiries.chooseExecutionPeriod" bundle="INQUIRIES_RESOURCES" value=""/>
 			
 					<bean:define id="value"><bean:message key="value.inquiries.allExecutionPeriods" bundle="INQUIRIES_RESOURCES"/></bean:define>
@@ -56,21 +56,21 @@
 	<br/>
 	<table width="90%"cellpadding="5" border="0">
 		<tr>
-			<td class="listClasses-header" style="text-align:left">
+			<th class="listClasses-header" style="text-align:left">
 				<bean:message key="table.header.inquiries.courseName" bundle="INQUIRIES_RESOURCES"/>
-			</td>
-			<td class="listClasses-header" style="text-align:left">
+			</th>
+			<th class="listClasses-header" style="text-align:left">
 				<bean:message key="table.header.inquiries.executionPeriod" bundle="INQUIRIES_RESOURCES"/>
-			</td>
-			<td class="listClasses-header">
+			</th>
+			<th class="listClasses-header">
 				<bean:message key="table.header.inquiries.teachers" bundle="INQUIRIES_RESOURCES"/>
-			</td>
-			<td class="listClasses-header">
+			</th>
+			<th class="listClasses-header">
 				<bean:message key="table.header.inquiries.teachersnumber" bundle="INQUIRIES_RESOURCES"/>
-			</td>
-			<td class="listClasses-header">
+			</th>
+			<th class="listClasses-header">
 				<bean:message key="table.header.inquiries.curricularYear" bundle="INQUIRIES_RESOURCES"/>
-			</td>
+			</th>
 		</tr>
 		<logic:iterate id="oldInquiriesTeachersResList" name="oldInquiriesTeachersResListOfLists" type="java.util.List">
 			<%

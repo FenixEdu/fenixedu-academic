@@ -1,5 +1,5 @@
 <%@ page language="java" %>
-<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %><html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/c.tld" prefix="c" %>
@@ -75,10 +75,10 @@
 	</ol>
 
 	<html:form action="/fillInquiries">
-		<html:hidden property="method" value="defaultMethod" />
-		<html:hidden property="attendingExecutionCourseId" />
-		<html:hidden property="studentExecutionDegreeId" />
-		<html:hidden property="studentAttendsId" />
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="defaultMethod" />
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.attendingExecutionCourseId" property="attendingExecutionCourseId" />
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.studentExecutionDegreeId" property="studentExecutionDegreeId" />
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.studentAttendsId" property="studentAttendsId" />
 				
 		<div id='<%= InquiriesUtil.STUDENT_FORM_ANCHOR %>' class="block">
 			<h2>
@@ -119,7 +119,7 @@
 										<bean:define id="year">
 											<c:out value="${cYear}"/>
 										</bean:define>
-										<c:out value="${cYear}"/>&ordm;<html:radio property="curricularYear" value='<%= year %>'/>
+										<c:out value="${cYear}"/>&ordm;<html:radio bundle="HTMLALT_RESOURCES" altKey="radio.curricularYear" property="curricularYear" value='<%= year %>'/>
 									</c:forTokens>
 								</td>
 							</tr>
@@ -132,7 +132,7 @@
 						1.3 <bean:message key="table.rowname.inquiries.student.form.school.class" bundle="INQUIRIES_RESOURCES"/>
 					</td>
 					<td class="right">
-						<html:select property="attendingCourseSchoolClassId">
+						<html:select bundle="HTMLALT_RESOURCES" altKey="select.attendingCourseSchoolClassId" property="attendingCourseSchoolClassId">
 							<bean:define id="noChoice">
 								<bean:message key="value.inquiries.no.choice" bundle="INQUIRIES_RESOURCES"/>
 							</bean:define>
@@ -154,10 +154,10 @@
 					</td>
 					<td class="right">
 						<bean:message key="table.rowname.inquiries.student.form.first.enrollment.yes" bundle="INQUIRIES_RESOURCES"/>
-						<html:radio property="firstEnrollment" value="true"/>
+						<html:radio bundle="HTMLALT_RESOURCES" altKey="radio.firstEnrollment" property="firstEnrollment" value="true"/>
 						
 						<bean:message key="table.rowname.inquiries.student.form.first.enrollment.no" bundle="INQUIRIES_RESOURCES"/>
-						<html:radio property="firstEnrollment" value="false"/>
+						<html:radio bundle="HTMLALT_RESOURCES" altKey="radio.firstEnrollment" property="firstEnrollment" value="false"/>
 					</td>
 				</tr>
 
@@ -214,7 +214,7 @@
 							<br/>
 							<logic:notPresent name='<%= InquiriesUtil.ATTENDING_COURSE_EXECUTION_DEGREE %>'>
 								<logic:present name='<%= InquiriesUtil.ATTENDING_COURSE_EXECUTION_DEGREES %>'>
-									<html:select property="attendingCourseExecutionDegreeId">
+									<html:select bundle="HTMLALT_RESOURCES" altKey="select.attendingCourseExecutionDegreeId" property="attendingCourseExecutionDegreeId">
 										<html:options property="idInternal" 
 													  labelProperty="infoDegreeCurricularPlan.infoDegree.sigla" 
 													  collection='<%= InquiriesUtil.ATTENDING_COURSE_EXECUTION_DEGREES %>' />
@@ -223,7 +223,7 @@
 							</logic:notPresent>
 							<logic:present name='<%= InquiriesUtil.ATTENDING_COURSE_EXECUTION_DEGREE %>'>
 								<bean:define id="attendingCourseExecutionDegreeId" name='<%= InquiriesUtil.ATTENDING_COURSE_EXECUTION_DEGREE %>' property="idInternal" />
-								<html:hidden property="attendingCourseExecutionDegreeId" value='<%= attendingCourseExecutionDegreeId.toString() %>' />
+								<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.attendingCourseExecutionDegreeId" property="attendingCourseExecutionDegreeId" value='<%= attendingCourseExecutionDegreeId.toString() %>' />
 							</logic:present>
 						</td>
 					</tr>
@@ -253,7 +253,7 @@
 												<c:out value="${int}"/>
 											</bean:define>
 										<td>
-											<html:radio property="executionCourseQuestion22" value='<%= i %>'/>
+											<html:radio bundle="HTMLALT_RESOURCES" altKey="radio.executionCourseQuestion22" property="executionCourseQuestion22" value='<%= i %>'/>
 										</td>
 									</c:forTokens>
 								</tr>
@@ -280,7 +280,7 @@
 												<c:out value="${int}"/>
 											</bean:define>
 										<td>
-											<html:radio property="executionCourseQuestion23" value='<%= i %>'/>
+											<html:radio bundle="HTMLALT_RESOURCES" altKey="radio.executionCourseQuestion23" property="executionCourseQuestion23" value='<%= i %>'/>
 										</td>
 									</c:forTokens>
 								</tr>
@@ -307,7 +307,7 @@
 												<c:out value="${int}"/>
 											</bean:define>
 										<td>
-											<html:radio property="executionCourseQuestion24" value='<%= i %>'/>
+											<html:radio bundle="HTMLALT_RESOURCES" altKey="radio.executionCourseQuestion24" property="executionCourseQuestion24" value='<%= i %>'/>
 										</td>
 									</c:forTokens>
 								</tr>
@@ -337,7 +337,7 @@
 												<c:out value="${int}"/>
 											</bean:define>
 										<td>
-											<html:radio property="executionCourseQuestion25" value='<%= i %>'/>
+											<html:radio bundle="HTMLALT_RESOURCES" altKey="radio.executionCourseQuestion25" property="executionCourseQuestion25" value='<%= i %>'/>
 										</td>
 									</c:forTokens>
 								</tr>
@@ -364,7 +364,7 @@
 												<c:out value="${int}"/>
 											</bean:define>
 										<td>
-											<html:radio property="executionCourseQuestion26" value='<%= i %>'/>
+											<html:radio bundle="HTMLALT_RESOURCES" altKey="radio.executionCourseQuestion26" property="executionCourseQuestion26" value='<%= i %>'/>
 										</td>
 									</c:forTokens>
 								</tr>
@@ -391,7 +391,7 @@
 												<c:out value="${int}"/>
 											</bean:define>
 										<td>
-											<html:radio property="executionCourseQuestion27" value='<%= i %>'/>
+											<html:radio bundle="HTMLALT_RESOURCES" altKey="radio.executionCourseQuestion27" property="executionCourseQuestion27" value='<%= i %>'/>
 										</td>
 									</c:forTokens>
 								</tr>
@@ -418,7 +418,7 @@
 												<c:out value="${int}"/>
 											</bean:define>
 										<td>
-											<html:radio property="executionCourseQuestion28" value='<%= i %>'/>
+											<html:radio bundle="HTMLALT_RESOURCES" altKey="radio.executionCourseQuestion28" property="executionCourseQuestion28" value='<%= i %>'/>
 										</td>
 									</c:forTokens>
 								</tr>
@@ -470,9 +470,9 @@
 			%>
 
 			<logic:present name='<%= InquiriesUtil.ATTENDING_COURSE_TEACHERS %>'>
-				<html:hidden property="newAttendingCourseTeacherId" />
-				<html:hidden property="newAttendingCourseNonAffiliatedTeacherId" />
-				<html:hidden property="selectedAttendingCourseTeacherFormPosition" />
+				<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.newAttendingCourseTeacherId" property="newAttendingCourseTeacherId" />
+				<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.newAttendingCourseNonAffiliatedTeacherId" property="newAttendingCourseNonAffiliatedTeacherId" />
+				<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.selectedAttendingCourseTeacherFormPosition" property="selectedAttendingCourseTeacherFormPosition" />
 
 				<bean:define id="evaluateTeacher">
 					<bean:message key="message.inquiries.anchor.title.evaluate.teacher" bundle="INQUIRIES_RESOURCES"/>
@@ -507,11 +507,11 @@
 								<bean:define id="currentTeacherId" name="attendingCourseTeacher" property="idInternal"/>
 								<li class="border">									
 									<logic:empty name="attendingCourseTeacher" property="remainingClassTypes">
-										<input type="submit" class="inquirybutton" disabled="disabled" value='<%= evaluateButtonValue %>' />
+										<input alt="input.input" type="submit" class="inquirybutton" disabled="disabled" value='<%= evaluateButtonValue %>' />
 									</logic:empty>
 									
 									<logic:notEmpty name="attendingCourseTeacher" property="remainingClassTypes">
-										<html:submit styleClass="inquirybutton"
+										<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inquirybutton"
 											onclick='<%="this.form.method.value='prepareNewTeacher';this.form.newAttendingCourseTeacherId.value='" + currentTeacherId + "';" %>'
 											value='<%= evaluateButtonValue %>' title='<%= evaluateButtonTitle %>' />
 									</logic:notEmpty>
@@ -565,28 +565,28 @@
 															</td>
 										
 															<td>
-																<html:submit styleClass="inquirybutton" value='<%= editButtonValue %>' title='<%= editButtonTitle %>' 
+																<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inquirybutton" value='<%= editButtonValue %>' title='<%= editButtonTitle %>' 
 																	onclick='<%="this.form.method.value='editTeacher';this.form.selectedAttendingCourseTeacherFormPosition.value='" + selectedTeacherFormPosition + "';" %>' />
 																	
-																<html:submit styleClass="inquirybutton" value='<%= removeButtonValue %>' title='<%= removeButtonTitle %>' 
+																<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inquirybutton" value='<%= removeButtonValue %>' title='<%= removeButtonTitle %>' 
 																	onclick='<%="this.form.method.value='removeTeacher';this.form.selectedAttendingCourseTeacherFormPosition.value='" + selectedTeacherFormPosition + "';" %>'/>
 															</td>
 														</tr>
-														<html:hidden property="selectedAttendingCourseTeachersId" value='<%= "" + selectedAttendingCourseTeacherId %>'/>
-														<html:hidden property="selectedAttendingCourseTeachersClassTypeT" value='<%= "" + selectedAttendingCourseTeacher.hasClassType(ShiftType.TEORICA.name()) %>' />
-														<html:hidden property="selectedAttendingCourseTeachersClassTypeP" value='<%= "" + selectedAttendingCourseTeacher.hasClassType(ShiftType.PRATICA.name()) %>' />
-														<html:hidden property="selectedAttendingCourseTeachersClassTypeL" value='<%= "" + selectedAttendingCourseTeacher.hasClassType(ShiftType.LABORATORIAL.name()) %>' />
-														<html:hidden property="selectedAttendingCourseTeachersClassTypeTP" value='<%= "" + selectedAttendingCourseTeacher.hasClassType(ShiftType.TEORICO_PRATICA.name()) %>' />
-														<html:hidden property="selectedAttendingCourseTeachersQuestion33" value='<%= "" + selectedAttendingCourseTeacher.getStudentAssiduity() %>' />
-														<html:hidden property="selectedAttendingCourseTeachersQuestion34" value='<%= "" + selectedAttendingCourseTeacher.getTeacherAssiduity() %>' />
-														<html:hidden property="selectedAttendingCourseTeachersQuestion35" value='<%= "" + selectedAttendingCourseTeacher.getTeacherPunctuality() %>' />
-														<html:hidden property="selectedAttendingCourseTeachersQuestion36" value='<%= "" + selectedAttendingCourseTeacher.getTeacherClarity() %>' />
-														<html:hidden property="selectedAttendingCourseTeachersQuestion37" value='<%= "" + selectedAttendingCourseTeacher.getTeacherAssurance() %>' />
-														<html:hidden property="selectedAttendingCourseTeachersQuestion38" value='<%= "" + selectedAttendingCourseTeacher.getTeacherInterestStimulation() %>' />
-														<html:hidden property="selectedAttendingCourseTeachersQuestion39" value='<%= "" + selectedAttendingCourseTeacher.getTeacherAvailability() %>' />
-														<html:hidden property="selectedAttendingCourseTeachersQuestion310" value='<%= "" + selectedAttendingCourseTeacher.getTeacherReasoningStimulation() %>' />
-														<html:hidden property="selectedAttendingCourseTeachersQuestion311" value='<%= "" + selectedAttendingCourseTeacher.getGlobalAppreciation() %>' />
-														<html:hidden property="selectedAttendingCourseTeacherIsAffiliated" value="true"/>
+														<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.selectedAttendingCourseTeachersId" property="selectedAttendingCourseTeachersId" value='<%= "" + selectedAttendingCourseTeacherId %>'/>
+														<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.selectedAttendingCourseTeachersClassTypeT" property="selectedAttendingCourseTeachersClassTypeT" value='<%= "" + selectedAttendingCourseTeacher.hasClassType(ShiftType.TEORICA.name()) %>' />
+														<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.selectedAttendingCourseTeachersClassTypeP" property="selectedAttendingCourseTeachersClassTypeP" value='<%= "" + selectedAttendingCourseTeacher.hasClassType(ShiftType.PRATICA.name()) %>' />
+														<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.selectedAttendingCourseTeachersClassTypeL" property="selectedAttendingCourseTeachersClassTypeL" value='<%= "" + selectedAttendingCourseTeacher.hasClassType(ShiftType.LABORATORIAL.name()) %>' />
+														<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.selectedAttendingCourseTeachersClassTypeTP" property="selectedAttendingCourseTeachersClassTypeTP" value='<%= "" + selectedAttendingCourseTeacher.hasClassType(ShiftType.TEORICO_PRATICA.name()) %>' />
+														<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.selectedAttendingCourseTeachersQuestion33" property="selectedAttendingCourseTeachersQuestion33" value='<%= "" + selectedAttendingCourseTeacher.getStudentAssiduity() %>' />
+														<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.selectedAttendingCourseTeachersQuestion34" property="selectedAttendingCourseTeachersQuestion34" value='<%= "" + selectedAttendingCourseTeacher.getTeacherAssiduity() %>' />
+														<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.selectedAttendingCourseTeachersQuestion35" property="selectedAttendingCourseTeachersQuestion35" value='<%= "" + selectedAttendingCourseTeacher.getTeacherPunctuality() %>' />
+														<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.selectedAttendingCourseTeachersQuestion36" property="selectedAttendingCourseTeachersQuestion36" value='<%= "" + selectedAttendingCourseTeacher.getTeacherClarity() %>' />
+														<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.selectedAttendingCourseTeachersQuestion37" property="selectedAttendingCourseTeachersQuestion37" value='<%= "" + selectedAttendingCourseTeacher.getTeacherAssurance() %>' />
+														<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.selectedAttendingCourseTeachersQuestion38" property="selectedAttendingCourseTeachersQuestion38" value='<%= "" + selectedAttendingCourseTeacher.getTeacherInterestStimulation() %>' />
+														<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.selectedAttendingCourseTeachersQuestion39" property="selectedAttendingCourseTeachersQuestion39" value='<%= "" + selectedAttendingCourseTeacher.getTeacherAvailability() %>' />
+														<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.selectedAttendingCourseTeachersQuestion310" property="selectedAttendingCourseTeachersQuestion310" value='<%= "" + selectedAttendingCourseTeacher.getTeacherReasoningStimulation() %>' />
+														<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.selectedAttendingCourseTeachersQuestion311" property="selectedAttendingCourseTeachersQuestion311" value='<%= "" + selectedAttendingCourseTeacher.getGlobalAppreciation() %>' />
+														<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.selectedAttendingCourseTeacherIsAffiliated" property="selectedAttendingCourseTeacherIsAffiliated" value="true"/>
 									
 													<%
 													selectedTeacherFormPosition++;
@@ -609,10 +609,10 @@
 																</td>
 											
 																<td>
-																	<input type="submit" class="inquirybutton" disabled="disabled"
+																	<input alt="input.input" type="submit" class="inquirybutton" disabled="disabled"
 																		value='<%= editButtonValue %>' >
 																		
-																	<input type="submit" class="inquirybutton" disabled="disabled"
+																	<input alt="input.input" type="submit" class="inquirybutton" disabled="disabled"
 																		value='<%= removeButtonValue %>' >
 																</td>
 															</tr>
@@ -632,11 +632,11 @@
 								<bean:define id="currentTeacherId" name="attendingCourseTeacher" property="idInternal"/>
 								<li class="border">
 									<logic:empty name="attendingCourseTeacher" property="remainingClassTypes">
-										<input type="submit" class="inquirybutton" disabled="disabled" value='<%= evaluateButtonValue %>' />
+										<input alt="input.input" type="submit" class="inquirybutton" disabled="disabled" value='<%= evaluateButtonValue %>' />
 									</logic:empty>
 
 									<logic:notEmpty name="attendingCourseTeacher" property="remainingClassTypes">
-										<html:submit styleClass="inquirybutton"
+										<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inquirybutton"
 											onclick='<%="this.form.method.value='prepareNewTeacher';this.form.newAttendingCourseNonAffiliatedTeacherId.value='" + currentTeacherId + "';" %>'
 											value='<%= evaluateButtonValue %>' title='<%= evaluateButtonTitle %>' />
 									</logic:notEmpty>
@@ -690,28 +690,28 @@
 															</td>
 										
 															<td>
-																<html:submit styleClass="inquirybutton" value='<%= editButtonValue %>' title='<%= editButtonTitle %>' 
+																<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inquirybutton" value='<%= editButtonValue %>' title='<%= editButtonTitle %>' 
 																	onclick='<%="this.form.method.value='editTeacher';this.form.selectedAttendingCourseTeacherFormPosition.value='" + selectedTeacherFormPosition + "';" %>' />
 																	
-																<html:submit styleClass="inquirybutton" value='<%= removeButtonValue %>' title='<%= removeButtonTitle %>' 
+																<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inquirybutton" value='<%= removeButtonValue %>' title='<%= removeButtonTitle %>' 
 																	onclick='<%="this.form.method.value='removeTeacher';this.form.selectedAttendingCourseTeacherFormPosition.value='" + selectedTeacherFormPosition + "';" %>'/>
 															</td>
 														</tr>
-														<html:hidden property="selectedAttendingCourseTeachersId" value='<%= "" + selectedAttendingCourseTeacherId %>'/>
-														<html:hidden property="selectedAttendingCourseTeachersClassTypeT" value='<%= "" + selectedAttendingCourseTeacher.hasClassType(ShiftType.TEORICA.name()) %>' />
-														<html:hidden property="selectedAttendingCourseTeachersClassTypeP" value='<%= "" + selectedAttendingCourseTeacher.hasClassType(ShiftType.PRATICA.name()) %>' />
-														<html:hidden property="selectedAttendingCourseTeachersClassTypeL" value='<%= "" + selectedAttendingCourseTeacher.hasClassType(ShiftType.LABORATORIAL.name()) %>' />
-														<html:hidden property="selectedAttendingCourseTeachersClassTypeTP" value='<%= "" + selectedAttendingCourseTeacher.hasClassType(ShiftType.TEORICO_PRATICA.name()) %>' />
-														<html:hidden property="selectedAttendingCourseTeachersQuestion33" value='<%= "" + selectedAttendingCourseTeacher.getStudentAssiduity() %>' />
-														<html:hidden property="selectedAttendingCourseTeachersQuestion34" value='<%= "" + selectedAttendingCourseTeacher.getTeacherAssiduity() %>' />
-														<html:hidden property="selectedAttendingCourseTeachersQuestion35" value='<%= "" + selectedAttendingCourseTeacher.getTeacherPunctuality() %>' />
-														<html:hidden property="selectedAttendingCourseTeachersQuestion36" value='<%= "" + selectedAttendingCourseTeacher.getTeacherClarity() %>' />
-														<html:hidden property="selectedAttendingCourseTeachersQuestion37" value='<%= "" + selectedAttendingCourseTeacher.getTeacherAssurance() %>' />
-														<html:hidden property="selectedAttendingCourseTeachersQuestion38" value='<%= "" + selectedAttendingCourseTeacher.getTeacherInterestStimulation() %>' />
-														<html:hidden property="selectedAttendingCourseTeachersQuestion39" value='<%= "" + selectedAttendingCourseTeacher.getTeacherAvailability() %>' />
-														<html:hidden property="selectedAttendingCourseTeachersQuestion310" value='<%= "" + selectedAttendingCourseTeacher.getTeacherReasoningStimulation() %>' />
-														<html:hidden property="selectedAttendingCourseTeachersQuestion311" value='<%= "" + selectedAttendingCourseTeacher.getGlobalAppreciation() %>' />
-														<html:hidden property="selectedAttendingCourseTeacherIsAffiliated" value="false"/>
+														<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.selectedAttendingCourseTeachersId" property="selectedAttendingCourseTeachersId" value='<%= "" + selectedAttendingCourseTeacherId %>'/>
+														<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.selectedAttendingCourseTeachersClassTypeT" property="selectedAttendingCourseTeachersClassTypeT" value='<%= "" + selectedAttendingCourseTeacher.hasClassType(ShiftType.TEORICA.name()) %>' />
+														<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.selectedAttendingCourseTeachersClassTypeP" property="selectedAttendingCourseTeachersClassTypeP" value='<%= "" + selectedAttendingCourseTeacher.hasClassType(ShiftType.PRATICA.name()) %>' />
+														<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.selectedAttendingCourseTeachersClassTypeL" property="selectedAttendingCourseTeachersClassTypeL" value='<%= "" + selectedAttendingCourseTeacher.hasClassType(ShiftType.LABORATORIAL.name()) %>' />
+														<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.selectedAttendingCourseTeachersClassTypeTP" property="selectedAttendingCourseTeachersClassTypeTP" value='<%= "" + selectedAttendingCourseTeacher.hasClassType(ShiftType.TEORICO_PRATICA.name()) %>' />
+														<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.selectedAttendingCourseTeachersQuestion33" property="selectedAttendingCourseTeachersQuestion33" value='<%= "" + selectedAttendingCourseTeacher.getStudentAssiduity() %>' />
+														<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.selectedAttendingCourseTeachersQuestion34" property="selectedAttendingCourseTeachersQuestion34" value='<%= "" + selectedAttendingCourseTeacher.getTeacherAssiduity() %>' />
+														<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.selectedAttendingCourseTeachersQuestion35" property="selectedAttendingCourseTeachersQuestion35" value='<%= "" + selectedAttendingCourseTeacher.getTeacherPunctuality() %>' />
+														<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.selectedAttendingCourseTeachersQuestion36" property="selectedAttendingCourseTeachersQuestion36" value='<%= "" + selectedAttendingCourseTeacher.getTeacherClarity() %>' />
+														<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.selectedAttendingCourseTeachersQuestion37" property="selectedAttendingCourseTeachersQuestion37" value='<%= "" + selectedAttendingCourseTeacher.getTeacherAssurance() %>' />
+														<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.selectedAttendingCourseTeachersQuestion38" property="selectedAttendingCourseTeachersQuestion38" value='<%= "" + selectedAttendingCourseTeacher.getTeacherInterestStimulation() %>' />
+														<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.selectedAttendingCourseTeachersQuestion39" property="selectedAttendingCourseTeachersQuestion39" value='<%= "" + selectedAttendingCourseTeacher.getTeacherAvailability() %>' />
+														<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.selectedAttendingCourseTeachersQuestion310" property="selectedAttendingCourseTeachersQuestion310" value='<%= "" + selectedAttendingCourseTeacher.getTeacherReasoningStimulation() %>' />
+														<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.selectedAttendingCourseTeachersQuestion311" property="selectedAttendingCourseTeachersQuestion311" value='<%= "" + selectedAttendingCourseTeacher.getGlobalAppreciation() %>' />
+														<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.selectedAttendingCourseTeacherIsAffiliated" property="selectedAttendingCourseTeacherIsAffiliated" value="false"/>
 			
 								
 													<%
@@ -735,10 +735,10 @@
 																</td>
 											
 																<td>
-																	<input type="submit" class="inquirybutton" disabled="disabled"
+																	<input alt="input.input" type="submit" class="inquirybutton" disabled="disabled"
 																		value='<%= editButtonValue %>' >
 																		
-																	<input type="submit" class="inquirybutton" disabled="disabled"
+																	<input alt="input.input" type="submit" class="inquirybutton" disabled="disabled"
 																		value='<%= removeButtonValue %>' >
 																</td>
 															</tr>
@@ -774,27 +774,27 @@
 					   (currentAttendingCourseTeacherFormPosition.intValue() == teacherPosition)) {
 					%>
 						
-						<html:hidden property="currentAttendingCourseTeacherFormPosition" value='<%= "" + selectedTeacherFormPosition %>' />
-						<html:hidden property="selectedAttendingCourseTeachersId" value='<%= "" + selectedAttendingCourseTeacherId %>'/>
-						<html:hidden property="selectedAttendingCourseTeachersClassTypeT" value='<%= "" + selectedAttendingCourseTeacher.hasClassType(ShiftType.TEORICA.name()) %>' />
-						<html:hidden property="selectedAttendingCourseTeachersClassTypeP" value='<%= "" + selectedAttendingCourseTeacher.hasClassType(ShiftType.PRATICA.name()) %>' />
-						<html:hidden property="selectedAttendingCourseTeachersClassTypeL" value='<%= "" + selectedAttendingCourseTeacher.hasClassType(ShiftType.LABORATORIAL.name()) %>' />
-						<html:hidden property="selectedAttendingCourseTeachersClassTypeTP" value='<%= "" + selectedAttendingCourseTeacher.hasClassType(ShiftType.TEORICO_PRATICA.name()) %>' />
-						<html:hidden property="selectedAttendingCourseTeachersQuestion33" value='<%= "" + selectedAttendingCourseTeacher.getStudentAssiduity() %>' />
-						<html:hidden property="selectedAttendingCourseTeachersQuestion34" value='<%= "" + selectedAttendingCourseTeacher.getTeacherAssiduity() %>' />
-						<html:hidden property="selectedAttendingCourseTeachersQuestion35" value='<%= "" + selectedAttendingCourseTeacher.getTeacherPunctuality() %>' />
-						<html:hidden property="selectedAttendingCourseTeachersQuestion36" value='<%= "" + selectedAttendingCourseTeacher.getTeacherClarity() %>' />
-						<html:hidden property="selectedAttendingCourseTeachersQuestion37" value='<%= "" + selectedAttendingCourseTeacher.getTeacherAssurance() %>' />
-						<html:hidden property="selectedAttendingCourseTeachersQuestion38" value='<%= "" + selectedAttendingCourseTeacher.getTeacherInterestStimulation() %>' />
-						<html:hidden property="selectedAttendingCourseTeachersQuestion39" value='<%= "" + selectedAttendingCourseTeacher.getTeacherAvailability() %>' />
-						<html:hidden property="selectedAttendingCourseTeachersQuestion310" value='<%= "" + selectedAttendingCourseTeacher.getTeacherReasoningStimulation() %>' />
-						<html:hidden property="selectedAttendingCourseTeachersQuestion311" value='<%= "" + selectedAttendingCourseTeacher.getGlobalAppreciation() %>' />
+						<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.currentAttendingCourseTeacherFormPosition" property="currentAttendingCourseTeacherFormPosition" value='<%= "" + selectedTeacherFormPosition %>' />
+						<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.selectedAttendingCourseTeachersId" property="selectedAttendingCourseTeachersId" value='<%= "" + selectedAttendingCourseTeacherId %>'/>
+						<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.selectedAttendingCourseTeachersClassTypeT" property="selectedAttendingCourseTeachersClassTypeT" value='<%= "" + selectedAttendingCourseTeacher.hasClassType(ShiftType.TEORICA.name()) %>' />
+						<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.selectedAttendingCourseTeachersClassTypeP" property="selectedAttendingCourseTeachersClassTypeP" value='<%= "" + selectedAttendingCourseTeacher.hasClassType(ShiftType.PRATICA.name()) %>' />
+						<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.selectedAttendingCourseTeachersClassTypeL" property="selectedAttendingCourseTeachersClassTypeL" value='<%= "" + selectedAttendingCourseTeacher.hasClassType(ShiftType.LABORATORIAL.name()) %>' />
+						<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.selectedAttendingCourseTeachersClassTypeTP" property="selectedAttendingCourseTeachersClassTypeTP" value='<%= "" + selectedAttendingCourseTeacher.hasClassType(ShiftType.TEORICO_PRATICA.name()) %>' />
+						<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.selectedAttendingCourseTeachersQuestion33" property="selectedAttendingCourseTeachersQuestion33" value='<%= "" + selectedAttendingCourseTeacher.getStudentAssiduity() %>' />
+						<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.selectedAttendingCourseTeachersQuestion34" property="selectedAttendingCourseTeachersQuestion34" value='<%= "" + selectedAttendingCourseTeacher.getTeacherAssiduity() %>' />
+						<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.selectedAttendingCourseTeachersQuestion35" property="selectedAttendingCourseTeachersQuestion35" value='<%= "" + selectedAttendingCourseTeacher.getTeacherPunctuality() %>' />
+						<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.selectedAttendingCourseTeachersQuestion36" property="selectedAttendingCourseTeachersQuestion36" value='<%= "" + selectedAttendingCourseTeacher.getTeacherClarity() %>' />
+						<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.selectedAttendingCourseTeachersQuestion37" property="selectedAttendingCourseTeachersQuestion37" value='<%= "" + selectedAttendingCourseTeacher.getTeacherAssurance() %>' />
+						<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.selectedAttendingCourseTeachersQuestion38" property="selectedAttendingCourseTeachersQuestion38" value='<%= "" + selectedAttendingCourseTeacher.getTeacherInterestStimulation() %>' />
+						<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.selectedAttendingCourseTeachersQuestion39" property="selectedAttendingCourseTeachersQuestion39" value='<%= "" + selectedAttendingCourseTeacher.getTeacherAvailability() %>' />
+						<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.selectedAttendingCourseTeachersQuestion310" property="selectedAttendingCourseTeachersQuestion310" value='<%= "" + selectedAttendingCourseTeacher.getTeacherReasoningStimulation() %>' />
+						<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.selectedAttendingCourseTeachersQuestion311" property="selectedAttendingCourseTeachersQuestion311" value='<%= "" + selectedAttendingCourseTeacher.getGlobalAppreciation() %>' />
 						
 						<logic:present name="selectedAttendingCourseTeacher" property="teacherOrNonAffiliatedTeacher.teacher">
-							<html:hidden property="selectedAttendingCourseTeacherIsAffiliated" value="true"/>
+							<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.selectedAttendingCourseTeacherIsAffiliated" property="selectedAttendingCourseTeacherIsAffiliated" value="true"/>
 						</logic:present>
 						<logic:present name="selectedAttendingCourseTeacher" property="teacherOrNonAffiliatedTeacher.nonAffiliatedTeacher">
-							<html:hidden property="selectedAttendingCourseTeacherIsAffiliated" value="false"/>
+							<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.selectedAttendingCourseTeacherIsAffiliated" property="selectedAttendingCourseTeacherIsAffiliated" value="false"/>
 						</logic:present>
 						
 						<table id='<%= InquiriesUtil.CURRENT_ATTENDING_COURSE_TEACHER_FORM_ANCHOR  %>'>
@@ -832,7 +832,7 @@
 									<ul class="schoolClassType">								
 									<logic:iterate id="remainingClassType" name="selectedAttendingCourseTeacher" property="teacherOrNonAffiliatedTeacher.remainingClassTypes">
 										<li>
-											<html:multibox property="currentAttendingCourseTeacherClassType">
+											<html:multibox bundle="HTMLALT_RESOURCES" altKey="multibox.currentAttendingCourseTeacherClassType" property="currentAttendingCourseTeacherClassType">
 												<bean:write name="remainingClassType" property="name" />
 											</html:multibox>
 											<bean:write name="remainingClassType" property="fullNameTipoAula" />
@@ -840,7 +840,7 @@
 									</logic:iterate>
 									<logic:iterate id="classType" name="selectedAttendingCourseTeacher" property="classTypes">
 										<li>
-											<html:multibox property="currentAttendingCourseTeacherClassType">
+											<html:multibox bundle="HTMLALT_RESOURCES" altKey="multibox.currentAttendingCourseTeacherClassType" property="currentAttendingCourseTeacherClassType">
 												<bean:write name="classType" property="name" />
 											</html:multibox>
 											<bean:write name="classType" property="fullNameTipoAula" />
@@ -889,7 +889,7 @@
 													<c:out value="${int}"/>
 												</bean:define>
 												<td>
-													<html:radio property="currentAttendingCourseTeacherQuestion33" value='<%= i %>'/>
+													<html:radio bundle="HTMLALT_RESOURCES" altKey="radio.currentAttendingCourseTeacherQuestion33" property="currentAttendingCourseTeacherQuestion33" value='<%= i %>'/>
 												</td>
 											</c:forTokens>
 										</tr>
@@ -916,7 +916,7 @@
 														<c:out value="${int}"/>
 													</bean:define>
 												<td>
-													<html:radio property="currentAttendingCourseTeacherQuestion34" value='<%= i %>'/>
+													<html:radio bundle="HTMLALT_RESOURCES" altKey="radio.currentAttendingCourseTeacherQuestion34" property="currentAttendingCourseTeacherQuestion34" value='<%= i %>'/>
 												</td>
 											</c:forTokens>
 										</tr>
@@ -943,7 +943,7 @@
 													<c:out value="${int}"/>
 												</bean:define>
 												<td>
-													<html:radio property="currentAttendingCourseTeacherQuestion35" value='<%= i %>'/>
+													<html:radio bundle="HTMLALT_RESOURCES" altKey="radio.currentAttendingCourseTeacherQuestion35" property="currentAttendingCourseTeacherQuestion35" value='<%= i %>'/>
 												</td>
 											</c:forTokens>
 										</tr>
@@ -970,7 +970,7 @@
 														<c:out value="${int}"/>
 													</bean:define>
 												<td>
-													<html:radio property="currentAttendingCourseTeacherQuestion36" value='<%= i %>'/>
+													<html:radio bundle="HTMLALT_RESOURCES" altKey="radio.currentAttendingCourseTeacherQuestion36" property="currentAttendingCourseTeacherQuestion36" value='<%= i %>'/>
 												</td>
 											</c:forTokens>
 										</tr>
@@ -997,7 +997,7 @@
 														<c:out value="${int}"/>
 													</bean:define>
 												<td>
-													<html:radio property="currentAttendingCourseTeacherQuestion37" value='<%= i %>'/>
+													<html:radio bundle="HTMLALT_RESOURCES" altKey="radio.currentAttendingCourseTeacherQuestion37" property="currentAttendingCourseTeacherQuestion37" value='<%= i %>'/>
 												</td>
 											</c:forTokens>
 										</tr>
@@ -1024,7 +1024,7 @@
 														<c:out value="${int}"/>
 													</bean:define>
 												<td>
-													<html:radio property="currentAttendingCourseTeacherQuestion38" value='<%= i %>'/>
+													<html:radio bundle="HTMLALT_RESOURCES" altKey="radio.currentAttendingCourseTeacherQuestion38" property="currentAttendingCourseTeacherQuestion38" value='<%= i %>'/>
 												</td>
 											</c:forTokens>
 										</tr>
@@ -1051,7 +1051,7 @@
 														<c:out value="${int}"/>
 													</bean:define>
 												<td>
-													<html:radio property="currentAttendingCourseTeacherQuestion39" value='<%= i %>'/>
+													<html:radio bundle="HTMLALT_RESOURCES" altKey="radio.currentAttendingCourseTeacherQuestion39" property="currentAttendingCourseTeacherQuestion39" value='<%= i %>'/>
 												</td>
 											</c:forTokens>
 										</tr>
@@ -1078,7 +1078,7 @@
 														<c:out value="${int}"/>
 													</bean:define>
 												<td>
-													<html:radio property="currentAttendingCourseTeacherQuestion310" value='<%= i %>'/>
+													<html:radio bundle="HTMLALT_RESOURCES" altKey="radio.currentAttendingCourseTeacherQuestion310" property="currentAttendingCourseTeacherQuestion310" value='<%= i %>'/>
 												</td>
 											</c:forTokens>
 										</tr>
@@ -1105,7 +1105,7 @@
 														<c:out value="${int}"/>
 													</bean:define>
 												<td>
-													<html:radio property="currentAttendingCourseTeacherQuestion311" value='<%= i %>'/>
+													<html:radio bundle="HTMLALT_RESOURCES" altKey="radio.currentAttendingCourseTeacherQuestion311" property="currentAttendingCourseTeacherQuestion311" value='<%= i %>'/>
 												</td>
 											</c:forTokens>
 										</tr>
@@ -1115,10 +1115,10 @@
 
 							<tr>
 								<td class="left" colspan="2">
-									<html:submit styleClass="inquirybutton" onclick='<%="this.form.method.value='closeTeacher';" %>'>
+									<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inquirybutton" onclick='<%="this.form.method.value='closeTeacher';" %>'>
 										<bean:message key="button.inquiries.confirm.evaluation" bundle="INQUIRIES_RESOURCES"/>
 									</html:submit>
-									<html:submit styleClass="inquirybutton" onclick='<%="this.form.method.value='removeTeacher';this.form.selectedAttendingCourseTeacherFormPosition.value='" + selectedTeacherFormPosition + "';" %>'>
+									<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inquirybutton" onclick='<%="this.form.method.value='removeTeacher';this.form.selectedAttendingCourseTeacherFormPosition.value='" + selectedTeacherFormPosition + "';" %>'>
 										<bean:message key="button.inquiries.remove.evaluation" bundle="INQUIRIES_RESOURCES"/>
 									</html:submit>
 								</td>
@@ -1159,10 +1159,10 @@
 							</tr>
 							<tr>
 								<td class="left" colspan="2">
-									<html:submit styleClass="inquirybutton" onclick='<%="this.form.method.value='editTeacher';this.form.selectedAttendingCourseTeacherFormPosition.value='" + teacherPosition + "';" %>'>
+									<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inquirybutton" onclick='<%="this.form.method.value='editTeacher';this.form.selectedAttendingCourseTeacherFormPosition.value='" + teacherPosition + "';" %>'>
 										<bean:message key="button.inquiries.edit.evaluation" bundle="INQUIRIES_RESOURCES"/>
 									</html:submit>
-									<html:submit styleClass="inquirybutton" onclick='<%="this.form.method.value='removeTeacher';this.form.selectedAttendingCourseTeacherFormPosition.value='" + teacherPosition + "';" %>'>
+									<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inquirybutton" onclick='<%="this.form.method.value='removeTeacher';this.form.selectedAttendingCourseTeacherFormPosition.value='" + teacherPosition + "';" %>'>
 										<bean:message key="button.inquiries.remove.evaluation" bundle="INQUIRIES_RESOURCES"/>
 									</html:submit>
 								</td>
@@ -1213,7 +1213,7 @@
 			</h2>
 			
 			<logic:present name='<%= InquiriesUtil.ATTENDING_COURSE_ROOMS %>'>
-				<html:hidden property="newAttendingCourseRoomId" />
+				<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.newAttendingCourseRoomId" property="newAttendingCourseRoomId" />
 				<bean:define id="evaluateRoom">
 					<bean:message key="message.inquiries.anchor.title.evaluate.room" bundle="INQUIRIES_RESOURCES"/>
 				</bean:define>
@@ -1232,13 +1232,13 @@
 							<bean:define id="currentRoomId" name="attendingCourseRoom" property="idInternal"/>
 							<li>
 								<logic:notPresent name="attendingCourseRoom" property="inquiriesRoom">
-									<html:submit styleClass="inquirybutton"
+									<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inquirybutton"
 										onclick='<%="this.form.method.value='prepareNewRoom';this.form.newAttendingCourseRoomId.value='" + currentRoomId + "';" %>'
 										value='<%= buttonValue %>' title='<%= buttonTitle %>'/>
 									&gt;
 								</logic:notPresent>
 								<logic:present name="attendingCourseRoom" property="inquiriesRoom">
-									<input type="submit" class="inquirybutton" disabled="disabled" value='<%= buttonValue %>' />
+									<input alt="input.input" type="submit" class="inquirybutton" disabled="disabled" value='<%= buttonValue %>' />
 									&gt;
 								</logic:present>
 								<bean:message key="label.inquiries.room" bundle="INQUIRIES_RESOURCES"/>
@@ -1254,18 +1254,18 @@
 			</logic:present>
 
 			<logic:present name='<%= InquiriesUtil.SELECTED_ATTENDING_COURSE_ROOMS %>'>
-				<html:hidden property="selectedAttendingCourseRoomId" />
+				<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.selectedAttendingCourseRoomId" property="selectedAttendingCourseRoomId" />
 
 				<logic:iterate id="selectedAttendingCourseRoom" name='<%= InquiriesUtil.SELECTED_ATTENDING_COURSE_ROOMS %>' indexId="roomPosition" type="net.sourceforge.fenixedu.dataTransferObject.inquiries.InfoInquiriesRoom">
 					<bean:define id="selectedAttendingCourseRoomId" name="selectedAttendingCourseRoom" property="room.idInternal" />
 
-					<html:hidden property="selectedAttendingCourseRoomsId" value='<%= "" + selectedAttendingCourseRoomId %>'/>
-					<html:hidden property="selectedAttendingCourseRoomsQuestion41" value='<%= "" + selectedAttendingCourseRoom.getSpaceAdequation() %>' />
-					<html:hidden property="selectedAttendingCourseRoomsQuestion42" value='<%= "" + selectedAttendingCourseRoom.getEnvironmentalConditions() %>' />
-					<html:hidden property="selectedAttendingCourseRoomsQuestion43" value='<%= "" + selectedAttendingCourseRoom.getEquipmentQuality() %>' />
+					<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.selectedAttendingCourseRoomsId" property="selectedAttendingCourseRoomsId" value='<%= "" + selectedAttendingCourseRoomId %>'/>
+					<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.selectedAttendingCourseRoomsQuestion41" property="selectedAttendingCourseRoomsQuestion41" value='<%= "" + selectedAttendingCourseRoom.getSpaceAdequation() %>' />
+					<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.selectedAttendingCourseRoomsQuestion42" property="selectedAttendingCourseRoomsQuestion42" value='<%= "" + selectedAttendingCourseRoom.getEnvironmentalConditions() %>' />
+					<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.selectedAttendingCourseRoomsQuestion43" property="selectedAttendingCourseRoomsQuestion43" value='<%= "" + selectedAttendingCourseRoom.getEquipmentQuality() %>' />
 		
 					<c:if test="${selectedAttendingCourseRoomId == currentAttendingCourseRoom.room.idInternal}">
-						<html:hidden property="currentAttendingCourseRoomId" value='<%= selectedAttendingCourseRoomId.toString() %>'/>
+						<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.currentAttendingCourseRoomId" property="currentAttendingCourseRoomId" value='<%= selectedAttendingCourseRoomId.toString() %>'/>
 						<table id='<%= InquiriesUtil.CURRENT_ATTENDING_COURSE_ROOM_FORM_ANCHOR  %>'>
 							<tr>
 								<td class="top" colspan="2">
@@ -1310,7 +1310,7 @@
 														<c:out value="${int}"/>
 													</bean:define>
 												<td>
-													<html:radio property="currentAttendingCourseRoomQuestion41" value='<%= i %>'/>
+													<html:radio bundle="HTMLALT_RESOURCES" altKey="radio.currentAttendingCourseRoomQuestion41" property="currentAttendingCourseRoomQuestion41" value='<%= i %>'/>
 												</td>
 											</c:forTokens>
 										</tr>
@@ -1337,7 +1337,7 @@
 														<c:out value="${int}"/>
 													</bean:define>
 												<td>
-													<html:radio property="currentAttendingCourseRoomQuestion42" value='<%= i %>'/>
+													<html:radio bundle="HTMLALT_RESOURCES" altKey="radio.currentAttendingCourseRoomQuestion42" property="currentAttendingCourseRoomQuestion42" value='<%= i %>'/>
 												</td>
 											</c:forTokens>
 										</tr>
@@ -1364,7 +1364,7 @@
 														<c:out value="${int}"/>
 													</bean:define>
 												<td>
-													<html:radio property="currentAttendingCourseRoomQuestion43" value='<%= i %>'/>
+													<html:radio bundle="HTMLALT_RESOURCES" altKey="radio.currentAttendingCourseRoomQuestion43" property="currentAttendingCourseRoomQuestion43" value='<%= i %>'/>
 												</td>
 											</c:forTokens>
 										</tr>
@@ -1374,10 +1374,10 @@
 							
 							<tr>
 								<td class="left" colspan="2">
-									<html:submit styleClass="inquirybutton" onclick='<%="this.form.method.value='closeRoom';" %>'>
+									<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inquirybutton" onclick='<%="this.form.method.value='closeRoom';" %>'>
 										<bean:message key="button.inquiries.confirm.evaluation" bundle="INQUIRIES_RESOURCES"/>
 									</html:submit>
-									<html:submit styleClass="inquirybutton" onclick='<%="this.form.method.value='removeRoom';this.form.selectedAttendingCourseRoomId.value='" + selectedAttendingCourseRoomId + "';" %>'>
+									<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inquirybutton" onclick='<%="this.form.method.value='removeRoom';this.form.selectedAttendingCourseRoomId.value='" + selectedAttendingCourseRoomId + "';" %>'>
 										<bean:message key="button.inquiries.remove.evaluation" bundle="INQUIRIES_RESOURCES"/>
 									</html:submit>
 								</td>
@@ -1396,10 +1396,10 @@
 							</tr>
 							<tr>
 								<td class="left" colspan="2">
-									<html:submit styleClass="inquirybutton" onclick='<%="this.form.method.value='editRoom';this.form.selectedAttendingCourseRoomId.value='" + selectedAttendingCourseRoomId + "';" %>'>
+									<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inquirybutton" onclick='<%="this.form.method.value='editRoom';this.form.selectedAttendingCourseRoomId.value='" + selectedAttendingCourseRoomId + "';" %>'>
 										<bean:message key="button.inquiries.edit.evaluation" bundle="INQUIRIES_RESOURCES"/>
 									</html:submit>
-									<html:submit styleClass="inquirybutton" onclick='<%="this.form.method.value='removeRoom';this.form.selectedAttendingCourseRoomId.value='" + selectedAttendingCourseRoomId + "';" %>'>
+									<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inquirybutton" onclick='<%="this.form.method.value='removeRoom';this.form.selectedAttendingCourseRoomId.value='" + selectedAttendingCourseRoomId + "';" %>'>
 										<bean:message key="button.inquiries.remove.evaluation" bundle="INQUIRIES_RESOURCES"/>
 									</html:submit>
 								</td>
@@ -1443,7 +1443,7 @@
 				</strong>
 			</p>
 			<p>
-				<html:submit styleClass="inquirylargebutton" onclick='<%="this.form.method.value='submitInquiry';" %>'>
+				<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inquirylargebutton" onclick='<%="this.form.method.value='submitInquiry';" %>'>
 					<bean:message key="button.inquiries.preview.inquiry" bundle="INQUIRIES_RESOURCES"/>
 				</html:submit>
 			</p>
@@ -1453,7 +1453,7 @@
 				</strong>
 			</p>
 			<p>
-				<html:submit styleClass="inquirylargebutton" onclick='<%="this.form.method.value='saveInquiry';" %>'>
+				<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inquirylargebutton" onclick='<%="this.form.method.value='saveInquiry';" %>'>
 					<bean:message key="button.inquiries.submit" bundle="INQUIRIES_RESOURCES"/>
 				</html:submit>
 			</p>

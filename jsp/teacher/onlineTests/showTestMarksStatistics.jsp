@@ -1,5 +1,6 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 
@@ -16,15 +17,15 @@
 	<br/>
 	
 	<html:form action="/testDistribution">
-	<html:hidden property="method" value="showDistributedTests"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="showDistributedTests"/>
 
 	<bean:size id="questionNumber" name="component" property="answeredPercentage"/>
-	<html:hidden property="objectCode" value="<%= (pageContext.findAttribute("objectCode")).toString() %>"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.objectCode" property="objectCode" value="<%= (pageContext.findAttribute("objectCode")).toString() %>"/>
 	<table>
 		<tr>
 		<td class="listClasses-header"></td>
 		<% for(int i=1; i<=new Integer(questionNumber.toString()).intValue();i++ ){
-			out.write(new String("<td class='listClasses-header'><b>P"+i+"</b></td>"));
+			out.write(new String("<th class='listClasses-header'><b>P"+i+"</b></th>"));
 		} %>
 		</tr>
 		<tr>
@@ -90,7 +91,7 @@
 	<br/>
 	<table align="center">
 	<tr>
-		<td><html:submit styleClass="inputbutton"><bean:message key="label.back"/></html:submit></td>
+		<td><html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton"><bean:message key="label.back"/></html:submit></td>
 	</tr>
 	</table>
 	</html:form>

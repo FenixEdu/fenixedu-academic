@@ -1,5 +1,6 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 
@@ -24,11 +25,11 @@ function selectQuestionType(){
 <br/>
 
 <html:form action="/exerciseType">
-<html:hidden property="page" value="1"/>
-<html:hidden property="method" value="chooseQuestionType"/>
-<html:hidden property="objectCode" value="<%=(pageContext.findAttribute("objectCode")).toString()%>"/>
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="chooseQuestionType"/>
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.objectCode" property="objectCode" value="<%=(pageContext.findAttribute("objectCode")).toString()%>"/>
 <%if (pageContext.findAttribute("exerciseCode")!=null){%>
-<html:hidden property="exerciseCode" value="<%=(pageContext.findAttribute("exerciseCode")).toString()%>"/>
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.exerciseCode" property="exerciseCode" value="<%=(pageContext.findAttribute("exerciseCode")).toString()%>"/>
 <%}%>
 <span class="error"><html:errors/></span>
 <table>
@@ -38,14 +39,14 @@ function selectQuestionType(){
 <logic:iterate id="questionType" name="questionsTypes" type="org.apache.struts.util.LabelValueBean" indexId="index">
 	<tr>
 		<td><bean:write name="questionType" property="label"/></td>
-		<td><html:radio property="questionType"  value="<%=questionType.getValue()%>" onclick="selectQuestionType()"/></td>
+		<td><html:radio bundle="HTMLALT_RESOURCES" altKey="radio.questionType" property="questionType"  value="<%=questionType.getValue()%>" onclick="selectQuestionType()"/></td>
 	</tr>
 	<logic:equal name="index" value="0">
 
 		<logic:iterate id="cardinalityType" name="cardinalityTypes" type="org.apache.struts.util.LabelValueBean">
 			<tr><td/><td/>
 			<td><bean:write name="cardinalityType" property="label"/></td>
-			<td><html:radio property="cardinalityType" value="<%=cardinalityType.getValue()%>"/></td>
+			<td><html:radio bundle="HTMLALT_RESOURCES" altKey="radio.cardinalityType" property="cardinalityType" value="<%=cardinalityType.getValue()%>"/></td>
 			</tr>
 		</logic:iterate>
 	</logic:equal>
@@ -58,24 +59,24 @@ function selectQuestionType(){
 <table>
 	<tr>
 		<td><bean:message key="label.evaluationQuestion"/></td>
-		<td><html:radio property="evaluationQuestion" value="true"/></td>
+		<td><html:radio bundle="HTMLALT_RESOURCES" altKey="radio.evaluationQuestion" property="evaluationQuestion" value="true"/></td>
 	</tr>
 	<tr>
 		<td><bean:message key="label.inquiryQuestion"/></td>
-		<td><html:radio property="evaluationQuestion" value="false"/></td>
+		<td><html:radio bundle="HTMLALT_RESOURCES" altKey="radio.evaluationQuestion" property="evaluationQuestion" value="false"/></td>
 	</tr>
 </table>
 <br/>
 <br/>
 <table>
 <tr>
-<td><html:submit styleClass="inputbutton"><bean:message key="button.continue"/></html:submit></td>
+<td><html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton"><bean:message key="button.continue"/></html:submit></td>
 </html:form>
 <html:form action="/testsManagement">
-<html:hidden property="page" value="0"/>
-<html:hidden property="method" value="testsFirstPage"/>
-<html:hidden property="objectCode" value="<%=(pageContext.findAttribute("objectCode")).toString()%>"/>
-<td><html:submit styleClass="inputbutton"><bean:message key="button.cancel"/></html:submit></td>
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="0"/>
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="testsFirstPage"/>
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.objectCode" property="objectCode" value="<%=(pageContext.findAttribute("objectCode")).toString()%>"/>
+<td><html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton"><bean:message key="button.cancel"/></html:submit></td>
 </html:form>
 </tr>
 </table>

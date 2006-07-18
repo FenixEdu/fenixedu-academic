@@ -1,11 +1,12 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
 <h2><bean:message bundle="MANAGER_RESOURCES" key="title.manage.execution.periods"/></h2>
 <br />
 
-<strong>Nota:</strong> As operações disponíveis nesta página envolvem a manipulação
+<strong>Nota:</strong> As operaï¿½ï¿½es disponï¿½veis nesta pï¿½gina envolvem a manipulaï¿½ï¿½o
 de uma elevada quantidade de dados pelo que demoram alguns minutos a processar.
 <br /><br />
 
@@ -13,7 +14,7 @@ de uma elevada quantidade de dados pelo que demoram alguns minutos a processar.
 <logic:present name="<%= SessionConstants.LIST_EXECUTION_PERIODS %>" scope="request">
 <%--
 	<html:form action="/createExecutionPeriodForm">
-		Criar Periodo Execução: 
+		Criar Periodo Execuï¿½ï¿½o: 
 		<span class="error"><html:errors /></span>
 		<br />
 		<table>
@@ -32,10 +33,10 @@ de uma elevada quantidade de dados pelo que demoram alguns minutos a processar.
 				Para o periodo:
 				</td>
 				<td>
-				<html:text property="semesterToCreate" size="2"/>
+				<html:text bundle="HTMLALT_RESOURCES" altKey="text.semesterToCreate" property="semesterToCreate" size="2"/>
 				</td>
 				<td>
-				<html:text property="yearToCreate"  size="10"/>
+				<html:text bundle="HTMLALT_RESOURCES" altKey="text.yearToCreate" property="yearToCreate"  size="10"/>
 				</td>
 			</tr>
 			<tr>
@@ -43,24 +44,24 @@ de uma elevada quantidade de dados pelo que demoram alguns minutos a processar.
 				Importar dados do periodo:
 				</td>
 				<td>
-				<html:text property="semesterToExportDataFrom" size="2"/>
+				<html:text bundle="HTMLALT_RESOURCES" altKey="text.semesterToExportDataFrom" property="semesterToExportDataFrom" size="2"/>
 				</td>
 				<td>
-				<html:text property="yearToExportDataFrom" size="10"/>
+				<html:text bundle="HTMLALT_RESOURCES" altKey="text.yearToExportDataFrom" property="yearToExportDataFrom" size="10"/>
 				</td>
 			</tr>
 			<tr>
 				<td>
 				</td>
 				<td>
-					<html:hidden property="method" value="createExecutionPeriod"/>
-					<html:hidden property="page" value="1"/>
-					<html:submit property="operation" styleClass="inputbutton">
+					<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="createExecutionPeriod"/>
+					<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
+					<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.operation" property="operation" styleClass="inputbutton">
 						<bean:message bundle="MANAGER_RESOURCES" key="label.create"/>
 					</html:submit>
 				</td>
 				<td>
-					<html:reset value="Limpar" styleClass="inputbutton">
+					<html:reset bundle="HTMLALT_RESOURCES" altKey="reset.reset" value="Limpar" styleClass="inputbutton">
 						<bean:message bundle="MANAGER_RESOURCES" key="label.clear"/>
 					</html:reset>
 				</td>
@@ -72,19 +73,19 @@ de uma elevada quantidade de dados pelo que demoram alguns minutos a processar.
 	<br />
 	<table>
 		<tr>
-			<td class="listClasses-header">
+			<th class="listClasses-header">
 				Semestre
-			</td>
-			<td class="listClasses-header">
+			</th>
+			<th class="listClasses-header">
 				Ano Lectivo
-			</td>
-			<td class="listClasses-header">
+			</th>
+			<th class="listClasses-header">
 				Estado
-			</td>
-			<td class="listClasses-header">
-			</td>
-			<td class="listClasses-header">
-			</td>
+			</th>
+			<th class="listClasses-header">
+			</th>
+			<th class="listClasses-header">
+			</th>
 		</tr>
 		<logic:iterate id="infoExecutionPeriod" name="<%= SessionConstants.LIST_EXECUTION_PERIODS %>">
 			<bean:define id="year" name="infoExecutionPeriod" property="infoExecutionYear.year"/>

@@ -1,4 +1,5 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <bean:define id="code" value="" />
@@ -20,12 +21,12 @@
 		<br />
 		<table>
 			<tr>
-				<td class="listClasses-header"><bean:message key="label.username" /></td>
-				<td class="listClasses-header"><bean:message key="label.name" /></td>
-				<td class="listClasses-header"><bean:message key="label.projectNumber" /></td>
-				<td class="listClasses-header"><bean:message key="label.acronym" /></td>
-				<td class="listClasses-header"><bean:message key="label.beginDate" /></td>
-				<td class="listClasses-header"><bean:message key="label.endDate" /></td>
+				<th class="listClasses-header"><bean:message key="label.username" /></th>
+				<th class="listClasses-header"><bean:message key="label.name" /></th>
+				<th class="listClasses-header"><bean:message key="label.projectNumber" /></th>
+				<th class="listClasses-header"><bean:message key="label.acronym" /></th>
+				<th class="listClasses-header"><bean:message key="label.beginDate" /></th>
+				<th class="listClasses-header"><bean:message key="label.endDate" /></th>
 			</tr>
 			<logic:iterate id="projectAccess" name="projectsAccessesList">
 				<bean:define id="person" name="projectAccess" property="infoPerson" />

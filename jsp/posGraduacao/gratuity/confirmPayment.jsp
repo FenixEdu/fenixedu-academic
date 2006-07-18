@@ -1,5 +1,5 @@
 <%@ page language="java" %>
-<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
+<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%><html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.masterDegree.utils.SessionConstants" %>
@@ -72,7 +72,7 @@
 
 				<tr align="left">
 					<th><bean:message key="label.masterDegree.gratuity.adHocValue"/>: </th>
-					<td><html:text property="adHocValue" /></td>
+					<td><html:text bundle="HTMLALT_RESOURCES" altKey="text.adHocValue" property="adHocValue" /></td>
 				</tr>
 				
 					
@@ -86,7 +86,7 @@
 					</tr>	
 					<tr align="left">
 						<th colspan="2">
-							<html:checkbox property="insuranceExecutionYearId" value="<%= ((InfoInsuranceValue)insuranceValueWithGratuity).getInfoExecutionYear().getIdInternal().toString() %>"/>
+							<html:checkbox bundle="HTMLALT_RESOURCES" altKey="checkbox.insuranceExecutionYearId" property="insuranceExecutionYearId" value="<%= ((InfoInsuranceValue)insuranceValueWithGratuity).getInfoExecutionYear().getIdInternal().toString() %>"/>
 							<bean:message key="label.masterDegree.gratuity.payInsurance"/>
 						</th>
 					</tr>
@@ -98,7 +98,7 @@
 			<!-- Insurance Value -->
 			<logic:present name="<%= SessionConstants.INSURANCE_VALUE %>" scope="request">
 				<bean:define id="insuranceValue" name="<%= SessionConstants.INSURANCE_VALUE %>" scope="request"/>
-				<html:hidden property="insuranceExecutionYearId" />
+				<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.insuranceExecutionYearId" property="insuranceExecutionYearId" />
 				<tr align="left">
 					<th><bean:message key="label.executionYear"/>: </th>
 					<td><bean:write name="insuranceValue" property="infoExecutionYear.year"/></td>
@@ -115,13 +115,13 @@
 			
 		</table>
 	
-		<html:hidden property="method" value="pay"/>
-		<html:hidden property="gratuitySituationId" />		
-		<html:hidden property="studentId" />
-		<html:hidden property="contributorNumber" />
-		<html:hidden property="page" value="2"/>
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="pay"/>
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.gratuitySituationId" property="gratuitySituationId" />		
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.studentId" property="studentId" />
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.contributorNumber" property="contributorNumber" />
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="2"/>
 		
-		<html:submit styleClass="inputbutton">
+		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton">
 			<bean:message key="link.masterDegree.administrativeOffice.gratuity.pay"/>
 		</html:submit>
 	</html:form>

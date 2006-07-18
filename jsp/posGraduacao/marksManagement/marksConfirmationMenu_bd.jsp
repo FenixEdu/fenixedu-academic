@@ -1,5 +1,6 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <h2><bean:message key="label.masterDegree.administrativeOffice.marksConfirmation" /></h2>
@@ -26,15 +27,15 @@
 	<bean:define id="availableEvaluationDate" name="infoSiteEnrolmentEvaluation" property="lastEvaluationDate"/>
     <table>        
 		<tr>
-			<td class="listClasses-header">
+			<th class="listClasses-header">
 				<bean:message key="label.number" /> 
-		   	</td>
-			<td class="listClasses-header">
+		   	</th>
+			<th class="listClasses-header">
 				<bean:message key="label.name" />
-		   	</td>
-			<td class="listClasses-header">
+		   	</th>
+			<th class="listClasses-header">
 				<bean:message key="label.mark" />
-			</td>
+			</th>
 		</tr>    				
 		<bean:size id="size" name="infoSiteEnrolmentEvaluation" property="enrolmentEvaluations" />	
     	<logic:iterate id="enrolmentEvaluation" name="infoSiteEnrolmentEvaluation" property="enrolmentEvaluations" type="net.sourceforge.fenixedu.dataTransferObject.InfoEnrolmentEvaluation">

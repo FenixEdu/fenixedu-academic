@@ -5,6 +5,7 @@
 <%@ taglib uri="/WEB-INF/c.tld" prefix="c"%>
 
 <ft:tilesView definition="facultyAdmOffice.masterPage" attributeName="body-inline">
+	<f:loadBundle basename="resources/HtmlAltResources" var="htmlAltBundle"/>
 
 	<f:loadBundle basename="resources/DepartmentAdmOfficeResources" var="bundle"/>
 	
@@ -46,7 +47,7 @@
 						
 			<h:outputText value="<b>#{bundle['label.credits']}</b>" escape="false"/>
 			<h:panelGroup>
-				<h:inputText id="credits" size="5" maxlength="5" value="#{facultyAdmOfficeFunctionsManagementBackingBean.credits}"/>
+				<h:inputText alt="#{htmlAltBundle['inputText.credits']}" id="credits" size="5" maxlength="5" value="#{facultyAdmOfficeFunctionsManagementBackingBean.credits}"/>
 				<h:message for="credits" styleClass="error"/>
 			</h:panelGroup>
 		</h:panelGrid>		
@@ -81,7 +82,7 @@
 			columns="4" styleClass="infoop">							
 			<h:outputText value="<b>#{bundle['label.begin.date']}</b>" escape="false"/>
 			<h:panelGroup>
-				<h:inputText disabled="#{facultyAdmOfficeFunctionsManagementBackingBean.disabledVar == 0}" id="beginDate"  size="10" value="#{facultyAdmOfficeFunctionsManagementBackingBean.beginDate}">							
+				<h:inputText alt="#{htmlAltBundle['inputText.beginDate']}" disabled="#{facultyAdmOfficeFunctionsManagementBackingBean.disabledVar == 0}" id="beginDate"  size="10" value="#{facultyAdmOfficeFunctionsManagementBackingBean.beginDate}">							
 					<fc:dateValidator format="dd/MM/yyyy" strict="true"/>
 				</h:inputText>	
 				<h:outputText value="#{bundle['label.date.format']}"/>
@@ -92,7 +93,7 @@
 						
 			<h:outputText value="<b>#{bundle['label.end.date']}</b>" escape="false"/>
 			<h:panelGroup>
-				<h:inputText disabled="#{facultyAdmOfficeFunctionsManagementBackingBean.disabledVar == 0}" id="endDate" size="10" value="#{facultyAdmOfficeFunctionsManagementBackingBean.endDate}">
+				<h:inputText alt="#{htmlAltBundle['inputText.endDate']}" disabled="#{facultyAdmOfficeFunctionsManagementBackingBean.disabledVar == 0}" id="endDate" size="10" value="#{facultyAdmOfficeFunctionsManagementBackingBean.endDate}">
 					<fc:dateValidator format="dd/MM/yyyy" strict="true"/>
 				</h:inputText>				
 				<h:outputText value="#{bundle['label.date.format']}"/>
@@ -114,8 +115,8 @@
 				<fc:commandButton action="#{facultyAdmOfficeFunctionsManagementBackingBean.verifyFunction}" value="#{bundle['button.continue']}" styleClass="inputbutton">
 					<f:param id="disabledVar3" name="disabledVar" value="#{facultyAdmOfficeFunctionsManagementBackingBean.disabledVar}"/>
 				</fc:commandButton>							
-				<h:commandButton action="alterUnit" immediate="true" value="#{bundle['button.choose.new.person']}" styleClass="inputbutton"/>						
-				<h:commandButton action="cancel" immediate="true" value="#{bundle['button.cancel']}" styleClass="inputbutton"/>				
+				<h:commandButton alt="#{htmlAltBundle['commandButton.person']}" action="alterUnit" immediate="true" value="#{bundle['button.choose.new.person']}" styleClass="inputbutton"/>						
+				<h:commandButton alt="#{htmlAltBundle['commandButton.cancel']}" action="cancel" immediate="true" value="#{bundle['button.cancel']}" styleClass="inputbutton"/>				
 			</h:panelGroup>
 		</h:panelGrid>	
 

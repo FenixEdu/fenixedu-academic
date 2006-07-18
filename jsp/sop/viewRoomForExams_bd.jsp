@@ -1,6 +1,7 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/app.tld" prefix="app" %>
 <%@ page import="java.util.ArrayList" %>
@@ -11,12 +12,12 @@
 <logic:present name="publico.infoRoom" scope="request">
 	<table width="100%">
     	<tr>
-      		<td class="listClasses-header"><bean:message key="property.room.name"/></td>
-			<td class="listClasses-header"><bean:message key="property.room.type"/></td>
-            <td class="listClasses-header"><bean:message key="property.room.building"/></td>
-            <td class="listClasses-header"><bean:message key="property.room.floor"/></td>
-			<td class="listClasses-header"><bean:message key="property.room.capacity.normal"/></td>
-			<td class="listClasses-header"><bean:message key="property.room.capacity.exame"/></td>
+      		<th class="listClasses-header"><bean:message key="property.room.name"/></th>
+			<th class="listClasses-header"><bean:message key="property.room.type"/></th>
+            <th class="listClasses-header"><bean:message key="property.room.building"/></th>
+            <th class="listClasses-header"><bean:message key="property.room.floor"/></th>
+			<th class="listClasses-header"><bean:message key="property.room.capacity.normal"/></th>
+			<th class="listClasses-header"><bean:message key="property.room.capacity.exame"/></th>
       	</tr>
         <tr>
 			<td class="listClasses"><bean:write name="publico.infoRoom" property="nome"/></td>

@@ -1,11 +1,12 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 
 <html:form action="/enrollStudent?method=enrollStudent">
-<html:hidden property="page" value="6"/>
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="6"/>
 
-<p><strong>Página 5 de 6</strong></p>
+<p><strong>Pï¿½gina 5 de 6</strong></p>
 
  <h2 style="text-align: center;"><bean:message key="schoolRegistration.Header.residenceTitle"/></h2>
 	<p align="center"><span class="error"><html:errors property="residenceCandidate"/></span></p>	
@@ -16,19 +17,19 @@
 <div class="infoop">
 	<p>
 	<bean:message key="label.schoolRegistration.residenceCandidate"/>
-	<span style="padding-left: 1em;">Sim<html:radio property="residenceCandidate" value="true" /></span>
-	<span>Não<html:radio property="residenceCandidate" value="false" /></span>
+	<span style="padding-left: 1em;">Sim<html:radio bundle="HTMLALT_RESOURCES" altKey="radio.residenceCandidate" property="residenceCandidate" value="true" /></span>
+	<span>Nï¿½o<html:radio bundle="HTMLALT_RESOURCES" altKey="radio.residenceCandidate" property="residenceCandidate" value="false" /></span>
 	</p>
 
 	<p>
 	<bean:message key="label.schoolRegistration.observations"/>
-	<html:textarea cols="60" rows="5" property="observations" onkeyup="document.schoolRegistrationForm.charCount.value=240-document.schoolRegistrationForm.observations.value.length;"/>
+	<html:textarea bundle="HTMLALT_RESOURCES" altKey="textarea.observations" cols="60" rows="5" property="observations" onkeyup="document.schoolRegistrationForm.charCount.value=240-document.schoolRegistrationForm.observations.value.length;"/>
 	</p>
 
-	<p><bean:message key="label.person.remainingChars" bundle="DEFAULT"/>: <html:text property="charCount" size="4" maxlength="3" readonly="true" value="240" /></p>
+	<p><bean:message key="label.person.remainingChars" bundle="DEFAULT"/>: <html:text bundle="HTMLALT_RESOURCES" altKey="text.charCount" property="charCount" size="4" maxlength="3" readonly="true" value="240" /></p>
 </div>
 
-<p><html:submit value="Continuar" styleClass="inputbutton"/></p>
+<p><html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" value="Continuar" styleClass="inputbutton"/></p>
 </html:form>
 
 </div>

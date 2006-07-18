@@ -1,4 +1,5 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 
@@ -9,11 +10,11 @@
 </html:messages>
 <br/>
 <html:form action="/dfaCandidacy.do">
-	<html:hidden property="method" value="chooseCandidacy"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="chooseCandidacy"/>
 	<table>
 		<tr>
 			<td><bean:message key="label.candidacy.number" bundle="ADMIN_OFFICE_RESOURCES"/>:</td>
-			<td><html:text property="candidacyNumber" size="10" maxlength="10"/></td>
+			<td><html:text bundle="HTMLALT_RESOURCES" altKey="text.candidacyNumber" property="candidacyNumber" size="10" maxlength="10"/></td>
 		</tr>
 	</table>
 	<br/>

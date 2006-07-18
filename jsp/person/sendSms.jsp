@@ -1,12 +1,12 @@
 <%@ page language="java" %>
-<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
+<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%><html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 
 <h2><bean:message key="label.person.sendSms"/></h2>
 
 <span class="error">
-	Após uma fase de testes com sucesso, o serviço de envio de SMS encontra-se indisponível até ser celebrado um acordo com as operadoras.
+	Apï¿½s uma fase de testes com sucesso, o serviï¿½o de envio de SMS encontra-se indisponï¿½vel atï¿½ ser celebrado um acordo com as operadoras.
 </span><br/>
 
 <%--
@@ -20,8 +20,8 @@
 </span><br/>
 
 <html:form action="/sendSms.do">  
-	<html:hidden property="page" value="1" />	
-	<html:hidden property="method" value="send" />		
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1" />	
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="send" />		
 
 	<table>
 		<tr>
@@ -29,7 +29,7 @@
 				<bean:message key="label.person.destinationPhoneNumber"/>:
 			</td>
 			<td>
-				<html:text property="destinationPhoneNumber" size="20" maxlength="9"/>
+				<html:text bundle="HTMLALT_RESOURCES" altKey="text.destinationPhoneNumber" property="destinationPhoneNumber" size="20" maxlength="9"/>
 			</td>
 		</tr>	
 		<tr>
@@ -37,7 +37,7 @@
 				<bean:message key="label.person.message"/>:
 			</td>
 			<td>
-				<html:textarea property="message" rows="4" cols="30" 
+				<html:textarea bundle="HTMLALT_RESOURCES" altKey="textarea.message" property="message" rows="4" cols="30" 
 					onkeyup="document.sendSmsForm.charCount.value=140-document.sendSmsForm.message.value.length;" 
 					/>
 			</td>
@@ -47,13 +47,13 @@
 				<bean:message key="label.person.remainingChars"/>:
 			</td>
 			<td>
-				<html:text property="charCount" size="4" maxlength="3" readonly="true" value="140" />
+				<html:text bundle="HTMLALT_RESOURCES" altKey="text.charCount" property="charCount" size="4" maxlength="3" readonly="true" value="140" />
 			</td>
 		</tr>
 	</table>
 
 	<p />
-	<html:submit styleClass="inputbutton">
+	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton">
 		<bean:message key="button.person.send"/>
 	</html:submit>
 

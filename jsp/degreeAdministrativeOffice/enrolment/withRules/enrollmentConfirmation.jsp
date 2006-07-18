@@ -1,5 +1,6 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ page import="net.sourceforge.fenixedu.domain.curriculum.EnrollmentState" %>
@@ -34,8 +35,8 @@ font-weight: bold;
 	
 	<table class="style1">
 	<tr>
-		<td class="listClasses-header"><bean:message key="message.student.enrolled.curricularCourses" /></td>
-		<td class="listClasses-header"><bean:message key="label.course.enrollment.state" bundle="STUDENT_RESOURCES"/></td>
+		<th class="listClasses-header"><bean:message key="message.student.enrolled.curricularCourses" /></th>
+		<th class="listClasses-header"><bean:message key="label.course.enrollment.state" bundle="STUDENT_RESOURCES"/></th>
 	</tr>
 	<logic:iterate id="enrollmentElem" name="infoStudentEnrolmentContext" property="studentCurrentSemesterInfoEnrollments" type="net.sourceforge.fenixedu.dataTransferObject.InfoEnrolment">
 		<tr>
@@ -66,17 +67,17 @@ font-weight: bold;
 <table class="style1">
 	<logic:present name="infoStudentEnrolmentContext" property="infoStudentCurricularPlan.infoBranch">
 		<tr>
-			<td class="listClasses-header">
+			<th class="listClasses-header">
 				<bean:message key="label.student.enrollment.specializationArea" />: (<bean:message key="label.student.enrollment.branch" bundle="STUDENT_RESOURCES"/>)
-			</td>
+			</th>
 			<td class="listClasses">
 				<bean:write name="infoStudentEnrolmentContext" property="infoStudentCurricularPlan.infoBranch.name" />&nbsp;
 			</td>
 					
 		<logic:present name="infoStudentEnrolmentContext" property="infoStudentCurricularPlan.infoSecundaryBranch">
-		<td class="listClasses-header">
+		<th class="listClasses-header">
 				<bean:message key="label.branch.credits" />:&nbsp;
-		</td>
+		</th>
 		<td class="listClasses">
 			<bean:write name="infoStudentEnrolmentContext" property="creditsInSpecializationArea" />
 			&nbsp;<bean:message key="label.student.enrollment.from"/>&nbsp;
@@ -84,9 +85,9 @@ font-weight: bold;
 		</td>
 		</tr>
 		<tr>
-			<td class="listClasses-header"><bean:message key="label.student.enrollment.secondaryArea" />:&nbsp;</td>
+			<th class="listClasses-header"><bean:message key="label.student.enrollment.secondaryArea" />:&nbsp;</th>
 			<td class="listClasses"><bean:write name="infoStudentEnrolmentContext" property="infoStudentCurricularPlan.infoSecundaryBranch.name" /></td> 
-			<td class="listClasses-header"><bean:message key="label.branch.credits" />:&nbsp;</td>
+			<th class="listClasses-header"><bean:message key="label.branch.credits" />:&nbsp;</th>
 			<td class="listClasses">
 				<bean:write name="infoStudentEnrolmentContext" property="creditsInSecundaryArea" />
 				&nbsp;<bean:message key="label.student.enrollment.from"/>&nbsp;
@@ -100,17 +101,17 @@ font-weight: bold;
 	</logic:present>
 	<logic:notPresent name="infoStudentEnrolmentContext" property="infoStudentCurricularPlan.infoBranch">
 		<tr>
-			<td class="listClasses-header">
+			<th class="listClasses-header">
 				<bean:message key="label.student.enrollment.specializationArea" /> (<bean:message key="label.student.enrollment.branch" bundle="STUDENT_RESOURCES"/>):
-			</td>
+			</th>
 			<td  class="listClasses">
 				<bean:message key="label.student.enrollment.no.area" />
 			</td>
 		</tr>
 		<tr>
-			<td class="listClasses-header">
+			<th class="listClasses-header">
 				<bean:message key="label.student.enrollment.secondaryArea" />:&nbsp;
-			</td>
+			</th>
 			<td  class="listClasses">
 				<bean:message key="label.student.enrollment.no.area" />
 			</td>
@@ -126,11 +127,11 @@ font-weight: bold;
 	<h4><bean:message key="message.student.curriculum" /></h4>
 	<table class="style1">
 		<tr class="header">
-			<td class="listClasses-header"><bean:message key="label.executionYear" /></td>
-			<td class="listClasses-header"><bean:message key="label.semester" /></td>
-			<td class="listClasses-header"><bean:message key="label.degree.name" /></td>
-			<td class="listClasses-header"><bean:message key="label.curricular.course.name" /></td>
-			<td class="listClasses-header"><bean:message key="label.finalEvaluation" /></td>
+			<th class="listClasses-header"><bean:message key="label.executionYear" /></th>
+			<th class="listClasses-header"><bean:message key="label.semester" /></th>
+			<th class="listClasses-header"><bean:message key="label.degree.name" /></th>
+			<th class="listClasses-header"><bean:message key="label.curricular.course.name" /></th>
+			<th class="listClasses-header"><bean:message key="label.finalEvaluation" /></th>
 		</tr>
 		<logic:iterate id="curriculumElem" name="curriculum">
 			<tr>

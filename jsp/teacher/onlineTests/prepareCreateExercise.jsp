@@ -1,5 +1,6 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <script language="Javascript" type="text/javascript">
@@ -79,15 +80,15 @@ function remove(i){
 <h2><bean:message key="title.createExercise"/></h2>
 
 <html:form action="/exerciseCreation">
-<html:hidden property="page" value="2"/>
-<html:hidden property="method" value="createExercise"/>
-<html:hidden property="questionType"/>
-<html:hidden property="objectCode"/>
-<html:hidden property="optionNumber"/>
-<html:hidden property="cardinalityType"/>
-<html:hidden property="conditionId"/>
-<html:hidden property="evaluationQuestion"/>
-<html:hidden property="exerciseCode"/>
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="2"/>
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="createExercise"/>
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.questionType" property="questionType"/>
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.objectCode" property="objectCode"/>
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.optionNumber" property="optionNumber"/>
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.cardinalityType" property="cardinalityType"/>
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.conditionId" property="conditionId"/>
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.evaluationQuestion" property="evaluationQuestion"/>
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.exerciseCode" property="exerciseCode"/>
 <span class="error"><html:errors/></span>
 
 
@@ -98,21 +99,21 @@ function remove(i){
 </table>
 <br/>
 <table>
-<tr><td><b><bean:message key="message.tests.author"/></b></td><td><html:text size="25" property="author"/></td></tr>
-<tr><td><b><bean:message key="label.description"/>:</b></td><td><html:text size="25" property="description"/></td></tr>
+<tr><td><b><bean:message key="message.tests.author"/></b></td><td><html:text bundle="HTMLALT_RESOURCES" altKey="text.author" size="25" property="author"/></td></tr>
+<tr><td><b><bean:message key="label.description"/>:</b></td><td><html:text bundle="HTMLALT_RESOURCES" altKey="text.description" size="25" property="description"/></td></tr>
 <tr><td><b><bean:message key="label.test.difficulty"/>:</b></td>
 <td>
-<html:select property="difficulty">
+<html:select bundle="HTMLALT_RESOURCES" altKey="select.difficulty" property="difficulty">
 <logic:iterate id="questionDifficulty" name="questionDifficultyList" type="org.apache.struts.util.LabelValueBean">
 	<html:option value="<%=questionDifficulty.getValue()%>"><bean:write name="questionDifficulty" property="label"/></html:option>
 </logic:iterate>
 </html:select>
 </td></tr>
-<tr><td><b><bean:message key="label.test.materiaPrincipal"/>:</b></td><td><html:text size="25" property="mainSubject"/></td></tr>
-<tr><td><b><bean:message key="label.test.materiaSecundaria"/>:</b></td><td><html:text size="25" property="secondarySubject"/></td></tr>
+<tr><td><b><bean:message key="label.test.materiaPrincipal"/>:</b></td><td><html:text bundle="HTMLALT_RESOURCES" altKey="text.mainSubject" size="25" property="mainSubject"/></td></tr>
+<tr><td><b><bean:message key="label.test.materiaSecundaria"/>:</b></td><td><html:text bundle="HTMLALT_RESOURCES" altKey="text.secondarySubject" size="25" property="secondarySubject"/></td></tr>
 <tr><td><b><bean:message key="label.test.learningTime"/>:</b><bean:message key="message.hourFormat"/></td>
-<td><html:text size="2" maxlength="2" property="learningHour" onkeyup="changeFocus(this)"/>:<html:text size="2" maxlength="2" property="learningMinute" onkeyup="changeFocus(this)"/></td></tr>
-<tr><td><b><bean:message key="label.exam.enrollment.year"/>:</b></td><td><html:text size="2" maxlength="2" property="level"/></td></tr>
+<td><html:text bundle="HTMLALT_RESOURCES" altKey="text.learningHour" size="2" maxlength="2" property="learningHour" onkeyup="changeFocus(this)"/>:<html:text bundle="HTMLALT_RESOURCES" altKey="text.learningMinute" size="2" maxlength="2" property="learningMinute" onkeyup="changeFocus(this)"/></td></tr>
+<tr><td><b><bean:message key="label.exam.enrollment.year"/>:</b></td><td><html:text bundle="HTMLALT_RESOURCES" altKey="text.level" size="2" maxlength="2" property="level"/></td></tr>
 </table>
 </logic:empty>
 <bean:define id="questionType" name="exerciseCreationForm" property="questionType"/>
@@ -139,7 +140,7 @@ function remove(i){
 	<br/>
 	<table><tr>
 	<td><bean:message key="message.tests.questionValue"/></td>
-	<td><html:text size="2" maxlength="2" property="questionValue"/></td>
+	<td><html:text bundle="HTMLALT_RESOURCES" altKey="text.questionValue" size="2" maxlength="2" property="questionValue"/></td>
 	</tr></table>
 </logic:equal>
 <logic:notEqual name="exerciseCreationForm" property="evaluationQuestion" value="true">
@@ -162,7 +163,7 @@ function remove(i){
 <br/>
 <table>
 <tr><td><b><bean:message key="label.questionText"/></b></td></tr>
-<tr><td><html:textarea rows="5" cols="85" property="questionText"/></td></tr>
+<tr><td><html:textarea bundle="HTMLALT_RESOURCES" altKey="textarea.questionText" rows="5" cols="85" property="questionText"/></td></tr>
 </table>
 
 <logic:equal name="questionType" value="1"> <%-- QuestiobType.LID --%>
@@ -184,11 +185,11 @@ function remove(i){
 		
 		<logic:equal  name="exerciseCreationForm" property="evaluationQuestion" value="true">
 			<logic:equal name="cardinalityType" value="1"> <%-- CardinalityType.SINGLE --%>
-				<tr><td align='center'><html:radio property="correctOptions" value="<%=new Integer(i).toString() %>"/></td>
+				<tr><td align='center'><html:radio bundle="HTMLALT_RESOURCES" altKey="radio.correctOptions" property="correctOptions" value="<%=new Integer(i).toString() %>"/></td>
 			</logic:equal>
 			<logic:equal name="cardinalityType" value="2"> <%-- CardinalityType.MULTIPLE --%>
 				<tr><td align='center'>
-					<html:multibox property="correctOptions">
+					<html:multibox bundle="HTMLALT_RESOURCES" altKey="multibox.correctOptions" property="correctOptions">
 						<bean:define id="correctOptions" value="<%=new Integer(i).toString()%>"/>
 						<bean:write name="correctOptions"/>
 					</html:multibox>
@@ -200,10 +201,10 @@ function remove(i){
 		<logic:notEmpty name="exerciseCreationForm" property='<%="options["+new Integer(i-1)+"]"%>'>
 			<bean:define id="value" name="exerciseCreationForm" property='<%="options["+new Integer(i-1)+"]"%>' type="java.lang.String"/>
 		</logic:notEmpty>
-		<td align='center'><html:textarea rows="3" cols="70" property="options" value="<%=value.toString()%>"/></td>
+		<td align='center'><html:textarea bundle="HTMLALT_RESOURCES" altKey="textarea.options" rows="3" cols="70" property="options" value="<%=value.toString()%>"/></td>
 		<logic:equal  name="exerciseCreationForm" property="evaluationQuestion" value="true">
 			<td align='center'>
-				<html:multibox property="shuffle">
+				<html:multibox bundle="HTMLALT_RESOURCES" altKey="multibox.shuffle" property="shuffle">
 					<bean:define id="shuffleValue" value="<%=new Integer(i).toString()%>"/>
 					<bean:write name="shuffleValue"/>
 				</html:multibox>
@@ -227,23 +228,23 @@ function remove(i){
 <table>
 	<tr>
 		<td><b><bean:message key="label.breakLineBeforeResponseTextBox"/></b></td>
-		<td><html:checkbox property="breakLineBeforeResponseBox" value="true"/></td>
+		<td><html:checkbox bundle="HTMLALT_RESOURCES" altKey="checkbox.breakLineBeforeResponseBox" property="breakLineBeforeResponseBox" value="true"/></td>
 	</tr>
 </table>
 <br/><br/>
 <table>
 	<tr><td><b><bean:message key="label.responseTextBox"/></b></td></tr>
-	<tr><td/><td/><td><bean:message key="label.numberOfColumns"/></td><td><html:text size="2" maxlength="2" property="cols"/></td></tr>
+	<tr><td/><td/><td><bean:message key="label.numberOfColumns"/></td><td><html:text bundle="HTMLALT_RESOURCES" altKey="text.cols" size="2" maxlength="2" property="cols"/></td></tr>
 	<bean:define id="disable" value="false"/>
 	<logic:equal name="exerciseCreationForm" property="rows" value="0">
 		<bean:define id="disable" value="true"/>
 	</logic:equal>
-	<tr><td/><td><html:radio property="response" value="true" onclick="checkResponseTextBox()"/></td><td><bean:message key="label.numberOfRows"/></td><td><html:text size="2" maxlength="2" property="rows" disabled="<%=new Boolean(disable).booleanValue()%>" onkeyup="changeResponseTextBox(this)"/></td></tr>
+	<tr><td/><td><html:radio bundle="HTMLALT_RESOURCES" altKey="radio.response" property="response" value="true" onclick="checkResponseTextBox()"/></td><td><bean:message key="label.numberOfRows"/></td><td><html:text bundle="HTMLALT_RESOURCES" altKey="text.rows" size="2" maxlength="2" property="rows" disabled="<%=new Boolean(disable).booleanValue()%>" onkeyup="changeResponseTextBox(this)"/></td></tr>
 	<bean:define id="disable" value="false"/>
 	<logic:equal name="exerciseCreationForm" property="maxChar" value="0">
 		<bean:define id="disable" value="true"/>
 	</logic:equal>
-	<tr><td/><td><html:radio property="response" value="false" onclick="checkResponseTextBox()"/></td><td><bean:message key="label.maxNumberOfChars"/></td><td><html:text size="4" maxlength="4" property="maxChar" disabled="<%=new Boolean(disable).booleanValue()%>" onkeyup="changeResponseTextBox(this)"/></td></tr>
+	<tr><td/><td><html:radio bundle="HTMLALT_RESOURCES" altKey="radio.response" property="response" value="false" onclick="checkResponseTextBox()"/></td><td><bean:message key="label.maxNumberOfChars"/></td><td><html:text bundle="HTMLALT_RESOURCES" altKey="text.maxChar" size="4" maxlength="4" property="maxChar" disabled="<%=new Boolean(disable).booleanValue()%>" onkeyup="changeResponseTextBox(this)"/></td></tr>
 </table>
 <logic:equal name="questionType" value="3"> <%-- QuestionType.NUM --%>
 <br/>
@@ -251,11 +252,11 @@ function remove(i){
 		<tr><td><b><bean:message key="message.tests.questionCardinality"/></b></td></tr>
 		<tr><td/>
 			<td><bean:message key="label.integer"/></td>
-			<td><html:radio property="integerType" value="true"/></td>
+			<td><html:radio bundle="HTMLALT_RESOURCES" altKey="radio.integerType" property="integerType" value="true"/></td>
 		</tr>
 		<tr><td/>
 			<td><bean:message key="label.decimal"/></td>
-			<td><html:radio property="integerType" value="false"/></td>
+			<td><html:radio bundle="HTMLALT_RESOURCES" altKey="radio.integerType" property="integerType" value="false"/></td>
 		</tr>
 </table>
 </logic:equal>
@@ -273,7 +274,7 @@ function remove(i){
 		<td align='center'>
 		
 		<bean:define id="signalCode" name="exerciseCreationForm" property='<%="signal["+new Integer(i-1)+"]"%>'/>
-		<html:select name="exerciseCreationForm" property="signal" value="<%=signalCode.toString()%>">
+		<html:select bundle="HTMLALT_RESOURCES" altKey="select.signal" name="exerciseCreationForm" property="signal" value="<%=signalCode.toString()%>">
 		<logic:iterate id="signal2" name="signals" type="org.apache.struts.util.LabelValueBean">
 			<html:option value="<%=signal2.getValue()%>"><bean:write name="signal2" property="label"/></html:option>
 		</logic:iterate>
@@ -285,10 +286,10 @@ function remove(i){
 		</logic:notEmpty>
 		
 		<logic:equal name="questionType" value="2"> <%-- QuestionType.STR --%>
-			<td align='center'><html:text size="70" property="correctOptions" value="<%=value.toString()%>"/></td>
+			<td align='center'><html:text bundle="HTMLALT_RESOURCES" altKey="text.correctOptions" size="70" property="correctOptions" value="<%=value.toString()%>"/></td>
 		</logic:equal>	
 		<logic:equal name="questionType" value="3"> <%-- QuestionType.NUM --%>
-			<td align='center'><html:text size="20" property="correctOptions" value="<%=value.toString()%>"/></td>
+			<td align='center'><html:text bundle="HTMLALT_RESOURCES" altKey="text.correctOptions" size="20" property="correctOptions" value="<%=value.toString()%>"/></td>
 			<logic:greaterThan name="optionNumber" value="1">
 			<td><html:link href='<%="javascript:remove("+new Integer(i-1)+")"%>'>
 				<img border='0' src="<%= request.getContextPath()%>/images/remove.gif" alt="<bean:message key="remove" bundle="IMAGE_RESOURCES" />"/></td></tr>
@@ -299,7 +300,7 @@ function remove(i){
 	<logic:equal name="questionType" value="2"> <%-- QuestionType.STR --%>
 		<tr>
 			<td align='center' colspan="2"><b><bean:message key="label.caseSensitive"/></b>
-			<html:checkbox property="caseSensitive" value="true"/></td>
+			<html:checkbox bundle="HTMLALT_RESOURCES" altKey="checkbox.caseSensitive" property="caseSensitive" value="true"/></td>
 		</tr>
 	</logic:equal>
 	<%}%>
@@ -317,34 +318,34 @@ function remove(i){
 </logic:equal>
 <table>
 	<tr>
-		<td><b><bean:message key="label.breakLineAfterResponseTextBox"/></b><html:checkbox property="breakLineAfterResponseBox" value="true"/></td>
+		<td><b><bean:message key="label.breakLineAfterResponseTextBox"/></b><html:checkbox bundle="HTMLALT_RESOURCES" altKey="checkbox.breakLineAfterResponseBox" property="breakLineAfterResponseBox" value="true"/></td>
 	</tr>
 	<tr><td><b><bean:message key="label.secondQuestionText"/></b></td></tr>
-	<tr><td><html:textarea rows="5" cols="85" property="secondQuestionText"/></td></tr>
+	<tr><td><html:textarea bundle="HTMLALT_RESOURCES" altKey="textarea.secondQuestionText" rows="5" cols="85" property="secondQuestionText"/></td></tr>
 </table>
 </logic:notEqual>
 <br/>
 <logic:equal  name="exerciseCreationForm" property="evaluationQuestion" value="true">
 <table>
 <tr><td><b><bean:message key="label.correctFeedbackText"/></b></td></tr>
-<tr><td><html:textarea rows="3" cols="85" property="correctFeedbackText"/></td></tr>
+<tr><td><html:textarea bundle="HTMLALT_RESOURCES" altKey="textarea.correctFeedbackText" rows="3" cols="85" property="correctFeedbackText"/></td></tr>
 <tr><td><b><bean:message key="label.wrongFeedbackText"/></b></td></tr>
-<tr><td><html:textarea rows="3" cols="85" property="wrongFeedbackText"/></td></tr>
+<tr><td><html:textarea bundle="HTMLALT_RESOURCES" altKey="textarea.wrongFeedbackText" rows="3" cols="85" property="wrongFeedbackText"/></td></tr>
 </table>
 </logic:equal>
 <br/>
 <br/>
 <table>
 <tr>
-<td><html:submit styleClass="inputbutton" onclick="javascript:document.forms[0].method.value='createExercise';this.form.page.value=2;"><bean:message key="label.create"/></html:submit></td>
-<td><html:submit styleClass="inputbutton" onclick="javascript:document.forms[0].method.value='previewExercise';this.form.page.value=2;"><bean:message key="link.students.enrolled.exam"/></html:submit></td>
+<td><html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton" onclick="javascript:document.forms[0].method.value='createExercise';this.form.page.value=2;"><bean:message key="label.create"/></html:submit></td>
+<td><html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton" onclick="javascript:document.forms[0].method.value='previewExercise';this.form.page.value=2;"><bean:message key="link.students.enrolled.exam"/></html:submit></td>
 </html:form>
 
 <html:form action="/testsManagement">
-<html:hidden property="page" value="0"/>
-<html:hidden property="method" value="testsFirstPage"/>
-<html:hidden property="objectCode" value="<%=(pageContext.findAttribute("objectCode")).toString()%>"/>
-<td><html:submit styleClass="inputbutton"><bean:message key="button.cancel"/></html:submit></td>
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="0"/>
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="testsFirstPage"/>
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.objectCode" property="objectCode" value="<%=(pageContext.findAttribute("objectCode")).toString()%>"/>
+<td><html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton"><bean:message key="button.cancel"/></html:submit></td>
 </html:form>
 </tr>
 </table>

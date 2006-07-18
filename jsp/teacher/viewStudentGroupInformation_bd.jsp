@@ -1,5 +1,6 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/app.tld" prefix="app" %>
@@ -94,26 +95,26 @@
 	<tbody>		
 	
 		<tr >
-			<td class="listClasses-header" width="30%" rowspan="2">
+			<th class="listClasses-header" width="30%" rowspan="2">
 				<bean:message key="property.shift"/>
-			</td>
-			<td class="listClasses-header" colspan="4" width="70%"> 
+			</th>
+			<th class="listClasses-header" colspan="4" width="70%"> 
 				<bean:message key="property.lessons"/>
-			</td>
+			</th>
 		</tr>
 		<tr>
-			<td class="listClasses-header" width="25%">
+			<th class="listClasses-header" width="25%">
 				<bean:message key="property.lesson.weekDay"/>
-			</td>
-			<td class="listClasses-header" width="15%">
+			</th>
+			<th class="listClasses-header" width="15%">
 				<bean:message key="property.lesson.beginning"/>
-			</td>
-			<td class="listClasses-header" width="15%">
+			</th>
+			<th class="listClasses-header" width="15%">
 				<bean:message key="property.lesson.end"/>
-			</td>
-			<td class="listClasses-header" width="15%">
+			</th>
+			<th class="listClasses-header" width="15%">
 				<bean:message key="property.lesson.room"/>
-			</td>
+			</th>
 		</tr>
 		
 	 	<bean:define id="infoStudentGroup" name="component" property="infoStudentGroup"/>
@@ -278,12 +279,12 @@
 	<br/>	  
 	
 	<tr>
-		<td class="listClasses-header" width="16%"><bean:message key="label.numberWord" />
-		</td>
-		<td class="listClasses-header" width="63%"><bean:message key="label.nameWord" />
-		</td>
-		<td class="listClasses-header" width="26%"><bean:message key="label.emailWord" />
-		</td>
+		<th class="listClasses-header" width="16%"><bean:message key="label.numberWord" />
+		</th>
+		<th class="listClasses-header" width="63%"><bean:message key="label.nameWord" />
+		</th>
+		<th class="listClasses-header" width="26%"><bean:message key="label.emailWord" />
+		</th>
 	</tr>
 			
 	<logic:iterate id="infoSiteStudentInformation" name="component" property="infoSiteStudentInformationList">			

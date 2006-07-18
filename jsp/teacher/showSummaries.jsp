@@ -1,5 +1,6 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/enum.tld" prefix="e" %>
@@ -24,9 +25,9 @@
 <br />
 
 <html:form action="/showSummaries">
-<html:hidden property="page" value="1"/>
-<html:hidden property="method" value="showSummaries"/>
-<html:hidden property="objectCode" value="<%= objectCode.toString() %>"/>
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="showSummaries"/>
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.objectCode" property="objectCode" value="<%= objectCode.toString() %>"/>
 
 <table width="55%" border='0'>
 	<tr>
@@ -36,7 +37,7 @@
 	<e:labelValues id="values" enumeration="net.sourceforge.fenixedu.domain.ShiftType" bundle="ENUMERATION_RESOURCES"/>
 		<td width="15%"><bean:message key="message.summaryType" /></td>
 		<td width="40%">
-			<html:select property="bySummaryType" onchange="this.form.method.value='showSummaries';this.form.page.value=0;this.form.submit();">
+			<html:select bundle="HTMLALT_RESOURCES" altKey="select.bySummaryType" property="bySummaryType" onchange="this.form.method.value='showSummaries';this.form.page.value=0;this.form.submit();">
 				<html:option  value="0" key="label.showBy.all" />
 				<html:options collection="values" property="value" labelProperty="label"/>
 			</html:select>		
@@ -45,7 +46,7 @@
 	<tr>
 		<td width="15%"><bean:message key="label.shift" /></td>
 		<td width="40%">
-			<html:select property="byShift" onchange="this.form.method.value='showSummaries';this.form.page.value=0;this.form.submit();">
+			<html:select bundle="HTMLALT_RESOURCES" altKey="select.byShift" property="byShift" onchange="this.form.method.value='showSummaries';this.form.page.value=0;this.form.submit();">
 				<html:option  value="0" key="label.showBy.all" />
 				<html:options collection="shifts" property="idInternal" labelProperty="lessons"/>
 			</html:select>		
@@ -54,7 +55,7 @@
 	<tr>
 		<td width="15%"><bean:message key="label.teacher" /></td>
 		<td width="40%">
-			<html:select property="byTeacher" onchange="this.form.method.value='showSummaries';this.form.page.value=0;this.form.submit();">
+			<html:select bundle="HTMLALT_RESOURCES" altKey="select.byTeacher" property="byTeacher" onchange="this.form.method.value='showSummaries';this.form.page.value=0;this.form.submit();">
 				<html:option  value="0" key="label.showBy.all" />
 				<html:options collection="professorships" property="idInternal" labelProperty="infoTeacher.infoPerson.nome"/>
 				<html:option  value="-1" key="label.others"/>
@@ -63,7 +64,7 @@
 	</tr>
 	<%--<tr>
 		<td colspan='2' align='center'>
-			<html:submit styleClass="inputbutton"><bean:message key="button.show"/></html:submit>		
+			<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton"><bean:message key="button.show"/></html:submit>		
 		</td>
 	</tr>--%>
 </table>
@@ -213,7 +214,7 @@
 				</div>
 				<div class="gen-button">
 					<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" />
-					<html:link page="<%= "/summariesManager.do?method=deleteSummary&amp;page=0&amp;objectCode=" + pageContext.findAttribute("objectCode") + "&amp;summaryCode=" + summaryCode %>" onclick="return confirm('Tem a certeza que deseja apagar este sumário?')">
+					<html:link page="<%= "/summariesManager.do?method=deleteSummary&amp;page=0&amp;objectCode=" + pageContext.findAttribute("objectCode") + "&amp;summaryCode=" + summaryCode %>" onclick="return confirm('Tem a certeza que deseja apagar este sumï¿½rio?')">
 						<bean:message key="button.delete" />
 					</html:link>
 				</div>

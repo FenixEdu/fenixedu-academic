@@ -1,5 +1,5 @@
 <%@ page language="java" %>
-<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
+<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%><html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 
@@ -21,17 +21,17 @@
 <strong><p align="center"><bean:message key="label.grant.insurance.edition"/></p></strong><br/>
 
 	
-	<html:hidden property="method" value="doEdit"/>
-	<html:hidden property="page" value="1"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="doEdit"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
 
 	<%-- In case of validation error --%>
 	<%-- grant contract --%>
-	<html:hidden property="idContract"/> 
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.idContract" property="idContract"/> 
 	<%-- grant owner  --%>
-	<html:hidden property="idGrantOwner"/>	
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.idGrantOwner" property="idGrantOwner"/>	
 	<%-- grant insurance --%>
-	<html:hidden property="idGrantInsurance"/>
-	<html:hidden property="totalValue"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.idGrantInsurance" property="idGrantInsurance"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.totalValue" property="totalValue"/>
 	
 	
 	<table>
@@ -67,7 +67,7 @@
 				<bean:message key="label.grant.insurance.dateBeginInsurance"/>:&nbsp;
 			</td>
 			<td>
-				<html:text property="dateBeginInsurance" size="10"/>&nbsp;<bean:message key="label.requiredfield"/><bean:message key="label.dateformat"/>
+				<html:text bundle="HTMLALT_RESOURCES" altKey="text.dateBeginInsurance" property="dateBeginInsurance" size="10"/>&nbsp;<bean:message key="label.requiredfield"/><bean:message key="label.dateformat"/>
 			</td>
 		</tr>
 		<tr>
@@ -75,7 +75,7 @@
 			<bean:message key="label.grant.insurance.dateEndInsurance"/>:&nbsp;
 		</td>
 		<td>
-			<html:text property="dateEndInsurance" size="10"/>&nbsp;<bean:message key="label.dateformat"/>
+			<html:text bundle="HTMLALT_RESOURCES" altKey="text.dateEndInsurance" property="dateEndInsurance" size="10"/>&nbsp;<bean:message key="label.dateformat"/>
 		</td>
 		</tr>
 		<tr>
@@ -88,7 +88,7 @@
 				&nbsp;&nbsp;&nbsp;&nbsp;<bean:message key="label.grant.insurance.paymentEntity.project"/>:&nbsp;
 			</td>
 			<td>
-				<html:text property="project" size="10"/>&nbsp; 
+				<html:text bundle="HTMLALT_RESOURCES" altKey="text.project" property="project" size="10"/>&nbsp; 
 					<html:link page='<%= "/showPaymentEntitiesList.do?method=showForm&amp;project=1" %>' target="_blank">
 						<bean:message key="link.grantproject.showList"/>
 					</html:link>
@@ -99,7 +99,7 @@
 				&nbsp;&nbsp;&nbsp;&nbsp;<bean:message key="label.grant.insurance.paymentEntity.costCenter"/>:&nbsp;
 			</td>
 			<td>
-				<html:text property="costcenter" size="10"/>&nbsp; 
+				<html:text bundle="HTMLALT_RESOURCES" altKey="text.costcenter" property="costcenter" size="10"/>&nbsp; 
 				<html:link page='<%= "/showPaymentEntitiesList.do?method=showForm&amp;costcenter=1" %>' target="_blank">
 					<bean:message key="link.grantcostcenter.showList"/>
 				</html:link>
@@ -112,7 +112,7 @@
 	<table>
 		<tr>
 			<td>
-				<html:submit styleClass="inputbutton">
+				<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton">
 					<bean:message key="button.save"/>
 				</html:submit>
 
@@ -120,10 +120,10 @@
 			</td>
 			<td>
 				<html:form action="/manageGrantContract" style="display:inline">
-				<html:hidden property="method" value="prepareManageGrantContractForm"/>
-				<html:hidden property="page" value="1"/>
-				<html:hidden property="idInternal" value='<%= request.getAttribute("idGrantOwner").toString() %>'/>
-					<html:submit styleClass="inputbutton" style="display:inline">
+				<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="prepareManageGrantContractForm"/>
+				<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
+				<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.idInternal" property="idInternal" value='<%= request.getAttribute("idGrantOwner").toString() %>'/>
+					<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton" style="display:inline">
 						<bean:message key="button.cancel"/>
 					</html:submit>
 				</html:form>

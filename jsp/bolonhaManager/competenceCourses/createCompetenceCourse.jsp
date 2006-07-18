@@ -4,6 +4,7 @@
 <%@ taglib uri="/WEB-INF/html_basic.tld" prefix="h"%>
 
 <ft:tilesView definition="bolonhaManager.masterPage" attributeName="body-inline">
+	<f:loadBundle basename="resources/HtmlAltResources" var="htmlAltBundle"/>
 	<f:loadBundle basename="resources/BolonhaManagerResources" var="bolonhaBundle"/>
 	<f:loadBundle basename="resources/EnumerationResources" var="enumerationBundle"/>
 	
@@ -37,22 +38,22 @@
 	</h:outputFormat>	
 	<h:form>
 		<fc:viewState binding="#{CompetenceCourseManagement.viewState}"/>
-		<h:outputText escape="false" value="<input id='competenceCourseGroupUnitID' name='competenceCourseGroupUnitID' type='hidden' value='#{CompetenceCourseManagement.competenceCourseGroupUnit.idInternal}'/>"/>
-		<h:outputText escape="false" value="<input id='action' name='action' type='hidden' value='create'/>"/>
+		<h:outputText escape="false" value="<input alt='input.competenceCourseGroupUnitID' id='competenceCourseGroupUnitID' name='competenceCourseGroupUnitID' type='hidden' value='#{CompetenceCourseManagement.competenceCourseGroupUnit.idInternal}'/>"/>
+		<h:outputText escape="false" value="<input alt='input.action' id='action' name='action' type='hidden' value='create'/>"/>
 
 		<h:outputText value="<fieldset class='lfloat'>" escape="false"/>	
 		<h:outputText value="<p><label>#{bolonhaBundle['name']} (pt): </label>" escape="false"/>
-		<h:inputText id="name" required="true" maxlength="100" size="40" value="#{CompetenceCourseManagement.name}"/>
+		<h:inputText alt="#{htmlAltBundle['inputText.name']}" id="name" required="true" maxlength="100" size="40" value="#{CompetenceCourseManagement.name}"/>
 		<h:message styleClass="error0" for="name"/>
 		<h:outputText value="</p>" escape="false"/>
 				
 		<h:outputText value="<p><label>#{bolonhaBundle['nameEn']} (en): </label>" escape="false"/>
-		<h:inputText id="nameEn" required="true" maxlength="100" size="40" value="#{CompetenceCourseManagement.nameEn}"/>
+		<h:inputText alt="#{htmlAltBundle['inputText.nameEn']}" id="nameEn" required="true" maxlength="100" size="40" value="#{CompetenceCourseManagement.nameEn}"/>
 		<h:message styleClass="error0" for="nameEn"/>
 		<h:outputText value="</p>" escape="false"/>	
 		
 <%-- 		<h:outputText value="<p><label>#{bolonhaBundle['acronym']}: </label>" escape="false"/>
-		<h:inputText id="acronym" required="true" maxlength="10" size="9" value="#{CompetenceCourseManagement.acronym}"/>
+		<h:inputText alt="#{htmlAltBundle['inputText.acronym']}" id="acronym" required="true" maxlength="10" size="9" value="#{CompetenceCourseManagement.acronym}"/>
 		<h:message styleClass="error0" for="acronym" />
 		<h:outputText value="</p>" escape="false"/>
 --%>		
@@ -74,9 +75,9 @@
 		<h:outputText value="</p></fieldset>" escape="false"/>	
 		<h:outputText value="</div>" escape="false"/>	
 		
-		<h:commandButton styleClass="inputbutton" value="#{bolonhaBundle['create']}"
+		<h:commandButton alt="#{htmlAltBundle['commandButton.create']}" styleClass="inputbutton" value="#{bolonhaBundle['create']}"
 	 		action="#{CompetenceCourseManagement.createCompetenceCourse}"/> 
-		<h:commandButton immediate="true" styleClass="inputbutton" value="#{bolonhaBundle['cancel']}"
+		<h:commandButton alt="#{htmlAltBundle['commandButton.cancel']}" immediate="true" styleClass="inputbutton" value="#{bolonhaBundle['cancel']}"
 			action="competenceCoursesManagement"/>
 	</h:form>
 

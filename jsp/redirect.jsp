@@ -30,24 +30,24 @@
 								<logic:iterate id="entry" name="ORIGINAL_PARAMETER_MAP">
 									<bean:define id="key" name="entry" property="key" type="java.lang.String"/>
 									<logic:iterate id="value" name="entry" property="value" type="java.lang.String">
-										<input type="hidden" name="<%= key %>" value="<%= value %>"/>
+										<input alt="<%= key %>" type="hidden" name="<%= key %>" value="<%= value %>"/>
 									</logic:iterate>
 								</logic:iterate>
 
 								<logic:iterate id="entry" name="ORIGINAL_ATTRIBUTE_MAP">
 									<bean:define id="key" name="entry" property="key" type="java.lang.String"/>
 									<bean:define id="value" name="entry" property="value"/>
-									<input type="hidden" name="<%= key %>" value="<%= value.toString() %>"/>
+									<input alt="<%= key %>" type="hidden" name="<%= key %>" value="<%= value.toString() %>"/>
 								</logic:iterate>
 
-								<html:submit styleClass="button" property="ok">
+								<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.ok" styleClass="button" property="ok">
 									<bean:message key="label.button.yes" bundle="GLOBAL_RESOURCES"/>
 								</html:submit>
 							</form>
 						</td>
 						<td>
 							<form method="get" action="home.do">
-								<html:submit styleClass="button">
+								<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="button">
 									<bean:message key="label.button.no" bundle="GLOBAL_RESOURCES"/>
 								</html:submit>
 							</form>

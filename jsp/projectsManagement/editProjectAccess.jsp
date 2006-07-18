@@ -1,4 +1,5 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <script language="Javascript" type="text/javascript">
@@ -35,15 +36,15 @@ function getIndex(input){
 	<bean:define id="infoProject" name="infoProjectAccess" property="infoProject" />
 	<bean:define id="username" name="person" property="username" />
 	<html:form action="/projectAccessEdition" focus="beginDay">
-		<html:hidden property="method" value="editProjectAccess" />
-		<html:hidden property="projectCode" value="<%=projectCode.toString()%>" />
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="editProjectAccess" />
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.projectCode" property="projectCode" value="<%=projectCode.toString()%>" />
 		<bean:define id="personCode" name="person" property="idInternal" />
-		<html:hidden property="personCode" value="<%=personCode.toString()%>" />
-		<html:hidden property="username" value="<%=username.toString()%>" />
-		<html:hidden property="page" value="1" />
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.personCode" property="personCode" value="<%=personCode.toString()%>" />
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.username" property="username" value="<%=username.toString()%>" />
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1" />
 		<logic:present name="infoCostCenter" scope="request">
 			<bean:define id="cc" name="infoCostCenter" property="code" />
-			<html:hidden property="costCenter" value="<%=cc.toString()%>" />
+			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.costCenter" property="costCenter" value="<%=cc.toString()%>" />
 		</logic:present>
 
 		<table>
@@ -87,31 +88,31 @@ function getIndex(input){
 		<table border="0" cellpadding="0" cellspacing="0">
 			<tr>
 				<td><bean:message key="message.sinceDate" /><bean:message key="message.dateFormat" /></td>
-				<td><html:text maxlength="2" size="2" property="beginDay" onkeyup="changeFocus(this)" /> / <html:text maxlength="2" size="2"
-					property="beginMonth" onkeyup="changeFocus(this)" /> / <html:text maxlength="4" size="4" property="beginYear" onkeyup="changeFocus(this)" /></td>
+				<td><html:text bundle="HTMLALT_RESOURCES" altKey="text.beginDay" maxlength="2" size="2" property="beginDay" onkeyup="changeFocus(this)" /> / <html:text bundle="HTMLALT_RESOURCES" altKey="text.beginMonth" maxlength="2" size="2"
+					property="beginMonth" onkeyup="changeFocus(this)" /> / <html:text bundle="HTMLALT_RESOURCES" altKey="text.beginYear" maxlength="4" size="4" property="beginYear" onkeyup="changeFocus(this)" /></td>
 			</tr>
 			<tr>
 				<td><bean:message key="message.untilDate" /><bean:message key="message.dateFormat" /></td>
-				<td><html:text maxlength="2" size="2" property="endDay" onkeyup="changeFocus(this)" /> / <html:text maxlength="2" size="2" property="endMonth"
-					onkeyup="changeFocus(this)" /> / <html:text maxlength="4" size="4" property="endYear" onkeyup="changeFocus(this)" /></td>
+				<td><html:text bundle="HTMLALT_RESOURCES" altKey="text.endDay" maxlength="2" size="2" property="endDay" onkeyup="changeFocus(this)" /> / <html:text bundle="HTMLALT_RESOURCES" altKey="text.endMonth" maxlength="2" size="2" property="endMonth"
+					onkeyup="changeFocus(this)" /> / <html:text bundle="HTMLALT_RESOURCES" altKey="text.endYear" maxlength="4" size="4" property="endYear" onkeyup="changeFocus(this)" /></td>
 			</tr>
 		</table>
 		<br />
 		<table>
 			<tr>
-				<td><html:submit styleClass="inputbutton">
+				<td><html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton">
 					<bean:message key="label.confirm" />
 				</html:submit>
 	</html:form>
 	</td>
 	<td><html:form action="/projectAccess">
-		<html:hidden property="method" value="showPersonAccesses" />
-		<html:hidden property="username" value="<%=username.toString()%>" />
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="showPersonAccesses" />
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.username" property="username" value="<%=username.toString()%>" />
 		<logic:present name="infoCostCenter" scope="request">
 			<bean:define id="cc" name="infoCostCenter" property="code" />
-			<html:hidden property="costCenter" value="<%=cc.toString()%>" />
+			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.costCenter" property="costCenter" value="<%=cc.toString()%>" />
 		</logic:present>
-		<html:submit styleClass="inputbutton">
+		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton">
 			<bean:message key="label.back" />
 		</html:submit>
 	</html:form></td>

@@ -1,5 +1,6 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ page import="java.util.List" %>
@@ -16,21 +17,21 @@
 
 		<table align="center" cellspacing="1" cellpadding="5" >
 			<tr>
-			<td class="listClasses-header">
+			<th class="listClasses-header">
 					<bean:message key="property.curricularCourse.name"/>
-				</td>
-				<td class="listClasses-header">
+				</th>
+				<th class="listClasses-header">
 					<bean:message key="property.degree.initials"/>
-				</td>
-				<td class="listClasses-header">
+				</th>
+				<th class="listClasses-header">
 					<bean:message key="property.curricularCourse.branch"/>
-				</td>
-				<td class="listClasses-header">
+				</th>
+				<th class="listClasses-header">
 					<bean:message key="property.curricularCourse.curricularYear"/>
-				</td>
-				<td class="listClasses-header">
+				</th>
+				<th class="listClasses-header">
 					<bean:message key="property.curricularCourse.semester"/>
-				</td>
+				</th>
 			</tr>
 			
 			<logic:iterate id="curricularCourse" name="component" property="associatedCurricularCourses" >
@@ -71,12 +72,12 @@
 		
 			<table align="center" cellspacing="1" cellpadding="5" >
 			<tr>
-				<td class="listClasses-header">
+				<th class="listClasses-header">
 					<bean:message key="property.shift"/>
-				</td>
-				<td class="listClasses-header">
+				</th>
+				<th class="listClasses-header">
 					<bean:message key="property.classes"/>
-				</td>
+				</th>
 			</tr>
 				<logic:iterate id="shift" name="component" property="infoShiftsWithAssociatedClassesList" >		
 						

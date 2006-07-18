@@ -1,4 +1,5 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
@@ -18,8 +19,8 @@
 	//-->
 	</script>
 
-	<html:hidden name="markSheetManagementForm" property="method" value="gradeSubmissionStepTwo" />
-	<html:hidden name="markSheetManagementForm" property="executionCourseID" />
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" name="markSheetManagementForm" property="method" value="gradeSubmissionStepTwo" />
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.executionCourseID" name="markSheetManagementForm" property="executionCourseID" />
 	
 	<h2><bean:message key="label.submit.listMarks"/></h2>
 	<table class="infoop"><tr><td><bean:message key="label.submitMarks.introduction"/></td></tr></table>
@@ -64,8 +65,8 @@
 		<p><a href="javascript:setCheckBoxValue(true)"><bean:message key="button.selectAll"/></a> | <a href="javascript:setCheckBoxValue(false)"><bean:message key="button.selectNone"/></a></p>
 		<br/>
 		
-		<html:submit styleClass="inputbutton"><bean:message key="label.submit"/></html:submit>
-		<html:cancel styleClass="inputbutton" onclick="this.form.method.value='backToMainPage';"><bean:message key="button.cancel"/></html:cancel>
+		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton"><bean:message key="label.submit"/></html:submit>
+		<html:cancel bundle="HTMLALT_RESOURCES" altKey="cancel.cancel" styleClass="inputbutton" onclick="this.form.method.value='backToMainPage';"><bean:message key="button.cancel"/></html:cancel>
 	</logic:notEmpty>
 
 </fr:form>

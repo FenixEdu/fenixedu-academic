@@ -1,6 +1,7 @@
 <%@ page language="java" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="dt" %>
@@ -16,35 +17,35 @@
 	<logic:notEqual name="numberInfoExecutionCourses" value="0">
 		<table>
 			<tr>
-				<td rowspan="2" class="listClasses-header">
+				<th rowspan="2" class="listClasses-header">
 					<bean:message key="label.name"/>
-				</td>
-				<td rowspan="2" class="listClasses-header">
+				</th>
+				<th rowspan="2" class="listClasses-header">
 					<bean:message key="label.occupancy"/>
-				</td>
-				<td rowspan="2" class="listClasses-header">
+				</th>
+				<th rowspan="2" class="listClasses-header">
 					<bean:message key="label.hours.load.total"/>				
-				</td>
-				<td rowspan="2" class="listClasses-header">
+				</th>
+				<th rowspan="2" class="listClasses-header">
 					<bean:message key="label.courseInformation"/>	
-				</td>
-				<td colspan="3" class="listClasses-header">
+				</th>
+				<th colspan="3" class="listClasses-header">
 					<bean:message key="label.teachingReport"/>	
-				</td>
-				<td rowspan="2" class="listClasses-header">
+				</th>
+				<th rowspan="2" class="listClasses-header">
 					<bean:message key="message.teachingReport.students"/>
-				</td>
+				</th>
 			</tr>
 			<tr>
-				<td class="listClasses-header">
+				<th class="listClasses-header">
 					<bean:message key="label.masterDegree.administrativeOffice.situation"/>	
-				</td>
-				<td class="listClasses-header">
+				</th>
+				<th class="listClasses-header">
 					<bean:message key="message.teachingReport.AP/IN"/>(%)	
-				</td>
-				<td class="listClasses-header">
+				</th>
+				<th class="listClasses-header">
 					<bean:message key="message.teachingReport.AP/AV"/>(%)	
-				</td>
+				</th>
 			</tr>
 
 			<logic:iterate id="executionCourse" name="<%= SessionConstants.LIST_INFOEXECUTIONCOURSE %>" type="net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse">

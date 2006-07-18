@@ -5,6 +5,7 @@
 
 
 <ft:tilesView locale="<%=request.getAttribute(org.apache.struts.Globals.LOCALE_KEY).toString()%>" definition="definition.public.mainPageIST" attributeName="body-inline">
+	<f:loadBundle basename="resources/HtmlAltResources" var="htmlAltBundle"/>
 	<f:loadBundle basename="resources/PublicDegreeInformation" var="bundle"/>
 	<f:loadBundle basename="resources/ApplicationResources" var="bundleApplication"/>
 	<f:loadBundle basename="resources/EnumerationResources" var="bundleEnum"/>
@@ -33,7 +34,7 @@
 
 
 	<h:form>
-		<h:outputText escape="false" value="<input id='degreeID' name='degreeID' type='hidden' value='#{publicEvaluations.degreeID}'/>"/>
+		<h:outputText escape="false" value="<input alt='input.degreeID' id='degreeID' name='degreeID' type='hidden' value='#{publicEvaluations.degreeID}'/>"/>
 
 		<fc:breadCrumbs degree="#{publicEvaluations.degree}" trailingCrumb="#{bundle['public.degree.information.label.evaluations']}"/>
 	

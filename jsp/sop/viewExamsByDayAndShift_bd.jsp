@@ -4,6 +4,7 @@
 <%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoViewExamByDayAndShift" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <h2><bean:message key="title.exams.list"/></h2>
 <table width="100%">
@@ -31,12 +32,12 @@
 <logic:present name="<%= SessionConstants.LIST_EXAMSANDINFO %>" scope="request">
 	<table width="100%">
 		<tr>
-			<td class="listClasses-header"><bean:message key="property.course"/></td>
-			<td class="listClasses-header"><bean:message key="property.degrees"/></td>
-			<td class="listClasses-header"><bean:message key="property.number.students.attending.course"/></td>
-			<td class="listClasses-header"><bean:message key="property.exam.reservedRooms"/></td>
-			<td class="listClasses-header"><bean:message key="property.exam.number.vacancies"/></td>
-			<td class="listClasses-header"><bean:message key="property.exam.manage"/></td>
+			<th class="listClasses-header"><bean:message key="property.course"/></th>
+			<th class="listClasses-header"><bean:message key="property.degrees"/></th>
+			<th class="listClasses-header"><bean:message key="property.number.students.attending.course"/></th>
+			<th class="listClasses-header"><bean:message key="property.exam.reservedRooms"/></th>
+			<th class="listClasses-header"><bean:message key="property.exam.number.vacancies"/></th>
+			<th class="listClasses-header"><bean:message key="property.exam.manage"/></th>
 		</tr>
 		<logic:iterate id="infoViewExam" indexId="index" name="<%= SessionConstants.LIST_EXAMSANDINFO %>" scope="request">
 			<% int seatsReserved = 0; %>
@@ -110,6 +111,6 @@
 	</table>
 	<br />
 	<br />
-	- Nº de vagas para exames: <bean:write name="<%= SessionConstants.AVAILABLE_ROOM_OCCUPATION %>" scope="request"/>
+	- Nï¿½ de vagas para exames: <bean:write name="<%= SessionConstants.AVAILABLE_ROOM_OCCUPATION %>" scope="request"/>
 <br />
 </logic:present>

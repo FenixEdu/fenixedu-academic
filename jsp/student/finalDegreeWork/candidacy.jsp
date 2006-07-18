@@ -1,5 +1,6 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="dt" %>
@@ -7,15 +8,15 @@
 <h2><bean:message key="title.finalDegreeWork.candidacy"/></h2>
 <span class="error"><html:errors /></span>
 <html:form action="/finalDegreeWorkCandidacy" focus="executionDegreeOID">
-	<html:hidden property="method" value="somemethod"/>
-	<html:hidden property="page" value="1"/>
-	<html:hidden property="idInternal"/>
-	<html:hidden property="studentToRemove"/>
-	<html:hidden property="selectedGroupProposal"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="somemethod"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.idInternal" property="idInternal"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.studentToRemove" property="studentToRemove"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.selectedGroupProposal" property="selectedGroupProposal"/>
 
 	<bean:message key="label.finalDegreeWork.degree"/>:
 	<br />
-	<html:select property="executionDegreeOID" size="1"
+	<html:select bundle="HTMLALT_RESOURCES" altKey="select.executionDegreeOID" property="executionDegreeOID" size="1"
 				 onchange='this.form.method.value=\'selectExecutionDegree\';this.form.page.value=\'0\';this.form.submit();'>
 	<html:option value=""/>
 		<html:options property="idInternal"
@@ -30,14 +31,14 @@
 		<logic:present name="infoGroup" property="groupStudents">
 			<table>
 				<tr>
-					<td class="listClasses-header">
+					<th class="listClasses-header">
 						<bean:message key="label.finalDegreeWork.group.username"/>
-					</td>
-					<td class="listClasses-header">
+					</th>
+					<th class="listClasses-header">
 						<bean:message key="label.finalDegreeWork.group.name"/>
-					</td>
-					<td class="listClasses-header">
-					</td>
+					</th>
+					<th class="listClasses-header">
+					</th>
 				</tr>
 			<logic:iterate id="groupStudent" name="infoGroup" property="groupStudents">
 				<bean:define id="student" name="groupStudent" property="student"/>
@@ -53,7 +54,7 @@
 						<bean:define id="onClick">
 							this.form.method.value='removeStudent';this.form.studentToRemove.value='<bean:write name="student" property="idInternal"/>';
 						</bean:define>
-						<html:submit styleClass="inputbutton" onclick='<%= onClick.toString() %>'>
+						<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton" onclick='<%= onClick.toString() %>'>
 							<bean:message key="label.finalDegreeWork.group.remove"/>
 						</html:submit>
 					</td>
@@ -61,12 +62,12 @@
 			</logic:iterate>
 				<tr>
 					<td class="listClasses">
-						<html:text property="studentUsernameToAdd" size="6"/>
+						<html:text bundle="HTMLALT_RESOURCES" altKey="text.studentUsernameToAdd" property="studentUsernameToAdd" size="6"/>
 					</td>
 					<td class="listClasses">
 					</td>
 					<td class="listClasses">
-						<html:submit styleClass="inputbutton" onclick='this.form.method.value=\'addStudent\';'>
+						<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton" onclick='this.form.method.value=\'addStudent\';'>
 							<bean:message key="label.finalDegreeWork.group.add"/>
 						</html:submit>
 					</td>
@@ -79,28 +80,28 @@
 		<logic:present name="infoGroup" property="groupProposals">
 			<table>
 				<tr>
-					<td class="listClasses-header" rowspan="2">
+					<th class="listClasses-header" rowspan="2">
 						<bean:message key="label.finalDegreeWork.proposal.orderOfPreference"/>
-					</td>
-					<td class="listClasses-header" rowspan="2">
+					</th>
+					<th class="listClasses-header" rowspan="2">
 						<bean:message key="finalDegreeWorkProposalHeader.number"/>
-					</td>
-					<td class="listClasses-header" rowspan="2">
+					</th>
+					<th class="listClasses-header" rowspan="2">
 						<bean:message key="finalDegreeWorkProposalHeader.title"/>
-					</td>
-					<td class="listClasses-header">
+					</th>
+					<th class="listClasses-header">
 						<bean:message key="finalDegreeWorkProposalHeader.orientatorName"/>
-					</td>
-					<td class="listClasses-header" rowspan="2">
+					</th>
+					<th class="listClasses-header" rowspan="2">
 						<bean:message key="finalDegreeWorkProposalHeader.companyLink"/>
-					</td>
-					<td class="listClasses-header" rowspan="2">
-					</td>
+					</th>
+					<th class="listClasses-header" rowspan="2">
+					</th>
 				</tr>
 				<tr>
-					<td class="listClasses-header">
+					<th class="listClasses-header">
 						<bean:message key="finalDegreeWorkProposalHeader.coorientatorName"/>
-					</td>
+					</th>
 				</tr>
 				<logic:iterate id="groupProposal" name="infoGroup" property="groupProposals">
 
@@ -111,7 +112,7 @@
 								this.form.method.value='changePreferenceOrder';this.form.selectedGroupProposal.value='<bean:write name="groupProposal" property="idInternal"/>';this.form.submit();
 							</bean:define>
 							<bean:define id="propertyName">orderOfProposalPreference<bean:write name="groupProposal" property="idInternal"/></bean:define>
-							<html:text property='<%= propertyName %>' size="2"
+							<html:text alt='<%= propertyName %>' property='<%= propertyName %>' size="2"
 									   value='<%= groupProposalOrderOfPreference.toString() %>'
 									   onchange='<%= onChange.toString() %>'
 								/>
@@ -135,7 +136,7 @@
 							<bean:define id="onClick">
 								this.form.method.value='removeProposal';this.form.selectedGroupProposal.value='<bean:write name="groupProposal" property="idInternal"/>';
 							</bean:define>
-							<html:submit styleClass="inputbutton" onclick='<%= onClick.toString() %>'>
+							<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton" onclick='<%= onClick.toString() %>'>
 								<bean:message key="label.finalDegreeWork.group.remove"/>
 							</html:submit>
 						</td>
@@ -152,7 +153,7 @@
 			</table>
 		</logic:present>
 		<br />
-		<html:submit onclick='this.form.method.value=\'selectProposals\';'>
+		<html:submit bundle="HTMLALT_RESOURCES" altKey='submit.submit' onclick='this.form.method.value=\'selectProposals\';'>
 			<bean:message key="link.finalDegreeWork.selectProposals"/>
 		</html:submit>			
 	</logic:present>

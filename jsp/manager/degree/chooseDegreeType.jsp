@@ -3,6 +3,7 @@
 <%@ taglib uri="/WEB-INF/html_basic.tld" prefix="h"%>
 
 <ft:tilesView definition="df.executionDegreeManagement.default" attributeName="body-inline">
+	<f:loadBundle basename="resources/HtmlAltResources" var="htmlAltBundle"/>
 	<f:loadBundle basename="resources/ManagerResources" var="managerResources"/>
 
 	<h:outputText value="<h2>Criar #{managerResources['label.manager.executionDegreeManagement']}</h2>" escape="false"/>
@@ -22,7 +23,7 @@
 		</fieldset>
 		</div>
 		<p>
-			<h:commandButton action="choose" value="Continuar" styleClass="inputbutton" />
+			<h:commandButton alt="#{htmlAltBundle['commandButton.Continuar']}" action="choose" value="Continuar" styleClass="inputbutton" />
 		</p>			
 	</h:form>
 

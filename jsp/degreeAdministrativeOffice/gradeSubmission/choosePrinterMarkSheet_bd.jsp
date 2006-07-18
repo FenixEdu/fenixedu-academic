@@ -1,4 +1,5 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
@@ -13,15 +14,15 @@
 </logic:messagesPresent>
 <br/>
 <html:form action="/printMarkSheet.do">
-	<html:hidden property="method" value="printMarkSheets"/>
-	<html:hidden property="markSheet"/>
-	<html:hidden property="page" value="1"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="printMarkSheets"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.markSheet" property="markSheet"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
 	<table>
 		<tr>
 			<td>
 				<ul>
 				<logic:iterate id="name"  name="printerNames">
-					<li><html:radio property="printerName" value='<%= name.toString() %>'>
+					<li><html:radio bundle="HTMLALT_RESOURCES" altKey="radio.printerName" property="printerName" value='<%= name.toString() %>'>
 						<bean:write name="name"/>
 					</html:radio></li>
 				</logic:iterate>
@@ -35,7 +36,7 @@
 		</tr>
 	</table>
 	<br/>
-	<html:cancel styleClass="inputbutton"><bean:message key="label.back"/></html:cancel>
-	<html:submit styleClass="inputbutton"><bean:message key="label.print"/></html:submit>
+	<html:cancel bundle="HTMLALT_RESOURCES" altKey="cancel.cancel" styleClass="inputbutton"><bean:message key="label.back"/></html:cancel>
+	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton"><bean:message key="label.print"/></html:submit>
 	
 </html:form>

@@ -1,5 +1,6 @@
 <%@ page language="java"%>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 
@@ -20,13 +21,13 @@
 	<span class="error"><html:errors /></span>
 
 	<html:form action="/questionsManagementWithValue">
-		<html:hidden property="page" value="2" />
-		<html:hidden property="method" value="insertTestQuestion" />
-		<html:hidden property="objectCode" value="<%=(pageContext.findAttribute("objectCode")).toString()%>" />
-		<html:hidden property="testCode" value="<%=(pageContext.findAttribute("testCode")).toString()%>" />
-		<html:hidden property="metadataCode" value="<%= metadataCode.toString() %>" />
-		<html:hidden property="order" value="<%=(pageContext.findAttribute("order")).toString()%>" />
-		<html:hidden property="asc" value="<%=(pageContext.findAttribute("asc")).toString()%>" />
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="2" />
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="insertTestQuestion" />
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.objectCode" property="objectCode" value="<%=(pageContext.findAttribute("objectCode")).toString()%>" />
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.testCode" property="testCode" value="<%=(pageContext.findAttribute("testCode")).toString()%>" />
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.metadataCode" property="metadataCode" value="<%= metadataCode.toString() %>" />
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.order" property="order" value="<%=(pageContext.findAttribute("order")).toString()%>" />
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.asc" property="asc" value="<%=(pageContext.findAttribute("asc")).toString()%>" />
 		<table>
 			<logic:notEqual name="metadata" property="description" value="">
 				<tr>
@@ -93,7 +94,7 @@
 			<%--<td><b><bean:message key="message.testType"/></b></td> --%>
 			<logic:iterate id="formula" name="formulas" type="org.apache.struts.util.LabelValueBean">
 				<tr>
-					<td><html:radio property="formula" value="<%=formula.getValue()%>" /></td>
+					<td><html:radio bundle="HTMLALT_RESOURCES" altKey="radio.formula" property="formula" value="<%=formula.getValue()%>" /></td>
 					<td><bean:write name="formula" property="label" filter="false" /></td>
 				</tr>
 			</logic:iterate>
@@ -103,11 +104,11 @@
 		<table>
 			<tr>
 				<td><bean:message key="message.tests.questionValue" /></td>
-				<td><html:text size="1" name="infoQuestion" property="questionValue" /></td>
+				<td><html:text bundle="HTMLALT_RESOURCES" altKey="text.questionValue" size="1" name="infoQuestion" property="questionValue" /></td>
 			</tr>
 			<tr>
 				<td><bean:message key="message.testOrder" /></td>
-				<td><html:select property="questionOrder">
+				<td><html:select bundle="HTMLALT_RESOURCES" altKey="select.questionOrder" property="questionOrder">
 					<html:option value="-1">
 						<bean:message key="label.end" />
 					</html:option>
@@ -119,18 +120,18 @@
 		<br />
 		<table>
 			<tr>
-				<td><html:submit styleClass="inputbutton">
+				<td><html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton">
 					<bean:message key="button.insert" />
 				</html:submit></td>
 	</html:form>
 	<html:form action="/testsManagement">
-		<html:hidden property="page" value="0" />
-		<html:hidden property="method" value="showAvailableQuestions" />
-		<html:hidden property="objectCode" value="<%=(pageContext.findAttribute("objectCode")).toString()%>" />
-		<html:hidden property="testCode" value="<%=(pageContext.findAttribute("testCode")).toString()%>" />
-		<html:hidden property="order" value="<%=(pageContext.findAttribute("order")).toString()%>" />
-		<html:hidden property="asc" value="<%=(pageContext.findAttribute("asc")).toString()%>" />
-		<td><html:submit styleClass="inputbutton">
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="0" />
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="showAvailableQuestions" />
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.objectCode" property="objectCode" value="<%=(pageContext.findAttribute("objectCode")).toString()%>" />
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.testCode" property="testCode" value="<%=(pageContext.findAttribute("testCode")).toString()%>" />
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.order" property="order" value="<%=(pageContext.findAttribute("order")).toString()%>" />
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.asc" property="asc" value="<%=(pageContext.findAttribute("asc")).toString()%>" />
+		<td><html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton">
 			<bean:message key="link.goBack" />
 		</html:submit></td>
 

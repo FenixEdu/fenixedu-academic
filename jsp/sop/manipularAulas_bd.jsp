@@ -1,5 +1,6 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
@@ -25,11 +26,11 @@
 <table>
 	<tr>
     	<td class="listClasses-header"></td>
-       	<td class="listClasses-header"><bean:message key="property.aula.weekDay"/></td>
-        <td class="listClasses-header"><bean:message key="property.aula.time.begining"/></td>
-    	<td class="listClasses-header"><bean:message key="property.aula.time.end"/></td>
-       	<td class="listClasses-header"><bean:message key="property.aula.type"/></td>
-        <td class="listClasses-header"><bean:message key="property.aula.sala"/></td>
+       	<th class="listClasses-header"><bean:message key="property.aula.weekDay"/></th>
+        <th class="listClasses-header"><bean:message key="property.aula.time.begining"/></th>
+    	<th class="listClasses-header"><bean:message key="property.aula.time.end"/></th>
+       	<th class="listClasses-header"><bean:message key="property.aula.type"/></th>
+        <th class="listClasses-header"><bean:message key="property.aula.sala"/></th>
   	</tr>
 		<% int i = 0; %>
 <logic:iterate id="elem" name="listaAulas">
@@ -44,7 +45,7 @@
         <% if (fM.intValue() == 0) { %>
         <% 	appendEndMinute = "0"; } %>
     <tr>
- 		<td class="listClasses"><html:radio property="indexAula" value="<%= (new Integer(i)).toString() %>"/></td>
+ 		<td class="listClasses"><html:radio bundle="HTMLALT_RESOURCES" altKey="radio.indexAula" property="indexAula" value="<%= (new Integer(i)).toString() %>"/></td>
         <td class="listClasses"><bean:write name="elem" property="diaSemana" /></td>
        	<td class="listClasses"><%= iH.toString()%> : <%= iM.toString() + appendStartMinute %></td>
         <td class="listClasses"><%= fH.toString()%> : <%= fM.toString() + appendEndMinute %></td>
@@ -60,21 +61,21 @@
 </table>
 <br />
 <br />
-<html:hidden property="<%= SessionConstants.EXECUTION_PERIOD_OID %>"
+<html:hidden alt="<%= SessionConstants.EXECUTION_PERIOD_OID %>" property="<%= SessionConstants.EXECUTION_PERIOD_OID %>"
 			 value="<%= pageContext.findAttribute("executionPeriodOID").toString() %>"/>
-<html:hidden property="<%= SessionConstants.EXECUTION_DEGREE_OID %>"
+<html:hidden alt="<%= SessionConstants.EXECUTION_DEGREE_OID %>" property="<%= SessionConstants.EXECUTION_DEGREE_OID %>"
 			 value="<%= pageContext.findAttribute("executionDegreeOID").toString() %>"/>
-<html:hidden property="<%= SessionConstants.CURRICULAR_YEAR_OID %>"
+<html:hidden alt="<%= SessionConstants.CURRICULAR_YEAR_OID %>" property="<%= SessionConstants.CURRICULAR_YEAR_OID %>"
 			 value="<%= pageContext.findAttribute("curricularYearOID").toString() %>"/>
-<html:hidden property="<%= SessionConstants.EXECUTION_COURSE_OID %>"
+<html:hidden alt="<%= SessionConstants.EXECUTION_COURSE_OID %>" property="<%= SessionConstants.EXECUTION_COURSE_OID %>"
 			 value="<%= pageContext.findAttribute("executionCourseOID").toString() %>"/>
-<html:submit property="operation" styleClass="inputbutton"><bean:message key="label.edit.Aula"/></html:submit>
-<html:submit property="operation" styleClass="inputbutton"><bean:message key="label.delete.Aula"/></html:submit>
+<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.operation" property="operation" styleClass="inputbutton"><bean:message key="label.edit.Aula"/></html:submit>
+<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.operation" property="operation" styleClass="inputbutton"><bean:message key="label.delete.Aula"/></html:submit>
 	</logic:present>
     <logic:notPresent name="listaAulas" scope="request">
 <span class="errors"><bean:message key="errors.existAulas"/></span>
 <br />
 <br />          
-<html:submit property="operation" styleClass="inputbutton"><bean:message key="label.back"/></html:submit>
+<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.operation" property="operation" styleClass="inputbutton"><bean:message key="label.back"/></html:submit>
   	</logic:notPresent>
 </html:form>

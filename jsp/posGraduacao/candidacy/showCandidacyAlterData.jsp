@@ -1,10 +1,11 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 
 <html:form action="/dfaCandidacy.do">	
-	<html:hidden property="method" value="alterCandidacyData"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="alterCandidacyData"/>
 
 	<h2><strong><bean:message key="label.person.title.personal.info" /></strong></h2>
 	<fr:edit id="personData" name="candidacy" property="person" schema="candidate.personalData-freeEdit" >

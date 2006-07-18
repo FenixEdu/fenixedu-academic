@@ -1,6 +1,7 @@
 <%@ page language="java" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="dt" %>
@@ -13,86 +14,86 @@
 	</tr>
 </table>
 
-<h2>Gestão de Disciplinas</h2>
+<h2>Gestï¿½o de Disciplinas</h2>
 <br />
 <span class="error"><html:errors /></span>
 <br />
-Aviso: A alteração das cargas horárias pode tornar os dados incoerentes.
-Sempre que se altere as cargas é necessário confirmar que os turnos da disciplina
-obdecem à nova carga definida.
+Aviso: A alteraï¿½ï¿½o das cargas horï¿½rias pode tornar os dados incoerentes.
+Sempre que se altere as cargas ï¿½ necessï¿½rio confirmar que os turnos da disciplina
+obdecem ï¿½ nova carga definida.
 <br />
 <html:form action="/manageExecutionCourse" focus="theoreticalHours">
 
-	<html:hidden property="<%= SessionConstants.EXECUTION_PERIOD_OID %>"
+	<html:hidden alt="<%= SessionConstants.EXECUTION_PERIOD_OID %>" property="<%= SessionConstants.EXECUTION_PERIOD_OID %>"
 				 value="<%= pageContext.findAttribute("executionPeriodOID").toString() %>"/>
-	<html:hidden property="<%= SessionConstants.EXECUTION_COURSE_OID %>"
+	<html:hidden alt="<%= SessionConstants.EXECUTION_COURSE_OID %>" property="<%= SessionConstants.EXECUTION_COURSE_OID %>"
 				 value="<%= pageContext.findAttribute("executionCourseOID").toString() %>"/>
 
 	<table>
 			<tr>
-				<td class="listClasses-header">
+				<th class="listClasses-header">
 					<bean:message key="label.hours.load.theoretical"/>
-				</td>
-				<td class="listClasses-header">
+				</th>
+				<th class="listClasses-header">
 					<bean:message key="label.hours.load.theoretical_practical"/>
-				</td>
-				<td class="listClasses-header">
+				</th>
+				<th class="listClasses-header">
 					<bean:message key="label.hours.load.practical"/>
-				</td>
-				<td class="listClasses-header">
+				</th>
+				<th class="listClasses-header">
 					<bean:message key="label.hours.load.laboratorial"/>
-				</td>
-				<td class="listClasses-header">
+				</th>
+				<th class="listClasses-header">
 					<bean:message key="label.hours.load.seminary"/>
-				</td>
-				<td class="listClasses-header">
+				</th>
+				<th class="listClasses-header">
 					<bean:message key="label.hours.load.problems"/>
-				</td>
-				<td class="listClasses-header">
+				</th>
+				<th class="listClasses-header">
 					<bean:message key="label.hours.load.fieldWork"/>
-				</td>
-				<td class="listClasses-header">
+				</th>
+				<th class="listClasses-header">
 					<bean:message key="label.hours.load.trainingPeriod"/>
-				</td>
-				<td class="listClasses-header">
+				</th>
+				<th class="listClasses-header">
 					<bean:message key="label.hours.load.tutorialOrientation"/>
-				</td>
+				</th>
 			</tr>
 			<tr>
 				<td class="listClasses">
-					<html:text name="executionCourse" property="theoreticalHours" size="4"/>
+					<html:text bundle="HTMLALT_RESOURCES" altKey="text.theoreticalHours" name="executionCourse" property="theoreticalHours" size="4"/>
 				</td>
 				<td class="listClasses">
-					<html:text name="executionCourse" property="theoPratHours" size="4"/>
+					<html:text bundle="HTMLALT_RESOURCES" altKey="text.theoPratHours" name="executionCourse" property="theoPratHours" size="4"/>
 				</td>
 				<td class="listClasses">
-					<html:text name="executionCourse" property="praticalHours" size="4"/>
+					<html:text bundle="HTMLALT_RESOURCES" altKey="text.praticalHours" name="executionCourse" property="praticalHours" size="4"/>
 				</td>
 				<td class="listClasses">
-					<html:text name="executionCourse" property="labHours" size="4"/>
+					<html:text bundle="HTMLALT_RESOURCES" altKey="text.labHours" name="executionCourse" property="labHours" size="4"/>
 				</td>
 				<td class="listClasses">
-					<html:text name="executionCourse" property="seminaryHours" size="4"/>
+					<html:text bundle="HTMLALT_RESOURCES" altKey="text.seminaryHours" name="executionCourse" property="seminaryHours" size="4"/>
 				</td>
 				<td class="listClasses">
-					<html:text name="executionCourse" property="problemsHours" size="4"/>
+					<html:text bundle="HTMLALT_RESOURCES" altKey="text.problemsHours" name="executionCourse" property="problemsHours" size="4"/>
 				</td>
 				<td class="listClasses">
-					<html:text name="executionCourse" property="fieldWorkHours" size="4"/>
+					<html:text bundle="HTMLALT_RESOURCES" altKey="text.fieldWorkHours" name="executionCourse" property="fieldWorkHours" size="4"/>
 				</td>
 				<td class="listClasses">
-					<html:text name="executionCourse" property="trainingPeriodHours" size="4"/>
+					<html:text bundle="HTMLALT_RESOURCES" altKey="text.trainingPeriodHours" name="executionCourse" property="trainingPeriodHours" size="4"/>
 				</td>
 				<td class="listClasses">
-					<html:text name="executionCourse" property="tutorialOrientationHours" size="4"/>
+					<html:text bundle="HTMLALT_RESOURCES" altKey="text.tutorialOrientationHours" name="executionCourse" property="tutorialOrientationHours" size="4"/>
 				</td>
 				
 			</tr>
 	</table>
 	<br />
-	<html:hidden property="method" value="edit"/>
-	<html:hidden property="page" value="1"/>
-	<html:submit styleClass="inputbutton">
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="edit"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
+	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton">
 	<bean:message key="label.change"/>
 	</html:submit>
 </html:form>
@@ -102,12 +103,12 @@ obdecem à nova carga definida.
 <logic:present name="<%= SessionConstants.LIST_INFOCLASS %>" scope="request">
 	<table>
 		<tr>
-			<td class="listClasses-header">
+			<th class="listClasses-header">
 				<bean:message key="label.degree.name"/>
-			</td>
-			<td class="listClasses-header">
+			</th>
+			<th class="listClasses-header">
 				<bean:message key="label.name"/>
-			</td>
+			</th>
 		</tr>
 		<logic:iterate id="infoClass" name="<%= SessionConstants.LIST_INFOCLASS %>" scope="request">
 			<bean:define id="classOID" name="infoClass" property="idInternal"/>

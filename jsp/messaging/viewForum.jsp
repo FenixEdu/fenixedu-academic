@@ -1,5 +1,6 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
@@ -94,7 +95,7 @@
 
 
 <%--
-	<p>Pretende anular a subscrição deste fórum? <a href="">Anular Subscrição</a></p>
+	<p>Pretende anular a subscriï¿½ï¿½o deste fï¿½rum? <a href="">Anular Subscriï¿½ï¿½o</a></p>
 	
 	<logic:equal name="receivingMessagesByEmail" value="true">
 		<strong><bean:message bundle="MESSAGING_RESOURCES" key="label.viewForum.receivingMessagesByEmail"/></strong>

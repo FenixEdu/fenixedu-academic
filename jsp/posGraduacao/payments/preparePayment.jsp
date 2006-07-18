@@ -1,4 +1,5 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
@@ -6,7 +7,7 @@
 <bean:define id="personId" name="paymentsManagementDTO" property="person.idInternal"/>
 <fr:form action="<%="/payments.do?personId=" + personId %>">
 	
-	<html:hidden name="paymentsForm" property="method" />
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" name="paymentsForm" property="method" />
 	<h2><bean:message key="label.masterDegree.administrativeOffice.payments.preparePayment" /></h2>
 	<hr/>
 	<br />
@@ -53,6 +54,6 @@
 		</tr>
 	</table>
 	
-	<html:submit styleClass="inputbutton" onclick="this.form.method.value='doPayment';"><bean:message key="button.masterDegree.administrativeOffice.payments.pay"/></html:submit>
-	<html:cancel styleClass="inputbutton" onclick="this.form.method.value='backToShowOperations';"><bean:message key="button.masterDegree.administrativeOffice.payments.back"/></html:cancel>
+	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton" onclick="this.form.method.value='doPayment';"><bean:message key="button.masterDegree.administrativeOffice.payments.pay"/></html:submit>
+	<html:cancel bundle="HTMLALT_RESOURCES" altKey="cancel.cancel" styleClass="inputbutton" onclick="this.form.method.value='backToShowOperations';"><bean:message key="button.masterDegree.administrativeOffice.payments.back"/></html:cancel>
 </fr:form>

@@ -1,5 +1,6 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
@@ -35,6 +36,6 @@
 </logic:present>
 
 <html:form action="/websiteTypeManagement" method="get">
-    <html:hidden property="method" value="create"/>
+    <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="create"/>
     <html:submit><bean:message key="cms.websiteTypeManagement.create" bundle="CMS_RESOURCES"/></html:submit>
 </html:form>

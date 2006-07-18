@@ -1,5 +1,6 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ page import="java.util.Calendar" %>
@@ -39,30 +40,30 @@
 
 <table width="70%" cellpadding="0" border="0">
 	<tr>
-		<td class="listClasses-header"><bean:message bundle="MANAGER_RESOURCES" key="message.manager.theoreticalHours" />
-		</td>
-		<td class="listClasses-header"><bean:message bundle="MANAGER_RESOURCES" key="message.manager.praticalHours" />
-		</td>
-		<td class="listClasses-header"><bean:message bundle="MANAGER_RESOURCES" key="message.manager.theoPratHours" />
-		</td>
-		<td class="listClasses-header"><bean:message bundle="MANAGER_RESOURCES" key="message.manager.labHours" />
-		</td>
-		<td class="listClasses-header"><bean:message bundle="MANAGER_RESOURCES" key="message.manager.curricular.course.maxIncrementNac" />
-		</td>
-		<td class="listClasses-header"><bean:message bundle="MANAGER_RESOURCES" key="message.manager.curricular.course.minIncrementNac" />
-		</td>
-		<td class="listClasses-header"><bean:message bundle="MANAGER_RESOURCES" key="message.manager.curricular.course.credits" />
-		</td>
-		<td class="listClasses-header"><bean:message bundle="MANAGER_RESOURCES" key="message.manager.curricular.course.ectsCredits" />
-		</td>
-		<td class="listClasses-header"><bean:message bundle="MANAGER_RESOURCES" key="message.manager.curricular.course.weight" />
-		</td>
-		<td class="listClasses-header"><bean:message bundle="MANAGER_RESOURCES" key="message.manager.curricular.course.enrollmentWeigth"/>
-		</td>
-		<td class="listClasses-header"><bean:message bundle="MANAGER_RESOURCES" key="message.manager.curricular.course.mandatoryEnrollment"/>
-		</td>
-		<td class="listClasses-header"><bean:message bundle="MANAGER_RESOURCES" key="message.manager.curricular.course.enrollmentAllowed"/>
-		</td>
+		<th class="listClasses-header"><bean:message bundle="MANAGER_RESOURCES" key="message.manager.theoreticalHours" />
+		</th>
+		<th class="listClasses-header"><bean:message bundle="MANAGER_RESOURCES" key="message.manager.praticalHours" />
+		</th>
+		<th class="listClasses-header"><bean:message bundle="MANAGER_RESOURCES" key="message.manager.theoPratHours" />
+		</th>
+		<th class="listClasses-header"><bean:message bundle="MANAGER_RESOURCES" key="message.manager.labHours" />
+		</th>
+		<th class="listClasses-header"><bean:message bundle="MANAGER_RESOURCES" key="message.manager.curricular.course.maxIncrementNac" />
+		</th>
+		<th class="listClasses-header"><bean:message bundle="MANAGER_RESOURCES" key="message.manager.curricular.course.minIncrementNac" />
+		</th>
+		<th class="listClasses-header"><bean:message bundle="MANAGER_RESOURCES" key="message.manager.curricular.course.credits" />
+		</th>
+		<th class="listClasses-header"><bean:message bundle="MANAGER_RESOURCES" key="message.manager.curricular.course.ectsCredits" />
+		</th>
+		<th class="listClasses-header"><bean:message bundle="MANAGER_RESOURCES" key="message.manager.curricular.course.weight" />
+		</th>
+		<th class="listClasses-header"><bean:message bundle="MANAGER_RESOURCES" key="message.manager.curricular.course.enrollmentWeigth"/>
+		</th>
+		<th class="listClasses-header"><bean:message bundle="MANAGER_RESOURCES" key="message.manager.curricular.course.mandatoryEnrollment"/>
+		</th>
+		<th class="listClasses-header"><bean:message bundle="MANAGER_RESOURCES" key="message.manager.curricular.course.enrollmentAllowed"/>
+		</th>
 	</tr>
 	<tr>
 		<td class="listClasses">
@@ -114,16 +115,16 @@
 	<logic:notEmpty name="executionCoursesList">
 		<table width="100%" cellpadding="0" border="0">
 			<tr>
-				<td class="listClasses-header"><bean:message bundle="MANAGER_RESOURCES" key="label.manager.executionCourse.name" />
-				</td>
-				<td class="listClasses-header"><bean:message bundle="MANAGER_RESOURCES" key="label.manager.executionCourse.code" />
-				</td>
-				<td class="listClasses-header"><bean:message bundle="MANAGER_RESOURCES" key="label.manager.executionCourse.executionPeriod" />
-				</td>
-				<td class="listClasses-header"><bean:message bundle="MANAGER_RESOURCES" key="label.manager.executionCourse.site" />
-				</td>
-				<td class="listClasses-header">
-				</td>
+				<th class="listClasses-header"><bean:message bundle="MANAGER_RESOURCES" key="label.manager.executionCourse.name" />
+				</th>
+				<th class="listClasses-header"><bean:message bundle="MANAGER_RESOURCES" key="label.manager.executionCourse.code" />
+				</th>
+				<th class="listClasses-header"><bean:message bundle="MANAGER_RESOURCES" key="label.manager.executionCourse.executionPeriod" />
+				</th>
+				<th class="listClasses-header"><bean:message bundle="MANAGER_RESOURCES" key="label.manager.executionCourse.site" />
+				</th>
+				<th class="listClasses-header">
+				</th>
 			</tr>
 			
 			<logic:iterate id="executionCourse" name="executionCoursesList">
@@ -178,26 +179,26 @@
 <logic:present name="curricularCourseScopesList" scope="request">
 	<logic:notEmpty name="curricularCourseScopesList">
 		<html:form action="/deleteCurricularCourseScope" method="get">
-			<html:hidden property="degreeId" value="<%= request.getParameter("degreeId") %>"/>	
-			<html:hidden property="degreeCurricularPlanId" value="<%= request.getParameter("degreeCurricularPlanId") %>"/>
-			<html:hidden property="curricularCourseId" value="<%= request.getParameter("curricularCourseId") %>"/>
+			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.degreeId" property="degreeId" value="<%= request.getParameter("degreeId") %>"/>	
+			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.degreeCurricularPlanId" property="degreeCurricularPlanId" value="<%= request.getParameter("degreeCurricularPlanId") %>"/>
+			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.curricularCourseId" property="curricularCourseId" value="<%= request.getParameter("curricularCourseId") %>"/>
 				<bean:define id="onclick">
 					return confirm('<bean:message bundle="MANAGER_RESOURCES" key="message.confirm.delete.curricular.course.scope"/>')
  				</bean:define>
 				<table width="70%" cellpadding="0" border="0">
 					<tr>
-						<td class="listClasses-header">
-						</td>
-						<td class="listClasses-header"><bean:message bundle="MANAGER_RESOURCES" key="label.manager.curricularCourseScope.curricularYear" />
-						</td>
-						<td class="listClasses-header"><bean:message bundle="MANAGER_RESOURCES" key="label.manager.curricularCourseScope.curricularSemester" />
-						</td>
-						<td class="listClasses-header"><bean:message bundle="MANAGER_RESOURCES" key="label.manager.curricularCourseScope.branch" />
-						</td>
-						<td class="listClasses-header"><bean:message bundle="MANAGER_RESOURCES" key="label.manager.curricularCourseScope.beginDate" />
-						</td>
-						<td class="listClasses-header">
-						</td>
+						<th class="listClasses-header">
+						</th>
+						<th class="listClasses-header"><bean:message bundle="MANAGER_RESOURCES" key="label.manager.curricularCourseScope.curricularYear" />
+						</th>
+						<th class="listClasses-header"><bean:message bundle="MANAGER_RESOURCES" key="label.manager.curricularCourseScope.curricularSemester" />
+						</th>
+						<th class="listClasses-header"><bean:message bundle="MANAGER_RESOURCES" key="label.manager.curricularCourseScope.branch" />
+						</th>
+						<th class="listClasses-header"><bean:message bundle="MANAGER_RESOURCES" key="label.manager.curricularCourseScope.beginDate" />
+						</th>
+						<th class="listClasses-header">
+						</th>
 					</tr>
 					<logic:iterate id="curricularCourseScope" name="curricularCourseScopesList">
 						<bean:define id="infoBranch" name="curricularCourseScope" property="infoBranch"/>
@@ -205,7 +206,7 @@
 						<bean:define id="infoCurricularYear" name="infoCurricularSemester" property="infoCurricularYear"/>
 					<tr>
 						<td class="listClasses">
-							<html:radio property="curricularCourseScopeId" idName="curricularCourseScope" value="idInternal" />		
+							<html:radio bundle="HTMLALT_RESOURCES" altKey="radio.curricularCourseScopeId" property="curricularCourseScopeId" idName="curricularCourseScope" value="idInternal" />		
 						</td>
 						<td class="listClasses"><bean:write name="infoCurricularYear" property="year"/>
 						</td>
@@ -236,7 +237,7 @@
  					</tr>
  				</logic:iterate>			
 			</table>
-			<html:submit onclick='<%=onclick.toString() %>'><bean:message bundle="MANAGER_RESOURCES" key="label.manager.delete.selected.curricularCourseScopes"/></html:submit>
+			<html:submit bundle="HTMLALT_RESOURCES" altKey='submit.submit' onclick='<%=onclick.toString() %>'><bean:message bundle="MANAGER_RESOURCES" key="label.manager.delete.selected.curricularCourseScopes"/></html:submit>
 		</html:form>
 	</logic:notEmpty>	 	
 </logic:present>

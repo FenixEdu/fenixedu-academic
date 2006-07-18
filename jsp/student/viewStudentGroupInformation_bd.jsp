@@ -1,5 +1,6 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ page import="java.util.TreeMap" %>
@@ -136,12 +137,12 @@
 <table class="style1" width="70%" cellpadding="0" border="0">
 	<tbody>   
 	<tr>
-		<td class="listClasses-header" width="15%"><bean:message key="label.numberWord" />
-		</td>
-		<td class="listClasses-header" width="60%"><bean:message key="label.nameWord" />
-		</td>
-		<td class="listClasses-header" width="25%"><bean:message key="label.emailWord" />
-		</td>
+		<th class="listClasses-header" width="15%"><bean:message key="label.numberWord" />
+		</th>
+		<th class="listClasses-header" width="60%"><bean:message key="label.nameWord" />
+		</th>
+		<th class="listClasses-header" width="25%"><bean:message key="label.emailWord" />
+		</th>
 	</tr>
 	
 		

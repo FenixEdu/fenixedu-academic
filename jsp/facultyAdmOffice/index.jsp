@@ -1,7 +1,8 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 
 <center><strong>
-Bem Vindo ao Portal da Secção de Pessoal Docente e Investigador.
+Bem Vindo ao Portal da Secï¿½ï¿½o de Pessoal Docente e Investigador.
 </center></strong>

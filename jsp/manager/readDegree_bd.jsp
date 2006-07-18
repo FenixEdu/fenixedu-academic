@@ -1,5 +1,6 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 
@@ -39,22 +40,22 @@
 			return confirm('<bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="message.confirm.delete.degree.curricular.plans"/>')
 		  </bean:define>
 
-<html:hidden property="degreeId" value="<%= request.getParameter("degreeId") %>"/>
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.degreeId" property="degreeId" value="<%= request.getParameter("degreeId") %>"/>
 <table width="70%" cellpadding="0" border="0">
 	<tr>
-		<td class="listClasses-header">	
-		</td>
-		<td class="listClasses-header"><bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="label.manager.degreeCurricularPlan.name" />
-		</td>
-		<td class="listClasses-header"><bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="message.manager.degree.curricular.plan.degreeDuration" />
-		</td>
-		<td class="listClasses-header"><bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="message.manager.degree.curricular.plan.numerusClausus" />
-		</td>
+		<th class="listClasses-header">	
+		</th>
+		<th class="listClasses-header"><bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="label.manager.degreeCurricularPlan.name" />
+		</th>
+		<th class="listClasses-header"><bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="message.manager.degree.curricular.plan.degreeDuration" />
+		</th>
+		<th class="listClasses-header"><bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="message.manager.degree.curricular.plan.numerusClausus" />
+		</th>
 	</tr>
 	<tr>	 
 		<logic:iterate id="degreeCurricularPlan" name="curricularPlansList">			
 		<td class="listClasses">
-		<html:multibox property="internalIds">
+		<html:multibox bundle="HTMLALT_RESOURCES" altKey="multibox.internalIds" property="internalIds">
 			<bean:write name="degreeCurricularPlan" property="idInternal"/>
 		</html:multibox>
 		</td>				
@@ -69,7 +70,7 @@
 </table>
 <br>
 <br>	
-<html:submit onclick='<%=onclick.toString() %>'><bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="label.manager.delete.selected.degreeCurricularPlans"/></html:submit>
+<html:submit bundle="HTMLALT_RESOURCES" altKey='submit.submit' onclick='<%=onclick.toString() %>'><bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="label.manager.delete.selected.degreeCurricularPlans"/></html:submit>
 </html:form> 
 </logic:notEmpty>	 	
 </logic:present>

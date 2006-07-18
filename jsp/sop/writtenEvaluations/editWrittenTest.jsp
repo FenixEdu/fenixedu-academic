@@ -4,6 +4,7 @@
 <%@ taglib uri="/WEB-INF/jsf_fenix_components.tld" prefix="fc"%>
 
 <ft:tilesView definition="definition.sop.examsPage" attributeName="body-inline">
+	<f:loadBundle basename="resources/HtmlAltResources" var="htmlAltBundle"/>
 	<f:loadBundle basename="resources/ApplicationResourcesSOP" var="bundleSOP"/>
 	<f:loadBundle basename="resources/ApplicationResources" var="bundle"/>
 
@@ -25,8 +26,8 @@
 		<h:inputHidden binding="#{SOPEvaluationManagementBackingBean.calendarPeriodHidden}"/>
 		<h:inputHidden value="#{SOPEvaluationManagementBackingBean.evaluationTypeClassname}"/>
 		<fc:viewState binding="#{SOPEvaluationManagementBackingBean.viewState}" />
-		<h:outputText escape="false" value="<input id='curricularYearIDsParameterString' name='curricularYearIDsParameterString' type='hidden' value='#{SOPEvaluationManagementBackingBean.curricularYearIDsParameterString}'/>"/>
-		<h:outputText escape="false" value="<input id='executionPeriodOID' name='executionPeriodOID' type='hidden' value='#{SOPEvaluationManagementBackingBean.executionPeriodOID}'/>"/>
+		<h:outputText escape="false" value="<input alt='input.curricularYearIDsParameterString' id='curricularYearIDsParameterString' name='curricularYearIDsParameterString' type='hidden' value='#{SOPEvaluationManagementBackingBean.curricularYearIDsParameterString}'/>"/>
+		<h:outputText escape="false" value="<input alt='input.executionPeriodOID' id='executionPeriodOID' name='executionPeriodOID' type='hidden' value='#{SOPEvaluationManagementBackingBean.executionPeriodOID}'/>"/>
 
 		<h:panelGrid styleClass="infoselected">
 			<h:outputText value="#{bundleSOP['property.executionPeriod']}: #{SOPEvaluationManagementBackingBean.executionPeriodLabel}" escape="false"/>
@@ -57,26 +58,26 @@
 				<h:outputText value="#{bundle['label.date']}" escape="false"/>
 			</h:panelGroup>
 			<h:panelGroup>
-				<h:inputText required="true" maxlength="2" size="2" value="#{SOPEvaluationManagementBackingBean.day}">
+				<h:inputText alt="#{htmlAltBundle['inputText.day']}" required="true" maxlength="2" size="2" value="#{SOPEvaluationManagementBackingBean.day}">
 					<f:validateLongRange minimum="1" maximum="31" />
 				</h:inputText>
 				<h:outputText value=" / "/>
-				<h:inputText required="true" maxlength="2" size="2" value="#{SOPEvaluationManagementBackingBean.month}">
+				<h:inputText alt="#{htmlAltBundle['inputText.month']}" required="true" maxlength="2" size="2" value="#{SOPEvaluationManagementBackingBean.month}">
 					<f:validateLongRange minimum="1" maximum="12" />
 				</h:inputText>
 				<h:outputText value=" / "/>
-				<h:inputText required="true" maxlength="4" size="4" value="#{SOPEvaluationManagementBackingBean.year}"/>
+				<h:inputText alt="#{htmlAltBundle['inputText.year']}" required="true" maxlength="4" size="4" value="#{SOPEvaluationManagementBackingBean.year}"/>
 				<h:outputText value=" <i>#{bundle['label.date.instructions.small']}</i>" escape="false"/>
 			</h:panelGroup>
 			<h:panelGroup>
 				<h:outputText value="#{bundle['label.beginning']} " escape="false"/>
 			</h:panelGroup>
 			<h:panelGroup>
-				<h:inputText required="true" maxlength="2" size="2" value="#{SOPEvaluationManagementBackingBean.beginHour}">
+				<h:inputText alt="#{htmlAltBundle['inputText.beginHour']}" required="true" maxlength="2" size="2" value="#{SOPEvaluationManagementBackingBean.beginHour}">
 					<f:validateLongRange minimum="0" maximum="23" />
 				</h:inputText>
 				<h:outputText value=" : "/>
-				<h:inputText required="true" maxlength="2" size="2" value="#{SOPEvaluationManagementBackingBean.beginMinute}">
+				<h:inputText alt="#{htmlAltBundle['inputText.beginMinute']}" required="true" maxlength="2" size="2" value="#{SOPEvaluationManagementBackingBean.beginMinute}">
 					<f:validateLongRange minimum="0" maximum="59" />
 				</h:inputText>
 				<h:outputText value=" <i>#{bundle['label.hour.instructions']}</i>" escape="false"/>
@@ -85,11 +86,11 @@
 				<h:outputText value="#{bundle['label.end']} " escape="false"/>
 			</h:panelGroup>
 			<h:panelGroup>
-				<h:inputText required="true" maxlength="2" size="2" value="#{SOPEvaluationManagementBackingBean.endHour}">
+				<h:inputText alt="#{htmlAltBundle['inputText.endHour']}" required="true" maxlength="2" size="2" value="#{SOPEvaluationManagementBackingBean.endHour}">
 					<f:validateLongRange minimum="0" maximum="23" />
 				</h:inputText>
 				<h:outputText value=" : "/>
-				<h:inputText required="true" maxlength="2" size="2" value="#{SOPEvaluationManagementBackingBean.endMinute}">
+				<h:inputText alt="#{htmlAltBundle['inputText.endMinute']}" required="true" maxlength="2" size="2" value="#{SOPEvaluationManagementBackingBean.endMinute}">
 					<f:validateLongRange minimum="0" maximum="59" />
 				</h:inputText>
 				<h:outputText value=" <i>#{bundle['label.hour.instructions']}</i>" escape="false"/>
@@ -101,7 +102,7 @@
 						rendered="#{SOPEvaluationManagementBackingBean.evaluationTypeClassname == 'net.sourceforge.fenixedu.domain.Exam'}"/>
 			</h:panelGroup>
 			<h:panelGroup>
-				<h:inputText required="true" maxlength="120" size="15" value="#{SOPEvaluationManagementBackingBean.description}"
+				<h:inputText alt="#{htmlAltBundle['inputText.description']}" required="true" maxlength="120" size="15" value="#{SOPEvaluationManagementBackingBean.description}"
 						rendered="#{SOPEvaluationManagementBackingBean.evaluationTypeClassname == 'net.sourceforge.fenixedu.domain.WrittenTest'}"/>
 				<h:selectOneMenu value="#{SOPEvaluationManagementBackingBean.season}"
 						rendered="#{SOPEvaluationManagementBackingBean.evaluationTypeClassname == 'net.sourceforge.fenixedu.domain.Exam'}">
@@ -155,7 +156,7 @@
 		<h:outputText rendered="#{empty SOPEvaluationManagementBackingBean.associatedExecutionCourses}" value="<b>#{bundleSOP['label.no.associated.curricular.courses']}</b><br/>" escape="false"/>
 
 		<h:outputText value="<br/>" escape="false"/>
-		<h:commandButton action="#{SOPEvaluationManagementBackingBean.editWrittenEvaluation}" styleClass="inputbutton" value="#{bundle['button.save']}"/>
-		<h:commandButton immediate="true" action="writtenEvaluationCalendar" styleClass="inputbutton" value="#{bundle['button.cancel']}"/>
+		<h:commandButton alt="#{htmlAltBundle['commandButton.save']}" action="#{SOPEvaluationManagementBackingBean.editWrittenEvaluation}" styleClass="inputbutton" value="#{bundle['button.save']}"/>
+		<h:commandButton alt="#{htmlAltBundle['commandButton.cancel']}" immediate="true" action="writtenEvaluationCalendar" styleClass="inputbutton" value="#{bundle['button.cancel']}"/>
 	</h:form>
 </ft:tilesView>

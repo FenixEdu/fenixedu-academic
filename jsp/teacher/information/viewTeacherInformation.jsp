@@ -1,5 +1,6 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="dt"%>
@@ -28,11 +29,11 @@
 		<logic:notEmpty name="infoSiteTeacherInformation" property="infoQualifications">
 			<table width="100%" border="0" cellspacing="1" style="margin-top:10px">	
 				<tr>
-					<td class="listClasses-header"><bean:message key="message.teacherInformation.year" /></td>
-					<td class="listClasses-header"><bean:message key="message.teacherInformation.school" /></td>
-					<td class="listClasses-header"><bean:message key="message.teacherInformation.qualificationsDegree" /></td>
-					<td class="listClasses-header"><bean:message key="message.teacherInformation.qualificationsTitle" /></td>
-					<td class="listClasses-header"><bean:message key="message.teacherInformation.qualificationsMark" /></td>
+					<th class="listClasses-header"><bean:message key="message.teacherInformation.year" /></th>
+					<th class="listClasses-header"><bean:message key="message.teacherInformation.school" /></th>
+					<th class="listClasses-header"><bean:message key="message.teacherInformation.qualificationsDegree" /></th>
+					<th class="listClasses-header"><bean:message key="message.teacherInformation.qualificationsTitle" /></th>
+					<th class="listClasses-header"><bean:message key="message.teacherInformation.qualificationsMark" /></th>
 				</tr>
 				<logic:iterate id="infoQualification" name="infoSiteTeacherInformation" property="infoQualifications">
 				<tr>
@@ -63,9 +64,9 @@
 		<logic:notEmpty name="infoSiteTeacherInformation" property="infoTeachingCareers">
 			<table width="100%" border="0" cellspacing="1" style="margin-top:10px">	
 				<tr>
-					<td class="listClasses-header"><bean:message key="message.teacherInformation.years" /></td>
-					<td class="listClasses-header"><bean:message key="message.teacherInformation.careerCategory" /></td>
-					<td class="listClasses-header"><bean:message key="message.teacherInformation.careerPositions" /></td>
+					<th class="listClasses-header"><bean:message key="message.teacherInformation.years" /></th>
+					<th class="listClasses-header"><bean:message key="message.teacherInformation.careerCategory" /></th>
+					<th class="listClasses-header"><bean:message key="message.teacherInformation.careerPositions" /></th>
 				</tr>
 				<logic:iterate id="infoTeachingCareer" name="infoSiteTeacherInformation" property="infoTeachingCareers">
 				<tr>
@@ -93,9 +94,9 @@
 		<logic:notEmpty name="infoSiteTeacherInformation" property="infoProfessionalCareers">
 			<table width="100%" border="0" cellspacing="1" style="margin-top:10px">	
 				<tr>
-					<td class="listClasses-header"><bean:message key="message.teacherInformation.years" /></td>
-					<td class="listClasses-header"><bean:message key="message.teacherInformation.entity" /></td>
-					<td class="listClasses-header"><bean:message key="message.teacherInformation.functions" /></td>
+					<th class="listClasses-header"><bean:message key="message.teacherInformation.years" /></th>
+					<th class="listClasses-header"><bean:message key="message.teacherInformation.entity" /></th>
+					<th class="listClasses-header"><bean:message key="message.teacherInformation.functions" /></th>
 				</tr>
 				<logic:iterate id="infoProfessionalCareer" 
 							   name="infoSiteTeacherInformation" 
@@ -181,9 +182,9 @@
 		<bean:message key="message.teacherInformation.numberOfPublications" /></p>
 		<table width="100%" border="0" cellspacing="1" style="margin-top:10px">
 			<tr>
-				<td class="listClasses-header"><bean:message key="message.teacherInformation.number" /></td>
-				<td class="listClasses-header"><bean:message key="message.teacherInformation.national" /></td>
-				<td class="listClasses-header"><bean:message key="message.teacherInformation.international" /></td>
+				<th class="listClasses-header"><bean:message key="message.teacherInformation.number" /></th>
+				<th class="listClasses-header"><bean:message key="message.teacherInformation.national" /></th>
+				<th class="listClasses-header"><bean:message key="message.teacherInformation.international" /></th>
 			</tr>
 			<tr>
 				<td class="listClasses"><bean:message key="message.teacherInformation.comunicationsPublications" /></td>
@@ -261,12 +262,12 @@
 		</p>
 		<table width="100%" border="0" cellspacing="1" style="margin-top:10px">
 			<tr>
-				<td class="listClasses-header"><bean:message key="message.teacherInformation.semester" /></td>
-				<td class="listClasses-header"><bean:message key="message.teacherInformation.lectureCourse" /></td>
-				<td class="listClasses-header"><bean:message key="message.teacherInformation.qualificationsDegree" /></td>
-				<td class="listClasses-header"><bean:message key="message.teacherInformation.typeOfClass" /></td>
-				<td class="listClasses-header"><bean:message key="message.teacherInformation.numberOfClass" /></td>
-				<td class="listClasses-header"><bean:message key="message.teacherInformation.numberOfWeeklyHours" /></td>
+				<th class="listClasses-header"><bean:message key="message.teacherInformation.semester" /></th>
+				<th class="listClasses-header"><bean:message key="message.teacherInformation.lectureCourse" /></th>
+				<th class="listClasses-header"><bean:message key="message.teacherInformation.qualificationsDegree" /></th>
+				<th class="listClasses-header"><bean:message key="message.teacherInformation.typeOfClass" /></th>
+				<th class="listClasses-header"><bean:message key="message.teacherInformation.numberOfClass" /></th>
+				<th class="listClasses-header"><bean:message key="message.teacherInformation.numberOfWeeklyHours" /></th>
 			</tr>
 			<logic:iterate id="infoExecutionCourse" name="infoSiteTeacherInformation" property="infoLecturingExecutionCourses">
 				<logic:iterate id="infoCurricularCourse" name="infoExecutionCourse" property="associatedInfoCurricularCourses">
@@ -295,9 +296,9 @@
 		</p>
 		<table width="100%" border="0" cellspacing="1" style="margin-top:10px">
 			<tr>
-				<td class="listClasses-header">&nbsp;</td>
-				<td class="listClasses-header"><bean:message key="message.teacherInformation.numberOfStudents" /></td>
-				<td class="listClasses-header"><bean:message key="message.teacherInformation.description" /></td>
+				<th class="listClasses-header">&nbsp;</th>
+				<th class="listClasses-header"><bean:message key="message.teacherInformation.numberOfStudents" /></th>
+				<th class="listClasses-header"><bean:message key="message.teacherInformation.description" /></th>
 			</tr>
 			<tr>
 				<td class="listClasses"><bean:message key="message.teacherInformation.tfc" /></td>
@@ -335,12 +336,12 @@
 		</p>
 		<table width="100%" border="0" cellspacing="1" style="margin-top:10px">
 		<tr>
-			<td class="listClasses-header">&nbsp;</td>
-			<td class="listClasses-header"><bean:message key="message.teacherInformation.teachers" /></td>
-			<td class="listClasses-header"><bean:message key="message.teacherInformation.supportLessons" /></td>
-			<td class="listClasses-header"><bean:message key="message.teacherInformation.investigation" /></td>
-			<td class="listClasses-header"><bean:message key="message.teacherInformation.managementWorks" /></td>
-			<td class="listClasses-header"><bean:message key="message.teacherInformation.others" /></td>
+			<th class="listClasses-header">&nbsp;</th>
+			<th class="listClasses-header"><bean:message key="message.teacherInformation.teachers" /></th>
+			<th class="listClasses-header"><bean:message key="message.teacherInformation.supportLessons" /></th>
+			<th class="listClasses-header"><bean:message key="message.teacherInformation.investigation" /></th>
+			<th class="listClasses-header"><bean:message key="message.teacherInformation.managementWorks" /></th>
+			<th class="listClasses-header"><bean:message key="message.teacherInformation.others" /></th>
 		</tr>
 		<tr>
 			<td class="listClasses"><bean:message key="message.teacherInformation.numberOfHours" /></td>

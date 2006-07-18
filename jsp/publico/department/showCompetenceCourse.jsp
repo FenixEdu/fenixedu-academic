@@ -4,6 +4,7 @@
 <%@ taglib uri="/WEB-INF/html_basic.tld" prefix="h"%>
 
 <ft:tilesView locale="<%=request.getAttribute(org.apache.struts.Globals.LOCALE_KEY).toString()%>" definition="definition.public.department" attributeName="body-inline">
+	<f:loadBundle basename="resources/HtmlAltResources" var="htmlAltBundle"/>
 	<style type="text/css">@import "<%= request.getContextPath() %>/CSS/transitional.css";</style>
 	
 	<f:loadBundle basename="resources/BolonhaManagerResources" var="bolonhaBundle"/>
@@ -87,7 +88,7 @@
 	<!-- LESSON HOURS -->
 	<h:outputText value="<h2 class='arrow_bullet'>#{bolonhaBundle['lessonHours']}</h2>" escape="false"/>
 	<fc:dataRepeater value="#{CompetenceCourseManagement.sortedCompetenceCourseLoads}" var="competenceCourseLoad" rowCountVar="numberOfElements">
-		<h:outputText value="<p style='margin-top: 30px; margin-left: 0px;'><strong><em>#{competenceCourseLoad.order}º #{bolonhaBundle['semester']}</em></strong></p>" escape="false"
+		<h:outputText value="<p style='margin-top: 30px; margin-left: 0px;'><strong><em>#{competenceCourseLoad.order}ï¿½ #{bolonhaBundle['semester']}</em></strong></p>" escape="false"
 			rendered="#{CompetenceCourseManagement.competenceCourse.regime.name == 'ANUAL' && numberOfElements == 2}"/>
 		
 		<h:outputText value="<p style='margin-left: 0px;'>#{bolonhaBundle['theoreticalLesson']}: " escape="false"/>
@@ -211,8 +212,8 @@
 	</fc:dataRepeater>
 
 	<h:form>
-		<h:outputText escape="false" value="<input id='competenceCourseID' name='competenceCourseID' type='hidden' value='#{CompetenceCourseManagement.competenceCourse.idInternal}'/>"/>
- 		<h:outputText escape="false" value="<input id='executionPeriodOID' name='executionPeriodOID' type='hidden' value='#{CurricularCourseManagement.executionPeriodOID}'/>"/>
+		<h:outputText escape="false" value="<input alt='input.competenceCourseID' id='competenceCourseID' name='competenceCourseID' type='hidden' value='#{CompetenceCourseManagement.competenceCourse.idInternal}'/>"/>
+ 		<h:outputText escape="false" value="<input alt='input.executionPeriodOID' id='executionPeriodOID' name='executionPeriodOID' type='hidden' value='#{CurricularCourseManagement.executionPeriodOID}'/>"/>
 	</h:form>
 
 </ft:tilesView>

@@ -1,7 +1,7 @@
 <%@ page language="java" %>
 
 <%@ page import="java.lang.String" %>
-<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
+<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%><html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 
@@ -45,12 +45,12 @@
 <table width="100%" border="0" style="text-align: left;">
         <tbody>
     	 <tr>
-			<td class="listClasses-header" width="30%" ><bean:message key="label.projectName" />
-			</td>
-			<td class="listClasses-header" width="40%" ><bean:message key="label.SentedProjectProposalsWaitingExecutionCourses" />
-			</td>
-			<td class="listClasses-header" width="30%" ><bean:message key="label.SentedProjectProposalsWaitingExecutionCoursesOption" />
-			</td>
+			<th class="listClasses-header" width="30%" ><bean:message key="label.projectName" />
+			</th>
+			<th class="listClasses-header" width="40%" ><bean:message key="label.SentedProjectProposalsWaitingExecutionCourses" />
+			</th>
+			<th class="listClasses-header" width="30%" ><bean:message key="label.SentedProjectProposalsWaitingExecutionCoursesOption" />
+			</th>
 		</tr>
 	<logic:iterate id="infoGroupProperties" name="component" property="infoGroupPropertiesList" >
 		<bean:define id="groupPropertiesCode" name="infoGroupProperties" property="idInternal"/>

@@ -1,5 +1,5 @@
 <%@ page language="java" %>
-<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %><html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
@@ -26,12 +26,12 @@
 	</br>
 	<table>
 		<tr>
-			<td class="listClasses-header"><bean:message bundle="MANAGER_RESOURCES" key="label.manager.execution.period.semester" />
-			</td>
-			<td class="listClasses-header"><bean:message bundle="MANAGER_RESOURCES" key="label.manager.execution.period.year" />
-			</td>
-			<td class="listClasses-header"><bean:message bundle="MANAGER_RESOURCES" key="label.manager.execution.period.state" />
-			</td>
+			<th class="listClasses-header"><bean:message bundle="MANAGER_RESOURCES" key="label.manager.execution.period.semester" />
+			</th>
+			<th class="listClasses-header"><bean:message bundle="MANAGER_RESOURCES" key="label.manager.execution.period.year" />
+			</th>
+			<th class="listClasses-header"><bean:message bundle="MANAGER_RESOURCES" key="label.manager.execution.period.state" />
+			</th>
 			
 		</tr>
 		<logic:present name="name" scope="request">

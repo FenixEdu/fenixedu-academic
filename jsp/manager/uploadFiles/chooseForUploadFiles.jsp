@@ -1,5 +1,5 @@
 <%@ page language="java" %>
-<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
+<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%><html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <h2><bean:message bundle="MANAGER_RESOURCES" key="label.uploadFiles"/></h2>
@@ -16,21 +16,21 @@
 </b>
 <p>
 <html:form action="/uploadFiles.do?method=uploadGratuityFile" enctype="multipart/form-data">  
-	<html:hidden property="page" value="1" />
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1" />
 		
-	<html:hidden property="file" value="<%=fileToUpload.toString() %>" />
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.file" property="file" value="<%=fileToUpload.toString() %>" />
 	<table>
 		<tr>
 			<td>
 				<bean:message bundle="MANAGER_RESOURCES" key="label.file"/>
 			</td>
 			<td>
-				<html:file property="uploadedFile" size="30"/>
+				<html:file bundle="HTMLALT_RESOURCES" altKey="file.uploadedFile" property="uploadedFile" size="30"/>
 			</td>
 		</tr>	
 	</table>
 	<p />
-	<html:submit styleClass="inputbutton">
+	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton">
 		<bean:message bundle="MANAGER_RESOURCES" key="button.uploadFiles.upload"/>
 	</html:submit>
 </html:form>

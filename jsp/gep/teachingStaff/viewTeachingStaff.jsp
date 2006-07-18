@@ -1,4 +1,5 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 
@@ -53,9 +54,9 @@
 <h3><bean:message key="title.inquiries.insertNonAffiliatedTeacher" bundle="INQUIRIES_RESOURCES" /></h3>
 <table>	
 	<html:form action="/teachingStaff"  >
-		<html:hidden property="method" value="createNewNonAffiliatedTeacher" />
-		<html:hidden property="executionCourseID" styleId="executionCourseID" />
-		<html:hidden property="nonAffiliatedTeacherID" />
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="createNewNonAffiliatedTeacher" />
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.executionCourseID" property="executionCourseID" styleId="executionCourseID" />
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.nonAffiliatedTeacherID" property="nonAffiliatedTeacherID" />
 		
 		<script>
 			var getTeacherHeader = function(teacher) { return '<bean:message key="table.rowname.inquiries.teacher.form.teacher.name" bundle="INQUIRIES_RESOURCES" />' };
@@ -78,7 +79,7 @@
 		
 		<tr>
 			<td><strong><bean:message key="table.rowname.inquiries.teacher.form.teacher.name" bundle="INQUIRIES_RESOURCES" />:</strong></td>
-			<td><input type="text" name="nonAffiliatedTeacherName" value="" onkeyup="TeacherBridge.readNonAffiliatedTeachersByName(fillTeachers,teacherName.value);" id="teacherName" autocomplete="off" /></td>			
+			<td><input alt="input.nonAffiliatedTeacherName" type="text" name="nonAffiliatedTeacherName" value="" onkeyup="TeacherBridge.readNonAffiliatedTeachersByName(fillTeachers,teacherName.value);" id="teacherName" autocomplete="off" /></td>			
 		</tr>
 		
 		<tr>
@@ -97,7 +98,7 @@
 		<tr>
 			<td><strong><bean:message key="label.inquiries.existentInstitution" bundle="INQUIRIES_RESOURCES" />:</strong></td>			
 			<td>
-				<html:select property="nonAffiliatedTeacherInstitutionID">
+				<html:select bundle="HTMLALT_RESOURCES" altKey="select.nonAffiliatedTeacherInstitutionID" property="nonAffiliatedTeacherInstitutionID">
 					<html:option value="0" >[<bean:message key="label.inquiries.choose" bundle="INQUIRIES_RESOURCES" />]</html:option>
 					<html:options collection="institutions" property="idInternal" labelProperty="name" />
 				</html:select>
@@ -105,7 +106,7 @@
 		</tr>		
 		<tr>
 			<td><strong><bean:message key="label.inquiries.or" bundle="INQUIRIES_RESOURCES" />&nbsp;<bean:message key="label.inquiries.newInstitution" bundle="INQUIRIES_RESOURCES" />:</strong></td>	
-			<td><html:text property="nonAffiliatedTeacherInstitutionName" /></td>
+			<td><html:text bundle="HTMLALT_RESOURCES" altKey="text.nonAffiliatedTeacherInstitutionName" property="nonAffiliatedTeacherInstitutionName" /></td>
 		</tr>
 		<tr><td>&nbsp;</td></tr>
 		<tr>

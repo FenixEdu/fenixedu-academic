@@ -1,5 +1,6 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <bean:define id="degreeCurricularPlanID" name="degreeCurricularPlanID"/>
@@ -89,22 +90,22 @@
 		</tr>
 	</table>
 		<html:form action="/displayCourseListToStudyPlan?method=chooseCurricularCourses">
-	   	  	<html:hidden property="page" value="1"/> 
-	   	  	<html:hidden property="candidateID"/> 
-	   	  	<html:hidden property="executionYear"/>´
-	   	  	<html:hidden property="degreeCurricularPlanID"/>
+	   	  	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/> 
+	   	  	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.candidateID" property="candidateID"/> 
+	   	  	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.executionYear" property="executionYear"/>ï¿½
+	   	  	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.degreeCurricularPlanID" property="degreeCurricularPlanID"/>
 
 			<!-- CurricularCourse -->
 			<table>
 				<tr>
-					<td><bean:message key="label.givenCredits"/>: <html:text property="attributedCredits" size="2"/></td>
+					<td><bean:message key="label.givenCredits"/>: <html:text bundle="HTMLALT_RESOURCES" altKey="text.attributedCredits" property="attributedCredits" size="2"/></td>
 				</tr>
 				<tr>
 					<td><bean:message key="label.givenCreditsRemarks"/>:</td>
 				</tr>
 				<tr>
 					<td>
-						<html:textarea property="givenCreditsRemarks" cols="40" rows="5" />
+						<html:textarea bundle="HTMLALT_RESOURCES" altKey="textarea.givenCreditsRemarks" property="givenCreditsRemarks" cols="40" rows="5" />
 					</td>
 				</tr>
 			</table>
@@ -114,8 +115,8 @@
 					<logic:iterate id="candidateEnrolment" name="candidateEnrolments" indexId="index">
 						<tr>
 							<td>
-	<%--							<html:multibox property='<%= "selection[" + index.intValue() + "]" %>'>
-	--%>						<html:multibox property="selection" >	
+	<%--							<html:multibox alt='<%= "selection[" + index.intValue() + "]" %>' property='<%= "selection[" + index.intValue() + "]" %>'>
+	--%>						<html:multibox bundle="HTMLALT_RESOURCES" altKey="multibox.selection" property="selection" >	
 	
 									<bean:write name="candidateEnrolment" property="infoCurricularCourse.idInternal"/>
 								</html:multibox>
@@ -134,8 +135,8 @@
 			
 			<div class="infoop">
 				<span class="error"><strong>Nota:</strong></span>
-				<br />&nbsp;&nbsp;&nbsp;&nbsp;O nome das Áreas Científicas aparecem por baixo do nome da disciplina e ligeiramente mais à frente. Nesse caso a opção é feita no quadrado à frente da área científica.
-				<br />&nbsp;&nbsp;&nbsp;&nbsp;Caso a disciplina não pertença a nenhuma Área Científica, a opção para a sua selecção aparecerá imediatamente antes do seu nome. 
+				<br />&nbsp;&nbsp;&nbsp;&nbsp;O nome das ï¿½reas Cientï¿½ficas aparecem por baixo do nome da disciplina e ligeiramente mais ï¿½ frente. Nesse caso a opï¿½ï¿½o ï¿½ feita no quadrado ï¿½ frente da ï¿½rea cientï¿½fica.
+				<br />&nbsp;&nbsp;&nbsp;&nbsp;Caso a disciplina nï¿½o pertenï¿½a a nenhuma ï¿½rea Cientï¿½fica, a opï¿½ï¿½o para a sua selecï¿½ï¿½o aparecerï¿½ imediatamente antes do seu nome. 
 			</div>
 	
 			<br />
@@ -155,7 +156,7 @@
 									  offset="0" length="1">
 		        						<logic:equal name="curricularCourseScope" property="infoBranch.name"  value='<%= new String("") %>'>
 		        							<bean:define id="offset" value="1"/>
-		            						<html:multibox property="selection">
+		            						<html:multibox bundle="HTMLALT_RESOURCES" altKey="multibox.selection" property="selection">
 		                						<bean:write name="curricularCourseScope" property="infoCurricularCourse.idInternal"/>
 		            						</html:multibox>
 		        						</logic:equal>
@@ -168,7 +169,7 @@
 						    <blockquote>
 		            			<logic:iterate id="curricularCourseScope" name="curricularCourseElem"  indexId="scopeID" property="infoScopes" 
 		            						    offset="<%= new String(offset) %>" length="<%= String.valueOf(ccsSize.intValue() - Integer.parseInt(offset)) %>">
-		                						<html:multibox property="selection">
+		                						<html:multibox bundle="HTMLALT_RESOURCES" altKey="multibox.selection" property="selection">
 		                    						<bean:write name="curricularCourseScope" property="infoCurricularCourse.idInternal"/>
 		                						</html:multibox>
 		               							<bean:write name="curricularCourseScope" property="infoBranch.name"/> <br/>
@@ -180,7 +181,7 @@
 			</table>		
 	<br />
 			
-	<html:submit value="Submeter" styleClass="inputbutton" property="ok"/>
+	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.ok" value="Submeter" styleClass="inputbutton" property="ok"/>
 	</html:form>
 	</logic:present>
 </logic:present>

@@ -1,4 +1,5 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
@@ -35,8 +36,8 @@
 		<bean:message bundle="MANAGER_RESOURCES" key="cache.response.refresh.timeout"/>:
 		<bean:define id="currentRefreshValue"><bean:write name="<%= SessionConstants.CACHED_RESPONSES_TIMEOUT %>"/></bean:define>
 		<html:form action="/manageCache" focus="executionDegreeOID">
-			<html:hidden property="method" value="setResponseRefreshTimeout"/>
-			<html:hidden property="page" value="1"/>
+			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="setResponseRefreshTimeout"/>
+			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
 			<html:text
 				property="responseRefreshTimeout"
 				size="6"

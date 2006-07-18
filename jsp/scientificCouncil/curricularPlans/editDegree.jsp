@@ -3,6 +3,7 @@
 <%@ taglib uri="/WEB-INF/html_basic.tld" prefix="h"%>
 
 <ft:tilesView definition="scientificCouncil.masterPage" attributeName="body-inline">
+	<f:loadBundle basename="resources/HtmlAltResources" var="htmlAltBundle"/>
 	<f:loadBundle basename="resources/ScientificCouncilResources" var="scouncilBundle"/>
 	
 	<h:outputText value="<i>#{DegreeManagement.degree.nome}" escape="false"/>
@@ -11,7 +12,7 @@
 		<f:param value="#{scouncilBundle['degree']}" />
 	</h:outputFormat>
 	<h:form>
-		<h:outputText escape="false" value="<input id='degreeId' name='degreeId' type='hidden' value='#{DegreeManagement.degreeId}'/>"/>
+		<h:outputText escape="false" value="<input alt='input.degreeId' id='degreeId' name='degreeId' type='hidden' value='#{DegreeManagement.degreeId}'/>"/>
 
 		<h:outputText styleClass="error0" rendered="#{!empty DegreeManagement.errorMessage}"
 			value="#{DegreeManagement.errorMessage}<br/>" escape="false"/>
@@ -24,21 +25,21 @@
 
 		<h:outputText value="<p><label><span class='required'>*</span> #{scouncilBundle['name']} (pt):</label>" escape="false"/>
 		<h:panelGroup>
-			<h:inputText id="name" value="#{DegreeManagement.name}" maxlength="100" size="60"/>
+			<h:inputText alt="#{htmlAltBundle['inputText.name']}" id="name" value="#{DegreeManagement.name}" maxlength="100" size="60"/>
 			<h:message for="name" errorClass="error0" rendered="#{empty DegreeManagement.errorMessage}"/>
 		</h:panelGroup>
 		<h:outputText value="</p>" escape="false"/>
 
 		<h:outputText value="<p><label><span class='required'>*</span> #{scouncilBundle['name']} (en):</label>" escape="false"/>
 		<h:panelGroup>
-			<h:inputText id="nameEn" value="#{DegreeManagement.nameEn}" maxlength="100" size="60"/>
+			<h:inputText alt="#{htmlAltBundle['inputText.nameEn']}" id="nameEn" value="#{DegreeManagement.nameEn}" maxlength="100" size="60"/>
 			<h:message for="nameEn" errorClass="error0" rendered="#{empty DegreeManagement.errorMessage}"/>
 		</h:panelGroup>
 		<h:outputText value="</p>" escape="false"/>
 
 		<h:outputText value="<p><label><span class='required'>*</span> #{scouncilBundle['acronym']}:</label>" escape="false"/>
 		<h:panelGroup>
-			<h:inputText id="acronym" value="#{DegreeManagement.acronym}" maxlength="9" size="9"/>
+			<h:inputText alt="#{htmlAltBundle['inputText.acronym']}" id="acronym" value="#{DegreeManagement.acronym}" maxlength="9" size="9"/>
 			<h:message for="acronym" errorClass="error0" rendered="#{empty DegreeManagement.errorMessage}"/>
 		</h:panelGroup>
 		<h:outputText value="</p>" escape="false"/>
@@ -54,14 +55,14 @@
 
 		<h:outputText value="<p><label>#{scouncilBundle['ectsCredits']}:</label>" escape="false"/>
 		<h:panelGroup>
-			<h:inputText id="ectsCredits" value="#{DegreeManagement.ectsCredits}" disabled="true" maxlength="5" size="4"/>
+			<h:inputText alt="#{htmlAltBundle['inputText.ectsCredits']}" id="ectsCredits" value="#{DegreeManagement.ectsCredits}" disabled="true" maxlength="5" size="4"/>
 			<h:message for="ectsCredits" errorClass="error0" rendered="#{empty DegreeManagement.errorMessage}"/>
 		</h:panelGroup>
 		<h:outputText value="</p>" escape="false"/>
 
 		<h:outputText value="<p><label>#{scouncilBundle['prevailingScientificArea']}:</label>" escape="false"/>
 		<h:panelGroup>
-			<h:inputText id="prevailingScientificArea" value="#{DegreeManagement.prevailingScientificArea}" maxlength="100" size="60"/>
+			<h:inputText alt="#{htmlAltBundle['inputText.prevailingScientificArea']}" id="prevailingScientificArea" value="#{DegreeManagement.prevailingScientificArea}" maxlength="100" size="60"/>
 			<h:message for="prevailingScientificArea" errorClass="error0" rendered="#{empty DegreeManagement.errorMessage}"/>
 		</h:panelGroup>
 		<h:outputText value="</p>" escape="false"/>
@@ -71,9 +72,9 @@
 		<h:outputText value="</fieldset></div>" escape="false"/>
 
 		<h:outputText value="<p>" escape="false"/>
-		<h:commandButton styleClass="inputbutton" value="#{scouncilBundle['button.save']}"
+		<h:commandButton alt="#{htmlAltBundle['commandButton.save']}" styleClass="inputbutton" value="#{scouncilBundle['button.save']}"
 			action="#{DegreeManagement.editDegree}"/>
-		<h:commandButton immediate="true" styleClass="inputbutton" value="#{scouncilBundle['cancel']}"
+		<h:commandButton alt="#{htmlAltBundle['commandButton.cancel']}" immediate="true" styleClass="inputbutton" value="#{scouncilBundle['cancel']}"
 			action="curricularPlansManagement"/>
 		<h:outputText value="<p>" escape="false"/>
 	</h:form>

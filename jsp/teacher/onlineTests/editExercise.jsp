@@ -1,5 +1,6 @@
 <%@ page language="java"%>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 
@@ -44,18 +45,18 @@ function back(){
 		</tr>
 	</table>
 	<html:form action="/exercisesEdition">
-		<html:hidden property="page" value="1" />
-		<html:hidden property="method" value="editExercise" />
-		<html:hidden property="objectCode" value="<%=(pageContext.findAttribute("objectCode")).toString()%>" />
-		<html:hidden property="exerciseCode" value="<%=(pageContext.findAttribute("metadataId")).toString()%>" />
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1" />
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="editExercise" />
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.objectCode" property="objectCode" value="<%=(pageContext.findAttribute("objectCode")).toString()%>" />
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.exerciseCode" property="exerciseCode" value="<%=(pageContext.findAttribute("metadataId")).toString()%>" />
 		<logic:present name="order">
-			<html:hidden property="order" value="<%=(pageContext.findAttribute("order")).toString()%>" />
+			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.order" property="order" value="<%=(pageContext.findAttribute("order")).toString()%>" />
 		</logic:present>
 		<logic:present name="asc">
-			<html:hidden property="asc" value="<%=(pageContext.findAttribute("asc")).toString()%>" />
+			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.asc" property="asc" value="<%=(pageContext.findAttribute("asc")).toString()%>" />
 		</logic:present>
 		<logic:notPresent name="asc">
-			<html:hidden property="asc" value="true" />
+			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.asc" property="asc" value="true" />
 		</logic:notPresent>
 		<table>
 			<logic:notEqual name="infoMetadata" property="author" value="">
@@ -67,7 +68,7 @@ function back(){
 			<logic:equal name="infoMetadata" property="author" value="">
 				<tr>
 					<td><b><bean:message key="message.tests.author" /></b></td>
-					<td><html:text size="25" name="infoMetadata" property="author" /></td>
+					<td><html:text bundle="HTMLALT_RESOURCES" altKey="text.author" size="25" name="infoMetadata" property="author" /></td>
 				</tr>
 			</logic:equal>
 			<tr>
@@ -76,11 +77,11 @@ function back(){
 			</tr>
 			<tr>
 				<td><b><bean:message key="label.description" />:</b></td>
-				<td><html:text size="25" name="infoMetadata" property="description" /></td>
+				<td><html:text bundle="HTMLALT_RESOURCES" altKey="text.description" size="25" name="infoMetadata" property="description" /></td>
 			</tr>
 			<tr>
 				<td><b><bean:message key="label.test.difficulty" />:</b></td>
-				<td><html:select property="difficulty">
+				<td><html:select bundle="HTMLALT_RESOURCES" altKey="select.difficulty" property="difficulty">
 					<logic:notEqual name="infoMetadata" property="difficulty" value="">
 						<html:option value="-1">
 							<bean:write name="infoMetadata" property="difficulty" />
@@ -95,31 +96,31 @@ function back(){
 			</tr>
 			<tr>
 				<td><b><bean:message key="label.test.materiaPrincipal" />:</b></td>
-				<td><html:text size="25" name="infoMetadata" property="mainSubject" /></td>
+				<td><html:text bundle="HTMLALT_RESOURCES" altKey="text.mainSubject" size="25" name="infoMetadata" property="mainSubject" /></td>
 			</tr>
 
 			<tr>
 				<td><b><bean:message key="label.test.materiaSecundaria" />:</b></td>
-				<td><html:text size="25" name="infoMetadata" property="secondarySubject" /></td>
+				<td><html:text bundle="HTMLALT_RESOURCES" altKey="text.secondarySubject" size="25" name="infoMetadata" property="secondarySubject" /></td>
 			</tr>
 			<tr>
 				<td><b><bean:message key="label.test.learningTime" /></b><bean:message key="message.hourFormat" />:</td>
-				<td><html:text size="8" name="infoMetadata" property="learningTimeFormatted" /></td>
+				<td><html:text bundle="HTMLALT_RESOURCES" altKey="text.learningTimeFormatted" size="8" name="infoMetadata" property="learningTimeFormatted" /></td>
 				<td><span class="error"><html:errors property="learningTimeFormatted" /></span></td>
 			</tr>
 			<tr>
 				<td><b><bean:message key="label.exam.enrollment.year" />:</b></td>
-				<td><html:text size="2" name="infoMetadata" property="level" /></td>
+				<td><html:text bundle="HTMLALT_RESOURCES" altKey="text.level" size="2" name="infoMetadata" property="level" /></td>
 				<td><span class="error"><html:errors property="level" /></span></td>
 			</tr>
 		</table>
 		<br />
 		<table align="center">
 			<tr>
-				<td><html:submit styleClass="inputbutton">
+				<td><html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton">
 					<bean:message key="label.change" />
 				</html:submit></td>
-				<td><html:submit styleClass="inputbutton" onclick="back()">
+				<td><html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton" onclick="back()">
 					<bean:message key="label.back" />
 				</html:submit></td>
 			</tr>
@@ -135,7 +136,7 @@ function back(){
 		<br />
 		<bean:size id="questionsSize" name="infoMetadata" property="visibleQuestions" />
 		<logic:notEqual name="questionsSize" value="">
-			<html:select property="variationCode" onchange="showQuestion()">
+			<html:select bundle="HTMLALT_RESOURCES" altKey="select.variationCode" property="variationCode" onchange="showQuestion()">
 				<html:option value="-1">
 					<bean:message key="label.variations" />
 				</html:option>

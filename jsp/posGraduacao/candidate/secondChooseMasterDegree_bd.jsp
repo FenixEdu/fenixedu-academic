@@ -1,5 +1,6 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ page import="org.apache.struts.Globals" %>
@@ -23,17 +24,17 @@
 	   <!-- MasterDegree -->
 			<tr>
 				<td>
-					<html:select property="masterDegree">
+					<html:select bundle="HTMLALT_RESOURCES" altKey="select.masterDegree" property="masterDegree">
                		<html:options collection="<%= SessionConstants.DEGREE_LIST %>" property="value" labelProperty="label"/></html:select>
 				</td>
 	   		</tr>
 	</table>
 	<br />
-	<input type="hidden" name="method" value="chooseMasterDegree"/>
-		<html:hidden property="page" value="1"/>
-		<html:hidden property="executionYear" value="<%= pageContext.findAttribute("executionYear").toString() %>" />
-		<html:hidden property="candidateID" />
-   	  	<html:hidden property="degreeCurricularPlanID"/>
-	<html:submit value="Submeter" styleClass="inputbutton" property="ok"/></td>
+	<input alt="input.method" type="hidden" name="method" value="chooseMasterDegree"/>
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.executionYear" property="executionYear" value="<%= pageContext.findAttribute("executionYear").toString() %>" />
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.candidateID" property="candidateID" />
+   	  	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.degreeCurricularPlanID" property="degreeCurricularPlanID"/>
+	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.ok" value="Submeter" styleClass="inputbutton" property="ok"/></td>
 	</html:form> 
 </logic:present>

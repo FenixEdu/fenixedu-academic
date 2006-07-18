@@ -1,5 +1,5 @@
 <%@ page language="java" %>
-<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
+<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%><html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="dt"%>
@@ -120,43 +120,43 @@
 </logic:notPresent>
 <table width="90%" border="0" cellspacing="1" style="margin-top:10px">
 	<tr>
-		<td class="listClasses-header">
+		<th class="listClasses-header">
 			<bean:message key="label.gep.courseYear" bundle="GEP_RESOURCES"/><br />
 			<bean:message key="label.gep.courseSemester" bundle="GEP_RESOURCES"/><br />
 			<bean:message key="label.gep.branch" bundle="GEP_RESOURCES"/>
-		</td>
-		<td class="listClasses-header">
+		</th>
+		<th class="listClasses-header">
 			<bean:message key="label.gep.courseName" bundle="GEP_RESOURCES"/>
-		</td>
-		<td class="listClasses-header">
+		</th>
+		<th class="listClasses-header">
 			<bean:message key="label.gep.code" bundle="GEP_RESOURCES"/>
-		</td>
-		<td class="listClasses-header">
+		</th>
+		<th class="listClasses-header">
 			<bean:message key="label.gep.executionPeriod" bundle="GEP_RESOURCES"/>
-		</td>
+		</th>
 		<logic:notPresent name="infoExecutionDegree">
-			<td class="listClasses-header">
+			<th class="listClasses-header">
 				<bean:message key="label.gep.degree" bundle="GEP_RESOURCES"/>
-			</td>
+			</th>
 		</logic:notPresent>
-		<td class="listClasses-header">
+		<th class="listClasses-header">
 			<bean:message key="label.gep.courseInformation.basic" bundle="GEP_RESOURCES"/>
-		</td>
-		<td class="listClasses-header">
+		</th>
+		<th class="listClasses-header">
 			<bean:message key="label.gep.courseInformation.professorships" bundle="GEP_RESOURCES"/>
-		</td>
-		<td class="listClasses-header">
+		</th>
+		<th class="listClasses-header">
 			<bean:message key="label.gep.courseInformation.department" bundle="GEP_RESOURCES"/>
-		</td>
-		<td class="listClasses-header">
+		</th>
+		<th class="listClasses-header">
 			<bean:message key="title.gep.teachersInformationSituation" bundle="GEP_RESOURCES"/>
-		</td>
-		<td class="listClasses-header">
+		</th>
+		<th class="listClasses-header">
 			<bean:message key="label.gep.courseInformation.lastModificationDate" bundle="GEP_RESOURCES"/>
-		</td>
-		<td class="listClasses-header">
+		</th>
+		<th class="listClasses-header">
 			<bean:message key="label.gep.teachingReport" bundle="GEP_RESOURCES"/>	
-		</td>
+		</th>
 	</tr>
 	<logic:present name="infoCourses">
 		<logic:iterate id="infoCourse" name="infoCourses" type="net.sourceforge.fenixedu.presentationTier.Action.gep.SearchCoursesInformationAction.InfoCourse">
@@ -303,9 +303,9 @@
 <br/>
 <table width="50%" border="0" cellspacing="1" style="margin-top:10px">
 	<tr>
-		<td class="listClasses-header"><bean:message key="label.gep.situation" bundle="GEP_RESOURCES"/></td>
-		<td class="listClasses-header"><bean:message key="label.gep.numberOfFieldsWithInfo" bundle="GEP_RESOURCES"/></td>
-		<td class="listClasses-header"><bean:message key="label.gep.stats" bundle="GEP_RESOURCES"/>&nbsp;(%)</td>
+		<th class="listClasses-header"><bean:message key="label.gep.situation" bundle="GEP_RESOURCES"/></th>
+		<th class="listClasses-header"><bean:message key="label.gep.numberOfFieldsWithInfo" bundle="GEP_RESOURCES"/></th>
+		<th class="listClasses-header"><bean:message key="label.gep.stats" bundle="GEP_RESOURCES"/>&nbsp;(%)</th>
 		
 	</tr>
 	<tr>

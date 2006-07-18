@@ -1,6 +1,7 @@
 <%@ page language="java"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/app.tld" prefix="app" %>
 
@@ -28,19 +29,19 @@
 						<td>
 						<table border="0" width="100%" height="100%">
 							<tr align="left">
-								<td>&nbsp;<b>INSTITUTO SUPERIOR TÉCNICO</b><br />
-								&nbsp;<b>Secretaria da Pós-Graduação</b><br />
+								<td>&nbsp;<b>INSTITUTO SUPERIOR Tï¿½CNICO</b><br />
+								&nbsp;<b>Secretaria da Pï¿½s-Graduaï¿½ï¿½o</b><br />
 								&nbsp;<b>Centro de Custo 0212</b>
 								<hr size="1">
 								</td>
 							</tr>
 							<tr>
-								<td align="right" valign="top"><b>Recibo Nº: </b> <bean:write
+								<td align="right" valign="top"><b>Recibo Nï¿½: </b> <bean:write
 									name="receipt" property="number" />/<bean:write name="receipt"
 									property="year" /><br />
 								<logic:greaterEqual name="receipt" property="receiptsVersionsCount"
 									value="2">
-									<em>2ª Via</em>
+									<em>2ï¿½ Via</em>
 								</logic:greaterEqual></td>
 							</tr>
 						</table>
@@ -138,7 +139,7 @@
 				<td>&nbsp;</td>
 			</tr>
 			<tr>
-				<td><strong>A liquidar a importância de </strong></td>
+				<td><strong>A liquidar a importï¿½ncia de </strong></td>
 				<td>_____________________&nbsp;</td>
 				<td><strong><bean:define id="totalAmount" name="receipt"
 					property="totalAmount" type="java.math.BigDecimal" /><%=totalAmount.toPlainString()%>&nbsp;<bean:message
@@ -167,7 +168,7 @@
 				<td colspan="2" valign="bottom">&nbsp;
 				<div align="center">&nbsp;</div>
 				<div align="center">&nbsp;</div>
-				<div align="center"><b>O Funcionário</b> <br>
+				<div align="center"><b>O Funcionï¿½rio</b> <br>
 				<br>
 				<br>
 				</div>

@@ -1,6 +1,7 @@
 <%@ page language="java" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="dt" %>
@@ -13,7 +14,7 @@
 		<table>
 			<tr>
 
-				<td class="listClasses-header">
+				<th class="listClasses-header">
 					<html:link page="<%= "/manageExecutionCourses.do?method=search&amp;"
 							+ "executionPeriodOID"
 							+ "="
@@ -33,9 +34,9 @@
 							+ "&amp;sortBy=nome" %>">
 						<bean:message key="label.name"/>
 					</html:link>
-				</td>
+				</th>
 
-				<td class="listClasses-header">
+				<th class="listClasses-header">
 					<html:link page="<%= "/manageExecutionCourses.do?method=search&amp;"
 							+ "executionPeriodOID"
 							+ "="
@@ -55,8 +56,8 @@
 							+ "&amp;sortBy=occupancy" %>">
 					<bean:message key="label.occupancy"/>
 					</html:link>
-				</td>
-				<td class="listClasses-header">
+				</th>
+				<th class="listClasses-header">
 					<html:link page="<%= "/manageExecutionCourses.do?method=search&amp;"
 							+ "executionPeriodOID"
 							+ "="
@@ -76,7 +77,7 @@
 							+ "&amp;sortBy=equalLoad" %>">
 						<bean:message key="label.hours.load.total"/>
 					</html:link>
-				</td>
+				</th>
 			</tr>
 			
 			<logic:iterate id="executionCourse" name="<%= SessionConstants.LIST_INFOEXECUTIONCOURSE %>">

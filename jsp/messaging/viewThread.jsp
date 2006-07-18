@@ -1,5 +1,6 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
@@ -15,12 +16,12 @@
 		<logic:present name="person">
 			<logic:present name="messages">			
 				<bean:define id="conversationMessages" name="thread" property="conversationMessages" />
-					<em>Fórum <bean:write name="forum" property="name"/></em>
+					<em>Fï¿½rum <bean:write name="forum" property="name"/></em>
 					<h2><bean:message bundle="MESSAGING_RESOURCES" key="label.viewThread.title"/></h2>
 					
 					<p class="mbottom0">
 					<html:link action="<%= contextPrefix + "method=viewForum&forumId="+ forumId %>">
-						Voltar ao fórum
+						Voltar ao fï¿½rum
 					</html:link>
 					</p>
 <!--					

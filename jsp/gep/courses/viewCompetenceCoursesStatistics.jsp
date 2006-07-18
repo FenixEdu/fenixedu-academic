@@ -1,4 +1,5 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 
@@ -51,16 +52,16 @@
 	</SCRIPT>
 
 
-	<html:hidden property="method" value="selectExecutionYear"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="selectExecutionYear"/>
 
 	<logic:present name="executionYears" >		
 		<bean:message key="label.gep.chooseExecutionYear" bundle="GEP_RESOURCES" />: 
-		<html:select property="executionYearID">
+		<html:select bundle="HTMLALT_RESOURCES" altKey="select.executionYearID" property="executionYearID">
 			<html:options collection="executionYears" property="idInternal"
 				labelProperty="year" />
 		</html:select>	
 		<br/><br/>
-		<html:submit onclick="startClock()">Ok</html:submit>		
+		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" onclick="startClock()">Ok</html:submit>		
 		<br/><br/>
 	</logic:present>
 	

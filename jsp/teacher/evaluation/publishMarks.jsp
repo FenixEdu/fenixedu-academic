@@ -7,6 +7,7 @@
 <%@ taglib uri="/WEB-INF/html_basic.tld" prefix="h"%>
 
 <ft:tilesView definition="df.teacher.evaluation-management" attributeName="body-inline">
+	<f:loadBundle basename="resources/HtmlAltResources" var="htmlAltBundle"/>
 	<f:loadBundle basename="resources/ApplicationResources" var="bundle"/>
 
 	<h:outputFormat value="<h2>#{bundle['title.evaluation.manage.publishMarks']}</h2>" escape="false">
@@ -75,8 +76,8 @@
 		<h:outputText styleClass="error" value="#{bundle['message.sms.unavailable']}"/>
 		<h:outputText value="<br/><br/>" escape="false"/>
 
-		<h:commandButton styleClass="inputbutton" action="#{evaluationManagementBackingBean.publishMarks}" value="#{bundle['button.insert']}"/>
-		<h:commandButton immediate="true" action="#{evaluationManagementBackingBean.evaluation.class.getSimpleName}" styleClass="inputbutton" value="#{bundle['button.cancel']}"/>				
+		<h:commandButton alt="#{htmlAltBundle['commandButton.insert']}" styleClass="inputbutton" action="#{evaluationManagementBackingBean.publishMarks}" value="#{bundle['button.insert']}"/>
+		<h:commandButton alt="#{htmlAltBundle['commandButton.cancel']}" immediate="true" action="#{evaluationManagementBackingBean.evaluation.class.getSimpleName}" styleClass="inputbutton" value="#{bundle['button.cancel']}"/>				
 	</h:form>
 
 </ft:tilesView>

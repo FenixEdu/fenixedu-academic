@@ -1,5 +1,6 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %> 
 <bean:define id="seminary" scope="request" name="seminary"/>
@@ -10,10 +11,10 @@
     	<h3><bean:message key="label.seminariesEquivalencies"/></h3>
     	<table width="90%" align="center">
     	<tr>
-    		<td class="listClasses-header" ><bean:message key="label.candidacyCurricularCourseTitle"/></td>
-    		<td class="listClasses-header" ><bean:message key="label.modalityTitle" /></td>
-    		<td class="listClasses-header" ><bean:message key="label.themesTitle" /></td>
-    		<td class="listClasses-header" ><bean:message key="label.enroll" /></td>
+    		<th class="listClasses-header" ><bean:message key="label.candidacyCurricularCourseTitle"/></th>
+    		<th class="listClasses-header" ><bean:message key="label.modalityTitle" /></th>
+    		<th class="listClasses-header" ><bean:message key="label.themesTitle" /></th>
+    		<th class="listClasses-header" ><bean:message key="label.enroll" /></th>
     	</tr>	
     		<logic:iterate id="equivalency" name="equivalencies">
     		<tr>
@@ -50,5 +51,5 @@
     <html:errors/>
  </logic:notEmpty>
  <logic:empty name="equivalencies">
- 	<span class="error">Não existem opções disponíveis para a sua licenciatura neste ciclo de seminários.</span>
+ 	<span class="error">Nï¿½o existem opï¿½ï¿½es disponï¿½veis para a sua licenciatura neste ciclo de seminï¿½rios.</span>
  </logic:empty>

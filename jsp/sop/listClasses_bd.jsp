@@ -1,6 +1,7 @@
 <%@ page language="java" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
    	<table width="100%" border="0" cellpadding="0" cellspacing="0">
@@ -21,12 +22,12 @@
 	    	<logic:present name="classesList" scope="request">
 	 	<tr>
 	 <!-- Table headers: Nome e Apagar -->
-			<td class="listClasses-header">
+			<th class="listClasses-header">
 				<bean:message key="label.name"/>
-			</td>
-			<td class="listClasses-header">
+			</th>
+			<th class="listClasses-header">
 				<bean:message key="label.delete"/>
-			</td>				
+			</th>				
 		</tr>		
 		  <bean:define id="deleteConfirm">
 			return confirm('<bean:message key="message.confirm.delete.class"/>')

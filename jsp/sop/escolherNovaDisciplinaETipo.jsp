@@ -21,7 +21,7 @@
                 <td>
                     <bean:message key="property.course"/>
                     <br/>
-                    <html:select property="chaveDisciplinaExecucao" size="1">
+                    <html:select bundle="HTMLALT_RESOURCES" altKey="select.chaveDisciplinaExecucao" property="chaveDisciplinaExecucao" size="1">
                         <html:options collection="disciplinasExecucao" property="value" labelProperty="label"/>
                     </html:select>
                 </td>

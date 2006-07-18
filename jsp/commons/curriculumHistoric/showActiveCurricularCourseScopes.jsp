@@ -1,5 +1,6 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <h2><bean:message key="label.curricularPlan"  bundle="CURRICULUM_HISTORIC_RESOURCES"/>&nbsp;-&nbsp;
@@ -15,19 +16,19 @@
 			<bean:define id="executionYear" name="executionYearID" />
 	<table>
 		<tr>
-			<td class="listClasses-header"><bean:message key="label.curricularCourseScope.curricularYear" bundle="CURRICULUM_HISTORIC_RESOURCES"/></td>
-			<td class="listClasses-header"><bean:message key="label.curricularCourseScope.curricularSemester" bundle="CURRICULUM_HISTORIC_RESOURCES"/></td>
-			<td class="listClasses-header"><bean:message key="label.curricularCourse" bundle="CURRICULUM_HISTORIC_RESOURCES"/></td>
-			<td class="listClasses-header"><bean:message key="label.curricularCourseScope.branch" bundle="CURRICULUM_HISTORIC_RESOURCES"/></td>
+			<th class="listClasses-header"><bean:message key="label.curricularCourseScope.curricularYear" bundle="CURRICULUM_HISTORIC_RESOURCES"/></th>
+			<th class="listClasses-header"><bean:message key="label.curricularCourseScope.curricularSemester" bundle="CURRICULUM_HISTORIC_RESOURCES"/></th>
+			<th class="listClasses-header"><bean:message key="label.curricularCourse" bundle="CURRICULUM_HISTORIC_RESOURCES"/></th>
+			<th class="listClasses-header"><bean:message key="label.curricularCourseScope.branch" bundle="CURRICULUM_HISTORIC_RESOURCES"/></th>
 		</tr>
 		<logic:iterate id="curricularCourseScopeElemList" name="allActiveCurricularCourseScopes">
 			<logic:iterate id="curricularCourseScopeElem" name="curricularCourseScopeElemList" type="net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseScope" length="1" >
 				<logic:notEqual name="curricularCourseScopeElem" property="infoCurricularSemester.semester" value="<%= pageContext.findAttribute("currentSemester").toString()%>">
 					<tr>
-						<td class="listClasses-header"><bean:message key="label.curricularCourseScope.curricularYear" bundle="CURRICULUM_HISTORIC_RESOURCES"/></td>
-						<td class="listClasses-header"><bean:message key="label.curricularCourseScope.curricularSemester" bundle="CURRICULUM_HISTORIC_RESOURCES"/></td>
-						<td class="listClasses-header"><bean:message key="label.curricularCourse" bundle="CURRICULUM_HISTORIC_RESOURCES"/></td>
-						<td class="listClasses-header"><bean:message key="label.curricularCourseScope.branch" bundle="CURRICULUM_HISTORIC_RESOURCES"/></td>
+						<th class="listClasses-header"><bean:message key="label.curricularCourseScope.curricularYear" bundle="CURRICULUM_HISTORIC_RESOURCES"/></th>
+						<th class="listClasses-header"><bean:message key="label.curricularCourseScope.curricularSemester" bundle="CURRICULUM_HISTORIC_RESOURCES"/></th>
+						<th class="listClasses-header"><bean:message key="label.curricularCourse" bundle="CURRICULUM_HISTORIC_RESOURCES"/></th>
+						<th class="listClasses-header"><bean:message key="label.curricularCourseScope.branch" bundle="CURRICULUM_HISTORIC_RESOURCES"/></th>
 					</tr>
 					<bean:define id="currentSemester" name="curricularCourseScopeElem" property="infoCurricularSemester.semester"/>
 				</logic:notEqual>

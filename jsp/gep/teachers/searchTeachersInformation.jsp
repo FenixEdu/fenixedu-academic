@@ -1,6 +1,7 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <h2><bean:message key="link.gep.teachersInformation" bundle="GEP_RESOURCES"/></h2>
 <span class="error">
@@ -8,14 +9,14 @@
 </span>
 <logic:equal name="showNextSelects" value="false">
 	<html:form action="/searchTeachersInformation">
-		<html:hidden property="method" value="searchForm"/>
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="searchForm"/>
 		<table>
 			<tr>
 				<td>
 					<b><bean:message key="title.gep.executionYear" bundle="GEP_RESOURCES"/>:</b>
 				</td>
 				<td>
-					<html:select property="executionYear" onchange="this.form.submit();">
+					<html:select bundle="HTMLALT_RESOURCES" altKey="select.executionYear" property="executionYear" onchange="this.form.submit();">
 						<html:option value="[Escolha]"/>
 						<html:optionsCollection name="executionYears"/>
 					</html:select>
@@ -39,15 +40,15 @@
 	</table>
 
 	<html:form action="/searchTeachersInformation">
-		<html:hidden property="method" value="doSearch"/>
-		<html:hidden property="executionYear" value="<%=executionYear%>"/>
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="doSearch"/>
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.executionYear" property="executionYear" value="<%=executionYear%>"/>
 		<table>
 			<tr>
 				<td>
 					<b><bean:message key="label.gep.degree" bundle="GEP_RESOURCES"/>:</b>
 				</td>
 				<td>
-					<html:select property="executionDegreeId">
+					<html:select bundle="HTMLALT_RESOURCES" altKey="select.executionDegreeId" property="executionDegreeId">
 						<html:option key="label.selectAll" bundle="GEP_RESOURCES" value="all"/>
 						<html:options collection="infoExecutionDegrees" labelProperty="label" property="value"/>
 					</html:select>
@@ -64,7 +65,7 @@
 					<bean:message key="label.gep.basic" bundle="GEP_RESOURCES"/>
 				</td>
 				<td>
-					<html:radio property="basic" value="true"/>
+					<html:radio bundle="HTMLALT_RESOURCES" altKey="radio.basic" property="basic" value="true"/>
 				</td>
 			</tr>
 			<tr>
@@ -72,7 +73,7 @@
 					<bean:message key="label.gep.non.basic" bundle="GEP_RESOURCES"/>
 				</td>
 				<td>
-					<html:radio property="basic" value="false"/>
+					<html:radio bundle="HTMLALT_RESOURCES" altKey="radio.basic" property="basic" value="false"/>
 				</td>
 			</tr>
 			<tr>
@@ -80,12 +81,12 @@
 					<bean:message key="label.selectAll" bundle="GEP_RESOURCES"/>
 				</td>
 				<td>
-					<html:radio property="basic" value=""/>
+					<html:radio bundle="HTMLALT_RESOURCES" altKey="radio.basic" property="basic" value=""/>
 				</td>
 			</tr>
 		</table>
 	<br />
-	<html:submit styleClass="inputbutton">
+	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton">
 		<bean:message key="button.show"
 					  bundle="GEP_RESOURCES"/>
 	</html:submit>

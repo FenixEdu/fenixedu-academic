@@ -3,6 +3,7 @@
 <%@ taglib uri="/WEB-INF/html_basic.tld" prefix="h"%>
 
 <ft:tilesView definition="df.coordinator.evaluation-management" attributeName="body-inline">
+	<f:loadBundle basename="resources/HtmlAltResources" var="htmlAltBundle"/>
 	<f:loadBundle basename="resources/ApplicationResources" var="bundle"/>
 	
 	<h:form>
@@ -21,7 +22,7 @@
 			<f:selectItems value="#{coordinatorEvaluationManagementBackingBean.executionCoursesLabels}" />
 		</h:selectOneMenu>
 		<h:outputText value="<br/><br/>" escape="false" />		
-		<h:commandButton action="#{coordinatorEvaluationManagementBackingBean.selectExecutionCourse}"
+		<h:commandButton alt="#{htmlAltBundle['commandButton.choose']}" action="#{coordinatorEvaluationManagementBackingBean.selectExecutionCourse}"
 		  value="#{bundle['label.choose']}" styleClass="inputbutton"/>
 		
 	</h:form>

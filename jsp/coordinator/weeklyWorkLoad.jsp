@@ -1,6 +1,7 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/c.tld" prefix="c"%>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/taglibs-string.tld" prefix="str" %>
@@ -13,9 +14,9 @@
 <br/>
 
 <html:form action="/weeklyWorkLoad.do">
-	<html:hidden property="method" value="prepare"/>
-	<html:hidden property="page" value="1"/>
-	<html:hidden property="degreeCurricularPlanID"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="prepare"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.degreeCurricularPlanID" property="degreeCurricularPlanID"/>
 
 	<table>
 		<tr>
@@ -23,7 +24,7 @@
 				<bean:message key="title.weekly.work.load.academic.period"/>:
 			</td>
 			<td>
-				<html:select property="executionPeriodID" onchange="this.form.submit();">
+				<html:select bundle="HTMLALT_RESOURCES" altKey="select.executionPeriodID" property="executionPeriodID" onchange="this.form.submit();">
 					<html:options collection="executionPeriods" property="idInternal" labelProperty="qualifiedName"/>
 				</html:select>
 			</td>
@@ -33,7 +34,7 @@
 				<bean:message key="title.weekly.work.load.curricular.year"/>:
 			</td>
 			<td>
-				<html:select property="curricularYearID" onchange="this.form.submit();">
+				<html:select bundle="HTMLALT_RESOURCES" altKey="select.curricularYearID" property="curricularYearID" onchange="this.form.submit();">
 					<html:option value=""/>
 					<html:options collection="curricularYears" property="idInternal" labelProperty="year"/>
 				</html:select>
@@ -44,7 +45,7 @@
 				<bean:message key="title.weekly.work.load.execution.period"/>:
 			</td>
 			<td>
-				<html:select property="executionCourseID" onchange="this.form.submit();">
+				<html:select bundle="HTMLALT_RESOURCES" altKey="select.executionCourseID" property="executionCourseID" onchange="this.form.submit();">
 					<html:option value="" key="label.all"/>
 					<html:options collection="executionCourses" property="idInternal" labelProperty="nome"/>
 				</html:select>

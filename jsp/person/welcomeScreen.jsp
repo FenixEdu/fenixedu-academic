@@ -1,5 +1,6 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="date"%>
@@ -51,4 +52,4 @@
 	</table>
 	</logic:notEqual>
 </logic:present>
-<p>Bem-vindo à sua área pessoal.<br /> Poderá visualizar e alterar a sua informação pessoal, proceder à alteração da sua password ler os avisos que lhe são enviados pelos orgãos de gestão da escola.</p>
+<p>Bem-vindo ï¿½ sua ï¿½rea pessoal.<br /> Poderï¿½ visualizar e alterar a sua informaï¿½ï¿½o pessoal, proceder ï¿½ alteraï¿½ï¿½o da sua password ler os avisos que lhe sï¿½o enviados pelos orgï¿½os de gestï¿½o da escola.</p>

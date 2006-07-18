@@ -1,5 +1,5 @@
 <%@ page language="java" %>
-<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %><html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 
@@ -17,8 +17,8 @@
 <br />
 <br />
 <html:form action="/editExecutionCourseTransferCurricularCourses" focus="name">
-	<html:hidden property="page" value="1"/>
-	<html:hidden property="method" value="transferCurricularCourse"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="transferCurricularCourse"/>
 
 	<bean:define id="executionCourseId" name="infoExecutionCourse" property="idInternal"/>
 	<bean:define id="curricularCourseId" name="infoCurricularCourse" property="idInternal"/>
@@ -26,16 +26,16 @@
 	<bean:write name="executionCourseId"/><br />
 	<bean:write name="curricularCourseId"/><br />
 
-	<html:hidden property="executionCourseId" value="<%= pageContext.findAttribute("executionCourseId").toString() %>"/>
-	<html:hidden property="curricularCourseId" value="<%= pageContext.findAttribute("curricularCourseId").toString() %>"/>
-	<html:hidden property="executionPeriodId" value="<%= pageContext.findAttribute("executionPeriodId").toString() %>"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.executionCourseId" property="executionCourseId" value="<%= pageContext.findAttribute("executionCourseId").toString() %>"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.curricularCourseId" property="curricularCourseId" value="<%= pageContext.findAttribute("curricularCourseId").toString() %>"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.executionPeriodId" property="executionPeriodId" value="<%= pageContext.findAttribute("executionPeriodId").toString() %>"/>
 
-	<html:select property="destinationExecutionDegreeId" size="1"
+	<html:select bundle="HTMLALT_RESOURCES" altKey="select.destinationExecutionDegreeId" property="destinationExecutionDegreeId" size="1"
 			onchange="this.form.method.value='selectExecutionDegree';document.executionCourseTransferCurricularCourseForm.submit();">
 		<html:options collection="executionDegrees" labelProperty="label" property="value" />
 	</html:select>
 
-	<html:select property="curricularYear" size="1"
+	<html:select bundle="HTMLALT_RESOURCES" altKey="select.curricularYear" property="curricularYear" size="1"
 			onchange="this.form.method.value='selectExecutionDegree';document.executionCourseTransferCurricularCourseForm.submit();">
 		<html:options collection="curricularYears" labelProperty="label" property="value" />
 	</html:select>
@@ -45,19 +45,19 @@
 	<logic:present name="executionCourses">
 		<table>
 			<tr>
-				<td class="listClasses-header">&nbsp;
-				</td>
-				<td class="listClasses-header">&nbsp;
-				</td>
-				<td class="listClasses-header">&nbsp;
-				</td>
+				<th class="listClasses-header">&nbsp;
+				</th>
+				<th class="listClasses-header">&nbsp;
+				</th>
+				<th class="listClasses-header">&nbsp;
+				</th>
 			</tr>
 			<logic:iterate id="executionCourse" name="executionCourses">
 				<bean:define id="destinationExecutionCourseId" name="executionCourse" property="idInternal"/>
 				<tr>
 					<td class="listClasses">
 						<bean:write name="executionCourse" property="idInternal"/>
-						<html:radio property="destinationExecutionCourseId"
+						<html:radio bundle="HTMLALT_RESOURCES" altKey="radio.destinationExecutionCourseId" property="destinationExecutionCourseId"
 								value="<%= pageContext.findAttribute("destinationExecutionCourseId").toString() %>" />
 					</td>
 					<td class="listClasses">
@@ -73,5 +73,5 @@
 
 	<br />
 	<br />
-	<html:submit styleClass="inputbutton"><bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="button.transfer"/></html:submit>
+	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton"><bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="button.transfer"/></html:submit>
 </html:form>

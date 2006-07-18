@@ -5,6 +5,7 @@
 <%@ taglib uri="/WEB-INF/c.tld" prefix="c"%>
 
 <ft:tilesView definition="definition.manager.masterPage" attributeName="body-inline">
+	<f:loadBundle basename="resources/HtmlAltResources" var="htmlAltBundle"/>
 	
 	<f:loadBundle basename="resources/ManagerResources" var="bundle"/>
 		
@@ -19,13 +20,13 @@
 		
 			<h:outputText value="<b>#{bundle['message.name']}</b>" escape="false"/>
 			<h:panelGroup>
-				<h:inputText id="name" required="true" size="60" value="#{organizationalStructureBackingBean.unitName}"/>
+				<h:inputText alt="#{htmlAltBundle['inputText.unitName']}" id="name" required="true" size="60" value="#{organizationalStructureBackingBean.unitName}"/>
 				<h:message for="name" styleClass="error"/>
 			</h:panelGroup>
 			
 			<h:outputText value="<b>#{bundle['message.costCenter']}</b>" escape="false"/>
 			<h:panelGroup>
-				<h:inputText id="costCenter" size="10" value="#{organizationalStructureBackingBean.unitCostCenter}">
+				<h:inputText alt="#{htmlAltBundle['inputText.unitCostCenter']}" id="costCenter" size="10" value="#{organizationalStructureBackingBean.unitCostCenter}">
 					<fc:regexValidator regex="[0-9]*"/>
 				</h:inputText>
 				<h:message for="costCenter" styleClass="error"/>
@@ -33,17 +34,17 @@
 			
 			<h:outputText value="<b>#{bundle['message.acronym']}</b>" escape="false"/>
 			<h:panelGroup>
-				<h:inputText size="10" value="#{organizationalStructureBackingBean.unitAcronym}"/>				
+				<h:inputText alt="#{htmlAltBundle['inputText.unitAcronym']}" size="10" value="#{organizationalStructureBackingBean.unitAcronym}"/>				
 			</h:panelGroup>									
 			
 			<h:outputText value="<b>#{bundle['message.webAddress']}</b>" escape="false"/>
 			<h:panelGroup>
-				<h:inputText size="30" value="#{organizationalStructureBackingBean.unitWebAddress}"/>				
+				<h:inputText alt="#{htmlAltBundle['inputText.unitWebAddress']}" size="30" value="#{organizationalStructureBackingBean.unitWebAddress}"/>				
 			</h:panelGroup>		
 			
 			<h:outputText value="<b>#{bundle['message.initialDate']}:</b>" escape="false"/>
 			<h:panelGroup>
-				<h:inputText id="beginDate" required="true" size="10" value="#{organizationalStructureBackingBean.unitBeginDate}">
+				<h:inputText alt="#{htmlAltBundle['inputText.unitBeginDate']}" id="beginDate" required="true" size="10" value="#{organizationalStructureBackingBean.unitBeginDate}">
 					<fc:dateValidator format="dd/MM/yyyy" strict="true"/>
 				</h:inputText>
 				<h:outputText value="#{bundle['date.format']}"/>
@@ -52,7 +53,7 @@
 			
 			<h:outputText value="<b>#{bundle['message.endDate']}:</b>" escape="false"/>
 			<h:panelGroup>
-				<h:inputText id="endDate" size="10" value="#{organizationalStructureBackingBean.unitEndDate}"/>
+				<h:inputText alt="#{htmlAltBundle['inputText.unitEndDate']}" id="endDate" size="10" value="#{organizationalStructureBackingBean.unitEndDate}"/>
 				<h:outputText value="#{bundle['date.format']}"/>				
 			</h:panelGroup>
 		
@@ -75,8 +76,8 @@
 		
 		<h:outputText value="<br/>" escape="false" />	
 		<h:panelGrid columns="2">
-			<h:commandButton action="#{organizationalStructureBackingBean.createTopUnit}" value="#{bundle['link.new.unit2']}" styleClass="inputbutton"/>				
-			<h:commandButton action="listAllUnits" immediate="true" value="#{bundle['label.return']}" styleClass="inputbutton"/>								
+			<h:commandButton alt="#{htmlAltBundle['commandButton.unit2']}" action="#{organizationalStructureBackingBean.createTopUnit}" value="#{bundle['link.new.unit2']}" styleClass="inputbutton"/>				
+			<h:commandButton alt="#{htmlAltBundle['commandButton.return']}" action="listAllUnits" immediate="true" value="#{bundle['label.return']}" styleClass="inputbutton"/>								
 		</h:panelGrid>		
 				
 	</h:form>

@@ -5,6 +5,7 @@
 <%@ taglib uri="/WEB-INF/c.tld" prefix="c"%>
 
 <ft:tilesView definition="df.coordinator.evaluation-management" attributeName="body-inline">
+	<f:loadBundle basename="resources/HtmlAltResources" var="htmlAltBundle"/>
 
 <style>
 .alignright { text-align: right; }
@@ -17,8 +18,8 @@
 	<h:outputFormat value="<h2>#{bundle['list.students']}</h2/><hr>" escape="false"/>
 
 	<h:form>
-		<h:outputText escape="false" value="<input id='degreeCurricularPlanID' name='degreeCurricularPlanID' type='hidden' value='#{CoordinatorStudentsBackingBean.degreeCurricularPlanID}'/>"/>
-		<h:outputText escape="false" value="<input id='sortBy' name='sortBy' type='hidden' value='#{CoordinatorStudentsBackingBean.sortBy}'/>"/>
+		<h:outputText escape="false" value="<input alt='input.degreeCurricularPlanID' id='degreeCurricularPlanID' name='degreeCurricularPlanID' type='hidden' value='#{CoordinatorStudentsBackingBean.degreeCurricularPlanID}'/>"/>
+		<h:outputText escape="false" value="<input alt='input.sortBy' id='sortBy' name='sortBy' type='hidden' value='#{CoordinatorStudentsBackingBean.sortBy}'/>"/>
 
 		<h:panelGrid columns="2" styleClass="infoop" columnClasses="alignright,,"  rowClasses=",,,valigntop">
 			<h:outputText value="#{bundle['label.student.curricular.plan.state']}: " />
@@ -34,23 +35,23 @@
 
 			<h:outputText value="#{bundle['label.student.number']}: " />
 			<h:panelGroup>
-				<h:inputText id="minStudentNumberString" value="#{CoordinatorStudentsBackingBean.minStudentNumberString}" size="6"/>
+				<h:inputText alt="#{htmlAltBundle['inputText.minStudentNumberString']}" id="minStudentNumberString" value="#{CoordinatorStudentsBackingBean.minStudentNumberString}" size="6"/>
 				<h:outputText value=" - " />
-				<h:inputText id="maxStudentNumberString" value="#{CoordinatorStudentsBackingBean.maxStudentNumberString}" size="6"/>
+				<h:inputText alt="#{htmlAltBundle['inputText.maxStudentNumberString']}" id="maxStudentNumberString" value="#{CoordinatorStudentsBackingBean.maxStudentNumberString}" size="6"/>
 			</h:panelGroup>
 
 			<h:outputText value="#{bundle['label.average']}: " />
 			<h:panelGroup>
-				<h:inputText id="minGradeString" value="#{CoordinatorStudentsBackingBean.minGradeString}" size="4"/>
+				<h:inputText alt="#{htmlAltBundle['inputText.minGradeString']}" id="minGradeString" value="#{CoordinatorStudentsBackingBean.minGradeString}" size="4"/>
 				<h:outputText value=" - " />
-				<h:inputText id="maxGradeString" value="#{CoordinatorStudentsBackingBean.maxGradeString}" size="4"/>
+				<h:inputText alt="#{htmlAltBundle['inputText.maxGradeString']}" id="maxGradeString" value="#{CoordinatorStudentsBackingBean.maxGradeString}" size="4"/>
 			</h:panelGroup>
 
 			<h:outputText value="#{bundle['label.number.approved.curricular.courses']}: " />
 			<h:panelGroup>
-				<h:inputText id="minNumberApprovedString" value="#{CoordinatorStudentsBackingBean.minNumberApprovedString}" size="4"/>
+				<h:inputText alt="#{htmlAltBundle['inputText.minNumberApprovedString']}" id="minNumberApprovedString" value="#{CoordinatorStudentsBackingBean.minNumberApprovedString}" size="4"/>
 				<h:outputText value=" - " />
-				<h:inputText id="maxNumberApprovedString" value="#{CoordinatorStudentsBackingBean.maxNumberApprovedString}" size="4"/>
+				<h:inputText alt="#{htmlAltBundle['inputText.maxNumberApprovedString']}" id="maxNumberApprovedString" value="#{CoordinatorStudentsBackingBean.maxNumberApprovedString}" size="4"/>
 			</h:panelGroup>
 
 			<h:outputText value="#{bundle['label.viewPhoto']}: " />
@@ -59,7 +60,7 @@
 			</h:selectBooleanCheckbox>
 		</h:panelGrid>
 
-		<h:commandButton styleClass="inputbutton" value="#{bundle['button.search']}"/>
+		<h:commandButton alt="#{htmlAltBundle['commandButton.search']}" styleClass="inputbutton" value="#{bundle['button.search']}"/>
 	</h:form>
 
 	<h:outputText value="<br/>#{bundle['label.number.results']}: " escape="false"/>

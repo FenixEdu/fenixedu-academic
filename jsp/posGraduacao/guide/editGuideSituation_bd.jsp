@@ -1,5 +1,6 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/enum.tld" prefix="e" %>
@@ -37,7 +38,7 @@
 
 
   <html:form action='<%= pageContext.findAttribute("action").toString() %>'>
-   	  <html:hidden property="page" value="1"/>  
+   	  <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>  
    <strong><bean:message key="label.masterDegree.administrativeOffice.activeSituation" /></strong>
    <br>
    <br>
@@ -112,7 +113,7 @@
 	   			<!-- Guide Situation -->
        			<tr>
         			<td><bean:message key="label.masterDegree.administrativeOffice.remarks"/> </td>
-       				<td><html:textarea property="remarks"/></td>
+       				<td><html:textarea bundle="HTMLALT_RESOURCES" altKey="textarea.remarks" property="remarks"/></td>
        			</tr>
        			<tr>
        				<td>&nbsp;</td>
@@ -123,7 +124,7 @@
         			</td>
         			<td>
         				<e:labelValues id="situations" enumeration="net.sourceforge.fenixedu.domain.GuideState" bundle="ENUMERATION_RESOURCES"/>
-            			<html:select property="guideSituation">
+            			<html:select bundle="HTMLALT_RESOURCES" altKey="select.guideSituation" property="guideSituation">
             				<html:option key="dropDown.Default" value=""/>
            					<html:options collection="situations" property="value" labelProperty="label" />
             			</html:select>          
@@ -138,13 +139,13 @@
         		<tr>
          			<td><bean:message key="label.masterDegree.administrativeOffice.paymentDate" /></td>
           			<td>
-          				<html:select property="paymentDateYear">
+          				<html:select bundle="HTMLALT_RESOURCES" altKey="select.paymentDateYear" property="paymentDateYear">
                 			<html:options collection="<%= SessionConstants.YEARS_KEY %>" property="value" labelProperty="label"/>
 	             		</html:select>
-    	         		<html:select property="paymentDateMonth">
+    	         		<html:select bundle="HTMLALT_RESOURCES" altKey="select.paymentDateMonth" property="paymentDateMonth">
         	        		<html:options collection="<%= SessionConstants.MONTH_LIST_KEY %>" property="value" labelProperty="label"/>
             	 		</html:select>
-             			<html:select property="paymentDateDay">
+             			<html:select bundle="HTMLALT_RESOURCES" altKey="select.paymentDateDay" property="paymentDateDay">
                 			<html:options collection="<%= SessionConstants.MONTH_DAYS_KEY %>" property="value" labelProperty="label"/>
              			</html:select>
 	          		</td>          
@@ -160,7 +161,7 @@
     				</td>
     				<td>
     					<e:labelValues id="values" enumeration="net.sourceforge.fenixedu.domain.transactions.PaymentType" bundle="ENUMERATION_RESOURCES"/>
-    				    <html:select property="paymentType">
+    				    <html:select bundle="HTMLALT_RESOURCES" altKey="select.paymentType" property="paymentType">
 					       	<html:option key="dropDown.Default" value=""/>
 					        <html:options collection="values" property="value" labelProperty="label"/>
 					    </html:select> 
@@ -175,8 +176,8 @@
 				</tr>
    				<tr>
    					<td>
-   						<html:submit property="Alterar">Alterar Situação</html:submit>
-   						<html:reset property="Reset">Dados Originais</html:reset>
+   						<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.Alterar" property="Alterar">Alterar Situaï¿½ï¿½o</html:submit>
+   						<html:reset bundle="HTMLALT_RESOURCES" altKey="reset.Reset" property="Reset">Dados Originais</html:reset>
    					</td>
    				</tr>
         		

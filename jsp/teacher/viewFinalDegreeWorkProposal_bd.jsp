@@ -1,5 +1,6 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 
@@ -24,15 +25,15 @@
 			</td>
 		</tr>
 		<tr>
-			<td class="listClasses-header">
+			<th class="listClasses-header">
 				<bean:message key="label.teacher.finalWork.number"/>
-			</td>
-			<td class="listClasses-header">
+			</th>
+			<th class="listClasses-header">
 				<bean:message key="label.teacher.finalWork.name"/>
-			</td>
-			<td class="listClasses-header">
+			</th>
+			<th class="listClasses-header">
 				<bean:message key="label.teacher.finalWork.credits.short"/>
-			</td>
+			</th>
 		</tr>
 		<tr>
 			<td class="listClasses">
@@ -52,15 +53,15 @@
 				</td>
 			</tr>
 			<tr>
-				<td class="listClasses-header">
+				<th class="listClasses-header">
 					<bean:message key="label.teacher.finalWork.number"/>
-				</td>
-				<td class="listClasses-header">
+				</th>
+				<th class="listClasses-header">
 					<bean:message key="label.teacher.finalWork.name"/>
-				</td>
-				<td class="listClasses-header">
+				</th>
+				<th class="listClasses-header">
 					<bean:message key="label.teacher.finalWork.credits.short"/>
-				</td>
+				</th>
 			</tr>
 			<tr>
 				<td class="listClasses">
@@ -81,41 +82,41 @@
 				</td>
 			</tr>
 			<tr>
-				<td class="listClasses-header">
+				<th class="listClasses-header">
 					<bean:message key="label.teacher.finalWork.name"/>
-				</td>
+				</th>
 				<td class="listClasses" colspan="2">
 					<bean:write name="finalDegreeWorkProposal" property="companionName"/>
 				</td>
 			</tr>			
 			<tr>
-				<td class="listClasses-header">
+				<th class="listClasses-header">
 					<bean:message key="label.teacher.finalWork.mail"/>
-				</td>
+				</th>
 				<td class="listClasses" colspan="2">
 					<bean:write name="finalDegreeWorkProposal" property="companionMail"/>
 				</td>
 			</tr>			
 			<tr>
-				<td class="listClasses-header">
+				<th class="listClasses-header">
 					<bean:message key="label.teacher.finalWork.phone"/>
-				</td>
+				</th>
 				<td class="listClasses" colspan="2">
 					<bean:write name="finalDegreeWorkProposal" property="companionPhone"/>
 				</td>
 			</tr>			
 			<tr>
-				<td class="listClasses-header">
+				<th class="listClasses-header">
 					<bean:message key="label.teacher.finalWork.companyName"/>
-				</td>
+				</th>
 				<td class="listClasses" colspan="2">
 					<bean:write name="finalDegreeWorkProposal" property="companyName"/>
 				</td>
 			</tr>			
 			<tr>
-				<td class="listClasses-header">
+				<th class="listClasses-header">
 					<bean:message key="label.teacher.finalWork.companyAdress"/>
-				</td>
+				</th>
 				<td class="listClasses" colspan="2">
 					<bean:write name="finalDegreeWorkProposal" property="companyAdress"/>
 				</td>
@@ -201,17 +202,17 @@
 			</td>
 		</tr>
 		<tr>
-			<td class="listClasses-header">
+			<th class="listClasses-header">
 				<bean:message key="label.teacher.finalWork.minimumNumberGroupElements"/>
-			</td>
+			</th>
 			<td class="listClasses" colspan="2">
 				<bean:write name="finalDegreeWorkProposal" property="minimumNumberOfGroupElements"/>
 			</td>
 		</tr>
 		<tr>
-			<td class="listClasses-header">
+			<th class="listClasses-header">
 				<bean:message key="label.teacher.finalWork.maximumNumberGroupElements"/>
-			</td>
+			</th>
 			<td class="listClasses" colspan="2">
 				<bean:write name="finalDegreeWorkProposal" property="maximumNumberOfGroupElements"/>
 			</td>

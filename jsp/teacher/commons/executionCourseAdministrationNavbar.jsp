@@ -1,5 +1,6 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 
@@ -118,7 +119,7 @@
 		<br/>
 		<li>
 			<html:link href="<%= request.getContextPath()+"/publico/viewSiteExecutionCourse.do?method=firstPage" %>" paramId="objectCode" paramName="executionCourse" paramProperty="idInternal" target="_blank">
-				Ver Página da Disciplina
+				Ver Pï¿½gina da Disciplina
 			</html:link>
 		</li>
 	</ul>

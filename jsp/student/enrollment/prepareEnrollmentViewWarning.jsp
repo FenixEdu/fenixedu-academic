@@ -1,6 +1,6 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
-<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %><html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 
 <div  align="center"  >
@@ -16,9 +16,9 @@
 	<ul>
 		<li>Alunos Externos</li>
 		<li>Melhorias de Nota</li>
-		<li>Alunos inscritos em Época Especial 2003/2004</li>
-		<li>Alunos cuja inscrição é efectuada pelo Coordenador de Licenciatura/Tutor</li>
-		<li>Alunos com processos de Equivalência em curso</li>
+		<li>Alunos inscritos em ï¿½poca Especial 2003/2004</li>
+		<li>Alunos cuja inscriï¿½ï¿½o ï¿½ efectuada pelo Coordenador de Licenciatura/Tutor</li>
+		<li>Alunos com processos de Equivalï¿½ncia em curso</li>
 	</ul>
 	<li><bean:message key="message.warning.student.enrolmentClasses.notEnroll.chooseCourse" /> <html:link page="<%= "/studentShiftEnrollmentManager.do?method=start&selectCourses=true" %>"><bean:message key="message.warning.student.enrolmentClasses.notEnroll.chooseCourse.link" /></html:link></li>
 </ul>
@@ -26,8 +26,8 @@
 
 <br />
 <html:form action="/studentShiftEnrollmentManager">
-	<input type="hidden" name="method" value="start">
-	<html:submit styleClass="inputbutton">
+	<input alt="input.method" type="hidden" name="method" value="start">
+	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton">
 	<bean:message key="button.continue.enrolment"/>
 	</html:submit>
 </html:form>

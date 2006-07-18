@@ -1,6 +1,7 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 
 <bean:define id="component" name="siteView" property="component"/>
@@ -14,7 +15,7 @@
 </table>
 	<br />
 <center><table  >
-<tr><td class="listClasses-header"><bean:message key="label.degree"/> </td></tr>
+<tr><th class="listClasses-header"><bean:message key="label.degree"/> </th></tr>
 <logic:iterate id="degree" name="degreeList">
 <tr>
 <bean:define id="degreeId" name="degree" property="idInternal"/>

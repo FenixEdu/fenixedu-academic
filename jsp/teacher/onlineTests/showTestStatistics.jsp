@@ -1,5 +1,6 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 
@@ -8,8 +9,8 @@
 <bean:define id="infoInquiryStatistics" name="component" property="infoInquiryStatistics"/>
 
 <html:form action="/testDistribution">
-<html:hidden property="method" value="showDistributedTests"/>
-<html:hidden property="objectCode" value="<%= (pageContext.findAttribute("objectCode")).toString() %>"/>
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="showDistributedTests"/>
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.objectCode" property="objectCode" value="<%= (pageContext.findAttribute("objectCode")).toString() %>"/>
 	
 	<logic:iterate id="infoInquiryStatisticsList" name="infoInquiryStatistics" type="net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoInquiryStatistics"/>
 	<bean:define id="testQuestion" name ="infoInquiryStatisticsList" property="infoStudentTestQuestion" type="net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoStudentTestQuestion"/>
@@ -112,7 +113,7 @@
 							</td><td>
 						<%}
 						}else{%> <%--QuestionType.STR ou QuestionType.NUM--%>
-							<html:text property="selected" value="" disabled="true"/>
+							<html:text bundle="HTMLALT_RESOURCES" altKey="text.selected" property="selected" value="" disabled="true"/>
 					<%  }
 					 } else {%>
 					<bean:write name="optionBody" property="value"/>
@@ -149,7 +150,7 @@
 	<br/>
 	<table align="center">
 	<tr>
-		<td><html:submit styleClass="inputbutton"><bean:message key="label.back"/></html:submit></td>
+		<td><html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton"><bean:message key="label.back"/></html:submit></td>
 	</tr>
 	</table>
 	</html:form>

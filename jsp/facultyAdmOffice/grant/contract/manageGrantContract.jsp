@@ -1,5 +1,5 @@
 <%@ page language="java" %>
-<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
+<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%><html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="dt"%>
@@ -26,19 +26,19 @@
     <table border="0" cellspacing="1" cellpadding="1">
     <%-- Table with contract description rows --%>
     <tr>
-        <td class="listClasses-header">
+        <th class="listClasses-header">
             <bean:message key="label.grant.contract.number"/>
-        </td>
-        <td class="listClasses-header">
+        </th>
+        <th class="listClasses-header">
             <bean:message key="label.grant.contract.orientationTeacher"/>
-        </td>
-        <td class="listClasses-header">
+        </th>
+        <th class="listClasses-header">
             <bean:message key="label.grant.contract.state"/>
-        </td>
-        <td class="listClasses-header">&nbsp;</td>
-        <td class="listClasses-header">&nbsp;</td>
-        <td class="listClasses-header">&nbsp;</td>
-        <td class="listClasses-header">&nbsp;</td>
+        </th>
+        <th class="listClasses-header">&nbsp;</th>
+        <th class="listClasses-header">&nbsp;</th>
+        <th class="listClasses-header">&nbsp;</th>
+        <th class="listClasses-header">&nbsp;</th>
     </tr>   
     <%-- Table with result of search --%>
     <logic:iterate id="infoGrantContract" name="infoGrantContractList">
@@ -108,10 +108,10 @@
 <br/><br/><br/>
 <center>
 <html:form action="/manageGrantOwner" style="display:inline">
-	<html:hidden property="method" value="prepareManageGrantOwnerForm"/>
-	<html:hidden property="page" value="1"/>
-	<html:hidden property="idInternal" value='<%= request.getAttribute("idInternal").toString() %>'/>
-	<html:submit styleClass="inputbutton" style="display:inline">
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="prepareManageGrantOwnerForm"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.idInternal" property="idInternal" value='<%= request.getAttribute("idInternal").toString() %>'/>
+	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton" style="display:inline">
 		<bean:message key="button.manageGrantOwner"/>
 	</html:submit>
 </html:form>		

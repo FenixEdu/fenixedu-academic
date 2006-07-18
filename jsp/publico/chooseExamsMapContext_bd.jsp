@@ -1,5 +1,6 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ page import="org.apache.struts.Globals" %>
@@ -7,25 +8,25 @@
 <span class="error"><html:errors/></span>
 
 <html:form action="/chooseExamsMapContextDA" method="GET">
-	<html:hidden property="<%=SessionConstants.EXECUTION_PERIOD_OID%>" value="<%= ""+request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID)%>" />	
+	<html:hidden alt="<%=SessionConstants.EXECUTION_PERIOD_OID%>" property="<%=SessionConstants.EXECUTION_PERIOD_OID%>" value="<%= ""+request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID)%>" />	
 
-	<html:hidden property="page" value="1"/>
-	<html:hidden property="method" value="choose"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="choose"/>
 
 <%--
 	<p style="font-size:12px">
-		<b style="color: #f00">Nota:</b> Para os exames das <b>Licenciaturas LERCI, LESIM e LEGI</b> <u>onde se lê 9:00 dever-se-á ler 10:00</u>, com excepção de <b>PE</b>
-		 e <b>CG</b> que se mantém às 9:00.
+		<b style="color: #f00">Nota:</b> Para os exames das <b>Licenciaturas LERCI, LESIM e LEGI</b> <u>onde se lï¿½ 9:00 dever-se-ï¿½ ler 10:00</u>, com excepï¿½ï¿½o de <b>PE</b>
+		 e <b>CG</b> que se mantï¿½m ï¿½s 9:00.
 	</p>
 	<br/>
 --%>
-	<p><strong><font color="#FF0000">Atenção&nbsp;-&nbsp;</font>Se pretende consultar informação relativa a disciplinas de 4º ou 5º em 2003/2004 ou 5ª em 2004/2005 do curso de Informática - Alameda, deve seleccionar o plano curricular "Licenciatura em Engenharia Informática e de Computadores - LEIC - Currículo Antigo"</strong></p>
+	<p><strong><font color="#FF0000">Atenï¿½ï¿½o&nbsp;-&nbsp;</font>Se pretende consultar informaï¿½ï¿½o relativa a disciplinas de 4ï¿½ ou 5ï¿½ em 2003/2004 ou 5ï¿½ em 2004/2005 do curso de Informï¿½tica - Alameda, deve seleccionar o plano curricular "Licenciatura em Engenharia Informï¿½tica e de Computadores - LEIC - Currï¿½culo Antigo"</strong></p>
 
 	<p class="infoop">
 		<bean:message key="message.public.degree.choose"/>
 	</p>
 	<p><bean:message key="property.context.degree"/>:
-	<html:select property="index" size="1">
+	<html:select bundle="HTMLALT_RESOURCES" altKey="select.index" property="index" size="1">
     	<html:options collection="degreeList" property="value" labelProperty="label"/>
     </html:select>
 	</p>
@@ -36,18 +37,18 @@
    	<bean:message key="property.context.curricular.year"/>:<br/>
 	<logic:present name="curricularYearList" >
 		<logic:iterate id="item" name="curricularYearList">
-			<html:multibox property="selectedCurricularYears">
+			<html:multibox bundle="HTMLALT_RESOURCES" altKey="multibox.selectedCurricularYears" property="selectedCurricularYears">
 				<bean:write name="item"/>
 			</html:multibox>
 			<bean:write name="item"/><bean:message key="label.exam.year"/><br/>
 		</logic:iterate>
-		<html:checkbox property="selectAllCurricularYears">
+		<html:checkbox bundle="HTMLALT_RESOURCES" altKey="checkbox.selectAllCurricularYears" property="selectAllCurricularYears">
 			<bean:message key="checkbox.show.all"/><br/>
 		</html:checkbox>
 	</logic:present>
 	<br/>
    <p>
-	   <html:submit value="Submeter" styleClass="inputbutton">
+	   <html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" value="Submeter" styleClass="inputbutton">
 	   		<bean:message key="label.next"/>
 	   </html:submit>
    </p>

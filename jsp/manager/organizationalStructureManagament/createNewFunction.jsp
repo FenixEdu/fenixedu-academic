@@ -5,6 +5,7 @@
 <%@ taglib uri="/WEB-INF/c.tld" prefix="c"%>
 
 <ft:tilesView definition="definition.manager.masterPage" attributeName="body-inline">
+	<f:loadBundle basename="resources/HtmlAltResources" var="htmlAltBundle"/>
 	
 	<f:loadBundle basename="resources/ManagerResources" var="bundle"/>
 		
@@ -27,13 +28,13 @@
 		
 			<h:outputText value="<b>#{bundle['title.FunctionName']}:</b>" escape="false"/>
 			<h:panelGroup>
-				<h:inputText id="name" required="true" size="30" value="#{organizationalStructureBackingBean.functionName}"/>
+				<h:inputText alt="#{htmlAltBundle['inputText.functionName']}" id="name" required="true" size="30" value="#{organizationalStructureBackingBean.functionName}"/>
 				<h:message for="name" styleClass="error"/>
 			</h:panelGroup>
 			
 			<h:outputText value="<b>#{bundle['message.initialDate']}:</b>" escape="false"/>
 			<h:panelGroup>
-				<h:inputText id="beginDate" required="true" size="10" value="#{organizationalStructureBackingBean.functionBeginDate}">
+				<h:inputText alt="#{htmlAltBundle['inputText.functionBeginDate']}" id="beginDate" required="true" size="10" value="#{organizationalStructureBackingBean.functionBeginDate}">
 					<fc:dateValidator format="dd/MM/yyyy" strict="true"/>
 				</h:inputText>
 				<h:outputText value="#{bundle['date.format']}"/>
@@ -42,7 +43,7 @@
 			
 			<h:outputText value="<b>#{bundle['message.endDate']}:</b>" escape="false"/>
 			<h:panelGroup>
-				<h:inputText id="endDate" size="10" value="#{organizationalStructureBackingBean.functionEndDate}"/>
+				<h:inputText alt="#{htmlAltBundle['inputText.functionEndDate']}" id="endDate" size="10" value="#{organizationalStructureBackingBean.functionEndDate}"/>
 				<h:outputText value="#{bundle['date.format']}"/>				
 			</h:panelGroup>
 		
@@ -55,8 +56,8 @@
 		
 		<h:outputText value="<br/>" escape="false" />	
 		<h:panelGrid columns="2">
-			<h:commandButton action="#{organizationalStructureBackingBean.createFunction}" value="#{bundle['link.new.function2']}" styleClass="inputbutton"/>				
-			<h:commandButton action="backToUnitDetails" immediate="true" value="#{bundle['label.return']}" styleClass="inputbutton"/>								
+			<h:commandButton alt="#{htmlAltBundle['commandButton.function2']}" action="#{organizationalStructureBackingBean.createFunction}" value="#{bundle['link.new.function2']}" styleClass="inputbutton"/>				
+			<h:commandButton alt="#{htmlAltBundle['commandButton.return']}" action="backToUnitDetails" immediate="true" value="#{bundle['label.return']}" styleClass="inputbutton"/>								
 		</h:panelGrid>		
 				
 	</h:form>

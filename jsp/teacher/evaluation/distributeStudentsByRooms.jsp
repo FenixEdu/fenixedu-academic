@@ -4,6 +4,7 @@
 <%@ taglib uri="/WEB-INF/jsf_fenix_components.tld" prefix="fc"%>
 
 <ft:tilesView definition="df.teacher.evaluation-management" attributeName="body-inline">
+	<f:loadBundle basename="resources/HtmlAltResources" var="htmlAltBundle"/>
 
 <style>
 .boldFontClass { 
@@ -61,13 +62,13 @@
 			<h:outputText styleClass="error" rendered="#{!empty evaluationManagementBackingBean.errorMessage}"
 					value="#{bundle[evaluationManagementBackingBean.errorMessage]}<br/>" escape="false" />		
 			
-			<h:commandButton action="#{evaluationManagementBackingBean.distributeStudentsByRooms}" value="#{bundle['label.submit']}" styleClass="inputButton" />	
+			<h:commandButton alt="#{htmlAltBundle['commandButton.submit']}" action="#{evaluationManagementBackingBean.distributeStudentsByRooms}" value="#{bundle['label.submit']}" styleClass="inputButton" />	
 		</h:panelGroup>
 
 		<h:panelGroup rendered="#{empty evaluationManagementBackingBean.evaluationRooms}">
 			<h:outputText value="<i>#{bundle['label.no.room.associated']}</i><br/><br/>" escape="false"/>
 		</h:panelGroup>
 
-		<h:commandButton action="#{evaluationManagementBackingBean.evaluation.class.getSimpleName}" value="#{bundle['link.goBack']}" styleClass="inputButton" />		
+		<h:commandButton alt="#{htmlAltBundle['commandButton.goBack']}" action="#{evaluationManagementBackingBean.evaluation.class.getSimpleName}" value="#{bundle['link.goBack']}" styleClass="inputButton" />		
 	</h:form>
 </ft:tilesView>		

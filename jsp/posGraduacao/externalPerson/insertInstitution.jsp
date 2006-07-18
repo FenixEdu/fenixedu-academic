@@ -1,5 +1,6 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 
@@ -10,14 +11,14 @@
 <br/>
 
 <html:form action="/insertInstitution.do?method=insert" >
-	<html:hidden property="page" value="1" />
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1" />
 	
 	<table>
 		<tr>
 			<td>
 				<!-- Name -->
 				<bean:message key="label.masterDegree.administrativeOffice.institutionName"/>:
-				<html:text property="name" />	
+				<html:text bundle="HTMLALT_RESOURCES" altKey="text.name" property="name" />	
 			</td>
 		</tr>
 		<tr>
@@ -26,7 +27,7 @@
 		<tr>
 			<td>
 				<!-- Submit button -->
-				<html:submit styleClass="inputbuttonSmall">
+				<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbuttonSmall">
 					<bean:message key="button.submit.masterDegree.externalPerson.institution.insertInstitution"/>
 				</html:submit>	
 			</td>

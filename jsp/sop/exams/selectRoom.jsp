@@ -1,6 +1,6 @@
 <%@ page language="java" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
-<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %><html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 
@@ -32,15 +32,15 @@ function cleanSelect() {
 <h2>Seleccione as Salas a Consultar</h2>
 
 <span class="error"><html:errors/></span>
-<html:hidden property="method" value="show"/> 
-<html:hidden property="page" value="1"/> 
-<html:hidden property="executionPeriodOID"/> 
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="show"/> 
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/> 
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.executionPeriodOID" property="executionPeriodOID"/> 
 	
 <logic:present name="<%=SessionConstants.ROOMS_LIST%>">		
 
 	<bean:define id="rooms" name="<%=SessionConstants.ROOMS_LIST%>"/>
 
-	<html:multibox property="roomsId" onclick="invertSelect()">
+	<html:multibox bundle="HTMLALT_RESOURCES" altKey="multibox.roomsId" property="roomsId" onclick="invertSelect()">
 	     0 </html:multibox>
 	Seleccionar todas 
 		
@@ -58,7 +58,7 @@ function cleanSelect() {
 		<logic:iterate id ="infoRoom" name="rooms">
 			<tr>
 				<td>
-					<html:multibox property="roomsId" onclick="cleanSelect()">
+					<html:multibox bundle="HTMLALT_RESOURCES" altKey="multibox.roomsId" property="roomsId" onclick="cleanSelect()">
 						<bean:write name="infoRoom" property="idInternal"/>
 					</html:multibox>
 				</td>
@@ -69,7 +69,7 @@ function cleanSelect() {
 					<bean:define id="tipo" name="infoRoom" property="tipo"/>
 					<logic:equal name="tipo" value="A">Anfiteatro</logic:equal>
 					<logic:equal name="tipo" value="P">Plana</logic:equal>
-					<logic:equal name="tipo" value="L">Laboratório</logic:equal>
+					<logic:equal name="tipo" value="L">Laboratï¿½rio</logic:equal>
 				</td>
 				<td>
 					<bean:write name="infoRoom" property="edificio"/>
@@ -88,15 +88,15 @@ function cleanSelect() {
 	</table>
 </logic:present>
 <logic:notPresent name="<%=SessionConstants.ROOMS_LIST%>">
-	Não existem salas com as caracteristicas especificadas.<br/>
+	Nï¿½o existem salas com as caracteristicas especificadas.<br/>
 </logic:notPresent>
 <br/>
-	<html:submit styleClass="inputbutton" onclick="cleanSelect()">
+	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton" onclick="cleanSelect()">
 		<bean:message key="lable.choose"/>
 	</html:submit>
 	
 <%--
-	<html:cancel value="Cancelar" styleClass="inputbutton">
+	<html:cancel bundle="HTMLALT_RESOURCES" altKey="cancel.cancel" value="Cancelar" styleClass="inputbutton">
 		<bean:message key="label.cancel"/>
 	</html:cancel>
 --%>

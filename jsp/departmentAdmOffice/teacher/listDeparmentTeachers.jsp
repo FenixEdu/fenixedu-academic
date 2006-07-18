@@ -1,4 +1,5 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-tiles.tld" prefix="tiles" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
@@ -15,33 +16,33 @@
 <br />
 <bean:parameter id="executionPeriodId" name="executionPeriodId" />
 <html:form action="/listDepartmentTeachers">
-	<html:hidden property="idInternal"/>
-	<html:hidden property="sortBy" value=""/>
-	<html:hidden property="method" value="sortBy"/>
-	<html:hidden property="executionPeriodId"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.idInternal" property="idInternal"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.sortBy" property="sortBy" value=""/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="sortBy"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.executionPeriodId" property="executionPeriodId"/>
 	<table width="100%">
 		<tr>
-			<td class="listClasses-header" width="10%">
+			<th class="listClasses-header" width="10%">
 				<html:link href="javascript:void(0)" onclick="document.forms[0].sortBy.value='teacherNumber'; document.forms[0].submit();return false;">			
 					<bean:message key="label.departmentTeachersList.teacherNumber" />
 				</html:link>
-			</td>
-			<td class="listClasses-header" style="text-align:left">
+			</th>
+			<th class="listClasses-header" style="text-align:left">
 				<html:link href="javascript:void(0)" onclick="document.forms[0].sortBy.value='teacherName';document.forms[0].submit();return false;">			
 					<bean:message key="label.departmentTeachersList.teacherName" />
 				</html:link>
-			</td>
-			<td class="listClasses-header" width="10%">
+			</th>
+			<th class="listClasses-header" width="10%">
 				<html:link href="javascript:void(0)" onclick="document.forms[0].sortBy.value='category.code';document.forms[0].submit();return false;">
 					<bean:message key="label.departmentTeachersList.teacherCategory" />
 				</html:link>
-			</td>
-			<td class="listClasses-header">
+			</th>
+			<th class="listClasses-header">
 				<bean:message key="label.credits.resume" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>
-			</td>
-			<td class="listClasses-header" width="10%">
+			</th>
+			<th class="listClasses-header" width="10%">
 				<bean:message key="label.departmentTeachersList.teacherCreditsSheet.details" />
-			</td>
+			</th>
 			
 		</tr>
 		<logic:iterate id="infoTeacherCreditsDetails" name="infoTeacherList">

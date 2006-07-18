@@ -1,5 +1,6 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 		
@@ -11,14 +12,14 @@
 <span class="error"><html:errors /></span>
 <br>
 <html:form action="/competenceCourseManagement">
-	<html:hidden property="method" value="deleteCompetenceCourses"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="deleteCompetenceCourses"/>
 	<table>
 		<tr>
 			<td>
 				<bean:message bundle="MANAGER_RESOURCES" key="label.manager.department"/>
 			</td>
 			<td>
-				<html:select property="departmentID" onchange="this.form.method.value='showDepartmentCompetenceCourses';this.form.submit();">
+				<html:select bundle="HTMLALT_RESOURCES" altKey="select.departmentID" property="departmentID" onchange="this.form.method.value='showDepartmentCompetenceCourses';this.form.submit();">
 					<html:option value="null">&nbsp;</html:option>
 					<html:options collection="departments" property="idInternal" labelProperty="realName"/>
     			</html:select>
@@ -30,12 +31,12 @@
 			
 			<table width="100%" cellpadding="0" border="0">
 				<tr>
-					<td class="listClasses-header">
-					</td>
-					<td class="listClasses-header"><bean:message bundle="MANAGER_RESOURCES" key="label.manager.code" />
-					</td>
-					<td class="listClasses-header"><bean:message bundle="MANAGER_RESOURCES" key="label.manager.competence.course" />
-					</td>
+					<th class="listClasses-header">
+					</th>
+					<th class="listClasses-header"><bean:message bundle="MANAGER_RESOURCES" key="label.manager.code" />
+					</th>
+					<th class="listClasses-header"><bean:message bundle="MANAGER_RESOURCES" key="label.manager.competence.course" />
+					</th>
 				</tr>
 					
 					 
@@ -43,7 +44,7 @@
 					<tr>	
 						<td class="listClasses">
 						
-						<html:multibox property="competenceCoursesIds">
+						<html:multibox bundle="HTMLALT_RESOURCES" altKey="multibox.competenceCoursesIds" property="competenceCoursesIds">
 							<bean:write name="competenceCourse" property="idInternal"/>
 						</html:multibox>
 						</td>	

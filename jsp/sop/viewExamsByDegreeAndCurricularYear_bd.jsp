@@ -5,6 +5,7 @@
 <%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourseAndExams" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
         <h2><bean:message key="title.exams.list"/></h2>
 	   	<table width="100%" border="0" cellpadding="0" cellspacing="0">
@@ -29,10 +30,10 @@
 <logic:present name="<%= SessionConstants.INFO_EXAMS_KEY %>" scope="request">
 	<table width="100%">
 		<tr>
-			<td class="listClasses-header"><bean:message key="property.course"/></td>
-			<td class="listClasses-header"><bean:message key="property.number.students.attending.course"/></td>
-			<td class="listClasses-header"><bean:message key="property.exam.1stExam"/></td>
-			<td class="listClasses-header"><bean:message key="property.exam.2stExam"/></td>
+			<th class="listClasses-header"><bean:message key="property.course"/></th>
+			<th class="listClasses-header"><bean:message key="property.number.students.attending.course"/></th>
+			<th class="listClasses-header"><bean:message key="property.exam.1stExam"/></th>
+			<th class="listClasses-header"><bean:message key="property.exam.2stExam"/></th>
 		</tr>
 			<logic:iterate id="infoExecutionCourseAndExams" name="<%= SessionConstants.INFO_EXAMS_KEY %>" scope="request">
 		<tr>

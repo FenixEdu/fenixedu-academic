@@ -1,6 +1,7 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 
 <html>
@@ -22,7 +23,7 @@
 			              <td>
 			                <table border="0" width="100%" height="100%">
 			                  <tr valign="top" align="left"> 
-			                    <td>&nbsp;<b>INSTITUTO SUPERIOR TÉCNICO</b><br>
+			                    <td>&nbsp;<b>INSTITUTO SUPERIOR Tï¿½CNICO</b><br>
 				                    &nbsp;<b>Curso: <bean:write name="infoExecutionDegree" property="infoDegreeCurricularPlan.infoDegree.nome"/><br>
 				                    &nbsp;<b>Ano Lectivo: <bean:write name="infoExecutionDegree" property="infoExecutionYear.year"/><br>
 			                      <hr size="1">
@@ -176,7 +177,7 @@
 	            </div>
 	            <hr size="1" color="#000000" width="100%">
 	            <div align="center">
-	              <font size="2"> Av. Rovisco Pais, 1 1049-001 Lisboa Codex Telefone: 218417336 Fax: 218419531 Contribuinte Nº: 501507930</font>
+	              <font size="2"> Av. Rovisco Pais, 1 1049-001 Lisboa Codex Telefone: 218417336 Fax: 218419531 Contribuinte Nï¿½: 501507930</font>
 	            </div>
 	          </td>
 	          </tr>

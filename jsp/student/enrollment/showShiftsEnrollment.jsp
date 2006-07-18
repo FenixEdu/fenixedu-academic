@@ -1,6 +1,6 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
-<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %><html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="dt" %>
 
@@ -128,10 +128,10 @@ width: 98%;
 		<table class="special">
 			<tr>
 				<th><bean:message key="label.curricular.course.name"/></th>
-				<th title="Teórica"><bean:message key="label.shiftType.theoric"/></th>
-				<th title="Prática"><bean:message key="label.shiftType.pratic"/></th>
-				<th title="Laboratório"><bean:message key="label.shiftType.laboratory"/></th>
-				<th title="Teórico-prática"><bean:message key="label.shiftType.theoricoPratic"/></th>
+				<th title="Teï¿½rica"><bean:message key="label.shiftType.theoric"/></th>
+				<th title="Prï¿½tica"><bean:message key="label.shiftType.pratic"/></th>
+				<th title="Laboratï¿½rio"><bean:message key="label.shiftType.laboratory"/></th>
+				<th title="Teï¿½rico-prï¿½tica"><bean:message key="label.shiftType.theoricoPratic"/></th>
 			</tr>			
 			<logic:iterate id="infoNewShiftEnrollment" name="infoEnrolledNewShiftEnrollmentList" 
 					type="net.sourceforge.fenixedu.dataTransferObject.InfoNewShiftEnrollment">
@@ -209,10 +209,10 @@ width: 98%;
 		<table class="special">
 			<tr>
 				<th><bean:message key="label.curricular.course.name"/></h>
-				<th title="Teórica"><bean:message key="label.shiftType.theoric"/></th>
-				<th title="Prática"><bean:message key="label.shiftType.pratic"/></th>
-				<th title="Laboratório"><bean:message key="label.shiftType.laboratory"/></th>
-				<th title="Teórico-prática"><bean:message key="label.shiftType.theoricoPratic"/></th>
+				<th title="Teï¿½rica"><bean:message key="label.shiftType.theoric"/></th>
+				<th title="Prï¿½tica"><bean:message key="label.shiftType.pratic"/></th>
+				<th title="Laboratï¿½rio"><bean:message key="label.shiftType.laboratory"/></th>
+				<th title="Teï¿½rico-prï¿½tica"><bean:message key="label.shiftType.theoricoPratic"/></th>
 			</tr>			
 			<logic:iterate id="infoNewShiftEnrollment" name="infoNotEnrolledNewShiftEnrollmentList" 
 					type="net.sourceforge.fenixedu.dataTransferObject.InfoNewShiftEnrollment">

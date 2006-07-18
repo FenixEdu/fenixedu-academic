@@ -1,4 +1,5 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 
 Hello World :o0)
@@ -8,8 +9,8 @@ Hello World :o0)
 <br />
 
 <html:form action="/someStrutsPage">
-	<html:hidden property="method" value="showExecutionPeriods" />
-	<html:hidden property="page" value="1" />
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="showExecutionPeriods" />
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1" />
 
 		<html:submit>
 			List Execution Periods

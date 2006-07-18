@@ -6,6 +6,7 @@
 <%@ taglib uri="/WEB-INF/fmt.tld" prefix="fmt"%>
 
 <ft:tilesView definition="definition.sop.examsPage" attributeName="body-inline">
+	<f:loadBundle basename="resources/HtmlAltResources" var="htmlAltBundle"/>
 
 <style>@import url(<%= request.getContextPath() %>/CSS/dotist_calendars.css);</style>
 
@@ -97,8 +98,8 @@ table.executionCoursesWithoutWrittenEvaluations td {
 		<h:inputHidden value="#{SOPEvaluationManagementBackingBean.selectedBegin}"/>
 		<h:inputHidden value="#{SOPEvaluationManagementBackingBean.selectedEnd}"/>
 		<fc:viewState binding="#{SOPEvaluationManagementBackingBean.viewState}" />
-		<h:outputText escape="false" value="<input id='executionPeriodOID' name='executionPeriodOID' type='hidden' value='#{SOPEvaluationManagementBackingBean.executionPeriodOID}'/>"/>
-		<h:outputText escape="false" value="<input id='curricularYearIDsParameterString' name='curricularYearIDsParameterString' type='hidden' value='#{SOPEvaluationManagementBackingBean.curricularYearIDsParameterString}'/>"/>
+		<h:outputText escape="false" value="<input alt='input.executionPeriodOID' id='executionPeriodOID' name='executionPeriodOID' type='hidden' value='#{SOPEvaluationManagementBackingBean.executionPeriodOID}'/>"/>
+		<h:outputText escape="false" value="<input alt='input.curricularYearIDsParameterString' id='curricularYearIDsParameterString' name='curricularYearIDsParameterString' type='hidden' value='#{SOPEvaluationManagementBackingBean.curricularYearIDsParameterString}'/>"/>
 
 		<h:panelGrid columns="2" styleClass="infotable">
 			<h:outputText value="<b><i>#{bundleSOP['title.selected.degree']}:</b></i>" escape="false"/>

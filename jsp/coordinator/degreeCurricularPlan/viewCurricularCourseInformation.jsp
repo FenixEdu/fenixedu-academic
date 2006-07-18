@@ -1,5 +1,5 @@
 <%@ page language="java" %>
-<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %><html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/taglibs-string.tld" prefix="str" %>
@@ -218,36 +218,36 @@
 				<logic:notEmpty name="infoCurriculum" property="infoCurricularCourse.infoScopes">
 					<table width="100%" cellpadding="0" border="0">
 						<tr>
-							<td class="listClasses-header" rowspan="2"><bean:message key="label.manager.curricularCourseScope.curricularYear" />
-							</td>
-							<td class="listClasses-header" rowspan="2"><bean:message key="label.manager.curricularCourseScope.curricularSemester" />
-							</td>
-							<td class="listClasses-header" colspan="4"><bean:message key="label.coordinator.degreeCurricularPlan.scope.numberHours" />
-							</td>
-							<td class="listClasses-header" rowspan="2"><bean:message key="message.manager.curricular.course.maxIncrementNac" />
-							</td>
-							<td class="listClasses-header" rowspan="2"><bean:message key="message.manager.curricular.course.minIncrementNac" />
-							</td>
-							<td class="listClasses-header" rowspan="2"><bean:message key="message.manager.curricular.course.credits" />
-							</td>
-							<td class="listClasses-header" rowspan="2"><bean:message key="message.manager.curricular.course.ectsCredits" />
-							</td>
-							<td class="listClasses-header" rowspan="2"><bean:message key="message.manager.curricular.course.weight" />
-							</td>
-							<td class="listClasses-header" rowspan="2"><bean:message key="label.manager.curricularCourseScope.branch" />
-							</td>
-							<td class="listClasses-header" rowspan="2"><bean:message key="label.manager.curricularCourseScope.beginDate" />
-							</td>
+							<th class="listClasses-header" rowspan="2"><bean:message key="label.manager.curricularCourseScope.curricularYear" />
+							</th>
+							<th class="listClasses-header" rowspan="2"><bean:message key="label.manager.curricularCourseScope.curricularSemester" />
+							</th>
+							<th class="listClasses-header" colspan="4"><bean:message key="label.coordinator.degreeCurricularPlan.scope.numberHours" />
+							</th>
+							<th class="listClasses-header" rowspan="2"><bean:message key="message.manager.curricular.course.maxIncrementNac" />
+							</th>
+							<th class="listClasses-header" rowspan="2"><bean:message key="message.manager.curricular.course.minIncrementNac" />
+							</th>
+							<th class="listClasses-header" rowspan="2"><bean:message key="message.manager.curricular.course.credits" />
+							</th>
+							<th class="listClasses-header" rowspan="2"><bean:message key="message.manager.curricular.course.ectsCredits" />
+							</th>
+							<th class="listClasses-header" rowspan="2"><bean:message key="message.manager.curricular.course.weight" />
+							</th>
+							<th class="listClasses-header" rowspan="2"><bean:message key="label.manager.curricularCourseScope.branch" />
+							</th>
+							<th class="listClasses-header" rowspan="2"><bean:message key="label.manager.curricularCourseScope.beginDate" />
+							</th>
 						</tr>
 						<tr>
-							<td class="listClasses-header"><bean:message key="label.coordinator.degreeCurricularPlan.scope.theoretical" />
-							</td>
-							<td class="listClasses-header"><bean:message key="label.coordinator.degreeCurricularPlan.scope.practical" />
-							</td>
-							<td class="listClasses-header"><bean:message key="label.coordinator.degreeCurricularPlan.scope.theoreticalPractical" />
-							</td>
-							<td class="listClasses-header"><bean:message key="label.coordinator.degreeCurricularPlan.scope.laboratorial" />
-							</td>						
+							<th class="listClasses-header"><bean:message key="label.coordinator.degreeCurricularPlan.scope.theoretical" />
+							</th>
+							<th class="listClasses-header"><bean:message key="label.coordinator.degreeCurricularPlan.scope.practical" />
+							</th>
+							<th class="listClasses-header"><bean:message key="label.coordinator.degreeCurricularPlan.scope.theoreticalPractical" />
+							</th>
+							<th class="listClasses-header"><bean:message key="label.coordinator.degreeCurricularPlan.scope.laboratorial" />
+							</th>						
 						</tr>
 						<logic:iterate id="curricularCourseScope" name="infoCurriculum" property="infoCurricularCourse.infoScopes">
 							<bean:define id="infoBranch" name="curricularCourseScope" property="infoBranch"/>
@@ -326,14 +326,14 @@
 				<logic:notEmpty name="infoCurriculum" property="infoCurricularCourse.infoAssociatedExecutionCourses">
 					<table width="100%" cellpadding="0" border="0">
 						<tr>
-							<td class="listClasses-header"><bean:message key="label.manager.executionCourse.name" bundle="MANAGER_RESOURCES" />
-							</td>
-							<td class="listClasses-header"><bean:message key="label.manager.executionCourse.code" bundle="MANAGER_RESOURCES" />
-							</td>
-							<td class="listClasses-header"><bean:message key="label.manager.executionCourse.executionPeriod" bundle="MANAGER_RESOURCES" />
-							</td>
-							<td class="listClasses-header"><bean:message key="label.manager.executionCourse.site" bundle="MANAGER_RESOURCES" />
-							</td>
+							<th class="listClasses-header"><bean:message key="label.manager.executionCourse.name" bundle="MANAGER_RESOURCES" />
+							</th>
+							<th class="listClasses-header"><bean:message key="label.manager.executionCourse.code" bundle="MANAGER_RESOURCES" />
+							</th>
+							<th class="listClasses-header"><bean:message key="label.manager.executionCourse.executionPeriod" bundle="MANAGER_RESOURCES" />
+							</th>
+							<th class="listClasses-header"><bean:message key="label.manager.executionCourse.site" bundle="MANAGER_RESOURCES" />
+							</th>
 						</tr>
 			
 						<logic:iterate id="executionCourse" name="infoCurriculum" property="infoCurricularCourse.infoAssociatedExecutionCourses">

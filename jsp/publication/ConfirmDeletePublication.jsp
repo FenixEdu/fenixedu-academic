@@ -1,5 +1,5 @@
 <%@ page language="java" %>
-<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
+<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%><html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="dt"%>
@@ -61,24 +61,24 @@
 					<html:form action="/deletePublication">
 						<%--
 						<bean:define id="id1" name="infoPublication" property="idInternal"/>
-						<html:hidden property="idInternal" value="<%= pageContext.findAttribute("id1").toString() %>" />
+						<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.idInternal" property="idInternal" value="<%= pageContext.findAttribute("id1").toString() %>" />
 						--%>
 						
 						<%--
 						<bean:define id="idInternal" name="infoPublication" property="idInternal"/>
-						<html:hidden property="idInternal" />
+						<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.idInternal" property="idInternal" />
 						--%>
 			
 						<bean:define id="idInternal" name="infoPublication" property="idInternal"/>						
-						<html:hidden property="idInternal" value="<%= idInternal.toString() %>" />
+						<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.idInternal" property="idInternal" value="<%= idInternal.toString() %>" />
 			
-						<html:hidden property="method" />
+						<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" />
 						
-						<html:submit styleClass="inputbutton" onclick='<%= "this.form.method.value='delete' " %>'>
+						<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton" onclick='<%= "this.form.method.value='delete' " %>'>
 							<bean:message key="button.confirm"/>	
 						</html:submit>
 
-						<html:submit styleClass="inputbutton" onclick='<%= "this.form.method.value='cancel' " %>'>
+						<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton" onclick='<%= "this.form.method.value='cancel' " %>'>
 							<bean:message key="button.cancel"/>
 						</html:submit>
 

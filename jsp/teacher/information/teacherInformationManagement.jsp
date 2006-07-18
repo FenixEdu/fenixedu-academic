@@ -1,5 +1,6 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="dt"%>
@@ -11,19 +12,19 @@
 			<html:errors/>
 		</span>
 		</logic:messagesPresent>
-		<html:hidden property="teacherId"/>
-		<html:hidden property="weeklyOcupationId"/>
-		<html:hidden property="serviceProviderRegimeId"/>
-		<html:hidden property="degreeOrientationId"/>
-		<html:hidden property="masterOrientationId"/>
-		<html:hidden property="phdOrientationId"/>
-		<html:hidden property="comunicationPublicationsNumberId"/>
-		<html:hidden property="magArticlePublicationsNumberId"/>
-		<html:hidden property="authorBookPublicationsNumberId"/>
-		<html:hidden property="editorBookPublicationsNumberId"/>
-		<html:hidden property="articlesChaptersPublicationsNumberId"/>
-		<html:hidden property="method" value="edit"/>
-		<html:hidden property="page" value="1"/>
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.teacherId" property="teacherId"/>
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.weeklyOcupationId" property="weeklyOcupationId"/>
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.serviceProviderRegimeId" property="serviceProviderRegimeId"/>
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.degreeOrientationId" property="degreeOrientationId"/>
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.masterOrientationId" property="masterOrientationId"/>
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.phdOrientationId" property="phdOrientationId"/>
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.comunicationPublicationsNumberId" property="comunicationPublicationsNumberId"/>
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.magArticlePublicationsNumberId" property="magArticlePublicationsNumberId"/>
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.authorBookPublicationsNumberId" property="authorBookPublicationsNumberId"/>
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.editorBookPublicationsNumberId" property="editorBookPublicationsNumberId"/>
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.articlesChaptersPublicationsNumberId" property="articlesChaptersPublicationsNumberId"/>
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="edit"/>
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
 		<table class="listClasses" width="100%">
 			<tr>
 				<td>
@@ -55,11 +56,11 @@
 		<logic:notEmpty name="infoSiteTeacherInformation" property="infoQualifications">
 			<table width="100%" border="0" cellspacing="1" style="margin-top:10px">	
 				<tr>
-					<td class="listClasses-header"><bean:message key="message.teacherInformation.year" bundle="GEP_RESOURCES" /></td>
-					<td class="listClasses-header"><bean:message key="message.teacherInformation.school" bundle="GEP_RESOURCES"/></td>
-					<td class="listClasses-header"><bean:message key="message.teacherInformation.qualificationsDegree" bundle="GEP_RESOURCES"/></td>
-					<td class="listClasses-header"><bean:message key="message.teacherInformation.qualificationsTitle" bundle="GEP_RESOURCES"/></td>
-					<td class="listClasses-header"><bean:message key="message.teacherInformation.qualificationsMark" bundle="GEP_RESOURCES"/></td>
+					<th class="listClasses-header"><bean:message key="message.teacherInformation.year" bundle="GEP_RESOURCES" /></th>
+					<th class="listClasses-header"><bean:message key="message.teacherInformation.school" bundle="GEP_RESOURCES"/></th>
+					<th class="listClasses-header"><bean:message key="message.teacherInformation.qualificationsDegree" bundle="GEP_RESOURCES"/></th>
+					<th class="listClasses-header"><bean:message key="message.teacherInformation.qualificationsTitle" bundle="GEP_RESOURCES"/></th>
+					<th class="listClasses-header"><bean:message key="message.teacherInformation.qualificationsMark" bundle="GEP_RESOURCES"/></th>
 				</tr>
 				<logic:iterate id="infoQualification" name="infoSiteTeacherInformation" property="infoQualifications">
 					<tr>
@@ -115,9 +116,9 @@
 		<logic:notEmpty name="infoSiteTeacherInformation" property="infoTeachingCareers">
 			<table width="100%" border="0" cellspacing="1" style="margin-top:10px">	
 				<tr>
-					<td class="listClasses-header"><bean:message key="message.teacherInformation.years" bundle="GEP_RESOURCES" /></td>
-					<td class="listClasses-header"><bean:message key="message.teacherInformation.careerCategory" bundle="GEP_RESOURCES" /></td>
-					<td class="listClasses-header"><bean:message key="message.teacherInformation.careerPositions" bundle="GEP_RESOURCES" /></td>
+					<th class="listClasses-header"><bean:message key="message.teacherInformation.years" bundle="GEP_RESOURCES" /></th>
+					<th class="listClasses-header"><bean:message key="message.teacherInformation.careerCategory" bundle="GEP_RESOURCES" /></th>
+					<th class="listClasses-header"><bean:message key="message.teacherInformation.careerPositions" bundle="GEP_RESOURCES" /></th>
 				</tr>
 				<logic:iterate id="infoTeachingCareer" name="infoSiteTeacherInformation" property="infoTeachingCareers">
 				<tr>
@@ -151,9 +152,9 @@
 		<logic:notEmpty name="infoSiteTeacherInformation" property="infoProfessionalCareers">
 			<table width="100%" border="0" cellspacing="1" style="margin-top:10px">	
 				<tr>
-					<td class="listClasses-header"><bean:message key="message.teacherInformation.years" bundle="GEP_RESOURCES"/></td>
-					<td class="listClasses-header"><bean:message key="message.teacherInformation.entity" bundle="GEP_RESOURCES"/></td>
-					<td class="listClasses-header"><bean:message key="message.teacherInformation.functions" bundle="GEP_RESOURCES"/></td>
+					<th class="listClasses-header"><bean:message key="message.teacherInformation.years" bundle="GEP_RESOURCES"/></th>
+					<th class="listClasses-header"><bean:message key="message.teacherInformation.entity" bundle="GEP_RESOURCES"/></th>
+					<th class="listClasses-header"><bean:message key="message.teacherInformation.functions" bundle="GEP_RESOURCES"/></th>
 				</tr>
 				<logic:iterate id="infoProfessionalCareer" 
 							   name="infoSiteTeacherInformation" 
@@ -258,34 +259,34 @@
 			<bean:message key="message.teacherInformation.numberOfPublications" /></p>
 		<table width="100%" border="0" cellspacing="1" style="margin-top:10px">
 			<tr>
-				<td class="listClasses-header"><bean:message key="message.teacherInformation.number" /></td>
-				<td class="listClasses-header"><bean:message key="message.teacherInformation.national" /></td>
-				<td class="listClasses-header"><bean:message key="message.teacherInformation.international" /></td>
+				<th class="listClasses-header"><bean:message key="message.teacherInformation.number" /></th>
+				<th class="listClasses-header"><bean:message key="message.teacherInformation.national" /></th>
+				<th class="listClasses-header"><bean:message key="message.teacherInformation.international" /></th>
 			</tr>
 			<tr>
 				<td class="listClasses"><bean:message key="message.teacherInformation.comunicationsPublications" /></td>
-				<td class="listClasses"><html:text property="comunicationNational" /></td>
-				<td class="listClasses"><html:text property="comunicationInternational" /></td>
+				<td class="listClasses"><html:text bundle="HTMLALT_RESOURCES" altKey="text.comunicationNational" property="comunicationNational" /></td>
+				<td class="listClasses"><html:text bundle="HTMLALT_RESOURCES" altKey="text.comunicationInternational" property="comunicationInternational" /></td>
 			</tr>
 			<tr>
 				<td class="listClasses"><bean:message key="message.teacherInformation.articlesPublications" /></td>
-				<td class="listClasses"><html:text property="magArticleNational" /></td>
-				<td class="listClasses"><html:text property="magArticleInternational" /></td>
+				<td class="listClasses"><html:text bundle="HTMLALT_RESOURCES" altKey="text.magArticleNational" property="magArticleNational" /></td>
+				<td class="listClasses"><html:text bundle="HTMLALT_RESOURCES" altKey="text.magArticleInternational" property="magArticleInternational" /></td>
 			</tr>
 			<tr>
 				<td class="listClasses"><bean:message key="message.teacherInformation.bookAuthorPublications" /></td>
-				<td class="listClasses"><html:text property="authorBookNational" /></td>
-				<td class="listClasses"><html:text property="authorBookInternational" /></td>
+				<td class="listClasses"><html:text bundle="HTMLALT_RESOURCES" altKey="text.authorBookNational" property="authorBookNational" /></td>
+				<td class="listClasses"><html:text bundle="HTMLALT_RESOURCES" altKey="text.authorBookInternational" property="authorBookInternational" /></td>
 			</tr>
 			<tr>
 				<td class="listClasses"><bean:message key="message.teacherInformation.bookEditorPublications" /></td>
-				<td class="listClasses"><html:text property="editorBookNational" /></td>
-				<td class="listClasses"><html:text property="editorBookInternational" /></td>
+				<td class="listClasses"><html:text bundle="HTMLALT_RESOURCES" altKey="text.editorBookNational" property="editorBookNational" /></td>
+				<td class="listClasses"><html:text bundle="HTMLALT_RESOURCES" altKey="text.editorBookInternational" property="editorBookInternational" /></td>
 			</tr>
 			<tr>
 				<td class="listClasses"><bean:message key="message.teacherInformation.articlesAndChaptersPublications" /></td>
-				<td class="listClasses"><html:text property="articlesChaptersNational" /></td>
-				<td class="listClasses"><html:text property="articlesChaptersInternational" /></td>
+				<td class="listClasses"><html:text bundle="HTMLALT_RESOURCES" altKey="text.articlesChaptersNational" property="articlesChaptersNational" /></td>
+				<td class="listClasses"><html:text bundle="HTMLALT_RESOURCES" altKey="text.articlesChaptersInternational" property="articlesChaptersInternational" /></td>
 			</tr>
 		</table>
 		<br />
@@ -297,7 +298,7 @@
 		<table width="100%" border="1" cellspacing="1">	
 			<logic:iterate id="providerRegimeType" name="providerRegimeTypeList" scope="request">
 				<tr>
-					<td><html:radio property="serviceProviderRegimeTypeName"
+					<td><html:radio bundle="HTMLALT_RESOURCES" altKey="radio.serviceProviderRegimeTypeName" property="serviceProviderRegimeTypeName"
 					  		  idName="providerRegimeType"
 							  value="name"/>
 					</td>
@@ -314,12 +315,12 @@
 		<logic:notEmpty name="infoSiteTeacherInformation" property="infoLecturingExecutionCourses">
 			<table width="100%" border="0" cellspacing="1" style="margin-top:10px">
 				<tr>
-					<td class="listClasses-header"><bean:message key="message.teacherInformation.semester" /></td>
-					<td class="listClasses-header"><bean:message key="message.teacherInformation.lectureCourse" /></td>
-					<td class="listClasses-header"><bean:message key="message.teacherInformation.qualificationsDegree" /></td>
-					<td class="listClasses-header"><bean:message key="message.teacherInformation.typeOfClass" /></td>
-					<td class="listClasses-header"><bean:message key="message.teacherInformation.numberOfClass" /></td>
-					<td class="listClasses-header"><bean:message key="message.teacherInformation.numberOfWeeklyHours" /></td>
+					<th class="listClasses-header"><bean:message key="message.teacherInformation.semester" /></th>
+					<th class="listClasses-header"><bean:message key="message.teacherInformation.lectureCourse" /></th>
+					<th class="listClasses-header"><bean:message key="message.teacherInformation.qualificationsDegree" /></th>
+					<th class="listClasses-header"><bean:message key="message.teacherInformation.typeOfClass" /></th>
+					<th class="listClasses-header"><bean:message key="message.teacherInformation.numberOfClass" /></th>
+					<th class="listClasses-header"><bean:message key="message.teacherInformation.numberOfWeeklyHours" /></th>
 				</tr>
 				<logic:iterate id="infoExecutionCourse" name="infoSiteTeacherInformation" property="infoLecturingExecutionCourses">
 					<logic:iterate id="infoCurricularCourse" name="infoExecutionCourse" property="associatedInfoCurricularCourses">
@@ -354,24 +355,24 @@
 		</p>
 		<table width="100%" border="0" cellspacing="1" style="margin-top:10px">
 			<tr>
-				<td class="listClasses-header">&nbsp;</td>
-				<td class="listClasses-header"><bean:message key="message.teacherInformation.numberOfStudents" /></td>
-				<td class="listClasses-header"><bean:message key="message.teacherInformation.description" /></td>
+				<th class="listClasses-header">&nbsp;</th>
+				<th class="listClasses-header"><bean:message key="message.teacherInformation.numberOfStudents" /></th>
+				<th class="listClasses-header"><bean:message key="message.teacherInformation.description" /></th>
 			</tr>
 			<tr>
 				<td class="listClasses"><bean:message key="message.teacherInformation.tfc" /></td>
-				<td class="listClasses"><html:text property="degreeStudentsNumber" /></td>
-				<td class="listClasses"><html:text property="degreeDescription" /></td>
+				<td class="listClasses"><html:text bundle="HTMLALT_RESOURCES" altKey="text.degreeStudentsNumber" property="degreeStudentsNumber" /></td>
+				<td class="listClasses"><html:text bundle="HTMLALT_RESOURCES" altKey="text.degreeDescription" property="degreeDescription" /></td>
 			</tr>
 			<tr>
 				<td class="listClasses"><bean:message key="message.teacherInformation.masterThesis" /></td>
-				<td class="listClasses"><html:text property="masterStudentsNumber" /></td>
-				<td class="listClasses"><html:text property="masterDescription" /></td>
+				<td class="listClasses"><html:text bundle="HTMLALT_RESOURCES" altKey="text.masterStudentsNumber" property="masterStudentsNumber" /></td>
+				<td class="listClasses"><html:text bundle="HTMLALT_RESOURCES" altKey="text.masterDescription" property="masterDescription" /></td>
 			</tr>
 			<tr>
 				<td class="listClasses"><bean:message key="message.teacherInformation.phdThesis" /></td>
-				<td class="listClasses"><html:text property="phdStudentsNumber" /></td>
-				<td class="listClasses"><html:text property="phdDescription" /></td>
+				<td class="listClasses"><html:text bundle="HTMLALT_RESOURCES" altKey="text.phdStudentsNumber" property="phdStudentsNumber" /></td>
+				<td class="listClasses"><html:text bundle="HTMLALT_RESOURCES" altKey="text.phdDescription" property="phdDescription" /></td>
 			</tr>
 		</table>
 		<br />
@@ -382,20 +383,20 @@
 		</p>
 		<table width="100%" border="0" cellspacing="1" style="margin-top:10px">
 		<tr>
-			<td class="listClasses-header">&nbsp;</td>
-			<td class="listClasses-header"><bean:message key="message.teacherInformation.teachers" /></td>
-			<td class="listClasses-header"><bean:message key="message.teacherInformation.supportLessons" /></td>
-			<td class="listClasses-header"><bean:message key="message.teacherInformation.investigation" /></td>
-			<td class="listClasses-header"><bean:message key="message.teacherInformation.managementWorks" /></td>
-			<td class="listClasses-header"><bean:message key="message.teacherInformation.others" /></td>
+			<th class="listClasses-header">&nbsp;</th>
+			<th class="listClasses-header"><bean:message key="message.teacherInformation.teachers" /></th>
+			<th class="listClasses-header"><bean:message key="message.teacherInformation.supportLessons" /></th>
+			<th class="listClasses-header"><bean:message key="message.teacherInformation.investigation" /></th>
+			<th class="listClasses-header"><bean:message key="message.teacherInformation.managementWorks" /></th>
+			<th class="listClasses-header"><bean:message key="message.teacherInformation.others" /></th>
 		</tr>
 		<tr>
 			<td class="listClasses"><bean:message key="message.teacherInformation.numberOfHours" /></td>	
-			<td class="listClasses"><html:text property="lecture" /></td>
-			<td class="listClasses"><html:text property="support" /></td>
-			<td class="listClasses"><html:text property="research" /></td>
-			<td class="listClasses"><html:text property="management" /></td>
-			<td class="listClasses"><html:text property="other" /></td>
+			<td class="listClasses"><html:text bundle="HTMLALT_RESOURCES" altKey="text.lecture" property="lecture" /></td>
+			<td class="listClasses"><html:text bundle="HTMLALT_RESOURCES" altKey="text.support" property="support" /></td>
+			<td class="listClasses"><html:text bundle="HTMLALT_RESOURCES" altKey="text.research" property="research" /></td>
+			<td class="listClasses"><html:text bundle="HTMLALT_RESOURCES" altKey="text.management" property="management" /></td>
+			<td class="listClasses"><html:text bundle="HTMLALT_RESOURCES" altKey="text.other" property="other" /></td>
 		</tr>
 		</table>
 		<br />		
@@ -408,10 +409,10 @@
 			<bean:define id="datePattern" value="dd-MM-yyyy"/>
 			<logic:notEmpty name="infoSiteTeacherInformation" property="personFunctions">		
 				<tr>
-					<td class="listClasses-header" style="text-align:left"><bean:message key="label.managementPosition.position" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></td>
-					<td class="listClasses-header" style="text-align:left"><bean:message key="label.managementPosition.unit" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></td>										
-					<td class="listClasses-header" width="10%"><bean:message key="label.managementPosition.start" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></td>					
-					<td class="listClasses-header" width="10%"><bean:message key="label.managementPosition.end" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></td>
+					<th class="listClasses-header" style="text-align:left"><bean:message key="label.managementPosition.position" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></th>
+					<th class="listClasses-header" style="text-align:left"><bean:message key="label.managementPosition.unit" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></th>										
+					<th class="listClasses-header" width="10%"><bean:message key="label.managementPosition.start" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></th>					
+					<th class="listClasses-header" width="10%"><bean:message key="label.managementPosition.end" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></th>
 				</tr>
 				<logic:iterate id="personFunction" name="infoSiteTeacherInformation" property="personFunctions">
 					<tr>
@@ -462,12 +463,12 @@
 			<table>
 				<tr align="center">	
 					<td>
-						<html:submit styleClass="inputbutton" property="confirm">
+						<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.confirm" styleClass="inputbutton" property="confirm">
 							<bean:message key="button.confirm"/>
 						</html:submit>
 					</td>
 					<td>
-						<html:reset styleClass="inputbutton">
+						<html:reset bundle="HTMLALT_RESOURCES" altKey="reset.reset" styleClass="inputbutton">
 							<bean:message key="label.clear"/>
 						</html:reset>
 					</td>

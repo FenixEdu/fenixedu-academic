@@ -1,4 +1,5 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
@@ -20,16 +21,16 @@
 <br/>
 
 <fr:form action="/rectifyMarkSheet.do">
-	<html:hidden name="markSheetManagementForm" property="method" value="rectifyMarkSheetStepOneByStudentNumber" />
-	<html:hidden name="markSheetManagementForm" property="epID" />
-	<html:hidden name="markSheetManagementForm" property="dID" />
-	<html:hidden name="markSheetManagementForm" property="dcpID" />
-	<html:hidden name="markSheetManagementForm" property="ccID"  />	
-	<html:hidden name="markSheetManagementForm" property="msID" />
-	<html:hidden name="markSheetManagementForm" property="tn" />
-	<html:hidden name="markSheetManagementForm" property="ed"/>
-	<html:hidden name="markSheetManagementForm" property="mss" />
-	<html:hidden name="markSheetManagementForm" property="mst" />
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" name="markSheetManagementForm" property="method" value="rectifyMarkSheetStepOneByStudentNumber" />
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.epID" name="markSheetManagementForm" property="epID" />
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.dID" name="markSheetManagementForm" property="dID" />
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.dcpID" name="markSheetManagementForm" property="dcpID" />
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.ccID" name="markSheetManagementForm" property="ccID"  />	
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.msID" name="markSheetManagementForm" property="msID" />
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.tn" name="markSheetManagementForm" property="tn" />
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.ed" name="markSheetManagementForm" property="ed"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.mss" name="markSheetManagementForm" property="mss" />
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.mst" name="markSheetManagementForm" property="mst" />
 
 	<strong><bean:message key="label.rectifyMarkSheet.chooseStudent"/></strong><br/><br/>
 	a) <bean:message key="label.rectifyMarkSheet.chooseStudent.studentNumber"/><br/><br/>
@@ -56,7 +57,7 @@
 				</fr:edit>
 			</td>
 			<td>
-				<html:submit styleClass="inputbutton"><bean:message key="label.continue"/></html:submit>
+				<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton"><bean:message key="label.continue"/></html:submit>
 			</td>				
 		</tr>
 	</table>
@@ -127,5 +128,5 @@
 		</logic:iterate>
 	</table>
 	<br />
-	<html:cancel styleClass="inputbutton" onclick="this.form.method.value='prepareSearchMarkSheetFilled';this.form.submit();"><bean:message key="label.back"/></html:cancel>
+	<html:cancel bundle="HTMLALT_RESOURCES" altKey="cancel.cancel" styleClass="inputbutton" onclick="this.form.method.value='prepareSearchMarkSheetFilled';this.form.submit();"><bean:message key="label.back"/></html:cancel>
 </fr:form>

@@ -1,5 +1,6 @@
 <%@ page language="java" %> 
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
@@ -34,14 +35,14 @@
 	
 	<html:form action="/publications/publicationsManagement">
 		<bean:define id="resultId" name="publication" property="idInternal"/>
-		<html:hidden property="resultId" value="<%= resultId.toString() %>" />
-		<html:hidden property="method" />
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.resultId" property="resultId" value="<%= resultId.toString() %>" />
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" />
 		
-		<html:submit onclick='<%= "this.form.method.value='deletePublication' " %>'>
+		<html:submit bundle="HTMLALT_RESOURCES" altKey='submit.submit' onclick='<%= "this.form.method.value='deletePublication' " %>'>
 			<bean:message key="button.delete"/>
 		</html:submit>
 
-		<html:submit onclick='<%= "this.form.method.value='listPublications' " %>'>
+		<html:submit bundle="HTMLALT_RESOURCES" altKey='submit.submit' onclick='<%= "this.form.method.value='listPublications' " %>'>
 			<bean:message key="button.cancel"/>
 		</html:submit>
 

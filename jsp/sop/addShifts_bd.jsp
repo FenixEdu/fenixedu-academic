@@ -1,6 +1,7 @@
 <%@ page language="java" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="dt" %>
@@ -21,54 +22,54 @@
 <br />
 <logic:present name="<%= SessionConstants.SHIFTS %>" scope="request">
 	<html:form action="/addShifts" focus="selectedItems">
-		<html:hidden property="method" value="add"/>
-		<html:hidden property="page" value="1"/>
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="add"/>
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
 
-		<html:hidden property="<%= SessionConstants.EXECUTION_PERIOD_OID %>"
+		<html:hidden alt="<%= SessionConstants.EXECUTION_PERIOD_OID %>" property="<%= SessionConstants.EXECUTION_PERIOD_OID %>"
 					 value="<%= pageContext.findAttribute("executionPeriodOID").toString() %>"/>
-		<html:hidden property="<%= SessionConstants.EXECUTION_DEGREE_OID %>"
+		<html:hidden alt="<%= SessionConstants.EXECUTION_DEGREE_OID %>" property="<%= SessionConstants.EXECUTION_DEGREE_OID %>"
 					 value="<%= pageContext.findAttribute("executionDegreeOID").toString() %>"/>
-		<html:hidden property="<%= SessionConstants.CURRICULAR_YEAR_OID %>"
+		<html:hidden alt="<%= SessionConstants.CURRICULAR_YEAR_OID %>" property="<%= SessionConstants.CURRICULAR_YEAR_OID %>"
 					 value="<%= pageContext.findAttribute("curricularYearOID").toString() %>"/>
-		<html:hidden property="<%= SessionConstants.CLASS_VIEW_OID %>"
+		<html:hidden alt="<%= SessionConstants.CLASS_VIEW_OID %>" property="<%= SessionConstants.CLASS_VIEW_OID %>"
 					 value="<%= pageContext.findAttribute("classOID").toString() %>"/>
 
 	<table>
 		<tr>
-			<td class="listClasses-header" rowspan="2">
-			</td>
-			<td class="listClasses-header" rowspan="2">
+			<th class="listClasses-header" rowspan="2">
+			</th>
+			<th class="listClasses-header" rowspan="2">
 				<bean:message key="property.executionCourse"/>
-			</td>
-			<td class="listClasses-header" rowspan="2">
+			</th>
+			<th class="listClasses-header" rowspan="2">
 				<bean:message key="property.shift.name"/>
-			</td>
-	        <td class="listClasses-header" rowspan="2">
+			</th>
+	        <th class="listClasses-header" rowspan="2">
 	        	<bean:message key="property.shift.type"/>
-	        </td>
-			<td class="listClasses-header" rowspan="2">
+	        </th>
+			<th class="listClasses-header" rowspan="2">
 				<bean:message key="property.shift.capacity"/>
-			</td>
-			<td class="listClasses-header" colspan="5">
+			</th>
+			<th class="listClasses-header" colspan="5">
 	        	<bean:message key="property.lessons"/>
-	        </td>
+	        </th>
 		</tr>
 		<tr>
-			<td class="listClasses-header">
+			<th class="listClasses-header">
 				<bean:message key="property.weekday"/>
-			</td>
-			<td class="listClasses-header">
+			</th>
+			<th class="listClasses-header">
 				<bean:message key="property.time.start"/>
-			</td>
-		       <td class="listClasses-header">
+			</th>
+		       <th class="listClasses-header">
 		       	<bean:message key="property.time.end"/>
-	    	   </td>
-			<td class="listClasses-header">
+	    	   </th>
+			<th class="listClasses-header">
 				<bean:message key="property.room"/>
-			</td>
-			<td class="listClasses-header">
+			</th>
+			<th class="listClasses-header">
 		       	<bean:message key="property.capacity"/>
-		       </td>
+		       </th>
 		</tr>
 		<logic:iterate id="infoShift" name="<%= SessionConstants.SHIFTS %>">
 			<bean:define id="infoShiftOID" name="infoShift" property="idInternal"/>
@@ -84,7 +85,7 @@
 			<logic:notEqual name="numberOfLessons" value="0">
 	        	<td class="listClasses" rowspan="<%= pageContext.findAttribute("numberOfLessons") %>">
 			</logic:notEqual>
-				<html:multibox property="selectedItems">
+				<html:multibox bundle="HTMLALT_RESOURCES" altKey="multibox.selectedItems" property="selectedItems">
 					<bean:write name="infoShift" property="idInternal"/>
 				</html:multibox>
 			</td>
@@ -206,7 +207,7 @@
 	</logic:iterate>
 	</table>
 
-		<html:submit styleClass="inputbutton">
+		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton">
 			<bean:message key="label.add"/>
 		</html:submit>			
 	</html:form>

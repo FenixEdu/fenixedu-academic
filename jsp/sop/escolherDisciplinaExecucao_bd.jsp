@@ -1,6 +1,7 @@
 <%@ page language="java" %>
 <%@ page import="org.apache.struts.Globals" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
@@ -17,7 +18,7 @@
         <span class="error"><html:errors /></span>
         <bean:define id="path" type="java.lang.String" scope="request" property="path" name="<%= Globals.MAPPING_KEY %>" />
         <html:form action="<%= path %>">        
-        	<html:hidden property="page" value="1"/>
+        	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
     	<table border="0" cellspacing="0" cellpadding="0">
           <tr>
             <td nowrap="nowrap" class="formTD"><bean:message key="property.course"/></td>
@@ -28,15 +29,15 @@
 
 
 <logic:present name="classOID">
-	<html:hidden property="<%= SessionConstants.CLASS_VIEW_OID %>"
+	<html:hidden alt="<%= SessionConstants.CLASS_VIEW_OID %>" property="<%= SessionConstants.CLASS_VIEW_OID %>"
 				 value="<%= pageContext.findAttribute("classOID").toString() %>"/>
 </logic:present>
 
-<html:hidden property="<%= SessionConstants.EXECUTION_PERIOD_OID %>"
+<html:hidden alt="<%= SessionConstants.EXECUTION_PERIOD_OID %>" property="<%= SessionConstants.EXECUTION_PERIOD_OID %>"
 			 value="<%= pageContext.findAttribute("executionPeriodOID").toString() %>"/>
-<html:hidden property="<%= SessionConstants.EXECUTION_DEGREE_OID %>"
+<html:hidden alt="<%= SessionConstants.EXECUTION_DEGREE_OID %>" property="<%= SessionConstants.EXECUTION_DEGREE_OID %>"
 			 value="<%= pageContext.findAttribute("executionDegreeOID").toString() %>"/>
-<html:hidden property="<%= SessionConstants.CURRICULAR_YEAR_OID %>"
+<html:hidden alt="<%= SessionConstants.CURRICULAR_YEAR_OID %>" property="<%= SessionConstants.CURRICULAR_YEAR_OID %>"
 			 value="<%= pageContext.findAttribute("curricularYearOID").toString() %>"/>
-<html:submit value="Procurar" styleClass="inputbutton"><bean:message key="label.search"/></html:submit>
+<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" value="Procurar" styleClass="inputbutton"><bean:message key="label.search"/></html:submit>
 </html:form>

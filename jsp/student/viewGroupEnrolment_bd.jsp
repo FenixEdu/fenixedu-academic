@@ -1,4 +1,5 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 
@@ -50,19 +51,19 @@ padding: 0;
 	<table class="style1" width="80%" cellpadding="0" border="0">	
 		<tr>
 		
-		<td width="5%" class="listClasses-header">
-		</td>
-		<td width="10%" class="listClasses-header"><bean:message key="label.numberWord" />
-		</td>
-		<td width="35%" class="listClasses-header"><bean:message key="label.nameWord" />
-		</td>
-		<td width="20%" class="listClasses-header"><bean:message key="label.emailWord" />
-		</td>
+		<th width="5%" class="listClasses-header">
+		</th>
+		<th width="10%" class="listClasses-header"><bean:message key="label.numberWord" />
+		</th>
+		<th width="35%" class="listClasses-header"><bean:message key="label.nameWord" />
+		</th>
+		<th width="20%" class="listClasses-header"><bean:message key="label.emailWord" />
+		</th>
 		</tr>
 			<tr>	
 			
 				<td class="listClasses">
-				<input type="checkbox" name="studentsAutomaticallyEnroled" checked disabled>
+				<input alt="input.studentsAutomaticallyEnroled" type="checkbox" name="studentsAutomaticallyEnroled" checked disabled>
 				</td>	
 				
 				<td class="listClasses"><bean:write name="infoUserStudent" property="number"/>
@@ -92,7 +93,7 @@ padding: 0;
 		<logic:iterate id="infoStudent" name="infoStudents">			
 			<tr>	
 				<td width="5%" class="listClasses">
-				<html:multibox property="studentsNotEnroled">
+				<html:multibox bundle="HTMLALT_RESOURCES" altKey="multibox.studentsNotEnroled" property="studentsNotEnroled">
 				<bean:define id="infoPerson" name="infoStudent" property="infoPerson" />
 				<bean:write name="infoPerson" property="username"/>
 				</html:multibox>
@@ -114,31 +115,31 @@ padding: 0;
 	</logic:present>
 
 
-<html:hidden property="method" value="enrolment"/>
-<html:hidden  property="executionCourseCode" value="<%= request.getParameter("executionCourseCode")%>"/>
-<html:hidden  property="groupPropertiesCode" value="<%= request.getParameter("groupPropertiesCode") %>" />
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="enrolment"/>
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.executionCourseCode"  property="executionCourseCode" value="<%= request.getParameter("executionCourseCode")%>"/>
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.groupPropertiesCode"  property="groupPropertiesCode" value="<%= request.getParameter("groupPropertiesCode") %>" />
 <logic:present name="shiftCode"> 
-<html:hidden  property="shiftCode" value="<%= request.getParameter("shiftCode") %>" />
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.shiftCode"  property="shiftCode" value="<%= request.getParameter("shiftCode") %>" />
 </logic:present>
-<html:hidden  property="groupNumber" value="<%= groupNumber.toString() %>" />
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.groupNumber"  property="groupNumber" value="<%= groupNumber.toString() %>" />
 
 <table>
 <tr>
 	<td>
-		<html:submit styleClass="inputbutton"><bean:message key="button.finalize.enrolment"/></html:submit>       
+		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton"><bean:message key="button.finalize.enrolment"/></html:submit>       
 	</td>
 	
 	<td>
-		<html:reset styleClass="inputbutton"><bean:message key="label.clear"/></html:reset>  
+		<html:reset bundle="HTMLALT_RESOURCES" altKey="reset.reset" styleClass="inputbutton"><bean:message key="label.clear"/></html:reset>  
 		</html:form>
 	</td>
 	
 	<td>
 		<html:form action="/viewShiftsAndGroups" method="get">
-		<html:cancel styleClass="inputbutton"><bean:message key="button.cancel"/></html:cancel>
-		<html:hidden property="method" value="execute"/>
-		<html:hidden  property="executionCourseCode" value="<%= request.getParameter("executionCourseCode")%>"/>
-		<html:hidden  property="groupPropertiesCode" value="<%= request.getParameter("groupPropertiesCode")%>"/>		
+		<html:cancel bundle="HTMLALT_RESOURCES" altKey="cancel.cancel" styleClass="inputbutton"><bean:message key="button.cancel"/></html:cancel>
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="execute"/>
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.executionCourseCode"  property="executionCourseCode" value="<%= request.getParameter("executionCourseCode")%>"/>
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.groupPropertiesCode"  property="groupPropertiesCode" value="<%= request.getParameter("groupPropertiesCode")%>"/>		
 		</html:form>
 	</td>
 </tr>

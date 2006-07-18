@@ -1,4 +1,5 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-tiles.tld" prefix="tiles" %>
@@ -13,7 +14,7 @@
 </p>
 <span class="error"><html:errors/></span>
 <html:form action="/showTeacherProfessorshipsForManagement">
-	<html:hidden property="idInternal" />	
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.idInternal" property="idInternal" />	
 	<table width="100%">
 		<tr>
 			<td class="infoop">
@@ -24,7 +25,7 @@
 		<tr>
 			<td>
 				<bean:message key="label.executionYear"/>:
-				<html:select property="executionYearId" onchange="this.form.submit();">
+				<html:select bundle="HTMLALT_RESOURCES" altKey="select.executionYearId" property="executionYearId" onchange="this.form.submit();">
 					<html:options collection="executionYears" property="idInternal" labelProperty="year"/>
 				</html:select>
 			</td>
@@ -34,37 +35,37 @@
 <br />
 <logic:notEmpty name="detailedProfessorshipList" >	
 	<html:form action="/updateTeacherExecutionYearExecutionCourseResponsabilities">
-		<html:hidden property="idInternal" />	
-		<html:hidden property="teacherId" />
-		<html:hidden property="executionYearId" />
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.idInternal" property="idInternal" />	
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.teacherId" property="teacherId" />
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.executionYearId" property="executionYearId" />
 		
 		<h2><bean:message key="label.teacher.professorships"/></h2>
 		<table width="100%"cellpadding="5" border="0">
 			<tr>
-				<td class="listClasses-header" style="text-align:left">
+				<th class="listClasses-header" style="text-align:left">
 					<bean:message key="label.execution-course.name" />
-				</td>
-				<td class="listClasses-header" style="text-align:left">
+				</th>
+				<th class="listClasses-header" style="text-align:left">
 					<bean:message key="label.execution-course.degrees.all" />
-				</td>
-				<td class="listClasses-header">
+				</th>
+				<th class="listClasses-header">
 					<bean:message key="label.execution-period" />
-				</td>
-				<td class="listClasses-header">
+				</th>
+				<th class="listClasses-header">
 					<bean:message key="label.professorship.responsibleFor"/>
-				</td>
+				</th>
 				
 				<logic:present role="CREDITS_MANAGER">
-					<td class="listClasses-header">
+					<th class="listClasses-header">
 						<bean:message key="label.professorship.hours"/>
-					</td>
+					</th>
 				</logic:present>
 				
 				<logic:present role="DEPARTMENT_CREDITS_MANAGER">
 					<logic:equal name="isDepartmentManager" value="true">
-						<td class="listClasses-header">
+						<th class="listClasses-header">
 							<bean:message key="label.professorship.remove" />
-						</td>
+						</th>
 					</logic:equal>
 				</logic:present>
 			</tr>
@@ -76,7 +77,7 @@
 				<tr>
 					<td class="listClasses" style="text-align:left">
 						<logic:present role="DEPARTMENT_CREDITS_MANAGER">
-							<html:hidden property='<%= "hours("+ executionCourseId +")" %>' />							
+							<html:hidden alt='<%= "hours("+ executionCourseId +")" %>' property='<%= "hours("+ executionCourseId +")" %>' />							
 						</logic:present>
 					
 						<bean:write name="infoExecutionCourse" property="nome"/>
@@ -99,7 +100,7 @@
 						<logic:present role="DEPARTMENT_CREDITS_MANAGER,CREDITS_MANAGER">
 							<logic:equal name="isDepartmentManager" value="true">
 								<bean:define id="executionCourseId" name="infoExecutionCourse" property="idInternal" />
-									<html:multibox property="executionCourseResponsability" value="<%= executionCourseId.toString() %>" />
+									<html:multibox bundle="HTMLALT_RESOURCES" altKey="multibox.executionCourseResponsability" property="executionCourseResponsability" value="<%= executionCourseId.toString() %>" />
 							</logic:equal>
 							<logic:equal name="isDepartmentManager" value="false">
 								<logic:equal name="detailedProfessorship" property="responsibleFor" value="true">
@@ -114,7 +115,7 @@
 					<logic:present role="CREDITS_MANAGER">
 						<td class="listClasses">
 							<logic:equal name="detailedProfessorship" property="masterDegreeOnly" value="true">
-								<html:text property='<%= "hours("+ executionCourseId +")" %>' size="5"/>
+								<html:text alt='<%= "hours("+ executionCourseId +")" %>' property='<%= "hours("+ executionCourseId +")" %>' size="5"/>
 							</logic:equal>
 							<logic:equal name="detailedProfessorship" property="masterDegreeOnly" value="false" >
 								-- 
@@ -139,13 +140,13 @@
 	 	</table>
 		<logic:present role="DEPARTMENT_CREDITS_MANAGER">
 			<logic:equal name="isDepartmentManager" value="true">
-			 	<html:submit styleClass="inputbutton">
+			 	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton">
 			 		<bean:message key="button.save"/>
 			 	</html:submit>
 			</logic:equal>
 		</logic:present>		 	
 		<logic:present role="CREDITS_MANAGER">
-			<html:submit property="save" styleClass="inputbutton">
+			<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.save" property="save" styleClass="inputbutton">
 				<bean:message key="button.submit" />
 			</html:submit>
 		</logic:present>

@@ -4,6 +4,7 @@
 <%@ taglib uri="/WEB-INF/jsf_fenix_components.tld" prefix="fc"%>
 
 <ft:tilesView definition="definition.sop.examsPage" attributeName="body-inline">
+	<f:loadBundle basename="resources/HtmlAltResources" var="htmlAltBundle"/>
 	<f:loadBundle basename="resources/ApplicationResourcesSOP" var="bundleSOP"/>
 	<f:loadBundle basename="resources/ApplicationResources" var="bundle"/>
 
@@ -25,8 +26,8 @@
 		<h:inputHidden binding="#{SOPEvaluationManagementBackingBean.calendarPeriodHidden}"/>
 		<h:inputHidden value="#{SOPEvaluationManagementBackingBean.evaluationTypeClassname}"/>
 		<fc:viewState binding="#{SOPEvaluationManagementBackingBean.viewState}" />
-		<h:outputText escape="false" value="<input id='executionPeriodOID' name='executionPeriodOID' type='hidden' value='#{SOPEvaluationManagementBackingBean.executionPeriodOID}'/>"/>
-		<h:outputText escape="false" value="<input id='curricularYearIDsParameterString' name='curricularYearIDsParameterString' type='hidden' value='#{SOPEvaluationManagementBackingBean.curricularYearIDsParameterString}'/>"/>
+		<h:outputText escape="false" value="<input alt='input.executionPeriodOID' id='executionPeriodOID' name='executionPeriodOID' type='hidden' value='#{SOPEvaluationManagementBackingBean.executionPeriodOID}'/>"/>
+		<h:outputText escape="false" value="<input alt='input.curricularYearIDsParameterString' id='curricularYearIDsParameterString' name='curricularYearIDsParameterString' type='hidden' value='#{SOPEvaluationManagementBackingBean.curricularYearIDsParameterString}'/>"/>
 
 		<h:panelGrid styleClass="infoselected">
 			<h:outputText value="#{bundleSOP['property.executionPeriod']}: #{SOPEvaluationManagementBackingBean.executionPeriodLabel}" escape="false"/>
@@ -88,11 +89,11 @@
 		</h:panelGrid>
 
 		<h:outputText value="<br/>" escape="false"/>
- 		<h:commandButton 	immediate="true" styleClass="inputbutton"
+ 		<h:commandButton alt="#{htmlAltBundle['commandButton.remove']}" 	immediate="true" styleClass="inputbutton"
 							value="#{bundle['button.remove']}" 
 							action="#{SOPEvaluationManagementBackingBean.deleteWrittenTest}" 
 							title="#{bundle['button.remove']}" 
 							onclick="return confirm('#{bundle['message.confirm.written.test']}')"/>
-		<h:commandButton immediate="true" action="writtenEvaluationCalendar" styleClass="inputbutton" value="#{bundle['button.cancel']}"/>
+		<h:commandButton alt="#{htmlAltBundle['commandButton.cancel']}" immediate="true" action="writtenEvaluationCalendar" styleClass="inputbutton" value="#{bundle['button.cancel']}"/>
 	</h:form>
 </ft:tilesView>

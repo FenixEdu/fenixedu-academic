@@ -1,5 +1,6 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
@@ -22,25 +23,25 @@
 <br/>
 <table>
 <tr>
-	<td class="listClasses-header">
+	<th class="listClasses-header">
 				&nbsp;
-	</td>
-	<td class="listClasses-header">
+	</th>
+	<th class="listClasses-header">
 				<bean:message key="label.class" /> 
-	</td>
-	<td class="listClasses-header">
+	</th>
+	<th class="listClasses-header">
 				<bean:message key="label.degree" />
-	</td>			
+	</th>			
 </tr>  
 <html:form action="/addShiftToClasses">
 
-<html:hidden property="method" value="addShiftToClasses"/>  	
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="addShiftToClasses"/>  	
 <bean:define id="classesList" name="component" property="infoClasses"/>
 <logic:iterate id="infoClass" name="component" property="infoClasses" type="net.sourceforge.fenixedu.dataTransferObject.InfoClass">
 <bean:define id="idInternal" name="infoClass" property="idInternal"/>
 <tr>
 	<td class="listClasses">
-			<html:multibox  property="classesList" value="<%= idInternal.toString() %>" />
+			<html:multibox bundle="HTMLALT_RESOURCES" altKey="multibox.classesList"  property="classesList" value="<%= idInternal.toString() %>" />
 	</td>
 	<td class="listClasses">
 		<bean:write name="infoClass" property="nome"/>			
@@ -60,15 +61,15 @@
 <br/>
 <br/>
 
-<html:hidden property="<%= SessionConstants.EXECUTION_PERIOD_OID %>"
+<html:hidden alt="<%= SessionConstants.EXECUTION_PERIOD_OID %>" property="<%= SessionConstants.EXECUTION_PERIOD_OID %>"
 			 value="<%= pageContext.findAttribute("executionPeriodOID").toString() %>"/>
-<html:hidden property="<%= SessionConstants.EXECUTION_DEGREE_OID %>"
+<html:hidden alt="<%= SessionConstants.EXECUTION_DEGREE_OID %>" property="<%= SessionConstants.EXECUTION_DEGREE_OID %>"
 			 value="<%= pageContext.findAttribute("executionDegreeOID").toString() %>"/>
-<html:hidden property="<%= SessionConstants.CURRICULAR_YEAR_OID %>"
+<html:hidden alt="<%= SessionConstants.CURRICULAR_YEAR_OID %>" property="<%= SessionConstants.CURRICULAR_YEAR_OID %>"
 			 value="<%= pageContext.findAttribute("curricularYearOID").toString() %>"/>
-<html:hidden property="<%= SessionConstants.EXECUTION_COURSE_OID %>"
+<html:hidden alt="<%= SessionConstants.EXECUTION_COURSE_OID %>" property="<%= SessionConstants.EXECUTION_COURSE_OID %>"
 			 value="<%= pageContext.findAttribute("executionCourseOID").toString() %>"/>
-<html:hidden property="<%= SessionConstants.SHIFT_OID %>"
+<html:hidden alt="<%= SessionConstants.SHIFT_OID %>" property="<%= SessionConstants.SHIFT_OID %>"
 			 value="<%= pageContext.findAttribute("shiftOID").toString() %>"/>
 
 <html:submit/><html:reset/>

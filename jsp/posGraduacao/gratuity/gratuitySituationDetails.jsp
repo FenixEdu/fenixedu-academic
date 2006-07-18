@@ -1,5 +1,5 @@
 <%@ page language="java" %>
-<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
+<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%><html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.masterDegree.utils.SessionConstants" %>
@@ -134,15 +134,15 @@
 		if(existsTransactionsWithouGuides == true)
 		{ %>
 			<html:form action="/createGuideFromTransactions.do" >
-				<html:hidden property="method" value="chooseContributor"/>
-				<html:hidden property="gratuitySituationId" />
-				<html:hidden property="studentId" />
-				<html:hidden property="contributorNumber" />
-				<html:hidden property="page" value="1"/>
+				<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="chooseContributor"/>
+				<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.gratuitySituationId" property="gratuitySituationId" />
+				<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.studentId" property="studentId" />
+				<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.contributorNumber" property="contributorNumber" />
+				<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
 				
 				<bean:message key="label.transaction.createGuides"/>: 
 				
-				<html:submit styleClass="inputbutton">
+				<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton">
 					<bean:message key="button.create"/>
 				</html:submit>
 			</html:form>

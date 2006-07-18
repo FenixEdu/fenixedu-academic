@@ -1,5 +1,5 @@
 <%@ page language="java" %>
-<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %><html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/c.tld" prefix="c" %>
@@ -43,11 +43,11 @@
 			<tr>
 				<td class="invisible">
 					<html:form action="/showDegreeSite">
-						<html:hidden property="method" value="viewDegreeEvaluation"/>
-						<html:hidden property="degreeID" value='<%= request.getAttribute("degreeID").toString() %>'/>	
+						<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="viewDegreeEvaluation"/>
+						<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.degreeID" property="degreeID" value='<%= request.getAttribute("degreeID").toString() %>'/>	
 						<p>Per&iacute;odo de Execu&ccedil;&atilde;o: 
 							
-							<html:select property="executionPeriodId" onchange="this.form.submit()">
+							<html:select bundle="HTMLALT_RESOURCES" altKey="select.executionPeriodId" property="executionPeriodId" onchange="this.form.submit()">
 								<html:option value="">Escolher</html:option>		
 								<logic:iterate id="executionPeriod" name="executionPeriodList" type="net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod"> 
 									<bean:define    id="currentPeriodId"   name="executionPeriod" property="idInternal"/>

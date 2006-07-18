@@ -1,5 +1,6 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
@@ -10,7 +11,7 @@
 		<logic:notPresent name="<%= SessionConstants.DIPLOMA%>">
  	<tr>
 		<td>	
-	  		<p>O COORDENADOR DO NÚCLEO DE PÓS-GRADUAÇÃO E FORMAÇÃO CONTÍNUA DO INSTITUTO SUPERIOR TÉCNICO DA UNIVERSIDADE TÉCNICA DE LISBOA CERTIFICA, a requerimento do(a) interessado(a), que do seu processo individual organizado e arquivado nesta secretaria, consta que:<br />
+	  		<p>O COORDENADOR DO Nï¿½CLEO DE Pï¿½S-GRADUAï¿½ï¿½O E FORMAï¿½ï¿½O CONTï¿½NUA DO INSTITUTO SUPERIOR Tï¿½CNICO DA UNIVERSIDADE Tï¿½CNICA DE LISBOA CERTIFICA, a requerimento do(a) interessado(a), que do seu processo individual organizado e arquivado nesta secretaria, consta que:<br />
 			<%--Certificate --%>			
 			<jsp:include page="./certificateTemplate1.jsp" flush="true" />
 				<logic:present name="<%= SessionConstants.MATRICULA%>">
@@ -43,10 +44,10 @@
 				
 				<logic:present name="<%= SessionConstants.FINAL_RESULT_SIMPLE%>">
 					
-					<logic:equal name="infoStudentCurricularPlan"  property="infoDegreeCurricularPlan.infoDegree.nome" value="Logística">
+					<logic:equal name="infoStudentCurricularPlan"  property="infoDegreeCurricularPlan.infoDegree.nome" value="Logï¿½stica">
 						<jsp:include page="./certificateTemplate16.jsp" flush="true" />
 					</logic:equal>
-					<logic:notEqual name="infoStudentCurricularPlan"  property="infoDegreeCurricularPlan.infoDegree.nome" value="Logística">
+					<logic:notEqual name="infoStudentCurricularPlan"  property="infoDegreeCurricularPlan.infoDegree.nome" value="Logï¿½stica">
 						<jsp:include page="./certificateTemplate7.jsp" flush="true" /> 
 					</logic:notEqual>
 			  		
@@ -56,10 +57,10 @@
 				
 				<logic:present name="<%= SessionConstants.DISCRIMINATED_WITHOUT_AVERAGE%>">				
 					
-					<logic:equal name="infoStudentCurricularPlan"  property="infoDegreeCurricularPlan.infoDegree.nome" value="Logística">
+					<logic:equal name="infoStudentCurricularPlan"  property="infoDegreeCurricularPlan.infoDegree.nome" value="Logï¿½stica">
 						<jsp:include page="./certificateTemplate17.jsp" flush="true" />
 					</logic:equal>
-					<logic:notEqual name="infoStudentCurricularPlan"  property="infoDegreeCurricularPlan.infoDegree.nome" value="Logística">
+					<logic:notEqual name="infoStudentCurricularPlan"  property="infoDegreeCurricularPlan.infoDegree.nome" value="Logï¿½stica">
 						<jsp:include page="./certificateTemplate9.jsp" flush="true" />
 					</logic:notEqual>
 			  		
@@ -69,10 +70,10 @@
 				</logic:present>
 				<logic:present name="<%= SessionConstants.DISCRIMINATED_WITH_AVERAGE%>">
 				
-					<logic:equal name="infoStudentCurricularPlan"  property="infoDegreeCurricularPlan.infoDegree.nome" value="Logística">
+					<logic:equal name="infoStudentCurricularPlan"  property="infoDegreeCurricularPlan.infoDegree.nome" value="Logï¿½stica">
 						<jsp:include page="./certificateTemplate17.jsp" flush="true" />
 					</logic:equal>
-					<logic:notEqual name="infoStudentCurricularPlan"  property="infoDegreeCurricularPlan.infoDegree.nome" value="Logística">
+					<logic:notEqual name="infoStudentCurricularPlan"  property="infoDegreeCurricularPlan.infoDegree.nome" value="Logï¿½stica">
 						<jsp:include page="./certificateTemplate9.jsp" flush="true" />
 					</logic:notEqual>
 			  		
@@ -82,10 +83,10 @@
 				</logic:present>
 				<logic:present name="<%= SessionConstants.FINAL_DEGREE_DISCRIMINATED_WITH_AVERAGE%>">	
 				
-					<logic:equal name="infoStudentCurricularPlan"  property="infoDegreeCurricularPlan.infoDegree.nome" value="Logística">
+					<logic:equal name="infoStudentCurricularPlan"  property="infoDegreeCurricularPlan.infoDegree.nome" value="Logï¿½stica">
 						<jsp:include page="./certificateTemplate18.jsp" flush="true" />
 					</logic:equal>
-					<logic:notEqual name="infoStudentCurricularPlan"  property="infoDegreeCurricularPlan.infoDegree.nome" value="Logística">
+					<logic:notEqual name="infoStudentCurricularPlan"  property="infoDegreeCurricularPlan.infoDegree.nome" value="Logï¿½stica">
 						<jsp:include page="./certificateTemplate14.jsp" flush="true" />
 					</logic:notEqual>				
 				
@@ -94,10 +95,10 @@
 				</logic:present>
 				<logic:present name="<%= SessionConstants.FINAL_RESULT_DEGREE_SIMPLE%>">
 				
-					<logic:equal name="infoStudentCurricularPlan"  property="infoDegreeCurricularPlan.infoDegree.nome" value="Logística">
+					<logic:equal name="infoStudentCurricularPlan"  property="infoDegreeCurricularPlan.infoDegree.nome" value="Logï¿½stica">
 						<jsp:include page="./certificateTemplate19.jsp" flush="true" />
 					</logic:equal>
-					<logic:notEqual name="infoStudentCurricularPlan"  property="infoDegreeCurricularPlan.infoDegree.nome" value="Logística">
+					<logic:notEqual name="infoStudentCurricularPlan"  property="infoDegreeCurricularPlan.infoDegree.nome" value="Logï¿½stica">
 						<jsp:include page="./certificateTemplate12.jsp" flush="true" />
 					</logic:notEqual>
 									
@@ -117,11 +118,11 @@
 	 	</logic:notPresent>
 	 	<logic:present name="<%= SessionConstants.DIPLOMA%>">
 
-			<logic:equal name="infoStudentCurricularPlan"  property="infoDegreeCurricularPlan.infoDegree.nome" value="Logística">
+			<logic:equal name="infoStudentCurricularPlan"  property="infoDegreeCurricularPlan.infoDegree.nome" value="Logï¿½stica">
 			  	<jsp:include page="./certificateTemplate15.jsp" flush="true" />
 			</logic:equal>
 
-			<logic:notEqual name="infoStudentCurricularPlan"  property="infoDegreeCurricularPlan.infoDegree.nome" value="Logística">
+			<logic:notEqual name="infoStudentCurricularPlan"  property="infoDegreeCurricularPlan.infoDegree.nome" value="Logï¿½stica">
 				<jsp:include page="./certificateTemplate11.jsp" flush="true" />
 			</logic:notEqual>
 		  	

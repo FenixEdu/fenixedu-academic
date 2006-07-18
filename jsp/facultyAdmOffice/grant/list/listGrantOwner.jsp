@@ -1,5 +1,5 @@
 <%@ page language="java" %>
-<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %><html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 
@@ -24,13 +24,13 @@
 	<td>
 	&nbsp;
 <html:form action="/listGrantOwner" style="display:inline">
-	<html:hidden property="method" value="prepareListGrantOwner"/>
-	<html:hidden property="page" value="1"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="prepareListGrantOwner"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
 
 	<%-- span attributes --%>
-	<html:hidden property="orderBy"/>
-	<html:hidden property="totalElements"/>
-	<html:text property="spanNumber" size="2"/>/<bean:write name="numberOfSpans"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.orderBy" property="orderBy"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.totalElements" property="totalElements"/>
+	<html:text bundle="HTMLALT_RESOURCES" altKey="text.spanNumber" property="spanNumber" size="2"/>/<bean:write name="numberOfSpans"/>
 </html:form>
 	&nbsp;</td>
 	<logic:present name="afterSpan">
@@ -48,22 +48,22 @@
     <table border="0" cellspacing="1" cellpadding="1" align="center">
     <%-- Table with list grant owner description rows --%>
     <tr>
-        <td class="listClasses-header">
+        <th class="listClasses-header">
 	        <html:link page='<%= "/listGrantOwner.do?method=prepareFirstTimeListGrantOwner&amp;spanNumber=" + request.getAttribute("spanNumber") +  "&amp;orderBy=orderByNumber&amp;totalElements=" + request.getAttribute("totalElements") %>' > 
 	            <bean:message key="label.list.grant.owner.number"/>
 			</html:link>
-        </td>
-        <td class="listClasses-header">
+        </th>
+        <th class="listClasses-header">
 	        <html:link page='<%= "/listGrantOwner.do?method=prepareFirstTimeListGrantOwner&amp;spanNumber=" + request.getAttribute("spanNumber") + "&amp;orderBy=orderByFirstName&amp;totalElements=" + request.getAttribute("totalElements") %>' > 
 	            <bean:message key="label.list.grant.owner.first.name"/>
 			</html:link>
-        </td>
-        <td class="listClasses-header">
+        </th>
+        <th class="listClasses-header">
 	        <%-- <html:link page='<%= "/listGrantOwner.do?method=prepareFirstTimeListGrantOwner&amp;spanNumber=" + request.getAttribute("spanNumber") + "&amp;orderBy=orderByFirstName&amp;totalElements=" + request.getAttribute("totalElements") %>' > --%> 
 	            <bean:message key="label.list.grant.owner.last.name"/>
 			<%-- </html:link> --%>
-        </td>
-        <td class="listClasses-header">&nbsp;</td>
+        </th>
+        <th class="listClasses-header">&nbsp;</th>
     </tr>   
     
     <%-- Table with result of search --%>
@@ -108,13 +108,13 @@
 	<td>
 	&nbsp;
 	<html:form action="/listGrantOwner" style="display:inline">
-	<html:hidden property="method" value="prepareListGrantOwner"/>
-	<html:hidden property="page" value="1"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="prepareListGrantOwner"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
 
 	<%-- span attributes --%>
-	<html:hidden property="orderBy"/>
-	<html:hidden property="totalElements"/>
-	<html:text property="spanNumber" size="2"/>/<bean:write name="numberOfSpans"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.orderBy" property="orderBy"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.totalElements" property="totalElements"/>
+	<html:text bundle="HTMLALT_RESOURCES" altKey="text.spanNumber" property="spanNumber" size="2"/>/<bean:write name="numberOfSpans"/>
 	</html:form>
 	&nbsp;
 	</td>

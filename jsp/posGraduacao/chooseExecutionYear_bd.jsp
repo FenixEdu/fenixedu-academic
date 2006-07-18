@@ -1,5 +1,6 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ page import="org.apache.struts.Globals" %>
@@ -38,7 +39,7 @@
 				</logic:notPresent>
        		</td>
 <%--         <td><bean:message key="label.masterDegree.administrativeOffice.executionYear"/>:</td>
-         <td><html:select property="executionYear">
+         <td><html:select bundle="HTMLALT_RESOURCES" altKey="select.executionYear" property="executionYear">
                 <html:options collection="executionYearList" property="value" labelProperty="label" />
              </html:select>
          </td> --%>

@@ -1,4 +1,5 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 
@@ -17,8 +18,8 @@
 
 <html:form action="/mergeExecutionCoursesForm" >
 	    
-	<html:hidden property="page" value="1"/>
-	<html:hidden property="method" value="mergeExecutionCourses"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="mergeExecutionCourses"/>
 	<br/>
 	
 	
@@ -31,14 +32,14 @@
 	<bean:write name="sourceInfoDegree" property="nome" /> -
 	<bean:write name="sourceInfoDegree" property="sigla" />
 	<br/>
-	<strong>Escolha a Disciplina Execução de Origem</strong>
+	<strong>Escolha a Disciplina Execuï¿½ï¿½o de Origem</strong>
 	<br/>	
 	<br/>
 	<table>
 	<logic:iterate id="executionCourse" name="sourceExecutionCourses">
 		<tr>
 			<td class="listClasses">
-			<html:radio property="sourceExecutionCourseId" idName="executionCourse" value="idInternal"/> 
+			<html:radio bundle="HTMLALT_RESOURCES" altKey="radio.sourceExecutionCourseId" property="sourceExecutionCourseId" idName="executionCourse" value="idInternal"/> 
 			</td>
 			<td class="listClasses">
 			<bean:write name="executionCourse" property="sigla"/>
@@ -54,12 +55,12 @@
 	<bean:write name="destinationInfoDegree" property="nome" /> -
 	<bean:write name="destinationInfoDegree" property="sigla" />
 	<br/>
-	<strong>Escolha a Disciplina Execução de Destino</strong>
+	<strong>Escolha a Disciplina Execuï¿½ï¿½o de Destino</strong>
 	<table>
 	<logic:iterate id="executionCourse" name="destinationExecutionCourses">
 		<tr>
 			<td class="listClasses">
-			<html:radio property="destinationExecutionCourseId" idName="executionCourse" value="idInternal"/> 
+			<html:radio bundle="HTMLALT_RESOURCES" altKey="radio.destinationExecutionCourseId" property="destinationExecutionCourseId" idName="executionCourse" value="idInternal"/> 
 			</td>
 			<td class="listClasses">
 			<bean:write name="executionCourse" property="sigla"/>
@@ -75,10 +76,10 @@
 	</table>
 	<br/>
 	<br/>
-	<html:submit styleClass="inputbutton">
+	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton">
 		<bean:message bundle="MANAGER_RESOURCES" key="button.save"/>
 	</html:submit>
-	<html:reset  styleClass="inputbutton">
+	<html:reset bundle="HTMLALT_RESOURCES" altKey="reset.reset"  styleClass="inputbutton">
 		<bean:message bundle="MANAGER_RESOURCES" key="label.clear"/>
 	</html:reset>
 </html:form>

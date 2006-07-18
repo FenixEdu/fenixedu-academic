@@ -1,5 +1,5 @@
 <%@ page language="java" %>
-<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
+<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%><html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="dt"%>
@@ -115,15 +115,15 @@
 				<td colspan="2">
 					<table>
 						<tr>
-							<td class="listClasses-header">
-								<bean:message key="label.masterDegree.gratuity.initialDate"/></td>
-							<td class="listClasses-header">
-								<bean:message key="label.masterDegree.gratuity.finalDate"/></td>
-							<td class="listClasses-header">
+							<th class="listClasses-header">
+								<bean:message key="label.masterDegree.gratuity.initialDate"/></th>
+							<th class="listClasses-header">
+								<bean:message key="label.masterDegree.gratuity.finalDate"/></th>
+							<th class="listClasses-header">
 								<bean:message key="label.masterDegree.gratuity.value"/>&nbsp;
-								<bean:message key="label.masterDegree.gratuity.euro"/></td>
-							<td class="listClasses-header">
-								<bean:message key="label.masterDegree.gratuity.description"/></td>
+								<bean:message key="label.masterDegree.gratuity.euro"/></th>
+							<th class="listClasses-header">
+								<bean:message key="label.masterDegree.gratuity.description"/></th>
 						</tr>
 						<logic:iterate id="phase" name="infoGratuityValues" property="infoPaymentPhases" type="net.sourceforge.fenixedu.dataTransferObject.InfoPaymentPhase" indexId="index">
 							<tr>

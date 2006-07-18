@@ -1,5 +1,5 @@
 <%@ page language="java" %>
-<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
+<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%><html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 
@@ -47,34 +47,34 @@
 <table border="0" cellspacing="1" cellpadding="1">
 	<%-- Table description rows --%>
 	<tr>
-		<td class="listClasses-header" colspan="3">
+		<th class="listClasses-header" colspan="3">
 			<bean:message key="label.grant.owner.personalinformation"/>
-		</td>
-		<td class="listClasses-header" colspan="2">
+		</th>
+		<th class="listClasses-header" colspan="2">
 			<bean:message key="label.grant.owner.documentidentification"/>
-		</td>
-		<td class="listClasses-header">
+		</th>
+		<th class="listClasses-header">
 			&nbsp;<%-- blank --%>
-		</td>				
+		</th>				
 	</tr>
 	<tr>
-		<td class="listClasses-header">
+		<th class="listClasses-header">
 			<bean:message key="label.grant.owner.infoperson.name"/>
-		</td>
-		<td class="listClasses-header">
+		</th>
+		<th class="listClasses-header">
 			<bean:message key="label.grant.owner.number"/>
-		</td>
-		<td class="listClasses-header">
+		</th>
+		<th class="listClasses-header">
 			<bean:message key="label.grant.owner.infoperson.socialSecurityNumber"/>
-		</td>
-		<td class="listClasses-header">
+		</th>
+		<th class="listClasses-header">
 			<bean:message key="label.grant.owner.infoperson.documentId"/>
-		</td>
-		<td class="listClasses-header">
+		</th>
+		<th class="listClasses-header">
 			<bean:message key="label.grant.owner.infoperson.documentIdType"/>
-		</td>
-		<td class="listClasses-header">
-		</td>				
+		</th>
+		<th class="listClasses-header">
+		</th>				
 	</tr>
 	<%-- Table with result of search --%>
 	<logic:iterate id="infoGrantOwner" name="infoGrantOwnerList">

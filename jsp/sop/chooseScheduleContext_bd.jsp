@@ -1,5 +1,6 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
 <h2>
@@ -10,9 +11,9 @@
 
 <html:form action="/chooseContext" focus="executionDegreeOID">
 
-	<html:hidden property="page" value="1"/>
-	<html:hidden property="method" value="choose"/>
-	<html:hidden property="<%= SessionConstants.EXECUTION_PERIOD_OID %>"
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="choose"/>
+	<html:hidden alt="<%= SessionConstants.EXECUTION_PERIOD_OID %>" property="<%= SessionConstants.EXECUTION_PERIOD_OID %>"
 				 value="<%= pageContext.findAttribute("executionPeriodOID").toString() %>"/>
 
 	<table width="100%" border="0" cellpadding="0" cellspacing="0">
@@ -26,7 +27,7 @@
 	<br />
 	<p>
 		<bean:message key="property.context.degree"/>:
-		<html:select property="executionDegreeOID" size="1">
+		<html:select bundle="HTMLALT_RESOURCES" altKey="select.executionDegreeOID" property="executionDegreeOID" size="1">
        		<html:options collection="licenciaturas"
        					  property="value"
        					  labelProperty="label"/>
@@ -48,7 +49,7 @@
 				<bean:message key="property.context.curricular.year"/>:
 			</td>
 			<td nowrap class="formTD">
-				<html:select property="curricularYear" size="1">
+				<html:select bundle="HTMLALT_RESOURCES" altKey="select.curricularYear" property="curricularYear" size="1">
 		       		<html:options collection="anosCurriculares"
 		       					  property="value"
 		       					  labelProperty="label"/>
@@ -59,7 +60,7 @@
 
 	<br />
 	<p>
-		<html:submit value="Submeter" styleClass="inputbutton">
+		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" value="Submeter" styleClass="inputbutton">
              <bean:message key="label.next"/>
        </html:submit>
 	</p>

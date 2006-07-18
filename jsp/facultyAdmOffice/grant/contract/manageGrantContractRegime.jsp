@@ -1,5 +1,5 @@
 <%@ page language="java" %>
-<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
+<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%><html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="dt"%>
@@ -30,19 +30,19 @@
     <table border="0" cellspacing="1" cellpadding="1">
     <%-- Table with contract regimes description rows --%>
     <tr>
-        <td class="listClasses-header">
+        <th class="listClasses-header">
             <bean:message key="label.grant.contract.regime.beginDate"/>
-        </td>
-        <td class="listClasses-header">
+        </th>
+        <th class="listClasses-header">
             <bean:message key="label.grant.contract.regime.endDate"/>
-        </td>
-        <td class="listClasses-header">
+        </th>
+        <th class="listClasses-header">
             <bean:message key="label.grant.contract.orientationTeacher"/>
-        </td>
-        <td class="listClasses-header">
+        </th>
+        <th class="listClasses-header">
             <bean:message key="label.grant.contract.regime.state"/>
-        </td>
-        <td class="listClasses-header">&nbsp;</td>
+        </th>
+        <th class="listClasses-header">&nbsp;</th>
     </tr>   
     <%-- Table with result of search --%>
     <logic:iterate id="infoGrantContractRegime" name="infoGrantActiveContractRegimeList">
@@ -115,19 +115,19 @@
     <table border="0" cellspacing="1" cellpadding="1">
     <%-- Table with contract regimes description rows --%>
     <tr>
-        <td class="listClasses-header">
+        <th class="listClasses-header">
             <bean:message key="label.grant.contract.regime.beginDate"/>
-        </td>
-        <td class="listClasses-header">
+        </th>
+        <th class="listClasses-header">
             <bean:message key="label.grant.contract.regime.endDate"/>
-        </td>
-        <td class="listClasses-header">
+        </th>
+        <th class="listClasses-header">
             <bean:message key="label.grant.contract.orientationTeacher"/>
-        </td>
-        <td class="listClasses-header">
+        </th>
+        <th class="listClasses-header">
             <bean:message key="label.grant.contract.regime.state"/>
-        </td>
-        <td class="listClasses-header">&nbsp;</td>
+        </th>
+        <th class="listClasses-header">&nbsp;</th>
     </tr>   
     <%-- Table with result of search --%>
     <logic:iterate id="infoGrantContractRegime" name="infoGrantNotActiveContractRegimeList">
@@ -182,10 +182,10 @@
 <br/><br/><br/>
 <center>
 <html:form action="/manageGrantContract" style="display:inline">
-	<html:hidden property="method" value="prepareManageGrantContractForm"/>
-	<html:hidden property="page" value="1"/>
-	<html:hidden property="idInternal" value='<%= request.getAttribute("idGrantOwner").toString() %>'/>
-	<html:submit styleClass="inputbutton" style="display:inline">
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="prepareManageGrantContractForm"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.idInternal" property="idInternal" value='<%= request.getAttribute("idGrantOwner").toString() %>'/>
+	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton" style="display:inline">
 		<bean:message key="button.manageGrantContract"/>
 	</html:submit>
 </html:form>		

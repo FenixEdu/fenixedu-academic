@@ -1,5 +1,5 @@
 <%@ page language="java" %>
-<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %><html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ page import="net.sourceforge.fenixedu.dataTransferObject.precedences.InfoRestriction" %>
@@ -15,10 +15,10 @@
 
 <html:form action="/makePrecedenceConjunction.do">
 
-	<html:hidden property="page" value="1"/>
-	<html:hidden property="degreeCurricularPlanId" value="<%= request.getParameter("degreeCurricularPlanId") %>"/>
-	<html:hidden property="degreeId" value="<%= request.getParameter("degreeId") %>"/>
-	<html:hidden property="method" value="showSecondPage"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.degreeCurricularPlanId" property="degreeCurricularPlanId" value="<%= request.getParameter("degreeCurricularPlanId") %>"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.degreeId" property="degreeId" value="<%= request.getParameter("degreeId") %>"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="showSecondPage"/>
 
 	<logic:iterate id="element" name="precedences">
 		<bean:define id="infoCurricularCourse" name="element" property="key"/>
@@ -26,11 +26,11 @@
 
 		<table border="0">
 			<tr>
-				<td class="listClasses-header" colspan="2">
+				<th class="listClasses-header" colspan="2">
 					<bean:message bundle="MANAGER_RESOURCES" key="message.manager.this.course"/>
 						<bean:write name="infoCurricularCourse" property="name"/>
 					<bean:message bundle="MANAGER_RESOURCES" key="message.manager.has.precedence"/>
-				</td>
+				</th>
 			</tr>
 			<bean:size id="infoPrecedencesSize" name="infoPrecedences"/>
 			<logic:iterate id="precedence" name="infoPrecedences" indexId="precedencesLength">
@@ -52,12 +52,12 @@
 					</td>
 					<td class="listClasses">
 						<bean:define id="precedenceID" name="precedence" property="idInternal"/>
-						<html:radio property="firstPrecedence" value="<%= precedenceID.toString() %>" onclick="form.submit()"/>
+						<html:radio bundle="HTMLALT_RESOURCES" altKey="radio.firstPrecedence" property="firstPrecedence" value="<%= precedenceID.toString() %>" onclick="form.submit()"/>
 					</td>
 				</tr>
 				<% if ((precedencesLength.intValue() + 1 ) < infoPrecedencesSize.intValue()) { %>
 					<tr>
-						<td class="listClasses-header" colspan="2"><bean:message bundle="MANAGER_RESOURCES" key="message.manager.or"/></td>
+						<th class="listClasses-header" colspan="2"><bean:message bundle="MANAGER_RESOURCES" key="message.manager.or"/></th>
 					</tr>
 				<% } %>
 			</logic:iterate>

@@ -2,6 +2,7 @@
 
 <%@ page import="java.lang.String" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 
@@ -38,7 +39,7 @@
 
 <logic:notEmpty name="infoGrouping" property="infoAttends">
 	<html:form action="/deleteAttendsSetMembers" method="get">
-	<html:hidden property="page" value="1"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
 	<bean:message key="message.editAttendsSetMembers.RemoveMembers"/>
 
 	<br>
@@ -46,16 +47,16 @@
 	<table width="50%" cellpadding="0" border="0">
 		<tr>
 			<td class="listClasses-header"></td>
-			<td class="listClasses-header"><bean:message key="label.teacher.StudentNumber" /></td>
-			<td class="listClasses-header"><bean:message key="label.teacher.StudentName" /></td>
-			<td class="listClasses-header"><bean:message key="label.teacher.StudentEmail" /></td>		
+			<th class="listClasses-header"><bean:message key="label.teacher.StudentNumber" /></th>
+			<th class="listClasses-header"><bean:message key="label.teacher.StudentName" /></th>
+			<th class="listClasses-header"><bean:message key="label.teacher.StudentEmail" /></th>		
 		</tr>	
 		<logic:iterate id="infoAttend" name="infoGrouping" property="infoAttends">
 			<bean:define id="infoStudent" name="infoAttend" property="aluno" />
 			<bean:define id="infoPerson" name="infoStudent" property="infoPerson" />	
 			<tr>	
 				<td class="listClasses">
-					<html:multibox property="studentsToRemove">
+					<html:multibox bundle="HTMLALT_RESOURCES" altKey="multibox.studentsToRemove" property="studentsToRemove">
 					<bean:write name="infoPerson" property="username" />
 					</html:multibox>
 				</td>	
@@ -66,15 +67,15 @@
 		</logic:iterate>
 	</table>
 	<br>
-	<html:submit styleClass="inputbutton"><bean:message key="button.removeAluno"/>               		         	
+	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton"><bean:message key="button.removeAluno"/>               		         	
 	</html:submit>
-	<html:reset styleClass="inputbutton"><bean:message key="label.clear"/>
+	<html:reset bundle="HTMLALT_RESOURCES" altKey="reset.reset" styleClass="inputbutton"><bean:message key="label.clear"/>
 	</html:reset>
 	<br>
 	<br>
-	<html:hidden property="method" value="deleteAttendsSetMembers"/>
-	<html:hidden property="objectCode" value="<%= pageContext.findAttribute("objectCode").toString() %>" />
-	<html:hidden property="groupPropertiesCode" value="<%= request.getParameter("groupPropertiesCode") %>" />
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="deleteAttendsSetMembers"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.objectCode" property="objectCode" value="<%= pageContext.findAttribute("objectCode").toString() %>" />
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.groupPropertiesCode" property="groupPropertiesCode" value="<%= request.getParameter("groupPropertiesCode") %>" />
 	</html:form>
 </logic:notEmpty> 	
 
@@ -90,7 +91,7 @@
 <logic:present name="infoStudentList"> 
 		
 <html:form action="/insertAttendsSetMembers" method="get">
-<html:hidden property="page" value="1"/>
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
 
 <logic:empty name="infoStudentList"> 
 <h2>
@@ -107,21 +108,21 @@
 
 	
 	<tr>
-		<td class="listClasses-header">
-		</td>
-		<td class="listClasses-header"><bean:message key="label.teacher.StudentNumber" />
-		</td>
-		<td class="listClasses-header"><bean:message key="label.teacher.StudentName" />
-		</td>
-		<td class="listClasses-header"><bean:message key="label.teacher.StudentEmail" />
-		</td>
+		<th class="listClasses-header">
+		</th>
+		<th class="listClasses-header"><bean:message key="label.teacher.StudentNumber" />
+		</th>
+		<th class="listClasses-header"><bean:message key="label.teacher.StudentName" />
+		</th>
+		<th class="listClasses-header"><bean:message key="label.teacher.StudentEmail" />
+		</th>
 	</tr>
 
 
 	<logic:iterate id="infoStudent" name="infoStudentList">			
 		<tr>	
 			<td class="listClasses">
-			<html:multibox property="studentCodesToInsert">
+			<html:multibox bundle="HTMLALT_RESOURCES" altKey="multibox.studentCodesToInsert" property="studentCodesToInsert">
 			<bean:write name="infoStudent" property="idInternal"/>
 			</html:multibox>
 			</td>	
@@ -139,15 +140,15 @@
 </table>
 <br>
 
-<html:hidden property="method" value="insertAttendsSetMembers"/>
-<html:hidden  property="objectCode" value="<%= pageContext.findAttribute("objectCode").toString() %>" />
-<html:hidden  property="groupPropertiesCode" value="<%= request.getParameter("groupPropertiesCode") %>" />
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="insertAttendsSetMembers"/>
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.objectCode"  property="objectCode" value="<%= pageContext.findAttribute("objectCode").toString() %>" />
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.groupPropertiesCode"  property="groupPropertiesCode" value="<%= request.getParameter("groupPropertiesCode") %>" />
 
 
-<html:submit styleClass="inputbutton"><bean:message key="button.insertAluno"/>                    		         	
+<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton"><bean:message key="button.insertAluno"/>                    		         	
 </html:submit>       
 
-<html:reset styleClass="inputbutton"><bean:message key="label.clear"/>
+<html:reset bundle="HTMLALT_RESOURCES" altKey="reset.reset" styleClass="inputbutton"><bean:message key="label.clear"/>
 </html:reset>  
 
 </logic:notEmpty>

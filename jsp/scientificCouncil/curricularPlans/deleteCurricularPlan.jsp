@@ -3,6 +3,7 @@
 <%@ taglib uri="/WEB-INF/html_basic.tld" prefix="h"%>
 
 <ft:tilesView definition="scientificCouncil.masterPage" attributeName="body-inline">
+	<f:loadBundle basename="resources/HtmlAltResources" var="htmlAltBundle"/>
 	<f:loadBundle basename="resources/ScientificCouncilResources" var="scouncilBundle"/>	
 	<f:loadBundle basename="resources/EnumerationResources" var="enumerationBundle"/>
 
@@ -12,7 +13,7 @@
 		<f:param value="#{scouncilBundle['curricularPlan']}" />
 	</h:outputFormat>
 	<h:form>
-		<h:outputText escape="false" value="<input id='dcpId' name='dcpId' type='hidden' value='#{DegreeCurricularPlanManagement.dcpId}'/>"/>
+		<h:outputText escape="false" value="<input alt='input.dcpId' id='dcpId' name='dcpId' type='hidden' value='#{DegreeCurricularPlanManagement.dcpId}'/>"/>
 
 		<h:messages infoClass="success0" errorClass="error0" layout="table" globalOnly="true"/>
 		
@@ -26,9 +27,9 @@
 		
 		
 		<h:outputText value="<br/><p>" escape="false"/>
-		<h:commandButton styleClass="inputbutton" value="#{scouncilBundle['confirm']}"
+		<h:commandButton alt="#{htmlAltBundle['commandButton.confirm']}" styleClass="inputbutton" value="#{scouncilBundle['confirm']}"
 			action="#{DegreeCurricularPlanManagement.deleteCurricularPlan}" onclick="return confirm('#{scouncilBundle['confirm.delete.curricularPlan']}')"/>
-		<h:commandButton immediate="true" styleClass="inputbutton" value="#{scouncilBundle['cancel']}"
+		<h:commandButton alt="#{htmlAltBundle['commandButton.cancel']}" immediate="true" styleClass="inputbutton" value="#{scouncilBundle['cancel']}"
 			action="curricularPlansManagement"/>
 		<h:outputText value="</p>" escape="false"/>
 	</h:form>

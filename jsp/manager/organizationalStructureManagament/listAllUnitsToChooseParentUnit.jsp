@@ -22,6 +22,7 @@ function check(e,v)
 </script>
 
 <ft:tilesView definition="definition.manager.masterPage" attributeName="body-inline">
+	<f:loadBundle basename="resources/HtmlAltResources" var="htmlAltBundle"/>
 	
 	<f:loadBundle basename="resources/ManagerResources" var="bundle"/>
 	
@@ -37,7 +38,7 @@ function check(e,v)
 		<h:outputText value="#{organizationalStructureBackingBean.allUnitsToChooseParentUnit}" escape="false"/>
 		
 		<h:outputText value="<br/>" escape="false" />		
-		<h:commandButton action="backToUnitDetails" immediate="true" value="#{bundle['label.return']}" styleClass="inputbutton"/>
+		<h:commandButton alt="#{htmlAltBundle['commandButton.return']}" action="backToUnitDetails" immediate="true" value="#{bundle['label.return']}" styleClass="inputbutton"/>
 				
 	</h:form>
 </ft:tilesView>

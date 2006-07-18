@@ -2,6 +2,7 @@
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.TagLib.sop.v3.TimeTableType" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/app.tld" prefix="app" %>
@@ -25,7 +26,7 @@
 	   	</tr>
 	</table>
 	<br />
-	<h2>Horário da Turma</h2>
+	<h2>Horï¿½rio da Turma</h2>
 	<div align="center">
 		<app:gerarHorario name="<%= SessionConstants.LESSON_LIST_ATT %>"
 						  type="<%= TimeTableType.SOP_CLASS_TIMETABLE %>"/>

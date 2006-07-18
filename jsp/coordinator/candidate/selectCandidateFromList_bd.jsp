@@ -1,5 +1,6 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ page import="org.apache.struts.Globals" %>
@@ -21,10 +22,10 @@
 </p>    
 	    <table>
     		<tr>
-	    		<td class="listClasses-header"><bean:message key="label.name" /></td>
-				<td class="listClasses-header"><bean:message key="label.masterDegree.administrativeOffice.specialization" /></td>
-				<td class="listClasses-header"><bean:message key="label.masterDegree.administrativeOffice.candidateSituation" /></td>
-				<td class="listClasses-header"><bean:message key="label.masterDegree.administrativeOffice.situationDate" /></td>
+	    		<th class="listClasses-header"><bean:message key="label.name" /></th>
+				<th class="listClasses-header"><bean:message key="label.masterDegree.administrativeOffice.specialization" /></th>
+				<th class="listClasses-header"><bean:message key="label.masterDegree.administrativeOffice.candidateSituation" /></th>
+				<th class="listClasses-header"><bean:message key="label.masterDegree.administrativeOffice.situationDate" /></th>
 			</tr>
     		<logic:iterate id="candidate" name="candidateList" >
     			<bean:define id="candidateLink">

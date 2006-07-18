@@ -1,5 +1,6 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
 
 <!-- Title and TOC -->
@@ -125,7 +126,7 @@
     &lt;slot name=&quot;nome&quot;&gt;
         &lt;validator class=&quot;net.sourceforge.fenixedu.renderers.validators.RegexpValidator&quot;&gt;
             &lt;property name=&quot;regexp&quot; value=&quot;\p{Space}*[^ ]+\p{Space}+[^ ]+.*&quot;/&gt;
-            &lt;property name=&quot;message&quot; value=&quot;Escreva pelo menos o primeiro e último nome&quot;/&gt;
+            &lt;property name=&quot;message&quot; value=&quot;Escreva pelo menos o primeiro e ï¿½ltimo nome&quot;/&gt;
             &lt;property name=&quot;key&quot; value=&quot;false&quot;/&gt;
         &lt;/validator&gt;
         &lt;property name=&quot;size&quot; value=&quot;50&quot;/&gt;
@@ -251,7 +252,7 @@ public class RegexpValidator extends HtmlValidator {
     &lt;slot name=&quot;nome&quot;&gt;
         &lt;validator class=&quot;net.sourceforge.fenixedu.renderers.validators.RegexpValidator&quot;&gt;
             &lt;property name=&quot;regexp&quot; value=&quot;\p{Space}*[^ ]+\p{Space}+[^ ]+.*&quot;/&gt;
-            &lt;property name=&quot;message&quot; value=&quot;Escreva pelo menos o primeiro e último nome&quot;/&gt;
+            &lt;property name=&quot;message&quot; value=&quot;Escreva pelo menos o primeiro e ï¿½ltimo nome&quot;/&gt;
             &lt;property name=&quot;key&quot; value=&quot;false&quot;/&gt;
         &lt;/validator&gt;
         &lt;property name=&quot;size&quot; value=&quot;50&quot;/&gt;

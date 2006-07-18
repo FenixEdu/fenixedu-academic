@@ -1,5 +1,6 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 
@@ -7,24 +8,24 @@
 
 <html:form action="/masterDegreeCreditsManagement">
 
-	<html:hidden property="method" value="viewMasterDegreeCredits"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="viewMasterDegreeCredits"/>
 	
 	<p class="mtop2"><bean:message key="label.credits.choose.ExecutionYear"/>:</p>
 	<p>
-	<html:select property="executionYearID" size="1" onchange="this.form.method.value='prepare';this.form.submit();">
+	<html:select bundle="HTMLALT_RESOURCES" altKey="select.executionYearID" property="executionYearID" size="1" onchange="this.form.method.value='prepare';this.form.submit();">
 		<html:options collection="executionYears" property="idInternal" labelProperty="year"/>
 	</html:select>
 	</p>
 	
 	<p class="mtop2"><bean:message key="label.credits.choose.masterDegreeCurricularPlan"/>:</p>
 	<p>
-	<html:select property="executionDegreeID" size="1" >
+	<html:select bundle="HTMLALT_RESOURCES" altKey="select.executionDegreeID" property="executionDegreeID" size="1" >
 		<html:options collection="masterDegreeExecutions" property="idInternal" labelProperty="degreeCurricularPlan.name"/>
 	</html:select>
 	</p>
 	
 	<p class="mtop2">
-	<html:submit styleClass="inputbutton">
+	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton">
 		<bean:message key="visualize"/>
 	</html:submit>
 	</p>

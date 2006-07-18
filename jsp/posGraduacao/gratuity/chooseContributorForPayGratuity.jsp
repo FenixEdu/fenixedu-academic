@@ -1,5 +1,5 @@
 <%@ page language="java" %>
-<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %><html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.masterDegree.utils.SessionConstants" %>
 
@@ -12,22 +12,22 @@
 <br/>
 <br/>
 <html:form action="/payGratuity.do" focus="contributorNumber">
-	<html:hidden property="method" value="confirmPayment"/>
-	<html:hidden property="gratuitySituationId" />
-	<html:hidden property="insuranceExecutionYearId" />
-	<html:hidden property="studentId" />
-	<html:hidden property="page" value="1"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="confirmPayment"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.gratuitySituationId" property="gratuitySituationId" />
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.insuranceExecutionYearId" property="insuranceExecutionYearId" />
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.studentId" property="studentId" />
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
 	<table border="0">
 		<tr>
 			<td><bean:message key="label.choose.contributor"/>&nbsp;</td>
 			<td>
-				<input type="text" name="contributorNumber" size="10" value=""/>
+				<input alt="input.contributorNumber" type="text" name="contributorNumber" size="10" value=""/>
 			</td>
 		</tr>
 	</table>
 	<br/>
 	<br/>
-	<html:submit styleClass="inputbutton">
+	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton">
 		<bean:message key="button.continue"/>
 	</html:submit>
 </html:form>

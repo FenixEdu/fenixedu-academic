@@ -1,5 +1,6 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
@@ -13,7 +14,7 @@
         %>
     
         <logic:iterate id="parent" indexId="index" name="parents">
-            <logic:greaterThan name="index" value="0">»</logic:greaterThan>
+            <logic:greaterThan name="index" value="0">ï¿½</logic:greaterThan>
             
             <bean:define id="parentId" name="parent" property="idInternal"/>
             <html:link page="<%= "/websiteManagement.do?method=edit&oid=" + parentId + "&path=" + pathParam %>">
@@ -25,7 +26,7 @@
             %>
         </logic:iterate>
         
-        <logic:notEmpty name="parents">»</logic:notEmpty>
+        <logic:notEmpty name="parents">ï¿½</logic:notEmpty>
         <bean:write name="item" property="name"/>
     
     </logic:present>

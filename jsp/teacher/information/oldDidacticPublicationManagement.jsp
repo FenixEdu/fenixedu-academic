@@ -1,5 +1,6 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <h2><bean:message key="title.teacherInformation"/></h2>
@@ -61,7 +62,7 @@
 <tr align="center">	
 	<td>
 	<html:form action="/voidAction">
-		<html:submit styleClass="inputbutton" property="confirm">
+		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.confirm" styleClass="inputbutton" property="confirm">
 			<bean:message key="button.continue"/>
 		</html:submit>
 	</html:form>

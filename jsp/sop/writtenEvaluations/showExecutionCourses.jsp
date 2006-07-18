@@ -4,6 +4,7 @@
 <%@ taglib uri="/WEB-INF/jsf_fenix_components.tld" prefix="fc"%>
 
 <ft:tilesView definition="definition.sop.examsPage" attributeName="body-inline">
+	<f:loadBundle basename="resources/HtmlAltResources" var="htmlAltBundle"/>
 	<f:loadBundle basename="resources/ApplicationResourcesSOP" var="bundleSOP"/>
 
 	<h:outputText value="<h2>#{bundleSOP['title.choose.discipline']}</h2><br/>" escape="false" />
@@ -15,8 +16,8 @@
 		<h:inputHidden binding="#{SOPEvaluationManagementBackingBean.monthHidden}"/>
 		<h:inputHidden binding="#{SOPEvaluationManagementBackingBean.yearHidden}"/>
 		<fc:viewState binding="#{SOPEvaluationManagementBackingBean.viewState}" />
-		<h:outputText escape="false" value="<input id='executionPeriodOID' name='executionPeriodOID' type='hidden' value='#{SOPEvaluationManagementBackingBean.executionPeriodOID}'/>"/>
-		<h:outputText escape="false" value="<input id='curricularYearIDsParameterString' name='curricularYearIDsParameterString' type='hidden' value='#{SOPEvaluationManagementBackingBean.curricularYearIDsParameterString}'/>"/>
+		<h:outputText escape="false" value="<input alt='input.executionPeriodOID' id='executionPeriodOID' name='executionPeriodOID' type='hidden' value='#{SOPEvaluationManagementBackingBean.executionPeriodOID}'/>"/>
+		<h:outputText escape="false" value="<input alt='input.curricularYearIDsParameterString' id='curricularYearIDsParameterString' name='curricularYearIDsParameterString' type='hidden' value='#{SOPEvaluationManagementBackingBean.curricularYearIDsParameterString}'/>"/>
 
 		<h:panelGrid columns="1" styleClass="infoselected">
 			<h:outputText value="#{bundleSOP['property.executionPeriod']}: <b>#{SOPEvaluationManagementBackingBean.executionPeriodLabel}</b>" escape="false"/>
@@ -41,8 +42,8 @@
 		</h:selectOneMenu>
 
 		<h:outputText value="<br/><br/>" escape="false" />
-		<h:commandButton action="#{SOPEvaluationManagementBackingBean.continueToCreateWrittenEvaluation}" value="#{bundleSOP['button.continue']}" styleClass="inputbutton"/>
-		<h:commandButton action="writtenEvaluationCalendar" value="#{bundleSOP['label.back']}" styleClass="inputbutton"/>
+		<h:commandButton alt="#{htmlAltBundle['commandButton.continue']}" action="#{SOPEvaluationManagementBackingBean.continueToCreateWrittenEvaluation}" value="#{bundleSOP['button.continue']}" styleClass="inputbutton"/>
+		<h:commandButton alt="#{htmlAltBundle['commandButton.back']}" action="writtenEvaluationCalendar" value="#{bundleSOP['label.back']}" styleClass="inputbutton"/>
 	</h:form>
 
 </ft:tilesView>

@@ -34,12 +34,12 @@
     <table border="0" cellspacing="1" cellpadding="1">
     <%-- Table with teachers description rows --%>
     <tr>
-        <td class="listClasses-header">
+        <th class="listClasses-header">
             <bean:message key="label.grant.contract.teacherNumber"/>
-        </td>
-        <td class="listClasses-header">
+        </th>
+        <th class="listClasses-header">
             <bean:message key="label.grant.contract.teacherName"/>
-        </td>
+        </th>
     </tr>   
     <%-- Table with result of search --%>
     <logic:iterate id="infoTeacher" name="teachersList">

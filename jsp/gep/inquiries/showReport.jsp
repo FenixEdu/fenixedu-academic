@@ -1,5 +1,5 @@
 <%@ page language="java" %>
-<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %><html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/c.tld" prefix="c" %>
@@ -22,27 +22,27 @@
 
 <logic:present name='<%= InquiriesUtil.EMAIL_REMINDER_REPORTS_LIST %>'>
 	<html:form action="/sendEmailReminder">
-		<html:hidden property="method" value="sendEmails" />
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="sendEmails" />
 		<table>
 			<tr>
-				<td class="listClasses-header">
+				<th class="listClasses-header">
 					<bean:message key="table.header.curricular.plan" bundle="INQUIRIES_RESOURCES"/>
-				</td>
-				<td class="listClasses-header">
+				</th>
+				<th class="listClasses-header">
 					<bean:message key="table.header.acronym" bundle="INQUIRIES_RESOURCES"/>
-				</td>
-				<td class="listClasses-header">
+				</th>
+				<th class="listClasses-header">
 					<bean:message key="table.header.number.degree.students" bundle="INQUIRIES_RESOURCES"/>
-				</td>
-				<td class="listClasses-header">
+				</th>
+				<th class="listClasses-header">
 					<bean:message key="table.header.number.students.with.email" bundle="INQUIRIES_RESOURCES"/>
-				</td>
-				<td class="listClasses-header">
+				</th>
+				<th class="listClasses-header">
 					<bean:message key="table.header.number.sent.emails" bundle="INQUIRIES_RESOURCES"/>
-				</td>
-				<td class="listClasses-header">
+				</th>
+				<th class="listClasses-header">
 					<bean:message key="table.header.number.unanswered.inquiries" bundle="INQUIRIES_RESOURCES"/>
-				</td>
+				</th>
 			</tr>
 			<%
 			int totalNumberDegreeStudents = 0;
@@ -86,25 +86,25 @@
 				%>
 			</logic:iterate>
 			
-			<td class="listClasses-header" colspan="2">
+			<th class="listClasses-header" colspan="2">
 				<bean:message key="table.header.totals" bundle="INQUIRIES_RESOURCES"/>
-			</td>
-			<td class="listClasses-header">
+			</th>
+			<th class="listClasses-header">
 				<% out.print(totalNumberDegreeStudents); %>
-			</td>
-			<td class="listClasses-header">
+			</th>
+			<th class="listClasses-header">
 				<% out.print(totalNumberStudentsWithEmail); %>
-			</td>
-			<td class="listClasses-header">
+			</th>
+			<th class="listClasses-header">
 				<% out.print(totalNumberSentEmails); %>
-			</td>
-			<td class="listClasses-header">
+			</th>
+			<th class="listClasses-header">
 				<% 
 				Double globalPercent = new Double((totalNumberUnansweredInquiries/globalTotalNumberInquiries)*100);
 				
 				out.print(totalNumberUnansweredInquiries + " (" + InquiriesUtil.formatAnswer(NumberUtils.formatNumber(globalPercent, 2)) + "%)");
 				%>
-			</td>
+			</th>
 		</table>
 		<%--/ul--%>
 

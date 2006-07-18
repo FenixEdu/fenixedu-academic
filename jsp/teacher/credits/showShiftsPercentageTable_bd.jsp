@@ -1,5 +1,6 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
@@ -11,25 +12,25 @@
 <span class="error"><html:errors/></span>
 
 <html:form action="/executionCourseShiftsPercentageManager">
-	<html:hidden property="method" value="accept"/>
-	<html:hidden property="objectCode"/>
-	<html:hidden property="teacherOID"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="accept"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.objectCode" property="objectCode"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.teacherOID" property="teacherOID"/>
 	
 	<table width="100%">
 		<tr>
-			<td rowspan="2" class="listClasses-header"><bean:message key="label.shift"/></td>
-			<td rowspan="2" class="listClasses-header"><bean:message key="label.shift.type"/></td>
-			<td colspan="4" class="listClasses-header"><bean:message key="label.lessons"/></td>
-			<td rowspan="2" class="listClasses-header"><bean:message key="label.professorship.question"/></td>			
-			<td rowspan="2" class="listClasses-header"><bean:message key="label.professorship.percentage"/></td>
-			<td class="listClasses-header"><bean:message key="label.teacher.applied"/></td>			
+			<th rowspan="2" class="listClasses-header"><bean:message key="label.shift"/></th>
+			<th rowspan="2" class="listClasses-header"><bean:message key="label.shift.type"/></th>
+			<th colspan="4" class="listClasses-header"><bean:message key="label.lessons"/></th>
+			<th rowspan="2" class="listClasses-header"><bean:message key="label.professorship.question"/></th>			
+			<th rowspan="2" class="listClasses-header"><bean:message key="label.professorship.percentage"/></th>
+			<th class="listClasses-header"><bean:message key="label.teacher.applied"/></th>			
 		</tr>
 		<tr>
-			<td class="listClasses-header"><bean:message key="label.day.of.week"/></td>
-			<td class="listClasses-header"><bean:message key="label.lesson.start"/></td>
-			<td class="listClasses-header"><bean:message key="label.lesson.end"/></td>
-			<td class="listClasses-header"><bean:message key="label.lesson.room"/></td>			
-			<td class="listClasses-header"><bean:message key="label.teacher"/> - <bean:message key="label.professorship.percentage"/></td>
+			<th class="listClasses-header"><bean:message key="label.day.of.week"/></th>
+			<th class="listClasses-header"><bean:message key="label.lesson.start"/></th>
+			<th class="listClasses-header"><bean:message key="label.lesson.end"/></th>
+			<th class="listClasses-header"><bean:message key="label.lesson.room"/></th>			
+			<th class="listClasses-header"><bean:message key="label.teacher"/> - <bean:message key="label.professorship.percentage"/></th>
 		</tr> 
 		<logic:iterate id="infoShiftPercentage" name="infoShiftsPercentageList" indexId="index">
 			<bean:define id="availablePercentage" name="infoShiftPercentage" property="availablePercentage" />
@@ -38,7 +39,7 @@
 					<tr>
 						<td class="listClasses"><bean:write name="infoShiftPercentage" property="shift.nome"/></td>
 						<td class="listClasses"><bean:write name="infoShiftPercentage" property="shift.tipo.siglaTipoAula"/></td>
-						<td class="listClasses" colspan="7"> Não tem aulas </td>
+						<td class="listClasses" colspan="7"> Nï¿½o tem aulas </td>
 					</tr>
 				</logic:equal>
 				<logic:notEqual name="lessonsSize" value="0">
@@ -68,7 +69,7 @@
 							</td>
 							
 							<td class="listClasses" rowspan="<%= lessonsSize %>">
-								<html:multibox property="shiftProfessorships">
+								<html:multibox bundle="HTMLALT_RESOURCES" altKey="multibox.shiftProfessorships" property="shiftProfessorships">
 									<bean:write name="infoShiftPercentage" property="shift.idInternal"/>
 								</html:multibox>
 							</td>	
@@ -77,7 +78,7 @@
 						  		<bean:define id="propertyName">
 									percentage_<bean:write name="infoShiftPercentage" property="shift.idInternal"/>
 								</bean:define>
-								<html:text property='<%= propertyName.toString() %>' size="4" value=""/> %
+								<html:text alt='<%= propertyName.toString() %>' property='<%= propertyName.toString() %>' size="4" value=""/> %
 							</td>
 							<td class="listClasses" rowspan="<%= lessonsSize %>">
 								<bean:size id="shiftPercentageSize" name="infoShiftPercentage" property="teacherShiftPercentageList"/>
@@ -114,5 +115,5 @@
 		</logic:iterate>
 	</table>
 	<p>
-	<html:submit styleClass="inputbutton" value="Submeter"/>
+	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton" value="Submeter"/>
 </html:form>

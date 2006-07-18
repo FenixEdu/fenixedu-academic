@@ -1,5 +1,6 @@
 <%@ page language="java"%>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/enum.tld" prefix="e"%>
@@ -15,16 +16,16 @@
 	<logic:greaterThan name="numberOfWebsites" value="0">	
 	<table width="100%">
 		<tr>
-			<td class="listClasses-header"><bean:message key="cms.executionCourseWebsiteManagement.website.type.label" bundle="CMS_RESOURCES"/></td>
-            <td class="listClasses-header"><bean:message key="cms.executionCourseWebsiteManagement.website.title.label" bundle="CMS_RESOURCES"/></td>
-			<td class="listClasses-header"><bean:message key="cms.executionCourseWebsiteManagement.website.executionCourse.label" bundle="CMS_RESOURCES"/></td>
-			<td class="listClasses-header"><bean:message key="cms.executionCourseWebsiteManagement.website.executionPeriod.label" bundle="CMS_RESOURCES"/></td>
-			<td class="listClasses-header"><bean:message key="cms.executionCourseWebsiteManagement.website.curricularYear.label" bundle="CMS_RESOURCES"/></td>
-			<td class="listClasses-header"><bean:message key="cms.executionCourseWebsiteManagement.website.degree.label" bundle="CMS_RESOURCES"/></td>
-			<td class="listClasses-header"><bean:message key="cms.executionCourseWebsiteManagement.website.description.label" bundle="CMS_RESOURCES"/></td>
-            <td class="listClasses-header">&nbsp;</td>
-			<td class="listClasses-header">&nbsp;</td>
-			<td class="listClasses-header">&nbsp;</td>
+			<th class="listClasses-header"><bean:message key="cms.executionCourseWebsiteManagement.website.type.label" bundle="CMS_RESOURCES"/></th>
+            <th class="listClasses-header"><bean:message key="cms.executionCourseWebsiteManagement.website.title.label" bundle="CMS_RESOURCES"/></th>
+			<th class="listClasses-header"><bean:message key="cms.executionCourseWebsiteManagement.website.executionCourse.label" bundle="CMS_RESOURCES"/></th>
+			<th class="listClasses-header"><bean:message key="cms.executionCourseWebsiteManagement.website.executionPeriod.label" bundle="CMS_RESOURCES"/></th>
+			<th class="listClasses-header"><bean:message key="cms.executionCourseWebsiteManagement.website.curricularYear.label" bundle="CMS_RESOURCES"/></th>
+			<th class="listClasses-header"><bean:message key="cms.executionCourseWebsiteManagement.website.degree.label" bundle="CMS_RESOURCES"/></th>
+			<th class="listClasses-header"><bean:message key="cms.executionCourseWebsiteManagement.website.description.label" bundle="CMS_RESOURCES"/></th>
+            <th class="listClasses-header">&nbsp;</th>
+			<th class="listClasses-header">&nbsp;</th>
+			<th class="listClasses-header">&nbsp;</th>
 		</tr>
 		<logic:iterate id="website" name="websites" type="net.sourceforge.fenixedu.domain.cms.website.ExecutionCourseWebsite">
 		<tr>
@@ -113,7 +114,7 @@
 
 <logic:present name="executionPeriods">
 	<html:form action="/executionCourseWebsiteManagement" method="get">  
-		<html:hidden property="method" value="prepareChooseExecDegreeAndCurYear" />
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="prepareChooseExecDegreeAndCurYear" />
 		<table width="100%">
 			<tr>
 				<td width="10%">
@@ -121,21 +122,21 @@
 					:
 				</td>
 				<td width="90%">
-					<html:select property="executionPeriodID">
+					<html:select bundle="HTMLALT_RESOURCES" altKey="select.executionPeriodID" property="executionPeriodID">
 						<html:options collection="executionPeriods" property="idInternal" labelProperty="qualifiedName"/>
 					</html:select>
 				</td>
 			</tr>
 		</table>
 		<br />
-		<html:submit styleClass="inputbutton"><bean:message  bundle="CMS_RESOURCES" key="cms.executionCourseWebsiteManagement.choose.button"/></html:submit>
+		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton"><bean:message  bundle="CMS_RESOURCES" key="cms.executionCourseWebsiteManagement.choose.button"/></html:submit>
 	</html:form>
 </logic:present>
 
 <logic:present name="degrees">	
 	<html:form action="/executionCourseWebsiteManagement" method="get">
-		<html:hidden property="executionPeriodID"/>
-		<html:hidden property="method" value="prepareChooseExecutionCourse" />
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.executionPeriodID" property="executionPeriodID"/>
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="prepareChooseExecutionCourse" />
 
 		<table width="100%">		
 			<tr>
@@ -144,7 +145,7 @@
 					:
 				</td>
 				<td witdh="90%">
-					<html:select property="executionDegreeID">
+					<html:select bundle="HTMLALT_RESOURCES" altKey="select.executionDegreeID" property="executionDegreeID">
 						<html:options collection="degrees" property="idInternal" labelProperty="qualifiedName"/>
 					</html:select>
 				</td>
@@ -155,7 +156,7 @@
 					:
 				</td>
 				<td witdh="90%">
-					<html:select property="curricularYear">
+					<html:select bundle="HTMLALT_RESOURCES" altKey="select.curricularYear" property="curricularYear">
 						<html:option value="1">1</html:option>
 						<html:option value="2">2</html:option>
 						<html:option value="3">3</html:option>
@@ -166,7 +167,7 @@
 			</tr>		
 		</table>
 		<br />
-		<html:submit styleClass="inputbutton">
+		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton">
 			<bean:message  bundle="CMS_RESOURCES" key="cms.executionCourseWebsiteManagement.choose.button"/>
 		</html:submit>
 	</html:form>
@@ -175,14 +176,14 @@
 
 <logic:present name="courses">
 	<html:form action="/executionCourseWebsiteManagement" method="get">
-		<html:hidden property="method" value="createWebsite" />	
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="createWebsite" />	
 			<table width="100%">
 				<tr>
 					<td>
 						<bean:message bundle="CMS_RESOURCES" key="cms.executionCourseWebsiteManagement.website.title.label"/>
 					</td>
 					<td>
-						<html:text property="name"/>
+						<html:text bundle="HTMLALT_RESOURCES" altKey="text.name" property="name"/>
 					</td>																
 				</tr>
 				<tr>
@@ -190,7 +191,7 @@
 						<bean:message bundle="CMS_RESOURCES" key="cms.executionCourseWebsiteManagement.website.description.label"/>
 					</td>							
 					<td>
-						<html:text property="description" size="60"/>
+						<html:text bundle="HTMLALT_RESOURCES" altKey="text.description" property="description" size="60"/>
 					</td>
 				</tr>		
                 <tr>
@@ -198,7 +199,7 @@
                         <bean:message bundle="CMS_RESOURCES" key="cms.executionCourseWebsiteManagement.website.type.label"/>
                     </td>                           
                     <td>
-                        <html:select property="websiteTypeID">
+                        <html:select bundle="HTMLALT_RESOURCES" altKey="select.websiteTypeID" property="websiteTypeID">
 						  <html:options collection="websiteTypes" property="idInternal" labelProperty="name"/>
         					</html:select>
                     </td>
@@ -217,15 +218,15 @@
 											<tr>
 												<td>&nbsp;
 												</td>
-												<td class="listClasses-header"><bean:message  bundle="CMS_RESOURCES" key="cms.course.label" />
-												</td>
+												<th class="listClasses-header"><bean:message  bundle="CMS_RESOURCES" key="cms.course.label" />
+												</th>
 											</tr>													
 											<bean:define id="viewAction" name="viewAction" type="java.lang.String"/>				
 											<logic:iterate id="executionCourse" name="courses" type="net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse">
 												<bean:define id="infoExecutionPeriod" name="executionCourse" property="infoExecutionPeriod"/>
 												<tr>	 			
 													<td class="listClasses">
-														<html:radio idName="executionCourse" property="executionCourseID" value="idInternal"/>
+														<html:radio bundle="HTMLALT_RESOURCES" altKey="radio.executionCourseID" idName="executionCourse" property="executionCourseID" value="idInternal"/>
 													</td>
 													<td class="listClasses" style="text-align:left"><bean:write name="executionCourse" property="nome"/>
 													</td>												
@@ -239,7 +240,7 @@
 					</td>
 				</tr>
 			</table>
-	<html:submit styleClass="inputbutton">
+	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton">
 			<bean:message  bundle="CMS_RESOURCES" key="cms.executionCourseWebsiteManagement.choose.button"/>
 		</html:submit>
 	</html:form>

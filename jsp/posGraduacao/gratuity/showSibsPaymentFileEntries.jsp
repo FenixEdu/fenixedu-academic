@@ -1,5 +1,5 @@
 <%@ page language="java" %>
-<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
+<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%><html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.masterDegree.utils.SessionConstants" %>
@@ -29,7 +29,7 @@
 		<logic:iterate id="sibsPaymentFileEntry" name="sibsPaymentFileEntries">
 			
 			<tr align="center">
-				<td><html:radio idName="sibsPaymentFileEntry" property="sibsPaymentFileEntryId" value="idInternal"/>	</td>
+				<td><html:radio bundle="HTMLALT_RESOURCES" altKey="radio.sibsPaymentFileEntryId" idName="sibsPaymentFileEntry" property="sibsPaymentFileEntryId" value="idInternal"/>	</td>
 				<td><bean:write name="sibsPaymentFileEntry" property="year"/></td>
 				
 				<td><bean:write name="sibsPaymentFileEntry" property="studentNumber"/></td>
@@ -51,9 +51,9 @@
 
 	<br/><br/>
 	
-	<html:hidden property="method" value="fix"/>
-	<html:hidden property="page" value="1"/>
-	<html:submit styleClass="inputbutton">
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="fix"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
+	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton">
 		<bean:message key="label.sibsPaymentFileEntry.fix"/>
 	</html:submit>
 	

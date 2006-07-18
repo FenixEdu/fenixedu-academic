@@ -15,7 +15,7 @@
         <br/>
         <html:errors/>
         <html:form action="/adicionarAulasTmp">
-            <center> <b> Aulas disponíveis </b> </center>
+            <center> <b> Aulas disponï¿½veis </b> </center>
             <br/>
             <!-- Cria a tabela das aulas -->
             <logic:present name="listaAulasDeDisciplinaETipoBean" scope="request">
@@ -29,7 +29,7 @@
                             Dia da Semana
                         </th>
                         <th>
-                            Início
+                            Inï¿½cio
                         </th>
                         <th>
                             Fim
@@ -44,7 +44,7 @@
                     <logic:iterate id="elem" name="listaAulasDeDisciplinaETipoBean" scope="request">
                        <tr align="center">
                             <td>
-                                <html:radio name="posicaoAulaFormBean" property="posicao" value="<%= (new Integer(i)).toString() %>"/>
+                                <html:radio bundle="HTMLALT_RESOURCES" altKey="radio.posicao" name="posicaoAulaFormBean" property="posicao" value="<%= (new Integer(i)).toString() %>"/>
                             </td>
                             <td>
                                 <bean:write name="elem" property="diaSemana" />
@@ -70,7 +70,7 @@
                 <table align="center" border='1' cellpadding='5'>
                     <tr align="center">
                         <td>
-                            <font color='red'> Não existem aulas da disciplina e tipo escolhidos </font>
+                            <font color='red'> Nï¿½o existem aulas da disciplina e tipo escolhidos </font>
                         </td>
                     </tr>
                 </table>
@@ -80,7 +80,7 @@
             <table align="center">
                 <tr align="center">
                     <td>
-                        <html:submit property="operation">
+                        <html:submit bundle="HTMLALT_RESOURCES" altKey="submit.operation" property="operation">
                             Adicionar Aula
                         </html:submit>
                     </td>

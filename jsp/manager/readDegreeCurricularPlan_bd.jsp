@@ -1,5 +1,6 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/taglibs-string.tld" prefix="str" %>
@@ -45,23 +46,23 @@
 			return confirm('<bean:message bundle="MANAGER_RESOURCES" key="message.confirm.delete.curricular.courses"/>')
 	 </bean:define>
 	
-		<html:hidden property="degreeCurricularPlanId" value="<%= request.getParameter("degreeCurricularPlanId") %>"/>
-		<html:hidden property="degreeId" value="<%= request.getParameter("degreeId") %>"/>
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.degreeCurricularPlanId" property="degreeCurricularPlanId" value="<%= request.getParameter("degreeCurricularPlanId") %>"/>
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.degreeId" property="degreeId" value="<%= request.getParameter("degreeId") %>"/>
 			<table width="100%" cellpadding="0" border="0">
 				<tr>
-					<td class="listClasses-header">
-					</td>
-					<td class="listClasses-header"><bean:message bundle="MANAGER_RESOURCES" key="label.manager.curricularCourse.name" />
-					</td>
-					<td class="listClasses-header"><bean:message bundle="MANAGER_RESOURCES" key="label.manager.curricularCourse.code" />
-					</td>
-					<td class="listClasses-header"><bean:message bundle="MANAGER_RESOURCES" key="label.manager.curricularCourse.acronym" />
-					</td>
+					<th class="listClasses-header">
+					</th>
+					<th class="listClasses-header"><bean:message bundle="MANAGER_RESOURCES" key="label.manager.curricularCourse.name" />
+					</th>
+					<th class="listClasses-header"><bean:message bundle="MANAGER_RESOURCES" key="label.manager.curricularCourse.code" />
+					</th>
+					<th class="listClasses-header"><bean:message bundle="MANAGER_RESOURCES" key="label.manager.curricularCourse.acronym" />
+					</th>
 				</tr>
 				<logic:iterate id="curricularCourse" name="curricularCoursesList">
 				<tr>	 
 					<td class="listClasses">
-						<html:multibox property="internalIds">
+						<html:multibox bundle="HTMLALT_RESOURCES" altKey="multibox.internalIds" property="internalIds">
 							<bean:write name="curricularCourse" property="idInternal"/>
 						</html:multibox>
 					</td>				
@@ -77,7 +78,7 @@
 			
 <br>
 
-		<html:submit onclick='<%=onclick.toString() %>'><bean:message bundle="MANAGER_RESOURCES" key="label.manager.delete.selected.curricularCourses"/></html:submit>
+		<html:submit bundle="HTMLALT_RESOURCES" altKey='submit.submit' onclick='<%=onclick.toString() %>'><bean:message bundle="MANAGER_RESOURCES" key="label.manager.delete.selected.curricularCourses"/></html:submit>
 	</html:form> 
 </logic:notEmpty>	 	
 </logic:present>
@@ -102,34 +103,34 @@
 			return confirm('<bean:message bundle="MANAGER_RESOURCES" key="message.confirm.delete.execution.degrees"/>')
 		  </bean:define>
 		  
-		<html:hidden property="degreeCurricularPlanId" value="<%= request.getParameter("degreeCurricularPlanId") %>"/>
-		<html:hidden property="degreeId" value="<%= request.getParameter("degreeId") %>"/>
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.degreeCurricularPlanId" property="degreeCurricularPlanId" value="<%= request.getParameter("degreeCurricularPlanId") %>"/>
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.degreeId" property="degreeId" value="<%= request.getParameter("degreeId") %>"/>
 			<table cellpadding="0" border="0">
 				<tr>
-					<td class="listClasses-header">
-					</td>
-					<td class="listClasses-header"><bean:message bundle="MANAGER_RESOURCES" key="label.manager.executionDegree.executionYear" />
-					</td>
-					<td class="listClasses-header"><bean:message bundle="MANAGER_RESOURCES" key="label.manager.executionDegree.coordinator" />
-					</td>
-					<td class="listClasses-header"><bean:message bundle="MANAGER_RESOURCES" key="label.manager.executionDegree.temporaryExamMap" />
-					</td>
-					<td class="listClasses-header">Aulas 1º Semestre
-					</td>
-					<td class="listClasses-header">Exames 1º Semestre
-					</td>
-					<td class="listClasses-header">Aulas 2º Semestre
-					</td>
-					<td class="listClasses-header">Exames 2º Semestre
-					</td>
-					<td class="listClasses-header">
-					</td>
+					<th class="listClasses-header">
+					</th>
+					<th class="listClasses-header"><bean:message bundle="MANAGER_RESOURCES" key="label.manager.executionDegree.executionYear" />
+					</th>
+					<th class="listClasses-header"><bean:message bundle="MANAGER_RESOURCES" key="label.manager.executionDegree.coordinator" />
+					</th>
+					<th class="listClasses-header"><bean:message bundle="MANAGER_RESOURCES" key="label.manager.executionDegree.temporaryExamMap" />
+					</th>
+					<th class="listClasses-header">Aulas 1ï¿½ Semestre
+					</th>
+					<th class="listClasses-header">Exames 1ï¿½ Semestre
+					</th>
+					<th class="listClasses-header">Aulas 2ï¿½ Semestre
+					</th>
+					<th class="listClasses-header">Exames 2ï¿½ Semestre
+					</th>
+					<th class="listClasses-header">
+					</th>
 				</tr>
 				<logic:iterate id="executionDegree" name="executionDegreesList">
 				<bean:define id="executionDegreeId" name="executionDegree" property="idInternal"/>
 				<tr>	 
 					<td class="listClasses">
-						<html:multibox property="internalIds">
+						<html:multibox bundle="HTMLALT_RESOURCES" altKey="multibox.internalIds" property="internalIds">
 							<bean:write name="executionDegree" property="idInternal"/>
 						</html:multibox>
 					</td>
@@ -171,7 +172,7 @@
 									Sim
 								</logic:equal> 
 								<logic:notEqual name="tempExamMap" value="true">
-									Não
+									Nï¿½o
 								</logic:notEqual>
 							</logic:present>
 						</logic:notEmpty>
@@ -251,7 +252,7 @@
 			
 <br>	
 
-		<html:submit onclick='<%=onclick.toString() %>'><bean:message bundle="MANAGER_RESOURCES" key="label.manager.delete.selected.executionDegrees"/></html:submit>
+		<html:submit bundle="HTMLALT_RESOURCES" altKey='submit.submit' onclick='<%=onclick.toString() %>'><bean:message bundle="MANAGER_RESOURCES" key="label.manager.delete.selected.executionDegrees"/></html:submit>
 	</html:form> 
 </logic:notEmpty>
 -->

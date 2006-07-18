@@ -1,5 +1,6 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ page import="java.util.Map" %>
@@ -19,15 +20,15 @@
 	<b><bean:message bundle="MANAGER_RESOURCES" bundle="CMS_RESOURCES" key="cms.description.label"/>:</b> <bean:write name="group" property="description"/><br/>
 	
 	<html:form action="/mailingListManagement" method="get">
-		<html:hidden property="method" value="create"/>
-		<html:hidden property="groupID"/>
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="create"/>
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.groupID" property="groupID"/>
 		<table>
 			<tr>				
 				<td>
 					<bean:message bundle="MANAGER_RESOURCES" bundle="CMS_RESOURCES" key="cms.messaging.mailingList.creating.name.label"/>
 				</td>
 				<td>
-					<html:text property="name"/>
+					<html:text bundle="HTMLALT_RESOURCES" altKey="text.name" property="name"/>
 				</td>
 			</tr>
 			<tr>
@@ -35,7 +36,7 @@
 					<bean:message bundle="MANAGER_RESOURCES" bundle="CMS_RESOURCES" key="cms.messaging.mailingList.creating.description.label"/>
 				</td>
 				<td>
-					<html:text property="description"/>
+					<html:text bundle="HTMLALT_RESOURCES" altKey="text.description" property="description"/>
 				</td>
 			</tr>
 			<tr>				
@@ -43,11 +44,11 @@
 					<bean:message bundle="MANAGER_RESOURCES" bundle="CMS_RESOURCES" key="cms.messaging.mailingList.creating.address.label"/>
 				</td>
 				<td>
-					<html:text property="address"/>@lists.fenix.ist.utl.pt
+					<html:text bundle="HTMLALT_RESOURCES" altKey="text.address" property="address"/>@lists.fenix.ist.utl.pt
 				</td>
 			</tr>			
 		</table>
-		<html:submit styleClass="inputbutton">
+		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton">
 					<bean:message bundle="MANAGER_RESOURCES" bundle="CMS_RESOURCES" key="cms.save.button"/>
 		</html:submit>
 	</html:form>

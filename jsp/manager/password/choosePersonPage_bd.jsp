@@ -1,5 +1,6 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 
@@ -9,7 +10,7 @@
 
 <br />
 <html:form action="/generateNewPassword.do?method=findPerson">
-	<html:hidden property="page" value="1" />
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1" />
 
 
 	<h3><bean:message bundle="MANAGER_RESOURCES" key="label.operator.choosePerson" /></h3>
@@ -21,7 +22,7 @@
 				Username
 			</td>
 			<td>
-				<html:text property="username" />
+				<html:text bundle="HTMLALT_RESOURCES" altKey="text.username" property="username" />
 			</td>
 		
 		</tr>
@@ -30,5 +31,5 @@
 
 
 
-	<html:submit value="Seguinte" styleClass="inputbutton" property="OK"/>
+	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.OK" value="Seguinte" styleClass="inputbutton" property="OK"/>
 </html:form> 

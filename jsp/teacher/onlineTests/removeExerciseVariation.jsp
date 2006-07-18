@@ -1,5 +1,6 @@
 <%@ page language="java"%>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 
@@ -28,20 +29,20 @@
 			<bean:message key="message.removeVariation.changeStudentVariation" />
 			<p></p>
 			<html:form action="/exercisesEdition">
-				<html:hidden property="page" value="0" />
-				<html:hidden property="method" value="removeExerciseVariation" />
-				<html:hidden property="exerciseCode" />
-				<html:hidden property="variationCode" />
-				<html:hidden property="objectCode" value="<%= pageContext.findAttribute("objectCode").toString() %>" />
+				<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="0" />
+				<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="removeExerciseVariation" />
+				<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.exerciseCode" property="exerciseCode" />
+				<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.variationCode" property="variationCode" />
+				<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.objectCode" property="objectCode" value="<%= pageContext.findAttribute("objectCode").toString() %>" />
 				<logic:present name="order">
-					<html:hidden property="order" value="<%=(pageContext.findAttribute("order")).toString()%>" />
+					<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.order" property="order" value="<%=(pageContext.findAttribute("order")).toString()%>" />
 				</logic:present>
 				<logic:present name="asc">
-					<html:hidden property="asc" value="<%=(pageContext.findAttribute("asc")).toString()%>" />
+					<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.asc" property="asc" value="<%=(pageContext.findAttribute("asc")).toString()%>" />
 				</logic:present>
 				<table>
 					<tr>
-						<td><html:submit styleClass="inputbutton">
+						<td><html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton">
 							<bean:message key="button.continue" />
 						</html:submit></td>
 			</html:form>
@@ -58,19 +59,19 @@
 			<tr>
 	</logic:empty>
 	<html:form action="/exercisesEdition">
-		<html:hidden property="page" value="0" />
-		<html:hidden property="method" value="prepareEditExercise" />
-		<html:hidden property="exerciseCode" />
-		<html:hidden property="variationCode" />
-		<html:hidden property="objectCode" />
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="0" />
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="prepareEditExercise" />
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.exerciseCode" property="exerciseCode" />
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.variationCode" property="variationCode" />
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.objectCode" property="objectCode" />
 		<logic:present name="order">
-			<html:hidden property="order" value="<%=(pageContext.findAttribute("order")).toString()%>" />
+			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.order" property="order" value="<%=(pageContext.findAttribute("order")).toString()%>" />
 		</logic:present>
 		<logic:present name="asc">
-			<html:hidden property="asc" value="<%=(pageContext.findAttribute("asc")).toString()%>" />
+			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.asc" property="asc" value="<%=(pageContext.findAttribute("asc")).toString()%>" />
 		</logic:present>
 
-		<td><html:submit styleClass="inputbutton">
+		<td><html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton">
 			<bean:message key="link.goBack" />
 		</html:submit></td>
 		</tr>

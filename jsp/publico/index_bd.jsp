@@ -1,6 +1,7 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-tiles.tld" prefix="tiles" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
@@ -18,12 +19,12 @@
 <bean:message key="message.public.index.degree.consult"/>
 </p>
 <br />--%>
-	<p><strong><font color="#FF0000">Atenção&nbsp;-&nbsp;</font>Se pretende consultar informação relativa a disciplinas de 4º ou 5º em 2003/2004 ou 5ª em 2004/2005 do curso de Informática - Alameda, deve seleccionar o plano curricular "Licenciatura em Engenharia Informática e de Computadores - LEIC - Currículo Antigo"</strong></p>
-	<p>	<strong><font color="#FF0000">Atenção&nbsp;-&nbsp;</font>Devido à alteração do calendário das Licenciaturas em Engenharia Civil, em Engenharia do Território, e em Arquitectura (despacho do Conselho Directivo do passado dia 29 de Julho), as salas de aula dessas três Licenciaturas foram alteradas</strong></p>
+	<p><strong><font color="#FF0000">Atenï¿½ï¿½o&nbsp;-&nbsp;</font>Se pretende consultar informaï¿½ï¿½o relativa a disciplinas de 4ï¿½ ou 5ï¿½ em 2003/2004 ou 5ï¿½ em 2004/2005 do curso de Informï¿½tica - Alameda, deve seleccionar o plano curricular "Licenciatura em Engenharia Informï¿½tica e de Computadores - LEIC - Currï¿½culo Antigo"</strong></p>
+	<p>	<strong><font color="#FF0000">Atenï¿½ï¿½o&nbsp;-&nbsp;</font>Devido ï¿½ alteraï¿½ï¿½o do calendï¿½rio das Licenciaturas em Engenharia Civil, em Engenharia do Territï¿½rio, e em Arquitectura (despacho do Conselho Directivo do passado dia 29 de Julho), as salas de aula dessas trï¿½s Licenciaturas foram alteradas</strong></p>
 	
 <%--	<strong><font color="#FF0000">Aviso:</font></strong>
 	<br />
-	<strong>Já estão disponíveis os <font color="#FF0000">horários provisórios</font> para o 1º semestre de 2004/2005 </strong>
+	<strong>Jï¿½ estï¿½o disponï¿½veis os <font color="#FF0000">horï¿½rios provisï¿½rios</font> para o 1ï¿½ semestre de 2004/2005 </strong>
 	<br />
 --%>	
 	<br />

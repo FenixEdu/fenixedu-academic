@@ -1,5 +1,6 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ page import="net.sourceforge.fenixedu.domain.curriculum.EnrollmentState" %>
@@ -54,30 +55,30 @@
 		<h3 class="bluetxt"><bean:message key="label.students.enrolled.exam" bundle="CURRICULUM_HISTORIC_RESOURCES"/></h3>
 		<table cellspacing="1" cellpadding="1">
 			<tr>
-				<td class="listClasses-header">
+				<th class="listClasses-header">
 					<bean:message key="label.number" bundle="CURRICULUM_HISTORIC_RESOURCES" /> 
-		   		</td>
-				<td class="listClasses-header">
+		   		</th>
+				<th class="listClasses-header">
 					<bean:message key="label.name" bundle="CURRICULUM_HISTORIC_RESOURCES"/>
-			   	</td>		
-			   	<td class="listClasses-header">
+			   	</th>		
+			   	<th class="listClasses-header">
 					<bean:message key="label.Degree" bundle="CURRICULUM_HISTORIC_RESOURCES"/>
-			   	</td>
-			   	<td class="listClasses-header">
+			   	</th>
+			   	<th class="listClasses-header">
 					<bean:message key="label.normal.mark" bundle="CURRICULUM_HISTORIC_RESOURCES"/>
-			   	</td>
-			   	<td class="listClasses-header">
+			   	</th>
+			   	<th class="listClasses-header">
 					<bean:message key="label.special.season.mark" bundle="CURRICULUM_HISTORIC_RESOURCES"/>
-			   	</td>
-			   	<td class="listClasses-header">
+			   	</th>
+			   	<th class="listClasses-header">
 					<bean:message key="label.improvment.mark" bundle="CURRICULUM_HISTORIC_RESOURCES"/>
-			   	</td>
-			   	<td class="listClasses-header">
+			   	</th>
+			   	<th class="listClasses-header">
 					<bean:message key="label.equivalence.mark" bundle="CURRICULUM_HISTORIC_RESOURCES"/>
-			   	</td>
-				<td class="listClasses-header">
+			   	</th>
+				<th class="listClasses-header">
 					<bean:message key="label.mark" bundle="CURRICULUM_HISTORIC_RESOURCES"/>
-			   	</td>
+			   	</th>
 			</tr>
 			<logic:iterate id="enrollment" name="infoCurriculumHistoricReport" property="enrollments">
 				<tr>

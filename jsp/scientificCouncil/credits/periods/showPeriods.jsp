@@ -1,5 +1,6 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
@@ -15,7 +16,7 @@
 	
 	<html:form action="/defineCreditsPeriods.do?method=showPeriods">
 		<logic:notEmpty name="executionPeriods">
-			<p><html:select property="executionPeriodId" onchange="this.form.submit()">
+			<p><html:select bundle="HTMLALT_RESOURCES" altKey="select.executionPeriodId" property="executionPeriodId" onchange="this.form.submit()">
 				<html:option key="choose.execution.period" value=""/>
 				<html:options collection="executionPeriods" property="value" labelProperty="label"/>
 			</html:select></p>		

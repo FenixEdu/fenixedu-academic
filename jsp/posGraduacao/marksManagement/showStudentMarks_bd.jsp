@@ -1,5 +1,6 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="dt" %>
@@ -35,16 +36,16 @@
 	<span class="error"><html:errors/></span>
 	<table>   
 		<tr>
-			<td class="listClasses-header"><bean:message key="label.mark"  /></td>
-			<td class="listClasses-header"><bean:message key="label.examDate"  /></td>
-			<td class="listClasses-header"><bean:message key="label.gradeAvailableDate"  /></td>
-			<td class="listClasses-header"><bean:message key="label.enrolmentEvaluationType"  /></td>
-			<td class="listClasses-header"><bean:message key="label.teacherName"  /></td>
+			<th class="listClasses-header"><bean:message key="label.mark"  /></th>
+			<th class="listClasses-header"><bean:message key="label.examDate"  /></th>
+			<th class="listClasses-header"><bean:message key="label.gradeAvailableDate"  /></th>
+			<th class="listClasses-header"><bean:message key="label.enrolmentEvaluationType"  /></th>
+			<th class="listClasses-header"><bean:message key="label.teacherName"  /></th>
 			<logic:present name="showMarks" >
-			 	<td class="listClasses-header"><bean:message key="label.employee"  /></td>
-		    	<td class="listClasses-header"><bean:message key="label.when"  /></td>
+			 	<th class="listClasses-header"><bean:message key="label.employee"  /></th>
+		    	<th class="listClasses-header"><bean:message key="label.when"  /></th>
 	    	</logic:present>
-			<td class="listClasses-header"><bean:message key="label.observation"  /></td>
+			<th class="listClasses-header"><bean:message key="label.observation"  /></th>
 		</tr>
 		<logic:iterate id="enrolment" name="studentmMarksListComponent" >	
 			<logic:iterate id="enrolmentEvaluation" name="enrolment" property="enrolmentEvaluations" type="net.sourceforge.fenixedu.dataTransferObject.InfoEnrolmentEvaluation" indexId="evaluationId" >		
@@ -119,18 +120,18 @@
 	<logic:notPresent name="showMarks" >
 		<html:form action="/changeMarkDispatchAction?method=studentMarkChanged" >
 	 		<bean:define id="teacherCode" name="lastEnrolmentEavluation" property="idInternal"/>
-	 		<html:hidden property="studentNumber"/>	
-			<html:hidden property="teacherCode" value="<%= pageContext.findAttribute("teacherCode").toString() %>" />
-	 		<html:hidden property="courseId" value="<%= pageContext.findAttribute("courseId").toString() %>" />
-	 		<html:hidden property="objectCode" value="<%= pageContext.findAttribute("objectCode").toString() %>" />
-	 		<html:hidden property="degreeId" value="<%= pageContext.findAttribute("degreeId").toString() %>" />
+	 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.studentNumber" property="studentNumber"/>	
+			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.teacherCode" property="teacherCode" value="<%= pageContext.findAttribute("teacherCode").toString() %>" />
+	 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.courseId" property="courseId" value="<%= pageContext.findAttribute("courseId").toString() %>" />
+	 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.objectCode" property="objectCode" value="<%= pageContext.findAttribute("objectCode").toString() %>" />
+	 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.degreeId" property="degreeId" value="<%= pageContext.findAttribute("degreeId").toString() %>" />
 			<table>
 	 			<tr>									
 					<td align="left">
 						<bean:message key="label.mark" />:
 					</td>
 					<td align="left">
-						<html:text property="grade" size="4"  />
+						<html:text bundle="HTMLALT_RESOURCES" altKey="text.grade" property="grade" size="4"  />
 					</td>
 				</tr>
 				<%-- Data de Exame --%>
@@ -139,30 +140,30 @@
 						<bean:message key="label.examDate" />:
 					</td>
              		<td>
-             			<html:select property="examDateYear">
+             			<html:select bundle="HTMLALT_RESOURCES" altKey="select.examDateYear" property="examDateYear">
                     		<html:options collection="<%= SessionConstants.YEARS_KEY %>" property="value" labelProperty="label"/>
                  		</html:select>
-                 		<html:select property="examDateMonth">
+                 		<html:select bundle="HTMLALT_RESOURCES" altKey="select.examDateMonth" property="examDateMonth">
                     		<html:options collection="<%= SessionConstants.MONTH_LIST_KEY %>" property="value" labelProperty="label"/>
                  		</html:select>
-                 		<html:select property="examDateDay">
+                 		<html:select bundle="HTMLALT_RESOURCES" altKey="select.examDateDay" property="examDateDay">
                     		<html:options collection="<%= SessionConstants.MONTH_DAYS_KEY %>" property="value" labelProperty="label"/>
                  		</html:select>    
              		</td>          
    				</tr>
-				<%-- Data de Avaliaçao --%>
+				<%-- Data de Avaliaï¿½ao --%>
    				<tr>							
 					<td align="left">
 						<bean:message key="label.gradeAvailableDate" />:
 					</td>
 	             	<td>
-	             		<html:select property="gradeAvailableDateYear">
+	             		<html:select bundle="HTMLALT_RESOURCES" altKey="select.gradeAvailableDateYear" property="gradeAvailableDateYear">
 	                    	<html:options collection="<%= SessionConstants.YEARS_KEY %>" property="value" labelProperty="label"/>
 	                 	</html:select>
-	                 	<html:select property="gradeAvailableDateMonth">
+	                 	<html:select bundle="HTMLALT_RESOURCES" altKey="select.gradeAvailableDateMonth" property="gradeAvailableDateMonth">
 	                    	<html:options collection="<%= SessionConstants.MONTH_LIST_KEY %>" property="value" labelProperty="label"/>
 	                 	</html:select>
-	                 	<html:select property="gradeAvailableDateDay">
+	                 	<html:select bundle="HTMLALT_RESOURCES" altKey="select.gradeAvailableDateDay" property="gradeAvailableDateDay">
 	                    	<html:options collection="<%= SessionConstants.MONTH_DAYS_KEY %>" property="value" labelProperty="label"/>
 	                 	</html:select>    
 	             	</td>          
@@ -172,7 +173,7 @@
 						<bean:message key="label.enrolmentEvaluationType" />:
 					</td>
 					<td align="left">
-						<html:select property="enrolmentEvaluationType">
+						<html:select bundle="HTMLALT_RESOURCES" altKey="select.enrolmentEvaluationType" property="enrolmentEvaluationType">
 		               		<html:options collection="<%= SessionConstants.ENROLMENT_EVALUATION_TYPE_LIST %>"  property="value" labelProperty="label"/>
 	             		</html:select>   
 					</td>
@@ -182,7 +183,7 @@
 						<bean:message key="label.masterDegree.administrativeOffice.responsibleTeacher" />:
 					</td>
 					<td align="left">	
-						<html:text property="teacherNumber" size="4" />	
+						<html:text bundle="HTMLALT_RESOURCES" altKey="text.teacherNumber" property="teacherNumber" size="4" />	
 					</td>
 				</tr>
 				<tr>									
@@ -190,11 +191,11 @@
 						<bean:message key="label.observation" />:
 					</td>
 					<td align="left">
-						<html:text  property="observation" size="20" />
+						<html:text bundle="HTMLALT_RESOURCES" altKey="text.observation"  property="observation" size="20" />
 					</td>
 				</tr>
 	 		</table>	
-	 		<html:submit styleClass="inputbutton">
+	 		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton">
 	 			<bean:message key="button.save"/>
 	 		</html:submit>
 	 	</html:form>

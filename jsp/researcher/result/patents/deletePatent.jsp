@@ -1,5 +1,6 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
@@ -38,19 +39,19 @@
 	<br/>
 	
 	<html:form action="/patents/patentsManagement">
-		<html:hidden property="method" value="deletePatent"/>
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="deletePatent"/>
 		<bean:define id="patentId" name="patent" property="idInternal" />
-		<html:hidden property="resultId" value="<%= patentId.toString() %>"/>
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.resultId" property="resultId" value="<%= patentId.toString() %>"/>
 		
 		<table>
 			<tr>
 				<td>
-					<html:submit styleClass="inputButton">
+					<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputButton">
 						<bean:message bundle="RESEARCHER_RESOURCES" key="button.delete"/>
 					</html:submit>
 				</td>
 				<td>
-					<html:submit styleClass="inputButton" onclick='<%= "this.form.method.value='listPatents'" %>'>
+					<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputButton" onclick='<%= "this.form.method.value='listPatents'" %>'>
 						<bean:message bundle="RESEARCHER_RESOURCES" key="button.cancel"/>
 					</html:submit>
 				</td>

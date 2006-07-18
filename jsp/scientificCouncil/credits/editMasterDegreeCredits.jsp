@@ -1,5 +1,6 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/enum.tld" prefix="e"%>
@@ -17,9 +18,9 @@
 
 <html:form action="/masterDegreeCreditsManagement">
 
-<html:hidden property="method" value="edit"/>
-<html:hidden property="executionDegreeID"/>
-<html:hidden property="curricularCourseID"/>
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="edit"/>
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.executionDegreeID" property="executionDegreeID"/>
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.curricularCourseID" property="curricularCourseID"/>
 
 <table class="tstyle1c">
 	<tr>
@@ -104,8 +105,8 @@
 						creditsMap(<bean:write name="professorship" property="idInternal"/>)
 					</bean:define>
 
-					<td><html:text property='<%= hours %>' size="4" /></td>
-					<td><html:text property='<%= credits %>' size="4" /></td>		
+					<td><html:text alt='<%= hours %>' property='<%= hours %>' size="4" /></td>
+					<td><html:text alt='<%= credits %>' property='<%= credits %>' size="4" /></td>		
 
 					<logic:equal name="isLastCellDone" value="false">
 						<td rowspan="<%= profRowSpan.intValue() %>">
@@ -144,7 +145,7 @@
 		<tr><td style="border: none"></td></tr>
 		<tr>
 			<td class="aright" style="border: none" colspan="10">
-				<html:submit styleClass="inputbutton">
+				<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton">
 					<bean:message key="button.save"/>	
 				</html:submit>
 			</td>

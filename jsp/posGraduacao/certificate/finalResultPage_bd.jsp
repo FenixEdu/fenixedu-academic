@@ -1,5 +1,6 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/taglibs-string.tld" prefix="str" %>
@@ -17,13 +18,13 @@
 	<tr>
 	<logic:present name="<%= SessionConstants.INFO_BRANCH %>" >
 		<bean:define id="infoBranch" name="<%= SessionConstants.INFO_BRANCH %>" scope="session" />
-	 		<td>Area de Especialização em <b><bean:write name="infoBranch" /></b>   			
+	 		<td>Area de Especializaï¿½ï¿½o em <b><bean:write name="infoBranch" /></b>   			
 			</td>	
 		<tr>
 	</logic:present>
- 		<td><p>O Aluno nº <bean:write name="infoStudentCurricularPlan" property="infoStudent.number"/> - <b><bean:write name="infoStudentCurricularPlan" property="infoStudent.infoPerson.nome"/></b><p/></td>
+ 		<td><p>O Aluno nï¿½ <bean:write name="infoStudentCurricularPlan" property="infoStudent.number"/> - <b><bean:write name="infoStudentCurricularPlan" property="infoStudent.infoPerson.nome"/></b><p/></td>
     <tr>
- 		<td>concluiu a parte escolar do curso de <bean:message name="infoStudentCurricularPlan" property="specialization.name" bundle="ENUMERATION_RESOURCES"/> acima indicado, constituída pelas seguintes disciplinas e classificações:<br /><br /></td>
+ 		<td>concluiu a parte escolar do curso de <bean:message name="infoStudentCurricularPlan" property="specialization.name" bundle="ENUMERATION_RESOURCES"/> acima indicado, constituï¿½da pelas seguintes disciplinas e classificaï¿½ï¿½es:<br /><br /></td>
  	</tr> 
  </table>	
  <table width="90%" cellspacing="0">
@@ -46,11 +47,11 @@
      	<td class="cell-last"><bean:write name="infoStudentCurricularPlan" property="givenCredits" /></td>  	
      </logic:present>
 	<tr>
-		<td class="results" align="right"><b>Total de créditos:</b></td>
+		<td class="results" align="right"><b>Total de crï¿½ditos:</b></td>
 		<td class="results">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
 		<td class="results" align="center"><b><bean:write name="total"/></b></td>
 	</tr>
 	</table>
-	<%-- BRUNO ESTA PARTE DEVERÁ SER IMPRESSA NO VERSO DA ÚLTIMA PAGINA --%> 		
+	<%-- BRUNO ESTA PARTE DEVERï¿½ SER IMPRESSA NO VERSO DA ï¿½LTIMA PAGINA --%> 		
 	<%--The Final Result --%>
 	<jsp:include page="./finalResultTemplate1.jsp" flush="true" />

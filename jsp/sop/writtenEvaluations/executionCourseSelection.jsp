@@ -3,6 +3,7 @@
 <%@ taglib uri="/WEB-INF/html_basic.tld" prefix="h"%>
 
 <ft:tilesView definition="definition.sop.examsPage" attributeName="body-inline">
+	<f:loadBundle basename="resources/HtmlAltResources" var="htmlAltBundle"/>
 	<f:loadBundle basename="resources/ApplicationResourcesSOP" var="bundleSOP"/>
 	<f:loadBundle basename="resources/ApplicationResources" var="bundle"/>
 
@@ -19,7 +20,7 @@
 	<h:form>
 		<fc:viewState binding="#{SOPEvaluationManagementBackingBean.viewState}" />
 		<h:inputHidden value="#{SOPEvaluationManagementBackingBean.evaluationTypeClassname}"/>
-		<h:outputText escape="false" value="<input id='executionPeriodOID' name='executionPeriodOID' type='hidden' value='#{SOPEvaluationManagementBackingBean.executionPeriodOID}'/>"/>
+		<h:outputText escape="false" value="<input alt='input.executionPeriodOID' id='executionPeriodOID' name='executionPeriodOID' type='hidden' value='#{SOPEvaluationManagementBackingBean.executionPeriodOID}'/>"/>
 
 		<h:panelGrid columns="2" styleClass="infotable">
 			<h:outputText value="<b><i>#{bundleSOP['title.selected.degree']}:</b></i>" escape="false"/>
@@ -47,7 +48,7 @@
 			
 		</h:panelGrid>
 		<h:outputText value="<br/>" escape="false"/>
-		<h:commandButton styleClass="inputbutton" action="#{SOPEvaluationManagementBackingBean.continueToCalendar}" value="#{bundle['button.change']}" />
+		<h:commandButton alt="#{htmlAltBundle['commandButton.change']}" styleClass="inputbutton" action="#{SOPEvaluationManagementBackingBean.continueToCalendar}" value="#{bundle['button.change']}" />
 	</h:form>
 
 </ft:tilesView>

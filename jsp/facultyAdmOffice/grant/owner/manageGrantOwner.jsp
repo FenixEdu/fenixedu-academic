@@ -1,5 +1,5 @@
 <%@ page language="java" %>
-<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
+<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%><html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="dt"%>
@@ -400,11 +400,11 @@
 	<%-- Editar Bolseiro --%>
 	<bean:define id="idGrantOwner" name="infoGrantOwner" property="idInternal"/>
 	
-	<html:hidden property="idGrantOwner" value="<%= idGrantOwner.toString() %>"/>
-	<html:hidden property="method" value="prepareEditGrantOwnerForm"/>				
-	<html:hidden property="loaddb" value="1"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.idGrantOwner" property="idGrantOwner" value="<%= idGrantOwner.toString() %>"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="prepareEditGrantOwnerForm"/>				
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.loaddb" property="loaddb" value="1"/>
 
-	<html:submit styleClass="inputbutton">
+	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton">
 		<bean:message key="button.edit"/>
     </html:submit>
     &nbsp;&nbsp;&nbsp;&nbsp;

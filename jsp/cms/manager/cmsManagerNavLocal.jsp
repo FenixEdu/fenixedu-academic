@@ -1,8 +1,9 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
+<html:xhtml/>
 
 <ul>
-	<li class="navheader">Gestão de CMS</li>
+	<li class="navheader">Gestï¿½o de CMS</li>
 	<li>
 	<html:link module="/cms" action="/personalGroupsManagement.do?method=prepare" titleKey="person.userGroupsManagement.label.title">
 		<bean:message bundle="CMS_RESOURCES" key="link.userGroupsManagement" />

@@ -1,5 +1,5 @@
 <%@ page language="java" %>
-<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %><html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 
@@ -36,20 +36,20 @@
 	
 <logic:present name="infoTeachersList" scope="request">
 	<html:form action="/saveTeachersBody" method="get">
-		<html:hidden property="degreeId" value="<%= request.getParameter("degreeId") %>"/>	
-		<html:hidden property="degreeCurricularPlanId" value="<%= request.getParameter("degreeCurricularPlanId") %>"/>
-		<html:hidden property="curricularCourseId" value="<%= request.getParameter("curricularCourseId") %>"/>
-		<html:hidden property="executionCourseId" value="<%= request.getParameter("executionCourseId") %>"/>
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.degreeId" property="degreeId" value="<%= request.getParameter("degreeId") %>"/>	
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.degreeCurricularPlanId" property="degreeCurricularPlanId" value="<%= request.getParameter("degreeCurricularPlanId") %>"/>
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.curricularCourseId" property="curricularCourseId" value="<%= request.getParameter("curricularCourseId") %>"/>
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.executionCourseId" property="executionCourseId" value="<%= request.getParameter("executionCourseId") %>"/>
 		<table width="80%" cellpadding="0" border="0">
 			<tr>
-				<td class="listClasses-header"><bean:message bundle="MANAGER_RESOURCES" key="label.manager.teacher.name" />
-				</td>
-				<td class="listClasses-header"><bean:message bundle="MANAGER_RESOURCES" key="label.manager.teacher.number" />
-				</td>
-				<td class="listClasses-header"><bean:message bundle="MANAGER_RESOURCES" key="label.manager.teaches" />
-				</td>
-				<td class="listClasses-header"><bean:message bundle="MANAGER_RESOURCES" key="label.manager.responsible" />
-				</td>	
+				<th class="listClasses-header"><bean:message bundle="MANAGER_RESOURCES" key="label.manager.teacher.name" />
+				</th>
+				<th class="listClasses-header"><bean:message bundle="MANAGER_RESOURCES" key="label.manager.teacher.number" />
+				</th>
+				<th class="listClasses-header"><bean:message bundle="MANAGER_RESOURCES" key="label.manager.teaches" />
+				</th>
+				<th class="listClasses-header"><bean:message bundle="MANAGER_RESOURCES" key="label.manager.responsible" />
+				</th>	
 			</tr>
 			<logic:iterate id="infoTeacher" name="infoTeachersList">
 				<tr>
@@ -59,12 +59,12 @@
 					<td class="listClasses"><bean:write name="infoTeacher" property="teacherNumber"/>
 					</td>
 					<td class="listClasses">
-						<html:multibox property="professorShipTeachersIds">
+						<html:multibox bundle="HTMLALT_RESOURCES" altKey="multibox.professorShipTeachersIds" property="professorShipTeachersIds">
 							<bean:write name="teacherId"/>
 						</html:multibox>
 					</td>
 					<td class="listClasses">
-						<html:multibox property="responsibleTeachersIds">
+						<html:multibox bundle="HTMLALT_RESOURCES" altKey="multibox.responsibleTeachersIds" property="responsibleTeachersIds">
 							<bean:write name="teacherId"/>
 						</html:multibox>
 					</td>
@@ -79,7 +79,7 @@
 						</td>
 						<td class="listClasses"></td>
 						<td class="listClasses">
-							<html:multibox property="nonAffiliatedTeachersIds">
+							<html:multibox bundle="HTMLALT_RESOURCES" altKey="multibox.nonAffiliatedTeachersIds" property="nonAffiliatedTeachersIds">
 								<bean:write name="nonAffiliatedTeacherId"/>
 							</html:multibox>
 						</td>

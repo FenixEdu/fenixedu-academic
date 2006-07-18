@@ -1,5 +1,6 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>	
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <logic:present name="infoStudentTestQuestionList">
@@ -10,15 +11,15 @@
 	
 	<logic:notEmpty name="infoStudentTestQuestionList" >
 	<html:form action="/studentTests">
-	<html:hidden property="method" value="testsFirstPage"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="testsFirstPage"/>
 
 	<logic:iterate id="testQuestion" name="infoStudentTestQuestionList" type="net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoStudentTestQuestion"/>
 	<bean:define id="distributedTest" name="testQuestion" property="distributedTest" type="net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoDistributedTest"/>
 	<bean:define id="testCode" name="distributedTest" property="idInternal"/>
 		
 	<bean:define id="objectCode" name="distributedTest" property="infoTestScope.infoObject.idInternal"/>
-	<html:hidden property="objectCode" value="<%= objectCode.toString() %>"/>
-	<html:hidden property="testCode" value="<%= testCode.toString() %>"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.objectCode" property="objectCode" value="<%= objectCode.toString() %>"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.testCode" property="testCode" value="<%= testCode.toString() %>"/>
 	
 		<h2><bean:write name="distributedTest" property="title"/></h2>
 		<b><bean:write name="distributedTest" property="testInformation"/></b>
@@ -35,7 +36,7 @@
  	</jsp:include>
 	<table align="center">
 	<tr>
-		<td><html:submit styleClass="inputbutton"><bean:message key="button.back"/></html:submit></td>
+		<td><html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton"><bean:message key="button.back"/></html:submit></td>
 	</tr>
 	</table>
 	</html:form>

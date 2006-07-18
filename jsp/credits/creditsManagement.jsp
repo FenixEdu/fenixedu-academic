@@ -1,31 +1,32 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-tiles.tld" prefix="tiles" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <span class="error"><html:errors/></span>
 
 <html:form action="/creditsManagement">
-	<html:hidden property="page" value="1"/>
-	<html:hidden property="method" value="processForm"/>
-	<html:hidden property="teacherOID"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="processForm"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.teacherOID" property="teacherOID"/>
 	<table width="100%" cellpadding="5" cellspacing="1">
 		<tr>
-			<td class="listClasses-header" colspan="2"><b><bean:message key="label.tfc.students.number"/></b></td>
-			<td class="listClasses" style="text-align:left"><html:text property="tfcStudentsNumber" size="5"/></td>
+			<th class="listClasses-header" colspan="2"><b><bean:message key="label.tfc.students.number"/></b></th>
+			<td class="listClasses" style="text-align:left"><html:text bundle="HTMLALT_RESOURCES" altKey="text.tfcStudentsNumber" property="tfcStudentsNumber" size="5"/></td>
 		</tr>
 		<tr>
-			<td class="listClasses-header" rowspan="2"><b><bean:message key="label.additional.credits"/></b></td>
-			<td class="listClasses-header"><b><bean:message key="label.credits"/></b></td>
-			<td class="listClasses" style="text-align:left"><html:text property="additionalCredits" size="5"/></td>
+			<th class="listClasses-header" rowspan="2"><b><bean:message key="label.additional.credits"/></b></th>
+			<th class="listClasses-header"><b><bean:message key="label.credits"/></b></th>
+			<td class="listClasses" style="text-align:left"><html:text bundle="HTMLALT_RESOURCES" altKey="text.additionalCredits" property="additionalCredits" size="5"/></td>
 		</tr>
 		<tr>
-			<td class="listClasses-header"><b><bean:message key="label.additional.credits.reason"/></b></td>
-			<td class="listClasses" style="text-align:left"><html:textarea property="additionalCreditsJustification" rows="2" cols="60"/></td>
+			<th class="listClasses-header"><b><bean:message key="label.additional.credits.reason"/></b></th>
+			<td class="listClasses" style="text-align:left"><html:textarea bundle="HTMLALT_RESOURCES" altKey="textarea.additionalCreditsJustification" property="additionalCreditsJustification" rows="2" cols="60"/></td>
 		</tr>
 	</table>	
 	<br />
-	<html:submit styleClass="inputbutton">
+	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton">
 		<bean:message key="button.save"/>
 	</html:submit>
 	<br />
@@ -39,10 +40,10 @@
 	<logic:notEmpty name="creditsView" property="infoProfessorshipList">
 		<table width="100%" cellpadding="0" border="0">
 			<tr>
-				<td class="listClasses-header"><bean:message key="label.professorships.acronym" />
-				</td>
-				<td class="listClasses-header"><bean:message key="label.professorships.name" />
-				</td>
+				<th class="listClasses-header"><bean:message key="label.professorships.acronym" />
+				</th>
+				<th class="listClasses-header"><bean:message key="label.professorships.name" />
+				</th>
 			</tr>
 			<logic:iterate id="professorship" name="creditsView" property="infoProfessorshipList">
 				<bean:define id="infoExecutionCourse" name="professorship" property="infoExecutionCourse"/>

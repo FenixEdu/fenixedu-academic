@@ -1,5 +1,6 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
@@ -20,12 +21,12 @@ width: 0.5em;
 </style>
 
 <html:form action="/manageHomepage">
-	<html:hidden property="method" value="submitHomepage"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="submitHomepage"/>
 
 	<p>
 	<bean:message key="label.homepage.activated" bundle="HOMEPAGE_RESOURCES"/>
-	<html:radio property="activated" value="true" onchange="this.form.submit()"/><bean:message key="label.homepage.activated.yes" bundle="HOMEPAGE_RESOURCES"/>
-	<html:radio property="activated" value="false" onchange="this.form.submit()"/><bean:message key="label.homepage.activated.no" bundle="HOMEPAGE_RESOURCES"/>
+	<html:radio bundle="HTMLALT_RESOURCES" altKey="radio.activated" property="activated" value="true" onchange="this.form.submit()"/><bean:message key="label.homepage.activated.yes" bundle="HOMEPAGE_RESOURCES"/>
+	<html:radio bundle="HTMLALT_RESOURCES" altKey="radio.activated" property="activated" value="false" onchange="this.form.submit()"/><bean:message key="label.homepage.activated.no" bundle="HOMEPAGE_RESOURCES"/>
 	</p>
 	
 
@@ -65,7 +66,7 @@ width: 0.5em;
 				<bean:message key="label.homepage.name" bundle="HOMEPAGE_RESOURCES"/>:
 			</th>
 			<td colspan="3">
-				<html:text property="name" size="50"/>
+				<html:text bundle="HTMLALT_RESOURCES" altKey="text.name" property="name" size="50"/>
 				<p><bean:message key="label.homepage.name.instructions" bundle="HOMEPAGE_RESOURCES"/></p>
 			</td>
 		</tr>
@@ -75,7 +76,7 @@ width: 0.5em;
 					<bean:message key="label.homepage.showUnit" bundle="HOMEPAGE_RESOURCES"/>:
 				</th>
 				<td class="tdcheck">
-					<html:checkbox property="showUnit" value="true"/>
+					<html:checkbox bundle="HTMLALT_RESOURCES" altKey="checkbox.showUnit" property="showUnit" value="true"/>
 				</td>
 				<td>
 					<p>
@@ -92,7 +93,7 @@ width: 0.5em;
 						<bean:message key="label.homepage.showCategory" bundle="HOMEPAGE_RESOURCES"/>:
 					</th>
 					<td class="tdcheck">
-						<html:checkbox property="showCategory" value="true"/>
+						<html:checkbox bundle="HTMLALT_RESOURCES" altKey="checkbox.showCategory" property="showCategory" value="true"/>
 					</td>
 					<td>
 						<logic:present name="UserView" property="person.teacher">
@@ -105,11 +106,11 @@ width: 0.5em;
 						<bean:message key="label.homepage.showResearchUnitHomepage" bundle="HOMEPAGE_RESOURCES"/>:
 					</th>
 					<td class="tdcheck">
-						<html:checkbox property="showResearchUnitHomepage" value="true"/>
+						<html:checkbox bundle="HTMLALT_RESOURCES" altKey="checkbox.showResearchUnitHomepage" property="showResearchUnitHomepage" value="true"/>
 					</td>					
 					<td>
-						<p><bean:message key="label.homepage.research.unit.homepage" bundle="HOMEPAGE_RESOURCES"/>: <html:text property="researchUnitHomepage" size="30"/></p>
-						<p><bean:message key="label.homepage.research.unit.name" bundle="HOMEPAGE_RESOURCES"/>: <html:text property="researchUnit" size="30"/></p>
+						<p><bean:message key="label.homepage.research.unit.homepage" bundle="HOMEPAGE_RESOURCES"/>: <html:text bundle="HTMLALT_RESOURCES" altKey="text.researchUnitHomepage" property="researchUnitHomepage" size="30"/></p>
+						<p><bean:message key="label.homepage.research.unit.name" bundle="HOMEPAGE_RESOURCES"/>: <html:text bundle="HTMLALT_RESOURCES" altKey="text.researchUnit" property="researchUnit" size="30"/></p>
 					</td>
 				</tr>
 
@@ -121,7 +122,7 @@ width: 0.5em;
 					<bean:message key="label.homepage.showActiveStudentCurricularPlans" bundle="HOMEPAGE_RESOURCES"/>:
 				</th>
 				<td class="tdcheck">
-					<html:checkbox property="showActiveStudentCurricularPlans" value="true"/>
+					<html:checkbox bundle="HTMLALT_RESOURCES" altKey="checkbox.showActiveStudentCurricularPlans" property="showActiveStudentCurricularPlans" value="true"/>
 				</td>
 				<td>
 					<logic:iterate id="studentCurricularPlan" name="UserView" property="person.activeStudentCurricularPlansSortedByDegreeTypeAndDegreeName" length="1">
@@ -168,7 +169,7 @@ width: 0.5em;
 					<bean:message key="label.homepage.showCurrentAttendingExecutionCourses" bundle="HOMEPAGE_RESOURCES"/>:
 				</th>
 				<td class="tdcheck">
-					<html:checkbox property="showCurrentAttendingExecutionCourses" value="true"/>
+					<html:checkbox bundle="HTMLALT_RESOURCES" altKey="checkbox.showCurrentAttendingExecutionCourses" property="showCurrentAttendingExecutionCourses" value="true"/>
 				</td>
 				<td>
 					<logic:iterate id="attend" name="personAttends" length="1">
@@ -195,7 +196,7 @@ width: 0.5em;
 					<bean:message key="label.homepage.showAlumniDegrees" bundle="HOMEPAGE_RESOURCES"/>:
 				</th>
 				<td class="tdcheck">
-					<html:checkbox property="showAlumniDegrees" value="true"/>
+					<html:checkbox bundle="HTMLALT_RESOURCES" altKey="checkbox.showAlumniDegrees" property="showAlumniDegrees" value="true"/>
 				</td>
 				<td>
 					<logic:iterate id="studentCurricularPlan" name="UserView" property="person.completedStudentCurricularPlansSortedByDegreeTypeAndDegreeName" length="1">
@@ -241,7 +242,7 @@ width: 0.5em;
 <%--
 	<tr><td class="leftcol"><bean:message key="label.homepage.showUnit" bundle="HOMEPAGE_RESOURCES"/>:</td>
 		<td>
-			<html:checkbox property="showUnit" value="true"/>
+			<html:checkbox bundle="HTMLALT_RESOURCES" altKey="checkbox.showUnit" property="showUnit" value="true"/>
 			<logic:present name="UserView" property="person.employee.currentContract.workingUnit">
 				<bean:write name="UserView" property="person.employee.currentContract.workingUnit.name"/>
 			</logic:present>
@@ -258,7 +259,7 @@ width: 0.5em;
 				<bean:message key="label.homepage.showPhoto" bundle="HOMEPAGE_RESOURCES"/>:
 			</th>
 			<td class="tdcheck">
-				<html:checkbox property="showPhoto" value="true"/>
+				<html:checkbox bundle="HTMLALT_RESOURCES" altKey="checkbox.showPhoto" property="showPhoto" value="true"/>
 			</td>
 			<td>
 				<html:img align="middle" src="<%= request.getContextPath() +"/person/retrievePersonalPhoto.do?method=retrieveOwnPhoto" %>" altKey="personPhoto" bundle="IMAGE_RESOURCES" />
@@ -270,7 +271,7 @@ width: 0.5em;
 				<bean:message key="label.homepage.showEmail" bundle="HOMEPAGE_RESOURCES"/>:
 			</th>
 			<td class="tdcheck">
-				<html:checkbox property="showEmail" value="true"/>
+				<html:checkbox bundle="HTMLALT_RESOURCES" altKey="checkbox.showEmail" property="showEmail" value="true"/>
 			</td>
 			<td style="vertical-align: center;">
 				<bean:write name="UserView" property="person.email"/>
@@ -282,7 +283,7 @@ width: 0.5em;
 				<bean:message key="label.homepage.showTelephone" bundle="HOMEPAGE_RESOURCES"/>:
 			</th>
 			<td class="tdcheck">
-				<html:checkbox property="showTelephone" value="true"/>
+				<html:checkbox bundle="HTMLALT_RESOURCES" altKey="checkbox.showTelephone" property="showTelephone" value="true"/>
 			</td>
 			<td>
 				<bean:write name="UserView" property="person.phone"/>
@@ -294,7 +295,7 @@ width: 0.5em;
 				<bean:message key="label.homepage.showWorkTelephone" bundle="HOMEPAGE_RESOURCES"/>:
 			</th>
 			<td class="tdcheck">
-				<html:checkbox property="showWorkTelephone" value="true"/>
+				<html:checkbox bundle="HTMLALT_RESOURCES" altKey="checkbox.showWorkTelephone" property="showWorkTelephone" value="true"/>
 			</td>
 			<td>
 				<bean:write name="UserView" property="person.workPhone"/>
@@ -306,7 +307,7 @@ width: 0.5em;
 				<bean:message key="label.homepage.showMobileTelephone" bundle="HOMEPAGE_RESOURCES"/>:
 			</th>
 			<td class="tdcheck">
-				<html:checkbox property="showMobileTelephone" value="true"/>
+				<html:checkbox bundle="HTMLALT_RESOURCES" altKey="checkbox.showMobileTelephone" property="showMobileTelephone" value="true"/>
 			</td>
 			<td>
 				<bean:write name="UserView" property="person.mobile"/>
@@ -318,7 +319,7 @@ width: 0.5em;
 				<bean:message key="label.homepage.showAlternativeHomepage" bundle="HOMEPAGE_RESOURCES"/>:
 			</th>
 			<td class="tdcheck">
-				<html:checkbox property="showAlternativeHomepage" value="true"/>
+				<html:checkbox bundle="HTMLALT_RESOURCES" altKey="checkbox.showAlternativeHomepage" property="showAlternativeHomepage" value="true"/>
 			</td>
 			<td td>
 				<bean:define id="url" type="java.lang.String" name="UserView" property="person.webAddress"/>
@@ -335,7 +336,7 @@ width: 0.5em;
 						<bean:message key="label.homepage.showCurrentExecutionCourses" bundle="HOMEPAGE_RESOURCES"/>:
 					</th>
 					<td class="tdcheck">
-						<html:checkbox property="showCurrentExecutionCourses" value="true"/>
+						<html:checkbox bundle="HTMLALT_RESOURCES" altKey="checkbox.showCurrentExecutionCourses" property="showCurrentExecutionCourses" value="true"/>
 					</td>
 					<td>
 						<logic:iterate id="executionCourse" name="UserView" property="person.teacher.currentExecutionCourses" length="1">
@@ -360,7 +361,7 @@ width: 0.5em;
 			<th>
 			</th>
 			<td colspan="3">
-				<html:submit styleClass="mvert05">
+				<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="mvert05">
 					<bean:message key="person.homepage.update" bundle="HOMEPAGE_RESOURCES"/>
 				</html:submit>
 			</td>

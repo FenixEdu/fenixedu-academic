@@ -1,4 +1,5 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 
 <center>
@@ -15,7 +16,7 @@
 <li class="navheader">Mensagens e Avisos</li>
 <li> 
 	<html:link module="/manager" page="/advisoriesManagement/listCurrentAdvisories.faces">
-		Gestão de Avisos
+		Gestï¿½o de Avisos
 	</html:link>
 </li>
 <li> 
@@ -36,7 +37,7 @@
 	</html:link>
 </li>
 
-<li class="navheader">Gestão da Estrutura de Ensino</li>
+<li class="navheader">Gestï¿½o da Estrutura de Ensino</li>
 <li> 
 	<html:link module="/manager" module="/manager" page="/readDegrees.do">
 		<bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="label.manager.readDegrees" />
@@ -63,10 +64,10 @@
   	</html:link>  
 </li>
 
-<li class="navheader">Gestão de Execuções</li>
+<li class="navheader">Gestï¿½o de Execuï¿½ï¿½es</li>
 <li> 
 	<html:link module="/manager" module="/manager" page="/manageExecutionPeriods.do?method=prepare">
-		Periodos Execução
+		Periodos Execuï¿½ï¿½o
 	</html:link>
 </li>
 <li> 
@@ -85,7 +86,7 @@
 	</html:link>
 </li>
 
-<li class="navheader">Gestão de Pessoal</li>
+<li class="navheader">Gestï¿½o de Pessoal</li>
 <li> 
 	<html:link module="/manager" module="/manager" page="/teachersManagement.do?method=firstPage">
 		<bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="link.manager.teachersManagement" />
@@ -129,11 +130,11 @@
 </li>
 <li>
 	<html:link module="/manager" module="/manager" page="/gratuity/updateGratuitySituations.faces">
-		Actualizar Situações de Propina
+		Actualizar Situaï¿½ï¿½es de Propina
 	</html:link>
 </li>
 
-<li class="navheader">Gestão de CMS</li>
+<li class="navheader">Gestï¿½o de CMS</li>
 <li> 
 	<html:link module="/cms" action="/personalGroupsManagement.do?method=prepare" titleKey="person.userGroupsManagement.label.title">
 		<bean:message bundle="MANAGER_RESOURCES" key="link.userGroupsManagement" />
@@ -150,34 +151,34 @@
 	</html:link>	
 </li>
 
-<li class="navheader">Gestão do Suporte</li>
+<li class="navheader">Gestï¿½o do Suporte</li>
 <li>
 	<html:link module="/manager" module="/manager" page="/manageGlossary.do?method=prepare">
-		Gestão de Glossário
+		Gestï¿½o de Glossï¿½rio
 	</html:link>
 </li>
 <li>
 	<html:link module="/manager" module="/manager" page="/manageFAQs.do?method=prepare">
-		Gestão de FAQ's
+		Gestï¿½o de FAQ's
 	</html:link>
 </li>
 
-<li class="navheader">Gestão de Objectos</li>
+<li class="navheader">Gestï¿½o de Objectos</li>
 <li> 
 	<html:link module="/manager" page="/manageCache.do?method=prepare">
-		Gestão da Cache
+		Gestï¿½o da Cache
 	</html:link>
 </li>
 <li>
 	<html:link module="/manager"page="/domainObjectStringPropertyFormatter.do?method=prepare">
-		Formatação de Propriedades
+		Formataï¿½ï¿½o de Propriedades
 	</html:link>
 </li>
 
-<li class="navheader">Gestão do Sistema</li>
+<li class="navheader">Gestï¿½o do Sistema</li>
 <li> 
 	<html:link module="/manager" module="/manager" page="/monitorServices.do?method=monitor">
-		Monitorização de Serviços
+		Monitorizaï¿½ï¿½o de Serviï¿½os
 	</html:link>
 </li>
 <li> 
@@ -187,12 +188,12 @@
 </li>
 <li> 
 	<html:link module="/manager" module="/manager" page="/monitorUsers.do?method=monitor">
-		Monitorização de Utilizadores
+		Monitorizaï¿½ï¿½o de Utilizadores
 	</html:link>
 </li>
 <li> 
 	<html:link module="/manager" module="/manager" page="/monitorSystem.do?method=monitor">
-		Informações do Sistema
+		Informaï¿½ï¿½es do Sistema
 	</html:link>
 </li>
 <li>
@@ -228,7 +229,7 @@
     <html:link module="/manager" page="/renderers/index.do">Exemplos Renderers</html:link>
 </li>
 <li>
-    <html:link module="/manager" page="/renderers/reload.do">Reler Configuração Renderers</html:link>
+    <html:link module="/manager" page="/renderers/reload.do">Reler Configuraï¿½ï¿½o Renderers</html:link>
 </li>
 
 </ul>

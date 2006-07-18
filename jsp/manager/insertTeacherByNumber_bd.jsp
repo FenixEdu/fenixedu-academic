@@ -1,4 +1,4 @@
-<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
+<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%><html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 
@@ -19,30 +19,30 @@
 <span class="error"><html:errors/></span>
 
 <html:form action="/insertProfessorShipByNumber" method="get">
-	<html:hidden property="method" value="insert" /> 
-	<html:hidden property="page" value="1"/>
-	<html:hidden property="degreeId" value="<%= request.getParameter("degreeId") %>"/>	
-	<html:hidden property="degreeCurricularPlanId" value="<%= request.getParameter("degreeCurricularPlanId") %>"/>
-	<html:hidden property="curricularCourseId" value="<%= request.getParameter("curricularCourseId") %>"/>
-	<html:hidden property="executionCourseId" value="<%= request.getParameter("executionCourseId") %>"/>
-	<html:hidden property="executionCourseName" value="<%= request.getParameter("executionCourseName") %>"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="insert" /> 
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.degreeId" property="degreeId" value="<%= request.getParameter("degreeId") %>"/>	
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.degreeCurricularPlanId" property="degreeCurricularPlanId" value="<%= request.getParameter("degreeCurricularPlanId") %>"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.curricularCourseId" property="curricularCourseId" value="<%= request.getParameter("curricularCourseId") %>"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.executionCourseId" property="executionCourseId" value="<%= request.getParameter("executionCourseId") %>"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.executionCourseName" property="executionCourseName" value="<%= request.getParameter("executionCourseName") %>"/>
 	<table>
 		<tr>
 			<td>
 				<bean:message bundle="MANAGER_RESOURCES" key="message.insert.teacher.number"/>
 			</td>
 			<td>
-				<html:text size="5" property="number" />
+				<html:text bundle="HTMLALT_RESOURCES" altKey="text.number" size="5" property="number" />
 			</td>
 		</tr>
 	</table>
 	
 	<br>
 
-	<html:submit styleClass="inputbutton">
+	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton">
 		<bean:message bundle="MANAGER_RESOURCES" key="button.save"/>
 	</html:submit>
-	<html:reset  styleClass="inputbutton">
+	<html:reset bundle="HTMLALT_RESOURCES" altKey="reset.reset"  styleClass="inputbutton">
 		<bean:message bundle="MANAGER_RESOURCES" key="label.clear"/>
 	</html:reset>			
 </html:form>

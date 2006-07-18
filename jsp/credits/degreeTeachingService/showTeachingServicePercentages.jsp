@@ -1,5 +1,6 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="dt"%>
@@ -35,12 +36,12 @@
 <p class="mbottom0"><strong>Disciplinas Leccionadas em Licenciatura - Aulas</strong></p>
 
 <html:form action="/degreeTeachingServiceManagement">
-	<html:hidden property="teacherNumber" value="<%= teacherNumber.toString() %>"/>
-	<html:hidden property="teacherId" value="<%= teacherId.toString() %>" />
-	<html:hidden property="executionPeriodId" />
-	<html:hidden property="executionCourseId"/>
-	<html:hidden property="professorshipID"/>
-	<html:hidden property="method" value="updateTeachingServices"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.teacherNumber" property="teacherNumber" value="<%= teacherNumber.toString() %>"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.teacherId" property="teacherId" value="<%= teacherId.toString() %>" />
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.executionPeriodId" property="executionPeriodId" />
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.executionCourseId" property="executionCourseId"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.professorshipID" property="professorshipID"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="updateTeachingServices"/>
 
 	<table class="tstyle4 mtop1">
 		<%-- ********************************* HEADER *********************************************** --%>
@@ -69,7 +70,7 @@
 					<tr>
 						<td><bean:write name="shift" property="nome"/></td>
 						<td><bean:write name="shift" property="tipo.siglaTipoAula"/></td>
-						<td colspan="7"> Não tem aulas </td>
+						<td colspan="7"> Nï¿½o tem aulas </td>
 					</tr>
 				</logic:equal>
 
@@ -101,7 +102,7 @@
 									<bean:define id="propertyName">
 										teacherPercentageMap(<bean:write name="shift" property="idInternal"/>)
 									</bean:define>
-									<html:text property='<%= propertyName %>' size="4" /> %
+									<html:text alt='<%= propertyName %>' property='<%= propertyName %>' size="4" /> %
 								</logic:greaterThan>
 								<logic:equal name="availablePercentage" value="0">
 									&nbsp;
@@ -150,10 +151,10 @@
 	<p class="mtop05"><bean:message key="label.teaching.service.help.bottom" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></p>
 	
 	<p class="mtop2">
-	<html:submit styleClass="inputbutton">
+	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton">
 		<bean:message key="button.save"/>
 	</html:submit>
-	<html:submit styleClass="inputbutton" onclick="this.form.method.value='cancel';this.form.page.value='0'">
+	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton" onclick="this.form.method.value='cancel';this.form.page.value='0'">
 			<bean:message key="button.cancel"/>
 	</html:submit>
 	</p>	

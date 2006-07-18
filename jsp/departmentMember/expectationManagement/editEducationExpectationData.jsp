@@ -4,6 +4,7 @@
 <%@ taglib uri="/WEB-INF/html_basic.tld" prefix="h"%>
 
 <ft:tilesView definition="departmentMember.masterPage" attributeName="body-inline">
+	<f:loadBundle basename="resources/HtmlAltResources" var="htmlAltBundle"/>
 
 <style>
 	.alignTopRight {
@@ -78,7 +79,7 @@
 		<h:panelGrid columns="2" columnClasses="alignTopRight infocell,infocell,errorColumn" border="0" style="padding: 0.5em; ">
 			<h:outputText value="#{bundle['label.personalExpectationsManagement.numberOfGraduations']}" />
 			<h:panelGroup>
-				<h:inputText id="graduations" value="#{teacherExpectationManagement.graduations}" required="true" maxlength="3" size="3" />
+				<h:inputText alt="#{htmlAltBundle['inputText.graduations']}" id="graduations" value="#{teacherExpectationManagement.graduations}" required="true" maxlength="3" size="3" />
 				<h:outputText value="&nbsp;&nbsp;" escape="false"/>
 				<h:message for="graduations" styleClass="error"/>
 			</h:panelGroup>
@@ -136,7 +137,7 @@
 		<h:panelGrid columns="2" columnClasses="alignTopRight infocell,infocell,errorColumn" border="0" style="padding: 0.5em; ">
 			<h:outputText value="#{bundle['label.personalExpectationsManagement.numberOfCientificPosGraduations']}" />
 			<h:panelGroup>
-				<h:inputText id="cientificPosGraduations" value="#{teacherExpectationManagement.cientificPosGraduations}" required="true" maxlength="3" size="3" />
+				<h:inputText alt="#{htmlAltBundle['inputText.cientificPosGraduations']}" id="cientificPosGraduations" value="#{teacherExpectationManagement.cientificPosGraduations}" required="true" maxlength="3" size="3" />
 				<h:outputText value="&nbsp;&nbsp;" escape="false"/>
 				<h:message for="cientificPosGraduations" styleClass="error"/>
 			</h:panelGroup>
@@ -154,7 +155,7 @@
 		<h:panelGrid columns="2" columnClasses="alignTopRight infocell,infocell,errorColumn" border="0" style="padding: 0.5em; ">
 			<h:outputText value="#{bundle['label.personalExpectationsManagement.numberOfProfessionalPosGraduations']}" />
 			<h:panelGroup>
-				<h:inputText id="professionalPosGraduations" value="#{teacherExpectationManagement.professionalPosGraduations}" required="true" maxlength="3" size="3" />
+				<h:inputText alt="#{htmlAltBundle['inputText.professionalPosGraduations']}" id="professionalPosGraduations" value="#{teacherExpectationManagement.professionalPosGraduations}" required="true" maxlength="3" size="3" />
 				<h:outputText value="&nbsp;&nbsp;" escape="false"/>
 				<h:message for="professionalPosGraduations" styleClass="error"/>
 			</h:panelGroup>
@@ -172,7 +173,7 @@
 		<h:panelGrid columns="2" columnClasses="alignTopRight infocell,infocell,errorColumn" border="0" style="padding: 0.5em; ">
 			<h:outputText value="#{bundle['label.personalExpectationsManagement.numberOfSeminaries']}" />
 			<h:panelGroup>
-				<h:inputText id="seminaries" value="#{teacherExpectationManagement.seminaries}" required="true" maxlength="3" size="3" />
+				<h:inputText alt="#{htmlAltBundle['inputText.seminaries']}" id="seminaries" value="#{teacherExpectationManagement.seminaries}" required="true" maxlength="3" size="3" />
 				<h:outputText value="&nbsp;&nbsp;" escape="false"/>
 				<h:message for="seminaries" styleClass="error"/>
 			</h:panelGroup>

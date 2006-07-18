@@ -1,6 +1,7 @@
 <%@ page language="java" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 
@@ -17,24 +18,24 @@
 <br />
 <table width="100%" border="0" cellpadding="0" cellspacing="0">
                 <tr>
-                    <td class="listClasses-header">
+                    <th class="listClasses-header">
                         <bean:message key="property.room.name"/>
-                    </td>
-					<td class="listClasses-header">
+                    </th>
+					<th class="listClasses-header">
 						<bean:message key="property.room.type"/>
-					</td>
-                    <td class="listClasses-header">
+					</th>
+                    <th class="listClasses-header">
                         <bean:message key="property.room.building"/>
-                    </td>
-                    <td class="listClasses-header">
+                    </th>
+                    <th class="listClasses-header">
                         <bean:message key="property.room.floor"/>
-                    </td>
-					<td class="listClasses-header">
+                    </th>
+					<th class="listClasses-header">
 						<bean:message key="property.room.capacity.normal"/>
-					</td>
-					<td class="listClasses-header">
+					</th>
+					<th class="listClasses-header">
 						<bean:message key="property.room.capacity.exame"/>
-					</td>
+					</th>
                 </tr>
 	<logic:iterate id="infoRoom" name="<%= SessionConstants.INFO_EMPTY_ROOMS_KEY %>" scope="request">
                 <tr>

@@ -1,6 +1,7 @@
 <%@ page language="java" %>
 <%@ page import="org.apache.struts.util.RequestUtils" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/app.tld" prefix="app" %>
@@ -12,7 +13,7 @@
 <h2><bean:message key="button.editSection" /></h2>
 <span class="error"><html:errors property="error.default"/></span>
 <html:form action="/editSection">
-<html:hidden property="page" value="1"/>
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
 <table>
 	<tr>
 		<td>
@@ -23,7 +24,7 @@
 		<td>
 			<br />
 			<br />
-			<html:text name="section" property="name" />
+			<html:text bundle="HTMLALT_RESOURCES" altKey="text.name" name="section" property="name" />
 			<span class="error"><html:errors property="name"/></span>
 		</td>
 	</tr>
@@ -34,7 +35,7 @@
 	</td>
 	<td>
 		<bean:define id="sectionOrder" name="section" property="sectionOrder" type="java.lang.Integer"/>
-		<html:select name="section" property="sectionOrder" size="1">
+		<html:select bundle="HTMLALT_RESOURCES" altKey="select.sectionOrder" name="section" property="sectionOrder" size="1">
 			<logic:iterate id="otherSection" name="sections" property="sections" type="net.sourceforge.fenixedu.dataTransferObject.InfoSection">
 				<bean:define id="otherSectionOrder" type="java.lang.String"><%= String.valueOf(otherSection.getSectionOrder().intValue()) %></bean:define>
 				<bean:define id="selected" value=""></bean:define>
@@ -54,21 +55,21 @@
 	</td>
 	</logic:present>
 	<logic:notPresent name="sections">
-		<html:hidden property="sectionOrder" value="0"/>
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.sectionOrder" property="sectionOrder" value="0"/>
 	</logic:notPresent>
 </tr>
 </table>
 <br />
 
-<html:hidden property="method" value="editSection" />
-<html:hidden property="objectCode" value="<%= pageContext.findAttribute("objectCode").toString() %>" />
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="editSection" />
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.objectCode" property="objectCode" value="<%= pageContext.findAttribute("objectCode").toString() %>" />
 <bean:define id="currentSectionCode" name="section" property="idInternal"/>
-<html:hidden property="currentSectionCode" value="<%= currentSectionCode.toString() %>" />
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.currentSectionCode" property="currentSectionCode" value="<%= currentSectionCode.toString() %>" />
 
-<html:submit styleClass="inputbutton">
+<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton">
 	<bean:message key="button.save"/>
 </html:submit>
-<html:reset styleClass="inputbutton">
+<html:reset bundle="HTMLALT_RESOURCES" altKey="reset.reset" styleClass="inputbutton">
 	<bean:message key="label.clear"/>
 </html:reset>			
 </html:form>

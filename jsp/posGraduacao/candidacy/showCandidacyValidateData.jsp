@@ -1,6 +1,7 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 
 <html:messages id="message" message="true" bundle="ADMIN_OFFICE_RESOURCES">
@@ -50,9 +51,9 @@
 
 <logic:equal name="candidacy" property="activeCandidacySituation.canCandidacyDataBeValidated" value="true">
 	<html:form action="/dfaCandidacy.do">	
-		<html:hidden property="method" value="validateData"/>
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="validateData"/>
 		<bean:define id="number" name="candidacy" property="number"/>
-		<html:hidden property="candidacyNumber" value="<%= number.toString() %>"/>
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.candidacyNumber" property="candidacyNumber" value="<%= number.toString() %>"/>
 		<br/><br/>
 		<html:submit><bean:message key="button.validate" bundle="ADMIN_OFFICE_RESOURCES"/></html:submit>	
 	</html:form>

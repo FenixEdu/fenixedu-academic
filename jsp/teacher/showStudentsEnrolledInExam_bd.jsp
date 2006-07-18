@@ -1,5 +1,6 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-tiles.tld" prefix="tiles" %>
@@ -17,12 +18,12 @@
 <br/>
 <table cellspacing="1" border="0">
 	<tr>
-		<td class="listClasses-header" ><bean:message key="label.season"/></td>
-		<td class="listClasses-header" ><bean:message key="label.day"/></td>
-		<td class="listClasses-header" ><bean:message key="label.beginning"/></td>	
-		<td class="listClasses-header"><bean:message key="label.number.students.enrolled"/></td>
+		<th class="listClasses-header" ><bean:message key="label.season"/></th>
+		<th class="listClasses-header" ><bean:message key="label.day"/></th>
+		<th class="listClasses-header" ><bean:message key="label.beginning"/></th>	
+		<th class="listClasses-header"><bean:message key="label.number.students.enrolled"/></th>
 <%--		<logic:notEqual name="component" property="size" value="0">
-			<td class="listClasses-header"><bean:message key="label.student.room.distribution"/></td>		
+			<th class="listClasses-header"><bean:message key="label.student.room.distribution"/></th>		
 		</logic:notEqual> --%>
 	</tr>
 	<tr>
@@ -51,9 +52,9 @@
 	<h2><bean:message key="label.students.enrolled.exam"/></h2>
 	<table>
 		<tr>
-			<td class="listClasses-header"><bean:message key="label.number"/></td>
-			<td class="listClasses-header"><bean:message key="label.name"/></td>
-			<td class="listClasses-header"><bean:message key="label.room"/></td>	
+			<th class="listClasses-header"><bean:message key="label.number"/></th>
+			<th class="listClasses-header"><bean:message key="label.name"/></th>
+			<th class="listClasses-header"><bean:message key="label.room"/></th>	
 		</tr>
 		<logic:equal name="sizeOfWrittenEvaluationEnrolments" value="0">
 			<logic:iterate id="student" name="component" property="infoStudents">
@@ -84,10 +85,10 @@
 	<br/>
 </logic:notEmpty>
 <html:form action="/examEnrollmentManager" focus="submit">
-	<html:hidden property="method" value="prepareEnrolmentManagement"/>
-	<html:hidden property="objectCode" value="<%= pageContext.findAttribute("objectCode").toString() %>"/>
-	<html:hidden property="evaluationCode" value="<%= pageContext.findAttribute("evaluationCode").toString() %>"/>
-  	<html:submit property="submit" styleClass="inputbutton">
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="prepareEnrolmentManagement"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.objectCode" property="objectCode" value="<%= pageContext.findAttribute("objectCode").toString() %>"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.evaluationCode" property="evaluationCode" value="<%= pageContext.findAttribute("evaluationCode").toString() %>"/>
+  	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" property="submit" styleClass="inputbutton">
     	<bean:message key="link.goBack"/>
   	</html:submit>
 </html:form>		   			

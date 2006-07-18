@@ -1,7 +1,7 @@
 <%@ page language="java" %>
 
 <%@ page import="java.lang.String" %>
-<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
+<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%><html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 
@@ -51,10 +51,10 @@ function cleanSelect() {
 <logic:present name="infoStudentList"> 
 		
 <html:form action="/insertStudentsInAttendsSet" method="get">
-<html:hidden property="page" value="1"/>
-<html:hidden property="method" value="insertStudentsInAttendsSet"/>
-<html:hidden  property="objectCode" value="<%= pageContext.findAttribute("objectCode").toString() %>" />
-<html:hidden  property="groupPropertiesCode" value="<%= request.getParameter("groupPropertiesCode") %>" />
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="insertStudentsInAttendsSet"/>
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.objectCode"  property="objectCode" value="<%= pageContext.findAttribute("objectCode").toString() %>" />
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.groupPropertiesCode"  property="groupPropertiesCode" value="<%= request.getParameter("groupPropertiesCode") %>" />
 
 
 <logic:empty name="infoStudentList"> 
@@ -73,28 +73,28 @@ function cleanSelect() {
 <tr><td></td>
 		<td><b><bean:message key="label.allStudents"/></b></td>
 		<td>
-		<html:multibox property="selected" onclick="invertSelect()">
+		<html:multibox bundle="HTMLALT_RESOURCES" altKey="multibox.selected" property="selected" onclick="invertSelect()">
 		    <bean:message key="label.allStudents"/>
 		</html:multibox> 
 		</td>
 	</tr>
 	
 	<tr>
-		<td class="listClasses-header">
-		</td>
-		<td class="listClasses-header"><bean:message key="label.teacher.StudentNumber" />
-		</td>
-		<td class="listClasses-header"><bean:message key="label.teacher.StudentName" />
-		</td>
-		<td class="listClasses-header"><bean:message key="label.teacher.StudentEmail" />
-		</td>
+		<th class="listClasses-header">
+		</th>
+		<th class="listClasses-header"><bean:message key="label.teacher.StudentNumber" />
+		</th>
+		<th class="listClasses-header"><bean:message key="label.teacher.StudentName" />
+		</th>
+		<th class="listClasses-header"><bean:message key="label.teacher.StudentEmail" />
+		</th>
 	</tr>
 
 
 	<logic:iterate id="infoStudent" name="infoStudentList">			
 		<tr>	
 			<td class="listClasses">
-			<html:multibox property="selected" onclick="cleanSelect()">
+			<html:multibox bundle="HTMLALT_RESOURCES" altKey="multibox.selected" property="selected" onclick="cleanSelect()">
 			<bean:write name="infoStudent" property="idInternal"/>
 			</html:multibox>
 			</td>
@@ -111,10 +111,10 @@ function cleanSelect() {
 </table>
 <br>
 
-<html:submit styleClass="inputbutton"><bean:message key="button.insertAluno"/>                    		         	
+<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton"><bean:message key="button.insertAluno"/>                    		         	
 </html:submit>       
 
-<html:reset styleClass="inputbutton"><bean:message key="label.clear"/>
+<html:reset bundle="HTMLALT_RESOURCES" altKey="reset.reset" styleClass="inputbutton"><bean:message key="label.clear"/>
 </html:reset>  
 
 </logic:notEmpty>

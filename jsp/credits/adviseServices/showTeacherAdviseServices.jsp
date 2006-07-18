@@ -1,5 +1,6 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 
@@ -31,7 +32,7 @@
 
 <span class="error"><html:errors /></span>
 <logic:messagesPresent message="true">
-	<hr class="error"/><u><b>Para prosseguir deverá corrigir os seguintes erros:</b></u><br/>		
+	<hr class="error"/><u><b>Para prosseguir deverï¿½ corrigir os seguintes erros:</b></u><br/>		
 	<ul>
 		<html:messages id="msg" message="true">
 			<span class="error"><li><i><bean:write name="msg"/></i></li></span>
@@ -41,13 +42,13 @@
 </logic:messagesPresent>	
 
 <html:form action="/teacherAdviseServiceManagement">
-	<html:hidden property="method" value="editAdviseService"/>
-	<html:hidden property="page" value="1"/>	
-	<html:hidden property="idInternal"/>
-	<html:hidden property="studentId"/>	
-	<html:hidden property="teacherId"/>	
-	<html:hidden property="teacherNumber"/>	
-	<html:hidden property="executionPeriodId"/>						
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="editAdviseService"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>	
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.idInternal" property="idInternal"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.studentId" property="studentId"/>	
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.teacherId" property="teacherId"/>	
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.teacherNumber" property="teacherNumber"/>	
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.executionPeriodId" property="executionPeriodId"/>						
 	
 	<table>
 		<tr>
@@ -56,10 +57,10 @@
 			</td>
 			<td>
 				<logic:messagesPresent>
-					<html:text property="studentNumber" size="6"/>		
+					<html:text bundle="HTMLALT_RESOURCES" altKey="text.studentNumber" property="studentNumber" size="6"/>		
 				</logic:messagesPresent>
 				<logic:messagesNotPresent>
-					<html:text property="studentNumber" value="" size="6"/>		
+					<html:text bundle="HTMLALT_RESOURCES" altKey="text.studentNumber" property="studentNumber" value="" size="6"/>		
 				</logic:messagesNotPresent>		
 			</td>
 		</tr>
@@ -69,11 +70,11 @@
 			</td>
 			
 			<td>
-				<html:text property="percentage" maxlength="3" size="4"/>
+				<html:text bundle="HTMLALT_RESOURCES" altKey="text.percentage" property="percentage" maxlength="3" size="4"/>
 			</td>
 		</tr>
 	</table>	
-	<html:submit styleClass="inputbutton">
+	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton">
 		<bean:message key="button.add"/>
 	</html:submit>
 </html:form>	

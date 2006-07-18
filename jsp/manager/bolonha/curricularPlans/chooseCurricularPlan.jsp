@@ -3,6 +3,7 @@
 <%@ taglib uri="/WEB-INF/html_basic.tld" prefix="h"%>
 
 <ft:tilesView definition="definition.manager.masterPage" attributeName="body-inline">
+	<f:loadBundle basename="resources/HtmlAltResources" var="htmlAltBundle"/>
 	<f:loadBundle basename="resources/DegreeAdministrativeOfficeResources" var="bundle"/>
 
 	<h:form>
@@ -21,7 +22,7 @@
 
 		<p/>
 			
-		<h:commandButton action="#{displayCurricularPlan.choose}" value="#{bundle['button.select']}" />
+		<h:commandButton alt="#{htmlAltBundle['commandButton.select']}" action="#{displayCurricularPlan.choose}" value="#{bundle['button.select']}" />
 
 	</h:form>
 

@@ -1,4 +1,5 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/enum.tld" prefix="e" %>
@@ -6,26 +7,26 @@
 
 <html:form action="/studentsManagement" focus="number">
 
-	<html:hidden property="method" value="show"/>
-	<html:hidden property="page" value="1"/>
-	<html:hidden property="selectedStudentCurricularPlanId" value="0"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="show"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.selectedStudentCurricularPlanId" property="selectedStudentCurricularPlanId" value="0"/>
 
 	<table>
 		<tr>
-			<td class="listClasses-header">
+			<th class="listClasses-header">
 				<bean:message bundle="MANAGER_RESOURCES" key="property.student.number"/>
-			</td>
-			<td class="listClasses-header">
+			</th>
+			<th class="listClasses-header">
 				<bean:message bundle="MANAGER_RESOURCES" key="property.student.degreeType"/>
-			</td>
+			</th>
 		</tr>
 		<tr>
 			<td class="listClasses">
-				<html:text property="number" size="5" onchange="this.form.submit();"/>
+				<html:text bundle="HTMLALT_RESOURCES" altKey="text.number" property="number" size="5" onchange="this.form.submit();"/>
 			</td>
 			<td class="listClasses">
 				<e:labelValues id="values" enumeration="net.sourceforge.fenixedu.domain.degree.DegreeType" bundle="ENUMERATION_RESOURCES"/>
-				<html:select property="degreeType" size="1" onchange="this.form.submit();">
+				<html:select bundle="HTMLALT_RESOURCES" altKey="select.degreeType" property="degreeType" size="1" onchange="this.form.submit();">
 					<html:options collection="values" property="value" labelProperty="label"/>
 				</html:select>
 			</td>

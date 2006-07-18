@@ -1,5 +1,6 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %> 
 <%@ taglib uri="/WEB-INF/struts-tiles.tld" prefix="tiles" %> 
@@ -15,7 +16,7 @@
 		<b><bean:message key="label.seminaries.motivation"/></b>
 		</td>
 		<td>
-			<html:textarea cols="50" rows="10" property="motivation"/>
+			<html:textarea bundle="HTMLALT_RESOURCES" altKey="textarea.motivation" cols="50" rows="10" property="motivation"/>
 		</td>
 	</tr>
 	<tr>
@@ -25,7 +26,7 @@
 				<b><bean:message key="label.seminaries.theme"/></b>
 			</td>
 			<td>
-				<html:select property="themeID">
+				<html:select bundle="HTMLALT_RESOURCES" altKey="select.themeID" property="themeID">
 						<html:optionsCollection name="equivalency" property="themes" label="name" value="idInternal"/>
 				</html:select>
 			</td>
@@ -35,14 +36,14 @@
 		<td>
 		</td>
 		<td>
-			<html:hidden property="idInternal" name="equivalency"/>			
+			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.idInternal" property="idInternal" name="equivalency"/>			
 		</td>
 	</tr>
 	<tr>
 		<td>
 		</td>
 		<td>
-			<html:submit styleClass="button" value="Submeter" property="submition"/>			
+			<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submition" styleClass="button" value="Submeter" property="submition"/>			
 		</td>
 	</tr>
 </table>

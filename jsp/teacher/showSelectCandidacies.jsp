@@ -1,5 +1,6 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-tiles.tld" prefix="tiles" %>
@@ -8,40 +9,40 @@
 		<bean:message key="label.selectCandicaciesGrid.Title"/>
 	</h2>
 	<html:form action="/selectCandidacies.do">
-		<html:hidden property="method" value="prepare"/>
-		<html:select property="seminaryID">
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="prepare"/>
+		<html:select bundle="HTMLALT_RESOURCES" altKey="select.seminaryID" property="seminaryID">
 			<html:option value="-1" key="label.seminary.candidaciesGrid.select">
 				<bean:message key="label.seminary.candidaciesGrid.select"/>
 			</html:option>
 			<html:options collection="seminaries" property="idInternal" labelProperty="name"/>
 		</html:select>
-		<html:submit styleClass="button" value="OK" property="submition"/>
+		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submition" styleClass="button" value="OK" property="submition"/>
 	</html:form>
 	
 	<html:form action="/selectCandidacies.do">
 		<table>
 			<tr>
-				<td class="listClasses-header">
+				<th class="listClasses-header">
 					<bean:message key="label.details"/>
-				</td>
-				<td class="listClasses-header">
+				</th>
+				<th class="listClasses-header">
 					<bean:message key="label.seminaries.showCandidacy.Student.Number"/>
-				</td>
-				<td class="listClasses-header">
+				</th>
+				<th class="listClasses-header">
 					<bean:message key="label.seminaries.showCandidacy.Student.Name"/>
-				</td>
-				<td class="listClasses-header">
+				</th>
+				<th class="listClasses-header">
 					<bean:message key="label.seminaries.showCandidacy.Student.Average"/>
-				</td>
-				<td class="listClasses-header">
+				</th>
+				<th class="listClasses-header">
 					<bean:message key="label.seminaries.showCandidacy.Student.courses.done"/>
-				</td>
-				<td class="listClasses-header">
+				</th>
+				<th class="listClasses-header">
 					<bean:message key="label.seminaries.showCandidacy.Student.Email"/>
-				</td>
-				<td class="listClasses-header">
+				</th>
+				<th class="listClasses-header">
 					<bean:message key="label.seminaries.showCandidacy.Student.Candidacy.Accepted" />
-				</td>
+				</th>
 			</tr>
 			<logic:present name="candidacies">
 				<logic:notEmpty name="candidacies">
@@ -90,7 +91,7 @@
 								</a>
 							</td> 
 							<td class="listClasses">
-								<input type="checkbox" name="selectedStudents" value="<%=candidacy.getCandidacyId().toString()%>"
+								<input alt="input.selectedStudents" type="checkbox" name="selectedStudents" value="<%=candidacy.getCandidacyId().toString()%>"
 									<%  if (candidacy.getApproved().booleanValue())
 											out.print("checked");	
 									%>					
@@ -100,7 +101,7 @@
 					</logic:iterate>
 					<tr>
 						<td>
-							<html:submit property="submition" value="OK"/>
+							<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submition" property="submition" value="OK"/>
 						</td>
 					</tr>
 				</logic:notEmpty>
@@ -108,14 +109,14 @@
 		</table>
 		<logic:iterate name="candidacies" id="candidacy" type="net.sourceforge.fenixedu.dataTransferObject.Seminaries.CandidacyDTO">
 			<logic:equal name="candidacy" property="approved" value="true">
-				<html:hidden property="previousSelected" value="<%=candidacy.getCandidacyId().toString()%>"/>
+				<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.previousSelected" property="previousSelected" value="<%=candidacy.getCandidacyId().toString()%>"/>
 			</logic:equal>
 			<logic:notEqual name="candidacy" property="approved" value="true">
-				<html:hidden property="previousUnselected" value="<%=candidacy.getCandidacyId().toString()%>"/>
+				<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.previousUnselected" property="previousUnselected" value="<%=candidacy.getCandidacyId().toString()%>"/>
 			</logic:notEqual>
 		</logic:iterate> 
-		<html:hidden property="seminaryID"/>
-		<html:hidden property="method" value="changeSelection"/> 
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.seminaryID" property="seminaryID"/>
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="changeSelection"/> 
 	</html:form>
 
 </logic:present>

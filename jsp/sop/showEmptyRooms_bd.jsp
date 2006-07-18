@@ -3,6 +3,7 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<html:xhtml/>
 <h2><bean:message key="title.search.result"/></h2>
 <table width="100%" border="0" cellpadding="0" cellspacing="0">
 	<tr>
@@ -19,9 +20,9 @@
 				<br/>
 				<bean:write name="weekDay" scope="request"/>,
 				das <bean:write name="intervalStart" scope="request"/>
-				às <bean:write name="intervalEnd" scope="request"/>
+				ï¿½s <bean:write name="intervalEnd" scope="request"/>
 				<br/>
-				Capacidade normal mínima de <bean:write name="minimumCapacity" scope="request"/> lugares.
+				Capacidade normal mï¿½nima de <bean:write name="minimumCapacity" scope="request"/> lugares.
 			</strong>
 		</td>
 	</tr>
@@ -29,11 +30,11 @@
 <br />
 <table cellpadding="0" border="0" width="100%">
 	 <tr>
-		<td class="listClasses-header"><bean:message key="property.room.name"/></td>
-		<td class="listClasses-header"><bean:message key="property.room.type"/></td>
-		<td class="listClasses-header"><bean:message key="property.room.building"/></td>
-		<td class="listClasses-header"><bean:message key="property.room.capacity.normal"/></td>
-		<td class="listClasses-header"><bean:message key="property.room.capacity.exame"/></td>
+		<th class="listClasses-header"><bean:message key="property.room.name"/></th>
+		<th class="listClasses-header"><bean:message key="property.room.type"/></th>
+		<th class="listClasses-header"><bean:message key="property.room.building"/></th>
+		<th class="listClasses-header"><bean:message key="property.room.capacity.normal"/></th>
+		<th class="listClasses-header"><bean:message key="property.room.capacity.exame"/></th>
 	</tr>		
 <logic:iterate id="infoRoom" name="roomList" scope="request">
 	<tr>

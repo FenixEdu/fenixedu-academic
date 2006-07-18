@@ -1,5 +1,6 @@
 <%@ page language="java"%>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <bean:define id="reportType" value="<%=request.getAttribute("reportType").toString()%>" />
@@ -28,8 +29,8 @@
 	<logic:notEmpty name="coordinatorsList">
 		<table>
 			<tr>
-				<td class="listClasses-header"><bean:message key="label.mecanographicNumber" /></td>
-				<td class="listClasses-header"><bean:message key="label.name" /></td>
+				<th class="listClasses-header"><bean:message key="label.mecanographicNumber" /></th>
+				<th class="listClasses-header"><bean:message key="label.name" /></th>
 			</tr>
 			<logic:iterate id="coordinator" name="coordinatorsList">
 				<bean:define id="coordinatorCode" name="coordinator" property="code" />

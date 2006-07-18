@@ -1,5 +1,6 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
 
 <!-- Title and TOC -->
@@ -120,7 +121,7 @@
 </p>
 
 <p>
-    As Fénix domain objects are persistent you have and additional way of refering to a domain object.
+    As Fï¿½nix domain objects are persistent you have and additional way of refering to a domain object.
     You can specify the object internal id type directly in the tag. If you do this the object will
     be retrieved from the database and displayed as before. So to display the same person as in the
     last example you could write:

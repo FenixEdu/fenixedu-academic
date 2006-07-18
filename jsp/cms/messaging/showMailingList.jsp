@@ -1,5 +1,6 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="dt" %>
@@ -197,10 +198,10 @@
 	
 	<table width="100%" class="style1">
 		<tr>
-			<td class="listClasses-header" width="40%"><bean:message bundle="MANAGER_RESOURCES" bundle="CMS_RESOURCES" key="cms.messaging.mailingList.viewMailingList.subject.label"/></td>
-			<td class="listClasses-header" width="40%"><bean:message bundle="MANAGER_RESOURCES" bundle="CMS_RESOURCES" key="cms.messaging.mailingList.viewMailingList.conversationStarter.label"/></td>		
-			<td class="listClasses-header" width="20%"><bean:message bundle="MANAGER_RESOURCES" bundle="CMS_RESOURCES" key="cms.messaging.mailingList.viewMailingList.conversatioCreationDate.label"/></td>					
-			<td class="listClasses-header" width="0%"><bean:message bundle="MANAGER_RESOURCES" bundle="CMS_RESOURCES" key="cms.messaging.mailingList.viewMailingList.messages.label"/></td>							
+			<th class="listClasses-header" width="40%"><bean:message bundle="MANAGER_RESOURCES" bundle="CMS_RESOURCES" key="cms.messaging.mailingList.viewMailingList.subject.label"/></th>
+			<th class="listClasses-header" width="40%"><bean:message bundle="MANAGER_RESOURCES" bundle="CMS_RESOURCES" key="cms.messaging.mailingList.viewMailingList.conversationStarter.label"/></th>		
+			<th class="listClasses-header" width="20%"><bean:message bundle="MANAGER_RESOURCES" bundle="CMS_RESOURCES" key="cms.messaging.mailingList.viewMailingList.conversatioCreationDate.label"/></th>					
+			<th class="listClasses-header" width="0%"><bean:message bundle="MANAGER_RESOURCES" bundle="CMS_RESOURCES" key="cms.messaging.mailingList.viewMailingList.messages.label"/></th>							
 
 		</tr>		
 		<logic:iterate id="conversation" name="mailingList" property="mailConversationsIterator" type="net.sourceforge.fenixedu.domain.cms.messaging.IMailConversation">

@@ -1,5 +1,6 @@
 <%@ page language="java"%>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <h2><bean:message key="title.showAvailableQuestions" /></h2>
@@ -52,20 +53,20 @@ function invertSelect(){
 			<table>
 				<tr>
 					<td><html:form action="/testEdition">
-						<html:hidden property="page" value="0" />
-						<html:hidden property="method" value="editTest" />
-						<html:hidden property="objectCode" value="<%=(pageContext.findAttribute("objectCode")).toString()%>" />
-						<html:hidden property="testCode" value="<%=(pageContext.findAttribute("testCode")).toString()%>" />
-						<html:submit styleClass="inputbutton">
+						<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="0" />
+						<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="editTest" />
+						<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.objectCode" property="objectCode" value="<%=(pageContext.findAttribute("objectCode")).toString()%>" />
+						<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.testCode" property="testCode" value="<%=(pageContext.findAttribute("testCode")).toString()%>" />
+						<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton">
 							<bean:message key="button.continue" />
 						</html:submit>
 					</html:form></td>
 					<td><html:form action="/testsManagement">
-						<html:hidden property="page" value="0" />
-						<html:hidden property="method" value="deleteTest" />
-						<html:hidden property="objectCode" value="<%=(pageContext.findAttribute("objectCode")).toString()%>" />
-						<html:hidden property="testCode" value="<%=(pageContext.findAttribute("testCode")).toString()%>" />
-						<html:submit styleClass="inputbutton">
+						<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="0" />
+						<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="deleteTest" />
+						<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.objectCode" property="objectCode" value="<%=(pageContext.findAttribute("objectCode")).toString()%>" />
+						<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.testCode" property="testCode" value="<%=(pageContext.findAttribute("testCode")).toString()%>" />
+						<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton">
 							<bean:message key="link.removeTest" />
 						</html:submit>
 					</html:form></td>
@@ -76,12 +77,12 @@ function invertSelect(){
 		</logic:greaterThan>
 		
 		<html:form action="/questionsManagement">
-			<html:hidden property="page" value="1" />
-			<html:hidden property="method" value="insertTestQuestion" />
-			<html:hidden property="objectCode" value="<%=(pageContext.findAttribute("objectCode")).toString()%>" />
-			<html:hidden property="testCode" value="<%=(pageContext.findAttribute("testCode")).toString()%>" />
-			<html:hidden property="order" value="<%=(pageContext.findAttribute("order")).toString()%>" />
-			<html:hidden property="asc" value="<%=(pageContext.findAttribute("asc")).toString()%>" />
+			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1" />
+			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="insertTestQuestion" />
+			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.objectCode" property="objectCode" value="<%=(pageContext.findAttribute("objectCode")).toString()%>" />
+			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.testCode" property="testCode" value="<%=(pageContext.findAttribute("testCode")).toString()%>" />
+			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.order" property="order" value="<%=(pageContext.findAttribute("order")).toString()%>" />
+			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.asc" property="asc" value="<%=(pageContext.findAttribute("asc")).toString()%>" />
 			<logic:greaterThan name="metadatasSize" value="10">
 				<table>
 					<tr>
@@ -93,7 +94,7 @@ function invertSelect(){
 						</td>
 					</tr>
 					<tr>
-						<td><html:submit styleClass="inputbutton">
+						<td><html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton">
 							<bean:message key="button.insert" />
 						</html:submit>
 					</td>
@@ -106,7 +107,7 @@ function invertSelect(){
 		<table>
 			<tr>
 				<td class="listClasses-header"></td>
-				<td class="listClasses-header">
+				<th class="listClasses-header">
 				<div class="gen-button"><logic:equal name="order" value="description">
 					<logic:equal name="asc" value="true">
 						<img hspace="5" border="0" src="<%= request.getContextPath() %>/images/gray_square.gif" alt="<bean:message key="gray_square" bundle="IMAGE_RESOURCES" />" />
@@ -141,8 +142,8 @@ function invertSelect(){
 					</html:link>
 					<img hspace="5" border="0" src="<%= request.getContextPath() %>/images/gray_square.gif" alt="<bean:message key="gray_square" bundle="IMAGE_RESOURCES" />" />
 				</logic:notEqual></div>
-				</td>
-				<td class="listClasses-header">
+				</th>
+				<th class="listClasses-header">
 				<div class="gen-button"><logic:equal name="order" value="mainSubject">
 					<logic:equal name="asc" value="true">
 						<img hspace="5" border="0" src="<%= request.getContextPath() %>/images/gray_square.gif" alt="<bean:message key="gray_square" bundle="IMAGE_RESOURCES" />" />
@@ -177,8 +178,8 @@ function invertSelect(){
 					</html:link>
 					<img hspace="5" border="0" src="<%= request.getContextPath() %>/images/gray_square.gif" alt="<bean:message key="gray_square" bundle="IMAGE_RESOURCES" />" />
 				</logic:notEqual></div>
-				</td>
-				<td class="listClasses-header">
+				</th>
+				<th class="listClasses-header">
 				<div class="gen-button"><logic:equal name="order" value="difficulty">
 					<logic:equal name="asc" value="true">
 						<img hspace="5" border="0" src="<%= request.getContextPath() %>/images/gray_square.gif" alt="<bean:message key="gray_square" bundle="IMAGE_RESOURCES" />" />
@@ -213,8 +214,8 @@ function invertSelect(){
 					</html:link>
 					<img hspace="5" border="0" src="<%= request.getContextPath() %>/images/gray_square.gif" alt="<bean:message key="gray_square" bundle="IMAGE_RESOURCES" />" />
 				</logic:notEqual></div>
-				</td>
-				<td width="90" class="listClasses-header">
+				</th>
+				<th width="90" class="listClasses-header">
 				<div class="gen-button"><logic:equal name="order" value="numberOfMembers">
 					<logic:equal name="asc" value="true">
 						<html:link
@@ -246,7 +247,7 @@ function invertSelect(){
 					</html:link>
 					<img hspace="5" border="0" src="<%= request.getContextPath() %>/images/gray_square.gif" alt="<bean:message key="gray_square" bundle="IMAGE_RESOURCES" />" />
 				</logic:notEqual></div>
-				</td>
+				</th>
 			</tr>
 			
 			<logic:iterate id="metadata" name="infoMetadataList" type="net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoMetadata">
@@ -256,7 +257,7 @@ function invertSelect(){
 						
 					<td class="listClasses">
 					
-					<html:multibox property="metadataCode">
+					<html:multibox bundle="HTMLALT_RESOURCES" altKey="multibox.metadataCode" property="metadataCode">
 					
 					<bean:write name="metadataId" />
 					
@@ -319,7 +320,7 @@ function invertSelect(){
 				</td>
 			</tr>
 			<tr>
-				<td><html:submit styleClass="inputbutton">
+				<td><html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton">
 					<bean:message key="button.insert" />
 				</html:submit> </td>
 			</tr>
@@ -335,20 +336,20 @@ function invertSelect(){
 	<table>
 		<tr>
 			<td><html:form action="/testEdition">
-				<html:hidden property="page" value="0" />
-				<html:hidden property="method" value="editTest" />
-				<html:hidden property="objectCode" value="<%=(pageContext.findAttribute("objectCode")).toString()%>" />
-				<html:hidden property="testCode" value="<%=(pageContext.findAttribute("testCode")).toString()%>" />
-				<html:submit styleClass="inputbutton">
+				<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="0" />
+				<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="editTest" />
+				<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.objectCode" property="objectCode" value="<%=(pageContext.findAttribute("objectCode")).toString()%>" />
+				<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.testCode" property="testCode" value="<%=(pageContext.findAttribute("testCode")).toString()%>" />
+				<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton">
 					<bean:message key="button.continue" />
 				</html:submit>
 			</html:form></td>
 			<td><html:form action="/testsManagement">
-				<html:hidden property="page" value="0" />
-				<html:hidden property="method" value="deleteTest" />
-				<html:hidden property="objectCode" value="<%=(pageContext.findAttribute("objectCode")).toString()%>" />
-				<html:hidden property="testCode" value="<%=(pageContext.findAttribute("testCode")).toString()%>" />
-				<html:submit styleClass="inputbutton">
+				<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="0" />
+				<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="deleteTest" />
+				<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.objectCode" property="objectCode" value="<%=(pageContext.findAttribute("objectCode")).toString()%>" />
+				<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.testCode" property="testCode" value="<%=(pageContext.findAttribute("testCode")).toString()%>" />
+				<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton">
 					<bean:message key="link.removeTest" />
 				</html:submit>
 			</html:form></td>

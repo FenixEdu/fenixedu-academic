@@ -4,6 +4,7 @@
 <%@ taglib uri="/WEB-INF/html_basic.tld" prefix="h"%>
 
 <ft:tilesView definition="scientificCouncil.masterPage" attributeName="body-inline">
+	<f:loadBundle basename="resources/HtmlAltResources" var="htmlAltBundle"/>
 	<f:loadBundle basename="resources/ScientificCouncilResources" var="scouncilBundle"/>
 	<f:loadBundle basename="resources/EnumerationResources" var="enumerationBundle"/>
 <style>
@@ -30,8 +31,8 @@ padding-right: 10px;
 
 	<h:form>
 		<fc:viewState binding="#{CompetenceCourseManagement.viewState}"/>
-		<h:outputText escape="false" value="<input id='selectedDepartmentUnitID' name='selectedDepartmentUnitID' type='hidden' value='#{CompetenceCourseManagement.selectedDepartmentUnitID}'/>"/>
-		<h:outputText escape="false" value="<input id='competenceCourseID' name='competenceCourseID' type='hidden' value='#{CompetenceCourseManagement.competenceCourse.idInternal}'/>"/>
+		<h:outputText escape="false" value="<input alt='input.selectedDepartmentUnitID' id='selectedDepartmentUnitID' name='selectedDepartmentUnitID' type='hidden' value='#{CompetenceCourseManagement.selectedDepartmentUnitID}'/>"/>
+		<h:outputText escape="false" value="<input alt='input.competenceCourseID' id='competenceCourseID' name='competenceCourseID' type='hidden' value='#{CompetenceCourseManagement.competenceCourse.idInternal}'/>"/>
 
 		<h:outputText value="<p>" escape="false"/>
 		<fc:selectOneMenu value="#{CompetenceCourseManagement.transferToDepartmentUnitID}" 
@@ -50,8 +51,8 @@ padding-right: 10px;
 			<f:selectItems binding="#{CompetenceCourseManagement.competenceCourseGroupUnitItems}"/>
 		</fc:selectOneMenu>
 		<h:outputText value="<p/><p>" escape="false"/>
-		<h:commandButton styleClass="inputbutton" action="#{CompetenceCourseManagement.transferCompetenceCourse}" value="#{scouncilBundle['transfer']}" />
-		<h:commandButton immediate="true" styleClass="inputbutton" action="competenceCoursesManagement" value="#{scouncilBundle['back']}" />
+		<h:commandButton alt="#{htmlAltBundle['commandButton.transfer']}" styleClass="inputbutton" action="#{CompetenceCourseManagement.transferCompetenceCourse}" value="#{scouncilBundle['transfer']}" />
+		<h:commandButton alt="#{htmlAltBundle['commandButton.back']}" immediate="true" styleClass="inputbutton" action="competenceCoursesManagement" value="#{scouncilBundle['back']}" />
 		<h:outputText value="<p/>" escape="false"/>
 	</h:form>
 </ft:tilesView>

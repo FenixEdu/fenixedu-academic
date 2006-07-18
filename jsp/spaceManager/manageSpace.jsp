@@ -1,5 +1,6 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
@@ -27,9 +28,9 @@
 
 	<table>
 		<tr>
-			<td class="listClasses-header">
+			<th class="listClasses-header">
 				<bean:message bundle="SPACE_RESOURCES" key="title.space.type"/>
-			</td>
+			</th>
 			<td class="listClasses">
 				<logic:equal name="selectedSpaceInformation" property="space.class.name" value="net.sourceforge.fenixedu.domain.space.Campus">
 					<bean:message bundle="SPACE_RESOURCES" key="select.item.campus"/>
@@ -46,25 +47,25 @@
 			</td>
 		</tr>
 		<tr>
-			<td class="listClasses-header">
+			<th class="listClasses-header">
 				<bean:message bundle="SPACE_RESOURCES" key="title.space.Space"/>
-			</td>
+			</th>
 			<td class="listClasses">
 				<bean:write name="selectedSpaceInformation" property="presentationName"/>
 			</td>
 		</tr>
 		<tr>
-			<td class="listClasses-header">
+			<th class="listClasses-header">
 				<bean:message bundle="SPACE_RESOURCES" key="title.space.last.version.date"/>
-			</td>
+			</th>
 			<td class="listClasses">
 				
 			</td>
 		</tr>
 		<tr>	
-			<td class="listClasses-header">
+			<th class="listClasses-header">
 				<bean:message bundle="SPACE_RESOURCES" key="title.space.number.subspaces"/>
-			</td>						
+			</th>						
 			<td class="listClasses">
 				<bean:write name="selectedSpaceInformation" property="space.containedSpacesCount"/>
 			</td>
@@ -100,17 +101,17 @@
 		<logic:greaterEqual name="spacesSize" value="1">
 			<table>				
 				<tr>
-					<td class="listClasses-header">
+					<th class="listClasses-header">
 						<bean:message bundle="SPACE_RESOURCES" key="title.space.type"/>
-					</td>
-					<td class="listClasses-header">
+					</th>
+					<th class="listClasses-header">
 						<bean:message bundle="SPACE_RESOURCES" key="title.space.Space"/>
-					</td>
-					<td class="listClasses-header">
+					</th>
+					<th class="listClasses-header">
 						<bean:message bundle="SPACE_RESOURCES" key="title.space.number.subspaces"/>
-					</td>
-					<td class="listClasses-header">
-					</td>
+					</th>
+					<th class="listClasses-header">
+					</th>
 				</tr>
 				<logic:iterate id="space" name="spaces">
 					<tr>

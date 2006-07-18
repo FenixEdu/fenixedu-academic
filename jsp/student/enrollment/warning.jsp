@@ -1,6 +1,6 @@
-<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %><%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %><div align="center">	<span class="error"><html:errors/></span>	<br/>	<h2 style="text-align:center">		<bean:message key="title.student.enrollment.simple"/>	</h2>			</div><div class="infoselected">
-		<h2>Atenção:</h2>		<ul>		<li><bean:message key="message.students.with.tutor"/></li>		<li><bean:message key="message.LEEC.students.tutor"/></li>		<li><bean:message key="message.LMAC.students"/></li>		<li><bean:message key="message.LEFT.students"/></li>		</ul>
+<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %><html:xhtml/><%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %><div align="center">	<span class="error"><html:errors/></span>	<br/>	<h2 style="text-align:center">		<bean:message key="title.student.enrollment.simple"/>	</h2>			</div><div class="infoselected">
+		<h2>Atenï¿½ï¿½o:</h2>		<ul>		<li><bean:message key="message.students.with.tutor"/></li>		<li><bean:message key="message.LEEC.students.tutor"/></li>		<li><bean:message key="message.LMAC.students"/></li>		<li><bean:message key="message.LEFT.students"/></li>		</ul>
 		<ul>
 		<li><a href="@enrollment.faq.url@" target="_blank"><bean:message key="message.enrollment.instructions"/></a>	</li>		</ul></div>
 
-<div><br/><br/>	<html:form action="/dislocatedStudent">		<html:hidden property="method" value="prepareDislocatedStudentInquiry"/>		<html:submit styleClass="inputbutton">			<bean:message key="button.continue.enrolment"/>		</html:submit>	</html:form></div>
+<div><br/><br/>	<html:form action="/dislocatedStudent">		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="prepareDislocatedStudentInquiry"/>		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton">			<bean:message key="button.continue.enrolment"/>		</html:submit>	</html:form></div>

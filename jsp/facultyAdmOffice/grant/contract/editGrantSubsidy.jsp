@@ -1,5 +1,5 @@
 <%@ page language="java" %>
-<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
+<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%><html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 
@@ -19,22 +19,22 @@
 	</span><br/>
 	</logic:messagesPresent>
 
-	<html:hidden property="method" value="doEdit"/>
-	<html:hidden property="page" value="1"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="doEdit"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
 
 	<%-- In case of validation error --%>
-	<html:hidden property="contractNumber" value='<%= request.getAttribute("contractNumber").toString() %>' />
-	<html:hidden property="grantTypeName" value='<%= request.getAttribute("grantTypeName").toString() %>' />
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.contractNumber" property="contractNumber" value='<%= request.getAttribute("contractNumber").toString() %>' />
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.grantTypeName" property="grantTypeName" value='<%= request.getAttribute("grantTypeName").toString() %>' />
 	
 	<%-- grant contract --%>
-	<html:hidden property="idContract"/> 
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.idContract" property="idContract"/> 
 	
 	<%-- grant subsidy --%>
-	<html:hidden property="idGrantSubsidy"/>
-	<html:hidden property="state"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.idGrantSubsidy" property="idGrantSubsidy"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.state" property="state"/>
 
 	<%-- grant owner  --%>
-	<html:hidden property="idGrantOwner"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.idGrantOwner" property="idGrantOwner"/>
 
 	<table>
 		<tr>
@@ -42,7 +42,7 @@
 				<bean:message key="label.grant.subsidy.value"/>:&nbsp;
 			</td>
 			<td>
-				<html:text property="value"/><bean:message key="label.requiredfield"/>
+				<html:text bundle="HTMLALT_RESOURCES" altKey="text.value" property="value"/><bean:message key="label.requiredfield"/>
 			</td>
 		</tr>
 		<tr>
@@ -50,7 +50,7 @@
 				<bean:message key="label.grant.subsidy.valueFullName"/>:&nbsp;
 			</td>
 			<td>
-				<html:text property="valueFullName" size="50"/>
+				<html:text bundle="HTMLALT_RESOURCES" altKey="text.valueFullName" property="valueFullName" size="50"/>
 			</td>
 		</tr>
 		<tr>
@@ -58,7 +58,7 @@
 				<bean:message key="label.grant.subsidy.totalCost"/>:&nbsp;
 			</td>
 			<td>
-				<html:text property="totalCost"/><bean:message key="label.requiredfield"/>
+				<html:text bundle="HTMLALT_RESOURCES" altKey="text.totalCost" property="totalCost"/><bean:message key="label.requiredfield"/>
 			</td>
 		</tr>
 		
@@ -67,7 +67,7 @@
 				<bean:message key="label.grant.subsidy.dateBeginSubsidy"/>:&nbsp;
 			</td>
 			<td>
-				<html:text property="dateBeginSubsidy" size="10"/>&nbsp;<bean:message key="label.dateformat"/>
+				<html:text bundle="HTMLALT_RESOURCES" altKey="text.dateBeginSubsidy" property="dateBeginSubsidy" size="10"/>&nbsp;<bean:message key="label.dateformat"/>
 				<bean:message key="label.requiredfield"/>
 			</td>
 		</tr>
@@ -76,7 +76,7 @@
 				<bean:message key="label.grant.subsidy.dateEndSubsidy"/>:&nbsp;
 			</td>
 			<td>
-				<html:text property="dateEndSubsidy" size="10"/>&nbsp;<bean:message key="label.dateformat"/>
+				<html:text bundle="HTMLALT_RESOURCES" altKey="text.dateEndSubsidy" property="dateEndSubsidy" size="10"/>&nbsp;<bean:message key="label.dateformat"/>
 				<bean:message key="label.requiredfield"/>
 			</td>
 		</tr>
@@ -87,17 +87,17 @@
 	<table>
 		<tr>
 			<td>
-				<html:submit styleClass="inputbutton">
+				<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton">
 					<bean:message key="button.save"/>
 				</html:submit>
 </html:form>
 			</td>
 			<td>
 				<html:form action="/manageGrantSubsidy" style="display:inline">
-				<html:hidden property="method" value="prepareManageGrantSubsidyForm"/>
-				<html:hidden property="page" value="1"/>
-				<html:hidden property="idContract" value='<%= request.getAttribute("idContract").toString() %>'/>
-					<html:submit styleClass="inputbutton" style="display:inline">
+				<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="prepareManageGrantSubsidyForm"/>
+				<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
+				<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.idContract" property="idContract" value='<%= request.getAttribute("idContract").toString() %>'/>
+					<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton" style="display:inline">
 						<bean:message key="button.cancel"/>
 					</html:submit>
 				</html:form>

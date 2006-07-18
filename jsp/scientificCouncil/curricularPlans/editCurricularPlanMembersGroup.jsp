@@ -5,6 +5,7 @@
 
 
 <ft:tilesView definition="scientificCouncil.masterPage" attributeName="body-inline">
+	<f:loadBundle basename="resources/HtmlAltResources" var="htmlAltBundle"/>
 	<f:loadBundle basename="resources/ScientificCouncilResources" var="scouncilBundle"/>
 	<f:loadBundle basename="resources/EnumerationResources" var="enumBundle"/>
 		
@@ -15,7 +16,7 @@
 
 	<h:form>
 		<fc:viewState binding="#{CurricularPlansMembersManagementBackingBean.viewState}"/>
-		<h:outputText escape="false" value="<input id='dcpId' name='dcpId' type='hidden' value='#{CurricularPlansMembersManagementBackingBean.selectedCurricularPlanID}'/>"/>
+		<h:outputText escape="false" value="<input alt='input.dcpId' id='dcpId' name='dcpId' type='hidden' value='#{CurricularPlansMembersManagementBackingBean.selectedCurricularPlanID}'/>"/>
 				
 		<h:messages styleClass="error"/>
 		
@@ -57,7 +58,7 @@
 		<h:outputText value="<p>" escape="false" />				
 		<h:commandLink value="#{scouncilBundle['addPersons']}" actionListener="#{CurricularPlansMembersManagementBackingBean.addMembers}" />
 		<h:outputText value="</p><br/><br/>" escape="false" />
-		<h:commandButton immediate="true" styleClass="inputbutton" value="#{scouncilBundle['return']}"
+		<h:commandButton alt="#{htmlAltBundle['commandButton.return']}" immediate="true" styleClass="inputbutton" value="#{scouncilBundle['return']}"
 			action="curricularPlansManagement"/>
 
 	</h:form>

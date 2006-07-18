@@ -1,5 +1,6 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
@@ -23,18 +24,18 @@
 	<bean:size id="numCPs" name="selectedStudentCPs"/>
 
 	<html:form action="/viewCurriculum.do?method=getStudentCP">
-		<html:hidden property="degreeCurricularPlanID"/>
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.degreeCurricularPlanID" property="degreeCurricularPlanID"/>
 		
 		<table width="100%" class="infoop">
 			<tr>
 				<td><bean:message key="label.studentCurricularPlan" bundle="STUDENT_RESOURCES" /></td>
-				<td><html:select property="studentCPID"	onchange='document.studentCurricularPlanAndEnrollmentsSelectionForm.submit();'> <html:options collection="allSCPs" property="value" labelProperty="label" /></html:select></td>
+				<td><html:select bundle="HTMLALT_RESOURCES" altKey="select.studentCPID" property="studentCPID"	onchange='document.studentCurricularPlanAndEnrollmentsSelectionForm.submit();'> <html:options collection="allSCPs" property="value" labelProperty="label" /></html:select></td>
 			</tr>
 			
 			<tr>
 				<td><bean:message key="label.enrollmentsFilter" bundle="STUDENT_RESOURCES" /></td>
 				<td>
-					<html:select property="select"
+					<html:select bundle="HTMLALT_RESOURCES" altKey="select.select" property="select"
 						onchange='document.studentCurricularPlanAndEnrollmentsSelectionForm.submit();' >
 						<html:options collection="enrollmentOptions" property="value" labelProperty="label"/>
 					</html:select>
@@ -43,7 +44,7 @@
 		</table>
 		
 		<logic:present property="studentNumber" name="studentCurricularPlanAndEnrollmentsSelectionForm">
-			<html:hidden name="studentCurricularPlanAndEnrollmentsSelectionForm" property="studentNumber"/>
+			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.studentNumber" name="studentCurricularPlanAndEnrollmentsSelectionForm" property="studentNumber"/>
 		</logic:present>
 	</html:form>
 
@@ -96,21 +97,21 @@
 								actualSemester = ((InfoEnrolment)enrolment).getInfoExecutionPeriod().getSemester().toString();
 						%>	
 							<tr>
-							  	<td class="listClasses-header">
+							  	<th class="listClasses-header">
 							  		<bean:message key="label.executionYear" />
-							  	</td >
-							  	<td class="listClasses-header">
+							  	</th >
+							  	<th class="listClasses-header">
 							  		<bean:message key="label.semester" />
-							  	</td >
-							  	<td class="listClasses-header">
+							  	</th >
+							  	<th class="listClasses-header">
 							  		<bean:message key="label.degree.name" />
-							  	</td>
-							  	<td class="listClasses-header">
+							  	</th>
+							  	<th class="listClasses-header">
 							  		<bean:message key="label.curricular.course.name" />
-							  	</td>
-							  	<td class="listClasses-header">
+							  	</th>
+							  	<th class="listClasses-header">
 							  		<bean:message key="label.finalEvaluation" />
-							  	</td>
+							  	</th>
 						  	</tr>	
 								
 						<%		

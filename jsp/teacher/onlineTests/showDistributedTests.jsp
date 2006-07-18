@@ -1,5 +1,6 @@
 <%@ page language="java"%>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <h2><bean:message key="title.showDistributedTests" /></h2>
@@ -62,16 +63,16 @@ function invertSelect(){
 		</table>
 		<br />
 		<html:form action="/distributedTestMarks">
-			<html:hidden property="page" value="1" />
-			<html:hidden property="method" value="downloadTestMarks" />
-			<html:hidden property="objectCode" value="<%=(pageContext.findAttribute("objectCode")).toString()%>" />
+			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1" />
+			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="downloadTestMarks" />
+			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.objectCode" property="objectCode" value="<%=(pageContext.findAttribute("objectCode")).toString()%>" />
 			<span class="error"><html:errors /></span>
 			<table>
 				<tr>
 					<td class="listClasses-header"></td>
-					<td class="listClasses-header"><bean:message key="label.test.title" /></td>
-					<td class="listClasses-header"><bean:message key="message.testBeginDate" /></td>
-					<td class="listClasses-header"><bean:message key="message.testEndDate" /></td>
+					<th class="listClasses-header"><bean:message key="label.test.title" /></th>
+					<th class="listClasses-header"><bean:message key="message.testBeginDate" /></th>
+					<th class="listClasses-header"><bean:message key="message.testEndDate" /></th>
 				</tr>
 				<logic:iterate id="distributedTest" name="infoDistributedTests" type="net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoDistributedTest">
 					<tr>
@@ -79,11 +80,11 @@ function invertSelect(){
 						<bean:define id="distributedTestCode" name="distributedTest" property="idInternal" />
 						<td class="listClasses"><%if (((Integer) testType).intValue() != 3) {
 
-        %> <html:multibox property="distributedTestCodes">
+        %> <html:multibox bundle="HTMLALT_RESOURCES" altKey="multibox.distributedTestCodes" property="distributedTestCodes">
 							<bean:write name="distributedTestCode" />
 						</html:multibox> <%} else {
 
-        %> <html:multibox property="distributedTestCodes" disabled="true">
+        %> <html:multibox bundle="HTMLALT_RESOURCES" altKey="multibox.distributedTestCodes" property="distributedTestCodes" disabled="true">
 							<bean:write name="distributedTestCode" />
 						</html:multibox> <%}
 
@@ -141,7 +142,7 @@ function invertSelect(){
 			</html:link>
 			<br />
 			<br />
-			<html:submit styleClass="inputbutton">
+			<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton">
 				<bean:message key="link.export" />
 			</html:submit>
 		</html:form>

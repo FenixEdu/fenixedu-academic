@@ -1,5 +1,6 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ page import="net.sourceforge.fenixedu.domain.curriculum.CurricularCourseType" %>
@@ -50,15 +51,15 @@ input { font-size: 11px; }
 <h2><bean:message key="title.student.enrollment.simple" bundle="STUDENT_RESOURCES"/></h2>
 <span class="error"><html:errors/></span>
 <html:form action="/curricularCoursesEnrollment">
-	<html:hidden property="method" value="enrollmentConfirmation" />
-	<html:hidden property="studentNumber" />
-	<html:hidden property="degreeCurricularPlanID" />
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="enrollmentConfirmation" />
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.studentNumber" property="studentNumber" />
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.degreeCurricularPlanID" property="degreeCurricularPlanID" />
 	<bean:define id="studentCurricularPlanId" name="infoStudentEnrolmentContext" property="infoStudentCurricularPlan.idInternal" />
-	<html:hidden property="studentCurricularPlanId" value="<%=studentCurricularPlanId.toString()%>"/>
-	<html:hidden property="courseType"/>
-	<html:hidden property="curricularCourse"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.studentCurricularPlanId" property="studentCurricularPlanId" value="<%=studentCurricularPlanId.toString()%>"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.courseType" property="courseType"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.curricularCourse" property="curricularCourse"/>
 	<logic:present name="executionDegreeId">
-		<html:hidden property="executionDegreeId" value="<%=pageContext.findAttribute("executionDegreeId").toString()%>"/>
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.executionDegreeId" property="executionDegreeId" value="<%=pageContext.findAttribute("executionDegreeId").toString()%>"/>
 	</logic:present>
 	
 	<div class="infoselected">
@@ -99,9 +100,9 @@ input { font-size: 11px; }
 
 	<table class="style1">	
 		<tr>
-			<td class="listClasses-header"><bean:message key="label.student.enrollment.specializationArea" />/<bean:message key="label.student.enrollment.branch" bundle="STUDENT_RESOURCES" /></td>
-			<td class="listClasses-header"><bean:message key="label.student.enrollment.secondaryArea" /></td>
-			<td class="listClasses-header">&nbsp;</td>
+			<th class="listClasses-header"><bean:message key="label.student.enrollment.specializationArea" />/<bean:message key="label.student.enrollment.branch" bundle="STUDENT_RESOURCES" /></th>
+			<th class="listClasses-header"><bean:message key="label.student.enrollment.secondaryArea" /></th>
+			<th class="listClasses-header">&nbsp;</th>
 		</tr>
 		<logic:present name="infoStudentEnrolmentContext" property="infoStudentCurricularPlan.infoBranch">
 					<bean:define id="name" name="infoStudentEnrolmentContext" property="infoStudentCurricularPlan.infoStudent.infoPerson.nome"/>
@@ -178,20 +179,20 @@ input { font-size: 11px; }
 	</table>
 
 <ul>
-	<li><a href="@enrollment.faq.url@" target="_blank">FAQ Inscrição em Disciplinas - Glossário</a></li>
-	<li>Para mais esclarecimentos consultar <em>"II.7. Normas a observar na Inscrição"</em> no documento <a href="http://www.ist.utl.pt/html/destaques/regulamento0506.pdf">Licenciaturas: Regulamentos e Calendário Escolar 2005/2006 (.pdf)</a></li>
+	<li><a href="@enrollment.faq.url@" target="_blank">FAQ Inscriï¿½ï¿½o em Disciplinas - Glossï¿½rio</a></li>
+	<li>Para mais esclarecimentos consultar <em>"II.7. Normas a observar na Inscriï¿½ï¿½o"</em> no documento <a href="http://www.ist.utl.pt/html/destaques/regulamento0506.pdf">Licenciaturas: Regulamentos e Calendï¿½rio Escolar 2005/2006 (.pdf)</a></li>
 </ul>
 
 
 	<h4><bean:message key="message.student.enrolled.curricularCourses" />:</h4>
 	<table class="style1">
 		<tr class="header">
-		<td class="listClasses-header"><bean:message key="label.courses" bundle="STUDENT_RESOURCES"/></td>
-		<td class="listClasses-header"><bean:message key="label.course.type" bundle="STUDENT_RESOURCES"/></td>		
-		<td class="listClasses-header"><bean:message key="label.course.enrollment.weight2" bundle="STUDENT_RESOURCES"/></td>
-		<td class="listClasses-header"><bean:message key="label.course.enrollment.acumulated.enrollments2" bundle="STUDENT_RESOURCES"/></td>
-		<td class="listClasses-header"><bean:message key="label.course.enrollment.state" bundle="STUDENT_RESOURCES"/></td>
-		<td class="listClasses-header"><bean:message key="label.course.enrollment.cancel" bundle="STUDENT_RESOURCES"/></td>		
+		<th class="listClasses-header"><bean:message key="label.courses" bundle="STUDENT_RESOURCES"/></th>
+		<th class="listClasses-header"><bean:message key="label.course.type" bundle="STUDENT_RESOURCES"/></th>		
+		<th class="listClasses-header"><bean:message key="label.course.enrollment.weight2" bundle="STUDENT_RESOURCES"/></th>
+		<th class="listClasses-header"><bean:message key="label.course.enrollment.acumulated.enrollments2" bundle="STUDENT_RESOURCES"/></th>
+		<th class="listClasses-header"><bean:message key="label.course.enrollment.state" bundle="STUDENT_RESOURCES"/></th>
+		<th class="listClasses-header"><bean:message key="label.course.enrollment.cancel" bundle="STUDENT_RESOURCES"/></th>		
 		</tr>
 		<logic:iterate id="enrollmentElem" name="infoStudentEnrolmentContext" property="studentCurrentSemesterInfoEnrollments" type="net.sourceforge.fenixedu.dataTransferObject.InfoEnrolment">
 			<tr>
@@ -206,7 +207,7 @@ input { font-size: 11px; }
 				<td class="listClasses">
 					<bean:define id="enrollmentIndex" name="enrollmentElem" property="idInternal"/>
 					<bean:define id="onClickString" >this.form.method.value='unenrollFromCurricularCourse'; this.form.curricularCourse.value='<bean:write name="enrollmentIndex" />'; disableAllElements(this.form); this.form.submit();</bean:define>
-					<html:button property="<%=enrollmentIndex.toString()%>"   onclick="<%= onClickString %>">
+					<html:button alt="<%=enrollmentIndex.toString()%>" property="<%=enrollmentIndex.toString()%>"   onclick="<%= onClickString %>">
 						<bean:message key="button.anull" bundle="STUDENT_RESOURCES"/>
 					</html:button>
 				</td>
@@ -229,13 +230,13 @@ input { font-size: 11px; }
 			</tr>
 		</logic:present>	
 		<tr class="header">
-		<td class="listClasses-header"><bean:message key="label.course" bundle="STUDENT_RESOURCES"/></td>
-		<td class="listClasses-header"><bean:message key="label.course.type" bundle="STUDENT_RESOURCES"/></td>	
-		<td class="listClasses-header"><bean:message key="label.course.enrollment.weight2" bundle="STUDENT_RESOURCES"/></td>
-		<td class="listClasses-header"><bean:message key="label.course.enrollment.acumulated.enrollments2" bundle="STUDENT_RESOURCES"/></td>
-		<td class="listClasses-header"><bean:message key="label.course.enrollment.curricularYear" bundle="STUDENT_RESOURCES"/></td>
-		<td class="listClasses-header"><bean:message key="label.course.enrollment.state" bundle="STUDENT_RESOURCES"/></td>
-		<td class="listClasses-header"><bean:message key="label.course.enrollment.enroll" bundle="STUDENT_RESOURCES"/></td>		
+		<th class="listClasses-header"><bean:message key="label.course" bundle="STUDENT_RESOURCES"/></th>
+		<th class="listClasses-header"><bean:message key="label.course.type" bundle="STUDENT_RESOURCES"/></th>	
+		<th class="listClasses-header"><bean:message key="label.course.enrollment.weight2" bundle="STUDENT_RESOURCES"/></th>
+		<th class="listClasses-header"><bean:message key="label.course.enrollment.acumulated.enrollments2" bundle="STUDENT_RESOURCES"/></th>
+		<th class="listClasses-header"><bean:message key="label.course.enrollment.curricularYear" bundle="STUDENT_RESOURCES"/></th>
+		<th class="listClasses-header"><bean:message key="label.course.enrollment.state" bundle="STUDENT_RESOURCES"/></th>
+		<th class="listClasses-header"><bean:message key="label.course.enrollment.enroll" bundle="STUDENT_RESOURCES"/></th>		
 		</tr>
 		<logic:iterate id="curricularCourse" name="infoStudentEnrolmentContext" property="curricularCourses2Enroll">
 			<bean:define id="curricularCourseIndex" name="curricularCourse" property="infoCurricularCourse.idInternal"/>
@@ -263,7 +264,7 @@ input { font-size: 11px; }
 							this.form.method.value='enrollInCurricularCourse';  this.form.curricularCourse.value='<bean:write name="curricularCourseString" />'; this.form.courseType.value='1'; disableAllElements(this.form); this.form.submit();
 						<% } %>
 					</bean:define>
-					<html:button property="curricularCourseString" onclick="<%=onClickString%>">
+					<html:button bundle="HTMLALT_RESOURCES" altKey="button.curricularCourseString" property="curricularCourseString" onclick="<%=onClickString%>">
 						<bean:message key="button.enroll" bundle="STUDENT_RESOURCES"/>
 					</html:button>
 				</td>
@@ -272,7 +273,7 @@ input { font-size: 11px; }
 	</table>
 	
 	<br/>
-	<html:submit styleClass="inputbutton">
+	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton">
 		<bean:message bundle="APPLICATION_RESOURCES" key="label.finish"/>
 	</html:submit>
 </html:form>

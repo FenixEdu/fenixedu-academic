@@ -1,5 +1,6 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ page import="java.util.ArrayList" %>
@@ -33,8 +34,8 @@
    <%--<bean:define id="link">/printGuidePages.do?graduationType=<bean:write name="graduationType"/>&<bean:write name="<%= SessionConstants.REQUESTER_NUMBER %>"/></bean:define>
    <bean:define id="graduationType" name="graduationType"/>
    <html:link page='<%= pageContext.findAttribute("link").toString() %>' target="_blank">
-   <html:hidden property="graduationType" value='<%= pageContext.findAttribute("graduationType").toString()%>'/>
-   <html:hidden property="<%= SessionConstants.REQUESTER_NUMBER %>" value='<%= pageContext.findAttribute("SessionConstants.REQUESTER_NUMBER").toString()%>'/>
+   <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.graduationType" property="graduationType" value='<%= pageContext.findAttribute("graduationType").toString()%>'/>
+   <html:hidden alt="<%= SessionConstants.REQUESTER_NUMBER %>" property="<%= SessionConstants.REQUESTER_NUMBER %>" value='<%= pageContext.findAttribute("SessionConstants.REQUESTER_NUMBER").toString()%>'/>
    <bean:message key="link.masterDegree.administrativeOffice.printGuide" />
    </html:link>--%>
    <html:link page="<%= "/printGuidePages.do?graduationType=" + pageContext.findAttribute("graduationType") + "&amp;" + SessionConstants.REQUESTER_NUMBER + "=" + pageContext.findAttribute(SessionConstants.REQUESTER_NUMBER)%>" >

@@ -1,11 +1,12 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/enum.tld" prefix="e" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
 <html:form action="/guideListingByPerson.do?method=getPersonGuideList" focus="studentNumber">
-	<html:hidden property="page" value="1"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
    	<table width="100%">
        	<tr>
         	<td style="text-align:left" class="listClasses">
@@ -19,7 +20,7 @@
        	<%-- Student Number --%>
        	<tr>
         	<td><bean:message key="label.masterDegree.administrativeOffice.studentNumber"/>:</td>
-         	<td><html:text property="studentNumber" size="5" maxlength="5"/></td>
+         	<td><html:text bundle="HTMLALT_RESOURCES" altKey="text.studentNumber" property="studentNumber" size="5" maxlength="5"/></td>
        	</tr>
        	<%-- Or --%>
        	<tr>
@@ -30,14 +31,14 @@
 		<%-- Identification Document Number --%>
        	<tr>
         	<td><bean:message key="label.candidate.identificationDocumentNumber"/>:</td>
-         	<td><html:text property="identificationDocumentNumber"/></td>
+         	<td><html:text bundle="HTMLALT_RESOURCES" altKey="text.identificationDocumentNumber" property="identificationDocumentNumber"/></td>
        	</tr>
        	<%-- Identification Document Type --%>
        	<tr>
         	<td><bean:message key="label.candidate.identificationDocumentType"/>:</td>
          	<td>
          		<e:labelValues id="values" enumeration="net.sourceforge.fenixedu.domain.person.IDDocumentType"/>
-         		<html:select property="identificationDocumentType">
+         		<html:select bundle="HTMLALT_RESOURCES" altKey="select.identificationDocumentType" property="identificationDocumentType">
          			<html:option key="dropDown.Default" value=""/>
             		<html:options collection="values" property="value" labelProperty="label"/>
              	</html:select>
@@ -45,6 +46,6 @@
        	</tr>
 	</table>
 	<br />
-	<html:submit value="Seguinte" styleClass="inputbutton" property="ok"/>
-	<html:reset value="Limpar" styleClass="inputbutton"/>
+	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.ok" value="Seguinte" styleClass="inputbutton" property="ok"/>
+	<html:reset bundle="HTMLALT_RESOURCES" altKey="reset.reset" value="Limpar" styleClass="inputbutton"/>
 </html:form>

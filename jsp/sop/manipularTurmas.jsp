@@ -31,7 +31,7 @@
                     <logic:iterate id="elem" name="listaTurmasBean">
                         <tr align="center">
                             <td width="25">
-                                <html:radio name="posicaoTurmaFormBean" property="posicao" value="<%= (new Integer(i)).toString()%>"/>
+                                <html:radio bundle="HTMLALT_RESOURCES" altKey="radio.posicao" name="posicaoTurmaFormBean" property="posicao" value="<%= (new Integer(i)).toString()%>"/>
                             </td>
                             <td>
                                 <bean:write name="elem" property="nome"/>
@@ -45,7 +45,7 @@
                 <table align="center" border='1' cellpadding='5''>
                     <tr align="center">
                         <td>
-                            <font color='red'> Não existem turmas </font>
+                            <font color='red'> Nï¿½o existem turmas </font>
                         </td>
                     </tr>
                 </table>
@@ -55,19 +55,19 @@
             <table align="center">
                 <tr align="center">
                     <td>
-                        <html:submit property="operation">
+                        <html:submit bundle="HTMLALT_RESOURCES" altKey="submit.operation" property="operation">
                             Ver Turma
                         </html:submit>
                     </td>
                     <td width="20"> </td>
                     <td>
-                        <html:submit property="operation">
+                        <html:submit bundle="HTMLALT_RESOURCES" altKey="submit.operation" property="operation">
                             Editar Turma
                         </html:submit>
                     </td>
                     <td width="20"> </td>
                     <td>
-                        <html:submit property="operation">
+                        <html:submit bundle="HTMLALT_RESOURCES" altKey="submit.operation" property="operation">
                             Apagar Turma
                         </html:submit>
                     </td>

@@ -4,6 +4,7 @@
 <%@ taglib uri="/WEB-INF/jsf_fenix_components.tld" prefix="fc"%>
 
 <ft:tilesView definition="definition.sop.examsPage" attributeName="body-inline">
+	<f:loadBundle basename="resources/HtmlAltResources" var="htmlAltBundle"/>
 	<f:loadBundle basename="resources/ApplicationResourcesSOP" var="bundleSOP"/>
 
 	<h:outputText value="<h2>#{bundleSOP['property.exam.associate']}</h2><br/>" escape="false" />
@@ -25,16 +26,16 @@
 		<h:inputHidden binding="#{SOPEvaluationManagementBackingBean.endHourHidden}"/>
 		<h:inputHidden binding="#{SOPEvaluationManagementBackingBean.endMinuteHidden}"/>
 		
-		<h:outputText escape="false" value="<input id='executionPeriodOID' name='executionPeriodOID' type='hidden' value='#{SOPEvaluationManagementBackingBean.executionPeriodOID}'/>"/>
-		<h:outputText escape="false" value="<input id='curricularYearIDsParameterString' name='curricularYearIDsParameterString' type='hidden' value='#{SOPEvaluationManagementBackingBean.curricularYearIDsParameterString}'/>"/>
+		<h:outputText escape="false" value="<input alt='input.executionPeriodOID' id='executionPeriodOID' name='executionPeriodOID' type='hidden' value='#{SOPEvaluationManagementBackingBean.executionPeriodOID}'/>"/>
+		<h:outputText escape="false" value="<input alt='input.curricularYearIDsParameterString' id='curricularYearIDsParameterString' name='curricularYearIDsParameterString' type='hidden' value='#{SOPEvaluationManagementBackingBean.curricularYearIDsParameterString}'/>"/>
 
-		<h:outputText escape="false" value="<input id='year' name='year' type='hidden' value='#{SOPEvaluationManagementBackingBean.year}'/>"/>
-		<h:outputText escape="false" value="<input id='month' name='month' type='hidden' value='#{SOPEvaluationManagementBackingBean.month}'/>"/>
-		<h:outputText escape="false" value="<input id='day' name='day' type='hidden' value='#{SOPEvaluationManagementBackingBean.day}'/>"/>
-		<h:outputText escape="false" value="<input id='beginHour' name='beginHour' type='hidden' value='#{SOPEvaluationManagementBackingBean.beginHour}'/>"/>
-		<h:outputText escape="false" value="<input id='beginMinute' name='beginMinute' type='hidden' value='#{SOPEvaluationManagementBackingBean.beginMinute}'/>"/>
-		<h:outputText escape="false" value="<input id='endHour' name='endHour' type='hidden' value='#{SOPEvaluationManagementBackingBean.endHour}'/>"/>
-		<h:outputText escape="false" value="<input id='endMinute' name='endMinute' type='hidden' value='#{SOPEvaluationManagementBackingBean.endMinute}'/>"/>
+		<h:outputText escape="false" value="<input alt='input.year' id='year' name='year' type='hidden' value='#{SOPEvaluationManagementBackingBean.year}'/>"/>
+		<h:outputText escape="false" value="<input alt='input.month' id='month' name='month' type='hidden' value='#{SOPEvaluationManagementBackingBean.month}'/>"/>
+		<h:outputText escape="false" value="<input alt='input.day' id='day' name='day' type='hidden' value='#{SOPEvaluationManagementBackingBean.day}'/>"/>
+		<h:outputText escape="false" value="<input alt='input.beginHour' id='beginHour' name='beginHour' type='hidden' value='#{SOPEvaluationManagementBackingBean.beginHour}'/>"/>
+		<h:outputText escape="false" value="<input alt='input.beginMinute' id='beginMinute' name='beginMinute' type='hidden' value='#{SOPEvaluationManagementBackingBean.beginMinute}'/>"/>
+		<h:outputText escape="false" value="<input alt='input.endHour' id='endHour' name='endHour' type='hidden' value='#{SOPEvaluationManagementBackingBean.endHour}'/>"/>
+		<h:outputText escape="false" value="<input alt='input.endMinute' id='endMinute' name='endMinute' type='hidden' value='#{SOPEvaluationManagementBackingBean.endMinute}'/>"/>
 
 		<h:outputText styleClass="error" rendered="#{!empty SOPEvaluationManagementBackingBean.errorMessage}"
 			value="#{bundleSOP[SOPEvaluationManagementBackingBean.errorMessage]}"/>
@@ -81,8 +82,8 @@
 		
 
 		<h:outputText value="<br/><br/>" escape="false" />
-		<h:commandButton action="#{SOPEvaluationManagementBackingBean.associateExecutionCourse}" value="#{bundleSOP['button.associate']}" styleClass="inputbutton"/>
-		<h:commandButton action="#{SOPEvaluationManagementBackingBean.returnToCreateOrEdit}" value="#{bundleSOP['button.cancel']}" styleClass="inputbutton"/>
+		<h:commandButton alt="#{htmlAltBundle['commandButton.associate']}" action="#{SOPEvaluationManagementBackingBean.associateExecutionCourse}" value="#{bundleSOP['button.associate']}" styleClass="inputbutton"/>
+		<h:commandButton alt="#{htmlAltBundle['commandButton.cancel']}" action="#{SOPEvaluationManagementBackingBean.returnToCreateOrEdit}" value="#{bundleSOP['button.cancel']}" styleClass="inputbutton"/>
 	</h:form>
 
 </ft:tilesView>

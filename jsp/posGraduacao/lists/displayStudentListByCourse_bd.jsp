@@ -1,5 +1,6 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
@@ -42,9 +43,9 @@
 		<bean:message key="label.masterDegree.chooseOne"/><br><br><br>
 		<table>
 			<tr>
-				<td class="listClasses-header"><bean:message key="label.candidate.number" /></td>
-		    	<td class="listClasses-header"><bean:message key="label.person.name" /></td>
-		    	<td class="listClasses-header"><bean:message key="label.masterDegree.administrativeOffice.mark" /></td>
+				<th class="listClasses-header"><bean:message key="label.candidate.number" /></th>
+		    	<th class="listClasses-header"><bean:message key="label.person.name" /></th>
+		    	<th class="listClasses-header"><bean:message key="label.masterDegree.administrativeOffice.mark" /></th>
 		    </tr>
 		    <logic:iterate id="enrolment" name="enrolmentList">
 		     	<logic:notEqual name="enrolment" property="enrollmentState" value="<%= EnrollmentState.ANNULED.toString() %>">

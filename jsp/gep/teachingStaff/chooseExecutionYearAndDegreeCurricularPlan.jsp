@@ -1,4 +1,5 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 
@@ -9,10 +10,10 @@
 </p>
 
 <html:form action="/teachingStaff">
-	<html:hidden property="method" value="selectExecutionDegree"/>
-	<html:hidden property="executionYearID" value="44"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="selectExecutionDegree"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.executionYearID" property="executionYearID" value="44"/>
 
-	<!--<html:select property="executionYearID"
+	<!--<html:select bundle="HTMLALT_RESOURCES" altKey="select.executionYearID" property="executionYearID"
 		onchange="this.form.method.value='selectExecutionYear';this.form.submit();">
 		<html:options collection="executionYears" property="idInternal"
 			labelProperty="year" />
@@ -28,7 +29,7 @@
 				<logic:equal name="degreeCurricularPlan" property="infoDegree.tipoCurso.name" value="DEGREE" >
 					<tr>
 						<td>
-							<html:radio property="degreeCurricularPlanID" idName="degreeCurricularPlan" value="idInternal" />
+							<html:radio bundle="HTMLALT_RESOURCES" altKey="radio.degreeCurricularPlanID" property="degreeCurricularPlanID" idName="degreeCurricularPlan" value="idInternal" />
 						</td>
 						<td><bean:write name="degreeCurricularPlan"
 							property="name" /></td>

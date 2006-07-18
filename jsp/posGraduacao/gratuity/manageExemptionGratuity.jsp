@@ -1,5 +1,5 @@
 <%@ page language="java" %>
-<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
+<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%><html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ page import="net.sourceforge.fenixedu.domain.gratuity.ExemptionGratuityType" %>
@@ -34,14 +34,14 @@
 <p />
 
 <html:form action="/manageExemptionGratuityLA" >
-<html:hidden property="page" value="1" />
-<html:hidden property="studentCurricularPlanID" value="<%=pageContext.findAttribute("studentCurricularPlanID").toString()%>" />
-<html:hidden property="executionYear"  value="<%=pageContext.findAttribute("executionYear").toString()%>" />
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1" />
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.studentCurricularPlanID" property="studentCurricularPlanID" value="<%=pageContext.findAttribute("studentCurricularPlanID").toString()%>" />
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.executionYear" property="executionYear"  value="<%=pageContext.findAttribute("executionYear").toString()%>" />
 <logic:present name="gratuitySituationID">
-	<html:hidden property="gratuitySituationID" value="<%= ""+request.getAttribute("gratuitySituationID")%>" />
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.gratuitySituationID" property="gratuitySituationID" value="<%= ""+request.getAttribute("gratuitySituationID")%>" />
 </logic:present>
 <logic:present name="gratuityValuesID">
-	<html:hidden property="gratuityValuesID" value="<%= ""+request.getAttribute("gratuityValuesID")%>" />
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.gratuityValuesID" property="gratuityValuesID" value="<%= ""+request.getAttribute("gratuityValuesID")%>" />
 </logic:present>
 
 <table border="0" width='100%'>
@@ -59,7 +59,7 @@
 							<bean:write name="percentage" />%&nbsp;
 						</td>
 						<td>
-							<html:radio property="valueExemptionGratuity" value="<%= percentage.toString() %>"/>
+							<html:radio bundle="HTMLALT_RESOURCES" altKey="radio.valueExemptionGratuity" property="valueExemptionGratuity" value="<%= percentage.toString() %>"/>
 						</td>
 					</tr>
 				</logic:iterate>
@@ -69,12 +69,12 @@
 						<bean:message key="label.masterDegree.gratuity.anotherOne" />&nbsp;
 					</td>
 					<td>
-						<html:radio property="valueExemptionGratuity" value="-1"/>
+						<html:radio bundle="HTMLALT_RESOURCES" altKey="radio.valueExemptionGratuity" property="valueExemptionGratuity" value="-1"/>
 					</td>
 				</tr>
 				<tr>
 					<td colspan="2">
-						<html:text property="otherValueExemptionGratuity" size="4"/>%
+						<html:text bundle="HTMLALT_RESOURCES" altKey="text.otherValueExemptionGratuity" property="otherValueExemptionGratuity" size="4"/>%
 					</td>
 				</tr>	
 				<tr><td>&nbsp;</td></tr>
@@ -82,7 +82,7 @@
 				<tr><td>&nbsp;</td></tr>
 				<tr>
 					<td colspan="2">
-						<html:text property="adHocValueExemptionGratuity" size="4"/>&euro;
+						<html:text bundle="HTMLALT_RESOURCES" altKey="text.adHocValueExemptionGratuity" property="adHocValueExemptionGratuity" size="4"/>&euro;
 					</td>
 				</tr>											
 			</table>
@@ -97,7 +97,7 @@
 							<bean:message name="exemptionGratuity" property="name" bundle="ENUMERATION_RESOURCES" />&nbsp;
 						</td>
 						<td>								
-							<html:radio property="justificationExemptionGratuity" idName="exemptionGratuity" value="name"/>
+							<html:radio bundle="HTMLALT_RESOURCES" altKey="radio.justificationExemptionGratuity" property="justificationExemptionGratuity" idName="exemptionGratuity" value="name"/>
 						</td>
 					</tr>
 					</logic:notEqual>
@@ -107,12 +107,12 @@
 						<bean:message key="OTHER" bundle="ENUMERATION_RESOURCES" />&nbsp;
 					</td>
 					<td>																							
-						<html:radio property="justificationExemptionGratuity" value="OTHER"/>
+						<html:radio bundle="HTMLALT_RESOURCES" altKey="radio.justificationExemptionGratuity" property="justificationExemptionGratuity" value="OTHER"/>
 					</td>
 				</tr>	
 				<tr>
 					<td colspan="2">																							
-						<html:text property="otherJustificationExemptionGratuity" size="40"/>
+						<html:text bundle="HTMLALT_RESOURCES" altKey="text.otherJustificationExemptionGratuity" property="otherJustificationExemptionGratuity" size="40"/>
 					</td>
 				</tr>					
 			</table>
@@ -121,13 +121,13 @@
 	<tr><td  colspan="2" ><br /><br /><br /></td></tr>
 	<tr>
 		<td valign='middle' align="right">	
-			<html:submit property="method" styleClass="inputbutton">
+			<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.method" property="method" styleClass="inputbutton">
 				<bean:message key="button.masterDegree.gratuity.give" />
 			</html:submit>				
 			
 		</td>
 		<td valign='middle' align="left">
-			<html:submit property="method" styleClass="inputbutton">
+			<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.method" property="method" styleClass="inputbutton">
 				<bean:message key="button.masterDegree.gratuity.remove" />
 			</html:submit>				
 		</td>

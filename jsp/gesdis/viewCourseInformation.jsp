@@ -1,5 +1,6 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <h2><bean:message key="title.courseInformation"/></h2>
@@ -67,10 +68,10 @@
 	<bean:message key="message.courseInformation.timeTable" /></p>
 	<table width="100%" border="0" cellspacing="1" style="margin-top:10px">
 		<tr>
-		    <td class="listClasses-header" width="200px"><bean:message key="message.courseInformation.classType"/></td>
-		    <td class="listClasses-header"><bean:message key="message.courseInformation.numberOfClasses"/></td>
-		    <td class="listClasses-header"><bean:message key="message.courseInformation.classDuration"/></td>
-			<td class="listClasses-header"><bean:message key="message.courseInformation.totalDuration"/></td>
+		    <th class="listClasses-header" width="200px"><bean:message key="message.courseInformation.classType"/></th>
+		    <th class="listClasses-header"><bean:message key="message.courseInformation.numberOfClasses"/></th>
+		    <th class="listClasses-header"><bean:message key="message.courseInformation.classDuration"/></th>
+			<th class="listClasses-header"><bean:message key="message.courseInformation.totalDuration"/></th>
 		</tr>
 		<logic:iterate id="infoLesson" name="siteCourseInformation" property="infoLessons">
 			<tr>
@@ -121,9 +122,9 @@
 	<p><bean:message key="message.courseInformation.specialTeacherWarning"/></p>
 	<table width="100%" border="0" cellspacing="1" style="margin-top:10px">
 		<tr>
-			<td class="listClasses-header"> <bean:message key="message.courseInformation.nameOfTeacher"/></td>
-			<td class="listClasses-header"> <bean:message key="message.courseInformation.categoryOfTeacher"/></td>
-			<td class="listClasses-header"> <bean:message key="message.courseInformation.typeOfClassOfTeacher"/></td>
+			<th class="listClasses-header"> <bean:message key="message.courseInformation.nameOfTeacher"/></th>
+			<th class="listClasses-header"> <bean:message key="message.courseInformation.categoryOfTeacher"/></th>
+			<th class="listClasses-header"> <bean:message key="message.courseInformation.typeOfClassOfTeacher"/></th>
 		</tr>
 		<logic:iterate id="infoTeacher" name="siteCourseInformation" property="infoLecturingTeachers">
 			<tr>
@@ -146,32 +147,32 @@
 	<%--<table border="0" cellspacing="1" style="margin-top:10px">
 		<tr>
 			<td></td>
-			<td class="listClasses-header"><bean:message key="message.courseInformation.numberOfStudents" /></td>
+			<th class="listClasses-header"><bean:message key="message.courseInformation.numberOfStudents" /></th>
 		</tr>
 		<tr>
-			<td class="listClasses-header"><bean:message key="message.courseInformation.enrolledStudents" /></td>
+			<th class="listClasses-header"><bean:message key="message.courseInformation.enrolledStudents" /></th>
 			<td class="listClasses"><bean:write name="executionCourse" property="numberOfAttendingStudents"/></td>
 		</tr>
 		<!-- VER-->
 		<tr>
-			<td class="listClasses-header"><bean:message key="message.courseInformation.evaluatedStudents" /></td>
+			<th class="listClasses-header"><bean:message key="message.courseInformation.evaluatedStudents" /></th>
 			<td class="listClasses"><bean:write name="siteCourseInformation" property="evaluatedStudents"/></td>
 		</tr>
 		<tr>
-			<td class="listClasses-header"><bean:message key="message.courseInformation.approvedStudents" /></td>
+			<th class="listClasses-header"><bean:message key="message.courseInformation.approvedStudents" /></th>
 			<td class="listClasses"><bean:write name="siteCourseInformation" property="approvedStudents"/></td>
 		</tr>
 		<tr>
-			<td class="listClasses-header"><bean:message key="message.courseInformation.evaluatedPerEnrolled" /></td>
+			<th class="listClasses-header"><bean:message key="message.courseInformation.evaluatedPerEnrolled" /></th>
 			<!-- VER ONDE SE FAZEM AS CONTAS-->
 			<td class="listClasses"><bean:write name="siteCourseInformation" property="evaluatedPerEnrolled"/></td>
 		</tr>
 		<tr>
-			<td class="listClasses-header"><bean:message key="message.courseInformation.approvedPerEvaluated" /></td>
+			<th class="listClasses-header"><bean:message key="message.courseInformation.approvedPerEvaluated" /></th>
 			<td class="listClasses"><bean:write name="siteCourseInformation" property="approvedPerEvaluated"/></td>
 		</tr>
 		<tr>
-			<td class="listClasses-header"><bean:message key="message.courseInformation.approvedPerEnrolled" /></td>
+			<th class="listClasses-header"><bean:message key="message.courseInformation.approvedPerEnrolled" /></th>
 			<td class="listClasses"><bean:write name="siteCourseInformation" property="approvedPerEnrolled"/></td>
 		</tr>
 	</table>--%>
@@ -225,7 +226,7 @@
 	<bean:message key="message.courseInformation.courseBibliographicReference" /></p>
 	<table border="0" cellspacing="1" style="margin-top:10px" width="100%">
 		<tr>
-			<td class="listClasses-header" colspan="4"><bean:message key="message.courseInformation.coursePrincipalBibliographicReference" /></td>
+			<th class="listClasses-header" colspan="4"><bean:message key="message.courseInformation.coursePrincipalBibliographicReference" /></th>
 		</tr>
 		<logic:iterate id="infoBibliographicReference" name="siteCourseInformation" property="infoBibliographicReferences">
 		<logic:equal name="infoBibliographicReference" property="optional" value="false">
@@ -240,7 +241,7 @@
 	</table>
 	<table border="0" cellspacing="1" style="margin-top:10px" width="100%">
 		<tr>
-			<td class="listClasses-header" colspan="4"><bean:message key="message.courseInformation.courseSecondaryBibliographicReference" /></td>
+			<th class="listClasses-header" colspan="4"><bean:message key="message.courseInformation.courseSecondaryBibliographicReference" /></th>
 		</tr>
 		<logic:iterate id="infoBibliographicReference" name="siteCourseInformation" property="infoBibliographicReferences">
 		<logic:equal name="infoBibliographicReference" property="optional" value="true">

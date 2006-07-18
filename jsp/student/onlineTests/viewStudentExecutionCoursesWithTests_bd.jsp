@@ -1,5 +1,6 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 
@@ -12,8 +13,8 @@
 	
 	<table>
 		<tr>
-			<td class="listClasses-header"><bean:message key="label.curricular.course.acronym"/></td>
-			<td class="listClasses-header"><bean:message key="label.curricular.course.name"/></td>
+			<th class="listClasses-header"><bean:message key="label.curricular.course.acronym"/></th>
+			<th class="listClasses-header"><bean:message key="label.curricular.course.name"/></th>
 		</tr>
 		<logic:iterate id="executionCourse" name="studentExecutionCoursesList" type="net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse">
 		<tr>

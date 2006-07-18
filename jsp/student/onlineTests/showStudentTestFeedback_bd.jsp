@@ -1,5 +1,6 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>	
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 
@@ -23,9 +24,9 @@
 	</table>
 
 	<html:form action="/studentTests">
-	<html:hidden property="method" value="testsFirstPage"/>
-	<html:hidden property="objectCode" value="<%=(pageContext.findAttribute("objectCode")).toString()%>"/>
-	<html:hidden property="testCode" value="<%=(pageContext.findAttribute("testCode")).toString()%>"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="testsFirstPage"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.objectCode" property="objectCode" value="<%=(pageContext.findAttribute("objectCode")).toString()%>"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.testCode" property="testCode" value="<%=(pageContext.findAttribute("testCode")).toString()%>"/>
 	<logic:present name="infoStudentTestQuestionList">
 	<logic:notEmpty name="infoStudentTestQuestionList" >
 
@@ -45,7 +46,7 @@
 	</logic:notEmpty>
 	</logic:present>
 	<center>
-		<html:submit styleClass="inputbutton"><bean:message key="button.back"/></html:submit>
+		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton"><bean:message key="button.back"/></html:submit>
 	</center>
 	</html:form>
 </logic:present>

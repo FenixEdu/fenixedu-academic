@@ -3,6 +3,7 @@
 <%@ taglib uri="/WEB-INF/html_basic.tld" prefix="h"%>
 <%@ taglib uri="/WEB-INF/jsf_fenix_components.tld" prefix="fc"%>
 <ft:tilesView definition="df.teacher.evaluation-management" attributeName="body-inline">
+	<f:loadBundle basename="resources/HtmlAltResources" var="htmlAltBundle"/>
 
 	<f:loadBundle basename="resources/ApplicationResources" var="bundle"/>
 
@@ -21,11 +22,11 @@
 		<h:messages styleClass="error" layout="table"/>
 		<h:outputText value="<br/>" escape="false"/>
 		<h:outputText value="#{bundle['label.submitMarks.examDate']}:"/>
-		<h:inputText required="true" binding="#{evaluationManagementBackingBean.submitEvaluationDateTextBox}"  value="#{evaluationManagementBackingBean.submitEvaluationDateTextBoxValue}" size="12" maxlength="10">
+		<h:inputText alt="#{htmlAltBundle['inputText.submitEvaluationDateTextBoxValue']}" required="true" binding="#{evaluationManagementBackingBean.submitEvaluationDateTextBox}"  value="#{evaluationManagementBackingBean.submitEvaluationDateTextBoxValue}" size="12" maxlength="10">
 			<fc:dateValidator format="dd/MM/yyyy" strict="false"/>
 		</h:inputText>
 		<h:outputText value="#{bundle['message.dateFormat']}<br/><br/>" escape="false"/>
-		<h:commandButton styleClass="inputbutton" action="#{evaluationManagementBackingBean.submitMarks2}" value="#{bundle['button.submit']}"/>
-		<h:commandButton immediate="true" action="enterSubmitMarksList" styleClass="inputbutton" value="#{bundle['button.cancel']}"/>
+		<h:commandButton alt="#{htmlAltBundle['commandButton.submit']}" styleClass="inputbutton" action="#{evaluationManagementBackingBean.submitMarks2}" value="#{bundle['button.submit']}"/>
+		<h:commandButton alt="#{htmlAltBundle['commandButton.cancel']}" immediate="true" action="enterSubmitMarksList" styleClass="inputbutton" value="#{bundle['button.cancel']}"/>
 	</h:form> 
 </ft:tilesView>

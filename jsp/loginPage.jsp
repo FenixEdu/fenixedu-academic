@@ -31,20 +31,20 @@
 		</tr>
 		<tr>
 			<td><bean:message key="label.username" bundle="GLOBAL_RESOURCES" />:</td>
-			<td><html:text property="username" /></td>
+			<td><html:text bundle="HTMLALT_RESOURCES" altKey="text.username" property="username" /></td>
 		</tr>
 		<tr>
 			<td colspan="2"><span class="error"><html:errors property="password" /></span></td>
 		</tr>
 		<tr>
 			<td><bean:message key="label.password" bundle="GLOBAL_RESOURCES" />:</td>
-			<td><html:password property="password" redisplay="false" /></td>
+			<td><html:password bundle="HTMLALT_RESOURCES" altKey="password.password" property="password" redisplay="false" /></td>
 		</tr>
 	</table>
 	<br />
-	<div class="wrapper"><html:submit styleClass="button" property="ok">
+	<div class="wrapper"><html:submit bundle="HTMLALT_RESOURCES" altKey="submit.ok" styleClass="button" property="ok">
 		<bean:message key="button.submit" />
-	</html:submit> <html:reset styleClass="button">
+	</html:submit> <html:reset bundle="HTMLALT_RESOURCES" altKey="reset.reset" styleClass="button">
 		<bean:message key="button.clean" />
 	</html:reset></div>
 </html:form> <br />

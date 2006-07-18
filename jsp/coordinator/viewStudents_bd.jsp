@@ -1,5 +1,5 @@
 <%@ page language="java" %>
-<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %><html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ page import="java.util.TreeMap" %>
@@ -43,15 +43,15 @@
 
 
 <html:form action="/studentsByCurricularCourse.do" method="get">
-<html:hidden property="objectCode"/>
-<html:hidden property="method" value="readStudents"/>
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.objectCode" property="objectCode"/>
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="readStudents"/>
 <table>
 	<tr valign="top">
 		<td>
 			<bean:message key="label.viewPhoto" />
 		</td>
 		<td colspan="3">
-			<html:checkbox  property="viewPhoto" />
+			<html:checkbox bundle="HTMLALT_RESOURCES" altKey="checkbox.viewPhoto"  property="viewPhoto" />
 		</td>
 	</tr>
 	<tr>
@@ -60,7 +60,7 @@
 		</td>
 		<td colspan="3">
 
-			<html:select property="shiftCode">
+			<html:select bundle="HTMLALT_RESOURCES" altKey="select.shiftCode" property="shiftCode">
 							<option value="null">
 								<bean:message key="label.select.SelectShift"/>
 							</option>
@@ -99,7 +99,7 @@
 								</option>
 							</logic:iterate>
 						</html:select>
-						<html:submit property="submition"><bean:message key="button.selectShift"/></html:submit>
+						<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submition" property="submition"><bean:message key="button.selectShift"/></html:submit>
 					</td>
 		</tr>
 </table>
@@ -150,32 +150,32 @@
 		   </logic:present>
 		
 			<logic:equal name="viewPhoto" value="true">
-				<td class="listClasses-header" rowspan="<%= rowspan.toString() %>">
+				<th class="listClasses-header" rowspan="<%= rowspan.toString() %>">
 					<bean:message key="label.photo" /> 
-			   </td>
+			   </th>
 			 </logic:equal>
-			<td class="listClasses-header" rowspan="<%= rowspan.toString() %>">
+			<th class="listClasses-header" rowspan="<%= rowspan.toString() %>">
 				<bean:message key="label.number" /> 
-		   </td>
-			<td class="listClasses-header" rowspan="<%= rowspan.toString() %>">
+		   </th>
+			<th class="listClasses-header" rowspan="<%= rowspan.toString() %>">
 				<bean:message key="label.numberOfEnrollments" />
-		   </td>
-			<td class="listClasses-header" rowspan="<%= rowspan.toString() %>">
+		   </th>
+			<th class="listClasses-header" rowspan="<%= rowspan.toString() %>">
 				<bean:message key="label.Degree" /> 
-		   </td>
-			<td class="listClasses-header" rowspan="<%= rowspan.toString() %>">
+		   </th>
+			<th class="listClasses-header" rowspan="<%= rowspan.toString() %>">
 				<bean:message key="label.name" />
-		   </td>
+		   </th>
 		   <logic:present name="projects">
 			<logic:notEmpty name="projects">
-					<td class="listClasses-header" colspan="<%= colspan.toString() %>">
+					<th class="listClasses-header" colspan="<%= colspan.toString() %>">
 						<bean:message key="label.projectGroup"/>
-					</td>
+					</th>
 			</logic:notEmpty>
 		   </logic:present>
-			<td class="listClasses-header" rowspan="<%= rowspan.toString() %>">
+			<th class="listClasses-header" rowspan="<%= rowspan.toString() %>">
 				<bean:message key="label.mail" />
-		   </td>
+		   </th>
 		    <bean:define id="theoreticalHours" name="commonComponent" property="executionCourse.theoreticalHours" />
            <bean:define id="praticalHours" name="commonComponent" property="executionCourse.praticalHours" />
            <bean:define id="theoPratHours" name="commonComponent" property="executionCourse.theoPratHours" />
@@ -195,41 +195,41 @@
          </logic:greaterThan>
          <% Integer shiftColSpanInteger = new Integer(shiftColSpan); %>
          <% if (shiftColSpan>0) {%>
-         <td class="listClasses-header" colspan="<%= shiftColSpanInteger %>" >
+         <th class="listClasses-header" colspan="<%= shiftColSpanInteger %>" >
                 Turnos
-            </td>
+            </th>
             <%     }%>
 		</tr>    		
 		<tr>
 		   <logic:present name="projects">
 			<logic:notEmpty name="projects">
 				<logic:iterate name="projects" id="project" type="net.sourceforge.fenixedu.dataTransferObject.InfoGrouping">
-					<td class="listClasses-header">
+					<th class="listClasses-header">
 <%--					<bean:message key="label.projectGroup"/>&nbsp; --%>
 					<bean:write name="project" property="name"/>
-					</td>
+					</th>
 				</logic:iterate>
 			</logic:notEmpty>
 		   </logic:present>
 		    <logic:greaterThan value="0" name="theoreticalHours" >
-          <td class="listClasses-header" >
-             Teórico
-          </td>
+          <th class="listClasses-header" >
+             Teï¿½rico
+          </th>
          </logic:greaterThan>
          <logic:greaterThan value="0" name="praticalHours" >
-          <td class="listClasses-header" >
-             Prático
-          </td>
+          <th class="listClasses-header" >
+             Prï¿½tico
+          </th>
          </logic:greaterThan>
          <logic:greaterThan value="0" name="theoPratHours" >
-          <td class="listClasses-header" >
-             Teórico-Prático
-          </td>
+          <th class="listClasses-header" >
+             Teï¿½rico-Prï¿½tico
+          </th>
          </logic:greaterThan>
          <logic:greaterThan value="0" name="labHours" >
-          <td class="listClasses-header" >
+          <th class="listClasses-header" >
              Laboratorial
-          </td>
+          </th>
          </logic:greaterThan>
 		</tr>    		
 		
@@ -398,8 +398,8 @@
  <strong>Resumo:</strong>
 <table>
 	<tr>
-		<td class="listClasses-header">Número de inscrições</td>
-		<td class="listClasses-header">Número de Alunos</td>
+		<th class="listClasses-header">Nï¿½mero de inscriï¿½ï¿½es</th>
+		<th class="listClasses-header">Nï¿½mero de Alunos</th>
 	</tr>
 	<logic:iterate id="enrollmentNumber" name="attendsSummary" property="numberOfEnrollments">
 	<tr>

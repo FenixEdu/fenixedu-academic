@@ -1,5 +1,6 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ page import="net.sourceforge.fenixedu.domain.FileItemPermittedGroupType" %>
@@ -14,10 +15,10 @@
  	<bean:define id="currentSection" name="siteView" property="component.item.infoSection"/>
 	<bean:define id="currentSectionCode" name="currentSection" property="idInternal"/>
 	
-	<html:hidden property="currentSectionCode" value="<%= currentSectionCode.toString() %>" />
- 	<html:hidden  property="objectCode" value="<%= objectCode.toString() %>"/>
- 	<html:hidden  property="itemCode" />
- 	<html:hidden  property="fileItemId"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.currentSectionCode" property="currentSectionCode" value="<%= currentSectionCode.toString() %>" />
+ 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.objectCode"  property="objectCode" value="<%= objectCode.toString() %>"/>
+ 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.itemCode"  property="itemCode" />
+ 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.fileItemId"  property="fileItemId"/>
  	
  	<table>
  		<tr>	
@@ -36,11 +37,11 @@
  	<br/>
  	 
 	<strong><bean:message key="label.teacher.siteAdministration.editItemFilePermissions.fileAvailableFor"/>:</strong><br/>
-	<html:radio property="permittedGroupType" value="PUBLIC" /><bean:message key="<%=FileItemPermittedGroupType.PUBLIC.toString()%>" bundle="ENUMERATION_RESOURCES"/><br/>
-	<html:radio property="permittedGroupType" value="INSTITUTION_PERSONS"/><bean:message key="<%=FileItemPermittedGroupType.INSTITUTION_PERSONS.toString()%>" bundle="ENUMERATION_RESOURCES"/><br/>
-	<html:radio property="permittedGroupType" value="EXECUTION_COURSE_TEACHERS_AND_STUDENTS"/><bean:message key="<%=FileItemPermittedGroupType.EXECUTION_COURSE_TEACHERS_AND_STUDENTS.toString()%>" bundle="ENUMERATION_RESOURCES"/><br/>
+	<html:radio bundle="HTMLALT_RESOURCES" altKey="radio.permittedGroupType" property="permittedGroupType" value="PUBLIC" /><bean:message key="<%=FileItemPermittedGroupType.PUBLIC.toString()%>" bundle="ENUMERATION_RESOURCES"/><br/>
+	<html:radio bundle="HTMLALT_RESOURCES" altKey="radio.permittedGroupType" property="permittedGroupType" value="INSTITUTION_PERSONS"/><bean:message key="<%=FileItemPermittedGroupType.INSTITUTION_PERSONS.toString()%>" bundle="ENUMERATION_RESOURCES"/><br/>
+	<html:radio bundle="HTMLALT_RESOURCES" altKey="radio.permittedGroupType" property="permittedGroupType" value="EXECUTION_COURSE_TEACHERS_AND_STUDENTS"/><bean:message key="<%=FileItemPermittedGroupType.EXECUTION_COURSE_TEACHERS_AND_STUDENTS.toString()%>" bundle="ENUMERATION_RESOURCES"/><br/>
 	<br />
 	<br />
-	<html:submit styleClass="inputbutton"><bean:message key="button.save"/></html:submit>
+	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton"><bean:message key="button.save"/></html:submit>
  </html:form> 
 

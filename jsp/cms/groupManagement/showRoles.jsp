@@ -1,5 +1,6 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/enum.tld" prefix="e"%>
@@ -16,22 +17,22 @@
 	<logic:notEmpty name="roles">	
 		<html:form action="/roleGroupOperationsManagement" method="get">
         
-        		<html:hidden property="method" value="createGroup"/>
-        		<html:hidden property="userGroupType"/>
-        		<html:hidden property="name"/>
-        		<html:hidden property="description"/>
+        		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="createGroup"/>
+        		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.userGroupType" property="userGroupType"/>
+        		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.name" property="name"/>
+        		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.description" property="description"/>
             
 			<table width="100%">
 				<tr>
-					<td class="listClasses-header">&nbsp;
-					</td>
-					<td class="listClasses-header"><bean:message  bundle="CMS_RESOURCES" key="cms.name.label"/>
-					</td>
+					<th class="listClasses-header">&nbsp;
+					</th>
+					<th class="listClasses-header"><bean:message  bundle="CMS_RESOURCES" key="cms.name.label"/>
+					</th>
 				</tr>			
 				<logic:iterate id="role" name="roles" type="net.sourceforge.fenixedu.domain.Role">
 					<tr>
 						<td class="listClasses">
-							<input type="radio" name="selectedRole" value="<%= role.getIdInternal() %>"/> 
+							<input alt="input.selectedRole" type="radio" name="selectedRole" value="<%= role.getIdInternal() %>"/> 
 						</td>
 						<td class="listClasses"><bean:message name="role" bundle="ENUMERATION_RESOURCES" property="roleType.name"/></td>
 					</tr>

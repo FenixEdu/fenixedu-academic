@@ -1,5 +1,6 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 
@@ -26,20 +27,20 @@
 	</html:messages>	
 		
 	<html:form action="/otherServiceManagement">
-		<html:hidden property="idInternal"/>
-		<html:hidden property="otherServiceID"/>
-		<html:hidden property="teacherId"/>
-		<html:hidden property="executionPeriodId"/>
-		<html:hidden property="page" value="1"/>	
-		<html:hidden property="method" value="editOtherService"/>
-		<html:hidden property="teacherNumber" name="teacher"/>
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.idInternal" property="idInternal"/>
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.otherServiceID" property="otherServiceID"/>
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.teacherId" property="teacherId"/>
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.executionPeriodId" property="executionPeriodId"/>
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>	
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="editOtherService"/>
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.teacherNumber" property="teacherNumber" name="teacher"/>
 		<table>
 			<tr>
 				<td width="10%">
 					<bean:message key="label.otherTypeCreditLine.credits" bundle="TEACHER_CREDITS_SHEET_RESOURCES" />:
 				</td>
 				<td>
-					<html:text property="credits" size="3"/>
+					<html:text bundle="HTMLALT_RESOURCES" altKey="text.credits" property="credits" size="3"/>
 					<bean:message key="label.otherTypeCreditLine.credits.size" bundle="TEACHER_CREDITS_SHEET_RESOURCES" />
 				</td>
 			</tr>
@@ -48,15 +49,15 @@
 					<bean:message key="label.otherTypeCreditLine.reason" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>:
 				</td>
 				<td>
-					<html:textarea property="reason" cols="50" rows="3"/> <br />
+					<html:textarea bundle="HTMLALT_RESOURCES" altKey="textarea.reason" property="reason" cols="50" rows="3"/> <br />
 				</td>
 			</tr>
 		</table>
 		<br/>
-		<html:submit styleClass="inputbutton">
+		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton">
 			<bean:message key="button.submit" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>
 		</html:submit>
-		<html:submit styleClass="inputbutton" onclick="this.form.method.value='cancel';this.form.page.value='0'">
+		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton" onclick="this.form.method.value='cancel';this.form.page.value='0'">
 			<bean:message key="button.cancel"/>
 		</html:submit>
 	</html:form>	

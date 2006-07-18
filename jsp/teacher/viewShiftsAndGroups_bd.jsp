@@ -1,6 +1,7 @@
 <%@ page language="java" %>
 
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/app.tld" prefix="app" %>
@@ -45,7 +46,7 @@
 			
 			<tr>
 				<td  class="listClasses">
-				<font color="red">ATENÇÃO: <b><bean:write name="numberOfStudentsOutsideAttendsSet"/></b> <bean:message key="message.numberOfStudentsOutsideAttendsSet"/></font>
+				<font color="red">ATENï¿½ï¿½O: <b><bean:write name="numberOfStudentsOutsideAttendsSet"/></b> <bean:message key="message.numberOfStudentsOutsideAttendsSet"/></font>
 				</td>
 				<td  class="listClasses">
 				<html:link page="<%="/prepareInsertStudentsInAttendsSet.do?method=prepareInsertStudentsInAttendsSet&amp;objectCode=" + pageContext.findAttribute("objectCode")+ "&amp;groupPropertiesCode=" + request.getParameter("groupPropertiesCode")+ "&amp;groupingOID=" + groupingOID.toString()%>">
@@ -115,7 +116,7 @@
 			
 			<tr>
 				<td  class="listClasses">
-				<font color="red">ATENÇÃO: <b><bean:write name="numberOfStudentsOutsideAttendsSet"/></b> <bean:message key="message.numberOfStudentsOutsideAttendsSet"/></font>
+				<font color="red">ATENï¿½ï¿½O: <b><bean:write name="numberOfStudentsOutsideAttendsSet"/></b> <bean:message key="message.numberOfStudentsOutsideAttendsSet"/></font>
 				</td>
 				<td  class="listClasses">
 				<html:link page="<%="/prepareInsertStudentsInAttendsSet.do?method=prepareInsertStudentsInAttendsSet&amp;objectCode=" + pageContext.findAttribute("objectCode")+ "&amp;groupPropertiesCode=" + request.getParameter("groupPropertiesCode")+ "&amp;groupingOID=" + groupingOID.toString()%>">
@@ -178,7 +179,7 @@
 			
 			<tr>
 				<td  class="listClasses">
-				<font color="red">ATENÇÃO: <b><bean:write name="numberOfStudentsOutsideAttendsSet"/></b> <bean:message key="message.numberOfStudentsOutsideAttendsSet"/></font>
+				<font color="red">ATENï¿½ï¿½O: <b><bean:write name="numberOfStudentsOutsideAttendsSet"/></b> <bean:message key="message.numberOfStudentsOutsideAttendsSet"/></font>
 				</td>
 				<td  class="listClasses">
 				<html:link page="<%="/prepareInsertStudentsInAttendsSet.do?method=prepareInsertStudentsInAttendsSet&amp;objectCode=" + pageContext.findAttribute("objectCode")+ "&amp;groupPropertiesCode=" + request.getParameter("groupPropertiesCode")+ "&amp;groupingOID=" + groupingOID.toString()%>">
@@ -217,29 +218,29 @@
 	  	<table align="left" width="95%" cellspacing='1' cellpadding='1'>	
 		<tbody>			
 			<tr >
-				<td class="listClasses-header" width="15%" rowspan="2">
+				<th class="listClasses-header" width="15%" rowspan="2">
 					<bean:message key="property.shift"/>
-				</td>
-				<td class="listClasses-header" colspan="4" width="45%"> 
+				</th>
+				<th class="listClasses-header" colspan="4" width="45%"> 
 					<bean:message key="property.lessons"/>
-				</td>
-				<td class="listClasses-header" width="40%" rowspan="2" colspan="3">
+				</th>
+				<th class="listClasses-header" width="40%" rowspan="2" colspan="3">
 					<bean:message key="property.groups"/>
-				</td>
+				</th>
 			</tr>
 			<tr>
-				<td class="listClasses-header" width="15%">
+				<th class="listClasses-header" width="15%">
 					<bean:message key="property.lesson.weekDay"/>
-				</td>
-				<td class="listClasses-header" width="10%">
+				</th>
+				<th class="listClasses-header" width="10%">
 					<bean:message key="property.lesson.beginning"/>
-				</td>
-				<td class="listClasses-header" width="10%">
+				</th>
+				<th class="listClasses-header" width="10%">
 					<bean:message key="property.lesson.end"/>
-				</td>
-				<td class="listClasses-header" width="10%">
+				</th>
+				<th class="listClasses-header" width="10%">
 					<bean:message key="property.lesson.room"/>
-				</td>
+				</th>
 			</tr>
 			
 			

@@ -6,13 +6,13 @@
 <html:html xhtml="true">
     <app:checkLogon/>
     <head>
-        <title> Editar Horário </title>
+        <title> Editar Horï¿½rio </title>
     </head>
     <body>
        <jsp:include page="context.jsp"/><br/>
        
         <br/>
-        <center><font color='#034D7A' size='5'> <b> Editar Horário </b> </font></center>
+        <center><font color='#034D7A' size='5'> <b> Editar Horï¿½rio </b> </font></center>
         <br/>
         <br/>
         <html:errors/>
@@ -26,7 +26,7 @@
                     <logic:iterate id="elem" name="listaTurnosBean">
                         <tr align="center">
                             <td width="25">
-                                <html:radio name="posicaoTurnoFormBean" property="posicao" value="<%= (new Integer(i)).toString() %>"/>
+                                <html:radio bundle="HTMLALT_RESOURCES" altKey="radio.posicao" name="posicaoTurnoFormBean" property="posicao" value="<%= (new Integer(i)).toString() %>"/>
                             </td>
                             <td width="100" height="25">
                                 <bean:write name="elem" property="nome"/>
@@ -40,7 +40,7 @@
                 <table align="center" border=1 cellpadding='5'>
                     <tr align="center">
                         <td width='200'>
-                            <font color='red'> Não existem turnos </font>
+                            <font color='red'> Nï¿½o existem turnos </font>
                         </td>
                     </tr>
                 </table>
@@ -50,13 +50,13 @@
             <table align="center">
                 <tr align="center">
                     <td>
-                        <html:submit property="operation">
+                        <html:submit bundle="HTMLALT_RESOURCES" altKey="submit.operation" property="operation">
                             Adicionar Turno
                         </html:submit>
                     </td>
                     <td width="20"> </td>
                     <td>
-                        <html:submit property="operation">
+                        <html:submit bundle="HTMLALT_RESOURCES" altKey="submit.operation" property="operation">
                             Remover Turno
                         </html:submit>
                     </td>

@@ -1,6 +1,7 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
 <bean:define id="infoFinalResult" name="<%= SessionConstants.INFO_FINAL_RESULT%>" />
@@ -9,15 +10,15 @@
 <bean:define id="infoStudentCurricularPlan" name="<%= SessionConstants.INFO_STUDENT_CURRICULAR_PLAN%>" />
 <table class="apura-final" width="90%" cellspacing="0">
 	<tr>
-		<td colspan="2" style="color: #333; background: #ccc; padding: 5px; border-bottom: 1px solid #333;">Atribuição de média</td>
+		<td colspan="2" style="color: #333; background: #ccc; padding: 5px; border-bottom: 1px solid #333;">Atribuiï¿½ï¿½o de mï¿½dia</td>
 		</td>
 	</tr>
 	<tr> 
-		<td width="50%" style="padding: 5px;">Média ponderada <bean:write name="infoFinalResult" property="averageWeighted" /></td>
+		<td width="50%" style="padding: 5px;">Mï¿½dia ponderada <bean:write name="infoFinalResult" property="averageWeighted" /></td>
     	<td width="50%" style="padding: 5px; padding-left: 100px;">O coordenador do curso,</td>
     </tr>
     <tr>
-    	<td width="50%" style="padding: 5px;">Média simples <bean:write name="infoFinalResult" property="averageSimple" /></td>
+    	<td width="50%" style="padding: 5px;">Mï¿½dia simples <bean:write name="infoFinalResult" property="averageSimple" /></td>
     	<td width="50%" style="padding: 5px;" align="center" >&nbsp;</td>
     </tr>
     <tr>
@@ -28,20 +29,20 @@
  <br />  
  <table class="apura-final" width="90%" cellspacing="0">
 	<tr>
-		<td style="color: #333; background: #ccc; padding: 5px; border-bottom: 1px solid #333;">Informação</td>
+		<td style="color: #333; background: #ccc; padding: 5px; border-bottom: 1px solid #333;">Informaï¿½ï¿½o</td>
 	</tr>
     <tr>
-    	<td style="padding: 5px;"><p class="apura-pt9">Concluiu a parte escolar do curso de <bean:message name="infoStudentCurricularPlan" property="specialization.name" bundle="ENUMERATION_RESOURCES"/> em <bean:write name="conclusionDate"/> com a média final de 
+    	<td style="padding: 5px;"><p class="apura-pt9">Concluiu a parte escolar do curso de <bean:message name="infoStudentCurricularPlan" property="specialization.name" bundle="ENUMERATION_RESOURCES"/> em <bean:write name="conclusionDate"/> com a mï¿½dia final de 
     		<bean:write name="infoFinalResult" property="finalAverage" /> valores.</p>
-    		<p class="apura-pt9">Secretaria dos Serviços Académicos, em <bean:write name="date"/></p><br /><br />
+    		<p class="apura-pt9">Secretaria dos Serviï¿½os Acadï¿½micos, em <bean:write name="date"/></p><br /><br />
     	</td>
     </tr>
     <tr>
     	<td>
     		<div class="homologo">Homologo</div>
-    		<div class="consid">À consideração de V.Exª.</div>
+    		<div class="consid">ï¿½ consideraï¿½ï¿½o de V.Exï¿½.</div>
     	</td>	
     </tr>
-    	<td style="padding: 5px;"><br /><br /><p class="apura-pt9">O Aluno nº <bean:write name="infoStudentCurricularPlan" property="infoStudent.number"/></p></td>
+    	<td style="padding: 5px;"><br /><br /><p class="apura-pt9">O Aluno nï¿½ <bean:write name="infoStudentCurricularPlan" property="infoStudent.number"/></p></td>
     </tr>
  </table>

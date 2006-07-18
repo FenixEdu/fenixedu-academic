@@ -1,12 +1,13 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
 
 <fr:form action="/markSheetManagement.do">
 
-	<html:hidden name="markSheetManagementForm" property="method" value="gradeSubmissionStepOne" />
-	<html:hidden name="markSheetManagementForm" property="executionCourseID" />
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" name="markSheetManagementForm" property="method" value="gradeSubmissionStepOne" />
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.executionCourseID" name="markSheetManagementForm" property="executionCourseID" />
 	
 	<h2><bean:message key="label.submit.listMarks"/></h2>
 	<table class="infoop"><tr><td><bean:message key="label.submitMarks.introduction"/></td></tr></table>
@@ -32,6 +33,6 @@
 		</fr:layout>
 	</fr:edit>
 	<br/>
-	<html:submit styleClass="inputbutton"><bean:message key="button.continue"/></html:submit>
+	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton"><bean:message key="button.continue"/></html:submit>
 	
 </fr:form>

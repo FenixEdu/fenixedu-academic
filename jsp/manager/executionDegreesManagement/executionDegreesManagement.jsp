@@ -1,4 +1,5 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="dt" %>
@@ -10,20 +11,20 @@
 </html:messages>
 
 <html:form action="/executionDegreesManagement">
-	<html:hidden property="method" value="deleteExecutionDegrees"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="deleteExecutionDegrees"/>
 	
 	<div class='simpleblock4'>
 	<fieldset class='lfloat'>
 	
 	<p><label><strong><bean:message bundle="MANAGER_RESOURCES" key="label.manager.degree.tipoCurso"/></strong>:</label>
-	<html:select property="degreeType" onchange="this.form.method.value='readDegreeCurricularPlans';this.form.submit();" >
+	<html:select bundle="HTMLALT_RESOURCES" altKey="select.degreeType" property="degreeType" onchange="this.form.method.value='readDegreeCurricularPlans';this.form.submit();" >
 		<html:options collection="degreeTypes" property="value" labelProperty="label" /> 
 	</html:select>
 	</p>
 	
 	<logic:notEmpty name="degreeCurricularPlans">
 		<p><label><strong><bean:message bundle="MANAGER_RESOURCES" key="label.manager.degreeCurricularPlan"/></strong>:</label>
-		<html:select property="degreeCurricularPlanID" onchange="this.form.method.value='readExecutionDegrees';this.form.submit();">
+		<html:select bundle="HTMLALT_RESOURCES" altKey="select.degreeCurricularPlanID" property="degreeCurricularPlanID" onchange="this.form.method.value='readExecutionDegrees';this.form.submit();">
 			<html:options collection="degreeCurricularPlans" property="value" labelProperty="label" /> 
 		</html:select>
 		</p>
@@ -39,43 +40,43 @@
 		<table cellpadding='0' border='0'>
 			<tr>
 				<td class="listClasses-header"></td>
-				<td class='listClasses-header'> <bean:message bundle="MANAGER_RESOURCES" key="label.manager.executionDegree.executionYear"/> </td>
-				<td class='listClasses-header'> 
+				<th class='listClasses-header'> <bean:message bundle="MANAGER_RESOURCES" key="label.manager.executionDegree.executionYear"/> </th>
+				<th class='listClasses-header'> 
 					<bean:message bundle="MANAGER_RESOURCES" key="label.manager.lessons"/>
-					1º <bean:message bundle="MANAGER_RESOURCES" key="label.manager.semester"/>
-				</td>
-				<td class='listClasses-header'> 
+					1ï¿½ <bean:message bundle="MANAGER_RESOURCES" key="label.manager.semester"/>
+				</th>
+				<th class='listClasses-header'> 
 					<bean:message bundle="MANAGER_RESOURCES" key="label.manager.exams"/>
-					1º <bean:message bundle="MANAGER_RESOURCES" key="label.manager.semester"/>
-				</td>
-				<td class='listClasses-header'> 
+					1ï¿½ <bean:message bundle="MANAGER_RESOURCES" key="label.manager.semester"/>
+				</th>
+				<th class='listClasses-header'> 
 					<bean:message bundle="MANAGER_RESOURCES" key="label.manager.lessons"/>
-					2º <bean:message bundle="MANAGER_RESOURCES" key="label.manager.semester"/>
-				</td>
-				<td class='listClasses-header'> 
+					2ï¿½ <bean:message bundle="MANAGER_RESOURCES" key="label.manager.semester"/>
+				</th>
+				<th class='listClasses-header'> 
 					<bean:message bundle="MANAGER_RESOURCES" key="label.manager.exams"/>
-					2º <bean:message bundle="MANAGER_RESOURCES" key="label.manager.semester"/>
-				</td>
-				<td class='listClasses-header'> 
+					2ï¿½ <bean:message bundle="MANAGER_RESOURCES" key="label.manager.semester"/>
+				</th>
+				<th class='listClasses-header'> 
 					<bean:message bundle="MANAGER_RESOURCES" key="label.manager.executionDegree.examsSpecialSeason"/>					
-				</td>
-				<td class='listClasses-header'> 
+				</th>
+				<th class='listClasses-header'> 
 					<bean:message bundle="MANAGER_RESOURCES" key="label.manager.executionDegree.gradeSubmissionNormalSeason1"/>					
-				</td>
-				<td class='listClasses-header'> 
+				</th>
+				<th class='listClasses-header'> 
 					<bean:message bundle="MANAGER_RESOURCES" key="label.manager.executionDegree.gradeSubmissionNormalSeason2"/>					
-				</td>
-				<td class='listClasses-header'> 
+				</th>
+				<th class='listClasses-header'> 
 					<bean:message bundle="MANAGER_RESOURCES" key="label.manager.executionDegree.gradeSubmissionSpecialSeason"/>					
-				</td>
-				<td class='listClasses-header'> <bean:message bundle="MANAGER_RESOURCES" key="label.manager.executionDegree.temporaryExamMap"/> </td>
-				<td class='listClasses-header'> <bean:message bundle="MANAGER_RESOURCES" key="label.manager.executionDegree.coordinator"/> </td>
-				<td class='listClasses-header'> </td>
+				</th>
+				<th class='listClasses-header'> <bean:message bundle="MANAGER_RESOURCES" key="label.manager.executionDegree.temporaryExamMap"/> </th>
+				<th class='listClasses-header'> <bean:message bundle="MANAGER_RESOURCES" key="label.manager.executionDegree.coordinator"/> </th>
+				<th class='listClasses-header'> </th>
 			</tr>
 			<logic:iterate id="executionDegree" name="executionDegrees">
 				<tr>
 					<td class="listClasses">
-						<html:multibox property="internalIds">
+						<html:multibox bundle="HTMLALT_RESOURCES" altKey="multibox.internalIds" property="internalIds">
 							<bean:write name="executionDegree" property="idInternal"/>
 						</html:multibox>
 					</td>
@@ -215,7 +216,7 @@
 			return confirm('<bean:message bundle="MANAGER_RESOURCES" key="message.confirm.delete.execution.degrees"/>')
 		</bean:define>
 		<br/>			
-		<html:submit styleClass="inputbutton" onclick='<%=onclick.toString() %>'><bean:message bundle="MANAGER_RESOURCES" key="label.manager.delete.selected.executionDegrees"/></html:submit>
+		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton" onclick='<%=onclick.toString() %>'><bean:message bundle="MANAGER_RESOURCES" key="label.manager.delete.selected.executionDegrees"/></html:submit>
 
 	</logic:notEmpty>
 

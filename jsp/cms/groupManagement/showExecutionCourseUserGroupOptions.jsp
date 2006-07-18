@@ -1,5 +1,6 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/enum.tld" prefix="e"%>
@@ -16,10 +17,10 @@
 
 <logic:present name="executionPeriods">
 	<html:form action="<%=targetAction%>" method="get">  
-		<html:hidden property="name"/>
-		<html:hidden property="description"/>		
-		<html:hidden property="userGroupType"/>
-		<html:hidden property="method" value="prepareChooseExecDegreeAndCurYear" />
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.name" property="name"/>
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.description" property="description"/>		
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.userGroupType" property="userGroupType"/>
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="prepareChooseExecDegreeAndCurYear" />
 		<table width="100%">
 			<tr>
 				<td width="10%">
@@ -27,24 +28,24 @@
 					:
 				</td>
 				<td width="90%">
-					<html:select property="executionPeriodID">
+					<html:select bundle="HTMLALT_RESOURCES" altKey="select.executionPeriodID" property="executionPeriodID">
 						<html:options collection="executionPeriods" property="idInternal" labelProperty="qualifiedName"/>
 					</html:select>
 				</td>
 			</tr>
 		</table>
 		<br />
-		<html:submit styleClass="inputbutton"><bean:message  bundle="CMS_RESOURCES" key="cms.personalGroupsManagement.choose.button"/></html:submit>
+		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton"><bean:message  bundle="CMS_RESOURCES" key="cms.personalGroupsManagement.choose.button"/></html:submit>
 	</html:form>
 </logic:present>
 
 <logic:present name="degrees">	
 	<html:form action="<%=targetAction%>" method="get">
-		<html:hidden property="name"/>
-		<html:hidden property="description"/>		
-		<html:hidden property="userGroupType"/>
-		<html:hidden property="executionPeriodID"/>
-		<html:hidden property="method" value="prepareChooseExecutionCourse" />
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.name" property="name"/>
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.description" property="description"/>		
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.userGroupType" property="userGroupType"/>
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.executionPeriodID" property="executionPeriodID"/>
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="prepareChooseExecutionCourse" />
 
 		<table width="100%">		
 			<tr>
@@ -53,7 +54,7 @@
 					:
 				</td>
 				<td witdh="90%">
-					<html:select property="executionDegreeID">
+					<html:select bundle="HTMLALT_RESOURCES" altKey="select.executionDegreeID" property="executionDegreeID">
 						<html:options collection="degrees" property="idInternal" labelProperty="qualifiedName"/>
 					</html:select>
 				</td>
@@ -64,7 +65,7 @@
 					:
 				</td>
 				<td witdh="90%">
-					<html:select property="curricularYear">
+					<html:select bundle="HTMLALT_RESOURCES" altKey="select.curricularYear" property="curricularYear">
 						<html:option value="1">1</html:option>
 						<html:option value="2">2</html:option>
 						<html:option value="3">3</html:option>
@@ -75,7 +76,7 @@
 			</tr>		
 		</table>
 		<br />
-		<html:submit styleClass="inputbutton">
+		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton">
 			<bean:message  bundle="CMS_RESOURCES" key="cms.personalGroupsManagement.choose.button"/>
 		</html:submit>
 	</html:form>
@@ -84,10 +85,10 @@
 
 <logic:present name="courses">
 	<html:form action="<%=targetAction%>" method="get">
-		<html:hidden property="name"/>
-		<html:hidden property="description"/>		
-		<html:hidden property="userGroupType"/>
-		<html:hidden property="method" value="createGroup" />	
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.name" property="name"/>
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.description" property="description"/>		
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.userGroupType" property="userGroupType"/>
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="createGroup" />	
 			<table width="100%">
 				<tr>
 					<td valign="top" width="10%">
@@ -103,8 +104,8 @@
 											<tr>
 												<td>&nbsp;
 												</td>
-												<td class="listClasses-header"><bean:message  bundle="CMS_RESOURCES" key="cms.course.label" />
-												</td>
+												<th class="listClasses-header"><bean:message  bundle="CMS_RESOURCES" key="cms.course.label" />
+												</th>
 												<td>&nbsp;
 												</td>
 											</tr>													
@@ -113,7 +114,7 @@
 												<bean:define id="infoExecutionPeriod" name="executionCourse" property="infoExecutionPeriod"/>
 												<tr>	 			
 													<td class="listClasses">
-														<html:radio idName="executionCourse" property="executionCourseID" value="idInternal"/>
+														<html:radio bundle="HTMLALT_RESOURCES" altKey="radio.executionCourseID" idName="executionCourse" property="executionCourseID" value="idInternal"/>
 													</td>
 													<td class="listClasses" style="text-align:left"><bean:write name="executionCourse" property="nome"/>
 													</td>
@@ -137,7 +138,7 @@
 					</td>
 				</tr>
 			</table>
-	<html:submit styleClass="inputbutton">
+	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton">
 			<bean:message  bundle="CMS_RESOURCES" key="cms.personalGroupsManagement.save.button"/>
 		</html:submit>
 	</html:form>

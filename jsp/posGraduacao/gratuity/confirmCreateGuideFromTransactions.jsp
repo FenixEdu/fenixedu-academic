@@ -1,5 +1,5 @@
 <%@ page language="java" %>
-<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
+<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%><html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.masterDegree.utils.SessionConstants" %>
@@ -79,7 +79,7 @@
 				
 				<bean:define id="transactionIdStr" name="transaction" property="idInternal" />
 						 
-				<html:hidden property="transactionsWithoutGuide" value="<%= transactionIdStr.toString() %>"/>				
+				<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.transactionsWithoutGuide" property="transactionsWithoutGuide" value="<%= transactionIdStr.toString() %>"/>				
 				<tr>
 					<td align="left"><bean:write name="transaction" property="transactionDate"/></td>
 
@@ -101,15 +101,15 @@
 		<br/>	<br/>
 	
 	
-		<html:hidden property="method" value="create"/>
-		<html:hidden property="gratuitySituationId" />
-		<html:hidden property="studentId" />
-		<html:hidden property="contributorNumber" />
-		<html:hidden property="page" value="2"/>
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="create"/>
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.gratuitySituationId" property="gratuitySituationId" />
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.studentId" property="studentId" />
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.contributorNumber" property="contributorNumber" />
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="2"/>
 		
 		<bean:message key="label.transaction.createGuides"/>: 
 		
-		<html:submit styleClass="inputbutton">
+		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton">
 			<bean:message key="button.create"/>
 		</html:submit>
 	</html:form>

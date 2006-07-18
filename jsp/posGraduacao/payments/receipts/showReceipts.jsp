@@ -1,4 +1,5 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
@@ -42,5 +43,5 @@
 <bean:define id="personId" name="person" property="idInternal"/>
 <html:form action='<%= "/payments.do?method=backToShowOperations&personId=" + personId %>'>
 	<br/>
-	<html:submit styleClass="inputbutton"><bean:message key="button.masterDegree.administrativeOffice.payments.back"/></html:submit>
+	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton"><bean:message key="button.masterDegree.administrativeOffice.payments.back"/></html:submit>
 </html:form>

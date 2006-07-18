@@ -3,6 +3,7 @@
 <%@ taglib uri="/WEB-INF/html_basic.tld" prefix="h"%>
 
 <ft:tilesView definition="df.coordinator.evaluation-management" attributeName="body-inline">
+	<f:loadBundle basename="resources/HtmlAltResources" var="htmlAltBundle"/>
 
 <style>
 .boldFontClass { font-weight: bold; }
@@ -44,9 +45,9 @@
 		</h:panelGrid>
 		
 		<h:outputText value="<br/>#{bundle['message.confirm.written.test']}<br/><br/>" escape="false" styleClass="error"/>
-		<h:commandButton action="#{coordinatorWrittenTestsManagementBackingBean.deleteWrittenTest}"
+		<h:commandButton alt="#{htmlAltBundle['commandButton.yes']}" action="#{coordinatorWrittenTestsManagementBackingBean.deleteWrittenTest}"
 		   styleClass="inputbutton" value="#{bundle['button.yes']}"/>
-		<h:commandButton immediate="true" action="#{coordinatorWrittenTestsManagementBackingBean.showWrittenTestsForExecutionCourses}"
+		<h:commandButton alt="#{htmlAltBundle['commandButton.no']}" immediate="true" action="#{coordinatorWrittenTestsManagementBackingBean.showWrittenTestsForExecutionCourses}"
 		   styleClass="inputbutton" value="#{bundle['button.no']}"/>
 					
 	</h:form>

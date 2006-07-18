@@ -1,5 +1,5 @@
 <%@ page language="java" %>
-<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %><html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <h2><bean:message key="title.student.enrolment.without.rules" bundle="DEGREE_ADM_OFFICE" /></h2>
@@ -25,53 +25,53 @@
 		<br /><br />
 	</logic:lessEqual >
 	<html:form action="/courseEnrolmentWithoutRulesManagerDA">
-		<html:hidden property="method" value="enrollCourses"/>
-		<html:hidden property="page" value="1"/>
-		<html:hidden property="studentNumber" />
-		<html:hidden property="executionPeriod" />
-		<html:hidden property="degreeType" />
-		<html:hidden property="userType" />
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="enrollCourses"/>
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.studentNumber" property="studentNumber" />
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.executionPeriod" property="executionPeriod" />
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.degreeType" property="degreeType" />
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.userType" property="userType" />
 		<logic:greaterThan name="curricularCoursesSize" value="0">
 			<table >
 			<tr>
-				<td class="listClasses-header">
+				<th class="listClasses-header">
 				<bean:message key="message.student.unenrolled.curricularCourses" bundle="DEGREE_ADM_OFFICE"/>
-				</td>
-				<td class="listClasses-header"><bean:message key="label.enroll" bundle="DEGREE_ADM_OFFICE"/></td>
-				<td class="listClasses-header"><bean:message key="label.enrollment.normal.course" bundle="DEGREE_ADM_OFFICE"/></td>
-				<td class="listClasses-header"><bean:message key="label.enrollment.optional.course" bundle="DEGREE_ADM_OFFICE"/></td>
-				<td class="listClasses-header"><bean:message key="label.enrollment.extra.curricular.course" bundle="DEGREE_ADM_OFFICE"/></td>
+				</th>
+				<th class="listClasses-header"><bean:message key="label.enroll" bundle="DEGREE_ADM_OFFICE"/></th>
+				<th class="listClasses-header"><bean:message key="label.enrollment.normal.course" bundle="DEGREE_ADM_OFFICE"/></th>
+				<th class="listClasses-header"><bean:message key="label.enrollment.optional.course" bundle="DEGREE_ADM_OFFICE"/></th>
+				<th class="listClasses-header"><bean:message key="label.enrollment.extra.curricular.course" bundle="DEGREE_ADM_OFFICE"/></th>
 			</tr>
 				<logic:iterate id="infoCurricularCourse" name="infoCurricularCoursesToEnroll">
 					<bean:define id="infoCurricularCourseId" name="infoCurricularCourse" property="infoCurricularCourse.idInternal" />
 					<tr>
 						<td class="listClasses" style="text-align:left"><bean:write name="infoCurricularCourse" property="infoCurricularCourse.name"/></td>
-						<td class="listClasses"><html:multibox property="curricularCourses"> 
+						<td class="listClasses"><html:multibox bundle="HTMLALT_RESOURCES" altKey="multibox.curricularCourses" property="curricularCourses"> 
 						<bean:write name="infoCurricularCourseId"/>-<bean:write name="infoCurricularCourse" property="enrollmentType"/>
 						</html:multibox>
 						</td>
 						<td class="listClasses">
-						<input type="radio" checked name="<%= "enrollmentTypes(" + infoCurricularCourseId.toString() + ")" %>" value="1"/>
+						<input alt="<%= "enrollmentTypes(" + infoCurricularCourseId.toString() + ")" %>" type="radio" checked name="<%= "enrollmentTypes(" + infoCurricularCourseId.toString() + ")" %>" value="1"/>
 						</td>
 						<td class="listClasses">
-						<input type="radio" name="<%= "enrollmentTypes(" + infoCurricularCourseId.toString() + ")" %>" value="2"/>
+						<input alt="<%= "enrollmentTypes(" + infoCurricularCourseId.toString() + ")" %>" type="radio" name="<%= "enrollmentTypes(" + infoCurricularCourseId.toString() + ")" %>" value="2"/>
 						</td>
 						<td class="listClasses">
-						<html:radio property='<%= "enrollmentTypes(" + infoCurricularCourseId.toString() + ")" %>' value="3"/>
+						<html:radio alt='<%= "enrollmentTypes(" + infoCurricularCourseId.toString() + ")" %>' property='<%= "enrollmentTypes(" + infoCurricularCourseId.toString() + ")" %>' value="3"/>
 						</td>
 					</tr>
 				</logic:iterate>
 			</table>
 			<br/>
 			<br />
-			<html:submit styleClass="inputbutton">
+			<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton">
 				<bean:message key="button.enroll" bundle="DEGREE_ADM_OFFICE"/>
 			</html:submit>
-			<html:reset styleClass="inputbutton">
+			<html:reset bundle="HTMLALT_RESOURCES" altKey="reset.reset" styleClass="inputbutton">
 				<bean:message key="button.clean" bundle="DEGREE_ADM_OFFICE"/>
 			</html:reset>
 		</logic:greaterThan>
-		<html:cancel styleClass="inputbutton" onclick="this.form.method.value='readEnrollments';this.form.submit();">
+		<html:cancel bundle="HTMLALT_RESOURCES" altKey="cancel.cancel" styleClass="inputbutton" onclick="this.form.method.value='readEnrollments';this.form.submit();">
 			<bean:message key="button.cancel" bundle="DEGREE_ADM_OFFICE"/>
 		</html:cancel>
 	</html:form>

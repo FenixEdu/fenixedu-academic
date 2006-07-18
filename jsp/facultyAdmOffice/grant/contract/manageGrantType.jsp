@@ -1,5 +1,5 @@
 <%@ page language="java" %>
-<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
+<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%><html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="dt"%>
@@ -39,25 +39,25 @@
     <table border="0" cellspacing="1" cellpadding="1">
     <%-- Table with grant type description rows --%>
     <tr>
-        <td class="listClasses-header">
+        <th class="listClasses-header">
             <bean:message key="label.grant.type.sigla"/>
-        </td>
-        <td class="listClasses-header">
+        </th>
+        <th class="listClasses-header">
             <bean:message key="label.grant.type.name"/>
-        </td>
-        <td class="listClasses-header">
+        </th>
+        <th class="listClasses-header">
             <bean:message key="label.grant.type.minPeriodDays"/>
-        </td>
-        <td class="listClasses-header">
+        </th>
+        <th class="listClasses-header">
             <bean:message key="label.grant.type.maxPeriodDays"/>
-        </td>
-        <td class="listClasses-header">
+        </th>
+        <th class="listClasses-header">
             <bean:message key="label.grant.type.source"/>
-        </td>
-        <td class="listClasses-header">
+        </th>
+        <th class="listClasses-header">
             <bean:message key="label.grant.type.state"/>
-        </td>
-        <td class="listClasses-header">&nbsp;</td>
+        </th>
+        <th class="listClasses-header">&nbsp;</th>
     </tr>   
     <%-- Table with result of search --%>
     <logic:iterate id="infoGrantType" name="infoGrantTypeList">

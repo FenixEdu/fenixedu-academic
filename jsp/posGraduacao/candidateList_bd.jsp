@@ -1,5 +1,6 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ page import="org.apache.struts.Globals" %>
@@ -16,7 +17,7 @@
 		<bean:write name="path"/>.do?method=chooseCandidate<%= "&" %>personID=
 		</bean:define>
 	<h2><bean:message name="title"/></h2>
-    	<p><b>Critérios de procura:</b><br /><br /><bean:write name="findQuery" filter="false"/></p>
+    	<p><b>Critï¿½rios de procura:</b><br /><br /><bean:write name="findQuery" filter="false"/></p>
     	<br /> 
     	<p>
     		<h3>   
@@ -26,12 +27,12 @@
     	</p>  
     <table>
     	<tr>
-			<td class="listClasses-header"><bean:message key="label.person.name" /></td>
-			<td class="listClasses-header"><bean:message key="label.candidate.number" /></td>
-			<td class="listClasses-header"><bean:message key="label.candidate.degree" /></td>
-			<td class="listClasses-header"><bean:message key="label.candidate.specialization" /></td>
-			<td class="listClasses-header"><bean:message key="label.candidate.infoCandidateSituation" /></td>
-			<td class="listClasses-header"><bean:message key="label.candidate.infoCandidateSituationDate" /></td>	
+			<th class="listClasses-header"><bean:message key="label.person.name" /></th>
+			<th class="listClasses-header"><bean:message key="label.candidate.number" /></th>
+			<th class="listClasses-header"><bean:message key="label.candidate.degree" /></th>
+			<th class="listClasses-header"><bean:message key="label.candidate.specialization" /></th>
+			<th class="listClasses-header"><bean:message key="label.candidate.infoCandidateSituation" /></th>
+			<th class="listClasses-header"><bean:message key="label.candidate.infoCandidateSituationDate" /></th>	
 		</tr>
     		<logic:iterate id="candidate" name="candidateList" indexId="indexCandidate">
     			<bean:define id="candidateLink">

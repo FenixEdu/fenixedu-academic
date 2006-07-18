@@ -1,4 +1,5 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 
@@ -9,7 +10,7 @@
 <%-- <html:form action="<%= "/viewEnrollments?method=declarations&amp;degreeName="+ request.getAttribute("degreeName")%>"> --%>
 <html:form action="/declaration.do?method=logOff" >
 
-<p><strong>Página 6 de 6</strong></p>
+<p><strong>Pï¿½gina 6 de 6</strong></p>
 
 <p align="center"><span class="error"><html:errors/></span></p>
 
@@ -30,9 +31,9 @@
 
 	<table class="table1" align="center">
 		<tr>
-			<td class="listClasses-header">
+			<th class="listClasses-header">
 			<bean:message key="label.curricular.course.name" bundle="DEFAULT"/>
-			</td>
+			</th>
 		</tr>
 	<logic:iterate id="enrolment" name="infoEnrollments">
 	  	<tr>
@@ -68,5 +69,5 @@
 
 <br/><br/>
 
-<p align="center"><html:submit value="Terminar" styleClass="inputbutton"/></p>
+<p align="center"><html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" value="Terminar" styleClass="inputbutton"/></p>
 </html:form>

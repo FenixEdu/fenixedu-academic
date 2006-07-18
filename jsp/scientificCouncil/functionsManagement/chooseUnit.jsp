@@ -4,6 +4,7 @@
 <%@ taglib uri="/WEB-INF/c.tld" prefix="c"%>
 
 <ft:tilesView definition="scientificCouncil.masterPage" attributeName="body-inline">
+	<f:loadBundle basename="resources/HtmlAltResources" var="htmlAltBundle"/>
 
 	<script language="JavaScript">
 	function check(e,v)
@@ -42,7 +43,7 @@
 					
 		<h:outputText value="#{scientificCouncilFunctionsManagementBackingBean.units}<br/>" escape="false"/>
 		
-		<h:commandButton styleClass="inputbutton" value="#{bundle['button.choose.new.person']}" action="backToList"/>
+		<h:commandButton alt="#{htmlAltBundle['commandButton.person']}" styleClass="inputbutton" value="#{bundle['button.choose.new.person']}" action="backToList"/>
 						    				
 	</h:form>
 

@@ -1,5 +1,6 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>	
 
@@ -66,5 +67,5 @@
 </logic:present>
 
 <logic:notPresent name="infoSiteStudentDistributedTests">
-	Não há!!!
+	Nï¿½o hï¿½!!!
 </logic:notPresent>

@@ -1,5 +1,5 @@
 <%@ page language="java" %>
-<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %><html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 
@@ -18,9 +18,9 @@
 <logic:present name="infoBranchesList">
 
 	<html:form action="/manageBranches" method="get">
-		<html:hidden property="degreeId" />
-		<html:hidden property="degreeCurricularPlanId" />
-		<html:hidden property="method" value="delete"/>
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.degreeId" property="degreeId" />
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.degreeCurricularPlanId" property="degreeCurricularPlanId" />
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="delete"/>
 
  		<bean:define id="onclick">
 			return confirm('<bean:message bundle="MANAGER_RESOURCES" key="message.confirm.delete.branches"/>')
@@ -28,19 +28,19 @@
 
 		<table width="80%" cellpadding="0" border="0">
 			<tr>
-				<td class="listClasses-header">
-				</td>
-				<td class="listClasses-header"><bean:message bundle="MANAGER_RESOURCES" key="label.name" />
-				</td>
-				<td class="listClasses-header"><bean:message bundle="MANAGER_RESOURCES" key="label.manager.code" />
-				</td>
-				<td class="listClasses-header">
-				</td>
+				<th class="listClasses-header">
+				</th>
+				<th class="listClasses-header"><bean:message bundle="MANAGER_RESOURCES" key="label.name" />
+				</th>
+				<th class="listClasses-header"><bean:message bundle="MANAGER_RESOURCES" key="label.manager.code" />
+				</th>
+				<th class="listClasses-header">
+				</th>
 			</tr> 
 			<logic:iterate id="infoBranch" name="infoBranchesList">			
 				<tr>	
 					<td class="listClasses">
-						<html:multibox property="internalIds">
+						<html:multibox bundle="HTMLALT_RESOURCES" altKey="multibox.internalIds" property="internalIds">
 							<bean:write name="infoBranch" property="idInternal"/>
 						</html:multibox>
 					</td>	
@@ -61,7 +61,7 @@
 		
 		<br>
 			
-  		<html:submit onclick='<%=onclick.toString() %>'>
+  		<html:submit bundle="HTMLALT_RESOURCES" altKey='submit.submit' onclick='<%=onclick.toString() %>'>
    			<bean:message bundle="MANAGER_RESOURCES" key="label.manager.delete.selected.branches"/>
   		</html:submit>
 	</html:form> 

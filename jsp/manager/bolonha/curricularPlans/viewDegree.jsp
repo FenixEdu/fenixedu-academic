@@ -3,6 +3,7 @@
 <%@ taglib uri="/WEB-INF/html_basic.tld" prefix="h"%>
 
 <ft:tilesView definition="definition.manager.masterPage" attributeName="body-inline">
+	<f:loadBundle basename="resources/HtmlAltResources" var="htmlAltBundle"/>
 	<f:loadBundle basename="resources/ScientificCouncilResources" var="scouncilBundle"/>	
 	<f:loadBundle basename="resources/EnumerationResources" var="enumerationBundle"/>
 
@@ -33,9 +34,9 @@
 	<h:outputText value="</fieldset></div>" escape="false"/>
 
 	<h:form>
-		<h:outputText escape="false" value="<input id='degreeId' name='degreeId' type='hidden' value='#{DegreeManagement.degreeId}'/>"/>
+		<h:outputText escape="false" value="<input alt='input.degreeId' id='degreeId' name='degreeId' type='hidden' value='#{DegreeManagement.degreeId}'/>"/>
 		<h:outputText value="<p> " escape="false"/>
-		<h:commandButton immediate="true" styleClass="inputbutton" value="#{scouncilBundle['return']}"
+		<h:commandButton alt="#{htmlAltBundle['commandButton.return']}" immediate="true" styleClass="inputbutton" value="#{scouncilBundle['return']}"
 			action="curricularPlansManagement"/>
 		<h:outputText value="</p> " escape="false"/>
 	</h:form>

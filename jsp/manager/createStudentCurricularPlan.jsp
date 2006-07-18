@@ -1,4 +1,5 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="dt" %>
@@ -12,18 +13,18 @@
 
 <html:form action="/studentsManagement" focus="number">
 
-	<html:hidden property="method" value="createStudentCurricularPlan"/>
-	<html:hidden property="page" value="1"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="createStudentCurricularPlan"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
 
 	<bean:define id="number" name="studentCurricularPlanForm" property="number" type="java.lang.String"/>
-	<html:hidden property="number" value="<%= number %>"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.number" property="number" value="<%= number %>"/>
 	<bean:define id="degreeType" type="java.lang.String" name="studentCurricularPlanForm" property="degreeType"/>
-	<html:hidden property="degreeType"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.degreeType" property="degreeType"/>
 
 	<table>
 		<tr>
 			<td>
-				<html:select property="degreeCurricularPlanId" size="1">
+				<html:select bundle="HTMLALT_RESOURCES" altKey="select.degreeCurricularPlanId" property="degreeCurricularPlanId" size="1">
 					<html:options collection="degreeCurricularPlans" property="idInternal" labelProperty="label"/>
 				</html:select>
 			</td>
@@ -32,7 +33,7 @@
 		<tr>
 			<td>
 				<e:labelValues id="values" enumeration="net.sourceforge.fenixedu.domain.studentCurricularPlan.StudentCurricularPlanState" bundle="ENUMERATION_RESOURCES"/>
-				<html:select property="studentCurricularPlanState" size="1">
+				<html:select bundle="HTMLALT_RESOURCES" altKey="select.studentCurricularPlanState" property="studentCurricularPlanState" size="1">
 					<html:options collection="values" property="value" labelProperty="label"/>
 				</html:select>
 			</td>
@@ -40,13 +41,13 @@
 
 		<tr>
 			<td>
-				<html:text property="startDate" size="10"/>
+				<html:text bundle="HTMLALT_RESOURCES" altKey="text.startDate" property="startDate" size="10"/>
 			</td>
 		</tr>
 	</table>
 
 	<br/>
 
-	<html:submit property="submit" styleClass="inputbutton"/>
+	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" property="submit" styleClass="inputbutton"/>
 
 </html:form>

@@ -1,5 +1,6 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="dt" %>
@@ -53,7 +54,7 @@
 							<html:link page="<%= "/announcementManagementAction.do?method=prepareEditAnnouncement&amp;objectCode=" + pageContext.findAttribute("objectCode") + "&amp;announcementCode=" + announcementCode %>">
 								<bean:message key="button.edit" /> 
 							</html:link>&nbsp;<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" />
-							<html:link page="<%= "/announcementManagementAction.do?method=deleteAnnouncement&amp;objectCode=" + pageContext.findAttribute("objectCode") + "&amp;announcementCode=" + announcementCode %>" onclick="return confirm('Tem a certeza que deseja apagar este anúncio?')">
+							<html:link page="<%= "/announcementManagementAction.do?method=deleteAnnouncement&amp;objectCode=" + pageContext.findAttribute("objectCode") + "&amp;announcementCode=" + announcementCode %>" onclick="return confirm('Tem a certeza que deseja apagar este anï¿½ncio?')">
 								<bean:message key="button.delete" />
 							</html:link></div>
     	                <br />

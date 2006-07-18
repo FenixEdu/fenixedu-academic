@@ -1,5 +1,6 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 
@@ -17,14 +18,14 @@
 </logic:present>
 
 <html:form action="/createSection">
-<html:hidden property="page" value="1"/>	
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>	
 <table>
 <tr>
 	<td>
 		<bean:message key="message.sectionName"/>
 	</td>
 	<td>
-		<html:text property="name" />
+		<html:text bundle="HTMLALT_RESOURCES" altKey="text.name" property="name" />
 			<span class="error"><html:errors property="name"/></span>
 	</td>
 </tr>
@@ -34,7 +35,7 @@
 		<bean:message key="message.sectionOrder"/>		
 	</td>
 	<td>
-		<html:select name="sectionForm" property="sectionOrder">
+		<html:select bundle="HTMLALT_RESOURCES" altKey="select.sectionOrder" name="sectionForm" property="sectionOrder">
 			<html:option value="-1"><bean:message key="label.end"/></html:option>
 			<html:options collection="sections" labelProperty="name" property="sectionOrder"/>
 			
@@ -43,23 +44,23 @@
 	</td>
 	</logic:present>
 	<logic:notPresent name="sections">
-		<html:hidden property="sectionOrder" value="0"/>
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.sectionOrder" property="sectionOrder" value="0"/>
 	</logic:notPresent>
 </tr>
 </table>
 <br />
 
-<html:hidden property="method" value="createSection"/>
-<html:hidden property="objectCode" value="<%= pageContext.findAttribute("objectCode").toString() %>" />
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="createSection"/>
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.objectCode" property="objectCode" value="<%= pageContext.findAttribute("objectCode").toString() %>" />
 
 <logic:present name="component" property="regularSections">
-	<html:hidden property="currentSectionCode" value="<%= pageContext.findAttribute("currentSectionCode").toString() %>" />
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.currentSectionCode" property="currentSectionCode" value="<%= pageContext.findAttribute("currentSectionCode").toString() %>" />
 </logic:present>
 
-<html:submit styleClass="inputbutton">
+<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton">
 	<bean:message key="button.save"/>
 </html:submit>
-<html:reset  styleClass="inputbutton">
+<html:reset bundle="HTMLALT_RESOURCES" altKey="reset.reset"  styleClass="inputbutton">
 	<bean:message key="label.clear"/>
 </html:reset>			
 </html:form>

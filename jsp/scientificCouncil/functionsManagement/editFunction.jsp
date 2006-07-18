@@ -5,6 +5,7 @@
 <%@ taglib uri="/WEB-INF/c.tld" prefix="c"%>
 
 <ft:tilesView definition="scientificCouncil.masterPage" attributeName="body-inline">
+	<f:loadBundle basename="resources/HtmlAltResources" var="htmlAltBundle"/>
 
 	<f:loadBundle basename="resources/DepartmentAdmOfficeResources" var="bundle"/>
 	
@@ -43,13 +44,13 @@
 						
 			<h:outputText value="<b>#{bundle['label.credits']}</b>" escape="false"/>
 			<h:panelGroup>
-				<h:inputText id="credits" required="true" size="5" maxlength="5" value="#{scientificCouncilFunctionsManagementBackingBean.credits}"/>
+				<h:inputText alt="#{htmlAltBundle['inputText.credits']}" id="credits" required="true" size="5" maxlength="5" value="#{scientificCouncilFunctionsManagementBackingBean.credits}"/>
 				<h:message for="credits" styleClass="error"/>
 			</h:panelGroup>
 			
 			<h:outputText value="<b>#{bundle['label.begin.date']}</b>" escape="false"/>
 			<h:panelGroup>
-				<h:inputText id="beginDate" required="true" size="10" value="#{scientificCouncilFunctionsManagementBackingBean.beginDate}">							
+				<h:inputText alt="#{htmlAltBundle['inputText.beginDate']}" id="beginDate" required="true" size="10" value="#{scientificCouncilFunctionsManagementBackingBean.beginDate}">							
 					<fc:dateValidator format="dd/MM/yyyy" strict="true"/>
 				</h:inputText>	
 				<h:outputText value="#{bundle['label.date.format']}"/>
@@ -58,7 +59,7 @@
 						
 			<h:outputText value="<b>#{bundle['label.end.date']}</b>" escape="false"/>
 			<h:panelGroup>
-				<h:inputText id="endDate" required="true" size="10" value="#{scientificCouncilFunctionsManagementBackingBean.endDate}">
+				<h:inputText alt="#{htmlAltBundle['inputText.endDate']}" id="endDate" required="true" size="10" value="#{scientificCouncilFunctionsManagementBackingBean.endDate}">
 					<fc:dateValidator format="dd/MM/yyyy" strict="true"/>
 				</h:inputText>				
 				<h:outputText value="#{bundle['label.date.format']}"/>
@@ -68,8 +69,8 @@
 		
 		<h:outputText value="<br/>" escape="false" />	
 		<h:panelGrid columns="2">
-			<h:commandButton action="#{scientificCouncilFunctionsManagementBackingBean.editFunction}" value="#{bundle['label.next']}" styleClass="inputbutton"/>				
-			<h:commandButton action="alterFunction" immediate="true" value="#{bundle['button.choose.new.person']}" styleClass="inputbutton"/>								
+			<h:commandButton alt="#{htmlAltBundle['commandButton.next']}" action="#{scientificCouncilFunctionsManagementBackingBean.editFunction}" value="#{bundle['label.next']}" styleClass="inputbutton"/>				
+			<h:commandButton alt="#{htmlAltBundle['commandButton.person']}" action="alterFunction" immediate="true" value="#{bundle['button.choose.new.person']}" styleClass="inputbutton"/>								
 		</h:panelGrid>	
 
 	</h:form>

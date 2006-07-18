@@ -2,6 +2,7 @@
 <%@ page language="java" %>
 
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 
@@ -35,12 +36,12 @@ padding: 0;
 
 	<table class="style1" width="70%" cellpadding="0" border="0">
 	<tr>
-		<td class="listClasses-header"><bean:message key="label.numberWord" />
-		</td>
-		<td class="listClasses-header"><bean:message key="label.nameWord" />
-		</td>
-		<td class="listClasses-header"><bean:message key="label.emailWord" />
-		</td>
+		<th class="listClasses-header"><bean:message key="label.numberWord" />
+		</th>
+		<th class="listClasses-header"><bean:message key="label.nameWord" />
+		</th>
+		<th class="listClasses-header"><bean:message key="label.emailWord" />
+		</th>
 	</tr>
 	
 	 <bean:define id="mailingList" value=""/>
@@ -75,15 +76,15 @@ padding: 0;
 	<table>
 		<tr>
 			<td>
-				<html:submit styleClass="inputbutton"><bean:message key="button.remove"/>                    		         	
+				<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton"><bean:message key="button.remove"/>                    		         	
 				</html:submit> 
 			
-				<html:hidden property="method" value="remove"/>
-				<html:hidden  property="executionCourseCode" value="<%= request.getParameter("executionCourseCode")%>"/>
-				<html:hidden  property="groupPropertiesCode" value="<%= request.getParameter("groupPropertiesCode")%>"/>
-				<html:hidden  property="studentGroupCode" value="<%= request.getParameter("studentGroupCode")%>"/>	
+				<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="remove"/>
+				<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.executionCourseCode"  property="executionCourseCode" value="<%= request.getParameter("executionCourseCode")%>"/>
+				<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.groupPropertiesCode"  property="groupPropertiesCode" value="<%= request.getParameter("groupPropertiesCode")%>"/>
+				<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.studentGroupCode"  property="studentGroupCode" value="<%= request.getParameter("studentGroupCode")%>"/>	
 				<logic:present name="shiftCode">
-				<html:hidden  property="shiftCode" value="<%= request.getParameter("shiftCode")%>"/>
+				<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.shiftCode"  property="shiftCode" value="<%= request.getParameter("shiftCode")%>"/>
 				</logic:present>
 				</html:form>
 
@@ -92,16 +93,16 @@ padding: 0;
 			<td>
 				<html:form action="/viewStudentGroupInformation" method="get">
 	
-				<html:cancel styleClass="inputbutton"><bean:message key="button.cancel"/>                    		         	
+				<html:cancel bundle="HTMLALT_RESOURCES" altKey="cancel.cancel" styleClass="inputbutton"><bean:message key="button.cancel"/>                    		         	
 				</html:cancel>
 	
-				<html:hidden property="method" value="execute"/>
-				<html:hidden  property="executionCourseCode" value="<%= request.getParameter("executionCourseCode")%>"/>
-				<html:hidden  property="groupPropertiesCode" value="<%= request.getParameter("groupPropertiesCode")%>"/>
+				<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="execute"/>
+				<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.executionCourseCode"  property="executionCourseCode" value="<%= request.getParameter("executionCourseCode")%>"/>
+				<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.groupPropertiesCode"  property="groupPropertiesCode" value="<%= request.getParameter("groupPropertiesCode")%>"/>
 				<logic:present name="shiftCode">
-				<html:hidden  property="shiftCode" value="<%= request.getParameter("shiftCode")%>"/>
+				<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.shiftCode"  property="shiftCode" value="<%= request.getParameter("shiftCode")%>"/>
 				</logic:present>				
-				<html:hidden  property="studentGroupCode" value="<%= request.getParameter("studentGroupCode")%>"/>	
+				<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.studentGroupCode"  property="studentGroupCode" value="<%= request.getParameter("studentGroupCode")%>"/>	
 			
 			
 				</html:form>

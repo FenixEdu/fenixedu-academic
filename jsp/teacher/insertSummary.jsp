@@ -1,5 +1,5 @@
 <%@ page language="java" %>
-<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %><html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="dt"%>
@@ -28,14 +28,14 @@
 <h2><bean:message key="title.summary.insert" /></h2>
 
 <html:form action="/summariesManagerInsertSummary">
- <html:hidden property="forHidden" />
- <html:hidden property="page" value="1"/>
- <html:hidden property="method" value="insertSummary"/>
- <html:hidden property="objectCode"/>
- <html:hidden property="save"/>
+ <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.forHidden" property="forHidden" />
+ <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
+ <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="insertSummary"/>
+ <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.objectCode" property="objectCode"/>
+ <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.save" property="save"/>
  
  <logic:present name="verEditor">
-	<html:hidden property="summaryText"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.summaryText" property="summaryText"/>
  </logic:present>
   
 <!-- Shifts -->
@@ -49,13 +49,13 @@
 	<tr>
 		<td><bean:message key="property.shift" />:</td>
 		<logic:present name="verEditor">
-			<td><html:select property="shift" onchange="this.form.method.value='prepareInsertSummary';this.form.page.value=0;this.form.summaryText.value=update();this.form.submit();" >
+			<td><html:select bundle="HTMLALT_RESOURCES" altKey="select.shift" property="shift" onchange="this.form.method.value='prepareInsertSummary';this.form.page.value=0;this.form.summaryText.value=update();this.form.submit();" >
 					<html:options collection="shifts" property="idInternal" labelProperty="lessons"/>
 				</html:select>
 			</td>
 		</logic:present>
 		<logic:notPresent name="verEditor">
-			<td><html:select property="shift" onchange="this.form.method.value='prepareInsertSummary';this.form.page.value=0;this.form.submit();" >
+			<td><html:select bundle="HTMLALT_RESOURCES" altKey="select.shift" property="shift" onchange="this.form.method.value='prepareInsertSummary';this.form.page.value=0;this.form.submit();" >
 					<html:options collection="shifts" property="idInternal" labelProperty="lessons"/>
 				</html:select>
 			</td>
@@ -87,18 +87,18 @@
 			:</td>
 			<logic:present name="checked">
 				<logic:present name="verEditor">	
-					<td><html:radio property="lesson" value="<%= lessonId.toString() %>" onclick="this.form.summaryDateInputOption.value='null';this.form.method.value='prepareInsertSummary';this.form.forHidden.value='true';this.form.page.value=0;this.form.summaryText.value=update();this.form.submit();"/></td>
+					<td><html:radio bundle="HTMLALT_RESOURCES" altKey="radio.lesson" property="lesson" value="<%= lessonId.toString() %>" onclick="this.form.summaryDateInputOption.value='null';this.form.method.value='prepareInsertSummary';this.form.forHidden.value='true';this.form.page.value=0;this.form.summaryText.value=update();this.form.submit();"/></td>
 				</logic:present>
 				<logic:notPresent name="verEditor">	
-					<td><html:radio property="lesson" value="<%= lessonId.toString() %>" onclick="this.form.summaryDateInputOption.value='null';this.form.method.value='prepareInsertSummary';this.form.forHidden.value='true';this.form.page.value=0;this.form.submit();"/></td>
+					<td><html:radio bundle="HTMLALT_RESOURCES" altKey="radio.lesson" property="lesson" value="<%= lessonId.toString() %>" onclick="this.form.summaryDateInputOption.value='null';this.form.method.value='prepareInsertSummary';this.form.forHidden.value='true';this.form.page.value=0;this.form.submit();"/></td>
 				</logic:notPresent>	
 			</logic:present>
 			<logic:notPresent name="checked">	
 				<logic:present name="verEditor">	
-					<td><html:radio property="lesson" value="<%= lessonId.toString() %>" onclick="this.form.method.value='prepareInsertSummary';this.form.forHidden.value='true';this.form.page.value=0;this.form.summaryText.value=update();this.form.submit();"/></td>
+					<td><html:radio bundle="HTMLALT_RESOURCES" altKey="radio.lesson" property="lesson" value="<%= lessonId.toString() %>" onclick="this.form.method.value='prepareInsertSummary';this.form.forHidden.value='true';this.form.page.value=0;this.form.summaryText.value=update();this.form.submit();"/></td>
 				</logic:present>
 				<logic:notPresent name="verEditor">	
-					<td><html:radio property="lesson" value="<%= lessonId.toString() %>" onclick="this.form.method.value='prepareInsertSummary';this.form.forHidden.value='true';this.form.page.value=0;this.form.submit();"/></td>
+					<td><html:radio bundle="HTMLALT_RESOURCES" altKey="radio.lesson" property="lesson" value="<%= lessonId.toString() %>" onclick="this.form.method.value='prepareInsertSummary';this.form.forHidden.value='true';this.form.page.value=0;this.form.submit();"/></td>
 				</logic:notPresent>	
 			</logic:notPresent>	
 		</tr>
@@ -106,10 +106,10 @@
 	<tr>
 		<td><bean:message key="label.extra.lesson" />:</td>
 		<logic:present name="verEditor">	
-			<td><html:radio property="lesson" value="0" onclick="this.form.method.value='prepareInsertSummary';this.form.forHidden.value='false';this.form.page.value=0;this.form.summaryText.value=update();this.form.submit();"/></td>
+			<td><html:radio bundle="HTMLALT_RESOURCES" altKey="radio.lesson" property="lesson" value="0" onclick="this.form.method.value='prepareInsertSummary';this.form.forHidden.value='false';this.form.page.value=0;this.form.summaryText.value=update();this.form.submit();"/></td>
 		</logic:present>
 		<logic:notPresent name="verEditor">	
-			<td><html:radio property="lesson" value="0" onclick="this.form.method.value='prepareInsertSummary';this.form.forHidden.value='false';this.form.page.value=0;this.form.submit();"/></td>
+			<td><html:radio bundle="HTMLALT_RESOURCES" altKey="radio.lesson" property="lesson" value="0" onclick="this.form.method.value='prepareInsertSummary';this.form.forHidden.value='false';this.form.page.value=0;this.form.submit();"/></td>
 		</logic:notPresent>
 	</tr>
 	<tr>
@@ -126,13 +126,13 @@
 					<td>&nbsp;&nbsp;&nbsp;&nbsp;<b><bean:write name="summaryDate"/></b></td>
 					<td width="50%">
 						<logic:present name="verEditor">
-							<html:checkbox property="summaryDateInputOption"
+							<html:checkbox bundle="HTMLALT_RESOURCES" altKey="checkbox.summaryDateInputOption" property="summaryDateInputOption"
 								onclick="<%= "this.form.summaryDateInput.value='"
 					   			    + summaryDate 
 									+ "';this.form.method.value='prepareInsertSummary';this.form.page.value=0;this.form.summaryText.value=update();this.form.submit();" %>" />																	
 						</logic:present>
 						<logic:notPresent name="verEditor">	
-							<html:checkbox property="summaryDateInputOption"
+							<html:checkbox bundle="HTMLALT_RESOURCES" altKey="checkbox.summaryDateInputOption" property="summaryDateInputOption"
 								onclick="<%= "this.form.summaryDateInput.value='"
 					   			    + summaryDate 
 									+ "';this.form.method.value='prepareInsertSummary';this.form.page.value=0;this.form.submit();" %>" />																	
@@ -144,11 +144,11 @@
 			<tr>
 				<td><bean:message key="label.summaryDateOptions"/></td>
 				<logic:present name="verEditor">	
-					<td><html:text property="dateEmpty" size="10" maxlength="10"
+					<td><html:text bundle="HTMLALT_RESOURCES" altKey="text.dateEmpty" property="dateEmpty" size="10" maxlength="10"
 							onchange="this.form.summaryDateInputOption.value='null';this.form.summaryDateInput.value=this.form.dateEmpty.value;this.form.method.value='prepareInsertSummary';this.form.page.value=0;this.form.summaryText.value=update();this.form.submit();"/>
 				</logic:present>
 				<logic:notPresent name="verEditor">	
-					<td><html:text property="dateEmpty" size="10" maxlength="10"
+					<td><html:text bundle="HTMLALT_RESOURCES" altKey="text.dateEmpty" property="dateEmpty" size="10" maxlength="10"
 							onchange="this.form.summaryDateInputOption.value='null';this.form.summaryDateInput.value=this.form.dateEmpty.value;this.form.method.value='prepareInsertSummary';this.form.page.value=0;this.form.submit();"/>
 				</logic:notPresent>					
 				<bean:message key="message.dateFormat"/></td>
@@ -159,34 +159,34 @@
 		<logic:equal name="forHidden" value="false">
 		<tr>
 			<td><bean:message key="label.summaryDate"/></td>
-			<td><html:text property="summaryDateInput" size="10" maxlength="10"/><bean:message key="message.dateFormat"/></td>
+			<td><html:text bundle="HTMLALT_RESOURCES" altKey="text.summaryDateInput" property="summaryDateInput" size="10" maxlength="10"/><bean:message key="message.dateFormat"/></td>
 		</tr>
 		<tr>
 			<td><bean:message key="label.summaryHour"/></td>
-			<td><html:text property="summaryHourInput" size="5" maxlength="5"/><bean:message key="message.hourFormat"/></td>		
+			<td><html:text bundle="HTMLALT_RESOURCES" altKey="text.summaryHourInput" property="summaryHourInput" size="5" maxlength="5"/><bean:message key="message.hourFormat"/></td>		
 		<tr/>	
 		<tr>
 			<td><bean:message key="label.room"/>:</td>
-			<td><html:select  property="room">
+			<td><html:select bundle="HTMLALT_RESOURCES" altKey="select.room"  property="room">
 					<html:option key="label.summary.select" value="" />
 					<html:options collection="rooms" property="idInternal" labelProperty="nome"/>
 				</html:select></td>		
 		<tr/>	
 		</logic:equal>
 		<logic:equal name="forHidden" value="true">
-			<html:hidden property="summaryHourInput"/>
-			<html:hidden property="room"/>
-			<html:hidden property="summaryDateInput" />
+			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.summaryHourInput" property="summaryHourInput"/>
+			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.room" property="room"/>
+			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.summaryDateInput" property="summaryDateInput" />
 		</logic:equal>
 	</logic:present>
 	<logic:notPresent name="forHidden">
 		<tr>
 			<td><bean:message key="label.summaryHour"/></td>
-			<td><html:text property="summaryHourInput" size="5" maxlength="5"/><bean:message key="message.hourFormat"/></td>		
+			<td><html:text bundle="HTMLALT_RESOURCES" altKey="text.summaryHourInput" property="summaryHourInput" size="5" maxlength="5"/><bean:message key="message.hourFormat"/></td>		
 		<tr/>	
 		<tr>
 			<td><bean:message key="label.room"/>:</td>
-			<td><html:select  property="room">
+			<td><html:select bundle="HTMLALT_RESOURCES" altKey="select.room"  property="room">
 					<html:option key="label.summary.select" value="" />
 					<html:options collection="rooms" property="idInternal" labelProperty="nome"/>
 				</html:select></td>		
@@ -194,7 +194,7 @@
 	</logic:notPresent>	
 	<tr>
 		<td><bean:message key="label.studentNumber.attended.lesson" />:</td>
-		<td><html:text property="studentsNumber" size="4"/></td>
+		<td><html:text bundle="HTMLALT_RESOURCES" altKey="text.studentsNumber" property="studentsNumber" size="4"/></td>
 	</tr>
 </table>
 <br/>
@@ -213,24 +213,24 @@
 		 	<bean:define id="professorshipId" name="professorship" property="idInternal" />
 		 	<tr>
 		 		<td><bean:write name="professorship" property="infoTeacher.infoPerson.nome"/>:</td>
-		 		<td><html:radio property="teacher" value="<%= professorshipId.toString()%>" /></td>				
+		 		<td><html:radio bundle="HTMLALT_RESOURCES" altKey="radio.teacher" property="teacher" value="<%= professorshipId.toString()%>" /></td>				
 		 	</tr>
 		 </logic:iterate>
 		<tr>
 			<td><bean:message key="label.teacher.in" />:</td>
-			<td><html:radio property="teacher" value="0" /></td>
-			<td><bean:message key="label.number" />:</td><td><html:text property="teacherNumber" size="4" /></td>
+			<td><html:radio bundle="HTMLALT_RESOURCES" altKey="radio.teacher" property="teacher" value="0" /></td>
+			<td><bean:message key="label.number" />:</td><td><html:text bundle="HTMLALT_RESOURCES" altKey="text.teacherNumber" property="teacherNumber" size="4" /></td>
 		</tr>
 		<tr>
 			<td><bean:message key="label.teacher.out" />:</td>
-			<td><html:radio property="teacher" value="-1" /></td>
-			<td><bean:message key="label.name" />:</td><td><html:text property="teacherName" size="40"/></td>				
+			<td><html:radio bundle="HTMLALT_RESOURCES" altKey="radio.teacher" property="teacher" value="-1" /></td>
+			<td><bean:message key="label.name" />:</td><td><html:text bundle="HTMLALT_RESOURCES" altKey="text.teacherName" property="teacherName" size="40"/></td>				
 		</tr>				
 	</table>
 </logic:equal>
 <logic:equal name="loggedIsResponsible" value="false">
 	<bean:define name="loggedTeacherProfessorship" id="loggedTeacherProfessorship"/>
-	<input type="hidden" name="teacher" value="<%=loggedTeacherProfessorship%>" />
+	<input alt="input.teacher" type="hidden" name="teacher" value="<%=loggedTeacherProfessorship%>" />
 </logic:equal>
 <br/>
 <br/>		
@@ -239,7 +239,7 @@
 		<td colspan='2'><strong><bean:message key="label.title"/></strong></td>
 	</tr>
 	<tr>		
-		<td colspan='2'><html:text size="66" property="title"/></td>
+		<td colspan='2'><html:text bundle="HTMLALT_RESOURCES" altKey="text.title" size="66" property="title"/></td>
 	</tr>
 	<tr>
 		<td>&nbsp;</td>
@@ -251,17 +251,17 @@
 		<td colspan='2'>	
 			<logic:present name="naoVerEditor">
 				<bean:message key="label.editor"/>
-				<html:radio property="editor" value="false" disabled="true"/>
+				<html:radio bundle="HTMLALT_RESOURCES" altKey="radio.editor" property="editor" value="false" disabled="true"/>
 				&nbsp;
 				<bean:message key="label.plain.text"/>
-				<html:radio property="editor" value="true"/>						
+				<html:radio bundle="HTMLALT_RESOURCES" altKey="radio.editor" property="editor" value="true"/>						
 			</logic:present>
 			<logic:notPresent name="naoVerEditor">						
 			    <bean:message key="label.editor"/>
-				<html:radio property="editor" value="true" onclick="this.form.method.value='prepareInsertSummary';this.form.summaryText.value='';this.form.page.value=0;this.form.submit();"/>
+				<html:radio bundle="HTMLALT_RESOURCES" altKey="radio.editor" property="editor" value="true" onclick="this.form.method.value='prepareInsertSummary';this.form.summaryText.value='';this.form.page.value=0;this.form.submit();"/>
 				&nbsp;
 				<bean:message key="label.plain.text"/>
-				<html:radio property="editor" value="false" onclick="this.form.method.value='prepareInsertSummary';this.form.page.value=0;this.form.submit();"/>					
+				<html:radio bundle="HTMLALT_RESOURCES" altKey="radio.editor" property="editor" value="false" onclick="this.form.method.value='prepareInsertSummary';this.form.page.value=0;this.form.submit();"/>					
 			</logic:notPresent>				
 		</td>
 	</tr>
@@ -287,7 +287,7 @@
 		</td>
 	  </logic:present>
 	  <logic:notPresent name="verEditor">	 	 
-		 <td colspan='2'><html:textarea rows="30" cols="100" property="summaryText"/></td>
+		 <td colspan='2'><html:textarea bundle="HTMLALT_RESOURCES" altKey="textarea.summaryText" rows="30" cols="100" property="summaryText"/></td>
 	  </logic:notPresent>
 	</tr>
 </table>
@@ -295,23 +295,23 @@
 <br/>
 <br/>
 <logic:present name="verEditor">
-	<html:submit styleClass="inputbutton" titleKey="message.button.save" onclick="this.form.save.value='0';this.form.summaryText.value=update()"><bean:message key="button.save"/>                    		         	
+	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton" titleKey="message.button.save" onclick="this.form.save.value='0';this.form.summaryText.value=update()"><bean:message key="button.save"/>                    		         	
 	</html:submit> 
-	<html:submit styleClass="inputbutton" titleKey="message.button.save.new" onclick="this.form.save.value='1';this.form.summaryText.value=update()" ><bean:message key="button.save.new"/>                    		         	
+	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton" titleKey="message.button.save.new" onclick="this.form.save.value='1';this.form.summaryText.value=update()" ><bean:message key="button.save.new"/>                    		         	
 	</html:submit> 
-	<html:submit styleClass="inputbutton" titleKey="message.button.save.equal" onclick="this.form.save.value='2';this.form.summaryText.value=update()"><bean:message key="button.save.equal"/>                                
+	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton" titleKey="message.button.save.equal" onclick="this.form.save.value='2';this.form.summaryText.value=update()"><bean:message key="button.save.equal"/>                                
 	</html:submit> 
 </logic:present>
 <logic:notPresent name="verEditor"> 
-	<html:submit styleClass="inputbutton" titleKey="message.button.save" onclick="this.form.save.value='0'"><bean:message key="button.save"/>                                
+	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton" titleKey="message.button.save" onclick="this.form.save.value='0'"><bean:message key="button.save"/>                                
 	</html:submit> 
-	<html:submit styleClass="inputbutton" titleKey="message.button.save.new" onclick="this.form.save.value='1'"><bean:message key="button.save.new"/>                                
+	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton" titleKey="message.button.save.new" onclick="this.form.save.value='1'"><bean:message key="button.save.new"/>                                
 	</html:submit> 
-	<html:submit styleClass="inputbutton" titleKey="message.button.save.equal" onclick="this.form.save.value='2'"><bean:message key="button.save.equal"/>                                
+	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton" titleKey="message.button.save.equal" onclick="this.form.save.value='2'"><bean:message key="button.save.equal"/>                                
 	</html:submit> 
 </logic:notPresent>
 
-<html:reset styleClass="inputbutton"><bean:message key="label.clear"/>
+<html:reset bundle="HTMLALT_RESOURCES" altKey="reset.reset" styleClass="inputbutton"><bean:message key="label.clear"/>
 </html:reset>  
 <br><br>
 <bean:message key="message.text.editor.requires"/>

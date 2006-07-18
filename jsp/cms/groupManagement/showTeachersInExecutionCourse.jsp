@@ -1,5 +1,6 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 
@@ -10,15 +11,15 @@
 		<bean:message  bundle="CMS_RESOURCES" key="person.personalGroupsManagement.elements.label" arg0="<%=numberOfElements.toString()%>"/>
 		<table>
 			<tr>
-				<td class="listClasses-header">
+				<th class="listClasses-header">
 					<bean:message  bundle="CMS_RESOURCES" key="cms.name.label"/>
-				</td>
-				<td class="listClasses-header">
+				</th>
+				<th class="listClasses-header">
 					<bean:message  bundle="CMS_RESOURCES" key="cms.teacher.category.label"/>
-				</td>
-				<td class="listClasses-header">
+				</th>
+				<th class="listClasses-header">
 					<bean:message  bundle="CMS_RESOURCES" key="cms.email.label"/>
-				</td>
+				</th>
 			</tr>
 			<logic:iterate id="person" name="elements" type="net.sourceforge.fenixedu.domain.Person">
 			    <bean:define id="teacher" name="person" property="teacher"/>

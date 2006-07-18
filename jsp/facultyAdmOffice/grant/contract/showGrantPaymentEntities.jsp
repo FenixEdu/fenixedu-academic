@@ -42,15 +42,15 @@
     <table border="0" cellspacing="1" cellpadding="1">
     <%-- Table with grant payment entities description rows --%>
     <tr>
-        <td class="listClasses-header">
+        <th class="listClasses-header">
             <bean:message key="label.grant.paymententity.number"/>
-        </td>
-        <td class="listClasses-header">
+        </th>
+        <th class="listClasses-header">
             <bean:message key="label.grant.paymententity.designation"/>
-        </td>
-        <td class="listClasses-header">
+        </th>
+        <th class="listClasses-header">
             <bean:message key="label.grant.paymententity.teacher"/>
-        </td>
+        </th>
     </tr>   
     <%-- Table with result of search --%>
     <logic:iterate id="infoGrantPaymentEntity" name="grantPaymentList">

@@ -1,4 +1,5 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 
@@ -10,11 +11,11 @@
 
 <html:form action="/chooseDegreesForExecutionCourseMerge" >
 	    
-	<html:hidden property="page" value="1"/>
-	<html:hidden property="method" value="chooseDegreesAndExecutionPeriod"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="chooseDegreesAndExecutionPeriod"/>
 	<br/>
-	<strong>Escolha o Período Execução</strong>
-	<html:select property="executionPeriodId">
+	<strong>Escolha o Perï¿½odo Execuï¿½ï¿½o</strong>
+	<html:select bundle="HTMLALT_RESOURCES" altKey="select.executionPeriodId" property="executionPeriodId">
 		<logic:iterate id="executionPeriod" name="executionPeriods">
 			<bean:define id="executionPeriodId" name="executionPeriod" property="idInternal"/>
 			<html:option value="<%= executionPeriodId.toString() %>">
@@ -35,7 +36,7 @@
 	<logic:iterate id="degree" name="sourceDegrees">
 		<tr>
 			<td class="listClasses">
-			<html:radio property="sourceDegreeId" idName="degree" value="idInternal"/> 
+			<html:radio bundle="HTMLALT_RESOURCES" altKey="radio.sourceDegreeId" property="sourceDegreeId" idName="degree" value="idInternal"/> 
 			</td>
 			<td class="listClasses">
 			<bean:write name="degree" property="sigla"/>
@@ -56,7 +57,7 @@
 	<logic:iterate id="degree" name="destinationDegrees">
 		<tr>
 			<td class="listClasses">
-			<html:radio property="destinationDegreeId" idName="degree" value="idInternal"/> 
+			<html:radio bundle="HTMLALT_RESOURCES" altKey="radio.destinationDegreeId" property="destinationDegreeId" idName="degree" value="idInternal"/> 
 			</td>
 			<td class="listClasses">
 			<bean:write name="degree" property="sigla"/>
@@ -70,10 +71,10 @@
 	</td></tr></table>
 	<br/>
 	<br/>
-	<html:submit styleClass="inputbutton">
+	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton">
 		<bean:message bundle="MANAGER_RESOURCES" key="button.save"/>
 	</html:submit>
-	<html:reset  styleClass="inputbutton">
+	<html:reset bundle="HTMLALT_RESOURCES" altKey="reset.reset"  styleClass="inputbutton">
 		<bean:message bundle="MANAGER_RESOURCES" key="label.clear"/>
 	</html:reset>
 </html:form>

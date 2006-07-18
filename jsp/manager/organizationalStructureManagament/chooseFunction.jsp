@@ -5,6 +5,7 @@
 <%@ taglib uri="/WEB-INF/c.tld" prefix="c"%>
 
 <ft:tilesView definition="definition.manager.masterPage" attributeName="body-inline">
+	<f:loadBundle basename="resources/HtmlAltResources" var="htmlAltBundle"/>
 	<f:loadBundle basename="resources/ManagerResources" var="bundle"/>
 	<h:form>	
 
@@ -68,7 +69,7 @@
 				styleClass="error" escape="false"/>				
 		
 		<h:outputText value="<br/>" escape="false" />	
-		<h:commandButton action="listAllUnits" immediate="true" value="#{bundle['label.return']}" styleClass="inputbutton"/>								
+		<h:commandButton alt="#{htmlAltBundle['commandButton.return']}" action="listAllUnits" immediate="true" value="#{bundle['label.return']}" styleClass="inputbutton"/>								
 				
 	</h:form>
 </ft:tilesView>

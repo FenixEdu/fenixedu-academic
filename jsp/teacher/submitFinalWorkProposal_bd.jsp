@@ -1,4 +1,4 @@
-<%@ page language="java" %><%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<%@ page language="java" %><%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %><html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
@@ -29,17 +29,17 @@
 </logic:present>
 
 <html:form action="/finalWorkManagement">
-	<html:hidden property="page" value="2"/>
-	<html:hidden property="method" value="submit"/>
-	<html:hidden property="degree"/>
-	<html:hidden property="role"/>
-	<html:hidden property="idInternal"/>
-	<html:hidden property="orientatorOID"/>
-	<html:hidden property="coorientatorOID"/>
-	<html:hidden property="alteredField"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="2"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="submit"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.degree" property="degree"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.role" property="role"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.idInternal" property="idInternal"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.orientatorOID" property="orientatorOID"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.coorientatorOID" property="coorientatorOID"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.alteredField" property="alteredField"/>
 
 	<b><bean:message key="label.teacher.finalWork.title"/>:</b>
-	<br><html:text property="title" size="85"/>
+	<br><html:text bundle="HTMLALT_RESOURCES" altKey="text.title" property="title" size="85"/>
 	<hr><br>
 
 	<b><bean:message key="label.teacher.finalWork.responsable"/>:</b>
@@ -48,13 +48,13 @@
 			<th width="16%"><bean:message key="label.teacher.finalWork.number"/>:</th>
 			<td width="10%">
 				<logic:present name="orientator">
-					<html:text property="responsableTeacherNumber" maxlength="6" size="6"
+					<html:text bundle="HTMLALT_RESOURCES" altKey="text.responsableTeacherNumber" property="responsableTeacherNumber" maxlength="6" size="6"
 						value='<%= ((InfoTeacher) pageContext.findAttribute("orientator")).getTeacherNumber().toString() %>'
 						 onchange="this.form.method.value='showTeacherName';this.form.page.value='1';this.form.alteredField.value='orientator';this.form.submit();"  
 						/>
 				</logic:present>
 				<logic:notPresent name="orientator">
-					<html:text property="responsableTeacherNumber" maxlength="6" size="6"
+					<html:text bundle="HTMLALT_RESOURCES" altKey="text.responsableTeacherNumber" property="responsableTeacherNumber" maxlength="6" size="6"
 						 onchange="this.form.method.value='showTeacherName';this.form.page.value='1';this.form.alteredField.value='orientator';this.form.submit();"/>
 				</logic:notPresent>
 			</td>
@@ -62,11 +62,11 @@
 			<th width="7%"><bean:message key="label.teacher.finalWork.name"/>:</th>
 			<td width="66%">
 				<logic:present name="orientator">
-					<html:text property="responsableTeacherName" size="55"
+					<html:text bundle="HTMLALT_RESOURCES" altKey="text.responsableTeacherName" property="responsableTeacherName" size="55"
 						value='<%= ((InfoTeacher) pageContext.findAttribute("orientator")).getInfoPerson().getNome().toString() %>'/>
 				</logic:present>
 				<logic:notPresent name="orientator">
-					<html:text property="responsableTeacherName" size="55"/>
+					<html:text bundle="HTMLALT_RESOURCES" altKey="text.responsableTeacherName" property="responsableTeacherName" size="55"/>
 				</logic:notPresent>
 			</td>
 		</tr>
@@ -84,13 +84,13 @@
 			<th width="16%"><bean:message key="label.teacher.finalWork.number"/>:</th>
 			<td width="10%">
 				<logic:present name="coorientator">
-					<html:text property="coResponsableTeacherNumber" maxlength="6" size="6"
+					<html:text bundle="HTMLALT_RESOURCES" altKey="text.coResponsableTeacherNumber" property="coResponsableTeacherNumber" maxlength="6" size="6"
 						value='<%= ((InfoTeacher) pageContext.findAttribute("coorientator")).getTeacherNumber().toString() %>'
 						 onchange="this.form.method.value='showTeacherName';this.form.page.value='1';this.form.alteredField.value='coorientator';this.form.submit();"  
 						/>
 				</logic:present>
 				<logic:notPresent name="coorientator">
-					<html:text property="coResponsableTeacherNumber" maxlength="6" size="6" 
+					<html:text bundle="HTMLALT_RESOURCES" altKey="text.coResponsableTeacherNumber" property="coResponsableTeacherNumber" maxlength="6" size="6" 
 						 onchange="this.form.method.value='showTeacherName';this.form.page.value='1';this.form.alteredField.value='coorientator';this.form.submit();"  
 					/>
 				</logic:notPresent>
@@ -99,11 +99,11 @@
 			<th width="7%"><bean:message key="label.teacher.finalWork.name"/>:</th>
 			<td width="66%">
 				<logic:present name="coorientator">
-					<html:text property="coResponsableTeacherName" size="55"
+					<html:text bundle="HTMLALT_RESOURCES" altKey="text.coResponsableTeacherName" property="coResponsableTeacherName" size="55"
 						value='<%= ((InfoTeacher) pageContext.findAttribute("coorientator")).getInfoPerson().getNome().toString() %>'/>
 				</logic:present>
 				<logic:notPresent name="coorientator">
-					<html:text property="coResponsableTeacherName" size="55"/>
+					<html:text bundle="HTMLALT_RESOURCES" altKey="text.coResponsableTeacherName" property="coResponsableTeacherName" size="55"/>
 				</logic:notPresent>
 			</td>
 		</tr>
@@ -121,35 +121,35 @@
 		<tr>
 			<th width="9%"><bean:message key="label.teacher.finalWork.name"/>:</th>
 			<td>
-				<html:text property="companionName" size="70" 
+				<html:text bundle="HTMLALT_RESOURCES" altKey="text.companionName" property="companionName" size="70" 
 				onchange="this.form.method.value='coorientatorVisibility';this.form.page.value='1';this.form.alteredField.value='companion';this.form.submit();"  />						
 			</td>
 		</tr>
 		<tr>
 			<th width="9%"><bean:message key="label.teacher.finalWork.mail"/>:</th>
 			<td>		
-				<html:text property="companionMail" size="70" 
+				<html:text bundle="HTMLALT_RESOURCES" altKey="text.companionMail" property="companionMail" size="70" 
 				onchange="this.form.method.value='coorientatorVisibility';this.form.page.value='1';this.form.alteredField.value='companion';this.form.submit();"/>
 			</td>
 		</tr>
 		<tr>
 			<th width="9%"><bean:message key="label.teacher.finalWork.phone"/>:</th>
 			<td>
-				<html:text property="companionPhone" size="10" maxlength="9" 
+				<html:text bundle="HTMLALT_RESOURCES" altKey="text.companionPhone" property="companionPhone" size="10" maxlength="9" 
 				onchange="this.form.method.value='coorientatorVisibility';this.form.page.value='1';this.form.alteredField.value='companion';this.form.submit();"/>						
 			</td>
 		</tr>	
 		<tr>
 			<th with="9%"><bean:message key="label.teacher.finalWork.companyName"/>:</th>
 			<td>
-				<html:text property="companyName" size="70"
+				<html:text bundle="HTMLALT_RESOURCES" altKey="text.companyName" property="companyName" size="70"
 				onchange="this.form.method.value='coorientatorVisibility';this.form.page.value='1';this.form.alteredField.value='companion';this.form.submit();"/>
 			</td>
 		</tr>
 		<tr>
 			<th with="9%"><bean:message key="label.teacher.finalWork.companyAdress"/>:</th>
 			<td>
-				<html:text property="companyAdress" size="70"
+				<html:text bundle="HTMLALT_RESOURCES" altKey="text.companyAdress" property="companyAdress" size="70"
 				onchange="this.form.method.value='coorientatorVisibility';this.form.page.value='1';this.form.alteredField.value='companion';this.form.submit();"/>
 			</td>
 		</tr>
@@ -158,27 +158,27 @@
 	</logic:empty>
 				
 	<b><bean:message key="label.teacher.finalWork.credits"/>:</b>
-	<html:text property="responsibleCreditsPercentage" size="3" maxlength="3"/>% /
-	<html:text property="coResponsibleCreditsPercentage" size="3" maxlength="3"/>%
+	<html:text bundle="HTMLALT_RESOURCES" altKey="text.responsibleCreditsPercentage" property="responsibleCreditsPercentage" size="3" maxlength="3"/>% /
+	<html:text bundle="HTMLALT_RESOURCES" altKey="text.coResponsibleCreditsPercentage" property="coResponsibleCreditsPercentage" size="3" maxlength="3"/>%
 	<br><hr>
 
 	<b><bean:message key="label.teacher.finalWork.framing"/>:</b>
-	<br><html:textarea property="framing" rows="4" cols="80"/>
+	<br><html:textarea bundle="HTMLALT_RESOURCES" altKey="textarea.framing" property="framing" rows="4" cols="80"/>
 	<br><br>
 	<b><bean:message key="label.teacher.finalWork.objectives"/>:</b>
-	<br><html:textarea property="objectives" rows="4" cols="80"/>
+	<br><html:textarea bundle="HTMLALT_RESOURCES" altKey="textarea.objectives" property="objectives" rows="4" cols="80"/>
 	<br><br>
 	<b><bean:message key="label.teacher.finalWork.description"/>:</b>
-	<br><html:textarea property="description" rows="8" cols="80"/>
+	<br><html:textarea bundle="HTMLALT_RESOURCES" altKey="textarea.description" property="description" rows="8" cols="80"/>
 	<br><br>
 	<b><bean:message key="label.teacher.finalWork.requirements"/>:</b>
-	<br><html:textarea property="requirements" rows="8" cols="80"/>
+	<br><html:textarea bundle="HTMLALT_RESOURCES" altKey="textarea.requirements" property="requirements" rows="8" cols="80"/>
 	<br><br>
 	<b><bean:message key="label.teacher.finalWork.deliverable"/>:</b>
-	<br><html:textarea property="deliverable" rows="4" cols="80"/>
+	<br><html:textarea bundle="HTMLALT_RESOURCES" altKey="textarea.deliverable" property="deliverable" rows="4" cols="80"/>
 	<br><br>
 	<b><bean:message key="label.teacher.finalWork.url"/>:</b>
-	<br><html:text property="url" size="80"/>
+	<br><html:text bundle="HTMLALT_RESOURCES" altKey="text.url" property="url" size="80"/>
 	<br><hr>
 	<br><b><bean:message key="label.teacher.finalWork.priority.info"/></b><br><br>
 
@@ -189,7 +189,7 @@
 					<bean:write name="branch" property="name"/>				
 				</td>
 				<td>
-					<html:multibox property="branchList">
+					<html:multibox bundle="HTMLALT_RESOURCES" altKey="multibox.branchList" property="branchList">
 						<bean:write name="branch" property="idInternal"/>
 					</html:multibox>
 				</td>
@@ -203,27 +203,27 @@
 			<th><bean:message key="label.teacher.finalWork.numberOfGroupElements"/>:</th>
 			<td>
 				<bean:message key="label.teacher.finalWork.minimumNumberGroupElements"/>
-				<html:text size="3" maxlength="2" property="minimumNumberOfGroupElements"/>
+				<html:text bundle="HTMLALT_RESOURCES" altKey="text.minimumNumberOfGroupElements" size="3" maxlength="2" property="minimumNumberOfGroupElements"/>
 			</td>		
 			<td>
 				<bean:message key="label.teacher.finalWork.maximumNumberGroupElements"/>
-				<html:text size="3" maxlength="2" property="maximumNumberOfGroupElements"/>
+				<html:text bundle="HTMLALT_RESOURCES" altKey="text.maximumNumberOfGroupElements" size="3" maxlength="2" property="maximumNumberOfGroupElements"/>
 			</td>
 		</tr>
 		<tr height="10"></tr>
 		<tr>
 			<th><bean:message key="label.teacher.finalWork.degreeType"/>:</th>
-			<td><html:radio value="" property="degreeType"/><bean:message key="label.both"/></td>
-			<td><html:radio value="<%= net.sourceforge.fenixedu.domain.degree.DegreeType.DEGREE.toString() %>" property="degreeType"/><bean:message bundle="ENUMERATION_RESOURCES" key="<%= net.sourceforge.fenixedu.domain.degree.DegreeType.DEGREE.toString() %>"/></td>
-			<td><html:radio value="<%= net.sourceforge.fenixedu.domain.degree.DegreeType.MASTER_DEGREE.toString() %>" property="degreeType"/><bean:message bundle="ENUMERATION_RESOURCES" key="<%= net.sourceforge.fenixedu.domain.degree.DegreeType.MASTER_DEGREE.toString() %>"/></td>
+			<td><html:radio bundle="HTMLALT_RESOURCES" altKey="radio.degreeType" value="" property="degreeType"/><bean:message key="label.both"/></td>
+			<td><html:radio bundle="HTMLALT_RESOURCES" altKey="radio.degreeType" value="<%= net.sourceforge.fenixedu.domain.degree.DegreeType.DEGREE.toString() %>" property="degreeType"/><bean:message bundle="ENUMERATION_RESOURCES" key="<%= net.sourceforge.fenixedu.domain.degree.DegreeType.DEGREE.toString() %>"/></td>
+			<td><html:radio bundle="HTMLALT_RESOURCES" altKey="radio.degreeType" value="<%= net.sourceforge.fenixedu.domain.degree.DegreeType.MASTER_DEGREE.toString() %>" property="degreeType"/><bean:message bundle="ENUMERATION_RESOURCES" key="<%= net.sourceforge.fenixedu.domain.degree.DegreeType.MASTER_DEGREE.toString() %>"/></td>
 		</tr>
 	</table>
 	<br><hr><br>
 	<b><bean:message key="label.teacher.finalWork.observations"/>:</b>
-	<br><html:textarea property="observations" rows="4" cols="80"/><br><br>
+	<br><html:textarea bundle="HTMLALT_RESOURCES" altKey="textarea.observations" property="observations" rows="4" cols="80"/><br><br>
 	<b><bean:message key="label.teacher.finalWork.location"/>:</b>
-	<br><html:text property="location" size="81"/><br>
+	<br><html:text bundle="HTMLALT_RESOURCES" altKey="text.location" property="location" size="81"/><br>
 
 
-	<br><br><html:submit styleClass="inputbutton"><bean:message key="button.submit"/></html:submit></td>
+	<br><br><html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton"><bean:message key="button.submit"/></html:submit></td>
 </html:form>

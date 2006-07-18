@@ -1,6 +1,7 @@
 <%@ page language="java" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <table width="100%" border="0" cellpadding="0" cellspacing="0">
@@ -18,23 +19,23 @@
 <br />
 <html:form action="/manageClasses" focus="className">
 
-	<html:hidden property="<%= SessionConstants.EXECUTION_PERIOD_OID %>"
+	<html:hidden alt="<%= SessionConstants.EXECUTION_PERIOD_OID %>" property="<%= SessionConstants.EXECUTION_PERIOD_OID %>"
 				 value="<%= pageContext.findAttribute("executionPeriodOID").toString() %>"/>
-	<html:hidden property="<%= SessionConstants.EXECUTION_DEGREE_OID %>"
+	<html:hidden alt="<%= SessionConstants.EXECUTION_DEGREE_OID %>" property="<%= SessionConstants.EXECUTION_DEGREE_OID %>"
 				 value="<%= pageContext.findAttribute("executionDegreeOID").toString() %>"/>
-	<html:hidden property="<%= SessionConstants.CURRICULAR_YEAR_OID %>"
+	<html:hidden alt="<%= SessionConstants.CURRICULAR_YEAR_OID %>" property="<%= SessionConstants.CURRICULAR_YEAR_OID %>"
 				 value="<%= pageContext.findAttribute("curricularYearOID").toString() %>"/>
 
-	<html:hidden property="method" value="create"/>
-	<html:hidden property="page" value= "1"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="create"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value= "1"/>
 
 	<span class="error"><html:errors/></span>
    	<br />
    	<bean:define id="degree" type="net.sourceforge.fenixedu.domain.Degree" name="executionDegreeD" property="degreeCurricularPlan.degree"/>
    	<bean:define id="curricularYear" type="java.lang.Integer" name="curricularYearOID"/>
    	<%= degree.constructSchoolClassPrefix(curricularYear) %>
-   	<html:text property="className"/>
-   	<html:submit styleClass="inputbuttonSmall">
+   	<html:text bundle="HTMLALT_RESOURCES" altKey="text.className" property="className"/>
+   	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbuttonSmall">
    		<bean:message key="label.create"/>
    	</html:submit>
 </html:form>
@@ -43,26 +44,26 @@
 <logic:present name="<%= SessionConstants.CLASSES %>" scope="request">
   <html:form action="/deleteClasses">
 
-	<html:hidden property="method" value="deleteClasses"/>
-	<html:hidden property="page" value="1"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="deleteClasses"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
 
-	<html:hidden property="<%= SessionConstants.EXECUTION_PERIOD_OID %>"
+	<html:hidden alt="<%= SessionConstants.EXECUTION_PERIOD_OID %>" property="<%= SessionConstants.EXECUTION_PERIOD_OID %>"
 				 value="<%= pageContext.findAttribute("executionPeriodOID").toString() %>"/>
-	<html:hidden property="<%= SessionConstants.EXECUTION_DEGREE_OID %>"
+	<html:hidden alt="<%= SessionConstants.EXECUTION_DEGREE_OID %>" property="<%= SessionConstants.EXECUTION_DEGREE_OID %>"
 				 value="<%= pageContext.findAttribute("executionDegreeOID").toString() %>"/>
-	<html:hidden property="<%= SessionConstants.CURRICULAR_YEAR_OID %>"
+	<html:hidden alt="<%= SessionConstants.CURRICULAR_YEAR_OID %>" property="<%= SessionConstants.CURRICULAR_YEAR_OID %>"
 				 value="<%= pageContext.findAttribute("curricularYearOID").toString() %>"/>
 
 <table cellpadding="0" border="0">
 	<tr>
-		<td class="listClasses-header">
-		</td>
-		<td class="listClasses-header">
+		<th class="listClasses-header">
+		</th>
+		<th class="listClasses-header">
 			<bean:message key="label.name"/>
-		</td>
-		<td class="listClasses-header">
+		</th>
+		<th class="listClasses-header">
 			<bean:message key="label.delete"/>
-		</td>				
+		</th>				
 	</tr>		
 	<bean:define id="deleteConfirm">
 		return confirm('<bean:message key="message.confirm.delete.class"/>')
@@ -74,7 +75,7 @@
 					 property="idInternal"/>
 		<tr>
        		<td class="listClasses">
-				<html:multibox property="selectedItems">
+				<html:multibox bundle="HTMLALT_RESOURCES" altKey="multibox.selectedItems" property="selectedItems">
 					<bean:write name="classView" property="idInternal"/>
 				</html:multibox>
 			</td>
@@ -127,7 +128,7 @@
 	</logic:iterate>
 </table>
 
-	<html:submit styleClass="inputbutton" onclick='<%= pageContext.findAttribute("deleteConfirm").toString() %>'>
+	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton" onclick='<%= pageContext.findAttribute("deleteConfirm").toString() %>'>
 		<bean:message key="link.delete"/>
 	</html:submit>
   </html:form>

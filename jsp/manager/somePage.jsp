@@ -4,12 +4,13 @@
 
 
 <ft:tilesView definition="definition.manager.masterPage" attributeName="body-inline">
+	<f:loadBundle basename="resources/HtmlAltResources" var="htmlAltBundle"/>
 	<h:outputText value="Hello World :o)"/>
 	<br />
 	<h:outputText value="#{infoExecutionPeriod.name}"/>
 	<br />
 	<br />
 	<h:form>
-		<h:commandButton value="List Execution Periods" action="listExecutionPeriods"/>
+		<h:commandButton alt="#{htmlAltBundle['commandButton.List Execution Periods']}" value="List Execution Periods" action="listExecutionPeriods"/>
 	</h:form>
 </ft:tilesView>

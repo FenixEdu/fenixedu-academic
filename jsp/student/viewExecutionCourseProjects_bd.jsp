@@ -1,6 +1,7 @@
 <%@ page language="java" %>
 <%@ page import="java.lang.String" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 
@@ -28,15 +29,15 @@ td.listClasses p { margin: 6px 0; padding: 0; }
 
 	<table class="style1" style="text-align: left;">
          <tr>
-			<td class="listClasses-header" width="20%"><bean:message key="label.projectTable.project" />
+			<th class="listClasses-header" width="20%"><bean:message key="label.projectTable.project" />
+			</th>
+			<th class="listClasses-header" width="30%"><bean:message key="label.projectTable.description" />
+			</th>
+			<th class="listClasses-header" width="20%"><bean:message key="label.projectTable.properties" />
+			</th>		
 			</td>
-			<td class="listClasses-header" width="30%"><bean:message key="label.projectTable.description" />
-			</td>
-			<td class="listClasses-header" width="20%"><bean:message key="label.projectTable.properties" />
-			</td>		
-			</td>
-			<td class="listClasses-header" width="20%" ><bean:message key="label.projectTable.newProjectProposal" />
-			</td>
+			<th class="listClasses-header" width="20%" ><bean:message key="label.projectTable.newProjectProposal" />
+			</th>
 		</tr>
 		
             <logic:iterate id="infoGroupProperties" name="infoGroupPropertiesList">

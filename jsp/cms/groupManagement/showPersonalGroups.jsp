@@ -1,5 +1,6 @@
 <%@ page language="java"%>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/enum.tld" prefix="e"%>
@@ -20,18 +21,18 @@
     <logic:greaterThan name="numberOfGroups" value="0">	
         	<table width="100%">
         		<tr>
-        			<td class="listClasses-header"><bean:message  bundle="CMS_RESOURCES" key="cms.name.label"/>
-        			</td>
-        			<td class="listClasses-header"><bean:message  bundle="CMS_RESOURCES" key="cms.description.label"/>
-        			</td>
-        			<td class="listClasses-header"><bean:message  bundle="CMS_RESOURCES" key="cms.personalGroupsManagement.type.label"/>
-        			</td>
-        			<td class="listClasses-header"><bean:message  bundle="CMS_RESOURCES" key="cms.personalGroupsManagement.groupCardinality.label"/>
-        			</td>
-        			<td class="listClasses-header">&nbsp;
-        			</td>
-        			<td class="listClasses-header">&nbsp;
-        			</td>
+        			<th class="listClasses-header"><bean:message  bundle="CMS_RESOURCES" key="cms.name.label"/>
+        			</th>
+        			<th class="listClasses-header"><bean:message  bundle="CMS_RESOURCES" key="cms.description.label"/>
+        			</th>
+        			<th class="listClasses-header"><bean:message  bundle="CMS_RESOURCES" key="cms.personalGroupsManagement.type.label"/>
+        			</th>
+        			<th class="listClasses-header"><bean:message  bundle="CMS_RESOURCES" key="cms.personalGroupsManagement.groupCardinality.label"/>
+        			</th>
+        			<th class="listClasses-header">&nbsp;
+        			</th>
+        			<th class="listClasses-header">&nbsp;
+        			</th>
         		</tr>
         		<logic:iterate id="personalGroup" name="groupsIterator" type="net.sourceforge.fenixedu.domain.PersonalGroup">
         			<bean:define id="readableGroupType" value="<%= GroupTypes.userGroupTypeByClass(personalGroup.getGroup().getClass()).toString() %>"/>
@@ -71,7 +72,7 @@
 	<h3><bean:message  bundle="CMS_RESOURCES" key="cms.personalGroupsManagement.createNewGroup.label" /></h3>
     
 	<html:form action="/personalGroupsManagement" method="get">
-        <html:hidden property="method" value="selectUserGroupTypeToAdd"/>
+        <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="selectUserGroupTypeToAdd"/>
         
 		<table>
 		  <tr>
@@ -80,11 +81,11 @@
 			</td>
             
 			<td width="90%"><e:labelValues id="values" enumeration="net.sourceforge.fenixedu.domain.accessControl.GroupTypes" bundle="ENUMERATION_RESOURCES"/>
-				<html:select property="userGroupType">
+				<html:select bundle="HTMLALT_RESOURCES" altKey="select.userGroupType" property="userGroupType">
     	    		         <html:options collection="values" property="value" labelProperty="label" />
 				</html:select>
                 
-				<html:submit styleClass="inputbutton">
+				<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton">
 					<bean:message  bundle="CMS_RESOURCES" key="cms.personalGroupsManagement.create.label"/>
 				</html:submit>        		
 			</td>	

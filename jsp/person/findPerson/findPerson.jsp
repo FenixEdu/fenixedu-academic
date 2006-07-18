@@ -1,4 +1,4 @@
-<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %><html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/enum.tld" prefix="e" %>
@@ -95,22 +95,22 @@ else
 
 
 <html:form action="/preparePerson" >
-	<html:hidden property="method" value="preparePerson" />
-	<html:hidden property="countPage" value="1"/>
-	<html:hidden property="departmentId" name="findPersonForm"/>
-	<html:hidden property="degreeId" name="findPersonForm"/>
-	<html:hidden property="viewPhoto" name="findPersonForm"/>
-	<html:hidden property="name" name="findPersonForm"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="preparePerson" />
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.countPage" property="countPage" value="1"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.departmentId" property="departmentId" name="findPersonForm"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.degreeId" property="degreeId" name="findPersonForm"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.viewPhoto" property="viewPhoto" name="findPersonForm"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.name" property="name" name="findPersonForm"/>
 	
 	<table class="search">
 			
 		<tr>
 			<td class="leftcolumn"><bean:message key="label.type"/>:</td>
 			<td><e:labelValues id="values" enumeration="net.sourceforge.fenixedu.domain.person.RoleType" bundle="ENUMERATION_RESOURCES" includedFields="STUDENT,TEACHER,GRANT_OWNER,EMPLOYEE" />
-				<html:select property="roleType" onchange="this.form.submit()">
+				<html:select bundle="HTMLALT_RESOURCES" altKey="select.roleType" property="roleType" onchange="this.form.submit()">
 				<html:option value=""/>
 				<html:options collection="values" property="value" labelProperty="label"/>
-				<html:hidden property="roleType" name="findPersonForm"/>
+				<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.roleType" property="roleType" name="findPersonForm"/>
 				
 				</html:select>
 			</td>
@@ -121,10 +121,10 @@ else
 			<td class="leftcolumn"><bean:message key="label.degree"/>:</td>
 			<td>
 				<e:labelValues id="values" enumeration="net.sourceforge.fenixedu.domain.degree.DegreeType" bundle="ENUMERATION_RESOURCES"  />
-				<html:select property="degreeType" onchange="this.form.submit()">
+				<html:select bundle="HTMLALT_RESOURCES" altKey="select.degreeType" property="degreeType" onchange="this.form.submit()">
 				<html:option value=""/>
 				<html:options collection="values" property="value" labelProperty="label"/>				
-				<html:hidden property="degreeType" name="findPersonForm"/>
+				<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.degreeType" property="degreeType" name="findPersonForm"/>
 				</html:select>
 			</td>
 			</tr>
@@ -134,13 +134,13 @@ else
 
 
 <html:form action="/findPerson" >
-<html:hidden property="method" value="findPerson" />
-<html:hidden property="startIndex" value="1" />
-<html:hidden property="page" value="1" />
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="findPerson" />
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.startIndex" property="startIndex" value="1" />
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1" />
 <bean:define id="roleType" name="findPersonForm" property="roleType" type="java.lang.String"/>
-<html:hidden property="roleType" value="<%= roleType %>"/>
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.roleType" property="roleType" value="<%= roleType %>"/>
 <bean:define id="degreeType" name="findPersonForm" property="degreeType" type="java.lang.String"/>
-<html:hidden property="degreeType" value="<%= degreeType %>"/>
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.degreeType" property="degreeType" value="<%= degreeType %>"/>
 
 <logic:present name="departments">
 		<tr>
@@ -148,7 +148,7 @@ else
 			<bean:message key="label.teacher.finalWork.department"/>:
 		</td>
 		<td>
-			<html:select property="departmentId">	
+			<html:select bundle="HTMLALT_RESOURCES" altKey="select.departmentId" property="departmentId">	
 			<html:option value=""/>
 				<logic:iterate id="department" name="departments" > 
 			   	<bean:define id="departmentID" name="department" property="idInternal"/>
@@ -167,7 +167,7 @@ else
 			<bean:message key="label.degree.name"/>:
 		</td>
 		<td>
-			<html:select property="degreeId">	
+			<html:select bundle="HTMLALT_RESOURCES" altKey="select.degreeId" property="degreeId">	
 				<html:option value=""/>
 				<logic:iterate id="degree" name="nonMasterDegree" > 
 			   	<bean:define id="degreeID" name="degree" property="idInternal"/>
@@ -182,17 +182,17 @@ else
 		</tr>
 </logic:present>
 <logic:notPresent name="nonMasterDegree">
-<html:hidden property="degreeId" value=""/>
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.degreeId" property="degreeId" value=""/>
 </logic:notPresent>
 <logic:notPresent name="departments">
-<html:hidden property="departmentId" value=""/>
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.departmentId" property="departmentId" value=""/>
 </logic:notPresent>
 		
 	<tr>
 		<td class="leftcolumn"><bean:message key="label.nameWord" />:</td>
 		<td>
-			<html:text name="findPersonForm" property="name" size="50"/>
-			<html:hidden property="name" name="findPersonForm"/>
+			<html:text bundle="HTMLALT_RESOURCES" altKey="text.name" name="findPersonForm" property="name" size="50"/>
+			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.name" property="name" name="findPersonForm"/>
 		</td>		
 	</tr>
 	<tr>
@@ -200,16 +200,16 @@ else
 			<bean:message key="label.viewPhoto" />:
 		</td>
 		<td>
-			<html:checkbox  property="viewPhoto" />
+			<html:checkbox bundle="HTMLALT_RESOURCES" altKey="checkbox.viewPhoto"  property="viewPhoto" />
 		</td>
 	</tr>
 	<tr>
 		<td></td>
 		<td>
-			<html:submit styleClass="inputbutton">
+			<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton">
 			<bean:message key="button.search"/>
 			</html:submit>
-			<html:reset  styleClass="inputbutton">
+			<html:reset bundle="HTMLALT_RESOURCES" altKey="reset.reset"  styleClass="inputbutton">
 			<bean:message key="label.clear"/>
 			</html:reset>
 		</td>
@@ -230,7 +230,7 @@ else
 	</logic:equal>
 
 <logic:present name="pages" >
-<p>Páginas:
+<p>Pï¿½ginas:
 	<logic:iterate id="pages" name="pages" indexId="pageIndex">	
 		<bean:define id="indexPageId" value="<%= String.valueOf(pageIndex.intValue() + 1) %>" />		
 		<bean:define id="actualPage" value="<%= pageContext.findAttribute("startIndex").toString()%>"/>
@@ -267,7 +267,7 @@ else
 			<td width="30%" style="text-align: right;">
 				<bean:define id="aa" value="<%= "aa" + personIndex %>" />
 				<bean:define id="id" value="<%= "id" + personIndex %>" />
-				<input type = button value="+"  id="<%= pageContext.findAttribute("id").toString()%>" indexed="true" onClick="check(document.getElementById('<%= pageContext.findAttribute("aa").toString() %>'),document.getElementById('<%= pageContext.findAttribute("id").toString() %>'));return false;" >													
+				<input alt="input.input" type = button value="+"  id="<%= pageContext.findAttribute("id").toString()%>" indexed="true" onClick="check(document.getElementById('<%= pageContext.findAttribute("aa").toString() %>'),document.getElementById('<%= pageContext.findAttribute("id").toString() %>'));return false;" >													
 			</td>
 		</tr>
 		</table>

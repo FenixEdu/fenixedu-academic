@@ -5,6 +5,7 @@
 <%@ taglib uri="/WEB-INF/c.tld" prefix="c"%>
 
 <ft:tilesView definition="definition.manager.masterPage" attributeName="body-inline">
+	<f:loadBundle basename="resources/HtmlAltResources" var="htmlAltBundle"/>
 
 <style>
 .alignright { text-align: right; }
@@ -18,19 +19,19 @@
 
 		<h:panelGrid columns="2" styleClass="infoop" columnClasses="alignright,,"  rowClasses=",,,valigntop">
 			<h:outputText value="From: " escape="false"/>
-			<h:inputText id="from" value="#{SendMailBackingBean.from}"/>
+			<h:inputText alt="#{htmlAltBundle['inputText.from']}" id="from" value="#{SendMailBackingBean.from}"/>
 
 			<h:outputText value="To: " escape="false"/>
-			<h:inputText id="to" value="#{SendMailBackingBean.to}"/>
+			<h:inputText alt="#{htmlAltBundle['inputText.to']}" id="to" value="#{SendMailBackingBean.to}"/>
 
 			<h:outputText value="Cc: " escape="false"/>
-			<h:inputText id="ccs" value="#{SendMailBackingBean.ccs}"/>
+			<h:inputText alt="#{htmlAltBundle['inputText.ccs']}" id="ccs" value="#{SendMailBackingBean.ccs}"/>
 
 			<h:outputText value="Bc: " escape="false"/>
-			<h:inputText id="bccs" value="#{SendMailBackingBean.bccs}"/>
+			<h:inputText alt="#{htmlAltBundle['inputText.bccs']}" id="bccs" value="#{SendMailBackingBean.bccs}"/>
 
 			<h:outputText value="Subject: " escape="false"/>
-			<h:inputText id="subject" value="#{SendMailBackingBean.subject}"/>
+			<h:inputText alt="#{htmlAltBundle['inputText.subject']}" id="subject" value="#{SendMailBackingBean.subject}"/>
 
 		</h:panelGrid>
 
@@ -68,7 +69,7 @@
 		<h:outputText value="Send to all execution course responsibles." escape="false"/>
 
 		<h:outputText value="<br/><br/>" escape="false"/>
-		<h:commandButton action="#{SendMailBackingBean.send}"
+		<h:commandButton alt="#{htmlAltBundle['commandButton.send']}" action="#{SendMailBackingBean.send}"
 				styleClass="inputbutton" value="#{bundle['button.send']}"/>
 
 	</h:form>

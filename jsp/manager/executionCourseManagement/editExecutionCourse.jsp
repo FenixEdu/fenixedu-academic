@@ -1,5 +1,5 @@
 <%@ page language="java" %>
-<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %><html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
@@ -23,20 +23,20 @@
  	> <bean:write name="executionCourseName"/>
  	
 	<html:form action="/editExecutionCourse" focus="name">
-		<html:hidden property="method" value="updateExecutionCourse"/>
-		<html:hidden property="executionCourseId" value="<%= executionCourseId.toString() %>" />
-		<html:hidden property="executionPeriod"/>
-		<html:hidden property="executionDegree"/>
-		<html:hidden property="curYear"/>				
-		<html:hidden property="executionCoursesNotLinked"/>
-		<html:hidden property="page" value="3"/>
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="updateExecutionCourse"/>
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.executionCourseId" property="executionCourseId" value="<%= executionCourseId.toString() %>" />
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.executionPeriod" property="executionPeriod"/>
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.executionDegree" property="executionDegree"/>
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.curYear" property="curYear"/>				
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.executionCoursesNotLinked" property="executionCoursesNotLinked"/>
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="3"/>
 		<table>			
 			<tr>
 				<td>
 					<bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="message.manager.execution.course.name"/>
 				</td>
 				<td>
-					<html:text size="30" property="name" />
+					<html:text bundle="HTMLALT_RESOURCES" altKey="text.name" size="30" property="name" />
 				</td>
 			</tr>
 			<tr>
@@ -44,7 +44,7 @@
 					<bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="message.manager.execution.course.code"/>
 				</td>
 				<td>
-					<html:text size="5" property="code" />
+					<html:text bundle="HTMLALT_RESOURCES" altKey="text.code" size="5" property="code" />
 				</td>
 			</tr>
 			<tr>
@@ -52,7 +52,7 @@
 					<bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="message.manager.theoreticalHours"/>
 				</td>
 				<td>
-					<html:text size="5" property="theoreticalHours" />
+					<html:text bundle="HTMLALT_RESOURCES" altKey="text.theoreticalHours" size="5" property="theoreticalHours" />
 				</td>
 			</tr>
 			<tr>
@@ -60,7 +60,7 @@
 					<bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="message.manager.praticalHours"/>
 				</td>
 				<td>
-					<html:text size="5" property="praticalHours" />
+					<html:text bundle="HTMLALT_RESOURCES" altKey="text.praticalHours" size="5" property="praticalHours" />
 				</td>
 			</tr>
 			<tr>
@@ -68,7 +68,7 @@
 					<bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="message.manager.theoPratHours"/>
 				</td>
 				<td>
-					<html:text size="5" property="theoPratHours" />
+					<html:text bundle="HTMLALT_RESOURCES" altKey="text.theoPratHours" size="5" property="theoPratHours" />
 				</td>
 			</tr>
 			<tr>
@@ -76,7 +76,7 @@
 					<bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="message.manager.labHours"/>
 				</td>
 				<td>
-					<html:text size="5" property="labHours" />
+					<html:text bundle="HTMLALT_RESOURCES" altKey="text.labHours" size="5" property="labHours" />
 				</td>
 			</tr>
 			<tr>
@@ -84,7 +84,7 @@
 					<bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="message.manager.seminaryHours"/>
 				</td>
 				<td>
-					<html:text size="5" property="seminaryHours" />
+					<html:text bundle="HTMLALT_RESOURCES" altKey="text.seminaryHours" size="5" property="seminaryHours" />
 				</td>
 			</tr>
 			<tr>
@@ -92,7 +92,7 @@
 					<bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="message.manager.problemsHours"/>
 				</td>
 				<td>
-					<html:text size="5" property="problemsHours" />
+					<html:text bundle="HTMLALT_RESOURCES" altKey="text.problemsHours" size="5" property="problemsHours" />
 				</td>
 			</tr>
 			<tr>
@@ -100,7 +100,7 @@
 					<bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="message.manager.fieldWorkHours"/>
 				</td>
 				<td>
-					<html:text size="5" property="fieldWorkHours" />
+					<html:text bundle="HTMLALT_RESOURCES" altKey="text.fieldWorkHours" size="5" property="fieldWorkHours" />
 				</td>
 			</tr>
 			<tr>
@@ -108,7 +108,7 @@
 					<bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="message.manager.trainingPeriodHours"/>
 				</td>
 				<td>
-					<html:text size="5" property="trainingPeriodHours" />
+					<html:text bundle="HTMLALT_RESOURCES" altKey="text.trainingPeriodHours" size="5" property="trainingPeriodHours" />
 				</td>
 			</tr>
 			<tr>
@@ -116,7 +116,7 @@
 					<bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="message.manager.tutorialOrientationHours"/>
 				</td>
 				<td>
-					<html:text size="5" property="tutorialOrientationHours" />
+					<html:text bundle="HTMLALT_RESOURCES" altKey="text.tutorialOrientationHours" size="5" property="tutorialOrientationHours" />
 				</td>
 			</tr>
 			<tr>
@@ -124,12 +124,12 @@
 					<bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="message.manager.execution.course.comment"/>
 				</td>
 				<td>
-					<html:textarea property="comment" rows="3" cols="45" />
+					<html:textarea bundle="HTMLALT_RESOURCES" altKey="textarea.comment" property="comment" rows="3" cols="45" />
 				</td>
 			</tr>
 		</table>
 		<br />
-		<html:submit styleClass="inputbutton"><bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="button.save"/></html:submit>
+		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton"><bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="button.save"/></html:submit>
 	</html:form>
 	
 	<br />
@@ -151,16 +151,16 @@
 								
 							<table width="100%" cellpadding="0" border="0">
 								<tr>
-									<td class="listClasses-header"><bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="label.manager.executionCourseManagement.curricularCourse" />
-									</td>
-									<td class="listClasses-header"><bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="label.manager.executionCourseManagement.code" />
-									</td>
-									<td class="listClasses-header"><bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="label.manager.executionCourseManagement.underGraduate" />
-									</td>
-									<td class="listClasses-header">&nbsp;
-									</td>
-									<td class="listClasses-header">&nbsp;
-									</td>
+									<th class="listClasses-header"><bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="label.manager.executionCourseManagement.curricularCourse" />
+									</th>
+									<th class="listClasses-header"><bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="label.manager.executionCourseManagement.code" />
+									</th>
+									<th class="listClasses-header"><bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="label.manager.executionCourseManagement.underGraduate" />
+									</th>
+									<th class="listClasses-header">&nbsp;
+									</th>
+									<th class="listClasses-header">&nbsp;
+									</th>
 								</tr>
 					
 								<logic:iterate id="curricularCourse" name="curricularCourses" type="net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse">

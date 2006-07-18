@@ -1,5 +1,6 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <html:form action="/selectRoomToViewForExams">
@@ -14,8 +15,8 @@
         <tr align="center">
           <td>
           	<bean:define id="roomId" name="infoRoom" property="idInternal"/>
-            <html:radio property="index" value="<%= pageContext.findAttribute("roomId").toString() %>"/>
-            <html:hidden property="roomId" value="<%= pageContext.findAttribute("roomId").toString() %>"/>
+            <html:radio bundle="HTMLALT_RESOURCES" altKey="radio.index" property="index" value="<%= pageContext.findAttribute("roomId").toString() %>"/>
+            <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.roomId" property="roomId" value="<%= pageContext.findAttribute("roomId").toString() %>"/>
           </td>
           <td><bean:write name="infoRoom" property="nome"/></td>
         </tr>
@@ -23,7 +24,7 @@
       </logic:iterate>
     </table>
     <br/>
-<html:submit property="operation" styleClass="inputbutton"><bean:message key="manipularSalas.verSalaOperation"/></html:submit>
+<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.operation" property="operation" styleClass="inputbutton"><bean:message key="manipularSalas.verSalaOperation"/></html:submit>
   </logic:present>
   <logic:notPresent name="selectedRooms" scope="request">
     <table>

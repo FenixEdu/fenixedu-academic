@@ -1,5 +1,6 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/enum.tld" prefix="e" %>
@@ -13,7 +14,7 @@ width: 20em;
 }
 </style>
 
-<p><strong>Página 2 de 6</strong></p>
+<p><strong>Pï¿½gina 2 de 6</strong></p>
 
  <br/>
  <h2><bean:message key="label.person.title.personalConsult" bundle="DEFAULT" /></h2>
@@ -22,11 +23,11 @@ width: 20em;
 	<p align="center"><span class="error"><%= request.getAttribute("incompleteData") %></span></p>
 </logic:present>
 <html:form action="/studentPersonalDataAuthorization?method=preparePersonalDataUseInquiry">
- <html:hidden property="page" value="3"/>
+ <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="3"/>
  <br/>
  <logic:present name="infoPerson">
  <bean:define id="infoPersonId" name="infoPerson" property="idInternal"/>
- <html:hidden property="idInternal" value="<%= infoPersonId.toString()%>"/>
+ <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.idInternal" property="idInternal" value="<%= infoPersonId.toString()%>"/>
 
 		<table width="100%" cellpadding="0" cellspacing="0">
           <!-- Dados Pessoais -->
@@ -64,7 +65,7 @@ width: 20em;
             <td class="leftcell"><bean:message key="label.person.identificationDocumentType" bundle="DEFAULT" /></td>
             <td class="greytxt">
 	            <e:labelValues id="values" enumeration="net.sourceforge.fenixedu.domain.person.IDDocumentType" bundle="ENUMERATION_RESOURCES"/>
-            	<html:select property="identificationDocumentType">
+            	<html:select bundle="HTMLALT_RESOURCES" altKey="select.identificationDocumentType" property="identificationDocumentType">
 					<html:options collection="values" property="value" labelProperty="label"/>
 				</html:select>
             </td>
@@ -85,9 +86,9 @@ width: 20em;
           <tr>
             <td class="leftcell"><bean:message key="label.person.identificationDocumentIssueDate" bundle="DEFAULT" /> <span class="redtxt">*</span></td>
 			<td class="greytxt">
-				<html:text size="2" maxlength="2" property="dayOfEmissionDateOfDocumentId"/> /
-				<html:text size="2" maxlength="2" property="monthOfEmissionDateOfDocumentId"/> /
-				<html:text size="4" maxlength="4" property="yearOfEmissionDateOfDocumentId"/> (dd/mm/aaaa)
+				<html:text bundle="HTMLALT_RESOURCES" altKey="text.dayOfEmissionDateOfDocumentId" size="2" maxlength="2" property="dayOfEmissionDateOfDocumentId"/> /
+				<html:text bundle="HTMLALT_RESOURCES" altKey="text.monthOfEmissionDateOfDocumentId" size="2" maxlength="2" property="monthOfEmissionDateOfDocumentId"/> /
+				<html:text bundle="HTMLALT_RESOURCES" altKey="text.yearOfEmissionDateOfDocumentId" size="4" maxlength="4" property="yearOfEmissionDateOfDocumentId"/> (dd/mm/aaaa)
 			</td>            
           </tr>
           <!-- Data de Validade do Documento de Identificacao -->
@@ -101,9 +102,9 @@ width: 20em;
           <tr>
             <td class="leftcell"><bean:message key="label.person.identificationDocumentExpirationDate" bundle="DEFAULT" /> <span class="redtxt">*</span></td>
             <td class="greytxt">
-				<html:text size="2" maxlength="2" property="dayOfExpirationDateOfDocumentId"/> /
-				<html:text size="2" maxlength="2" property="monthOfExpirationDateOfDocumentId"/> /
-				<html:text size="4" maxlength="4" property="yearOfExpirationDateOfDocumentId"/> (dd/mm/aaaa)								            
+				<html:text bundle="HTMLALT_RESOURCES" altKey="text.dayOfExpirationDateOfDocumentId" size="2" maxlength="2" property="dayOfExpirationDateOfDocumentId"/> /
+				<html:text bundle="HTMLALT_RESOURCES" altKey="text.monthOfExpirationDateOfDocumentId" size="2" maxlength="2" property="monthOfExpirationDateOfDocumentId"/> /
+				<html:text bundle="HTMLALT_RESOURCES" altKey="text.yearOfExpirationDateOfDocumentId" size="4" maxlength="4" property="yearOfExpirationDateOfDocumentId"/> (dd/mm/aaaa)								            
 			</td>   
           </tr>
           <!-- Numero de Contribuinte -->
@@ -113,12 +114,12 @@ width: 20em;
           </tr>
           <tr>
             <td class="leftcell"><bean:message key="label.person.contributorNumber" bundle="DEFAULT" /></td>
-            <td class="greytxt"><html:text size="9" maxlength="9" property="contributorNumber"/></td>
+            <td class="greytxt"><html:text bundle="HTMLALT_RESOURCES" altKey="text.contributorNumber" size="9" maxlength="9" property="contributorNumber"/></td>
           </tr>
           <!-- Profissao -->
           <tr>
             <td class="leftcell"><bean:message key="label.person.occupation" bundle="DEFAULT" /></td>
-            <td class="greytxt"><html:text size="40" maxlength="40" property="occupation"/></td>
+            <td class="greytxt"><html:text bundle="HTMLALT_RESOURCES" altKey="text.occupation" size="40" maxlength="40" property="occupation"/></td>
           </tr>
           <!-- Estado Civil -->
           <tr>
@@ -129,7 +130,7 @@ width: 20em;
             <td class="leftcell"><bean:message key="label.person.maritalStatus" bundle="DEFAULT" /></td>
             <td class="greytxt">
             	<e:labelValues id="values" enumeration="net.sourceforge.fenixedu.domain.person.MaritalStatus" bundle="DEFAULT"/>
-                <html:select property="maritalStatus">
+                <html:select bundle="HTMLALT_RESOURCES" altKey="select.maritalStatus" property="maritalStatus">
                     <html:options collection="values" property="value" labelProperty="label"/>
                  </html:select>          
             </td>
@@ -137,7 +138,7 @@ width: 20em;
        </table>
        <br/>
        <table width="100%" cellpadding="0" cellspacing="0">
-          <!-- Filiação -->
+          <!-- Filiaï¿½ï¿½o -->
           <tr>
           	<td class="infoop" width="25"><span class="emphasis-box">2</span></td>
           	<td class="infoop"><strong><bean:message key="label.person.title.filiation" bundle="DEFAULT" /></strong></td>
@@ -157,7 +158,7 @@ width: 20em;
           <tr>
             <td class="leftcell"><bean:message key="label.person.country" bundle="DEFAULT" /></td>
 		     	<td class="greytxt">
-		     		<html:select property="nacionality">
+		     		<html:select bundle="HTMLALT_RESOURCES" altKey="select.nacionality" property="nacionality">
 	                	<html:options collection="nationalityList" property="value" labelProperty="label"/>
                 	</html:select>
                 </td>
@@ -169,7 +170,7 @@ width: 20em;
 	      </tr>
           <tr>
             <td class="leftcell"><bean:message key="label.person.birthPlaceParish" bundle="DEFAULT" /> <span class="redtxt">*</span></td>
-            <td class="greytxt"><html:text size="30" maxlength="30" property="parishOfBirth"/></td>
+            <td class="greytxt"><html:text bundle="HTMLALT_RESOURCES" altKey="text.parishOfBirth" size="30" maxlength="30" property="parishOfBirth"/></td>
           </tr>
           <!-- Concelho de Naturalidade -->
           <tr>
@@ -178,7 +179,7 @@ width: 20em;
 		  </tr>
           <tr>
             <td class="leftcell"><bean:message key="label.person.birthPlaceMunicipality" bundle="DEFAULT" /> <span class="redtxt">*</span></td>
-            <td class="greytxt"><html:text size="30" maxlength="30" property="districtSubvisionOfBirth"/></td>
+            <td class="greytxt"><html:text bundle="HTMLALT_RESOURCES" altKey="text.districtSubvisionOfBirth" size="30" maxlength="30" property="districtSubvisionOfBirth"/></td>
           </tr>
            <!-- Distrito de Naturalidade -->
           <tr>
@@ -187,7 +188,7 @@ width: 20em;
           </tr>
           <tr>
             <td class="leftcell"><bean:message key="label.person.birthPlaceDistrict" bundle="DEFAULT" /> <span class="redtxt">*</span></td>
-            <td class="greytxt"><html:text size="30" maxlength="30" property="districtOfBirth"/></td>
+            <td class="greytxt"><html:text bundle="HTMLALT_RESOURCES" altKey="text.districtOfBirth" size="30" maxlength="30" property="districtOfBirth"/></td>
           </tr>
           <!-- Nome do Pai -->
           <tr>
@@ -196,7 +197,7 @@ width: 20em;
           </tr>
           <tr>
             <td class="leftcell"><bean:message key="label.person.fatherName" bundle="DEFAULT" /> <span class="redtxt">*</span></td>
-            <td class="greytxt"><html:text size="50" maxlength="56" property="nameOfFather"/></td>
+            <td class="greytxt"><html:text bundle="HTMLALT_RESOURCES" altKey="text.nameOfFather" size="50" maxlength="56" property="nameOfFather"/></td>
           </tr>
           <!-- Nome da Mae -->
           <tr>
@@ -205,7 +206,7 @@ width: 20em;
 		  </tr>		
           <tr>
             <td class="leftcell"><bean:message key="label.person.motherName" bundle="DEFAULT" /> <span class="redtxt">*</span></td>
-            <td class="greytxt"><html:text size="50" maxlength="60" property="nameOfMother"/></td>
+            <td class="greytxt"><html:text bundle="HTMLALT_RESOURCES" altKey="text.nameOfMother" size="50" maxlength="60" property="nameOfMother"/></td>
           </tr>
 		</table>
 		<br />
@@ -225,7 +226,7 @@ width: 20em;
           </tr>
           <tr>
             <td class="leftcell"><bean:message key="label.person.address" bundle="DEFAULT" /> <span class="redtxt">*</span></td>
-            <td class="greytxt"><html:text size="50" maxlength="40" property="address"/></td>
+            <td class="greytxt"><html:text bundle="HTMLALT_RESOURCES" altKey="text.address" size="50" maxlength="40" property="address"/></td>
           </tr>
           <!-- Codigo Postal -->
           <tr>
@@ -239,9 +240,9 @@ width: 20em;
           <tr>
             <td class="leftcell"><bean:message key="label.person.postCode" bundle="DEFAULT" /> <span class="redtxt">*</span></td>
             <td class="greytxt">
-            	<html:text size="4" maxlength="4" property="primaryAreaCode"/>
+            	<html:text bundle="HTMLALT_RESOURCES" altKey="text.primaryAreaCode" size="4" maxlength="4" property="primaryAreaCode"/>
             	 - 
-            	<html:text size="3" maxlength="3" property="secondaryAreaCode"/> (XXXX-XXX)
+            	<html:text bundle="HTMLALT_RESOURCES" altKey="text.secondaryAreaCode" size="3" maxlength="3" property="secondaryAreaCode"/> (XXXX-XXX)
             </td>
           </tr>
           <!-- Area do Codigo Postal -->
@@ -251,7 +252,7 @@ width: 20em;
           </tr>
           <tr>
             <td class="leftcell"><bean:message key="label.person.areaOfPostCode" bundle="DEFAULT" />  <span class="redtxt">*</span></td>
-            <td class="greytxt"><html:text size="25" maxlength="25" property="areaOfAreaCode"/></td>
+            <td class="greytxt"><html:text bundle="HTMLALT_RESOURCES" altKey="text.areaOfAreaCode" size="25" maxlength="25" property="areaOfAreaCode"/></td>
           </tr>
           <!-- Localidade de Residencia -->
           <tr>
@@ -260,7 +261,7 @@ width: 20em;
           </tr>
           <tr>
             <td class="leftcell"><bean:message key="label.person.place" bundle="DEFAULT" /> <span class="redtxt">*</span></td>
-            <td class="greytxt"><html:text size="25" maxlength="25" property="area"/></td>
+            <td class="greytxt"><html:text bundle="HTMLALT_RESOURCES" altKey="text.area" size="25" maxlength="25" property="area"/></td>
           </tr>
           <!-- Freguesia de Residencia -->
           <tr>
@@ -269,7 +270,7 @@ width: 20em;
           </tr>
           <tr>
             <td class="leftcell"><bean:message key="label.person.addressParish" bundle="DEFAULT" /> <span class="redtxt">*</span></td>
-            <td class="greytxt"><html:text size="30" maxlength="30" property="parishOfResidence"/></td>
+            <td class="greytxt"><html:text bundle="HTMLALT_RESOURCES" altKey="text.parishOfResidence" size="30" maxlength="30" property="parishOfResidence"/></td>
           </tr>
           <!-- Concelho de Residencia -->
           <tr>
@@ -278,7 +279,7 @@ width: 20em;
           </tr>
           <tr>
             <td class="leftcell"><bean:message key="label.person.addressMunicipality" bundle="DEFAULT" /> <span class="redtxt">*</span></td>
-            <td class="greytxt"><html:text size="30" maxlength="30" property="districtSubdivisionOfResidence"/></td>
+            <td class="greytxt"><html:text bundle="HTMLALT_RESOURCES" altKey="text.districtSubdivisionOfResidence" size="30" maxlength="30" property="districtSubdivisionOfResidence"/></td>
           </tr>
           <!-- Distrito de Residencia -->
           <tr>
@@ -287,7 +288,7 @@ width: 20em;
           </tr>
           <tr>
             <td class="leftcell"><bean:message key="label.person.addressDistrict" bundle="DEFAULT" /> <span class="redtxt">*</span></td>
-            <td class="greytxt"><html:text size="30" maxlength="30" property="districtOfResidence"/></td>
+            <td class="greytxt"><html:text bundle="HTMLALT_RESOURCES" altKey="text.districtOfResidence" size="30" maxlength="30" property="districtOfResidence"/></td>
           </tr>
 		</table>
 		<br />
@@ -307,7 +308,7 @@ width: 20em;
           </tr>
           <tr>
             <td class="leftcell"><bean:message key="label.person.telephone" bundle="DEFAULT" /> <span class="redtxt">*</span></td>
-            <td class="greytxt"><html:text size="9" maxlength="9" property="phone"/></td>
+            <td class="greytxt"><html:text bundle="HTMLALT_RESOURCES" altKey="text.phone" size="9" maxlength="9" property="phone"/></td>
           </tr>
           <!-- Telemovel -->
           <tr>
@@ -316,7 +317,7 @@ width: 20em;
           </tr>
           <tr>
             <td class="leftcell"><bean:message key="label.person.mobilePhone" bundle="DEFAULT" /></td>
-            <td class="greytxt"><html:text size="9" maxlength="9" property="mobile"/></td>
+            <td class="greytxt"><html:text bundle="HTMLALT_RESOURCES" altKey="text.mobile" size="9" maxlength="9" property="mobile"/></td>
           </tr>
           <!-- E-Mail -->
           <tr>
@@ -325,28 +326,28 @@ width: 20em;
           </tr>
           <tr>
             <td class="leftcell"><bean:message key="label.person.email" bundle="DEFAULT" /></td>
-            <td class="greytxt"><html:text size="40" maxlength="50" property="email"/> 
+            <td class="greytxt"><html:text bundle="HTMLALT_RESOURCES" altKey="text.email" size="40" maxlength="50" property="email"/> 
             					<bean:message key="label.person.availableEmail" bundle="DEFAULT" />
-            					<html:checkbox property="availableEmail"/></td>            
+            					<html:checkbox bundle="HTMLALT_RESOURCES" altKey="checkbox.availableEmail" property="availableEmail"/></td>            
           </tr>
           <!-- WebPage -->
           <tr>
             <td class="leftcell"><bean:message key="label.person.webSite" bundle="DEFAULT" /></td>
-            <td class="greytxt"><html:text size="40" maxlength="200" property="webAddress"/> 
+            <td class="greytxt"><html:text bundle="HTMLALT_RESOURCES" altKey="text.webAddress" size="40" maxlength="200" property="webAddress"/> 
 					            <bean:message key="label.person.availableWebSite" bundle="DEFAULT" />
-					            <html:checkbox property="availableWebAdress"/></td>
+					            <html:checkbox bundle="HTMLALT_RESOURCES" altKey="checkbox.availableWebAdress" property="availableWebAdress"/></td>
           </tr>
           <!-- Photo -->
           <tr>
             <td class="leftcell"><bean:message key="label.person.photo" bundle="DEFAULT" /></td>
           	<td class="greytxt">          		
           		<bean:message key="label.person.availablePhoto" bundle="DEFAULT" />
-          		<html:checkbox property="availablePhoto"/>
+          		<html:checkbox bundle="HTMLALT_RESOURCES" altKey="checkbox.availablePhoto" property="availablePhoto"/>
           	</td>
           </tr>
        </logic:present>
        	</table>
 
        	<br/>
-		<p align="center"><html:submit styleClass="inputbutton">Continuar</html:submit></p>
+		<p align="center"><html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton">Continuar</html:submit></p>
 </html:form>

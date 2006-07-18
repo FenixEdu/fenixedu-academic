@@ -1,5 +1,6 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <h2><bean:message key="label.masterDegree.administrativeOffice.marksConfirmation" /></h2>
@@ -25,15 +26,15 @@
 	<bean:define id="teacher" name="infoSiteEnrolmentEvaluation" property="infoTeacher"/>
 	<bean:define id="availableEvaluationDate" name="infoSiteEnrolmentEvaluation" property="lastEvaluationDate"/>
 	<html:form action="/marksConfirmation">
-		<html:hidden property="method" value="confirm" />
-		<html:hidden property="courseId" value="<%= pageContext.findAttribute("courseId").toString() %>" />
-		<html:hidden property="objectCode" value="<%= pageContext.findAttribute("objectCode").toString() %>" />
-		<html:hidden property="degreeId" value="<%= pageContext.findAttribute("degreeId").toString() %>" />
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="confirm" />
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.courseId" property="courseId" value="<%= pageContext.findAttribute("courseId").toString() %>" />
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.objectCode" property="objectCode" value="<%= pageContext.findAttribute("objectCode").toString() %>" />
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.degreeId" property="degreeId" value="<%= pageContext.findAttribute("degreeId").toString() %>" />
 	    <table>        
 			<tr>
-				<td class="listClasses-header"><bean:message key="label.number" /></td>
-				<td class="listClasses-header"><bean:message key="label.name" /></td>
-				<td class="listClasses-header"><bean:message key="label.mark" /></td>
+				<th class="listClasses-header"><bean:message key="label.number" /></th>
+				<th class="listClasses-header"><bean:message key="label.name" /></th>
+				<th class="listClasses-header"><bean:message key="label.mark" /></th>
 			</tr>    				
 			<bean:size id="size" name="infoSiteEnrolmentEvaluation" property="enrolmentEvaluations" />	
 	    	<logic:iterate id="enrolmentEvaluation" name="infoSiteEnrolmentEvaluation" property="enrolmentEvaluations" type="net.sourceforge.fenixedu.dataTransferObject.InfoEnrolmentEvaluation">
@@ -75,7 +76,7 @@
 			</tr>
 	    </table>
 		<br /><br />
-	 	<html:submit styleClass="inputbutton">
+	 	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton">
 			<bean:message key="button.confirm"/>
 	  	</html:submit>
 	</html:form>

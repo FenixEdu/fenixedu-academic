@@ -2,6 +2,7 @@
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.TagLib.sop.v3.TimeTableType" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/app.tld" prefix="app" %>
@@ -32,24 +33,24 @@
 		<bean:define id="infoRoom" name="viewRoomSchedule" property="infoRoom"/>		
         <table width="100%">
         	<tr>
-            	<td class="listClasses-header">
+            	<th class="listClasses-header">
                 	<bean:message key="property.room.name"/>
-                </td>
-				<td class="listClasses-header">
+                </th>
+				<th class="listClasses-header">
 					<bean:message key="property.room.type"/>
-				</td>
-				<td class="listClasses-header">
+				</th>
+				<th class="listClasses-header">
 					<bean:message key="property.room.building"/>
-				</td>
-				<td class="listClasses-header">
+				</th>
+				<th class="listClasses-header">
 					<bean:message key="property.room.floor"/>
-				</td>
-				<td class="listClasses-header">
+				</th>
+				<th class="listClasses-header">
 					<bean:message key="property.room.capacity.normal"/>
-				</td>
-				<td class="listClasses-header">
+				</th>
+				<th class="listClasses-header">
 					<bean:message key="property.room.capacity.exame"/>
-				</td>
+				</th>
 			</tr>
 			<tr>
 				<td class="listClasses">

@@ -5,16 +5,16 @@
 
 <div id="version">
 	<html:form action="/changeLocaleTo.do">
-		<html:hidden property="windowLocation" value=""/>
-		<html:hidden property="newCountry" value="<%= net.sourceforge.fenixedu._development.PropertiesManager.getProperty("language") %>"/>
-		<html:hidden property="newCountry" value="<%= net.sourceforge.fenixedu._development.PropertiesManager.getProperty("location") %>"/>
-		<html:hidden property="newVariant" value="<%= net.sourceforge.fenixedu._development.PropertiesManager.getProperty("variant") %>"/>
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.windowLocation" property="windowLocation" value=""/>
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.newCountry" property="newCountry" value="<%= net.sourceforge.fenixedu._development.PropertiesManager.getProperty("language") %>"/>
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.newCountry" property="newCountry" value="<%= net.sourceforge.fenixedu._development.PropertiesManager.getProperty("location") %>"/>
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.newVariant" property="newVariant" value="<%= net.sourceforge.fenixedu._development.PropertiesManager.getProperty("variant") %>"/>
 
 		<logic:notEqual name="<%= org.apache.struts.Globals.LOCALE_KEY %>" property="language" value="pt">
 			<input type="image"
 					src="<%= request.getContextPath() %>/images/flags/pt.gif"
 					alt="<bean:message key="pt" bundle="IMAGE_RESOURCES" />"
-					title="Português"
+					title="Portuguï¿½s"
 					value="PT"
 					onclick="this.form.newLanguage.value='pt';this.form.newCountry.value='PT';this.form.newVariant.value='<%= net.sourceforge.fenixedu._development.PropertiesManager.getProperty("variant") %>';this.form.windowLocation.value=window.location;this.form.submit();"/>
 			<input class="activeflag"
@@ -29,7 +29,7 @@
 			<input class="activeflag"
 					type="image" src="<%= request.getContextPath() %>/images/flags/pt.gif"
 					alt="<bean:message key="pt" bundle="IMAGE_RESOURCES" />"
-					title="Português"
+					title="Portuguï¿½s"
 					value="PT"
 					onclick="this.form.newLanguage.value='pt';this.form.newCountry.value='PT';this.form.newVariant.value='<%= net.sourceforge.fenixedu._development.PropertiesManager.getProperty("variant") %>';this.form.windowLocation.value=window.location;this.form.submit();"/>
 			<input type="image" src="<%= request.getContextPath() %>/images/flags/en.gif"

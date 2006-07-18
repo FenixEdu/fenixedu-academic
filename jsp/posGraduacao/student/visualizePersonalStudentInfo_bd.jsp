@@ -1,11 +1,11 @@
 <%@ page language="java" %>
-<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
+<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%><html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ page import="net.sourceforge.fenixedu.util.Data" %>
 <%@ page import="java.util.Date" %>
  <h2><bean:message key="label.person.title.personalConsult" /></h2>
- <html:hidden property="page" value="1"/>
+ <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
  <br />
         <logic:present name="infoPerson">
 		<table width="100%" cellpadding="0" cellspacing="0">
@@ -87,7 +87,7 @@
 		</table>
 		<br />
 		<table width="100%" cellpadding="0" cellspacing="0">
-          <!-- Filiação -->
+          <!-- Filiaï¿½ï¿½o -->
           <tr>
           	<td class="infoop" width="25"><span class="emphasis-box">2</span></td>
           	<td class="infoop"><strong><bean:message key="label.person.title.filiation" /></strong></td>

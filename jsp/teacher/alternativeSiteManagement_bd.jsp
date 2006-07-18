@@ -1,6 +1,7 @@
 <%@ page language="java" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@page import="net.sourceforge.fenixedu.presentationTier.Action.messaging.ExecutionCourseAliasExpandingAction"%>
@@ -30,7 +31,7 @@
 	</td>
 	<td witdh="1px">
 	</td>
-	<td><html:text property="siteAddress" size="30"/>
+	<td><html:text bundle="HTMLALT_RESOURCES" altKey="text.siteAddress" property="siteAddress" size="30"/>
 	</td>
 	<td><span class="error" ><html:errors property="siteAddress"/></span>
 	</td>
@@ -40,10 +41,10 @@
 		<bean:message key="message.mailAddressCourse"/>	 
 	</td>
 	<td width="1px">
-		<html:radio property="dynamicMailDistribution" value="false"/>
+		<html:radio bundle="HTMLALT_RESOURCES" altKey="radio.dynamicMailDistribution" property="dynamicMailDistribution" value="false"/>
 	</td>
 	<td>  	  
-	  <html:text property="mail" size="30"/>
+	  <html:text bundle="HTMLALT_RESOURCES" altKey="text.mail" property="mail" size="30"/>
 	</td>
 	<td><span class="error" >
 	  <html:errors property="mail"/></span>
@@ -53,7 +54,7 @@
 	<td>
 	</td>
 	<td width="1px">
-		<html:radio property="dynamicMailDistribution" value="true"/>
+		<html:radio bundle="HTMLALT_RESOURCES" altKey="radio.dynamicMailDistribution" property="dynamicMailDistribution" value="true"/>
 	</td>
 	<td width="400px">
 	  	<%=ExecutionCourseAliasExpandingAction.emailAddressPrefix%><%=request.getParameter("objectCode")%>&#64;<%=TeacherAdministrationViewerDispatchAction.mailingListDomainConfiguration() %>	
@@ -84,7 +85,7 @@
 	<td width="200px" valign="top">
 		<bean:message key="message.initialStatement"/>
 	</td>	
-	<td><html:textarea name="bodyComponent" property="initialStatement" rows="10" cols="56"/> 
+	<td><html:textarea bundle="HTMLALT_RESOURCES" altKey="textarea.initialStatement" name="bodyComponent" property="initialStatement" rows="10" cols="56"/> 
 	</td>
 </tr>
 </table>
@@ -104,22 +105,22 @@
 	<td width="200px" valign="top">
 		<bean:message key="message.introduction"/>
 	</td>	
-	<td><html:textarea name="bodyComponent" property="introduction" rows="10" cols="56"/></td> 
+	<td><html:textarea bundle="HTMLALT_RESOURCES" altKey="textarea.introduction" name="bodyComponent" property="introduction" rows="10" cols="56"/></td> 
 </tr>
 </table>
 <h3><table>
-<html:hidden property="method" value="editCustomizationOptions"/>
-<html:hidden property="page" value="1"/>
-<html:hidden  property="objectCode" value="<%= pageContext.findAttribute("objectCode").toString() %>" />
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="editCustomizationOptions"/>
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.objectCode"  property="objectCode" value="<%= pageContext.findAttribute("objectCode").toString() %>" />
 
 <tr align="center">	
 	<td>
-	<html:submit styleClass="inputbutton" property="confirm">
+	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.confirm" styleClass="inputbutton" property="confirm">
 		<bean:message key="button.save"/>
 	</html:submit>
 	</td>
 	<td>
-		<html:reset styleClass="inputbutton">
+		<html:reset bundle="HTMLALT_RESOURCES" altKey="reset.reset" styleClass="inputbutton">
 		<bean:message key="label.clear"/>
 	</html:reset>
 	</td>

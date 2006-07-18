@@ -5,6 +5,7 @@
 <%@ taglib uri="/WEB-INF/c.tld" prefix="c"%>
 
 <ft:tilesView definition="facultyAdmOffice.masterPage" attributeName="body-inline">
+	<f:loadBundle basename="resources/HtmlAltResources" var="htmlAltBundle"/>
 
 	<f:loadBundle basename="resources/DepartmentAdmOfficeResources" var="bundle"/>
 	
@@ -59,10 +60,10 @@
 		
 	<h:outputText value="<br/>" escape="false" />
 	<h:panelGrid columns="4">
-		<h:commandButton action="#{facultyAdmOfficeFunctionsManagementBackingBean.associateNewFunction}" value="#{bundle['label.confirme']}" styleClass="inputbutton"/>			
-		<h:commandButton action="alterUnit" immediate="true" value="#{bundle['alter.unit.button']}" styleClass="inputbutton"/>						
-		<h:commandButton action="alterFunction" immediate="true" value="#{bundle['alter.function.button']}" styleClass="inputbutton"/>								
-		<h:commandButton action="success" immediate="true" value="#{bundle['button.cancel']}" styleClass="inputbutton"/>
+		<h:commandButton alt="#{htmlAltBundle['commandButton.confirme']}" action="#{facultyAdmOfficeFunctionsManagementBackingBean.associateNewFunction}" value="#{bundle['label.confirme']}" styleClass="inputbutton"/>			
+		<h:commandButton alt="#{htmlAltBundle['commandButton.button']}" action="alterUnit" immediate="true" value="#{bundle['alter.unit.button']}" styleClass="inputbutton"/>						
+		<h:commandButton alt="#{htmlAltBundle['commandButton.button']}" action="alterFunction" immediate="true" value="#{bundle['alter.function.button']}" styleClass="inputbutton"/>								
+		<h:commandButton alt="#{htmlAltBundle['commandButton.cancel']}" action="success" immediate="true" value="#{bundle['button.cancel']}" styleClass="inputbutton"/>
 	</h:panelGrid>
 	
 	</h:form>

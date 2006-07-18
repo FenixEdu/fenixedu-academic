@@ -1,5 +1,6 @@
 <%@ page language="java"%>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/app.tld" prefix="app"%>
@@ -60,9 +61,9 @@
 	key="public.degree.information.label.semester.abbr" /> <bean:write
 	name="execPeriod" property="semester" /> </span></h2>
 
-<html:hidden property="<%SessionConstants.EXECUTION_PERIOD_OID%>"
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.<%SessionConstants.EXECUTION_PERIOD_OID%>" property="<%SessionConstants.EXECUTION_PERIOD_OID%>"
 	value="<%= ""+request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID)%>" />
-<html:hidden property="page" value="1" />
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1" />
 
 <bean:define id="lessonList" name="component" property="lessons" />
 

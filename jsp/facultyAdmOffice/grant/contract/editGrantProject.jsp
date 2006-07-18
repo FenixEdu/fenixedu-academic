@@ -1,5 +1,5 @@
 <%@ page language="java" %>
-<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
+<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%><html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 
@@ -14,12 +14,12 @@
 	</span><br/>
 	</logic:messagesPresent>
 
-	<html:hidden property="method" value="doEdit"/>
-	<html:hidden property="page" value="1"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="doEdit"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
 
 	<%-- grant project --%>
-	<html:hidden property="idInternal"/>
-	<html:hidden property="ojbConcreteClass"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.idInternal" property="idInternal"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.ojbConcreteClass" property="ojbConcreteClass"/>
 
 	<table>
 		<tr>
@@ -27,7 +27,7 @@
 				<bean:message key="label.grant.project.number"/>:&nbsp;
 			</td>
 			<td>
-				<html:text property="number"/><bean:message key="label.requiredfield"/>
+				<html:text bundle="HTMLALT_RESOURCES" altKey="text.number" property="number"/><bean:message key="label.requiredfield"/>
 			</td>
 		</tr>
 		<tr>
@@ -35,7 +35,7 @@
 				<bean:message key="label.grant.project.designation"/>:&nbsp;
 			</td>
 			<td>
-				<html:text property="designation" size="80"/><bean:message key="label.requiredfield"/>
+				<html:text bundle="HTMLALT_RESOURCES" altKey="text.designation" property="designation" size="80"/><bean:message key="label.requiredfield"/>
 			</td>
 		</tr>
 		<tr>
@@ -43,7 +43,7 @@
 				<bean:message key="label.grant.project.responsibleTeacher.number"/>:&nbsp;
 			</td>
 			<td>
-				<html:text property="responsibleTeacherNumber" size="10"/><bean:message key="label.requiredfield"/>&nbsp;
+				<html:text bundle="HTMLALT_RESOURCES" altKey="text.responsibleTeacherNumber" property="responsibleTeacherNumber" size="10"/><bean:message key="label.requiredfield"/>&nbsp;
 				<html:link page='<%= "/showTeachersList.do?method=showForm" %>' target="_blank">
 					<bean:message key="link.teacher.showList"/>
 				</html:link>
@@ -54,7 +54,7 @@
 				<bean:message key="label.grant.project.grantCostCenter.number"/>:&nbsp;
 			</td>
 			<td>
-				<html:text property="grantCostCenterNumber"/><bean:message key="label.requiredfield"/>
+				<html:text bundle="HTMLALT_RESOURCES" altKey="text.grantCostCenterNumber" property="grantCostCenterNumber"/><bean:message key="label.requiredfield"/>
 				<html:link page='<%= "/showPaymentEntitiesList.do?method=showForm&amp;costcenter=1" %>' target="_blank">
 					<bean:message key="link.grantcostcenter.showList"/>
 				</html:link>
@@ -66,7 +66,7 @@
 		<tr>
 			<td>
 				<%-- Save button (edit/create) --%>
-				<html:submit styleClass="inputbutton">
+				<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton">
 					<bean:message key="button.save"/>
 				</html:submit>
 </html:form>
@@ -74,8 +74,8 @@
 			<td>
 				<html:form action="/manageGrantProject" style="display:inline">
 					<%-- button cancel --%>
-					<html:hidden property="method" value="prepareManageGrantProject"/>
-					<html:submit styleClass="inputbutton" style="display:inline">
+					<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="prepareManageGrantProject"/>
+					<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton" style="display:inline">
 						<bean:message key="button.cancel"/>
 					</html:submit>
 				</html:form>

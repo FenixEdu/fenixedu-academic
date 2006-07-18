@@ -1,5 +1,5 @@
 <%@ page language="java" %>
-<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
+<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%><html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ page import="java.util.ArrayList" %>
@@ -24,8 +24,8 @@
 </center>
 
 <html:form action="/editReimbursementGuideSituation.do?method=edit">
-	<html:hidden property="page" value="1"/>
-	<html:hidden property="id" />
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.id" property="id" />
 	
 	<table>
 		
@@ -34,7 +34,7 @@
 				<bean:message key="label.masterDegree.administrativeOffice.guide.reimbursementGuide.newSituation" />
       		</td>
       		<td>
-				<html:select property="situation">
+				<html:select bundle="HTMLALT_RESOURCES" altKey="select.situation" property="situation">
 					<html:option value="">
 						<bean:message key="label.choose.one"/>
 					</html:option>						
@@ -55,13 +55,13 @@
 				<bean:message key="label.masterDegree.administrativeOffice.guide.reimbursementGuide.date" />
       		</td>
       		<td>				
-				<html:select property="officialDateDay">
+				<html:select bundle="HTMLALT_RESOURCES" altKey="select.officialDateDay" property="officialDateDay">
 					<html:options collection="<%= SessionConstants.MONTH_DAYS_KEY %>" property="value" labelProperty="label"/>
 				</html:select>
-				<html:select property="officialDateMonth">
+				<html:select bundle="HTMLALT_RESOURCES" altKey="select.officialDateMonth" property="officialDateMonth">
 					<html:options collection="<%= SessionConstants.MONTH_LIST_KEY %>" property="value" labelProperty="label"/>
 				</html:select>
-				<html:select property="officialDateYear">
+				<html:select bundle="HTMLALT_RESOURCES" altKey="select.officialDateYear" property="officialDateYear">
 					<html:options collection="<%= SessionConstants.YEARS_KEY %>" property="value" labelProperty="label"/>
 				</html:select>				
 			</td>          
@@ -71,7 +71,7 @@
 				<bean:message key="label.masterDegree.administrativeOffice.guide.reimbursementGuide.remarks" />
       		</td>
       		<td>	
-				<html:textarea property="remarks"/>
+				<html:textarea bundle="HTMLALT_RESOURCES" altKey="textarea.remarks" property="remarks"/>
 			</td>				
 		</tr>		
 		<tr>
@@ -79,7 +79,7 @@
 		</tr>		
 		<tr>
 			<td colspan="2" align="center" >
-				<html:submit styleClass="inputbutton">				
+				<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton">				
 					<bean:message key="button.submit.masterDegree.reimbursementGuide.edit"/>
 				</html:submit>
 			</td>		

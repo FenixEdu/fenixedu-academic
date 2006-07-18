@@ -1,6 +1,7 @@
 <%@ page language="java" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <table width="100%">
@@ -23,10 +24,10 @@
 </logic:equal>
 <table>
 	<tr>
-		<td width="150" class="listClasses-header"><bean:message key="label.teacherNumber" /></td>
-		<td width="250" class="listClasses-header"><bean:message key="label.name" /></td>			
+		<th width="150" class="listClasses-header"><bean:message key="label.teacherNumber" /></th>
+		<th width="250" class="listClasses-header"><bean:message key="label.name" /></th>			
 		<logic:equal name="isResponsible" value="true">
-			<td width="250" class="listClasses-header"><bean:message key="message.edit" /></td>    
+			<th width="250" class="listClasses-header"><bean:message key="message.edit" /></th>    
 		</logic:equal>
 	</tr>	
 	<logic:iterate id="infoTeacher" name="teachersList">

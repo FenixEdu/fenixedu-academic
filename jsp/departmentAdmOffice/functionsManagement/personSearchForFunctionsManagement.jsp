@@ -5,6 +5,7 @@
 <%@ taglib uri="/WEB-INF/c.tld" prefix="c"%>
 
 <ft:tilesView definition="departmentAdmOffice.masterPage" attributeName="body-inline">
+	<f:loadBundle basename="resources/HtmlAltResources" var="htmlAltBundle"/>
 	
 	<f:loadBundle basename="resources/DepartmentAdmOfficeResources" var="bundle"/>
 				
@@ -13,8 +14,8 @@
   	    <h:outputText value="<p><strong>#{bundle['label.find.person.name']}</strong></p>" escape="false"/>
 		<h:panelGrid columns="3" styleClass="infoop">			
 			<h:outputText value="#{bundle['label.name']}:" escape="false"/>
-			<h:inputText id="name" required="true" size="30" value="#{functionsManagementBackingBean.personName}"/>
-			<h:commandButton action="#{functionsManagementBackingBean.searchPersonByName}" styleClass="inputbutton" value="#{bundle['button.searchPerson']}"/>
+			<h:inputText alt="#{htmlAltBundle['inputText.personName']}" id="name" required="true" size="30" value="#{functionsManagementBackingBean.personName}"/>
+			<h:commandButton alt="#{htmlAltBundle['commandButton.searchPerson']}" action="#{functionsManagementBackingBean.searchPersonByName}" styleClass="inputbutton" value="#{bundle['button.searchPerson']}"/>
 		</h:panelGrid>		
 		<h:message for="name" styleClass="error"/>
 	</h:form>
@@ -29,8 +30,8 @@
 				<f:selectItems value="#{functionsManagementBackingBean.personTypes}"/>
 			</fc:selectOneMenu>
 	    	<h:outputText value="#{bundle['label.number']}:" escape="false"/>	    		    				
-			<h:inputText id="number" required="true" size="5" value="#{functionsManagementBackingBean.personNumber}"/>			
-			<h:commandButton action="#{functionsManagementBackingBean.searchPersonByNumber}" styleClass="inputbutton" value="#{bundle['button.searchPerson']}"/>
+			<h:inputText alt="#{htmlAltBundle['inputText.personNumber']}" id="number" required="true" size="5" value="#{functionsManagementBackingBean.personNumber}"/>			
+			<h:commandButton alt="#{htmlAltBundle['commandButton.searchPerson']}" action="#{functionsManagementBackingBean.searchPersonByNumber}" styleClass="inputbutton" value="#{bundle['button.searchPerson']}"/>
 		</h:panelGrid>
 		<h:message for="number" styleClass="error"/>
 	</h:form>	

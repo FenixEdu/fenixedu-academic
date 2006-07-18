@@ -1,9 +1,9 @@
-<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %><html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <h2>Gest&atilde;o de Exames</h2>
 <p>Seleccione a op&ccedil;&atilde;o pretendida para criar, editar ou visualisar a calendariza&ccedil&atilde;o dos exames. <br />
-Pode alterar em baixo o período de execu&ccedil&atilde;o seleccionado.</p>
+Pode alterar em baixo o perï¿½odo de execu&ccedil&atilde;o seleccionado.</p>
 <span class="error"><html:errors /></span>
 <html:form action="/mainExamsNew">
 <table border="0" cellspacing="0" cellpadding="0">
@@ -13,9 +13,9 @@ Pode alterar em baixo o período de execu&ccedil&atilde;o seleccionado.</p>
   </tr>
 </table>
 <br />
-<html:hidden property="method" value="choose"/>
-<html:hidden property="page" value="1"/>
-<html:submit styleClass="inputbutton">
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="choose"/>
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
+<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton">
 <bean:message key="label.choose"/>
 </html:submit>
 </html:form>
@@ -23,14 +23,14 @@ Pode alterar em baixo o período de execu&ccedil&atilde;o seleccionado.</p>
 <br/>
 
 <html:form action="/publishExams">
-	<html:hidden property="method" value="switchPublishedState"/>
-	<html:hidden property="page" value="1"/>
-	<html:hidden property="<%= net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants.EXECUTION_PERIOD_OID %>"
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="switchPublishedState"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
+	<html:hidden alt="<%= net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants.EXECUTION_PERIOD_OID %>" property="<%= net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants.EXECUTION_PERIOD_OID %>"
 				 value="<%= pageContext.findAttribute("executionPeriodOID").toString() %>"/>
 
 	<bean:message key="publish.exams.map" />
 	<br/>
-	<html:submit styleClass="inputbutton">
+	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton">
 		<bean:message key="label.change.published.state"/>
 	</html:submit>
 	<br />

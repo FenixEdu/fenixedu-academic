@@ -1,5 +1,5 @@
 <%@ page language="java" %>
-<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %><html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
@@ -64,19 +64,19 @@
 	</h2>
 
 	<html:form action="/prepareConsultCurricularPlanNew.do" method="GET" >
-		<html:hidden property="<%= SessionConstants.EXECUTION_PERIOD_OID %>" value="<%= ""+request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID)%>" />
-		<html:hidden property="degreeID" value="<%= ""+request.getAttribute("degreeID")%>" />
-		<html:hidden property="degreeCurricularPlanID" value="<%= pageContext.findAttribute("degreeCurricularPlanID").toString() %>" />	
-		<html:hidden property="index" value="<%= ""+ request.getAttribute("index")%>"/>
-		<html:hidden property="page" value="1"/>
-		<html:hidden property="method" value="select"/>
-		<html:hidden property="<%= SessionConstants.EXECUTION_DEGREE%>" value="<%= "" + request.getAttribute(SessionConstants.EXECUTION_DEGREE)%>"/>		
+		<html:hidden alt="<%= SessionConstants.EXECUTION_PERIOD_OID %>" property="<%= SessionConstants.EXECUTION_PERIOD_OID %>" value="<%= ""+request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID)%>" />
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.degreeID" property="degreeID" value="<%= ""+request.getAttribute("degreeID")%>" />
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.degreeCurricularPlanID" property="degreeCurricularPlanID" value="<%= pageContext.findAttribute("degreeCurricularPlanID").toString() %>" />	
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.index" property="index" value="<%= ""+ request.getAttribute("index")%>"/>
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="select"/>
+		<html:hidden alt="<%= SessionConstants.EXECUTION_DEGREE%>" property="<%= SessionConstants.EXECUTION_DEGREE%>" value="<%= "" + request.getAttribute(SessionConstants.EXECUTION_DEGREE)%>"/>		
 		
 		<table border="0" cellspacing="2" cellpadding="0">			
 			<tr>
 				<td><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.executionYear"/>:</td>
 				<td>
-					<html:select property="indice" size="1" onchange="this.form.submit();">
+					<html:select bundle="HTMLALT_RESOURCES" altKey="select.indice" property="indice" size="1" onchange="this.form.submit();">
 						<html:options property="value" labelProperty="label" collection="<%= SessionConstants.LABELLIST_EXECUTIONPERIOD%>"/>
 						<bean:define id="indiceID" name="chooseContextDegreeForm" property="indice"/>
 					</html:select>
@@ -85,7 +85,7 @@
 			<tr>
 				<td><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.curricularYear"/>:</td>
 				<td>
-					<html:select property="curYear" size="1" onchange="this.form.submit();">
+					<html:select bundle="HTMLALT_RESOURCES" altKey="select.curYear" property="curYear" size="1" onchange="this.form.submit();">
 						<html:options collection="curricularYearList" property="value" labelProperty="label"/>
 					</html:select>				
 				</td>

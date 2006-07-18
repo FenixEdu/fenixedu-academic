@@ -1,5 +1,5 @@
 <%@ page language="java" %>
-<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %><html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
@@ -10,12 +10,12 @@
 <span class="error"><html:errors/></span>
 <br />
 <html:form action="/courseEnrolmentWithoutRulesManagerDA">
-	<html:hidden property="method" value="readCoursesToEnroll"/>
-	<html:hidden property="page" value="2"/>
-	<html:hidden property="studentNumber" />
-	<html:hidden property="executionPeriod"/>
-	<html:hidden property="degreeType"/>
-	<html:hidden property="userType"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="readCoursesToEnroll"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="2"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.studentNumber" property="studentNumber" />
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.executionPeriod" property="executionPeriod"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.degreeType" property="degreeType"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.userType" property="userType"/>
 
 	<table border="0">
 		<!-- Degrees -->
@@ -24,7 +24,7 @@
 		</tr>
 		<tr>
 			<td colspan="2" align="left">
-				<html:select property="executionDegree" size="1">
+				<html:select bundle="HTMLALT_RESOURCES" altKey="select.executionDegree" property="executionDegree" size="1">
 					<html:options collection="infoExecutionDegreesNamesList" property="value" labelProperty="label"/>
 				</html:select>
 			</td>
@@ -41,7 +41,7 @@
 					<logic:iterate id="year" name="yearsList">
 						<tr>
 							<td>
-								<html:multibox property="curricularYears">
+								<html:multibox bundle="HTMLALT_RESOURCES" altKey="multibox.curricularYears" property="curricularYears">
 									<bean:write name="year"/>
 								</html:multibox>
 							</td>
@@ -58,7 +58,7 @@
 					<logic:iterate id="semester" name="semestersList">
 						<tr>
 							<td>
-								<html:multibox property="curricularSemesters">
+								<html:multibox bundle="HTMLALT_RESOURCES" altKey="multibox.curricularSemesters" property="curricularSemesters">
 									<bean:write name="semester"/>
 								</html:multibox>
 							</td>
@@ -73,13 +73,13 @@
 	</table>	
 	<br/>
 	<br/>
-	<html:submit styleClass="inputbutton">
+	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton">
 		<bean:message key="button.submit.degree.type.and.student"/>
 	</html:submit>
-	<html:reset styleClass="inputbutton">
+	<html:reset bundle="HTMLALT_RESOURCES" altKey="reset.reset" styleClass="inputbutton">
 		<bean:message key="button.clean"/>
 	</html:reset>
-	<html:cancel styleClass="inputbutton" onclick="this.form.method.value='readEnrollments';this.form.submit();">
+	<html:cancel bundle="HTMLALT_RESOURCES" altKey="cancel.cancel" styleClass="inputbutton" onclick="this.form.method.value='readEnrollments';this.form.submit();">
 		<bean:message key="button.cancel"/>
 	</html:cancel>
 </html:form>

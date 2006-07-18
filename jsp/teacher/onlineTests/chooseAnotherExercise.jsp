@@ -1,5 +1,6 @@
 <%@ page language="java"%>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <h2><bean:message key="title.showAvailableQuestionsForChange" /></h2>
@@ -27,23 +28,23 @@
 		<br />
 		<br />
 		<html:form action="/testsManagement">
-			<html:hidden property="page" value="0" />
-			<html:hidden property="method" value="changeStudentTestQuestion" />
-			<html:hidden property="distributedTestCode" value="<%=(pageContext.findAttribute("distributedTestCode")).toString()%>" />
-			<html:hidden property="objectCode" value="<%=(pageContext.findAttribute("objectCode")).toString()%>" />
-			<html:hidden property="studentCode" value="<%=(pageContext.findAttribute("studentCode")).toString()%>" />
-			<html:hidden property="questionCode" value="<%=(pageContext.findAttribute("questionCode")).toString()%>" />
+			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="0" />
+			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="changeStudentTestQuestion" />
+			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.distributedTestCode" property="distributedTestCode" value="<%=(pageContext.findAttribute("distributedTestCode")).toString()%>" />
+			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.objectCode" property="objectCode" value="<%=(pageContext.findAttribute("objectCode")).toString()%>" />
+			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.studentCode" property="studentCode" value="<%=(pageContext.findAttribute("studentCode")).toString()%>" />
+			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.questionCode" property="questionCode" value="<%=(pageContext.findAttribute("questionCode")).toString()%>" />
 			<logic:present name="deleteVariation">
-				<html:hidden property="deleteVariation" value="<%=(pageContext.findAttribute("deleteVariation")).toString()%>" />
+				<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.deleteVariation" property="deleteVariation" value="<%=(pageContext.findAttribute("deleteVariation")).toString()%>" />
 			</logic:present>
-			<html:hidden property="studentsType" value="<%=(pageContext.findAttribute("studentsType")).toString()%>" />
-			<html:hidden property="changesType" value="<%=(pageContext.findAttribute("changesType")).toString()%>" />
+			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.studentsType" property="studentsType" value="<%=(pageContext.findAttribute("studentsType")).toString()%>" />
+			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.changesType" property="changesType" value="<%=(pageContext.findAttribute("changesType")).toString()%>" />
 			<table>
 				<tr>
-					<td class="listClasses-header"><bean:message key="label.description" /></td>
-					<td class="listClasses-header"><bean:message key="label.test.materiaPrincipal" /></td>
-					<td class="listClasses-header"><bean:message key="label.test.difficulty" /></td>
-					<td width="90" class="listClasses-header"><bean:message key="label.test.quantidadeExercicios" /></td>
+					<th class="listClasses-header"><bean:message key="label.description" /></th>
+					<th class="listClasses-header"><bean:message key="label.test.materiaPrincipal" /></th>
+					<th class="listClasses-header"><bean:message key="label.test.difficulty" /></th>
+					<th width="90" class="listClasses-header"><bean:message key="label.test.quantidadeExercicios" /></th>
 				</tr>
 				<logic:iterate id="metadata" name="infoMetadataList" type="net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoMetadata">
 					<tr>
@@ -73,11 +74,11 @@
 						</logic:equal>
 						<bean:define id="metadataCode" name="metadata" property="idInternal" />
 
-						<td><html:radio property="metadataCode" value="<%= metadataCode.toString() %>" /></td>
+						<td><html:radio bundle="HTMLALT_RESOURCES" altKey="radio.metadataCode" property="metadataCode" value="<%= metadataCode.toString() %>" /></td>
 					</tr>
 				</logic:iterate>
 			</table>
-			<center><html:submit styleClass="inputbutton">
+			<center><html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton">
 				<bean:message key="label.chosse.situation" />
 			</html:submit></center>
 		</html:form>

@@ -1,5 +1,6 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>	
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <logic:present name="infoStudentTestQuestionList">
@@ -33,11 +34,11 @@
 		<bean:define id="questionType" name="question" property="questionType.type"/>
 		
 		<logic:notEqual name="correctionType" value="studentCorrection">
-			<html:hidden property='<%="questionCode"+questionIndex%>' value="<%= questionCode.toString() %>"/>
-			<html:hidden property='<%="questionType"+questionIndex%>' value="<%= questionType.toString() %>"/>
+			<html:hidden alt='<%="questionCode"+questionIndex%>' property='<%="questionCode"+questionIndex%>' value="<%= questionCode.toString() %>"/>
+			<html:hidden alt='<%="questionType"+questionIndex%>' property='<%="questionType"+questionIndex%>' value="<%= questionType.toString() %>"/>
 			<%if(((Integer)questionType).intValue()==1 ){ %>
 				<bean:define id="optionShuffle" name="testQuestion" property="optionShuffle"/>
-				<html:hidden property='<%="optionShuffle"+questionIndex%>' value="<%= optionShuffle.toString() %>"/>
+				<html:hidden alt='<%="optionShuffle"+questionIndex%>' property='<%="optionShuffle"+questionIndex%>' value="<%= optionShuffle.toString() %>"/>
 			<% } %>
 		</logic:notEqual>
 		
@@ -193,7 +194,7 @@
 															<%if(((Integer)cardinality).intValue()==1 ){ %>  <%--CardinalityType.SINGLE--%>
 																<logic:equal name="isResponsed" value="true">
 																	<img src="<%= request.getContextPath() %>/images/radioButtonSelected.gif" alt="<bean:message key="radioButtonSelected" bundle="IMAGE_RESOURCES" />" />
-																	<html:hidden property="<%=questionValue%>" value="<%= indexOption.toString() %>"/>
+																	<html:hidden alt="<%=questionValue%>" property="<%=questionValue%>" value="<%= indexOption.toString() %>"/>
 																</logic:equal>
 																<logic:notEqual name="isResponsed" value="true">
 																	<img src="<%= request.getContextPath() %>/images/radioButtonUnselected.gif" alt="<bean:message key="radioButtonUnselected" bundle="IMAGE_RESOURCES" />" />
@@ -201,7 +202,7 @@
 															<%}else if(((Integer)cardinality).intValue()==2 ){ %>  <%--CardinalityType.MULTIPLE--%>
 																<logic:equal name="isResponsed" value="true">
 																	<img src="<%= request.getContextPath() %>/images/checkButtonSelected.gif" alt="<bean:message key="checkButtonSelected" bundle="IMAGE_RESOURCES" />" />
-																	<html:hidden property="<%=questionValue%>" value="<%= indexOption.toString() %>"/>
+																	<html:hidden alt="<%=questionValue%>" property="<%=questionValue%>" value="<%= indexOption.toString() %>"/>
 																</logic:equal>
 																<logic:notEqual name="isResponsed" value="true">
 																	<img src="<%= request.getContextPath() %>/images/checkButtonUnselected.gif" alt="<bean:message key="checkButtonUnselected" bundle="IMAGE_RESOURCES" />" />
@@ -234,19 +235,19 @@
 							</tr></td><tr><td>
 							<logic:equal name="checkDisable" value="true">
 									<logic:equal name="responsed" value="true">
-										<input type="radio" name="<%=questionValue%>" value="<%= indexOption.toString() %>" disabled="<%=new Boolean(checkDisable).booleanValue()%>" checked/>
-										<html:hidden property="<%=questionValue%>" value="<%= indexOption.toString() %>"/>
+										<input alt="<%=questionValue%>" type="radio" name="<%=questionValue%>" value="<%= indexOption.toString() %>" disabled="<%=new Boolean(checkDisable).booleanValue()%>" checked/>
+										<html:hidden alt="<%=questionValue%>" property="<%=questionValue%>" value="<%= indexOption.toString() %>"/>
 									</logic:equal>
 									<logic:equal name="responsed" value="false">
-										<input type="radio" name="<%=questionValue%>" value="<%= indexOption.toString() %>" disabled="<%=new Boolean(checkDisable).booleanValue()%>"/>
+										<input alt="<%=questionValue%>" type="radio" name="<%=questionValue%>" value="<%= indexOption.toString() %>" disabled="<%=new Boolean(checkDisable).booleanValue()%>"/>
 									</logic:equal>
 							</logic:equal>
 							<logic:equal name="checkDisable" value="false">
 									<logic:equal name="responsed" value="true">
-										<input type="radio" name="<%=questionValue%>" value="<%= indexOption.toString() %>" checked/>
+										<input alt="<%=questionValue%>" type="radio" name="<%=questionValue%>" value="<%= indexOption.toString() %>" checked/>
 									</logic:equal>
 									<logic:equal name="responsed" value="false">
-										<input type="radio" name="<%=questionValue%>" value="<%= indexOption.toString() %>"/>
+										<input alt="<%=questionValue%>" type="radio" name="<%=questionValue%>" value="<%= indexOption.toString() %>"/>
 									</logic:equal>
 							</logic:equal>
 						<%}else if(((Integer)cardinality).intValue()==2 ){ %>  <%--CardinalityType.MULTIPLE--%>
@@ -264,19 +265,19 @@
 							</tr></td><tr><td>
 							<logic:equal name="checkDisable" value="true">
 								<logic:equal name="responsed" value="true">
-									<input type="checkbox" name="<%=questionValue%>" value="<%= indexOption.toString()%>" disabled="<%=new Boolean(checkDisable).booleanValue()%>" checked>
-									<html:hidden property="<%=questionValue%>" value="<%= indexOption.toString() %>"/>
+									<input alt="<%=questionValue%>" type="checkbox" name="<%=questionValue%>" value="<%= indexOption.toString()%>" disabled="<%=new Boolean(checkDisable).booleanValue()%>" checked>
+									<html:hidden alt="<%=questionValue%>" property="<%=questionValue%>" value="<%= indexOption.toString() %>"/>
 								</logic:equal>
 								<logic:equal name="responsed" value="false">
-									<input type="checkbox" name="<%=questionValue%>" value="<%= indexOption.toString()%>" disabled="<%=new Boolean(checkDisable).booleanValue()%>">
+									<input alt="<%=questionValue%>" type="checkbox" name="<%=questionValue%>" value="<%= indexOption.toString()%>" disabled="<%=new Boolean(checkDisable).booleanValue()%>">
 								</logic:equal>
 							</logic:equal>
 							<logic:equal name="checkDisable" value="false">
 								<logic:equal name="responsed" value="true">
-									<input type="checkbox" name="<%=questionValue%>" value="<%= indexOption.toString()%>" checked>
+									<input alt="<%=questionValue%>" type="checkbox" name="<%=questionValue%>" value="<%= indexOption.toString()%>" checked>
 								</logic:equal>
 								<logic:equal name="responsed" value="false">
-									<input type="checkbox" name="<%=questionValue%>" value="<%= indexOption.toString()%>">
+									<input alt="<%=questionValue%>" type="checkbox" name="<%=questionValue%>" value="<%= indexOption.toString()%>">
 								</logic:equal>
 							</logic:equal>
 						<%}%>
@@ -286,20 +287,20 @@
 				<%}else{%> <%--QuestionType.STR or QuestionType.NUM --%>
 					<bean:define id="questionValue" name='<%="question"+ optionOrder%>'/>
 					<logic:equal name="checkDisable" value="true">
-						<html:hidden property='<%="question"+ optionOrder%>' value="<%= questionValue.toString() %>"/>
+						<html:hidden alt='<%="question"+ optionOrder%>' property='<%="question"+ optionOrder%>' value="<%= questionValue.toString() %>"/>
 					</logic:equal>
 					<logic:notEmpty name="question" property="questionType.render.maxchars">
 						<bean:define id="maxchars" name="question" property="questionType.render.maxchars"/>
 						<logic:notEmpty name="question" property="questionType.render.columns">
 							<bean:define id="cols" name="question" property="questionType.render.columns"/>
-							<html:text maxlength="<%=maxchars.toString()%>" size="<%=cols.toString()%>" value="<%=questionValue.toString()%>" property='<%="question"+ optionOrder%>' disabled="<%=new Boolean(checkDisable).booleanValue()%>"/>
+							<html:text alt="<%="question"+ optionOrder%>" maxlength="<%=maxchars.toString()%>" size="<%=cols.toString()%>" value="<%=questionValue.toString()%>" property='<%="question"+ optionOrder%>' disabled="<%=new Boolean(checkDisable).booleanValue()%>"/>
 						</logic:notEmpty>
 						<logic:empty name="question" property="questionType.render.columns">
 							<bean:define id="textBoxSize" value="<%=maxchars.toString()%>"/>
 							<logic:greaterThan name="textBoxSize" value="100" >
 								<bean:define id="textBoxSize" value="100"/>
 							</logic:greaterThan>
-							<html:text maxlength="<%=maxchars.toString()%>" size="<%=textBoxSize%>" value="<%=questionValue.toString()%>" property='<%="question"+ optionOrder%>' disabled="<%=new Boolean(checkDisable).booleanValue()%>"/>
+							<html:text alt="<%="question"+ optionOrder%>" maxlength="<%=maxchars.toString()%>" size="<%=textBoxSize%>" value="<%=questionValue.toString()%>" property='<%="question"+ optionOrder%>' disabled="<%=new Boolean(checkDisable).booleanValue()%>"/>
 						</logic:empty>	
 					</logic:notEmpty>	
 					<logic:empty name="question" property="questionType.render.maxchars">
@@ -307,20 +308,20 @@
 							<bean:define id="rows" name="question" property="questionType.render.rows"/>
 							<logic:notEmpty name="question" property="questionType.render.columns">
 								<bean:define id="cols" name="question" property="questionType.render.columns"/>
-								<html:textarea rows="<%=rows.toString()%>" cols="<%=cols.toString()%>" value="<%=questionValue.toString()%>" property='<%="question"+ optionOrder%>' disabled="<%=new Boolean(checkDisable).booleanValue()%>"/>
+								<html:textarea alt="<%="question"+ optionOrder%>" rows="<%=rows.toString()%>" cols="<%=cols.toString()%>" value="<%=questionValue.toString()%>" property='<%="question"+ optionOrder%>' disabled="<%=new Boolean(checkDisable).booleanValue()%>"/>
 							</logic:notEmpty>
 							<logic:empty name="question" property="questionType.render.columns">
 
-								<html:textarea rows="<%=rows.toString()%>" value="<%=questionValue.toString()%>" property='<%="question"+ optionOrder%>' disabled="<%=new Boolean(checkDisable).booleanValue()%>"/>
+								<html:textarea alt="<%="question"+ optionOrder%>" rows="<%=rows.toString()%>" value="<%=questionValue.toString()%>" property='<%="question"+ optionOrder%>' disabled="<%=new Boolean(checkDisable).booleanValue()%>"/>
 							</logic:empty>
 						</logic:notEmpty>
 						<logic:empty name="question" property="questionType.render.rows">
 							<logic:notEmpty name="question" property="questionType.render.columns">
 								<bean:define id="cols" name="question" property="questionType.render.columns"/>
-								<html:textarea cols="<%=cols.toString()%>" value="<%=questionValue.toString()%>" property='<%="question"+ optionOrder%>' disabled="<%=new Boolean(checkDisable).booleanValue()%>"/>
+								<html:textarea alt="<%="question"+ optionOrder%>" cols="<%=cols.toString()%>" value="<%=questionValue.toString()%>" property='<%="question"+ optionOrder%>' disabled="<%=new Boolean(checkDisable).booleanValue()%>"/>
 							</logic:notEmpty>
 							<logic:empty name="question" property="questionType.render.columns">
-								<html:text property='<%="question"+ optionOrder%>' value="<%=questionValue.toString()%>" disabled="<%=new Boolean(checkDisable).booleanValue()%>"/>
+								<html:text alt='<%="question"+ optionOrder%>' property='<%="question"+ optionOrder%>' value="<%=questionValue.toString()%>" disabled="<%=new Boolean(checkDisable).booleanValue()%>"/>
 							</logic:empty>
 						</logic:empty>
 					</logic:empty>

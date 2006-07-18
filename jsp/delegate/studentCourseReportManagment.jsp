@@ -1,5 +1,5 @@
 <%@ page language="java" %>
-<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
+<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%><html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <h2><bean:message key="title.studentReport"/></h2>
@@ -59,9 +59,9 @@
 	<h3 class="bluetxt"><bean:message key="message.studentReport.approvalRates"/>*</h3>
 	<table width="50%">
 		<tr>
-			<td class="listClasses-header">&nbsp;</td>
-			<td class="listClasses-header"><bean:message key="message.studentReport.AP/IN"/></td>
-			<td class="listClasses-header"><bean:message key="message.studentReport.AP/AV"/></td>
+			<th class="listClasses-header">&nbsp;</th>
+			<th class="listClasses-header"><bean:message key="message.studentReport.AP/IN"/></th>
+			<th class="listClasses-header"><bean:message key="message.studentReport.AP/AV"/></th>
 		</tr>
 		<logic:iterate id="infoSiteEvaluationStatistics" name="infoSiteStudentCourseReport" property="infoSiteEvaluationHistory">
 			<bean:define id="evaluated" name="infoSiteEvaluationStatistics" property="evaluated" type="java.lang.Integer"/>
@@ -104,32 +104,32 @@
 		<bean:message key="message.studentReport.note2"/>
 	</p>
 	<h3 class="bluetxt"><bean:message key="message.studentReport.strongPoints"/></h3>
-	<html:textarea property="strongPoints" cols="70%" rows="10"/>
+	<html:textarea bundle="HTMLALT_RESOURCES" altKey="textarea.strongPoints" property="strongPoints" cols="70%" rows="10"/>
 	<h3 class="bluetxt"><bean:message key="message.studentReport.weakPoints"/></h3>
-	<html:textarea property="weakPoints" cols="70%" rows="10"/>
+	<html:textarea bundle="HTMLALT_RESOURCES" altKey="textarea.weakPoints" property="weakPoints" cols="70%" rows="10"/>
 	<h3 class="bluetxt"><bean:message key="message.studentReport.studentReport"/></h3>
-	<html:textarea property="studentReport" cols="70%" rows="10"/>
+	<html:textarea bundle="HTMLALT_RESOURCES" altKey="textarea.studentReport" property="studentReport" cols="70%" rows="10"/>
 	<br />
 	<br/>
 	<bean:message key="message.teachingReport.thanks"/>
 	<br />
 	<br />
-	<html:hidden property="page" value="1"/>
-	<html:hidden property="idInternal"/>
-	<html:hidden property="curricularCourseId"/>
-	<html:hidden property="universityId"/>
-	<html:hidden property="degreeCurricularPlanId"/>
-	<html:hidden property="degreeId"/>
-	<html:hidden property="method" value="edit"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.idInternal" property="idInternal"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.curricularCourseId" property="curricularCourseId"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.universityId" property="universityId"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.degreeCurricularPlanId" property="degreeCurricularPlanId"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.degreeId" property="degreeId"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="edit"/>
 	<table>
 		<tr align="center">	
 			<td>
-				<html:submit styleClass="inputbutton" property="confirm">
+				<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.confirm" styleClass="inputbutton" property="confirm">
 					<bean:message key="button.save"/>
 				</html:submit>
 			</td>
 			<td>
-				<html:reset styleClass="inputbutton">
+				<html:reset bundle="HTMLALT_RESOURCES" altKey="reset.reset" styleClass="inputbutton">
 					<bean:message key="label.clear"/>
 				</html:reset>
 			</td>

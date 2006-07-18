@@ -1,5 +1,6 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>			
 <h2><bean:message bundle="MANAGER_RESOURCES" key="label.manager.competence.course.management"/></h2>
@@ -11,18 +12,18 @@
 
 <logic:notEmpty name="curricularCourses">
 	<html:form action="/curricularCoursesCompetenceCourse">
-		<html:hidden property="method" value="addToCompetenceCourse"/>
-		<html:hidden property="competenceCourseID"/>
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="addToCompetenceCourse"/>
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.competenceCourseID" property="competenceCourseID"/>
 		<table width="100%" cellpadding="0" border="0">
 			<tr>
-				<td class="listClasses-header">
-				</td>
-				<td class="listClasses-header"><bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="label.manager.degree.code" />
-				</td>
-				<td class="listClasses-header"><bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="label.manager.degree.name" />
-				</td>
-				<td class="listClasses-header"><bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="label.manager.degreeCurricularPlan" />
-				</td>
+				<th class="listClasses-header">
+				</th>
+				<th class="listClasses-header"><bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="label.manager.degree.code" />
+				</th>
+				<th class="listClasses-header"><bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="label.manager.degree.name" />
+				</th>
+				<th class="listClasses-header"><bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="label.manager.degreeCurricularPlan" />
+				</th>
 			</tr>
 				
 				 
@@ -30,7 +31,7 @@
 				<tr>	
 					<td class="listClasses">
 					
-					<html:multibox property="curricularCoursesIds">
+					<html:multibox bundle="HTMLALT_RESOURCES" altKey="multibox.curricularCoursesIds" property="curricularCoursesIds">
 						<bean:write name="curricularCourse" property="idInternal"/>
 					</html:multibox>
 					</td>	

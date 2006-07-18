@@ -1,11 +1,12 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
+<html:xhtml/>
 
 <html>
   <head>
-    <title>SOP - Excepção</title>
+    <title>SOP - Excepï¿½ï¿½o</title>
   </head>
   <body>
     <html:errors/>
-    Não Autorizado
+    Nï¿½o Autorizado
   </body>
 </html>

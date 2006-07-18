@@ -1,5 +1,5 @@
 <%@ page language="java" %>
-<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %><html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/enum.tld" prefix="e" %>
@@ -19,12 +19,12 @@
 <br/>
 
 <html:form action="/changeMasterDegreeProofLookup.do">
-	<html:hidden property="studentNumber" />
-	<html:hidden property="degreeType" />
-	<html:hidden property="page" value="1" />
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.studentNumber" property="studentNumber" />
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.degreeType" property="degreeType" />
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1" />
 
 
-	<html:hidden property="dissertationTitle" />
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.dissertationTitle" property="dissertationTitle" />
 
 	<table border="0" width="100%" cellspacing="3" cellpadding="10">
 		<tr>
@@ -71,17 +71,17 @@
 		<tr >
 			<th align="left"><bean:message key="label.masterDegree.administrativeOffice.proofDate"/>:&nbsp;</th>
 			<th>
-				<html:select property="proofDateDay">
+				<html:select bundle="HTMLALT_RESOURCES" altKey="select.proofDateDay" property="proofDateDay">
 			    	<html:options collection="<%= SessionConstants.DAYS_LIST %>" property="value" labelProperty="label" />
 			   </html:select> 
 			</th>
 			<th>
-				<html:select property="proofDateMonth">
+				<html:select bundle="HTMLALT_RESOURCES" altKey="select.proofDateMonth" property="proofDateMonth">
 			    	<html:options collection="<%= SessionConstants.MONTHS_LIST %>" property="value" labelProperty="label" />
 			   </html:select> 
 			</th>
 			<th>
-				<html:select property="proofDateYear">
+				<html:select bundle="HTMLALT_RESOURCES" altKey="select.proofDateYear" property="proofDateYear">
 			    	<html:options collection="<%= SessionConstants.YEARS_LIST %>" property="value" labelProperty="label" />
 			   </html:select> 
 			</th>						
@@ -92,17 +92,17 @@
 		<tr >
 			<th align="left"><bean:message key="label.masterDegree.administrativeOffice.thesisDeliveryDate"/>:&nbsp;</th>
 			<th>
-				<html:select property="thesisDeliveryDateDay">
+				<html:select bundle="HTMLALT_RESOURCES" altKey="select.thesisDeliveryDateDay" property="thesisDeliveryDateDay">
 			    	<html:options collection="<%= SessionConstants.DAYS_LIST %>" property="value" labelProperty="label" />
 			   </html:select> 
 			</th>
 			<th>
-				<html:select property="thesisDeliveryDateMonth">
+				<html:select bundle="HTMLALT_RESOURCES" altKey="select.thesisDeliveryDateMonth" property="thesisDeliveryDateMonth">
 			    	<html:options collection="<%= SessionConstants.MONTHS_LIST %>" property="value" labelProperty="label" />
 			   </html:select> 
 			</th>
 			<th>
-				<html:select property="thesisDeliveryDateYear">
+				<html:select bundle="HTMLALT_RESOURCES" altKey="select.thesisDeliveryDateYear" property="thesisDeliveryDateYear">
 			    	<html:options collection="<%= SessionConstants.YEARS_LIST %>" property="value" labelProperty="label" />
 			   </html:select> 
 			</th>	
@@ -119,7 +119,7 @@
 			<th align="left" colspan="3">
 				<bean:message key="label.masterDegree.administrativeOffice.finalResult"/>:&nbsp;
 				<e:labelValues id="values" enumeration="net.sourceforge.fenixedu.domain.masterDegree.MasterDegreeClassification" bundle="ENUMERATION_RESOURCES"/>	            
-			    <html:select property="finalResult">
+			    <html:select bundle="HTMLALT_RESOURCES" altKey="select.finalResult" property="finalResult">
 			    	<html:option key="dropDown.Default" value=""/>
 			    	<html:options collection="values" property="value" labelProperty="label" />
 			   </html:select> 
@@ -133,7 +133,7 @@
 		<tr>
 			<th align="left" colspan="4">
 				<bean:message key="label.masterDegree.administrativeOffice.attachedCopiesNumber"/>:&nbsp;
-				<html:text property="attachedCopiesNumber" size="5"/>
+				<html:text bundle="HTMLALT_RESOURCES" altKey="text.attachedCopiesNumber" property="attachedCopiesNumber" size="5"/>
 			</th>
 		</tr>
 		<tr> 
@@ -153,13 +153,13 @@
 					<td>&nbsp;</td>						
 				</tr>					
 				<logic:iterate id="jury" name="juriesList">
-					<html:hidden property="juriesNumbers" value="<%= ((InfoTeacher)jury).getTeacherNumber().toString() %>"/>
+					<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.juriesNumbers" property="juriesNumbers" value="<%= ((InfoTeacher)jury).getTeacherNumber().toString() %>"/>
 					<tr>
 						<td align="left"><bean:write name="jury" property="teacherNumber"/></td>
 						<td align="left"><bean:write name="jury" property="infoPerson.nome"/></td>
 						<td>&nbsp;</td>
 						<td align="center">
-							<html:multibox property="removedJuriesNumbers">
+							<html:multibox bundle="HTMLALT_RESOURCES" altKey="multibox.removedJuriesNumbers" property="removedJuriesNumbers">
 								<bean:write name="jury" property="teacherNumber"/>
 							</html:multibox>	
 						</td>						
@@ -167,7 +167,7 @@
 				</logic:iterate>
 				<tr>
 					<td colspan="4" align="right">
-						<html:submit styleClass="inputbuttonSmall" property="method">
+						<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.method" styleClass="inputbuttonSmall" property="method">
 							<bean:message key="button.submit.masterDegree.thesis.removeJuries"/>
 						</html:submit>
 					</td>
@@ -176,8 +176,8 @@
 		<tr>
 			<th align="left" colspan="4">
 				<bean:message key="label.masterDegree.administrativeOffice.teacherNumber"/>:
-				<html:text property="juriesNumbers" size="5" value="" />
-				<html:submit styleClass="inputbuttonSmall" property="method">
+				<html:text bundle="HTMLALT_RESOURCES" altKey="text.juriesNumbers" property="juriesNumbers" size="5" value="" />
+				<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.method" styleClass="inputbuttonSmall" property="method">
 					<bean:message key="button.submit.masterDegree.thesis.addJury"/>
 				</html:submit>
 			</th>
@@ -202,13 +202,13 @@
 				<td>&nbsp;</td>									
 			</tr>			
 			<logic:iterate id="externalJury" name="externalJuriesList">
-				<html:hidden property="externalJuriesIDs" value="<%= ((InfoExternalPerson)externalJury).getIdInternal().toString() %>"/>
+				<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.externalJuriesIDs" property="externalJuriesIDs" value="<%= ((InfoExternalPerson)externalJury).getIdInternal().toString() %>"/>
 				<tr>
 					<td>&nbsp;</td>
 					<td align="left"><bean:write name="externalJury" property="infoPerson.nome"/></td>
 					<td align="left"><bean:write name="externalJury" property="infoInstitution.name"/></td>
 					<td align="center">
-						<html:multibox property="removedExternalJuriesIDs">
+						<html:multibox bundle="HTMLALT_RESOURCES" altKey="multibox.removedExternalJuriesIDs" property="removedExternalJuriesIDs">
 							<bean:write name="externalJury" property="idInternal"/>
 						</html:multibox>	
 					</td>						
@@ -216,7 +216,7 @@
 			</logic:iterate>
 			<tr>
 				<td colspan="4" align="right">
-					<html:submit styleClass="inputbuttonSmall" property="method">
+					<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.method" styleClass="inputbuttonSmall" property="method">
 						<bean:message key="button.submit.masterDegree.thesis.removeExternalJuries"/>
 					</html:submit>
 				</td>
@@ -227,7 +227,7 @@
 			<logic:notPresent name="<%= SessionConstants.EXTERNAL_JURIES_SEARCH_RESULTS %>" scope="request">
 				<tr>
 					<td align="left" colspan="4">
-						<html:submit styleClass="inputbuttonSmall" property="method">
+						<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.method" styleClass="inputbuttonSmall" property="method">
 							<bean:message key="button.submit.masterDegree.thesis.externalJury"/>
 						</html:submit>
 					</td>
@@ -243,9 +243,9 @@
 							<span class="emphasis-box">info</span>
 						</td>
 						<td class="infoop">
-							<strong>Nota:</strong> Na indicação do nome pode ser fornecido apenas parte do nome do júri externo.<br/>
-							Exemplo 1: Para selecionar todos os júris externos que começam com a letra "A" escreva <strong>A%</strong><br/>
-							Exemplo 2: Para selecionar todos os júris externos que começam com a letra "A" e que tenham um segundo nome que começam com a letra "M" escreva <strong>A% M%</strong>
+							<strong>Nota:</strong> Na indicaï¿½ï¿½o do nome pode ser fornecido apenas parte do nome do jï¿½ri externo.<br/>
+							Exemplo 1: Para selecionar todos os jï¿½ris externos que comeï¿½am com a letra "A" escreva <strong>A%</strong><br/>
+							Exemplo 2: Para selecionar todos os jï¿½ris externos que comeï¿½am com a letra "A" e que tenham um segundo nome que comeï¿½am com a letra "M" escreva <strong>A% M%</strong>
 						</td>
 					</tr>
 				</table></td>	
@@ -253,8 +253,8 @@
 			<tr>
 				<td align="left" colspan="4">
 					<bean:message key="label.masterDegree.administrativeOffice.externalPersonName"/>:
-					<input type="text" name="externalJuryName" size="25" value=""/>
-					<html:submit styleClass="inputbuttonSmall" property="method">
+					<input alt="input.externalJuryName" type="text" name="externalJuryName" size="25" value=""/>
+					<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.method" styleClass="inputbuttonSmall" property="method">
 						<bean:message key="button.submit.masterDegree.thesis.searchExternalJury"/>
 					</html:submit>
 				</td>
@@ -278,13 +278,13 @@
 					<td align="left"><bean:write name="externalJury" property="infoPerson.nome"/></td>
 					<td align="left"><bean:write name="externalJury" property="infoInstitution.name"/></td>						
 					<td>
-						<html:radio idName="externalJury" property="externalJuriesIDs" value="idInternal"/>	
+						<html:radio bundle="HTMLALT_RESOURCES" altKey="radio.externalJuriesIDs" idName="externalJury" property="externalJuriesIDs" value="idInternal"/>	
 					</td>
 				</tr>				
 			</logic:iterate>
 			<tr>
 				<td colspan="4" align="right">
-					<html:submit styleClass="inputbuttonSmall" property="method">
+					<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.method" styleClass="inputbuttonSmall" property="method">
 						<bean:message key="button.submit.masterDegree.thesis.addExternalJury"/>
 					</html:submit>
 				</td>
@@ -298,10 +298,10 @@
 		<!-- confirmation -->
 		<tr>		
 			<td colspan="4" align="center">
-				<html:submit styleClass="inputbuttonSmall" property="method">
+				<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.method" styleClass="inputbuttonSmall" property="method">
 					<bean:message key="button.submit.masterDegree.thesis.changeProof"/>
 				</html:submit>
-				<html:submit styleClass="inputbuttonSmall" property="method">
+				<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.method" styleClass="inputbuttonSmall" property="method">
 					<bean:message key="button.cancel"/>
 				</html:submit>
 			</td>

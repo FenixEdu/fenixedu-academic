@@ -1,5 +1,6 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %> 
 <%@ taglib uri="/WEB-INF/struts-tiles.tld" prefix="tiles" %> 
@@ -13,13 +14,13 @@
 				<bean:define id="hiddenSelectedCases" type="java.util.List" scope="request" name="hiddenSelectedCases"/>
 				<bean:size id="selectedCasesSize" scope="request" name="selectedCases"/>
 				<h2><bean:message key="label.candidacyFormTitle"/></h2>
-				<h2 class="redtxt">Informação:</h2><p><bean:message key="message.seminaries.selectCaseStudy"/></p>
+				<h2 class="redtxt">Informaï¿½ï¿½o:</h2><p><bean:message key="message.seminaries.selectCaseStudy"/></p>
 				<html:form action="manageCaseStudyChoices.do" method="post">
 				<table width="100%" align="center" border="0">
 					<tr>
 						<td width="45%" align="left">
 							<b><bean:message key="message.seminaries.avaliableCases"/></b><br/>
-							<html:select style="width:100%" size = "7" multiple="true" property="selectedCases">
+							<html:select bundle="HTMLALT_RESOURCES" altKey="select.selectedCases" style="width:100%" size = "7" multiple="true" property="selectedCases">
 						
 								<html:options collection="unselectedCases" property="idInternal" labelProperty="name"/>
 							
@@ -31,7 +32,7 @@
 							<logic:lessThan name="selectedCasesSize" value="5">
 								<tr>
 									<td>
-										<html:submit styleClass="button" style="width:100%" value="Adicionar" property="submition"/>
+										<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submition" styleClass="button" style="width:100%" value="Adicionar" property="submition"/>
 									</td>
 								</tr>
 							</logic:lessThan>
@@ -41,7 +42,7 @@
 						<td width="45%" align="left">
 							<br/><br/>
 							<b><bean:message key="message.seminaries.selectedCases"/></b><br/>
-							<html:select style="width:100%" size = "5" multiple="true" property="unselectedCases">
+							<html:select bundle="HTMLALT_RESOURCES" altKey="select.unselectedCases" style="width:100%" size = "5" multiple="true" property="unselectedCases">
 				
 								<html:options collection="selectedCases" property="idInternal" labelProperty="name"/>
 					
@@ -50,35 +51,35 @@
 					</tr>
 					<tr>
 						<td>
-							<html:submit styleClass="button" style="width:100%" value="Remover" property="submition"/>
+							<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submition" styleClass="button" style="width:100%" value="Remover" property="submition"/>
 						</td>
 					</tr>
 					<logic:equal name="selectedCasesSize" value="5">
 						<tr>
 							<td>
-								<html:submit styleClass="button" value="Submeter" property="submition"/>			
+								<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submition" styleClass="button" value="Submeter" property="submition"/>			
 							</td>
 						</tr>
 					</logic:equal>
 					<tr>
 						<td>
-							<input type="hidden" name="equivalencyID" value="<%= equivalency.getIdInternal()%>">			
+							<input alt="input.equivalencyID" type="hidden" name="equivalencyID" value="<%= equivalency.getIdInternal()%>">			
 						</td>
 					</tr>
 					<tr>
 						<td>
-							<input type="hidden" name="themeID" value="<%=request.getParameter("themeID")%>">			
+							<input alt="input.themeID" type="hidden" name="themeID" value="<%=request.getParameter("themeID")%>">			
 						</td>
 					</tr>
 					<tr>
 						<td>
-							<input type="hidden" name="motivation" value='<%=request.getParameter("motivation")%>'>			
+							<input alt="input.motivation" type="hidden" name="motivation" value='<%=request.getParameter("motivation")%>'>			
 						</td>
 					</tr>
 					<tr>
 						<td>
 							<logic:iterate id="selectedCase" type="net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoCaseStudy" name="hiddenSelectedCases">
-								<html:hidden property="hiddenSelectedCases" value="<%=selectedCase.getIdInternal().toString()%>"/>
+								<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.hiddenSelectedCases" property="hiddenSelectedCases" value="<%=selectedCase.getIdInternal().toString()%>"/>
 							</logic:iterate>
 						</td>
 					</tr>

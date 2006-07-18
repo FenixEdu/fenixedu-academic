@@ -1,5 +1,5 @@
 <%@ page language="java" %>
-<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
+<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%><html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <h2><bean:message key="title.teachingReport"/></h2>
@@ -94,9 +94,9 @@
 		<h3 class="bluetxt"><bean:message key="message.teachingReport.approvalRates"/>*</h3>
 		<table width="50%">
 			<tr>
-				<td class="listClasses-header">&nbsp;</td>
-				<td class="listClasses-header"><bean:message key="message.teachingReport.AP/IN"/></td>
-				<td class="listClasses-header"><bean:message key="message.teachingReport.AP/AV"/></td>
+				<th class="listClasses-header">&nbsp;</th>
+				<th class="listClasses-header"><bean:message key="message.teachingReport.AP/IN"/></th>
+				<th class="listClasses-header"><bean:message key="message.teachingReport.AP/AV"/></th>
 			</tr>
 			<logic:iterate id="siteEvaluationStatistics" name="siteEvaluationInformation" property="infoSiteEvaluationHistory">
 				<bean:define id="evaluated" name="siteEvaluationStatistics" property="evaluated" type="java.lang.Integer"/>
@@ -147,7 +147,7 @@
 	</p>
 	<h3 class="bluetxt"><bean:message key="message.teachingReport.report"/></h3>
 	<bean:message key="message.teachingReport.note3"/>
-	<html:textarea property="report" cols="70%" rows="10"/>
+	<html:textarea bundle="HTMLALT_RESOURCES" altKey="textarea.report" property="report" cols="70%" rows="10"/>
 	<br />
 	<br />
 	<strong><bean:message key="message.teachingReport.text1"/></strong>
@@ -160,21 +160,21 @@
 	<bean:message key="message.teachingReport.thanks"/>
 	<br />
 	<br />
-	<html:hidden property="page" value="1"/>
-	<html:hidden property="idInternal"/>
-    <html:hidden property="executionCourseId"/>
-    <html:hidden property="executionPeriodId"/>
-    <html:hidden property="executionYearId"/>
-	<html:hidden property="method" value="edit"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.idInternal" property="idInternal"/>
+    <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.executionCourseId" property="executionCourseId"/>
+    <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.executionPeriodId" property="executionPeriodId"/>
+    <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.executionYearId" property="executionYearId"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="edit"/>
 	<table>
 		<tr align="center">	
 			<td>
-				<html:submit styleClass="inputbutton" property="confirm">
+				<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.confirm" styleClass="inputbutton" property="confirm">
 					<bean:message key="button.save"/>
 				</html:submit>
 			</td>
 			<td>
-				<html:reset styleClass="inputbutton">
+				<html:reset bundle="HTMLALT_RESOURCES" altKey="reset.reset" styleClass="inputbutton">
 					<bean:message key="label.clear"/>
 				</html:reset>
 			</td>

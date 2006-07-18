@@ -1,5 +1,6 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="dt" %>
@@ -13,29 +14,29 @@
 	<h2><bean:message key="label.executionCourse" /></h2>
 	<table width="100%" cellpadding="1" cellspacing="1">
 		<tr>
-			<td class="listClasses-header" width="30%" rowspan="2">
+			<th class="listClasses-header" width="30%" rowspan="2">
 				<bean:message key="label.name"/>
-			</td>
-			<td class="listClasses-header" width="10%" rowspan="2"> 
+			</th>
+			<th class="listClasses-header" width="10%" rowspan="2"> 
 				<bean:message key="label.code"/>
-			</td>
-			<td class="listClasses-header" colspan="4" width="60%">
+			</th>
+			<th class="listClasses-header" colspan="4" width="60%">
 				Carga
-			</td>
+			</th>
 		</tr>
 		<tr>
-			<td class="listClasses-header">
+			<th class="listClasses-header">
 				<bean:message key="label.hours.load.theoretical"/>
-			</td>
-			<td class="listClasses-header">
+			</th>
+			<th class="listClasses-header">
 				<bean:message key="label.hours.load.theoretical_practical"/>
-			</td>
-			<td class="listClasses-header">
+			</th>
+			<th class="listClasses-header">
 				<bean:message key="label.hours.load.practical"/>
-			</td>
-			<td class="listClasses-header">
+			</th>
+			<th class="listClasses-header">
 				<bean:message key="label.hours.load.laboratorial"/>
-			</td>			
+			</th>			
 		</tr>	
 
 		<tr>
@@ -75,14 +76,14 @@
 								
 				<table width="70%" cellpadding="0" border="0">
 					<tr>
-						<td class="listClasses-header"><bean:message key="message.manager.theoreticalHours" />
-						</td>
-						<td class="listClasses-header"><bean:message key="message.manager.theoPratHours" />
-						</td>
-						<td class="listClasses-header"><bean:message key="message.manager.praticalHours" />
-						</td>
-						<td class="listClasses-header"><bean:message key="message.manager.labHours" />
-						</td>
+						<th class="listClasses-header"><bean:message key="message.manager.theoreticalHours" />
+						</th>
+						<th class="listClasses-header"><bean:message key="message.manager.theoPratHours" />
+						</th>
+						<th class="listClasses-header"><bean:message key="message.manager.praticalHours" />
+						</th>
+						<th class="listClasses-header"><bean:message key="message.manager.labHours" />
+						</th>
 					</tr>
 					<tr>
 						<td class="listClasses">
@@ -123,16 +124,16 @@
 				<br />
 				<table width="50%" cellpadding="0" border="0">				
 					<tr>				
-						<td class="listClasses-header">
+						<th class="listClasses-header">
 							<bean:message key="label.manager.curricularCourseScope.branch"/>
-						</td>
-						<td class="listClasses-header">
+						</th>
+						<th class="listClasses-header">
 							<bean:message key="label.manager.curricularCourseScope.curricularYear"/>
-						</td>
-						<td class="listClasses-header">
+						</th>
+						<th class="listClasses-header">
 							Sem.
 							<%--<bean:message key="label.manager.curricularCourseScope.curricularSemester"/> --%>
-						</td>	
+						</th>	
 						<td>
 							&nbsp;
 						</td>				

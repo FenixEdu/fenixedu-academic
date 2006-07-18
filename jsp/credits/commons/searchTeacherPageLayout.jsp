@@ -1,6 +1,7 @@
 <%@page contentType="text/html" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-tiles.tld" prefix="tiles" %>
 <%@ page import="org.apache.struts.Globals" %>
@@ -37,10 +38,10 @@
 
 <bean:define id="path" name="<%= Globals.MAPPING_KEY %>" property="path" type="java.lang.String"/>
 <html:form action="<%= path %>" focus="teacherNumber">
-	<html:hidden property="method"/>
-	<input type="hidden" name="page" value="0"/>
-	<bean:message key="label.teacher.number"/>: <html:text property="teacherNumber"	size="6" maxlength="7"/>
-	<html:submit styleClass="inputbutton">
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method"/>
+	<input alt="input.page" type="hidden" name="page" value="0"/>
+	<bean:message key="label.teacher.number"/>: <html:text bundle="HTMLALT_RESOURCES" altKey="text.teacherNumber" property="teacherNumber"	size="6" maxlength="7"/>
+	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton">
 		<bean:message key="button.ok"/>
 	</html:submit>
 </html:form>

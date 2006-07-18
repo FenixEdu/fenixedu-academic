@@ -1,5 +1,6 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="dt" %>
@@ -181,9 +182,9 @@
 	
 	<table width="100%" class="style1">
 			<tr>
-				<td class="listClasses-header" width="10%"><bean:message bundle="MANAGER_RESOURCES" bundle="CMS_RESOURCES" key="cms.messaging.mailingList.viewThread.mailMessage.senders.label"/></td>		
-				<td width="80%" class="listClasses-header"><bean:message bundle="MANAGER_RESOURCES" bundle="CMS_RESOURCES" key="cms.messaging.mailingList.viewMailingList.message.label"/></td>
-				<td class="listClasses-header" width="10%"><bean:message bundle="MANAGER_RESOURCES" bundle="CMS_RESOURCES" key="cms.messaging.mailingList.viewMailingList.conversatioCreationDate.label"/></td>
+				<th class="listClasses-header" width="10%"><bean:message bundle="MANAGER_RESOURCES" bundle="CMS_RESOURCES" key="cms.messaging.mailingList.viewThread.mailMessage.senders.label"/></th>		
+				<th width="80%" class="listClasses-header"><bean:message bundle="MANAGER_RESOURCES" bundle="CMS_RESOURCES" key="cms.messaging.mailingList.viewMailingList.message.label"/></th>
+				<th class="listClasses-header" width="10%"><bean:message bundle="MANAGER_RESOURCES" bundle="CMS_RESOURCES" key="cms.messaging.mailingList.viewMailingList.conversatioCreationDate.label"/></th>
 			</tr>
 			<tr>			
 				<td class="listClasses" valign="top">
@@ -233,9 +234,9 @@
 	</logic:equal>	
 	<table width="100%" class="style1">
 			<tr>
-				<td class="listClasses-header" width="10%"><bean:message bundle="MANAGER_RESOURCES" bundle="CMS_RESOURCES" key="cms.messaging.mailingList.viewThread.mailMessage.senders.label"/></td>		
-				<td width="80%" class="listClasses-header"><bean:message bundle="MANAGER_RESOURCES" bundle="CMS_RESOURCES" key="cms.messaging.mailingList.viewMailingList.message.label"/></td>
-				<td class="listClasses-header" width="10%"><bean:message bundle="MANAGER_RESOURCES" bundle="CMS_RESOURCES" key="cms.messaging.mailingList.viewMailingList.conversatioCreationDate.label"/></td>
+				<th class="listClasses-header" width="10%"><bean:message bundle="MANAGER_RESOURCES" bundle="CMS_RESOURCES" key="cms.messaging.mailingList.viewThread.mailMessage.senders.label"/></th>		
+				<th width="80%" class="listClasses-header"><bean:message bundle="MANAGER_RESOURCES" bundle="CMS_RESOURCES" key="cms.messaging.mailingList.viewMailingList.message.label"/></th>
+				<th class="listClasses-header" width="10%"><bean:message bundle="MANAGER_RESOURCES" bundle="CMS_RESOURCES" key="cms.messaging.mailingList.viewMailingList.conversatioCreationDate.label"/></th>
 			</tr>
 		<logic:iterate id="mailMessage" name="mailConversation" property="mailMessagesIterator" type="net.sourceforge.fenixedu.domain.cms.messaging.IMailMessage">
 			<logic:notEqual name="firstMessage" property="idInternal" value="<%=mailMessage.getIdInternal().toString()%>">

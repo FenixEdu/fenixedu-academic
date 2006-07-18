@@ -2,6 +2,7 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<html:xhtml/>
 
 
 <bean:define id="infoExecutionCourse" name="infoExecutionCourseOccupancy" property="infoExecutionCourse" />
@@ -22,25 +23,25 @@
 	<bean:define id="capacityCount" value="0"/>
 	<table>
 			<tr>
-				<td class="listClasses-header">
+				<th class="listClasses-header">
 					<bean:message key="label.name" />
-				</td>	
+				</th>	
 	
-				<td class="listClasses-header">
+				<th class="listClasses-header">
 					<bean:message key="label.curricularCourseType" />
-				</td>	
+				</th>	
 	
-				<td class="listClasses-header">
+				<th class="listClasses-header">
 					<bean:message key="listAlunos.OfTurno" />
-				</td>	
+				</th>	
 	
-				<td class="listClasses-header">
+				<th class="listClasses-header">
 					<bean:message key="property.turno.capacity" />
-				</td>	
+				</th>	
 	
-				<td class="listClasses-header">
+				<th class="listClasses-header">
 					<bean:message key="label.occupancy" />
-				</td>	
+				</th>	
 			</tr>
 		<logic:iterate id="shift" name="infoShiftGroupStatistics" property="shiftsInGroup" >
 			<tr>
@@ -66,26 +67,26 @@
 			</tr>
 		</logic:iterate> 		
 		<tr>
-			<td class="listClasses-header">
+			<th class="listClasses-header">
 				<bean:message key="label.total" />
-			</td>
+			</th>
 			
-			<td class="listClasses-header">
+			<th class="listClasses-header">
 				&nbsp
-			</td>
+			</th>
 		
-			<td class="listClasses-header">
+			<th class="listClasses-header">
 				<bean:write name="infoShiftGroupStatistics" property="totalNumberOfStudents"  />
 
-			</td>
+			</th>
 		
-			<td class="listClasses-header">
+			<th class="listClasses-header">
 				<bean:write name="infoShiftGroupStatistics" property="totalCapacity"  />
-			</td>
+			</th>
 		
-			<td class="listClasses-header">
+			<th class="listClasses-header">
 				<bean:write name="infoShiftGroupStatistics" property="totalPercentage"  />
-			</td>		
+			</th>		
 		</tr>
 	</table>
 	<br />

@@ -4,6 +4,7 @@
 <%@ taglib uri="/WEB-INF/html_basic.tld" prefix="h"%>
 
 <ft:tilesView definition="bolonhaManager.masterPage" attributeName="body-inline">
+	<f:loadBundle basename="resources/HtmlAltResources" var="htmlAltBundle"/>
 	<style>
 		table.nospace label { width: auto; }
 	</style>
@@ -49,8 +50,8 @@
 	<h:outputText value="<div class='simpleblock4'>" escape="false"/>
 	<h:form>
 		<fc:viewState binding="#{CompetenceCourseManagement.viewState}"/>
-		<h:outputText escape="false" value="<input id='competenceCourseID' name='competenceCourseID' type='hidden' value='#{CompetenceCourseManagement.competenceCourse.idInternal}'/>"/>
-		<h:outputText escape="false" value="<input id='action' name='action' type='hidden' value='#{CompetenceCourseManagement.action}'/>"/>
+		<h:outputText escape="false" value="<input alt='input.competenceCourseID' id='competenceCourseID' name='competenceCourseID' type='hidden' value='#{CompetenceCourseManagement.competenceCourse.idInternal}'/>"/>
+		<h:outputText escape="false" value="<input alt='input.action' id='action' name='action' type='hidden' value='#{CompetenceCourseManagement.action}'/>"/>
 		
 		<h:outputText value="<fieldset class='lfloat'>" escape="false"/>
 
@@ -76,7 +77,7 @@
 				<h:outputText value="<p><label>#{bolonhaBundle['lessonHours']}: </label>" escape="false"/>				
 				<h:panelGrid columns="2" style="background-color: #fff; padding: 0.5em; border: 1px solid #ccc;" headerClass="pbottom1">
 					<f:facet name="header">					
-						<h:outputText value="<strong>#{courseLoad.order}º #{bolonhaBundle['semester']}</strong>" escape="false"
+						<h:outputText value="<strong>#{courseLoad.order}ï¿½ #{bolonhaBundle['semester']}</strong>" escape="false"
 							rendered="#{CompetenceCourseManagement.regime == 'ANUAL' && CompetenceCourseManagement.numberOfPeriods == 2}"/>		
 					</f:facet>			
 					
@@ -85,56 +86,56 @@
 		
 					<h:outputText value="#{bolonhaBundle['theoreticalLesson']}: "/>
 					<h:panelGroup>
-						<h:inputText maxlength="5" size="5" value="#{courseLoad.theoreticalHours}"/>
+						<h:inputText alt="#{htmlAltBundle['inputText.theoreticalHours']}" maxlength="5" size="5" value="#{courseLoad.theoreticalHours}"/>
 						<h:outputText value=" h/#{bolonhaBundle['lowerCase.week']}"/>
 					</h:panelGroup>
 					
 					<h:outputText value="#{bolonhaBundle['problemsLesson']}: "/>
 					<h:panelGroup>
-						<h:inputText maxlength="5" size="5" value="#{courseLoad.problemsHours}"/>
+						<h:inputText alt="#{htmlAltBundle['inputText.problemsHours']}" maxlength="5" size="5" value="#{courseLoad.problemsHours}"/>
 						<h:outputText value=" h/#{bolonhaBundle['lowerCase.week']}"/>
 					</h:panelGroup>	
 					
 					<h:outputText value="#{bolonhaBundle['laboratorialLesson']}: "/>
 					<h:panelGroup>
-						<h:inputText maxlength="5" size="5" value="#{courseLoad.laboratorialHours}"/>
+						<h:inputText alt="#{htmlAltBundle['inputText.laboratorialHours']}" maxlength="5" size="5" value="#{courseLoad.laboratorialHours}"/>
 						<h:outputText value=" h/#{bolonhaBundle['lowerCase.week']}"/>
 					</h:panelGroup>
 					
 					<h:outputText value="#{bolonhaBundle['seminary']}: "/>
 					<h:panelGroup>
-						<h:inputText maxlength="5" size="5" value="#{courseLoad.seminaryHours}"/>
+						<h:inputText alt="#{htmlAltBundle['inputText.seminaryHours']}" maxlength="5" size="5" value="#{courseLoad.seminaryHours}"/>
 						<h:outputText value=" h/#{bolonhaBundle['lowerCase.week']}"/>
 					</h:panelGroup>		
 					
 					<h:outputText value="#{bolonhaBundle['fieldWork']}: "/>
 					<h:panelGroup>
-						<h:inputText maxlength="5" size="5" value="#{courseLoad.fieldWorkHours}"/>
+						<h:inputText alt="#{htmlAltBundle['inputText.fieldWorkHours']}" maxlength="5" size="5" value="#{courseLoad.fieldWorkHours}"/>
 						<h:outputText value=" h/#{bolonhaBundle['lowerCase.week']}"/>
 					</h:panelGroup>		
 					
 					<h:outputText value="#{bolonhaBundle['trainingPeriod']}: "/>
 					<h:panelGroup>
-						<h:inputText maxlength="5" size="5" value="#{courseLoad.trainingPeriodHours}"/>
+						<h:inputText alt="#{htmlAltBundle['inputText.trainingPeriodHours']}" maxlength="5" size="5" value="#{courseLoad.trainingPeriodHours}"/>
 						<h:outputText value=" h/#{bolonhaBundle['lowerCase.week']}"/>
 					</h:panelGroup>
 					
 					<h:outputText value="#{bolonhaBundle['tutorialOrientation']}: "/>
 					<h:panelGroup>
-						<h:inputText maxlength="5" size="5" value="#{courseLoad.tutorialOrientationHours}"/>
+						<h:inputText alt="#{htmlAltBundle['inputText.tutorialOrientationHours']}" maxlength="5" size="5" value="#{courseLoad.tutorialOrientationHours}"/>
 						<h:outputText value=" h/#{bolonhaBundle['lowerCase.week']}"/>
 					</h:panelGroup>
 					
 					<h:outputText value="#{bolonhaBundle['autonomousWork']}: " style="font-weight: bold"/>
 					<h:panelGroup>
-						<h:inputText maxlength="5" size="5" value="#{courseLoad.autonomousWorkHours}"/>
+						<h:inputText alt="#{htmlAltBundle['inputText.autonomousWorkHours']}" maxlength="5" size="5" value="#{courseLoad.autonomousWorkHours}"/>
 						<h:outputText value=" <b>h/#{bolonhaBundle['lowerCase.semester']}</b>" escape="false"/>
 					</h:panelGroup>
 				</h:panelGrid>
 				<h:outputText value="<p><label>#{bolonhaBundle['ectsCredits']}: </label>" escape="false"/>
-				<h:inputText id="ectsCredits" required="true" maxlength="5" size="5" value="#{courseLoad.ectsCredits}"/>
+				<h:inputText alt="#{htmlAltBundle['inputText.ectsCredits']}" id="ectsCredits" required="true" maxlength="5" size="5" value="#{courseLoad.ectsCredits}"/>
 				<h:outputText value=" (#{bolonhaBundle['by']} #{bolonhaBundle['semester']})" rendered="#{CompetenceCourseManagement.regime == 'ANUAL' && CompetenceCourseManagement.numberOfPeriods == 1}"/>
-				<h:outputText value=" (#{courseLoad.order}º #{bolonhaBundle['semester']})" rendered="#{CompetenceCourseManagement.regime == 'ANUAL' && CompetenceCourseManagement.numberOfPeriods == 2}"/>
+				<h:outputText value=" (#{courseLoad.order}ï¿½ #{bolonhaBundle['semester']})" rendered="#{CompetenceCourseManagement.regime == 'ANUAL' && CompetenceCourseManagement.numberOfPeriods == 2}"/>
 				<h:message styleClass="error0" for="ectsCredits" />
 				<h:outputText value="</p>" escape="false"/>
 			</h:column>
@@ -143,16 +144,16 @@
 		<h:outputText value="</div>" escape="false"/>
 		
 		<h:panelGroup rendered="#{CompetenceCourseManagement.action == 'create'}">
-			<h:commandButton styleClass="inputbutton" value="#{bolonhaBundle['submit']}" action="#{CompetenceCourseManagement.createCompetenceCourseLoad}"/>
+			<h:commandButton alt="#{htmlAltBundle['commandButton.submit']}" styleClass="inputbutton" value="#{bolonhaBundle['submit']}" action="#{CompetenceCourseManagement.createCompetenceCourseLoad}"/>
 		</h:panelGroup>
 		<h:panelGroup rendered="#{CompetenceCourseManagement.action == 'edit'}">
-			<h:commandButton styleClass="inputbutton" value="#{bolonhaBundle['save']}" action="#{CompetenceCourseManagement.editCompetenceCourseLoad}"/>
+			<h:commandButton alt="#{htmlAltBundle['commandButton.save']}" styleClass="inputbutton" value="#{bolonhaBundle['save']}" action="#{CompetenceCourseManagement.editCompetenceCourseLoad}"/>
 		</h:panelGroup>		
 		<h:panelGroup rendered="#{CompetenceCourseManagement.action == 'create'}">
-			<h:commandButton immediate="true" styleClass="inputbutton" value="#{bolonhaBundle['cancel']}" action="competenceCoursesManagement"/>			
+			<h:commandButton alt="#{htmlAltBundle['commandButton.cancel']}" immediate="true" styleClass="inputbutton" value="#{bolonhaBundle['cancel']}" action="competenceCoursesManagement"/>			
 		</h:panelGroup>
 		<h:panelGroup rendered="#{CompetenceCourseManagement.action == 'edit'}">
-			<h:commandButton immediate="true" styleClass="inputbutton" value="#{bolonhaBundle['cancel']}" action="editCompetenceCourseMainPage"/>			
+			<h:commandButton alt="#{htmlAltBundle['commandButton.cancel']}" immediate="true" styleClass="inputbutton" value="#{bolonhaBundle['cancel']}" action="editCompetenceCourseMainPage"/>			
 		</h:panelGroup>
 	</h:form>
 	

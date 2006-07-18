@@ -1,28 +1,29 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 
-<h2>Prova de Aferição de Física - 2003/2004</h2>
+<h2>Prova de Aferiï¿½ï¿½o de Fï¿½sica - 2003/2004</h2>
 <table width="90%" border="0" cellpadding="0" cellspacing="0">
 	<tr>
 		<td bgcolor="#FFFFFF" class="infoselected">
 <bean:define id="testslink" type="java.lang.String"><bean:message key="link.gauging.physics.test" bundle="GLOBAL_RESOURCES"/></bean:define>
-Os enunciados e as respectivas chaves de correcção estão disponíveis em <html:link href="<%= testslink %>" target="about_blank"><%= testslink %></html:link>
+Os enunciados e as respectivas chaves de correcï¿½ï¿½o estï¿½o disponï¿½veis em <html:link href="<%= testslink %>" target="about_blank"><%= testslink %></html:link>
 </td></tr>
 </table>
 <br/>
 <logic:notPresent name="gaugingTestResult">
-<span class="error">Não fez a prova de aferição</span> 
+<span class="error">Nï¿½o fez a prova de aferiï¿½ï¿½o</span> 
 </logic:notPresent>
 <logic:present name="gaugingTestResult">
 <table width="90%">
 <tr>
-<td class="listClasses-header">Enunciado</td>
-<td class="listClasses-header">Número de Respostas em branco</td>
-<td class="listClasses-header">Número de Respostas correctas</td>
-<td class="listClasses-header">Número de Respostas erradas</td>
-<td class="listClasses-header">Classificação Final</td>
+<th class="listClasses-header">Enunciado</th>
+<th class="listClasses-header">Nï¿½mero de Respostas em branco</th>
+<th class="listClasses-header">Nï¿½mero de Respostas correctas</th>
+<th class="listClasses-header">Nï¿½mero de Respostas erradas</th>
+<th class="listClasses-header">Classificaï¿½ï¿½o Final</th>
 </tr>
 <tr>
 <td class="listClasses"><bean:write name="gaugingTestResult" property="test"/></td>
@@ -40,7 +41,7 @@ Os enunciados e as respectivas chaves de correcção estão disponíveis em <html:li
 
 <table width="90%">
 <tr>
-<td class="listClasses-header">Pergunta</td><td class="listClasses-header">Resultado</td>
+<th class="listClasses-header">Pergunta</th><th class="listClasses-header">Resultado</th>
 </tr><tr>
 <td class="listClasses">P1</td><td class="listClasses"><bean:write name="gaugingTestResult" property="p1"/>&nbsp;</td>
 </tr><tr>

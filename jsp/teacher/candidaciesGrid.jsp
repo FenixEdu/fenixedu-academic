@@ -1,5 +1,5 @@
 <%@ page language="java" %>
-<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %><html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-tiles.tld" prefix="tiles" %>
@@ -24,7 +24,7 @@
 										<bean:message key="label.seminary.candidaciesGrid"/>
 									</td>
 									<td>
-										<html:select property="seminaryID">
+										<html:select bundle="HTMLALT_RESOURCES" altKey="select.seminaryID" property="seminaryID">
 												<html:option value="-1" key="label.seminary.candidaciesGrid.select">
 													<bean:message key="label.seminary.candidaciesGrid.select"/>
 												</html:option>
@@ -37,7 +37,7 @@
 										<bean:message key="label.degree.candidaciesGrid"/>
 									</td>
 									<td>
-										<html:select property="degreeID">
+										<html:select bundle="HTMLALT_RESOURCES" altKey="select.degreeID" property="degreeID">
 											<html:option value="-1" key="label.degree.candidaciesGrid.select">
 												<bean:message key="label.degree.candidaciesGrid.select"/>
 											</html:option>
@@ -50,7 +50,7 @@
 										<bean:message key="label.course.candidaciesGrid"/>
 									</td>
 									<td>
-										<html:select property="courseID">
+										<html:select bundle="HTMLALT_RESOURCES" altKey="select.courseID" property="courseID">
 											<html:option value="-1" key="label.course.candidaciesGrid.select">
 												<bean:message key="label.course.candidaciesGrid.select"/>
 											</html:option>
@@ -63,7 +63,7 @@
 										<bean:message key="label.modality.candidaciesGrid"/>
 									</td>
 									<td>
-										<html:select property="modalityID">
+										<html:select bundle="HTMLALT_RESOURCES" altKey="select.modalityID" property="modalityID">
 											<html:option value="-1" key="label.modality.candidaciesGrid.select">
 												<bean:message key="label.modality.candidaciesGrid.select"/>
 											</html:option>
@@ -76,7 +76,7 @@
 										<bean:message key="label.theme.candidaciesGrid"/>
 									</td>
 									<td>
-										<html:select property="themeID">
+										<html:select bundle="HTMLALT_RESOURCES" altKey="select.themeID" property="themeID">
 											<html:option value="-1" key="label.theme.candidaciesGrid.select">
 												<bean:message key="label.theme.candidaciesGrid.select"/>
 											</html:option>
@@ -89,7 +89,7 @@
 										<bean:message key="label.case1.candidaciesGrid"/>
 									</td>
 									<td>
-										<html:select property="case1ID">
+										<html:select bundle="HTMLALT_RESOURCES" altKey="select.case1ID" property="case1ID">
 											<html:option value="-1" key="label.case1.candidaciesGrid.select">
 												<bean:message key="label.case1.candidaciesGrid.select"/>
 											</html:option>
@@ -107,7 +107,7 @@
 										<bean:message key="label.case2.candidaciesGrid"/>
 									</td>
 									<td>
-										<html:select property="case2ID">
+										<html:select bundle="HTMLALT_RESOURCES" altKey="select.case2ID" property="case2ID">
 											<html:option value="-1" key="label.case2.candidaciesGrid.select">
 												<bean:message key="label.case2.candidaciesGrid.select"/>
 											</html:option>
@@ -125,7 +125,7 @@
 										<bean:message key="label.case3.candidaciesGrid"/>
 									</td>
 									<td>
-										<html:select property="case3ID">
+										<html:select bundle="HTMLALT_RESOURCES" altKey="select.case3ID" property="case3ID">
 											<html:option value="-1" key="label.case3.candidaciesGrid.select">
 												<bean:message key="label.case3.candidaciesGrid.select"/>
 											</html:option>
@@ -143,7 +143,7 @@
 										<bean:message key="label.case4.candidaciesGrid"/>
 									</td>
 									<td>
-										<html:select property="case4ID">
+										<html:select bundle="HTMLALT_RESOURCES" altKey="select.case4ID" property="case4ID">
 											<html:option value="-1" key="label.case4.candidaciesGrid.select">
 												<bean:message key="label.case4.candidaciesGrid.select"/>
 											</html:option>
@@ -161,7 +161,7 @@
 										<bean:message key="label.case5.candidaciesGrid"/>
 									</td>
 									<td>
-										<html:select property="case5ID">
+										<html:select bundle="HTMLALT_RESOURCES" altKey="select.case5ID" property="case5ID">
 											<html:option value="-1" key="label.case5.candidaciesGrid.select">
 												<bean:message key="label.case5.candidaciesGrid.select"/>
 											</html:option>
@@ -179,7 +179,7 @@
 										<bean:message key="label.onlyApproved"/>
 									</td>
 									<td>
-										<html:select property="approved">
+										<html:select bundle="HTMLALT_RESOURCES" altKey="select.approved" property="approved">
 											<html:option value="-1" key="label.approved.all">
 												<bean:message key="label.approved.all"/>
 											</html:option>
@@ -194,8 +194,8 @@
 								</tr>
 								<tr>
 									<td colspan="2">
-										<html:submit styleClass="button" value="&nbsp;&nbsp;&nbsp;&nbsp;OK&nbsp;&nbsp;&nbsp;&nbsp;" property="submition"/>
-										<html:reset styleClass="button" value="Limpar"/>
+										<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submition" styleClass="button" value="&nbsp;&nbsp;&nbsp;&nbsp;OK&nbsp;&nbsp;&nbsp;&nbsp;" property="submition"/>
+										<html:reset bundle="HTMLALT_RESOURCES" altKey="reset.reset" styleClass="button" value="Limpar"/>
 									</td>
 								</tr>
 								<tr>
@@ -222,60 +222,60 @@
 							</table>
 							<table>
 								<tr>
-									<td class="listClasses-header">
+									<th class="listClasses-header">
 										Detalhes
-									</td>
-									<td class="listClasses-header">
-										Nº
-									</td>
-									<td class="listClasses-header">
+									</th>
+									<th class="listClasses-header">
+										Nï¿½
+									</th>
+									<th class="listClasses-header">
 										Nome
-									</td>
-									<td class="listClasses-header">
-										Média
-									</td>
-									<td class="listClasses-header">
+									</th>
+									<th class="listClasses-header">
+										Mï¿½dia
+									</th>
+									<th class="listClasses-header">
 										Cadeiras Feitas
-									</td>
-									<td class="listClasses-header">
+									</th>
+									<th class="listClasses-header">
 										Aceite
-									</td>
-									<td class="listClasses-header">
+									</th>
+									<th class="listClasses-header">
 										E-Mail
-									</td>
-									<td class="listClasses-header">
-										Seminário
-									</td>
-									<td class="listClasses-header">
+									</th>
+									<th class="listClasses-header">
+										Seminï¿½rio
+									</th>
+									<th class="listClasses-header">
 										Curso
-									</td>
-									<td class="listClasses-header">
+									</th>
+									<th class="listClasses-header">
 										Disciplina
-									</td>
-									<td class="listClasses-header">
+									</th>
+									<th class="listClasses-header">
 										Modalidade
-									</td>
-									<td class="listClasses-header">
+									</th>
+									<th class="listClasses-header">
 										Tema
-									</td>
-									<td class="listClasses-header">
-										Motivação
-									</td>
-									<td class="listClasses-header">
+									</th>
+									<th class="listClasses-header">
+										Motivaï¿½ï¿½o
+									</th>
+									<th class="listClasses-header">
 										Caso 1
-									</td>
-									<td class="listClasses-header">
+									</th>
+									<th class="listClasses-header">
 										Caso 2
-									</td>
-									<td class="listClasses-header">
+									</th>
+									<th class="listClasses-header">
 										Caso 3
-									</td>
-									<td class="listClasses-header">
+									</th>
+									<th class="listClasses-header">
 										Caso 4
-									</td>
-									<td class="listClasses-header">
+									</th>
+									<th class="listClasses-header">
 										Caso 5
-									</td>
+									</th>
 								</tr>
 								
 				<logic:present name="candidacies">
@@ -323,7 +323,7 @@
 											Sim
 										</logic:equal>
 										<logic:notEqual name="candidacy" property="approved" value="true">
-											Não
+											Nï¿½o
 										</logic:notEqual>
 									</td>
 									<td class="listClasses">

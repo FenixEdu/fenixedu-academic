@@ -1,5 +1,6 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="dt"%>
@@ -15,24 +16,24 @@
 <logic:notEqual name="seniorInfoForm" property="name" value="">
   <html:form action="/seniorInformation?method=change">
 	
-	<html:hidden property="seniorIDInternal"/>
-	<html:hidden property="name" name="seniorInfoForm"/>
-	<html:hidden property="address" name="seniorInfoForm"/>	
-	<html:hidden property="areaCode" name="seniorInfoForm"/>	
-	<html:hidden property="areaCodeArea" name="seniorInfoForm"/>	
-	<html:hidden property="phone" name="seniorInfoForm"/>	
-	<html:hidden property="mobilePhone" name="seniorInfoForm"/>			
-	<html:hidden property="email" name="seniorInfoForm"/>
-	<html:hidden property="availablePhoto" name="seniorInfoForm"/>	
-	<html:hidden property="personID" name="seniorInfoForm"/>		
-	<html:hidden property="page" value="1"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.seniorIDInternal" property="seniorIDInternal"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.name" property="name" name="seniorInfoForm"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.address" property="address" name="seniorInfoForm"/>	
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.areaCode" property="areaCode" name="seniorInfoForm"/>	
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.areaCodeArea" property="areaCodeArea" name="seniorInfoForm"/>	
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.phone" property="phone" name="seniorInfoForm"/>	
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.mobilePhone" property="mobilePhone" name="seniorInfoForm"/>			
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.email" property="email" name="seniorInfoForm"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.availablePhoto" property="availablePhoto" name="seniorInfoForm"/>	
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.personID" property="personID" name="seniorInfoForm"/>		
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
 	
-	<html:hidden property="specialtyField"/>
-	<html:hidden property="professionalInterests"/>
-	<html:hidden property="languageSkills"/>
-	<html:hidden property="informaticsSkills"/>
-	<html:hidden property="extracurricularActivities"/>
-	<html:hidden property="professionalExperience"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.specialtyField" property="specialtyField"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.professionalInterests" property="professionalInterests"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.languageSkills" property="languageSkills"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.informaticsSkills" property="informaticsSkills"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.extracurricularActivities" property="extracurricularActivities"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.professionalExperience" property="professionalExperience"/>
 
 	
     <table width="100%" cellspacing="0">
@@ -87,13 +88,13 @@
 		  <tr>
             <td width="20%"><bean:message key="label.senior.expectedDegreeTermination"/></td>
             <td>
-				<html:text maxlength="2" size="2" property="expectedDegreeTerminationDay"/> / <html:text maxlength="2" size="2" property="expectedDegreeTerminationMonth"/> / <html:text maxlength="4" size="4" property="expectedDegreeTerminationYear"/>
+				<html:text bundle="HTMLALT_RESOURCES" altKey="text.expectedDegreeTerminationDay" maxlength="2" size="2" property="expectedDegreeTerminationDay"/> / <html:text bundle="HTMLALT_RESOURCES" altKey="text.expectedDegreeTerminationMonth" maxlength="2" size="2" property="expectedDegreeTerminationMonth"/> / <html:text bundle="HTMLALT_RESOURCES" altKey="text.expectedDegreeTerminationYear" maxlength="4" size="4" property="expectedDegreeTerminationYear"/>
 				<bean:message key="label.senior.expectedDegreeTerminationHelp"/>
 			</td>
           </tr>
 		  <tr>
             <td><bean:message key="label.senior.expectedDegreeAverageGrade"/>:</td>
-            <td><html:text maxlength="2" size="2" property="expectedDegreeAverageGrade"/></td>
+            <td><html:text bundle="HTMLALT_RESOURCES" altKey="text.expectedDegreeAverageGrade" maxlength="2" size="2" property="expectedDegreeAverageGrade"/></td>
           </tr>
     </table>
    	<table border="0" width="100%" cellspacing="9">
@@ -104,7 +105,7 @@
 	          <td valign="top"><bean:message key="label.senior.specialtyField_"/></td>	          
           </tr>		  
 		  <tr>
-            <!--<td><html:textarea rows="5" cols="65" property="specialtyField"/></td>-->           
+            <!--<td><html:textarea bundle="HTMLALT_RESOURCES" altKey="textarea.specialtyField" rows="5" cols="65" property="specialtyField"/></td>-->           
             <td>		        
 				<script language="JavaScript" type="text/javascript"> 
 					<!--
@@ -133,7 +134,7 @@
 		  </tr>		  
 		  <tr>
 			<!--<td valign="top"><bean:message key="label.senior.professionalInterests"/></td>-->
-            <!--<td><html:textarea rows="5" cols="65" property="professionalInterests"/></td>-->
+            <!--<td><html:textarea bundle="HTMLALT_RESOURCES" altKey="textarea.professionalInterests" rows="5" cols="65" property="professionalInterests"/></td>-->
             <td>	
 				<script language="JavaScript" type="text/javascript"> 
 					<!--
@@ -161,7 +162,7 @@
           </tr>		  
 		  <tr>
             <!--<td valign="top"><bean:message key="label.senior.languageSkills"/></td>-->
-            <!--<td><html:textarea rows="5" cols="65" property="languageSkills"/></td>-->
+            <!--<td><html:textarea bundle="HTMLALT_RESOURCES" altKey="textarea.languageSkills" rows="5" cols="65" property="languageSkills"/></td>-->
             <td>	
 				<script language="JavaScript" type="text/javascript"> 
 					<!--
@@ -189,7 +190,7 @@
           </tr>		  
 		  <tr>
             <!--<td valign="top"><bean:message key="label.senior.informaticsSkills"/></td>-->
-            <!--<td><html:textarea rows="5" cols="65" property="informaticsSkills"/></td>-->
+            <!--<td><html:textarea bundle="HTMLALT_RESOURCES" altKey="textarea.informaticsSkills" rows="5" cols="65" property="informaticsSkills"/></td>-->
             <td>	
 				<script language="JavaScript" type="text/javascript"> 
 					<!--
@@ -217,7 +218,7 @@
           </tr>		  
 		  <tr>
             <!--<td valign="top"><bean:message key="label.senior.extracurricularActivities"/></td>-->
-            <!--<td><html:textarea rows="5" cols="65" property="extracurricularActivities"/></td>-->            
+            <!--<td><html:textarea bundle="HTMLALT_RESOURCES" altKey="textarea.extracurricularActivities" rows="5" cols="65" property="extracurricularActivities"/></td>-->            
             <td>	
 				<script language="JavaScript" type="text/javascript"> 
 					<!--
@@ -245,7 +246,7 @@
           </tr>		  
   		  <tr>
             <!--<td valign="top"><bean:message key="label.senior.professionalExperience"/></td>-->
-            <!--<td><html:textarea rows="5" cols="65" property="professionalExperience"/></td>-->            
+            <!--<td><html:textarea bundle="HTMLALT_RESOURCES" altKey="textarea.professionalExperience" rows="5" cols="65" property="professionalExperience"/></td>-->            
           	<td>	
 				<script language="JavaScript" type="text/javascript"> 
 					<!--
@@ -278,8 +279,8 @@
           </tr>
    	</table>
 <br /><br />
-<html:submit styleClass="inputbutton" property="Alterar" onclick="this.form.specialtyField.value=update1();this.form.professionalInterests.value=update2();this.form.languageSkills.value=update3();this.form.informaticsSkills.value=update4();this.form.extracurricularActivities.value=update5(); this.form.professionalExperience.value=update6()"><bean:message key="button.change"/></html:submit>
-<html:reset property="Reset" styleClass="inputbutton"><bean:message key="button.reset"/></html:reset>
+<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.Alterar" styleClass="inputbutton" property="Alterar" onclick="this.form.specialtyField.value=update1();this.form.professionalInterests.value=update2();this.form.languageSkills.value=update3();this.form.informaticsSkills.value=update4();this.form.extracurricularActivities.value=update5(); this.form.professionalExperience.value=update6()"><bean:message key="button.change"/></html:submit>
+<html:reset bundle="HTMLALT_RESOURCES" altKey="reset.Reset" property="Reset" styleClass="inputbutton"><bean:message key="button.reset"/></html:reset>
 </html:form>
 
 </logic:notEqual>

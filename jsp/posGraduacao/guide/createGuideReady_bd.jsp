@@ -1,5 +1,6 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/enum.tld" prefix="e" %>
@@ -75,14 +76,14 @@
 		</logic:iterate>
 
       <html:form action="/createGuideReadyDispatchAction?method=create">
-       <html:hidden property="graduationType" value='<%= pageContext.findAttribute("graduationType").toString()%>'/>
-       <html:hidden property="requester" value='<%= pageContext.findAttribute(SessionConstants.REQUESTER_TYPE).toString()%>'/>
-       <html:hidden property="<%= SessionConstants.REQUESTER_NUMBER %>" value='<%= pageContext.findAttribute(SessionConstants.REQUESTER_NUMBER).toString()%>'/>
-       <html:hidden property="page" value="1"/>
+       <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.graduationType" property="graduationType" value='<%= pageContext.findAttribute("graduationType").toString()%>'/>
+       <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.requester" property="requester" value='<%= pageContext.findAttribute(SessionConstants.REQUESTER_TYPE).toString()%>'/>
+       <html:hidden alt="<%= SessionConstants.REQUESTER_NUMBER %>" property="<%= SessionConstants.REQUESTER_NUMBER %>" value='<%= pageContext.findAttribute(SessionConstants.REQUESTER_NUMBER).toString()%>'/>
+       <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
        <tr>
          <td><bean:message key="label.masterDegree.administrativeOffice.others"/> </td>
-         <td><html:textarea property="othersRemarks"/></td>
-         <td><html:text property="othersPrice"/> <bean:message key="label.currencySymbol"/></td>
+         <td><html:textarea bundle="HTMLALT_RESOURCES" altKey="textarea.othersRemarks" property="othersRemarks"/></td>
+         <td><html:text bundle="HTMLALT_RESOURCES" altKey="text.othersPrice" property="othersPrice"/> <bean:message key="label.currencySymbol"/></td>
        </tr>
        
     </table>
@@ -97,10 +98,10 @@
 	   <!-- Guide Situation -->
        <tr>
         <td><bean:message key="label.masterDegree.administrativeOffice.remarks"/> </td>
-       	<td><html:textarea property="remarks"/></td>
+       	<td><html:textarea bundle="HTMLALT_RESOURCES" altKey="textarea.remarks" property="remarks"/></td>
         <td><bean:message key="label.masterDegree.administrativeOffice.newGuideSituation" />
         	<e:labelValues id="values" enumeration="net.sourceforge.fenixedu.domain.GuideState" bundle="ENUMERATION_RESOURCES" includedFields="NON_PAYED,PAYED"/>  
-            <html:select property="guideSituation">
+            <html:select bundle="HTMLALT_RESOURCES" altKey="select.guideSituation" property="guideSituation">
            		<html:options collection="values" property="value" labelProperty="label" />
             </html:select>          
        	</td>
@@ -110,12 +111,12 @@
 	
     <bean:message key="label.masterDegree.administrativeOffice.payment" />
 	<e:labelValues id="values" enumeration="net.sourceforge.fenixedu.domain.transactions.PaymentType"  bundle="ENUMERATION_RESOURCES"/>
-    <html:select property="paymentType">
+    <html:select bundle="HTMLALT_RESOURCES" altKey="select.paymentType" property="paymentType">
        	<html:option key="dropDown.Default" value=""/>
         <html:options collection="values" property="value" labelProperty="label"/>
     </html:select> 
 
-   <html:submit property="Criar">Criar Guia</html:submit>
+   <html:submit bundle="HTMLALT_RESOURCES" altKey="submit.Criar" property="Criar">Criar Guia</html:submit>
       </html:form>
    </table>
 

@@ -1,4 +1,5 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 
@@ -7,19 +8,19 @@
 <span class="error"><html:errors/></span>
 
 <html:form action="/curricularCourseEquivalencies">
-	<html:hidden property="method" value="prepare"/>
-	<html:hidden property="page" value="0"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="prepare"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="0"/>
 
 	<br />
 	<br />
 
 	<table>
 		<tr>
-			<td class="listClasses-header">
+			<th class="listClasses-header">
 				<bean:message key="label.choose.degree"/>
-			</td>
+			</th>
 			<td class="listClasses">
-				<html:select property="degreeID" onchange="this.form.submit();">
+				<html:select bundle="HTMLALT_RESOURCES" altKey="select.degreeID" property="degreeID" onchange="this.form.submit();">
 					<html:option value=""/>
 					<html:options collection="infoDegrees" labelProperty="name" property="idInternal"/>
 				</html:select>
@@ -27,11 +28,11 @@
 		</tr>
 		<logic:present name="infoDegreeCurricularPlans">
 			<tr>
-				<td class="listClasses-header">
+				<th class="listClasses-header">
 					<bean:message key="label.choose.degree.curricular.plan"/>
-				</td>
+				</th>
 				<td class="listClasses">
-					<html:select property="degreeCurricularPlanID" onchange="this.form.submit();">
+					<html:select bundle="HTMLALT_RESOURCES" altKey="select.degreeCurricularPlanID" property="degreeCurricularPlanID" onchange="this.form.submit();">
 						<html:option value=""/>
 						<html:options collection="infoDegreeCurricularPlans" labelProperty="name" property="idInternal"/>
 					</html:select>
@@ -48,14 +49,14 @@
 	<br/>
 
 	<html:form action="/curricularCourseEquivalencies">
-		<html:hidden property="method" value="prepareCreate"/>
-		<html:hidden property="page" value="0"/>
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="prepareCreate"/>
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="0"/>
 		<bean:define id="degreeID" name="curricularCourseEquivalenciesForm" property="degreeID" type="java.lang.String"/>
-		<html:hidden property="degreeID" value="<%= degreeID %>"/>
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.degreeID" property="degreeID" value="<%= degreeID %>"/>
 		<bean:define id="degreeCurricularPlanID" name="curricularCourseEquivalenciesForm" property="degreeCurricularPlanID" type="java.lang.String"/>
-		<html:hidden property="degreeCurricularPlanID" value="<%= degreeCurricularPlanID %>"/>
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.degreeCurricularPlanID" property="degreeCurricularPlanID" value="<%= degreeCurricularPlanID %>"/>
 
-		<html:submit styleClass="inputbutton">
+		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton">
 			<bean:message key="link.curricular.course.equivalence.create"/>
 		</html:submit>
 	</html:form>
@@ -65,14 +66,14 @@
 
 	<table>
 		<tr>
-			<td colspan="3" class="listClasses-header">
+			<th colspan="3" class="listClasses-header">
 				<bean:message key="label.old.curricular.course"/>
-			</td>
-			<td colspan="2" class="listClasses-header">
+			</th>
+			<th colspan="2" class="listClasses-header">
 				<bean:message key="label.equivalente.curricular.course"/>
-			</td>
-			<td class="listClasses-header">
-			</td>
+			</th>
+			<th class="listClasses-header">
+			</th>
 		</tr>
 		<logic:iterate id="infoCurricularCourseEquivalence" name="infoCurricularCourseEquivalences">
 			<tr>
@@ -93,16 +94,16 @@
 				</td>
 				<td class="listClasses">
 					<html:form action="/curricularCourseEquivalencies">
-						<html:hidden property="method" value="delete"/>
-						<html:hidden property="page" value="0"/>
+						<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="delete"/>
+						<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="0"/>
 						<bean:define id="degreeID" name="curricularCourseEquivalenciesForm" property="degreeID" type="java.lang.String"/>
-						<html:hidden property="degreeID" value="<%= degreeID %>"/>
+						<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.degreeID" property="degreeID" value="<%= degreeID %>"/>
 						<bean:define id="degreeCurricularPlanID" name="curricularCourseEquivalenciesForm" property="degreeCurricularPlanID" type="java.lang.String"/>
-						<html:hidden property="degreeCurricularPlanID" value="<%= degreeCurricularPlanID %>"/>
+						<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.degreeCurricularPlanID" property="degreeCurricularPlanID" value="<%= degreeCurricularPlanID %>"/>
 						<bean:define id="curricularCourseEquivalencyID" name="infoCurricularCourseEquivalence" property="idInternal" type="java.lang.Integer"/>
-						<html:hidden property="curricularCourseEquivalencyID" value="<%= curricularCourseEquivalencyID.toString() %>"/>
+						<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.curricularCourseEquivalencyID" property="curricularCourseEquivalencyID" value="<%= curricularCourseEquivalencyID.toString() %>"/>
 
-						<html:submit styleClass="inputbutton">
+						<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton">
 							<bean:message key="button.delete"/>
 						</html:submit>
 					</html:form>

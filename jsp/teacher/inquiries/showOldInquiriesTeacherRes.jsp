@@ -1,5 +1,5 @@
 <%@ page language="java" %>
-<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %><html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoTeacher" %>
@@ -104,21 +104,21 @@
 			<td class="invisible" style="text-align:left" rowspan="10" valign="top">
 				&nbsp;&nbsp;
 			</td>
-			<td class="listClasses-header" style="text-align:left">
+			<th class="listClasses-header" style="text-align:left">
 				<bean:message key="table.header.inquiries.questions"  bundle="INQUIRIES_RESOURCES"/>
-			</td>
-			<td class="listClasses-header">
+			</th>
+			<th class="listClasses-header">
 				<bean:message key="table.header.inquiries.average"  bundle="INQUIRIES_RESOURCES"/>
-			</td>
-			<td class="listClasses-header">
+			</th>
+			<th class="listClasses-header">
 				<bean:message key="table.header.inquiries.deviation"  bundle="INQUIRIES_RESOURCES"/>
-			</td>
-			<td class="listClasses-header">
+			</th>
+			<th class="listClasses-header">
 				<bean:message key="table.header.inquiries.tolerance"  bundle="INQUIRIES_RESOURCES"/>
-			</td>
-			<td class="listClasses-header">
+			</th>
+			<th class="listClasses-header">
 				<bean:message key="table.header.inquiries.number.answers"  bundle="INQUIRIES_RESOURCES"/>
-			</td>
+			</th>
 		</tr>
 
 		<%--############ CLASS COORDINATION ############## --%>
@@ -418,21 +418,21 @@
 				<td class="invisible" style="text-align:left" rowspan="10" valign="top">
 					&nbsp;&nbsp;
 				</td>
-				<td class="listClasses-header" style="text-align:left">
+				<th class="listClasses-header" style="text-align:left">
 					<bean:message key="table.header.inquiries.questions"  bundle="INQUIRIES_RESOURCES"/>
-				</td>
-				<td class="listClasses-header">
+				</th>
+				<th class="listClasses-header">
 					<bean:message key="table.header.inquiries.average"  bundle="INQUIRIES_RESOURCES"/>
-				</td>
-				<td class="listClasses-header">
+				</th>
+				<th class="listClasses-header">
 					<bean:message key="table.header.inquiries.deviation"  bundle="INQUIRIES_RESOURCES"/>
-				</td>
-				<td class="listClasses-header">
+				</th>
+				<th class="listClasses-header">
 					<bean:message key="table.header.inquiries.tolerance"  bundle="INQUIRIES_RESOURCES"/>
-				</td>
-				<td class="listClasses-header">
+				</th>
+				<th class="listClasses-header">
 					<bean:message key="table.header.inquiries.number.answers"  bundle="INQUIRIES_RESOURCES"/>
-				</td>
+				</th>
 			</tr>
 	
 			<%--############ ASSIDUITY (TEACHER) ############## --%>

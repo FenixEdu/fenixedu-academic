@@ -5,6 +5,7 @@
 <%@ taglib uri="/WEB-INF/c.tld" prefix="c"%>
 
 <ft:tilesView definition="departmentAdmOffice.masterPage" attributeName="body-inline">
+	<f:loadBundle basename="resources/HtmlAltResources" var="htmlAltBundle"/>
 
 	<f:loadBundle basename="resources/DepartmentAdmOfficeResources" var="bundle"/>
 	
@@ -173,7 +174,7 @@
 				rendered="#{empty functionsManagementBackingBean.inactiveFunctions}" escape="false"/>							
 			
 		<h:outputText value="<br/><br/>" escape="false"/>				
-		<h:commandButton value="#{bundle['button.cancel']}" action="chooseNewPerson" styleClass="inputbutton"/>
+		<h:commandButton alt="#{htmlAltBundle['commandButton.cancel']}" value="#{bundle['button.cancel']}" action="chooseNewPerson" styleClass="inputbutton"/>
 					
 	</h:form>
 

@@ -1,5 +1,6 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/enum.tld" prefix="e"%>
@@ -23,27 +24,27 @@
 	<logic:greaterThan name="numberOfGroups" value="0">	
 		<html:form action="/differenceGroupOperationsManagement" method="get">
         
-        		<html:hidden property="method" value="createGroup"/>
-        		<html:hidden property="userGroupType"/>
-        		<html:hidden property="name"/>
-        		<html:hidden property="description"/>
+        		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="createGroup"/>
+        		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.userGroupType" property="userGroupType"/>
+        		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.name" property="name"/>
+        		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.description" property="description"/>
             
             <h3><bean:message  bundle="CMS_RESOURCES" key="cms.personalGroupsManagement.includeGroups.title.label"/></h3>
             
 			<table width="100%">
 				<tr>
-					<td class="listClasses-header">&nbsp;
-					</td>
-					<td class="listClasses-header"><bean:message  bundle="CMS_RESOURCES" key="cms.name.label"/>
-					</td>
-					<td class="listClasses-header"><bean:message  bundle="CMS_RESOURCES" key="cms.description.label"/>
-					</td>
-					<td class="listClasses-header"><bean:message  bundle="CMS_RESOURCES" key="cms.personalGroupsManagement.type.label"/>
-					</td>
-					<td class="listClasses-header"><bean:message  bundle="CMS_RESOURCES" key="cms.personalGroupsManagement.groupCardinality.label"/>
-					</td>			
-					<td class="listClasses-header">&nbsp;
-					</td>
+					<th class="listClasses-header">&nbsp;
+					</th>
+					<th class="listClasses-header"><bean:message  bundle="CMS_RESOURCES" key="cms.name.label"/>
+					</th>
+					<th class="listClasses-header"><bean:message  bundle="CMS_RESOURCES" key="cms.description.label"/>
+					</th>
+					<th class="listClasses-header"><bean:message  bundle="CMS_RESOURCES" key="cms.personalGroupsManagement.type.label"/>
+					</th>
+					<th class="listClasses-header"><bean:message  bundle="CMS_RESOURCES" key="cms.personalGroupsManagement.groupCardinality.label"/>
+					</th>			
+					<th class="listClasses-header">&nbsp;
+					</th>
 				</tr>			
 				<logic:iterate id="group" name="person" property="personalGroupsIterator" type="net.sourceforge.fenixedu.domain.PersonalGroup">
 					<bean:define id="readableGroupType" value="<%= GroupTypes.userGroupTypeByClass(group.getGroup().getClass()).toString() %>"/>
@@ -51,7 +52,7 @@
                     
 					<tr>
 						<td class="listClasses">
-							<input type="checkbox" name="selectedGroups" value="<%= group.getIdInternal().toString() %>"/> 
+							<input alt="input.selectedGroups" type="checkbox" name="selectedGroups" value="<%= group.getIdInternal().toString() %>"/> 
 						</td>
 						<td class="listClasses"><bean:write name="group" property="name"/></td>
 						<td class="listClasses"><bean:write name="group" property="description"/></td>
@@ -73,18 +74,18 @@
             
             <table width="100%">
                 <tr>
-                    <td class="listClasses-header">&nbsp;
-                    </td>
-                    <td class="listClasses-header"><bean:message  bundle="CMS_RESOURCES" key="cms.name.label"/>
-                    </td>
-                    <td class="listClasses-header"><bean:message  bundle="CMS_RESOURCES" key="cms.description.label"/>
-                    </td>
-                    <td class="listClasses-header"><bean:message  bundle="CMS_RESOURCES" key="cms.personalGroupsManagement.type.label"/>
-                    </td>
-                    <td class="listClasses-header"><bean:message  bundle="CMS_RESOURCES" key="cms.personalGroupsManagement.groupCardinality.label"/>
-                    </td>           
-                    <td class="listClasses-header">&nbsp;
-                    </td>
+                    <th class="listClasses-header">&nbsp;
+                    </th>
+                    <th class="listClasses-header"><bean:message  bundle="CMS_RESOURCES" key="cms.name.label"/>
+                    </th>
+                    <th class="listClasses-header"><bean:message  bundle="CMS_RESOURCES" key="cms.description.label"/>
+                    </th>
+                    <th class="listClasses-header"><bean:message  bundle="CMS_RESOURCES" key="cms.personalGroupsManagement.type.label"/>
+                    </th>
+                    <th class="listClasses-header"><bean:message  bundle="CMS_RESOURCES" key="cms.personalGroupsManagement.groupCardinality.label"/>
+                    </th>           
+                    <th class="listClasses-header">&nbsp;
+                    </th>
                 </tr>           
                 <logic:iterate id="group" name="person" property="personalGroupsIterator" type="net.sourceforge.fenixedu.domain.PersonalGroup">
                     <bean:define id="readableGroupType" value="<%= GroupTypes.userGroupTypeByClass(group.getGroup().getClass()).toString() %>"/>
@@ -92,7 +93,7 @@
 
                     <tr>
                         <td class="listClasses">
-                            <input type="checkbox" name="excludeGroups" value="<%= group.getIdInternal().toString() %>"/> 
+                            <input alt="input.excludeGroups" type="checkbox" name="excludeGroups" value="<%= group.getIdInternal().toString() %>"/> 
                         </td>
                         <td class="listClasses"><bean:write name="group" property="name"/></td>
                         <td class="listClasses"><bean:write name="group" property="description"/></td>

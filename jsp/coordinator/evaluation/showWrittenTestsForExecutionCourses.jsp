@@ -6,6 +6,7 @@
 <%@ taglib uri="/WEB-INF/fmt.tld" prefix="fmt"%>
 
 <ft:tilesView definition="df.coordinator.evaluation-management" attributeName="body-inline">
+	<f:loadBundle basename="resources/HtmlAltResources" var="htmlAltBundle"/>
 <style>
 .boldFontClass { 
 	font-weight: bold
@@ -83,7 +84,7 @@ table.executionCoursesWithoutWrittenEvaluations td {
 			</h:selectOneMenu>
 		</h:panelGrid>
 		<h:outputText value="<br/>" escape="false" />
-		<h:commandButton action="#{coordinatorWrittenTestsInformationBackingBean.searchExecutionCourses}"
+		<h:commandButton alt="#{htmlAltBundle['commandButton.search']}" action="#{coordinatorWrittenTestsInformationBackingBean.searchExecutionCourses}"
 			value="#{bundle['button.search']}" styleClass="inputbutton"/>
  		<h:outputText value="</div>" escape="false" />
 		<h:outputText value="<br/>" escape="false" />

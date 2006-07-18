@@ -21,6 +21,7 @@ function check(e,v)
 </script>
 
 <ft:tilesView definition="df.page.functionsManagement" attributeName="body-inline">
+	<f:loadBundle basename="resources/HtmlAltResources" var="htmlAltBundle"/>
 
 	<f:loadBundle basename="resources/DepartmentAdmOfficeResources" var="bundle"/>
 	
@@ -42,7 +43,7 @@ function check(e,v)
 					
 		<h:outputText value="#{managerFunctionsManagementBackingBean.units}<br/>" escape="false"/>
 		
-		<h:commandButton styleClass="inputbutton" value="#{bundle['button.choose.new.person']}" action="backToList"/>
+		<h:commandButton alt="#{htmlAltBundle['commandButton.person']}" styleClass="inputbutton" value="#{bundle['button.choose.new.person']}" action="backToList"/>
 						    				
 	</h:form>
 

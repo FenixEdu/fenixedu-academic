@@ -1,5 +1,6 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 
@@ -16,29 +17,29 @@
 	</table>
 
 <html:form action="/marksList">
-<html:hidden property="page" value="1"/>	
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>	
 <table>
 <tr>
 	<td>
 		<bean:message key="label.data.avaliacao"/>:
 	</td>
 	<td> 
-		<html:text property="day" size="2" maxlength="2" />&nbsp;/&nbsp;
-		<html:text property="month" size="2" maxlength="2"/>&nbsp;/&nbsp;
-		<html:text property="year" size="4" maxlength="4"/>
+		<html:text bundle="HTMLALT_RESOURCES" altKey="text.day" property="day" size="2" maxlength="2" />&nbsp;/&nbsp;
+		<html:text bundle="HTMLALT_RESOURCES" altKey="text.month" property="month" size="2" maxlength="2"/>&nbsp;/&nbsp;
+		<html:text bundle="HTMLALT_RESOURCES" altKey="text.year" property="year" size="4" maxlength="4"/>
 	</td>
 </tr>
 </table>
 <br />
 
-<html:hidden property="method" value="submitMarks"/>
-<html:hidden property="objectCode" value="<%= pageContext.findAttribute("objectCode").toString() %>" />
-<html:hidden property="evaluationCode" value="<%= pageContext.findAttribute("evaluationCode").toString() %>" />
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="submitMarks"/>
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.objectCode" property="objectCode" value="<%= pageContext.findAttribute("objectCode").toString() %>" />
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.evaluationCode" property="evaluationCode" value="<%= pageContext.findAttribute("evaluationCode").toString() %>" />
 
-<html:submit styleClass="inputbutton">
+<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton">
 	<bean:message key="button.save"/>
 </html:submit>
-<html:reset  styleClass="inputbutton">
+<html:reset bundle="HTMLALT_RESOURCES" altKey="reset.reset"  styleClass="inputbutton">
 	<bean:message key="label.clear"/>
 </html:reset>			
 </html:form>

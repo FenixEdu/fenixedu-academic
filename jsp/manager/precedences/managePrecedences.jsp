@@ -1,5 +1,5 @@
 <%@ page language="java" %>
-<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %><html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ page import="net.sourceforge.fenixedu.dataTransferObject.precedences.InfoRestriction" %>
@@ -19,11 +19,11 @@
 
 		<table border="0">
 			<tr>
-				<td class="listClasses-header" colspan="2">
+				<th class="listClasses-header" colspan="2">
 					<bean:message bundle="MANAGER_RESOURCES" key="message.manager.this.course"/>
 					<bean:write name="infoCurricularCourse" property="name"/>
 					<bean:message bundle="MANAGER_RESOURCES" key="message.manager.has.precedence"/>
-				</td>
+				</th>
 			</tr>
 			<bean:size id="infoPrecedencesSize" name="infoPrecedences"/>
 			<logic:iterate id="precedence" name="infoPrecedences" indexId="precedencesLength">
@@ -60,7 +60,7 @@
 				</tr>
 				<% if ((precedencesLength.intValue() + 1 ) < infoPrecedencesSize.intValue()) { %>
 					<tr>
-						<td class="listClasses-header" colspan="2"><bean:message bundle="MANAGER_RESOURCES" key="message.manager.or"/></td>
+						<th class="listClasses-header" colspan="2"><bean:message bundle="MANAGER_RESOURCES" key="message.manager.or"/></th>
 					</tr>
 				<% } %>
 			</logic:iterate>

@@ -1,24 +1,24 @@
 <%@ page language="java" %>
-<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
+<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%><html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>			
 <h2><bean:message bundle="MANAGER_RESOURCES" key="label.manager.insert.curricularCourseScope" /></h2>
 <br />
 <span class="error"><html:errors/></span>
 <html:form action="/insertCurricularCourseScopeFromAnother" method="get">
-	<html:hidden property="method" value="insert"/>
-	<html:hidden property="page" value="1"/>
-	<html:hidden property="degreeId" value="<%= request.getParameter("degreeId") %>"/>
-	<html:hidden property="degreeCurricularPlanId" value="<%= request.getParameter("degreeCurricularPlanId") %>"/>
-	<html:hidden property="curricularCourseId" value="<%= request.getParameter("curricularCourseId") %>"/>
-	<html:hidden property="curricularCourseScopeId" value="<%= request.getParameter("curricularCourseScopeId") %>"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="insert"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.degreeId" property="degreeId" value="<%= request.getParameter("degreeId") %>"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.degreeCurricularPlanId" property="degreeCurricularPlanId" value="<%= request.getParameter("degreeCurricularPlanId") %>"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.curricularCourseId" property="curricularCourseId" value="<%= request.getParameter("curricularCourseId") %>"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.curricularCourseScopeId" property="curricularCourseScopeId" value="<%= request.getParameter("curricularCourseScopeId") %>"/>
 	<table>
 		<tr>
 			<td>
 				<bean:message bundle="MANAGER_RESOURCES" key="message.manager.curricular.course.scope.YearAndSemester"/>
 			</td>
 			<td>
-				<html:select property="curricularSemesterId">
+				<html:select bundle="HTMLALT_RESOURCES" altKey="select.curricularSemesterId" property="curricularSemesterId">
 				<html:option key="option.curricular.course.scope.semester.1" value="1"/>
     			<html:option key="option.curricular.course.scope.semester.2" value="2"/>
     			<html:option key="option.curricular.course.scope.semester.3" value="3"/>
@@ -37,7 +37,7 @@
 				<bean:message bundle="MANAGER_RESOURCES" key="message.manager.curricular.course.scope.branchCode"/>
 			</td>
 			<td>
-				<html:select property="branchId">
+				<html:select bundle="HTMLALT_RESOURCES" altKey="select.branchId" property="branchId">
 					<html:options collection="branchesList" property="value" labelProperty="label"/>
 				</html:select>				
 			</td>
@@ -47,7 +47,7 @@
 				<bean:message bundle="MANAGER_RESOURCES" key="label.manager.curricularCourseScope.beginDate"/>
 			</td>
 			<td>
-				<html:select property="beginDate">
+				<html:select bundle="HTMLALT_RESOURCES" altKey="select.beginDate" property="beginDate">
 					<html:options collection="executionPeriodsLabels" property="value" labelProperty="label"/>
 				</html:select>				
 			</td>
@@ -57,15 +57,15 @@
 				<bean:message bundle="MANAGER_RESOURCES" key="message.manager.degree.curricular.plan.anotation"/>
 			</td>
 			<td>
-				<html:text property="anotation" size="20" />
+				<html:text bundle="HTMLALT_RESOURCES" altKey="text.anotation" property="anotation" size="20" />
 			</td>
 		</tr>
 	</table>
 	<br />
-	<html:submit styleClass="inputbutton">
+	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton">
 		<bean:message bundle="MANAGER_RESOURCES" key="button.save"/>
 	</html:submit>
-	<html:reset  styleClass="inputbutton">
+	<html:reset bundle="HTMLALT_RESOURCES" altKey="reset.reset"  styleClass="inputbutton">
 		<bean:message bundle="MANAGER_RESOURCES" key="label.clear"/>
 	</html:reset>
 </html:form>	

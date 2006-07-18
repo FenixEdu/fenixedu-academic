@@ -1,22 +1,23 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 
 <logic:iterate id="departmentTeachersDTO" name="departmentTeachersDTOList">
 	<html:form action="/creditsManagement">
-		<html:hidden property="page" value="0"/>
-		<html:hidden property="method" value="prepare"/>
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="0"/>
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="prepare"/>
 		<h2><bean:write name="departmentTeachersDTO" property="infoDepartment.name"/></h2>
 		<bean:size id="numberOfTeachers" name="departmentTeachersDTO" property="infoTeacherList"/>
-		<html:select property="teacherOID" value="0" style="display:inline">
+		<html:select bundle="HTMLALT_RESOURCES" altKey="select.teacherOID" property="teacherOID" value="0" style="display:inline">
 			<logic:iterate id="infoTeacher" name="departmentTeachersDTO" property="infoTeacherList">
 				<option value="<jsp:getProperty name='infoTeacher' property='idInternal'/>">
 					<jsp:getProperty name="infoTeacher" property="teacherNumber"/> - <bean:write name="infoTeacher" property="infoPerson.nome"/>
 				</option>
 			</logic:iterate>
 		</html:select>
-		<html:submit value="Editar" styleClass="inputbutton"/>
+		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" value="Editar" styleClass="inputbutton"/>
 	</html:form>
 </logic:iterate>
 

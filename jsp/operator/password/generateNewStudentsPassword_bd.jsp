@@ -1,5 +1,6 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 
@@ -8,7 +9,7 @@
 
 <br />
 <html:form action="/generateNewStudentsPasswords.do?method=generatePasswords" target="_blank">
-	<html:hidden property="page" value="1" />
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1" />
 
 	<h3><bean:message key="label.newPasswordForStudentRegistration" bundle="MANAGER_RESOURCES"/></h3>
 
@@ -26,7 +27,7 @@
 				<b><bean:message key="label.fromNumber" bundle="MANAGER_RESOURCES" /></b>
 			</td>
 			<td>
-				<html:text property="fromNumber"/>
+				<html:text bundle="HTMLALT_RESOURCES" altKey="text.fromNumber" property="fromNumber"/>
 			</td>		
 		</tr>
 		<tr>
@@ -34,7 +35,7 @@
 				<b><bean:message key="label.toNumber" bundle="MANAGER_RESOURCES" /></b>
 			</td>
 			<td>
-				<html:text property="toNumber"/>
+				<html:text bundle="HTMLALT_RESOURCES" altKey="text.toNumber" property="toNumber"/>
 			</td>		
 		</tr>
 	</table>
@@ -42,5 +43,5 @@
 
 
 	<br /><br />
-	<html:submit value="Gerar Passwords" styleClass="inputbutton" property="OK"/>
+	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.OK" value="Gerar Passwords" styleClass="inputbutton" property="OK"/>
 </html:form> 

@@ -1,5 +1,5 @@
 <%@ page language="java" %>
-<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
+<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%><html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 
@@ -35,9 +35,9 @@
 
 		<tr>
 		
-			<td class="listClasses-header" align="left">
+			<th class="listClasses-header" align="left">
 			<bean:message key="message.groupPropertiesName"/>
-         	</td>
+         	</th>
                     
 			<td class="listClasses" align="left">
 			<bean:write name="infoGrouping" property="name" />
@@ -45,9 +45,9 @@
 		</tr>
 		
 		<tr>
-			<td class="listClasses-header" align="left">
+			<th class="listClasses-header" align="left">
 			<bean:message key="message.groupPropertiesProjectDescription"/>
-         	</td>
+         	</th>
          	
          	
          	<td class="listClasses">
@@ -63,9 +63,9 @@
 		</tr>
 		
 	    <tr>
-		    <td class="listClasses-header" align="left">
+		    <th class="listClasses-header" align="left">
 			<bean:message key="message.groupPropertiesEnrolmentBeginDay"/>
-         	</td>
+         	</th>
 	    
 			
 			<td class="listClasses" align="left">
@@ -85,9 +85,9 @@
  		 </tr>
 	    	<tr>
 
-				<td class="listClasses-header" align="left">
+				<th class="listClasses-header" align="left">
 				<bean:message key="message.groupPropertiesEnrolmentEndDay"/>
-         		</td>
+         		</th>
 
 			
 			<td class="listClasses" align="left">
@@ -107,9 +107,9 @@
 			
 		<tr>
 
-			<td class="listClasses-header" align="left">
+			<th class="listClasses-header" align="left">
 			<bean:message key="message.groupPropertiesEnrolmentPolicy"/>
-         	</td>
+         	</th>
 
 			<td class="listClasses" align="left">
 			<bean:write name="enrolmentPolicyName"/>
@@ -117,20 +117,20 @@
 		</tr>
 		
 		<tr>
-			<td class="listClasses-header" align="left">
+			<th class="listClasses-header" align="left">
 			<bean:message key="message.groupPropertiesShiftType"/>
-         	</td>
+         	</th>
 		
 			<td class="listClasses" align="left">
 			<bean:write name="shiftTypeName"/></td>		
 		</tr>
 
 		<tr>
-			<td class="listClasses-header" align="left">
+			<th class="listClasses-header" align="left">
 			<bean:message key="message.groupPropertiesMaximumCapacity"/>:
 			<br><bean:message key="label.teacher.insertGroupProperties.MaximumCapacityDescription"/>
 			<br>
-         	</td>
+         	</th>
 			
 			<td class="listClasses" align="left">
 			<logic:empty name="infoGrouping" property="maximumCapacity">
@@ -144,11 +144,11 @@
 		</tr>	
     	<tr>
     	
-    		<td class="listClasses-header" align="left">
+    		<th class="listClasses-header" align="left">
 			<bean:message key="message.groupPropertiesMinimumCapacity"/>:
 			<br><bean:message key="label.teacher.insertGroupProperties.MinimumCapacityDescription"/>
 			<br>
-         	</td>
+         	</th>
     	
 			<td class="listClasses" align="left">
 			<logic:empty name="infoGrouping" property="minimumCapacity">
@@ -162,11 +162,11 @@
 		</tr>
 		<tr>
 		
-			<td class="listClasses-header" align="left">
+			<th class="listClasses-header" align="left">
 			<bean:message key="message.groupPropertiesIdealCapacity"/>:
 			<br><bean:message key="label.teacher.insertGroupProperties.IdealCapacityDescription"/>
 			<br>
-         	</td>
+         	</th>
 		
 			<td class="listClasses" align="left">
 			<logic:empty name="infoGrouping" property="idealCapacity">
@@ -179,9 +179,9 @@
 			
 		</tr>
 		<tr>
-			<td class="listClasses-header" align="left">
+			<th class="listClasses-header" align="left">
 			<bean:message key="message.groupPropertiesGroupMaximumNumber"/>:
-         	</td>
+         	</th>
 		
 			
 			<td class="listClasses" align="left">
@@ -205,31 +205,31 @@
 
 	<html:form action="/acceptNewProjectProposal" method="get">
 	<td>
-		<html:submit styleClass="inputbutton"><bean:message key="button.accept"/>                    		         	
+		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton"><bean:message key="button.accept"/>                    		         	
 		</html:submit>
 	</td>
-		<html:hidden property="method" value="acceptNewProjectProposal"/>
-		<html:hidden  property="objectCode" value="<%= pageContext.findAttribute("objectCode").toString() %>" />
-		<html:hidden  property="groupPropertiesCode" value="<%= request.getParameter("groupPropertiesCode") %>" />
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="acceptNewProjectProposal"/>
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.objectCode"  property="objectCode" value="<%= pageContext.findAttribute("objectCode").toString() %>" />
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.groupPropertiesCode"  property="groupPropertiesCode" value="<%= request.getParameter("groupPropertiesCode") %>" />
 	</html:form>
 
 	<html:form action="/rejectNewProjectProposal" method="get">
 	<td>
-		<html:submit styleClass="inputbutton"><bean:message key="button.reject"/>                    		         	
+		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton"><bean:message key="button.reject"/>                    		         	
 		</html:submit>
 	</td>
-		<html:hidden property="method" value="rejectNewProjectProposal"/>
-		<html:hidden  property="objectCode" value="<%= pageContext.findAttribute("objectCode").toString() %>" />
-		<html:hidden  property="groupPropertiesCode" value="<%= request.getParameter("groupPropertiesCode") %>" />
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="rejectNewProjectProposal"/>
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.objectCode"  property="objectCode" value="<%= pageContext.findAttribute("objectCode").toString() %>" />
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.groupPropertiesCode"  property="groupPropertiesCode" value="<%= request.getParameter("groupPropertiesCode") %>" />
 	</html:form>
 
 	<html:form action="/viewNewProjectProposals" method="get">
 	<td>
-		<html:cancel styleClass="inputbutton"><bean:message key="button.cancel"/>                    		         	
+		<html:cancel bundle="HTMLALT_RESOURCES" altKey="cancel.cancel" styleClass="inputbutton"><bean:message key="button.cancel"/>                    		         	
 		</html:cancel>
 	</td>
-		<html:hidden property="method" value="viewNewProjectProposals"/>
-		<html:hidden  property="objectCode" value="<%= pageContext.findAttribute("objectCode").toString() %>" />
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="viewNewProjectProposals"/>
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.objectCode"  property="objectCode" value="<%= pageContext.findAttribute("objectCode").toString() %>" />
 	</html:form>
 
 </tr>

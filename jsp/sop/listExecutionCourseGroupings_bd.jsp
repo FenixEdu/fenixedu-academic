@@ -1,12 +1,13 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 
 <html:form action="/listExecutionCourseGroupings">
-	<html:hidden property="method" value="selectExecutionPeriod"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="selectExecutionPeriod"/>
 
-	<html:select property="executionPeriodID" onchange="this.form.submit();">
+	<html:select bundle="HTMLALT_RESOURCES" altKey="select.executionPeriodID" property="executionPeriodID" onchange="this.form.submit();">
 		<logic:notPresent name="executionPeriod">
 			<html:option value=""></html:option>
 		</logic:notPresent>

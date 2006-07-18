@@ -28,11 +28,11 @@
 
 <div id="search">
 	<form method="get" action="<%= searchUrl %>">
-		<input type="hidden" name="ie" value="iso-8859-1" />
-		<input type="hidden" name="domains" value="<%= searchDomain %>" />
-		<input type="hidden" name="sitesearch" value="<%= searchSite %>" />
+		<input alt="input.ie" type="hidden" name="ie" value="iso-8859-1" />
+		<input alt="input.domains" type="hidden" name="domains" value="<%= searchDomain %>" />
+		<input alt="input.sitesearch" type="hidden" name="sitesearch" value="<%= searchSite %>" />
 		<bean:message bundle="GLOBAL_RESOURCES" key="search.title"/>:
-		<input type="text" id="textfield" name="q" size="17" />
-		<input type="submit" id="submit" name="sa" value="Google" />
+		<input alt="input.q" type="text" id="textfield" name="q" size="17" />
+		<input alt="input.sa" type="submit" id="submit" name="sa" value="Google" />
 	</form>
 </div>

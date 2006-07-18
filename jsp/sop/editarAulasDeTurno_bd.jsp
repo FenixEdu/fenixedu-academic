@@ -1,6 +1,7 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
 <%@ page import="java.util.Calendar" %>
@@ -53,15 +54,15 @@
         <html:errors/>
         <html:form action="/editarAulasDeTurnoForm">
 
-<html:hidden property="<%= SessionConstants.EXECUTION_PERIOD_OID %>"
+<html:hidden alt="<%= SessionConstants.EXECUTION_PERIOD_OID %>" property="<%= SessionConstants.EXECUTION_PERIOD_OID %>"
 			 value="<%= pageContext.findAttribute("executionPeriodOID").toString() %>"/>
-<html:hidden property="<%= SessionConstants.EXECUTION_DEGREE_OID %>"
+<html:hidden alt="<%= SessionConstants.EXECUTION_DEGREE_OID %>" property="<%= SessionConstants.EXECUTION_DEGREE_OID %>"
 			 value="<%= pageContext.findAttribute("executionDegreeOID").toString() %>"/>
-<html:hidden property="<%= SessionConstants.CURRICULAR_YEAR_OID %>"
+<html:hidden alt="<%= SessionConstants.CURRICULAR_YEAR_OID %>" property="<%= SessionConstants.CURRICULAR_YEAR_OID %>"
 			 value="<%= pageContext.findAttribute("curricularYearOID").toString() %>"/>
-<html:hidden property="<%= SessionConstants.EXECUTION_COURSE_OID %>"
+<html:hidden alt="<%= SessionConstants.EXECUTION_COURSE_OID %>" property="<%= SessionConstants.EXECUTION_COURSE_OID %>"
 			 value="<%= pageContext.findAttribute("executionCourseOID").toString() %>"/>
-<html:hidden property="<%= SessionConstants.SHIFT_OID %>"
+<html:hidden alt="<%= SessionConstants.SHIFT_OID %>" property="<%= SessionConstants.SHIFT_OID %>"
 			 value="<%= pageContext.findAttribute("shiftOID").toString() %>"/>
 
             <center> <b> <bean:message key="listAulas.added"/> </b> </center>
@@ -95,7 +96,7 @@
                        <% Integer fM = new Integer(((InfoLesson) iA.get(i)).getFim().get(Calendar.MINUTE)); %>
                        <tr align="center">
                             <td>
-                            	<html:radio property="indexAula" value="<%= (new Integer(i)).toString() %>"/>
+                            	<html:radio bundle="HTMLALT_RESOURCES" altKey="radio.indexAula" property="indexAula" value="<%= (new Integer(i)).toString() %>"/>
                             </td>
                             <td>
                                 <bean:write name="elem" property="diaSemana" />
@@ -123,13 +124,13 @@
             	<table align="center">
                 	<tr align="center">
                     	<td>
-                        	<html:submit property="operation">
+                        	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.operation" property="operation">
                             	<bean:message key="label.add.Aulas"/>
                        	 </html:submit>
         	            </td>
          	           <td width="20"> </td>
            	  	       <td>
-               		   	<html:submit property="operation">
+               		   	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.operation" property="operation">
                         	<bean:message key="label.remove.Aula"/>
                         </html:submit>
                     </td>
@@ -150,7 +151,7 @@
                 		<tr align="center">
                     		<td>
 
-                        		<html:submit property="operation">
+                        		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.operation" property="operation">
                             		<bean:message key="label.add.Aulas"/>
                        		 </html:submit>
         	            	</td>

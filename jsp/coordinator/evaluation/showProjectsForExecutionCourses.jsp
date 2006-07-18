@@ -5,6 +5,7 @@
 <%@ taglib uri="/WEB-INF/fmt.tld" prefix="fmt"%>
 <%@ taglib uri="/WEB-INF/jsf_fenix_components.tld" prefix="fc"%>
 <ft:tilesView definition="df.coordinator.evaluation-management" attributeName="body-inline">
+	<f:loadBundle basename="resources/HtmlAltResources" var="htmlAltBundle"/>
 <style>
 .boldFontClass { 
 	font-weight: bold
@@ -82,7 +83,7 @@ table.executionCoursesWithoutWrittenEvaluations td {
 			</h:selectOneMenu>
 		</h:panelGrid>
 		<h:outputText value="<br/>" escape="false" />				
-		<h:commandButton action="#{coordinatorProjectsInformationBackingBean.searchExecutionCourses}"
+		<h:commandButton alt="#{htmlAltBundle['commandButton.search']}" action="#{coordinatorProjectsInformationBackingBean.searchExecutionCourses}"
 			value="#{bundle['button.search']}" styleClass="inputbutton"/>
  		<h:outputText value="</div>" escape="false" /> 		
  		<h:outputText value="<br/>" escape="false" />

@@ -2,6 +2,7 @@
 
 <%@ page import="java.lang.String" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 
@@ -83,14 +84,14 @@
 <table border="0" style="text-align: left;">
         <tbody>
     	 <tr>
-			<td class="listClasses-header" width="20%" ><bean:message key="label.projectName" />
-			</td>
-			<td class="listClasses-header" width="30%" ><bean:message key="label.projectDescription" />
-			</td>
-			<td class="listClasses-header" width="30%" ><bean:message key="label.properties" />
-			</td>
-			<td class="listClasses-header" width="20%" ><bean:message key="label.executionCourses" />
-			</td>
+			<th class="listClasses-header" width="20%" ><bean:message key="label.projectName" />
+			</th>
+			<th class="listClasses-header" width="30%" ><bean:message key="label.projectDescription" />
+			</th>
+			<th class="listClasses-header" width="30%" ><bean:message key="label.properties" />
+			</th>
+			<th class="listClasses-header" width="20%" ><bean:message key="label.executionCourses" />
+			</th>
 		</tr>
             <logic:iterate id="infoGroupProperties" name="component" property="infoGroupPropertiesList" >
             	<tr>

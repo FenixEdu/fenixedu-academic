@@ -1,5 +1,6 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>	
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-form.tld" prefix="form" %>
@@ -28,11 +29,11 @@ response.setDateHeader ("Expires", 0);
 	<bean:define id="studentCode" name="student" property="number"/>
 	
 	<html:form action="/studentTests">
-	<html:hidden property="method" value="doTest"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="doTest"/>
 	
-	<html:hidden property="objectCode" value="<%= objectCode.toString() %>"/>
-	<html:hidden property="testCode" value="<%= testCode.toString() %>"/>
-	<html:hidden property="studentCode" value="<%= studentCode.toString() %>"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.objectCode" property="objectCode" value="<%= objectCode.toString() %>"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.testCode" property="testCode" value="<%= testCode.toString() %>"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.studentCode" property="studentCode" value="<%= studentCode.toString() %>"/>
 	
 		<h2><bean:write name="distributedTest" property="title"/></h2>
 		<b><bean:write name="distributedTest" property="testInformation"/></b>
@@ -45,13 +46,13 @@ response.setDateHeader ("Expires", 0);
  	</jsp:include>
 	<table align="center">
 	<tr>
-		<td><html:submit styleClass="inputbutton" property="submit"><bean:message key="button.submitTest"/></html:submit></td>
-		<td><html:reset styleClass="inputbutton"><bean:message key="label.clear"/></html:reset></td></html:form>
+		<td><html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton" property="submit"><bean:message key="button.submitTest"/></html:submit></td>
+		<td><html:reset bundle="HTMLALT_RESOURCES" altKey="reset.reset" styleClass="inputbutton"><bean:message key="label.clear"/></html:reset></td></html:form>
 		<html:form action="/studentTests">
-		<html:hidden property="method" value="testsFirstPage"/>
-		<html:hidden property="objectCode" value="<%= objectCode.toString() %>"/>
-		<html:hidden property="testCode" value="<%= testCode.toString() %>"/>
-		<td><html:submit styleClass="inputbutton" property="back"><bean:message key="button.back"/></html:submit></td></html:form>
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="testsFirstPage"/>
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.objectCode" property="objectCode" value="<%= objectCode.toString() %>"/>
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.testCode" property="testCode" value="<%= testCode.toString() %>"/>
+		<td><html:submit bundle="HTMLALT_RESOURCES" altKey="submit.back" styleClass="inputbutton" property="back"><bean:message key="button.back"/></html:submit></td></html:form>
 	</tr>
 	</table>	
 	</logic:notEmpty>

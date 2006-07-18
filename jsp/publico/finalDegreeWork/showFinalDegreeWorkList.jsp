@@ -1,5 +1,6 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="dt" %>
@@ -7,15 +8,15 @@
 <h2><bean:message key="title.finalDegreeWorkProposals"/></h2>
 <span class="error"><html:errors /></span>
 <html:form action="/finalDegreeWorks" focus="executionDegreeOID">
-	<html:hidden property="method" value="search"/>
-	<html:hidden property="page" value="1"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="search"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
 	<table border="0" cellspacing="0" cellpadding="0">
 		<tr>
 			<td nowrap="nowrap">
 				<bean:message key="property.executionPeriod"/>:
 			</td>
 			<td nowrap="nowrap">
-				<html:select property="executionYearOID"
+				<html:select bundle="HTMLALT_RESOURCES" altKey="select.executionYearOID" property="executionYearOID"
 							 size="1"
 							 onchange='document.finalDegreeWorksForm.method.value=\'prepareSearch\';document.finalDegreeWorksForm.page.value=\'0\';document.finalDegreeWorksForm.submit();'>
 					<html:options property="idInternal" 
@@ -29,7 +30,7 @@
 				<bean:message key="finalDegreeWorkProposalHeader.degree"/>:
 			</td>
 			<td nowrap="nowrap">
-				<html:select property="executionDegreeOID" size="1"
+				<html:select bundle="HTMLALT_RESOURCES" altKey="select.executionDegreeOID" property="executionDegreeOID" size="1"
 							 onchange='document.finalDegreeWorksForm.method.value=\'search\';document.finalDegreeWorksForm.page.value=\'0\';document.finalDegreeWorksForm.submit();'>
 					<html:option value=""/>
 					<html:options property="idInternal"
@@ -54,7 +55,7 @@
 					<bean:message key="finalDegreeWorkProposalHeader.filter.by.branch"/>:
 				</td>
 				<td nowrap="nowrap">
-					<html:select property="branchOID" size="1"
+					<html:select bundle="HTMLALT_RESOURCES" altKey="select.branchOID" property="branchOID" size="1"
 								 onchange='document.finalDegreeWorksForm.method.value=\'filter\';document.finalDegreeWorksForm.page.value=\'0\';document.finalDegreeWorksForm.submit();'>
 						<html:option value=""/>
 						<html:options property="idInternal"

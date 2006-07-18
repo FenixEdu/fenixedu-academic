@@ -1,6 +1,6 @@
 <%@ page language="java" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
-<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
+<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%><html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 
@@ -11,7 +11,7 @@
 			<bean:message key="message.publicationAttribute.required" /><bean:message key="message.publicationAttribute.subType" />
 		</td>
 		<td>
-			<html:select property="subtype">
+			<html:select bundle="HTMLALT_RESOURCES" altKey="select.subtype" property="subtype">
 				<html:options collection="subTypeList" property="subtype" />
 			</html:select>
 		</td>
@@ -22,7 +22,7 @@
 			<bean:message key="message.publicationAttribute.required" /><bean:message key="message.publicationAttribute.journalName" />
 		</td>
 		<td>
-			<html:text size="20" property="journalName"/>
+			<html:text bundle="HTMLALT_RESOURCES" altKey="text.journalName" size="20" property="journalName"/>
 		</td>
 	</tr>
 	
@@ -31,7 +31,7 @@
 			<bean:message key="message.publicationAttribute.required" /><bean:message key="message.publicationAttribute.title" />
 		</td>
 		<td>
-			<html:text size="20" property="title"/>
+			<html:text bundle="HTMLALT_RESOURCES" altKey="text.title" size="20" property="title"/>
 		</td>
 	</tr>
 	
@@ -40,7 +40,7 @@
 			<bean:message key="message.publicationAttribute.required" /><bean:message key="message.publicationAttribute.volume" />
 		</td>
 		<td>
-			<html:text size="20" property="volume"/>
+			<html:text bundle="HTMLALT_RESOURCES" altKey="text.volume" size="20" property="volume"/>
 		</td>
 	</tr>
 	
@@ -49,7 +49,7 @@
 			<bean:message key="message.publicationAttribute.required" /><bean:message key="message.publicationAttribute.inicialPage" />
 		</td>
 		<td>
-			<html:text size="3" property="firstPage"/>
+			<html:text bundle="HTMLALT_RESOURCES" altKey="text.firstPage" size="3" property="firstPage"/>
 		</td>
 	</tr>
 	
@@ -58,7 +58,7 @@
 			<bean:message key="message.publicationAttribute.required" /><bean:message key="message.publicationAttribute.finalPage" />
 		</td>
 		<td>
-			<html:text size="3" property="lastPage"/>
+			<html:text bundle="HTMLALT_RESOURCES" altKey="text.lastPage" size="3" property="lastPage"/>
 		</td>
 	</tr>
 	
@@ -67,7 +67,7 @@
 			<bean:message key="message.publicationAttribute.required" /><bean:message key="message.publicationAttribute.number" />
 		</td>
 		<td>
-			<html:text size="10" property="number"/>
+			<html:text bundle="HTMLALT_RESOURCES" altKey="text.number" size="10" property="number"/>
 		</td>
 	</tr>
 	
@@ -82,7 +82,7 @@
 			</logic:notEqual>	
 		</td>
 		<td>
-			<html:select property="month">
+			<html:select bundle="HTMLALT_RESOURCES" altKey="select.month" property="month">
 				<logic:iterate id="month" name="monthList" >
 					<html:option value='<%=month.toString()%>'>
 						<bean:write name="month" />		
@@ -103,7 +103,7 @@
 			</logic:notEqual>
 		</td>
 		<td>
-			<html:text size="9" property="year"/>
+			<html:text bundle="HTMLALT_RESOURCES" altKey="text.year" size="9" property="year"/>
 		</td>
 	</tr>
 	
@@ -115,7 +115,7 @@
 			<bean:message key="message.publicationAttribute.language" />
 		</td>
 		<td>
-			<html:text size="20" property="language"/>
+			<html:text bundle="HTMLALT_RESOURCES" altKey="text.language" size="20" property="language"/>
 		</td>
 	</tr>
 	
@@ -124,7 +124,7 @@
 			<bean:message key="message.publicationAttribute.format" />
 		</td>
 		<td>
-			<html:select property="format">
+			<html:select bundle="HTMLALT_RESOURCES" altKey="select.format" property="format">
 				<html:options collection="formatList" property="format" />
 			</html:select>
 		</td>
@@ -135,7 +135,7 @@
 			<bean:message key="message.publicationAttribute.observations" />
 		</td>
 		<td>
-			<html:text size="20" property="observation"/>
+			<html:text bundle="HTMLALT_RESOURCES" altKey="text.observation" size="20" property="observation"/>
 		</td>
 	</tr>
 	
@@ -144,7 +144,7 @@
 			<bean:message key="message.publicationAttribute.editor" />
 		</td>
 		<td>
-			<html:text size="30" property="editor"/>
+			<html:text bundle="HTMLALT_RESOURCES" altKey="text.editor" size="30" property="editor"/>
 		</td>
 	</tr>
 	
@@ -153,7 +153,7 @@
 			<bean:message key="message.publicationAttribute.country" />
 		</td>
 		<td>
-			<html:text size="20" property="country"/>
+			<html:text bundle="HTMLALT_RESOURCES" altKey="text.country" size="20" property="country"/>
 		</td>
 	</tr>
 	
@@ -162,7 +162,7 @@
 			<bean:message key="message.publicationAttribute.issn" />
 		</td>
 		<td>
-			<html:text size="20" property="issn"/>
+			<html:text bundle="HTMLALT_RESOURCES" altKey="text.issn" size="20" property="issn"/>
 		</td>
 	</tr>
 	
@@ -171,7 +171,7 @@
 			<bean:message key="message.publicationAttribute.scope" />
 		</td>
 		<td>
-			<html:select property="scope">
+			<html:select bundle="HTMLALT_RESOURCES" altKey="select.scope" property="scope">
 				<logic:iterate id="scopes" name="scopeList" >
 					<html:option value='<%=scopes.toString()%>'>
 						<bean:write name="scopes" />
@@ -186,6 +186,6 @@
 			<bean:message key="message.publicationAttribute.url" />
 		</td>
 		<td>
-			<html:text size="70" property="url"/>
+			<html:text bundle="HTMLALT_RESOURCES" altKey="text.url" size="70" property="url"/>
 		</td>
 	</tr>

@@ -1,5 +1,5 @@
 <%@ page language="java" %>
-<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
+<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%><html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="dt"%>
@@ -10,11 +10,11 @@
 <html:form action="/teachersInformation.do">	
 	<h2>
 		<bean:message key="link.masterDegree.administrativeOffice.gratuity.chosenYear"/>
-		<html:select property="yearString" size="1" onchange="this.form.submit();">
+		<html:select bundle="HTMLALT_RESOURCES" altKey="select.yearString" property="yearString" size="1" onchange="this.form.submit();">
 			<html:options property="value" labelProperty="label" collection="executionYearList" />
 		</html:select>
-		<html:hidden property="degreeCurricularPlanID" />
-		<html:hidden property="executionDegreeId" />		
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.degreeCurricularPlanID" property="degreeCurricularPlanID" />
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.executionDegreeId" property="executionDegreeId" />		
 	</h2>
 </html:form>
 
@@ -22,12 +22,12 @@
 <logic:present name="infoSiteTeachersInformation">
 	<table width="90%" border="0" cellspacing="1" style="margin-top:10px">
 		<tr>
-			<td class="listClasses-header"><bean:message key="label.teacher" /></td>
-			<td class="listClasses-header"><bean:message key="label.teachersInformation.number" /></td>
-			<td class="listClasses-header"><bean:message key="label.teacher.category" /></td>
-			<td class="listClasses-header"><bean:message key="label.teachersInformation.associatedLecturingCourses" /></td>
-			<td class="listClasses-header"><bean:message key="label.teachersInformation.associatedLecturingCourses.degrees" /></td>
-			<td class="listClasses-header"><bean:message key="label.teachersInformation.lastModificationDate" /></td>
+			<th class="listClasses-header"><bean:message key="label.teacher" /></th>
+			<th class="listClasses-header"><bean:message key="label.teachersInformation.number" /></th>
+			<th class="listClasses-header"><bean:message key="label.teacher.category" /></th>
+			<th class="listClasses-header"><bean:message key="label.teachersInformation.associatedLecturingCourses" /></th>
+			<th class="listClasses-header"><bean:message key="label.teachersInformation.associatedLecturingCourses.degrees" /></th>
+			<th class="listClasses-header"><bean:message key="label.teachersInformation.lastModificationDate" /></th>
 		</tr>
 		<logic:iterate id="infoSiteTeacherInformation" name="infoSiteTeachersInformation">
 			<bean:size id="numberCourses" name="infoSiteTeacherInformation" property="infoLecturingExecutionCourses"/> 

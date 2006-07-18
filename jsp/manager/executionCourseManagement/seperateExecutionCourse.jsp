@@ -1,5 +1,5 @@
 <%@ page language="java" %>
-<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %><html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="dt" %>
@@ -21,18 +21,18 @@
 	<br />
 
 	<html:form action="/seperateExecutionCourse">
-		<html:hidden property="method" value="transfer"/>
-		<html:hidden property="executionCourseId" value="<%= pageContext.findAttribute("executionCourseID").toString() %>"/>
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="transfer"/>
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.executionCourseId" property="executionCourseId" value="<%= pageContext.findAttribute("executionCourseID").toString() %>"/>
 
 		<bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="executionDegree.destination"/>:<br />
-		<html:select property="destinationExecutionDegreeId" size="1"
+		<html:select bundle="HTMLALT_RESOURCES" altKey="select.destinationExecutionDegreeId" property="destinationExecutionDegreeId" size="1"
 				onchange="this.form.method.value='changeDestinationContext'; this.form.submit();">
 			<html:options collection="executionDegrees" labelProperty="label" property="value" />
 		</html:select>
 
 		<br />
 		<bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="curricularYear.destination"/>:<br />
-		<html:select property="destinationCurricularYear" size="1"
+		<html:select bundle="HTMLALT_RESOURCES" altKey="select.destinationCurricularYear" property="destinationCurricularYear" size="1"
 				onchange="this.form.method.value='changeDestinationContext'; this.form.submit();">
 			<html:options collection="curricularYear.list" labelProperty="label" property="value" />
 		</html:select>
@@ -40,7 +40,7 @@
 		<br />
 		<logic:present name="executionCourses">
 			<bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="executionCourse.destination"/>:<br />
-			<html:select property="destinationExecutionCourseID" size="1">
+			<html:select bundle="HTMLALT_RESOURCES" altKey="select.destinationExecutionCourseID" property="destinationExecutionCourseID" size="1">
 				<html:option value="" />
 				<html:options collection="executionCourses" labelProperty="nome" property="idInternal" />
 			</html:select>
@@ -55,19 +55,19 @@
 		<bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="curricularCourses.toTransfer"/>:<br />
 		<table>
 			<tr>
-				<td class="listClasses-header">
-				</td>
-				<td class="listClasses-header">
-				</td>
-				<td class="listClasses-header">
-				</td>
-				<td class="listClasses-header">
-				</td>
+				<th class="listClasses-header">
+				</th>
+				<th class="listClasses-header">
+				</th>
+				<th class="listClasses-header">
+				</th>
+				<th class="listClasses-header">
+				</th>
 			</tr>
 			<logic:iterate id="infoCurricularCourse" name="infoExecutionCourse" property="associatedInfoCurricularCourses">
 				<tr>
 					<td class="listClasses">
-						<html:multibox property="curricularCourseIdsToTransfer">
+						<html:multibox bundle="HTMLALT_RESOURCES" altKey="multibox.curricularCourseIdsToTransfer" property="curricularCourseIdsToTransfer">
 							<bean:write name="infoCurricularCourse" property="idInternal"/>
 						</html:multibox>
 					</td>
@@ -89,19 +89,19 @@
 		<bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="shifts.toTransfer"/>:<br />
 		<table>
 			<tr>
-				<td class="listClasses-header">
-				</td>
-				<td class="listClasses-header">
-				</td>
-				<td class="listClasses-header">
-				</td>
-				<td class="listClasses-header">
-				</td>
+				<th class="listClasses-header">
+				</th>
+				<th class="listClasses-header">
+				</th>
+				<th class="listClasses-header">
+				</th>
+				<th class="listClasses-header">
+				</th>
 			</tr>
 			<logic:iterate id="infoShift" name="infoExecutionCourse" property="associatedInfoShifts">
 				<tr>
 					<td class="listClasses">
-						<html:multibox property="shiftIdsToTransfer">
+						<html:multibox bundle="HTMLALT_RESOURCES" altKey="multibox.shiftIdsToTransfer" property="shiftIdsToTransfer">
 							<bean:write name="infoShift" property="idInternal"/>
 						</html:multibox>
 					</td>
@@ -132,7 +132,7 @@
 			</logic:iterate>
 		</table>
 
-		<html:submit styleClass="inputbutton">
+		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton">
 			<bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="button.transfer"/>
 		</html:submit>
 

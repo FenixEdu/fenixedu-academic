@@ -1,6 +1,7 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>	
 <%@ page import="org.apache.struts.Globals" %>	
@@ -50,7 +51,7 @@
 	</div>
 </logic:present>
 <logic:notPresent name="<%= Globals.MODULE_KEY %>">
-	<span class="error">Não passou pelo RequestProcessor</span>
+	<span class="error">Nï¿½o passou pelo RequestProcessor</span>
 </logic:notPresent>
 
 

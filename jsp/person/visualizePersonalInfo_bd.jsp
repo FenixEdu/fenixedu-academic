@@ -1,5 +1,6 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/enum.tld" prefix="e"%>
@@ -109,7 +110,7 @@
 		</table>
 		<br />
 		<table width="100%" cellpadding="0" cellspacing="0">
-          <!-- Filiação -->
+          <!-- Filiaï¿½ï¿½o -->
           <tr>
           	<td class="infoop" width="25"><span class="emphasis-box">2</span></td>
           	<td class="infoop"><strong><bean:message key="label.person.title.filiation" /></strong></td>

@@ -1,5 +1,6 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
@@ -12,11 +13,11 @@
    
    <table>
 <html:form action="/studentGuideDispatchAction?method=createReady">
-    <html:hidden property="page" value="1"/>
+    <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
     <bean:define id="graduationType" name="graduationType"/>
-    <html:hidden property="graduationType" value='<%= pageContext.findAttribute("graduationType").toString()%>'/>
-    <html:hidden property="requester" value='<%= pageContext.findAttribute(SessionConstants.REQUESTER_TYPE).toString()%>'/>
-    <html:hidden property="number" value='<%= pageContext.findAttribute(SessionConstants.REQUESTER_NUMBER).toString()%>'/>
+    <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.graduationType" property="graduationType" value='<%= pageContext.findAttribute("graduationType").toString()%>'/>
+    <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.requester" property="requester" value='<%= pageContext.findAttribute(SessionConstants.REQUESTER_TYPE).toString()%>'/>
+    <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.number" property="number" value='<%= pageContext.findAttribute(SessionConstants.REQUESTER_NUMBER).toString()%>'/>
     
     <bean:define id="certificateList" name="<%= SessionConstants.CERTIFICATE_LIST %>"/>
     
@@ -29,7 +30,7 @@
   	       
     		<td>
     		<div align="right">
-	  			<html:text property="quantityList" size='2' maxlength='3' value='0'/> 
+	  			<html:text bundle="HTMLALT_RESOURCES" altKey="text.quantityList" property="quantityList" size='2' maxlength='3' value='0'/> 
   			</div>
   	        </td>
   	         <td>
@@ -49,7 +50,7 @@
    </table>
    <br />
    <br />
-<html:submit value="Submeter" styleClass="inputbutton" property="ok"/>
+<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.ok" value="Submeter" styleClass="inputbutton" property="ok"/>
 </html:form>
 
 

@@ -1,5 +1,5 @@
 <%@ page language="java" %>
-<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %><html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
@@ -16,9 +16,9 @@
 <br/>
 
 <html:form action="/createMasterDegreeThesisLookup.do">
-	<html:hidden property="studentNumber" value="<%= ((InfoStudent)student).getNumber().toString()%>" />
-	<html:hidden property="degreeType" value="MASTER_DEGREE"/>
-	<html:hidden property="page" value="1"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.studentNumber" property="studentNumber" value="<%= ((InfoStudent)student).getNumber().toString()%>" />
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.degreeType" property="degreeType" value="MASTER_DEGREE"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
 
 	<table border="0" width="100%" cellspacing="3" cellpadding="10">
 		<tr>
@@ -42,7 +42,7 @@
 		<tr>
 			<th align="left" colspan="2">
 				<bean:message key="label.masterDegree.administrativeOffice.dissertationTitle"/>:&nbsp;
-				<html:text property="dissertationTitle" size="45"/>
+				<html:text bundle="HTMLALT_RESOURCES" altKey="text.dissertationTitle" property="dissertationTitle" size="45"/>
 			</th>
 		</tr>
 		<tr> 
@@ -66,13 +66,13 @@
 					<td>&nbsp;</td>						
 				</tr>					
 				<logic:iterate id="guider" name="guidersList">
-					<html:hidden property="guidersNumbers" value="<%= ((InfoTeacher)guider).getTeacherNumber().toString() %>"/>
+					<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.guidersNumbers" property="guidersNumbers" value="<%= ((InfoTeacher)guider).getTeacherNumber().toString() %>"/>
 					<tr>
 						<td align="left"><bean:write name="guider" property="teacherNumber"/></td>
 						<td align="left"><bean:write name="guider" property="infoPerson.nome"/></td>
 						<td>&nbsp;</td>
 						<td align="center">
-							<html:multibox property="removedGuidersNumbers">
+							<html:multibox bundle="HTMLALT_RESOURCES" altKey="multibox.removedGuidersNumbers" property="removedGuidersNumbers">
 								<bean:write name="guider" property="teacherNumber"/>
 							</html:multibox>	
 						</td>						
@@ -80,7 +80,7 @@
 				</logic:iterate>
 				<tr>
 					<td colspan="4" align="right">
-						<html:submit styleClass="inputbuttonSmall" property="method">
+						<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.method" styleClass="inputbuttonSmall" property="method">
 							<bean:message key="button.submit.masterDegree.thesis.removeGuiders"/>
 						</html:submit>
 					</td>
@@ -89,8 +89,8 @@
 		<tr>
 			<th align="left" colspan="4">
 				<bean:message key="label.masterDegree.administrativeOffice.teacherNumber"/>:
-				<html:text property="guidersNumbers" size="5" value="" />
-				<html:submit styleClass="inputbuttonSmall" property="method">
+				<html:text bundle="HTMLALT_RESOURCES" altKey="text.guidersNumbers" property="guidersNumbers" size="5" value="" />
+				<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.method" styleClass="inputbuttonSmall" property="method">
 					<bean:message key="button.submit.masterDegree.thesis.addGuider"/>
 				</html:submit>
 			</th>
@@ -114,13 +114,13 @@
 				<td>&nbsp;</td>									
 			</tr>			
 			<logic:iterate id="externalGuider" name="externalGuidersList">
-				<html:hidden property="externalGuidersIDs" value="<%= ((InfoExternalPerson)externalGuider).getIdInternal().toString() %>"/>
+				<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.externalGuidersIDs" property="externalGuidersIDs" value="<%= ((InfoExternalPerson)externalGuider).getIdInternal().toString() %>"/>
 				<tr>
 					<td>&nbsp;</td>
 					<td align="left"><bean:write name="externalGuider" property="infoPerson.nome"/></td>
 					<td align="left"><bean:write name="externalGuider" property="infoInstitution.name"/></td>
 					<td align="center">
-						<html:multibox property="removedExternalGuidersIDs">
+						<html:multibox bundle="HTMLALT_RESOURCES" altKey="multibox.removedExternalGuidersIDs" property="removedExternalGuidersIDs">
 							<bean:write name="externalGuider" property="idInternal"/>
 						</html:multibox>	
 					</td>						
@@ -128,7 +128,7 @@
 			</logic:iterate>
 			<tr>
 				<td colspan="4" align="right">
-					<html:submit styleClass="inputbuttonSmall" property="method">
+					<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.method" styleClass="inputbuttonSmall" property="method">
 						<bean:message key="button.submit.masterDegree.thesis.removeExternalGuiders"/>
 					</html:submit>
 				</td>
@@ -139,7 +139,7 @@
 			<logic:notPresent name="<%= SessionConstants.EXTERNAL_GUIDERS_SEARCH_RESULTS %>" scope="request">
 				<tr>
 					<td align="left" colspan="4">
-						<html:submit styleClass="inputbuttonSmall" property="method">
+						<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.method" styleClass="inputbuttonSmall" property="method">
 							<bean:message key="button.submit.masterDegree.thesis.externalGuider"/>
 						</html:submit>
 					</td>
@@ -155,9 +155,9 @@
 							<span class="emphasis-box">info</span>
 						</td>
 						<td class="infoop">
-							<strong>Nota:</strong> Na indicação do nome pode ser fornecido apenas parte do nome do orientador externo.<br/>
-							Exemplo 1: Para selecionar todos os orientadores externos que começam com a letra "A" escreva <strong>A%</strong><br/>
-							Exemplo 2: Para selecionar todos os orientadores externos que começam com a letra "A" e que tenham um segundo nome que começam com a letra "M" escreva <strong>A% M%</strong>
+							<strong>Nota:</strong> Na indicaï¿½ï¿½o do nome pode ser fornecido apenas parte do nome do orientador externo.<br/>
+							Exemplo 1: Para selecionar todos os orientadores externos que comeï¿½am com a letra "A" escreva <strong>A%</strong><br/>
+							Exemplo 2: Para selecionar todos os orientadores externos que comeï¿½am com a letra "A" e que tenham um segundo nome que comeï¿½am com a letra "M" escreva <strong>A% M%</strong>
 						</td>
 					</tr>
 				</table></td>	
@@ -165,8 +165,8 @@
 			<tr>
 				<td align="left" colspan="4">
 					<bean:message key="label.masterDegree.administrativeOffice.externalPersonName"/>:
-					<input type="text" name="externalGuiderName" size="25" value=""/>
-					<html:submit styleClass="inputbuttonSmall" property="method">
+					<input alt="input.externalGuiderName" type="text" name="externalGuiderName" size="25" value=""/>
+					<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.method" styleClass="inputbuttonSmall" property="method">
 						<bean:message key="button.submit.masterDegree.thesis.searchExternalGuider"/>
 					</html:submit>
 				</td>
@@ -190,13 +190,13 @@
 					<td align="left"><bean:write name="externalGuider" property="infoPerson.nome"/></td>
 					<td align="left"><bean:write name="externalGuider" property="infoInstitution.name"/></td>						
 					<td>
-						<html:radio idName="externalGuider" property="externalGuidersIDs" value="idInternal"/>	
+						<html:radio bundle="HTMLALT_RESOURCES" altKey="radio.externalGuidersIDs" idName="externalGuider" property="externalGuidersIDs" value="idInternal"/>	
 					</td>
 				</tr>				
 			</logic:iterate>
 			<tr>
 				<td colspan="4" align="right">
-					<html:submit styleClass="inputbuttonSmall" property="method">
+					<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.method" styleClass="inputbuttonSmall" property="method">
 						<bean:message key="button.submit.masterDegree.thesis.addExternalGuider"/>
 					</html:submit>
 				</td>
@@ -222,13 +222,13 @@
 				<td>&nbsp;</td>						
 			</tr>
 			<logic:iterate id="assistentGuider" name="assistentsGuidersList">
-				<html:hidden property="assistentGuidersNumbers" value="<%= ((InfoTeacher)assistentGuider).getTeacherNumber().toString() %>"/>
+				<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.assistentGuidersNumbers" property="assistentGuidersNumbers" value="<%= ((InfoTeacher)assistentGuider).getTeacherNumber().toString() %>"/>
 				<tr>
 					<td align="left"><bean:write name="assistentGuider" property="teacherNumber"/></td>
 					<td align="left"><bean:write name="assistentGuider" property="infoPerson.nome"/></td>
 					<td>&nbsp;</td>
 					<td align="center">
-						<html:multibox property="removedAssistentGuidersNumbers">
+						<html:multibox bundle="HTMLALT_RESOURCES" altKey="multibox.removedAssistentGuidersNumbers" property="removedAssistentGuidersNumbers">
 							<bean:write name="assistentGuider" property="teacherNumber"/>
 						</html:multibox>	
 					</td>						
@@ -236,7 +236,7 @@
 			</logic:iterate>
 			<tr>
 				<td colspan="4" align="right">
-					<html:submit styleClass="inputbuttonSmall" property="method">
+					<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.method" styleClass="inputbuttonSmall" property="method">
 						<bean:message key="button.submit.masterDegree.thesis.removeAssistentGuiders"/>
 					</html:submit>
 				</td>
@@ -245,8 +245,8 @@
 		<tr>
 			<th align="left" colspan="4">
 				<bean:message key="label.masterDegree.administrativeOffice.teacherNumber"/>:
-				<input type="text" name="assistentGuidersNumbers" size="5" value=""/>
-				<html:submit styleClass="inputbuttonSmall" property="method">
+				<input alt="input.assistentGuidersNumbers" type="text" name="assistentGuidersNumbers" size="5" value=""/>
+				<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.method" styleClass="inputbuttonSmall" property="method">
 					<bean:message key="button.submit.masterDegree.thesis.addAssistentGuider"/>
 				</html:submit>
 			</th>
@@ -269,13 +269,13 @@
 				<td>&nbsp;</td>									
 			</tr>			
 			<logic:iterate id="externalAssistentGuider" name="externalAssistentsGuidersList">
-				<html:hidden property="externalAssistentGuidersIDs" value="<%= ((InfoExternalPerson)externalAssistentGuider).getIdInternal().toString() %>"/>
+				<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.externalAssistentGuidersIDs" property="externalAssistentGuidersIDs" value="<%= ((InfoExternalPerson)externalAssistentGuider).getIdInternal().toString() %>"/>
 				<tr>
 					<td>&nbsp;</td>
 					<td align="left"><bean:write name="externalAssistentGuider" property="infoPerson.nome"/></td>
 					<td align="left"><bean:write name="externalAssistentGuider" property="infoInstitution.name"/></td>
 					<td align="center">
-						<html:multibox property="removedExternalAssistentGuidersIDs">
+						<html:multibox bundle="HTMLALT_RESOURCES" altKey="multibox.removedExternalAssistentGuidersIDs" property="removedExternalAssistentGuidersIDs">
 							<bean:write name="externalAssistentGuider" property="idInternal"/>
 						</html:multibox>	
 					</td>						
@@ -283,7 +283,7 @@
 			</logic:iterate>
 			<tr>
 				<td colspan="4" align="right">
-					<html:submit styleClass="inputbuttonSmall" property="method">
+					<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.method" styleClass="inputbuttonSmall" property="method">
 						<bean:message key="button.submit.masterDegree.thesis.removeExternalAssistentGuiders"/>
 					</html:submit>
 				</td>
@@ -294,7 +294,7 @@
 			<logic:notPresent name="<%= SessionConstants.EXTERNAL_ASSISTENT_GUIDERS_SEARCH_RESULTS %>" scope="request">
 				<tr>
 					<td align="left" colspan="4">
-						<html:submit styleClass="inputbuttonSmall" property="method">
+						<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.method" styleClass="inputbuttonSmall" property="method">
 							<bean:message key="button.submit.masterDegree.thesis.externalAssitentGuider"/>
 						</html:submit>
 					</td>
@@ -310,9 +310,9 @@
 							<span class="emphasis-box">info</span>
 						</td>
 						<td class="infoop">
-							<strong>Nota:</strong> Na indicação do nome pode ser fornecido apenas parte do nome do co-orientador externo.<br/>
-							Exemplo 1: Para selecionar todos os co-orientadores externos que começam com a letra "A" escreva <strong>A%</strong><br/>
-							Exemplo 2: Para selecionar todos os co-orientadores externos que começam com a letra "A" e que tenham um segundo nome que começam com a letra "M" escreva <strong>A% M%</strong>
+							<strong>Nota:</strong> Na indicaï¿½ï¿½o do nome pode ser fornecido apenas parte do nome do co-orientador externo.<br/>
+							Exemplo 1: Para selecionar todos os co-orientadores externos que comeï¿½am com a letra "A" escreva <strong>A%</strong><br/>
+							Exemplo 2: Para selecionar todos os co-orientadores externos que comeï¿½am com a letra "A" e que tenham um segundo nome que comeï¿½am com a letra "M" escreva <strong>A% M%</strong>
 						</td>
 					</tr>
 				</table></td>	
@@ -320,8 +320,8 @@
 			<tr>
 				<td align="left" colspan="4">
 					<bean:message key="label.masterDegree.administrativeOffice.externalPersonName"/>:
-					<input type="text" name="externalAssistentGuiderName" size="25" value=""/>
-					<html:submit styleClass="inputbuttonSmall" property="method">
+					<input alt="input.externalAssistentGuiderName" type="text" name="externalAssistentGuiderName" size="25" value=""/>
+					<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.method" styleClass="inputbuttonSmall" property="method">
 						<bean:message key="button.submit.masterDegree.thesis.searchExternalAssitentGuider"/>
 					</html:submit>
 				</td>
@@ -345,13 +345,13 @@
 					<td align="left"><bean:write name="externalAssistentGuider" property="infoPerson.nome"/></td>
 					<td align="left"><bean:write name="externalAssistentGuider" property="infoInstitution.name"/></td>						
 					<td>
-						<html:radio idName="externalAssistentGuider" property="externalAssistentGuidersIDs" value="idInternal"/>	
+						<html:radio bundle="HTMLALT_RESOURCES" altKey="radio.externalAssistentGuidersIDs" idName="externalAssistentGuider" property="externalAssistentGuidersIDs" value="idInternal"/>	
 					</td>
 				</tr>				
 			</logic:iterate>
 			<tr>
 				<td colspan="4" align="right">
-					<html:submit styleClass="inputbuttonSmall" property="method">
+					<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.method" styleClass="inputbuttonSmall" property="method">
 						<bean:message key="button.submit.masterDegree.thesis.addExternalAssistentGuider"/>
 					</html:submit>
 				</td>
@@ -364,10 +364,10 @@
 				<td>&nbsp;</td>
 			</tr>			
 			<td colspan="4" align="center">
-				<html:submit styleClass="inputbuttonSmall" property="method">
+				<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.method" styleClass="inputbuttonSmall" property="method">
 					<bean:message key="button.submit.masterDegree.thesis.createThesis"/>
 				</html:submit>
-				<html:submit styleClass="inputbuttonSmall" property="method">
+				<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.method" styleClass="inputbuttonSmall" property="method">
 					<bean:message key="button.cancel"/>
 				</html:submit>
 			</td>

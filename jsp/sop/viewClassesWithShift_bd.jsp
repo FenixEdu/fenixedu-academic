@@ -1,5 +1,6 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ page import="java.util.List"%>
@@ -15,8 +16,8 @@
 <br />
 <table>
   	<tr>
-      	<td class="listClasses-header"><bean:message key="property.class.name"/></td>
-<%--      	<td class="listClasses-header"><bean:message key="label.class"/></td> --%>
+      	<th class="listClasses-header"><bean:message key="property.class.name"/></th>
+<%--      	<th class="listClasses-header"><bean:message key="label.class"/></th> --%>
    	</tr>
 	<logic:iterate id="infoClass" name="classesWithShift">
     <tr>

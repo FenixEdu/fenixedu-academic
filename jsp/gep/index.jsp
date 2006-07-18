@@ -1,7 +1,8 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 
 <center><strong>
-Bem Vindo à secção de gabinetes de estudos e planeamento.
+Bem Vindo ï¿½ secï¿½ï¿½o de gabinetes de estudos e planeamento.
 </strong></center>

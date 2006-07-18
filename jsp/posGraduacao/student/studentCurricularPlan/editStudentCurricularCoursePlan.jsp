@@ -1,5 +1,6 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/enum.tld" prefix="e" %>
@@ -13,10 +14,10 @@
 
 <span class="error"><html:errors/></span>
 <html:form action="/alterStudentCurricularPlan">
-<html:hidden property="method" value="edit"/>
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="edit"/>
 <bean:define id="idInternal" name="studentCurricularPlan" property="idInternal"/>
-<html:hidden property="studentCurricularPlanId" value="<%= idInternal.toString() %>"/>
-<html:hidden property="page" value="1"/>
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.studentCurricularPlanId" property="studentCurricularPlanId" value="<%= idInternal.toString() %>"/>
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
 <table border="0" cellspacing="3" cellpadding="10">
 	<tr>
 		<td>
@@ -28,7 +29,7 @@
 	<tr>
 		<td>
 			<strong><bean:message key="label.student.branch" /></strong>
-			<html:select property="branch">
+			<html:select bundle="HTMLALT_RESOURCES" altKey="select.branch" property="branch">
 				<html:options collection="<%= SessionConstants.BRANCH %>" property="idInternal" labelProperty="name"/>
 		    </html:select>
 			<!--<logic:empty name="studentCurricularPlan" property="infoBranch">
@@ -48,7 +49,7 @@
 		<td>
 			<strong><bean:message key="label.student.specialization" /></strong>
 			<e:labelValues id="values" enumeration="net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization" excludedFields="INTEGRATED_MASTER_DEGREE" bundle="ENUMERATION_RESOURCES"/>
-			<html:select property="specialization">
+			<html:select bundle="HTMLALT_RESOURCES" altKey="select.specialization" property="specialization">
 				<html:options collection="values" property="value" labelProperty="label"/>
 		    </html:select>
 		</td>
@@ -57,7 +58,7 @@
 		<td>
 			<strong><bean:message key="label.student.state" /></strong>
 				<e:labelValues id="values" enumeration="net.sourceforge.fenixedu.domain.studentCurricularPlan.StudentCurricularPlanState" bundle="ENUMERATION_RESOURCES"/>
-				<html:select property="currentState" >
+				<html:select bundle="HTMLALT_RESOURCES" altKey="select.currentState" property="currentState" >
 	          	 	<html:options collection="values" property="value" labelProperty="label"/>
 	    	 	</html:select>   
 		</td>						
@@ -65,14 +66,14 @@
 	<tr>
 		<td>
 			<strong><bean:message key="label.student.startDate" /></strong>
-			<html:text property="startDate" /> 
+			<html:text bundle="HTMLALT_RESOURCES" altKey="text.startDate" property="startDate" /> 
 			<span class="error"><bean:message key="message.dateFormat"/></span>
 		</td>								
 	</tr>	
 	<tr>
 		<td>
 			<strong><bean:message key="label.student.credits" /></strong>
-			<html:text name="studentCurricularPlanForm" property="credits" size="4"/>
+			<html:text bundle="HTMLALT_RESOURCES" altKey="text.credits" name="studentCurricularPlanForm" property="credits" size="4"/>
 		</td>
 	</tr>	
 	<tr>
@@ -100,7 +101,7 @@
 		</td>
 	</tr>
 	<tr>
-		<td><html:textarea name="studentCurricularPlan" property="observations" cols="40" rows="4"/>
+		<td><html:textarea bundle="HTMLALT_RESOURCES" altKey="textarea.observations" name="studentCurricularPlan" property="observations" cols="40" rows="4"/>
 		</td>
 	</tr>
 	<tr>
@@ -117,7 +118,7 @@
 				</logic:lessEqual>
 				
 				<logic:greaterThan name="sizeEnrolments" value="0">
-				<html:hidden property="size" value='<%= pageContext.findAttribute("sizeEnrolments").toString() %>'/>
+				<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.size" property="size" value='<%= pageContext.findAttribute("sizeEnrolments").toString() %>'/>
 					<table>
 						<tr>
 							<td colspan="3" align="center"><h3><bean:message key="title.enrolments"/></h3></td>
@@ -152,7 +153,7 @@
 								</td>
 								<td>
 									<bean:define  id="idEnrolment" name="infoEnrolment" property="idInternal"/>
-									<html:multibox property="extraCurricularCourses"><bean:write name="infoEnrolment" property="idInternal"/> </html:multibox >&nbsp;
+									<html:multibox bundle="HTMLALT_RESOURCES" altKey="multibox.extraCurricularCourses" property="extraCurricularCourses"><bean:write name="infoEnrolment" property="idInternal"/> </html:multibox >&nbsp;
 								</td>
 							</tr>		
 						</logic:iterate>
@@ -162,7 +163,7 @@
 		</td>
 	</tr>	
 </table>	
- <html:submit value="Submeter" styleClass="inputbutton">
+ <html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" value="Submeter" styleClass="inputbutton">
 </html:submit>
 </html:form>	
 

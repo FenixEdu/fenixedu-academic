@@ -3,6 +3,7 @@
 <%@ taglib uri="/WEB-INF/html_basic.tld" prefix="h"%>
 
 <ft:tilesView definition="df.teacher.evaluation-management" attributeName="body-inline">
+	<f:loadBundle basename="resources/HtmlAltResources" var="htmlAltBundle"/>
 	<f:loadBundle basename="resources/ApplicationResources" var="bundle"/>
 
 	<h:outputFormat value="<h2>#{bundle['title.evaluation.manage.marksList']}</h2>" escape="false">
@@ -84,13 +85,13 @@
 				</h:column>
 				<h:column>
 					<f:facet name="header"><h:outputText value="#{bundle['label.mark']}"/></f:facet>
-					<h:inputText size="3" maxlength="4" value="#{evaluationManagementBackingBean.marks[attends.aluno.number]}"/>
+					<h:inputText alt="#{htmlAltBundle['inputText.number]']}" size="3" maxlength="4" value="#{evaluationManagementBackingBean.marks[attends.aluno.number]}"/>
 				</h:column>
 			</h:dataTable>
 
 		</h:panelGrid>
-		<h:commandButton styleClass="inputbutton" action="#{evaluationManagementBackingBean.editMarks}" value="#{bundle['button.save']}"/>
-		<h:commandButton immediate="true" action="#{evaluationManagementBackingBean.evaluation.class.getSimpleName}" styleClass="inputbutton" value="#{bundle['button.cancel']}"/>				
+		<h:commandButton alt="#{htmlAltBundle['commandButton.save']}" styleClass="inputbutton" action="#{evaluationManagementBackingBean.editMarks}" value="#{bundle['button.save']}"/>
+		<h:commandButton alt="#{htmlAltBundle['commandButton.cancel']}" immediate="true" action="#{evaluationManagementBackingBean.evaluation.class.getSimpleName}" styleClass="inputbutton" value="#{bundle['button.cancel']}"/>				
 	</h:form>
 
 </ft:tilesView>

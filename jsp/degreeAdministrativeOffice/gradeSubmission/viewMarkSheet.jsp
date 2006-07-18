@@ -1,4 +1,5 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
@@ -17,16 +18,16 @@
 </logic:messagesPresent>
 
 <html:form action="/markSheetManagement.do">
-	<html:hidden property="method" value="choosePrinter"/>
-	<html:hidden property="epID" />
-	<html:hidden property="dID" />
-	<html:hidden property="dcpID" />
-	<html:hidden property="ccID"  />	
-	<html:hidden property="msID" />
-	<html:hidden property="tn" />
-	<html:hidden property="ed"/>
-	<html:hidden property="mss" />
-	<html:hidden property="mst" />
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="choosePrinter"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.epID" property="epID" />
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.dID" property="dID" />
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.dcpID" property="dcpID" />
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.ccID" property="ccID"  />	
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.msID" property="msID" />
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.tn" property="tn" />
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.ed" property="ed"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.mss" property="mss" />
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.mst" property="mst" />
 	
 	<fr:view name="markSheet" schema="degreeAdministrativeOffice.markSheet.view">
 		<fr:layout name="tabular" >
@@ -78,7 +79,7 @@
 	<bean:define id="checksum" value="<%= FenixDigestUtils.getPrettyCheckSum(mark.getCheckSum())%>"/>
 	<strong><bean:message key="label.checksum"/></strong> : <bean:write name="checksum"/>
 	<br/><br/><br/>
-	<html:cancel styleClass="inputbutton" onclick="this.form.method.value='prepareSearchMarkSheetFilled';this.form.submit();"><bean:message key="label.back"/></html:cancel>
-	<html:submit styleClass="inputbutton"><bean:message key="label.print"/></html:submit>
+	<html:cancel bundle="HTMLALT_RESOURCES" altKey="cancel.cancel" styleClass="inputbutton" onclick="this.form.method.value='prepareSearchMarkSheetFilled';this.form.submit();"><bean:message key="label.back"/></html:cancel>
+	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton"><bean:message key="label.print"/></html:submit>
 	
 </html:form>

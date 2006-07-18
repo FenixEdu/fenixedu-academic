@@ -1,5 +1,6 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/enum.tld" prefix="e" %>
@@ -17,9 +18,9 @@
 <logic:present name="personalInfo">
 <bean:define id="studentNumber" name="studentNumber" />
 <html:form action="<%= "/editInformation.do?method=change&studentNumber=" + studentNumber.toString() %>" >
-<html:hidden name="personalInfo" property="idInternal" />
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.idInternal" name="personalInfo" property="idInternal" />
 <bean:define id="studentNumber" name="studentNumber" />
-<html:hidden property="page" value="2"/>
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="2"/>
 <table width="100%" cellpadding="0" cellspacing="0">
 	<!-- Dados Pessoais -->
 	<tr>
@@ -34,7 +35,7 @@
           <!-- Nome -->
     <tr>
    		<td width="30%"><bean:message key="label.person.name"   /></td>
-      	<td class="greytxt"><html:text property="name" size="75"/></td>
+      	<td class="greytxt"><html:text bundle="HTMLALT_RESOURCES" altKey="text.name" property="name" size="75"/></td>
    	</tr>
     <!-- Username -->
     <tr>
@@ -45,7 +46,7 @@
     <tr>
      <td><bean:message key="label.person.sex"  /></td>
      <td>
-        <html:select property="sex">
+        <html:select bundle="HTMLALT_RESOURCES" altKey="select.sex" property="sex">
             <html:options collection="<%= SessionConstants.SEX_LIST_KEY %>" property="value" labelProperty="label"/>
          </html:select>          
      </td>
@@ -54,37 +55,37 @@
     <tr>
      <td><bean:message key="label.person.identificationDocumentNumber"  /></td>
       <!-- <bean:write name="personalInfo" property="numeroDocumentoIdentificacao"/> -->
-	   <td><html:text property="identificationDocumentNumber"/> </td>
-	  <html:hidden property="identificationDocumentNumber" />
+	   <td><html:text bundle="HTMLALT_RESOURCES" altKey="text.identificationDocumentNumber" property="identificationDocumentNumber"/> </td>
+	  <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.identificationDocumentNumber" property="identificationDocumentNumber" />
     </tr>
     <!-- Tipo do Documento de Identificacao -->
     <tr>
      <td><bean:message key="label.person.identificationDocumentType"  /></td>
      <td>
      	<e:labelValues id="values" enumeration="net.sourceforge.fenixedu.domain.person.IDDocumentType"  />
-         <html:select property="identificationDocumentType">
+         <html:select bundle="HTMLALT_RESOURCES" altKey="select.identificationDocumentType" property="identificationDocumentType">
          	<html:option key="dropDown.Default" value=""  />
             <html:options collection="values" property="value" labelProperty="label" />
          </html:select>
        <!--  <bean:write name="personalInfo" property="tipoDocumentoIdentificacao"/>-->
-         <html:hidden property="identificationDocumentType" />          
+         <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.identificationDocumentType" property="identificationDocumentType" />          
      </td>
     </tr>
     <!-- Local de Emissao do Documento de Identificacao -->
     <tr>
      <td><bean:message key="label.person.identificationDocumentIssuePlace"  /></td>
-      <td><html:text property="identificationDocumentIssuePlace" size="75"/></td>
+      <td><html:text bundle="HTMLALT_RESOURCES" altKey="text.identificationDocumentIssuePlace" property="identificationDocumentIssuePlace" size="75"/></td>
     </tr>
     <!-- Data de Emissao do Documento de Identificacao -->
     <tr>
      <td><bean:message key="label.person.identificationDocumentIssueDate"  /></td>
-      <td><html:select property="idIssueDateYear">
+      <td><html:select bundle="HTMLALT_RESOURCES" altKey="select.idIssueDateYear" property="idIssueDateYear">
             <html:options collection="<%= SessionConstants.YEARS_KEY %>" property="value" labelProperty="label"/>
          </html:select>
-         <html:select property="idIssueDateMonth">
+         <html:select bundle="HTMLALT_RESOURCES" altKey="select.idIssueDateMonth" property="idIssueDateMonth">
             <html:options collection="<%= SessionConstants.MONTH_LIST_KEY %>" property="value" labelProperty="label"/>
          </html:select>
-         <html:select property="idIssueDateDay">
+         <html:select bundle="HTMLALT_RESOURCES" altKey="select.idIssueDateDay" property="idIssueDateDay">
             <html:options collection="<%= SessionConstants.MONTH_DAYS_KEY %>" property="value" labelProperty="label"/>
          </html:select>
       </td>          
@@ -92,13 +93,13 @@
 <!-- Data de Validade do Documento de Identificacao -->
     <tr>
      <td><bean:message key="label.person.identificationDocumentExpirationDate"  /></td>
-     <td><html:select property="idExpirationDateYear">
+     <td><html:select bundle="HTMLALT_RESOURCES" altKey="select.idExpirationDateYear" property="idExpirationDateYear">
             <html:options collection="<%= SessionConstants.EXPIRATION_YEARS_KEY %>" property="value" labelProperty="label"/>
          </html:select>
-         <html:select property="idExpirationDateMonth">
+         <html:select bundle="HTMLALT_RESOURCES" altKey="select.idExpirationDateMonth" property="idExpirationDateMonth">
             <html:options collection="<%= SessionConstants.MONTH_LIST_KEY %>" property="value" labelProperty="label"/>
          </html:select>
-         <html:select property="idExpirationDateDay">
+         <html:select bundle="HTMLALT_RESOURCES" altKey="select.idExpirationDateDay" property="idExpirationDateDay">
             <html:options collection="<%= SessionConstants.MONTH_DAYS_KEY %>" property="value" labelProperty="label"/>
          </html:select>
       </td>          
@@ -106,19 +107,19 @@
      <!-- Numero de Contribuinte -->
     <tr>
      <td><bean:message key="label.person.contributorNumber"  /></td>
-      <td><html:text property="contributorNumber"/></td>
+      <td><html:text bundle="HTMLALT_RESOURCES" altKey="text.contributorNumber" property="contributorNumber"/></td>
     </tr>
     <!-- Profissao -->
     <tr>
      <td><bean:message key="label.person.occupation"  /></td>
-      <td><html:text property="occupation" size="75"/></td>
+      <td><html:text bundle="HTMLALT_RESOURCES" altKey="text.occupation" property="occupation" size="75"/></td>
     </tr>
     <!-- Estado Civil -->
     <tr>
      <td with="15%"><bean:message key="label.person.maritalStatus"  /></td>
      <td>
         <e:labelValues id="values" enumeration="net.sourceforge.fenixedu.domain.person.MaritalStatus" />
-		<html:select property="maritalStatus">
+		<html:select bundle="HTMLALT_RESOURCES" altKey="select.maritalStatus" property="maritalStatus">
     		<html:option key="dropDown.Default" value=""  />
         	<html:options collection="values" property="value" labelProperty="label"/>
 		</html:select>           
@@ -127,7 +128,7 @@
 </table>
 <br />
 <table width="100%" cellpadding="0" cellspacing="0">
-   <!-- Filiação -->
+   <!-- Filiaï¿½ï¿½o -->
   	<tr>
 	   <td class="infoop" width="25"><span class="emphasis-box">2</span></td>
   	   <td class="infoop"><strong><bean:message key="label.person.title.filiation"  /></strong></td>
@@ -138,13 +139,13 @@
    <!-- Data de Nascimento -->
 	<tr>
 	 <td><bean:message key="label.person.birth"  /></td>
-	 <td><html:select property="birthYear">
+	 <td><html:select bundle="HTMLALT_RESOURCES" altKey="select.birthYear" property="birthYear">
 	        <html:options collection="<%= SessionConstants.YEARS_KEY %>" property="value" labelProperty="label"/>
 	     </html:select>
-	     <html:select property="birthMonth">
+	     <html:select bundle="HTMLALT_RESOURCES" altKey="select.birthMonth" property="birthMonth">
 	        <html:options collection="<%= SessionConstants.MONTH_LIST_KEY %>" property="value" labelProperty="label"/>
 	     </html:select>
-	     <html:select property="birthDay">
+	     <html:select bundle="HTMLALT_RESOURCES" altKey="select.birthDay" property="birthDay">
 	        <html:options collection="<%= SessionConstants.MONTH_DAYS_KEY %>" property="value" labelProperty="label"/>
 	     </html:select>
 	 </td>   
@@ -152,7 +153,7 @@
     <tr>
      <td><bean:message key="label.person.nationality"  /></td>
      <td>
-        <html:select property="nationality">
+        <html:select bundle="HTMLALT_RESOURCES" altKey="select.nationality" property="nationality">
             <html:options collection="<%= SessionConstants.NATIONALITY_LIST_KEY %>" property="value" labelProperty="label"/>
          </html:select>          
      </td>
@@ -160,28 +161,28 @@
     <!-- Freguesia de Naturalidade -->
     <tr>
      <td><bean:message key="label.person.birthPlaceParish"  /></td>
-      <td><html:text property="birthPlaceParish" size="75"/></td>
+      <td><html:text bundle="HTMLALT_RESOURCES" altKey="text.birthPlaceParish" property="birthPlaceParish" size="75"/></td>
     </tr>
     <!-- Concelho de Naturalidade -->
     <tr>
      <td><bean:message key="label.person.birthPlaceMunicipality"  /></td>
-      <td><html:text property="birthPlaceMunicipality" size="75"/></td>
+      <td><html:text bundle="HTMLALT_RESOURCES" altKey="text.birthPlaceMunicipality" property="birthPlaceMunicipality" size="75"/></td>
     </tr>
     <!-- Distrito de Naturalidade -->
     <tr>
      <td><bean:message key="label.person.birthPlaceDistrict"  /></td>
-      <td><html:text property="birthPlaceDistrict" size="75"/></td>
+      <td><html:text bundle="HTMLALT_RESOURCES" altKey="text.birthPlaceDistrict" property="birthPlaceDistrict" size="75"/></td>
     </tr>
     </tr>              
     <!-- Nome do Pai -->
     <tr>
      <td><bean:message key="label.person.fatherName"  /></td>
-      <td><html:text property="fatherName" size="75"/></td>
+      <td><html:text bundle="HTMLALT_RESOURCES" altKey="text.fatherName" property="fatherName" size="75"/></td>
     </tr>
     <!-- Nome da Mae -->
     <tr>
      <td><bean:message key="label.person.motherName"  /></td>
-      <td><html:text property="motherName" size="75"/></td>
+      <td><html:text bundle="HTMLALT_RESOURCES" altKey="text.motherName" property="motherName" size="75"/></td>
     </tr>
 </table>
 <br />
@@ -197,38 +198,38 @@
     <!-- Morada -->
     <tr>
      <td><bean:message key="label.person.address"  /></td>
-      <td><html:text property="address" size="75"/></td>
+      <td><html:text bundle="HTMLALT_RESOURCES" altKey="text.address" property="address" size="75"/></td>
     </tr>
     <!-- Codigo Postal -->
     <tr>
      <td><bean:message key="label.person.postCode"  /></td>
-      <td><html:text property="postCode" size="6"/></td>
+      <td><html:text bundle="HTMLALT_RESOURCES" altKey="text.postCode" property="postCode" size="6"/></td>
     </tr>
     <!-- Localidade -->
     <tr>
      <td><bean:message key="label.person.place"  /></td>
-      <td><html:text property="place" size="75"/></td>
+      <td><html:text bundle="HTMLALT_RESOURCES" altKey="text.place" property="place" size="75"/></td>
     </tr>
     
     <!-- Area do Codigo Postal -->
     <tr>
      <td><bean:message key="label.person.areaOfPostCode"  /></td>
-      <td><html:text property="areaOfAreaCode" size="6"/></td>
+      <td><html:text bundle="HTMLALT_RESOURCES" altKey="text.areaOfAreaCode" property="areaOfAreaCode" size="6"/></td>
     </tr>
     <!-- Freguesia de Morada -->
     <tr>
      <td><bean:message key="label.person.addressParish"  /></td>
-      <td><html:text property="addressParish" size="75"/></td>
+      <td><html:text bundle="HTMLALT_RESOURCES" altKey="text.addressParish" property="addressParish" size="75"/></td>
     </tr>
     <!-- Concelho de Morada -->
     <tr>
      <td><bean:message key="label.person.addressMunicipality"  /></td>
-      <td><html:text property="addressMunicipality" size="75"/></td>
+      <td><html:text bundle="HTMLALT_RESOURCES" altKey="text.addressMunicipality" property="addressMunicipality" size="75"/></td>
     </tr>
     <!-- Distrito de Morada -->
     <tr>
      <td><bean:message key="label.person.addressDistrict"  /></td>
-      <td><html:text property="addressDistrict" size="75"/></td>
+      <td><html:text bundle="HTMLALT_RESOURCES" altKey="text.addressDistrict" property="addressDistrict" size="75"/></td>
     </tr>
 </table>
 <br />
@@ -244,26 +245,26 @@
 	<!-- telefone -->
 	<tr>
 	     <td><bean:message key="label.person.telephone"  /></td>
-	      <td><html:text property="telephone"/></td>
+	      <td><html:text bundle="HTMLALT_RESOURCES" altKey="text.telephone" property="telephone"/></td>
 	</tr>
 	<!-- Telemovel -->
 	<tr>
 	    <td width="15%"><bean:message key="label.person.mobilePhone"  /></td>
-	    <td><html:text property="mobilePhone"/></td>
+	    <td><html:text bundle="HTMLALT_RESOURCES" altKey="text.mobilePhone" property="mobilePhone"/></td>
 	</tr>
 	<!-- E-Mail -->
 	<tr>
 	    <td><bean:message key="label.person.email"  /></td>
-	    <td><html:text property="email" /></td>
+	    <td><html:text bundle="HTMLALT_RESOURCES" altKey="text.email" property="email" /></td>
 	</tr>
 	<!-- WebPage -->
 	<tr>
 	    <td><bean:message key="label.person.webSite"  /></td>
-	    <td><html:text property="webSite" /></td>
+	    <td><html:text bundle="HTMLALT_RESOURCES" altKey="text.webSite" property="webSite" /></td>
 	</tr>
  </table>
     
-	<html:submit value="Alterar Dados" styleClass="inputbutton" property="ok"/>
+	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.ok" value="Alterar Dados" styleClass="inputbutton" property="ok"/>
 </html:form>
 </logic:present>
     

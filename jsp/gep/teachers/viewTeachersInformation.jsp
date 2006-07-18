@@ -1,5 +1,5 @@
 <%@ page language="java" %>
-<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
+<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%><html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="dt"%>
@@ -87,14 +87,14 @@
 	</logic:notPresent>	
 	<table width="90%" border="0" cellspacing="1" style="margin-top:10px">
 		<tr> 
-			<td class="listClasses-header"><bean:message key="label.gep.teacher" bundle="GEP_RESOURCES"/></td>
-			<td class="listClasses-header"><bean:message key="label.gep.teacher.number" bundle="GEP_RESOURCES"/></td>
-			<td class="listClasses-header"><bean:message key="label.gep.teacher.category" bundle="GEP_RESOURCES"/> </td> 
-		    <td class="listClasses-header"><bean:message key="label.gep.teachersInformation.associatedLecturingCourses" bundle="GEP_RESOURCES"/></td> 
-		    <td class="listClasses-header"><bean:message key="label.gep.teachersInformation.associatedLecturingCourses.degrees" bundle="GEP_RESOURCES"/></td>
-			<td class="listClasses-header"><bean:message key="label.gep.teachersInformation.associatedLecturingCourses.executionPeriod" bundle="GEP_RESOURCES"></bean:message></td>
-		    <td class="listClasses-header"><bean:message key="title.gep.teachersInformationSituation" bundle="GEP_RESOURCES"/></td> 
-		    <td class="listClasses-header"><bean:message key="label.gep.teachersInformation.lastModificationDate" bundle="GEP_RESOURCES"/></td> 
+			<th class="listClasses-header"><bean:message key="label.gep.teacher" bundle="GEP_RESOURCES"/></th>
+			<th class="listClasses-header"><bean:message key="label.gep.teacher.number" bundle="GEP_RESOURCES"/></th>
+			<th class="listClasses-header"><bean:message key="label.gep.teacher.category" bundle="GEP_RESOURCES"/> </th> 
+		    <th class="listClasses-header"><bean:message key="label.gep.teachersInformation.associatedLecturingCourses" bundle="GEP_RESOURCES"/></th> 
+		    <th class="listClasses-header"><bean:message key="label.gep.teachersInformation.associatedLecturingCourses.degrees" bundle="GEP_RESOURCES"/></th>
+			<th class="listClasses-header"><bean:message key="label.gep.teachersInformation.associatedLecturingCourses.executionPeriod" bundle="GEP_RESOURCES"></bean:message></th>
+		    <th class="listClasses-header"><bean:message key="title.gep.teachersInformationSituation" bundle="GEP_RESOURCES"/></th> 
+		    <th class="listClasses-header"><bean:message key="label.gep.teachersInformation.lastModificationDate" bundle="GEP_RESOURCES"/></th> 
 	    </tr>
 	    <% HashMap statistics = new HashMap(); %>
    		<logic:iterate id="infoSiteTeacherInformation" name="infoSiteTeachersInformation" type="net.sourceforge.fenixedu.dataTransferObject.teacher.InfoSiteTeacherInformation">
@@ -259,9 +259,9 @@
 	<br />
 	<table width="50%" border="0" cellspacing="1" style="margin-top:10px">
 		<tr>
-			<td class="listClasses-header"><bean:message key="label.gep.situation" bundle="GEP_RESOURCES"/></td>
-			<td class="listClasses-header"><bean:message key="label.gep.numberOfFieldsWithInfo" bundle="GEP_RESOURCES"/></td>
-			<td class="listClasses-header"><bean:message key="label.gep.stats" bundle="GEP_RESOURCES"/>&nbsp;(%)</td>
+			<th class="listClasses-header"><bean:message key="label.gep.situation" bundle="GEP_RESOURCES"/></th>
+			<th class="listClasses-header"><bean:message key="label.gep.numberOfFieldsWithInfo" bundle="GEP_RESOURCES"/></th>
+			<th class="listClasses-header"><bean:message key="label.gep.stats" bundle="GEP_RESOURCES"/>&nbsp;(%)</th>
 		</tr>
 		<tr>
 			<td class="listClasses"><font color="#008000">5/5</font></td>

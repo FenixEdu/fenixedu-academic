@@ -1,6 +1,7 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 
         <center>
@@ -79,7 +80,7 @@
         <table align="center">
             <tr align="center">
                 <td>
-                    <html:link page="/viewRoomOcupation.do"> Ver Ocupação </html:link>
+                    <html:link page="/viewRoomOcupation.do"> Ver Ocupaï¿½ï¿½o </html:link>
                 </td>
             </tr>
         </table>

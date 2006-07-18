@@ -1,4 +1,5 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <html:errors/>
 <center>
@@ -8,8 +9,8 @@
 <br/>
 <br/>
 <html:form action="/curricularCourseEnrolmentWithRulesManager.do">
-	<html:hidden property="method" value="outOfPeriod"/>
-	<html:submit styleClass="inputbutton"><bean:message key="button.yes"/></html:submit>
-	<html:cancel styleClass="inputbutton"><bean:message key="button.no"/></html:cancel>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="outOfPeriod"/>
+	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton"><bean:message key="button.yes"/></html:submit>
+	<html:cancel bundle="HTMLALT_RESOURCES" altKey="cancel.cancel" styleClass="inputbutton"><bean:message key="button.no"/></html:cancel>
 </html:form>
 </center>

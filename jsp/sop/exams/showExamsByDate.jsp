@@ -4,7 +4,7 @@
 <%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoRoomOccupation" %>
 <%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoViewExamByDayAndShift" %>
 <%@ page import="java.util.Calendar" %>
-<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %><html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="dt" %>
@@ -27,13 +27,13 @@
 <logic:present name="<%= SessionConstants.LIST_EXAMSANDINFO %>" scope="request">
 	<table width="100%" border="1">
 		<tr>
-			<td class="listClasses-header">Disciplina</td>
-			<td class="listClasses-header">Curso</td>		
-			<td class="listClasses-header">Época</td>
-			<td class="listClasses-header">Hora</td>
-			<td class="listClasses-header">Salas</td>
-			<td class="listClasses-header">Nº Alunos</td>	
-			<td class="listClasses-header">Faltam X Lugares</td>	
+			<th class="listClasses-header">Disciplina</th>
+			<th class="listClasses-header">Curso</th>		
+			<th class="listClasses-header">ï¿½poca</th>
+			<th class="listClasses-header">Hora</th>
+			<th class="listClasses-header">Salas</th>
+			<th class="listClasses-header">Nï¿½ Alunos</th>	
+			<th class="listClasses-header">Faltam X Lugares</th>	
 		</tr>
 		<logic:iterate id="infoViewExam" indexId="index" name="<%= SessionConstants.LIST_EXAMSANDINFO %>" scope="request">
 				

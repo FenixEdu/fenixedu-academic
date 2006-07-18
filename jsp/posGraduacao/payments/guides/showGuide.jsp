@@ -1,4 +1,5 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
@@ -35,10 +36,10 @@
 	</table>
 	<br/>
 	<html:form action="/payments.do" target="_blank">
-		<html:hidden property="method" />
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" />
 		<fr:edit id="paymentsManagementDTO" name="paymentsManagementDTO" visible="false"/>
 		<br/>
-		<html:submit styleClass="inputbutton" onclick="this.form.method.value='printGuide';"><bean:message key="label.masterDegree.administrativeOffice.payments.print"/></html:submit>
+		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton" onclick="this.form.method.value='printGuide';"><bean:message key="label.masterDegree.administrativeOffice.payments.print"/></html:submit>
 	</html:form>
 </logic:notEmpty>
 <logic:empty name="paymentsManagementDTO" property="selectedEntries">

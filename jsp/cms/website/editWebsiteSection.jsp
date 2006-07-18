@@ -5,6 +5,7 @@
 <%@ page import="org.apache.struts.taglib.TagUtils" %>
 
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
@@ -18,7 +19,7 @@
         %>
     
         <logic:iterate id="parent" indexId="index" name="parents">
-            <logic:greaterThan name="index" value="0">»</logic:greaterThan>
+            <logic:greaterThan name="index" value="0">ï¿½</logic:greaterThan>
             
             <bean:define id="parentId" name="parent" property="idInternal"/>
             <html:link page="<%= "/websiteManagement.do?method=edit&oid=" + parentId + "&path=" + pathParam %>">
@@ -30,7 +31,7 @@
             %>
         </logic:iterate>
         
-        <logic:notEmpty name="parents">»</logic:notEmpty>
+        <logic:notEmpty name="parents">ï¿½</logic:notEmpty>
         <bean:write name="section" property="name"/>
     
         <div style="float: right;">
@@ -88,13 +89,13 @@
         <br/>
         
         <html:form action="/websiteManagement" method="get">
-            <html:hidden property="method" value="createChild"/>
+            <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="createChild"/>
             
-            <input type="hidden" name="oid" value="<%= oid %>"/>
-            <input type="hidden" name="path" value="<%= path %>"/>
+            <input alt="input.oid" type="hidden" name="oid" value="<%= oid %>"/>
+            <input alt="input.path" type="hidden" name="path" value="<%= path %>"/>
             
-            <html:submit property="section"><bean:message key="cms.websiteManagement.section.create" bundle="CMS_RESOURCES"/></html:submit>
-            <html:submit property="item"><bean:message key="cms.websiteManagement.item.create" bundle="CMS_RESOURCES"/></html:submit>
+            <html:submit bundle="HTMLALT_RESOURCES" altKey="submit.section" property="section"><bean:message key="cms.websiteManagement.section.create" bundle="CMS_RESOURCES"/></html:submit>
+            <html:submit bundle="HTMLALT_RESOURCES" altKey="submit.item" property="item"><bean:message key="cms.websiteManagement.item.create" bundle="CMS_RESOURCES"/></html:submit>
         </html:form>
     </div>
 </logic:present>

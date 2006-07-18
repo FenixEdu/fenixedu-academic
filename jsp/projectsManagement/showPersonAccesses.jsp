@@ -1,4 +1,5 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <bean:define id="code" value="" />
@@ -71,12 +72,12 @@ function getIndex(input){
 		<br />
 		<table>
 			<tr>
-				<td class="listClasses-header"><bean:message key="label.username" /></td>
-				<td class="listClasses-header"><bean:message key="label.name" /></td>
-				<td class="listClasses-header"><bean:message key="label.projectNumber" /></td>
-				<td class="listClasses-header"><bean:message key="label.acronym" /></td>
-				<td class="listClasses-header"><bean:message key="label.beginDate" /></td>
-				<td class="listClasses-header"><bean:message key="label.endDate" /></td>
+				<th class="listClasses-header"><bean:message key="label.username" /></th>
+				<th class="listClasses-header"><bean:message key="label.name" /></th>
+				<th class="listClasses-header"><bean:message key="label.projectNumber" /></th>
+				<th class="listClasses-header"><bean:message key="label.acronym" /></th>
+				<th class="listClasses-header"><bean:message key="label.beginDate" /></th>
+				<th class="listClasses-header"><bean:message key="label.endDate" /></th>
 			</tr>
 			<logic:iterate id="projectAccess" name="personAccessesList">
 				<bean:define id="person" name="projectAccess" property="infoPerson" />
@@ -116,28 +117,28 @@ function getIndex(input){
 			</table>
 			<br />
 			<html:form action="/projectAccess" focus="beginDay">
-				<html:hidden property="username" value="<%=(pageContext.findAttribute("username")).toString()%>" />
-				<html:hidden property="method" value="delegateAccess" />
-				<html:hidden property="page" value="2" />
+				<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.username" property="username" value="<%=(pageContext.findAttribute("username")).toString()%>" />
+				<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="delegateAccess" />
+				<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="2" />
 				<logic:present name="infoCostCenter" scope="request">
 					<bean:define id="cc" name="infoCostCenter" property="code" scope="request" />
-					<html:hidden property="costCenter" value="<%=cc.toString()%>" />
+					<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.costCenter" property="costCenter" value="<%=cc.toString()%>" />
 				</logic:present>
 				<logic:present name="noProjectsSelected">
 					<span class="error"><bean:message key="errors.requiredProject" /></span>
 				</logic:present>
 				<table>
 					<tr>
-						<td class="listClasses-header"><bean:message key="label.projectNumber" /></td>
-						<td class="listClasses-header"><bean:message key="label.acronym" /></td>
-						<td class="listClasses-header"><html:multibox property="projectCode" onclick="invertStatus()" value="-1" /></td>
+						<th class="listClasses-header"><bean:message key="label.projectNumber" /></th>
+						<th class="listClasses-header"><bean:message key="label.acronym" /></th>
+						<th class="listClasses-header"><html:multibox bundle="HTMLALT_RESOURCES" altKey="multibox.projectCode" property="projectCode" onclick="invertStatus()" value="-1" /></th>
 					</tr>
 					<logic:iterate id="project" name="projectList">
 						<bean:define id="projectCode" name="project" property="projectCode" />
 						<tr>
 							<td class="listClasses"><bean:write name="project" property="projectIdentification" /></td>
 							<td class="listClasses"><bean:write name="project" property="title" /></td>
-							<td class="listClasses"><html:multibox property="projectCodes">
+							<td class="listClasses"><html:multibox bundle="HTMLALT_RESOURCES" altKey="multibox.projectCodes" property="projectCodes">
 								<bean:write name="project" property="projectCode" />
 							</html:multibox></td>
 						</tr>
@@ -166,17 +167,17 @@ function getIndex(input){
 				<table border="0" cellpadding="0" cellspacing="0">
 					<tr>
 						<td><bean:message key="message.sinceDate" /><bean:message key="message.dateFormat" /></td>
-						<td><html:text maxlength="2" size="2" property="beginDay" onkeyup="changeFocus(this)" /> / <html:text maxlength="2" size="2"
-							property="beginMonth" onkeyup="changeFocus(this)" /> / <html:text maxlength="4" size="4" property="beginYear" onkeyup="changeFocus(this)" /></td>
+						<td><html:text bundle="HTMLALT_RESOURCES" altKey="text.beginDay" maxlength="2" size="2" property="beginDay" onkeyup="changeFocus(this)" /> / <html:text bundle="HTMLALT_RESOURCES" altKey="text.beginMonth" maxlength="2" size="2"
+							property="beginMonth" onkeyup="changeFocus(this)" /> / <html:text bundle="HTMLALT_RESOURCES" altKey="text.beginYear" maxlength="4" size="4" property="beginYear" onkeyup="changeFocus(this)" /></td>
 					</tr>
 					<tr>
 						<td><bean:message key="message.untilDate" /><bean:message key="message.dateFormat" /></td>
-						<td><html:text maxlength="2" size="2" property="endDay" onkeyup="changeFocus(this)" /> / <html:text maxlength="2" size="2" property="endMonth"
-							onkeyup="changeFocus(this)" /> / <html:text maxlength="4" size="4" property="endYear" onkeyup="changeFocus(this)" /></td>
+						<td><html:text bundle="HTMLALT_RESOURCES" altKey="text.endDay" maxlength="2" size="2" property="endDay" onkeyup="changeFocus(this)" /> / <html:text bundle="HTMLALT_RESOURCES" altKey="text.endMonth" maxlength="2" size="2" property="endMonth"
+							onkeyup="changeFocus(this)" /> / <html:text bundle="HTMLALT_RESOURCES" altKey="text.endYear" maxlength="4" size="4" property="endYear" onkeyup="changeFocus(this)" /></td>
 					</tr>
 				</table>
 				<br />
-				<html:submit styleClass="inputbutton">
+				<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton">
 					<bean:message key="label.add" />
 				</html:submit>
 			</html:form>

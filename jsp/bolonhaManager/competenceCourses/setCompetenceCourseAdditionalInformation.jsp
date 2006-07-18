@@ -4,6 +4,7 @@
 <%@ taglib uri="/WEB-INF/html_basic.tld" prefix="h"%>
 
 <ft:tilesView definition="bolonhaManager.masterPage" attributeName="body-inline">
+	<f:loadBundle basename="resources/HtmlAltResources" var="htmlAltBundle"/>
 	<f:loadBundle basename="resources/BolonhaManagerResources" var="bolonhaBundle"/>
 	<f:loadBundle basename="resources/EnumerationResources" var="enumerationBundle"/>
 
@@ -106,22 +107,22 @@
 		</h:panelGrid>
 		<h:outputText value="</p></fieldset></div>" escape="false"/>
 		
-		<h:outputText escape="false" value="<input id='competenceCourseID' name='competenceCourseID' type='hidden' value='#{CompetenceCourseManagement.competenceCourse.idInternal}'/>"/>
-		<h:outputText escape="false" value="<input id='action' name='action' type='hidden' value='#{CompetenceCourseManagement.action}'/>"/>		
+		<h:outputText escape="false" value="<input alt='input.competenceCourseID' id='competenceCourseID' name='competenceCourseID' type='hidden' value='#{CompetenceCourseManagement.competenceCourse.idInternal}'/>"/>
+		<h:outputText escape="false" value="<input alt='input.action' id='action' name='action' type='hidden' value='#{CompetenceCourseManagement.action}'/>"/>		
 
 		<h:panelGroup rendered="#{CompetenceCourseManagement.action == 'create'}">
-			<h:commandButton styleClass="inputbutton" value="#{bolonhaBundle['submit']}"
+			<h:commandButton alt="#{htmlAltBundle['commandButton.submit']}" styleClass="inputbutton" value="#{bolonhaBundle['submit']}"
 				action="#{CompetenceCourseManagement.createCompetenceCourseAdditionalInformation}"/>
 		</h:panelGroup>
 		<h:panelGroup rendered="#{CompetenceCourseManagement.action == 'edit'}">
-			<h:commandButton styleClass="inputbutton" value="#{bolonhaBundle['save']}"
+			<h:commandButton alt="#{htmlAltBundle['commandButton.save']}" styleClass="inputbutton" value="#{bolonhaBundle['save']}"
 				action="#{CompetenceCourseManagement.editCompetenceCourseAdditionalInformation}"/>
 		</h:panelGroup>		
 		<h:panelGroup rendered="#{CompetenceCourseManagement.action == 'create'}">
-			<h:commandButton immediate="true" styleClass="inputbutton" value="#{bolonhaBundle['cancel']}" action="competenceCoursesManagement"/>			
+			<h:commandButton alt="#{htmlAltBundle['commandButton.cancel']}" immediate="true" styleClass="inputbutton" value="#{bolonhaBundle['cancel']}" action="competenceCoursesManagement"/>			
 		</h:panelGroup>
 		<h:panelGroup rendered="#{CompetenceCourseManagement.action == 'edit'}">
-			<h:commandButton immediate="true" styleClass="inputbutton" value="#{bolonhaBundle['cancel']}" action="editCompetenceCourseMainPage"/>			
+			<h:commandButton alt="#{htmlAltBundle['commandButton.cancel']}" immediate="true" styleClass="inputbutton" value="#{bolonhaBundle['cancel']}" action="editCompetenceCourseMainPage"/>			
 		</h:panelGroup>
 
 	</h:form>

@@ -1,5 +1,5 @@
 <%@ page language="java" %>
-<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
+<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%><html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
@@ -19,7 +19,7 @@
 <html:form action="/studentsGratuityList.do?method=coordinatorStudentsGratuityList">	
 	<h2>
 		<bean:message key="link.masterDegree.administrativeOffice.gratuity.chosenYear"/>
-		<html:select onchange="this.form.submit();" property="chosenYear">
+		<html:select bundle="HTMLALT_RESOURCES" altKey="select.chosenYear" onchange="this.form.submit();" property="chosenYear">
 			<logic:iterate id="executionYearTemp" name="executionYears">
 				<bean:define id="executionYearString" name="executionYearTemp" property="year" type="java.lang.String"/>
 				<html:option value="<%= executionYearString %>">
@@ -27,8 +27,8 @@
 				</html:option>
 			</logic:iterate>
 		</html:select>	
-		<html:hidden property="degreeCurricularPlanID" />
-		<html:hidden property="order" />
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.degreeCurricularPlanID" property="degreeCurricularPlanID" />
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.order" property="order" />
 	</h2>
 </html:form>
 
@@ -69,13 +69,13 @@
 		<h2>
 		<logic:present name="totalRemaingValue">
 			<bean:message key="label.masterDegree.gratuity.total" />&nbsp;<bean:message key="label.masterDegree.gratuity.notPayedValue"/>:
-			&nbsp;<bean:write name="totalRemaingValue" />€
+			&nbsp;<bean:write name="totalRemaingValue" />ï¿½
 		</logic:present>
 		</h2>
 		<h2>
 		<logic:present name="totalPayedValue">
 			<bean:message key="label.masterDegree.gratuity.total" />&nbsp;<bean:message key="label.masterDegree.gratuity.payedValue"/>:
-			&nbsp;<bean:write name="totalPayedValue" />€
+			&nbsp;<bean:write name="totalPayedValue" />ï¿½
 		</logic:present>
 		</h2>
 		

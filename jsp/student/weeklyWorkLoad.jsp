@@ -1,5 +1,6 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %> 
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
@@ -41,10 +42,10 @@ padding: 0.5em;
 <br/>
 
 <html:form action="/weeklyWorkLoad.do">
-	<html:hidden property="method" value="prepare"/>
-	<html:hidden property="page" value="0"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="prepare"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="0"/>
 	Semestre: 
-	<html:select property="executionPeriodID" onchange="this.form.submit();">
+	<html:select bundle="HTMLALT_RESOURCES" altKey="select.executionPeriodID" property="executionPeriodID" onchange="this.form.submit();">
 		<html:options collection="executionPeriods" property="idInternal" labelProperty="qualifiedName"/>
 	</html:select>
 </html:form>
@@ -96,7 +97,7 @@ padding: 0.5em;
 
 
 
-<p class="mbottom0"><span class="attention">Atenção:</span> Deve submeter uma disciplina de cada vez e preencher os três campos (Contacto, Trabalho Autónomo e Outro).</p>
+<p class="mbottom0"><span class="attention">Atenï¿½ï¿½o:</span> Deve submeter uma disciplina de cada vez e preencher os trï¿½s campos (Contacto, Trabalho Autï¿½nomo e Outro).</p>
 
 
 	<logic:present name="firstAttends" property="responseWeek">
@@ -136,26 +137,26 @@ padding: 0.5em;
 				<logic:notPresent name="attend" property="weeklyWorkLoadOfPreviousWeek">
 					<tr>
 						<html:form action="/weeklyWorkLoad.do">
-							<html:hidden property="method" value="createFromForm"/>
-							<html:hidden property="page" value="1"/>
+							<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="createFromForm"/>
+							<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
 							<bean:define id="attendsID" type="java.lang.Integer" name="attend" property="idInternal"/>
-							<html:hidden property="attendsID" value="<%= attendsID.toString() %>"/>
-							<html:hidden property="executionPeriodID"/>
+							<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.attendsID" property="attendsID" value="<%= attendsID.toString() %>"/>
+							<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.executionPeriodID" property="executionPeriodID"/>
 
 							<td>
 								<bean:write name="attend" property="disciplinaExecucao.nome"/>
 							</td>
 							<td title="<%= contact_tooltip %>">
-								<html:text size="3" maxlength="3" property="contact"/>
+								<html:text bundle="HTMLALT_RESOURCES" altKey="text.contact" size="3" maxlength="3" property="contact"/>
 							</td>
 							<td  title="<%= autonomousStudy_tooltip %>">
-								<html:text size="3" maxlength="3" property="autonomousStudy"/>
+								<html:text bundle="HTMLALT_RESOURCES" altKey="text.autonomousStudy" size="3" maxlength="3" property="autonomousStudy"/>
 							</td>
 							<td title="<%= other_tooltip %>">
-								<html:text size="3" maxlength="3" property="other"/>
+								<html:text bundle="HTMLALT_RESOURCES" altKey="text.other" size="3" maxlength="3" property="other"/>
 							</td>
 							<td>
-								<html:submit onclick='<%= submitConfirm %>'>
+								<html:submit bundle="HTMLALT_RESOURCES" altKey='submit.submit' onclick='<%= submitConfirm %>'>
 									<bean:message key="button.submit"/>
 								</html:submit>
 							</td>

@@ -1,5 +1,6 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="dt" %>
@@ -7,9 +8,9 @@
 <h2><bean:message key="title.finalDegreeWork.attribution"/></h2>
 <span class="error"><html:errors /></span>
 <html:form action="/finalDegreeWorkAttribution">
-	<html:hidden property="method" value="confirmAttribution"/>
-	<html:hidden property="selectedGroupProposal"/>
-	<html:hidden property="page" value="1"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="confirmAttribution"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.selectedGroupProposal" property="selectedGroupProposal"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
 
 	<logic:present name="infoGroup">
 		<bean:message key="label.finalDegreeWork.group"/>:
@@ -17,12 +18,12 @@
 		<logic:present name="infoGroup" property="groupStudents">
 			<table>
 				<tr>
-					<td class="listClasses-header">
+					<th class="listClasses-header">
 						<bean:message key="label.finalDegreeWork.group.username"/>
-					</td>
-					<td class="listClasses-header">
+					</th>
+					<th class="listClasses-header">
 						<bean:message key="label.finalDegreeWork.group.name"/>
-					</td>
+					</th>
 				</tr>
 			<logic:iterate id="groupStudent" name="infoGroup" property="groupStudents">
 				<bean:define id="student" name="groupStudent" property="student"/>
@@ -43,37 +44,37 @@
 		<logic:present name="infoGroup" property="groupProposals">
 			<table>
 				<tr>
-					<td class="listClasses-header" rowspan="2">
+					<th class="listClasses-header" rowspan="2">
 						<bean:message key="label.finalDegreeWork.proposal.orderOfPreference"/>
-					</td>
-					<td class="listClasses-header" rowspan="2">
+					</th>
+					<th class="listClasses-header" rowspan="2">
 						<bean:message key="finalDegreeWorkProposalHeader.number"/>
-					</td>
-					<td class="listClasses-header" rowspan="2">
+					</th>
+					<th class="listClasses-header" rowspan="2">
 						<bean:message key="finalDegreeWorkProposalHeader.title"/>
-					</td>
-					<td class="listClasses-header">
+					</th>
+					<th class="listClasses-header">
 						<bean:message key="finalDegreeWorkProposalHeader.orientatorName"/>
-					</td>
-					<td class="listClasses-header" rowspan="2">
+					</th>
+					<th class="listClasses-header" rowspan="2">
 						<bean:message key="finalDegreeWorkProposalHeader.companyLink"/>
-					</td>
-					<td class="listClasses-header" rowspan="2">
+					</th>
+					<th class="listClasses-header" rowspan="2">
 						<bean:message key="finalDegreeWorkProposalHeader.attribution.byTeacher"/>
-					</td>
+					</th>
 					<logic:present name="infoGroup" property="groupStudents">
 						<logic:iterate id="groupStudent" name="infoGroup" property="groupStudents">
-							<td class="listClasses-header" rowspan="2">
+							<th class="listClasses-header" rowspan="2">
 								<bean:message key="finalDegreeWorkProposalHeader.student.confirmation"/>
 								<bean:write name="groupStudent" property="student.infoPerson.username"/>
-							</td>							
+							</th>							
 						</logic:iterate>
 					</logic:present>
 				</tr>
 				<tr>
-					<td class="listClasses-header">
+					<th class="listClasses-header">
 						<bean:message key="finalDegreeWorkProposalHeader.coorientatorName"/>
-					</td>
+					</th>
 				</tr>
 				<logic:iterate id="groupProposal" name="infoGroup" property="groupProposals">
 
@@ -97,7 +98,7 @@
 							<bean:write name="groupProposal" property="finalDegreeWorkProposal.companionName"/>
 						</td>
 						<td class="listClasses" rowspan="2">
-							<html:multibox property="attributedByTeacher" disabled="true">
+							<html:multibox bundle="HTMLALT_RESOURCES" altKey="multibox.attributedByTeacher" property="attributedByTeacher" disabled="true">
 								<bean:write name="groupProposal" property="finalDegreeWorkProposal.idInternal"/>
 							</html:multibox>
 						</td>
@@ -109,12 +110,12 @@
 										<bean:define id="onChange">
 											this.form.selectedGroupProposal.value='<bean:write name="groupProposal" property="idInternal"/>';this.form.submit();
 										</bean:define>
-										<html:multibox property="confirmAttributions" onchange='<%= onChange.toString() %>'>
+										<html:multibox bundle="HTMLALT_RESOURCES" altKey="multibox.confirmAttributions" property="confirmAttributions" onchange='<%= onChange.toString() %>'>
 											<bean:write name="groupProposal" property="finalDegreeWorkProposal.idInternal"/><bean:write name="groupStudent" property="student.idInternal"/>
 										</html:multibox>
 									</logic:equal>
 									<logic:notEqual name="groupStudent" property="student.infoPerson.username" value="<%= username %>">
-										<html:multibox property="confirmAttributions" disabled="true">
+										<html:multibox bundle="HTMLALT_RESOURCES" altKey="multibox.confirmAttributions" property="confirmAttributions" disabled="true">
 											<bean:write name="groupProposal" property="finalDegreeWorkProposal.idInternal"/><bean:write name="groupStudent" property="student.idInternal"/>
 										</html:multibox>
 									</logic:notEqual>

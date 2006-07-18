@@ -1,5 +1,6 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ page import="java.util.List" %>
@@ -16,8 +17,8 @@
 
 <table>
 	<tr>
-		<td class="listClasses-header">Nome</td>
-		<td class="listClasses-header">Plano Curricular</td>
+		<th class="listClasses-header">Nome</th>
+		<th class="listClasses-header">Plano Curricular</th>
 	</tr>
 	
 	<logic:iterate id="infoDegreeCurricularPlan" name="coordinatedInfoDegreeCurricularPlans">

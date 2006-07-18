@@ -1,6 +1,7 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/app.tld" prefix="app" %>
 
@@ -27,8 +28,8 @@
               <td>
                 <table border="0" width="100%" height="100%">
                   <tr align="left"> 
-                    <td>&nbsp;<b>INSTITUTO SUPERIOR TÉCNICO</b><br/>
-                      &nbsp;<b>Secretaria da Pós-Graduação</b><br/>
+                    <td>&nbsp;<b>INSTITUTO SUPERIOR Tï¿½CNICO</b><br/>
+                      &nbsp;<b>Secretaria da Pï¿½s-Graduaï¿½ï¿½o</b><br/>
                       &nbsp;<b>Centro de Custo 0212</b>
                       <hr size="1">
                     </td>
@@ -99,7 +100,7 @@
             <td>&nbsp;</td>
         </tr>
     	<tr>
-    	  	<td><strong>A liquidar a importância de </strong></td>
+    	  	<td><strong>A liquidar a importï¿½ncia de </strong></td>
    			<td>_________________&nbsp;</td>
    			<td><strong><bean:define id="totalAmountToPay" name="paymentsManagementDTO" property="totalAmountToPay" type="java.math.BigDecimal"/><%= totalAmountToPay.toPlainString() %>&nbsp;<bean:message key="label.currencySymbol"/></strong></td>
     	</tr>
@@ -128,7 +129,7 @@
          <td colspan="2" valign="bottom">
            &nbsp;<div align="center">&nbsp;</div>
            <div align="center">&nbsp;</div>
-           <div align="center"><b>O Funcionário</b> <br>
+           <div align="center"><b>O Funcionï¿½rio</b> <br>
             <br>
             <br>
            </div>

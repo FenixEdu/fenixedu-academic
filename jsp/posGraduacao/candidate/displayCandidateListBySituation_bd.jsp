@@ -1,5 +1,6 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
@@ -19,25 +20,25 @@
             <bean:message key="title.masterDegree.administrativeOffice.listCandidates" />
         <br /><br />
         <html:form action="/displayListToSelectCandidates.do?method=selectCandidates">
-        	<html:hidden property="degreeCurricularPlanID"/>
+        	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.degreeCurricularPlanID" property="degreeCurricularPlanID"/>
 		    <table>	        
         	<!-- Candidate List -->
         	<logic:iterate id="candidate" name="candidateList" indexId="indexCandidate">
 				<tr>
 					<td>
-				        <html:hidden property='<%= "candidatesID[" + indexCandidate + "]" %>' />					
+				        <html:hidden alt='<%= "candidatesID[" + indexCandidate + "]" %>' property='<%= "candidatesID[" + indexCandidate + "]" %>' />					
 					<bean:write name="candidate" property="infoPerson.nome"/></td>
 					<td>
-                        <html:select property='<%= "situations[" + indexCandidate + "]" %>' >
+                        <html:select alt='<%= "situations[" + indexCandidate + "]" %>' property='<%= "situations[" + indexCandidate + "]" %>' >
                             <html:options collection="situationList" property="value" labelProperty="label"/> 
                         </html:select> 
 					</td>
 					<td><bean:message key="label.masterDegree.administrativeOffice.remarks" />
-					<html:textarea property='<%= "remarks[" + indexCandidate + "]" %>'/></td>
+					<html:textarea alt='<%= "remarks[" + indexCandidate + "]" %>' property='<%= "remarks[" + indexCandidate + "]" %>'/></td>
         		</tr>
         	</logic:iterate>
         	</table>	
-		   <html:hidden property="executionDegreeID" value="<%= pageContext.findAttribute("executionDegreeID").toString() %>" />
-		   <html:submit value="Seguinte" styleClass="inputbutton" property="ok"/>
+		   <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.executionDegreeID" property="executionDegreeID" value="<%= pageContext.findAttribute("executionDegreeID").toString() %>" />
+		   <html:submit bundle="HTMLALT_RESOURCES" altKey="submit.ok" value="Seguinte" styleClass="inputbutton" property="ok"/>
         </html:form>	
    </logic:present>

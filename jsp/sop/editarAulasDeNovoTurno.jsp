@@ -23,7 +23,7 @@
         <br/>
         <html:errors/>
         <html:form action="/editarAulasDeNovoTurno">
-            <html:hidden name="turnoFormBean" property="codigoInterno"/>
+            <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.codigoInterno" name="turnoFormBean" property="codigoInterno"/>
             <center> <b> Aulas adicionadas </b> </center>
             <br/>
             <logic:present name="listaAulasBean" scope="request">
@@ -52,7 +52,7 @@
                     <logic:iterate id="elem" name="listaAulasBean">
                        <tr align="center">
                             <td>
-                                <html:radio name="posicaoAulaFormBean" property="posicao" value="<%= (new Integer(i)).toString() %>"/>
+                                <html:radio bundle="HTMLALT_RESOURCES" altKey="radio.posicao" name="posicaoAulaFormBean" property="posicao" value="<%= (new Integer(i)).toString() %>"/>
                             </td>
                             <td>
                                 <bean:write name="elem" property="diaSemana" />
@@ -88,13 +88,13 @@
             <table align="center">
                 <tr align="center">
                     <td>
-                        <html:submit property="operation">
+                        <html:submit bundle="HTMLALT_RESOURCES" altKey="submit.operation" property="operation">
                             <bean:message key="label.add.Aulas"/>
                         </html:submit>
                     </td>
                     <td width="20"> </td>
                     <td>
-                        <html:submit property="operation">
+                        <html:submit bundle="HTMLALT_RESOURCES" altKey="submit.operation" property="operation">
                             <bean:message key="label.remove.Aula"/>
                         </html:submit>
                     </td>

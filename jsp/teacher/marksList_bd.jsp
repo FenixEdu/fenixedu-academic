@@ -1,5 +1,6 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ page import="net.sourceforge.fenixedu.util.EvaluationType" %> 
@@ -15,10 +16,10 @@
 	<bean:define id="executionCourseId" name="commonComponent" property="executionCourse.idInternal"/>
 	<bean:define id="evaluationId" name="marksListComponent" property="infoEvaluation.idInternal" />
 	
-	<html:hidden property="objectCode" value="<%= executionCourseId.toString() %>" />	
-	<html:hidden property="evaluationCode" value="<%= evaluationId.toString() %>" />
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.objectCode" property="objectCode" value="<%= executionCourseId.toString() %>" />	
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.evaluationCode" property="evaluationCode" value="<%= evaluationId.toString() %>" />
 		
-	<html:hidden property="method" value="writeMarks" />
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="writeMarks" />
 
     <table>        
 		<tr>
@@ -55,25 +56,25 @@
 		<tr><td><br></br></td></tr>
 		<tr>
 			
-			<td class="listClasses-header">
+			<th class="listClasses-header">
 				<bean:message key="label.number" /> 
-		   </td>
-			<td class="listClasses-header">
+		   </th>
+			<th class="listClasses-header">
 				<bean:message key="label.name" />
-		   </td>
-		   <td class="listClasses-header">
+		   </th>
+		   <th class="listClasses-header">
 				<bean:message key="label.enrolmentEvaluationType" /> 
-		   </td>
+		   </th>
 			<logic:present name="marksListComponent" property="marksList">  						
-				<td class="listClasses-header">
+				<th class="listClasses-header">
 					<bean:message key="label.mark" />
-				</td>
+				</th>
 			</logic:present>
 		</tr>    		
 		
 		<logic:present name="marksListComponent" property="infoAttends">  
 			<bean:size id="size" name="marksListComponent" property="infoAttends" />	
-			<html:hidden property="sizeList" value="<%= size.toString() %>" /> 
+			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.sizeList" property="sizeList" value="<%= size.toString() %>" /> 
 				    			    		
 	    	<logic:iterate id="markElem" name="marksListComponent" property="infoAttends"  indexId="markId"  type="net.sourceforge.fenixedu.dataTransferObject.InfoFrequenta" > 
 	    	
@@ -108,10 +109,10 @@
 				
 					<td class="listClasses">
 						<logic:empty name="studentMark">
-							<html:text property='<%="hashMarks(" + studentNumber + ")" %>' size="4" value=""/>
+							<html:text alt='<%="hashMarks(" + studentNumber + ")" %>' property='<%="hashMarks(" + studentNumber + ")" %>' size="4" value=""/>
 						</logic:empty>
 						<logic:notEmpty name="studentMark">
-							<html:text property='<%="hashMarks(" + studentNumber + ")" %>' value="<%=studentMark %>" size="4" />
+							<html:text alt='<%="hashMarks(" + studentNumber + ")" %>' property='<%="hashMarks(" + studentNumber + ")" %>' value="<%=studentMark %>" size="4" />
 						</logic:notEmpty>						
 					</td>
 				</tr>
@@ -122,7 +123,7 @@
     </table>    
   	</logic:present>   
  	<br />
- 	<html:submit styleClass="inputbutton">
+ 	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton">
 		<bean:message key="button.save"/>
   	</html:submit>
 </html:form> 

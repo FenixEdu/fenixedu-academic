@@ -1,5 +1,6 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ page import="java.util.Date" %>
@@ -31,15 +32,15 @@
     <logic:notEqual name="studentListSize" value="0">       
         <table>
         	<tr>
-    			<td class="listClasses-header"><bean:message key="label.candidate.number" /></td>
-    			<td class="listClasses-header"><bean:message key="label.person.name" /></td>
-    			<td class="listClasses-header"><bean:message key="label.mark" /></td>
-    			<td class="listClasses-header"><bean:message key="label.examDate" /></td>
-    			<td class="listClasses-header"><bean:message key="label.gradeAvailableDate" /></td>
-    			<td class="listClasses-header"><bean:message key="label.enrolmentEvaluationType" /></td>
-    			<td class="listClasses-header"><bean:message key="label.teacherName"  /></td>
-    			<td class="listClasses-header"><bean:message key="label.employee"  /></td>
-    			<td class="listClasses-header"><bean:message key="label.observation"  /></td>
+    			<th class="listClasses-header"><bean:message key="label.candidate.number" /></th>
+    			<th class="listClasses-header"><bean:message key="label.person.name" /></th>
+    			<th class="listClasses-header"><bean:message key="label.mark" /></th>
+    			<th class="listClasses-header"><bean:message key="label.examDate" /></th>
+    			<th class="listClasses-header"><bean:message key="label.gradeAvailableDate" /></th>
+    			<th class="listClasses-header"><bean:message key="label.enrolmentEvaluationType" /></th>
+    			<th class="listClasses-header"><bean:message key="label.teacherName"  /></th>
+    			<th class="listClasses-header"><bean:message key="label.employee"  /></th>
+    			<th class="listClasses-header"><bean:message key="label.observation"  /></th>
     		</tr>
      		<logic:iterate id="enrolment" name="studentList" type="net.sourceforge.fenixedu.dataTransferObject.InfoEnrolment">
 	        		<tr>

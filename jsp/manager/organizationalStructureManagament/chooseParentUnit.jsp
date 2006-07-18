@@ -5,6 +5,7 @@
 <%@ taglib uri="/WEB-INF/c.tld" prefix="c"%>
 
 <ft:tilesView definition="definition.manager.masterPage" attributeName="body-inline">
+	<f:loadBundle basename="resources/HtmlAltResources" var="htmlAltBundle"/>
 	<f:loadBundle basename="resources/ManagerResources" var="bundle"/>
 	<h:form>	
 
@@ -71,9 +72,9 @@
 		<h:outputText value="<br/><br/>" escape="false" />	
 						
 		<h:outputText value="<br/>" escape="false" />								
-		<h:commandButton action="#{organizationalStructureBackingBean.associateParentUnit}" value="#{bundle['button.choose']}" 
+		<h:commandButton alt="#{htmlAltBundle['commandButton.choose']}" action="#{organizationalStructureBackingBean.associateParentUnit}" value="#{bundle['button.choose']}" 
 			styleClass="inputbutton"/> 		
-		<h:commandButton action="listAllUnitsToChooseParentUnit" immediate="true" value="#{bundle['label.return']}"
+		<h:commandButton alt="#{htmlAltBundle['commandButton.return']}" action="listAllUnitsToChooseParentUnit" immediate="true" value="#{bundle['label.return']}"
 			 styleClass="inputbutton"/>	
 				
 	</h:form>

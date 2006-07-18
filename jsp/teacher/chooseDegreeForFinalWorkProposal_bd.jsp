@@ -1,5 +1,5 @@
 <%@ page language="java" %>
-<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %><html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="dt" %>
@@ -21,17 +21,17 @@
 <br />
 
 <html:form action="/finalWorkManagement">
-	<html:hidden property="method" value="prepareFinalWorkInformation"/>
-	<html:hidden property="responsibleCreditsPercentage"/>
-	<html:hidden property="coResponsibleCreditsPercentage"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="prepareFinalWorkInformation"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.responsibleCreditsPercentage" property="responsibleCreditsPercentage"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.coResponsibleCreditsPercentage" property="coResponsibleCreditsPercentage"/>
 
 	<strong><bean:message key="label.teacher.finalWork.chooseDegreeAndYear"/>:</strong><br />
-	<html:select property="executionYear"
+	<html:select bundle="HTMLALT_RESOURCES" altKey="select.executionYear" property="executionYear"
 			onchange="this.form.method.value='changeExecutionYear';this.form.submit();"
 			>
 		<html:options collection="infoExecutionYears" property="idInternal" labelProperty="year" />
 	</html:select>
-	<html:select property="degree"
+	<html:select bundle="HTMLALT_RESOURCES" altKey="select.degree" property="degree"
 			onchange="this.form.method.value='chooseDegree';this.form.submit();"
 			>
 		<html:options collection="executionDegreeList" property="idInternal" labelProperty="infoDegreeCurricularPlan.presentationName" />
@@ -39,11 +39,11 @@
 	<br /><br />
 	<strong><bean:message key="label.teacher.finalWork.role" />:</strong>
 	<br />
-	<html:radio property="role" value="responsable" /><bean:message key="label.teacher.finalWork.responsable"/>
+	<html:radio bundle="HTMLALT_RESOURCES" altKey="radio.role" property="role" value="responsable" /><bean:message key="label.teacher.finalWork.responsable"/>
 	<br />
-	<html:radio property="role" value="coResponsable" /><bean:message key="label.teacher.finalWork.coResponsable"/>
+	<html:radio bundle="HTMLALT_RESOURCES" altKey="radio.role" property="role" value="coResponsable" /><bean:message key="label.teacher.finalWork.coResponsable"/>
 	<br /><br />
-	<html:submit styleClass="inputbutton"><bean:message key="button.create"/></html:submit>
+	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton"><bean:message key="button.create"/></html:submit>
 </html:form>
 
 <br />
@@ -52,27 +52,27 @@
 	<logic:greaterEqual name="finalDegreeWorkProposalHeaders" value="1">
 		<table>
 			<tr>
-				<td class="listClasses-header" rowspan="2" colspan="2">
-				</td>
-				<td class="listClasses-header" rowspan="2">
+				<th class="listClasses-header" rowspan="2" colspan="2">
+				</th>
+				<th class="listClasses-header" rowspan="2">
 					<bean:message key="finalDegreeWorkProposalHeader.number"/>
-				</td>
-				<td class="listClasses-header" rowspan="2">
+				</th>
+				<th class="listClasses-header" rowspan="2">
 					<bean:message key="finalDegreeWorkProposalHeader.title"/>
-				</td>
-				<td class="listClasses-header">
+				</th>
+				<th class="listClasses-header">
 					<bean:message key="finalDegreeWorkProposalHeader.orientatorName"/>
-				</td>
-				<td class="listClasses-header" rowspan="2">
+				</th>
+				<th class="listClasses-header" rowspan="2">
 					<bean:message key="finalDegreeWorkProposalHeader.companyLink"/>
-				</td>
-				<td class="listClasses-header" rowspan="2">
-				</td>
+				</th>
+				<th class="listClasses-header" rowspan="2">
+				</th>
 			</tr>
 			<tr>
-		        <td class="listClasses-header">
+		        <th class="listClasses-header">
 		        	<bean:message key="finalDegreeWorkProposalHeader.coorientatorName"/>
-	    	    </td>
+	    	    </th>
 			</tr>
 			<% java.util.Set processedExecutionDegreeIds = new java.util.HashSet(); %>
 			<bean:define id="degree" name="finalWorkInformationForm" property="degree"/>
@@ -80,9 +80,9 @@
 				<bean:define id="executionDegreeId" name="finalDegreeWorkProposalHeader" property="executionDegreeOID"/>
 				<logic:equal name="executionDegreeId"value="<%= degree.toString() %>">
 				<tr>
-					<td class="listClasses-header" rowspan="2" colspan="2">
+					<th class="listClasses-header" rowspan="2" colspan="2">
 						<bean:message key="finalDegreeWorkProposalHeader.proposal"/>
-					</td>				
+					</th>				
 					<td class="listClasses" rowspan="2">
 						<bean:write name="finalDegreeWorkProposalHeader" property="proposalNumber"/> 
 					</td>
@@ -120,10 +120,10 @@
 				<% total += numberOfStudents.intValue(); %>
 			</logic:iterate>
 			<html:form action="/finalDegreeWorkAttribution">
-				<html:hidden property="method" value="attributeFinalDegreeWork"/>
-				<html:hidden property="selectedGroupProposal"/>
-				<html:hidden property="executionYear"/>
-				<html:hidden property="degree"/>
+				<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="attributeFinalDegreeWork"/>
+				<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.selectedGroupProposal" property="selectedGroupProposal"/>
+				<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.executionYear" property="executionYear"/>
+				<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.degree" property="degree"/>
 
 				<tr>
 					<td bgcolor="#a2aebc" align="center" rowspan="<%= total %>">
@@ -174,7 +174,7 @@
 						<bean:define id="onChange">
 							this.form.selectedGroupProposal.value='<bean:write name="groupProposal" property="idInternal"/>';this.form.submit();
 						</bean:define>
-						<html:multibox property="selectedGroupProposals" onchange='<%= onChange.toString() %>'><bean:write name="groupProposal" property="idInternal"/></html:multibox>
+						<html:multibox bundle="HTMLALT_RESOURCES" altKey="multibox.selectedGroupProposals" property="selectedGroupProposals" onchange='<%= onChange.toString() %>'><bean:write name="groupProposal" property="idInternal"/></html:multibox>
 					</td>
 					<td bgcolor="<%= bgColor %>" align="center" rowspan="<%= numberOfStudents.toString() %>">
 						<a href="mailto:<%= emails %>"><bean:write name="groupProposal" property="orderOfPreference"/></a>

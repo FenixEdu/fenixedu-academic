@@ -1,5 +1,6 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 
@@ -70,12 +71,12 @@
     </bean:define>
 
     <html:form action='<%= pageContext.findAttribute("link").toString() %>'>
-   	<html:hidden property="page" value="1"/> 
+   	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/> 
 	<table>
       <tr> 
         <td><bean:message key="label.masterDegree.administrativeOffice.newContributor"/></td>
 		<td>	
-         <html:select property="contributor">
+         <html:select bundle="HTMLALT_RESOURCES" altKey="select.contributor" property="contributor">
            <option value="" selected="selected"><bean:message key="label.masterDegree.administrativeOffice.contributor.default"/></option>
            <html:options collection="<%= SessionConstants.CONTRIBUTOR_LIST %>" property="value" labelProperty="label"/>
     	 </html:select>        
@@ -108,16 +109,16 @@
 							<bean:message name="documentType" bundle="ENUMERATION_RESOURCES" />
             			</td>
             			<td><bean:write name="guideEntry" property="description"/></td>
-            			<input type="hidden" name="<%= new String("quantityList" + pageContext.findAttribute("position").toString()) %>" value='<%= pageContext.findAttribute("entryQuantity").toString() %>' >
+            			<input alt="<%= new String("quantityList" + pageContext.findAttribute("position").toString()) %>" type="hidden" name="<%= new String("quantityList" + pageContext.findAttribute("position").toString()) %>" value='<%= pageContext.findAttribute("entryQuantity").toString() %>' >
             			<td><bean:write name="entryQuantity" /></td>
             			<td align="right"><bean:write name="guideEntry" property="price"/> <bean:message key="label.currencySymbol" /></td>
 		   			</tr>
         		</logic:iterate>
 
 				<tr>
-					<td><html:hidden property="othersRemarks"/></td>
-					<td><html:hidden property="othersQuantity"/></td>
-					<td><html:hidden property="othersPrice"/></td>
+					<td><html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.othersRemarks" property="othersRemarks"/></td>
+					<td><html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.othersQuantity" property="othersQuantity"/></td>
+					<td><html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.othersPrice" property="othersPrice"/></td>
 				</tr>
 		
 		<%
@@ -137,12 +138,12 @@
 						
 						<% if(((InfoGuideEntry)guideEntry).getDocumentType().equals(DocumentType.GRATUITY) || ((InfoGuideEntry)guideEntry).getDocumentType().equals(DocumentType.INSURANCE)){ %>
 							
-							<input type="hidden" name="<%= new String("quantityList" + pageContext.findAttribute("position").toString()) %>" value='<%= pageContext.findAttribute("entryQuantity").toString() %>' >
+							<input alt="<%= new String("quantityList" + pageContext.findAttribute("position").toString()) %>" type="hidden" name="<%= new String("quantityList" + pageContext.findAttribute("position").toString()) %>" value='<%= pageContext.findAttribute("entryQuantity").toString() %>' >
 							<td><bean:write name="entryQuantity" /></td>
             			
 						<%	}else{ %>
 						
-							<td><input type="text" name="<%= new String("quantityList" + pageContext.findAttribute("position").toString()) %>" value='<%= pageContext.findAttribute("entryQuantity").toString() %>' ></td>
+							<td><input alt="<%= new String("quantityList" + pageContext.findAttribute("position").toString()) %>" type="text" name="<%= new String("quantityList" + pageContext.findAttribute("position").toString()) %>" value='<%= pageContext.findAttribute("entryQuantity").toString() %>' ></td>
 						
 						<% } %>
 													
@@ -152,9 +153,9 @@
 
 				<tr>
 					<td><bean:message key="label.masterDegree.administrativeOffice.others" /></td>
-					<td><html:textarea property="othersRemarks"/></td>
-					<td><html:text property="othersQuantity"/></td>
-					<td><html:text property="othersPrice"/> <bean:message key="label.currencySymbol" /></td>
+					<td><html:textarea bundle="HTMLALT_RESOURCES" altKey="textarea.othersRemarks" property="othersRemarks"/></td>
+					<td><html:text bundle="HTMLALT_RESOURCES" altKey="text.othersQuantity" property="othersQuantity"/></td>
+					<td><html:text bundle="HTMLALT_RESOURCES" altKey="text.othersPrice" property="othersPrice"/> <bean:message key="label.currencySymbol" /></td>
 				</tr>
          <%
          	}
@@ -167,7 +168,7 @@
          	</tr>
      </table>
      
-     <html:submit property="Alterar">Alterar Informação</html:submit>
+     <html:submit bundle="HTMLALT_RESOURCES" altKey="submit.Alterar" property="Alterar">Alterar Informaï¿½ï¿½o</html:submit>
      
     </html:form>
 

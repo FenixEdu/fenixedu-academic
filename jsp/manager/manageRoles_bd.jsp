@@ -1,4 +1,5 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
@@ -12,8 +13,8 @@
 </html:messages>
 
 <html:form action="/manageRoles" focus="username">
-	<html:hidden property="method" value="selectUser"/>
-	<html:hidden property="page" value="1"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="selectUser"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
 
 	<table>
 		<tr>
@@ -21,10 +22,10 @@
 			 	<bean:message bundle="MANAGER_RESOURCES" key="property.login.username"/>
 			</td>
 			<td>
-				<html:text property="username" size="25"/>
+				<html:text bundle="HTMLALT_RESOURCES" altKey="text.username" property="username" size="25"/>
 			</td>
 			<td>
-				<html:submit styleClass="inputbutton">
+				<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton">
 					<bean:message bundle="MANAGER_RESOURCES" key="label.select"/>
 				</html:submit>
 			</td>
@@ -46,16 +47,16 @@
 
 	<table>
 		<tr>
-			<td class="listClasses-header">
-			</td>
-			<td class="listClasses-header">
+			<th class="listClasses-header">
+			</th>
+			<th class="listClasses-header">
 				<bean:message bundle="MANAGER_RESOURCES" key="label.roleType"/>
-			</td>
+			</th>
 		</tr>
 		<logic:iterate id="role" name="<%= SessionConstants.ROLES %>" scope="request">
 			<tr>
 				<td class="listClasses">
-					<html:multibox property="roleOIDs">
+					<html:multibox bundle="HTMLALT_RESOURCES" altKey="multibox.roleOIDs" property="roleOIDs">
 						<bean:write name="role" property="idInternal"/>
 					</html:multibox>
 				</td>
@@ -67,10 +68,10 @@
 		</logic:iterate>
 	</table>
 	<br />
-	<html:submit styleClass="inputbutton" onclick="this.form.method.value='setPersonRoles';this.form.page.value=2;">
+	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton" onclick="this.form.method.value='setPersonRoles';this.form.page.value=2;">
 		<bean:message bundle="MANAGER_RESOURCES" key="label.setRoles"/>
 	</html:submit>
-	<html:reset styleClass="inputbutton">
+	<html:reset bundle="HTMLALT_RESOURCES" altKey="reset.reset" styleClass="inputbutton">
 		<bean:message bundle="MANAGER_RESOURCES" key="label.clear"/>
 	</html:reset>
 </logic:present>

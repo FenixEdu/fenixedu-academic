@@ -1,4 +1,5 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 
@@ -16,11 +17,11 @@
 </ul>
 <table>
 	<tr>
-		<td class="listClasses-header"><bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="label.group"/></td>
-		<td class="listClasses-header"><bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="label.branch"/></td>
-		<td class="listClasses-header"><bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="label.type"/></td>
-		<td class="listClasses-header">&nbsp;</td>
-		<td class="listClasses-header">&nbsp;</td>
+		<th class="listClasses-header"><bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="label.group"/></th>
+		<th class="listClasses-header"><bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="label.branch"/></th>
+		<th class="listClasses-header"><bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="label.type"/></th>
+		<th class="listClasses-header">&nbsp;</th>
+		<th class="listClasses-header">&nbsp;</th>
 	</tr>
 	<logic:iterate id="group" name="curricularCourseGroups">
 	<tr>

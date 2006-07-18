@@ -1,5 +1,5 @@
 <%@ page language="java" %>
-<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %><html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <bean:define id="degreeCurricularPlanID" name="degreeCurricularPlanID" scope="request" />
@@ -8,15 +8,15 @@
 <logic:present name="coordinators">
 <h3><bean:message key="title.coordinationTeam"/></h3>
 <html:form action="/viewCoordinationTeam">
-<html:hidden property="method" value="removeCoordinators" />
-<html:hidden property="degreeCurricularPlanID" value="<%= degreeCurricularPlanID.toString() %>"/>
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="removeCoordinators" />
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.degreeCurricularPlanID" property="degreeCurricularPlanID" value="<%= degreeCurricularPlanID.toString() %>"/>
 <table>
-<tr><td class="listClasses-header">Nome</td>
-	<td class="listClasses-header">
+<tr><th class="listClasses-header">Nome</th>
+	<th class="listClasses-header">
    <logic:equal name="isResponsible" value="true">
    <bean:message key="label.remove"/>
    </logic:equal>
-   &nbsp;</td>
+   &nbsp;</th>
 </tr>
 <logic:iterate name="coordinators" id="coordinator">
 <tr>
@@ -31,7 +31,7 @@
 		</logic:equal> 
 		<logic:notEqual name="coordinator" property="responsible" value="true">
 			<logic:equal name="isResponsible" value="true">	
-			 <html:multibox property="coordinatorsIds">
+			 <html:multibox bundle="HTMLALT_RESOURCES" altKey="multibox.coordinatorsIds" property="coordinatorsIds">
 			 	<bean:write name="coordinator" property="idInternal"/> 
 			 </html:multibox >
 			 </logic:equal>&nbsp;
@@ -43,7 +43,7 @@
 </table>
 <br/>
 <br/><bean:define id="infoExecutionDegreeId" name="infoExecutionDegreeId"/>
-<html:hidden property="infoExecutionDegreeId" value="<%= infoExecutionDegreeId.toString() %>"/>
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.infoExecutionDegreeId" property="infoExecutionDegreeId" value="<%= infoExecutionDegreeId.toString() %>"/>
 <logic:equal name="isResponsible" value="true">	
 <html:submit><bean:message key="label.remove"/></html:submit>
 

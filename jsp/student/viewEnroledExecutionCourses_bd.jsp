@@ -1,5 +1,6 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>	
 
@@ -30,14 +31,14 @@
 	<table class="style1">	
 		<tr>
 			<td class="listClasses-header"></td>
-		 	<td class="listClasses-header"><bean:message key="label.executionCourse"/></td>
-		 	<td class="listClasses-header"><bean:message key="Label.groupings"/></td>
+		 	<th class="listClasses-header"><bean:message key="label.executionCourse"/></th>
+		 	<th class="listClasses-header"><bean:message key="Label.groupings"/></th>
 		</tr>
 		
 		<logic:iterate id="infoExecutionCourse" name="infoExecutionCourses">
 			<tr>
 				<td class="listClasses"><bean:define id="executionCourseID" name="infoExecutionCourse" property="idInternal" type="java.lang.Integer"/>
-					<html:radio property="executionCourseCode" value="<%= executionCourseID.toString() %>"/>
+					<html:radio bundle="HTMLALT_RESOURCES" altKey="radio.executionCourseCode" property="executionCourseCode" value="<%= executionCourseID.toString() %>"/>
 			 	</td>
 			 	<td class="listClasses"><bean:write name="infoExecutionCourse" property="nome"/></td>
 			 	<td class="listClasses" style="line-height: 200%;">
@@ -57,7 +58,7 @@
 	</table>
 	
 <br />
-<html:submit styleClass="inputbutton"><bean:message key="button.choose"/></html:submit>
+<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton"><bean:message key="button.choose"/></html:submit>
 <br />
 
 

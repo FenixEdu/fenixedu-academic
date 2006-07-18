@@ -1,18 +1,19 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/app.tld" prefix="app" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
 <bean:define id="infoStudentShiftEnrolment" name="<%= SessionConstants.INFO_STUDENT_SHIFT_ENROLMENT_CONTEXT_KEY %>" />
 <h3>
-<html:link page="/studentShiftEnrolmentManager.do?method=initializeShiftEnrolment">Visualizar Turmas e Horário</html:link>
+<html:link page="/studentShiftEnrolmentManager.do?method=initializeShiftEnrolment">Visualizar Turmas e Horï¿½rio</html:link>
 </h3>		
    <logic:present name="infoStudentShiftEnrolment">
 	   <logic:present name="infoStudentShiftEnrolment" property="currentEnrolment">
 			<br>
 <table>
 
-  			<tr><th>Estes são os turnos onde estava inscrito até agora:</th></tr>
+  			<tr><th>Estes sï¿½o os turnos onde estava inscrito atï¿½ agora:</th></tr>
    	 		<logic:iterate name="infoStudentShiftEnrolment" id="shift" property="currentEnrolment">
 			<tr>
    				 <td class="listClasses">Turno:<bean:write name="shift" property="nome"/> 

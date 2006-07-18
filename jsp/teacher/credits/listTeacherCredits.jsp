@@ -1,5 +1,6 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-tiles.tld" prefix="tiles" %>
@@ -20,8 +21,8 @@
 <logic:notEmpty name="infoCredits">
 	<table cellpadding="3" cellspacing="1">
 		<tr>
-			<td class="listClasses-header"><bean:message key="label.executionPeriod" /></td>
-			<td class="listClasses-header" colspan="2"><bean:message key="label.creditsResume" /></td>
+			<th class="listClasses-header"><bean:message key="label.executionPeriod" /></th>
+			<th class="listClasses-header" colspan="2"><bean:message key="label.creditsResume" /></th>
 		</tr>
 	<logic:iterate id="infoCredits" name="infoCredits">
 		<tr>

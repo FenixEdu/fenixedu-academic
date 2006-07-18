@@ -1,5 +1,6 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="dt" %>
@@ -9,9 +10,9 @@
 
 <html:form action="/searchWrittenEvaluationsByDate" focus="day">
 
-	<html:hidden property="method" value="search"/>
-	<html:hidden property="page" value="1"/>
-	<html:hidden property="executionPeriodOID" value="<%= request.getAttribute("executionPeriodOID").toString() %>"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="search"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.executionPeriodOID" property="executionPeriodOID" value="<%= request.getAttribute("executionPeriodOID").toString() %>"/>
 
 	<span class="error"><html:errors/></span>
 
@@ -21,11 +22,11 @@
 			   	<bean:message key="property.exam.date"/>:
 			</td>
 			<td>
-   				<html:text maxlength="2" size="2" property="day"/>
+   				<html:text bundle="HTMLALT_RESOURCES" altKey="text.day" maxlength="2" size="2" property="day"/>
 			   	/
-		  		<html:text maxlength="2" size="2" property="month"/>
+		  		<html:text bundle="HTMLALT_RESOURCES" altKey="text.month" maxlength="2" size="2" property="month"/>
 			   	/
-		  		<html:text maxlength="4" size="4" property="year"/>
+		  		<html:text bundle="HTMLALT_RESOURCES" altKey="text.year" maxlength="4" size="4" property="year"/>
 			   	<bean:message key="label.example.date"/>
 			</td>
 		</tr>
@@ -34,9 +35,9 @@
 			    <bean:message key="property.exam.beginning"/>:
 			</td>
 			<td>
-		  		<html:text maxlength="2" size="2" property="beginningHour"/>
+		  		<html:text bundle="HTMLALT_RESOURCES" altKey="text.beginningHour" maxlength="2" size="2" property="beginningHour"/>
    				:
-		  		<html:text maxlength="2" size="2" property="beginningMinute"/> 
+		  		<html:text bundle="HTMLALT_RESOURCES" altKey="text.beginningMinute" maxlength="2" size="2" property="beginningMinute"/> 
 		  		<bean:message key="label.optional"/>
 			</td>
 		</tr>
@@ -45,16 +46,16 @@
     			<bean:message key="property.exam.end"/>:
 			</td>
 			<td>
-			   	<html:text maxlength="2" size="2" property="endHour"/>
+			   	<html:text bundle="HTMLALT_RESOURCES" altKey="text.endHour" maxlength="2" size="2" property="endHour"/>
 			   	:
-			   	<html:text maxlength="2" size="2" property="endMinute"/>
+			   	<html:text bundle="HTMLALT_RESOURCES" altKey="text.endMinute" maxlength="2" size="2" property="endMinute"/>
 			   	<bean:message key="label.optional"/>
 			</td>
 		</tr>
 	</table>
 	<br/>
 	
-	<html:submit styleClass="inputbutton">
+	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton">
 		<bean:message key="lable.choose"/>
 	</html:submit>
 
@@ -64,13 +65,13 @@
 	<br/>
 	<table width="100%" border="1">
 		<tr>
-			<td class="listClasses-header"><bean:message key="lable.execution.course"/></td>
-			<td class="listClasses-header"><bean:message key="lable.degree"/></td>
-			<td class="listClasses-header"><bean:message key="lable.season"/></td>
-			<td class="listClasses-header"><bean:message key="lable.hour"/></td>
-			<td class="listClasses-header"><bean:message key="lable.rooms"/></td>
-			<td class="listClasses-header"><bean:message key="lable.number.enroled.students"/></td>
-			<td class="listClasses-header"><bean:message key="lable.number.missing.seats"/></td>	
+			<th class="listClasses-header"><bean:message key="lable.execution.course"/></th>
+			<th class="listClasses-header"><bean:message key="lable.degree"/></th>
+			<th class="listClasses-header"><bean:message key="lable.season"/></th>
+			<th class="listClasses-header"><bean:message key="lable.hour"/></th>
+			<th class="listClasses-header"><bean:message key="lable.rooms"/></th>
+			<th class="listClasses-header"><bean:message key="lable.number.enroled.students"/></th>
+			<th class="listClasses-header"><bean:message key="lable.number.missing.seats"/></th>	
 		</tr>
 		<logic:iterate id="writtenEvaluation" name="writtenEvaluations">
 			<bean:define id="evaluationID" name="writtenEvaluation" property="idInternal"/>

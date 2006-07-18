@@ -1,4 +1,5 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
@@ -44,20 +45,20 @@
 	</table>
 	
 	<html:form action="/rectifyMarkSheet.do">
-		<html:hidden property="method" value="prepareRectifyMarkSheet" />
-		<html:hidden name="markSheetManagementForm" property="epID" />
-		<html:hidden name="markSheetManagementForm" property="dID" />
-		<html:hidden name="markSheetManagementForm" property="dcpID" />
-		<html:hidden name="markSheetManagementForm" property="ccID"  />			
-		<html:hidden name="markSheetManagementForm" property="tn" />
-		<html:hidden name="markSheetManagementForm" property="ed"/>
-		<html:hidden name="markSheetManagementForm" property="mss" />
-		<html:hidden name="markSheetManagementForm" property="mst" />
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="prepareRectifyMarkSheet" />
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.epID" name="markSheetManagementForm" property="epID" />
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.dID" name="markSheetManagementForm" property="dID" />
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.dcpID" name="markSheetManagementForm" property="dcpID" />
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.ccID" name="markSheetManagementForm" property="ccID"  />			
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.tn" name="markSheetManagementForm" property="tn" />
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.ed" name="markSheetManagementForm" property="ed"/>
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.mss" name="markSheetManagementForm" property="mss" />
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.mst" name="markSheetManagementForm" property="mst" />
 		
 		<bean:define id="markSheetID" name="enrolmentEvaluation" property="markSheet.idInternal" />
-		<html:hidden property="msID" value="<%= markSheetID.toString() %>"/>
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.msID" property="msID" value="<%= markSheetID.toString() %>"/>
 		<br/>
-		<html:submit styleClass="inputbutton"><bean:message key="label.back"/></html:submit>
+		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton"><bean:message key="label.back"/></html:submit>
 	</html:form>
 	
 </logic:present>

@@ -1,5 +1,6 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-tiles.tld" prefix="tiles"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
@@ -24,12 +25,12 @@
 
 <html:form
 	action="/viewDepartmentTeachersExpectations.do">
-	<input type="hidden" name="method" value="changeExecutionYear"/>
+	<input alt="input.method" type="hidden" name="method" value="changeExecutionYear"/>
 	<logic:notEmpty name="executionYears" scope="request">
 		<table class="showinfo2 invisible">
 			<tr>
 				<td class="aright"><bean:message key="label.common.chooseExecutionYear" />:</td>
-				<td><html:select property="executionYearID"
+				<td><html:select bundle="HTMLALT_RESOURCES" altKey="select.executionYearID" property="executionYearID"
 					onchange="this.form.method.value='changeExecutionYear';this.form.submit();">
 					<html:options collection="executionYears" property="value"
 						labelProperty="label" />
@@ -38,7 +39,7 @@
 			<tr>
 				<td class="aright"><bean:message
 					key="label.viewDepartmentTeachersExpectations.chooseTeacher" />:</td>
-				<td><html:select property="teacherID" onchange="this.form.method.value='changeTeacher';this.form.submit();">
+				<td><html:select bundle="HTMLALT_RESOURCES" altKey="select.teacherID" property="teacherID" onchange="this.form.method.value='changeTeacher';this.form.submit();">
 					<html:option value="-1" key="label.common.allTeachers" />
 					<html:options collection="departmentTeachers" property="value"
 						labelProperty="label" />

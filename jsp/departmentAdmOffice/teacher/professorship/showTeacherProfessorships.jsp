@@ -1,4 +1,5 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-tiles.tld" prefix="tiles" %>
@@ -20,18 +21,18 @@
 	<h2><bean:message key="label.teacher.professorships"/></h2>
 		<table width="100%"cellpadding="5" border="0">
 			<tr>
-				<td class="listClasses-header" style="text-align:left">
+				<th class="listClasses-header" style="text-align:left">
 					<bean:message key="label.execution-course.name" />
-				</td>
-				<td class="listClasses-header" style="text-align:left">	
+				</th>
+				<th class="listClasses-header" style="text-align:left">	
 					<bean:message key="label.execution-course.degrees" />
-				</td>
-				<td class="listClasses-header">
+				</th>
+				<th class="listClasses-header">
 					<bean:message key="label.professorship.responsibleFor" />
-				</td>
-				<td class="listClasses-header">
+				</th>
+				<th class="listClasses-header">
 					<bean:message key="label.execution-period" />
-				</td>
+				</th>
 			</tr>
 			<logic:iterate id="professorshipDTO" name="professorshipDTOs">
 				<bean:define id="professorship" name="professorshipDTO" property="professorship"/>

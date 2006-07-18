@@ -1,5 +1,5 @@
 <%@ page language="java" %>
-<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
+<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%><html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 
@@ -14,11 +14,11 @@
 	</span><br/>
 	</logic:messagesPresent>
 
-	<html:hidden property="method" value="doEdit"/>
-	<html:hidden property="page" value="1"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="doEdit"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
 
-	<html:hidden property="idInternal"/>
-	<html:hidden property="grantContractId"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.idInternal" property="idInternal"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.grantContractId" property="grantContractId"/>
 
 	<table>
 		<tr>
@@ -26,7 +26,7 @@
 				<bean:message key="label.grant.contract.movement.location"/>:&nbsp;
 			</td>
 			<td>
-				<html:text property="location" size="15"/><bean:message key="label.requiredfield"/>
+				<html:text bundle="HTMLALT_RESOURCES" altKey="text.location" property="location" size="15"/><bean:message key="label.requiredfield"/>
 			</td>
 		</tr>
 		<tr>
@@ -34,7 +34,7 @@
 				<bean:message key="label.grant.contract.movement.departureDate"/>:&nbsp;
 			</td>
 			<td>
-				<html:text property="departureDate" size="10"/><bean:message key="label.requiredfield"/>
+				<html:text bundle="HTMLALT_RESOURCES" altKey="text.departureDate" property="departureDate" size="10"/><bean:message key="label.requiredfield"/>
 				&nbsp;
 				<bean:message key="label.dateformat"/>
 			</td>
@@ -44,7 +44,7 @@
 				<bean:message key="label.grant.contract.movement.arrivalDate"/>:&nbsp;
 			</td>
 			<td>
-				<html:text property="arrivalDate" size="10"/><bean:message key="label.requiredfield"/>
+				<html:text bundle="HTMLALT_RESOURCES" altKey="text.arrivalDate" property="arrivalDate" size="10"/><bean:message key="label.requiredfield"/>
 				&nbsp;
 				<bean:message key="label.dateformat"/>
 			</td>
@@ -58,7 +58,7 @@
 		<tr>
 			<td>
 				<%-- Save button (edit/create) --%>
-				<html:submit styleClass="inputbutton">
+				<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton">
 					<bean:message key="button.save"/>
 				</html:submit>
 </html:form>
@@ -66,9 +66,9 @@
 			<td>
 				<html:form action="/manageGrantContractMovement" style="display:inline">
 					<%-- button cancel --%>
-					<html:hidden property="method" value="prepareManageGrantContractMovement"/>
-					<html:hidden property="idContract" value='<%= request.getAttribute("idContract").toString() %>'/>
-					<html:submit styleClass="inputbutton" style="display:inline">
+					<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="prepareManageGrantContractMovement"/>
+					<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.idContract" property="idContract" value='<%= request.getAttribute("idContract").toString() %>'/>
+					<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton" style="display:inline">
 						<bean:message key="button.cancel"/>
 					</html:submit>
 				</html:form>

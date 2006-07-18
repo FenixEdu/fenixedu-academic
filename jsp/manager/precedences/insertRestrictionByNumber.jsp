@@ -1,5 +1,5 @@
 <%@ page language="java" %>
-<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %><html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <h3><bean:message bundle="MANAGER_RESOURCES" key="label.manager.precedences.management"/>&nbsp;-&nbsp;<bean:message bundle="MANAGER_RESOURCES" key="label.manager.insert.simple.precedence"/>&nbsp;-&nbsp;<bean:message bundle="MANAGER_RESOURCES" key="label.manager.insert.restriction.restrictionByNumberOfDoneCurricularCourses"/></h3>
@@ -12,13 +12,13 @@
 <bean:define id="degreeCurricularPlanId" name="degreeCurricularPlanId" />
 
 <html:form action="/makeSimplePrecedence.do">
-	<html:hidden property="page" value="1" />
-	<html:hidden property="method" value="insertRestriction" />
-	<html:hidden property="className" value="<%= request.getAttribute("className").toString() %>" />	
-	<html:hidden property="degreeId" value="<%= request.getAttribute("degreeId").toString() %>" />
-	<html:hidden property="degreeCurricularPlanId" value="<%= request.getAttribute("degreeCurricularPlanId").toString() %>" />
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1" />
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="insertRestriction" />
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.className" property="className" value="<%= request.getAttribute("className").toString() %>" />	
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.degreeId" property="degreeId" value="<%= request.getAttribute("degreeId").toString() %>" />
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.degreeCurricularPlanId" property="degreeCurricularPlanId" value="<%= request.getAttribute("degreeCurricularPlanId").toString() %>" />
 			
-	<b><bean:message bundle="MANAGER_RESOURCES" key="label.manager.numberOfDoneCurricularCourses" />:</b>&nbsp;<html:text property="number" />	
+	<b><bean:message bundle="MANAGER_RESOURCES" key="label.manager.numberOfDoneCurricularCourses" />:</b>&nbsp;<html:text bundle="HTMLALT_RESOURCES" altKey="text.number" property="number" />	
 	<p />
 	<table>
 		<tr>
@@ -30,12 +30,12 @@
 		<logic:iterate id="curricularCourse" name="curricularCoursesList">
 			<tr>
 				<td><bean:write name="curricularCourse" property="name" /></td>
-				<td><html:radio property="curricularCourseToAddPrecedenceID" idName="curricularCourse" value="idInternal"/></td>				
+				<td><html:radio bundle="HTMLALT_RESOURCES" altKey="radio.curricularCourseToAddPrecedenceID" property="curricularCourseToAddPrecedenceID" idName="curricularCourse" value="idInternal"/></td>				
 			</tr>
 		</logic:iterate>
 	</table>	
 	<p />
-	<html:submit styleClass="inputbutton">
+	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton">
 		<bean:message bundle="MANAGER_RESOURCES" key="button.continue"/>
 	</html:submit>
 </html:form>

@@ -1,5 +1,6 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %> 
 <%@ taglib uri="/WEB-INF/struts-tiles.tld" prefix="tiles" %> 
@@ -9,14 +10,14 @@
 </logic:empty>
 <logic:notEmpty name="listSeminaries" >
 	<span class="error"><html:errors /></span>
-	<h2 class="redtxt">Informações de utilização:</h2>
-	<p>Existem várias modalidades de inscrição. Para mais informações consultar regulamento do seminário.</p>
+	<h2 class="redtxt">Informaï¿½ï¿½es de utilizaï¿½ï¿½o:</h2>
+	<p>Existem vï¿½rias modalidades de inscriï¿½ï¿½o. Para mais informaï¿½ï¿½es consultar regulamento do seminï¿½rio.</p>
 	<h2><bean:message key="label.seminariesToEnroll"/></h2>
 	<table width="90%" align="center">
 	<tr>
-		<td class="listClasses-header" ><bean:message key="label.seminaryTitle"/></td>
-		<td class="listClasses-header" ><bean:message key="label.enroll" /></td>
-		<td class="listClasses-header" ><bean:message key="label.deadline" /></td>
+		<th class="listClasses-header" ><bean:message key="label.seminaryTitle"/></th>
+		<th class="listClasses-header" ><bean:message key="label.enroll" /></th>
+		<th class="listClasses-header" ><bean:message key="label.deadline" /></th>
 	</tr>	
 		<logic:iterate id="seminary" name="listSeminaries" type="net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoSeminary">
 		<tr>
@@ -41,9 +42,9 @@
 	<bean:define id="currentCandidacies" type="java.util.List" scope="request" name="currentCandidacies"/>
 	<table width="90%" align="center">
 		<tr>
-			<td class="listClasses-header" ><bean:message key="label.seminaryTitle"/></td>
-			<td class="listClasses-header" ><bean:message key="label.seminaryCandidacyDetails" /></td>
-			<td class="listClasses-header" ><bean:message key="label.cancelCandidacy" /></td>
+			<th class="listClasses-header" ><bean:message key="label.seminaryTitle"/></th>
+			<th class="listClasses-header" ><bean:message key="label.seminaryCandidacyDetails" /></th>
+			<th class="listClasses-header" ><bean:message key="label.cancelCandidacy" /></th>
 		</tr>	
 			<logic:iterate id="candidacy" name="currentCandidacies">
 			<tr>

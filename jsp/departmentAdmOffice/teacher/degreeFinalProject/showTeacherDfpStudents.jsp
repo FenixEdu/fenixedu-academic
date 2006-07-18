@@ -1,5 +1,6 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="dt"%>
@@ -23,12 +24,12 @@
 		<bean:message key="label.teacher-dfp-student.add-student"/>			
 </h3>
 <html:form action="/manageTeacherDFPStudent">
-	<html:hidden property="method" value="edit"/>
-	<html:hidden property="page" value="1"/>	
-	<html:hidden property="idInternal"/>
-	<html:hidden property="studentId"/>	
-	<html:hidden property="teacherId"/>	
-	<html:hidden property="executionPeriodId"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="edit"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>	
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.idInternal" property="idInternal"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.studentId" property="studentId"/>	
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.teacherId" property="teacherId"/>	
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.executionPeriodId" property="executionPeriodId"/>
 	
 	<span class="error"><html:errors /></span>
 	
@@ -39,10 +40,10 @@
 			</td>
 			<td>
 				<logic:messagesPresent>
-					<html:text property="studentNumber" size="6"/>		
+					<html:text bundle="HTMLALT_RESOURCES" altKey="text.studentNumber" property="studentNumber" size="6"/>		
 				</logic:messagesPresent>
 				<logic:messagesNotPresent>
-					<html:text property="studentNumber" value="" size="6"/>		
+					<html:text bundle="HTMLALT_RESOURCES" altKey="text.studentNumber" property="studentNumber" value="" size="6"/>		
 				</logic:messagesNotPresent>		
 			</td>
 		</tr>
@@ -52,8 +53,8 @@
 			</td>
 			
 			<td>
-				<html:text property="percentage" size="4"/>
-				<html:submit styleClass="inputbutton">
+				<html:text bundle="HTMLALT_RESOURCES" altKey="text.percentage" property="percentage" size="4"/>
+				<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton">
 					<bean:message key="button.ok"/>
 				</html:submit>
 			</td>
@@ -75,18 +76,18 @@
 	</h3>
 	<table>
 		<tr>
-			<td class="listClasses-header">
+			<th class="listClasses-header">
 				<bean:message key="label.teacher-dfp-student.student-number"/>
-			</td>
-			<td class="listClasses-header">
+			</th>
+			<th class="listClasses-header">
 				<bean:message key="label.teacher-dfp-student.student-name"/>
-			</td>
-			<td class="listClasses-header">
+			</th>
+			<th class="listClasses-header">
 				<bean:message key="label.teacher-dfp-student.percentage"/>
-			</td>
-			<td class="listClasses-header">
+			</th>
+			<th class="listClasses-header">
 				<bean:message key="label.teacher-dfp-student.remove-student"/>
-			</td>
+			</th>
 			
 		</tr>			
 			<bean:define id="teacherId" name="infoTeacher" property="idInternal"/>

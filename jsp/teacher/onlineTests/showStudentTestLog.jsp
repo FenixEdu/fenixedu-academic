@@ -1,12 +1,13 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <logic:present name="infoStudentTestLogList">
 <html:form action="/testsManagement">
-<html:hidden property="method" value="showTestMarks"/>
-<html:hidden property="objectCode" value="<%=(pageContext.findAttribute("objectCode")).toString()%>"/>
-<html:hidden property="distributedTestCode" value="<%=(pageContext.findAttribute("distributedTestCode")).toString()%>"/>
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="showTestMarks"/>
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.objectCode" property="objectCode" value="<%=(pageContext.findAttribute("objectCode")).toString()%>"/>
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.distributedTestCode" property="distributedTestCode" value="<%=(pageContext.findAttribute("distributedTestCode")).toString()%>"/>
 
 	<logic:empty name="infoStudentTestLogList">
 		<h2><bean:message key="message.test.no.log"/></h2>
@@ -25,10 +26,10 @@
 			<table>
 			<bean:define id="questionNumber" value="<%=(pageContext.findAttribute("questionNumber")).toString()%>"/>
 			<tr>
-				<td class="listClasses-header"><b>Data</b></td>
-				<td class="listClasses-header"><b>Evento</b></td>
+				<th class="listClasses-header"><b>Data</b></th>
+				<th class="listClasses-header"><b>Evento</b></th>
 				<% for(int i=1; i<=new Integer(questionNumber).intValue()-1;i++ ){ 
-					out.write(new String("<td class='listClasses-header'><b>P"+i+"</b></td>"));				
+					out.write(new String("<th class='listClasses-header'><b>P"+i+"</b></th>"));				
 				} %>
 			</tr>
 			</logic:equal>
@@ -51,6 +52,6 @@
 
 	<br/>
 	</logic:notEmpty>
-	<html:submit styleClass="inputbutton"><bean:message key="label.back"/></html:submit>
+	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton"><bean:message key="label.back"/></html:submit>
 </html:form>	
 </logic:present>

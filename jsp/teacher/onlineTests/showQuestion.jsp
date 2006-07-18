@@ -1,5 +1,6 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <logic:present name="iquestion">
@@ -77,11 +78,11 @@
 
 			<%	if(((Integer)cardinality).intValue()==1 ){ %> <%-- Cardinality.SINGLE--%>
 				</td></tr><tr>
-				<td><html:radio property="option" value="<%= indexOption.toString() %>" disabled="true"/></td>
+				<td><html:radio bundle="HTMLALT_RESOURCES" altKey="radio.option" property="option" value="<%= indexOption.toString() %>" disabled="true"/></td>
 				<td>
 			<% }else if(((Integer)cardinality).intValue()==2){ %> <%-- Cardinality.MULTIPLE--%>
 				</td></tr><tr>
-				<td><html:multibox property="option" value="<%= new Integer(indexOption.intValue()+1).toString() %>" disabled="true"></html:multibox></td>
+				<td><html:multibox bundle="HTMLALT_RESOURCES" altKey="multibox.option" property="option" value="<%= new Integer(indexOption.intValue()+1).toString() %>" disabled="true"></html:multibox></td>
 				<td>
 				
 			<%}%>
@@ -90,14 +91,14 @@
 				<bean:define id="maxchars" name="iquestion" property="questionType.render.maxchars"/>
 				<logic:notEmpty name="iquestion" property="questionType.render.columns">
 					<bean:define id="cols" name="iquestion" property="questionType.render.columns"/>
-					<html:text maxlength="<%=maxchars.toString()%>" size="<%=cols.toString()%>" property="option" value="" disabled="true"/>
+					<html:text bundle="HTMLALT_RESOURCES" altKey="text.option" maxlength="<%=maxchars.toString()%>" size="<%=cols.toString()%>" property="option" value="" disabled="true"/>
 				</logic:notEmpty>
 				<logic:empty name="iquestion" property="questionType.render.columns">
 					<bean:define id="textBoxSize" value="<%=maxchars.toString()%>"/>
 					<logic:greaterThan name="textBoxSize" value="100" >
 						<bean:define id="textBoxSize" value="100"/>
 					</logic:greaterThan>
-					<html:text maxlength="<%=maxchars.toString()%>" size="<%=textBoxSize%>" property="option" value="" disabled="true"/>
+					<html:text bundle="HTMLALT_RESOURCES" altKey="text.option" maxlength="<%=maxchars.toString()%>" size="<%=textBoxSize%>" property="option" value="" disabled="true"/>
 				</logic:empty>
 			</logic:notEmpty>	
 			<logic:empty name="iquestion" property="questionType.render.maxchars">
@@ -105,19 +106,19 @@
 					<bean:define id="rows" name="iquestion" property="questionType.render.rows"/>
 					<logic:notEmpty name="iquestion" property="questionType.render.columns">
 						<bean:define id="cols" name="iquestion" property="questionType.render.columns"/>
-						<html:textarea rows="<%=rows.toString()%>" cols="<%=cols.toString()%>" property="option" disabled="true"/>
+						<html:textarea bundle="HTMLALT_RESOURCES" altKey="textarea.option" rows="<%=rows.toString()%>" cols="<%=cols.toString()%>" property="option" disabled="true"/>
 					</logic:notEmpty>
 					<logic:empty name="iquestion" property="questionType.render.columns">
-						<html:textarea rows="<%=rows.toString()%>" property="option" disabled="true"/>
+						<html:textarea bundle="HTMLALT_RESOURCES" altKey="textarea.option" rows="<%=rows.toString()%>" property="option" disabled="true"/>
 					</logic:empty>
 				</logic:notEmpty>
 				<logic:empty name="iquestion" property="questionType.render.rows">
 					<logic:notEmpty name="iquestion" property="questionType.render.columns">
 						<bean:define id="cols" name="iquestion" property="questionType.render.columns"/>
-						<html:textarea cols="<%=cols.toString()%>" property="option" disabled="true"/>
+						<html:textarea bundle="HTMLALT_RESOURCES" altKey="textarea.option" cols="<%=cols.toString()%>" property="option" disabled="true"/>
 					</logic:notEmpty>
 					<logic:empty name="iquestion" property="questionType.render.columns">
-						<html:text property="option" value="" disabled="true"/>
+						<html:text bundle="HTMLALT_RESOURCES" altKey="text.option" property="option" value="" disabled="true"/>
 					</logic:empty>
 				</logic:empty>
 			</logic:empty>
@@ -148,7 +149,7 @@
 	<bean:define id="index" value="<%=firstOptionImage.toString()%>"/>
 	<tr>
 	<logic:equal name="rpIndex" value="0">
-		<td><b>Cotação</b></td>
+		<td><b>Cotaï¿½ï¿½o</b></td>
 		<td><b>Resposta</b></td>
 		<td><b>Feedback</b></td>
 		<td><b>Fenix</b></td>
@@ -184,7 +185,7 @@
 							</logic:equal>
 						</logic:notEmpty>
 						<logic:equal name="button" value="true">
-							<td><html:radio property="option" value="<%= new Integer(indexOption.intValue()+1).toString() %>" disabled="true"/></td>
+							<td><html:radio bundle="HTMLALT_RESOURCES" altKey="radio.option" property="option" value="<%= new Integer(indexOption.intValue()+1).toString() %>" disabled="true"/></td>
 						</logic:equal>
 					</logic:iterate>
 				<%}else if(((Integer)cardinality).intValue()==2){ %> <%-- Cardinality.MULTIPLE--%>
@@ -201,7 +202,7 @@
 						</logic:notEmpty>
 					</logic:iterate>
 					<logic:equal name="button" value="true">
-						<td><html:multibox property="option" value="<%= new Integer(indexOption.intValue()+1).toString() %>" disabled="true"/></td>
+						<td><html:multibox bundle="HTMLALT_RESOURCES" altKey="multibox.option" property="option" value="<%= new Integer(indexOption.intValue()+1).toString() %>" disabled="true"/></td>
 					</logic:equal>
 				<%}%>
 			

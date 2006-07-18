@@ -1,6 +1,6 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
-<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %><html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/app.tld" prefix="app" %>
 <%@ page import="net.sourceforge.fenixedu.domain.degree.DegreeType" %>
@@ -93,20 +93,20 @@
 	<logic:present name="lista" scope="request">
 		<bean:define id="listaNew" name="lista" />
 		<html:form action="/chooseContextDANew.do" method="GET">
-			<html:hidden property="<%SessionConstants.EXECUTION_PERIOD_OID%>" value="<%= ""+request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID)%>" />
-			<html:hidden property="page" value="1"/>
-			<html:hidden property="method" value="nextPagePublic"/>
-			<html:hidden property="degreeID" value="<%= ""+request.getAttribute("degreeID")%>" />
-			<html:hidden property="degreeCurricularPlanID" value="<%= pageContext.findAttribute("degreeCurricularPlanID").toString()%>" />
-			<html:hidden property="lista" value="<%= pageContext.findAttribute("listaNew").toString()%>" />
-			<html:hidden property="nextPage" value="classSearch"/>
-			<html:hidden property="inputPage" value="chooseContext"/>
+			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.<%SessionConstants.EXECUTION_PERIOD_OID%>" property="<%SessionConstants.EXECUTION_PERIOD_OID%>" value="<%= ""+request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID)%>" />
+			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
+			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="nextPagePublic"/>
+			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.degreeID" property="degreeID" value="<%= ""+request.getAttribute("degreeID")%>" />
+			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.degreeCurricularPlanID" property="degreeCurricularPlanID" value="<%= pageContext.findAttribute("degreeCurricularPlanID").toString()%>" />
+			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.lista" property="lista" value="<%= pageContext.findAttribute("listaNew").toString()%>" />
+			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.nextPage" property="nextPage" value="classSearch"/>
+			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.inputPage" property="inputPage" value="chooseContext"/>
 			
 			<table border="0" cellspacing="0" cellpadding="0">
 				<tr>
 				    <td><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.property.executionPeriod"/>:</td>
 				    <td>
-						<html:select property="indice" size="1" onchange='this.form.submit();'>
+						<html:select bundle="HTMLALT_RESOURCES" altKey="select.indice" property="indice" size="1" onchange='this.form.submit();'>
 							<logic:notEmpty name="chooseSearchContextForm" property="indice" >
 								<bean:define id="ind" name="chooseSearchContextForm" property="indice" />	
 							</logic:notEmpty>

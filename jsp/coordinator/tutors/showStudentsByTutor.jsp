@@ -1,5 +1,5 @@
 <%@ page language="java" %>
-<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %><html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <h2><bean:message key="label.coordinator.tutor.managementTutor"/></h2>
@@ -30,9 +30,9 @@
 </span>
 
 <html:form action="/tutorManagementLookup" focus="studentNumber">
-<html:hidden property="executionDegreeId" value="<%=  request.getAttribute("executionDegreeId").toString() %>"/>
-<html:hidden property="tutorNumber" value="<%=  request.getAttribute("tutorNumber").toString() %>"/>
-<html:hidden property="degreeCurricularPlanID" />
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.executionDegreeId" property="executionDegreeId" value="<%=  request.getAttribute("executionDegreeId").toString() %>"/>
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.tutorNumber" property="tutorNumber" value="<%=  request.getAttribute("tutorNumber").toString() %>"/>
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.degreeCurricularPlanID" property="degreeCurricularPlanID" />
 <!-- Associar aluno -->
 <table border="0">
 <tr>
@@ -47,9 +47,9 @@
 </tr>
 <tr>
 	<td><bean:message key="label.number" />:&nbsp;</td>	
-	<td><html:text property="studentNumber" size="5"/></td>
+	<td><html:text bundle="HTMLALT_RESOURCES" altKey="text.studentNumber" property="studentNumber" size="5"/></td>
 	<td>
-		<html:submit property="method" styleClass="inputbutton" onclick="document.tutorForm.page=2;">
+		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.method" property="method" styleClass="inputbutton" onclick="document.tutorForm.page=2;">
 			<bean:message key="button.coordinator.tutor.associateOneStudent"/>
 		</html:submit>
 	</td>
@@ -71,9 +71,9 @@
 </tr>
 <tr>
 	<td><bean:message key="label.numbersRange" />:&nbsp;</td>	
-	<td><html:text property="studentNumberFirst" size="5" />-<html:text property="studentNumberSecond" size="5" /></td>
+	<td><html:text bundle="HTMLALT_RESOURCES" altKey="text.studentNumberFirst" property="studentNumberFirst" size="5" />-<html:text bundle="HTMLALT_RESOURCES" altKey="text.studentNumberSecond" property="studentNumberSecond" size="5" /></td>
 	<td>
-		<html:submit property="method" styleClass="inputbutton" onclick="document.tutorForm.page=2;">
+		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.method" property="method" styleClass="inputbutton" onclick="document.tutorForm.page=2;">
 			<bean:message key="button.coordinator.tutor.associateManyStudent"/>
 		</html:submit>
 	</td>
@@ -111,7 +111,7 @@
 		<td><bean:write name="infoTutor" property="infoStudent.number"/></td>
 		<td><bean:write name="infoTutor" property="infoStudent.infoPerson.nome"/></td>
 		<td>
-			<html:multibox property="deletedTutorsIds">
+			<html:multibox bundle="HTMLALT_RESOURCES" altKey="multibox.deletedTutorsIds" property="deletedTutorsIds">
 				<bean:write name="tutorId"/>
 			</html:multibox>
 		</td>
@@ -120,11 +120,11 @@
 
 <tr>
 	<td colspan='3'>
-		<html:submit property="method" styleClass="inputbutton" onclick="document.tutorForm.page=0;">
+		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.method" property="method" styleClass="inputbutton" onclick="document.tutorForm.page=0;">
 			<bean:message key="button.coordinator.tutor.remove"/>
 		</html:submit>
 			
-		<html:submit property="method" styleClass="inputbutton" onclick="document.tutorForm.page=0;">
+		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.method" property="method" styleClass="inputbutton" onclick="document.tutorForm.page=0;">
 			<bean:message key="button.cancel"/>
 		</html:submit>
 	</td>

@@ -1,5 +1,5 @@
 <%@ page language="java" %>
-<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %><html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
@@ -12,7 +12,7 @@
 		<ul class="expmenu">
 			<li><html:link page="<%= "/showDegrees.do?method=nonMaster" %>" ><bean:message key="link.degree.nonMaster"/></html:link></li>
 			<bean:define id="institutionUrlPostGraduation" type="java.lang.String"><bean:message key="institution.url" bundle="GLOBAL_RESOURCES"/>html/ensino/pos_grad.html</bean:define>
-			<li><a href="<%= institutionUrlPostGraduation %>">Pós-graduações</a></li>
+			<li><a href="<%= institutionUrlPostGraduation %>">Pï¿½s-graduaï¿½ï¿½es</a></li>
 			<li><html:link page="<%= "/showDegrees.do?method=master&executionPeriodOID=" + request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID) %>" ><bean:message key="link.degree.master"/></html:link></li>
 			<bean:define id="institutionUrlPhd" type="java.lang.String"><bean:message key="institution.url" bundle="GLOBAL_RESOURCES"/>html/ensino/doutoramentos.html</bean:define>
 			<li><a href="<%= institutionUrlPhd %>">Doutoramentos</a></li>

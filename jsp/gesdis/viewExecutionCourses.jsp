@@ -1,5 +1,6 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
@@ -18,10 +19,10 @@
 				<logic:notEmpty name="<%=SessionConstants.EXECUTION_COURSE_LIST_KEY%>">
 					<table width="100%" cellpadding="0" border="0">
 						<tr>
-							<td class="listClasses-header"><bean:message key="label.copySite.course" />
-							</td>
-							<td class="listClasses-header">&nbsp;
-							</td>
+							<th class="listClasses-header"><bean:message key="label.copySite.course" />
+							</th>
+							<th class="listClasses-header">&nbsp;
+							</th>
 						</tr>
 			
 						<logic:iterate id="executionCourse" name="<%=SessionConstants.EXECUTION_COURSE_LIST_KEY%>" type="net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse">

@@ -4,6 +4,7 @@
 <%@ taglib uri="/WEB-INF/html_basic.tld" prefix="h"%>
 
 <ft:tilesView definition="bolonhaManager.masterPage" attributeName="body-inline">
+	<f:loadBundle basename="resources/HtmlAltResources" var="htmlAltBundle"/>
 	<f:loadBundle basename="resources/BolonhaManagerResources" var="bolonhaBundle"/>
 		<h:outputText value="<em>#{bolonhaBundle['competenceCourse']}</em>" escape="false"/>
 		<h:outputText value="<h2>#{bolonhaBundle['delete']}: #{CompetenceCourseManagement.competenceCourse.name} " style="font-weight: bold" escape="false"/>
@@ -29,12 +30,12 @@
 		</h:panelGroup>
 		
 		<h:messages infoClass="success0" errorClass="error0" layout="table"/>
-		<h:outputText escape="false" value="<input id='competenceCourseID' name='competenceCourseID' type='hidden' value='#{CompetenceCourseManagement.competenceCourse.idInternal}'/>"/><br/>
+		<h:outputText escape="false" value="<input alt='input.competenceCourseID' id='competenceCourseID' name='competenceCourseID' type='hidden' value='#{CompetenceCourseManagement.competenceCourse.idInternal}'/>"/><br/>
 		<h:outputText value="#{bolonhaBundle['confirmDeleteMessage']}" styleClass="warning0"/>
 		<br/><br/>
 		<h:outputText value="<p>" escape="false"/>	
-		<h:commandButton styleClass="inputbutton" value="#{bolonhaBundle['yes']}" action="#{CompetenceCourseManagement.deleteCompetenceCourse}"/>
-		<h:commandButton immediate="true" styleClass="inputbutton" value="#{bolonhaBundle['no']}" action="competenceCoursesManagement"/>
+		<h:commandButton alt="#{htmlAltBundle['commandButton.yes']}" styleClass="inputbutton" value="#{bolonhaBundle['yes']}" action="#{CompetenceCourseManagement.deleteCompetenceCourse}"/>
+		<h:commandButton alt="#{htmlAltBundle['commandButton.no']}" immediate="true" styleClass="inputbutton" value="#{bolonhaBundle['no']}" action="competenceCoursesManagement"/>
 		<h:outputText value="</p>" escape="false"/>
 	</h:form>
 </ft:tilesView>

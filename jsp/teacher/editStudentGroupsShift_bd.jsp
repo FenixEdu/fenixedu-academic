@@ -1,6 +1,6 @@
 <%@ page language="java" %>
 
-<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
+<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%><html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 
@@ -35,29 +35,29 @@
 <table align="left" width="95%" cellspacing='1' cellpadding='1'>	
 		<tbody>			
 			<tr >
-				<td class="listClasses-header" width="15%" rowspan="2">
+				<th class="listClasses-header" width="15%" rowspan="2">
 					<bean:message key="property.shift"/>
-				</td>
-				<td class="listClasses-header" colspan="4" width="45%"> 
+				</th>
+				<th class="listClasses-header" colspan="4" width="45%"> 
 					<bean:message key="property.lessons"/>
-				</td>
-				<td class="listClasses-header" width="40%" rowspan="2" colspan="3">
+				</th>
+				<th class="listClasses-header" width="40%" rowspan="2" colspan="3">
 					<bean:message key="property.groups"/>
-				</td>
+				</th>
 			</tr>
 			<tr>
-				<td class="listClasses-header" width="15%">
+				<th class="listClasses-header" width="15%">
 					<bean:message key="property.lesson.weekDay"/>
-				</td>
-				<td class="listClasses-header" width="10%">
+				</th>
+				<th class="listClasses-header" width="10%">
 					<bean:message key="property.lesson.beginning"/>
-				</td>
-				<td class="listClasses-header" width="10%">
+				</th>
+				<th class="listClasses-header" width="10%">
 					<bean:message key="property.lesson.end"/>
-				</td>
-				<td class="listClasses-header" width="10%">
+				</th>
+				<th class="listClasses-header" width="10%">
 					<bean:message key="property.lesson.room"/>
-				</td>
+				</th>
 			</tr>
 			
 			<bean:define id="infoSiteShiftsAndGroups" name="component" property="infoSiteShiftsAndGroups"/>	
@@ -171,7 +171,7 @@
 
 <logic:notEmpty name="component" property="infoSiteStudentsAndShiftByStudentGroupList">
 <html:form action="/executeEditStudentGroupsShift" method="get">
-<html:hidden property="page" value="1"/>
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
 <bean:message key="message.editStudentGroupsShift"/>
 
 <br>
@@ -180,17 +180,17 @@
 
 	
 	<tr>
-		<td class="listClasses-header">
-		</td>
+		<th class="listClasses-header">
+		</th>
 		
-		<td class="listClasses-header"><bean:message key="label.studentGroupNumber" />
-		</td>
+		<th class="listClasses-header"><bean:message key="label.studentGroupNumber" />
+		</th>
 		
-		<td class="listClasses-header"><bean:message key="label.studentsNumber" />
-		</td>
+		<th class="listClasses-header"><bean:message key="label.studentsNumber" />
+		</th>
 		
-		<td class="listClasses-header"><bean:message key="label.shiftName" />
-		</td>
+		<th class="listClasses-header"><bean:message key="label.shiftName" />
+		</th>
 		
 	</tr>
 	
@@ -198,7 +198,7 @@
 	<bean:define id="infoStudentGroup" name="infoSiteStudentsAndShiftByStudentGroup" property="infoStudentGroup"/>
 		<tr>	
 			<td class="listClasses">
-			<html:multibox property="studentGroupsCodes">
+			<html:multibox bundle="HTMLALT_RESOURCES" altKey="multibox.studentGroupsCodes" property="studentGroupsCodes">
 			<bean:write name="infoStudentGroup" property="idInternal" />
 			</html:multibox>
 			</td>	
@@ -240,17 +240,17 @@
 
 <br>
 <br>
-<html:submit styleClass="inputbutton"><bean:message key="button.join"/>                    		         	
+<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton"><bean:message key="button.join"/>                    		         	
 </html:submit>
-<html:reset styleClass="inputbutton"><bean:message key="label.clear"/>
+<html:reset bundle="HTMLALT_RESOURCES" altKey="reset.reset" styleClass="inputbutton"><bean:message key="label.clear"/>
 </html:reset>
 <br>
 <br>
 
-<html:hidden property="method" value="editStudentGroupsShift"/>
-<html:hidden  property="objectCode" value="<%= pageContext.findAttribute("objectCode").toString() %>" />
-<html:hidden  property="groupPropertiesCode" value="<%= request.getParameter("groupPropertiesCode") %>" />
-<html:hidden  property="shiftCode" value="<%= request.getParameter("shiftCode") %>" />
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="editStudentGroupsShift"/>
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.objectCode"  property="objectCode" value="<%= pageContext.findAttribute("objectCode").toString() %>" />
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.groupPropertiesCode"  property="groupPropertiesCode" value="<%= request.getParameter("groupPropertiesCode") %>" />
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.shiftCode"  property="shiftCode" value="<%= request.getParameter("shiftCode") %>" />
 
 </html:form>
 

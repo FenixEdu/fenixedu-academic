@@ -1,5 +1,6 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ page import="org.apache.struts.Globals" %>
@@ -42,8 +43,8 @@
     
         <table>
         	<tr>
-    			<td class="listClasses-header"><bean:message key="label.candidate.number" /></td>
-    			<td class="listClasses-header"><bean:message key="label.person.name" /></td>
+    			<th class="listClasses-header"><bean:message key="label.candidate.number" /></th>
+    			<th class="listClasses-header"><bean:message key="label.person.name" /></th>
     		</tr>
      	<logic:iterate id="studentCP" name="studentList">
         	<bean:define id="studentLink">

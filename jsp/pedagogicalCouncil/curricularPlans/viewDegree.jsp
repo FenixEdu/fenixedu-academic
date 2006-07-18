@@ -3,6 +3,7 @@
 <%@ taglib uri="/WEB-INF/html_basic.tld" prefix="h"%>
 
 <ft:tilesView definition="pedagogicalCouncil.masterPage" attributeName="body-inline">
+	<f:loadBundle basename="resources/HtmlAltResources" var="htmlAltBundle"/>
 	<f:loadBundle basename="resources/ScientificCouncilResources" var="scouncilBundle"/>	
 	<f:loadBundle basename="resources/EnumerationResources" var="enumerationBundle"/>
 
@@ -12,7 +13,7 @@
 		<f:param value="#{scouncilBundle['degree']}" />
 	</h:outputFormat>
 	<h:form>
-		<h:outputText escape="false" value="<input id='degreeId' name='degreeId' type='hidden' value='#{DegreeManagement.degreeId}'/>"/>
+		<h:outputText escape="false" value="<input alt='input.degreeId' id='degreeId' name='degreeId' type='hidden' value='#{DegreeManagement.degreeId}'/>"/>
 		<h:messages infoClass="success0" errorClass="error0" layout="table" globalOnly="true"/>
 
 		<h:outputText value="<p><b>#{scouncilBundle['name']} (pt):</b> " escape="false"/>
@@ -32,7 +33,7 @@
 
 		<br/>
 		<h:outputText value="<p> " escape="false"/>
-		<h:commandButton immediate="true" styleClass="inputbutton" value="#{scouncilBundle['return']}"
+		<h:commandButton alt="#{htmlAltBundle['commandButton.return']}" immediate="true" styleClass="inputbutton" value="#{scouncilBundle['return']}"
 			action="curricularPlansManagement"/>
 		<h:outputText value="</p> " escape="false"/>
 	</h:form>

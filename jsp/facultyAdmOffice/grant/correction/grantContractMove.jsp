@@ -1,5 +1,5 @@
 <%@ page language="java" %>
-<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
+<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%><html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 
@@ -30,28 +30,28 @@
 	 
 	</table><br><br>
 
-	<html:hidden property="method" value="moveContract"/>
-	<html:hidden property="action" value="moveContract"/>
-	<html:hidden property="page" value="1"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="moveContract"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.action" property="action" value="moveContract"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
 
 	
 	<%-- Change number of Grant Contract --%> 
 	<table>
 		<tr>
 			<td align="left"><bean:message key="label.grant.owner.number"/>:&nbsp;</td>
-			<td><html:text property="grantOwnerNumber" size="5"/></td>
+			<td><html:text bundle="HTMLALT_RESOURCES" altKey="text.grantOwnerNumber" property="grantOwnerNumber" size="5"/></td>
 		</tr>
 		<tr>
 			<td align="left"><bean:message key="label.grant.contract.number.correction"/>:&nbsp;</td>
-			<td><html:text property="grantContractNumber" size="5"/></td>
+			<td><html:text bundle="HTMLALT_RESOURCES" altKey="text.grantContractNumber" property="grantContractNumber" size="5"/></td>
 		</tr>
 		<tr>
 			<td align="left"><bean:message key="label.new.grant.owner"/>:&nbsp;</td>
-			<td><html:text property="newGrantOwnerNumber" size="5"/></td>
+			<td><html:text bundle="HTMLALT_RESOURCES" altKey="text.newGrantOwnerNumber" property="newGrantOwnerNumber" size="5"/></td>
 		</tr>
 	</table>
 	
-	<p><html:submit styleClass="inputbutton">
+	<p><html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton">
 		<bean:message key="button.correct"/>
 	</html:submit></p>
 

@@ -4,6 +4,7 @@
 <%@ taglib uri="/WEB-INF/html_basic.tld" prefix="h"%>
 
 <ft:tilesView definition="bolonhaManager.masterPage" attributeName="body-inline">
+	<f:loadBundle basename="resources/HtmlAltResources" var="htmlAltBundle"/>
 	<f:loadBundle basename="resources/BolonhaManagerResources" var="bolonhaBundle"/>
 	<f:loadBundle basename="resources/EnumerationResources" var="enumerationBundle"/>
 <style>
@@ -21,8 +22,8 @@ padding-right: 10px;
 	<h:messages infoClass="infoMsg" errorClass="error0" globalOnly="true" />
 	
 	<h:form>
-		<h:outputText escape="false" value="<input id='competenceCourseID' name='competenceCourseID' type='hidden' value='#{CompetenceCourseManagement.competenceCourse.idInternal}'/>"/>
-		<h:outputText escape="false" value="<input id='action' name='action' type='hidden' value='#{CompetenceCourseManagement.action}'/>"/>
+		<h:outputText escape="false" value="<input alt='input.competenceCourseID' id='competenceCourseID' name='competenceCourseID' type='hidden' value='#{CompetenceCourseManagement.competenceCourse.idInternal}'/>"/>
+		<h:outputText escape="false" value="<input alt='input.action' id='action' name='action' type='hidden' value='#{CompetenceCourseManagement.action}'/>"/>
 		<h:outputText value="<p>" escape="false"/>
  		<h:outputLink value="setCompetenceCourseBibliographicReference.faces">
 				<h:outputText value="#{bolonhaBundle['createBibliographicReference']}"/>
@@ -38,31 +39,31 @@ padding-right: 10px;
 			<h:outputText value="<fieldset class='lfloat'>" escape="false"/>
 			
 			<h:outputText value="<p><label>#{bolonhaBundle['title']}:</label>" escape="false"/>
-			<h:inputText id="title" size="50" required="true" value="#{CompetenceCourseManagement.title}"/>
+			<h:inputText alt="#{htmlAltBundle['inputText.title']}" id="title" size="50" required="true" value="#{CompetenceCourseManagement.title}"/>
 			<h:outputText value=" " escape="false"/>
 			<h:message for="title" styleClass="error0"/>
 			<h:outputText value="</p>" escape="false"/>
 			
 			<h:outputText value="<p><label>#{bolonhaBundle['author']}:</label>" escape="false"/>
-			<h:inputText id="author" size="50" required="true" value="#{CompetenceCourseManagement.author}"/>
+			<h:inputText alt="#{htmlAltBundle['inputText.author']}" id="author" size="50" required="true" value="#{CompetenceCourseManagement.author}"/>
 			<h:outputText value=" " escape="false"/>
 			<h:message for="author" styleClass="error0"/>
 			<h:outputText value="</p>" escape="false"/>
 			
 			<h:outputText value="<p><label>#{bolonhaBundle['year']}:</label>" escape="false"/>
-			<h:inputText id="year" size="3" required="true" value="#{CompetenceCourseManagement.year}"/>
+			<h:inputText alt="#{htmlAltBundle['inputText.year']}" id="year" size="3" required="true" value="#{CompetenceCourseManagement.year}"/>
 			<h:outputText value=" " escape="false"/>
 			<h:message for="year" styleClass="error0"/>
 			<h:outputText value="</p>" escape="false"/>
 			
 			<h:outputText value="<p><label>#{bolonhaBundle['reference']}:</label>" escape="false"/>
-			<h:inputText id="reference" size="50" required="true" value="#{CompetenceCourseManagement.reference}"/>
+			<h:inputText alt="#{htmlAltBundle['inputText.reference']}" id="reference" size="50" required="true" value="#{CompetenceCourseManagement.reference}"/>
 			<h:outputText value=" " escape="false"/>
 			<h:message for="reference" styleClass="error0"/>
 			<h:outputText value="</p>" escape="false"/>
 			
 			<h:outputText value="<p><label>#{bolonhaBundle['url']}:</label>" escape="false"/>
-			<h:inputText id="url" size="50" maxlength="100" value="#{CompetenceCourseManagement.url}"/>			
+			<h:inputText alt="#{htmlAltBundle['inputText.url']}" id="url" size="50" maxlength="100" value="#{CompetenceCourseManagement.url}"/>			
 			<h:outputText value=" <span>(#{bolonhaBundle['optional']})</span></p>" escape="false"/>
 
 			<h:outputText value="<p><label>#{bolonhaBundle['type']}:</label>" escape="false"/>	
@@ -74,15 +75,15 @@ padding-right: 10px;
 			
 			<h:outputText value="<p class='mtop1'><label class='lempty'>.</label>" escape="false" />
 			<h:panelGroup rendered="#{empty CompetenceCourseManagement.bibliographicReferenceID}">
-				<h:commandButton value="#{bolonhaBundle['create']}" styleClass="inputbutton"
+				<h:commandButton alt="#{htmlAltBundle['commandButton.create']}" value="#{bolonhaBundle['create']}" styleClass="inputbutton"
 					action="#{CompetenceCourseManagement.createBibliographicReference}"/>					
 			</h:panelGroup>
 			<h:panelGroup rendered="#{(!empty CompetenceCourseManagement.bibliographicReferenceID && CompetenceCourseManagement.bibliographicReferenceID != -1)}">
-				<h:outputText escape="false" value="<input id='bibliographicReferenceID' name='bibliographicReferenceID' type='hidden' value='#{CompetenceCourseManagement.bibliographicReferenceID}'/>"/>
-				<h:commandButton value="#{bolonhaBundle['save']}" styleClass="inputbutton"
+				<h:outputText escape="false" value="<input alt='input.bibliographicReferenceID' id='bibliographicReferenceID' name='bibliographicReferenceID' type='hidden' value='#{CompetenceCourseManagement.bibliographicReferenceID}'/>"/>
+				<h:commandButton alt="#{htmlAltBundle['commandButton.save']}" value="#{bolonhaBundle['save']}" styleClass="inputbutton"
 					action="#{CompetenceCourseManagement.editBibliographicReference}"/>
 			</h:panelGroup>
-			<h:commandButton value="#{bolonhaBundle['cancel']}" styleClass="inputbutton" immediate="true"
+			<h:commandButton alt="#{htmlAltBundle['commandButton.cancel']}" value="#{bolonhaBundle['cancel']}" styleClass="inputbutton" immediate="true"
 					action="#{CompetenceCourseManagement.cancelBibliographicReference}"/>			
 			<h:outputText value="</p></fieldset></div>" escape="false" />
 		</h:panelGroup>	
@@ -206,10 +207,10 @@ padding-right: 10px;
 		</h:dataTable>
 		<h:outputText value="<br/>" escape="false"/>			
 		<h:panelGroup rendered="#{CompetenceCourseManagement.action == 'add'}">
-			<h:commandButton immediate="true" styleClass="inputbutton" value="#{bolonhaBundle['back']}" action="competenceCoursesManagement"/>			
+			<h:commandButton alt="#{htmlAltBundle['commandButton.back']}" immediate="true" styleClass="inputbutton" value="#{bolonhaBundle['back']}" action="competenceCoursesManagement"/>			
 		</h:panelGroup>
 		<h:panelGroup rendered="#{CompetenceCourseManagement.action == 'edit'}">
-			<h:commandButton immediate="true" styleClass="inputbutton" value="#{bolonhaBundle['back']}" action="editCompetenceCourseMainPage"/>			
+			<h:commandButton alt="#{htmlAltBundle['commandButton.back']}" immediate="true" styleClass="inputbutton" value="#{bolonhaBundle['back']}" action="editCompetenceCourseMainPage"/>			
 		</h:panelGroup>
 	</h:form>
 </ft:tilesView>

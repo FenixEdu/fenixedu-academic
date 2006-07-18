@@ -1,5 +1,6 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
@@ -8,7 +9,7 @@
 	<h2>Listas finais de Candidatos</h2>
 	<br />
 <bean:define id="executionDegreeID" name="<%= SessionConstants.EXECUTION_DEGREE %>" scope="request" />
-<html:hidden property="executionDegreeID" value="<%= pageContext.findAttribute("executionDegreeID").toString() %>" />
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.executionDegreeID" property="executionDegreeID" value="<%= pageContext.findAttribute("executionDegreeID").toString() %>" />
 	<logic:iterate id="group" name="infoGroup" >
 		<h2><bean:write name="group" property="situationName"/></h2>
   		<table>
@@ -28,22 +29,22 @@
 	
     <logic:equal name="confirmation" value="YES">
         <html:form action="/displayListToSelectCandidates.do?method=aprove">
-        <html:hidden property="executionDegreeID" value="<%= pageContext.findAttribute("executionDegreeID").toString() %>" />
+        <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.executionDegreeID" property="executionDegreeID" value="<%= pageContext.findAttribute("executionDegreeID").toString() %>" />
         	<logic:iterate id="candidate" name="candidatesID" indexId="indexCandidate">
-                <html:hidden property='<%= "candidatesID[" + indexCandidate + "]" %>' />					
-                <html:hidden property='<%= "situations[" + indexCandidate + "]" %>' />					
-                <html:hidden property='<%= "remarks[" + indexCandidate + "]" %>' />					
-                <html:hidden property='<%= "substitutes[" + indexCandidate + "]" %>' />	
-                <html:hidden property="executionDegreeID" value="<%= pageContext.findAttribute("executionDegreeID").toString() %>" />				
-                <html:hidden property="degreeCurricularPlanID"/>
+                <html:hidden alt='<%= "candidatesID[" + indexCandidate + "]" %>' property='<%= "candidatesID[" + indexCandidate + "]" %>' />					
+                <html:hidden alt='<%= "situations[" + indexCandidate + "]" %>' property='<%= "situations[" + indexCandidate + "]" %>' />					
+                <html:hidden alt='<%= "remarks[" + indexCandidate + "]" %>' property='<%= "remarks[" + indexCandidate + "]" %>' />					
+                <html:hidden alt='<%= "substitutes[" + indexCandidate + "]" %>' property='<%= "substitutes[" + indexCandidate + "]" %>' />	
+                <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.executionDegreeID" property="executionDegreeID" value="<%= pageContext.findAttribute("executionDegreeID").toString() %>" />				
+                <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.degreeCurricularPlanID" property="degreeCurricularPlanID"/>
         	</logic:iterate> 
-    	    <html:submit value="Confirmar" styleClass="inputbutton" property="OK"/>
-    	    <html:submit value="Cancelar" styleClass="inputbutton" property="NotOK"/>
+    	    <html:submit bundle="HTMLALT_RESOURCES" altKey="submit.OK" value="Confirmar" styleClass="inputbutton" property="OK"/>
+    	    <html:submit bundle="HTMLALT_RESOURCES" altKey="submit.NotOK" value="Cancelar" styleClass="inputbutton" property="NotOK"/>
     	</html:form>
 	</logic:equal>
 	<bean:define id="link">/displayListToSelectCandidates.do?method=print&executionDegreeID=<%= pageContext.findAttribute("executionDegreeID").toString() %></bean:define>
 	<logic:equal name="confirmation" value="NO">
-	<html:hidden property="executionDegreeID" value="<%= pageContext.findAttribute("executionDegreeID").toString() %>" />
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.executionDegreeID" property="executionDegreeID" value="<%= pageContext.findAttribute("executionDegreeID").toString() %>" />
 		<h2><bean:message key="label.candidateApprovalDone" /> </h2><br />
 		<br />
 		<br />

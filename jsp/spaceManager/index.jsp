@@ -1,5 +1,6 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 
@@ -22,17 +23,17 @@
 <logic:present name="spaces">
 	<table>
 		<tr>
-			<td class="listClasses-header">
+			<th class="listClasses-header">
 				<bean:message bundle="SPACE_RESOURCES" key="title.space.type"/>
-			</td>
-			<td class="listClasses-header">
+			</th>
+			<th class="listClasses-header">
 				<bean:message bundle="SPACE_RESOURCES" key="title.space.Space"/>
-			</td>
-			<td class="listClasses-header">
+			</th>
+			<th class="listClasses-header">
 				<bean:message bundle="SPACE_RESOURCES" key="title.space.number.subspaces"/>
-			</td>
-			<td class="listClasses-header">
-			</td>
+			</th>
+			<th class="listClasses-header">
+			</th>
 		</tr>
 		<logic:iterate id="space" name="spaces">
 			<logic:notPresent name="space" property="suroundingSpace">

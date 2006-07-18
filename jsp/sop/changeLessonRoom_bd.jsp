@@ -1,6 +1,7 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
 <table width="100%" cellspacing="0">
@@ -32,7 +33,7 @@
 			<td>
 				<span class="grey-txt">
 					<b>
-						<html:hidden property="diaSemana"/>
+						<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.diaSemana" property="diaSemana"/>
 						<bean:write name="weekDayString"/>
 					</b>
 				</span>
@@ -46,9 +47,9 @@
 			<td>
 				<span class="grey-txt">
 					<b>
-						<html:hidden property="horaInicio" write="true"/>
+						<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.horaInicio" property="horaInicio" write="true"/>
 						:
-						<html:hidden property="minutosInicio" write="true"/>
+						<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.minutosInicio" property="minutosInicio" write="true"/>
 					</b>
       		</span>
       	</td>
@@ -61,9 +62,9 @@
 			<td>
 				<span class="grey-txt">
 					<b>
-						<html:hidden property="horaFim" write="true"/>
+						<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.horaFim" property="horaFim" write="true"/>
 						:
-						<html:hidden property="minutosFim" write="true"/>
+						<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.minutosFim" property="minutosFim" write="true"/>
 					</b>
        		</span>
        	</td>
@@ -76,7 +77,7 @@
 			<td>
 				<span class="grey-txt">
 					<b>
-						<html:select property="tipoAula">
+						<html:select bundle="HTMLALT_RESOURCES" altKey="select.tipoAula" property="tipoAula">
              	<html:options collection="tiposAula" property="value" labelProperty="label"/>
 						</html:select>
 					</b>
@@ -89,7 +90,7 @@
 				:
 			</td>
 			<td>
-				<html:select property="nomeSala" size="1" >
+				<html:select bundle="HTMLALT_RESOURCES" altKey="select.nomeSala" property="nomeSala" size="1" >
             	<html:options collection="listaSalas" property="value" labelProperty="label"/>
            	</html:select>
      	</td>
@@ -99,21 +100,21 @@
 <bean:define id="infoAula_oid"
 			 name="infoAula"
 			 property="idInternal"/>
-<html:hidden property="infoAula_oid"
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.infoAula_oid" property="infoAula_oid"
 			 value="<%= pageContext.findAttribute("infoAula_oid").toString() %>"/>
 
-<html:hidden property="<%= SessionConstants.EXECUTION_PERIOD_OID %>"
+<html:hidden alt="<%= SessionConstants.EXECUTION_PERIOD_OID %>" property="<%= SessionConstants.EXECUTION_PERIOD_OID %>"
 			 value="<%= pageContext.findAttribute("executionPeriodOID").toString() %>"/>
-<html:hidden property="<%= SessionConstants.EXECUTION_DEGREE_OID %>"
+<html:hidden alt="<%= SessionConstants.EXECUTION_DEGREE_OID %>" property="<%= SessionConstants.EXECUTION_DEGREE_OID %>"
 			 value="<%= pageContext.findAttribute("executionDegreeOID").toString() %>"/>
-<html:hidden property="<%= SessionConstants.CURRICULAR_YEAR_OID %>"
+<html:hidden alt="<%= SessionConstants.CURRICULAR_YEAR_OID %>" property="<%= SessionConstants.CURRICULAR_YEAR_OID %>"
 			 value="<%= pageContext.findAttribute("curricularYearOID").toString() %>"/>
-<html:hidden property="<%= SessionConstants.EXECUTION_COURSE_OID %>"
+<html:hidden alt="<%= SessionConstants.EXECUTION_COURSE_OID %>" property="<%= SessionConstants.EXECUTION_COURSE_OID %>"
 			 value="<%= pageContext.findAttribute("executionCourseOID").toString() %>"/>
-	<html:submit property="operation" styleClass="inputbutton">
+	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.operation" property="operation" styleClass="inputbutton">
 		<bean:message key="label.save"/>
 	</html:submit>
-	<html:reset styleClass="inputbutton">
+	<html:reset bundle="HTMLALT_RESOURCES" altKey="reset.reset" styleClass="inputbutton">
 		<bean:message key="label.clear"/>
 	</html:reset>
 </html:form>

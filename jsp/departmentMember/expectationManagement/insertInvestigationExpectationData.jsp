@@ -4,6 +4,7 @@
 <%@ taglib uri="/WEB-INF/html_basic.tld" prefix="h"%>
 
 <ft:tilesView definition="departmentMember.masterPage" attributeName="body-inline">
+	<f:loadBundle basename="resources/HtmlAltResources" var="htmlAltBundle"/>
 
 <style>
 	.alignTopRight {
@@ -46,49 +47,49 @@
 		<h:panelGrid columns="2" columnClasses="alignTopRight infocell,infocell">
 			<h:outputText value="#{bundle['label.personalExpectationsManagement.researchAndDevProjects']}" />
 			<h:panelGroup>
-				<h:inputText id="researchAndDevProjects" value="#{teacherExpectationManagement.researchAndDevProjects}" required="true" maxlength="3" size="3" />
+				<h:inputText alt="#{htmlAltBundle['inputText.researchAndDevProjects']}" id="researchAndDevProjects" value="#{teacherExpectationManagement.researchAndDevProjects}" required="true" maxlength="3" size="3" />
 				<h:outputText value="&nbsp;&nbsp;" escape="false" />
 				<h:message for="researchAndDevProjects" styleClass="error"/>
 			</h:panelGroup>
 			
 			<h:outputText value="#{bundle['label.personalExpectationsManagement.jornalArticlePublications']}" />
 			<h:panelGroup>
-				<h:inputText id="jornalArticlePublications" value="#{teacherExpectationManagement.jornalArticlePublications}" required="true" maxlength="3" size="3" />
+				<h:inputText alt="#{htmlAltBundle['inputText.jornalArticlePublications']}" id="jornalArticlePublications" value="#{teacherExpectationManagement.jornalArticlePublications}" required="true" maxlength="3" size="3" />
 				<h:outputText value="&nbsp;&nbsp;" escape="false" />
 				<h:message for="jornalArticlePublications" styleClass="error"/>
 			</h:panelGroup>
 			
 			<h:outputText value="#{bundle['label.personalExpectationsManagement.bookPublications']}" />
 			<h:panelGroup>
-				<h:inputText id="bookPublications" value="#{teacherExpectationManagement.bookPublications}" required="true" maxlength="3" size="3" />
+				<h:inputText alt="#{htmlAltBundle['inputText.bookPublications']}" id="bookPublications" value="#{teacherExpectationManagement.bookPublications}" required="true" maxlength="3" size="3" />
 				<h:outputText value="&nbsp;&nbsp;" escape="false" />
 				<h:message for="bookPublications" styleClass="error"/>
 			</h:panelGroup>
 			
 			<h:outputText value="#{bundle['label.personalExpectationsManagement.conferencePublications']}" />
 			<h:panelGroup>
-				<h:inputText id="conferencePublications" value="#{teacherExpectationManagement.conferencePublications}" required="true" maxlength="3" size="3" />
+				<h:inputText alt="#{htmlAltBundle['inputText.conferencePublications']}" id="conferencePublications" value="#{teacherExpectationManagement.conferencePublications}" required="true" maxlength="3" size="3" />
 				<h:outputText value="&nbsp;&nbsp;" escape="false" />
 				<h:message for="conferencePublications" styleClass="error"/>
 			</h:panelGroup>
 			
 			<h:outputText value="#{bundle['label.personalExpectationsManagement.technicalReportPublications']}" />
 			<h:panelGroup>
-				<h:inputText id="technicalReportPublications" value="#{teacherExpectationManagement.technicalReportPublications}" required="true" maxlength="3" size="3" />
+				<h:inputText alt="#{htmlAltBundle['inputText.technicalReportPublications']}" id="technicalReportPublications" value="#{teacherExpectationManagement.technicalReportPublications}" required="true" maxlength="3" size="3" />
 				<h:outputText value="&nbsp;&nbsp;" escape="false" />
 				<h:message for="technicalReportPublications" styleClass="error"/>
 			</h:panelGroup>
 			
 			<h:outputText value="#{bundle['label.personalExpectationsManagement.patentPublications']}" />
 			<h:panelGroup>
-				<h:inputText id="patentPublications" value="#{teacherExpectationManagement.patentPublications}" required="true" maxlength="3" size="3" />
+				<h:inputText alt="#{htmlAltBundle['inputText.patentPublications']}" id="patentPublications" value="#{teacherExpectationManagement.patentPublications}" required="true" maxlength="3" size="3" />
 				<h:outputText value="&nbsp;&nbsp;" escape="false" />
 				<h:message for="patentPublications" styleClass="error"/>
 			</h:panelGroup>
 			
 			<h:outputText value="#{bundle['label.personalExpectationsManagement.otherPublications']}" />
 			<h:panelGroup>
-				<h:inputText id="otherPublications" value="#{teacherExpectationManagement.otherPublications}" required="true" maxlength="3" size="3" />
+				<h:inputText alt="#{htmlAltBundle['inputText.otherPublications']}" id="otherPublications" value="#{teacherExpectationManagement.otherPublications}" required="true" maxlength="3" size="3" />
 				<h:outputText value="&nbsp;&nbsp;" escape="false" />
 				<h:message for="otherPublications" styleClass="error"/>
 			</h:panelGroup>
@@ -110,14 +111,14 @@
 		<h:panelGrid columns="2" columnClasses="alignTopRight infocell,infocell" >
 				<h:outputText value="#{bundle['label.personalExpectationsManagement.phdOrientations']}" />
 				<h:panelGroup>
-					<h:inputText id="phdOrientations" value="#{teacherExpectationManagement.phdOrientations}" required="true" maxlength="3" size="3" />
+					<h:inputText alt="#{htmlAltBundle['inputText.phdOrientations']}" id="phdOrientations" value="#{teacherExpectationManagement.phdOrientations}" required="true" maxlength="3" size="3" />
 					<h:outputText value="&nbsp;&nbsp;" escape="false"/>
 					<h:message for="phdOrientations" styleClass="error"/>
 				</h:panelGroup>
 				
 				<h:outputText value="#{bundle['label.personalExpectationsManagement.masterDegreeOrientations']}" />
 				<h:panelGroup>
-					<h:inputText id="masterDegreeOrientations" value="#{teacherExpectationManagement.masterDegreeOrientations}" required="true" maxlength="3" size="3" />
+					<h:inputText alt="#{htmlAltBundle['inputText.masterDegreeOrientations']}" id="masterDegreeOrientations" value="#{teacherExpectationManagement.masterDegreeOrientations}" required="true" maxlength="3" size="3" />
 					<h:outputText value="&nbsp;&nbsp;" escape="false" />
 					<h:message for="masterDegreeOrientations" styleClass="error"/>
 				</h:panelGroup>
@@ -165,7 +166,7 @@
 		<h:panelGrid columns="4" columnClasses="alignTopRight infocell">
 			<h:outputText value="#{bundle['label.personalExpectationsManagement.finalDegreeWorkOrientations']}" />
 			<h:panelGroup>
-				<h:inputText id="finalDegreeWorkOrientations" value="#{teacherExpectationManagement.finalDegreeWorkOrientations}" required="true" maxlength="3" size="3" />
+				<h:inputText alt="#{htmlAltBundle['inputText.finalDegreeWorkOrientations']}" id="finalDegreeWorkOrientations" value="#{teacherExpectationManagement.finalDegreeWorkOrientations}" required="true" maxlength="3" size="3" />
 				<h:outputText value="&nbsp;&nbsp;" escape="false" />
 				<h:message for="finalDegreeWorkOrientations" styleClass="error"/>
 			</h:panelGroup>

@@ -1,5 +1,6 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ page import="java.util.Calendar" %>
@@ -48,25 +49,25 @@
 	
 <logic:notEmpty name="competenceCourse" property="associatedCurricularCourses">
 	<html:form action="/curricularCoursesCompetenceCourse">
-		<html:hidden property="method" value="removeFromCompetenceCourse"/>
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="removeFromCompetenceCourse"/>
 		<bean:define id="idInternal" name="competenceCourse" property="idInternal"/>
-		<html:hidden property="competenceCourseID" value='<%=idInternal.toString()%>'/>
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.competenceCourseID" property="competenceCourseID" value='<%=idInternal.toString()%>'/>
 		<table width="100%" cellpadding="0" border="0">
 			<tr>
-				<td class="listClasses-header">
-				</td>
-				<td class="listClasses-header"><bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="label.manager.curricularCourse.code" />
-				</td>
-				<td class="listClasses-header"><bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="message.manager.degree.curricular.plan.name" />
-				</td>
-				<td class="listClasses-header"><bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="label.manager.degreeCurricularPlan" />
-				</td>
+				<th class="listClasses-header">
+				</th>
+				<th class="listClasses-header"><bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="label.manager.curricularCourse.code" />
+				</th>
+				<th class="listClasses-header"><bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="message.manager.degree.curricular.plan.name" />
+				</th>
+				<th class="listClasses-header"><bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="label.manager.degreeCurricularPlan" />
+				</th>
 			</tr>
 			
 			<logic:iterate id="curricularCourse" name="competenceCourse" property="associatedCurricularCourses">
 				<tr>
 					<td class="listClasses">
-						<html:multibox property="curricularCoursesIds">
+						<html:multibox bundle="HTMLALT_RESOURCES" altKey="multibox.curricularCoursesIds" property="curricularCoursesIds">
 							<bean:write name="curricularCourse" property="idInternal"/>
 						</html:multibox>
 					</td>		

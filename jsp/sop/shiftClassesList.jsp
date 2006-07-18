@@ -1,6 +1,7 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="dt" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
@@ -9,30 +10,30 @@ Turmas associadas ao turno:
 <logic:present name="shift" property="infoClasses">
   <html:form action="/manageShiftMultipleItems">
 
-	<html:hidden property="method" value="removeClasses"/>
-	<html:hidden property="page" value="1"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="removeClasses"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
 
-	<html:hidden property="<%= SessionConstants.EXECUTION_PERIOD_OID %>"
+	<html:hidden alt="<%= SessionConstants.EXECUTION_PERIOD_OID %>" property="<%= SessionConstants.EXECUTION_PERIOD_OID %>"
 				 value="<%= pageContext.findAttribute("executionPeriodOID").toString() %>"/>
-	<html:hidden property="<%= SessionConstants.EXECUTION_DEGREE_OID %>"
+	<html:hidden alt="<%= SessionConstants.EXECUTION_DEGREE_OID %>" property="<%= SessionConstants.EXECUTION_DEGREE_OID %>"
 				 value="<%= pageContext.findAttribute("executionDegreeOID").toString() %>"/>
-	<html:hidden property="<%= SessionConstants.CURRICULAR_YEAR_OID %>"
+	<html:hidden alt="<%= SessionConstants.CURRICULAR_YEAR_OID %>" property="<%= SessionConstants.CURRICULAR_YEAR_OID %>"
 				 value="<%= pageContext.findAttribute("curricularYearOID").toString() %>"/>
-	<html:hidden property="<%= SessionConstants.EXECUTION_COURSE_OID %>"
+	<html:hidden alt="<%= SessionConstants.EXECUTION_COURSE_OID %>" property="<%= SessionConstants.EXECUTION_COURSE_OID %>"
 				 value="<%= pageContext.findAttribute("executionCourseOID").toString() %>"/>
-	<html:hidden property="<%= SessionConstants.SHIFT_OID %>"
+	<html:hidden alt="<%= SessionConstants.SHIFT_OID %>" property="<%= SessionConstants.SHIFT_OID %>"
 				 value="<%= pageContext.findAttribute("shiftOID").toString() %>"/>
 
 	<table cellpadding="0" border="0">
 		<tr>
-			<td class="listClasses-header">
-			</td>
-			<td class="listClasses-header">
+			<th class="listClasses-header">
+			</th>
+			<th class="listClasses-header">
 				<bean:message key="label.name"/>
-			</td>
-			<td class="listClasses-header">
+			</th>
+			<th class="listClasses-header">
 				<bean:message key="link.schedules.remove"/>
-			</td>				
+			</th>				
 		</tr>		
 	
 		<bean:define id="deleteConfirm">
@@ -42,7 +43,7 @@ Turmas associadas ao turno:
 		<bean:define id="classOID" name="shiftClass" property="idInternal"/>
 			<tr>
               	<td class="listClasses">
-					<html:multibox property="selectedItems">
+					<html:multibox bundle="HTMLALT_RESOURCES" altKey="multibox.selectedItems" property="selectedItems">
 						<bean:write name="shiftClass" property="idInternal"/>
 					</html:multibox>
 				</td>
@@ -102,7 +103,7 @@ Turmas associadas ao turno:
 			</tr>
 	</logic:iterate>
 	</table>
-	<html:submit styleClass="inputbutton" onclick='<%= pageContext.findAttribute("deleteConfirm").toString() %>'>
+	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton" onclick='<%= pageContext.findAttribute("deleteConfirm").toString() %>'>
 		<bean:message key="link.schedules.remove"/>
 	</html:submit>
   </html:form>

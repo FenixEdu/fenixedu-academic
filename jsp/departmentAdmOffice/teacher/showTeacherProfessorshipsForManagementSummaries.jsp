@@ -1,5 +1,6 @@
 <%@ page import="java.util.TreeMap" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-tiles.tld" prefix="tiles" %>
@@ -16,7 +17,7 @@
 	<html:errors />
 </logic:messagesPresent>
 <html:form action="/showTeacherProfessorshipsForSummariesManagement">
-	<html:hidden property="idInternal" />	
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.idInternal" property="idInternal" />	
 	<table width="100%">
 		<tr>
 			<td class="infoop">
@@ -27,7 +28,7 @@
 		<tr>
 			<td>
 				<bean:message key="label.executionYear"/>:
-				<html:select property="executionYearId" onchange="this.form.submit();">
+				<html:select bundle="HTMLALT_RESOURCES" altKey="select.executionYearId" property="executionYearId" onchange="this.form.submit();">
 					<html:options collection="executionYears" property="idInternal" labelProperty="year"/>
 				</html:select>
 			</td>
@@ -37,22 +38,22 @@
 <br />
 <logic:notEmpty name="detailedProfessorshipList" >	
 	<html:form action="/updateTeacherExecutionYearExecutionCourseResponsabilities">
-		<html:hidden property="idInternal" />	
-		<html:hidden property="teacherId" />
-		<html:hidden property="executionYearId" />
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.idInternal" property="idInternal" />	
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.teacherId" property="teacherId" />
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.executionYearId" property="executionYearId" />
 
 		<h2><bean:message key="label.teacher.professorships"/></h2>
 		<table width="100%"cellpadding="5" border="0">
 			<tr>
-				<td class="listClasses-header" style="text-align:left">
+				<th class="listClasses-header" style="text-align:left">
 					<bean:message key="label.execution-course.name" />
-				</td>
-				<td class="listClasses-header" style="text-align:left">
+				</th>
+				<th class="listClasses-header" style="text-align:left">
 					<bean:message key="label.execution-course.degrees" />
-				</td>
-				<td class="listClasses-header">
+				</th>
+				<th class="listClasses-header">
 					<bean:message key="label.execution-period" />
-				</td>
+				</th>
 			</tr>
 			
 			<bean:define id="args" scope="request" type="java.util.TreeMap" name="args"/>
@@ -65,7 +66,7 @@
 				<tr>
 					<td class="listClasses" style="text-align:left">
 						<logic:present role="DEPARTMENT_CREDITS_MANAGER">
-							<html:hidden property='<%= "hours("+ executionCourseId +")" %>' />							
+							<html:hidden alt='<%= "hours("+ executionCourseId +")" %>' property='<%= "hours("+ executionCourseId +")" %>' />							
 						</logic:present>
 						<% args.clear(); args.put("objectCode", executionCourseId); args.put("teacherNumber", teacherNumber); %>						
 						<html:link page="/showSummaries.do?method=showSummaries&amp;page=0" name="args" >

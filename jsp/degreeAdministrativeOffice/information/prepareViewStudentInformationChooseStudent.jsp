@@ -1,31 +1,32 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 
 <html:errors/>
 <h2><bean:message key="title.student.information"/></h2>
 <html:form action="/viewInformation" focus="studentNumber">
-	<html:hidden property="method" value="getStudentCP"/>
-	<html:hidden property="page" value="1"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="getStudentCP"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
 	
 	<logic:present name="executionDegreeId">
-		<html:hidden property="executionDegreeId" value="<%=pageContext.findAttribute("executionDegreeId").toString()%>"/>
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.executionDegreeId" property="executionDegreeId" value="<%=pageContext.findAttribute("executionDegreeId").toString()%>"/>
 	</logic:present>
 	<logic:present name="degreeCurricularPlanID">
-		<html:hidden property="degreeCurricularPlanID" value="<%=pageContext.findAttribute("degreeCurricularPlanID").toString()%>"/>
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.degreeCurricularPlanID" property="degreeCurricularPlanID" value="<%=pageContext.findAttribute("degreeCurricularPlanID").toString()%>"/>
 	</logic:present>
 	<table>
 		<tr>
 			<td><bean:message key="label.choose.student"/>&nbsp;</td>
 			<td>
-				<input type="text" name="studentNumber" size="5" maxlength="5"/>
+				<input alt="input.studentNumber" type="text" name="studentNumber" size="5" maxlength="5"/>
 			</td>
 		</tr>
 	</table>
 	<br/>
 	<br/>
-	<html:submit styleClass="inputbutton">
+	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton">
 		<bean:message key="button.submit.student"/>
 	</html:submit>
 </html:form>

@@ -1,5 +1,6 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
@@ -19,9 +20,9 @@
     	</td>
 		<td nowrap="nowrap">
 			<html:form action="/showProfessorships" >
-				<html:hidden property="method" value="list"/>
-				<html:hidden property="page" value="1"/>
-				<html:select property="executionPeriodID" size="1" onchange="this.form.submit();">
+				<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="list"/>
+				<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
+				<html:select bundle="HTMLALT_RESOURCES" altKey="select.executionPeriodID" property="executionPeriodID" size="1" onchange="this.form.submit();">
 					<html:option key="option.all.execution.periods" value=""/>
 					<html:options labelProperty="label" property="value" collection="executionPeriodLabelValueBeans"/>
 				</html:select>
@@ -35,18 +36,18 @@
 
 <table width="90%"cellpadding="5" border="0">
 	<tr>
-		<td class="listClasses-header" style="text-align:left">
+		<th class="listClasses-header" style="text-align:left">
 			<bean:message key="label.professorships.acronym"/>
-		</td>
-		<td class="listClasses-header" style="text-align:left">
+		</th>
+		<th class="listClasses-header" style="text-align:left">
 			<bean:message key="label.professorships.name"/>
-		</td>
-		<td class="listClasses-header" style="text-align:left">
+		</th>
+		<th class="listClasses-header" style="text-align:left">
 			<bean:message key="label.professorships.degrees"/>
-		</td>
-		<td class="listClasses-header" style="text-align:left">
+		</th>
+		<th class="listClasses-header" style="text-align:left">
 			<bean:message key="label.semestre"/>
-		</td>
+		</th>
 	</tr>
 	<logic:iterate id="executionCourse" name="executionCourses">
 		<tr>

@@ -1,5 +1,5 @@
 <%@ page language="java" %>
-<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %><html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ page import="org.apache.struts.Globals" %>
@@ -9,9 +9,9 @@
 
 <html:form action="/chooseDegreeAndYearContext.do?method=choose" focus="executionDegree">
 
-	<html:hidden property="page" value="1"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
 	
-	<html:hidden property="<%= SessionConstants.EXECUTION_PERIOD_OID %>"
+	<html:hidden alt="<%= SessionConstants.EXECUTION_PERIOD_OID %>" property="<%= SessionConstants.EXECUTION_PERIOD_OID %>"
 				 value="<%= pageContext.findAttribute("executionPeriodOID").toString() %>"/>
 
     <table width="100%" border="0" cellpadding="0" cellspacing="0">
@@ -22,7 +22,7 @@
     </table>
 	<br />
     <p><bean:message key="property.context.degree"/>:
-		<html:select property="executionDegree" size="1">
+		<html:select bundle="HTMLALT_RESOURCES" altKey="select.executionDegree" property="executionDegree" size="1">
        		<html:options collection="<%= SessionConstants.DEGREES %>" property="value" labelProperty="label"/>
        </html:select>
 	 </p>
@@ -40,14 +40,14 @@
 	     	<bean:message key="property.context.curricular.year"/>:
 	     </td>
 	     <td nowrap class="formTD">
-	     	<html:select property="curricularYear" size="1">
+	     	<html:select bundle="HTMLALT_RESOURCES" altKey="select.curricularYear" property="curricularYear" size="1">
        			<html:options collection="<%= SessionConstants.LABELLIST_CURRICULAR_YEARS %>" property="value" labelProperty="label"/>
        	 	</html:select>
        	 </td>
        </tr>
 	   </table>
 	   <br />
-	   <p><html:submit value="Submeter" styleClass="inputbutton">
+	   <p><html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" value="Submeter" styleClass="inputbutton">
              <bean:message key="label.next"/>
        </html:submit></p>
 </html:form>

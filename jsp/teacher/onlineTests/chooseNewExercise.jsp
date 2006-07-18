@@ -1,5 +1,6 @@
 <%@ page language="java"%>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <h2><bean:message key="title.createExercise" /></h2>
@@ -45,7 +46,7 @@
 		<br />
 		<table>
 			<tr>
-				<td class="listClasses-header">
+				<th class="listClasses-header">
 				<div class="gen-button"><logic:equal name="order" value="description">
 					<logic:equal name="asc" value="true">
 						<img hspace="5" border="0" src="<%= request.getContextPath() %>/images/gray_square.gif" alt="<bean:message key="gray_square" bundle="IMAGE_RESOURCES" />" />
@@ -77,8 +78,8 @@
 					</html:link>
 					<img hspace="5" border="0" src="<%= request.getContextPath() %>/images/gray_square.gif" alt="<bean:message key="gray_square" bundle="IMAGE_RESOURCES" />" />
 				</logic:notEqual></div>
-				</td>
-				<td class="listClasses-header">
+				</th>
+				<th class="listClasses-header">
 				<div class="gen-button"><logic:equal name="order" value="mainSubject">
 					<logic:equal name="asc" value="true">
 						<img hspace="5" border="0" src="<%= request.getContextPath() %>/images/gray_square.gif" alt="<bean:message key="gray_square" bundle="IMAGE_RESOURCES" />" />
@@ -110,8 +111,8 @@
 					</html:link>
 					<img hspace="5" border="0" src="<%= request.getContextPath() %>/images/gray_square.gif" alt="<bean:message key="gray_square" bundle="IMAGE_RESOURCES" />" />
 				</logic:notEqual></div>
-				</td>
-				<td class="listClasses-header">
+				</th>
+				<th class="listClasses-header">
 				<div class="gen-button"><logic:equal name="order" value="difficulty">
 					<logic:equal name="asc" value="true">
 						<img hspace="5" border="0" src="<%= request.getContextPath() %>/images/gray_square.gif" alt="<bean:message key="gray_square" bundle="IMAGE_RESOURCES" />" />
@@ -143,8 +144,8 @@
 					</html:link>
 					<img hspace="5" border="0" src="<%= request.getContextPath() %>/images/gray_square.gif" alt="<bean:message key="gray_square" bundle="IMAGE_RESOURCES" />" />
 				</logic:notEqual></div>
-				</td>
-				<td width="90" class="listClasses-header">
+				</th>
+				<th width="90" class="listClasses-header">
 				<div class="gen-button"><logic:equal name="order" value="numberOfMembers">
 					<logic:equal name="asc" value="true">
 						<html:link
@@ -173,7 +174,7 @@
 					</html:link>
 					<img hspace="5" border="0" src="<%= request.getContextPath() %>/images/gray_square.gif" alt="<bean:message key="gray_square" bundle="IMAGE_RESOURCES" />" />
 				</logic:notEqual></div>
-				</td>
+				</th>
 			</tr>
 			<logic:iterate id="metadata" name="infoMetadataList" type="net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoMetadata">
 				<tr>

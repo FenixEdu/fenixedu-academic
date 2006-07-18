@@ -1,5 +1,6 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
@@ -31,15 +32,15 @@
     <logic:equal name="confirmation" value="YES">
         <html:form action="/displayListToSelectCandidates.do?method=aprove">
         	<logic:iterate id="candidate" name="candidatesID" indexId="indexCandidate">
-                <html:hidden property='<%= "candidatesID[" + indexCandidate + "]" %>' />					
-                <html:hidden property='<%= "situations[" + indexCandidate + "]" %>' />					
-                <html:hidden property='<%= "remarks[" + indexCandidate + "]" %>' />					
-                <html:hidden property='<%= "substitutes[" + indexCandidate + "]" %>' />
-                <html:hidden property="degreeCurricularPlanID" />					
+                <html:hidden alt='<%= "candidatesID[" + indexCandidate + "]" %>' property='<%= "candidatesID[" + indexCandidate + "]" %>' />					
+                <html:hidden alt='<%= "situations[" + indexCandidate + "]" %>' property='<%= "situations[" + indexCandidate + "]" %>' />					
+                <html:hidden alt='<%= "remarks[" + indexCandidate + "]" %>' property='<%= "remarks[" + indexCandidate + "]" %>' />					
+                <html:hidden alt='<%= "substitutes[" + indexCandidate + "]" %>' property='<%= "substitutes[" + indexCandidate + "]" %>' />
+                <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.degreeCurricularPlanID" property="degreeCurricularPlanID" />					
         	</logic:iterate> 
-        	 <html:hidden property="executionDegreeID" value="<%= pageContext.findAttribute("executionDegreeID").toString() %>" />
-    	    <html:submit value="Confirmar" styleClass="inputbutton" property="OK"/>
-    	    <html:submit value="Cancelar" styleClass="inputbutton" property="NotOK"/>
+        	 <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.executionDegreeID" property="executionDegreeID" value="<%= pageContext.findAttribute("executionDegreeID").toString() %>" />
+    	    <html:submit bundle="HTMLALT_RESOURCES" altKey="submit.OK" value="Confirmar" styleClass="inputbutton" property="OK"/>
+    	    <html:submit bundle="HTMLALT_RESOURCES" altKey="submit.NotOK" value="Cancelar" styleClass="inputbutton" property="NotOK"/>
     	</html:form>
 	</logic:equal>
 	<logic:equal name="confirmation" value="NO">

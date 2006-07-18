@@ -1,5 +1,6 @@
 <%@ page language="java" %> 
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
@@ -15,21 +16,21 @@
 
 	<!-- possible publication types -->		
 	<html:form action="/publications/publicationsManagement"> 
-		<html:hidden property="method" />
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" />
 		<bean:message bundle="RESEARCHER_RESOURCES" key="researcher.result.publication.publicationType"/>
 		<e:labelValues id="resultPublicationTypes" enumeration="net.sourceforge.fenixedu.domain.research.result.publication.ResultPublication$ResultPublicationType" bundle="ENUMERATION_RESOURCES" />
-		<html:select value="<%=resultPublicationType%>" property="resultPublicationType">
+		<html:select bundle="HTMLALT_RESOURCES" altKey="select.resultPublicationType" value="<%=resultPublicationType%>" property="resultPublicationType">
 			<html:options collection="resultPublicationTypes" property="value" labelProperty="label"  />
 		</html:select>
 		
-		<html:submit onclick='<%= "this.form.method.value='prepareCreatePublication' " %>'>
+		<html:submit bundle="HTMLALT_RESOURCES" altKey='submit.submit' onclick='<%= "this.form.method.value='prepareCreatePublication' " %>'>
 			<bean:message key="button.change"/>
 		</html:submit>
 	</html:form>
 	<br />
 	<h3><bean:message bundle="RESEARCHER_RESOURCES" key="<%="researcher.result.publication.publicationType." + resultPublicationType %>"/></h3>
 
-<%-- TODO: type é obrigatorio, construção automatica  
+<%-- TODO: type ï¿½ obrigatorio, construï¿½ï¿½o automatica  
 --%>
 	<!-- schema depends on selected option -->
 	<fr:create id="createPublication" type="<%= className %>" schema="<%="result.publication.details." + resultPublicationType %>"

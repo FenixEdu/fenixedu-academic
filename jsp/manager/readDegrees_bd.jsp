@@ -1,5 +1,6 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 
@@ -22,14 +23,14 @@
 
 <table width="100%" cellpadding="0" border="0">
 	<tr>
-		<td class="listClasses-header">
-		</td>
-		<td class="listClasses-header"><bean:message bundle="MANAGER_RESOURCES" key="label.manager.degree.code" />
-		</td>
-		<td class="listClasses-header"><bean:message bundle="MANAGER_RESOURCES" key="label.manager.degree.name" />
-		</td>
-		<td class="listClasses-header"><bean:message bundle="MANAGER_RESOURCES" key="label.manager.degree.tipoCurso" />
-		</td>
+		<th class="listClasses-header">
+		</th>
+		<th class="listClasses-header"><bean:message bundle="MANAGER_RESOURCES" key="label.manager.degree.code" />
+		</th>
+		<th class="listClasses-header"><bean:message bundle="MANAGER_RESOURCES" key="label.manager.degree.name" />
+		</th>
+		<th class="listClasses-header"><bean:message bundle="MANAGER_RESOURCES" key="label.manager.degree.tipoCurso" />
+		</th>
 	</tr>
 		
 		 
@@ -37,7 +38,7 @@
 		<tr>	
 			<td class="listClasses">
 			
-			<html:multibox property="internalIds">
+			<html:multibox bundle="HTMLALT_RESOURCES" altKey="multibox.internalIds" property="internalIds">
 			<bean:write name="degree" property="idInternal"/>
 			</html:multibox>
 			</td>	
@@ -57,7 +58,7 @@
 <br>
 <br>	
 
-  <html:submit onclick='<%=onclick.toString() %>'>
+  <html:submit bundle="HTMLALT_RESOURCES" altKey='submit.submit' onclick='<%=onclick.toString() %>'>
   
    <bean:message bundle="MANAGER_RESOURCES" key="label.manager.delete.selected.degrees"/>
   </html:submit>

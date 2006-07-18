@@ -1,4 +1,5 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="dt" %>
@@ -11,18 +12,18 @@
 
 <html:form action="/studentsManagement" focus="number">
 
-	<html:hidden property="method" value="transferEnrollments"/>
-	<html:hidden property="page" value="1"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="transferEnrollments"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
 
-	<html:hidden property="number"/>
-	<html:hidden property="degreeType"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.number" property="number"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.degreeType" property="degreeType"/>
 
 	<bean:define id="enrollmentIDsToTransfer" name="studentCurricularPlanForm" property="enrollmentIDsToTransfer" type="java.lang.String[]"/>
 	<%
 		for (int i = 0; i < enrollmentIDsToTransfer.length; i++) {
 			final String enrollmentIDToTransfer = enrollmentIDsToTransfer[i];
 	%>
-			<html:hidden property="enrollmentIDsToTransfer" value="<%= enrollmentIDToTransfer %>"/>
+			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.enrollmentIDsToTransfer" property="enrollmentIDsToTransfer" value="<%= enrollmentIDToTransfer %>"/>
 	<%
 		}
 	%>
@@ -37,9 +38,9 @@
 
 			<table>
 				<tr>
-					<td colspan="2" rowspan="3" class="listClasses-header">
+					<th colspan="2" rowspan="3" class="listClasses-header">
 						<bean:message bundle="MANAGER_RESOURCES" key="label.studentCurricularPlan"/>
-					</td>
+					</th>
 					<td colspan="4" class="listClasses">
 						<bean:define id="studentCurricularPlanStateString" type="java.lang.String" name="infoStudentCurricularPlan" property="currentState.name"/>
 						<bean:define id="onChangeString" type="java.lang.String">this.form.method.value='changeStudentCurricularPlanState';this.form.selectedStudentCurricularPlanId.value=<%= studentCurricularPlanId.toString() %>;this.form.submit();</bean:define>
@@ -82,24 +83,24 @@
 					</td>
 				</tr>
 					<tr>
-						<td class="listClasses-header">
+						<th class="listClasses-header">
 							<bean:message bundle="MANAGER_RESOURCES" key="label.executionYear"/>
-						</td>
-						<td class="listClasses-header">
+						</th>
+						<th class="listClasses-header">
 							<bean:message bundle="MANAGER_RESOURCES" key="label.manager.semester"/>
-						</td>
-						<td class="listClasses-header">
+						</th>
+						<th class="listClasses-header">
 							<bean:message bundle="MANAGER_RESOURCES" key="label.manager.degree"/>
-						</td>
-						<td class="listClasses-header">
+						</th>
+						<th class="listClasses-header">
 							<bean:message bundle="MANAGER_RESOURCES" key="label.course.code"/>
-						</td>
-						<td class="listClasses-header">
+						</th>
+						<th class="listClasses-header">
 							<bean:message bundle="MANAGER_RESOURCES" key="label.course.name"/>
-						</td>
-						<td class="listClasses-header">
+						</th>
+						<th class="listClasses-header">
 							<bean:message bundle="MANAGER_RESOURCES" key="label.grade"/>
-						</td>
+						</th>
 					</tr>
 
 				<logic:iterate id="infoEnrollmentGrade" name="infoStudentCurricularPlan" property="infoEnrolments">
@@ -157,9 +158,9 @@
 
 			<table>
 				<tr>
-					<td rowspan="3" class="listClasses-header">
+					<th rowspan="3" class="listClasses-header">
 						<bean:message bundle="MANAGER_RESOURCES" key="label.studentCurricularPlan"/>
-					</td>
+					</th>
 					<td class="listClasses">
 						<bean:define id="studentCurricularPlanStateString" type="java.lang.String" name="infoStudentCurricularPlan" property="currentState.name"/>
 						<bean:define id="onChangeString" type="java.lang.String">this.form.method.value='changeStudentCurricularPlanState';this.form.selectedStudentCurricularPlanId.value=<%= studentCurricularPlanId.toString() %>;this.form.submit();</bean:define>
@@ -173,7 +174,7 @@
 						</logic:present>						
 					</td>
 					<td rowspan="3" class="listClasses">
-						<html:radio property="selectedStudentCurricularPlanId" value="<%= studentCurricularPlanId.toString() %>"/>
+						<html:radio bundle="HTMLALT_RESOURCES" altKey="radio.selectedStudentCurricularPlanId" property="selectedStudentCurricularPlanId" value="<%= studentCurricularPlanId.toString() %>"/>
 					</td>
 				</tr>
 				<tr>
@@ -213,6 +214,6 @@
 
 	<br/>
 
-	<html:submit property="submit" styleClass="inputbutton"/>
+	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" property="submit" styleClass="inputbutton"/>
 
 </html:form>
