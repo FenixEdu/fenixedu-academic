@@ -52,4 +52,9 @@
 	</table>
 	</logic:notEqual>
 </logic:present>
-<p>Bem-vindo ï¿? sua ï¿?rea pessoal.<br /> Poderï¿? visualizar e alterar a sua informação pessoal, proceder ï¿? alteraï¿?ï¿?o da sua password ler os avisos que lhe sï¿?o enviados pelos orgï¿?os de gestï¿?o da escola.</p>
+<p>
+	<bean:message key="message.person.welcome.header"/>
+<p/>
+<p>
+	<bean:message key="message.person.welcome.body"/>
+</p>
