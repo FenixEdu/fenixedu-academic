@@ -132,7 +132,7 @@ public class ProjectReportsDispatchAction extends ReportsDispatchAction {
                         costCenter, reportType, projectCode });
                 infoProjectReport.getReportToExcel(userView, wb, reportType);
             }
-            fileName = reportType.getReportLabel();
+            fileName = reportType.getReportLabel().replaceAll(" ", "_");
         }
         try {
             ServletOutputStream writer = response.getOutputStream();

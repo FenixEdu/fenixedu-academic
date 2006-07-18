@@ -28,17 +28,19 @@ import org.apache.struts.action.ActionMapping;
  */
 public class OverheadReportsDispatchAction extends ReportsDispatchAction {
 
-    public ActionForward getReport(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-            throws FenixServiceException, FenixFilterException {
+    public ActionForward getReport(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws FenixServiceException, FenixFilterException {
         final IUserView userView = SessionUtils.getUserView(request);
         final String reportTypeStr = request.getParameter("reportType");
         final ReportType reportType = new ReportType(reportTypeStr);
         final String costCenter = request.getParameter("costCenter");
         if (reportType.getReportType() != null) {
-            if (reportType.equals(ReportType.GENERATED_OVERHEADS) || reportType.equals(ReportType.TRANSFERED_OVERHEADS)
+            if (reportType.equals(ReportType.GENERATED_OVERHEADS)
+                    || reportType.equals(ReportType.TRANSFERED_OVERHEADS)
                     || reportType.equals(ReportType.OVERHEADS_SUMMARY)) {
-                final InfoOverheadReport infoReport = (InfoOverheadReport) ServiceUtils.executeService(userView, "ReadOverheadReport", new Object[] {
-                        userView.getUtilizador(), costCenter, reportType, null });
+                final InfoOverheadReport infoReport = (InfoOverheadReport) ServiceUtils.executeService(
+                        userView, "ReadOverheadReport", new Object[] { userView.getUtilizador(),
+                                costCenter, reportType, null });
                 getSpans(request, infoReport);
                 request.setAttribute("infoReport", infoReport);
                 request.setAttribute("reportType", reportTypeStr);
@@ -50,8 +52,9 @@ public class OverheadReportsDispatchAction extends ReportsDispatchAction {
         return mapping.findForward("index");
     }
 
-    public ActionForward exportToExcel(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-            throws FenixServiceException, FenixFilterException {
+    public ActionForward exportToExcel(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws FenixServiceException,
+            FenixFilterException {
         final IUserView userView = SessionUtils.getUserView(request);
         final String reportTypeStr = request.getParameter("reportType");
         final ReportType reportType = new ReportType(reportTypeStr);
@@ -61,13 +64,15 @@ public class OverheadReportsDispatchAction extends ReportsDispatchAction {
         String fileName = new String("listagem");
 
         if (reportType.getReportType() != null) {
-            if (reportType.equals(ReportType.GENERATED_OVERHEADS) || reportType.equals(ReportType.TRANSFERED_OVERHEADS)
+            if (reportType.equals(ReportType.GENERATED_OVERHEADS)
+                    || reportType.equals(ReportType.TRANSFERED_OVERHEADS)
                     || reportType.equals(ReportType.OVERHEADS_SUMMARY)) {
-                InfoOverheadReport infoOverheadReport = (InfoOverheadReport) ServiceUtils.executeService(userView, "ReadOverheadReport",
-                        new Object[] { userView.getUtilizador(), costCenter, reportType, null });
+                InfoOverheadReport infoOverheadReport = (InfoOverheadReport) ServiceUtils
+                        .executeService(userView, "ReadOverheadReport", new Object[] {
+                                userView.getUtilizador(), costCenter, reportType, null });
                 infoOverheadReport.getReportToExcel(userView, wb, reportType);
             }
-            fileName = reportType.getReportLabel();
+            fileName = reportType.getReportLabel().replaceAll(" ", "_");
         }
         try {
             ServletOutputStream writer = response.getOutputStream();
