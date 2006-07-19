@@ -51,3 +51,6 @@
 
 <class-descriptor class="net.sourceforge.fenixedu.domain.space.RoomClassification" table="ROOM_CLASSIFICATION">
 </class-descriptor>
+
+<class-descriptor class="net.sourceforge.fenixedu.domain.space.SpaceResponsibility" table="SPACE_RESPONSIBILITY">
+</class-descriptor>

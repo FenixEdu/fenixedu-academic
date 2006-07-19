@@ -13,7 +13,7 @@
 		
 	<bean:define id="space" name="selectedSpaceInformation" property="space" toScope="request"/>
 	<bean:define id="selectedSpaceInformationId" name="selectedSpaceInformation" property="idInternal" />
-	<jsp:include page="../spaceCrumbs.jsp"/>
+	<jsp:include page="spaceCrumbs.jsp"/>
 	
 	<br/><br/>	
 			

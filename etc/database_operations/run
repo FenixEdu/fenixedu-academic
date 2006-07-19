@@ -26,3 +26,6 @@ function executeWithTempFile() {
 	rm tmp.sql
 	echo
 }
+
+execute "CREATE SPACE_RESPONSIBILITY TABLE" createSpaceResponsibilityTable.sql
+execute "ALTER VARIOUS TABLES" alterVariousTables.sql

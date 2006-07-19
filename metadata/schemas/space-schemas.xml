@@ -99,8 +99,7 @@
 		<validator class="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" />			
 	</slot>
 </schema>
-<schema name="ViewSpaceResponsibleUnits" type="net.sourceforge.fenixedu.domain.organizationalStructure.Unit" bundle="SPACE_RESOURCES">
-	<slot name="name"/>	
-	<slot name="costCenterCode"/>
+<schema name="ViewSpaceResponsibleUnits" type="net.sourceforge.fenixedu.domain.space.SpaceResponsibility" bundle="SPACE_RESOURCES">
+	<slot name="unit.name"/>	
+	<slot name="unit.costCenterCode"/>	
 </schema>
-

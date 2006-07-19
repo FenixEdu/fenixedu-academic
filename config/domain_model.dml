@@ -2512,12 +2512,11 @@ class net.sourceforge.fenixedu.domain.space.SpaceOccupation extends net.sourcefo
 	}
 
 
-class net.sourceforge.fenixedu.domain.space.SpaceResponsability extends net.sourceforge.fenixedu.domain.DomainObject {
-	Integer keySpace;
-	String ojbConcreteClass;
+class net.sourceforge.fenixedu.domain.space.SpaceResponsibility extends net.sourceforge.fenixedu.domain.DomainObject {
 	YearMonthDay begin;
 	YearMonthDay end;
 	Integer keyUnit;
+	Integer keySpace;
 }
 
 
@@ -6003,15 +6002,15 @@ relation SpaceSpaceOccupation {
 	net.sourceforge.fenixedu.domain.space.Space playsRole space;
 }
 
-relation SpaceSpaceResponsability {
-	net.sourceforge.fenixedu.domain.space.SpaceResponsability playsRole spaceResponsability {
+relation SpaceSpaceResponsibility {
+	net.sourceforge.fenixedu.domain.space.SpaceResponsibility playsRole spaceResponsibility {
 		multiplicity *;
 	}
 	net.sourceforge.fenixedu.domain.space.Space playsRole space;
 }
 
-relation UnitSpaceResponsability {
-	net.sourceforge.fenixedu.domain.space.SpaceResponsability playsRole spaceResponsability {
+relation UnitSpaceResponsibility {
+	net.sourceforge.fenixedu.domain.space.SpaceResponsibility playsRole spaceResponsibility {
 		multiplicity *;
 	}
 	net.sourceforge.fenixedu.domain.organizationalStructure.Unit playsRole unit;
@@ -8236,9 +8235,9 @@ relation RootDomainObjectSpaceOccupation {
 	}
 }
 
-relation RootDomainObjectSpaceResponsability {
+relation RootDomainObjectSpaceResponsibility {
 	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
-	net.sourceforge.fenixedu.domain.space.SpaceResponsability playsRole spaceResponsability {
+	net.sourceforge.fenixedu.domain.space.SpaceResponsibility playsRole spaceResponsibility {
 		multiplicity *;
 	}
 }

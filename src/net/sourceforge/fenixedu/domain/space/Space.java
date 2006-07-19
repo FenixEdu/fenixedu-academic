@@ -80,7 +80,29 @@ public abstract class Space extends Space_Base {
             if(spaceOccupation instanceof PersonSpaceOccupation && !((PersonSpaceOccupation)spaceOccupation).contains(current)) {
                 personSpaceOccupations.add((PersonSpaceOccupation)spaceOccupation);
             }
+        }  
+        return personSpaceOccupations;
+    }
+    
+    public SortedSet<PersonSpaceOccupation> getActiveSpaceResponsibility(){
+        SortedSet<PersonSpaceOccupation> personSpaceOccupations = new TreeSet<PersonSpaceOccupation>(SpaceResponsibility.COMPARATOR_BY_UNIT_NAME_AND_RESPONSIBILITY_INTERVAL);
+        YearMonthDay current = new YearMonthDay();
+        for (SpaceOccupation spaceOccupation : getSpaceOccupations()) {
+            if(spaceOccupation instanceof PersonSpaceOccupation && ((PersonSpaceOccupation)spaceOccupation).contains(current)) {
+                personSpaceOccupations.add((PersonSpaceOccupation)spaceOccupation);
+            }
         }        
+        return personSpaceOccupations;
+    }
+    
+    public SortedSet<PersonSpaceOccupation> getInactiveSpaceResponsibility(){
+        SortedSet<PersonSpaceOccupation> personSpaceOccupations = new TreeSet<PersonSpaceOccupation>(SpaceResponsibility.COMPARATOR_BY_UNIT_NAME_AND_RESPONSIBILITY_INTERVAL);
+        YearMonthDay current = new YearMonthDay();
+        for (SpaceOccupation spaceOccupation : getSpaceOccupations()) {
+            if(spaceOccupation instanceof PersonSpaceOccupation && !((PersonSpaceOccupation)spaceOccupation).contains(current)) {
+                personSpaceOccupations.add((PersonSpaceOccupation)spaceOccupation);
+            }
+        }  
         return personSpaceOccupations;
     }
     

@@ -1,0 +1,12 @@
+CREATE TABLE `SPACE_RESPONSIBILITY` (
+  `ID_INTERNAL` int(11) NOT NULL auto_increment,
+  `BEGIN` varchar(10) default NULL,
+  `END` varchar(10) default NULL,
+  `KEY_SPACE` int(11) NOT NULL default '0',
+  `KEY_UNIT` int(11) NOT NULL default '0', 
+  `KEY_ROOT_DOMAIN_OBJECT` int(11) NOT NULL default '1',
+  PRIMARY KEY  (`ID_INTERNAL`),
+  KEY `KEY_SPACE` (`KEY_SPACE`),
+  KEY `KEY_ROOT_DOMAIN_OBJECT` (`KEY_ROOT_DOMAIN_OBJECT`),
+  KEY `KEY_UNIT` (`KEY_UNIT`)
+) ENGINE=InnoDB;

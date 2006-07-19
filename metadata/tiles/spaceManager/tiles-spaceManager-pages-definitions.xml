@@ -26,9 +26,9 @@
         <put name="body" value="/spaceManager/roomClassification.jsp"></put>
     </definition>
     <definition name="show-person-space-occupations" extends="spaceManager.masterPage">
-        <put name="body" value="/spaceManager/occupations/personSpaceOccupationsManagement.jsp"></put>
+        <put name="body" value="/spaceManager/personSpaceOccupationsManagement.jsp"></put>
     </definition>    
-    <definition name="show-space-responsability" extends="spaceManager.masterPage">
-        <put name="body" value="/spaceManager/occupations/spaceResponsabilityManagement.jsp"></put>
+    <definition name="show-space-responsibility" extends="spaceManager.masterPage">
+        <put name="body" value="/spaceManager/spaceResponsibilityManagement.jsp"></put>
     </definition>    
 </tiles-definitions>
