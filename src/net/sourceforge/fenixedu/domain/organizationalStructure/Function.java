@@ -76,5 +76,12 @@ public class Function extends Function_Base {
     public boolean isInherentFunction() {
         return (this.getParentInherentFunction() != null);
     }
-           
+     
+    public void addParentInherentFunction(Function parentInherentFunction) {
+        if(parentInherentFunction.equals(this)) {
+            throw new DomainException("error.function.parentInherentFunction.equals.function");
+        }
+        removeParentInherentFunction();
+        setParentInherentFunction(parentInherentFunction);
+    }
 }

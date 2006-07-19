@@ -209,7 +209,7 @@
 				<f:facet name="header">
 					<h:outputText value="#{bundle['message.unitType']}" />
 				</f:facet>				
-				<h:outputText value="#{bundleEnum[function.type.name]}" escape="false"/>
+				<h:outputText value="#{bundleEnum[function.functionType.name]}" escape="false"/>
 			</h:column>
 			<h:column>
 				<f:facet name="header">
@@ -271,7 +271,7 @@
 				<f:facet name="header">
 					<h:outputText value="#{bundle['message.unitType']}" />
 				</f:facet>				
-				<h:outputText value="#{bundleEnum[function.type.name]}" escape="false"/>
+				<h:outputText value="#{bundleEnum[function.functionType.name]}" escape="false"/>
 			</h:column>
 			<h:column>
 				<f:facet name="header">

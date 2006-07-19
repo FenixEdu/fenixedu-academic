@@ -188,8 +188,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
     }
 
     private List<Unit> getSubUnits(boolean active, Unit unit, YearMonthDay currentDate) {
-        return (active) ? unit.getActiveSubUnits(currentDate) : unit
-                .getInactiveSubUnits(currentDate);        
+        return (active) ? unit.getActiveSubUnits(currentDate) : unit.getInactiveSubUnits(currentDate);
     }
 
     private List<Unit> getAllSubUnits(boolean active, Unit unit, YearMonthDay currentDate) {
@@ -301,9 +300,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
         }
 
         for (Unit subUnit : subUnits) {
-            if (!subUnit.equals(this.getUnit())) {
-                getUnitsListToChoosePrincipalFunction(subUnit, buffer, currentDate);
-            }
+            getUnitsListToChoosePrincipalFunction(subUnit, buffer, currentDate);
         }
 
         if (!subUnits.isEmpty()) {
@@ -561,8 +558,8 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
         return executeUnitsManagementService(argsToRead, "backToUnitDetails", "DisassociateParentUnit");
     }
 
-    private String executeUnitsManagementService(final Object[] argsToRead, String defaultReturn, String serviceName)
-            throws FenixFilterException {
+    private String executeUnitsManagementService(final Object[] argsToRead, String defaultReturn,
+            String serviceName) throws FenixFilterException {
         try {
             ServiceUtils.executeService(getUserView(), serviceName, argsToRead);
         } catch (FenixServiceException e) {
@@ -844,7 +841,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 
     private void getParentUnitsRelationTypes() {
         ResourceBundle bundle = getResourceBundle("resources/EnumerationResources");
-        getUnitRelationsAccountabilityTypes().clear();        
+        getUnitRelationsAccountabilityTypes().clear();
         for (Accountability accountability : unit.getParentsSet()) {
             if (accountability.getParentParty() instanceof Unit) {
                 getUnitRelationsAccountabilityTypes().put(
@@ -856,7 +853,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 
     private void getSubUnitsRelationTypes() {
         ResourceBundle bundle = getResourceBundle("resources/EnumerationResources");
-        getUnitRelationsAccountabilityTypes().clear();        
+        getUnitRelationsAccountabilityTypes().clear();
         for (Accountability accountability : unit.getChildsSet()) {
             if (accountability.getChildParty() instanceof Unit) {
                 getUnitRelationsAccountabilityTypes().put(

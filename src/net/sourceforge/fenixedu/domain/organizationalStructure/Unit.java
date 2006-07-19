@@ -433,8 +433,20 @@ public class Unit extends Unit_Base {
         if (parentUnit.equals(this)) {
             throw new DomainException("error.unit.equals.parentUnit");
         }
-        checkIfCanAddParent(accountabilityType);
+        checkIfCanAddParent(accountabilityType);   
+        checkParentUnit(parentUnit);
         return new Accountability(parentUnit, this, accountabilityType);
+    }
+
+    private void checkParentUnit(Unit parentUnit) {
+        if(getParentUnits().contains(parentUnit)) {
+            throw new DomainException("error.unit.parentUnit.is.already.parentUnit");
+        }
+        YearMonthDay currentDate = new YearMonthDay();
+        List<Unit> subUnits = (parentUnit.isActive(currentDate)) ? getAllActiveSubUnits(currentDate) : getAllInactiveSubUnits(currentDate);
+        if(subUnits.contains(parentUnit)) {
+           throw new DomainException("error.unit.parentUnit.is.already.subUnit"); 
+        }
     }
 
     private void checkIfCanAddParent(AccountabilityType accountabilityType) {

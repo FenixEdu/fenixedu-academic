@@ -23,6 +23,6 @@ public class AddParentInherentFunction extends Service {
             throw new FenixServiceException("error.noFunction");
         }
 
-        function.setParentInherentFunction(parentInherentFunction);
+        function.addParentInherentFunction(parentInherentFunction);
     }
 }
