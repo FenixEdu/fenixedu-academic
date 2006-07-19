@@ -395,7 +395,7 @@ public class Timeline {
                     DateTime endDate = lastTimePoint.getTime().toDateTimeToday();
                     if (lastTimePoint.isBefore(minimumClockTimePoint)) {
                         endDate = minimumClockTimePoint.getTime().toDateTimeToday();
-                        lastTimePoint = minimumClockTimePoint;
+                        lastTimePoint= minimumClockTimePoint;
                     } else if (maximumClockTimePoint.isBefore(lastTimePoint)) {
                         endDate = maximumClockTimePoint.getTime().toDateTimeToday();
                         lastTimePoint = maximumClockTimePoint;
@@ -532,9 +532,9 @@ public class Timeline {
     public TimeInterval calculateBreakPeriod() {
 
         TimePoint mealStart = findIntervalStartPointByAttribute(AttributeType.MEAL);
-        //System.out.println("mealStart " + mealStart);
+        // System.out.println("mealStart " + mealStart);
         TimePoint mealEnd = findIntervalEndPointByAttribute(AttributeType.MEAL);
-        //System.out.println("mealEnd " + mealEnd);
+        // System.out.println("mealEnd " + mealEnd);
 
         if (mealStart.getIntervalAttributes().contains(DomainConstants.WORKED_ATTRIBUTES)) {
             // meal esta' dentro de um periodo de trabalho
@@ -545,23 +545,24 @@ public class Timeline {
             // trabalho
             TimePoint workedEndPoint = findIntervalEndPointBetweenPointsByAttribute(mealStart, mealEnd,
                     workedAttribute);
-            //System.out.println("workedEndPoint " + workedEndPoint);
+            // System.out.println("workedEndPoint " + workedEndPoint);
             TimePoint workedStartPoint = findWorkedStartPointBetweenPoints(mealStart, mealEnd);
             // ver se nao houve marcacao antes do final da refeicao
-            //System.out.println("workedStartPoint " + workedStartPoint);
+            // System.out.println("workedStartPoint " + workedStartPoint);
             if (workedStartPoint != null && workedEndPoint != null) {
-                //System.out.println("start e' null");
+                // System.out.println("start e' null");
                 return (new TimeInterval(workedEndPoint.getTime(), workedStartPoint.getTime(),
                         workedStartPoint.isNextDay()));
             } else if (workedEndPoint != null) {
-                //System.out.println("end e' null");
+                // System.out.println("end e' null");
                 return (new TimeInterval(workedEndPoint.getTime(), mealEnd.getTime(), mealEnd
                         .isNextDay()));
             }
         } else { // mealStart nao esta' dentro dum worked procurar inicio de periodo de trabalho
-            //System.out.println("mealstart nao ta dentro de worked -> entrada dentro do int de refeicao");
+            // System.out.println("mealstart nao ta dentro de worked -> entrada dentro do int de
+            // refeicao");
             TimePoint workedStartPoint = findWorkedStartPointBetweenPoints(mealStart, mealEnd);
-            //System.out.println("workedStartPoint " + workedStartPoint);
+            // System.out.println("workedStartPoint " + workedStartPoint);
             TimePoint workedEndPoint = null;
             // caso em q trabalhou dentro da meal e nao almocou
             if (workedStartPoint != null) {
@@ -570,7 +571,7 @@ public class Timeline {
                         DomainConstants.WORKED_ATTRIBUTES); // saber qual o atributo de worked
                 workedEndPoint = findIntervalEndPointBetweenPointsByAttribute(workedStartPoint, mealEnd,
                         workedAttribute);
-                //System.out.println("workedEndPoint " + workedEndPoint);
+                // System.out.println("workedEndPoint " + workedEndPoint);
                 if (workedEndPoint != null) {
                     // saiu antes do final do periodo de almoco entao foi almocar...
                     return (new TimeInterval(workedEndPoint.getTime(), mealEnd.getTime(), mealEnd
@@ -596,44 +597,16 @@ public class Timeline {
         List<TimePoint> workedPointsList = getAllAttributePoints(DomainConstants.WORKED_ATTRIBUTES);
         TimePoint[] mealInterval = findIntervalByAttribute(AttributeType.MEAL);
         TimePoint startMealBreakPoint = null;
+        TimePoint firstPoint = workedPointsList.get(0);
         for (TimePoint point : workedPointsList) {
             // ponto esta dentro do intervalo de refeicao
-            if ((point.getIntervalAttributes().contains(DomainConstants.WORKED_ATTRIBUTES) == false)
-                    && point.getIntervalAttributes().contains(AttributeType.MEAL)
-                    // && point.getTime().isAfter(mealInterval.getStartTime())
-                    && (mealInterval[0].isBefore(point) || mealInterval[0].isAtSameTime(point))
-                    && scheduleMealBreakInterval.contains(point.getTime(), false)) {
-                //System.out.println("ponto" + point.toString());
-                // check if the employee nao trabalhou apenas dentro do periodo de almoco
-                // TimeInterval workedIntervalBeforeMeal =
-                // findIntervalByAttribute(point.getPointAttributes().intersects(DomainConstants.WORKED_ATTRIBUTES));
-                // //System.out.println(workedIntervalBeforeMeal.toString());
-                startMealBreakPoint = point;
-
-                // if (workedIntervalBeforeMeal.getStartTime().isBefore(mealInterval.getStartTime())) {
-                // startMealBreakPoint = point;
-                // //System.out.println("point" + point.toString());
-                // break;
-                // } else {
-                // // startMealBreakPoint =
-                // }
+            if (point.getIntervalAttributes().contains(DomainConstants.WORKED_ATTRIBUTES) == false) {
+                if (point.getIntervalAttributes().contains(AttributeType.MEAL)
+                        || (point.isBefore(mealInterval[0]) && !point.equals(firstPoint))) {
+                    startMealBreakPoint = point;
+                }
             }
         }
-        // NAO SE APLICA PQ O FUNCIONARIO TEM DE IR ALMOCAR NO INTERVALO
-        // // Se nao foi encontrado nenhum ponto pode haver a hipotese do funcionario ter ido almocar
-        // antes do intervalo de almoco
-        // if (startMealBreakPoint == null) {
-        // int workedPointsListSize = workedPointsList.size();
-        // for (int i = workedPointsListSize; i < 0; i--) {
-        // TimePoint point = workedPointsList.get(i);
-        // if ((point.getIntervalAttributes().contains(DomainConstants.WORKED_ATTRIBUTES) == false) &&
-        // (point.getIntervalAttributes().contains(AttributeType.MEAL) == false)
-        // && point.getPoint().isBefore(mealInterval.getStartTime())) {
-        // startMealBreakPoint = point;
-        // break;
-        // }
-        // }
-        // }
         return startMealBreakPoint;
     }
 
@@ -723,8 +696,10 @@ public class Timeline {
         plotList(pointList);
     }
 
-    private TimePoint constructTimePoint(AssiduousnessRecord clockIn, YearMonthDay day, AttributeType attribute) {
-        final TimeOfDay timeIn = new TimeOfDay(clockIn.getDate().getHourOfDay(), clockIn.getDate().getMinuteOfHour(), 0);
+    private TimePoint constructTimePoint(AssiduousnessRecord clockIn, YearMonthDay day,
+            AttributeType attribute) {
+        final TimeOfDay timeIn = new TimeOfDay(clockIn.getDate().getHourOfDay(), clockIn.getDate()
+                .getMinuteOfHour(), 0);
         return new TimePoint(timeIn, clockIn.getDate().toYearMonthDay().isAfter(day), attribute);
     }
 

@@ -11,7 +11,6 @@ import net.sourceforge.fenixedu.domain.assiduousness.util.TimePoint;
 import net.sourceforge.fenixedu.domain.assiduousness.util.Timeline;
 
 import org.joda.time.DateMidnight;
-import org.joda.time.DateTime;
 import org.joda.time.Duration;
 import org.joda.time.Interval;
 import org.joda.time.Period;
@@ -49,15 +48,22 @@ public class WorkSchedule extends WorkSchedule_Base {
         if (wsType.definedMeal()) {
             mealInterval = timeline.calculateMealBreakInterval(wsType.getMeal().getMealBreak());
             if (mealInterval != null) {
-                Duration lunchDuration = wsType.checkMealDurationAccordingToRules(mealInterval
+                Duration lunchDiscount = wsType.checkMealDurationAccordingToRules(mealInterval
                         .getDuration());
-                if (lunchDuration != null) {
+                if (lunchDiscount != null) {
                     firstWorkPeriod = timeline.calculateDurationAllIntervalsByAttributesToTime(
                             new TimePoint(mealInterval.getStartTime(), false, null),
                             DomainConstants.WORKED_ATTRIBUTES, new TimePoint(getWorkScheduleType()
                                     .getClockingTime(), AttributeType.NULL), new TimePoint(
                                     getWorkScheduleType().getClockingEndTime(), getWorkScheduleType()
                                             .isClokingTimeNextDay(), AttributeType.NULL));
+                    //tem de se refazer esta parte, precisamos de saber a duração do 1º intervalo de work
+                    //e nao de todos até à hora de almoço
+//                    if (wsType.canHaveExtendedContinuousWorkPeriod()
+//                            && (firstWorkPeriod.isEqual(WorkScheduleType.maximumContinuousWorkPeriod) || 
+//                                firstWorkPeriod.isLongerThan(WorkScheduleType.maximumContinuousWorkPeriod))) {
+//
+//                    }
                     if (((WorkPeriod) wsType.getNormalWorkPeriod()).isSecondWorkPeriodDefined()) {
                         lastWorkPeriod = timeline
                                 .calculateDurationAllIntervalsByAttributesFromTime(new TimePoint(
@@ -67,12 +73,16 @@ public class WorkSchedule extends WorkSchedule_Base {
                                                 AttributeType.NULL), new TimePoint(getWorkScheduleType()
                                                 .getClockingEndTime(), getWorkScheduleType()
                                                 .isClokingTimeNextDay(), AttributeType.NULL));
+                        if (lastWorkPeriod.equals(Duration.ZERO)) {
+                            lunchDiscount = Duration.ZERO;
+                        }
                     }
                     workDaySheet.setBalanceTime(getWorkPeriodBalance(
-                            (firstWorkPeriod.plus(lastWorkPeriod).minus(lunchDuration))).toPeriod());
+                            (firstWorkPeriod.plus(lastWorkPeriod).minus(lunchDiscount))).toPeriod());
                     workDaySheet.setUnjustifiedTime(wsType.calculateFixedPeriodDuration(timeline));
                 } else {
-                    workDaySheet.setBalanceTime((Duration.ZERO).toPeriod());
+                    workDaySheet.setBalanceTime(Duration.ZERO.minus(
+                            wsType.getNormalWorkPeriod().getWorkPeriodDuration()).toPeriod());
                     if (wsType.getFixedWorkPeriod() != null) {
                         workDaySheet.setUnjustifiedTime(wsType.getFixedWorkPeriod()
                                 .getWorkPeriodDuration());
@@ -158,10 +168,23 @@ public class WorkSchedule extends WorkSchedule_Base {
                                 workDaySheet.setUnjustifiedTime(wsType
                                         .calculateFixedPeriodDuration(timeline));
                             } else {
-                                workDaySheet.setBalanceTime((Duration.ZERO).toPeriod());
-                                if (wsType.getFixedWorkPeriod() != null) {
-                                    workDaySheet.setUnjustifiedTime(wsType.getFixedWorkPeriod()
-                                            .getWorkPeriodDuration());
+                                if (firstClockingDate.isBefore(wsType.getMeal().getBeginMealBreak())
+                                        && lastClockingDate.isAfter(wsType.getMeal().getEndMealBreak())) {
+
+                                    workDaySheet.setBalanceTime(Duration.ZERO.minus(
+                                            wsType.getNormalWorkPeriod().getWorkPeriodDuration())
+                                            .toPeriod());
+                                    if (wsType.getFixedWorkPeriod() != null) {
+                                        workDaySheet.setUnjustifiedTime(wsType.getFixedWorkPeriod()
+                                                .getWorkPeriodDuration());
+                                    }
+                                } else {
+                                    workDaySheet.setBalanceTime(getWorkPeriodBalance(workPeriod)
+                                            .toPeriod());
+                                    if (wsType.getFixedWorkPeriod() != null) {
+                                        workDaySheet.setUnjustifiedTime(wsType
+                                                .calculateFixedPeriodDuration(timeline));
+                                    }
                                 }
                             }
                         } else {

@@ -241,8 +241,13 @@ public class ReadAssiduousnessWorkSheet extends Service {
             dayBeforeWorkTimeInterval = new Interval(beginDayBeforeWorkTime, endDayBeforeWorkTime);
         }
         Interval overlapResult = thisDayWorkTimeInterval.overlap(dayBeforeWorkTimeInterval);
-        if (overlapResult == null
-                || (!overlapResult.contains(clocking) && clocking.isAfter(overlapResult.getStart()))) {
+        if (overlapResult == null) {
+            Interval gapResult = thisDayWorkTimeInterval.gap(dayBeforeWorkTimeInterval);
+            if(!gapResult.contains(clocking)) {
+                return false;
+            }
+        }
+        else if(!overlapResult.contains(clocking) && clocking.isAfter(overlapResult.getStart())) {
             return false;
         }
         return true;
