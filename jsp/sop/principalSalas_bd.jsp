@@ -3,6 +3,6 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <h2>Gestão de Salas</h2>
 <br />
-Seleccione a opção pretendida para criar ou editar as caracterï¿½sticas de uma sala. <br />
+Seleccione a opção pretendida para criar ou editar as características de uma sala. <br />
 DevNote: Deveria de haver uma descrição do que se pretende fazer, e o que está envolvido, na criação de salas.
 <br/>

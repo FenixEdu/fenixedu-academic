@@ -4,5 +4,5 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 
 <center><strong>
-Bem Vindo ï¿½ secção de gabinetes de estudos e planeamento.
+Bem Vindo à secção de gabinetes de estudos e planeamento.
 </strong></center>
