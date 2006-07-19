@@ -581,4 +581,9 @@ public class Unit extends Unit_Base {
 
         return institutionUnit;
     }
+
+    public Set<Unit> getParentByOrganizationalStructureAccountabilityType() {
+    	return (Set) getParentParties(AccountabilityTypeEnum.ORGANIZATIONAL_STRUCTURE, getClass());
+    }
+
 }
