@@ -40,7 +40,7 @@
 		</tr>
 	    <tr align="right">
 			<td>	
-				<h2>Despacho de Aceitaï¿½ï¿½o</h2>
+				<h2>Despacho de Aceitação</h2>
 			</td>
 		</tr>
 		

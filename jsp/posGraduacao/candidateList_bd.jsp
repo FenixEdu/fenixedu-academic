@@ -17,7 +17,7 @@
 		<bean:write name="path"/>.do?method=chooseCandidate<%= "&" %>personID=
 		</bean:define>
 	<h2><bean:message name="title"/></h2>
-    	<p><b>Critï¿½rios de procura:</b><br /><br /><bean:write name="findQuery" filter="false"/></p>
+    	<p><b>Critérios de procura:</b><br /><br /><bean:write name="findQuery" filter="false"/></p>
     	<br /> 
     	<p>
     		<h3>   

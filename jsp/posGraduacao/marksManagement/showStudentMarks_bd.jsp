@@ -151,7 +151,7 @@
                  		</html:select>    
              		</td>          
    				</tr>
-				<%-- Data de Avaliaï¿½ao --%>
+				<%-- Data de Avaliação --%>
    				<tr>							
 					<td align="left">
 						<bean:message key="label.gradeAvailableDate" />:

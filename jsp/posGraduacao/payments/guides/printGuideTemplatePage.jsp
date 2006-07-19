@@ -100,7 +100,7 @@
             <td>&nbsp;</td>
         </tr>
     	<tr>
-    	  	<td><strong>A liquidar a importï¿½ncia de </strong></td>
+    	  	<td><strong>A liquidar a importância de </strong></td>
    			<td>_________________&nbsp;</td>
    			<td><strong><bean:define id="totalAmountToPay" name="paymentsManagementDTO" property="totalAmountToPay" type="java.math.BigDecimal"/><%= totalAmountToPay.toPlainString() %>&nbsp;<bean:message key="label.currencySymbol"/></strong></td>
     	</tr>
@@ -129,7 +129,7 @@
          <td colspan="2" valign="bottom">
            &nbsp;<div align="center">&nbsp;</div>
            <div align="center">&nbsp;</div>
-           <div align="center"><b>O Funcionï¿½rio</b> <br>
+           <div align="center"><b>O Funcionário</b> <br>
             <br>
             <br>
            </div>

@@ -10,7 +10,7 @@
 
 <span class="error"><html:errors/></span>
 	<br />
-	<h2>Ordenaï¿½ï¿½o de Candidatos Suplentes</h2>
+	<h2>Ordenação de Candidatos Suplentes</h2>
 	<br />
 	<bean:define id="listOfCandidates" name="candidateList" scope="request" />
 
