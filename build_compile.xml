@@ -593,7 +593,7 @@ script.isAlive.check.slide=${script.isAlive.check.slide}
 	</target>
 	
 	<target name="write-all-properties" 
-		depends="write-filter-hostnames-configuration-file,write-index-redirect-hostnames-configuration-file,write-cas-serviceUrl-hostnames-configuration-file,write-path-access-control-configuration-file">
+		depends="write-filter-hostnames-configuration-file,write-index-redirect-hostnames-configuration-file,write-login-redirect-hostnames-configuration-file,write-cas-serviceUrl-hostnames-configuration-file,write-path-access-control-configuration-file">
 	</target>
 	
 	<target name="print-dml-message" if="dml.skip-compile">
