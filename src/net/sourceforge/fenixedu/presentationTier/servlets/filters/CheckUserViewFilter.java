@@ -65,7 +65,7 @@ public class CheckUserViewFilter implements Filter {
         	}
         	httpSession.setAttribute("ORIGINAL_ATTRIBUTE_MAP", attributeMap);
 
-            response.sendRedirect(HostRedirector.getRedirectPageLogin(uri));
+            response.sendRedirect(HostRedirector.getRedirectPageLogin(request.getRequestURL().toString()));
         } else {
             filterChain.doFilter(request, response);
         }
