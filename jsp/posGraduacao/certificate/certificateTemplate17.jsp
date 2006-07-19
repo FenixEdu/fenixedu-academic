@@ -13,8 +13,8 @@
     	<bean:write name="infoStudentCurricularPlan"  property="infoDegreeCurricularPlan.infoDegree.nome"/> 
     	( MBA em  <bean:write name="infoStudentCurricularPlan"  property="infoDegreeCurricularPlan.infoDegree.nome"/> )
     	 ministrado neste Instituto, 
-    	obteve aproveitamento nas disciplinas abaixo discriminadas, com as quais concluï¿½u o curso especializado conducente ï¿½ obtenï¿½ï¿½o do grau de mestre,  
+    	obteve aproveitamento nas disciplinas abaixo discriminadas, com as quais concluíu o curso especializado conducente à obtenção do grau de mestre,  
     	em <bean:write name="conclusiondate" />
     		<logic:present name="<%= SessionConstants.DISCRIMINATED_WITH_AVERAGE%>">
-     			, com a mï¿½dia de <bean:write name="infoFinalResult" property="finalAverage"/> valores
+     			, com a média de <bean:write name="infoFinalResult" property="finalAverage"/> valores
 			</logic:present>.<br />

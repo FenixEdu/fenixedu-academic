@@ -10,7 +10,7 @@
 <div id="vert-spacer">
 <table width="100%">
 	<tr>
-        <td align="center"><h2>DECLARAï¿½ï¿½O</h2></td>
+        <td align="center"><h2>DECLARAÇÃO</h2></td>
   	</tr>
 	<tr>
 		<td>
@@ -27,7 +27,7 @@
 		</td>
 	</tr>
 	<tr> 
-	     <td><h2 style="display: inline;">Aluno Nï¿½: </h2><bean:write name="infoStudentCurricularPlan" property="infoStudent.number"/></td>
+	     <td><h2 style="display: inline;">Aluno Nº: </h2><bean:write name="infoStudentCurricularPlan" property="infoStudent.number"/></td>
   	</tr>
 </table>
 </div>

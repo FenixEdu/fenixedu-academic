@@ -9,7 +9,7 @@
 do curso de  <bean:message name="infoStudentCurricularPlan" property="specialization.name" bundle="ENUMERATION_RESOURCES"/> em 
 		<bean:write name="infoStudentCurricularPlan"  property="infoDegreeCurricularPlan.infoDegree.nome"/> 
 			<logic:equal name="infoStudentCurricularPlan" property="specialization.name" value='<%= Specialization.MASTER_DEGREE.toString()%>'>
-     			ministrado neste Instituto, obteve aproveitamento nas disciplinas abaixo discriminadas, que fazem parte do curso especializado conducente ï¿½ obtenï¿½ï¿½o do grau de mestre:
+     			ministrado neste Instituto, obteve aproveitamento nas disciplinas abaixo discriminadas, que fazem parte do curso especializado conducente à obtenção do grau de mestre:
      			<br />
 			</logic:equal>
 			<logic:equal name="infoStudentCurricularPlan" property="specialization.name" value='<%= Specialization.SPECIALIZATION.toString()%>'>

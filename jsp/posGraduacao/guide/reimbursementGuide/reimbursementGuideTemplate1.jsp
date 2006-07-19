@@ -29,16 +29,16 @@
               <td>
                 <table border="0" width="100%" height="100%">
                   <tr align="left"> 
-                    <td>&nbsp;<b>INSTITUTO SUPERIOR Tï¿½CNICO</b><br>
-                      &nbsp;<b>Secretaria da Pï¿½s-Graduaï¿½ï¿½o</b><br>
+                    <td>&nbsp;<b>INSTITUTO SUPERIOR TÉCNICO</b><br>
+                      &nbsp;<b>Secretaria da Pós-Graduação</b><br>
                       &nbsp;<b>Centro de Custo 0212</b>
                       <hr size="1">
                     </td>
                   </tr>
                   <tr> 
                     <td align="right" valign="top"> 
-                    	<b>Guia de Reembolso Nï¿½: </b><bean:write name="reimbursementGuide" property="number"/> <br/>
-                    	<b>relativa ï¿½ Guia de Pagamento Nï¿½ </b>
+                    	<b>Guia de Reembolso Nº: </b><bean:write name="reimbursementGuide" property="number"/> <br/>
+                    	<b>relativa à Guia de Pagamento nº </b>
                     		<bean:write name="reimbursementGuide" property="infoGuide.number"/>/<bean:write name="reimbursementGuide" property="infoGuide.year"/>                   	                      
                     </td>
                   </tr>
@@ -144,7 +144,7 @@
             <td>&nbsp;</td>
         </tr>
     	<tr>
-    	  	<td><strong>A liquidar a importï¿½ncia de </strong></td>
+    	  	<td><strong>A liquidar a importância de </strong></td>
    			<td>_____________________</td>&nbsp;
    			<td><strong><%= NumberUtils.formatNumber(new Double(total), 2) %>&nbsp;<bean:message key="label.currencySymbol"/></strong></td>
     	</tr>
@@ -178,7 +178,7 @@
          <td colspan="2" valign="bottom">
            &nbsp;<div align="center">&nbsp;</div>
            <div align="center">&nbsp;</div>
-           <div align="center"><b>O Funcionï¿½rio</b> <br>
+           <div align="center"><b>O Funcionário</b> <br>
             <br>
             <br>
            </div>
@@ -199,11 +199,11 @@
 	      <tr>
           <td colspan="2" valign="bottom" >
             <div align="center">
-              <font size="2"> Documento processado por computador. Sï¿½ ï¿½ vï¿½lido como recibo apï¿½s o carimbo de pago e devidamente assinado.</font> 
+              <font size="2"> Documento processado por computador. Só é válido como recibo após o carimbo de pago e devidamente assinado.</font> 
             </div>
             <hr size="1" color="#000000" width="100%">
             <div align="center">
-              <font size="2"> Av. Rovisco Pais, 1 1049-001 Lisboa Codex Telefone: 218417336 Fax: 218419531 Contribuinte Nï¿½: 501507930</font>
+              <font size="2"> Av. Rovisco Pais, 1 1049-001 Lisboa Codex Telefone: 218417336 Fax: 218419531 Contribuinte Nº: 501507930</font>
             </div>
           </td>
           </tr>

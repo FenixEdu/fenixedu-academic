@@ -7,8 +7,8 @@
 <bean:define id="infoMasterDegreeProofVersion" name="<%= SessionConstants.MASTER_DEGREE_THESIS_HISTORY %>" />
 <bean:define id="conclusiondate" name="<%= SessionConstants.CONCLUSION_DATE %>" />
 <bean:define id="finalResult" name="<%= SessionConstants.FINAL_RESULT%>" />
-prestou provas para obtenï¿½ï¿½o do grau de Mestre em  
+prestou provas para obtenção do grau de Mestre em  
 <b><bean:write name="infoMasterDegreeThesisDataVersion"  property="infoMasterDegreeThesis.infoStudentCurricularPlan.infoDegreeCurricularPlan.infoDegree.nome"/></b> concluidas em  
-<bean:write name="conclusiondate" />, com a defesa da dissertaï¿½ï¿½o intitulada "
+<bean:write name="conclusiondate" />, com a defesa da dissertação intitulada "
 <b><bean:write name="infoMasterDegreeThesisDataVersion" property="dissertationTitle" />"</b>.
 </p>

@@ -6,6 +6,6 @@
 <bean:define id="conclusiondate" name="<%= SessionConstants.CONCLUSION_DATE %>" />
 <bean:define id="finalResult" name="<%= SessionConstants.FINAL_RESULT%>" />
 <p>
-Da acta da prova consta o seguinte resultado atribuï¿½do pelo jï¿½ri legalmente constituï¿½do: <b><bean:message name="finalResult" bundle="ENUMERATION_RESOURCES"/></b> pelo que<bean:write name="notString"/>tem direito
-ao grau acadï¿½mico de MESTRE.
+Da acta da prova consta o seguinte resultado atribuído pelo júri legalmente constituído: <b><bean:message name="finalResult" bundle="ENUMERATION_RESOURCES"/></b> pelo que<bean:write name="notString"/>tem direito
+ao grau académico de MESTRE.
 </p>

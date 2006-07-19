@@ -3,4 +3,4 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
-<p>Mais certifico, que o grau de mestre sï¿½ serï¿½ conferido apï¿½s a elaboraï¿½ï¿½o, aprovaï¿½ï¿½o e discussï¿½o de uma dissertaï¿½ï¿½o original, nos termos da alï¿½nea b), do nï¿½ 2, art. 5ï¿½, capï¿½tulo II, do Decreto-Lei 216/92, de 13 de Outubro.</p>
+<p>Mais certifico, que o grau de mestre só será conferido após a elaboração, aprovação e discussão de uma dissertação original, nos termos da alínea b), do nº 2, art. 5º, capítulo II, do Decreto-Lei 216/92, de 13 de Outubro.</p>

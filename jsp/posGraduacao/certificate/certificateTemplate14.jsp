@@ -7,11 +7,11 @@
 <bean:define id="conclusiondate" name="<%= SessionConstants.CONCLUSION_DATE %>" />
 <bean:define id="finalResult" name="<%= SessionConstants.FINAL_RESULT%>" />
 <bean:define id="infoFinalResult" name="<%= SessionConstants.INFO_FINAL_RESULT%>" />
-concluï¿½u o curso de mestrado em 
+concluíu o curso de mestrado em 
 <b><bean:write name="infoMasterDegreeThesisDataVersion"  property="infoMasterDegreeThesis.infoStudentCurricularPlan.infoDegreeCurricularPlan.infoDegree.nome"/></b> em <bean:write name="conclusiondate" />,
- com a defesa da dissertaï¿½ï¿½o intitulada "
+ com a defesa da dissertação intitulada "
 <b><bean:write name="infoMasterDegreeThesisDataVersion" property="dissertationTitle" />"</b>.
 </p>
 <p>
-A parte escolar do curso ï¿½ constituida pelas seguintes disciplinas, na qual obteve a mï¿½dia de <bean:write name="infoFinalResult" property="finalAverage"/> valores.
+A parte escolar do curso é constituida pelas seguintes disciplinas, na qual obteve a média de <bean:write name="infoFinalResult" property="finalAverage"/> valores.
 </p>

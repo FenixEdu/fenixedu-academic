@@ -42,7 +42,7 @@
                 <% if (((InfoGuideSituation) guideSituation).getState().equals(new State(State.ACTIVE))) { %>
                 	<tr>
                         <td><html:link page='<%= pageContext.findAttribute("versionLink").toString() %>'>
-                			Versï¿½o <bean:write name="version" property="version" />
+                			Versão <bean:write name="version" property="version" />
                             </html:link>
                         </td>
 			            <logic:present name="guideSituation" property="date" >
