@@ -89,6 +89,11 @@ public class InsertExecutionCourseDispatchAction extends FenixDispatchAction {
         executionCourseForm.set("praticalHours", new String("0.0"));
         executionCourseForm.set("theoPratHours", new String("0.0"));
         executionCourseForm.set("labHours", new String("0.0"));
+        executionCourseForm.set("seminaryHours", new String("0.0"));
+        executionCourseForm.set("problemsHours", new String("0.0"));
+        executionCourseForm.set("fieldWorkHours", new String("0.0"));
+        executionCourseForm.set("trainingPeriodHours", new String("0.0"));
+        executionCourseForm.set("tutorialOrientationHours", new String("0.0"));
 
         return mapping.findForward("insertExecutionCourse");
     }
@@ -144,6 +149,28 @@ public class InsertExecutionCourseDispatchAction extends FenixDispatchAction {
         if (theoreticalHours.compareTo("") != 0) {
             infoExecutionCourse.setTheoreticalHours(new Double(theoreticalHours));
         }
+
+        String seminaryHours = (String) dynaForm.get("seminaryHours");
+        if (seminaryHours.compareTo("") != 0) {
+            infoExecutionCourse.setSeminaryHours(new Double(seminaryHours));
+        }
+        String problemsHours = (String) dynaForm.get("problemsHours");
+        if (problemsHours.compareTo("") != 0) {
+            infoExecutionCourse.setProblemsHours(new Double(problemsHours));
+        }
+        String fieldWorkHours = (String) dynaForm.get("fieldWorkHours");
+        if (fieldWorkHours.compareTo("") != 0) {
+            infoExecutionCourse.setFieldWorkHours(new Double(fieldWorkHours));
+        }
+        String trainingPeriodHours = (String) dynaForm.get("trainingPeriodHours");
+        if (trainingPeriodHours.compareTo("") != 0) {
+            infoExecutionCourse.setTrainingPeriodHours(new Double(trainingPeriodHours));
+        }
+        String tutorialOrientationHours = (String) dynaForm.get("tutorialOrientationHours");
+        if (tutorialOrientationHours.compareTo("") != 0) {
+            infoExecutionCourse.setTutorialOrientationHours(new Double(tutorialOrientationHours));
+        }
+
         String comment = new String("");
         if ((String) dynaForm.get("comment") != null) {
             comment = (String) dynaForm.get("comment");

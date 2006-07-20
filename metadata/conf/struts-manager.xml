@@ -224,6 +224,11 @@
 				<form-property name="praticalHours" type="java.lang.String" />
 				<form-property name="theoPratHours" type="java.lang.String" />
 				<form-property name="labHours" type="java.lang.String" />
+				<form-property name="seminaryHours" type="java.lang.String" />
+				<form-property name="problemsHours" type="java.lang.String" />
+				<form-property name="fieldWorkHours" type="java.lang.String" />
+				<form-property name="trainingPeriodHours" type="java.lang.String" />
+				<form-property name="tutorialOrientationHours" type="java.lang.String" />
 				<form-property name="semester" type="java.lang.String" />
 				<form-property name="comment" type="java.lang.String" />
 				<form-property name="executionPeriodId" type="java.lang.String" />

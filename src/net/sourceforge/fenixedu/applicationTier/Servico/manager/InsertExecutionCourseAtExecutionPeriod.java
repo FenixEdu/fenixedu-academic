@@ -8,7 +8,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServi
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
-
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -45,6 +44,11 @@ public class InsertExecutionCourseAtExecutionPeriod extends Service {
         executionCourse.setPraticalHours(infoExecutionCourse.getPraticalHours());
         executionCourse.setTheoPratHours(infoExecutionCourse.getTheoPratHours());
         executionCourse.setTheoreticalHours(infoExecutionCourse.getTheoreticalHours());
+        executionCourse.setSeminaryHours(infoExecutionCourse.getSeminaryHours());
+        executionCourse.setProblemsHours(infoExecutionCourse.getProblemsHours());
+        executionCourse.setFieldWorkHours(infoExecutionCourse.getFieldWorkHours());
+        executionCourse.setTrainingPeriodHours(infoExecutionCourse.getTrainingPeriodHours());
+        executionCourse.setTutorialOrientationHours(infoExecutionCourse.getTutorialOrientationHours());
         executionCourse.setComment(infoExecutionCourse.getComment());
 
         executionCourse.createSite();            

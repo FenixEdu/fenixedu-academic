@@ -11,9 +11,16 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse;
+import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseWithInfoDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.comparators.ComparatorByNameForInfoExecutionDegree;
+import net.sourceforge.fenixedu.domain.CurricularCourse;
+import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
@@ -152,17 +159,23 @@ public class EditExecutionCourseManageCurricularCoursesDispatchAction extends Fe
             getAndSetStringToRequest(request, "curYear");
         }
 
-        Integer degreeCurricularPlanId = separateLabel(form, request, "degreeCurricularPlan",
-                "degreeCurricularPlanId", "degreeCurricularPlanName");
+        Integer degreeCurricularPlanId = separateLabel(form, request, "degreeCurricularPlan", "degreeCurricularPlanId", "degreeCurricularPlanName");
+        final DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanId);
 
-        Object args[] = { degreeCurricularPlanId };
+        final Integer executionCourseID = Integer.valueOf((String) request.getAttribute("executionCourseId"));
+        final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseID);
+        final ExecutionPeriod executionPeriod = executionCourse.getExecutionPeriod();
 
-        List infoCurricularCourses;
-        try {
-            infoCurricularCourses = (List) ServiceUtils.executeService(userView,
-                    "ReadCurricularCoursesByDegreeCurricularPlan", args);
-        } catch (FenixServiceException e) {
-            throw new FenixActionException(e);
+        final List<InfoCurricularCourse> infoCurricularCourses = new ArrayList<InfoCurricularCourse>();
+        for (final DegreeModule degreeModule : rootDomainObject.getDegreeModulesSet()) {
+        	if (degreeModule instanceof CurricularCourse) {
+        		final CurricularCourse curricularCourse = (CurricularCourse) degreeModule;
+        		if (!executionCourse.getAssociatedCurricularCoursesSet().contains(curricularCourse)) { 
+        			if (curricularCourse.hasScopeInGivenSemesterAndCurricularYearInDCP(null, degreeCurricularPlan, executionPeriod)) {
+        				infoCurricularCourses.add(InfoCurricularCourseWithInfoDegree.newInfoFromDomain(curricularCourse));
+        			}
+        		}
+        	}
         }
         Collections.sort(infoCurricularCourses, new BeanComparator("name"));
 

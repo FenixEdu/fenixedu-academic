@@ -562,10 +562,24 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
     @Override
     public List<CurricularCourse> getCurricularCourses() {
         if (this.isBolonha()) {
-            return this.getCurricularCourses(null);
+            return this.getCurricularCourses((ExecutionYear) null);
         } else {
             return super.getCurricularCourses();
         }
+    }
+
+    public Set<CurricularCourse> getCurricularCourses(final ExecutionPeriod executionPeriod) {
+    	final Set<CurricularCourse> curricularCourses = new HashSet<CurricularCourse>();
+    	for (final CurricularCourse curricularCourse : super.getCurricularCoursesSet()) {
+    		if (curricularCourse.hasScopeInGivenSemesterAndCurricularYearInDCP(null, null, executionPeriod)) {
+    			curricularCourses.add(curricularCourse);
+    		}
+    	}
+    	final ExecutionYear executionYear = executionPeriod.getExecutionYear();
+        for (final DegreeModule degreeModule : getDcpDegreeModules(CurricularCourse.class, executionYear)) {
+        	curricularCourses.add((CurricularCourse) degreeModule);
+        }
+    	return curricularCourses;
     }
 
     /**
@@ -809,7 +823,9 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
     public List<DegreeModule> getDcpDegreeModules(Class<? extends DegreeModule> clazz,
             ExecutionYear executionYear) {
         final Set<DegreeModule> result = new HashSet<DegreeModule>();
-        this.getRoot().collectChildDegreeModules(clazz, result, executionYear);
+        if (this.getRoot() != null) {
+        	this.getRoot().collectChildDegreeModules(clazz, result, executionYear);
+        }
         return new ArrayList<DegreeModule>(result);
     }
 
