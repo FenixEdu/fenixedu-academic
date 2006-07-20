@@ -67,7 +67,7 @@
 			</h:panelGroup>				
 
 			<h:outputText value="#{bundle['label.file']}: <br/>" escape="false"/>
-			<h:outputText value="<input alt="input.input" size=\"30\" type=\"file\" name=\"theFile\"/>" escape="false"/>
+			<h:outputText value="<input alt=\"input.input\" size=\"30\" type=\"file\" name=\"theFile\"/>" escape="false"/>
 			
 			<h:panelGroup>
 				<h:commandButton alt="#{htmlAltBundle['commandButton.send']}" styleClass="inputbutton" action="#{evaluationManagementBackingBean.loadMarks}" value="#{bundle['button.send']}"/>
