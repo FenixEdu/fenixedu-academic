@@ -217,5 +217,12 @@
 	<definition name="submit-project" extends="definition.student.masterPage">
 		<put name="body" value="/student/projectSubmissions/submitProject.jsp" />
 	</definition>
+
+	<!-- ADMINISTRATIVE OFFICE SERVICES -->
+	<definition name="df.page.administrativeOfficeServicesIndex" extends="definition.student.administrativeOfficeServices">
+		<put name="body" value="/student/main_bd.jsp" />
+	</definition>
+		
+
 	
 </tiles-definitions>

@@ -46,4 +46,8 @@
 	<definition name="definition.gaugingTestResults" extends="definition.student.masterPage">
 		<put name="body" value="/student/gaugingTests/physics/viewGaugingTestResults.jsp"/>
 	</definition>
+	
+	<definition name="definition.student.administrativeOfficeServices" extends="definition.student.masterPage">
+		<put name="navLocal" value="/student/administrativeOfficeServices/administrativeOfficeServicesMenu.jsp"/>
+	</definition>
 </tiles-definitions>

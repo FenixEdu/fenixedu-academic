@@ -820,6 +820,14 @@
   			<forward name="viewProjectSubmissions" path="view-project-submissions"/>
   			<forward name="submitProject" path="submit-project"/>
   		</action>
+
+		<!-- ADMINISTRATIVE OFFICE SERVICES -->
+		
+		<action path="/administrativeOfficeServicesSection"
+			parameter="method"
+			type="net.sourceforge.fenixedu.presentationTier.Action.commons.VoidAction">
+			<forward name="Success" path="df.page.administrativeOfficeServicesIndex"/>
+		</action>
   		
 	</action-mappings>     
 
