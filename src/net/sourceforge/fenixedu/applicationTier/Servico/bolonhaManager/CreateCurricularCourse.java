@@ -110,7 +110,7 @@ public class CreateCurricularCourse extends Service {
         }
     }
     
-    private static class CurricularCourseArgs {
+    private abstract static class CurricularCourseArgs {
         private Integer degreeCurricularPlanID, parentCourseGroupID, year, semester; 
         private Integer beginExecutionPeriodID, endExecutionPeriodID;
         
