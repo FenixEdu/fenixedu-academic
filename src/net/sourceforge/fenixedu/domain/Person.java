@@ -652,7 +652,7 @@ public class Person extends Person_Base {
             }
 
     public boolean hasFunctionType(FunctionType functionType) {
-        for (PersonFunction accountability : getActiveFunctions()) {
+        for (PersonFunction accountability : getActivePersonFunctions()) {
             if (accountability.getFunction().getFunctionType() == functionType) {
                 return true;
             }
