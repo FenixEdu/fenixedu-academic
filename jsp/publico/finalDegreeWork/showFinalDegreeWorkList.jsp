@@ -7,22 +7,23 @@
 
 <h2><bean:message key="title.finalDegreeWorkProposals"/></h2>
 <span class="error"><html:errors /></span>
-<html:form action="/finalDegreeWorks" focus="executionDegreeOID">
-	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="search"/>
-	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
 	<table border="0" cellspacing="0" cellpadding="0">
 		<tr>
 			<td nowrap="nowrap">
 				<bean:message key="property.executionPeriod"/>:
 			</td>
 			<td nowrap="nowrap">
-				<html:select bundle="HTMLALT_RESOURCES" altKey="select.executionYearOID" property="executionYearOID"
-							 size="1"
-							 onchange='document.finalDegreeWorksForm.method.value=\'prepareSearch\';document.finalDegreeWorksForm.page.value=\'0\';document.finalDegreeWorksForm.submit();'>
-					<html:options property="idInternal" 
-								  labelProperty="year" 
-								  collection="infoExecutionYears" />
-				</html:select>
+				<html:form action="/finalDegreeWorks" focus="executionDegreeOID">
+					<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="prepareSearch"/>
+					<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="0"/>
+					<html:select bundle="HTMLALT_RESOURCES" altKey="select.executionYearOID" property="executionYearOID"
+								 size="1"
+								 onchange="this.form.submit();">
+						<html:options property="idInternal" 
+									  labelProperty="year" 
+									  collection="infoExecutionYears" />
+					</html:select>
+				</html:form>
 			</td>
 		</tr>
 		<tr>
@@ -30,13 +31,19 @@
 				<bean:message key="finalDegreeWorkProposalHeader.degree"/>:
 			</td>
 			<td nowrap="nowrap">
-				<html:select bundle="HTMLALT_RESOURCES" altKey="select.executionDegreeOID" property="executionDegreeOID" size="1"
-							 onchange='document.finalDegreeWorksForm.method.value=\'search\';document.finalDegreeWorksForm.page.value=\'0\';document.finalDegreeWorksForm.submit();'>
-					<html:option value=""/>
-					<html:options property="idInternal"
-								  labelProperty="infoDegreeCurricularPlan.infoDegree.nome"
-								  collection="infoExecutionDegrees" />
-				</html:select>
+				<html:form action="/finalDegreeWorks" focus="executionDegreeOID">
+					<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="search"/>
+					<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
+					<bean:define id="executionYearOID" name="finalDegreeWorksForm" property="executionYearOID"/>
+					<html:hidden bundle="HTMLALT_RESOURCES" altKey="select.executionYearOID" property="executionYearOID" value="<%= executionYearOID.toString() %>"/>
+					<html:select bundle="HTMLALT_RESOURCES" altKey="select.executionDegreeOID" property="executionDegreeOID" size="1"
+								 onchange="this.form.submit();">
+						<html:option value=""/>
+						<html:options property="idInternal"
+									  labelProperty="infoDegreeCurricularPlan.infoDegree.nome"
+									  collection="infoExecutionDegrees" />
+					</html:select>
+				</html:form>
 			</td>
 		</tr>
 	</table>
@@ -55,13 +62,21 @@
 					<bean:message key="finalDegreeWorkProposalHeader.filter.by.branch"/>:
 				</td>
 				<td nowrap="nowrap">
-					<html:select bundle="HTMLALT_RESOURCES" altKey="select.branchOID" property="branchOID" size="1"
-								 onchange='document.finalDegreeWorksForm.method.value=\'filter\';document.finalDegreeWorksForm.page.value=\'0\';document.finalDegreeWorksForm.submit();'>
-						<html:option value=""/>
-						<html:options property="idInternal"
-									  labelProperty="name"
-									  collection="branches" />
-					</html:select>
+					<html:form action="/finalDegreeWorks" focus="executionDegreeOID">
+						<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="search"/>
+						<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
+						<bean:define id="executionYearOID" name="finalDegreeWorksForm" property="executionYearOID"/>
+						<html:hidden bundle="HTMLALT_RESOURCES" altKey="select.executionYearOID" property="executionYearOID" value="<%= executionYearOID.toString() %>"/>
+						<bean:define id="executionDegreeOID" name="finalDegreeWorksForm" property="executionDegreeOID"/>
+						<html:hidden bundle="HTMLALT_RESOURCES" altKey="select.executionDegreeOID" property="executionDegreeOID" value="<%= executionDegreeOID.toString() %>"/>
+						<html:select bundle="HTMLALT_RESOURCES" altKey="select.branchOID" property="branchOID" size="1"
+									 onchange="this.form.submit();">
+							<html:option value=""/>
+							<html:options property="idInternal"
+										  labelProperty="name"
+										  collection="branches" />
+						</html:select>
+					</html:form>
 				</td>
 			</tr>
 		</table>
@@ -184,4 +199,3 @@
 		<span class="error"><bean:message key="finalDegreeWorkProposalHeaders.notPresent"/></span>
 	</logic:lessEqual>	
 </logic:present>
-</html:form>
