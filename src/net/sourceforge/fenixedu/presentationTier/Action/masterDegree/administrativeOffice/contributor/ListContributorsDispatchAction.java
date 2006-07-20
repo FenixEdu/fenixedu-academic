@@ -76,7 +76,7 @@ public class ListContributorsDispatchAction extends DispatchAction {
             String contributorNumberString = (String) createCandidateForm.get("contributorNumber");
             Integer contributorNumber = null;
             if ((contributorNumberString != null) && (contributorNumberString.length() != 0))
-                contributorNumber = new Integer(contributorNumberString);
+                contributorNumber = Integer.valueOf(contributorNumberString);
 
             List contributors = null;
 
@@ -135,15 +135,18 @@ public class ListContributorsDispatchAction extends DispatchAction {
             InfoContributor infoContributor = (InfoContributor) session
                     .getAttribute(SessionConstants.CONTRIBUTOR);
 
-            // Fill in The Form
-
             editContributorForm.set("contributorNumber", String.valueOf(infoContributor
                     .getContributorNumber()));
             editContributorForm.set("contributorName", infoContributor.getContributorName());
             editContributorForm.set("contributorAddress", infoContributor.getContributorAddress());
+            editContributorForm.set("areaCode", infoContributor.getAreaCode());
+            editContributorForm.set("areaOfAreaCode", infoContributor.getAreaOfAreaCode());
+            editContributorForm.set("area", infoContributor.getArea());
+            editContributorForm.set("parishOfResidence", infoContributor.getParishOfResidence());
+            editContributorForm.set("districtSubdivisionOfResidence", infoContributor.getDistrictSubdivisionOfResidence());
+            editContributorForm.set("districtOfResidence", infoContributor.getDistrictOfResidence());
 
             return mapping.findForward("EditReady");
-
         }
         throw new Exception();
     }
@@ -162,11 +165,18 @@ public class ListContributorsDispatchAction extends DispatchAction {
 
             // Get the Information
             String contributorNumberString = (String) editContributorForm.get("contributorNumber");
-            Integer contributorNumber = new Integer(contributorNumberString);
+            Integer contributorNumber = Integer.valueOf(contributorNumberString);
             String contributorName = (String) editContributorForm.get("contributorName");
             String contributorAddress = (String) editContributorForm.get("contributorAddress");
+            String areaCode = (String) editContributorForm.get("areaCode");
+            String areaOfAreaCode = (String) editContributorForm.get("areaOfAreaCode");
+            String area = (String) editContributorForm.get("area");
+            String parishOfResidence = (String) editContributorForm.get("parishOfResidence");
+            String districtSubdivisionOfResidence = (String) editContributorForm.get("districtSubdivisionOfResidence");
+            String districtOfResidence = (String) editContributorForm.get("districtOfResidence");
 
-            Object args[] = { infoContributor, contributorNumber, contributorName, contributorAddress };
+            Object args[] = { infoContributor, contributorNumber, contributorName, contributorAddress, areaCode, areaOfAreaCode, area,
+                    parishOfResidence, districtSubdivisionOfResidence, districtOfResidence };
             InfoContributor newInfoContributor = null;
             try {
                 newInfoContributor = (InfoContributor) ServiceManagerServiceFactory.executeService(

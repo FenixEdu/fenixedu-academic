@@ -14,7 +14,7 @@ public class InfoGuideWithPersonAndExecutionDegreeAndDegreeCurricularPlanAndDegr
     public void copyFromDomain(Guide guide) {
         super.copyFromDomain(guide);
         if (guide != null) {
-            setInfoContributor(InfoContributor.newInfoFromDomain(guide.getContributor()));
+            setInfoContributor(InfoContributor.newInfoFromDomain(guide.getContributorParty()));
         }
     }
 

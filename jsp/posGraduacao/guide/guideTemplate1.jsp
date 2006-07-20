@@ -98,17 +98,54 @@
             <td width="70%" >&nbsp;</td>
           </tr>
           <tr> 
-            <td><bean:message key="label.masterDegree.administrativeOffice.contributorNumber"/></td>
+            <td><bean:message key="label.masterDegree.administrativeOffice.contributorNumber"/>:</td>
             <td><bean:write name="guide" property="infoContributor.contributorNumber"/></td>
           </tr>
           <tr> 
-            <td><bean:message key="label.masterDegree.administrativeOffice.contributorName"/></td>
+            <td><bean:message key="label.masterDegree.administrativeOffice.contributorName"/>:</td>
             <td><bean:write name="guide" property="infoContributor.contributorName"/></td>
           </tr>
           <tr> 
-            <td valign="top"><bean:message key="label.masterDegree.administrativeOffice.contributorAddress"/></td>
+            <td valign="top"><bean:message key="label.masterDegree.administrativeOffice.contributorAddress"/>:</td>
             <td><bean:write name="guide" property="infoContributor.contributorAddress"/></td>
           </tr>
+		<logic:notEmpty name="infoGuide" property="infoContributor.areaCode">
+			<tr>
+				<td><bean:message key="label.person.postCode" /></td>
+				<td><bean:write name="infoGuide" property="infoContributor.areaCode" /></td>
+			</tr>
+		</logic:notEmpty>
+		<logic:notEmpty name="infoGuide" property="infoContributor.areaOfAreaCode">
+			<tr>
+				<td><bean:message key="label.person.areaOfPostCode" /></td>
+				<td><bean:write name="infoGuide" property="infoContributor.areaOfAreaCode" /></td>
+			</tr>
+		</logic:notEmpty>
+		<logic:notEmpty name="infoGuide" property="infoContributor.area">
+			<tr>
+				<td><bean:message key="label.person.place" /></td>
+				<td><bean:write name="infoGuide" property="infoContributor.area" /></td>
+			</tr>
+		</logic:notEmpty>
+		<logic:notEmpty name="infoGuide" property="infoContributor.parishOfResidence">
+			<tr>
+				<td><bean:message key="label.person.addressParish" /></td>
+				<td><bean:write name="infoGuide" property="infoContributor.parishOfResidence" /></td>
+			</tr>
+		</logic:notEmpty>
+		<logic:notEmpty name="infoGuide" property="infoContributor.districtSubdivisionOfResidence">
+			<tr>
+				<td><bean:message key="label.person.addressMunicipality" /></td>
+				<td><bean:write name="infoGuide" property="infoContributor.districtSubdivisionOfResidence" /></td>
+			</tr>
+		</logic:notEmpty>
+		<logic:notEmpty name="infoGuide" property="infoContributor.districtOfResidence">
+			<tr>
+				<td><bean:message key="label.person.addressDistrict" /></td>
+				<td><bean:write name="infoGuide" property="infoContributor.districtOfResidence" /></td>
+			</tr>
+		</logic:notEmpty>
+          
 	  </table>
 	 </td>
 	 </tr>

@@ -20,7 +20,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgume
 import net.sourceforge.fenixedu.dataTransferObject.accounting.CreateReceiptBean;
 import net.sourceforge.fenixedu.dataTransferObject.accounting.PaymentsManagementDTO;
 import net.sourceforge.fenixedu.dataTransferObject.accounting.SelectableEntryBean;
-import net.sourceforge.fenixedu.domain.Contributor;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accounting.Entry;
 import net.sourceforge.fenixedu.domain.accounting.Event;
@@ -30,6 +29,7 @@ import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOfficeType;
 import net.sourceforge.fenixedu.domain.candidacy.Candidacy;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.domain.exceptions.accounting.PostingRuleDomainException;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
@@ -180,8 +180,8 @@ public abstract class PaymentsManagementDispatchAction extends FenixDispatchActi
         final CreateReceiptBean createReceiptBean = (CreateReceiptBean) RenderUtils.getViewState(
                 "createReceiptBean").getMetaObject().getObject();
 
-        if (createReceiptBean.getContributor() == null) {
-            final Contributor contributor = getContributor(createReceiptBean);
+        if (createReceiptBean.getContributorParty() == null) {
+            final Party contributor = Party.readByContributorNumber(createReceiptBean.getContributorNumber());
             if (contributor == null) {
                 addActionMessage(request,
                         "error.administrativeOffice.payments.receipt.contributor.does.not.exist");
@@ -190,7 +190,7 @@ public abstract class PaymentsManagementDispatchAction extends FenixDispatchActi
                 return showPaymentsWithoutReceipt(mapping, actionForm, request, response);
 
             } else {
-                createReceiptBean.setContributor(contributor);
+                createReceiptBean.setContributorParty(contributor);
             }
         }
 
@@ -206,17 +206,6 @@ public abstract class PaymentsManagementDispatchAction extends FenixDispatchActi
         return mapping.findForward("confirmCreateReceipt");
     }
 
-    private Contributor getContributor(final CreateReceiptBean createReceiptBean) {
-        try {
-            return Contributor.readByContributorNumber(Integer.valueOf(createReceiptBean
-                    .getContributorNumber()));
-
-        } catch (NumberFormatException ex) {
-            return null;
-        }
-
-    }
-
     public ActionForward createReceipt(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
             FenixServiceException {
@@ -227,7 +216,7 @@ public abstract class PaymentsManagementDispatchAction extends FenixDispatchActi
         try {
             final Receipt receipt = (Receipt) ServiceUtils.executeService(getUserView(request),
                     "CreateReceipt", new Object[] { getUserView(request).getPerson().getEmployee(),
-                            createReceiptBean.getPerson(), createReceiptBean.getContributor(),
+                            createReceiptBean.getPerson(), createReceiptBean.getContributorParty(),
                             createReceiptBean.getSelectedEntries() });
 
             request.setAttribute("personId", receipt.getPerson().getIdInternal());

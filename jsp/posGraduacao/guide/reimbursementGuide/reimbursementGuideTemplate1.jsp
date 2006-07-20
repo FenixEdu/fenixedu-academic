@@ -97,17 +97,53 @@
             <td width="70%" >&nbsp;</td>
           </tr>
           <tr> 
-            <td><bean:message key="label.masterDegree.administrativeOffice.contributorNumber"/></td>
+            <td><bean:message key="label.masterDegree.administrativeOffice.contributorNumber"/>:</td>
             <td><bean:write name="reimbursementGuide" property="infoGuide.infoContributor.contributorNumber"/></td>
           </tr>
           <tr> 
-            <td><bean:message key="label.masterDegree.administrativeOffice.contributorName"/></td>
+            <td><bean:message key="label.masterDegree.administrativeOffice.contributorName"/>:</td>
             <td><bean:write name="reimbursementGuide" property="infoGuide.infoContributor.contributorName"/></td>
           </tr>
           <tr> 
-            <td valign="top"><bean:message key="label.masterDegree.administrativeOffice.contributorAddress"/></td>
+            <td valign="top"><bean:message key="label.masterDegree.administrativeOffice.contributorAddress"/>:</td>
             <td><bean:write name="reimbursementGuide" property="infoGuide.infoContributor.contributorAddress"/></td>
           </tr>
+		<logic:notEmpty name="reimbursementGuide" property="infoGuide.infoContributor.areaCode">
+			<tr>
+				<td><bean:message key="label.person.postCode" /></td>
+				<td><bean:write name="reimbursementGuide" property="infoGuide.infoContributor.areaCode" /></td>
+			</tr>
+		</logic:notEmpty>
+		<logic:notEmpty name="reimbursementGuide" property="infoGuide.infoContributor.areaOfAreaCode">
+			<tr>
+				<td><bean:message key="label.person.areaOfPostCode" /></td>
+				<td><bean:write name="reimbursementGuide" property="infoGuide.infoContributor.areaOfAreaCode" /></td>
+			</tr>
+		</logic:notEmpty>
+		<logic:notEmpty name="reimbursementGuide" property="infoGuide.infoContributor.area">
+			<tr>
+				<td><bean:message key="label.person.place" /></td>
+				<td><bean:write name="reimbursementGuide" property="infoGuide.infoContributor.area" /></td>
+			</tr>
+		</logic:notEmpty>
+		<logic:notEmpty name="reimbursementGuide" property="infoGuide.infoContributor.parishOfResidence">
+			<tr>
+				<td><bean:message key="label.person.addressParish" /></td>
+				<td><bean:write name="reimbursementGuide" property="infoGuide.infoContributor.parishOfResidence" /></td>
+			</tr>
+		</logic:notEmpty>
+		<logic:notEmpty name="reimbursementGuide" property="infoGuide.infoContributor.districtSubdivisionOfResidence">
+			<tr>
+				<td><bean:message key="label.person.addressMunicipality" /></td>
+				<td><bean:write name="reimbursementGuide" property="infoGuide.infoContributor.districtSubdivisionOfResidence" /></td>
+			</tr>
+		</logic:notEmpty>
+		<logic:notEmpty name="reimbursementGuide" property="infoGuide.infoContributor.districtOfResidence">
+			<tr>
+				<td><bean:message key="label.person.addressDistrict" /></td>
+				<td><bean:write name="reimbursementGuide" property="infoGuide.infoContributor.districtOfResidence" /></td>
+			</tr>
+		</logic:notEmpty>          
 	  </table>
 	 </td>
 	 </tr>

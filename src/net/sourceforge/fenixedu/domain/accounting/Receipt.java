@@ -7,7 +7,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.domain.Contributor;
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
@@ -36,16 +35,16 @@ public class Receipt extends Receipt_Base {
         super.setWhenCreated(new DateTime());
     }
 
-    public Receipt(Employee employee, Person person, Contributor contributor, List<Entry> entries) {
+    public Receipt(Employee employee, Person person, Party contributor, List<Entry> entries) {
         this();
         init(employee, person, contributor, entries);
     }
 
-    private void init(Employee employee, Person person, Contributor contributor, List<Entry> entries) {
+    private void init(Employee employee, Person person, Party contributor, List<Entry> entries) {
         checkParameters(employee, person, contributor, entries);
         super.setPerson(person);
         super.setYear(new DateTime().getYear());
-        super.setContributor(contributor);
+        super.setContributorParty(contributor);
         super.setEmployee(employee);
 
         for (final Entry entry : entries) {
@@ -53,7 +52,7 @@ public class Receipt extends Receipt_Base {
         }
     }
 
-    private void checkParameters(Employee employee, Person person, Contributor contributor,
+    private void checkParameters(Employee employee, Person person, Party contributor,
             List<Entry> entries) {
         if (person == null) {
             throw new DomainException("error.accouting.receipt.person.cannot.be.null");

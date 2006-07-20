@@ -27,11 +27,17 @@
     <%= ((List) contributorList).size()%> <bean:message key="label.masterDegree.administrativeOffice.contributorsFound"/>        
     <% if (((List) contributorList).size() != 0) { %>
     
-	    <table>
+	    <table class="tstyle1a">
     		<tr>
 				<td><bean:message key="label.masterDegree.administrativeOffice.contributorNumber" /></td>
 				<td><bean:message key="label.masterDegree.administrativeOffice.contributorName" /></td>
 				<td><bean:message key="label.masterDegree.administrativeOffice.contributorAddress" /></td>
+				<td><bean:message key="label.person.postCode" /></td>
+				<td><bean:message key="label.person.areaOfPostCode" /></td>
+				<td><bean:message key="label.person.place" /></td>
+				<td><bean:message key="label.person.addressParish" /></td>
+				<td><bean:message key="label.person.addressMunicipality" /></td>
+				<td><bean:message key="label.person.addressDistrict" /></td>
 			</tr>
     		
         
@@ -47,6 +53,12 @@
     				</td>
     				<td><bean:write name="contributor" property="contributorName" /></td>
     				<td><bean:write name="contributor" property="contributorAddress" /></td>
+	   				<td><bean:write name="contributor" property="areaCode" /></td>
+	   				<td><bean:write name="contributor" property="areaOfAreaCode" /></td>
+	   				<td><bean:write name="contributor" property="area" /></td>
+	   				<td><bean:write name="contributor" property="parishOfResidence" /></td>
+	   				<td><bean:write name="contributor" property="districtSubdivisionOfResidence" /></td>
+	   				<td><bean:write name="contributor" property="districtOfResidence" /></td>
     			</tr>
     		</logic:iterate>
           </table>

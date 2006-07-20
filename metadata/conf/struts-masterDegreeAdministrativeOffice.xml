@@ -93,16 +93,23 @@
 		 <form-property name="executionYear" type="java.lang.String" />
       </form-bean>
       
-      <!-- Bean for The Creation of a Contributor -->
-      <form-bean name="createContributorForm" 
-                 type="org.apache.struts.validator.DynaValidatorForm"
-                 dynamic="true">
-
-         <form-property name="page" type="java.lang.Integer" />
-         <form-property name="contributorNumber" type="java.lang.String" />
-         <form-property name="contributorName" type="java.lang.String" />
-         <form-property name="contributorAddress" type="java.lang.String" />
-      </form-bean>
+		<!-- Bean for The Creation of a Contributor -->
+		<form-bean name="createContributorForm" 
+	    		type="org.apache.struts.validator.DynaValidatorForm"
+	            dynamic="true">
+	
+	        <form-property name="page" type="java.lang.Integer" />
+			<form-property name="contributorType" type="java.lang.String" />
+	        <form-property name="contributorNumber" type="java.lang.String" />
+	        <form-property name="contributorName" type="java.lang.String" />
+	        <form-property name="contributorAddress" type="java.lang.String" />
+	        <form-property name="areaCode" type="java.lang.String" />
+	        <form-property name="areaOfAreaCode" type="java.lang.String" />
+	        <form-property name="area" type="java.lang.String" />
+	        <form-property name="parishOfResidence" type="java.lang.String" />
+	        <form-property name="districtSubdivisionOfResidence" type="java.lang.String" />
+	        <form-property name="districtOfResidence" type="java.lang.String" />
+		</form-bean>
 
 
       <!-- Bean for The Choosing of a Contributor -->

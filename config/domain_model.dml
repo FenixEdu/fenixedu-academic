@@ -205,6 +205,7 @@ class net.sourceforge.fenixedu.domain.accounting.Event extends net.sourceforge.f
 class net.sourceforge.fenixedu.domain.accounting.Receipt extends net.sourceforge.fenixedu.domain.DomainObject {
     Integer keyPerson;
     Integer keyContributor;
+    Integer keyContributorParty;
     Integer number;
     Integer year;
     DateTime whenCreated;
@@ -1664,6 +1665,7 @@ class net.sourceforge.fenixedu.domain.ExportGrouping extends net.sourceforge.fen
         
 class net.sourceforge.fenixedu.domain.Guide extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer keyContributor;
+	Integer keyContributorParty;
 	String remarks;
 	Integer version;
 	Double total;
@@ -2839,17 +2841,26 @@ class net.sourceforge.fenixedu.domain.Seminaries.Theme extends net.sourceforge.f
 }
 
 class net.sourceforge.fenixedu.domain.organizationalStructure.Party extends net.sourceforge.fenixedu.domain.DomainObject {
+	Integer keyPartyType;
     String ojbConcreteClass;
+	PartyType type;
 	String name;
 	String webAddress;
-	PartyType type;
-	Integer keyPartyType;
+	String socialSecurityNumber;
+
+	String address;	
+	String areaCode;
+	String areaOfAreaCode;
+	String area;
+	String parishOfResidence;
+	String districtSubdivisionOfResidence;	
+	String districtOfResidence;	
 }
 	class net.sourceforge.fenixedu.domain.organizationalStructure.Unit extends net.sourceforge.fenixedu.domain.organizationalStructure.Party {
-		String acronym;
 		Integer costCenterCode;
 		Integer keyDepartment;	
 		Integer keyDegree;
+		String acronym;
 		YearMonthDay beginDateYearMonthDay;
 		YearMonthDay endDateYearMonthDay;
 		Integer keyAdministrativeOffice;
@@ -2866,39 +2877,34 @@ class net.sourceforge.fenixedu.domain.organizationalStructure.Party extends net.
 		Integer keyResearcher;
 		Integer keyUser;
 	    Integer keyHomepage;
-		String area;
-		String fiscalCode;
-		String mobile;
-		YearMonthDay expirationDateOfDocumentIdYearMonthDay;
-		String districtOfResidence;
-		String documentIdNumber;
 		Integer keyPais;
 		Integer keyCountryOfBirth;
 		Integer keyCountryOfResidence;		
-		String profession;
-		String districtSubdivisionOfBirth;
-		YearMonthDay emissionDateOfDocumentIdYearMonthDay;
-		String address;
-		Boolean availableWebSite;
-		String socialSecurityNumber;
-		String areaOfAreaCode;
-		String phone;
+
+	    Gender gender;
+		String documentIdNumber;
+	    IDDocumentType idDocumentType; 
 		String emissionLocationOfDocumentId;
-		String districtOfBirth;
-		Boolean availableEmail;
-		String workPhone;
+		YearMonthDay emissionDateOfDocumentIdYearMonthDay;
+		YearMonthDay expirationDateOfDocumentIdYearMonthDay;
+		String profession;	
+		String fiscalCode;
+	    MaritalStatus maritalStatus;
+
+		YearMonthDay dateOfBirthYearMonthDay;
 		String parishOfBirth;
-		String areaCode;
+		String districtSubdivisionOfBirth;
+		String districtOfBirth;		
 		String nameOfFather;
 		String nameOfMother;
-		Boolean availablePhoto;
+		
+		String phone;
+		String workPhone;
+		String mobile;
 		String email;
-		String districtSubdivisionOfResidence;
-		YearMonthDay dateOfBirthYearMonthDay;
-		String parishOfResidence;
-	    MaritalStatus maritalStatus;
-	    Gender gender;
-	    IDDocumentType idDocumentType; 
+		Boolean availableEmail;
+		Boolean availableWebSite;
+		Boolean availablePhoto;
 	}
 	 
 class net.sourceforge.fenixedu.domain.organizationalStructure.PartyType extends net.sourceforge.fenixedu.domain.DomainObject {	
@@ -5039,11 +5045,35 @@ relation GroupStudentStudent {
 	net.sourceforge.fenixedu.domain.Student playsRole student;
 }
 
+// remove
 relation GuideContributor {
 	net.sourceforge.fenixedu.domain.Guide playsRole guides {
 		multiplicity *;
 	}
 	net.sourceforge.fenixedu.domain.Contributor playsRole contributor;
+}
+
+// remove
+relation ReceiptContributor {
+	net.sourceforge.fenixedu.domain.Contributor playsRole contributor;
+	net.sourceforge.fenixedu.domain.accounting.Receipt playsRole receipts {
+		multiplicity *;
+	}
+}
+
+// remove
+relation RootDomainObjectContributor {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.Contributor playsRole contributors {
+		multiplicity *;
+	}
+}
+
+relation GuideContributorParty {
+	net.sourceforge.fenixedu.domain.Guide playsRole payedGuides {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.organizationalStructure.Party playsRole contributorParty;
 }
 
 relation GuideEntryGuide {
@@ -7359,13 +7389,6 @@ relation RootDomainObjectDegreeInfo {
 	}
 }
 
-relation RootDomainObjectContributor {
-	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
-	net.sourceforge.fenixedu.domain.Contributor playsRole contributors {
-		multiplicity *;
-	}
-}
-
 relation RootDomainObjectGratuityValues {
 	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
 	net.sourceforge.fenixedu.domain.GratuityValues playsRole gratuityValuess {
@@ -9145,9 +9168,9 @@ relation ReceiptPerson {
 	}
 }
 
-relation ReceiptContributor {
-	net.sourceforge.fenixedu.domain.Contributor playsRole contributor;
-	net.sourceforge.fenixedu.domain.accounting.Receipt playsRole receipts {
+relation ReceiptContributorParty {
+	net.sourceforge.fenixedu.domain.organizationalStructure.Party playsRole contributorParty;
+	net.sourceforge.fenixedu.domain.accounting.Receipt playsRole payedReceipts {
 		multiplicity *;
 	}
 }

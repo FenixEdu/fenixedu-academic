@@ -86,22 +86,57 @@
 					</tr>
 					<tr>
 						<td><bean:message
-							key="label.masterDegree.administrativeOffice.payments.contributorName" /></td>
+							key="label.masterDegree.administrativeOffice.payments.contributorName" />:</td>
 						<td><bean:write name="receipt"
-							property="contributor.contributorName" /></td>
+							property="contributorParty.name" /></td>
 					</tr>
 					<tr>
 						<td><bean:message
-							key="label.masterDegree.administrativeOffice.payments.contributorAddress" /></td>
+							key="label.masterDegree.administrativeOffice.payments.contributorNumber" />:</td>
 						<td><bean:write name="receipt"
-							property="contributor.contributorAddress" /></td>
+							property="contributorParty.socialSecurityNumber" /></td>
 					</tr>
 					<tr>
-						<td><bean:message
-							key="label.masterDegree.administrativeOffice.payments.contributorNumber" /></td>
-						<td><bean:write name="receipt"
-							property="contributor.contributorNumber" /></td>
+						<td><bean:message key="label.masterDegree.administrativeOffice.payments.contributorAddress" />:</td>
+						<td><bean:write name="receipt" property="contributorParty.address" /></td>
 					</tr>
+				<logic:notEmpty name="receipt" property="contributorParty.areaCode">
+					<tr>
+						<td><bean:message key="label.person.postCode" /></td>
+						<td><bean:write name="receipt" property="contributorParty.areaCode" /></td>
+					</tr>
+				</logic:notEmpty>
+				<logic:notEmpty name="receipt" property="contributorParty.areaOfAreaCode">
+					<tr>
+						<td><bean:message key="label.person.areaOfPostCode" /></td>
+						<td><bean:write name="receipt" property="contributorParty.areaOfAreaCode" /></td>
+					</tr>
+				</logic:notEmpty>
+				<logic:notEmpty name="receipt" property="contributorParty.area">
+					<tr>
+						<td><bean:message key="label.person.place" /></td>
+						<td><bean:write name="receipt" property="contributorParty.area" /></td>
+					</tr>
+				</logic:notEmpty>
+				<logic:notEmpty name="receipt" property="contributorParty.parishOfResidence">
+					<tr>
+						<td><bean:message key="label.person.addressParish" /></td>
+						<td><bean:write name="receipt" property="contributorParty.parishOfResidence" /></td>
+					</tr>
+				</logic:notEmpty>
+				<logic:notEmpty name="receipt" property="contributorParty.districtSubdivisionOfResidence">
+					<tr>
+						<td><bean:message key="label.person.addressMunicipality" /></td>
+						<td><bean:write name="receipt" property="contributorParty.districtSubdivisionOfResidence" /></td>
+					</tr>
+				</logic:notEmpty>
+				<logic:notEmpty name="receipt" property="contributorParty.districtOfResidence">
+					<tr>
+						<td><bean:message key="label.person.addressDistrict" /></td>
+						<td><bean:write name="receipt" property="contributorParty.districtOfResidence" /></td>
+					</tr>
+				</logic:notEmpty>
+
 
 				</table>
 			</tr>

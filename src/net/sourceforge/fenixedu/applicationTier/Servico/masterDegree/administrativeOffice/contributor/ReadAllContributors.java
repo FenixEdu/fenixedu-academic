@@ -4,17 +4,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoContributor;
-import net.sourceforge.fenixedu.domain.Contributor;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 
 public class ReadAllContributors extends Service {
 
-	public List<InfoContributor> run() throws FenixServiceException, ExcepcaoPersistencia {
+	public List<InfoContributor> run() {
         List<InfoContributor> result = new ArrayList<InfoContributor>();
         
-        for (Contributor contributor : rootDomainObject.getContributors()) {
+        for (final Party contributor : Party.readContributors()) {
             result.add(InfoContributor.newInfoFromDomain(contributor));
         }
 

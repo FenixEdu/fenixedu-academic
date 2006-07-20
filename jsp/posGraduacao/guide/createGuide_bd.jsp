@@ -71,38 +71,20 @@
        <!-- Contributor -->
        <tr>
          <td><bean:message key="label.masterDegree.administrativeOffice.contributorNumber"/>: </td>
-         <td><html:text bundle="HTMLALT_RESOURCES" altKey="text.contributorNumber" property="contributorNumber"/>
-         <logic:notPresent name="<%= SessionConstants.UNEXISTING_CONTRIBUTOR %>">
+         <td>
      	  <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
-     	  &nbsp;&nbsp;ou&nbsp;&nbsp; 
+
 	          <html:select bundle="HTMLALT_RESOURCES" altKey="select.contributorList" property="contributorList">
         	  	<option value="" selected="selected"><bean:message key="label.masterDegree.administrativeOffice.contributor.default"/></option>
     	        <html:options collection="<%= SessionConstants.CONTRIBUTOR_LIST %>" property="value" labelProperty="label"/>
 	          </html:select>        
           	</td>
            </tr> 
-		</logic:notPresent >
-		<logic:present name="<%= SessionConstants.UNEXISTING_CONTRIBUTOR %>">
-     	  <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="2"/>
-             </td>
-           </tr> 
-			<tr>		
-             <td><bean:message key="label.masterDegree.administrativeOffice.contributorName"/>: </td>
-             <td><html:text bundle="HTMLALT_RESOURCES" altKey="text.contributorName" property="contributorName"/>
-    		</tr>
-    		<tr>
-             <td><bean:message key="label.masterDegree.administrativeOffice.contributorAddress"/>: </td>
-             <td><html:text bundle="HTMLALT_RESOURCES" altKey="text.contributorAddress" property="contributorAddress"/>
-    		</tr>
-		</logic:present >
-		<tr>
-			<td>
-				<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.ok" value="Seguinte" styleClass="inputbutton" property="ok"/>
-			</td>
-			<td>
-				<html:reset bundle="HTMLALT_RESOURCES" altKey="reset.reset" value="Limpar" styleClass="inputbutton"/>
-			</td>
-		</tr>
+		</table>
+		<p>
+			<html:submit value="Seguinte" styleClass="inputbutton" property="ok"/>
+			<html:reset value="Limpar" styleClass="inputbutton"/>
+		</p>
 	  </html:form>
-	</table>
+
 </logic:present>

@@ -577,4 +577,26 @@ public class Unit extends Unit_Base {
     	return (Set) getParentParties(AccountabilityTypeEnum.ORGANIZATIONAL_STRUCTURE, getClass());
     }
 
+    public static Party createContributor(String contributorName, String contributorNumber,
+            String contributorAddress, String areaCode, String areaOfAreaCode, String area,
+            String parishOfResidence, String districtSubdivisionOfResidence, String districtOfResidence) {
+
+        if (Party.readByContributorNumber(contributorNumber) != null) {
+            throw new DomainException("EXTERNAL_INSTITUTION_UNIT.createContributor.existing.contributor.number");
+        }
+        
+        Unit contributor = Unit.createNewExternalInstitution(contributorName);
+
+        contributor.setSocialSecurityNumber(contributorNumber);
+        contributor.setAddress(contributorAddress);
+        contributor.setAreaCode(areaCode);
+        contributor.setAreaOfAreaCode(areaOfAreaCode);
+        contributor.setArea(area);
+        contributor.setParishOfResidence(parishOfResidence);
+        contributor.setDistrictSubdivisionOfResidence(districtSubdivisionOfResidence);
+        contributor.setDistrictOfResidence(districtOfResidence);
+        
+        return contributor;
+    }
+    
 }

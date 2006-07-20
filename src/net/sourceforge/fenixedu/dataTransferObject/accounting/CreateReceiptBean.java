@@ -5,16 +5,16 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.Contributor;
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accounting.Entry;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 
 public class CreateReceiptBean implements Serializable {
 
     private DomainReference<Person> person;
 
-    private DomainReference<Contributor> contributor;
+    private DomainReference<Party> contributorParty;
 
     private List<SelectableEntryBean> entries;
 
@@ -24,18 +24,18 @@ public class CreateReceiptBean implements Serializable {
 
     }
 
-    public CreateReceiptBean(Person person, Contributor contributor, List<SelectableEntryBean> entries) {
+    public CreateReceiptBean(Person person, Party contributor, List<SelectableEntryBean> entries) {
         setPerson(person);
-        setContributor(contributor);
+        setContributorParty(contributor);
         setEntries(entries);
     }
 
-    public Contributor getContributor() {
-        return (this.contributor != null) ? this.contributor.getObject() : null;
+    public Party getContributorParty() {
+        return (this.contributorParty != null) ? this.contributorParty.getObject() : null;
     }
 
-    public void setContributor(Contributor contributor) {
-        this.contributor = (contributor != null) ? new DomainReference<Contributor>(contributor) : null;
+    public void setContributorParty(Party contributorParty) {
+        this.contributorParty = (contributorParty != null) ? new DomainReference<Party>(contributorParty) : null;
     }
 
     public void setPerson(Person person) {

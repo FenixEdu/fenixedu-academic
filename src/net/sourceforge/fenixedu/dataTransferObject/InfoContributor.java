@@ -4,23 +4,33 @@
  */
 package net.sourceforge.fenixedu.dataTransferObject;
 
-import net.sourceforge.fenixedu.domain.Contributor;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
  */
 public class InfoContributor extends InfoObject {
 
-    private Integer contributorNumber;
+    public enum ContributorType {
+        EXTERNAL_PERSON,
+        EXTERNAL_INSTITUTION_UNIT,
+    }
 
+    private ContributorType contributorType;
     private String contributorName;
-
+    private String contributorNumber;
     private String contributorAddress;
+    private String areaCode;
+    private String areaOfAreaCode;
+    private String area;
+    private String parishOfResidence;
+    private String districtSubdivisionOfResidence;
+    private String districtOfResidence;
 
     public InfoContributor() {
     }
 
-    public InfoContributor(Integer contributorNumber, String contributorName, String contributorAddress) {
+    public InfoContributor(String contributorNumber, String contributorName, String contributorAddress) {
         this.contributorNumber = contributorNumber;
         this.contributorName = contributorName;
         this.contributorAddress = contributorAddress;
@@ -34,75 +44,22 @@ public class InfoContributor extends InfoObject {
 
     }
 
-    public String toString() {
-        String result = "InfoContributor:\n";
-        result += "\n  - Contributor Number : " + contributorNumber;
-        result += "\n  - Contributor Name : " + contributorName;
-        result += "\n  - Contributor Address : " + contributorAddress;
-        return result;
-    }
-
-    /**
-     * @return String
-     */
-    public String getContributorAddress() {
-        return contributorAddress;
-    }
-
-    /**
-     * @return String
-     */
-    public String getContributorName() {
-        return contributorName;
-    }
-
-    /**
-     * @return Integer
-     */
-    public Integer getContributorNumber() {
-        return contributorNumber;
-    }
-
-    /**
-     * Sets the contributorAddress.
-     * 
-     * @param contributorAddress
-     *            The contributorAddress to set
-     */
-    public void setContributorAddress(String contributorAddress) {
-        this.contributorAddress = contributorAddress;
-    }
-
-    /**
-     * Sets the contributorName.
-     * 
-     * @param contributorName
-     *            The contributorName to set
-     */
-    public void setContributorName(String contributorName) {
-        this.contributorName = contributorName;
-    }
-
-    /**
-     * Sets the contributorNumber.
-     * 
-     * @param contributorNumber
-     *            The contributorNumber to set
-     */
-    public void setContributorNumber(Integer contributorNumber) {
-        this.contributorNumber = contributorNumber;
-    }
-
-    public void copyFromDomain(Contributor contributor) {
+    public void copyFromDomain(Party contributor) {
         super.copyFromDomain(contributor);
         if (contributor != null) {
-            setContributorAddress(contributor.getContributorAddress());
-            setContributorName(contributor.getContributorName());
-            setContributorNumber(contributor.getContributorNumber());
+            setContributorName(contributor.getName());
+            setContributorNumber(contributor.getSocialSecurityNumber());
+            setContributorAddress(contributor.getAddress());
+            setAreaCode(contributor.getAreaCode());
+            setAreaOfAreaCode(contributor.getAreaOfAreaCode());
+            setArea(contributor.getArea());
+            setParishOfResidence(contributor.getParishOfResidence());
+            setDistrictSubdivisionOfResidence(contributor.getDistrictSubdivisionOfResidence());
+            setDistrictOfResidence(contributor.getDistrictOfResidence());
         }
     }
 
-    public static InfoContributor newInfoFromDomain(Contributor contributor) {
+    public static InfoContributor newInfoFromDomain(Party contributor) {
         InfoContributor infoContributor = null;
         if (contributor != null) {
             infoContributor = new InfoContributor();
@@ -111,12 +68,84 @@ public class InfoContributor extends InfoObject {
         return infoContributor;
     }
 
-    public void copyToDomain(InfoContributor infoContributor, Contributor contributor) {
-        super.copyToDomain(infoContributor, contributor);
+    public ContributorType getContributorType() {
+        return contributorType;
+    }
 
-        contributor.setContributorAddress(infoContributor.getContributorAddress());
-        contributor.setContributorName(infoContributor.getContributorName());
-        contributor.setContributorNumber(infoContributor.getContributorNumber());
+    public void setContributorType(ContributorType contributorType) {
+        this.contributorType = contributorType;
+    }
+
+    public String getContributorName() {
+        return contributorName;
+    }
+
+    public void setContributorName(String contributorName) {
+        this.contributorName = contributorName;
+    }
+
+    public String getContributorAddress() {
+        return contributorAddress;
+    }
+
+    public void setContributorAddress(String contributorAddress) {
+        this.contributorAddress = contributorAddress;
+    }
+
+    public String getContributorNumber() {
+        return contributorNumber;
+    }
+
+    public void setContributorNumber(String contributorNumber) {
+        this.contributorNumber = contributorNumber;
+    }
+
+    public String getArea() {
+        return area;
+    }
+
+    public void setArea(String area) {
+        this.area = area;
+    }
+
+    public String getAreaCode() {
+        return areaCode;
+    }
+
+    public void setAreaCode(String areaCode) {
+        this.areaCode = areaCode;
+    }
+
+    public String getAreaOfAreaCode() {
+        return areaOfAreaCode;
+    }
+
+    public void setAreaOfAreaCode(String areaOfAreaCode) {
+        this.areaOfAreaCode = areaOfAreaCode;
+    }
+
+    public String getDistrictOfResidence() {
+        return districtOfResidence;
+    }
+
+    public void setDistrictOfResidence(String districtOfResidence) {
+        this.districtOfResidence = districtOfResidence;
+    }
+
+    public String getDistrictSubdivisionOfResidence() {
+        return districtSubdivisionOfResidence;
+    }
+
+    public void setDistrictSubdivisionOfResidence(String districtSubdivisionOfResidence) {
+        this.districtSubdivisionOfResidence = districtSubdivisionOfResidence;
+    }
+
+    public String getParishOfResidence() {
+        return parishOfResidence;
+    }
+
+    public void setParishOfResidence(String parishOfResidence) {
+        this.parishOfResidence = parishOfResidence;
     }
 
 }

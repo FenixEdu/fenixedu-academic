@@ -11,9 +11,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidSituat
 import net.sourceforge.fenixedu.dataTransferObject.InfoGuide;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGuideSituation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGuideWithPersonAndExecutionDegreeAndContributor;
-import net.sourceforge.fenixedu.domain.Contributor;
 import net.sourceforge.fenixedu.domain.DocumentType;
-
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.GraduationType;
 import net.sourceforge.fenixedu.domain.Guide;
@@ -21,6 +19,7 @@ import net.sourceforge.fenixedu.domain.GuideEntry;
 import net.sourceforge.fenixedu.domain.GuideSituation;
 import net.sourceforge.fenixedu.domain.GuideState;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.domain.transactions.GratuityTransaction;
 import net.sourceforge.fenixedu.domain.transactions.InsuranceTransaction;
 import net.sourceforge.fenixedu.domain.transactions.PaymentTransaction;
@@ -80,12 +79,12 @@ public class CreateGuideFromTransactions extends Service {
         ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(infoGuide
                 .getInfoExecutionDegree().getIdInternal());
 
-        Contributor contributor = Contributor.readByContributorNumber(infoGuide.getInfoContributor()
+        Party contributor = Party.readByContributorNumber(infoGuide.getInfoContributor()
                 .getContributorNumber());
         Person person = Person.readPersonByUsername(infoGuide.getInfoPerson().getUsername());
 
         guide.setExecutionDegree(executionDegree);
-        guide.setContributor(contributor);
+        guide.setContributorParty(contributor);
         guide.setPerson(person);
 
         // Write the new Guide

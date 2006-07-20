@@ -39,8 +39,9 @@ public class InsertExternalPersons extends Service {
             String name = infoExternalPerson.getInfoPerson().getNome();
 
             // creating a new ExternalPerson
-            ExternalPerson externalPerson = new ExternalPerson(name, Gender.MALE, "", "",
-                    "", "", "", String.valueOf(System.currentTimeMillis()), currentInstitution);
+            ExternalPerson externalPerson = new ExternalPerson(name, Gender.MALE, null, null, null,
+                    null, null, null, null, null, null, null, null, String.valueOf(System
+                            .currentTimeMillis()), currentInstitution);
 
             externalPersons.add(externalPerson);
         }

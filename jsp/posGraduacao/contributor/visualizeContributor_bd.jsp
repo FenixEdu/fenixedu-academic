@@ -3,12 +3,7 @@
 <html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
-<%@ page import="org.apache.struts.Globals" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
-<%@ page import="net.sourceforge.fenixedu.util.State" %>
-<%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoCandidateSituation" %>
-
-
 
 <html>
   <head>
@@ -22,18 +17,42 @@
         <logic:present name="contributor">
           <!-- Contributor Number -->
           <tr>
-            <td><bean:message key="label.masterDegree.administrativeOffice.contributorNumber" /></td>
+            <td><bean:message key="label.masterDegree.administrativeOffice.contributorNumber" />:</td>
             <td><bean:write name="contributor" property="contributorNumber"/></td>
           </tr>
           <!-- Contributor Name -->
           <tr>
-            <td><bean:message key="label.masterDegree.administrativeOffice.contributorName" /></td>
+            <td><bean:message key="label.masterDegree.administrativeOffice.contributorName" />:</td>
             <td><bean:write name="contributor" property="contributorName"/></td>
           </tr>
           <!-- Contributor Address -->
           <tr>
-            <td><bean:message key="label.masterDegree.administrativeOffice.contributorAddress" /></td>
+            <td><bean:message key="label.masterDegree.administrativeOffice.contributorAddress" />:</td>
             <td><bean:write name="contributor" property="contributorAddress"/></td>
+          </tr>
+          <tr>
+            <td><bean:message key="label.person.postCode" /></td>
+            <td><bean:write name="contributor" property="areaCode"/></td>
+          </tr>
+          <tr>
+            <td><bean:message key="label.person.areaOfPostCode" /></td>
+            <td><bean:write name="contributor" property="areaOfAreaCode"/></td>
+          </tr>
+          <tr>
+            <td><bean:message key="label.person.place" /></td>
+            <td><bean:write name="contributor" property="area"/></td>
+          </tr>
+          <tr>
+            <td><bean:message key="label.person.addressParish" /></td>
+            <td><bean:write name="contributor" property="parishOfResidence"/></td>
+          </tr>
+          <tr>
+            <td><bean:message key="label.person.addressMunicipality" /></td>
+            <td><bean:write name="contributor" property="districtSubdivisionOfResidence"/></td>
+          </tr>
+          <tr>
+            <td><bean:message key="label.person.addressDistrict" /></td>
+            <td><bean:write name="contributor" property="districtOfResidence"/></td>
           </tr>
         </logic:present>
     </table>

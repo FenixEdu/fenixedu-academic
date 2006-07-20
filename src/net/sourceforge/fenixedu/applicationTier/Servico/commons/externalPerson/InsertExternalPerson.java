@@ -23,8 +23,9 @@ public class InsertExternalPerson extends Service {
 
         Unit institutionLocation = (Unit) rootDomainObject.readPartyByOID(institutionID);
 
-        return new ExternalPerson(name, Gender.valueOf(sex), address, phone, mobile,
-                homepage, email, String.valueOf(System.currentTimeMillis()), institutionLocation);
+        return new ExternalPerson(name, Gender.valueOf(sex), address, null, null, null, null, null,
+                null, phone, mobile, homepage, email, String.valueOf(System.currentTimeMillis()),
+                institutionLocation);
     }
 
     
@@ -36,10 +37,10 @@ public class InsertExternalPerson extends Service {
      * @throws ExcepcaoPersistencia
      * @throws FenixServiceException 
      */
-    public ExternalPerson run(String personName, String organizationName) throws ExcepcaoPersistencia, FenixServiceException {                 
-        final Unit organization = Unit.createNewExternalInstitution(organizationName);                
-        return new ExternalPerson(personName, Gender.MALE, null, null, null,
-                null, null, String.valueOf(System.currentTimeMillis()), organization);
+    public ExternalPerson run(String personName, String organizationName) {
+        final Unit organization = Unit.createNewExternalInstitution(organizationName);
+        return new ExternalPerson(personName, Gender.MALE, null, null, null, null, null, null, null,
+                null, null, null, null, String.valueOf(System.currentTimeMillis()), organization);
     }
     
     
@@ -52,8 +53,7 @@ public class InsertExternalPerson extends Service {
      * @throws FenixServiceException If there is already an externalPerson with the same name in the same unit
      * @throws ExcepcaoPersistencia
      */
-    public ExternalPerson run(String personName, Unit organization) throws FenixServiceException,
-            ExcepcaoPersistencia {
+    public ExternalPerson run(String personName, Unit organization) throws FenixServiceException {
 
         ExternalPerson storedExternalPerson = null;
 
@@ -63,7 +63,7 @@ public class InsertExternalPerson extends Service {
         if (storedExternalPerson != null)
             throw new ExistingServiceException("error.exception.commons.externalPerson.existingExternalPerson");
 
-        return new ExternalPerson(personName, Gender.MALE, null, null, null,
-                null, null, String.valueOf(System.currentTimeMillis()), organization);
+        return new ExternalPerson(personName, Gender.MALE, null, null, null, null, null, null, null,
+                null, null, null, null, String.valueOf(System.currentTimeMillis()), organization);
     }
 }

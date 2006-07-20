@@ -14,9 +14,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoGuide;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGuideEntry;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGuideSituation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGuideWithPersonAndExecutionDegreeAndContributor;
-import net.sourceforge.fenixedu.domain.Contributor;
 import net.sourceforge.fenixedu.domain.DocumentType;
-
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.GraduationType;
 import net.sourceforge.fenixedu.domain.Guide;
@@ -24,6 +22,7 @@ import net.sourceforge.fenixedu.domain.GuideEntry;
 import net.sourceforge.fenixedu.domain.GuideSituation;
 import net.sourceforge.fenixedu.domain.GuideState;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.domain.transactions.PaymentType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.util.CalculateGuideTotal;
@@ -78,12 +77,11 @@ public class CreateGuide extends Service {
                 .getIdInternal());
         ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(infoGuide
                 .getInfoExecutionDegree().getIdInternal());
-        Contributor contributor = rootDomainObject.readContributorByOID(infoGuide.getInfoContributor()
-                .getIdInternal());
+        final Party contributor = rootDomainObject.readPartyByOID(infoGuide.getInfoContributor().getIdInternal());
 
         Guide guide = new Guide();
         guide.setExecutionDegree(executionDegree);
-        guide.setContributor(contributor);
+        guide.setContributorParty(contributor);
         guide.setPerson(person);
         guide.setCreationDate(infoGuide.getCreationDate());
         guide.setGuideRequester(infoGuide.getGuideRequester());

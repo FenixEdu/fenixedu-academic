@@ -13,9 +13,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoContributor;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGuide;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGuideEntry;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGuideWithPersonAndExecutionDegreeAndContributor;
-import net.sourceforge.fenixedu.domain.Contributor;
 import net.sourceforge.fenixedu.domain.DocumentType;
-
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.GraduationType;
 import net.sourceforge.fenixedu.domain.GratuitySituation;
@@ -25,8 +23,8 @@ import net.sourceforge.fenixedu.domain.GuideSituation;
 import net.sourceforge.fenixedu.domain.GuideState;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.PersonAccount;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Student;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.domain.transactions.GratuityTransaction;
 import net.sourceforge.fenixedu.domain.transactions.InsuranceTransaction;
 import net.sourceforge.fenixedu.domain.transactions.PaymentTransaction;
@@ -54,14 +52,15 @@ public class EditGuideInformation extends Service {
                 infoGuide.getVersion());
 
         // check if it's needed to change the Contributor
-        if ((contributorNumber != null)
-                && (!infoGuide.getInfoContributor().getContributorNumber().equals(contributorNumber))) {
+        String contributorNumberString = (contributorNumber == null) ? null : contributorNumber.toString();
+        if ((contributorNumberString != null)
+                && (!infoGuide.getInfoContributor().getContributorNumber().equals(contributorNumberString))) {
             change = true;
         } else {
-            contributorNumber = infoGuide.getInfoContributor().getContributorNumber();
+            contributorNumberString = infoGuide.getInfoContributor().getContributorNumber();
         }
 
-        Contributor contributor = Contributor.readByContributorNumber(contributorNumber);
+        final Party contributor = Party.readByContributorNumber(contributorNumberString);
 
         infoGuide.setInfoContributor(InfoContributor.newInfoFromDomain(contributor));
 
@@ -125,7 +124,7 @@ public class EditGuideInformation extends Service {
                             infoGuideEntry.getDocumentType(), infoGuideEntry.getDescription());
                     guideEntry.setQuantity(infoGuideEntry.getQuantity());
                 }
-                guide.setContributor(contributor);
+                guide.setContributorParty(contributor);
             }
 
         } else if (infoGuide.getInfoGuideSituation().getSituation().equals(GuideState.PAYED)) {
@@ -247,15 +246,14 @@ public class EditGuideInformation extends Service {
     private Guide createNewGuideVersion(InfoGuide infoGuide) throws ExcepcaoPersistencia {
         // Read the needed information from the DataBase
         Person person = Person.readPersonByUsername(infoGuide.getInfoPerson().getUsername());
-        Contributor contributor = Contributor.readByContributorNumber(infoGuide.getInfoContributor()
-                .getContributorNumber());
+        Party contributor = Party.readByContributorNumber(infoGuide.getInfoContributor().getContributorNumber());
 
         ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(
                 infoGuide.getInfoExecutionDegree().getIdInternal());
         Guide guide = new Guide();
 
         // Set the fields
-        guide.setContributor(contributor);
+        guide.setContributorParty(contributor);
         guide.setPerson(person);
         guide.setExecutionDegree(executionDegree);
 

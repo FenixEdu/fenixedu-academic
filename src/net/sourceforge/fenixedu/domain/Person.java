@@ -120,15 +120,24 @@ public class Person extends Person_Base {
         setIsPassInKerberos(Boolean.FALSE);
     }
 
-    private Person(String name, Gender gender, String address, String phone, String mobile,
+    private Person(ExternalPerson externalPerson, String name, Gender gender, String address, String areaCode, String areaOfAreaCode, String area,
+            String parishOfResidence, String districtSubdivisionOfResidence, String districtOfResidence, String phone, String mobile,
             String homepage, String email, String documentIDNumber, IDDocumentType documentType) {
 
         super();
         checkConditionsToCreateNewPerson(documentIDNumber, documentType, this);
 
+        setExternalPerson(externalPerson);
+        
         setNome(name);
         setGender(gender);
         setAddress(address);
+        setAreaCode(areaCode);
+        setAreaOfAreaCode(areaOfAreaCode);
+        setArea(area);
+        setParishOfResidence(parishOfResidence);
+        setDistrictSubdivisionOfResidence(districtSubdivisionOfResidence);
+        setDistrictOfResidence(districtOfResidence);
         setPhone(phone);
         setMobile(mobile);
         setWebAddress(homepage);
@@ -141,12 +150,15 @@ public class Person extends Person_Base {
         setMaritalStatus(MaritalStatus.UNKNOWN);
     }
 
-    public static Person createPersonToExternalPerson(String name, Gender gender, String address,
-            String phone, String mobile, String homepage, String email, String documentIDNumber,
+    protected static Person createExternalPerson(ExternalPerson externalPerson, String name,
+            Gender gender, String address, String areaCode, String areaOfAreaCode, String area,
+            String parishOfResidence, String districtSubdivisionOfResidence, String districtOfResidence,
+            String phone, String mobile, String homepage, String email, String documentIdNumber,
             IDDocumentType documentType) {
 
-        return new Person(name, gender, address, phone, mobile, homepage, email, documentIDNumber,
-                documentType);
+        return new Person(externalPerson, name, gender, address, areaCode, areaOfAreaCode, area,
+                parishOfResidence, districtSubdivisionOfResidence, districtOfResidence, phone, mobile,
+                homepage, email, documentIdNumber, documentType);
     }
 
     public Person(String username, String name, Gender gender, String address, String phone,
@@ -665,10 +677,7 @@ public class Person extends Person_Base {
         if (hasPersonalPhoto()) {
             getPersonalPhoto().delete();
         }
-        // JCACHOPO: Can this for loop be replaced with the clear below?
-        // for (Role role : getPersonRoles()) {
-        // PersonRole.forceRemove(this, role);
-        // }
+
         getPersonRoles().clear();
         getManageableDepartmentCredits().clear();
         getAdvisories().clear();
@@ -1411,4 +1420,34 @@ public class Person extends Person_Base {
 
         return result;
     }
+
+    public static Party createContributor(String contributorName, String contributorNumber,
+            String contributorAddress, String areaCode, String areaOfAreaCode, String area,
+            String parishOfResidence, String districtSubdivisionOfResidence, String districtOfResidence) {
+
+        if (Party.readByContributorNumber(contributorNumber) != null) {
+            throw new DomainException("PERSON.createContributor.existing.contributor.number");
+        }
+        
+        ExternalPerson externalPerson = new ExternalPerson(
+                contributorName, 
+                Gender.MALE, 
+                contributorAddress,
+                areaCode, 
+                areaOfAreaCode, 
+                area, 
+                parishOfResidence, 
+                districtSubdivisionOfResidence, 
+                districtOfResidence, 
+                null, 
+                null, 
+                null, 
+                null, 
+                String.valueOf(System.currentTimeMillis()), 
+                null);
+        externalPerson.getPerson().setSocialSecurityNumber(contributorNumber);
+        
+        return externalPerson.getPerson();
+    }
+
 }

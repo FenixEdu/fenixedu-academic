@@ -3,12 +3,7 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.masterDegree.utils.SessionConstants" %>
-<%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoStudent" %>
-<%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoGratuitySituation" %>
-<%@ page import="net.sourceforge.fenixedu.dataTransferObject.transactions.InfoTransaction" %>
-<%@ page import="net.sourceforge.fenixedu.domain.transactions.TransactionType" %>
 <%@ page import="java.util.Iterator" %>
-<%@ page import="java.util.List" %>
 
 	
 <h2 align="center"><bean:message key="title.transaction.createGuides"/></h2>
@@ -57,6 +52,30 @@
 				<th><bean:message key="label.masterDegree.administrativeOffice.contributorAddress" />: </th>
 				<td><bean:write name="contributor" property="contributorAddress"/></td>
 			</tr>
+          <tr align="left">
+            <th><bean:message key="label.person.postCode" /></th>
+            <td><bean:write name="contributor" property="areaCode"/></td>
+          </tr>
+          <tr align="left">
+            <th><bean:message key="label.person.areaOfPostCode" /></th>
+            <td><bean:write name="contributor" property="areaOfAreaCode"/></td>
+          </tr>
+          <tr align="left">
+            <th><bean:message key="label.person.place" /></th>
+            <td><bean:write name="contributor" property="area"/></td>
+          </tr>
+          <tr align="left">
+            <th><bean:message key="label.person.addressParish" /></th>
+            <td><bean:write name="contributor" property="parishOfResidence"/></td>
+          </tr>
+          <tr align="left">
+            <th><bean:message key="label.person.addressMunicipality" /></th>
+            <td><bean:write name="contributor" property="districtSubdivisionOfResidence"/></td>
+          </tr>
+          <tr align="left">
+            <th><bean:message key="label.person.addressDistrict" /></th>
+            <td><bean:write name="contributor" property="districtOfResidence"/></td>
+          </tr>
 		
 			<tr align="left">
 				<td>&nbsp;</td>

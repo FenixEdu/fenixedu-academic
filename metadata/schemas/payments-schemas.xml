@@ -30,10 +30,12 @@
 	<slot name="year"/>
 </schema>
 
-<schema name="contributor.view" type="net.sourceforge.fenixedu.domain.Contributor" bundle="APPLICATION_RESOURCES">
-	<slot name="contributorName"/>
-	<slot name="contributorAddress"/>
-	<slot name="contributorNumber"/>
+<schema name="contributor.view" type="net.sourceforge.fenixedu.domain.organizationalStructure.Party" bundle="APPLICATION_RESOURCES">
+	<slot name="name"/>
+	<slot name="socialSecurityNumber" key="label.net.sourceforge.fenixedu.domain.organizationalStructure.Party.socialSecurityNumber"/>
+	<slot name="address"/>
+	<slot name="areaCode" key="label.net.sourceforge.fenixedu.domain.organizationalStructure.Party.areaCode"/>
+	<slot name="areaOfAreaCode" key="label.net.sourceforge.fenixedu.domain.organizationalStructure.Party.areaOfAreaCode"/>
 </schema>
 
 
@@ -50,15 +52,15 @@
 	<slot name="entry.amountWithAdjustment" read-only="true" key="label.net.sourceforge.fenixedu.domain.accounting.Entry.amountWithAdjustment" />
 </schema>
 
-<schema name="createReceiptBean.create" type="net.sourceforge.fenixedu.dataTransferObject.accounting.CreateReceiptBean" bundle="APPLICATION_RESOURCES">
-	<slot name="contributor" layout="autoComplete" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+<schema name="createReceiptBean.create" type="net.sourceforge.fenixedu.dataTransferObject.accounting.CreateReceiptBean">
+	<slot name="contributorParty" layout="autoComplete" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
 		<property name="size" value="70"/>
-		<property name="labelField" value="contributorNumber"/>
-		<property name="format" value="${contributorNumber} - ${contributorName}"/>
+		<property name="labelField" value="socialSecurityNumber"/>
+		<property name="format" value="${socialSecurityNumber} - ${name}"/>
 		<property name="indicatorShown" value="true"/>		
 		<property name="serviceName" value="SearchObjects"/>
-		<property name="serviceArgs" value="slot=contributorNumber"/>
-		<property name="className" value="net.sourceforge.fenixedu.domain.Contributor"/>
+		<property name="serviceArgs" value="slot=socialSecurityNumber"/>
+		<property name="className" value="net.sourceforge.fenixedu.domain.organizationalStructure.Party"/>
 		<property name="minChars" value="1"/>
 		<property name="maxCount" value="20"/>
 		<property name="rawSlotName" value="contributorNumber" />

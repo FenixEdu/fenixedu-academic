@@ -8,6 +8,7 @@ import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accounting.Entry;
 import net.sourceforge.fenixedu.domain.accounting.Receipt;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 
 public class CreateReceipt extends Service {
 
@@ -15,7 +16,7 @@ public class CreateReceipt extends Service {
         super();
     }
 
-    public Receipt run(final Employee employee, final Person person, final Contributor contributor,
+    public Receipt run(final Employee employee, final Person person, final Party contributor,
             final List<Entry> entries) {
         return new Receipt(employee, person, contributor, entries);
     }

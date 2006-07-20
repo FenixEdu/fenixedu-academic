@@ -42,21 +42,45 @@
 
        <!-- Contributor Number -->
        <tr>
-         <td><bean:message key="label.masterDegree.administrativeOffice.contributorNumber"/> </td>
+         <td><bean:message key="label.masterDegree.administrativeOffice.contributorNumber"/>:</td>
          <td><bean:write name="infoGuide" property="infoContributor.contributorNumber"/></td>
        </tr>
 
        <!-- Contributor Name -->
        <tr>
-         <td><bean:message key="label.masterDegree.administrativeOffice.contributorName"/> </td>
+         <td><bean:message key="label.masterDegree.administrativeOffice.contributorName"/>:</td>
          <td><bean:write name="infoGuide" property="infoContributor.contributorName"/></td>
        </tr>
 
        <!-- Contributor Address -->
        <tr>
-         <td><bean:message key="label.masterDegree.administrativeOffice.contributorAddress"/> </td>
+         <td><bean:message key="label.masterDegree.administrativeOffice.contributorAddress"/>:</td>
          <td><bean:write name="infoGuide" property="infoContributor.contributorAddress"/></td>
        </tr>
+		<tr>
+			<td><bean:message key="label.person.postCode" /></td>
+			<td><bean:write name="infoGuide" property="infoContributor.areaCode" /></td>
+		</tr>
+		<tr>
+			<td><bean:message key="label.person.areaOfPostCode" /></td>
+			<td><bean:write name="infoGuide" property="infoContributor.areaOfAreaCode" /></td>
+		</tr>
+		<tr>
+			<td><bean:message key="label.person.place" /></td>
+			<td><bean:write name="infoGuide" property="infoContributor.area" /></td>
+		</tr>
+		<tr>
+			<td><bean:message key="label.person.addressParish" /></td>
+			<td><bean:write name="infoGuide" property="infoContributor.parishOfResidence" /></td>
+		</tr>
+		<tr>
+			<td><bean:message key="label.person.addressMunicipality" /></td>
+			<td><bean:write name="infoGuide" property="infoContributor.districtSubdivisionOfResidence" /></td>
+		</tr>
+		<tr>
+			<td><bean:message key="label.person.addressDistrict" /></td>
+			<td><bean:write name="infoGuide" property="infoContributor.districtOfResidence" /></td>
+		</tr>
 
 
 		<!-- List of Items in the Guide -->

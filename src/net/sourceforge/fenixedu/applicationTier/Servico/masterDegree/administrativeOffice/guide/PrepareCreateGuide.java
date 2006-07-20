@@ -19,17 +19,17 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoGuide;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGuideEntry;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGuideWithPersonAndExecutionDegreeAndContributor;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
-import net.sourceforge.fenixedu.domain.Contributor;
 import net.sourceforge.fenixedu.domain.DocumentType;
-
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.GraduationType;
 import net.sourceforge.fenixedu.domain.MasterDegreeCandidate;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Price;
 import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.masterDegree.GuideRequester;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
@@ -45,11 +45,10 @@ public class PrepareCreateGuide extends Service {
             String requesterType, Integer contributorNumber, String contributorName,
             String contributorAddress) throws FenixServiceException, ExcepcaoPersistencia {
 
-        Contributor contributor = null;
         MasterDegreeCandidate masterDegreeCandidate = null;
         InfoGuide infoGuide = new InfoGuideWithPersonAndExecutionDegreeAndContributor();
 
-        contributor = Contributor.readByContributorNumber(contributorNumber);
+        Party contributor = Party.readByContributorNumber(contributorNumber.toString());
 
         if ((contributor == null)
                 && ((contributorAddress == null) || (contributorAddress.length() == 0)
@@ -61,10 +60,8 @@ public class PrepareCreateGuide extends Service {
                 && (contributorName.length() != 0) && (contributorName != null)) {
 
             // Create the Contributor
-            contributor = new Contributor();
-            contributor.setContributorNumber(contributorNumber);
-            contributor.setContributorAddress(contributorAddress);
-            contributor.setContributorName(contributorName);
+            contributor = Person.createContributor(contributorName, contributorNumber.toString(), contributorAddress,
+                    null, null, null, null, null, null);
         }
 
         Integer year = null;

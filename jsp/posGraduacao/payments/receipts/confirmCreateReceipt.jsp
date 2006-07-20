@@ -26,7 +26,7 @@
 
 <br/>
 <strong><bean:message key="label.masterDegree.administrativeOffice.payments.contributor" /></strong>:
-<fr:view name="createReceiptBean" property="contributor" schema="contributor.view">
+<fr:view name="createReceiptBean" property="contributorParty" schema="contributor.view">
 	<fr:layout name="tabular">
 		<fr:property name="classes" value="tstyle4" />
 	</fr:layout>

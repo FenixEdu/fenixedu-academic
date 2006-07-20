@@ -4,13 +4,19 @@
  */
 package net.sourceforge.fenixedu.domain.organizationalStructure;
 
+import java.text.Collator;
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.accounting.Account;
 import net.sourceforge.fenixedu.domain.accounting.AccountType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+
+import org.apache.commons.beanutils.BeanComparator;
+import org.apache.commons.collections.comparators.ComparatorChain;
 
 public abstract class Party extends Party_Base {
 
@@ -143,4 +149,57 @@ public abstract class Party extends Party_Base {
         return !hasAnyResearchInterests() && !hasAnyProjectParticipations()
                 && !hasAnyEventParticipations() && !hasAnyBoards() && !hasAnyChilds();
     }
+
+    public static Set<Party> readContributors() {
+        ComparatorChain chain = new ComparatorChain();
+        Comparator caseInsensitiveName = new Comparator<Party>() {
+            public int compare(Party party, Party otherParty) {
+                Collator collator = Collator.getInstance();
+                return collator.compare(party.getName().toLowerCase(), otherParty.getName().toLowerCase());
+            }
+        };
+        chain.addComparator(caseInsensitiveName);
+        chain.addComparator(new BeanComparator("socialSecurityNumber"));
+        
+        Set<Party> result = new TreeSet<Party>(chain);
+        for (final Party party : RootDomainObject.getInstance().getPartys()) {
+            if (party.getSocialSecurityNumber() != null && !party.getSocialSecurityNumber().equals("")) {
+                result.add(party);
+            }
+        }
+        
+        return result;
+    }
+
+    public static Party readByContributorNumber(String contributorNumber) {
+        for (final Party party : RootDomainObject.getInstance().getPartys()) {
+            if (party.getSocialSecurityNumber() != null && party.getSocialSecurityNumber().equalsIgnoreCase(contributorNumber)) {
+                return party;
+            }
+        }
+        
+        return null;
+    }
+
+    public void editContributor(String contributorName, String contributorNumber,
+            String contributorAddress, String areaCode, String areaOfAreaCode, String area,
+            String parishOfResidence, String districtSubdivisionOfResidence, String districtOfResidence) {
+        
+        final Party existing = Party.readByContributorNumber(contributorNumber);
+        if (existing != null && existing != this) {
+            throw new DomainException("PARTY.editContributor.existing.contributor.number");
+        }
+        
+        setName(contributorName);
+        setSocialSecurityNumber(contributorNumber);
+        setAddress(contributorAddress);
+        setAddress(contributorAddress);
+        setAreaCode(areaCode);
+        setAreaOfAreaCode(areaOfAreaCode);
+        setArea(area);
+        setParishOfResidence(parishOfResidence);
+        setDistrictSubdivisionOfResidence(districtSubdivisionOfResidence);
+        setDistrictOfResidence(districtOfResidence);
+    }
+
 }

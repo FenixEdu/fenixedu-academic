@@ -5,6 +5,7 @@ import java.util.Collection;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.person.Gender;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
@@ -20,14 +21,16 @@ public class ExternalPerson extends ExternalPerson_Base {
      * BUSINESS SERVICES *
      **************************************************************************/
 
-    public ExternalPerson(String name, Gender gender, String address, String phone, String mobile,
-            String homepage, String email, String documentIdNumber, Unit institution) {
+    public ExternalPerson(String name, Gender gender, String address, String areaCode,
+            String areaOfAreaCode, String area, String parishOfResidence,
+            String districtSubdivisionOfResidence, String districtOfResidence, String phone,
+            String mobile, String homepage, String email, String documentIdNumber, Unit institution) {
 
         this();
-        Person person = Person.createPersonToExternalPerson(name, gender, address, phone, mobile,
-                homepage, email, documentIdNumber, IDDocumentType.EXTERNAL);
-
-        setPerson(person);
+        Person.createExternalPerson(this, name, gender, address, areaCode,
+                areaOfAreaCode, area, parishOfResidence, districtSubdivisionOfResidence,
+                districtOfResidence, phone, mobile, homepage, email, documentIdNumber, IDDocumentType.EXTERNAL);
+        
         setInstitutionUnit(institution);
     }
 
@@ -76,7 +79,7 @@ public class ExternalPerson extends ExternalPerson_Base {
 
     public static List<ExternalPerson> readByName(String name) {
         final String nameToMatch = (name == null) ? null : name.replaceAll("%", ".*").toLowerCase();
-        List<ExternalPerson> allExternalPersons = new ArrayList();
+        List<ExternalPerson> allExternalPersons = new ArrayList<ExternalPerson>();
         for (ExternalPerson externalPerson : RootDomainObject.getInstance().getExternalPersons()) {
             if (externalPerson.getPerson().getName().toLowerCase().matches(nameToMatch)) {
                 allExternalPersons.add(externalPerson);
@@ -98,7 +101,7 @@ public class ExternalPerson extends ExternalPerson_Base {
     }
 
     public static List<ExternalPerson> readByIDs(Collection<Integer> externalPersonsIDs) {
-        List<ExternalPerson> externalPersons = new ArrayList();
+        List<ExternalPerson> externalPersons = new ArrayList<ExternalPerson>();
         if (externalPersonsIDs == null || externalPersonsIDs.isEmpty()) {
             return externalPersons;
         }
