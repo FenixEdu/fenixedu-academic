@@ -1,0 +1,1 @@
+alter table ACCOUNTING_EVENT add column KEY_ADMINISTRATIVE_OFFICE int(11) NULL;

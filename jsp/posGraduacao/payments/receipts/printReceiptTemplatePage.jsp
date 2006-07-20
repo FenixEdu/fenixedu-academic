@@ -29,19 +29,19 @@
 						<td>
 						<table border="0" width="100%" height="100%">
 							<tr align="left">
-								<td>&nbsp;<b>INSTITUTO SUPERIOR TÉCNICO</b><br />
-								&nbsp;<b>Secretaria da Pós-Graduação</b><br />
-								&nbsp;<b>Centro de Custo 0212</b>
+								<td>&nbsp;<b><bean:message key="label.masterDegree.administrativeOffice.payments.printTemplates.institutionName.upper.case"/></b><br />
+								&nbsp;<b><bean:write name="currentUnit" property="name"/></b><br/>
+                      			&nbsp;<b><bean:message key="label.masterDegree.administrativeOffice.payments.printTemplates.costCenter"/> <bean:write name="currentUnit" property="costCenterCode"/></b>
 								<hr size="1">
 								</td>
 							</tr>
 							<tr>
-								<td align="right" valign="top"><b>Recibo Nº: </b> <bean:write
+								<td align="right" valign="top"><b><bean:message key="label.masterDegree.administrativeOffice.payments.printTemplates.receipt.receiptNumber"/> </b> <bean:write
 									name="receipt" property="number" />/<bean:write name="receipt"
 									property="year" /><br />
 								<logic:greaterEqual name="receipt" property="receiptsVersionsCount"
 									value="2">
-									<em>2ª Via</em>
+									<em><bean:message  key="label.masterDegree.administrativeOffice.payments.printTemplates.receipt.secondPrintVersion"/></em>
 								</logic:greaterEqual></td>
 							</tr>
 						</table>
@@ -60,7 +60,7 @@
 				<td>
 				<table width="100%" border="0">
 					<tr>
-						<td width="20%"><strong>Processo de:</strong></td>
+						<td width="20%"><strong><bean:message  key="label.masterDegree.administrativeOffice.payments.printTemplates.processFrom"/>:</strong></td>
 						<td width="80%">&nbsp;</td>
 					</tr>
 					<tr>
@@ -81,7 +81,7 @@
 					</tr>
 
 					<tr>
-						<td width="30%"><strong>Entidade Pagadora:</strong></td>
+						<td width="30%"><strong><bean:message  key="label.masterDegree.administrativeOffice.payments.printTemplates.receipt.contributor"/>:</strong></td>
 						<td width="70%">&nbsp;</td>
 					</tr>
 					<tr>
@@ -139,7 +139,7 @@
 				<td>&nbsp;</td>
 			</tr>
 			<tr>
-				<td><strong>A liquidar a importância de </strong></td>
+				<td><strong><bean:message  key="label.masterDegree.administrativeOffice.payments.printTemplates.totalAmountToPay"/> </strong></td>
 				<td>_____________________&nbsp;</td>
 				<td><strong><bean:define id="totalAmount" name="receipt"
 					property="totalAmount" type="java.math.BigDecimal" /><%=totalAmount.toPlainString()%>&nbsp;<bean:message
@@ -158,9 +158,9 @@
 		<td>
 		<table valign="bottom" width="100%" border="0">
 			<tr>
-				<td><%="Lisboa, "
-                    + new java.text.SimpleDateFormat("dd MMMM yyyy", request.getLocale())
-                            .format(new java.util.Date())%></td>
+				<td>
+					<bean:message  key="label.masterDegree.administrativeOffice.payments.printTemplates.city"/>, <%= new java.text.SimpleDateFormat("dd MMMM yyyy", request.getLocale()).format(new java.util.Date()) %>
+				</td>
 			</tr>
 
 			<tr>
@@ -168,7 +168,7 @@
 				<td colspan="2" valign="bottom">&nbsp;
 				<div align="center">&nbsp;</div>
 				<div align="center">&nbsp;</div>
-				<div align="center"><b>O Funcionário</b> <br>
+				<div align="center"><b><bean:message  key="label.masterDegree.administrativeOffice.payments.printTemplates.theEmployee"/></b> <br>
 				<br>
 				<br>
 				</div>

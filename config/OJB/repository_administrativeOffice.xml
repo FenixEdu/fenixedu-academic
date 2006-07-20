@@ -1,0 +1,9 @@
+<!-- ************************************************************************************************************ -->
+<!-- Definitions for net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice -->
+<!-- ************************************************************************************************************ -->
+<class-descriptor class="net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice" table="ADMINISTRATIVE_OFFICE">
+
+</class-descriptor>
+
+
+

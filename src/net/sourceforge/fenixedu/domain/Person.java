@@ -19,6 +19,8 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
 import net.sourceforge.fenixedu.domain.accessControl.PersonGroup;
 import net.sourceforge.fenixedu.domain.accounting.Entry;
 import net.sourceforge.fenixedu.domain.accounting.Event;
+import net.sourceforge.fenixedu.domain.accounting.Receipt;
+import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.candidacy.Candidacy;
 import net.sourceforge.fenixedu.domain.candidacy.DFACandidacy;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
@@ -28,6 +30,7 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityTyp
 import net.sourceforge.fenixedu.domain.organizationalStructure.Function;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.person.Gender;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 import net.sourceforge.fenixedu.domain.person.MaritalStatus;
@@ -633,8 +636,8 @@ public class Person extends Person_Base {
     public List<PersonFunction> getPersonFunctions() {
         return new ArrayList(getParentAccountabilities(AccountabilityTypeEnum.MANAGEMENT_FUNCTION,
                 PersonFunction.class));
-    }
-   
+            }
+
     public PersonFunction addPersonFunction(Function function, YearMonthDay begin, YearMonthDay end,
             Double credits) {
         return new PersonFunction(function.getUnit(), this, function, begin, end, credits);
@@ -1359,10 +1362,15 @@ public class Person extends Person_Base {
     }
 
     public Set<Event> getNotPayedEvents() {
+        return getNotPayedEventsPayableOnAdministrativeOffice(null);
+    }
+
+    public Set<Event> getNotPayedEventsPayableOnAdministrativeOffice(
+            AdministrativeOffice administrativeOffice) {
         final Set<Event> result = new HashSet<Event>();
 
         for (final Event event : getEventsSet()) {
-            if (event.isOpen()) {
+            if (event.isOpen() && isPayableOnAdministrativeOffice(administrativeOffice, event)) {
                 result.add(event);
             }
         }
@@ -1370,14 +1378,37 @@ public class Person extends Person_Base {
         return result;
     }
 
+    private boolean isPayableOnAdministrativeOffice(AdministrativeOffice administrativeOffice,
+            final Event event) {
+        return ((administrativeOffice == null) || (event
+                .isPayableOnAdministrativeOffice(administrativeOffice)));
+    }
+
     public Set<Entry> getPaymentsWithoutReceipt() {
+        return getPaymentsWithoutReceiptByAdministrativeOffice(null);
+    }
+
+    public Set<Entry> getPaymentsWithoutReceiptByAdministrativeOffice(
+            AdministrativeOffice administrativeOffice) {
         final Set<Entry> result = new HashSet<Entry>();
 
         for (final Event event : getEventsSet()) {
-            result.addAll(event.getEntriesWithoutReceipt());
+            if (isPayableOnAdministrativeOffice(administrativeOffice, event)) {
+                result.addAll(event.getEntriesWithoutReceipt());
+            }
         }
 
         return result;
     }
 
+    public Set<Receipt> getReceiptsByAdministrativeOffice(AdministrativeOffice administrativeOffice) {
+        final Set<Receipt> result = new HashSet<Receipt>();
+        for (final Receipt receipt : getReceipts()) {
+            if (receipt.isFromAdministrativeOffice(administrativeOffice)) {
+                result.add(receipt);
+            }
+        }
+
+        return result;
+    }
 }

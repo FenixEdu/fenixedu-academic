@@ -11,6 +11,7 @@ import net.sourceforge.fenixedu.dataTransferObject.accounting.EntryDTO;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.User;
+import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.util.resources.LabelFormatter;
 
@@ -26,13 +27,19 @@ public abstract class Event extends Event_Base {
         super.setEventState(EventState.OPEN);
     }
 
-    protected void init(EventType eventType, Person person) {
-        checkParameters(eventType, person);
+    protected void init(AdministrativeOffice administrativeOffice, EventType eventType, Person person) {
+        checkParameters(administrativeOffice, eventType, person);
+        super.setAdministrativeOffice(administrativeOffice);
         super.setEventType(eventType);
         super.setPerson(person);
+
     }
 
-    private void checkParameters(EventType eventType, Person person) throws DomainException {
+    private void checkParameters(AdministrativeOffice administrativeOffice, EventType eventType,
+            Person person) throws DomainException {
+        if (administrativeOffice == null) {
+            throw new DomainException("error.accounting.Event.administrativeOffice.cannot.be.null");
+        }
         if (eventType == null) {
             throw new DomainException("error.accounting.Event.invalid.eventType");
         }
@@ -127,6 +134,11 @@ public abstract class Event extends Event_Base {
         throw new DomainException("error.accounting.Event.cannot.modify.eventState");
     }
 
+    @Override
+    public void setAdministrativeOffice(AdministrativeOffice administrativeOffice) {
+        throw new DomainException("error.accounting.Event.cannot.modify.administrativeOffice");
+    }
+
     protected boolean canCloseEvent(DateTime whenRegistered) {
         return calculateAmountToPay(whenRegistered).equals(calculatePayedAmount());
     }
@@ -134,7 +146,7 @@ public abstract class Event extends Event_Base {
     public Set<Entry> getEntries() {
         final Set<Entry> result = new HashSet<Entry>();
         for (final AccountingTransaction transaction : getAccountingTransactions()) {
-            result.add(transaction.getEntryByAccount(getToAccount()));
+            result.add(transaction.getToAccountEntry());
         }
 
         return result;
@@ -143,7 +155,7 @@ public abstract class Event extends Event_Base {
     public Set<Entry> getEntriesWithoutReceipt() {
         final Set<Entry> result = new HashSet<Entry>();
         for (final AccountingTransaction transaction : getAccountingTransactions()) {
-            final Entry entry = transaction.getEntryByAccount(getToAccount());
+            final Entry entry = transaction.getToAccountEntry();
             if (!entry.hasReceipt()) {
                 result.add(entry);
             }
@@ -159,9 +171,8 @@ public abstract class Event extends Event_Base {
         }
 
         BigDecimal payedAmount = new BigDecimal("0");
-        final Account account = getToAccount();
         for (final AccountingTransaction transaction : getAccountingTransactions()) {
-            payedAmount = payedAmount.add(transaction.getAmountByAccount(account));
+            payedAmount = payedAmount.add(transaction.getToAccountEntry().getAmountWithAdjustment());
         }
 
         return payedAmount;
@@ -180,12 +191,17 @@ public abstract class Event extends Event_Base {
 
     public List<EntryDTO> calculateEntries() {
         return calculateEntries(new DateTime());
+    }
 
+    public List<EntryDTO> calculateEntries(DateTime when) {
+        return getPostingRule(when).calculateEntries(this, when);
+    }
+
+    public final boolean isPayableOnAdministrativeOffice(AdministrativeOffice administrativeOffice) {
+        return (getAdministrativeOffice() == administrativeOffice);
     }
 
     public abstract Account getToAccount();
-
-    public abstract List<EntryDTO> calculateEntries(DateTime when);
 
     public abstract LabelFormatter getDescriptionForEntryType(EntryType entryType);
 

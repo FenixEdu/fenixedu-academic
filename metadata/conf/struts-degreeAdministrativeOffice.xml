@@ -194,6 +194,15 @@
 			<form-property name="page" type="java.lang.Integer" initial="0"/>
 		</form-bean>
 		
+		<!-- Payments -->
+		<form-bean name="paymentsForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
+			<form-property name="method" type="java.lang.String" />
+			<form-property name="candidacyNumber" type="java.lang.String" />
+			<form-property name="username" type="java.lang.String" />
+			<form-property name="documentType" type="java.lang.String" />
+			<form-property name="documentNumber" type="java.lang.String" />
+	    </form-bean>
+	    		
 
 	</form-beans>
 
@@ -539,6 +548,37 @@
        		<forward name="searchMarkSheetFilled" path="/markSheetManagement.do?method=prepareSearchMarkSheetFilled"/>
        		<forward name="searchMarkSheet" path="/markSheetManagement.do?method=prepareSearchMarkSheet"/>       		
 		</action>				
+		
+		<!-- Payments -->
+		<action path="/payments"
+				parameter="method"
+		        type="net.sourceforge.fenixedu.presentationTier.Action.masterDegree.administrativeOffice.payments.DegreePaymentsManagementDispatchAction"
+		 		name="paymentsForm"
+		 		scope="request">
+		        <forward name="searchPerson" path="payments.management.searchPerson"/> 
+		 	         <forward name="showOperations" path="payments.management.showOperations"/> 
+		 	         <forward name="showEvents" path="payments.management.showEvents"/> 
+		 	         <forward name="showGuide" path="payments.management.showGuide"/>
+		 	         <forward name="printGuide" path="/payments/guides/printGuidePage.jsp"/>
+		 	         <forward name="showReceipts" path="payments.management.showReceipts"/>
+		 	         <forward name="showReceipt" path="payments.management.showReceipt"/>
+		 	         <forward name="printReceipt" path="/payments/receipts/printReceiptPage.jsp"/>
+		 	         <forward name="preparePayment" path="payments.management.preparePayment"/> 
+		 	         <forward name="showPaymentsWithoutReceipt" path="payments.management.showPaymentsWithoutReceipt"/> 
+		 	         <forward name="confirmCreateReceipt" path="payments.management.confirmCreateReceipt"/> 
+		 	         <forward name="paymentConfirmed" path="payments.management.paymentConfirmed"/> 
+		</action>
+		
+		<!-- Price Management -->
+		<action path="/pricesManagement"
+		     	parameter="method"
+		        type="net.sourceforge.fenixedu.presentationTier.Action.masterDegree.administrativeOffice.pricesManagement.DegreePricesManagementDispatchAction"
+				scope="request">
+				<forward name="viewPrices" path="prices.management.viewPrices"/>
+		       	<forward name="editPrice" path="prices.management.editPrice"/>
+		</action>
+      
+      
 	</action-mappings>
 
 	<!-- ========== Controller Configuration ================================ -->

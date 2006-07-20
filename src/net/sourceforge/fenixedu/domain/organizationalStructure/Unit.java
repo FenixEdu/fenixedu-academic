@@ -433,7 +433,7 @@ public class Unit extends Unit_Base {
         if (parentUnit.equals(this)) {
             throw new DomainException("error.unit.equals.parentUnit");
         }
-        checkIfCanAddParent(accountabilityType);   
+   
         checkParentUnit(parentUnit);
         return new Accountability(parentUnit, this, accountabilityType);
     }
@@ -446,15 +446,6 @@ public class Unit extends Unit_Base {
         List<Unit> subUnits = (parentUnit.isActive(currentDate)) ? getAllActiveSubUnits(currentDate) : getAllInactiveSubUnits(currentDate);
         if(subUnits.contains(parentUnit)) {
            throw new DomainException("error.unit.parentUnit.is.already.subUnit"); 
-        }
-    }
-
-    private void checkIfCanAddParent(AccountabilityType accountabilityType) {
-        if ((accountabilityType.getType() == AccountabilityTypeEnum.ACADEMIC_MANAGEMENT)
-                && getParentParties(accountabilityType.getType(), getClass())
-                        .size() == 1) {
-            throw new DomainException(
-                    "error.organizationalStructure.Unit.parent.with.accountability.type.already.exists");
         }
     }
 

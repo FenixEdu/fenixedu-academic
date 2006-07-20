@@ -1,4 +1,4 @@
-<schema name="certificateRequestPRDTO.edit" type="net.sourceforge.fenixedu.dataTransferObject.accounting.postingRules.serviceRequests.CertificateRequestPRDTO">
+<schema name="certificateRequestPRDTO.edit" type="net.sourceforge.fenixedu.dataTransferObject.accounting.postingRules.serviceRequests.CertificateRequestPRDTO" bundle="APPLICATION_RESOURCES">
 	<slot name="baseAmount" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
 		<property name="maxLength" value="7"/>
 	</slot>

@@ -87,6 +87,7 @@
 <!ENTITY cron SYSTEM "repository_cron.xml">
 <!ENTITY accounting SYSTEM "repository_accounting.xml">
 <!ENTITY candidacy SYSTEM "repository_candidacy.xml">
+<!ENTITY administrativeOffice SYSTEM "repository_administrativeOffice.xml">
 ]>
 <descriptor-repository version="1.0" isolation-level="repeatable-read">
 
@@ -179,5 +180,6 @@
 	&cron;
 	&accounting;
 	&candidacy;
+	&administrativeOffice;
 
 </descriptor-repository>

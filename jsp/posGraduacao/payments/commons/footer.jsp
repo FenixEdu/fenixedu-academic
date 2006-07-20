@@ -1,3 +1,5 @@
+<%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
+
 <table width="100%" border="0">
 	<tr>	 
 		<td>
@@ -5,11 +7,11 @@
 		    	<tr>
 		        	<td colspan="2" valign="bottom">
 			            <div align="center">
-	        	      		<font size="2"> Documento processado por computador.</font> 
+	        	      		<font size="2"> <bean:message  key="label.masterDegree.administrativeOffice.payments.printTemplates.footer.document.processed.by.computer"/>.</font> 
 			            </div>
 			            <hr size="1" color="#000000" width="100%">
             			<div align="center">
-				            <font size="2"> Av. Rovisco Pais, 1 1049-001 Lisboa Codex Telefone: 218417336 Fax: 218419531 Contribuinte Nº: 501507930</font>
+				            <font size="2"> <bean:message  key="label.masterDegree.administrativeOffice.payments.printTemplates.footer.institutionIdentification"/></font>
 			            </div>
 		            </td>
 		        </tr>

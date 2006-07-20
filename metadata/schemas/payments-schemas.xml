@@ -1,56 +1,56 @@
-<schema name="entryDTO.edit" type="net.sourceforge.fenixedu.dataTransferObject.accounting.EntryDTO">
-	<slot name="selected" key="label.masterDegree.administrativeOffice.payments.selected"/>
-	<slot name="event.whenOccured" key="label.masterDegree.administrativeOffice.payments.eventDate" read-only="true"/>
-	<slot name="description" read-only="true" key="label.masterDegree.administrativeOffice.payments.description"/>
-	<slot name="totalAmount" read-only="true" key="label.masterDegree.administrativeOffice.payments.totalAmount"/>
-	<slot name="payedAmount" read-only="true" key="label.masterDegree.administrativeOffice.payments.payedAmount"/>
-	<slot name="amountToPay" key="label.masterDegree.administrativeOffice.payments.amountToPay" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+<schema name="entryDTO.edit" type="net.sourceforge.fenixedu.dataTransferObject.accounting.EntryDTO" bundle="APPLICATION_RESOURCES">
+	<slot name="selected"/>
+	<slot name="event.whenOccured" read-only="true" key="label.net.sourceforge.fenixedu.domain.accounting.Event.whenOccured" />
+	<slot name="description" read-only="true" key="label.net.sourceforge.fenixedu.domain.accounting.Entry.description"/>
+	<slot name="totalAmount" read-only="true" key="label.net.sourceforge.fenixedu.domain.accounting.Entry.amountWithAdjustment"/>
+	<slot name="payedAmount" read-only="true"/>
+	<slot name="amountToPay" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
 </schema>
 
-<schema name="entry.view" type="net.sourceforge.fenixedu.domain.accounting.Entry">
+<schema name="entry.view" type="net.sourceforge.fenixedu.domain.accounting.Entry" bundle="APPLICATION_RESOURCES">
 	<slot name="description" />
 	<slot name="whenRegistered" />
 	<slot name="amountWithAdjustment" />
 </schema>
 
-<schema name="entryDTO.view" type="net.sourceforge.fenixedu.dataTransferObject.accounting.EntryDTO">
+<schema name="entryDTO.view" type="net.sourceforge.fenixedu.dataTransferObject.accounting.EntryDTO" bundle="APPLICATION_RESOURCES">
 	<slot name="description" read-only="true" key="label.masterDegree.administrativeOffice.payments.description"/>
 	<slot name="amountToPay" key="label.masterDegree.administrativeOffice.payments.amountToPay"/>
 </schema>
 
-<schema name="receipt.view" type="net.sourceforge.fenixedu.domain.accounting.Receipt">
+<schema name="receipt.view" type="net.sourceforge.fenixedu.domain.accounting.Receipt" bundle="APPLICATION_RESOURCES">
 	<slot name="number"/>
 	<slot name="year"/>
 	<slot name="whenCreated"/>
 	<slot name="totalAmount"/>
 </schema>
 
-<schema name="receipt.view-with-number-and-year" type="net.sourceforge.fenixedu.domain.accounting.Receipt">
+<schema name="receipt.view-with-number-and-year" type="net.sourceforge.fenixedu.domain.accounting.Receipt" bundle="APPLICATION_RESOURCES">
 	<slot name="number"/>
 	<slot name="year"/>
 </schema>
 
-<schema name="contributor.view" type="net.sourceforge.fenixedu.domain.Contributor">
+<schema name="contributor.view" type="net.sourceforge.fenixedu.domain.Contributor" bundle="APPLICATION_RESOURCES">
 	<slot name="contributorName"/>
 	<slot name="contributorAddress"/>
 	<slot name="contributorNumber"/>
 </schema>
 
 
-<schema name="selectableEntryBean.view" type="net.sourceforge.fenixedu.dataTransferObject.accounting.SelectableEntryBean">
+<schema name="selectableEntryBean.view" type="net.sourceforge.fenixedu.dataTransferObject.accounting.SelectableEntryBean" bundle="APPLICATION_RESOURCES">
 	<slot name="entry.description" read-only="true" key="label.net.sourceforge.fenixedu.domain.accounting.Entry.description" />
 	<slot name="entry.whenRegistered" read-only="true" key="label.net.sourceforge.fenixedu.domain.accounting.Entry.whenRegistered" />
 	<slot name="entry.amountWithAdjustment" read-only="true" key="label.net.sourceforge.fenixedu.domain.accounting.Entry.amountWithAdjustment" />
 </schema>
 
-<schema name="selectableEntryBean.view-selectable" type="net.sourceforge.fenixedu.dataTransferObject.accounting.SelectableEntryBean">
+<schema name="selectableEntryBean.view-selectable" type="net.sourceforge.fenixedu.dataTransferObject.accounting.SelectableEntryBean" bundle="APPLICATION_RESOURCES">
 	<slot name="selected" key="label.commons.emptySelected" />
 	<slot name="entry.description" read-only="true" key="label.net.sourceforge.fenixedu.domain.accounting.Entry.description" />
 	<slot name="entry.whenRegistered" read-only="true" key="label.net.sourceforge.fenixedu.domain.accounting.Entry.whenRegistered" />
 	<slot name="entry.amountWithAdjustment" read-only="true" key="label.net.sourceforge.fenixedu.domain.accounting.Entry.amountWithAdjustment" />
 </schema>
 
-<schema name="createReceiptBean.create" type="net.sourceforge.fenixedu.dataTransferObject.accounting.CreateReceiptBean">
+<schema name="createReceiptBean.create" type="net.sourceforge.fenixedu.dataTransferObject.accounting.CreateReceiptBean" bundle="APPLICATION_RESOURCES">
 	<slot name="contributor" layout="autoComplete" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
 		<property name="size" value="70"/>
 		<property name="labelField" value="contributorNumber"/>
@@ -65,7 +65,7 @@
 	</slot>
 </schema>
 
-<schema name="paymentsManagementDTO.edit-with-paymentDate" type="net.sourceforge.fenixedu.dataTransferObject.accounting.PaymentsManagementDTO">
+<schema name="paymentsManagementDTO.edit-with-paymentDate" type="net.sourceforge.fenixedu.dataTransferObject.accounting.PaymentsManagementDTO" bundle="APPLICATION_RESOURCES">
 	<slot name="differedPayment" />
 	<slot name="paymentDate" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" />
 </schema>

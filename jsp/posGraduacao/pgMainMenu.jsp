@@ -16,5 +16,5 @@
     <li><html:link page="/listingSection.do"><bean:message key="link.masterDegree.administrativeOffice.listing" /></html:link></li>
     <li><html:link page="/dfaCandidacySection.do"><bean:message key="link.masterDegree.administrativeOffice.dfaCandidacyManagement" bundle="ADMIN_OFFICE_RESOURCES"/> </html:link></li>    
     <li><html:link page="/payments.do?method=prepareSearchPerson"><bean:message key="link.masterDegree.administrativeOffice.payments" /></html:link></li>
- <%--   <li><html:link page="/pricesManagement.do?method=viewPrices"><bean:message key="link.masterDegree.administrativeOffice.pricesManagement" /></html:link></li> --%>
+    <li><html:link page="/pricesManagement.do?method=viewPrices"><bean:message key="link.masterDegree.administrativeOffice.pricesManagement" /></html:link></li>
 </ul>   

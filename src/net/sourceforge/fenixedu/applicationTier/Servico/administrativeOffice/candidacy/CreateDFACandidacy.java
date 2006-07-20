@@ -5,6 +5,8 @@ import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accounting.events.candidacy.DFACandidacyEvent;
 import net.sourceforge.fenixedu.domain.accounting.serviceAgreements.DegreeCurricularPlanServiceAgreement;
+import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
+import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOfficeType;
 import net.sourceforge.fenixedu.domain.candidacy.DFACandidacy;
 import net.sourceforge.fenixedu.domain.person.Gender;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
@@ -19,13 +21,16 @@ public class CreateDFACandidacy extends Service {
             person = new Person(name, identificationDocumentNumber, identificationDocumentType,
                     Gender.MALE, "T" + System.currentTimeMillis());
         }
-        
+
         person.addPersonRoleByRoleType(RoleType.CANDIDATE);
         person.addPersonRoleByRoleType(RoleType.PERSON);
 
         final DFACandidacy candidacy = new DFACandidacy(person, executionDegree);
 
-        new DFACandidacyEvent(person, candidacy);
+        final AdministrativeOffice administrativeOffice = AdministrativeOffice
+                .readByAdministrativeOfficeType(AdministrativeOfficeType.MASTER_DEGREE);
+        new DFACandidacyEvent(administrativeOffice, person, candidacy);
+
         new DegreeCurricularPlanServiceAgreement(person, executionDegree.getDegreeCurricularPlan()
                 .getServiceAgreementTemplate());
 

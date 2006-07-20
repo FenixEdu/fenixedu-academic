@@ -130,45 +130,32 @@ public class AccountingTransaction extends AccountingTransaction_Base {
                 "error.accounting.accountingTransaction.cannot.modify.adjustmentTransaction");
     }
 
-    public BigDecimal getAmountByAccount(Account account) {
-        final Entry entryFromAccount = getEntryByAccount(account);
-
-        if (entryFromAccount == null) {
-            throw new DomainException(
-                    "error.accounting.accountingTransaction.amount.not.available.because.account.does.not.participate.in.transaction");
-        } else {
-            return entryFromAccount.getOriginalAmount();
-        }
-    }
-
-    public Entry getEntryByAccount(Account account) {
-        for (final Entry entry : getEntriesSet()) {
-            if (entry.getAccount() == account) {
-                return entry;
-            }
-        }
-
-        return null;
-    }
-
     public LabelFormatter getDescriptionForEntryType(EntryType entryType) {
         return getEvent().getDescriptionForEntryType(entryType);
     }
 
     public Account getFromAccount() {
-        return getAccount(false);
+        return getEntry(false).getAccount();
 
     }
 
     public Account getToAccount() {
-        return getAccount(true);
+        return getEntry(true).getAccount();
 
     }
 
-    private Account getAccount(boolean positive) {
+    public Entry getToAccountEntry() {
+        return getEntry(true);
+    }
+
+    public Entry getFromAccountEntry() {
+        return getEntry(false);
+    }
+
+    private Entry getEntry(boolean positive) {
         for (final Entry entry : getEntriesSet()) {
             if (entry.isPositiveAmount() == positive) {
-                return entry.getAccount();
+                return entry;
             }
         }
 
@@ -178,10 +165,10 @@ public class AccountingTransaction extends AccountingTransaction_Base {
     public AccountingTransaction reimburse(User responsibleUser, PaymentMode paymentMode,
             BigDecimal amountToReimburse) {
         final AccountingTransaction transaction = new AccountingTransaction(responsibleUser, new Entry(
-                EntryType.ADJUSTMENT, amountToReimburse.negate(), this.getToAccount()), new Entry(
-                EntryType.ADJUSTMENT, amountToReimburse, this.getFromAccount()), paymentMode,
-                new DateTime(), this);
-        
+                EntryType.ADJUSTMENT, amountToReimburse.negate(), getToAccount()), new Entry(
+                EntryType.ADJUSTMENT, amountToReimburse, getFromAccount()), paymentMode, new DateTime(),
+                this);
+
         getEvent().recalculateState(getWhenRegistered());
 
         return transaction;

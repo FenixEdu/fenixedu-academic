@@ -14,6 +14,8 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.accounting.postingRules.serviceRequests.CertificateRequestPRDTO;
 import net.sourceforge.fenixedu.domain.accounting.PostingRule;
 import net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.CertificateRequestPR;
+import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
+import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOfficeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
@@ -23,17 +25,17 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
-public class PricesManagementDispatchAction extends FenixDispatchAction {
+public abstract class PricesManagementDispatchAction extends FenixDispatchAction {
 
     public ActionForward viewPrices(ActionMapping mapping, ActionForm actionForm,
             HttpServletRequest request, HttpServletResponse response) {
-        
-        final SortedSet<PostingRule> sortedPostingRules = new TreeSet<PostingRule>(PostingRule.COMPARATOR_BY_EVENT_TYPE);
-        sortedPostingRules.addAll(getUserView(request).getPerson().getEmployee()
-                .getCurrentWorkingPlace().getServiceAgreementTemplate().getActivePostingRules());
-        
+
+        final SortedSet<PostingRule> sortedPostingRules = new TreeSet<PostingRule>(
+                PostingRule.COMPARATOR_BY_EVENT_TYPE);
+        sortedPostingRules.addAll(getAdministrativeOffice().getServiceAgreementTemplate()
+                .getActivePostingRules());
+
         request.setAttribute("postingRules", sortedPostingRules);
-        
 
         return mapping.findForward("viewPrices");
     }
@@ -53,8 +55,8 @@ public class PricesManagementDispatchAction extends FenixDispatchAction {
         final CertificateRequestPRDTO certificateRequestPRDTO = (CertificateRequestPRDTO) RenderUtils
                 .getViewState().getMetaObject().getObject();
         try {
-            ServiceManagerServiceFactory.executeService(getUserView(request), "EditCertificateRequestPR",
-                    new Object[] { certificateRequestPRDTO });
+            ServiceManagerServiceFactory.executeService(getUserView(request),
+                    "EditCertificateRequestPR", new Object[] { certificateRequestPRDTO });
         } catch (DomainException e) {
             addActionMessage(request, e.getKey(), e.getArgs());
 
@@ -65,5 +67,11 @@ public class PricesManagementDispatchAction extends FenixDispatchAction {
 
         return viewPrices(mapping, form, request, response);
     }
+
+    private AdministrativeOffice getAdministrativeOffice() {
+        return AdministrativeOffice.readByAdministrativeOfficeType(getAdministrativeOfficeType());
+    }
+
+    protected abstract AdministrativeOfficeType getAdministrativeOfficeType();
 
 }

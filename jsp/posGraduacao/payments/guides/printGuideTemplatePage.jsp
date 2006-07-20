@@ -11,7 +11,7 @@
     </head>
 
     <body>
-     
+
     <table width="100%" height="100%" border="0">
     <tr height="30"><td>
      <table width="100%" border="0" valign="top">
@@ -28,14 +28,14 @@
               <td>
                 <table border="0" width="100%" height="100%">
                   <tr align="left"> 
-                    <td>&nbsp;<b>INSTITUTO SUPERIOR TÉCNICO</b><br/>
-                      &nbsp;<b>Secretaria da Pós-Graduação</b><br/>
-                      &nbsp;<b>Centro de Custo 0212</b>
+                    <td>&nbsp;<b><bean:message key="label.masterDegree.administrativeOffice.payments.printTemplates.institutionName.upper.case"/></b><br/>
+                      &nbsp;<b><bean:write name="currentUnit" property="name"/></b><br/>
+                      &nbsp;<b><bean:message  key="label.masterDegree.administrativeOffice.payments.printTemplates.costCenter"/> <bean:write name="currentUnit" property="costCenterCode"/></b>
                       <hr size="1">
                     </td>
                   </tr>
                   <tr> 
-                    <td align="right" valign="top"> <b>Guia de Pagamento</b>
+                    <td align="right" valign="top"> <b><bean:message  key="label.masterDegree.administrativeOffice.payments.printTemplates.guide"/></b>
                     </td>
                   </tr>
                 </table>
@@ -56,7 +56,7 @@
 	 <td>
       <table width="100%" border="0">
           <tr>
-            <td width="20%"><strong>Processo de:</strong></td>
+            <td width="20%"><strong><bean:message  key="label.masterDegree.administrativeOffice.payments.printTemplates.processFrom"/>:</strong></td>
             <td width="80%">&nbsp;</td>
           </tr>
           <tr>
@@ -100,7 +100,7 @@
             <td>&nbsp;</td>
         </tr>
     	<tr>
-    	  	<td><strong>A liquidar a importância de </strong></td>
+    	  	<td><strong><bean:message  key="label.masterDegree.administrativeOffice.payments.printTemplates.totalAmountToPay"/></strong></td>
    			<td>_________________&nbsp;</td>
    			<td><strong><bean:define id="totalAmountToPay" name="paymentsManagementDTO" property="totalAmountToPay" type="java.math.BigDecimal"/><%= totalAmountToPay.toPlainString() %>&nbsp;<bean:message key="label.currencySymbol"/></strong></td>
     	</tr>
@@ -120,7 +120,7 @@
      <table valign="bottom" width="100%" border="0">
        <tr>
          <td>
-         	<%= "Lisboa, " + new java.text.SimpleDateFormat("dd MMMM yyyy", request.getLocale()).format(new java.util.Date()) %>
+         	<bean:message  key="label.masterDegree.administrativeOffice.payments.printTemplates.city"/>, <%= new java.text.SimpleDateFormat("dd MMMM yyyy", request.getLocale()).format(new java.util.Date()) %>
          </td>
        </tr>
        
@@ -129,7 +129,7 @@
          <td colspan="2" valign="bottom">
            &nbsp;<div align="center">&nbsp;</div>
            <div align="center">&nbsp;</div>
-           <div align="center"><b>O Funcionário</b> <br>
+           <div align="center"><b><bean:message  key="label.masterDegree.administrativeOffice.payments.printTemplates.theEmployee"/></b> <br>
             <br>
             <br>
            </div>

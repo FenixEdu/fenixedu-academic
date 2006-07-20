@@ -144,6 +144,7 @@ valueType net.sourceforge.fenixedu.domain.accounting.EventType     as Accounting
 valueType net.sourceforge.fenixedu.domain.accounting.EntryType     as EntryType;
 valueType net.sourceforge.fenixedu.domain.accounting.PaymentMode   as PaymentMode;
 valueType net.sourceforge.fenixedu.domain.accounting.EventState     as AccountingEventState;
+valueType net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOfficeType     as AdministrativeOfficeType;
 
 
 /*
@@ -190,6 +191,7 @@ class net.sourceforge.fenixedu.domain.accounting.Event extends net.sourceforge.f
     DateTime whenOccured;
     AccountingEventState eventState;
     Integer keyPerson;
+    Integer keyAdministrativeOffice;
 }
 
 	class net.sourceforge.fenixedu.domain.accounting.events.candidacy.DFACandidacyEvent extends net.sourceforge.fenixedu.domain.accounting.Event {
@@ -206,6 +208,7 @@ class net.sourceforge.fenixedu.domain.accounting.Receipt extends net.sourceforge
     Integer number;
     Integer year;
     DateTime whenCreated;
+	Integer keyEmployee;
 }
 
 class net.sourceforge.fenixedu.domain.accounting.ReceiptPrintVersion extends net.sourceforge.fenixedu.domain.DomainObject {
@@ -231,8 +234,8 @@ class net.sourceforge.fenixedu.domain.accounting.ServiceAgreementTemplate extend
 		Integer keyDegreeCurricularPlan;
 	}
 	
-	class net.sourceforge.fenixedu.domain.accounting.serviceAgreementTemplates.UnitServiceAgreementTemplate extends net.sourceforge.fenixedu.domain.accounting.ServiceAgreementTemplate {
-		Integer keyUnit;
+	class net.sourceforge.fenixedu.domain.accounting.serviceAgreementTemplates.AdministrativeOfficeServiceAgreementTemplate extends net.sourceforge.fenixedu.domain.accounting.ServiceAgreementTemplate {
+		Integer keyAdministrativeOffice;
 	}
 	
 class net.sourceforge.fenixedu.domain.accounting.PostingRule extends net.sourceforge.fenixedu.domain.DomainObject {
@@ -2849,7 +2852,7 @@ class net.sourceforge.fenixedu.domain.organizationalStructure.Party extends net.
 		Integer keyDegree;
 		YearMonthDay beginDateYearMonthDay;
 		YearMonthDay endDateYearMonthDay;
-		Integer keyServiceAgreementTemplate;
+		Integer keyAdministrativeOffice;
 	}
 
 	class net.sourceforge.fenixedu.domain.Person extends net.sourceforge.fenixedu.domain.organizationalStructure.Party {
@@ -3554,6 +3557,12 @@ class net.sourceforge.fenixedu.domain.candidacy.CandidacyDocument extends net.so
 	String documentDescription;
 	Integer keyCandidacy;
 	Integer keyFile;	
+}
+
+class net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice extends net.sourceforge.fenixedu.domain.DomainObject {
+	AdministrativeOfficeType administrativeOfficeType;
+	Integer keyUnit;
+	Integer keyServiceAgreementTemplate;
 }
 
 
@@ -7130,11 +7139,15 @@ relation DegreeCurricularPlanServiceAgreementTemplateDegreeCurricularPlan {
 	net.sourceforge.fenixedu.domain.accounting.serviceAgreementTemplates.DegreeCurricularPlanServiceAgreementTemplate playsRole serviceAgreementTemplate;
 }
 
-relation UnitServiceAgreementTemplateUnit {
-	net.sourceforge.fenixedu.domain.organizationalStructure.Unit playsRole unit;
-	net.sourceforge.fenixedu.domain.accounting.serviceAgreementTemplates.UnitServiceAgreementTemplate playsRole serviceAgreementTemplate;
+relation AdministrativeOfficeAdministrativeOfficeServiceAgreementTemplate {
+	net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice playsRole administrativeOffice;
+	net.sourceforge.fenixedu.domain.accounting.serviceAgreementTemplates.AdministrativeOfficeServiceAgreementTemplate playsRole serviceAgreementTemplate;
 }
 
+relation AdministrativeOfficeUnit {
+	net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice playsRole administrativeOffice;
+	net.sourceforge.fenixedu.domain.organizationalStructure.Unit playsRole unit;
+}
 
 
 /*
@@ -9097,6 +9110,13 @@ relation AccountTransactionAdjustedTransaction {
 	net.sourceforge.fenixedu.domain.accounting.AccountingTransaction playsRole adjustmentTransaction;
 }
 
+relation AdministrativeOfficeEvent {
+	net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice playsRole administrativeOffice;
+	net.sourceforge.fenixedu.domain.accounting.Event playsRole events {
+		multiplicity *;
+	}
+}
+
 relation DFACandidacyEventCandidacy {
 	net.sourceforge.fenixedu.domain.candidacy.DFACandidacy playsRole candidacy;
 	net.sourceforge.fenixedu.domain.accounting.events.candidacy.DFACandidacyEvent playsRole candidacyEvents {
@@ -9132,6 +9152,13 @@ relation ReceiptContributor {
 	}
 }
 
+relation ReceiptEmployee {
+	net.sourceforge.fenixedu.domain.Employee playsRole employee;
+	net.sourceforge.fenixedu.domain.accounting.Receipt playsRole receipts {
+		multiplicity *;
+	}
+}
+
 relation ReceiptPrintVersionEmployee {
 	net.sourceforge.fenixedu.domain.Employee playsRole employee;
 	net.sourceforge.fenixedu.domain.accounting.ReceiptPrintVersion playsRole receiptsVersions {
@@ -9149,6 +9176,13 @@ relation ReceiptPrintVersionReceipt {
 relation RootDomainObjectReceiptPrintVersion {
 	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
 	net.sourceforge.fenixedu.domain.accounting.ReceiptPrintVersion playsRole receiptVersions {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectAdministrativeOffice {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice playsRole administrativeOffices {
 		multiplicity *;
 	}
 }

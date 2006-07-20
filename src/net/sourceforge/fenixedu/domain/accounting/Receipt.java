@@ -11,6 +11,7 @@ import net.sourceforge.fenixedu.domain.Contributor;
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 
@@ -35,31 +36,36 @@ public class Receipt extends Receipt_Base {
         super.setWhenCreated(new DateTime());
     }
 
-    public Receipt(Person person, Contributor contributor, List<Entry> entries) {
+    public Receipt(Employee employee, Person person, Contributor contributor, List<Entry> entries) {
         this();
-        init(person, contributor, entries);
+        init(employee, person, contributor, entries);
     }
 
-    private void init(Person person, Contributor contributor, List<Entry> entries) {
-        checkParameters(person, contributor, entries);
+    private void init(Employee employee, Person person, Contributor contributor, List<Entry> entries) {
+        checkParameters(employee, person, contributor, entries);
         super.setPerson(person);
         super.setYear(new DateTime().getYear());
         super.setContributor(contributor);
+        super.setEmployee(employee);
 
         for (final Entry entry : entries) {
             entry.setReceipt(this);
         }
     }
 
-    private void checkParameters(Party party, Contributor contributor, List<Entry> entries) {
-        if (party == null) {
-            throw new DomainException("error.accouting.receipt.party.cannot.be.null");
+    private void checkParameters(Employee employee, Person person, Contributor contributor,
+            List<Entry> entries) {
+        if (person == null) {
+            throw new DomainException("error.accouting.receipt.person.cannot.be.null");
         }
         if (contributor == null) {
             throw new DomainException("error.accounting.receipt.contributor.cannot.be.null");
         }
         if (entries == null) {
             throw new DomainException("error.accounting.receipt.entries.cannot.be.null");
+        }
+        if (employee == null) {
+            throw new DomainException("error.accounting.Receipt.employeee.cannot.be.null");
         }
         if (entries.isEmpty()) {
             throw new DomainException("error.accounting.receipt.entries.cannot.be.empty");
@@ -144,6 +150,16 @@ public class Receipt extends Receipt_Base {
             result = result.add(entry.getAmountWithAdjustment());
         }
         return result;
+    }
+
+    public boolean isFromAdministrativeOffice(AdministrativeOffice administrativeOffice) {
+        for (final Entry entry : getEntries()) {
+            if (!entry.getAccountingTransaction().getEvent().isPayableOnAdministrativeOffice(
+                    administrativeOffice)) {
+                return false;
+            }
+        }
+        return true;
     }
 
 }

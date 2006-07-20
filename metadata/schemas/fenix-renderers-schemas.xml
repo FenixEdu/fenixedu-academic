@@ -737,7 +737,7 @@
    	    <slot name="fileChecksum"/>
 	</schema>
 	
-	<schema name="person.view-with-name-and-idDocumentType-and-documentIdNumber" type="net.sourceforge.fenixedu.domain.Person" bundle="DEFAULT">
+	<schema name="person.view-with-name-and-idDocumentType-and-documentIdNumber" type="net.sourceforge.fenixedu.domain.Person" bundle="APPLICATION_RESOURCES">
 		<slot name="name"/>
 		<slot name="idDocumentType"/>
 		<slot name="documentIdNumber"/>

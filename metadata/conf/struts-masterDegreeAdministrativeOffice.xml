@@ -2575,7 +2575,7 @@
 	  <!-- Payments -->
 	  <action path="/payments"
 		      parameter="method"
-              type="net.sourceforge.fenixedu.presentationTier.Action.masterDegree.administrativeOffice.payments.PaymentsManagementDispatchAction"
+              type="net.sourceforge.fenixedu.presentationTier.Action.masterDegree.administrativeOffice.payments.MasterDegreePaymentsManagementDispatchAction"
    		      name="paymentsForm"
    		      scope="request">
 	         <forward name="searchPerson" path="payments.management.searchPerson"/> 
@@ -2630,7 +2630,7 @@
 	  <!-- Price Management -->
 	  <action path="/pricesManagement"
 		      parameter="method"
-              type="net.sourceforge.fenixedu.presentationTier.Action.masterDegree.administrativeOffice.pricesManagement.PricesManagementDispatchAction"
+              type="net.sourceforge.fenixedu.presentationTier.Action.masterDegree.administrativeOffice.pricesManagement.MasterDegreePricesManagementDispatchAction"
    		      scope="request">
    	         <forward name="viewPrices" path="prices.management.viewPrices"/>
 	         <forward name="editPrice" path="prices.management.editPrice"/>
@@ -2646,7 +2646,7 @@
     
     <!-- ========== Message Resources Definitions ============================ -->
 	<message-resources parameter="resources.GlobalResources" key="GLOBAL_RESOURCES" null="false"/>
-	<message-resources parameter="resources.ApplicationResources" key="DEFAULT" null="false"/>
+	<message-resources parameter="resources.ApplicationResources" key="APPLICATION_RESOURCES" null="false"/>
     <message-resources parameter="resources.EnumerationResources" key="ENUMERATION_RESOURCES" null="false"/>
     <message-resources parameter="resources.AdminOffice" key="ADMIN_OFFICE_RESOURCES" null="false"/>    
     <message-resources parameter="resources.CandidateResources" key="CANDIDATE_RESOURCES" null="false" />

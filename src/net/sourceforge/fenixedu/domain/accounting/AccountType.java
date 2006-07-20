@@ -7,4 +7,12 @@ public enum AccountType {
     public String getName() {
         return name();
     }
+
+    public String getQualifiedName() {
+        return AccountType.class.getSimpleName() + "." + name();
+    }
+
+    public String getFullyQualifiedName() {
+        return AccountType.class.getName() + "." + name();
+    }
 }

@@ -26,3 +26,14 @@ function executeWithTempFile() {
 	rm tmp.sql
 	echo
 }
+
+execute "Changing table Receipt" AlterTableReceipt.sql
+executeWithTempFile "Updating table Receipt" UpdateTableReceipt.sql
+execute "Changing table Receipt (assert KeyEmployee not null)" AlterTableReceiptAssertKeyEmployeeNotNull.sql
+execute "Changing table AccountablityType" UpdateTableAccountabilityType.sql
+execute "Changing table Party" AlterTableParty.sql
+execute "Changing table ServiceAgreementTemplate" AlterTableServiceAgreementTemplate.sql
+execute "Changing table AdministrativeOffice" CreateTableAdministrativeOffice.sql
+execute "Changing table AccountingEvent" AlterTableAccountingEvent.sql
+
+

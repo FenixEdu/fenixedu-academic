@@ -19,4 +19,12 @@ public enum EntryType {
     public String getName() {
         return name();
     }
+
+    public String getQualifiedName() {
+        return EntryType.class.getSimpleName() + "." + name();
+    }
+
+    public String getFullyQualifiedName() {
+        return EntryType.class.getName() + "." + name();
+    }
 }

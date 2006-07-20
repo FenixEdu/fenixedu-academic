@@ -87,15 +87,14 @@ public abstract class PostingRule extends PostingRule_Base {
         final Set<AccountingTransaction> resultingTransactions = internalProcess(user, entryDTOs,
                 paymentMode, whenRegistered, event, fromAccount, toAccount);
 
-        return getResultingEntries(resultingTransactions, event.getToAccount());
+        return getResultingEntries(resultingTransactions);
     }
 
-    private Set<Entry> getResultingEntries(Set<AccountingTransaction> resultingTransactions,
-            Account toAccount) {
+    private Set<Entry> getResultingEntries(Set<AccountingTransaction> resultingTransactions) {
         final Set<Entry> result = new HashSet<Entry>();
 
         for (final AccountingTransaction transaction : resultingTransactions) {
-            result.add(transaction.getEntryByAccount(toAccount));
+            result.add(transaction.getToAccountEntry());
         }
 
         return result;

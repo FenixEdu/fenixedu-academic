@@ -15,4 +15,12 @@ public enum EventType {
     public String getName() {
         return name();
     }
+
+    public String getQualifiedName() {
+        return EventType.class.getSimpleName() + "." + name();
+    }
+
+    public String getFullyQualifiedName() {
+        return EventType.class.getName() + "." + name();
+    }
 }

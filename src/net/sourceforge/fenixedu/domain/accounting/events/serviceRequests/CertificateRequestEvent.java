@@ -6,6 +6,7 @@ import java.util.Set;
 import net.sourceforge.fenixedu.dataTransferObject.accounting.EntryDTO;
 import net.sourceforge.fenixedu.domain.User;
 import net.sourceforge.fenixedu.domain.accounting.Account;
+import net.sourceforge.fenixedu.domain.accounting.AccountType;
 import net.sourceforge.fenixedu.domain.accounting.Entry;
 import net.sourceforge.fenixedu.domain.accounting.EntryType;
 import net.sourceforge.fenixedu.domain.accounting.PaymentMode;
@@ -22,48 +23,43 @@ public class CertificateRequestEvent extends CertificateRequestEvent_Base {
 
     @Override
     public Account getToAccount() {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    @Override
-    public List<EntryDTO> calculateEntries(DateTime when) {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    @Override
-    public LabelFormatter getDescriptionForEntryType(EntryType entryType) {
-        // TODO Auto-generated method stub
-        return null;
+        return getAdministrativeOffice().getUnit().getAccountBy(AccountType.INTERNAL);
     }
 
     @Override
     protected PostingRule getPostingRule(DateTime whenRegistered) {
-        // TODO Auto-generated method stub
-        return null;
+        return getAdministrativeOffice().getServiceAgreementTemplate()
+                .findPostingRuleByEventTypeAndDate(getEventType(), whenRegistered);
     }
 
     @Override
     protected Set<Entry> internalProcess(User responsibleUser, List<EntryDTO> entryDTOs,
             PaymentMode paymentMode, DateTime whenRegistered) {
-        // TODO Auto-generated method stub
+        return getPostingRule(whenRegistered).process(responsibleUser, entryDTOs, paymentMode,
+                whenRegistered, this, getPerson().getAccountBy(AccountType.EXTERNAL), getToAccount());
+    }
+
+    @Override
+    public LabelFormatter getDescriptionForEntryType(EntryType entryType) {
+        // TODO: delegate to document
         return null;
+
     }
 
     public Integer getNumberOfUnits() {
-        // TODO: implement
-        //If number of units is not appliable to document, the document should return  0
+        // TODO: delegate to document
+        // If number of units is not appliable to document, the document should
+        // return 0
         return 0;
     }
-    
+
     public Integer getNumberOfPages() {
-        // TODO: implement
+        // TODO: delegate to document
         return 0;
     }
 
     public boolean isUrgentRequest() {
-        // TODO: implement
+        // TODO: delegate to document
         return false;
     }
 

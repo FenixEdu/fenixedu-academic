@@ -25,9 +25,9 @@
 	</fr:layout>
 </fr:view>
 <br/>
-<logic:notEmpty name="person" property="receipts">
+<logic:notEmpty name="receiptsForAdministrativeOffice">
 	<bean:define id="personId" name="person" property="idInternal"/>
-	<fr:view name="person" property="receipts" schema="receipt.view">
+	<fr:view name="receiptsForAdministrativeOffice" schema="receipt.view">
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle4 thlight thright" />
 			<fr:property name="linkFormat(view)" value="<%="/payments.do?method=prepareShowReceipt&receiptID=${idInternal}&personId=" + personId %>"/>
@@ -36,7 +36,7 @@
 		</fr:layout>
 	</fr:view>
 </logic:notEmpty>
-<logic:empty name="person" property="receipts">
+<logic:empty name="receiptsForAdministrativeOffice">
 		<span class="error0"><bean:message key="label.masterDegree.administrativeOffice.payments.noReceipts"/></span>
 </logic:empty>
 

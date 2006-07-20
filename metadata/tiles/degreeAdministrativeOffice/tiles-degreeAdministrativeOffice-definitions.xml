@@ -27,5 +27,5 @@
 	<definition name="definition.degreeAdministrativeOffice.change.student.areas" extends="definition.degreeAdministrativeOffice.masterPage">
 		<put name="body-context" value="/degreeAdministrativeOffice/areas/changeStudentAreasContext.jsp"/>
 	</definition>
-
+	
 </tiles-definitions>

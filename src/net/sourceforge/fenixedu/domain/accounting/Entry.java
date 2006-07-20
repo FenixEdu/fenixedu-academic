@@ -113,7 +113,12 @@ public class Entry extends Entry_Base {
     }
 
     public BigDecimal getAmountWithAdjustment() {
-        return getOriginalAmount();
+        return isAdjusted() ? getOriginalAmount().add(getTotalAdjustedAmount()) : getOriginalAmount();
+    }
+
+    private BigDecimal getTotalAdjustedAmount() {
+        return getAccountingTransaction().getAdjustmentTransaction().getFromAccountEntry()
+                .getAmountWithAdjustment();
     }
 
 }

@@ -119,7 +119,7 @@
 <!-- ************************************************************************************************************ -->
 <class-descriptor class="net.sourceforge.fenixedu.domain.accounting.ServiceAgreementTemplate" table="SERVICE_AGREEMENT_TEMPLATE">
 	<extent-class class-ref="net.sourceforge.fenixedu.domain.accounting.serviceAgreementTemplates.DegreeCurricularPlanServiceAgreementTemplate" />
-	<extent-class class-ref="net.sourceforge.fenixedu.domain.accounting.serviceAgreementTemplates.UnitServiceAgreementTemplate" />
+	<extent-class class-ref="net.sourceforge.fenixedu.domain.accounting.serviceAgreementTemplates.AdministrativeOfficeServiceAgreementTemplate" />
 </class-descriptor>
 
 	<!-- ************************************************************************************************************ -->
@@ -130,9 +130,9 @@
 	</class-descriptor>
 	
 	<!-- ************************************************************************************************************ -->
-	<!-- Definitions for net.sourceforge.fenixedu.domain.accounting.serviceAgreementTemplates.UnitServiceAgreementTemplate -->
+	<!-- Definitions for net.sourceforge.fenixedu.domain.accounting.serviceAgreementTemplates.AdministrativeOfficeServiceAgreementTemplate -->
 	<!-- ************************************************************************************************************ -->
-	<class-descriptor class="net.sourceforge.fenixedu.domain.accounting.serviceAgreementTemplates.UnitServiceAgreementTemplate" table="SERVICE_AGREEMENT_TEMPLATE">
+	<class-descriptor class="net.sourceforge.fenixedu.domain.accounting.serviceAgreementTemplates.AdministrativeOfficeServiceAgreementTemplate" table="SERVICE_AGREEMENT_TEMPLATE">
 	
 	</class-descriptor>
 

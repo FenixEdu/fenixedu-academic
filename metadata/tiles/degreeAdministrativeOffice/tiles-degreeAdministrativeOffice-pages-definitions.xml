@@ -190,4 +190,57 @@
 	</definition>	
 	
 	
+	<!-- ************* Payments ************* -->
+	<definition name="payments.management.searchPerson" extends="definition.degreeAdministrativeOffice.masterPage">
+		<put name="body" value="/degreeAdministrativeOffice/payments/searchPerson.jsp"/>
+	</definition>
+	
+	<definition name="payments.management.showEvents" extends="definition.degreeAdministrativeOffice.masterPage">
+		<put name="body" value="/degreeAdministrativeOffice/payments/showEvents.jsp"/>
+	</definition>
+	
+	<definition name="payments.management.showOperations" extends="definition.degreeAdministrativeOffice.masterPage">
+		<put name="body" value="/degreeAdministrativeOffice/payments/showOperations.jsp"/>
+	</definition>
+	
+	<definition name="payments.management.showPaymentsWithoutReceipt" extends="definition.degreeAdministrativeOffice.masterPage">
+		<put name="body" value="/degreeAdministrativeOffice/payments/showPaymentsWithoutReceipt.jsp"/>
+	</definition>
+
+	<definition name="payments.management.showGuide" extends="definition.degreeAdministrativeOffice.masterPage">
+		<put name="body" value="/degreeAdministrativeOffice/payments/guides/showGuide.jsp"/>
+	</definition>
+	
+	<definition name="payments.management.showReceipts" extends="definition.degreeAdministrativeOffice.masterPage">
+		<put name="body" value="/degreeAdministrativeOffice/payments/receipts/showReceipts.jsp"/>
+	</definition>
+	
+	<definition name="payments.management.showReceipt" extends="definition.degreeAdministrativeOffice.masterPage">
+		<put name="body" value="/degreeAdministrativeOffice/payments/receipts/showReceipt.jsp"/>
+	</definition>
+	
+	<definition name="payments.management.confirmCreateReceipt" extends="definition.degreeAdministrativeOffice.masterPage">
+		<put name="body" value="/degreeAdministrativeOffice/payments/receipts/confirmCreateReceipt.jsp"/>
+	</definition>
+	
+	<definition name="payments.management.preparePayment" extends="definition.degreeAdministrativeOffice.masterPage">
+		<put name="body" value="/degreeAdministrativeOffice/payments/preparePayment.jsp"/>
+	</definition>
+	
+	<definition name="payments.management.paymentConfirmed" extends="definition.degreeAdministrativeOffice.masterPage">
+		<put name="body" value="/degreeAdministrativeOffice/payments/paymentConfirmed.jsp"/>
+	</definition>
+	
+	
+	<!-- ************* Prices Management ************* -->
+	<definition name="prices.management.editPrice" extends="definition.degreeAdministrativeOffice.masterPage">
+		<put name="body" value="/degreeAdministrativeOffice/pricesManagement/editPrice.jsp"/>
+	</definition>
+
+	<definition name="prices.management.viewPrices" extends="definition.degreeAdministrativeOffice.masterPage">
+		<put name="body" value="/degreeAdministrativeOffice/pricesManagement/viewPrices.jsp"/>
+	</definition>
+	
+	
+	
 </tiles-definitions>

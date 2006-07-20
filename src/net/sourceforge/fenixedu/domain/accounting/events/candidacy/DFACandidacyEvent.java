@@ -15,9 +15,11 @@ import net.sourceforge.fenixedu.domain.accounting.EntryType;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
 import net.sourceforge.fenixedu.domain.accounting.PaymentMode;
 import net.sourceforge.fenixedu.domain.accounting.PostingRule;
+import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.candidacy.Candidacy;
 import net.sourceforge.fenixedu.domain.candidacy.DFACandidacy;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.util.StateMachine;
 import net.sourceforge.fenixedu.util.resources.LabelFormatter;
 
@@ -29,13 +31,14 @@ public class DFACandidacyEvent extends DFACandidacyEvent_Base {
         super();
     }
 
-    public DFACandidacyEvent(Person person, DFACandidacy candidacy) {
+    public DFACandidacyEvent(AdministrativeOffice administrativeOffice, Person person,
+            DFACandidacy candidacy) {
         this();
-        init(person, candidacy);
+        init(administrativeOffice, person, candidacy);
     }
 
-    private void init(Person person, DFACandidacy candidacy) {
-        init(EventType.CANDIDACY_ENROLMENT, person);
+    private void init(AdministrativeOffice administrativeOffice, Person person, DFACandidacy candidacy) {
+        init(administrativeOffice, EventType.CANDIDACY_ENROLMENT, person);
         checkParameters(candidacy);
         super.setCandidacy(candidacy);
     }
@@ -48,13 +51,11 @@ public class DFACandidacyEvent extends DFACandidacyEvent_Base {
 
     @Override
     public Account getToAccount() {
-        return getCandidacy().getExecutionDegree().getDegreeCurricularPlan().getDegree().getUnit()
-                .getAccountBy(AccountType.INTERNAL);
+        return getUnit().getAccountBy(AccountType.INTERNAL);
     }
 
-    @Override
-    public List<EntryDTO> calculateEntries(DateTime when) {
-        return getPostingRule(when).calculateEntries(this, when);
+    private Unit getUnit() {
+        return getCandidacy().getExecutionDegree().getDegreeCurricularPlan().getDegree().getUnit();
     }
 
     @Override
@@ -101,8 +102,7 @@ public class DFACandidacyEvent extends DFACandidacyEvent_Base {
     protected Set<Entry> internalProcess(User responsibleUser, List<EntryDTO> entryDTOs,
             PaymentMode paymentMode, DateTime whenRegistered) {
         return getPostingRule(whenRegistered).process(responsibleUser, entryDTOs, paymentMode,
-                whenRegistered, this, getCandidacy().getPerson().getAccountBy(AccountType.EXTERNAL),
-                getToAccount());
+                whenRegistered, this, getPerson().getAccountBy(AccountType.EXTERNAL), getToAccount());
     }
 
 }

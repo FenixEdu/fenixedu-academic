@@ -10,7 +10,7 @@
 <%@ page import="java.util.Date" %>
 
 <span class="error"><html:errors/></span>
-<html:messages id="message" message="true" bundle="DEFAULT">
+<html:messages id="message" message="true" bundle="APPLICATION_RESOURCES">
 	<span class="error">
 		<bean:write name="message"/>
 	</span>
