@@ -695,7 +695,7 @@ public class Teacher extends Teacher_Base {
     private Double round(double n) {
         return Math.round((n * 100.0)) / 100.0;
     }
-    
+       
     public boolean isDeceased() {
         for (TeacherLegalRegimen legalRegimen : getLegalRegimens()) {
             if (legalRegimen.getLegalRegimenType().equals(LegalRegimenType.DEATH)) {

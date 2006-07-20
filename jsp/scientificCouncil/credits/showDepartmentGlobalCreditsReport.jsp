@@ -22,7 +22,9 @@
 		<tr>
 			<th><bean:message key="department"/></th>
 			<logic:iterate id="departmentCredits" name="departmentTotalCredits" length="1">
-				<logic:iterate id="periods" name="departmentCredits" property="value">
+				<logic:iterate id="periods" name="departmentCredits" property="value">					
+					<th>&Sigma;&nbsp;<bean:write name="periods" property="key.year"/> - <bean:message key="label.career.teacher"/></th>
+					<th>&Sigma;&nbsp;<bean:write name="periods" property="key.year"/> - <bean:message key="label.not.career.teacher"/></th>
 					<th>&Sigma;&nbsp;<bean:write name="periods" property="key.year"/></th>
 				</logic:iterate>	
 			</logic:iterate>
@@ -34,6 +36,8 @@
 				<td><bean:write name="departmentCredits" property="key.realName"/></td>
 				<bean:size id="yearsSize" name="departmentCredits" property="value"/>				
 				<logic:iterate id="year" name="departmentCredits" property="value" indexId="index">
+					<td class="aright"><bean:write name="year" property="value.careerCategoryTeacherCredits"/></td>
+					<td class="aright"><bean:write name="year" property="value.notCareerCategoryTeacherCredits"/></td>
 					<td class="aright"><bean:write name="year" property="value.credits"/></td>
 					<logic:equal name="index" value="<%= String.valueOf(yearsSize.intValue() - 1) %>">
 						<td class="aright"><bean:write name="year" property="value.teachersSize"/></td>	
@@ -47,7 +51,9 @@
 			<tr>
 				<td><b><bean:message key="label.teacherService.credits.total"/></b></td>
 				<logic:iterate id="executionYearTotal" name="executionYearTotals">
-					<td class="aright"><b><bean:write name="executionYearTotal" property="value"/></b></td>	
+					<td class="aright"><b><bean:write name="executionYearTotal" property="value.right.left"/></b></td>	
+					<td class="aright"><b><bean:write name="executionYearTotal" property="value.right.right"/></b></td>	
+					<td class="aright"><b><bean:write name="executionYearTotal" property="value.left"/></b></td>
 				</logic:iterate>		
 				<td class="aright"><b><bean:write name="totalTeachersSize"/></b></a></td>	
 				<td class="aright"><b><bean:write name="totalBalance"/></b></td>	

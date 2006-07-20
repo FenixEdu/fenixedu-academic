@@ -216,7 +216,6 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
                 }
             }
         }
-
         return buffer.toString();
     }
 

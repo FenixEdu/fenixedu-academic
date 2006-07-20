@@ -28,6 +28,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.scientificCouncil.credits.ReadDepartmentTotalCreditsByPeriod.PeriodCreditsReportDTO;
 import net.sourceforge.fenixedu.applicationTier.Servico.scientificCouncil.credits.ReadTeachersCreditsResumeByPeriodAndUnit.TeacherCreditsReportDTO;
 import net.sourceforge.fenixedu.commons.OrderedIterator;
+import net.sourceforge.fenixedu.dataTransferObject.GenericPair;
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
@@ -177,23 +178,26 @@ public class ViewTeacherCreditsReportDispatchAction extends FenixDispatchAction 
             Map<ExecutionYear, PeriodCreditsReportDTO>> departmentTotalCredits) {
         
         int totalTeachersSize = 0;
-        SortedMap<ExecutionYear, Double> executionYearTotals = new TreeMap<ExecutionYear, Double>(ExecutionYear.EXECUTION_YEAR_COMPARATOR_BY_YEAR);                
+        SortedMap<ExecutionYear, GenericPair<Double, GenericPair<Double, Double>>> executionYearTotals = new TreeMap<ExecutionYear, GenericPair<Double, GenericPair<Double, Double>>>(ExecutionYear.EXECUTION_YEAR_COMPARATOR_BY_YEAR);        
         for (Department department : departmentTotalCredits.keySet()) {            
             for (ExecutionYear executionYear : departmentTotalCredits.get(department).keySet()) {
-                if(!executionYearTotals.containsKey(executionYear)) {
-                    executionYearTotals.put(executionYear, 0.0);                    
+                if(!executionYearTotals.containsKey(executionYear)) {                                       
+                    executionYearTotals.put(executionYear, new GenericPair(0.0, new GenericPair(0.0, 0.0)));                    
                 }
-                executionYearTotals.put(executionYear, round(departmentTotalCredits.get(department).get(executionYear).getCredits()
-                        + executionYearTotals.get(executionYear)));
+                
+                GenericPair genericPair = executionYearTotals.get(executionYear);                
+                genericPair.setLeft(round(departmentTotalCredits.get(department).get(executionYear).getCredits() + executionYearTotals.get(executionYear).getLeft()));                
+                ((GenericPair)genericPair.getRight()).setLeft(round(departmentTotalCredits.get(department).get(executionYear).getCareerCategoryTeacherCredits() + executionYearTotals.get(executionYear).getRight().getLeft()));
+                ((GenericPair)genericPair.getRight()).setRight(round(departmentTotalCredits.get(department).get(executionYear).getNotCareerCategoryTeacherCredits() + executionYearTotals.get(executionYear).getRight().getRight()));
                 
                 if(executionYear.equals(untilExecutionYear)) {
                     totalTeachersSize += departmentTotalCredits.get(department).get(executionYear).getTeachersSize();                    
                 }
             }         
         }  
-               
+                       
         request.setAttribute("totalTeachersSize", totalTeachersSize);
-        request.setAttribute("totalBalance", round(executionYearTotals.get(untilExecutionYear) / totalTeachersSize));
+        request.setAttribute("totalBalance", round(executionYearTotals.get(untilExecutionYear).getLeft() / totalTeachersSize));
         request.setAttribute("executionYearTotals", executionYearTotals);
     }
     
@@ -257,6 +261,8 @@ public class ViewTeacherCreditsReportDispatchAction extends FenixDispatchAction 
             ExecutionYear lastExecutionYear = null;
             for (ExecutionYear executionYear : teachersCreditsByDepartment.get(department).keySet()) {
                 row.setCell(String.valueOf(teachersCreditsByDepartment.get(department).get(executionYear).getCredits()).replace('.', ','));
+                row.setCell(String.valueOf(teachersCreditsByDepartment.get(department).get(executionYear).getCareerCategoryTeacherCredits()).replace('.', ','));
+                row.setCell(String.valueOf(teachersCreditsByDepartment.get(department).get(executionYear).getNotCareerCategoryTeacherCredits()).replace('.', ','));
                 lastExecutionYear = executionYear;
             }
             row.setCell(String.valueOf(teachersCreditsByDepartment.get(department).get(lastExecutionYear).getTeachersSize()));
@@ -266,9 +272,11 @@ public class ViewTeacherCreditsReportDispatchAction extends FenixDispatchAction 
         if(teachersCreditsByDepartment.keySet().size() > 1) {
             Row row = spreadsheet.addRow();
             row.setCell("Totais");
-            SortedMap<ExecutionYear, Double> executionYearTotals = (SortedMap<ExecutionYear, Double>) request.getAttribute("executionYearTotals");
-            for (Double value : executionYearTotals.values()) {
-                row.setCell(String.valueOf(value).replace('.', ','));
+            SortedMap<ExecutionYear, GenericPair<Double, GenericPair<Double, Double>>> executionYearTotals = (SortedMap<ExecutionYear, GenericPair<Double, GenericPair<Double, Double>>>) request.getAttribute("executionYearTotals");
+            for (GenericPair<Double, GenericPair<Double, Double>> genericPair : executionYearTotals.values()) {
+                row.setCell(String.valueOf(genericPair.getRight().getLeft()).replace('.', ','));
+                row.setCell(String.valueOf(genericPair.getRight().getRight()).replace('.', ','));
+                row.setCell(String.valueOf(genericPair.getLeft()).replace('.', ','));
             }
             row.setCell(String.valueOf(request.getAttribute("totalTeachersSize")));
             row.setCell(String.valueOf(request.getAttribute("totalBalance")).replace('.', ','));            
@@ -285,8 +293,10 @@ public class ViewTeacherCreditsReportDispatchAction extends FenixDispatchAction 
         initialRow.setCell("Departamento");
         
         for (Department department : teachersCreditsByDepartment.keySet()) {
-            for (ExecutionYear executionYear : teachersCreditsByDepartment.get(department).keySet()) {
-                initialRow.setCell(executionYear.getYear());
+            for (ExecutionYear executionYear : teachersCreditsByDepartment.get(department).keySet()) {                
+                initialRow.setCell("Sum. " + executionYear.getYear() + " - Contribuição Prof. Carreira");
+                initialRow.setCell("Sum. " + executionYear.getYear() + " - Contribuição Restantes Prof.");                
+                initialRow.setCell("Sum. " + executionYear.getYear());                
             }                   
             break;
         }

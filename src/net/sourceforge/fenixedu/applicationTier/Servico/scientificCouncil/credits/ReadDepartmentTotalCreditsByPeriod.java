@@ -12,6 +12,7 @@ import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
+import net.sourceforge.fenixedu.domain.teacher.Category;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class ReadDepartmentTotalCreditsByPeriod extends Service {
@@ -50,18 +51,25 @@ public class ReadDepartmentTotalCreditsByPeriod extends Service {
     private void updateCredits(Teacher teacher, ExecutionPeriod executionPeriod,
             Map<ExecutionYear, PeriodCreditsReportDTO> departmentCredits, ExecutionPeriod untilExecutionPeriod) throws ParseException {
 
-        double totalCredits = 0.0;        
-        totalCredits = teacher.getBalanceOfCreditsUntil(executionPeriod);
+        double teacherPeriodTotalCredits = teacher.getBalanceOfCreditsUntil(executionPeriod);
         
         if(!departmentCredits.containsKey(executionPeriod.getExecutionYear())) {
             departmentCredits.put(executionPeriod.getExecutionYear(), new PeriodCreditsReportDTO());
         }
         
         PeriodCreditsReportDTO reportDTO = departmentCredits.get(executionPeriod.getExecutionYear());
-        reportDTO.setCredits(round(reportDTO.getCredits() + totalCredits));
+        reportDTO.setCredits(round(reportDTO.getCredits() + teacherPeriodTotalCredits));
+        
+        Category category = teacher.getCategoryForCreditsByPeriod(executionPeriod);
+        if(category != null && category.isCareerCategory()) {
+            reportDTO.setCareerCategoryTeacherCredits(round(reportDTO.getCareerCategoryTeacherCredits() + teacherPeriodTotalCredits));
+        } else {
+            reportDTO.setNotCareerCategoryTeacherCredits(round(reportDTO.getNotCareerCategoryTeacherCredits() + teacherPeriodTotalCredits));
+        }
+        
         if(executionPeriod.equals(untilExecutionPeriod)) {
             reportDTO.setTeachersSize(reportDTO.getTeachersSize() + 1);
-            reportDTO.setBalance(round(reportDTO.getCredits() / reportDTO.getTeachersSize()));
+            reportDTO.setBalance(round(reportDTO.getCredits() / reportDTO.getTeachersSize()));            
         }
     }
 
@@ -86,8 +94,10 @@ public class ReadDepartmentTotalCreditsByPeriod extends Service {
     public static class PeriodCreditsReportDTO {        
         private double credits;
         private double balance;
-        private int teachersSize;
-        
+        private double careerCategoryTeacherCredits;
+        private double notCareerCategoryTeacherCredits;
+        private int teachersSize;                
+       
         public double getBalance() {
             return balance;
         }
@@ -105,6 +115,18 @@ public class ReadDepartmentTotalCreditsByPeriod extends Service {
         }
         public void setTeachersSize(int teachersSize) {
             this.teachersSize = teachersSize;
-        }                      
+        }
+        public double getCareerCategoryTeacherCredits() {
+            return careerCategoryTeacherCredits;
+        }
+        public void setCareerCategoryTeacherCredits(double careerCategoryTeacherCredits) {
+            this.careerCategoryTeacherCredits = careerCategoryTeacherCredits;
+        }
+        public double getNotCareerCategoryTeacherCredits() {
+            return notCareerCategoryTeacherCredits;
+        }
+        public void setNotCareerCategoryTeacherCredits(double notCareerCategoryTeacherCredits) {
+            this.notCareerCategoryTeacherCredits = notCareerCategoryTeacherCredits;
+        }                   
     }    
 }

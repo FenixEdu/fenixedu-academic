@@ -27,4 +27,11 @@ public class Category extends Category_Base implements Comparable {
         return weightCompare == 0 ? this.getLongName().compareTo(category.getLongName()) : weightCompare;
     }
 
+    public boolean isCareerCategory() {
+        return ((getLongName().equals("ASSISTENTE") && getCode().equals("AST")) ||
+                (getLongName().equals("PROFESSOR CATEDRATICO") && getCode().equals("PCA")) ||
+                (getLongName().equals("PROFESSOR AUXILIAR") && getCode().equals("PAX")) ||
+                (getLongName().equals("PROFESSOR ASSOCIADO") && getCode().equals("PAS")) ||
+                (getLongName().equals("ASSISTENTE ESTAGIARIO") && (getCode().equals("ASE") || getCode().equals("ASG"))));
+    }    
 }
