@@ -26,7 +26,3 @@ function executeWithTempFile() {
 	rm tmp.sql
 	echo
 }
-
-
-
-execute "Migrate Contributors into Parties" migrateContributorsIntoParties.sql

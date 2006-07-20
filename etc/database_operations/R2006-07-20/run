@@ -35,5 +35,4 @@ execute "Changing table Party" AlterTableParty.sql
 execute "Changing table ServiceAgreementTemplate" AlterTableServiceAgreementTemplate.sql
 execute "Creating table AdministrativeOffice" CreateTableAdministrativeOffice.sql
 execute "Changing table AccountingEvent" AlterTableAccountingEvent.sql
-
-
+execute "Migrate Contributors into Parties" migrateContributorsIntoParties.sql
