@@ -61,13 +61,21 @@ public class ReadDepartmentTotalCreditsByPeriod extends Service {
         reportDTO.setCredits(round(reportDTO.getCredits() + teacherPeriodTotalCredits));
         
         Category category = teacher.getCategoryForCreditsByPeriod(executionPeriod);
-        if(category != null && category.isCareerCategory()) {
+        boolean careerTeacher = (category != null && category.isCareerCategory());
+        if(careerTeacher) {
             reportDTO.setCareerCategoryTeacherCredits(round(reportDTO.getCareerCategoryTeacherCredits() + teacherPeriodTotalCredits));
         } else {
             reportDTO.setNotCareerCategoryTeacherCredits(round(reportDTO.getNotCareerCategoryTeacherCredits() + teacherPeriodTotalCredits));
         }
         
         if(executionPeriod.equals(untilExecutionPeriod)) {
+            if(careerTeacher) {
+                reportDTO.setCareerTeachersSize(reportDTO.getCareerTeachersSize() + 1);
+                reportDTO.setCareerTeachersBalance(round(reportDTO.getCareerCategoryTeacherCredits() / reportDTO.getCareerTeachersSize()));
+            } else {
+                reportDTO.setNotCareerTeachersSize(reportDTO.getNotCareerTeachersSize() + 1);
+                reportDTO.setNotCareerTeachersBalance(round(reportDTO.getNotCareerCategoryTeacherCredits() / reportDTO.getNotCareerTeachersSize()));
+            }
             reportDTO.setTeachersSize(reportDTO.getTeachersSize() + 1);
             reportDTO.setBalance(round(reportDTO.getCredits() / reportDTO.getTeachersSize()));            
         }
@@ -94,9 +102,13 @@ public class ReadDepartmentTotalCreditsByPeriod extends Service {
     public static class PeriodCreditsReportDTO {        
         private double credits;
         private double balance;
+        private double careerTeachersBalance;
+        private double notCareerTeachersBalance;
         private double careerCategoryTeacherCredits;
         private double notCareerCategoryTeacherCredits;
-        private int teachersSize;                
+        private int teachersSize;        
+        private int careerTeachersSize;
+        private int notCareerTeachersSize;
        
         public double getBalance() {
             return balance;
@@ -127,6 +139,30 @@ public class ReadDepartmentTotalCreditsByPeriod extends Service {
         }
         public void setNotCareerCategoryTeacherCredits(double notCareerCategoryTeacherCredits) {
             this.notCareerCategoryTeacherCredits = notCareerCategoryTeacherCredits;
+        }     
+        public double getCareerTeachersBalance() {
+            return careerTeachersBalance;
+        }
+        public void setCareerTeachersBalance(double careerTeachersBalance) {
+            this.careerTeachersBalance = careerTeachersBalance;
+        }
+        public int getCareerTeachersSize() {
+            return careerTeachersSize;
+        }
+        public void setCareerTeachersSize(int careerTeachersSize) {
+            this.careerTeachersSize = careerTeachersSize;
+        }
+        public double getNotCareerTeachersBalance() {
+            return notCareerTeachersBalance;
+        }
+        public void setNotCareerTeachersBalance(double notCareerTeachersBalance) {
+            this.notCareerTeachersBalance = notCareerTeachersBalance;
+        }
+        public int getNotCareerTeachersSize() {
+            return notCareerTeachersSize;
+        }
+        public void setNotCareerTeachersSize(int notCareerTeachersSize) {
+            this.notCareerTeachersSize = notCareerTeachersSize;
         }                   
     }    
 }

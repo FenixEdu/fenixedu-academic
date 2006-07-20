@@ -177,7 +177,7 @@ public class ViewTeacherCreditsReportDispatchAction extends FenixDispatchAction 
     private void setTotals(HttpServletRequest request, ExecutionYear untilExecutionYear, SortedMap<Department, 
             Map<ExecutionYear, PeriodCreditsReportDTO>> departmentTotalCredits) {
         
-        int totalTeachersSize = 0;
+        int totalTeachersSize = 0, totalCareerTeachersSize = 0, totalNotCareerTeachersSize = 0;
         SortedMap<ExecutionYear, GenericPair<Double, GenericPair<Double, Double>>> executionYearTotals = new TreeMap<ExecutionYear, GenericPair<Double, GenericPair<Double, Double>>>(ExecutionYear.EXECUTION_YEAR_COMPARATOR_BY_YEAR);        
         for (Department department : departmentTotalCredits.keySet()) {            
             for (ExecutionYear executionYear : departmentTotalCredits.get(department).keySet()) {
@@ -191,13 +191,19 @@ public class ViewTeacherCreditsReportDispatchAction extends FenixDispatchAction 
                 ((GenericPair)genericPair.getRight()).setRight(round(departmentTotalCredits.get(department).get(executionYear).getNotCareerCategoryTeacherCredits() + executionYearTotals.get(executionYear).getRight().getRight()));
                 
                 if(executionYear.equals(untilExecutionYear)) {
-                    totalTeachersSize += departmentTotalCredits.get(department).get(executionYear).getTeachersSize();                    
+                    totalTeachersSize += departmentTotalCredits.get(department).get(executionYear).getTeachersSize();
+                    totalCareerTeachersSize += departmentTotalCredits.get(department).get(executionYear).getCareerTeachersSize();
+                    totalNotCareerTeachersSize += departmentTotalCredits.get(department).get(executionYear).getNotCareerTeachersSize();
                 }
             }         
         }  
-                       
-        request.setAttribute("totalTeachersSize", totalTeachersSize);
+                              
+        request.setAttribute("totalCareerTeachersSize", totalCareerTeachersSize);
+        request.setAttribute("totalNotCareerTeachersSize", totalNotCareerTeachersSize);
+        request.setAttribute("totalCareerTeachersBalance", round(executionYearTotals.get(untilExecutionYear).getRight().getLeft() / totalCareerTeachersSize));
+        request.setAttribute("totalNotCareerTeachersBalance", round(executionYearTotals.get(untilExecutionYear).getRight().getRight() / totalNotCareerTeachersSize));        
         request.setAttribute("totalBalance", round(executionYearTotals.get(untilExecutionYear).getLeft() / totalTeachersSize));
+        request.setAttribute("totalTeachersSize", totalTeachersSize);
         request.setAttribute("executionYearTotals", executionYearTotals);
     }
     
@@ -265,7 +271,11 @@ public class ViewTeacherCreditsReportDispatchAction extends FenixDispatchAction 
                 row.setCell(String.valueOf(teachersCreditsByDepartment.get(department).get(executionYear).getNotCareerCategoryTeacherCredits()).replace('.', ','));
                 lastExecutionYear = executionYear;
             }
+            row.setCell(String.valueOf(teachersCreditsByDepartment.get(department).get(lastExecutionYear).getCareerTeachersSize()));
+            row.setCell(String.valueOf(teachersCreditsByDepartment.get(department).get(lastExecutionYear).getNotCareerTeachersSize()));
             row.setCell(String.valueOf(teachersCreditsByDepartment.get(department).get(lastExecutionYear).getTeachersSize()));
+            row.setCell(String.valueOf(teachersCreditsByDepartment.get(department).get(lastExecutionYear).getCareerTeachersBalance()).replace('.', ','));           
+            row.setCell(String.valueOf(teachersCreditsByDepartment.get(department).get(lastExecutionYear).getNotCareerTeachersBalance()).replace('.', ','));            
             row.setCell(String.valueOf(teachersCreditsByDepartment.get(department).get(lastExecutionYear).getBalance()).replace('.', ','));            
         }
         
@@ -278,7 +288,11 @@ public class ViewTeacherCreditsReportDispatchAction extends FenixDispatchAction 
                 row.setCell(String.valueOf(genericPair.getRight().getRight()).replace('.', ','));
                 row.setCell(String.valueOf(genericPair.getLeft()).replace('.', ','));
             }
+            row.setCell(String.valueOf(request.getAttribute("totalCareerTeachersSize")));
+            row.setCell(String.valueOf(request.getAttribute("totalNotCareerTeachersSize")));
             row.setCell(String.valueOf(request.getAttribute("totalTeachersSize")));
+            row.setCell(String.valueOf(request.getAttribute("totalCareerTeachersBalance")).replace('.', ','));           
+            row.setCell(String.valueOf(request.getAttribute("totalNotCareerTeachersBalance")).replace('.', ','));              
             row.setCell(String.valueOf(request.getAttribute("totalBalance")).replace('.', ','));            
         }
         
@@ -291,18 +305,43 @@ public class ViewTeacherCreditsReportDispatchAction extends FenixDispatchAction 
         spreadsheet.setName("Relatório de Créditos Global");                        
         final Row initialRow = spreadsheet.addRow();
         initialRow.setCell("Departamento");
-        
+
+        ExecutionYear lastExecutionYear = null;
         for (Department department : teachersCreditsByDepartment.keySet()) {
-            for (ExecutionYear executionYear : teachersCreditsByDepartment.get(department).keySet()) {                
-                initialRow.setCell("Sum. " + executionYear.getYear() + " - Contribuição Prof. Carreira");
-                initialRow.setCell("Sum. " + executionYear.getYear() + " - Contribuição Restantes Prof.");                
-                initialRow.setCell("Sum. " + executionYear.getYear());                
+            for (ExecutionYear executionYear : teachersCreditsByDepartment.get(department).keySet()) {                                               
+                for (int i = 0; i < 3; i++) {
+                    initialRow.setCell("Sum. " + executionYear.getYear());                
+                }
+                lastExecutionYear = executionYear;
             }                   
             break;
         }
-                          
-        initialRow.setCell("Nº Docentes");
-        initialRow.setCell("Saldo per capita");
+        
+        if(lastExecutionYear != null) {
+            for (int i = 0; i < 3; i++) {
+                initialRow.setCell("Nº Docentes " + lastExecutionYear.getYear());
+            }
+            for (int i = 0; i < 3; i++) {
+                initialRow.setCell("Saldo per capita " + lastExecutionYear.getYear());
+            }
+        }
+        
+        final Row secondRow = spreadsheet.addRow();
+        secondRow.setCell("");
+        for (Department department : teachersCreditsByDepartment.keySet()) {
+            for (int i = 0; i < teachersCreditsByDepartment.get(department).size(); i++) {                                               
+                secondRow.setCell("Docentes Carreira");
+                secondRow.setCell("Restantes Categorias");
+                secondRow.setCell("Saldo Final");
+            }                   
+            break;
+        }
+                           
+        for (int i = 0; i < 2; i++) {
+            secondRow.setCell("Docentes Carreira");
+            secondRow.setCell("Restantes Categorias");
+            secondRow.setCell("Total");        
+        }                                 
     }
        
     private SortedMap<Department, Map<ExecutionYear, PeriodCreditsReportDTO>> getGlobalDepartmentCreditsMap(HttpServletRequest request, IUserView userView, 
