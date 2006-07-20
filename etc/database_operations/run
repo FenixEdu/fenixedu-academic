@@ -33,7 +33,7 @@ execute "Changing table Receipt (assert KeyEmployee not null)" AlterTableReceipt
 execute "Changing table AccountablityType" UpdateTableAccountabilityType.sql
 execute "Changing table Party" AlterTableParty.sql
 execute "Changing table ServiceAgreementTemplate" AlterTableServiceAgreementTemplate.sql
-execute "Changing table AdministrativeOffice" CreateTableAdministrativeOffice.sql
+execute "Creating table AdministrativeOffice" CreateTableAdministrativeOffice.sql
 execute "Changing table AccountingEvent" AlterTableAccountingEvent.sql
 
 
