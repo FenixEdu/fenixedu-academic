@@ -7,6 +7,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 <link href="<%= request.getContextPath() + "/CSS/dotist.css" %>" rel="stylesheet" type="text/css" />
 <link href="<%= request.getContextPath() + "/CSS/dotist_timetables.css" %>" rel="stylesheet" type="text/css" />
+<link href="<%= request.getContextPath() %>/CSS/transitional.css" rel="stylesheet" media="screen" type="text/css" />
 <title><tiles:getAsString name="title" ignore="true" /></title>
 </head>
 <body>

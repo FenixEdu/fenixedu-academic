@@ -4,8 +4,8 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
 
-<ul>
-  <li class="navheader">Gest&atilde;o de Horários</li>
+<p class="mtop2 mbottom0"><strong>Gest&atilde;o de Horários</strong></p>
+<ul class="mtop05">
   <li>
   	<html:link page="<%= "/chooseContext.do?method=prepare&amp;"
   							+ SessionConstants.EXECUTION_PERIOD_OID
@@ -14,7 +14,9 @@
   		<bean:message key="link.schedules.chooseContext"/>
   	</html:link>
   </li>
-  <li class="navheader">Listagens de Horários</li>
+</ul>
+<p class="mtop2 mbottom0"><strong>Listagens de Horários</strong></p>
+<ul class="mtop05">
   <li>
   	<html:link page="<%= "/viewAllClassesSchedulesDA.do?method=choose&amp;"
   							+ SessionConstants.EXECUTION_PERIOD_OID
