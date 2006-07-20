@@ -18,38 +18,36 @@
 		<bean:message key="link.credits.xlsFileToDownload"/>
 	</html:link>	
 	
-	<table class="tstyle1b">
-		<tr>	
-			<tr>
-				<th rowspan="2"><bean:message key="department"/></th>
-				<logic:iterate id="departmentCredits" name="departmentTotalCredits" length="1">
-					<bean:size id="yearsSize" name="departmentCredits" property="value"/>				
-					<logic:iterate id="periods" name="departmentCredits" property="value" indexId="index">					
-						<th colspan="3">&Sigma;&nbsp;<bean:message key="label.credits.header"/><br/><bean:write name="periods" property="key.year"/></th>						
-						<logic:equal name="index" value="<%= String.valueOf(yearsSize.intValue() - 1) %>">
-							<bean:define id="lastExecutionYear" name="periods" property="key.year"/>
-						</logic:equal>
-					</logic:iterate>	
-				</logic:iterate>
-				<th colspan="3"><bean:message key="label.teachers.size"/><br/><bean:write name="lastExecutionYear"/></th>
-				<th colspan="3"><bean:message key="label.credits.balance"/><br/><bean:write name="lastExecutionYear"/></th></th>	
-			</tr>			
-			<tr>
-				<logic:iterate id="departmentCredits" name="departmentTotalCredits" length="1">
-					<logic:iterate id="periods" name="departmentCredits" property="value">					
-						<th><bean:message key="label.career.teachers"/></th>
-						<th><bean:message key="label.not.career.teachers"/></th>
-						<th><bean:message key="label.credits.final.balance"/></th>					
-					</logic:iterate>	
-				</logic:iterate>
-				<th><bean:message key="label.career.teachers"/></th>
-				<th><bean:message key="label.not.career.teachers"/></th>
-				<th><bean:message key="label.credits.total"/></th>					
-				<th><bean:message key="label.career.teachers"/></th>
-				<th><bean:message key="label.not.career.teachers"/></th>
-				<th><bean:message key="label.credits.total"/></th>				
-			</tr>											
-		</tr>
+	<table class="tstyle4">
+		<tr>
+			<th rowspan="2" style="width: 300px;"><bean:message key="department"/></th>
+			<logic:iterate id="departmentCredits" name="departmentTotalCredits" length="1">
+				<bean:size id="yearsSize" name="departmentCredits" property="value"/>				
+				<logic:iterate id="periods" name="departmentCredits" property="value" indexId="index">					
+					<th colspan="3">&Sigma;&nbsp;<bean:message key="label.credits.header"/><br/><bean:write name="periods" property="key.year"/></th>						
+					<logic:equal name="index" value="<%= String.valueOf(yearsSize.intValue() - 1) %>">
+						<bean:define id="lastExecutionYear" name="periods" property="key.year"/>
+					</logic:equal>
+				</logic:iterate>	
+			</logic:iterate>
+			<th colspan="3"><bean:message key="label.teachers.size"/><br/><bean:write name="lastExecutionYear"/></th>
+			<th colspan="3"><bean:message key="label.credits.balance"/><br/><bean:write name="lastExecutionYear"/></th></th>	
+		</tr>			
+		<tr>
+			<logic:iterate id="departmentCredits" name="departmentTotalCredits" length="1">
+				<logic:iterate id="periods" name="departmentCredits" property="value">					
+					<th><bean:message key="label.career.teachers"/></th>
+					<th><bean:message key="label.not.career.teachers"/></th>
+					<th><bean:message key="label.credits.final.balance"/></th>					
+				</logic:iterate>	
+			</logic:iterate>
+			<th><bean:message key="label.career.teachers"/></th>
+			<th><bean:message key="label.not.career.teachers"/></th>
+			<th><bean:message key="label.credits.total"/></th>					
+			<th><bean:message key="label.career.teachers"/></th>
+			<th><bean:message key="label.not.career.teachers"/></th>
+			<th><bean:message key="label.credits.total"/></th>				
+		</tr>											
 		<logic:iterate id="departmentCredits" name="departmentTotalCredits">
 			<tr>
 				<td><bean:write name="departmentCredits" property="key.realName"/></td>
@@ -74,16 +72,16 @@
 			<tr>
 				<td><b><bean:message key="label.teacherService.credits.total"/></b></td>
 				<logic:iterate id="executionYearTotal" name="executionYearTotals">
-					<td class="aright"><b><bean:write name="executionYearTotal" property="value.right.left"/></b></td>	
-					<td class="aright"><b><bean:write name="executionYearTotal" property="value.right.right"/></b></td>	
-					<td class="aright"><b><bean:write name="executionYearTotal" property="value.left"/></b></td>
+					<td class="aright" style="background: #fafae0;"><b><bean:write name="executionYearTotal" property="value.right.left"/></b></td>	
+					<td class="aright" style="background: #fafae0;"><b><bean:write name="executionYearTotal" property="value.right.right"/></b></td>	
+					<td class="aright" style="background: #fafae0;"><b><bean:write name="executionYearTotal" property="value.left"/></b></td>
 				</logic:iterate>		
-				<td class="aright"><b><bean:write name="totalCareerTeachersSize"/></b></a></td>	
-				<td class="aright"><b><bean:write name="totalNotCareerTeachersSize"/></b></a></td>	
-				<td class="aright"><b><bean:write name="totalTeachersSize"/></b></a></td>	
-				<td class="aright"><b><bean:write name="totalCareerTeachersBalance"/></b></td>	
-				<td class="aright"><b><bean:write name="totalNotCareerTeachersBalance"/></b></td>
-				<td class="aright"><b><bean:write name="totalBalance"/></b></td>	
+				<td class="aright" style="background: #fafae0;"><b><bean:write name="totalCareerTeachersSize"/></b></a></td>	
+				<td class="aright" style="background: #fafae0;"><b><bean:write name="totalNotCareerTeachersSize"/></b></a></td>	
+				<td class="aright" style="background: #fafae0;"><b><bean:write name="totalTeachersSize"/></b></a></td>	
+				<td class="aright" style="background: #fafae0;"><b><bean:write name="totalCareerTeachersBalance"/></b></td>	
+				<td class="aright" style="background: #fafae0;"><b><bean:write name="totalNotCareerTeachersBalance"/></b></td>
+				<td class="aright" style="background: #fafae0;"><b><bean:write name="totalBalance"/></b></td>	
 			</tr>	
 		</logic:greaterThan>			
 	</table>
