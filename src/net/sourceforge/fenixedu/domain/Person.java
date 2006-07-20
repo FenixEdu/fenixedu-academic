@@ -28,6 +28,7 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Accountability;
 import net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityTypeEnum;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Function;
+import net.sourceforge.fenixedu.domain.organizationalStructure.FunctionType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
@@ -649,6 +650,15 @@ public class Person extends Person_Base {
         return new ArrayList(getParentAccountabilities(AccountabilityTypeEnum.MANAGEMENT_FUNCTION,
                 PersonFunction.class));
             }
+
+    public boolean hasFunctionType(FunctionType functionType) {
+        for (PersonFunction accountability : getActiveFunctions()) {
+            if (accountability.getFunction().getFunctionType() == functionType) {
+                return true;
+            }
+        }
+        return false;
+    }
 
     public PersonFunction addPersonFunction(Function function, YearMonthDay begin, YearMonthDay end,
             Double credits) {
