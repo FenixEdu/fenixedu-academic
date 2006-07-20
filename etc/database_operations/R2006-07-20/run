@@ -36,3 +36,6 @@ execute "Changing table ServiceAgreementTemplate" AlterTableServiceAgreementTemp
 execute "Creating table AdministrativeOffice" CreateTableAdministrativeOffice.sql
 execute "Changing table AccountingEvent" AlterTableAccountingEvent.sql
 execute "Migrate Contributors into Parties" migrateContributorsIntoParties.sql
+executeWithTempFile "Updating Table AccountingEvent" UpdateTableAccountingEvent.sql
+execute "Changing table AccountingEvent (KeyAdministativeOffice not null)" AlterTableAccountingEventAssertNotNullKeyAdministrativeOffice.sql
+
