@@ -1,45 +1,38 @@
 package net.sourceforge.fenixedu.domain;
 
-import java.util.Calendar;
-import java.util.Date;
-
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
-/**
- * @author Ivo Brand�o
- */
+import org.joda.time.DateTime;
+
 public class Announcement extends Announcement_Base {
 
-    public Announcement() {
+    protected Announcement() {
     	super();
     	setRootDomainObject(RootDomainObject.getInstance());
     }
 
-    public Announcement(String title, Date creationDate, Date lastModifiedDate, String information,
-            Site site) {
+    public Announcement(final String title, final DateTime creationDate, final String information, final Site site) {
     	this();
-
-        if (Math.pow(2, 16) < information.length()) {
-            throw new DomainException("information.exceeds.storage.limit", Double.toString(Math.pow(2, 16)));
-        }
-
-        setTitle(title);
-        setCreationDate(creationDate);
-        setLastModifiedDate(lastModifiedDate);
-        setInformation(information);
         setSite(site);
+        setCreationDateDateTime(creationDate);
+        edit(title, information, creationDate);
     }
 
-    public void edit(final String newAnnouncementTitle, final String newAnnouncementInformation) {
-        if (newAnnouncementTitle == null || newAnnouncementInformation == null) {
+
+    public void edit(final String title, final String information) {
+        edit(title, information, new DateTime());
+    }
+
+    private void edit(final String title, final String information, final DateTime lastModifiedDate) {
+        if (title == null || information == null) {
             throw new NullPointerException();
         }
-        if (Math.pow(2, 16) < newAnnouncementInformation.length()) {
-            throw new DomainException("information.exceeds.storage.limit", Double.toString(Math.pow(2, 16)));
+        if (Math.pow(2, 16) < information.length()) {
+            throw new DomainException("information.exceeds.storage.limit", Integer.toString(Double.valueOf(Math.pow(2, 16)).intValue()));
         }
-        setTitle(newAnnouncementTitle);
-        setInformation(newAnnouncementInformation);
-        setLastModifiedDate(Calendar.getInstance().getTime());
+        setTitle(title);
+        setInformation(information);
+        setLastModifiedDateDateTime(lastModifiedDate);
     }
 
     public void delete() {

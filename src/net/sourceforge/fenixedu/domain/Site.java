@@ -13,6 +13,8 @@ import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
+import org.joda.time.DateTime;
+
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 /**
@@ -35,18 +37,8 @@ public class Site extends Site_Base {
         setAlternativeSite(alternativeSite);
     }
 
-    public void createAnnouncement(final String announcementTitle, final String announcementInformation) {
-
-        if (announcementTitle == null || announcementInformation == null) {
-            throw new NullPointerException();
-        }
-        final Date currentDate = Calendar.getInstance().getTime();
-        final Announcement announcement = new Announcement();
-        announcement.setTitle(announcementTitle);
-        announcement.setInformation(announcementInformation);
-        announcement.setCreationDate(currentDate);
-        announcement.setLastModifiedDate(currentDate);
-        announcement.setSite(this);
+    public void createAnnouncement(final String title, final String information) {
+        new Announcement(title, new DateTime(), information, this);
     }
 
     public Section createSection(String sectionName, Section parentSection, Integer sectionOrder) {
