@@ -84,26 +84,26 @@ public abstract class Space extends Space_Base {
         return personSpaceOccupations;
     }
     
-    public SortedSet<PersonSpaceOccupation> getActiveSpaceResponsibility(){
-        SortedSet<PersonSpaceOccupation> personSpaceOccupations = new TreeSet<PersonSpaceOccupation>(SpaceResponsibility.COMPARATOR_BY_UNIT_NAME_AND_RESPONSIBILITY_INTERVAL);
+    public SortedSet<SpaceResponsibility> getActiveSpaceResponsibility(){
+        SortedSet<SpaceResponsibility> spaceResponsibility = new TreeSet<SpaceResponsibility>(SpaceResponsibility.COMPARATOR_BY_UNIT_NAME_AND_RESPONSIBILITY_INTERVAL);
         YearMonthDay current = new YearMonthDay();
-        for (SpaceOccupation spaceOccupation : getSpaceOccupations()) {
-            if(spaceOccupation instanceof PersonSpaceOccupation && ((PersonSpaceOccupation)spaceOccupation).contains(current)) {
-                personSpaceOccupations.add((PersonSpaceOccupation)spaceOccupation);
+        for (SpaceResponsibility responsibility : getSpaceResponsibilitySet()) {
+            if(responsibility.isActive(current)) {
+                spaceResponsibility.add(responsibility);
             }
         }        
-        return personSpaceOccupations;
+        return spaceResponsibility;
     }
     
-    public SortedSet<PersonSpaceOccupation> getInactiveSpaceResponsibility(){
-        SortedSet<PersonSpaceOccupation> personSpaceOccupations = new TreeSet<PersonSpaceOccupation>(SpaceResponsibility.COMPARATOR_BY_UNIT_NAME_AND_RESPONSIBILITY_INTERVAL);
+    public SortedSet<SpaceResponsibility> getInactiveSpaceResponsibility(){
+        SortedSet<SpaceResponsibility> spaceResponsibility = new TreeSet<SpaceResponsibility>(SpaceResponsibility.COMPARATOR_BY_UNIT_NAME_AND_RESPONSIBILITY_INTERVAL);
         YearMonthDay current = new YearMonthDay();
-        for (SpaceOccupation spaceOccupation : getSpaceOccupations()) {
-            if(spaceOccupation instanceof PersonSpaceOccupation && !((PersonSpaceOccupation)spaceOccupation).contains(current)) {
-                personSpaceOccupations.add((PersonSpaceOccupation)spaceOccupation);
+        for (SpaceResponsibility responsibility : getSpaceResponsibilitySet()) {
+            if(!responsibility.isActive(current)) {
+                spaceResponsibility.add(responsibility);
             }
-        }  
-        return personSpaceOccupations;
+        }        
+        return spaceResponsibility;
     }
     
     public void delete() {

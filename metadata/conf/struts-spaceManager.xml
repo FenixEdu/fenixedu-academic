@@ -69,6 +69,7 @@
         		type="net.sourceforge.fenixedu.presentationTier.Action.spaceManager.ManageSpaceResponsibilityDA"
         		parameter="method">                		
        		<forward name="showSpaceResponsibility" path="show-space-responsibility"/>        		        	
+       		<forward name="manageResponsabilityInterval" path="manage-responsability-interval"/>        		        	
         </action>
 
         <action path="/showCreateSpaceForm"

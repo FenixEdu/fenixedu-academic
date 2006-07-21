@@ -168,15 +168,14 @@
 	<br/>
 	
 	<p><b><bean:message bundle="SPACE_RESOURCES" key="label.reponsible.unit"/></b></p>
-	<fr:view schema="ViewSpaceResponsibleUnits" name="selectedSpaceInformation" property="space.spaceResponsibility" />
+	<fr:view schema="ViewSpaceResponsibleUnits" name="selectedSpaceInformation" property="space.activeSpaceResponsibility" />
 	<p><html:link page="/manageSpaceResponsibility.do?method=showSpaceResponsibility&page=0" paramId="spaceInformationID" paramName="selectedSpaceInformation" paramProperty="idInternal">
 		<bean:message bundle="SPACE_RESOURCES" key="link.manage.space.responsibility"/>
 	</html:link></p>		
 	
 	<br/>	
 	<p><b><bean:message bundle="SPACE_RESOURCES" key="label.active.occupations"/></b></p>
-	<fr:view schema="PersonSpaceOccupationsWithUsername" name="selectedSpaceInformation" property="space.activePersonSpaceOccupations" />
-	
+	<fr:view schema="PersonSpaceOccupationsWithUsername" name="selectedSpaceInformation" property="space.activePersonSpaceOccupations" />	
 	<p><html:link page="/managePersonSpaceOccupations.do?method=showSpaceOccupations&page=0" paramId="spaceInformationID" paramName="selectedSpaceInformation" paramProperty="idInternal">
 		<bean:message bundle="SPACE_RESOURCES" key="link.manage.occupations"/>
 	</html:link></p>

@@ -5,7 +5,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.space.PersonSpaceOccupation;
 import net.sourceforge.fenixedu.domain.space.SpaceInformation;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
@@ -30,20 +29,7 @@ public class ManagePersonSpaceOccupationsDA extends FenixDispatchAction {
         request.setAttribute("personSpaceOccupation", personSpaceOccupation);
         return showSpaceOccupations(mapping, form, request, response);
     }
-    
-    public ActionForward editSpacePersonOccupation(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException {
-        final PersonSpaceOccupation personSpaceOccupation = getPersonSpaceOccupationFromParameter(request);
-        final SpaceInformation spaceInformation = getSpaceInformationFromParameter(request);               
-        Object[] args = { personSpaceOccupation };
-        try {
-            ServiceUtils.executeService(getUserView(request), "EditPersonSpaceOccupation", args);
-        } catch(DomainException domainException) {
-            
-        }
-        setSpaceAndSpaceInfo(request, spaceInformation);    
-        return mapping.findForward("showSpaceOccupations");
-    }
-    
+       
     public ActionForward deleteSpacePersonOccupation(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException {
         final PersonSpaceOccupation personSpaceOccupation = getPersonSpaceOccupationFromParameter(request);
         final SpaceInformation spaceInformation = getSpaceInformationFromParameter(request);                          

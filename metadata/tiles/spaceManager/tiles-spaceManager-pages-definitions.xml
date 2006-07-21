@@ -30,5 +30,8 @@
     </definition>    
     <definition name="show-space-responsibility" extends="spaceManager.masterPage">
         <put name="body" value="/spaceManager/spaceResponsibilityManagement.jsp"></put>
-    </definition>    
+    </definition>   
+	<definition name="manage-responsability-interval" extends="spaceManager.masterPage">
+        <put name="body" value="/spaceManager/manageResponsabilityInterval.jsp"></put>
+    </definition>       
 </tiles-definitions>

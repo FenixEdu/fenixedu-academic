@@ -126,6 +126,16 @@ public class Unit extends Unit_Base {
         return allActiveSubUnits;
     }  
 
+    public List<Unit> getActiveSubUnits(YearMonthDay currentDate, List<AccountabilityTypeEnum> accountabilityTypeEnums) {
+        List<Unit> allActiveSubUnits = new ArrayList<Unit>();
+        for (Unit subUnit : this.getSubUnits(accountabilityTypeEnums)) {
+            if (subUnit.isActive(currentDate)) {
+                allActiveSubUnits.add(subUnit);
+            }
+        }
+        return allActiveSubUnits;
+    }
+    
     public List<Unit> getAllInactiveSubUnits(YearMonthDay currentDate) {
         Set<Unit> allInactiveSubUnits = new HashSet<Unit>();
         List<Unit> inactiveSubUnits = getInactiveSubUnits(currentDate);
@@ -416,6 +426,10 @@ public class Unit extends Unit_Base {
     
     public List<Unit> getSubUnits(AccountabilityTypeEnum accountabilityTypeEnum) {
         return new ArrayList(getChildParties(accountabilityTypeEnum, getClass()));        
+    }
+    
+    public List<Unit> getSubUnits(List<AccountabilityTypeEnum> accountabilityTypeEnums) {
+        return new ArrayList(getChildParties(accountabilityTypeEnums, getClass()));        
     }
      
     public boolean hasAnyParentUnits() {

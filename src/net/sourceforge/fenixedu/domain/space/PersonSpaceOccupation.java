@@ -74,7 +74,7 @@ public class PersonSpaceOccupation extends PersonSpaceOccupation_Base {
         List<PersonSpaceOccupation> personSpaceOccupations = person.getPersonSpaceOccupations();        
         for (PersonSpaceOccupation personSpaceOccupation : personSpaceOccupations) {
             if(!personSpaceOccupation.equals(this) &&
-                    personSpaceOccupation.getSpace().equals(space) && personSpaceOccupation.intersect(begin, end)) {
+                    personSpaceOccupation.getSpace().equals(space) && personSpaceOccupation.checkIntersections(begin, end)) {
                 throw new DomainException("error.person.space.occupation.intersection");
             }
         }
@@ -85,7 +85,7 @@ public class PersonSpaceOccupation extends PersonSpaceOccupation_Base {
                 (this.getEnd() == null || !this.getEnd().isBefore(currentDate)));
     }
     
-    private boolean intersect(YearMonthDay begin, YearMonthDay end) {
+    private boolean checkIntersections(YearMonthDay begin, YearMonthDay end) {
         return ((end == null && !begin.isAfter(this.getBegin())) || (end != null && 
                 (!this.getBegin().isAfter(end) && (this.getEnd() == null || !this.getEnd().isBefore(begin)))));
     }     

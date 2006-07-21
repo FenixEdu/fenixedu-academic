@@ -7,6 +7,7 @@ package net.sourceforge.fenixedu.domain.organizationalStructure;
 import java.text.Collator;
 import java.util.Comparator;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -89,7 +90,18 @@ public abstract class Party extends Party_Base {
         }
         return result;
     }
-
+    
+    public Set<Party> getChildParties(List<AccountabilityTypeEnum> accountabilityTypeEnums, Class childPartyClass) {
+        final Set<Party> result = new HashSet<Party>();
+        for (final Accountability accountability : getChildsSet()) {
+            if (accountabilityTypeEnums.contains(accountability.getAccountabilityType().getType())
+                    && accountability.getChildParty().getClass().equals(childPartyClass)) {
+                result.add(accountability.getChildParty());
+            }
+        }
+        return result;
+    }
+   
     public Set<Accountability> getParentAccountabilities(AccountabilityTypeEnum accountabilityTypeEnum) {
         final Set<Accountability> result = new HashSet<Accountability>();
         for (final Accountability accountability : getParentsSet()) {

@@ -99,7 +99,29 @@
 		<validator class="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" />			
 	</slot>
 </schema>
+<schema name="ViewSpaceResponsibleUnitsWithInterval" type="net.sourceforge.fenixedu.domain.space.SpaceResponsibility" bundle="SPACE_RESOURCES">
+	<slot name="unit.name"/>	
+	<slot name="unit.costCenterCode"/>	
+	<slot name="begin" key="label.begin.date" />
+	<slot name="end" key="label.end.date" />
+</schema>
 <schema name="ViewSpaceResponsibleUnits" type="net.sourceforge.fenixedu.domain.space.SpaceResponsibility" bundle="SPACE_RESOURCES">
 	<slot name="unit.name"/>	
 	<slot name="unit.costCenterCode"/>	
+</schema>
+<schema name="CreateSpaceResponsibilityInterval" type="net.sourceforge.fenixedu.domain.space.SpaceResponsibility" bundle="SPACE_RESOURCES"
+	constructor="space, unit, begin, end">	
+	<slot name="space" hidden="true"/>
+	<slot name="unit" hidden="true"/>
+	<slot name="begin" key="label.begin.date">
+		<validator class="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" />
+	</slot>
+	<slot name="end" key="label.end.date"/>
+</schema>
+<schema name="EditSpaceResponsibility" type="net.sourceforge.fenixedu.domain.space.SpaceResponsibility" bundle="SPACE_RESOURCES">	
+	<slot name="begin" key="label.begin.date">
+		<validator class="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" />
+	</slot>
+	<slot name="end" key="label.end.date"/>
+	<setter signature="setSpaceResponsibilityInterval(begin, end)"/>
 </schema>
