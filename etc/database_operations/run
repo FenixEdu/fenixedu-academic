@@ -27,4 +27,3 @@ function executeWithTempFile() {
 	echo
 }
 
-execute "Add DocumentRequestType column to AcademicServiceRequest table" AlterTableAcademicServiceRequest.sql
