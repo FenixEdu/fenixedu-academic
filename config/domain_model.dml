@@ -123,31 +123,31 @@ valueType net.sourceforge.fenixedu.domain.research.project.ProjectType							as 
 valueType net.sourceforge.fenixedu.domain.organizationalStructure.PartyTypeEnum					as PartyType;
 valueType net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityTypeEnum		as AccountabilityType;
 valueType net.sourceforge.fenixedu.util.MultiLanguageString										as MultiLanguageString;
-valueType net.sourceforge.fenixedu.domain.research.project.ProjectParticipation.ProjectParticipationType			as ProjectParticipationType;
-valueType net.sourceforge.fenixedu.domain.research.project.ProjectEventAssociation.ProjectEventAssociationRole			as ProjectEventAssociationRole;
-valueType net.sourceforge.fenixedu.domain.research.result.ResultUnitAssociation.ResultUnitAssociationRole				as ResultUnitAssociationRole;
-valueType net.sourceforge.fenixedu.domain.research.result.ResultEventAssociation.ResultEventAssociationRole				as ResultEventAssociationRole;
-valueType net.sourceforge.fenixedu.domain.research.result.patent.ResultPatent.ResultPatentType							as ResultPatentType;
-valueType net.sourceforge.fenixedu.domain.research.result.patent.ResultPatent.ResultPatentStatus							as ResultPatentStatus;
-valueType net.sourceforge.fenixedu.domain.research.result.ResultParticipation.ResultParticipationRole	as ResultParticipationRole;
-valueType net.sourceforge.fenixedu.domain.research.result.publication.Thesis.ThesisType				as ThesisType;
-valueType net.sourceforge.fenixedu.domain.research.result.publication.ResultPublication.ScopeType	as ScopeType;
-valueType net.sourceforge.fenixedu.domain.research.result.publication.BookPart.BookPartType		as BookPartType;
+valueType net.sourceforge.fenixedu.domain.system.WhenToSendEmail                                as WhenToSendEmail;
 valueType net.sourceforge.fenixedu.domain.FileItemPermittedGroupType							as FileItemPermittedGroupType;
 valueType net.sourceforge.fenixedu.util.HourMinuteSecond										as HourMinuteSecond;
-valueType net.sourceforge.fenixedu.domain.research.event.EventParticipation.EventParticipationRole					as EventParticipationRole;
-valueType net.sourceforge.fenixedu.domain.MarkSheetType					as MarkSheetType;
-valueType net.sourceforge.fenixedu.domain.MarkSheetState					as MarkSheetState;
-valueType net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseLevel     as CompetenceCourseLevel;
-valueType net.sourceforge.fenixedu.domain.accounting.AccountType     as AccountType;
-valueType net.sourceforge.fenixedu.domain.accounting.EventType     as AccountingEventType;
-valueType net.sourceforge.fenixedu.domain.accounting.EntryType     as EntryType;
-valueType net.sourceforge.fenixedu.domain.accounting.PaymentMode   as PaymentMode;
-valueType net.sourceforge.fenixedu.domain.accounting.EventState     as AccountingEventState;
-valueType net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOfficeType     as AdministrativeOfficeType;
-valueType net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSituationType     as AcademicServiceRequestSituationType;
+valueType net.sourceforge.fenixedu.domain.research.result.publication.Thesis.ThesisType		    as ThesisType;
+valueType net.sourceforge.fenixedu.domain.MarkSheetType		                                    as MarkSheetType;
+valueType net.sourceforge.fenixedu.domain.MarkSheetState					                    as MarkSheetState;
+valueType net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseLevel                 as CompetenceCourseLevel;
+valueType net.sourceforge.fenixedu.domain.accounting.AccountType                                as AccountType;
+valueType net.sourceforge.fenixedu.domain.accounting.EventType                                  as AccountingEventType;
+valueType net.sourceforge.fenixedu.domain.accounting.EntryType                                  as EntryType;
+valueType net.sourceforge.fenixedu.domain.accounting.PaymentMode                                as PaymentMode;
+valueType net.sourceforge.fenixedu.domain.accounting.EventState                                 as AccountingEventState;
+valueType net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOfficeType         as AdministrativeOfficeType;
+valueType net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSituationType   as AcademicServiceRequestSituationType;
 valueType net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentPurposeType  as DocumentPurposeType;
-
+valueType net.sourceforge.fenixedu.domain.research.result.patent.ResultPatent.ResultPatentType  as ResultPatentType;
+valueType net.sourceforge.fenixedu.domain.research.result.publication.BookPart.BookPartType		as BookPartType;
+valueType net.sourceforge.fenixedu.domain.research.result.patent.ResultPatent.ResultPatentStatus as ResultPatentStatus;
+valueType net.sourceforge.fenixedu.domain.research.result.publication.ResultPublication.ScopeType as ScopeType;
+valueType net.sourceforge.fenixedu.domain.research.project.ProjectParticipation.ProjectParticipationType as ProjectParticipationType;
+valueType net.sourceforge.fenixedu.domain.research.project.ProjectEventAssociation.ProjectEventAssociationRole as ProjectEventAssociationRole;
+valueType net.sourceforge.fenixedu.domain.research.result.ResultUnitAssociation.ResultUnitAssociationRole as ResultUnitAssociationRole;
+valueType net.sourceforge.fenixedu.domain.research.result.ResultEventAssociation.ResultEventAssociationRole as ResultEventAssociationRole;
+valueType net.sourceforge.fenixedu.domain.research.result.ResultParticipation.ResultParticipationRole as ResultParticipationRole;
+valueType net.sourceforge.fenixedu.domain.research.event.EventParticipation.EventParticipationRole as EventParticipationRole;
 
 /*
 *
@@ -3520,6 +3520,8 @@ class net.sourceforge.fenixedu.domain.system.CronScriptState extends net.sourcef
 	Boolean isCurrentlyRunning;
 	ByteArray context;
 	Period invocationPeriod;
+	String emails;
+	WhenToSendEmail whenToSendEmail;
 }
 
 class net.sourceforge.fenixedu.domain.system.CronScriptInvocation extends net.sourceforge.fenixedu.domain.DomainObject {

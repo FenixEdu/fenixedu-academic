@@ -28,7 +28,7 @@ public class CronScriptState extends CronScriptState_Base {
 
 	private transient Class cronScriptClass = null;
 
-	public CronScriptState(final Class cronScriptClass, final Period invocationPeriod) {
+	public CronScriptState(final Class cronScriptClass, final Period invocationPeriod, final WhenToSendEmail whenToSendEmail, final String emails) {
 		super();
 		setRootDomainObject(RootDomainObject.getInstance());
 		setCronScriptClassname(cronScriptClass.getName());
