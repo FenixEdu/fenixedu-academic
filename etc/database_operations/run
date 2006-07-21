@@ -26,3 +26,6 @@ function executeWithTempFile() {
 	rm tmp.sql
 	echo
 }
+
+execute "Creating Service Request Tables" CreateServiceRequestsTables.sql
+execute "Changing table AccountingEvent" AlterTableAccountingEvent.sql

@@ -4,21 +4,56 @@ import java.util.List;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.dataTransferObject.accounting.EntryDTO;
+import net.sourceforge.fenixedu.domain.Degree;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.User;
 import net.sourceforge.fenixedu.domain.accounting.Account;
 import net.sourceforge.fenixedu.domain.accounting.AccountType;
 import net.sourceforge.fenixedu.domain.accounting.Entry;
 import net.sourceforge.fenixedu.domain.accounting.EntryType;
+import net.sourceforge.fenixedu.domain.accounting.EventType;
 import net.sourceforge.fenixedu.domain.accounting.PaymentMode;
 import net.sourceforge.fenixedu.domain.accounting.PostingRule;
+import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.CertificateRequest;
 import net.sourceforge.fenixedu.util.resources.LabelFormatter;
 
 import org.joda.time.DateTime;
 
 public class CertificateRequestEvent extends CertificateRequestEvent_Base {
 
-    public CertificateRequestEvent() {
+    protected CertificateRequestEvent() {
         super();
+    }
+
+    public CertificateRequestEvent(AdministrativeOffice administrativeOffice, EventType eventType,
+            Person person, CertificateRequest certificateRequest) {
+        this();
+        init(administrativeOffice, eventType, person, certificateRequest);
+
+    }
+
+    protected void init(AdministrativeOffice administrativeOffice, EventType eventType, Person person,
+            CertificateRequest certificateRequest) {
+        init(administrativeOffice, eventType, person);
+        checkParameters(certificateRequest);
+        super.setCertificateRequest(certificateRequest);
+
+    }
+
+    private void checkParameters(CertificateRequest certificateRequest) {
+        if (certificateRequest == null) {
+            throw new DomainException(
+                    "error.accounting.events.serviceRequests.CertificateRequestEvent.certificateRequest.cannot.be.null");
+        }
+
+    }
+
+    @Override
+    public void setCertificateRequest(CertificateRequest certificateRequest) {
+        throw new DomainException(
+                "error.accounting.events.serviceRequests.CertificateRequestEvent.cannot.modify.certificateRequest");
     }
 
     @Override
@@ -41,26 +76,29 @@ public class CertificateRequestEvent extends CertificateRequestEvent_Base {
 
     @Override
     public LabelFormatter getDescriptionForEntryType(EntryType entryType) {
-        // TODO: delegate to document
-        return null;
+        final LabelFormatter labelFormatter = new LabelFormatter();
+        labelFormatter.appendLabel(entryType.name(), "enum").appendLabel(" (").appendLabel(
+                getDegree().getDegreeType().name(), "enum").appendLabel(" - ").appendLabel(
+                getDegree().getName()).appendLabel(" )");
 
+        return labelFormatter;
+
+    }
+
+    private Degree getDegree() {
+        return getCertificateRequest().getStudentCurricularPlan().getDegreeCurricularPlan().getDegree();
     }
 
     public Integer getNumberOfUnits() {
-        // TODO: delegate to document
-        // If number of units is not appliable to document, the document should
-        // return 0
-        return 0;
+        return getCertificateRequest().getNumberOfUnits();
     }
 
     public Integer getNumberOfPages() {
-        // TODO: delegate to document
-        return 0;
+        return getCertificateRequest().getNumberOfPages();
     }
 
     public boolean isUrgentRequest() {
-        // TODO: delegate to document
-        return false;
-    }
+        return getCertificateRequest().isUrgent();
 
+    }
 }

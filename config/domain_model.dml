@@ -145,6 +145,8 @@ valueType net.sourceforge.fenixedu.domain.accounting.EntryType     as EntryType;
 valueType net.sourceforge.fenixedu.domain.accounting.PaymentMode   as PaymentMode;
 valueType net.sourceforge.fenixedu.domain.accounting.EventState     as AccountingEventState;
 valueType net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOfficeType     as AdministrativeOfficeType;
+valueType net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSituationType     as AcademicServiceRequestSituationType;
+valueType net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentPurposeType  as DocumentPurposeType;
 
 
 /*
@@ -199,7 +201,7 @@ class net.sourceforge.fenixedu.domain.accounting.Event extends net.sourceforge.f
 	}
 	
 	class net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.CertificateRequestEvent extends net.sourceforge.fenixedu.domain.accounting.Event {
-	/*TODO add key to certificate request*/
+		Integer keyCertificateRequest;
 	}
 
 class net.sourceforge.fenixedu.domain.accounting.Receipt extends net.sourceforge.fenixedu.domain.DomainObject {
@@ -2887,14 +2889,14 @@ class net.sourceforge.fenixedu.domain.organizationalStructure.Party extends net.
 		String emissionLocationOfDocumentId;
 		YearMonthDay emissionDateOfDocumentIdYearMonthDay;
 		YearMonthDay expirationDateOfDocumentIdYearMonthDay;
-		String profession;	
+		String profession;
 		String fiscalCode;
 	    MaritalStatus maritalStatus;
 
 		YearMonthDay dateOfBirthYearMonthDay;
 		String parishOfBirth;
 		String districtSubdivisionOfBirth;
-		String districtOfBirth;		
+		String districtOfBirth;
 		String nameOfFather;
 		String nameOfMother;
 		
@@ -3571,6 +3573,47 @@ class net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice 
 	Integer keyServiceAgreementTemplate;
 }
 
+class net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSituation extends net.sourceforge.fenixedu.domain.DomainObject {
+	AcademicServiceRequestSituationType academicServiceRequestSituationType;
+	DateTime creationDate;
+	Integer keyEmployee;
+	Integer keyAcademicServiceRequest;
+	String justification;
+}
+
+class net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest extends net.sourceforge.fenixedu.domain.DomainObject {
+	String ojbConcreteClass;
+	DateTime creationDate;
+	Integer keyStudentCurricularPlan;
+	Integer keyAdministrativeOffice;
+}
+
+		class net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest extends net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest {
+			DocumentPurposeType documentPurposeType;
+			String otherDocumentPurposeTypeDescription;
+			Integer numberOfPages;
+		}
+		
+		class net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.CertificateRequest extends net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest {
+			Boolean urgentRequest;
+			Integer keyCertificateRequestEvent;
+		}
+		
+			class net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DegreeFinalizationCertificateRequest extends net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.CertificateRequest {
+				Boolean average;
+			}
+			
+			class net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.ApprovementCertificateRequest extends net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.CertificateRequest {
+			}
+			
+			class net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.EnrolmentCertificateRequest extends net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.CertificateRequest {
+			}
+			
+			class net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.SchoolRegistrationCertificateRequest extends net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.CertificateRequest {
+			}
+			
+
+	
 
 /*
  * Relations definitions
@@ -9147,6 +9190,11 @@ relation DFACandidacyEventCandidacy {
 	}
 }
 
+relation CertificateRequestEventCertificateRequest {
+	net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.CertificateRequest playsRole certificateRequest;
+	net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.CertificateRequestEvent playsRole certificateRequestEvent;
+}
+
 relation RootDomainObjectReceipt {
 	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
 	net.sourceforge.fenixedu.domain.accounting.Receipt playsRole receipts {
@@ -9206,6 +9254,49 @@ relation RootDomainObjectReceiptPrintVersion {
 relation RootDomainObjectAdministrativeOffice {
 	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
 	net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice playsRole administrativeOffices {
+		multiplicity *;
+	}
+}
+
+
+relation RootDomainObjectAcademicServiceRequestSituation {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSituation playsRole academicServiceRequestSituations {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectAcademicServiceRequest {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest playsRole academicServiceRequests {
+		multiplicity *;
+	}
+}
+
+relation AcademicServiceRequestAcademicServiceRequestSituation {
+	net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest playsRole academicServiceRequest;
+	net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSituation playsRole academicServiceRequestSituations {
+		multiplicity *;
+	}
+}
+
+relation AcademicServiceRequestSituationEmployee {
+	net.sourceforge.fenixedu.domain.Employee playsRole employee;
+	net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSituation playsRole academicServiceRequestSituations {
+		multiplicity *;
+	}
+}
+
+relation AcademicServiceRequestStudentCurricularPlan {
+	net.sourceforge.fenixedu.domain.StudentCurricularPlan playsRole studentCurricularPlan;
+	net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest playsRole academicServiceRequests {
+		multiplicity *;
+	}
+}
+
+relation AcademicServiceRequestAdministrativeOffice {
+	net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice playsRole administrativeOffice;
+	net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest playsRole academicServiceRequests {
 		multiplicity *;
 	}
 }

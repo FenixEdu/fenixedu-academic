@@ -1,0 +1,61 @@
+<!-- ************************************************************************************************************ -->
+<!-- Definitions for net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest -->
+<!-- ************************************************************************************************************ -->
+<class-descriptor class="net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest" table="ACADEMIC_SERVICE_REQUEST">
+	<extent-class class-ref="net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest" />
+</class-descriptor>
+
+	<!-- ************************************************************************************************************ -->
+	<!-- Definitions for net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest -->
+	<!-- ************************************************************************************************************ -->
+	<class-descriptor class="net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest" table="ACADEMIC_SERVICE_REQUEST">
+		<extent-class class-ref="net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.CertificateRequest" />
+	</class-descriptor>
+
+	<!-- ************************************************************************************************************ -->
+	<!-- Definitions for net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.CertificateRequest -->
+	<!-- ************************************************************************************************************ -->
+	<class-descriptor class="net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.CertificateRequest" table="ACADEMIC_SERVICE_REQUEST">
+		<extent-class class-ref="net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DegreeFinalizationCertificateRequest" />
+		<extent-class class-ref="net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.ApprovementCertificateRequest" />
+		<extent-class class-ref="net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.EnrolmentCertificateRequest" />
+		<extent-class class-ref="net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.SchoolRegistrationCertificateRequest" />
+	</class-descriptor>
+	
+	<!-- ************************************************************************************************************ -->
+	<!-- Definitions for net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DegreeFinalizationCertificateRequest -->
+	<!-- ************************************************************************************************************ -->
+	<class-descriptor class="net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DegreeFinalizationCertificateRequest" table="ACADEMIC_SERVICE_REQUEST">
+		
+	</class-descriptor>
+	
+	<!-- ************************************************************************************************************ -->
+	<!-- Definitions for net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.ApprovementCertificateRequest -->
+	<!-- ************************************************************************************************************ -->
+	<class-descriptor class="net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.ApprovementCertificateRequest" table="ACADEMIC_SERVICE_REQUEST">
+		
+	</class-descriptor>
+	
+	<!-- ************************************************************************************************************ -->
+	<!-- Definitions for net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.EnrolmentCertificateRequest -->
+	<!-- ************************************************************************************************************ -->
+	<class-descriptor class="net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.EnrolmentCertificateRequest" table="ACADEMIC_SERVICE_REQUEST">
+		
+	</class-descriptor>
+	
+	<!-- ************************************************************************************************************ -->
+	<!-- Definitions for net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.SchoolRegistrationCertificateRequest -->
+	<!-- ************************************************************************************************************ -->
+	<class-descriptor class="net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.SchoolRegistrationCertificateRequest" table="ACADEMIC_SERVICE_REQUEST">
+		
+	</class-descriptor>
+	
+		
+<!-- ************************************************************************************************************ -->
+<!-- Definitions for net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSituation -->
+<!-- ************************************************************************************************************ -->
+<class-descriptor class="net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSituation" table="ACADEMIC_SERVICE_REQUEST_SITUATION">
+
+</class-descriptor>
+
+
