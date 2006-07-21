@@ -7,7 +7,6 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.assiduousness.util.AttributeType;
 import net.sourceforge.fenixedu.domain.assiduousness.util.TimeInterval;
 import net.sourceforge.fenixedu.domain.assiduousness.util.TimePoint;
-import net.sourceforge.fenixedu.domain.assiduousness.util.TimeUtils;
 import net.sourceforge.fenixedu.domain.assiduousness.util.Timeline;
 
 import org.joda.time.DateMidnight;
@@ -70,7 +69,7 @@ public class WorkSchedule extends WorkSchedule_Base {
                             lunchDiscount = Duration.ZERO;
                         }
                     }
-                    workDaySheet.setBalanceTime(TimeUtils.subtractDurationsWithoutSeconds(
+                    workDaySheet.setBalanceTime(subtractDurationsWithoutSeconds(
                             firstWorkPeriod.plus(lastWorkPeriod).minus(lunchDiscount),
                             getWorkScheduleType().getNormalWorkPeriod().getWorkPeriodDuration())
                             .toPeriod());
@@ -126,7 +125,7 @@ public class WorkSchedule extends WorkSchedule_Base {
                             }
                         }
                     }
-                    workDaySheet.setBalanceTime(TimeUtils.subtractDurationsWithoutSeconds(workPeriod,
+                    workDaySheet.setBalanceTime(subtractDurationsWithoutSeconds(workPeriod,
                             getWorkScheduleType().getNormalWorkPeriod().getWorkPeriodDuration())
                             .toPeriod());
                 } else { // caso dos horarios em q o minimo de intervalo de almoco e' tipicamente de
@@ -151,8 +150,7 @@ public class WorkSchedule extends WorkSchedule_Base {
                             // calcular o periodo fixo
                             workDaySheet.setUnjustifiedTime(wsType
                                     .calculateFixedPeriodDuration(timeline));
-                            workDaySheet.setBalanceTime(TimeUtils.subtractDurationsWithoutSeconds(
-                                    workPeriod,
+                            workDaySheet.setBalanceTime(subtractDurationsWithoutSeconds(workPeriod,
                                     getWorkScheduleType().getNormalWorkPeriod().getWorkPeriodDuration())
                                     .toPeriod());
 
@@ -163,7 +161,7 @@ public class WorkSchedule extends WorkSchedule_Base {
                             if (justificationInMealBreak(timeLeaves)) {
                                 workPeriod = workPeriod.minus(wsType.getMeal()
                                         .getMandatoryMealDiscount());
-                                workDaySheet.setBalanceTime(TimeUtils.subtractDurationsWithoutSeconds(
+                                workDaySheet.setBalanceTime(subtractDurationsWithoutSeconds(
                                         workPeriod,
                                         getWorkScheduleType().getNormalWorkPeriod()
                                                 .getWorkPeriodDuration()).toPeriod());
@@ -181,11 +179,10 @@ public class WorkSchedule extends WorkSchedule_Base {
                                                 .getWorkPeriodDuration());
                                     }
                                 } else {
-                                    workDaySheet.setBalanceTime(TimeUtils
-                                            .subtractDurationsWithoutSeconds(
-                                                    workPeriod,
-                                                    getWorkScheduleType().getNormalWorkPeriod()
-                                                            .getWorkPeriodDuration()).toPeriod());
+                                    workDaySheet.setBalanceTime(subtractDurationsWithoutSeconds(
+                                            workPeriod,
+                                            getWorkScheduleType().getNormalWorkPeriod()
+                                                    .getWorkPeriodDuration()).toPeriod());
                                     if (wsType.getFixedWorkPeriod() != null) {
                                         workDaySheet.setUnjustifiedTime(wsType
                                                 .calculateFixedPeriodDuration(timeline));
@@ -203,8 +200,7 @@ public class WorkSchedule extends WorkSchedule_Base {
                                         .getEndOfMealBreakMinusMealDiscount(), lastClockingDate, false))
                                         .getDurationMillis());
                             }
-                            workDaySheet.setBalanceTime(TimeUtils.subtractDurationsWithoutSeconds(
-                                    workPeriod,
+                            workDaySheet.setBalanceTime(subtractDurationsWithoutSeconds(workPeriod,
                                     getWorkScheduleType().getNormalWorkPeriod().getWorkPeriodDuration())
                                     .toPeriod());
                             workDaySheet.setUnjustifiedTime(wsType
@@ -219,12 +215,18 @@ public class WorkSchedule extends WorkSchedule_Base {
                     AttributeType.NULL), new TimePoint(getWorkScheduleType().getClockingEndTime(),
                     getWorkScheduleType().isClokingTimeNextDay(), AttributeType.NULL), wsType
                     .getMaximumContinuousWorkPeriod());
-            workDaySheet.setBalanceTime(TimeUtils.subtractDurationsWithoutSeconds(worked,
+            workDaySheet.setBalanceTime(subtractDurationsWithoutSeconds(worked,
                     getWorkScheduleType().getNormalWorkPeriod().getWorkPeriodDuration()).toPeriod());
             workDaySheet.setUnjustifiedTime(wsType.calculateFixedPeriodDuration(timeline));
 
         }
         return workDaySheet;
+    }
+
+    public Duration subtractDurationsWithoutSeconds(Duration firstDuration, Duration secondDuration) {
+        Period normalWorkedPeriod = firstDuration.toPeriod();
+        normalWorkedPeriod = normalWorkedPeriod.minusSeconds(normalWorkedPeriod.getSeconds());
+        return normalWorkedPeriod.toDurationFrom(new DateMidnight()).minus(secondDuration);
     }
 
     private boolean justificationInMealBreak(List<Leave> timeLeaves) {
