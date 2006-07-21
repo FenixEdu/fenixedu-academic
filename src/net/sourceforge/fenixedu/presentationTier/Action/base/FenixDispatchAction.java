@@ -17,10 +17,12 @@ import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.InvalidSessionActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
+import net.sourceforge.fenixedu.presentationTier.util.struts.StrutsMessageResourceProvider;
 import net.sourceforge.fenixedu.renderers.components.state.IViewState;
 import net.sourceforge.fenixedu.renderers.components.state.ViewDestination;
 import net.sourceforge.fenixedu.renderers.plugin.ExceptionHandler;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
+import net.sourceforge.fenixedu.util.resources.LabelFormatter;
 
 import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionErrors;
@@ -195,6 +197,28 @@ public abstract class FenixDispatchAction extends DispatchAction implements Exce
         final ActionMessages actionMessages = (ActionMessages) request
                 .getAttribute(ACTION_MESSAGES_REQUEST_KEY);
         actionMessages.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage(key, args));
+    }
+    
+    
+    protected String[] solveLabelFormatterArgs(HttpServletRequest request,
+            LabelFormatter[] labelFormatterArgs) {
+        final String[] args = new String[labelFormatterArgs.length];
+        int i = 0;
+        final StrutsMessageResourceProvider messageResourceProvider = getMessageResourceProvider(request);
+        for (final LabelFormatter labelFormatter : labelFormatterArgs) {
+            args[i++] = labelFormatter.toString(messageResourceProvider);
+        }
+
+        return args;
+    }
+
+    protected StrutsMessageResourceProvider getMessageResourceProvider(HttpServletRequest request) {
+        final StrutsMessageResourceProvider strutsMessageResourceProvider = new StrutsMessageResourceProvider(
+                getLocale(request), getServlet().getServletContext(), request);
+        strutsMessageResourceProvider.addMapping("enum", "ENUMERATION_RESOURCES");
+        strutsMessageResourceProvider.addMapping("application", "DEFAULT");
+
+        return strutsMessageResourceProvider;
     }
 
 }

@@ -29,14 +29,15 @@ import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOfficeType;
 import net.sourceforge.fenixedu.domain.candidacy.Candidacy;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.exceptions.DomainExceptionWithLabelFormatter;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
-import net.sourceforge.fenixedu.domain.exceptions.accounting.PostingRuleDomainException;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.util.struts.StrutsMessageResourceProvider;
 import net.sourceforge.fenixedu.renderers.components.state.IViewState;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
+import net.sourceforge.fenixedu.util.resources.LabelFormatter;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -181,7 +182,8 @@ public abstract class PaymentsManagementDispatchAction extends FenixDispatchActi
                 "createReceiptBean").getMetaObject().getObject();
 
         if (createReceiptBean.getContributorParty() == null) {
-            final Party contributor = Party.readByContributorNumber(createReceiptBean.getContributorNumber());
+            final Party contributor = Party.readByContributorNumber(createReceiptBean
+                    .getContributorNumber());
             if (contributor == null) {
                 addActionMessage(request,
                         "error.administrativeOffice.payments.receipt.contributor.does.not.exist");
@@ -300,9 +302,9 @@ public abstract class PaymentsManagementDispatchAction extends FenixDispatchActi
 
             return mapping.findForward("paymentConfirmed");
 
-        } catch (PostingRuleDomainException ex) {
-            addActionMessage(request, ex.getKey(), ex.getLabelFormatterArgs().toString(
-                    getMessageResourceProvider(request)));
+        } catch (DomainExceptionWithLabelFormatter ex) {
+            addActionMessage(request, ex.getKey(), solveLabelFormatterArgs(request, ex
+                    .getLabelFormatterArgs()));
             request.setAttribute("paymentsManagementDTO", paymentsManagementDTO);
             return mapping.findForward("showEvents");
         } catch (DomainException ex) {
@@ -312,15 +314,6 @@ public abstract class PaymentsManagementDispatchAction extends FenixDispatchActi
             return mapping.findForward("showEvents");
         }
 
-    }
-
-    private StrutsMessageResourceProvider getMessageResourceProvider(HttpServletRequest request) {
-        final StrutsMessageResourceProvider strutsMessageResourceProvider = new StrutsMessageResourceProvider(
-                getLocale(request), getServlet().getServletContext(), request);
-        strutsMessageResourceProvider.addMapping("enum", "ENUMERATION_RESOURCES");
-        strutsMessageResourceProvider.addMapping("application", "DEFAULT");
-
-        return strutsMessageResourceProvider;
     }
 
     private Person getPerson(HttpServletRequest request) {

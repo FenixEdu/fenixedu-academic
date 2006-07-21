@@ -15,7 +15,7 @@ import net.sourceforge.fenixedu.domain.accounting.EventType;
 import net.sourceforge.fenixedu.domain.accounting.PaymentMode;
 import net.sourceforge.fenixedu.domain.accounting.ServiceAgreementTemplate;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.exceptions.accounting.PostingRuleDomainException;
+import net.sourceforge.fenixedu.domain.exceptions.DomainExceptionWithLabelFormatter;
 
 import org.joda.time.DateTime;
 
@@ -89,7 +89,7 @@ public abstract class BaseAmountPlusAmountPerUnitPR extends BaseAmountPlusAmount
 
     private void checkIfCanAddAmount(BigDecimal amountToPay, Event event, DateTime when) {
         if (!amountToPay.equals(calculateTotalAmountToPay(event, when))) {
-            throw new PostingRuleDomainException(
+            throw new DomainExceptionWithLabelFormatter(
                     "error.accounting.postingRules.BaseAmountPlusAmountPerUnitGreaterThanOnePR.amount.being.payed.must.match.amount.to.pay",
                     event.getDescriptionForEntryType(getEntryType()));
         }

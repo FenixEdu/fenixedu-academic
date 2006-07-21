@@ -6,7 +6,7 @@
 
 
 
-<h2><bean:message key="label.documentRequestsManagement.searchDocumentRequests" /></h2>
+<h2><bean:message key="label.documentRequestsManagement.viewDocumentRequest" /></h2>
 
 <hr><br/>
 
@@ -18,3 +18,4 @@
 	</ul>
 	<br />
 </logic:messagesPresent>
+

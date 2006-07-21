@@ -15,7 +15,7 @@ import net.sourceforge.fenixedu.domain.accounting.EventType;
 import net.sourceforge.fenixedu.domain.accounting.PaymentMode;
 import net.sourceforge.fenixedu.domain.accounting.ServiceAgreementTemplate;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.exceptions.accounting.PostingRuleDomainException;
+import net.sourceforge.fenixedu.domain.exceptions.DomainExceptionWithLabelFormatter;
 
 import org.joda.time.DateTime;
 
@@ -72,7 +72,7 @@ public class FixedAmountPR extends FixedAmountPR_Base {
 
     private void checkIfCanAddAmount(final BigDecimal amountToPay, final Event event) {
         if (!amountToPay.equals(getFixedAmount())) {
-            throw new PostingRuleDomainException(
+            throw new DomainExceptionWithLabelFormatter(
                     "error.accounting.postingRules.FixedAmountPR.amount.being.payed.must.match.amount.to.pay",
                     event.getDescriptionForEntryType(getEntryType()));
         }

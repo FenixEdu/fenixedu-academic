@@ -28,3 +28,4 @@ function executeWithTempFile() {
 }
 
 execute "Add AplicableWeekDays column to AssiduousnessRecord table" AlterTableAssiduousnessRecord.sql
+execute "Updating Table AccountingEvent" UpdateTableAccountingEvent.sql

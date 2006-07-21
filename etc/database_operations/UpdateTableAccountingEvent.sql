@@ -1,0 +1,1 @@
+update ACCOUNTING_EVENT set OJB_CONCRETE_CLASS='net.sourceforge.fenixedu.domain.accounting.events.candidacy.DFACandidacyEvent' where OJB_CONCRETE_CLASS='net.sourceforge.fenixedu.domain.candidacy.DFACandidacyEvent';

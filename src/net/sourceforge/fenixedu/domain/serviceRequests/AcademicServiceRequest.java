@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.domain.serviceRequests;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
@@ -10,6 +11,8 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.exceptions.DomainExceptionWithLabelFormatter;
+import net.sourceforge.fenixedu.util.resources.LabelFormatter;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.joda.time.DateTime;
@@ -23,12 +26,14 @@ public abstract class AcademicServiceRequest extends AcademicServiceRequest_Base
         super.setCreationDate(new DateTime());
     }
 
-    protected AcademicServiceRequest(StudentCurricularPlan studentCurricularPlan, AdministrativeOffice administrativeOffice) {
+    protected AcademicServiceRequest(StudentCurricularPlan studentCurricularPlan,
+            AdministrativeOffice administrativeOffice) {
         this();
         init(studentCurricularPlan, administrativeOffice);
     }
 
-    private void checkParameters(StudentCurricularPlan studentCurricularPlan, AdministrativeOffice administrativeOffice) {
+    private void checkParameters(StudentCurricularPlan studentCurricularPlan,
+            AdministrativeOffice administrativeOffice) {
         if (studentCurricularPlan == null) {
             throw new DomainException(
                     "error.serviceRequests.AcademicServiceRequest.studentCurricularPlan.cannot.be.null");
@@ -40,7 +45,8 @@ public abstract class AcademicServiceRequest extends AcademicServiceRequest_Base
 
     }
 
-    protected void init(StudentCurricularPlan studentCurricularPlan, AdministrativeOffice administrativeOffice) {
+    protected void init(StudentCurricularPlan studentCurricularPlan,
+            AdministrativeOffice administrativeOffice) {
         checkParameters(studentCurricularPlan, administrativeOffice);
         super.setAdministrativeOffice(administrativeOffice);
         super.setStudentCurricularPlan(studentCurricularPlan);
@@ -111,28 +117,65 @@ public abstract class AcademicServiceRequest extends AcademicServiceRequest_Base
             AcademicServiceRequestSituationType academicServiceRequestSituationType, Employee employee,
             String justification) {
 
-        checkIfContainsSituationWithType(academicServiceRequestSituationType);
+        checkRulesToChangeState(academicServiceRequestSituationType);
+
+        internalChangeState(academicServiceRequestSituationType);
 
         new AcademicServiceRequestSituation(this, academicServiceRequestSituationType, employee,
                 justification);
 
-        internalChangeState(academicServiceRequestSituationType);
+    }
+
+    private void checkRulesToChangeState(
+            AcademicServiceRequestSituationType academicServiceRequestSituationType) {
+
+        AcademicServiceRequestSituationType[] acceptedTypes;
+        if (getActiveSituation() != null) {
+            switch (getActiveSituation().getAcademicServiceRequestSituationType()) {
+            case PROCESSING:
+                acceptedTypes = new AcademicServiceRequestSituationType[] {
+                        AcademicServiceRequestSituationType.CANCELLED,
+                        AcademicServiceRequestSituationType.REJECTED,
+                        AcademicServiceRequestSituationType.CONCLUDED };
+                break;
+            case CONCLUDED:
+                acceptedTypes = new AcademicServiceRequestSituationType[] { AcademicServiceRequestSituationType.DELIVERED };
+                break;
+            default:
+                acceptedTypes = new AcademicServiceRequestSituationType[] {};
+                break;
+            }
+
+            if (!Arrays.asList(acceptedTypes).contains(academicServiceRequestSituationType)) {
+                final LabelFormatter sourceLabelFormatter = new LabelFormatter().appendLabel(
+                        getActiveSituation().getAcademicServiceRequestSituationType().name(), "enum");
+                final LabelFormatter targetLabelFormatter = new LabelFormatter().appendLabel(
+                        academicServiceRequestSituationType.name(), "enum");
+
+                throw new DomainExceptionWithLabelFormatter(
+                        "error.serviceRequests.AcademicServiceRequest.cannot.change.from.source.state.to.target.state",
+                        sourceLabelFormatter, targetLabelFormatter);
+            }
+        } else {
+            acceptedTypes = new AcademicServiceRequestSituationType[] {
+                    AcademicServiceRequestSituationType.CANCELLED,
+                    AcademicServiceRequestSituationType.PROCESSING };
+            if (!Arrays.asList(acceptedTypes).contains(academicServiceRequestSituationType)) {
+                final LabelFormatter labelFormatter = new LabelFormatter().appendLabel(
+                        academicServiceRequestSituationType.name(), "enum");
+
+                throw new DomainExceptionWithLabelFormatter(
+                        "error.serviceRequests.AcademicServiceRequest.cannot.change.state.",
+                        labelFormatter);
+
+            }
+        }
 
     }
 
     protected void internalChangeState(
             AcademicServiceRequestSituationType academicServiceRequestSituationType) {
         // nothing to be done
-    }
-
-    private void checkIfContainsSituationWithType(
-            AcademicServiceRequestSituationType academicServiceRequestSituationType) {
-        for (final AcademicServiceRequestSituation academicServiceRequestSituation : getAcademicServiceRequestSituations()) {
-            if (academicServiceRequestSituation.getAcademicServiceRequestSituationType() == academicServiceRequestSituationType) {
-                throw new DomainException(
-                        "error.serviceRequests.AcademicServiceRequest.academicSituationType.already.exists");
-            }
-        }
     }
 
 }
