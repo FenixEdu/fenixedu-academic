@@ -56,7 +56,7 @@
       						<html:img align="middle" src="<%= request.getContextPath() +"/person/retrievePersonalPhoto.do?method=retrieveOwnPhoto" %>" altKey="personPhoto" bundle="IMAGE_RESOURCES" />
 						</logic:equal>
 						<logic:equal name="seniorInfoForm" property="availablePhoto" value="false">
-							<html:img src="<%= request.getContextPath() +"/images/photoPlaceHolder.jpg"%>" altKey="<bean:message key="photoPlaceHolder" bundle="IMAGE_RESOURCES" />"/>
+							<html:img src="<%= request.getContextPath() +"/images/photoPlaceHolder.jpg"%>" altKey="photoPlaceHolder" bundle="IMAGE_RESOURCES"/>
 						</logic:equal>
 					</td>
 		        </tr>
