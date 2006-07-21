@@ -1,0 +1,7 @@
+<schema name="certificateRequest.view" type="net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.CertificateRequest" bundle="APPLICATION_RESOURCES">
+	<slot name="event.whenOccured" read-only="true" key="label.net.sourceforge.fenixedu.domain.accounting.Event.whenOccured" />
+	<slot name="description" read-only="true" key="label.net.sourceforge.fenixedu.domain.accounting.Entry.description"/>
+	<slot name="totalAmount" read-only="true" key="label.net.sourceforge.fenixedu.domain.accounting.Entry.amountWithAdjustment"/>
+	<slot name="payedAmount" read-only="true"/>
+	<slot name="amountToPay" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+</schema>
