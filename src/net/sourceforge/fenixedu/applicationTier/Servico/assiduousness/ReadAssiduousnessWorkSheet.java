@@ -98,12 +98,15 @@ public class ReadAssiduousnessWorkSheet extends Service {
             }
             for (YearMonthDay leaveDay = record.getDate().toYearMonthDay(); leaveDay
                     .isBefore(endLeaveDay); leaveDay = leaveDay.plusDays(1)) {
-                List<Leave> leaveList = leavesMap.get(leaveDay);
-                if (leaveList == null) {
-                    leaveList = new ArrayList<Leave>();
+                if (record.getAplicableWeekDays() == null
+                        || record.getAplicableWeekDays().contains(leaveDay.toDateTimeAtMidnight())) {
+                    List<Leave> leaveList = leavesMap.get(leaveDay);
+                    if (leaveList == null) {
+                        leaveList = new ArrayList<Leave>();
+                    }
+                    leaveList.add(record);
+                    leavesMap.put(leaveDay, leaveList);
                 }
-                leaveList.add(record);
-                leavesMap.put(leaveDay, leaveList);
             }
         }
 
