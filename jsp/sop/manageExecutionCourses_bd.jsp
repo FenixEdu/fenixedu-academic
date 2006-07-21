@@ -26,7 +26,7 @@
     <td nowrap="nowrap">
 		<html:select bundle="HTMLALT_RESOURCES" altKey="select.executionPeriodOID" property="executionPeriodOID"
 					 size="1"
-					 onchange="document.searchExecutionCourse.method.value='changeExecutionPeriod';document.searchExecutionCourse.page.value='0';document.searchExecutionCourse.submit();">
+					 onchange="this.form.method.value='changeExecutionPeriod';this.form.page.value='0';this.form.submit();">
 			<html:options	property="value" 
      						labelProperty="label" 
 							collection="<%= SessionConstants.LABELLIST_EXECUTIONPERIOD %>" />

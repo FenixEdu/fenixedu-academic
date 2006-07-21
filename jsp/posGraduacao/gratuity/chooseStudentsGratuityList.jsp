@@ -36,7 +36,7 @@
 				<bean:message key="label.masterDegree.gratuity.executionYear"/>
 			</td>
 			<td>
-				<html:select bundle="HTMLALT_RESOURCES" altKey="select.executionYear" property="executionYear" onchange="document.studentsGratuityListForm.method.value='prepareChooseDegree';document.studentsGratuityListForm.submit();">
+				<html:select bundle="HTMLALT_RESOURCES" altKey="select.executionYear" property="executionYear" onchange="this.form.value='prepareChooseDegree';this.form.submit();">
 					<html:option value="" key="label.manager.executionCourseManagement.select">
 						<bean:message key="label.choose.one"/>
 					</html:option>

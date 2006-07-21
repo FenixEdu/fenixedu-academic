@@ -19,7 +19,7 @@
 					<html:select bundle="HTMLALT_RESOURCES" altKey="select.executionDegreeOID" property="executionDegreeOID"
 								 size="1"
 								 value="<%= pageContext.findAttribute("executionDegreeOID").toString() %>"
-								 onchange="document.chooseExamsContextForm.submit();">
+								 onchange="this.form.submit();">
 				  		<html:options collection="<%= SessionConstants.DEGREES %>"
 		    	   					  property="value"
 		       						  labelProperty="label"/>
@@ -30,7 +30,7 @@
 				<td>
 					<html:select bundle="HTMLALT_RESOURCES" altKey="select.curricularYear" property="curricularYear" size="1"
 								 value="<%= pageContext.findAttribute("curricularYearOID").toString() %>"
-								 onchange="document.chooseExamsContextForm.submit();">
+								 onchange="this.form.submit();">
 			       		<html:options collection="<%= SessionConstants.LABELLIST_CURRICULAR_YEARS %>"
 		    	   					  property="value"
 		       						  labelProperty="label"/>
@@ -44,7 +44,7 @@
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
 		<html:select bundle="HTMLALT_RESOURCES" altKey="select.executionPeriod" property="executionPeriod" size="1"
 					 value="<%= pageContext.findAttribute("executionPeriodOID").toString() %>"
-					 onchange="document.chooseExamsExecutionPeriodForm.submit();">
+					 onchange="this.form.submit();">
 	    	<html:options	property="value" 
 	     					labelProperty="label" 
 							collection="<%= SessionConstants.LABELLIST_EXECUTIONPERIOD%>"

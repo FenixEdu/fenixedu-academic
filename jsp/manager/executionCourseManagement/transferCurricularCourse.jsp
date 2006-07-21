@@ -31,12 +31,12 @@
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.executionPeriodId" property="executionPeriodId" value="<%= pageContext.findAttribute("executionPeriodId").toString() %>"/>
 
 	<html:select bundle="HTMLALT_RESOURCES" altKey="select.destinationExecutionDegreeId" property="destinationExecutionDegreeId" size="1"
-			onchange="this.form.method.value='selectExecutionDegree';document.executionCourseTransferCurricularCourseForm.submit();">
+			onchange="this.form.method.value='selectExecutionDegree';this.form.submit();">
 		<html:options collection="executionDegrees" labelProperty="label" property="value" />
 	</html:select>
 
 	<html:select bundle="HTMLALT_RESOURCES" altKey="select.curricularYear" property="curricularYear" size="1"
-			onchange="this.form.method.value='selectExecutionDegree';document.executionCourseTransferCurricularCourseForm.submit();">
+			onchange="this.form.method.value='selectExecutionDegree';this.form.submit();">
 		<html:options collection="curricularYears" labelProperty="label" property="value" />
 	</html:select>
 

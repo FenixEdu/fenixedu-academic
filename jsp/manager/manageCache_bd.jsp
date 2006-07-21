@@ -45,7 +45,7 @@
 			<html:text
 				property="responseRefreshTimeout"
 				size="6"
-				onchange='document.manageCache.submit();'
+				onchange='this.form.submit();'
 				/>
 			<bean:message bundle="MANAGER_RESOURCES" key="cache.response.refresh.timeout.units"/>
 		</html:form>

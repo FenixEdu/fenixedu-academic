@@ -29,14 +29,15 @@
 		<table width="100%" class="infoop">
 			<tr>
 				<td><bean:message key="label.studentCurricularPlan" bundle="STUDENT_RESOURCES" /></td>
-				<td><html:select bundle="HTMLALT_RESOURCES" altKey="select.studentCPID" property="studentCPID"	onchange='document.studentCurricularPlanAndEnrollmentsSelectionForm.submit();'> <html:options collection="allSCPs" property="value" labelProperty="label" /></html:select></td>
+				<td><html:select bundle="HTMLALT_RESOURCES" altKey="select.studentCPID" property="studentCPID"
+							onchange='this.form.submit();'> <html:options collection="allSCPs" property="value" labelProperty="label" /></html:select></td>
 			</tr>
 			
 			<tr>
 				<td><bean:message key="label.enrollmentsFilter" bundle="STUDENT_RESOURCES" /></td>
 				<td>
 					<html:select bundle="HTMLALT_RESOURCES" altKey="select.select" property="select"
-						onchange='document.studentCurricularPlanAndEnrollmentsSelectionForm.submit();' >
+						onchange='this.form.submit();' >
 						<html:options collection="enrollmentOptions" property="value" labelProperty="label"/>
 					</html:select>
 				</td>
