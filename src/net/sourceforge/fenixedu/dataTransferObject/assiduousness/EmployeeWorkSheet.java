@@ -1,11 +1,9 @@
 package net.sourceforge.fenixedu.dataTransferObject.assiduousness;
 
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.Employee;
-import net.sourceforge.fenixedu.domain.assiduousness.JustificationMotive;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 
 import org.joda.time.Duration;
