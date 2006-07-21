@@ -38,21 +38,6 @@ public class Timeline {
         plotList(pointList);
     }
 
-    // Plots the schedule in the timeline
-    // public void plotInTimeline() {
-    // List<TimePoint> pointList = new ArrayList<TimePoint>();
-    // pointList.addAll((workScheduleType.getNormalWorkPeriod()).toTimePoints(
-    // AttributeType.NORMAL_WORK_PERIOD_1, AttributeType.NORMAL_WORK_PERIOD_2));
-    // if (workScheduleType.definedFixedPeriod()) {
-    // pointList.addAll((workScheduleType.getFixedWorkPeriod()).toTimePoints(
-    // AttributeType.FIXED_PERIOD_1, AttributeType.FIXED_PERIOD_2));
-    // }
-    // if (workScheduleType.definedMeal()) {
-    // pointList.addAll(((Meal) workScheduleType.getMeal()).toTimePoints());
-    // }
-    // plotList(pointList);
-    // }
-
     public Timeline(YearMonthDay day) {
         timePoints = new ArrayList<TimePoint>();
         timePoints
@@ -371,41 +356,24 @@ public class Timeline {
         return result;
     }
 
-    // Calcula a duracao dos intervalos de atributo attributes cujo final seja ate timeOfDay
-    // TODO verificar
-    public Duration calculateDurationAllIntervalsByAttributesToTime(TimePoint timePoint,
-            Attributes attributes, TimePoint minimumClockTimePoint, TimePoint maximumClockTimePoint) {
-        Duration totalDuration = new Duration(0);
-        for (AttributeType attribute : attributes.getAttributes()) {
-            TimePoint[] timePoints = findIntervalByAttribute(attribute);
+    public Duration calculateWorkPeriodDuration(TimePoint firstTimePoint, TimePoint lastTimePoint,
+            TimePoint minimumClockTimePoint, TimePoint maximumClockTimePoint, Duration maximumDuration) {
+        Duration totalDuration = Duration.ZERO;
+        Duration temp = null;
+        for (AttributeType attributeType : DomainConstants.WORKED_ATTRIBUTES.getAttributes()) {
+            TimePoint[] timePoints = findIntervalByAttribute(attributeType);
             if (timePoints != null) {
-                if (timePoints[1].isBefore(timePoint) || timePoint.isAtSameTime(timePoints[1])) {
-                    TimePoint firstTimePoint = timePoints[0];
-                    TimePoint lastTimePoint = timePoints[1];
-
-                    DateTime startDate = firstTimePoint.getTime().toDateTimeToday();
-                    if (firstTimePoint.isBefore(minimumClockTimePoint)) {
-                        startDate = minimumClockTimePoint.getTime().toDateTimeToday();
-                        firstTimePoint = minimumClockTimePoint;
-                    } else if (maximumClockTimePoint.isBefore(firstTimePoint)) {
-                        startDate = maximumClockTimePoint.getTime().toDateTimeToday();
-                        firstTimePoint = maximumClockTimePoint;
+                if ((firstTimePoint != null && (timePoints[1].isBefore(firstTimePoint) || firstTimePoint
+                        .isAtSameTime(timePoints[1])))
+                        || (lastTimePoint != null && (lastTimePoint.isBefore(timePoints[0]) || lastTimePoint
+                                .isAtSameTime(timePoints[0])))) {
+                    temp = getDurationBetweenPoints(timePoints[0], timePoints[1], minimumClockTimePoint,
+                            maximumClockTimePoint);
+                    if (maximumDuration != null && (temp.isLongerThan(maximumDuration))) {
+                        totalDuration = totalDuration.plus(maximumDuration);
+                    } else {
+                        totalDuration = totalDuration.plus(temp);
                     }
-
-                    DateTime endDate = lastTimePoint.getTime().toDateTimeToday();
-                    if (lastTimePoint.isBefore(minimumClockTimePoint)) {
-                        endDate = minimumClockTimePoint.getTime().toDateTimeToday();
-                        lastTimePoint= minimumClockTimePoint;
-                    } else if (maximumClockTimePoint.isBefore(lastTimePoint)) {
-                        endDate = maximumClockTimePoint.getTime().toDateTimeToday();
-                        lastTimePoint = maximumClockTimePoint;
-                    }
-
-                    if (firstTimePoint.isNextDay() != lastTimePoint.isNextDay()) {
-                        endDate = endDate.plusDays(1);
-                    }
-
-                    totalDuration = totalDuration.plus(new Duration(startDate, endDate));
                 }
             } else {
                 break;
@@ -414,55 +382,125 @@ public class Timeline {
         return totalDuration;
     }
 
-    // Calcula a duracao dos intervalos de atributo attributes a partir de timeof day
-    // TODO verificar
-    public Duration calculateDurationAllIntervalsByAttributesFromTime(TimePoint timePoint,
-            Attributes attributes, TimePoint minimumClockTimePoint, TimePoint maximumClockTimePoint) {
-        Duration totalDuration = new Duration(0);
-        for (AttributeType attribute : attributes.getAttributes()) {
-            TimePoint[] timePoints = findIntervalByAttribute(attribute);
-            if (timePoints != null) {
-                if (timePoint.isBefore(timePoints[0]) || timePoint.isAtSameTime(timePoints[0])) {
-                    TimePoint firstTimePoint = timePoints[0];
-                    TimePoint lastTimePoint = timePoints[1];
-
-                    DateTime startDate = firstTimePoint.getTime().toDateTimeToday();
-                    if (firstTimePoint.isBefore(minimumClockTimePoint)) {
-                        startDate = minimumClockTimePoint.getTime().toDateTimeToday();
-                        firstTimePoint = minimumClockTimePoint;
-                    } else if (maximumClockTimePoint.isBefore(firstTimePoint)) {
-                        startDate = maximumClockTimePoint.getTime().toDateTimeToday();
-                        firstTimePoint = maximumClockTimePoint;
-                    }
-
-                    DateTime endDate = lastTimePoint.getTime().toDateTimeToday();
-                    if (lastTimePoint.isBefore(minimumClockTimePoint)) {
-                        endDate = minimumClockTimePoint.getTime().toDateTimeToday();
-                        lastTimePoint = minimumClockTimePoint;
-                    } else if (maximumClockTimePoint.isBefore(lastTimePoint)) {
-                        endDate = maximumClockTimePoint.getTime().toDateTimeToday();
-                        lastTimePoint = maximumClockTimePoint;
-                    }
-
-                    if (firstTimePoint.isNextDay() != lastTimePoint.isNextDay()) {
-                        endDate = endDate.plusDays(1);
-                    }
-                    totalDuration = totalDuration.plus(new Duration(startDate, endDate));
-                }
-            } else {
-                break;
-            }
-        }
-        return totalDuration;
-    }
-
-    // Calcula a duracao dos intervalos de atributo attributes a partir de timeof day
-    // TODO verificar
-    public Duration calculateDurationAllIntervalsByAttributes(Attributes attributes,
+    private Duration getDurationBetweenPoints(TimePoint firstTimePoint, TimePoint lastTimePoint,
             TimePoint minimumClockTimePoint, TimePoint maximumClockTimePoint) {
-        return calculateDurationAllIntervalsByAttributesFromTime(timePoints.iterator().next(),
-                attributes, minimumClockTimePoint, maximumClockTimePoint);
+        DateTime startDate = firstTimePoint.getTime().toDateTimeToday();
+        if (firstTimePoint.isBefore(minimumClockTimePoint)) {
+            startDate = minimumClockTimePoint.getTime().toDateTimeToday();
+            firstTimePoint = minimumClockTimePoint;
+        } else if (maximumClockTimePoint.isBefore(firstTimePoint)) {
+            startDate = maximumClockTimePoint.getTime().toDateTimeToday();
+            firstTimePoint = maximumClockTimePoint;
+        }
+
+        DateTime endDate = lastTimePoint.getTime().toDateTimeToday();
+        if (lastTimePoint.isBefore(minimumClockTimePoint)) {
+            endDate = minimumClockTimePoint.getTime().toDateTimeToday();
+            lastTimePoint = minimumClockTimePoint;
+        } else if (maximumClockTimePoint.isBefore(lastTimePoint)) {
+            endDate = maximumClockTimePoint.getTime().toDateTimeToday();
+            lastTimePoint = maximumClockTimePoint;
+        }
+
+        if (firstTimePoint.isNextDay() != lastTimePoint.isNextDay()) {
+            endDate = endDate.plusDays(1);
+        }
+
+        return new Duration(startDate, endDate);
     }
+
+    // // Calcula a duracao dos intervalos de atributo attributes cujo final seja ate timeOfDay
+    // // TODO verificar
+    // public Duration calculateDurationAllIntervalsByAttributesToTime(TimePoint timePoint,
+    // Attributes attributes, TimePoint minimumClockTimePoint, TimePoint maximumClockTimePoint) {
+    // Duration totalDuration = new Duration(0);
+    // for (AttributeType attribute : attributes.getAttributes()) {
+    // TimePoint[] timePoints = findIntervalByAttribute(attribute);
+    // if (timePoints != null) {
+    // if (timePoints[1].isBefore(timePoint) || timePoint.isAtSameTime(timePoints[1])) {
+    // TimePoint firstTimePoint = timePoints[0];
+    // TimePoint lastTimePoint = timePoints[1];
+    //
+    // DateTime startDate = firstTimePoint.getTime().toDateTimeToday();
+    // if (firstTimePoint.isBefore(minimumClockTimePoint)) {
+    // startDate = minimumClockTimePoint.getTime().toDateTimeToday();
+    // firstTimePoint = minimumClockTimePoint;
+    // } else if (maximumClockTimePoint.isBefore(firstTimePoint)) {
+    // startDate = maximumClockTimePoint.getTime().toDateTimeToday();
+    // firstTimePoint = maximumClockTimePoint;
+    // }
+    //
+    // DateTime endDate = lastTimePoint.getTime().toDateTimeToday();
+    // if (lastTimePoint.isBefore(minimumClockTimePoint)) {
+    // endDate = minimumClockTimePoint.getTime().toDateTimeToday();
+    // lastTimePoint = minimumClockTimePoint;
+    // } else if (maximumClockTimePoint.isBefore(lastTimePoint)) {
+    // endDate = maximumClockTimePoint.getTime().toDateTimeToday();
+    // lastTimePoint = maximumClockTimePoint;
+    // }
+    //
+    // if (firstTimePoint.isNextDay() != lastTimePoint.isNextDay()) {
+    // endDate = endDate.plusDays(1);
+    // }
+    //
+    // totalDuration = totalDuration.plus(new Duration(startDate, endDate));
+    // }
+    // } else {
+    // break;
+    // }
+    // }
+    // return totalDuration;
+    // }
+    //
+    // // Calcula a duracao dos intervalos de atributo attributes a partir de timeof day
+    // // TODO verificar
+    // public Duration calculateDurationAllIntervalsByAttributesFromTime(TimePoint timePoint,
+    // Attributes attributes, TimePoint minimumClockTimePoint, TimePoint maximumClockTimePoint) {
+    // Duration totalDuration = new Duration(0);
+    // for (AttributeType attribute : attributes.getAttributes()) {
+    // TimePoint[] timePoints = findIntervalByAttribute(attribute);
+    // if (timePoints != null) {
+    // if (timePoint.isBefore(timePoints[0]) || timePoint.isAtSameTime(timePoints[0])) {
+    // TimePoint firstTimePoint = timePoints[0];
+    // TimePoint lastTimePoint = timePoints[1];
+    //
+    // DateTime startDate = firstTimePoint.getTime().toDateTimeToday();
+    // if (firstTimePoint.isBefore(minimumClockTimePoint)) {
+    // startDate = minimumClockTimePoint.getTime().toDateTimeToday();
+    // firstTimePoint = minimumClockTimePoint;
+    // } else if (maximumClockTimePoint.isBefore(firstTimePoint)) {
+    // startDate = maximumClockTimePoint.getTime().toDateTimeToday();
+    // firstTimePoint = maximumClockTimePoint;
+    // }
+    //
+    // DateTime endDate = lastTimePoint.getTime().toDateTimeToday();
+    // if (lastTimePoint.isBefore(minimumClockTimePoint)) {
+    // endDate = minimumClockTimePoint.getTime().toDateTimeToday();
+    // lastTimePoint = minimumClockTimePoint;
+    // } else if (maximumClockTimePoint.isBefore(lastTimePoint)) {
+    // endDate = maximumClockTimePoint.getTime().toDateTimeToday();
+    // lastTimePoint = maximumClockTimePoint;
+    // }
+    //
+    // if (firstTimePoint.isNextDay() != lastTimePoint.isNextDay()) {
+    // endDate = endDate.plusDays(1);
+    // }
+    // totalDuration = totalDuration.plus(new Duration(startDate, endDate));
+    // }
+    // } else {
+    // break;
+    // }
+    // }
+    // return totalDuration;
+    // }
+
+    // // Calcula a duracao dos intervalos de atributo attributes a partir de timeof day
+    // // TODO verificar
+    // public Duration calculateDurationAllIntervalsByAttributes(Attributes attributes,
+    // TimePoint minimumClockTimePoint, TimePoint maximumClockTimePoint) {
+    // return calculateDurationAllIntervalsByAttributesFromTime(timePoints.iterator().next(),
+    // attributes, minimumClockTimePoint, maximumClockTimePoint);
+    // }
 
     // Returns a list will all points that contain the specified attributes
     public List<TimePoint> getAllAttributePoints(Attributes attributes) {

@@ -25,12 +25,13 @@ public class Leave extends Leave_Base {
     public static final Comparator<Leave> COMPARATORY_BY_DATE = new BeanComparator("date");
 
     public Leave(Assiduousness assiduousness, DateTime date, Duration dateDuration,
-            JustificationMotive justificationMotive, String notes, DateTime lastModificationDate,
-            Employee modifiedBy, Integer oracleSequence) {
+            JustificationMotive justificationMotive, WorkWeek aplicableWeekDays, String notes,
+            DateTime lastModificationDate, Employee modifiedBy, Integer oracleSequence) {
         super();
         setRootDomainObject(RootDomainObject.getInstance());
         setDate(date);
         setJustificationMotive(justificationMotive);
+        setAplicableWeekDays(aplicableWeekDays);
         setAssiduousness(assiduousness);
         setNotes(notes);
         setDuration(dateDuration);

@@ -16,11 +16,11 @@ import net.sourceforge.fenixedu.domain.assiduousness.util.DateInterval;
 import net.sourceforge.fenixedu.domain.assiduousness.util.DomainConstants;
 import net.sourceforge.fenixedu.domain.assiduousness.util.JustificationType;
 import net.sourceforge.fenixedu.domain.assiduousness.util.TimePoint;
+import net.sourceforge.fenixedu.domain.assiduousness.util.TimeUtils;
 import net.sourceforge.fenixedu.domain.assiduousness.util.Timeline;
 import net.sourceforge.fenixedu.domain.space.Campus;
 import net.sourceforge.fenixedu.util.WeekDay;
 
-import org.joda.time.DateMidnight;
 import org.joda.time.DateTime;
 import org.joda.time.Duration;
 import org.joda.time.Interval;
@@ -30,6 +30,7 @@ import org.joda.time.YearMonthDay;
 public class Assiduousness extends Assiduousness_Base {
 
     public static final TimeOfDay defaultStartWorkDay = new TimeOfDay(7, 30, 0, 0);
+
     public static final TimeOfDay defaultEndWorkDay = new TimeOfDay(23, 59, 59, 99);
 
     public Assiduousness(Employee employee) {
@@ -103,10 +104,9 @@ public class Assiduousness extends Assiduousness_Base {
                     workDaySheet = workDaySheet.getWorkSchedule().calculateWorkingPeriods(workDaySheet,
                             day, timeline, timeLeaves);
                 } else {
-                    workDaySheet
-                            .setBalanceTime(workDaySheet.getWorkSchedule().getWorkPeriodBalance(
-                                    workDaySheet.getBalanceTime().toDurationFrom(new DateMidnight()))
-                                    .toPeriod());
+                    workDaySheet.setBalanceTime(Duration.ZERO.minus(
+                            workDaySheet.getWorkSchedule().getWorkScheduleType().getNormalWorkPeriod()
+                                    .getWorkPeriodDuration()).toPeriod());
                     if (balanceLeaves.isEmpty()) {
                         workDaySheet.setNotes(workDaySheet.getNotes().concat("FALTA INJ"));
                     }
@@ -124,10 +124,11 @@ public class Assiduousness extends Assiduousness_Base {
                         .iterator();
                 timeline.plotListInTimeline(workDaySheet.getAssiduousnessRecords(), workDaySheet
                         .getLeaves(), attributesIt, day);
-                final Duration worked = timeline.calculateDurationAllIntervalsByAttributes(
-                        DomainConstants.WORKED_ATTRIBUTES, new TimePoint(defaultStartWorkDay,
-                                AttributeType.NULL), new TimePoint(defaultStartWorkDay, AttributeType.NULL));
-                workDaySheet.setBalanceTime(worked.toPeriod());            
+                final Duration worked = timeline.calculateWorkPeriodDuration(null, timeline
+                        .getTimePoints().iterator().next(), new TimePoint(defaultStartWorkDay,
+                        AttributeType.NULL), new TimePoint(defaultStartWorkDay, AttributeType.NULL),
+                        null);
+                workDaySheet.setBalanceTime(worked.toPeriod());
             }
         }
         return workDaySheet;

@@ -3311,6 +3311,7 @@ class net.sourceforge.fenixedu.domain.assiduousness.Anulation extends net.source
 
 class net.sourceforge.fenixedu.domain.assiduousness.Leave extends net.sourceforge.fenixedu.domain.assiduousness.Justification {
 		Duration duration;
+		WorkWeek aplicableWeekDays;
 }
 
 class net.sourceforge.fenixedu.domain.assiduousness.JustificationMotive extends net.sourceforge.fenixedu.domain.DomainObject {

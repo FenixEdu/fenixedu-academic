@@ -4,11 +4,10 @@
  */
 package net.sourceforge.fenixedu.domain.assiduousness;
 
-import net.sourceforge.fenixedu.util.WeekDay;
-
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.EnumSet;
+
+import net.sourceforge.fenixedu.util.WeekDay;
 
 import org.joda.time.DateTime;
 

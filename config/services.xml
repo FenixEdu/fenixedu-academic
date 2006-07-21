@@ -10154,7 +10154,7 @@
 	</service>
 	<service>
 		<name>ReadAllAssiduousnessWorkSheets</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.assiduousness.ReadAssiduousnessWorkSheet</implementationClass>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.assiduousness.ReadAllAssiduousnessWorkSheets</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains>

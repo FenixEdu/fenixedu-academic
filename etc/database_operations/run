@@ -27,3 +27,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Add AplicableWeekDays column to AssiduousnessRecord table" AlterTableAssiduousnessRecord.sql

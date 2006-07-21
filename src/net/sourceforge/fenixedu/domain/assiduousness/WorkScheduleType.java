@@ -12,6 +12,8 @@ import org.joda.time.YearMonthDay;
 
 public class WorkScheduleType extends WorkScheduleType_Base {
 
+    public static Duration maximumContinuousWorkPeriod = new Duration(18000000); // 5 hours
+
     public void update(String className, YearMonthDay beginValidDate, YearMonthDay endValidDate,
             String acronym, TimeOfDay dayTime, Duration dayTimeDuration, TimeOfDay clockingTime,
             Duration clockingTimeDuration, WorkPeriod normalWorkPeriod, WorkPeriod fixedWorkPeriod,
@@ -112,5 +114,12 @@ public class WorkScheduleType extends WorkScheduleType_Base {
     public static Interval getDefaultWorkTime(YearMonthDay workDay) {
         return new Interval(workDay.toDateTime(new TimeOfDay(3, 0, 0, 0)), workDay.toDateTime(
                 new TimeOfDay(6, 0, 0, 0)).plusDays(1));
+    }
+
+    public Duration getMaximumContinuousWorkPeriod() {
+        if (getMeal() == null || getMeal().getMinimumMealBreakInterval().equals(Duration.ZERO)) {
+            return null;
+        }
+        return maximumContinuousWorkPeriod;
     }
 }

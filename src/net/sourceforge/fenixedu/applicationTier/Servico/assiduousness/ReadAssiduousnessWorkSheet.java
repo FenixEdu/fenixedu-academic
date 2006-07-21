@@ -35,20 +35,6 @@ public class ReadAssiduousnessWorkSheet extends Service {
         return getEmployeeWorkSheet(assiduousness, beginDate, endDate, new YearMonthDay());
     }
 
-    public List<EmployeeWorkSheet> run(YearMonthDay beginDate, YearMonthDay endDate) {
-        final List<EmployeeWorkSheet> employeeWorkSheetList = new ArrayList<EmployeeWorkSheet>();
-        final YearMonthDay today = new YearMonthDay();
-
-        for (Assiduousness assiduousness : rootDomainObject.getAssiduousnesss()) {
-            if (assiduousness.isStatusActive(beginDate, endDate)) {
-                EmployeeWorkSheet employeeWorkSheet = getEmployeeWorkSheet(assiduousness, beginDate,
-                        endDate, today);
-                employeeWorkSheetList.add(employeeWorkSheet);
-            }
-        }
-        return employeeWorkSheetList;
-    }
-
     private EmployeeWorkSheet getEmployeeWorkSheet(Assiduousness assiduousness, YearMonthDay beginDate,
             YearMonthDay endDate, YearMonthDay today) {
         final List<WorkDaySheet> workSheet = new ArrayList<WorkDaySheet>();
@@ -242,12 +228,13 @@ public class ReadAssiduousnessWorkSheet extends Service {
         }
         Interval overlapResult = thisDayWorkTimeInterval.overlap(dayBeforeWorkTimeInterval);
         if (overlapResult == null) {
-            Interval gapResult = thisDayWorkTimeInterval.gap(dayBeforeWorkTimeInterval);
-            if(!gapResult.contains(clocking)) {
+            Interval gapResult = dayBeforeWorkTimeInterval.gap(thisDayWorkTimeInterval);
+            if (gapResult != null && !gapResult.contains(clocking)) {
                 return false;
+            } else {
+                return dayBeforeWorkTimeInterval.contains(clocking);
             }
-        }
-        else if(!overlapResult.contains(clocking) && clocking.isAfter(overlapResult.getStart())) {
+        } else if (!overlapResult.contains(clocking) && clocking.isAfter(overlapResult.getStart())) {
             return false;
         }
         return true;
