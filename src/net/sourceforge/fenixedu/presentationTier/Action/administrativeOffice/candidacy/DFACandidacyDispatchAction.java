@@ -122,7 +122,7 @@ public class DFACandidacyDispatchAction extends FenixDispatchAction {
                     "CreateDFACandidacy", new Object[] { createDFACandidacyBean.getExecutionDegree(),
                             createDFACandidacyBean.getName(),
                             createDFACandidacyBean.getIdentificationNumber(),
-                            createDFACandidacyBean.getIdDocumentType() });
+                            createDFACandidacyBean.getIdDocumentType(), createDFACandidacyBean.getContributorNumber() });
         } catch (DomainException e) {
             addActionMessage(request, e.getMessage(), null);
             RenderUtils.invalidateViewState();
