@@ -137,6 +137,7 @@ valueType net.sourceforge.fenixedu.domain.accounting.PaymentMode                
 valueType net.sourceforge.fenixedu.domain.accounting.EventState                                 as AccountingEventState;
 valueType net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOfficeType         as AdministrativeOfficeType;
 valueType net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSituationType   as AcademicServiceRequestSituationType;
+valueType net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequestType  as DocumentRequestType;
 valueType net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentPurposeType  as DocumentPurposeType;
 valueType net.sourceforge.fenixedu.domain.research.result.patent.ResultPatent.ResultPatentType  as ResultPatentType;
 valueType net.sourceforge.fenixedu.domain.research.result.publication.BookPart.BookPartType		as BookPartType;
@@ -3591,6 +3592,7 @@ class net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest ext
 }
 
 		class net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest extends net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest {
+			DocumentRequestType documentRequestType;
 			DocumentPurposeType documentPurposeType;
 			String otherDocumentPurposeTypeDescription;
 			Integer numberOfPages;
