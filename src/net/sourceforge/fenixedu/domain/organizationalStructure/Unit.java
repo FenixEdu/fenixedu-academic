@@ -250,7 +250,9 @@ public class Unit extends Unit_Base {
                 && !hasAnySalaryContracts()
                 && !hasAnyCompetenceCourses()
                 && !hasAnyExternalPersons()
-                && !hasAnyAssociatedNonAffiliatedTeachers();
+                && !hasAnyAssociatedNonAffiliatedTeachers()
+                && !hasAnyPayedGuides()
+                && !hasAnyPayedReceipts();
     }
 
     public List<Contract> getWorkingContracts(YearMonthDay begin, YearMonthDay end) {
