@@ -3595,11 +3595,11 @@ class net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest ext
 			DocumentRequestType documentRequestType;
 			DocumentPurposeType documentPurposeType;
 			String otherDocumentPurposeTypeDescription;
+			Boolean urgentRequest;
 			Integer numberOfPages;
 		}
 		
 		class net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.CertificateRequest extends net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest {
-			Boolean urgentRequest;
 			Integer keyCertificateRequestEvent;
 		}
 		

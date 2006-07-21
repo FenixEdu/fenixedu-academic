@@ -27,26 +27,7 @@ public abstract class CertificateRequest extends CertificateRequest_Base {
 			Integer numberOfPages, Boolean urgentRequest) {
 
 		init(studentCurricularPlan, administrativeOffice, documentRequestType, documentPurposeType,
-				otherDocumentPurposeTypeDescription, numberOfPages);
-
-		checkParameters(urgentRequest);
-
-		super.setUrgentRequest(urgentRequest);
-
-	}
-
-	private void checkParameters(Boolean urgentRequest) {
-		if (urgentRequest == null) {
-			throw new DomainException(
-					"error.serviceRequests.documentRequests.CertificateRequest.urgentRequest.cannot.be.null");
-		}
-
-	}
-
-	@Override
-	public void setUrgentRequest(Boolean urgentRequest) {
-		throw new DomainException(
-				"error.serviceRequests.documentRequests.CertificateRequest.cannot.modify.urgentRequest");
+				otherDocumentPurposeTypeDescription, numberOfPages, urgentRequest);
 	}
 
 	@Override
@@ -57,10 +38,6 @@ public abstract class CertificateRequest extends CertificateRequest_Base {
 
 	public Integer getNumberOfUnits() {
 		return 0;
-	}
-
-	public boolean isUrgent() {
-		return getUrgentRequest().booleanValue();
 	}
 
 }

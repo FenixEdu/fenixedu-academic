@@ -13,15 +13,15 @@ public abstract class DocumentRequest extends DocumentRequest_Base {
 	public DocumentRequest(StudentCurricularPlan studentCurricularPlan,
 			AdministrativeOffice administrativeOffice, DocumentRequestType documentRequestType,
 			DocumentPurposeType documentPurposeType, String otherDocumentPurposeTypeDescription,
-			Integer numberOfPages) {
+			Integer numberOfPages, Boolean urgentRequest) {
 		this();
 		init(studentCurricularPlan, administrativeOffice, documentRequestType, documentPurposeType,
-				otherDocumentPurposeTypeDescription, numberOfPages);
+				otherDocumentPurposeTypeDescription, numberOfPages, urgentRequest);
 	}
 
 	private void checkParameters(DocumentRequestType documentRequestType,
 			DocumentPurposeType documentPurposeType, String otherDocumentPurposeTypeDescription,
-			Integer numberOfPages) {
+			Integer numberOfPages, Boolean urgentRequest) {
 
 		if (documentRequestType == null) {
 			throw new DomainException(
@@ -44,22 +44,32 @@ public abstract class DocumentRequest extends DocumentRequest_Base {
 					"error.serviceRequests.documentRequests.DocumentRequest.numberOfPages.cannot.be.null");
 		}
 
+		if (urgentRequest == null) {
+			throw new DomainException(
+					"error.serviceRequests.documentRequests.DocumentRequest.urgentRequest.cannot.be.null");
+		}
+
 	}
 
 	protected void init(StudentCurricularPlan studentCurricularPlan,
 			AdministrativeOffice administrativeOffice, DocumentRequestType documentRequestType,
 			DocumentPurposeType documentPurposeType, String otherDocumentPurposeTypeDescription,
-			Integer numberOfPages) {
+			Integer numberOfPages, Boolean urgentRequest) {
 
 		init(studentCurricularPlan, administrativeOffice);
 
 		checkParameters(documentRequestType, documentPurposeType, otherDocumentPurposeTypeDescription,
-				numberOfPages);
+				numberOfPages, urgentRequest);
 
 		super.setDocumentRequestType(documentRequestType);
 		super.setDocumentPurposeType(documentPurposeType);
 		super.setOtherDocumentPurposeTypeDescription(otherDocumentPurposeTypeDescription);
 		super.setNumberOfPages(numberOfPages);
+		super.setUrgentRequest(urgentRequest);
+	}
+	
+	public boolean isUrgent() {
+		return getUrgentRequest().booleanValue();
 	}
 
 	@Override
@@ -83,7 +93,13 @@ public abstract class DocumentRequest extends DocumentRequest_Base {
 	@Override
 	public void setNumberOfPages(Integer numberOfPages) {
 		throw new DomainException(
-				"error.serviceRequests.documentRequests.enclosing_type.cannot.modify.numberOfPages");
+		"error.serviceRequests.documentRequests.enclosing_type.cannot.modify.numberOfPages");
+	}
+	
+	@Override
+	public void setUrgentRequest(Boolean urgentRequest) {
+		throw new DomainException(
+				"error.serviceRequests.documentRequests.CertificateRequest.cannot.modify.urgentRequest");
 	}
 
 }
