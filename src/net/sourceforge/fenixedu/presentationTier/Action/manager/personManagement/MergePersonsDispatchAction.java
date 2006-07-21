@@ -82,44 +82,55 @@ public class MergePersonsDispatchAction extends FenixDispatchAction {
                 "net.sourceforge.fenixedu.domain.Person");
 
         List<MergeSlotDTO> results = new ArrayList<MergeSlotDTO>();
-        for (Iterator<Slot> iter = personClass.getSlots(); iter.hasNext();) {
-            Slot slot = iter.next();
+        DomainClass personClassOrSuperClass = personClass;
+        while (personClassOrSuperClass.getSuperclass() != null) {
 
-            String slotName = slot.getName();
-            Object objPropertyPerson1 = PropertyUtils.getSimpleProperty(person1, slotName);
-            Object objPropertyPerson2 = PropertyUtils.getSimpleProperty(person2, slotName);
+            for (Iterator<Slot> iter = personClassOrSuperClass.getSlots(); iter.hasNext();) {
+                Slot slot = iter.next();
 
-            String propertyPerson1 = (objPropertyPerson1 == null) ? "" : objPropertyPerson1.toString();
-            String propertyPerson2 = (objPropertyPerson2 == null) ? "" : objPropertyPerson2.toString();
+                String slotName = slot.getName();
+                Object objPropertyPerson1 = PropertyUtils.getSimpleProperty(person1, slotName);
+                Object objPropertyPerson2 = PropertyUtils.getSimpleProperty(person2, slotName);
 
-            results
-                    .add(new MergeSlotDTO(slotName, "Simple Primitive", propertyPerson1, propertyPerson2));
+                String propertyPerson1 = (objPropertyPerson1 == null) ? "" : objPropertyPerson1
+                        .toString();
+                String propertyPerson2 = (objPropertyPerson2 == null) ? "" : objPropertyPerson2
+                        .toString();
+
+                results.add(new MergeSlotDTO(slotName, "Simple Primitive", propertyPerson1,
+                        propertyPerson2));
+            }
+            personClassOrSuperClass = (DomainClass) personClassOrSuperClass.getSuperclass();
         }
 
-        for (Iterator<Role> iter = personClass.getRoleSlots(); iter.hasNext();) {
-            Role roleSlot = iter.next();
+        personClassOrSuperClass = personClass;        
+        while (personClassOrSuperClass.getSuperclass() != null) {
+            for (Iterator<Role> iter = personClassOrSuperClass.getRoleSlots(); iter.hasNext();) {
+                Role roleSlot = iter.next();
 
-            String slotName = roleSlot.getName();
-            MergeSlotDTO mergeSlot = new MergeSlotDTO(slotName);
+                String slotName = roleSlot.getName();
+                MergeSlotDTO mergeSlot = new MergeSlotDTO(slotName);
 
-            Object propertyPerson1 = PropertyUtils.getSimpleProperty(person1, slotName);
-            Object propertyPerson2 = PropertyUtils.getSimpleProperty(person2, slotName);
+                Object propertyPerson1 = PropertyUtils.getSimpleProperty(person1, slotName);
+                Object propertyPerson2 = PropertyUtils.getSimpleProperty(person2, slotName);
 
-            if (roleSlot.getMultiplicityUpper() == 1) {
-                mergeSlot.setType("Reference");
+                if (roleSlot.getMultiplicityUpper() == 1) {
+                    mergeSlot.setType("Reference");
 
-                fillDtoWithSimpleProperty(roleSlot, mergeSlot, propertyPerson1, MergeSlotDTO.VALUE1);
-                fillDtoWithSimpleProperty(roleSlot, mergeSlot, propertyPerson2, MergeSlotDTO.VALUE2);
+                    fillDtoWithSimpleProperty(roleSlot, mergeSlot, propertyPerson1, MergeSlotDTO.VALUE1);
+                    fillDtoWithSimpleProperty(roleSlot, mergeSlot, propertyPerson2, MergeSlotDTO.VALUE2);
 
-            } else {
-                // collection
-                mergeSlot.setType("Collection");
+                } else {
+                    // collection
+                    mergeSlot.setType("Collection");
 
-                fillDtoWithColelctionProperty(mergeSlot, propertyPerson1, MergeSlotDTO.VALUE1);
-                fillDtoWithColelctionProperty(mergeSlot, propertyPerson2, MergeSlotDTO.VALUE2);
+                    fillDtoWithColelctionProperty(mergeSlot, propertyPerson1, MergeSlotDTO.VALUE1);
+                    fillDtoWithColelctionProperty(mergeSlot, propertyPerson2, MergeSlotDTO.VALUE2);
+                }
+
+                results.add(mergeSlot);
             }
-
-            results.add(mergeSlot);
+            personClassOrSuperClass = (DomainClass) personClassOrSuperClass.getSuperclass();
         }
 
         request.setAttribute("slots", results);
@@ -167,7 +178,8 @@ public class MergePersonsDispatchAction extends FenixDispatchAction {
         Integer sourceOrder = Integer.valueOf(request.getParameter("source"));
         String slotName = request.getParameter("slotName");
 
-        Object[] args = { (sourceOrder == 1) ? person1 : person2, (sourceOrder == 1) ? person2 : person1, slotName };
+        Object[] args = { (sourceOrder == 1) ? person1 : person2,
+                (sourceOrder == 1) ? person2 : person1, slotName };
         ServiceUtils.executeService(userView, "TransferDomainObjectProperty", args);
 
         return choosePersons(mapping, form, request, response);
@@ -186,7 +198,7 @@ public class MergePersonsDispatchAction extends FenixDispatchAction {
             ServiceUtils.executeService(userView, "DeletePersonByOID", args);
         } catch (DomainException e) {
             return choosePersons(mapping, form, request, response);
-        }               
-        return mapping.findForward("choosePersons");              
+        }
+        return mapping.findForward("choosePersons");
     }
 }
