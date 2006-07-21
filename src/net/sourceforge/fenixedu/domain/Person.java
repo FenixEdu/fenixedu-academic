@@ -31,7 +31,6 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Function;
 import net.sourceforge.fenixedu.domain.organizationalStructure.FunctionType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
-import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.person.Gender;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 import net.sourceforge.fenixedu.domain.person.MaritalStatus;
@@ -377,6 +376,15 @@ public class Person extends Person_Base {
         return null;
     }
 
+    public Student getStudentByUsername() {
+        for (final Student student : this.getStudents()) {
+            if (getUsername().contains(student.getNumber().toString())) {
+                return student;
+            }
+        }
+        return null;
+    }
+
     public String getNacionalidade() {
         return this.getPais().getNationality();
     }
@@ -693,7 +701,9 @@ public class Person extends Person_Base {
         getAdvisories().clear();
         removeCms();
         removePais();
-        getUser().delete();
+        if (hasUser()) {
+            getUser().delete();    
+        }
         super.delete();
     }
 
@@ -753,6 +763,12 @@ public class Person extends Person_Base {
             return false;
         }
         if (getGrantOwner() != null) {
+            return false;
+        }
+        if (hasAnyPayedGuides()) {
+            return false;
+        }
+        if (hasAnyPayedReceipts()) {
             return false;
         }
         return true;
@@ -1465,5 +1481,5 @@ public class Person extends Person_Base {
         
         return externalPerson.getPerson();
     }
-
+    
 }
