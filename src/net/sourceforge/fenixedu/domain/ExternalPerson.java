@@ -47,7 +47,11 @@ public class ExternalPerson extends ExternalPerson_Base {
 
     public void delete() {
         removeInstitutionUnit();
+        
+        Person person = getPerson();
         removePerson();
+        person.delete();
+        
         removeRootDomainObject();
         deleteDomainObject();
     }
