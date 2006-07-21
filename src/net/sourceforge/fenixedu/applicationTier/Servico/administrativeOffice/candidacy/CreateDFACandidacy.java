@@ -14,14 +14,15 @@ import net.sourceforge.fenixedu.domain.person.RoleType;
 
 public class CreateDFACandidacy extends Service {
     public DFACandidacy run(ExecutionDegree executionDegree, String name,
-            String identificationDocumentNumber, IDDocumentType identificationDocumentType) {
+            String identificationDocumentNumber, IDDocumentType identificationDocumentType, String contributorNumber) {
         Person person = Person.readByDocumentIdNumberAndIdDocumentType(identificationDocumentNumber,
                 identificationDocumentType);
         if (person == null) {
             person = new Person(name, identificationDocumentNumber, identificationDocumentType,
                     Gender.MALE, "T" + System.currentTimeMillis());
         }
-
+        
+        person.setSocialSecurityNumber(contributorNumber);
         person.addPersonRoleByRoleType(RoleType.CANDIDATE);
         person.addPersonRoleByRoleType(RoleType.PERSON);
 

@@ -2,10 +2,6 @@ package net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.candida
 
 import java.io.Serializable;
 
-import net.sourceforge.fenixedu.domain.Degree;
-import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.DomainReference;
-import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 
 public class CreateDFACandidacyBean extends DFACandidacyBean implements Serializable{
@@ -13,7 +9,7 @@ public class CreateDFACandidacyBean extends DFACandidacyBean implements Serializ
     private String name;
     private String identificationNumber;
     private IDDocumentType idDocumentType;
-    
+    private String contributorNumber;
 
 	public IDDocumentType getIdDocumentType() {
 		return idDocumentType;
@@ -38,5 +34,13 @@ public class CreateDFACandidacyBean extends DFACandidacyBean implements Serializ
 	public void setName(String name) {
 		this.name = name;
 	}
+
+    public String getContributorNumber() {
+        return contributorNumber;
+    }
+
+    public void setContributorNumber(String contributorNumber) {
+        this.contributorNumber = contributorNumber;
+    }
 
 }
