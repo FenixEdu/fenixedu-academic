@@ -1148,7 +1148,7 @@ public class Person extends Person_Base {
 
     @Deprecated
     public void setNumContribuinte(String numContribuinte) {
-        super.setSocialSecurityNumber(numContribuinte);
+        this.setSocialSecurityNumber(numContribuinte);
     }
 
     @Deprecated
@@ -1170,6 +1170,15 @@ public class Person extends Person_Base {
     public void setTelemovel(String telemovel) {
         super.setMobile(telemovel);
     }
+    
+    @Override
+    public void setSocialSecurityNumber(String socialSecurityNumber) {
+        if (Party.readByContributorNumber(socialSecurityNumber) != null) {
+            throw new DomainException("PERSON.createContributor.existing.contributor.number");
+        }
+        super.setSocialSecurityNumber(socialSecurityNumber);
+    }
+    
 
     // -------------------------------------------------------------
     // static methods
@@ -1434,10 +1443,6 @@ public class Person extends Person_Base {
     public static Party createContributor(String contributorName, String contributorNumber,
             String contributorAddress, String areaCode, String areaOfAreaCode, String area,
             String parishOfResidence, String districtSubdivisionOfResidence, String districtOfResidence) {
-
-        if (Party.readByContributorNumber(contributorNumber) != null) {
-            throw new DomainException("PERSON.createContributor.existing.contributor.number");
-        }
         
         ExternalPerson externalPerson = new ExternalPerson(
                 contributorName, 
