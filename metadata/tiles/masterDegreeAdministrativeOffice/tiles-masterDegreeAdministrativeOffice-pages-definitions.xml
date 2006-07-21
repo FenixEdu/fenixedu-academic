@@ -324,5 +324,5 @@
 	<definition name="prices.management.viewPrices" extends="definition.masterDegreeAdministrativeOffice.masterPage">
 		<put name="body" value="/posGraduacao/pricesManagement/viewPrices.jsp"/>
 	</definition>
-	
+		
 </tiles-definitions>

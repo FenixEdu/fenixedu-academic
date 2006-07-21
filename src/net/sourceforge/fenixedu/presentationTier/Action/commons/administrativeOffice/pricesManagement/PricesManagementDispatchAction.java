@@ -1,7 +1,7 @@
 /**
  * 
  */
-package net.sourceforge.fenixedu.presentationTier.Action.masterDegree.administrativeOffice.pricesManagement;
+package net.sourceforge.fenixedu.presentationTier.Action.commons.administrativeOffice.pricesManagement;
 
 import java.util.SortedSet;
 import java.util.TreeSet;

@@ -552,7 +552,7 @@
 		<!-- Payments -->
 		<action path="/payments"
 				parameter="method"
-		        type="net.sourceforge.fenixedu.presentationTier.Action.masterDegree.administrativeOffice.payments.DegreePaymentsManagementDispatchAction"
+		        type="net.sourceforge.fenixedu.presentationTier.Action.degreeAdministrativeOffice.payments.DegreePaymentsManagementDispatchAction"
 		 		name="paymentsForm"
 		 		scope="request">
 		        <forward name="searchPerson" path="payments.management.searchPerson"/> 
@@ -572,10 +572,20 @@
 		<!-- Price Management -->
 		<action path="/pricesManagement"
 		     	parameter="method"
-		        type="net.sourceforge.fenixedu.presentationTier.Action.masterDegree.administrativeOffice.pricesManagement.DegreePricesManagementDispatchAction"
+		        type="net.sourceforge.fenixedu.presentationTier.Action.degreeAdministrativeOffice.pricesManagement.DegreePricesManagementDispatchAction"
 				scope="request">
 				<forward name="viewPrices" path="prices.management.viewPrices"/>
 		       	<forward name="editPrice" path="prices.management.editPrice"/>
+		</action>
+		
+		<!-- Document Requests Management -->
+		<action path="/documentRequestsManagement"
+		     	parameter="method"
+		        type="net.sourceforge.fenixedu.presentationTier.Action.degreeAdministrativeOffice.serviceRequests.documentRequests.DocumentRequestsManagementDispatchAction"
+				scope="request">
+				<forward name="showOperations" path="documentRequests.management.showOperations"/>
+				<forward name="viewNewRequests" path="documentRequests.management.viewNewRequests"/>
+				<forward name="prepareSearch" path="documentRequests.management.prepareSearch"/>
 		</action>
       
       

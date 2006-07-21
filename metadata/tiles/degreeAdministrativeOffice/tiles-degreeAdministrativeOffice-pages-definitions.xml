@@ -241,6 +241,17 @@
 		<put name="body" value="/degreeAdministrativeOffice/pricesManagement/viewPrices.jsp"/>
 	</definition>
 	
+	<!-- ************* Document Requests Management ************* -->
+	<definition name="documentRequests.management.showOperations" extends="definition.degreeAdministrativeOffice.masterPage">
+		<put name="body" value="/degreeAdministrativeOffice/serviceRequests/documentRequests/showOperations.jsp"/>
+	</definition>
 	
+	<definition name="documentRequests.management.viewNewRequests" extends="definition.degreeAdministrativeOffice.masterPage">
+		<put name="body" value="/degreeAdministrativeOffice/serviceRequests/documentRequests/viewNewRequests.jsp"/>
+	</definition>
+	
+	<definition name="documentRequests.management.prepareSearch" extends="definition.degreeAdministrativeOffice.masterPage">
+		<put name="body" value="/degreeAdministrativeOffice/serviceRequests/documentRequests/prepareSearch.jsp"/>
+	</definition>
 	
 </tiles-definitions>
