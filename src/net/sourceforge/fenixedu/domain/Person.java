@@ -701,6 +701,8 @@ public class Person extends Person_Base {
         getAdvisories().clear();
         removeCms();
         removePais();
+        removeCountryOfBirth();
+        removeCountryOfResidence();
         if (hasUser()) {
             getUser().delete();    
         }
@@ -765,12 +767,15 @@ public class Person extends Person_Base {
         if (getGrantOwner() != null) {
             return false;
         }
+        if(getAccountsCount() > 0){
+            return false;            
+        }
         if (hasAnyPayedGuides()) {
             return false;
         }
         if (hasAnyPayedReceipts()) {
             return false;
-        }
+        }        
         return true;
     }
 
@@ -1481,5 +1486,5 @@ public class Person extends Person_Base {
         
         return externalPerson.getPerson();
     }
-    
+
 }
