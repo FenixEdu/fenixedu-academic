@@ -32,7 +32,7 @@ public class ManageSpaceResponsibilityDA extends FenixDispatchAction {
             FenixServiceException, ExcepcaoPersistencia {
         
         SpaceInformation spaceInformation = getSpaceInformationFromParameter(request);
-        setSpaceAndSpaceInfo(request, spaceInformation);
+        setSpaceInformation(request, spaceInformation);
         setUnitsList(request, spaceInformation);        
         return mapping.findForward("showSpaceResponsibility");
     }
@@ -50,7 +50,7 @@ public class ManageSpaceResponsibilityDA extends FenixDispatchAction {
         }
 
         SpaceInformation spaceInformation = getSpaceInformationFromParameter(request);
-        setSpaceAndSpaceInfo(request, spaceInformation);
+        setSpaceInformation(request, spaceInformation);
         setUnitsList(request, spaceInformation);
         return mapping.findForward("showSpaceResponsibility");
     }
@@ -60,7 +60,7 @@ public class ManageSpaceResponsibilityDA extends FenixDispatchAction {
             FenixServiceException, ExcepcaoPersistencia {
         
         SpaceInformation spaceInformation = getSpaceInformationFromParameter(request);
-        setSpaceAndSpaceInfo(request, spaceInformation);
+        setSpaceInformation(request, spaceInformation);
         SpaceResponsibility spaceResponsibility = getSpaceResponsibility(request);
         request.setAttribute("spaceResponsibility", spaceResponsibility);
         return mapping.findForward("manageResponsabilityInterval");        
@@ -71,13 +71,13 @@ public class ManageSpaceResponsibilityDA extends FenixDispatchAction {
             FenixServiceException, ExcepcaoPersistencia {
     
         SpaceInformation spaceInformation = getSpaceInformationFromParameter(request);
-        setSpaceAndSpaceInfo(request, spaceInformation);
+        setSpaceInformation(request, spaceInformation);
         Unit responsibleUnit = getResponsibleUnit(request);
         request.setAttribute("unit", responsibleUnit); 
         return mapping.findForward("manageResponsabilityInterval");
     }
     
-    private void setSpaceAndSpaceInfo(HttpServletRequest request, final SpaceInformation spaceInformation) {
+    private void setSpaceInformation(HttpServletRequest request, final SpaceInformation spaceInformation) {
         request.setAttribute("selectedSpaceInformation", spaceInformation);
         request.setAttribute("selectedSpace", spaceInformation.getSpace());
     }
@@ -111,6 +111,7 @@ public class ManageSpaceResponsibilityDA extends FenixDispatchAction {
 
     public void setUnitsList(HttpServletRequest request, SpaceInformation spaceInformation) throws FenixFilterException,
             FenixServiceException, ExcepcaoPersistencia {
+        
         StringBuilder buffer = new StringBuilder();
         Unit instituionUnit = UnitUtils.readInstitutionUnit();
         YearMonthDay currentDate = new YearMonthDay();
@@ -129,7 +130,9 @@ public class ManageSpaceResponsibilityDA extends FenixDispatchAction {
 
         List<Unit> subUnits = getUnitSubUnits(parentUnit, currentDate);
         if (!subUnits.isEmpty()) {
-            putImage(parentUnit, buffer, request);
+//            if(parentUnit.hasAnyParentUnits()) {
+                putImage(parentUnit, buffer, request);
+//            }
         }
 
         buffer.append("<a href=\"").append(request.getContextPath()).append("/SpaceManager/").append(
@@ -138,8 +141,12 @@ public class ManageSpaceResponsibilityDA extends FenixDispatchAction {
                 .append("\">").append(parentUnit.getName()).append("</a>").append("</li>");
 
         if (!subUnits.isEmpty()) {
-            buffer.append("<ul class='mvert0' id=\"").append("aa").append(parentUnit.getIdInternal())
-                    .append("\" ").append("style='display:none'>\r\n");
+//            if(parentUnit.hasAnyParentUnits()) {
+                buffer.append("<ul class='mvert0 nobullet' id=\"").append("aa").append(parentUnit.getIdInternal())
+                        .append("\" ").append("style='display:none'>\r\n");
+//            } else {
+//                buffer.append("<ul class='padding1 nobullet'>");
+//            }
             Collections.sort(subUnits, new BeanComparator("name"));
         }
 

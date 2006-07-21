@@ -133,23 +133,19 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 
         StringBuilder buffer = new StringBuilder();
         YearMonthDay currentDate = new YearMonthDay();
-        if (this.getUnit().getType() != null
-                && this.getUnit().getType().equals(PartyTypeEnum.EXTERNAL_INSTITUTION)) {
-            getUnitTreeToChooseParentUnit(buffer, UnitUtils.readExternalInstitutionUnit(), currentDate);
-        } else {
-            getUnitTreeToChooseParentUnit(buffer, UnitUtils.readInstitutionUnit(), currentDate);
+        if (this.getUnit().getType() != null && this.getUnit().getType().equals(PartyTypeEnum.EXTERNAL_INSTITUTION)) {            
+            buffer.append("<ul class='padding1 nobullet'>");
+            getSubUnitsListToChooseParentUnit(UnitUtils.readExternalInstitutionUnit(), buffer, currentDate);
+            closeULTag(buffer);
+        } else {            
+            buffer.append("<ul class='padding1 nobullet'>");
+            getSubUnitsListToChooseParentUnit(UnitUtils.readInstitutionUnit(), buffer, currentDate);
+            closeULTag(buffer);
         }
         return buffer.toString();
     }
-
-    public void getUnitTreeToChooseParentUnit(StringBuilder buffer, Unit parentUnit,
-            YearMonthDay currentDate) throws FenixFilterException, FenixServiceException {
-        buffer.append("<ul class='padding1 nobullet'>");
-        getUnitsListToChooseParentUnit(parentUnit, buffer, currentDate);
-        closeULTag(buffer);
-    }
-
-    private void getUnitsListToChooseParentUnit(Unit parentUnit, StringBuilder buffer,
+    
+    private void getSubUnitsListToChooseParentUnit(Unit parentUnit, StringBuilder buffer,
             YearMonthDay currentDate) throws FenixFilterException, FenixServiceException {
 
         openLITag(buffer);
@@ -178,7 +174,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 
         for (Unit subUnit : subUnits) {
             if (!subUnit.equals(this.getUnit())) {
-                getUnitsListToChooseParentUnit(subUnit, buffer, currentDate);
+                getSubUnitsListToChooseParentUnit(subUnit, buffer, currentDate);
             }
         }
 
@@ -206,27 +202,22 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
             boolean active = this.getListingTypeValueToUnitsHidden().getValue().toString().equals("0");
             if (active) {
                 if (unit.isActive(currentDate) || !getAllSubUnits(active, unit, currentDate).isEmpty()) {
-                    getUnitTree(buffer, unit, getSubUnits(active, unit, currentDate), currentDate,
-                            active);
+                    buffer.append("<ul class='padding1 nobullet'>");
+                    getSubUnitsList(unit, getSubUnits(active, unit, currentDate), buffer, currentDate, active);
+                    buffer.append("</ul>");
                 }
             } else {
                 if (!unit.isActive(currentDate) || !getAllSubUnits(active, unit, currentDate).isEmpty()) {
-                    getUnitTree(buffer, unit, getSubUnits(active, unit, currentDate), currentDate,
-                            active);
+                    buffer.append("<ul class='padding1 nobullet'>");                    
+                    getSubUnitsList(unit, getSubUnits(active, unit, currentDate), buffer, currentDate, active);
+                    buffer.append("</ul>");
                 }
             }
         }
         return buffer.toString();
     }
 
-    public void getUnitTree(StringBuilder buffer, Unit parentUnit, List<Unit> subUnits,
-            YearMonthDay currentDate, boolean active) {
-        buffer.append("<ul class='padding1 nobullet'>");
-        getUnitsList(parentUnit, subUnits, buffer, currentDate, active);
-        buffer.append("</ul>");
-    }
-
-    private void getUnitsList(Unit parentUnit, List<Unit> subUnits, StringBuilder buffer,
+    private void getSubUnitsList(Unit parentUnit, List<Unit> subUnits, StringBuilder buffer,
             YearMonthDay currentDate, boolean active) {
 
         openLITag(buffer);
@@ -246,7 +237,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
         }
 
         for (Unit subUnit : subUnits) {
-            getUnitsList(subUnit, getSubUnits(active, subUnit, currentDate), buffer, currentDate, active);
+            getSubUnitsList(subUnit, getSubUnits(active, subUnit, currentDate), buffer, currentDate, active);
         }
 
         if (!subUnits.isEmpty()) {
@@ -259,18 +250,13 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 
         YearMonthDay currentDate = new YearMonthDay();
         StringBuilder buffer = new StringBuilder();
-        getUnitTreeToChoosePrincipalFunction(buffer, UnitUtils.readInstitutionUnit(), currentDate);
+        buffer.append("<ul class='padding1 nobullet'>");        
+        getSubUnitsListToChoosePrincipalFunction(UnitUtils.readInstitutionUnit(), buffer, currentDate);
+        buffer.append("</ul>");
         return buffer.toString();
     }
 
-    public void getUnitTreeToChoosePrincipalFunction(StringBuilder buffer, Unit parentUnit,
-            YearMonthDay currentDate) throws FenixFilterException, FenixServiceException {
-        buffer.append("<ul class='padding1 nobullet'>");
-        getUnitsListToChoosePrincipalFunction(parentUnit, buffer, currentDate);
-        buffer.append("</ul>");
-    }
-
-    private void getUnitsListToChoosePrincipalFunction(Unit parentUnit, StringBuilder buffer,
+    private void getSubUnitsListToChoosePrincipalFunction(Unit parentUnit, StringBuilder buffer,
             YearMonthDay currentDate) throws FenixFilterException, FenixServiceException {
 
         openLITag(buffer);
@@ -299,7 +285,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
         }
 
         for (Unit subUnit : subUnits) {
-            getUnitsListToChoosePrincipalFunction(subUnit, buffer, currentDate);
+            getSubUnitsListToChoosePrincipalFunction(subUnit, buffer, currentDate);
         }
 
         if (!subUnits.isEmpty()) {
@@ -722,7 +708,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
     }
 
     private void openULTag(Unit parentUnit, StringBuilder buffer) {
-        buffer.append("<ul class='mvert0' id=\"").append("aa").append(parentUnit.getIdInternal())
+        buffer.append("<ul class='mvert0 nobullet' id=\"").append("aa").append(parentUnit.getIdInternal())
                 .append("\" ").append("style='display:none'>\r\n");
     }
 

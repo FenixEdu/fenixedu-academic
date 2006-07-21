@@ -97,7 +97,8 @@
 	</html:link>
 	<br/><br/>
 	
-	<html:img align="middle" src="<%= request.getContextPath() +"/images/clip_image002.jpg"%>" altKey="clip_image002" bundle="IMAGE_RESOURCES" />" />
+	<p><b><bean:message bundle="SPACE_RESOURCES" key="label.bluePrint"/></b></p>
+	<html:img align="middle" src="<%= request.getContextPath() +"/images/clip_image002.jpg"%>" altKey="clip_image002" bundle="IMAGE_RESOURCES" />
 	<br/>
 
 	<logic:equal name="selectedSpaceInformation" property="space.class.name" value="net.sourceforge.fenixedu.domain.space.Room">
