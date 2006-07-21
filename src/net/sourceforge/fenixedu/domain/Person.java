@@ -1173,7 +1173,8 @@ public class Person extends Person_Base {
     
     @Override
     public void setSocialSecurityNumber(String socialSecurityNumber) {
-        if (Party.readByContributorNumber(socialSecurityNumber) != null) {
+        final Party existingContributor = Party.readByContributorNumber(socialSecurityNumber);
+        if (existingContributor != null && existingContributor != this) {
             throw new DomainException("PERSON.createContributor.existing.contributor.number");
         }
         super.setSocialSecurityNumber(socialSecurityNumber);

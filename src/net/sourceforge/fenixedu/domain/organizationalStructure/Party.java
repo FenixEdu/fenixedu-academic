@@ -184,9 +184,12 @@ public abstract class Party extends Party_Base {
     }
 
     public static Party readByContributorNumber(String contributorNumber) {
-        for (final Party party : RootDomainObject.getInstance().getPartys()) {
-            if (party.getSocialSecurityNumber() != null && party.getSocialSecurityNumber().equalsIgnoreCase(contributorNumber)) {
-                return party;
+        
+        if(contributorNumber != null){
+            for (final Party party : RootDomainObject.getInstance().getPartys()) {
+                if (party.getSocialSecurityNumber() != null && party.getSocialSecurityNumber().equalsIgnoreCase(contributorNumber)) {
+                    return party;
+                }
             }
         }
         
