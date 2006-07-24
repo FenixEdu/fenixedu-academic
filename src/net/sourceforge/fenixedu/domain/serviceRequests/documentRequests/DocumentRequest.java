@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.domain.serviceRequests.documentRequests;
 
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 public abstract class DocumentRequest extends DocumentRequest_Base {
@@ -71,6 +72,33 @@ public abstract class DocumentRequest extends DocumentRequest_Base {
 	public boolean isUrgentRequest() {
 		return getUrgentRequest().booleanValue();
 	}
+
+    public static DocumentRequest create(StudentCurricularPlan studentCurricularPlan,
+            DocumentRequestType chosenDocumentRequestType,
+            DocumentPurposeType chosenDocumentPurposeType, String otherPurpose, String notes,
+            Boolean urgentRequest) {
+
+        final DegreeType degreeType = studentCurricularPlan.getDegreeType();
+        final AdministrativeOffice administrativeOffice = AdministrativeOffice
+                .getResponsibleAdministrativeOffice(degreeType);
+
+        switch (chosenDocumentRequestType) {
+        case SCHOOL_REGISTRATION_CERTIFICATE:
+            return new SchoolRegistrationCertificateRequest(studentCurricularPlan, administrativeOffice,
+                    chosenDocumentPurposeType, otherPurpose, 0, urgentRequest);
+        case ENROLMENT_CERTIFICATE:
+            return new EnrolmentCertificateRequest(studentCurricularPlan, administrativeOffice,
+                    chosenDocumentPurposeType, otherPurpose, 0, urgentRequest);
+        case APPROVEMENT_CERTIFICATE:
+            return new ApprovementCertificateRequest(studentCurricularPlan, administrativeOffice,
+                    chosenDocumentPurposeType, otherPurpose, 0, urgentRequest);
+        case DEGREE_FINALIZATION_CERTIFICATE:
+            return new DegreeFinalizationCertificateRequest(studentCurricularPlan, administrativeOffice,
+                    chosenDocumentPurposeType, otherPurpose, 0, urgentRequest, Boolean.FALSE);
+        }
+
+        return null;
+    }
 
 	@Override
 	public void setDocumentRequestType(DocumentRequestType documentRequestType) {
