@@ -6,6 +6,7 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -17,6 +18,7 @@ public class Blueprint extends Blueprint_Base {
     
     private Blueprint() {
         super();
+        setRootDomainObject(RootDomainObject.getInstance());
     }
     
     public Blueprint(Space space, BlueprintFile blueprintFile, Person person) {
