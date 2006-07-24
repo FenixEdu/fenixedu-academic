@@ -4,6 +4,7 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/enum.tld" prefix="e" %>
+<%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
 <h2><bean:message key="title.masterDegree.administraiveOffice.createGuide"/></h2>
 <span class="error"><html:errors/></span>
@@ -34,12 +35,12 @@
        <!-- Requester Type -->
        <tr>
          <td><bean:message key="label.masterDegree.administrativeOffice.requesterType"/>: </td>
-         <td>
+         <td>        
             <e:labelValues id="values" enumeration="net.sourceforge.fenixedu.domain.masterDegree.GuideRequester" bundle="ENUMERATION_RESOURCES"/>
             <html:select bundle="HTMLALT_RESOURCES" altKey="select.requester" property="requester">
             	<html:option key="dropDown.Default" value=""/>
                 <html:options collection="values" property="value" labelProperty="label"/>
-             </html:select>          
+             </html:select> 
          </td>
         </tr>
        <!-- Graduation Type -->
@@ -70,14 +71,13 @@
 		</logic:present >
        <!-- Contributor -->
        <tr>
-         <td><bean:message key="label.masterDegree.administrativeOffice.contributorNumber"/>: </td>
-         <td>
+         <td colspan="2">
      	  <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
-
-	          <html:select bundle="HTMLALT_RESOURCES" altKey="select.contributorList" property="contributorList">
-        	  	<option value="" selected="selected"><bean:message key="label.masterDegree.administrativeOffice.contributor.default"/></option>
-    	        <html:options collection="<%= SessionConstants.CONTRIBUTOR_LIST %>" property="value" labelProperty="label"/>
-	          </html:select>        
+			<fr:edit id="chooseContributorBean" name="chooseContributorBean" schema="createReceiptBean.create">
+				<fr:layout name="tabular">
+					<fr:property name="classes" value="tstyle4" />
+				</fr:layout>
+			</fr:edit>
           	</td>
            </tr> 
 		</table>

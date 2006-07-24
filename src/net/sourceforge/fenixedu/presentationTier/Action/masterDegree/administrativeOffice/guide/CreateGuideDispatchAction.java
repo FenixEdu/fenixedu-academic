@@ -23,6 +23,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingSe
 import net.sourceforge.fenixedu.dataTransferObject.InfoContributor;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGuide;
+import net.sourceforge.fenixedu.dataTransferObject.accounting.CreateReceiptBean;
 import net.sourceforge.fenixedu.domain.DocumentType;
 import net.sourceforge.fenixedu.domain.GraduationType;
 import net.sourceforge.fenixedu.domain.GuideState;
@@ -35,6 +36,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.exceptions.InvalidSituat
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NoActiveStudentCurricularPlanActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
+import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 import net.sourceforge.fenixedu.util.RandomStringGenerator;
 import net.sourceforge.fenixedu.util.SituationName;
 
@@ -52,7 +54,7 @@ import org.apache.struts.util.LabelValueBean;
  * @author Joana Mota (jccm@rnl.ist.utl.pt)
  * 
  * This is the Action to create a Guide
- *  
+ * 
  */
 
 public class CreateGuideDispatchAction extends DispatchAction {
@@ -90,30 +92,14 @@ public class CreateGuideDispatchAction extends DispatchAction {
             session.removeAttribute(SessionConstants.PRINT_PASSWORD);
             session.removeAttribute(SessionConstants.PRINT_INFORMATION);
 
-            //Contributor
+            // Contributor
             String unexistinngContributor = getFromRequest(SessionConstants.UNEXISTING_CONTRIBUTOR,
                     request);
             if (unexistinngContributor != null && unexistinngContributor.length() > 0) {
                 request.setAttribute(SessionConstants.UNEXISTING_CONTRIBUTOR, Boolean.TRUE.toString());
             }
 
-            //Although the chosen contributor doen't exists in the Database,
-            //all contributors in Database are show
-            List result = null;
-            try {
-                result = (List) ServiceManagerServiceFactory.executeService(userView,
-                        "ReadAllContributors", null);
-            } catch (ExistingServiceException e) {
-                throw new ExistingActionException(e);
-            }
-
-            List contributorList = new ArrayList();
-            Iterator iterator = result.iterator();
-            while (iterator.hasNext()) {
-                InfoContributor infoContributor = (InfoContributor) iterator.next();
-                contributorList.add(new LabelValueBean("Nr. " + infoContributor.getContributorNumber() + ", " + infoContributor.getContributorName(), infoContributor.getContributorNumber()));
-            }
-            request.setAttribute(SessionConstants.CONTRIBUTOR_LIST, contributorList);
+            request.setAttribute("chooseContributorBean", new CreateReceiptBean());
 
             return mapping.findForward("PrepareSuccess");
         }
@@ -122,12 +108,13 @@ public class CreateGuideDispatchAction extends DispatchAction {
     }
 
     public ActionForward requesterChosen(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException,
+            FenixFilterException {
 
         HttpSession session = request.getSession(false);
 
         if (session != null) {
-            //session.removeAttribute(SessionConstants.CERTIFICATE_LIST);
+            // session.removeAttribute(SessionConstants.CERTIFICATE_LIST);
 
             IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 
@@ -136,24 +123,11 @@ public class CreateGuideDispatchAction extends DispatchAction {
             // Get the Information
             Integer executionDegreeID = (Integer) createGuideForm.get("executionDegreeID");
 
-            //requester
+            // requester
             String graduationType = (String) createGuideForm.get("graduationType");
             String numberString = (String) createGuideForm.get("number");
             Integer number = new Integer(numberString);
             String requesterType = (String) createGuideForm.get("requester");
-
-            //contributor
-            String contributorNumberString = (String) createGuideForm.get("contributorNumber");
-            String contributorList = (String) createGuideForm.get("contributorList");
-
-            Integer contributorNumber = null;
-            Integer contributorNumberFromList = null;
-
-            if ((contributorNumberString != null) && (contributorNumberString.length() > 0))
-                contributorNumber = new Integer(contributorNumberString);
-
-            if ((contributorList != null) && (contributorList.length() > 0))
-                contributorNumberFromList = new Integer(contributorList);
 
             InfoExecutionDegree infoExecutionDegree = new InfoExecutionDegree();
             try {
@@ -166,7 +140,7 @@ public class CreateGuideDispatchAction extends DispatchAction {
             }
 
             List types = new ArrayList();
-            //types.add(DocumentType.INSURANCE_TYPE);
+            // types.add(DocumentType.INSURANCE_TYPE);
             types.add(DocumentType.CERTIFICATE);
             types.add(DocumentType.ENROLMENT);
             types.add(DocumentType.EMOLUMENT);
@@ -174,7 +148,7 @@ public class CreateGuideDispatchAction extends DispatchAction {
             types.add(DocumentType.CERTIFICATE_OF_DEGREE);
             types.add(DocumentType.ACADEMIC_PROOF_EMOLUMENT);
             types.add(DocumentType.RANK_RECOGNITION_AND_EQUIVALENCE_PROCESS);
-            //types.add(DocumentType.GRATUITY_TYPE);
+            // types.add(DocumentType.GRATUITY_TYPE);
             Object argsAux[] = { GraduationType.MASTER_DEGREE, types };
             List studentGuideList = null;
             try {
@@ -190,19 +164,15 @@ public class CreateGuideDispatchAction extends DispatchAction {
             }
             session.setAttribute(SessionConstants.CERTIFICATE_LIST, studentGuideList);
 
-            String contributorName = (String) createGuideForm.get("contributorName");
-            String contributorAddress = (String) createGuideForm.get("contributorAddress");
-
-            Integer contributorNumberToRead = null;
-            if (contributorNumber != null)
-                contributorNumberToRead = contributorNumber;
-            if (contributorNumberFromList != null)
-                contributorNumberToRead = contributorNumberFromList;
+            final CreateReceiptBean chooseContributorBean = (CreateReceiptBean) RenderUtils.getViewState(
+                    "chooseContributorBean").getMetaObject().getObject();
+            if(chooseContributorBean.getContributorParty() == null){
+                throw new ExistingActionException("error.masterDegree.administrativeOffice.nonExistingContributor");
+            }
 
             InfoGuide infoGuide = null;
             try {
-                Object args[] = { graduationType, infoExecutionDegree, number, requesterType,
-                        contributorNumberToRead, contributorName, contributorAddress };
+                Object args[] = { graduationType, infoExecutionDegree, number, requesterType, chooseContributorBean.getContributorParty() };
 
                 infoGuide = (InfoGuide) ServiceManagerServiceFactory.executeService(userView,
                         "PrepareCreateGuide", args);
@@ -272,7 +242,7 @@ public class CreateGuideDispatchAction extends DispatchAction {
         session.removeAttribute(SessionConstants.PRINT_PASSWORD);
         session.removeAttribute(SessionConstants.PRINT_INFORMATION);
 
-        //Get the information
+        // Get the information
         String othersRemarks = (String) createGuideForm.get("othersRemarks");
         String othersPriceString = (String) createGuideForm.get("othersPrice");
         String remarks = (String) createGuideForm.get("remarks");
@@ -297,13 +267,12 @@ public class CreateGuideDispatchAction extends DispatchAction {
             throw new InvalidInformationInFormActionException(new Throwable());
         }
 
-        //			session.setAttribute(SessionConstants.PRINT_PASSWORD, Boolean.FALSE);
+        // session.setAttribute(SessionConstants.PRINT_PASSWORD, Boolean.FALSE);
 
         // Check if the Guide will have a "Payed" situation and if the payment
         // type has been chosen
 
-        if ((guideSituationString.equals(GuideState.PAYED))
-                && (paymentType.equals(""))) {
+        if ((guideSituationString.equals(GuideState.PAYED)) && (paymentType.equals(""))) {
             ActionError actionError = new ActionError("error.paymentTypeRequired");
             ActionErrors actionErrors = new ActionErrors();
             actionErrors.add("Unknown", actionError);
@@ -326,7 +295,7 @@ public class CreateGuideDispatchAction extends DispatchAction {
             object = "Anulada";
             throw new InvalidSituationActionException(object);
         } catch (NonExistingContributorServiceException e) {
-            //session.setAttribute(SessionConstants.UNEXISTING_CONTRIBUTOR,
+            // session.setAttribute(SessionConstants.UNEXISTING_CONTRIBUTOR,
             // Boolean.TRUE);
             request.setAttribute(SessionConstants.UNEXISTING_CONTRIBUTOR, Boolean.TRUE.toString());
             return mapping.getInputForward();
@@ -349,7 +318,8 @@ public class CreateGuideDispatchAction extends DispatchAction {
 
                 try {
                     Object args[] = { newInfoGuide.getInfoExecutionDegree().getIdInternal(),
-                            newInfoGuide.getInfoPerson().getIdInternal(), new SituationName(SituationName.PENDENTE_STRING) };
+                            newInfoGuide.getInfoPerson().getIdInternal(),
+                            new SituationName(SituationName.PENDENTE_STRING) };
                     ServiceManagerServiceFactory.executeService(userView, "CreateCandidateSituation",
                             args);
                 } catch (FenixServiceException e) {

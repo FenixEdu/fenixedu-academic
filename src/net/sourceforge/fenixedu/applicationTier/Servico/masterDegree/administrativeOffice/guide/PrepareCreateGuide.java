@@ -10,7 +10,6 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingContributorServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoContributor;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
@@ -23,7 +22,6 @@ import net.sourceforge.fenixedu.domain.DocumentType;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.GraduationType;
 import net.sourceforge.fenixedu.domain.MasterDegreeCandidate;
-import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Price;
 import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
@@ -42,27 +40,10 @@ import org.apache.commons.collections.Predicate;
 public class PrepareCreateGuide extends Service {
 
     public InfoGuide run(String graduationType, InfoExecutionDegree infoExecutionDegree, Integer number,
-            String requesterType, Integer contributorNumber, String contributorName,
-            String contributorAddress) throws FenixServiceException, ExcepcaoPersistencia {
+            String requesterType, Party contributorParty) throws FenixServiceException, ExcepcaoPersistencia {
 
         MasterDegreeCandidate masterDegreeCandidate = null;
         InfoGuide infoGuide = new InfoGuideWithPersonAndExecutionDegreeAndContributor();
-
-        Party contributor = Party.readByContributorNumber(contributorNumber.toString());
-
-        if ((contributor == null)
-                && ((contributorAddress == null) || (contributorAddress.length() == 0)
-                        || (contributorName.length() == 0) || (contributorName == null))) {
-            throw new NonExistingContributorServiceException();
-        }
-
-        if ((contributor == null) && (contributorAddress != null) && (contributorAddress.length() != 0)
-                && (contributorName.length() != 0) && (contributorName != null)) {
-
-            // Create the Contributor
-            contributor = Person.createContributor(contributorName, contributorNumber.toString(), contributorAddress,
-                    null, null, null, null, null, null);
-        }
 
         Integer year = null;
         Calendar calendar = Calendar.getInstance();
@@ -96,7 +77,7 @@ public class PrepareCreateGuide extends Service {
                 throw new FenixServiceException("Unkown Application Price");
             }
 
-            infoGuide.setInfoContributor(InfoContributor.newInfoFromDomain(contributor));
+            infoGuide.setInfoContributor(InfoContributor.newInfoFromDomain(contributorParty));
             infoGuide.setInfoPerson(InfoPerson.newInfoFromDomain(masterDegreeCandidate.getPerson()));
             infoGuide.setYear(year);
             infoGuide.setTotal(price.getPrice());
@@ -150,7 +131,7 @@ public class PrepareCreateGuide extends Service {
             if (student == null)
                 throw new NonExistingServiceException("O Aluno", null);
 
-            infoGuide.setInfoContributor(InfoContributor.newInfoFromDomain(contributor));
+            infoGuide.setInfoContributor(InfoContributor.newInfoFromDomain(contributorParty));
             infoGuide.setInfoPerson(InfoPerson.newInfoFromDomain(student.getPerson()));
             infoGuide.setYear(year);
 
