@@ -7,23 +7,25 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 public class SchoolRegistrationCertificateRequest extends SchoolRegistrationCertificateRequest_Base {
 
-	private SchoolRegistrationCertificateRequest() {
-		super();
-	}
+    private SchoolRegistrationCertificateRequest() {
+        super();
+    }
 
-	public SchoolRegistrationCertificateRequest(StudentCurricularPlan studentCurricularPlan,
-			AdministrativeOffice administrativeOffice, DocumentPurposeType documentPurposeType,
-			String otherDocumentPurposeTypeDescription, Boolean urgentRequest, ExecutionYear executionYear) {
+    public SchoolRegistrationCertificateRequest(StudentCurricularPlan studentCurricularPlan,
+            AdministrativeOffice administrativeOffice, DocumentPurposeType documentPurposeType,
+            String otherDocumentPurposeTypeDescription, Boolean urgentRequest,
+            ExecutionYear executionYear) {
 
-		this();
+        this();
 
         init(studentCurricularPlan, administrativeOffice, documentPurposeType,
                 otherDocumentPurposeTypeDescription, urgentRequest, executionYear);
-	}
-    
+    }
+
     protected void init(StudentCurricularPlan studentCurricularPlan,
             AdministrativeOffice administrativeOffice, DocumentPurposeType documentPurposeType,
-            String otherDocumentPurposeTypeDescription, Boolean urgentRequest, ExecutionYear executionYear) {
+            String otherDocumentPurposeTypeDescription, Boolean urgentRequest,
+            ExecutionYear executionYear) {
 
         init(studentCurricularPlan, administrativeOffice, DocumentRequestType.ENROLMENT_CERTIFICATE,
                 documentPurposeType, otherDocumentPurposeTypeDescription, urgentRequest);
@@ -36,6 +38,10 @@ public class SchoolRegistrationCertificateRequest extends SchoolRegistrationCert
         if (executionYear == null) {
             throw new DomainException(
                     "error.serviceRequests.documentRequests.SchoolRegistrationCertificateRequest.executionYear.cannot.be.null");
+        } else if (!getStudentCurricularPlan().getNotClosedExecutionYearsSinceSCPStart().contains(
+                executionYear)) {
+            throw new DomainException(
+                    "error.serviceRequests.documentRequests.SchoolRegistrationCertificateRequest.executionYear.before.studentCurricularPlan.start");
         }
     }
 
