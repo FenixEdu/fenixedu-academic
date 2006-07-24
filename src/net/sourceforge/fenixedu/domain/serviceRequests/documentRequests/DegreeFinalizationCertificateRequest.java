@@ -12,31 +12,35 @@ public class DegreeFinalizationCertificateRequest extends DegreeFinalizationCert
 
 	public DegreeFinalizationCertificateRequest(StudentCurricularPlan studentCurricularPlan,
 			AdministrativeOffice administrativeOffice, DocumentPurposeType documentPurposeType,
-			String otherDocumentPurposeTypeDescription, Integer numberOfPages, Boolean urgentRequest,
-			Boolean average) {
+			String otherDocumentPurposeTypeDescription, Boolean urgentRequest,
+			Boolean average, Boolean detailed) {
 		this();
 		init(studentCurricularPlan, administrativeOffice, documentPurposeType,
-				otherDocumentPurposeTypeDescription, numberOfPages, urgentRequest, average);
+				otherDocumentPurposeTypeDescription, urgentRequest, average, detailed);
 	}
 
 	protected void init(StudentCurricularPlan studentCurricularPlan,
 			AdministrativeOffice administrativeOffice, DocumentPurposeType documentPurposeType,
-			String otherDocumentPurposeTypeDescription, Integer numberOfPages, Boolean urgentRequest,
-			Boolean average) {
+			String otherDocumentPurposeTypeDescription, Boolean urgentRequest,
+			Boolean average, Boolean detailed) {
 		init(studentCurricularPlan, administrativeOffice,
 				DocumentRequestType.DEGREE_FINALIZATION_CERTIFICATE, documentPurposeType,
-				otherDocumentPurposeTypeDescription, numberOfPages, urgentRequest);
+				otherDocumentPurposeTypeDescription, urgentRequest);
 
-		checkParameters(average);
+		checkParameters(average, detailed);
 		super.setAverage(average);
-
+        super.setDetailed(detailed);
 	}
 
-	private void checkParameters(Boolean average) {
-		if (average == null) {
-			throw new DomainException(
-					"error.serviceRequests.documentRequests.DegreeFinalizationCertificateRequest.average.cannot.be.null");
-		}
+	private void checkParameters(Boolean average, Boolean detailed) {
+        if (average == null) {
+            throw new DomainException(
+                    "error.serviceRequests.documentRequests.DegreeFinalizationCertificateRequest.average.cannot.be.null");
+        }
+        if (detailed == null) {
+            throw new DomainException(
+                    "error.serviceRequests.documentRequests.DegreeFinalizationCertificateRequest.detailed.cannot.be.null");
+        }
 	}
 
 	@Override

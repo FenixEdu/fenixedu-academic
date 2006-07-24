@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.domain.serviceRequests.documentRequests;
 
 import net.sourceforge.fenixedu.domain.Employee;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
@@ -16,15 +17,15 @@ public abstract class DocumentRequest extends DocumentRequest_Base {
     public DocumentRequest(StudentCurricularPlan studentCurricularPlan,
             AdministrativeOffice administrativeOffice, DocumentRequestType documentRequestType,
             DocumentPurposeType documentPurposeType, String otherDocumentPurposeTypeDescription,
-            Integer numberOfPages, Boolean urgentRequest) {
+            Boolean urgentRequest) {
         this();
         init(studentCurricularPlan, administrativeOffice, documentRequestType, documentPurposeType,
-                otherDocumentPurposeTypeDescription, numberOfPages, urgentRequest);
+                otherDocumentPurposeTypeDescription, urgentRequest);
     }
 
     private void checkParameters(DocumentRequestType documentRequestType,
             DocumentPurposeType documentPurposeType, String otherDocumentPurposeTypeDescription,
-            Integer numberOfPages, Boolean urgentRequest) {
+            Boolean urgentRequest) {
 
         if (documentRequestType == null) {
             throw new DomainException(
@@ -42,11 +43,6 @@ public abstract class DocumentRequest extends DocumentRequest_Base {
                     "error.serviceRequests.documentRequests.DocumentRequest.otherDocumentPurposeTypeDescription.cannot.be.null.for.other.purpose.type");
         }
 
-        if (numberOfPages == null) {
-            throw new DomainException(
-                    "error.serviceRequests.documentRequests.DocumentRequest.numberOfPages.cannot.be.null");
-        }
-
         if (urgentRequest == null) {
             throw new DomainException(
                     "error.serviceRequests.documentRequests.DocumentRequest.urgentRequest.cannot.be.null");
@@ -57,17 +53,16 @@ public abstract class DocumentRequest extends DocumentRequest_Base {
     protected void init(StudentCurricularPlan studentCurricularPlan,
             AdministrativeOffice administrativeOffice, DocumentRequestType documentRequestType,
             DocumentPurposeType documentPurposeType, String otherDocumentPurposeTypeDescription,
-            Integer numberOfPages, Boolean urgentRequest) {
+            Boolean urgentRequest) {
 
         init(studentCurricularPlan, administrativeOffice);
 
         checkParameters(documentRequestType, documentPurposeType, otherDocumentPurposeTypeDescription,
-                numberOfPages, urgentRequest);
+                urgentRequest);
 
         super.setDocumentRequestType(documentRequestType);
         super.setDocumentPurposeType(documentPurposeType);
         super.setOtherDocumentPurposeTypeDescription(otherDocumentPurposeTypeDescription);
-        super.setNumberOfPages(numberOfPages);
         super.setUrgentRequest(urgentRequest);
     }
 
@@ -78,7 +73,7 @@ public abstract class DocumentRequest extends DocumentRequest_Base {
     public static DocumentRequest create(StudentCurricularPlan studentCurricularPlan,
             DocumentRequestType chosenDocumentRequestType,
             DocumentPurposeType chosenDocumentPurposeType, String otherPurpose, String notes,
-            Boolean urgentRequest) {
+            Boolean urgentRequest, Boolean average, Boolean detailed, ExecutionYear executionYear) {
 
         final DegreeType degreeType = studentCurricularPlan.getDegreeType();
         final AdministrativeOffice administrativeOffice = AdministrativeOffice
@@ -87,16 +82,16 @@ public abstract class DocumentRequest extends DocumentRequest_Base {
         switch (chosenDocumentRequestType) {
         case SCHOOL_REGISTRATION_CERTIFICATE:
             return new SchoolRegistrationCertificateRequest(studentCurricularPlan, administrativeOffice,
-                    chosenDocumentPurposeType, otherPurpose, 0, urgentRequest);
+                    chosenDocumentPurposeType, otherPurpose, urgentRequest, executionYear);
         case ENROLMENT_CERTIFICATE:
             return new EnrolmentCertificateRequest(studentCurricularPlan, administrativeOffice,
-                    chosenDocumentPurposeType, otherPurpose, 0, urgentRequest);
+                    chosenDocumentPurposeType, otherPurpose, urgentRequest, detailed, executionYear);
         case APPROVEMENT_CERTIFICATE:
             return new ApprovementCertificateRequest(studentCurricularPlan, administrativeOffice,
-                    chosenDocumentPurposeType, otherPurpose, 0, urgentRequest);
+                    chosenDocumentPurposeType, otherPurpose, urgentRequest);
         case DEGREE_FINALIZATION_CERTIFICATE:
             return new DegreeFinalizationCertificateRequest(studentCurricularPlan, administrativeOffice,
-                    chosenDocumentPurposeType, otherPurpose, 0, urgentRequest, Boolean.FALSE);
+                    chosenDocumentPurposeType, otherPurpose, urgentRequest, average, detailed);
         }
 
         return null;

@@ -11,12 +11,12 @@ public class ApprovementCertificateRequest extends ApprovementCertificateRequest
 
 	public ApprovementCertificateRequest(StudentCurricularPlan studentCurricularPlan,
 			AdministrativeOffice administrativeOffice, DocumentPurposeType documentPurposeType,
-			String otherDocumentPurposeTypeDescription, Integer numberOfPages, Boolean urgentRequest) {
+			String otherDocumentPurposeTypeDescription, Boolean urgentRequest) {
 
 		this();
 
 		init(studentCurricularPlan, administrativeOffice, DocumentRequestType.APPROVEMENT_CERTIFICATE,
-				documentPurposeType, otherDocumentPurposeTypeDescription, numberOfPages, urgentRequest);
+				documentPurposeType, otherDocumentPurposeTypeDescription, urgentRequest);
 	}
 
 }
