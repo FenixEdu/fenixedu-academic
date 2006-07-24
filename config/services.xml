@@ -10195,4 +10195,13 @@
 			<chain name="DegreeOrMasterDegreeAdmininstrativeOfficeChain" />
 		</filterChains>
 	</service>	
+	<service>
+		<name>EditDocumentRequest</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.serviceRequests.documentRequests.EditDocumentRequest</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		<filterChains>
+			<chain name="DegreeOrMasterDegreeAdmininstrativeOfficeChain" />
+		</filterChains>
+	</service>
 </serviceDefinitions>

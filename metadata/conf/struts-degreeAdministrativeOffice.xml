@@ -202,7 +202,7 @@
 			<form-property name="documentType" type="java.lang.String" />
 			<form-property name="documentNumber" type="java.lang.String" />
 	    </form-bean>
-
+	    		
 		<!-- Document Requests Management -->	    
    		<form-bean name="documentRequestsManagementForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
 			<form-property name="method" type="java.lang.String" />
@@ -210,6 +210,7 @@
 			<form-property name="requestSituationType" type="java.lang.String" />
 			<form-property name="isUrgent" type="java.lang.Boolean" />
 			<form-property name="studentNumber" type="java.lang.String" />
+			<form-property name="documentRequestId" type="java.lang.String" />
 	    </form-bean>
 
 	</form-beans>
@@ -593,9 +594,11 @@
 		        type="net.sourceforge.fenixedu.presentationTier.Action.degreeAdministrativeOffice.serviceRequests.documentRequests.DocumentRequestsManagementDispatchAction"
 				scope="request">
 				<forward name="showOperations" path="documentRequests.management.showOperations"/>
-				<forward name="viewNewRequests" path="documentRequests.management.viewNewRequests"/>
+				<forward name="viewNewDocumentRequests" path="documentRequests.management.viewNewDocumentRequests"/>
 				<forward name="prepareSearch" path="documentRequests.management.prepareSearch"/>
 				<forward name="showDocumentRequests" path="documentRequests.management.showDocumentRequests"/>
+				<forward name="viewDocumentRequest" path="documentRequests.management.viewDocumentRequest"/>
+				<forward name="editDocumentRequest" path="documentRequests.management.editDocumentRequest"/>
 		</action>
       
       

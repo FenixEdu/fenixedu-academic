@@ -108,4 +108,9 @@ public class AcademicServiceRequestSituation extends AcademicServiceRequestSitua
                 "error.serviceRequests.AcademicServiceRequestSituation.cannot.modify.justification");
     }
 
+    void edit(Employee employee, String justification) {
+        super.setEmployee(employee);
+        super.setJustification(justification);
+    }
+
 }

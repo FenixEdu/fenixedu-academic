@@ -246,8 +246,8 @@
 		<put name="body" value="/degreeAdministrativeOffice/serviceRequests/documentRequests/showOperations.jsp"/>
 	</definition>
 	
-	<definition name="documentRequests.management.viewNewRequests" extends="definition.degreeAdministrativeOffice.masterPage">
-		<put name="body" value="/degreeAdministrativeOffice/serviceRequests/documentRequests/viewNewRequests.jsp"/>
+	<definition name="documentRequests.management.viewNewDocumentRequests" extends="definition.degreeAdministrativeOffice.masterPage">
+		<put name="body" value="/degreeAdministrativeOffice/serviceRequests/documentRequests/viewNewDocumentRequests.jsp"/>
 	</definition>
 	
 	<definition name="documentRequests.management.prepareSearch" extends="definition.degreeAdministrativeOffice.masterPage">
@@ -256,6 +256,14 @@
 	
 	<definition name="documentRequests.management.showDocumentRequests" extends="definition.degreeAdministrativeOffice.masterPage">
 		<put name="body" value="/degreeAdministrativeOffice/serviceRequests/documentRequests/showDocumentRequests.jsp"/>
+	</definition>
+
+	<definition name="documentRequests.management.viewDocumentRequest" extends="definition.degreeAdministrativeOffice.masterPage">
+		<put name="body" value="/degreeAdministrativeOffice/serviceRequests/documentRequests/viewDocumentRequest.jsp"/>
+	</definition>
+	
+	<definition name="documentRequests.management.editDocumentRequest" extends="definition.degreeAdministrativeOffice.masterPage">
+		<put name="body" value="/degreeAdministrativeOffice/serviceRequests/documentRequests/editDocumentRequest.jsp"/>
 	</definition>
 	
 </tiles-definitions>
