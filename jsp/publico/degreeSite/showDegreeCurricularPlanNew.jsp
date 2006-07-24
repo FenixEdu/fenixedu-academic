@@ -81,6 +81,9 @@
 						<html:options property="value" labelProperty="label" collection="<%= SessionConstants.LABELLIST_EXECUTIONPERIOD%>"/>
 						<bean:define id="indiceID" name="chooseContextDegreeForm" property="indice"/>
 					</html:select>
+					<html:submit styleId="javascriptButtonID" styleClass="altJavaScriptSubmitButton" bundle="HTMLALT_RESOURCES" altKey="submit.submit">
+						<bean:message key="button.submit"/>
+					</html:submit>
 				</td>
 			</tr>
 			<tr>
@@ -88,7 +91,10 @@
 				<td>
 					<html:select bundle="HTMLALT_RESOURCES" altKey="select.curYear" property="curYear" size="1" onchange="this.form.submit();">
 						<html:options collection="curricularYearList" property="value" labelProperty="label"/>
-					</html:select>				
+					</html:select>			
+					<html:submit styleId="javascriptButtonID2" styleClass="altJavaScriptSubmitButton" bundle="HTMLALT_RESOURCES" altKey="submit.submit">
+						<bean:message key="button.submit"/>
+					</html:submit>	
 				</td>
 			</tr>
 			<tr>

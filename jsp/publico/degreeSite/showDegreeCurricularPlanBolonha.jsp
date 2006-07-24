@@ -11,6 +11,7 @@
 	<f:loadBundle basename="resources/PublicDegreeInformation" var="publicDegreeInfoBundle"/>
 	<f:loadBundle basename="resources/BolonhaManagerResources" var="bolonhaBundle"/>
 	<f:loadBundle basename="resources/EnumerationResources" var="enumerationBundle"/>
+	<f:loadBundle basename="resources/HtmlAltResources" var="htmlAltBundle"/>
 	
 	<h:outputLink value="#{globalBundle['institution.url']}" >
 		<h:outputText value="#{globalBundle['institution.name.abbreviation']}"/>
@@ -66,6 +67,7 @@
 					<h:selectOneMenu value="#{CurricularCourseManagement.executionYearID}" onchange="this.form.submit();">
 						<f:selectItems value="#{CurricularCourseManagement.executionYearItems}" />
 					</h:selectOneMenu>
+					<h:outputText value="<input value='#{htmlAltBundle['submit.sumbit']}' id='javascriptButtonID' class='altJavaScriptSubmitButton' alt='#{htmlAltBundle['submit.sumbit']}' type='submit'>" escape="false"/>
 					<h:outputText value="</p>" escape="false"/>
 					<h:panelGroup rendered="#{!empty CurricularCourseManagement.degreeCurricularPlan.degreeStructure.childs}">
 						<h:outputText value="<p>#{bolonhaBundle['view.structure.organized.by']}: " escape="false"/>

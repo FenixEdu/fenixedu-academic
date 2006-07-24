@@ -23,6 +23,9 @@
 									  labelProperty="year" 
 									  collection="infoExecutionYears" />
 					</html:select>
+					<html:submit styleId="javascriptButtonID" styleClass="altJavaScriptSubmitButton" bundle="HTMLALT_RESOURCES" altKey="submit.submit">
+						<bean:message key="button.submit"/>
+					</html:submit>
 				</html:form>
 			</td>
 		</tr>
@@ -43,6 +46,9 @@
 									  labelProperty="infoDegreeCurricularPlan.infoDegree.nome"
 									  collection="infoExecutionDegrees" />
 					</html:select>
+					<html:submit styleId="javascriptButtonID2" styleClass="altJavaScriptSubmitButton" bundle="HTMLALT_RESOURCES" altKey="submit.submit">
+						<bean:message key="button.submit"/>
+					</html:submit>
 				</html:form>
 			</td>
 		</tr>
@@ -76,6 +82,9 @@
 										  labelProperty="name"
 										  collection="branches" />
 						</html:select>
+						<html:submit styleId="javascriptButtonID3" styleClass="altJavaScriptSubmitButton" bundle="HTMLALT_RESOURCES" altKey="submit.submit">
+							<bean:message key="button.submit"/>
+						</html:submit>
 					</html:form>
 				</td>
 			</tr>
