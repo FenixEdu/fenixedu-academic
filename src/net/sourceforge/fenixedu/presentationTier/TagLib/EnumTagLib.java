@@ -6,123 +6,139 @@ package net.sourceforge.fenixedu.presentationTier.TagLib;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
 
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.BodyTagSupport;
 
 import org.apache.struts.Globals;
+import org.apache.struts.taglib.TagUtils;
 import org.apache.struts.util.LabelValueBean;
 import org.apache.struts.util.MessageResources;
-import org.apache.struts.util.RequestUtils;
 
 public class EnumTagLib extends BodyTagSupport {
 
-    private final static Map<String, Map<String, Collection<LabelValueBean>>> labelValueBeansMap = new HashMap<String, Map<String, Collection<LabelValueBean>>>();
+	private String id;
 
-    private String id;
+	private String enumeration;
 
-    private String enumeration;
+	private String locale = Globals.LOCALE_KEY;
 
-    private String locale = Globals.LOCALE_KEY;
+	private String bundle;
 
-    private String bundle;
+	private String excludedFields;
 
-    private String excludedFields;
+	private String includedFields;
 
-    private String includedFields;
+	protected static MessageResources messages = MessageResources
+			.getMessageResources("org.apache.struts.taglib.bean.LocalStrings");
 
-    protected static MessageResources messages = MessageResources
-            .getMessageResources("org.apache.struts.taglib.bean.LocalStrings");
+	public int doStartTag() throws JspException {
+		Collection<LabelValueBean> labelValueBeans = getLabelValues();
+		pageContext.getRequest().setAttribute(id, labelValueBeans);
 
-    public int doStartTag() throws JspException {
-        Collection<LabelValueBean> labelValueBeans = getLabelValues();
-        pageContext.getRequest().setAttribute(id, labelValueBeans);
-        // pageContext.getRequest().setAttribute(id, new ArrayList());
+		return super.doStartTag();
+	}
 
-        return super.doStartTag();
-    }
+	public void setBundle(String bundle) {
+		this.bundle = bundle;
+	}
 
-    public void setBundle(String bundle) {
-        this.bundle = bundle;
-    }
+	public void setEnumeration(String enumeration) {
+		this.enumeration = enumeration;
+	}
 
-    public void setEnumeration(String enumeration) {
-        this.enumeration = enumeration;
-    }
+	public void setId(String id) {
+		this.id = id;
+	}
 
-    public void setId(String id) {
-        this.id = id;
-    }
+	public void setLocale(String locale) {
+		this.locale = locale;
+	}
 
-    public void setLocale(String locale) {
-        this.locale = locale;
-    }
+	public void setExcludedFields(String excludedFields) {
+		this.excludedFields = excludedFields;
+	}
 
-    public void setExcludedFields(String excludedFields) {
-        this.excludedFields = excludedFields;
-    }
+	public void setIncludedFields(String includedFields) {
+		this.includedFields = includedFields;
+	}
 
-    public void setIncludedFields(String includedFields) {
-        this.includedFields = includedFields; 
-    }
+	public Collection<LabelValueBean> getLabelValues() {
 
-    public Collection<LabelValueBean> getLabelValues() {
+		return getLabelValuesLookup();
+	}
 
-        return getLabelValuesLookup();
-    }
+	public Collection<LabelValueBean> getLabelValuesLookup() {
+		try {
+			Class clazz = Class.forName(this.enumeration);
+			if (!clazz.isEnum()) {
+				throw new IllegalArgumentException("Expected an enum type, got: " + this.enumeration);
+			}
 
-    public Collection<LabelValueBean> getLabelValuesLookup() {
-        try {
-            Class clazz = Class.forName(this.enumeration);
-            if (!clazz.isEnum()) {
-                throw new IllegalArgumentException("Expected an enum type, got: " + this.enumeration);
-            }
+			if (this.excludedFields != null && this.includedFields != null) {
+				throw new IllegalArgumentException(
+						"includedFields and excludedFields are both not empty");
+			}
 
-            if (this.excludedFields != null && this.includedFields != null) {
-                throw new IllegalArgumentException(
-                        "includedFields and excludedFields are both not empty");
-            }
+			final Method method = clazz.getMethod("values", (Class[]) null);
+			final Object[] objects = (Object[]) method.invoke(clazz, (Object[]) null);
+			final Collection<LabelValueBean> labelValueBeans = new ArrayList<LabelValueBean>(
+					objects.length);
 
-            final Method method = clazz.getMethod("values", (Class[]) null);
-            final Object[] objects = (Object[]) method.invoke(clazz, (Object[]) null);
-            final Collection<LabelValueBean> labelValueBeans = new ArrayList<LabelValueBean>(
-                    objects.length);
+			final Set<String> excludedFieldsNames = new HashSet();
+			fillSetWithSplittedString(excludedFieldsNames, this.excludedFields);
+			final Set<String> includedFieldsNames = new HashSet();
+			fillSetWithSplittedString(includedFieldsNames, this.includedFields);
 
-            final Set<String> excludedFieldsNames = new HashSet();
-            fillSetWithSplittedString(excludedFieldsNames, this.excludedFields);
-            final Set<String> includedFieldsNames = new HashSet();
-            fillSetWithSplittedString(includedFieldsNames, this.includedFields);
+			for (int i = 0; i < objects.length; i++) {
+				String value = objects[i].toString();
 
-            for (int i = 0; i < objects.length; i++) {
-                String value = objects[i].toString();
+				if ((!excludedFieldsNames.isEmpty() && !excludedFieldsNames.contains(value))
+						|| (!includedFieldsNames.isEmpty() && includedFieldsNames.contains(value))
+						|| (includedFieldsNames.isEmpty() && excludedFieldsNames.isEmpty())) {
+					String message = getMessage(clazz, value);
+					labelValueBeans.add(new LabelValueBean(message, value));
+				}
+			}
 
-                if ((!excludedFieldsNames.isEmpty() && !excludedFieldsNames.contains(value))
-                        || (!includedFieldsNames.isEmpty() && includedFieldsNames.contains(value)) || (includedFieldsNames
-                                .isEmpty() && excludedFieldsNames.isEmpty())) {
-                    String message = RequestUtils.message(pageContext, this.bundle, this.locale, value,
-                            null);
-                    labelValueBeans.add(new LabelValueBean(message, value));
-                }
-            }
+			return labelValueBeans;
+		} catch (Exception e) {
+			throw new IllegalArgumentException("Expected an enum type, got: " + this.enumeration);
+		}
 
-            return labelValueBeans;
-        } catch (Exception e) {
-            throw new IllegalArgumentException("Expected an enum type, got: " + this.enumeration);
-        }
+	}
 
-    }
+	private String getMessage(Class clazz, String key) throws JspException {
+		String message = null;
 
-    private void fillSetWithSplittedString(final Set<String> fieldsNamesSet, String fieldNamesString) {
-        if (fieldNamesString != null && fieldNamesString.length() > 0) {
-            String[] fieldsNamesArray = fieldNamesString.split(",");
-            for (String fieldName : fieldsNamesArray) {
-                fieldsNamesSet.add(fieldName);
-            }
-        }
-    }
+		message = getMessageFromBundle(clazz.getName() + "." + key);
+
+		if (message == null) {
+			message = getMessageFromBundle(clazz.getSimpleName() + "." + key);
+		}
+
+		if (message == null) {
+			message = getMessageFromBundle(key);
+		}
+
+		return (message != null) ? message : key;
+	}
+
+	private String getMessageFromBundle(String key) throws JspException {
+		return (TagUtils.getInstance().present(this.pageContext, this.bundle, this.locale, key)) ? TagUtils
+				.getInstance().message(this.pageContext, this.bundle, this.locale, key)
+				: null;
+	}
+
+	private void fillSetWithSplittedString(final Set<String> fieldsNamesSet, String fieldNamesString) {
+		if (fieldNamesString != null && fieldNamesString.length() > 0) {
+			String[] fieldsNamesArray = fieldNamesString.split(",");
+			for (String fieldName : fieldsNamesArray) {
+				fieldsNamesSet.add(fieldName);
+			}
+		}
+	}
 
 }
