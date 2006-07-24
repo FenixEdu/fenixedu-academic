@@ -30,7 +30,10 @@
 					<html:select bundle="HTMLALT_RESOURCES" altKey="select.bySummaryType" property="bySummaryType" onchange="this.form.method.value='summaries';this.form.page.value=0;this.form.submit();">
 						<html:option  value="0" key="label.showBy.all" />
 						<html:options collection="lessonTypes" property="name" labelProperty="fullNameTipoAula"/>
-					</html:select>		
+					</html:select>
+					<html:submit styleId="javascriptButtonID" styleClass="altJavaScriptSubmitButton" bundle="HTMLALT_RESOURCES" altKey="submit.submit">
+						<bean:message key="button.submit"/>
+					</html:submit>
 				</td>	
 			</tr>
 			<tr>
@@ -40,6 +43,9 @@
 						<html:option  value="0" key="label.showBy.all" />
 						<html:options collection="shifts" property="idInternal" labelProperty="lessons"/>
 					</html:select>		
+					<html:submit styleId="javascriptButtonID2" styleClass="altJavaScriptSubmitButton" bundle="HTMLALT_RESOURCES" altKey="submit.submit">
+						<bean:message key="button.submit"/>
+					</html:submit>
 				</td>
 			</tr>
 			<tr>
@@ -50,6 +56,9 @@
 						<html:options collection="professorships" property="idInternal" labelProperty="infoTeacher.infoPerson.nome"/>
 						<html:option  value="-1" key="label.others" />
 					</html:select>			
+					<html:submit styleId="javascriptButtonID3" styleClass="altJavaScriptSubmitButton" bundle="HTMLALT_RESOURCES" altKey="submit.submit">
+						<bean:message key="button.submit"/>
+					</html:submit>
 				</td>
 			</tr>
 		</table>	

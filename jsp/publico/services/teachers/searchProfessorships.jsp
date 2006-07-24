@@ -29,6 +29,10 @@
 			<html:option value="0">Todos</html:option>
 			<html:option value="1">Apenas Respons&aacute;veis</html:option>
 		</html:select>
+		&nbsp;&nbsp;
+		<html:submit styleId="javascriptButtonID" styleClass="altJavaScriptSubmitButton" bundle="HTMLALT_RESOURCES" altKey="submit.submit">
+			<bean:message key="button.submit"/>
+		</html:submit>
 		</p>
 	</html:form>
 	

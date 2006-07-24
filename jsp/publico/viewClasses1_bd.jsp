@@ -101,7 +101,7 @@
 			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.lista" property="lista" value="<%= pageContext.findAttribute("listaNew").toString()%>" />
 			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.nextPage" property="nextPage" value="classSearch"/>
 			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.inputPage" property="inputPage" value="chooseContext"/>
-			
+
 			<table border="0" cellspacing="0" cellpadding="0">
 				<tr>
 				    <td><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.property.executionPeriod"/>:</td>
@@ -112,6 +112,9 @@
 							</logic:notEmpty>
 							<html:options property="value" labelProperty="label" collection="lista"/>
 						</html:select>
+						<html:submit styleId="javascriptButtonID" styleClass="altJavaScriptSubmitButton" bundle="HTMLALT_RESOURCES" altKey="submit.submit">
+							<bean:message key="button.submit"/>
+						</html:submit>
 				    </td>
 				</tr>
 			</table>

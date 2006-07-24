@@ -23,6 +23,14 @@
 
 <link rel="stylesheet" type="text/css" href="<%= request.getContextPath() %>/CSS/dotist_timetables.css" />
 <script type="text/javascript" src="<%= request.getContextPath() %>/CSS/scripts/expmenu.js"></script>
+<script type="text/javascript">
+function hideButtons()
+{
+	document.getElementById("javascriptButtonID").style.visibility="hidden";
+	document.getElementById("javascriptButtonID2").style.visibility="hidden";
+	document.getElementById("javascriptButtonID3").style.visibility="hidden";
+}
+</script>
 
 <title><tiles:getAsString name="title" ignore="true" /></title>
 <%-- TITLE --%>
@@ -77,5 +85,10 @@ informations on <a href="http://www.webstandards.org/upgrade/">webstandards.org<
 
 <!-- FOOTER -->
 <div id="footer"><tiles:insert attribute="footer" ignore="true" /></div>
+
+<script type="text/javascript">
+	hideButtons()
+</script>
+
 </body>
 </html:html>

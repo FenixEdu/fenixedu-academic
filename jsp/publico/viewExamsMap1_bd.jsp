@@ -100,6 +100,11 @@
 							<html:options property="value" labelProperty="label" collection="lista"/>
 						</html:select>
 				    </td>
+				    <td>
+						<html:submit styleId="javascriptButtonID" styleClass="altJavaScriptSubmitButton" bundle="HTMLALT_RESOURCES" altKey="submit.submit">
+							<bean:message key="button.submit"/>
+						</html:submit>
+					</td>
 				</tr>
 			</table>
 		</html:form>

@@ -11,8 +11,8 @@ if (degreeID == null) {
 
 String aditionalParameter = "";
 if (request.getAttribute("executionDegreeID") != null) {
-    Integer executionDegreeID = (Integer) request.getAttribute("executionDegreeID");
-	aditionalParameter = (executionDegreeID != null) ? "&amp;executionDegreeID=" + executionDegreeID : "";
+    Object executionDegreeID = request.getAttribute("executionDegreeID");
+	aditionalParameter = (executionDegreeID != null) ? "&amp;executionDegreeID=" + executionDegreeID.toString() : "";
 }
 %>
 

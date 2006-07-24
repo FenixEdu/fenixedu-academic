@@ -5,6 +5,7 @@
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
 <%@ page import="net.sourceforge.fenixedu.domain.degree.DegreeType" %>
 
+
 <logic:present name="infoDegreeCurricularPlan">
 	<bean:define id="degreeCurricularPlanID" name="infoDegreeCurricularPlan" property="idInternal" />
 
@@ -88,6 +89,13 @@
 					<html:select bundle="HTMLALT_RESOURCES" altKey="select.curYear" property="curYear" size="1" onchange="this.form.submit();">
 						<html:options collection="curricularYearList" property="value" labelProperty="label"/>
 					</html:select>				
+				</td>
+			</tr>
+			<tr>
+				<td colspan="2">
+					<html:submit styleId="javascriptButtonID" styleClass="altJavaScriptSubmitButton" bundle="HTMLALT_RESOURCES" altKey="submit.submit">
+						<bean:message key="button.submit"/>
+					</html:submit>
 				</td>
 			</tr>
 		</table>

@@ -55,6 +55,7 @@
 					onchange="this.form.submit();">
 				<f:selectItems value="#{publicEvaluations.degreeCurricularPlanSelectItems}"/>
 			</h:selectOneMenu>
+			<h:outputText value="<input value='Submeter' id='javascriptButtonID' class='altJavaScriptSubmitButton' alt='submit' type='submit'>" escape="false"/>
 			<h:outputText value="</p>" escape="false"/>
 
 			<h:outputText value="<p>#{bundle['public.execution.period']}: " escape="false"/>
@@ -62,6 +63,7 @@
 					onchange="this.form.submit();">
 				<f:selectItems value="#{publicEvaluations.executionPeriodSelectItems}"/>
 			</h:selectOneMenu>
+			<h:outputText value="<input value='Submeter' id='javascriptButtonID2' class='altJavaScriptSubmitButton' alt='submit' type='submit'>" escape="false"/>
 			<h:outputText value="</p>" escape="false"/>
 	
 			<h:outputText value="<p>#{bundle['public.curricular.year']}: " escape="false"/>
@@ -70,10 +72,11 @@
 				<f:selectItem itemLabel="#{bundle['public.curricular.years.all']}" itemValue=""/>
 				<f:selectItems value="#{publicEvaluations.curricularYearSelectItems}"/>
 			</h:selectOneMenu>
+			<h:outputText value="<input value='Submeter' id='javascriptButtonID3' class='altJavaScriptSubmitButton' alt='submit' type='submit'>" escape="false"/>
 			<h:outputText value="</p>" escape="false"/>
 	
 			<h:outputText value="<br/>" escape="false"/>
-			
+
 		 	<fc:fenixCalendar 
 			 		begin="#{publicEvaluations.beginDate}" 
 			 		end="#{publicEvaluations.endDate}"

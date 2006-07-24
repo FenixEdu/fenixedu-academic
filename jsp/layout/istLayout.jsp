@@ -7,7 +7,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 <meta name="keywords" content="ensino,  ensino superior, universidade, instituto, ciência, instituto superior técnico, investigação e desenvolvimento" />
-<meta name="description" content="O Instituto Superior Técnico ï¿½ a maior escola de engenharia, ciência e tecnologia em Portugal." />
+<meta name="description" content="O Instituto Superior Técnico é a maior escola de engenharia, ciência e tecnologia em Portugal." />
 
 <link rel="stylesheet" type="text/css" media="screen" href="<%= request.getContextPath() %>/CSS/iststyle.css" />
 <link rel="stylesheet" type="text/css" media="screen" href="<%= request.getContextPath() %>/CSS/dotist_timetables.css" />
@@ -18,12 +18,21 @@
 <link rel="stylesheet" type="text/css" href="<%= request.getContextPath() %>/CSS/dotist_timetables.css" />
 
 <script type="text/javascript" src="<%= request.getContextPath() %>/CSS/scripts/expmenu.js"></script>
+<script type="text/javascript">
+function hideButtons()
+{
+	document.getElementById("javascriptButtonID").style.visibility="hidden";
+	document.getElementById("javascriptButtonID2").style.visibility="hidden";
+	document.getElementById("javascriptButtonID3").style.visibility="hidden";
+}
+</script>
 
 <title><tiles:getAsString name="title" ignore="true" /></title> <%-- TITLE --%>
 
 </head>
 
 <body>
+
 <!-- BEGIN BROWSER UPGRADE MESSAGE -->
 <div class="browser_upgrade">
   <p><strong>Aviso:</strong>
@@ -89,6 +98,7 @@
 
 <tiles:insert attribute="body" ignore="true"/>
 <tiles:getAsString name="body-inline" ignore="true"/>
+
 </td>
 
 </tr>
@@ -98,5 +108,10 @@
 <div id="footer">
 <tiles:insert attribute="footer" ignore="true"/>
 </div>
+
+<script type="text/javascript">
+	hideButtons()
+</script>
+
 </body>
 </html:html>
