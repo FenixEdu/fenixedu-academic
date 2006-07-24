@@ -106,6 +106,12 @@
 		
 		<!-- Event Participation -->
 		<h3 id='eventParticipationTitle' class='cd_heading'/> <span> <bean:message bundle="RESEARCHER_RESOURCES" key="researcher.viewCurriculum.eventParticipationTitle"/> </span> </h3>
+		<fr:view name="events">
+			<fr:layout>
+				<fr:property name="eachLayout" value="values-dash"/>
+				<fr:property name="eachSchema" value="event.summary"/>
+			</fr:layout>
+		</fr:view>
 		
 		<!-- Project Participation -->
 		<h3 id='projectParticipationTitle' class='cd_heading'/> <span> <bean:message bundle="RESEARCHER_RESOURCES" key="researcher.viewCurriculum.projectParticipationTitle"/> </span> </h3>

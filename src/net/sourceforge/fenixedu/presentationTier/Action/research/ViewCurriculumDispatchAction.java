@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.domain.research.ResearchInterest;
+import net.sourceforge.fenixedu.domain.research.event.Event;
+import net.sourceforge.fenixedu.domain.research.event.EventParticipation;
 import net.sourceforge.fenixedu.domain.research.project.Project;
 import net.sourceforge.fenixedu.domain.research.project.ProjectParticipation;
 import net.sourceforge.fenixedu.domain.research.result.ResultParticipation;
@@ -31,9 +33,20 @@ public class ViewCurriculumDispatchAction extends FenixDispatchAction {
         List<Project> projects = new ArrayList<Project>();
 
         for(ProjectParticipation participation : userView.getPerson().getProjectParticipations()) {
-            projects.add(participation.getProject());
+            if(!projects.contains(participation.getProject())) {
+                projects.add(participation.getProject());
+            }
         }
         request.setAttribute("projects", projects);
+        
+        List<Event> events = new ArrayList<Event>();
+        
+        for(EventParticipation participation : userView.getPerson().getEventParticipations()) {
+            if (!events.contains(participation.getEvent())) {
+                events.add(participation.getEvent());                
+            }
+        }
+        request.setAttribute("events", events);
         
         List<ResearchInterest> researchInterests = getUserView(request).getPerson()
         .getResearchInterests();
