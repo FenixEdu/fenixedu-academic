@@ -20,6 +20,7 @@ import net.sourceforge.fenixedu.dataTransferObject.teacher.gradeSubmission.MarkS
 import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Enrolment;
+import net.sourceforge.fenixedu.domain.EnrolmentEvaluation;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
@@ -84,9 +85,9 @@ public class MarkSheetTeacherManagementDispatchAction extends ManageExecutionCou
 
         ActionMessages actionMessages = new ActionMessages();
         try {
-            ServiceUtils.executeService(userView, "CreateMarkSheetByTeacher", new Object[] { submissionBean });
-            return mapping.findForward("mainPage");
-            
+        	List<EnrolmentEvaluation> marksSubmited = (List<EnrolmentEvaluation>) ServiceUtils.executeService(userView, "CreateMarkSheetByTeacher", new Object[] { submissionBean });
+        	request.setAttribute("marksSubmited", marksSubmited);
+            return mapping.findForward("viewGradesSubmited");
         } catch (NotAuthorizedException e) {
             addMessage(request, actionMessages, "error.notAuthorized");
         } catch (InvalidArgumentsServiceException e) {

@@ -563,6 +563,11 @@
 		<put name="body" value="/teacher/evaluation/gradeSubmission/gradeSubmissionStepTwo.jsp" />
 	</definition>
 	
+	<definition name="show.markSheetManagement.viewGradesSubmited" extends="df.teacher.evaluation-management">
+		<put name="body" value="/teacher/evaluation/gradeSubmission/viewGradesSubmited.jsp" />
+	</definition>
+	
+
 	<!-- ==== Project Submissions Management === -->
 	<definition name="view-last-project-submission-for-each-group" extends="df.teacher.evaluation-management">
 		<put name="body" value="/teacher/evaluation/viewLastProjectSubmissionForEachGroup.jsp" />

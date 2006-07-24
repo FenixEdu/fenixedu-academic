@@ -33,6 +33,9 @@
 		</fr:layout>
 	</fr:edit>
 	<br/>
+	<br/>
+	<table class="infoop"><tr><td><bean:message key="label.submitMarks.remainder"/></td></tr></table>
+	<br/>
 	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton"><bean:message key="button.continue"/></html:submit>
 	
 </fr:form>

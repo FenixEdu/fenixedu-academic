@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -15,8 +16,10 @@ import net.sourceforge.fenixedu.dataTransferObject.teacher.gradeSubmission.MarkS
 import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Enrolment;
+import net.sourceforge.fenixedu.domain.EnrolmentEvaluation;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.FinalMark;
+import net.sourceforge.fenixedu.domain.MarkSheet;
 import net.sourceforge.fenixedu.domain.MarkSheetType;
 import net.sourceforge.fenixedu.domain.Teacher;
 
@@ -24,7 +27,7 @@ import org.joda.time.YearMonthDay;
 
 public class CreateMarkSheetByTeacher extends Service {
 
-    public void run(MarkSheetTeacherGradeSubmissionBean submissionBean)
+    public List<EnrolmentEvaluation> run(MarkSheetTeacherGradeSubmissionBean submissionBean)
             throws InvalidArgumentsServiceException {
 
         ExecutionCourse executionCourse = submissionBean.getExecutionCourse();
@@ -36,7 +39,7 @@ public class CreateMarkSheetByTeacher extends Service {
             markSheetsInformation = new HashMap<CurricularCourse, Map<MarkSheetType, Collection<MarkSheetEnrolmentEvaluationBean>>>();
 
         createMarkSheetEnrolmentEvaluationBeans(submissionBean, executionCourse, markSheetsInformation);
-        createMarkSheets(markSheetsInformation, executionCourse, teacher, submissionBean.getEvaluationDate());
+        return createMarkSheets(markSheetsInformation, executionCourse, teacher, submissionBean.getEvaluationDate()); 
     }
 
     private void createMarkSheetEnrolmentEvaluationBeans(
@@ -45,9 +48,8 @@ public class CreateMarkSheetByTeacher extends Service {
             Map<CurricularCourse, Map<MarkSheetType, Collection<MarkSheetEnrolmentEvaluationBean>>> markSheetsInformation)
             throws InvalidArgumentsServiceException {
 
-        Date nowDate = new Date();
+        Date nowDate = new Date(); 
         for (MarkSheetTeacherMarkBean markBean : submissionBean.getSelectedMarksToSubmit()) {
-            
             CurricularCourse curricularCourse = markBean.getAttends().getEnrolment().getCurricularCourse();
             String grade = getGrade(markBean.getAttends(), markBean, markBean.getEvaluationDate(), nowDate);
 
@@ -56,10 +58,10 @@ public class CreateMarkSheetByTeacher extends Service {
         }
     }
 
-    private void createMarkSheets(
+    private List<EnrolmentEvaluation> createMarkSheets(
             Map<CurricularCourse, Map<MarkSheetType, Collection<MarkSheetEnrolmentEvaluationBean>>> markSheetsInformation,
             ExecutionCourse executionCourse, Teacher responsibleTeacher, Date evaluationDate) throws InvalidArgumentsServiceException {
-
+    	List<EnrolmentEvaluation> enrolmetnEvaluations = new ArrayList<EnrolmentEvaluation>();
         for (Entry<CurricularCourse, Map<MarkSheetType, Collection<MarkSheetEnrolmentEvaluationBean>>> curricularCourseEntry : markSheetsInformation.entrySet()) {
 
             CurricularCourse curricularCourse = curricularCourseEntry.getKey();
@@ -74,12 +76,14 @@ public class CreateMarkSheetByTeacher extends Service {
                 Collection<MarkSheetEnrolmentEvaluationBean> markSheetEnrolmentEvaluationBeans = markSheetTypeEntry.getValue();
 
                 if (markSheetEnrolmentEvaluationBeans != null) {
-                    curricularCourse.createNormalMarkSheet(executionCourse.getExecutionPeriod(),
+                    MarkSheet markSheet = curricularCourse.createNormalMarkSheet(executionCourse.getExecutionPeriod(),
                             responsibleTeacher, evaluationDate, markSheetType, Boolean.TRUE,
                             markSheetEnrolmentEvaluationBeans);
+                    enrolmetnEvaluations.addAll(markSheet.getEnrolmentEvaluations());
                 }
             }
         }
+        return enrolmetnEvaluations;
     }
 
     private void checkIfTeacherLecturesExecutionCourse(Teacher teacher, ExecutionCourse executionCourse)
