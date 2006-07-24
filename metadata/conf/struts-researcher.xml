@@ -118,7 +118,7 @@
 				scope="request"
 				parameter="method">
 			<forward name="CreateEvent" path="events.createEvent"/>
-		    <forward name="Success" path="events.eventsManagement"/>
+		    <forward name="Success" path="/events/eventsManagement.do?method=listEvents"/>
 		</action>
 
 		<action path="/events/editEvent"

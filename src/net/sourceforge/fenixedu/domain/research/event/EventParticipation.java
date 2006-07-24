@@ -16,10 +16,8 @@ public class EventParticipation extends EventParticipation_Base {
     }
     
     public enum EventParticipationRole {
-        Associate_Editor,
         Committee_Chair,
         Committee_Member,
-        Editor_in_Chief,
         General_Chair,
         Invited_Speaker,
         Reviewer;

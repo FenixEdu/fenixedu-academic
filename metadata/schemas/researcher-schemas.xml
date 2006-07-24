@@ -28,6 +28,7 @@
 </schema>	
 
 <schema name="projectParticipation.create-defaults" bundle="RESEARCHER_RESOURCES" type="net.sourceforge.fenixedu.domain.research.project.ProjectParticipation">
+	<slot name="role" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
 	<slot name="project.number" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
 	<slot name="project.acronym"/>
 	<slot name="project.title" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredMultiLanguageStringValidator">
@@ -39,7 +40,6 @@
 	</slot>
 	<slot name="project.startDate" layout="year-month" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
 	<slot name="project.endDate" layout="year-month"/> 
-	<slot name="role" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
 </schema>	
 
 <schema name="project.edit-defaults" bundle="RESEARCHER_RESOURCES" type="net.sourceforge.fenixedu.domain.research.project.Project">
@@ -317,7 +317,31 @@
 	<slot name="role" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
 </schema>
 
+<schema name="eventParticipation.simpleCreation" type="net.sourceforge.fenixedu.dataTransferObject.research.event.EventParticipantionSimpleCreationBean" bundle="RESEARCHER_RESOURCES">
+	<slot name="role" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+	<slot name="event" layout="autoComplete" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		<property name="size" value="50"/>
+		<property name="rawSlotName" value="eventName"/>
+		<property name="labelField" value="text"/>
+		<property name="indicatorShown" value="true"/>		
+		<property name="serviceName" value="SearchObjectsByMultiLanguageString"/>
+		<property name="serviceArgs" value="slot=name"/>
+		<property name="className" value="net.sourceforge.fenixedu.domain.research.event.Event"/>				
+		<property name="minChars" value="5"/>
+	</slot>
+</schema>
 
+<schema name="eventParticipation.fullCreation" type="net.sourceforge.fenixedu.dataTransferObject.research.event.EventParticipantionFullCreationBean" bundle="RESEARCHER_RESOURCES">
+	<slot name="role" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+	<slot name="eventName" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		<property name="size" value="50"/>
+	</slot>
+	<slot name="eventType" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+	<slot name="local" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+	<slot name="startDate" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+	<slot name="endDate" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+	<slot name="fee" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+</schema>
 
 <!-- SCHEMAS FOR PATENTS MANAGEMENT -->
 <schema name="patent-default" type="net.sourceforge.fenixedu.domain.research.result.patent.ResultPatent" bundle="RESEARCHER_RESOURCES">

@@ -11,22 +11,12 @@
 		
 	<h2/> <bean:message bundle="RESEARCHER_RESOURCES" key="researcher.project.createProject.useCasetitle"/> </h2>
   	
- 	<strong>
- 		<bean:message bundle="RESEARCHER_RESOURCES" key="researcher.project.createProjectUseCase.step.title"/> 1 :
- 	</strong>
- 	<u><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.project.createProjectUseCase.step.insertData"/></u>
-		
-	<br/>
 	<br/>
 	
 	<bean:message bundle="RESEARCHER_RESOURCES" key="researcher.project.createProjectUseCase.step.insertDataExplanation"/>
   	
   	<br/>
   	<br/>
- 	<br/>
-		
-	
-	<h3/> <bean:message bundle="RESEARCHER_RESOURCES" key="researcher.project.createProject.participants"/> </h3>
 	
 	<h3/> <bean:message bundle="RESEARCHER_RESOURCES" key="researcher.project.createProject.data"/> </h3>
 	

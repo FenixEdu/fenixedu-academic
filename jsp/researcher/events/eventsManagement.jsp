@@ -6,6 +6,8 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 
 <logic:present role="RESEARCHER">		
+	<em><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.event.eventsManagement.superUseCaseTitle"/></em>
+
   	<h2 id='pageTitle'/> <bean:message bundle="RESEARCHER_RESOURCES" key="researcher.event.eventsManagement.title"/> </h2>
 		
 		
@@ -28,7 +30,7 @@
 			</fr:layout>
 		</fr:view>
 		
-	<html:link page="/events/createEvent.do?method=prepareCreateEvent"><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.event.eventsManagement.createEvent" /></html:link>
+	<html:link page="/events/createEvent.do?method=prepareCreateSimpleEventParticipation"><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.event.eventsManagement.createEvent" /></html:link>
 </logic:present>
 		
 <br/>
