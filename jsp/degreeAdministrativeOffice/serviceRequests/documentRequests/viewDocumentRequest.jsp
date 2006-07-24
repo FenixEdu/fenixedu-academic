@@ -19,6 +19,8 @@
 	<br />
 </logic:messagesPresent>
 
+
+<strong><bean:message  key="label.documentRequestManagement.documentRequestInformation"/></strong>
 <bean:define id="simpleClassName" name="documentRequest" property="class.simpleName" />
 <fr:view name="documentRequest" schema="<%= simpleClassName  + ".view"%>">
 	<fr:layout name="tabular">
@@ -27,15 +29,20 @@
 	</fr:layout>
 </fr:view>
 
-<html:form action="/documentRequestsManagement.do">
-	<html:hidden property="method"/>
-	<html:hidden property="documentRequestType" />
-	<html:hidden property="requestSituationType"  />
-	<html:hidden property="isUrgent" />
-	<html:hidden property="studentNumber"  />
+<br/><br/>
+
+<strong><bean:message  key="label.documentRequestManagement.documentRequestSituation"/></strong>
+<fr:view name="documentRequest" property="activeSituation" schema="AcademicServiceRequestSituation.view">
+	<fr:layout name="tabular">
+		<fr:property name="classes" value="tstyle4" />
+		<fr:property name="columnClasses" value="listClasses,," />
+	</fr:layout>
+</fr:view>
+
+<bean:define id="url" name="url" />
+<html:form action="<%="/documentRequestsManagement.do?method=search" + url%>">
 	<bean:define id="documentRequestId" name="documentRequest" property="idInternal" />
 	<html:hidden property="documentRequestId" value="<%= documentRequestId.toString() %>"/>
 	
-	<html:submit onclick="this.form.method.value='editDocumentRequest';"><bean:message key="label.documentRequestsManagement.back" /></html:submit>
-	<html:submit onclick="this.form.method.value='search';"><bean:message key="label.documentRequestsManagement.back" /></html:submit>
+	<html:submit><bean:message key="label.documentRequestsManagement.back" /></html:submit>
 </html:form>

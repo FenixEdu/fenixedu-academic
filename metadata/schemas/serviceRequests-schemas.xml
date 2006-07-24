@@ -2,7 +2,6 @@
 	<slot name="creationDate" read-only="true" key="label.net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest.creationDate"/>
 	<slot name="student.number" key="label.net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest.studentCurricularPlan.student.studentNumber" />
 	<slot name="student.person.name" key="label.net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest.studentCurricularPlan.student.person.name"/>
-	<slot name="academicServiceRequestSituationType" key="label.net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest.academicServiceRequestSituationType" />
 </schema>
 
 <schema name="AcademicServiceRequest.view-without-active-situation-type" extends="AcademicServiceRequest.view" type="net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest" bundle="APPLICATION_RESOURCES">
@@ -10,9 +9,9 @@
 </schema>
 
 <schema name="AcademicServiceRequestSituation.view" type="net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSituation"  bundle="APPLICATION_RESOURCES">
-	<slot name="academicServiceRequestSituationType" key="label.net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSituation.academicServiceRequestSituationType" />
 	<slot name="creationDate" key="label.net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSituation.creationDate" />
 	<slot name="employee.person.name" key="label.net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSituation.employee.person.name" />
+	<slot name="academicServiceRequestSituationType" key="label.net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSituation.academicServiceRequestSituationType" />
 	<slot name="justification" key="label.net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSituation.justification" />
 </schema>
 
@@ -29,6 +28,7 @@
 	<remove name="numberOfPages" />
 	<remove name="documentPurposeType" />
 	<remove name="otherDocumentPurposeTypeDescription" />
+	<slot name="academicServiceRequestSituationType" key="label.net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSituation.academicServiceRequestSituationType" />
 </schema>
 
 
@@ -58,8 +58,8 @@
 
 
 <schema name="DocumentRequestEditBean" type="net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.serviceRequest.documentRequest.DocumentRequestEditBean" bundle="APPLICATION_RESOURCES">
-	<slot name="academicServiceRequestSituationType" key="label.net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest.academicServiceRequestSituationType"/>
+	<slot name="academicServiceRequestSituationType" key="label.net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest.academicServiceRequestSituationType" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
 	<slot name="justification" key="label.net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSituation.justification" layout="longText"/>
-	<slot name="numberOfPages" key="label.net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest.numberOfPages" />
+	<slot name="numberOfPages" key="label.net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest.numberOfPages" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" />
 </schema>
 

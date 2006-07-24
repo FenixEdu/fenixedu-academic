@@ -23,14 +23,12 @@ public class DocumentRequestEditBean implements Serializable {
 
     }
 
-    public DocumentRequestEditBean(DocumentRequest documentRequest, Employee employee,
-            AcademicServiceRequestSituationType academicServiceRequestSituationType,
-            Integer numberOfPages) {
+    public DocumentRequestEditBean(DocumentRequest documentRequest, Employee employee) {
         setDocumentRequest(documentRequest);
         setEmployee(employee);
-        setAcademicServiceRequestSituationType(academicServiceRequestSituationType);
-        setNumberOfPages(numberOfPages);
-
+        setAcademicServiceRequestSituationType(documentRequest.getAcademicServiceRequestSituationType());
+        setJustification(documentRequest.getActiveSituation().getJustification());
+        setNumberOfPages(documentRequest.getNumberOfPages());
     }
 
     public DocumentRequest getDocumentRequest() {

@@ -27,11 +27,12 @@
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle4 thlight thright" />
 			
-			<fr:property name="linkFormat(view)" value="<%="/documentRequestsManagement.do?method=viewRequest&documentRequestId=${idInternal}" + url %>"/>
+			<fr:property name="linkFormat(view)" value="<%="/documentRequestsManagement.do?method=viewDocumentRequest&documentRequestId=${idInternal}" + url %>"/>
 			<fr:property name="key(view)" value="label.documentRequestsManagement.viewRequest"/>
 
-			<fr:property name="linkFormat(edit)" value="<%="/documentRequestsManagement.do?method=editRequest&documentRequestId=${idInternal}" + url %>"/>
+			<fr:property name="linkFormat(edit)" value="<%="/documentRequestsManagement.do?method=prepareEditDocumentRequest&documentRequestId=${idInternal}" + url %>"/>
 			<fr:property name="key(edit)" value="label.documentRequestsManagement.editRequest"/>
+			<fr:property name="visibleIf(edit)" value="editable"/>
 			
 			<fr:property name="sortBy" value="urgentRequest=desc,creationDate=asc"/>
 		</fr:layout>
