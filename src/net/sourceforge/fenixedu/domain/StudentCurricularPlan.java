@@ -10,6 +10,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.BothAreasAreTheSameServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
@@ -1287,4 +1288,16 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
         return getDegreeCurricularPlan().getDegree().getTipoCurso();
     }
 
+    public Set<ExecutionYear> getNotClosedExecutionYearsSinceSCPStart() {
+        Set<ExecutionYear> result = new TreeSet<ExecutionYear>(ExecutionYear.EXECUTION_YEAR_COMPARATOR_BY_YEAR);
+        
+        for (final ExecutionYear executionYear : ExecutionYear.readNotClosedExecutionYears()) {
+            if (executionYear.getBeginDateYearMonthDay().isAfter(getStartDateYearMonthDay())) {
+                result.add(executionYear);
+            }
+        }
+        
+        return result;
+    }
+    
 }
