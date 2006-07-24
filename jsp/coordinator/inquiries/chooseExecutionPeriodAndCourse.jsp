@@ -43,7 +43,9 @@
 					</logic:notEmpty>
 			
 				</html:select>&nbsp;
-				
+				<html:submit styleId="javascriptButtonID" styleClass="altJavaScriptSubmitButton" bundle="HTMLALT_RESOURCES" altKey="submit.submit">
+					<bean:message key="button.submit"/>
+				</html:submit>
 			</html:form>
 		</td>
 		

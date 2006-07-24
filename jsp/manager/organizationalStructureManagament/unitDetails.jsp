@@ -109,6 +109,7 @@
 			onchange="this.form.submit();">
 			<f:selectItems value="#{organizationalStructureBackingBean.listingTypeToUnits}"/>				
 		</fc:selectOneMenu>
+		<h:outputText value="<input value='#{htmlAltBundle['submit.sumbit']}' id='javascriptButtonID' class='altJavaScriptSubmitButton' alt='#{htmlAltBundle['submit.sumbit']}' type='submit'>" escape="false"/>
 		<h:outputText value="<br/><br/>" escape="false"/>		
 			
 		<h:dataTable value="#{organizationalStructureBackingBean.allSubUnits}" var="unit"
@@ -195,6 +196,7 @@
 			onchange="this.form.submit();">
 			<f:selectItems value="#{organizationalStructureBackingBean.listingTypeToFunctions}"/>				
 		</fc:selectOneMenu>
+		<h:outputText value="<input value='#{htmlAltBundle['submit.sumbit']}' id='javascriptButtonID' class='altJavaScriptSubmitButton' alt='#{htmlAltBundle['submit.sumbit']}' type='submit'>" escape="false"/>
 		<h:outputText value="<br/><br/>" escape="false"/>
 		
 		<h:dataTable value="#{organizationalStructureBackingBean.allNonInherentFunctions}" var="function"

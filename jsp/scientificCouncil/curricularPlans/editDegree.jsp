@@ -49,6 +49,7 @@
 			<h:selectOneMenu id="bolonhaDegreeType" value="#{DegreeManagement.bolonhaDegreeType}" onchange="this.form.submit();" disabled="#{DegreeManagement.degree.degreeCurricularPlansCount > 0}">
 				<f:selectItems value="#{DegreeManagement.bolonhaDegreeTypes}" />
 			</h:selectOneMenu>
+			<h:outputText value="<input value='#{htmlAltBundle['submit.sumbit']}' id='javascriptButtonID' class='altJavaScriptSubmitButton' alt='#{htmlAltBundle['submit.sumbit']}' type='submit'>" escape="false"/>
 			<h:message for="bolonhaDegreeType" errorClass="error0" rendered="#{empty DegreeManagement.errorMessage}"/>
 		</h:panelGroup>
 		<h:outputText value="</p>" escape="false"/>

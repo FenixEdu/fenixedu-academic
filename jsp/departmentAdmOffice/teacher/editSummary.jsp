@@ -51,6 +51,9 @@
 					<html:option key="label.summary.select" value="null" />
 					<html:options collection="shifts" property="idInternal" labelProperty="lessons"/>
 				</html:select>
+					<html:submit styleId="javascriptButtonID" styleClass="altJavaScriptSubmitButton" bundle="HTMLALT_RESOURCES" altKey="submit.submit">
+						<bean:message key="button.submit"/>
+					</html:submit>
 			</td>
 		</logic:present>	
 		<logic:notPresent name="verEditor">
@@ -58,6 +61,9 @@
 					<html:option key="label.summary.select" value="null" />
 					<html:options collection="shifts" property="idInternal" labelProperty="lessons"/>
 				</html:select>
+				<html:submit styleId="javascriptButtonID2" styleClass="altJavaScriptSubmitButton" bundle="HTMLALT_RESOURCES" altKey="submit.submit">
+					<bean:message key="button.submit"/>
+				</html:submit>
 			</td>
 		</logic:notPresent>	
 		<td>&nbsp;</td>

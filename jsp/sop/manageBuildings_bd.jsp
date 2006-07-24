@@ -49,6 +49,9 @@
 						<html:select bundle="HTMLALT_RESOURCES" altKey="select.campusID" property="campusID" size="1" value="<%= campusID %>" onchange="this.form.submit();">
 							<html:options collection="campuss" property="idInternal" labelProperty="name"/>
 						</html:select>
+						<html:submit styleId="javascriptButtonID" styleClass="altJavaScriptSubmitButton" bundle="HTMLALT_RESOURCES" altKey="submit.submit">
+							<bean:message key="button.submit"/>
+						</html:submit>
 					</html:form>
 				</td>
 				<th class="listClasses-header" cellspacing="0" cellpadding="0">

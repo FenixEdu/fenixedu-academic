@@ -24,6 +24,9 @@
 					<html:option value=""/>
 					<html:options collection="infoExecutionPeriods" labelProperty="description" property="idInternal"/>
 				</html:select>
+				<html:submit styleId="javascriptButtonID" styleClass="altJavaScriptSubmitButton" bundle="HTMLALT_RESOURCES" altKey="submit.submit">
+					<bean:message key="button.submit"/>
+				</html:submit>
 			</td>
 		</tr>
 	</table>

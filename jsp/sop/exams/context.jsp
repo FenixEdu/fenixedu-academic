@@ -24,6 +24,9 @@
 		    	   					  property="value"
 		       						  labelProperty="label"/>
 			       </html:select>
+					<html:submit styleId="javascriptButtonID" styleClass="altJavaScriptSubmitButton" bundle="HTMLALT_RESOURCES" altKey="submit.submit">
+						<bean:message key="button.submit"/>
+					</html:submit>
 				</td>
 			</tr>
 			<tr>
@@ -35,6 +38,9 @@
 		    	   					  property="value"
 		       						  labelProperty="label"/>
 			       	</html:select> Ano
+					<html:submit styleId="javascriptButtonID2" styleClass="altJavaScriptSubmitButton" bundle="HTMLALT_RESOURCES" altKey="submit.submit">
+						<bean:message key="button.submit"/>
+					</html:submit>
 			</td>
 
 	</html:form>
@@ -50,6 +56,9 @@
 							collection="<%= SessionConstants.LABELLIST_EXECUTIONPERIOD%>"
 							/>
 		</html:select>
+		<html:submit styleId="javascriptButtonID" styleClass="altJavaScriptSubmitButton" bundle="HTMLALT_RESOURCES" altKey="submit.submit">
+			<bean:message key="button.submit"/>
+		</html:submit>
 	</html:form>    
 				</td>
 			</tr>

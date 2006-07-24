@@ -20,6 +20,9 @@
 		<h:selectOneMenu value="#{listFirstTimeEnrolmentMasterDegreeStudents.selectedExecutionYear}" onchange="this.form.submit()">
 			<f:selectItems value="#{listFirstTimeEnrolmentMasterDegreeStudents.executionYears}" />	
 		</h:selectOneMenu>
+		<html:submit styleId="javascriptButtonID" styleClass="altJavaScriptSubmitButton" bundle="HTMLALT_RESOURCES" altKey="submit.submit">
+			<bean:message key="button.submit"/>
+		</html:submit>
 	</h:form>
 
 	<h:dataTable value="#{listFirstTimeEnrolmentMasterDegreeStudents.studentCurricularPlans}" var="studentCurricularPlan" columnClasses="solidBorderClass">

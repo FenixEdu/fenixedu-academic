@@ -61,6 +61,7 @@
 			<fc:selectOneMenu disabled="#{facultyAdmOfficeFunctionsManagementBackingBean.disabledVar == 1}" onchange="this.form.submit();" value="#{facultyAdmOfficeFunctionsManagementBackingBean.executionPeriod}">
 				<f:selectItems value="#{facultyAdmOfficeFunctionsManagementBackingBean.executionPeriods}"/>
 			</fc:selectOneMenu>
+			<h:outputText value="<input value='#{htmlAltBundle['submit.sumbit']}' id='javascriptButtonID' class='altJavaScriptSubmitButton' alt='#{htmlAltBundle['submit.sumbit']}' type='submit'>" escape="false"/>
 			<h:outputText value=""/>
 			
 			<h:outputText value="<b>#{bundle['label.duration']}</b>" escape="false"/>
@@ -68,6 +69,7 @@
 							  value="#{facultyAdmOfficeFunctionsManagementBackingBean.duration}">
 				<f:selectItems value="#{facultyAdmOfficeFunctionsManagementBackingBean.durationList}" />
 			</h:selectOneRadio>
+			<h:outputText value="<input value='#{htmlAltBundle['submit.sumbit']}' id='javascriptButtonID2' class='altJavaScriptSubmitButton' alt='#{htmlAltBundle['submit.sumbit']}' type='submit'>" escape="false"/>
 			<h:panelGroup style="padding-left: 28px;">
 				<fc:commandLink action="" value="#{bundle['link.functions.management.edit']}" rendered="#{facultyAdmOfficeFunctionsManagementBackingBean.disabledVar == 1}"> 
 					<f:param id="disabledVar1" name="disabledVar" value="0"/>

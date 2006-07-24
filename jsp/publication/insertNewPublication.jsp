@@ -76,6 +76,9 @@
 				<html:select bundle="HTMLALT_RESOURCES" altKey="select.infoPublicationTypeId" property="infoPublicationTypeId" onchange="this.form.method.value='prepare';this.form.submit();">
 					<html:options collection="publicationTypesList" property="idInternal" labelProperty="publicationType"/>
 				</html:select>
+				<html:submit styleId="javascriptButtonID" styleClass="altJavaScriptSubmitButton" bundle="HTMLALT_RESOURCES" altKey="submit.submit">
+					<bean:message key="button.submit"/>
+				</html:submit>
 			</td>
 		</tr>
 		

@@ -32,6 +32,9 @@
 		<option></option>
 		<html:options collection="executionPeriods" property="idInternal" labelProperty="description"/>
 	</html:select>
+	<html:submit styleId="javascriptButtonID" styleClass="altJavaScriptSubmitButton" bundle="HTMLALT_RESOURCES" altKey="submit.submit">
+		<bean:message key="button.submit"/>
+	</html:submit>
 	
 	<logic:present name="executionDegrees">
 		<h2>
@@ -41,6 +44,9 @@
 			<option></option>
 			<html:options collection="executionDegrees" labelProperty="label" property="value"/>
 		</html:select>
+		<html:submit styleId="javascriptButtonID2" styleClass="altJavaScriptSubmitButton" bundle="HTMLALT_RESOURCES" altKey="submit.submit">
+			<bean:message key="button.submit"/>
+		</html:submit>
 	</logic:present>
 	
 	<logic:present name="executionCourses">

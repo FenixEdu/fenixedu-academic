@@ -47,6 +47,7 @@
 					valueChangeListener="#{CurricularRulesManagement.onChangeCurricularRuleTypeDropDown}">
 				<f:selectItems binding="#{CurricularRulesManagement.curricularRuleTypeItems}"/>
 			</fc:selectOneMenu>
+			<h:outputText value="<input value='#{htmlAltBundle['submit.sumbit']}' id='javascriptButtonID' class='altJavaScriptSubmitButton' alt='#{htmlAltBundle['submit.sumbit']}' type='submit'>" escape="false"/>
 			<h:outputText value="</p>" escape="false"/>
 			
 			<h:panelGroup rendered="#{CurricularRulesManagement.selectedCurricularRuleType == 'PRECEDENCY_APPROVED_DEGREE_MODULE' 
@@ -113,6 +114,7 @@
 					<f:selectItem itemLabel="#{enumerationBundle['MASTER_DEGREE']}" itemValue="MASTER_DEGREE"/>
 					<f:selectItem itemLabel="#{enumerationBundle['INTEGRATED_MASTER_DEGREE']}" itemValue="INTEGRATED_MASTER_DEGREE"/>
 				</fc:selectOneMenu>
+<h:outputText value="<input value='#{htmlAltBundle['submit.sumbit']}' id='javascriptButtonID2' class='altJavaScriptSubmitButton' alt='#{htmlAltBundle['submit.sumbit']}' type='submit'>" escape="false"/>
 				<h:outputText value="</p>" escape="false"/>
 				<h:outputText value="<p><label>#{bolonhaBundle['degree']}:</label>" escape="false"/>
 				<fc:selectOneMenu value="#{CurricularRulesManagement.selectedDegreeID}">

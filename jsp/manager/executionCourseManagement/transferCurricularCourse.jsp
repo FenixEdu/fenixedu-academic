@@ -34,11 +34,17 @@
 			onchange="this.form.method.value='selectExecutionDegree';this.form.submit();">
 		<html:options collection="executionDegrees" labelProperty="label" property="value" />
 	</html:select>
+	<html:submit styleId="javascriptButtonID" styleClass="altJavaScriptSubmitButton" bundle="HTMLALT_RESOURCES" altKey="submit.submit">
+		<bean:message key="button.submit"/>
+	</html:submit>
 
 	<html:select bundle="HTMLALT_RESOURCES" altKey="select.curricularYear" property="curricularYear" size="1"
 			onchange="this.form.method.value='selectExecutionDegree';this.form.submit();">
 		<html:options collection="curricularYears" labelProperty="label" property="value" />
 	</html:select>
+	<html:submit styleId="javascriptButtonID2" styleClass="altJavaScriptSubmitButton" bundle="HTMLALT_RESOURCES" altKey="submit.submit">
+		<bean:message key="button.submit"/>
+	</html:submit>
 
 	<br />
 	<br />

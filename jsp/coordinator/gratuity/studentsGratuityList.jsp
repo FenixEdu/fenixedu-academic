@@ -26,9 +26,12 @@
 					<bean:write name="executionYearString" />
 				</html:option>
 			</logic:iterate>
-		</html:select>	
+		</html:select>
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.degreeCurricularPlanID" property="degreeCurricularPlanID" />
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.order" property="order" />
+		<html:submit styleId="javascriptButtonID" styleClass="altJavaScriptSubmitButton" bundle="HTMLALT_RESOURCES" altKey="submit.submit">
+			<bean:message key="button.submit"/>
+		</html:submit>
 	</h2>
 </html:form>
 

@@ -23,12 +23,18 @@
 		<tr>
 			<td class="listClasses">
 				<html:text bundle="HTMLALT_RESOURCES" altKey="text.number" property="number" size="5" onchange="this.form.submit();"/>
+					<html:submit styleId="javascriptButtonID" styleClass="altJavaScriptSubmitButton" bundle="HTMLALT_RESOURCES" altKey="submit.submit">
+						<bean:message key="button.submit"/>
+					</html:submit>
 			</td>
 			<td class="listClasses">
 				<e:labelValues id="values" enumeration="net.sourceforge.fenixedu.domain.degree.DegreeType" bundle="ENUMERATION_RESOURCES"/>
 				<html:select bundle="HTMLALT_RESOURCES" altKey="select.degreeType" property="degreeType" size="1" onchange="this.form.submit();">
 					<html:options collection="values" property="value" labelProperty="label"/>
 				</html:select>
+					<html:submit styleId="javascriptButtonID2" styleClass="altJavaScriptSubmitButton" bundle="HTMLALT_RESOURCES" altKey="submit.submit">
+						<bean:message key="button.submit"/>
+					</html:submit>
 			</td>
 		</tr>
 		<logic:present name="infoStudentCurricularPlans">

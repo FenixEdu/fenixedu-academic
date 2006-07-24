@@ -87,17 +87,20 @@ text-align: right;
 					onchange="this.form.submit();">
 					<f:selectItems binding="#{viewTeacherService.executionYearItems}"/>
 				</fc:selectOneMenu>
+				<h:outputText value="<input value='#{htmlAltBundle['submit.sumbit']}' id='javascriptButtonID' class='altJavaScriptSubmitButton' alt='#{htmlAltBundle['submit.sumbit']}' type='submit'>" escape="false"/>
 			 	<h:outputText value="#{bundle['label.common.courseSemester']}&nbsp;" escape="false" styleClass="leftColumn" />
 				<fc:selectOneMenu value="#{viewTeacherService.selectedExecutionPeriodID}"
 					onchange="this.form.submit();">
 					<f:selectItems binding="#{viewTeacherService.executionPeriodsItems}"/>
 				</fc:selectOneMenu>	
+				<h:outputText value="<input value='#{htmlAltBundle['submit.sumbit']}' id='javascriptButtonID2' class='altJavaScriptSubmitButton' alt='#{htmlAltBundle['submit.sumbit']}' type='submit'>" escape="false"/>
 			</h:panelGrid>
 			<h:panelGrid columns="1" styleClass="search" width="100%">
 				<h:selectManyCheckbox value="#{viewTeacherService.selectedViewByTeacherOptions}" layout="pageDirection"
 					onchange="this.form.submit();">
 					<f:selectItems binding="#{viewTeacherService.viewByTeacherOptionsItems}"/>
 				</h:selectManyCheckbox>
+				<h:outputText value="<input value='#{htmlAltBundle['submit.sumbit']}' id='javascriptButtonID3' class='altJavaScriptSubmitButton' alt='#{htmlAltBundle['submit.sumbit']}' type='submit'>" escape="false"/>
 			</h:panelGrid>
 		</h:panelGrid>
 	</h:form>	

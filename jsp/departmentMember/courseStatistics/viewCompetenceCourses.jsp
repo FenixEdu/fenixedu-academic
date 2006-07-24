@@ -4,6 +4,7 @@
 <%@ taglib uri="/WEB-INF/jsf_fenix_components.tld" prefix="fc"%>
 
 <ft:tilesView definition="departmentMember.masterPage" attributeName="body-inline">
+	<f:loadBundle basename="resources/HtmlAltResources" var="htmlAltBundle"/>
 	<f:loadBundle basename="resources/DepartmentMemberResources" var="bundle"/>
 
 <style>
@@ -80,6 +81,7 @@ text-align: right;
 				onchange="this.form.submit();">
 				<f:selectItems value="#{courseStatistics.executionPeriods}" />
 			</fc:selectOneMenu>
+			<h:outputText value="<input value='#{htmlAltBundle['submit.sumbit']}' id='javascriptButtonID' class='altJavaScriptSubmitButton' alt='#{htmlAltBundle['submit.sumbit']}' type='submit'>" escape="false"/>
 		</h:panelGrid>
 
 		<h:outputText value="<br />" escape="false" />

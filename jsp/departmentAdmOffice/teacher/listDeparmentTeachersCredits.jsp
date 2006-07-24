@@ -53,7 +53,11 @@
 		<p><html:select bundle="HTMLALT_RESOURCES" altKey="select.executionPeriodId" property="executionPeriodId" onchange="this.form.submit()">
 			<html:option key="choose.execution.period" value=""/>
 			<html:options collection="executionPeriods" property="value" labelProperty="label"/>
-		</html:select></p>		
+			</html:select>
+			<html:submit styleId="javascriptButtonID" styleClass="altJavaScriptSubmitButton" bundle="HTMLALT_RESOURCES" altKey="submit.submit">
+				<bean:message key="button.submit"/>
+			</html:submit>
+		</p>
 	</logic:notEmpty>
 </html:form>
 

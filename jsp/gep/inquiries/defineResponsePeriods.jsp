@@ -23,6 +23,9 @@
 					<html:select bundle="HTMLALT_RESOURCES" altKey="select.executionPeriodID" property="executionPeriodID" size="1" onchange="this.form.submit()">
 				    	<html:options collection="executionPeriodLVBs" labelProperty="label" property="value"/>
 				    </html:select>
+					<html:submit styleId="javascriptButtonID" styleClass="altJavaScriptSubmitButton" bundle="HTMLALT_RESOURCES" altKey="submit.submit">
+						<bean:message key="button.submit"/>
+					</html:submit>
 				</td>
 			</tr>
 		</table>

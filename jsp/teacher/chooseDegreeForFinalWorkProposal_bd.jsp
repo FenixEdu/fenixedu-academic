@@ -31,11 +31,17 @@
 			>
 		<html:options collection="infoExecutionYears" property="idInternal" labelProperty="year" />
 	</html:select>
+	<html:submit styleId="javascriptButtonID" styleClass="altJavaScriptSubmitButton" bundle="HTMLALT_RESOURCES" altKey="submit.submit">
+		<bean:message key="button.submit"/>
+	</html:submit>
 	<html:select bundle="HTMLALT_RESOURCES" altKey="select.degree" property="degree"
 			onchange="this.form.method.value='chooseDegree';this.form.submit();"
 			>
 		<html:options collection="executionDegreeList" property="idInternal" labelProperty="infoDegreeCurricularPlan.presentationName" />
 	</html:select>
+	<html:submit styleId="javascriptButtonID2" styleClass="altJavaScriptSubmitButton" bundle="HTMLALT_RESOURCES" altKey="submit.submit">
+		<bean:message key="button.submit"/>
+	</html:submit>
 	<br /><br />
 	<strong><bean:message key="label.teacher.finalWork.role" />:</strong>
 	<br />
@@ -175,6 +181,9 @@
 							this.form.selectedGroupProposal.value='<bean:write name="groupProposal" property="idInternal"/>';this.form.submit();
 						</bean:define>
 						<html:multibox bundle="HTMLALT_RESOURCES" altKey="multibox.selectedGroupProposals" property="selectedGroupProposals" onchange='<%= onChange.toString() %>'><bean:write name="groupProposal" property="idInternal"/></html:multibox>
+						<html:submit styleId="javascriptButtonID" styleClass="altJavaScriptSubmitButton" bundle="HTMLALT_RESOURCES" altKey="submit.submit">
+							<bean:message key="button.submit"/>
+						</html:submit>
 					</td>
 					<td bgcolor="<%= bgColor %>" align="center" rowspan="<%= numberOfStudents.toString() %>">
 						<a href="mailto:<%= emails %>"><bean:write name="groupProposal" property="orderOfPreference"/></a>

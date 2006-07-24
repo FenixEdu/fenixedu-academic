@@ -10,7 +10,7 @@
 
 <ft:tilesView definition="departmentMember.masterPage"
 	attributeName="body-inline">
-	
+	<f:loadBundle basename="resources/HtmlAltResources" var="htmlAltBundle"/>
 <style>
 table.vtsbc {
 margin-bottom: 1em;

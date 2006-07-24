@@ -28,6 +28,9 @@
 				<html:select bundle="HTMLALT_RESOURCES" altKey="select.executionYearId" property="executionYearId" onchange="this.form.submit();">
 					<html:options collection="executionYears" property="idInternal" labelProperty="year"/>
 				</html:select>
+				<html:submit styleId="javascriptButtonID" styleClass="altJavaScriptSubmitButton" bundle="HTMLALT_RESOURCES" altKey="submit.submit">
+					<bean:message key="button.submit"/>
+				</html:submit>
 			</td>
 		</tr>
 	</table>	

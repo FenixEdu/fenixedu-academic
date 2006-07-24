@@ -20,6 +20,7 @@
 			<fc:selectOneMenu value="#{CompetenceCourseManagement.selectedDepartmentUnitID}" onchange="submit()">
 				<f:selectItems value="#{CurricularCourseManagement.departmentUnits}"/>
 			</fc:selectOneMenu>
+			<h:outputText value="<input value='#{htmlAltBundle['submit.sumbit']}' id='javascriptButtonID' class='altJavaScriptSubmitButton' alt='#{htmlAltBundle['submit.sumbit']}' type='submit'>" escape="false"/>
 		</h:panelGrid>
 
 <%--

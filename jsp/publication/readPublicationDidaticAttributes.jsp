@@ -87,6 +87,9 @@
 		this.form.page.value='0';this.form.typePublication.value='Didatic';this.form.submit();">
 		<html:options collection="publicationTypesList" property="idInternal" labelProperty="publicationType"/>
 	</html:select>
+	<html:submit styleId="javascriptButtonID" styleClass="altJavaScriptSubmitButton" bundle="HTMLALT_RESOURCES" altKey="submit.submit">
+		<bean:message key="button.submit"/>
+	</html:submit>
 	<br/><br/>
 	
 <table>

@@ -37,11 +37,13 @@
 				<f:selectItem itemLabel="#{bundle['label.evaluation.type.writtenTest']}" itemValue="net.sourceforge.fenixedu.domain.WrittenTest"/>
 				<f:selectItem itemLabel="#{bundle['label.evaluation.type.project']}" itemValue="net.sourceforge.fenixedu.domain.Project"/>
 			</h:selectOneMenu>
+			<h:outputText value="<input value='#{htmlAltBundle['submit.sumbit']}' id='javascriptButtonID' class='altJavaScriptSubmitButton' alt='#{htmlAltBundle['submit.sumbit']}' type='submit'>" escape="false"/>
 
 			<h:outputText value="#{bundle['label.executionCourse']}: "/>
 			<h:selectOneMenu value="#{CoordinatorEvaluationsBackingBean.executionCourseID}" onchange="this.form.submit()">
 				<f:selectItems value="#{CoordinatorEvaluationsBackingBean.executionCourseSelectItems}"/>
 			</h:selectOneMenu>
+			<h:outputText value="<input value='#{htmlAltBundle['submit.sumbit']}' id='javascriptButtonID2' class='altJavaScriptSubmitButton' alt='#{htmlAltBundle['submit.sumbit']}' type='submit'>" escape="false"/>
 		</h:panelGrid>
 		<h:outputText value="<br/>" escape="false" />
 	</h:form>

@@ -34,7 +34,11 @@
 					onchange="this.form.method.value='changeExecutionYear';this.form.submit();">
 					<html:options collection="executionYears" property="value"
 						labelProperty="label" />
-				</html:select></td>
+					</html:select>
+					<html:submit styleId="javascriptButtonID" styleClass="altJavaScriptSubmitButton" bundle="HTMLALT_RESOURCES" altKey="submit.submit">
+						<bean:message key="button.submit"/>
+					</html:submit>
+				</td>
 			</tr>
 			<tr>
 				<td class="aright"><bean:message

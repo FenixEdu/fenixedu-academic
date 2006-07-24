@@ -27,6 +27,9 @@
 					<html:option value=""/>
 					<html:options collection="infoDegrees" labelProperty="name" property="idInternal"/>
 				</html:select>
+				<html:submit styleId="javascriptButtonID" styleClass="altJavaScriptSubmitButton" bundle="HTMLALT_RESOURCES" altKey="submit.submit">
+					<bean:message key="button.submit"/>
+				</html:submit>
 			</td>
 		</tr>
 		<logic:present name="oldInfoDegreeCurricularPlans">
@@ -39,6 +42,9 @@
 						<html:option value=""/>
 						<html:options collection="oldInfoDegreeCurricularPlans" labelProperty="name" property="idInternal"/>
 					</html:select>
+					<html:submit styleId="javascriptButtonID2" styleClass="altJavaScriptSubmitButton" bundle="HTMLALT_RESOURCES" altKey="submit.submit">
+						<bean:message key="button.submit"/>
+					</html:submit>
 				</td>
 			</tr>
 		</logic:present>

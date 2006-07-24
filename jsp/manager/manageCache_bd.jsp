@@ -48,6 +48,9 @@
 				onchange='this.form.submit();'
 				/>
 			<bean:message bundle="MANAGER_RESOURCES" key="cache.response.refresh.timeout.units"/>
+			<html:submit styleId="javascriptButtonID" styleClass="altJavaScriptSubmitButton" bundle="HTMLALT_RESOURCES" altKey="submit.submit">
+				<bean:message key="button.submit"/>
+			</html:submit>
 		</html:form>
 	</logic:present>
 	<br /> <br />

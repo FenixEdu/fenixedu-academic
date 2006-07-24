@@ -13,6 +13,9 @@
 		</logic:notPresent>
 		<html:options collection="executionPeriods" labelProperty="qualifiedName" property="idInternal"/>
 	</html:select>
+	<html:submit styleId="javascriptButtonID" styleClass="altJavaScriptSubmitButton" bundle="HTMLALT_RESOURCES" altKey="submit.submit">
+		<bean:message key="button.submit"/>
+	</html:submit>
 </html:form>
 
 <logic:present name="executionPeriod">

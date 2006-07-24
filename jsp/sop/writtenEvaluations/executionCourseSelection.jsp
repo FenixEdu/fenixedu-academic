@@ -31,6 +31,7 @@
 	 						onchange="this.form.submit();" valueChangeListener="#{SOPEvaluationManagementBackingBean.enableDropDowns}">
 				<f:selectItems value="#{SOPEvaluationManagementBackingBean.executionPeriods}" />
 			</h:selectOneMenu>
+			<h:outputText value="<input value='#{htmlAltBundle['submit.sumbit']}' id='javascriptButtonID' class='altJavaScriptSubmitButton' alt='#{htmlAltBundle['submit.sumbit']}' type='submit'>" escape="false"/>
 			
 			<h:outputText value="#{bundleSOP['property.context.degree']}: " />
 			<h:selectOneMenu id="chosenExecutionDegreeID" value="#{SOPEvaluationManagementBackingBean.chosenExecutionDegreeID}"
@@ -38,6 +39,7 @@
 							onchange="this.form.submit();" valueChangeListener="#{SOPEvaluationManagementBackingBean.setNewValue}">
 				<f:selectItems value="#{SOPEvaluationManagementBackingBean.executionDegrees}"/>
 			</h:selectOneMenu>
+			<h:outputText value="<input value='#{htmlAltBundle['submit.sumbit']}' id='javascriptButtonID2' class='altJavaScriptSubmitButton' alt='#{htmlAltBundle['submit.sumbit']}' type='submit'>" escape="false"/>
 			
 			<h:outputText value="#{bundleSOP['property.context.curricular.year']}: " />
 			<h:selectOneMenu id="chosenCurricularYearID" value="#{SOPEvaluationManagementBackingBean.chosenCurricularYearID}"
@@ -45,7 +47,7 @@
 							onchange="this.form.submit();" valueChangeListener="#{SOPEvaluationManagementBackingBean.setNewValue}">
 				<f:selectItems value="#{SOPEvaluationManagementBackingBean.curricularYearItems}" />
 			</h:selectOneMenu>
-			
+			<h:outputText value="<input value='#{htmlAltBundle['submit.sumbit']}' id='javascriptButtonID3' class='altJavaScriptSubmitButton' alt='#{htmlAltBundle['submit.sumbit']}' type='submit'>" escape="false"/>
 		</h:panelGrid>
 		<h:outputText value="<br/>" escape="false"/>
 		<h:commandButton alt="#{htmlAltBundle['commandButton.change']}" styleClass="inputbutton" action="#{SOPEvaluationManagementBackingBean.continueToCalendar}" value="#{bundle['button.change']}" />

@@ -110,6 +110,7 @@ table.executionCoursesWithoutWrittenEvaluations td {
 	 						onchange="this.form.submit();" valueChangeListener="#{SOPEvaluationManagementBackingBean.enableDropDowns}">
 				<f:selectItems value="#{SOPEvaluationManagementBackingBean.executionPeriods}" />
 			</h:selectOneMenu>
+			<h:outputText value="<input value='#{htmlAltBundle['submit.sumbit']}' id='javascriptButtonID' class='altJavaScriptSubmitButton' alt='#{htmlAltBundle['submit.sumbit']}' type='submit'>" escape="false"/>
 			
 			<h:outputText value="#{bundleSOP['property.context.degree']}: " />
 			<h:selectOneMenu id="executionDegreeID" value="#{SOPEvaluationManagementBackingBean.executionDegreeID}"
@@ -117,6 +118,7 @@ table.executionCoursesWithoutWrittenEvaluations td {
 							onchange="this.form.submit();" valueChangeListener="#{SOPEvaluationManagementBackingBean.setNewValueExecutionDegreeID}">
 				<f:selectItems value="#{SOPEvaluationManagementBackingBean.executionDegrees}"/>
 			</h:selectOneMenu>
+			<h:outputText value="<input value='#{htmlAltBundle['submit.sumbit']}' id='javascriptButtonID2' class='altJavaScriptSubmitButton' alt='#{htmlAltBundle['submit.sumbit']}' type='submit'>" escape="false"/>
 
 			<h:outputText value="#{bundleSOP['property.context.period']}: " />
 			<h:selectOneMenu id="calendarPeriod" value="#{SOPEvaluationManagementBackingBean.calendarPeriod}"
@@ -124,14 +126,15 @@ table.executionCoursesWithoutWrittenEvaluations td {
 							onchange="this.form.submit();" valueChangeListener="#{SOPEvaluationManagementBackingBean.setNewValueCalendarPeriod}">
 				<f:selectItems value="#{SOPEvaluationManagementBackingBean.calendarPeriodItems}"/>
 			</h:selectOneMenu>
-			
+			<h:outputText value="<input value='#{htmlAltBundle['submit.sumbit']}' id='javascriptButtonID3' class='altJavaScriptSubmitButton' alt='#{htmlAltBundle['submit.sumbit']}' type='submit'>" escape="false"/>
+
 			<h:outputText value="#{bundleSOP['property.context.curricular.year']}: " />
 			<h:selectManyCheckbox id="curricularYearIDs"  value="#{SOPEvaluationManagementBackingBean.curricularYearIDs}"
 					disabled="#{SOPEvaluationManagementBackingBean.disableDropDown}"
 					onchange="this.form.submit();" valueChangeListener="#{SOPEvaluationManagementBackingBean.setNewValueCurricularYearIDs}">
 				<f:selectItems value="#{SOPEvaluationManagementBackingBean.curricularYearItems}"/>
 			</h:selectManyCheckbox>
-
+			<h:outputText value="<input value='#{htmlAltBundle['submit.sumbit']}' id='javascriptButtonID4' class='altJavaScriptSubmitButton' alt='#{htmlAltBundle['submit.sumbit']}' type='submit'>" escape="false"/>
 		</h:panelGrid>
 		<h:outputText value="<br/>" escape="false"/>
 

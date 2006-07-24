@@ -47,11 +47,13 @@
 							onchange="this.form.submit();" valueChangeListener="#{SOPEvaluationManagementBackingBean.onExecutionDegreeChanged}">
 				<f:selectItems value="#{SOPEvaluationManagementBackingBean.executionDegrees}"/>
 			</fc:selectOneMenu>
+			<h:outputText value="<input value='#{htmlAltBundle['submit.sumbit']}' id='javascriptButtonID' class='altJavaScriptSubmitButton' alt='#{htmlAltBundle['submit.sumbit']}' type='submit'>" escape="false"/>
 <%--
 			<fc:selectOneMenu value="#{SOPEvaluationManagementBackingBean.executionDegreeID}"
 							onchange="this.form.submit();" valueChangeListener="#{SOPEvaluationManagementBackingBean.setNewValueExecutionDegreeID}">
 				<f:selectItems value="#{SOPEvaluationManagementBackingBean.executionDegrees}"/>
 			</fc:selectOneMenu>
+			<h:outputText value="<input value='#{htmlAltBundle['submit.sumbit']}' id='javascriptButtonID2' class='altJavaScriptSubmitButton' alt='#{htmlAltBundle['submit.sumbit']}' type='submit'>" escape="false"/>
 --%>
 
 			<h:outputText value="#{bundleSOP['property.context.curricular.year']}: " />
@@ -59,11 +61,13 @@
 							onchange="this.form.submit();" valueChangeListener="#{SOPEvaluationManagementBackingBean.onCurricularYearChanged}">
 				<f:selectItems value="#{SOPEvaluationManagementBackingBean.curricularYearItems}"/>
 			</fc:selectOneMenu>
+			<h:outputText value="<input value='#{htmlAltBundle['submit.sumbit']}' id='javascriptButtonID3' class='altJavaScriptSubmitButton' alt='#{htmlAltBundle['submit.sumbit']}' type='submit'>" escape="false"/>
 <%--
 			<fc:selectOneMenu value="#{SOPEvaluationManagementBackingBean.curricularYearID}"
 							onchange="this.form.submit();" valueChangeListener="#{SOPEvaluationManagementBackingBean.setNewValueCurricularYearID}">
 				<f:selectItems value="#{SOPEvaluationManagementBackingBean.curricularYearItems}" />
 			</fc:selectOneMenu>
+			<h:outputText value="<input value='#{htmlAltBundle['submit.sumbit']}' id='javascriptButtonID4' class='altJavaScriptSubmitButton' alt='#{htmlAltBundle['submit.sumbit']}' type='submit'>" escape="false"/>
 --%>
 
 			<h:outputText value="#{bundleSOP['lable.execution.course']}: " />
@@ -71,11 +75,13 @@
 							onchange="this.form.submit();" valueChangeListener="#{SOPEvaluationManagementBackingBean.onExecutionCourseChanged}">
 				<f:selectItems value="#{SOPEvaluationManagementBackingBean.executionCoursesItems}"/>
 			</fc:selectOneMenu>
+			<h:outputText value="<input value='#{htmlAltBundle['submit.sumbit']}' id='javascriptButtonID5' class='altJavaScriptSubmitButton' alt='#{htmlAltBundle['submit.sumbit']}' type='submit'>" escape="false"/>
 <%--
 			<fc:selectOneMenu value="#{SOPEvaluationManagementBackingBean.executionCourseID}" 
 							onchange="this.form.submit();" valueChangeListener="#{SOPEvaluationManagementBackingBean.setNewValueExecutionCourseID}">
 				<f:selectItems value="#{SOPEvaluationManagementBackingBean.executionCoursesLabels}" />
 			</fc:selectOneMenu> 
+			<h:outputText value="<input value='#{htmlAltBundle['submit.sumbit']}' id='javascriptButtonID6' class='altJavaScriptSubmitButton' alt='#{htmlAltBundle['submit.sumbit']}' type='submit'>" escape="false"/>
 --%>			
 		</h:panelGrid>
 		

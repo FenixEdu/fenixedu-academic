@@ -56,6 +56,7 @@
 			<h:selectOneRadio onchange="this.form.submit();" value="#{SOPEvaluationManagementBackingBean.orderCriteria}">
 				<f:selectItems value="#{SOPEvaluationManagementBackingBean.orderByCriteriaItems}" />
 			</h:selectOneRadio>
+			<h:outputText value="<input value='#{htmlAltBundle['submit.sumbit']}' id='javascriptButtonID' class='altJavaScriptSubmitButton' alt='#{htmlAltBundle['submit.sumbit']}' type='submit'>" escape="false"/>
 		</h:panelGrid>
 
 		<h:outputText value="<br/>" escape="false"/>

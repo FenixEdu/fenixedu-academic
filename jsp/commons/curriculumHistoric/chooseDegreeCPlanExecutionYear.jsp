@@ -28,6 +28,9 @@ function changedExecutionYear(){
 			<html:options collection="executionYears" property="idInternal" labelProperty="year" />
 		</logic:notEmpty>
 	</html:select>
+	<html:submit styleId="javascriptButtonID" styleClass="altJavaScriptSubmitButton" bundle="HTMLALT_RESOURCES" altKey="submit.submit">
+		<bean:message key="button.submit"/>
+	</html:submit>
 	<br /><br />
 	<logic:empty name="degreeCurricularPlans">
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>

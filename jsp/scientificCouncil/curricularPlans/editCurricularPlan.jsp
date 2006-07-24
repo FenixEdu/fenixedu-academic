@@ -27,6 +27,7 @@
 		<h:selectOneMenu id="curricularStage" value="#{DegreeCurricularPlanManagement.curricularStage}" onchange="this.form.submit();">
 			<f:selectItems value="#{DegreeCurricularPlanManagement.curricularStages}" />
 		</h:selectOneMenu>
+		<h:outputText value="<input value='#{htmlAltBundle['submit.sumbit']}' id='javascriptButtonID' class='altJavaScriptSubmitButton' alt='#{htmlAltBundle['submit.sumbit']}' type='submit'>" escape="false"/>
 		<h:message for="curricularStage" errorClass="error" rendered="#{empty DegreeCurricularPlanManagement.errorMessage}"/>
 		<h:outputText value="</p>" escape="false"/>
 		

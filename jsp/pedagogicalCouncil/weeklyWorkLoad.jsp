@@ -26,6 +26,9 @@
 				<html:select bundle="HTMLALT_RESOURCES" altKey="select.executionPeriodID" property="executionPeriodID" onchange="this.form.submit();">
 					<html:options collection="executionPeriods" property="idInternal" labelProperty="qualifiedName"/>
 				</html:select>
+				<html:submit styleId="javascriptButtonID" styleClass="altJavaScriptSubmitButton" bundle="HTMLALT_RESOURCES" altKey="submit.submit">
+					<bean:message key="button.submit"/>
+				</html:submit>
 			</td>
 		</tr>
 		<tr>
@@ -37,6 +40,9 @@
 					<html:option value=""/>
 					<html:options collection="executionDegrees" property="degreeCurricularPlan.idInternal" labelProperty="degreeCurricularPlan.presentationName"/>
 				</html:select>
+				<html:submit styleId="javascriptButtonID2" styleClass="altJavaScriptSubmitButton" bundle="HTMLALT_RESOURCES" altKey="submit.submit">
+					<bean:message key="button.submit"/>
+				</html:submit>
 			</td>
 		</tr>
 		<tr>
@@ -48,6 +54,9 @@
 					<html:option value=""/>
 					<html:options collection="curricularYears" property="idInternal" labelProperty="year"/>
 				</html:select>
+				<html:submit styleId="javascriptButtonID3" styleClass="altJavaScriptSubmitButton" bundle="HTMLALT_RESOURCES" altKey="submit.submit">
+					<bean:message key="button.submit"/>
+				</html:submit>
 			</td>
 		</tr>
 		<tr>
@@ -59,6 +68,9 @@
 					<html:option value="" key="label.all"/>
 					<html:options collection="executionCourses" property="idInternal" labelProperty="nome"/>
 				</html:select>
+				<html:submit styleId="javascriptButtonID4" styleClass="altJavaScriptSubmitButton" bundle="HTMLALT_RESOURCES" altKey="submit.submit">
+					<bean:message key="button.submit"/>
+				</html:submit>
 			</td>
 		</tr>
 	</table>

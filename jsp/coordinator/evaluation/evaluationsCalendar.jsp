@@ -82,11 +82,13 @@ table.executionCoursesWithoutWrittenEvaluations td {
 				<h:selectOneMenu value="#{CoordinatorEvaluationsBackingBean.executionPeriodID}" onchange="this.form.submit()">
 					<f:selectItems value="#{CoordinatorEvaluationsBackingBean.executionPeriodSelectItems}"/>
 				</h:selectOneMenu>
+				<h:outputText value="<input value='#{htmlAltBundle['submit.sumbit']}' id='javascriptButtonID' class='altJavaScriptSubmitButton' alt='#{htmlAltBundle['submit.sumbit']}' type='submit'>" escape="false"/>
 
 				<h:outputText value="#{bundle['property.curricularYear']}: " escape="false" />
 				<h:selectOneMenu value="#{CoordinatorEvaluationsBackingBean.curricularYearID}" onchange="this.form.submit()">
 					<f:selectItems value="#{CoordinatorEvaluationsBackingBean.curricularYearSelectItems}"/>
 				</h:selectOneMenu>
+				<h:outputText value="<input value='#{htmlAltBundle['submit.sumbit']}' id='javascriptButtonID2' class='altJavaScriptSubmitButton' alt='#{htmlAltBundle['submit.sumbit']}' type='submit'>" escape="false"/>
 
 				<h:outputText value="#{bundle['label.evaluation.type']}: "/>
 				<h:selectOneMenu value="#{CoordinatorEvaluationsBackingBean.evaluationType}" onchange="this.form.submit()">
@@ -95,6 +97,7 @@ table.executionCoursesWithoutWrittenEvaluations td {
 					<f:selectItem itemLabel="#{bundle['label.evaluation.type.project']}" itemValue="net.sourceforge.fenixedu.domain.Project"/>
 					<f:selectItem itemLabel="#{bundle['label.evaluation.type.exam']}" itemValue="net.sourceforge.fenixedu.domain.Exam"/>
 				</h:selectOneMenu>
+				<h:outputText value="<input value='#{htmlAltBundle['submit.sumbit']}' id='javascriptButtonID3' class='altJavaScriptSubmitButton' alt='#{htmlAltBundle['submit.sumbit']}' type='submit'>" escape="false"/>
 			</h:panelGrid>
 		<h:outputText value="</div>" escape="false"/>
 

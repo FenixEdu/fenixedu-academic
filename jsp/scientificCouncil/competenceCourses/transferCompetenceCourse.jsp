@@ -40,12 +40,14 @@ padding-right: 10px;
 			valueChangeListener="#{CompetenceCourseManagement.onChangeDepartmentUnit}">
 			<f:selectItems binding="#{CompetenceCourseManagement.departmentUnitItems}"/>
 		</fc:selectOneMenu>
+		<h:outputText value="<input value='#{htmlAltBundle['submit.sumbit']}' id='javascriptButtonID' class='altJavaScriptSubmitButton' alt='#{htmlAltBundle['submit.sumbit']}' type='submit'>" escape="false"/>
 		<h:outputText value="<p/><p>" escape="false"/>
   		<fc:selectOneMenu value="#{CompetenceCourseManagement.transferToScientificAreaUnitID}" 
 			onchange="submit()"
 			valueChangeListener="#{CompetenceCourseManagement.onChangeScientificAreaUnit}">
 			<f:selectItems binding="#{CompetenceCourseManagement.scientificAreaUnitItems}"/>
 		</fc:selectOneMenu>
+		<h:outputText value="<input value='#{htmlAltBundle['submit.sumbit']}' id='javascriptButtonID2' class='altJavaScriptSubmitButton' alt='#{htmlAltBundle['submit.sumbit']}' type='submit'>" escape="false"/>
 		<h:outputText value="<p/><p>" escape="false"/>
 		<fc:selectOneMenu value="#{CompetenceCourseManagement.transferToCompetenceCourseGroupUnitID}">
 			<f:selectItems binding="#{CompetenceCourseManagement.competenceCourseGroupUnitItems}"/>

@@ -13,16 +13,6 @@
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="selectExecutionDegree"/>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.executionYearID" property="executionYearID" value="44"/>
 
-	<!--<html:select bundle="HTMLALT_RESOURCES" altKey="select.executionYearID" property="executionYearID"
-		onchange="this.form.method.value='selectExecutionYear';this.form.submit();">
-		<html:options collection="executionYears" property="idInternal"
-			labelProperty="year" />
-	</html:select>
-
-	<p />
-	
-	-->
-	
 	<logic:present name="degreeCurricularPlans">
 		<table>
 			<logic:iterate id="degreeCurricularPlan" name="degreeCurricularPlans">

@@ -15,6 +15,9 @@
 	<html:select bundle="HTMLALT_RESOURCES" altKey="select.domainObjectClass" property="domainObjectClass" onchange="this.form.method.value='chooseClass';this.form.submit();">
 		<html:options collection="domainClasses" property="value" labelProperty="label"/>
 	</html:select>
+	<html:submit styleId="javascriptButtonID" styleClass="altJavaScriptSubmitButton" bundle="HTMLALT_RESOURCES" altKey="submit.submit">
+		<bean:message key="button.submit"/>
+	</html:submit>
 
 	<br/><br/>
 		

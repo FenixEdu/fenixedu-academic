@@ -17,9 +17,12 @@
 	<fieldset class='lfloat'>
 	
 	<p><label><strong><bean:message bundle="MANAGER_RESOURCES" key="label.manager.degree.tipoCurso"/></strong>:</label>
-	<html:select bundle="HTMLALT_RESOURCES" altKey="select.degreeType" property="degreeType" onchange="this.form.method.value='readDegreeCurricularPlans';this.form.submit();" >
-		<html:options collection="degreeTypes" property="value" labelProperty="label" /> 
-	</html:select>
+		<html:select bundle="HTMLALT_RESOURCES" altKey="select.degreeType" property="degreeType" onchange="this.form.method.value='readDegreeCurricularPlans';this.form.submit();" >
+			<html:options collection="degreeTypes" property="value" labelProperty="label" /> 
+		</html:select>
+		<html:submit styleId="javascriptButtonID" styleClass="altJavaScriptSubmitButton" bundle="HTMLALT_RESOURCES" altKey="submit.submit">
+			<bean:message key="button.submit"/>
+		</html:submit>
 	</p>
 	
 	<logic:notEmpty name="degreeCurricularPlans">
@@ -27,6 +30,9 @@
 		<html:select bundle="HTMLALT_RESOURCES" altKey="select.degreeCurricularPlanID" property="degreeCurricularPlanID" onchange="this.form.method.value='readExecutionDegrees';this.form.submit();">
 			<html:options collection="degreeCurricularPlans" property="value" labelProperty="label" /> 
 		</html:select>
+		<html:submit styleId="javascriptButtonID2" styleClass="altJavaScriptSubmitButton" bundle="HTMLALT_RESOURCES" altKey="submit.submit">
+			<bean:message key="button.submit"/>
+		</html:submit>
 		</p>
 	</logic:notEmpty>
 	

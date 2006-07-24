@@ -23,13 +23,21 @@
 		<p><html:select bundle="HTMLALT_RESOURCES" altKey="select.department" property="department" onchange="this.form.method.value='listExecutionPeriods';this.form.submit()">
 				<html:option key="choose.department" value=""/>
 				<html:options collection="departments" property="value" labelProperty="label"/>
-		</html:select></p>
+			</html:select>
+			<html:submit styleId="javascriptButtonID" styleClass="altJavaScriptSubmitButton" bundle="HTMLALT_RESOURCES" altKey="submit.submit">
+				<bean:message key="button.submit"/>
+			</html:submit>
+		</p>
 		
 		<logic:notEmpty name="executionPeriods">
 			<p><html:select bundle="HTMLALT_RESOURCES" altKey="select.executionPeriod" property="executionPeriod" onchange="this.form.submit()">
 						<html:option key="choose.execution.period" value=""/>
 						<html:options collection="executionPeriods" property="value" labelProperty="label"/>
-			</html:select></p>		
+				</html:select>
+				<html:submit styleId="javascriptButtonID2" styleClass="altJavaScriptSubmitButton" bundle="HTMLALT_RESOURCES" altKey="submit.submit">
+					<bean:message key="button.submit"/>
+				</html:submit>
+			</p>		
 		</logic:notEmpty>
 		
 		<logic:present name="listElements">

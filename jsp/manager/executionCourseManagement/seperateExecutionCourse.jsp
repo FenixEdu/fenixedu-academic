@@ -29,6 +29,9 @@
 				onchange="this.form.method.value='changeDestinationContext'; this.form.submit();">
 			<html:options collection="executionDegrees" labelProperty="label" property="value" />
 		</html:select>
+		<html:submit styleId="javascriptButtonID" styleClass="altJavaScriptSubmitButton" bundle="HTMLALT_RESOURCES" altKey="submit.submit">
+			<bean:message key="button.submit"/>
+		</html:submit>
 
 		<br />
 		<bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="curricularYear.destination"/>:<br />
@@ -36,6 +39,9 @@
 				onchange="this.form.method.value='changeDestinationContext'; this.form.submit();">
 			<html:options collection="curricularYear.list" labelProperty="label" property="value" />
 		</html:select>
+		<html:submit styleId="javascriptButtonID2" styleClass="altJavaScriptSubmitButton" bundle="HTMLALT_RESOURCES" altKey="submit.submit">
+			<bean:message key="button.submit"/>
+		</html:submit>
 
 		<br />
 		<logic:present name="executionCourses">

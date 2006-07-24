@@ -16,10 +16,13 @@
 	
 	<html:form action="/defineCreditsPeriods.do?method=showPeriods">
 		<logic:notEmpty name="executionPeriods">
-			<p><html:select bundle="HTMLALT_RESOURCES" altKey="select.executionPeriodId" property="executionPeriodId" onchange="this.form.submit()">
-				<html:option key="choose.execution.period" value=""/>
-				<html:options collection="executionPeriods" property="value" labelProperty="label"/>
-			</html:select></p>		
+			<p>
+				<html:select bundle="HTMLALT_RESOURCES" altKey="select.executionPeriodId" property="executionPeriodId" onchange="this.form.submit()">
+					<html:option key="choose.execution.period" value=""/>
+					<html:options collection="executionPeriods" property="value" labelProperty="label"/>
+				</html:select>
+				<h:outputText value="<input value='#{htmlAltBundle['submit.sumbit']}' id='javascriptButtonID' class='altJavaScriptSubmitButton' alt='#{htmlAltBundle['submit.sumbit']}' type='submit'>" escape="false"/>
+			</p>		
 		</logic:notEmpty>
 	</html:form>
 	

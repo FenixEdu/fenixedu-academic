@@ -26,6 +26,9 @@
 					<html:option key="option.all.execution.periods" value=""/>
 					<html:options labelProperty="label" property="value" collection="executionPeriodLabelValueBeans"/>
 				</html:select>
+				<html:submit styleId="javascriptButtonID" styleClass="altJavaScriptSubmitButton" bundle="HTMLALT_RESOURCES" altKey="submit.submit">
+					<bean:message key="button.submit"/>
+				</html:submit>
 			</html:form>
     	</td>
     </tr>

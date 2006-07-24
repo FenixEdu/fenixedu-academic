@@ -61,6 +61,7 @@
 			<f:selectItem itemValue="SEMESTRIAL" itemLabel="#{enumerationBundle['SEMESTRIAL']}"/>
 			<f:selectItem itemValue="ANUAL" itemLabel="#{enumerationBundle['ANUAL']}"/>
 		</fc:selectOneMenu>
+		<h:outputText value="<input value='#{htmlAltBundle['submit.sumbit']}' id='javascriptButtonID' class='altJavaScriptSubmitButton' alt='#{htmlAltBundle['submit.sumbit']}' type='submit'>" escape="false"/>
 		<h:outputText value="</p>" escape="false"/>
 
 		<h:outputText value="<p><label>#{bolonhaBundle['setDifferentLoadsForEachSemester']}? </label>" escape="false" rendered="#{CompetenceCourseManagement.regime == 'ANUAL'}"/>
@@ -68,6 +69,7 @@
 				onchange="this.form.submit();" valueChangeListener="#{CompetenceCourseManagement.resetCorrespondentCourseLoad}">
 			<f:selectItems value="#{CompetenceCourseManagement.periods}"/>
 		</h:selectOneRadio>
+<h:outputText value="<input value='#{htmlAltBundle['submit.sumbit']}' id='javascriptButtonID2' class='altJavaScriptSubmitButton' alt='#{htmlAltBundle['submit.sumbit']}' type='submit'>" escape="false"/>
 		<h:outputText value="</p>" escape="false" rendered="#{CompetenceCourseManagement.regime == 'ANUAL'}"/>
 		<h:outputText value="</p></fieldset>" escape="false"/>
 		

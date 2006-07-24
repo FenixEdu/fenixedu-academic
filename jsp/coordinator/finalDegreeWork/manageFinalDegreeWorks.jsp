@@ -17,6 +17,9 @@
 		<html:option value=""/>
 		<html:options collection="executionDegrees" property="idInternal" labelProperty="executionYear.nextExecutionYear.year"/>
 	</html:select>
+	<html:submit styleId="javascriptButtonID" styleClass="altJavaScriptSubmitButton" bundle="HTMLALT_RESOURCES" altKey="submit.submit">
+		<bean:message key="button.submit"/>
+	</html:submit>
 </html:form>
 <br/>
 <br/>
