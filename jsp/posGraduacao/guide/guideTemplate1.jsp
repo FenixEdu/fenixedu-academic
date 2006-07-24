@@ -109,40 +109,40 @@
             <td valign="top"><bean:message key="label.masterDegree.administrativeOffice.contributorAddress"/>:</td>
             <td><bean:write name="guide" property="infoContributor.contributorAddress"/></td>
           </tr>
-		<logic:notEmpty name="infoGuide" property="infoContributor.areaCode">
+		<logic:notEmpty name="guide" property="infoContributor.areaCode">
 			<tr>
 				<td><bean:message key="label.person.postCode" /></td>
-				<td><bean:write name="infoGuide" property="infoContributor.areaCode" /></td>
+				<td><bean:write name="guide" property="infoContributor.areaCode" /></td>
 			</tr>
 		</logic:notEmpty>
-		<logic:notEmpty name="infoGuide" property="infoContributor.areaOfAreaCode">
+		<logic:notEmpty name="guide" property="infoContributor.areaOfAreaCode">
 			<tr>
 				<td><bean:message key="label.person.areaOfPostCode" /></td>
-				<td><bean:write name="infoGuide" property="infoContributor.areaOfAreaCode" /></td>
+				<td><bean:write name="guide" property="infoContributor.areaOfAreaCode" /></td>
 			</tr>
 		</logic:notEmpty>
-		<logic:notEmpty name="infoGuide" property="infoContributor.area">
+		<logic:notEmpty name="guide" property="infoContributor.area">
 			<tr>
 				<td><bean:message key="label.person.place" /></td>
-				<td><bean:write name="infoGuide" property="infoContributor.area" /></td>
+				<td><bean:write name="guide" property="infoContributor.area" /></td>
 			</tr>
 		</logic:notEmpty>
-		<logic:notEmpty name="infoGuide" property="infoContributor.parishOfResidence">
+		<logic:notEmpty name="guide" property="infoContributor.parishOfResidence">
 			<tr>
 				<td><bean:message key="label.person.addressParish" /></td>
-				<td><bean:write name="infoGuide" property="infoContributor.parishOfResidence" /></td>
+				<td><bean:write name="guide" property="infoContributor.parishOfResidence" /></td>
 			</tr>
 		</logic:notEmpty>
-		<logic:notEmpty name="infoGuide" property="infoContributor.districtSubdivisionOfResidence">
+		<logic:notEmpty name="guide" property="infoContributor.districtSubdivisionOfResidence">
 			<tr>
 				<td><bean:message key="label.person.addressMunicipality" /></td>
-				<td><bean:write name="infoGuide" property="infoContributor.districtSubdivisionOfResidence" /></td>
+				<td><bean:write name="guide" property="infoContributor.districtSubdivisionOfResidence" /></td>
 			</tr>
 		</logic:notEmpty>
-		<logic:notEmpty name="infoGuide" property="infoContributor.districtOfResidence">
+		<logic:notEmpty name="guide" property="infoContributor.districtOfResidence">
 			<tr>
 				<td><bean:message key="label.person.addressDistrict" /></td>
-				<td><bean:write name="infoGuide" property="infoContributor.districtOfResidence" /></td>
+				<td><bean:write name="guide" property="infoContributor.districtOfResidence" /></td>
 			</tr>
 		</logic:notEmpty>
           
