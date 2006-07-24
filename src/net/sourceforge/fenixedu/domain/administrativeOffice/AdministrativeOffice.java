@@ -5,6 +5,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Student;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest;
@@ -84,6 +85,19 @@ public class AdministrativeOffice extends AdministrativeOffice_Base {
 		return null;
 
 	}
+
+    public static AdministrativeOffice getResponsibleAdministrativeOffice(DegreeType degreeType) {
+        switch (degreeType) {
+        case DEGREE:
+            return readByAdministrativeOfficeType(AdministrativeOfficeType.DEGREE);
+        case MASTER_DEGREE:
+            return readByAdministrativeOfficeType(AdministrativeOfficeType.MASTER_DEGREE);
+        case BOLONHA_ADVANCED_FORMATION_DIPLOMA:
+            return readByAdministrativeOfficeType(AdministrativeOfficeType.MASTER_DEGREE);
+        }
+        
+        return null;
+    }
 
 	public List<DocumentRequest> searchDocumentsBy(DocumentRequestType documentRequestType,
 			AcademicServiceRequestSituationType requestSituationType, Boolean isUrgent, Student student) {
