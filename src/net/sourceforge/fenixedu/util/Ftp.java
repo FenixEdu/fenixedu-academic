@@ -213,6 +213,7 @@ public class Ftp extends FenixUtil {
 			}
 
 		} catch (IOException e) {
+            e.printStackTrace();
 			System.err.println("Could not connect to server.");
 			throw new IOException("error.impossible.submit");
 		}
