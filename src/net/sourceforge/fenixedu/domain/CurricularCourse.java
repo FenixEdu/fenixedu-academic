@@ -17,6 +17,7 @@ import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriodType;
 import net.sourceforge.fenixedu.domain.curricularRules.CurricularRule;
 import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseType;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
+import net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationType;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
@@ -1078,6 +1079,51 @@ public class CurricularCourse extends CurricularCourse_Base {
         }
         return result;
     }
+    
+    private boolean hasEnrolmentsNotInAnyMarkSheet(MarkSheetType markSheetType,
+            ExecutionPeriod executionPeriod) {
+    	for (final CurriculumModule curriculumModule : this.getCurriculumModulesSet()) {
+
+            if (curriculumModule instanceof Enrolment) {
+                final Enrolment enrolment = (Enrolment) curriculumModule;
+
+                if (enrolment.getExecutionPeriod() == executionPeriod
+                        && markSheetType.getEnrolmentEvaluationType() == enrolment
+                                .getEnrolmentEvaluationType()) {
+                    if (!enrolment.hasAssociatedMarkSheet(markSheetType)) {
+                        return true;
+                    }
+                } else if (markSheetType == MarkSheetType.IMPROVEMENT) {
+                    if (enrolment.hasImprovement() && !enrolment.hasAssociatedMarkSheet(markSheetType)
+                            && enrolment.hasAttendsFor(executionPeriod)) {
+                    	return true;
+                    }
+                }
+            }
+        }
+    	return false;
+    }
+    
+    private boolean hasEnrolmentsNotInAnyMarkSheet(ExecutionPeriod executionPeriod) {
+    	for (final CurriculumModule curriculumModule : this.getCurriculumModulesSet()) {
+
+            if (curriculumModule instanceof Enrolment) {
+                final Enrolment enrolment = (Enrolment) curriculumModule;
+
+                if (enrolment.getExecutionPeriod() == executionPeriod
+                        && enrolment.getEnrolmentEvaluationType() == EnrolmentEvaluationType.NORMAL) {
+                    if (!enrolment.hasAssociatedMarkSheet(MarkSheetType.NORMAL)) {
+                        return true;
+                    }
+                } if (enrolment.hasImprovement() && !enrolment.hasAssociatedMarkSheet(MarkSheetType.IMPROVEMENT)
+                            && enrolment.hasAttendsFor(executionPeriod)) {
+                    	return true;
+                }
+            }
+        }
+    	return false;
+    }
+
 
     public MarkSheet createNormalMarkSheet(ExecutionPeriod executionPeriod, Teacher responsibleTeacher,
             Date evaluationDate, MarkSheetType markSheetType, Boolean submittedByTeacher,
@@ -1199,24 +1245,20 @@ public class CurricularCourse extends CurricularCourse_Base {
     }
 
 	public boolean hasAnyDegreeGradeToSubmit(ExecutionPeriod period) {
-		ExecutionDegree executionDegree = getExecutionDegreeFor(period.getExecutionYear());
-		YearMonthDay today = new YearMonthDay();
-		//TODO: special season
-		if(period.getSemester().equals(Integer.valueOf(1))) {
-			if(executionDegree.getPeriodGradeSubmissionNormalSeasonFirstSemester() == null || executionDegree.getPeriodGradeSubmissionNormalSeasonFirstSemester().getEndYearMonthDay().isAfter(today)) {
-				return false;
+		return hasEnrolmentsNotInAnyMarkSheet(period);
+	}
+	
+	public boolean hasAnyDegreeMarkSheetToConfirm(ExecutionPeriod period) {
+		for (MarkSheet markSheet : this.getMarkSheetsSet()) {
+			if(markSheet.getExecutionPeriod().equals(period) && markSheet.isNotConfirmed()) {
+				return true;
 			}
-		} else {
-			if(executionDegree.getPeriodGradeSubmissionNormalSeasonSecondSemester() == null || executionDegree.getPeriodGradeSubmissionNormalSeasonSecondSemester().getEndYearMonthDay().isAfter(today)) {
-				return false;
-			}			
 		}
-		Collection<Enrolment> enrolmentsNotSubmited = new HashSet<Enrolment>(getEnrolmentsNotInAnyMarkSheet(MarkSheetType.NORMAL, period));
-		enrolmentsNotSubmited.addAll(getEnrolmentsNotInAnyMarkSheet(MarkSheetType.IMPROVEMENT, period));
-		return !enrolmentsNotSubmited.isEmpty();
+		return false;
 	}
     
     public List<DegreeModuleScope> getDegreeModuleScopes(){
         return DegreeModuleScope.getDegreeModuleScopes(this);
-    }      
+    }
+      
 }

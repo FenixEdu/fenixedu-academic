@@ -981,14 +981,28 @@ public class ExecutionCourse extends ExecutionCourse_Base {
         return result;
     }
     
-    public boolean hasAnyDegreeGradeToSubmit(ExecutionPeriod period) {
+    public boolean hasAnyDegreeGradeToSubmit(ExecutionPeriod period, DegreeCurricularPlan degreeCurricularPlan) {
 		for (final CurricularCourse curricularCourse : this.getCurricularCoursesWithDegreeType()) {
-			if(curricularCourse.hasAnyDegreeGradeToSubmit(period)) {
-				return true;
+			if(degreeCurricularPlan == null || degreeCurricularPlan.equals(curricularCourse.getDegreeCurricularPlan())) {
+				if(curricularCourse.hasAnyDegreeGradeToSubmit(period)) {
+					return true;
+				}
 			}
 		}
 		return false;
 	}
+    
+	public boolean hasAnyDegreeMarkSheetToConfirm(ExecutionPeriod period, DegreeCurricularPlan degreeCurricularPlan) {
+		for (final CurricularCourse curricularCourse : this.getCurricularCoursesWithDegreeType()) {
+			if(degreeCurricularPlan == null || degreeCurricularPlan.equals(curricularCourse.getDegreeCurricularPlan())) {
+				if(curricularCourse.hasAnyDegreeMarkSheetToConfirm(period)) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
 	
 	public String nextShiftName(final ShiftType shiftType) {
 	int i = 1;
@@ -1043,5 +1057,4 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 
         return result;
     }
-
 }

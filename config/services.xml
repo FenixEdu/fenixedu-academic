@@ -10211,5 +10211,19 @@
 		<filterChains>
 			<chain name="DegreeOrMasterDegreeAdmininstrativeOfficeChain" />
 		</filterChains>
-	</service>		
+	</service>
+	<service>
+		<name>MarkSheetsToConfirmSendMail</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.degreeAdministrativeOffice.gradeSubmission.MarkSheetsToConfirmSendMail</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		<filterChains />
+	</service>	
+	<service>
+		<name>GradesToSubmitSendMail</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.degreeAdministrativeOffice.gradeSubmission.GradesToSubmitSendMail</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		<filterChains />
+	</service>	
 </serviceDefinitions>

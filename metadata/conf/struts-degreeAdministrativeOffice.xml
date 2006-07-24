@@ -193,6 +193,11 @@
 			<form-property name="printerName" type="java.lang.String" />
 			<form-property name="page" type="java.lang.Integer" initial="0"/>
 		</form-bean>
+		<form-bean name="markSheetSendMailForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
+			<form-property name="method" type="java.lang.String" />
+			<form-property name="markSheetIDs" type="java.lang.Integer[]" />
+		</form-bean>
+		
 		
 		<!-- Payments -->
 		<form-bean name="paymentsForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
@@ -558,6 +563,18 @@
        		<forward name="searchMarkSheet" path="/markSheetManagement.do?method=prepareSearchMarkSheet"/>       		
 		</action>				
 		
+		<action path="/markSheetSendMail"
+				type="net.sourceforge.fenixedu.presentationTier.Action.degreeAdministrativeOffice.gradeSubmission.SendMailMarkSheetDispatchAction"
+				input="show.markSheetSendMail.searchSendMail"
+				parameter="method"
+				name="markSheetSendMailForm"
+				scope="request">
+       		<forward name="searchSendMail" path="show.markSheetSendMail.searchSendMail"/>
+       		<forward name="prepareMarkSheetsToConfirmSendMail" path="show.markSheetSendMail.prepareMarkSheetsToConfirmSendMail"/>
+       		<forward name="prepareGradesToSubmitSendMail" path="show.markSheetSendMail.prepareGradesToSubmitSendMail"/>
+       		
+		</action>				
+
 		<!-- Payments -->
 		<action path="/payments"
 				parameter="method"
@@ -585,8 +602,8 @@
 				scope="request">
 				<forward name="viewPrices" path="prices.management.viewPrices"/>
 		       	<forward name="editPrice" path="prices.management.editPrice"/>
-		</action>
-		
+		</action>	
+
 		<!-- Document Requests Management -->
 		<action path="/documentRequestsManagement"
 				name="documentRequestsManagementForm"
@@ -600,8 +617,7 @@
 				<forward name="viewDocumentRequest" path="documentRequests.management.viewDocumentRequest"/>
 				<forward name="editDocumentRequest" path="documentRequests.management.editDocumentRequest"/>
 		</action>
-      
-      
+	
 	</action-mappings>
 
 	<!-- ========== Controller Configuration ================================ -->

@@ -188,6 +188,16 @@
 	<definition name="show.printMarkSheet.choosePrinterMarkSheet" extends="definition.degreeAdministrativeOffice.masterPage">
 		<put name="body" value="/degreeAdministrativeOffice/gradeSubmission/choosePrinterMarkSheet_bd.jsp"></put>
 	</definition>	
+	<definition name="show.markSheetSendMail.searchSendMail" extends="definition.degreeAdministrativeOffice.masterPage">
+		<put name="body" value="/degreeAdministrativeOffice/gradeSubmission/searchSendMail.jsp"></put>
+	</definition>	
+	<definition name="show.markSheetSendMail.prepareMarkSheetsToConfirmSendMail" extends="definition.degreeAdministrativeOffice.masterPage">
+		<put name="body" value="/degreeAdministrativeOffice/gradeSubmission/prepareMarkSheetsToConfirmSendMail.jsp"></put>
+	</definition>	
+	<definition name="show.markSheetSendMail.prepareGradesToSubmitSendMail" extends="definition.degreeAdministrativeOffice.masterPage">
+		<put name="body" value="/degreeAdministrativeOffice/gradeSubmission/prepareGradesToSubmitSendMail.jsp"></put>
+	</definition>	
+	
 	
 	
 	<!-- ************* Payments ************* -->
@@ -240,7 +250,7 @@
 	<definition name="prices.management.viewPrices" extends="definition.degreeAdministrativeOffice.masterPage">
 		<put name="body" value="/degreeAdministrativeOffice/pricesManagement/viewPrices.jsp"/>
 	</definition>
-	
+
 	<!-- ************* Document Requests Management ************* -->
 	<definition name="documentRequests.management.showOperations" extends="definition.degreeAdministrativeOffice.masterPage">
 		<put name="body" value="/degreeAdministrativeOffice/serviceRequests/documentRequests/showOperations.jsp"/>
@@ -264,6 +274,5 @@
 	
 	<definition name="documentRequests.management.editDocumentRequest" extends="definition.degreeAdministrativeOffice.masterPage">
 		<put name="body" value="/degreeAdministrativeOffice/serviceRequests/documentRequests/editDocumentRequest.jsp"/>
-	</definition>
-	
+	</definition>			
 </tiles-definitions>

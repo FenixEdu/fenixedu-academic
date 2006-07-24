@@ -6,6 +6,7 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -148,15 +149,27 @@ public class ExecutionPeriod extends ExecutionPeriod_Base implements Comparable 
     	return markSheets;
     }
     
-    public Collection<ExecutionCourse> getExecutionCoursesWithDegreeGradesToSubmit(){
+    public Collection<ExecutionCourse> getExecutionCoursesWithDegreeGradesToSubmit(DegreeCurricularPlan degreeCurricularPlan){
     	final Collection<ExecutionCourse> executionCourses = new ArrayList<ExecutionCourse>(); 
     	for (final ExecutionCourse executionCourse : this.getAssociatedExecutionCoursesSet()) {
-			if(executionCourse.hasAnyDegreeGradeToSubmit(this)) {
+			if(executionCourse.hasAnyDegreeGradeToSubmit(this, degreeCurricularPlan)) {
 				executionCourses.add(executionCourse);
 			}
 		}
     	return executionCourses;
     }
+    
+    public Collection<MarkSheet> getMarkSheetsToConfirm(DegreeCurricularPlan degreeCurricularPlan){
+    	final Collection<MarkSheet> markSheets = new ArrayList<MarkSheet>(); 
+    	for (final MarkSheet markSheet : this.getMarkSheetsSet()) {
+    		if((degreeCurricularPlan == null || markSheet.getCurricularCourse().getDegreeCurricularPlan().equals(degreeCurricularPlan))
+    				&& markSheet.isNotConfirmed()) {
+    			markSheets.add(markSheet);
+    		}
+		}
+    	return markSheets;
+    }
+
 
     // -------------------------------------------------------------
     // read static methods    

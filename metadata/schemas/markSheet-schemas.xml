@@ -297,3 +297,82 @@
 		<property name="maxLength" value="10" />
 	</slot>
 </schema>
+
+<schema name="markSheet.search.send.mail"
+	type="net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.gradeSubmission.MarkSheetManagementBaseBean">
+	<slot name="executionPeriod" key="label.executionPeriod"
+		layout="menu-select"
+		validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		<property name="providerClass"
+			value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionPeriodsNotClosedPublicProvider" />
+		<property name="choiceType"
+			value="net.sourceforge.fenixedu.domain.ExecutionPeriod" />
+		<property name="format"
+			value="${executionYear.year} - ${semester}º Sem" />
+	</slot>
+	<slot name="degree" key="label.degree"
+		layout="menu-select-postback">
+		<property name="providerClass"
+			value="net.sourceforge.fenixedu.presentationTier.renderers.providers.DegreeTypeDegrees" />
+		<property name="choiceType"
+			value="net.sourceforge.fenixedu.domain.Degree" />
+		<property name="format" value="Licenciatura em ${name}" />
+		<property name="destination" value="postBack"/>
+	</slot>
+	<slot name="degreeCurricularPlan" key="label.degreeCurricularPlan"
+		layout="menu-select">
+		<property name="providerClass"
+			value="net.sourceforge.fenixedu.presentationTier.renderers.providers.DegreeCurricularPlansForDegree" />
+		<property name="choiceType"
+			value="net.sourceforge.fenixedu.domain.DegreeCurricularPlan" />
+		<property name="format" value="${name}" />
+	</slot>
+</schema>
+
+<schema name="markSheet.send.mail"
+	type="net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.gradeSubmission.MarkSheetSendMailBean">
+	<slot name="from" read-only="true" key="label.from"/>
+	<slot name="cc" key="label.cc">
+		<property name="size" value="80" />
+	</slot>
+	<slot name="subject" key="label.subject">
+		<property name="size" value="80" />
+	</slot>
+	<slot name="message" key="label.message" layout="longText">
+		<property name="columns" value="80" />
+		<property name="rows" value="10" />
+	</slot>		
+</schema>
+
+<schema name="markSheet.view.send.mail"
+	type="net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.gradeSubmission.MarkSheetSendMailBean">
+	<slot name="executionPeriod" layout="format" key="label.executionPeriod">
+		<property name="format" value="${semester}º ${executionYear.year}" />
+	</slot>
+	<slot name="degree.name" key="label.degree"/>
+	<slot name="degreeCurricularPlan.name" key="label.degreeCurricularPlan"/>	
+</schema>
+
+<schema name="markSheet.send.mail.choose.markSheets"
+		type="net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.gradeSubmission.MarkSheetToConfirmSendMailBean">
+	<slot name="toSubmit" key="label.blank" />		
+	<slot name="markSheet.curricularCourse.name" key="label.curricularCourse" read-only="true"/>
+	<slot name="markSheet.responsibleTeacher.person.name" key="label.responsibleTeacher" read-only="true"/>
+</schema>
+
+<schema name="markSheet.send.mail.choose.executionCourses"
+		type="net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.gradeSubmission.GradesToSubmitExecutionCourseSendMailBean">
+	<slot name="toSubmit" key="label.blank" />		
+	<slot name="executionCourse.nome" key="label.executionCourse" read-only="true"/>
+</schema>
+
+
+
+<schema name="markSheet.teacher.gradeSubmission.view.submited.marks"
+	type="net.sourceforge.fenixedu.domain.EnrolmentEvaluation">
+	<slot name="enrolment.studentCurricularPlan.student.number" key="label.number"/>
+	<slot name="enrolment.studentCurricularPlan.student.person.name" key="label.name"/>	
+	<slot name="grade" key="label.grade"/>		
+	<slot name="examDate" key="label.evaluationDate"/>			
+</schema>
+

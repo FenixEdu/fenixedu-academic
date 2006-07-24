@@ -221,7 +221,7 @@ public class MarkSheetDispatchAction extends FenixDispatchAction {
     
     public ActionForward prepareSendMail(ActionMapping mapping,
             ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws FenixFilterException  {
-    	Collection<ExecutionCourse> executionCoursesWithDegreeGradesToSubmit = ExecutionPeriod.readActualExecutionPeriod().getExecutionCoursesWithDegreeGradesToSubmit();
+    	Collection<ExecutionCourse> executionCoursesWithDegreeGradesToSubmit = ExecutionPeriod.readActualExecutionPeriod().getExecutionCoursesWithDegreeGradesToSubmit(null);
     	System.out.println(executionCoursesWithDegreeGradesToSubmit.size());
     	return mapping.getInputForward();
     }
