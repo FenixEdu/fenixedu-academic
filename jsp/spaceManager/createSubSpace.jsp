@@ -5,9 +5,7 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 
-<bean:message bundle="SPACE_RESOURCES" key="link.create.space"/>
-<br/>
-<br/>
+<H2><bean:message bundle="SPACE_RESOURCES" key="link.create.space"/></H2>
 <br/>
 
 <bean:define id="selectedSpace" name="selectedSpaceInformation" property="space"/>

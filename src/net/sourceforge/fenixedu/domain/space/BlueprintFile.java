@@ -19,9 +19,9 @@ public class BlueprintFile extends BlueprintFile_Base {
     }
     
     public void delete() {
-        removeBlueprint();
-        removeRootDomainObject();
+        removeBlueprint();        
         deleteFile();
+        removeRootDomainObject();
         deleteDomainObject();
     }
 

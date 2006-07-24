@@ -4,8 +4,7 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 
-<bean:message bundle="SPACE_RESOURCES" key="space.manager.page.title"/>
-<br/>
+<H2><bean:message bundle="SPACE_RESOURCES" key="space.manager.page.title"/></H2>
 <br/>
 
 <html:link page="/showCreateSpaceForm.do">

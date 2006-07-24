@@ -37,17 +37,17 @@
 		<br/>
 	</logic:notEmpty>
 
+	<bean:define id="backLink">
+		/manageSpaces.do?method=manageSpace&page=0&spaceInformationID=<bean:write name="selectedSpaceInformationId"/>
+	</bean:define>	
 	
 	<h3><bean:message key="label.add.new.version" bundle="SPACE_RESOURCES"/>:</h3>
 	<fr:edit name="blueprintBean" id="spaceBlueprintVersion" type="net.sourceforge.fenixedu.dataTransferObject.spaceManager.CreateBlueprintSubmissionBean" 
 		schema="BlueprintSubmission.edit" action="<%="/manageBlueprints.do?method=submitBlueprint&spaceInformationID" + selectedSpaceInformationId.toString()%>">
+		<fr:destination name="cancel" path="<%= backLink %>"/>
 	</fr:edit>
 
-	<br/>
-	<bean:define id="backLink">
-		/manageSpaces.do?method=manageSpace&page=0&spaceInformationID=<bean:write name="selectedSpaceInformationId"/>
-	</bean:define>	
-		
+	<br/>	
 	<html:link page="<%= backLink %>">
 		<bean:message key="link.return" bundle="SPACE_RESOURCES"/>
 	</html:link>	
