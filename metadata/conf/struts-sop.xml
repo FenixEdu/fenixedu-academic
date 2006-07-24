@@ -1625,6 +1625,7 @@
 	<!-- ==================== View Curricular Course Historic ================== -->
        	<action path="/chooseExecutionYearAndDegreeCurricularPlan"
        		name="executionYearDegreeCurricularPlanForm"
+       		attribute="executionYearDegreeCurricularPlanForm"
        		type="net.sourceforge.fenixedu.presentationTier.Action.commons.curriculumHistoric.DegreeCurricularPlanExecutionYearDispacthAction"
        		validate="true"
 			input="/chooseExecutionYearAndDegreeCurricularPlan.do?method=prepare&amp;page=0"

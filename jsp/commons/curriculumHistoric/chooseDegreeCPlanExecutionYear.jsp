@@ -3,35 +3,29 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 
-<script language="Javascript" type="text/javascript">
-<!--
-function changedExecutionYear(){
-	document.forms[0].method.value="chooseDegreeCurricularPlan";
-	document.forms[0].page.value="0";
-	document.forms[0].submit();
-}
-// -->
-</script>
-
 <h2><bean:message key="title.student.marksSheetConsult"/></h2>
 
 <span class="error"><html:errors bundle="CURRICULUM_HISTORIC_RESOURCES"/><br /></span>
 
+	<strong><bean:message key="label.curriculumHistoric.chooseExecutionYear" bundle="CURRICULUM_HISTORIC_RESOURCES"/>:</strong><br />
+	<html:form action="/chooseExecutionYearAndDegreeCurricularPlan">
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="chooseDegreeCurricularPlan"/>
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="0"/>
+		<html:select bundle="HTMLALT_RESOURCES" altKey="select.executionYearID" property="executionYearID" onchange="this.form.submit()">
+			<option value=""><bean:message key="label.curriculumHistoric.chooseExecutionYear" bundle="CURRICULUM_HISTORIC_RESOURCES"/></option>
+			<logic:notEmpty name="executionYears">
+				<html:options collection="executionYears" property="idInternal" labelProperty="year" />
+			</logic:notEmpty>
+		</html:select>
+		<html:submit styleId="javascriptButtonID" styleClass="altJavaScriptSubmitButton" bundle="HTMLALT_RESOURCES" altKey="submit.submit">
+			<bean:message key="button.submit"/>
+		</html:submit>
+	</html:form>
+	<br /><br />
 <html:form action="/chooseExecutionYearAndDegreeCurricularPlan">
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="showActiveCurricularCourseScope"/>
-	
-
-	<strong><bean:message key="label.curriculumHistoric.chooseExecutionYear" bundle="CURRICULUM_HISTORIC_RESOURCES"/>:</strong><br />
-	<html:select bundle="HTMLALT_RESOURCES" altKey="select.executionYearID" property="executionYearID" onchange="changedExecutionYear()">
-		<option value=""><bean:message key="label.curriculumHistoric.chooseExecutionYear" bundle="CURRICULUM_HISTORIC_RESOURCES"/></option>
-		<logic:notEmpty name="executionYears">
-			<html:options collection="executionYears" property="idInternal" labelProperty="year" />
-		</logic:notEmpty>
-	</html:select>
-	<html:submit styleId="javascriptButtonID" styleClass="altJavaScriptSubmitButton" bundle="HTMLALT_RESOURCES" altKey="submit.submit">
-		<bean:message key="button.submit"/>
-	</html:submit>
-	<br /><br />
+	<bean:define id="executionYearID" name="executionYearDegreeCurricularPlanForm" property="executionYearID"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.executionYearID" property="executionYearID" value="<%= executionYearID.toString() %>"/>
 	<logic:empty name="degreeCurricularPlans">
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
 	</logic:empty>

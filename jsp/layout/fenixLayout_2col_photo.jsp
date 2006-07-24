@@ -9,6 +9,18 @@
 <link href="<%= request.getContextPath() + "/CSS/dotist_timetables.css" %>" rel="stylesheet" type="text/css" />
 <link href="<%= request.getContextPath() %>/CSS/transitional.css" rel="stylesheet" media="screen" type="text/css" />
 <title><tiles:getAsString name="title" ignore="true" /></title>
+<script type="text/javascript">
+function hideButtons()
+{
+	document.getElementById("javascriptButtonID").style.visibility="hidden";
+	document.getElementById("javascriptButtonID2").style.visibility="hidden";
+	document.getElementById("javascriptButtonID3").style.visibility="hidden";
+	document.getElementById("javascriptButtonID4").style.visibility="hidden";
+	document.getElementById("javascriptButtonID5").style.visibility="hidden";
+	document.getElementById("javascriptButtonID6").style.visibility="hidden";
+	document.getElementById("javascriptButtonID7").style.visibility="hidden";
+}
+</script>
 </head>
 <body>
 <%-- Layout component parameters : title, context, header, navGeral, navLocal, body, footer --%>
@@ -46,5 +58,8 @@
     <p><tiles:insert attribute="footer" /></p>
 </div>
 <!--End Footer -->
+<script type="text/javascript">
+	hideButtons()
+</script>
 </body>
 </html:html>
