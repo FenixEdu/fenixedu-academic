@@ -5,6 +5,7 @@ import java.util.Comparator;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -18,12 +19,13 @@ public class Blueprint extends Blueprint_Base {
         super();
     }
     
-    public Blueprint(Space space, BlueprintFile blueprintFile) {
+    public Blueprint(Space space, BlueprintFile blueprintFile, Person person) {
         this();
-        checkParameters(space, blueprintFile);
+        checkParameters(space, blueprintFile, person);
         updateSpaceBlueprintsValidUntilDates(space);
         setSpace(space);
         setBlueprintFile(blueprintFile);
+        setCreationPerson(person);        
         super.setValidFrom(new YearMonthDay());        
     }
     
@@ -72,12 +74,15 @@ public class Blueprint extends Blueprint_Base {
         throw new DomainException("error.blueprint.invalid.validUntil.date");
     }
 
-    private void checkParameters(Space space, BlueprintFile blueprintFile) {
+    private void checkParameters(Space space, BlueprintFile blueprintFile, Person person) {
        if(space == null) {
            throw new DomainException("error.blueprint.no.space");
        }
        if(blueprintFile == null) {
            throw new DomainException("error.blueprint.no.blueprintFile");
+       } 
+       if(person == null) {
+           throw new DomainException("error.blueprint.no.person");
        } 
     }
 }

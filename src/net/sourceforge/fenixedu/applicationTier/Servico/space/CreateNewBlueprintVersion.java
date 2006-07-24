@@ -4,6 +4,7 @@ import net.sourceforge.fenixedu.accessControl.AccessControl;
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.spaceManager.CreateBlueprintSubmissionBean;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.domain.accessControl.RoleGroup;
 import net.sourceforge.fenixedu.domain.person.RoleType;
@@ -29,8 +30,9 @@ public class CreateNewBlueprintVersion extends Service {
             throw new FenixServiceException("error.blueprint.submission.no.space");
         }
 
-        final FileMetadata fileMetadata = new FileMetadata(filename, AccessControl.getUserView()
-                .getPerson().getName());
+        Person person = AccessControl.getUserView().getPerson();
+        
+        final FileMetadata fileMetadata = new FileMetadata(filename, person.getName());
 
         final FileDescriptor fileDescriptor = FileManagerFactory.getFileManager().saveFile(
                 getFilePath(space.getMostRecentSpaceInformation()), filename, true, fileMetadata,
@@ -41,7 +43,7 @@ public class CreateNewBlueprintVersion extends Service {
                         .getChecksumAlgorithm(), fileDescriptor.getSize(), fileDescriptor.getUniqueId(),
                 new RoleGroup(Role.getRoleByRoleType(RoleType.SPACE_MANAGER)));
 
-        new Blueprint(space, blueprintFile);                
+        new Blueprint(space, blueprintFile, person);                
     }
 
     private FilePath getFilePath(SpaceInformation spaceInformation) {
