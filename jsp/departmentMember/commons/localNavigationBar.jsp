@@ -33,13 +33,15 @@
 		<br/>
 		<bean:define id="userView" name="<%= SessionConstants.U_VIEW %>" scope="session"/>
 		<% String deiCode = "28"; %>
-		<logic:equal name="userView" property="person.employee.currentDepartmentWorkingPlace.code" value="<%= deiCode %>">
-		<li>
-			<html:link page="/expectationManagement/viewPersonalExpectation.faces">
-				<bean:message key="link.personalExpectationsManagement"/>
-			</html:link>
-		</li>
-		</logic:equal>
+		<logic:notEmpty name="userView" property="person.employee.currentDepartmentWorkingPlace">
+			<logic:equal name="userView" property="person.employee.currentDepartmentWorkingPlace.code" value="<%= deiCode %>">
+				<li>
+					<html:link page="/expectationManagement/viewPersonalExpectation.faces">
+						<bean:message key="link.personalExpectationsManagement"/>
+					</html:link>
+				</li>
+			</logic:equal>
+		</logic:notEmpty>	
 
 		<!-- Temporary solution until department defines criteria for access to personal expectations -->		
 		<bean:define id="username" name="userView" property="person.username" type="java.lang.String" />
