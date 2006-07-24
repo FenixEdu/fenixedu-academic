@@ -26,3 +26,7 @@ function executeWithTempFile() {
 	rm tmp.sql
 	echo
 }
+
+execute "Alter Table Academic Service Request" alterTableAcademicServiceRequest.sql
+execute "Create table Blueprint table" createBlueprintTable.sql
+execute "ALter table File" alterFileTable.sql
