@@ -115,7 +115,29 @@ public abstract class Space extends Space_Base {
         setSuroundingSpace(null);
         removeRootDomainObject();
         deleteDomainObject();
-    }      
+    }   
+    
+    public SpaceInformation getMostRecentSpaceInformation() {
+        final List<SpaceInformation> spaceInformations = getSpaceInformations();
+        SpaceInformation selectedSpaceInformation = null;
+        for (final SpaceInformation spaceInformation : spaceInformations) {
+            final YearMonthDay validUntil = spaceInformation.getValidUntil();
+
+            if (selectedSpaceInformation == null || validUntil.isAfter(selectedSpaceInformation.getValidUntil())) {
+                selectedSpaceInformation = spaceInformation;
+            }
+        }
+        return selectedSpaceInformation;
+    }
+    
+    public Blueprint getMostRecentBlueprint(){
+        for (Blueprint  blueprint : getBlueprints()) {
+            if(blueprint.getValidUntil() == null) {
+                return blueprint;
+            }
+        }
+        return null;
+    }
 
     public static class SpaceSpaceInformationListener extends RelationAdapter<Space, SpaceInformation> {
 
@@ -138,27 +160,13 @@ public abstract class Space extends Space_Base {
         public void afterRemove(Space space, SpaceInformation spaceInformation) {
             if (space != null) {
                 if (spaceInformation.getValidUntil() == null) {
-                    final SpaceInformation nextMostRecentSpaceInformation = findMostRecentSpaceInformation(space.getSpaceInformations());
+                    final SpaceInformation nextMostRecentSpaceInformation = space.getMostRecentSpaceInformation();
                     if (nextMostRecentSpaceInformation != null) {
                         nextMostRecentSpaceInformation.setValidUntil(null);
                     }
                 }
             }
-        }
-
-        private static SpaceInformation findMostRecentSpaceInformation(final List<SpaceInformation> spaceInformations) {
-            SpaceInformation selectedSpaceInformation = null;
-
-            for (final SpaceInformation spaceInformation : spaceInformations) {
-                final YearMonthDay validUntil = spaceInformation.getValidUntil();
-
-                if (selectedSpaceInformation == null || validUntil.isAfter(selectedSpaceInformation.getValidUntil())) {
-                    selectedSpaceInformation = spaceInformation;
-                }
-            }
-
-            return selectedSpaceInformation;
-        }
+        }       
 
     }
 

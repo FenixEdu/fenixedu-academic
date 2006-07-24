@@ -71,6 +71,12 @@
        		<forward name="showSpaceResponsibility" path="show-space-responsibility"/>        		        	
        		<forward name="manageResponsabilityInterval" path="manage-responsability-interval"/>        		        	
         </action>
+        
+        <action path="/manageBlueprints"        		
+        		type="net.sourceforge.fenixedu.presentationTier.Action.spaceManager.ManageSpaceBlueprintsDA"
+        		parameter="method">                		
+       		<forward name="showBlueprintVersions" path="show-blueprint-versions"/>        		        	       
+        </action>
 
         <action path="/showCreateSpaceForm"
         		type="net.sourceforge.fenixedu.presentationTier.Action.commons.VoidAction"

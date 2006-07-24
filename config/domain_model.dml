@@ -180,6 +180,14 @@ class net.sourceforge.fenixedu.domain.accounting.AccountingTransaction extends n
     Integer keyAdjustmentTransaction;
 }
 
+class net.sourceforge.fenixedu.domain.space.Blueprint extends net.sourceforge.fenixedu.domain.DomainObject {
+	Integer keyBlueprintFile;
+	Integer keySpace;
+	Integer keyCreationPerson;
+	YearMonthDay validFrom;
+	YearMonthDay validUntil;
+}
+
 class net.sourceforge.fenixedu.domain.accounting.Entry extends net.sourceforge.fenixedu.domain.DomainObject {
     Integer keyAccount;
     Integer keyAccountingTransaction;
@@ -1190,8 +1198,8 @@ class net.sourceforge.fenixedu.domain.Evaluation extends net.sourceforge.fenixed
 
 	class net.sourceforge.fenixedu.domain.Project extends net.sourceforge.fenixedu.domain.Evaluation {
 	    String name;
-	DateTime projectBeginDateTime;
-	DateTime projectEndDateTime;
+		DateTime projectBeginDateTime;
+		DateTime projectEndDateTime;
         String description;     
         Boolean onlineSubmissionsAllowed;
         Integer maxSubmissionsToKeep;
@@ -1657,15 +1665,14 @@ class net.sourceforge.fenixedu.domain.Grouping extends net.sourceforge.fenixedu.
 }
 
 class net.sourceforge.fenixedu.domain.ExportGrouping extends net.sourceforge.fenixedu.domain.DomainObject {
-        Integer keySenderExecutionCourse;
-        Integer keySenderPerson;
-        Integer keyExecutionCourse;
-        Integer keyReceiverPerson;
-        Integer keyGrouping;
+    Integer keySenderExecutionCourse;
+    Integer keySenderPerson;
+    Integer keyExecutionCourse;
+    Integer keyReceiverPerson;
+    Integer keyGrouping;
     ProposalState proposalState;
 }
-        
-        
+               
 class net.sourceforge.fenixedu.domain.Guide extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer keyContributor;
 	Integer keyContributorParty;
@@ -1702,29 +1709,33 @@ class net.sourceforge.fenixedu.domain.GuideSituation extends net.sourceforge.fen
 }
 
 class net.sourceforge.fenixedu.domain.File extends net.sourceforge.fenixedu.domain.DomainObject {
-  String ojbConcreteClass;
-  String filename;
-  String displayName;
-  String mimeType;
-  String checksum;
-  String checksumAlgorithm;
-  Integer size;
-  String externalStorageIdentification;
-  DateTime uploadTime;
-  Group permittedGroup;
+	String ojbConcreteClass;
+	String filename;
+	String displayName;
+	String mimeType;
+	String checksum;
+	String checksumAlgorithm;
+	Integer size;
+	String externalStorageIdentification;
+	DateTime uploadTime;
+	Group permittedGroup;
 }
 
 	class net.sourceforge.fenixedu.domain.FileItem extends net.sourceforge.fenixedu.domain.File {
-	  FileItemPermittedGroupType fileItemPermittedGroupType;
+		FileItemPermittedGroupType fileItemPermittedGroupType;
 	}
 	
 	class net.sourceforge.fenixedu.domain.ProjectSubmissionFile extends net.sourceforge.fenixedu.domain.File {
-	 Integer keyProjectSubmission;
+		Integer keyProjectSubmission;
 	}
 
 	class net.sourceforge.fenixedu.domain.candidacy.CandidacyDocumentFile extends net.sourceforge.fenixedu.domain.File {
 		Integer keyCandidacyDocument;
 	}	
+	
+	class net.sourceforge.fenixedu.domain.space.BlueprintFile extends net.sourceforge.fenixedu.domain.File {
+		Integer keyBlueprint;
+	}
 
 class net.sourceforge.fenixedu.domain.FileEntry extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer keyPerson;
@@ -1779,8 +1790,6 @@ class net.sourceforge.fenixedu.domain.Identification extends net.sourceforge.fen
 		DateTime lastModifiedDate;
 		Integer keyModifiedBy;
 	}
-
-	
   
 class net.sourceforge.fenixedu.domain.inquiries.InquiriesCourse extends net.sourceforge.fenixedu.domain.DomainObject {
     Integer keyExecutionPeriod;
@@ -2497,11 +2506,13 @@ class net.sourceforge.fenixedu.domain.space.SpaceOccupation extends net.sourcefo
 	String ojbConcreteClass;
 }
 
-	class net.sourceforge.fenixedu.domain.space.ExtensionSpaceOccupation extends net.sourceforge.fenixedu.domain.space.SpaceOccupation {
-		YearMonthDay begin;
-		YearMonthDay end;
-		Integer keyExtension;
+	class net.sourceforge.fenixedu.domain.space.MaterialSpaceOccupation extends net.sourceforge.fenixedu.domain.space.SpaceOccupation {
 	}
+		class net.sourceforge.fenixedu.domain.space.ExtensionSpaceOccupation extends net.sourceforge.fenixedu.domain.space.MaterialSpaceOccupation {
+			YearMonthDay begin;
+			YearMonthDay end;
+			Integer keyExtension;
+		}
 
 	class net.sourceforge.fenixedu.domain.space.PersonSpaceOccupation extends net.sourceforge.fenixedu.domain.space.SpaceOccupation {
 		YearMonthDay begin;
@@ -2518,7 +2529,6 @@ class net.sourceforge.fenixedu.domain.space.SpaceOccupation extends net.sourcefo
 	    Integer keyWrittenEvaluation;
 	    Integer keyLesson;
 	}
-
 
 class net.sourceforge.fenixedu.domain.space.SpaceResponsibility extends net.sourceforge.fenixedu.domain.DomainObject {
 	YearMonthDay begin;
@@ -9304,6 +9314,32 @@ relation AcademicServiceRequestStudentCurricularPlan {
 relation AcademicServiceRequestAdministrativeOffice {
 	net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice playsRole administrativeOffice;
 	net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest playsRole academicServiceRequests {
+		multiplicity *;
+	}
+}
+
+relation BlueprintBlueprintFile {
+	net.sourceforge.fenixedu.domain.space.Blueprint playsRole blueprint;
+	net.sourceforge.fenixedu.domain.space.BlueprintFile playsRole blueprintFile;
+}
+
+relation PersonBlueprint {
+	net.sourceforge.fenixedu.domain.Person playsRole creationPerson;
+	net.sourceforge.fenixedu.domain.space.Blueprint playsRole blueprints {
+		multiplicity *;
+	}
+}
+
+relation SpaceBlueprint {
+	net.sourceforge.fenixedu.domain.space.Space playsRole space;
+	net.sourceforge.fenixedu.domain.space.Blueprint playsRole blueprints {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectBlueprint {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.space.Blueprint playsRole blueprints {
 		multiplicity *;
 	}
 }

@@ -33,5 +33,8 @@
     </definition>   
 	<definition name="manage-responsability-interval" extends="spaceManager.masterPage">
         <put name="body" value="/spaceManager/manageResponsabilityInterval.jsp"></put>
+    </definition>
+    <definition name="show-blueprint-versions" extends="spaceManager.masterPage">
+        <put name="body" value="/spaceManager/manageSpaceBlueprintVersions.jsp"></put>
     </definition>       
 </tiles-definitions>

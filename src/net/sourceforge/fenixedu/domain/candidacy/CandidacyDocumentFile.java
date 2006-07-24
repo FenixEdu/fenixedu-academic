@@ -1,14 +1,11 @@
 package net.sourceforge.fenixedu.domain.candidacy;
 
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
 
 public class CandidacyDocumentFile extends CandidacyDocumentFile_Base {
 
     public CandidacyDocumentFile() {
-        super();
-        setRootDomainObject(RootDomainObject.getInstance());
-        setOjbConcreteClass(this.getClass().getName());
+        super();     
     }
 
     public CandidacyDocumentFile(String filename, String displayName, String mimeType, String checksum,

@@ -11,8 +11,6 @@ public class FileItem extends FileItem_Base {
 
     public FileItem() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
-        setOjbConcreteClass(this.getClass().getName());
     }
 
     public FileItem(String filename, String displayName, String mimeType, String checksum,

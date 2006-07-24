@@ -27,7 +27,5 @@ public class DeleteFileItemFromItem extends Service {
 
         final IFileManager fileManager = FileManagerFactory.getFileManager();
         fileManager.deleteFile(fileItem.getExternalStorageIdentification());
-
     }
-
 }

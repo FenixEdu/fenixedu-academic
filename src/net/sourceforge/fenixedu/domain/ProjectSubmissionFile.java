@@ -6,8 +6,6 @@ public class ProjectSubmissionFile extends ProjectSubmissionFile_Base {
 
     public ProjectSubmissionFile() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
-        setOjbConcreteClass(this.getClass().getName());
     }
 
     public ProjectSubmissionFile(String filename, String displayName, String mimeType, String checksum,

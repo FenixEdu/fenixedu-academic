@@ -125,3 +125,8 @@
 	<slot name="end" key="label.end.date"/>
 	<setter signature="setSpaceResponsibilityInterval(begin, end)"/>
 </schema>
+<schema name="BlueprintSubmission.edit" type="net.sourceforge.fenixedu.dataTransferObject.spaceManager.CreateBlueprintSubmissionBean" bundle="SPACE_RESOURCES">
+	<slot name="inputStream" key="label.blueprintSubmission.blueprintFile" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		<property name="fileNameSlot" value="filename"/>
+	</slot>
+</schema>

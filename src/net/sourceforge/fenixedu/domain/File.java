@@ -8,6 +8,8 @@ public abstract class File extends File_Base {
 
     public File() {
         super();
+        setRootDomainObject(RootDomainObject.getInstance());
+        setOjbConcreteClass(this.getClass().getName());
     }
 
     protected void init(String filename, String displayName, String mimeType, String checksum,

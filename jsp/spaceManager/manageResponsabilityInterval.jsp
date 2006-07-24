@@ -29,9 +29,9 @@
 		
 	<logic:empty name="spaceResponsibility">
 	<div class="infoop2">
-			<p><b><bean:message key="label.unit.name" bundle="SPACE_RESOURCES"/>:</b>&nbsp;<bean:write name="unit" property="name"/></p> 
-			<p><b><bean:message key="label.unit.costCenterCode" bundle="SPACE_RESOURCES"/>:</b>&nbsp;<bean:write name="unit" property="costCenterCode"/></p> 			
-		</div>		
+		<p><b><bean:message key="label.unit.name" bundle="SPACE_RESOURCES"/>:</b>&nbsp;<bean:write name="unit" property="name"/></p> 
+		<p><b><bean:message key="label.unit.costCenterCode" bundle="SPACE_RESOURCES"/>:</b>&nbsp;<bean:write name="unit" property="costCenterCode"/></p> 			
+	</div>		
 		<br/>
 		<fr:create id="create" action="<%= backLink %>" type="net.sourceforge.fenixedu.domain.space.SpaceResponsibility"
 				   schema="CreateSpaceResponsibilityInterval">	   	

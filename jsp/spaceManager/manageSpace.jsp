@@ -99,8 +99,11 @@
 	
 	<p><b><bean:message bundle="SPACE_RESOURCES" key="label.bluePrint"/></b></p>
 	<html:img align="middle" src="<%= request.getContextPath() +"/images/clip_image002.jpg"%>" altKey="clip_image002" bundle="IMAGE_RESOURCES" />
+	<p><html:link page="/manageBlueprints.do?method=showBlueprintVersions&page=0" paramId="spaceInformationID" paramName="selectedSpaceInformation" paramProperty="idInternal">
+		<bean:message bundle="SPACE_RESOURCES" key="link.manage.blueprints"/>
+	</html:link></p>	
 	<br/>
-
+	
 	<logic:equal name="selectedSpaceInformation" property="space.class.name" value="net.sourceforge.fenixedu.domain.space.Room">
 		<p><b><bean:message bundle="SPACE_RESOURCES" key="label.space.details"/></b></p>
 		<fr:view name="selectedSpaceInformation" schema="RoomInformation" layout="tabular"/>
