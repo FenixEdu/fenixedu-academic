@@ -51,14 +51,13 @@ public class ManageSpaceBlueprintsDA extends FenixDispatchAction {
                     new Object[] { blueprintSubmissionBean });
 
         } catch (DomainException ex) {
-            saveActionMessageOnRequest(request, ex.getKey(), ex.getArgs());
-            RenderUtils.invalidateViewState();
+            saveActionMessageOnRequest(request, ex.getKey(), ex.getArgs());            
 
         } catch (FileManagerException ex) {
-            saveActionMessageOnRequest(request, ex.getKey(), ex.getArgs());
-            RenderUtils.invalidateViewState();
+            saveActionMessageOnRequest(request, ex.getKey(), ex.getArgs());            
         }
-               
+         
+        RenderUtils.invalidateViewState();
         request.setAttribute("blueprintBean", blueprintSubmissionBean);
         setMostRecentBlueprintFile(request, blueprintSubmissionBean.getSpaceInformation());
         setSpaceInfo(request, blueprintSubmissionBean.getSpaceInformation());
