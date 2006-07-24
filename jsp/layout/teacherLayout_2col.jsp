@@ -12,7 +12,7 @@
 <link href="<%= request.getContextPath() %>/CSS/dotist_print.css" rel="stylesheet" media="print" type="text/css" />
 <link href="<%= request.getContextPath() %>/CSS/transitional.css" rel="stylesheet" media="screen" type="text/css" />
 <script type="text/javascript" src="<%= request.getContextPath() %>/script/gesdis-scripting.js"></script>
-
+<script type="text/javascript" src="<%= request.getContextPath() %>/CSS/scripts/hideButtons.js"></script>
 </head>
 <body>
 <%-- Layout component parameters : header, navLocal, body --%>
@@ -48,6 +48,9 @@
     <tiles:insert attribute="footer" />
 </div>
 <!--End Footer -->
+<script type="text/javascript">
+	hideButtons()
+</script>
 </body>
 </html:html>
 

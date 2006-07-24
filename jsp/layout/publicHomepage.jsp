@@ -9,7 +9,7 @@
 <link rel="stylesheet" type="text/css" media="print" href="<%= request.getContextPath() %>/CSS/dotist_print.css" />
 <link rel="stylesheet" type="text/css" media="print" href="<%= request.getContextPath() %>/CSS/print.css" />
 <link rel="stylesheet" type="text/css" media="screen" href="<%= request.getContextPath() %>/CSS/homepage_screen.css" />
-
+<script type="text/javascript" src="<%= request.getContextPath() %>/CSS/scripts/hideButtons.js"></script>
 <title><tiles:getAsString name="title" ignore="true" /></title>
 
 </head>
@@ -68,6 +68,10 @@
 <!--END MAIN CONTENT -->
 
 </div>
+
+<script type="text/javascript">
+	hideButtons()
+</script>
 
 </body>
 </html:html>

@@ -10,6 +10,7 @@
 <link href="<%= request.getContextPath() %>/CSS/dotist_print.css" rel="stylesheet" media="print" type="text/css" />
 <link href="<%= request.getContextPath() %>/CSS/transitional.css" rel="stylesheet" media="screen" type="text/css" />
 <title><bean:message key="dot.title" bundle="GLOBAL_RESOURCES"/> - <tiles:getAsString name="title" ignore="true" /></title>
+<script type="text/javascript" src="<%= request.getContextPath() %>/CSS/scripts/hideButtons.js"></script>
 </head>
 <body>
 <%-- Layout component parameters : title, context, header, navGeral, navLocal, body, footer --%>
@@ -50,6 +51,9 @@
 <div id="footer">
     <tiles:insert attribute="footer" />
 </div>
+<script type="text/javascript">
+	hideButtons()
+</script>
 <!--End Footer -->
 </body>
 </html:html>

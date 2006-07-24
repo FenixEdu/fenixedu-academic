@@ -18,18 +18,7 @@
 <link rel="stylesheet" type="text/css" href="<%= request.getContextPath() %>/CSS/dotist_timetables.css" />
 
 <script type="text/javascript" src="<%= request.getContextPath() %>/CSS/scripts/expmenu.js"></script>
-<script type="text/javascript">
-function hideButtons()
-{
-	document.getElementById("javascriptButtonID").style.visibility="hidden";
-	document.getElementById("javascriptButtonID2").style.visibility="hidden";
-	document.getElementById("javascriptButtonID3").style.visibility="hidden";
-	document.getElementById("javascriptButtonID4").style.visibility="hidden";
-	document.getElementById("javascriptButtonID5").style.visibility="hidden";
-	document.getElementById("javascriptButtonID6").style.visibility="hidden";
-	document.getElementById("javascriptButtonID7").style.visibility="hidden";
-}
-</script>
+<script type="text/javascript" src="<%= request.getContextPath() %>/CSS/scripts/hideButtons.js"></script>
 
 <title><tiles:getAsString name="title" ignore="true" /></title> <%-- TITLE --%>
 

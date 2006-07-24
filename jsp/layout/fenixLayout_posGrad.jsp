@@ -10,6 +10,7 @@
 <link href="<%= request.getContextPath() %>/CSS/posgrad_print.css" rel="stylesheet" media="print" type="text/css" />
 <link href="<%= request.getContextPath() %>/CSS/transitional.css" rel="stylesheet" media="screen" type="text/css" />
 <title><tiles:getAsString name="title" ignore="true" /></title>
+<script type="text/javascript" src="<%= request.getContextPath() %>/CSS/scripts/hideButtons.js"></script>
 </head>
 <body>
 <%-- Layout component parameters : title, header, navGeral, navLocal, body, footer --%>
@@ -46,5 +47,8 @@
     <p><tiles:insert attribute="footer" /></p>
 </div>
 <!--End Footer -->
+<script type="text/javascript">
+	hideButtons()
+</script>
 </body>
 </html:html>

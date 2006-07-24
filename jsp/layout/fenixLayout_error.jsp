@@ -12,7 +12,7 @@
 <link href="<%= request.getContextPath() %>/CSS/transitional.css" rel="stylesheet" media="screen" type="text/css" />
 <bean:define id="pageTitle" ><tiles:getAsString name="title" ignore="true" /></bean:define>
 <title><bean:message key="dot.title" bundle="GLOBAL_RESOURCES"/> - <bean:message name="pageTitle" bundle="GLOBAL_RESOURCES"/></title>
-
+<script type="text/javascript" src="<%= request.getContextPath() %>/CSS/scripts/hideButtons.js"></script>
 </head>
 <body>
 <%-- Layout component parameters : title, context, header, navGeral, navLocal, body, footer --%>
@@ -51,5 +51,8 @@
     <tiles:insert attribute="footer" />
 </div>
 <!--End Footer -->
+<script type="text/javascript">
+	hideButtons()
+</script>
 </body>
 </html:html>

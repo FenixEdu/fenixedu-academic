@@ -19,6 +19,7 @@
 		<link rel="stylesheet" type="text/css" media="print" href="<%= request.getContextPath() %>/CSS/dotist_print.css" />
 
 		<script type="text/javascript" src="<%= request.getContextPath() %>/CSS/scripts/expmenu.js"></script>
+		<script type="text/javascript" src="<%= request.getContextPath() %>/CSS/scripts/hideButtons.js"></script>
 
 		<logic:present name="executionCourse">
 			<title><bean:write name="executionCourse" property="nome"/></title>
@@ -81,6 +82,9 @@
 		<div id="footer">
 			<tiles:insert attribute="footer" ignore="true"/>
 		</div>
+<script type="text/javascript">
+	hideButtons()
+</script>
 	</body>
 
 </html:html>
