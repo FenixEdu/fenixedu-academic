@@ -4,6 +4,7 @@
 <%@ taglib uri="/WEB-INF/jsf_fenix_components.tld" prefix="fc"%>
 
 <ft:tilesView definition="definition.student.masterPage" attributeName="body-inline">
+	<f:loadBundle basename="resources/HtmlAltResources" var="htmlAltBundle"/>
 	<f:loadBundle basename="resources/StudentResources" var="bundle"/>
 
 <style>@import url(<%= request.getContextPath() %>/CSS/dotist_calendars.css);</style>
@@ -37,6 +38,7 @@
 					onchange="this.form.submit();" valueChangeListener="#{studentCalendar.resetExecutionCourses}">
 				<f:selectItems value="#{studentCalendar.executionPeriodSelectItems}"/>
 			</h:selectOneMenu>
+			<h:outputText value="<input value='#{htmlAltBundle['submit.sumbit']}' id='javascriptButtonID' class='altJavaScriptSubmitButton' alt='#{htmlAltBundle['submit.sumbit']}' type='submit'>" escape="false"/>
 
 			<h:outputText value="#{bundle['label.execution.course']}"/>
 			<h:selectOneMenu id="executionCourseID" value="#{studentCalendar.executionCourseID}"

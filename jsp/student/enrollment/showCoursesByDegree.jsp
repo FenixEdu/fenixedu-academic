@@ -55,6 +55,9 @@ table td { width: 50%; vertical-align: bottom; }
 		<html:select bundle="HTMLALT_RESOURCES" altKey="select.degree" property="degree" styleClass="degrees" size="1" onchange="this.form.method.value='start'; this.form.submit();" >
 		<html:optionsCollection name="infoShiftEnrollment" property="infoExecutionDegreesLabelsList"/>				
 		</html:select>
+		<html:submit styleId="javascriptButtonID" styleClass="altJavaScriptSubmitButton" bundle="HTMLALT_RESOURCES" altKey="submit.submit">
+			<bean:message key="button.submit"/>
+		</html:submit>
 	</html:form>
 	
 	<html:form action="/studentShiftEnrollmentManagerLoockup" >

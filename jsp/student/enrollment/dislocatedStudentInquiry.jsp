@@ -31,8 +31,19 @@
 	</tr>
 	<tr>
 		<td><bean:message key="label.enrollment.dislocatedStudent.dislocated"/></td>
-		<td><html:radio bundle="HTMLALT_RESOURCES" altKey="radio.dislocatedAnswer" property="dislocatedAnswer" value="true" onchange="this.form.method.value='prepareDislocatedStudentInquiry';this.form.submit();" /></td>
-		<td><html:radio bundle="HTMLALT_RESOURCES" altKey="radio.dislocatedAnswer" property="dislocatedAnswer" value="false" onchange="this.form.method.value='prepareDislocatedStudentInquiry';this.form.submit();" /></td>
+		<td>
+			<html:radio bundle="HTMLALT_RESOURCES" altKey="radio.dislocatedAnswer" property="dislocatedAnswer" value="true" onchange="this.form.method.value='prepareDislocatedStudentInquiry';this.form.submit();" />
+		</td>
+		<td>
+			<html:radio bundle="HTMLALT_RESOURCES" altKey="radio.dislocatedAnswer" property="dislocatedAnswer" value="false" onchange="this.form.method.value='prepareDislocatedStudentInquiry';this.form.submit();" />
+		</td>
+	</tr>
+	<tr>
+		<td colspan="3">
+			<html:submit styleId="javascriptButtonID" styleClass="altJavaScriptSubmitButton" bundle="HTMLALT_RESOURCES" altKey="submit.submit">
+				<bean:message key="button.submit"/>
+			</html:submit>
+		</td>
 	</tr>
 </table>
 <p><em><bean:message key="label.enrollment.dislocatedStudent.dislocated.explanation"/></em></p>
@@ -57,6 +68,9 @@
 			<html:option value=""/>
 			<html:options collection="infoCountries" property="idInternal" labelProperty="name"/>
 		</html:select>
+		<html:submit styleId="javascriptButtonID2" styleClass="altJavaScriptSubmitButton" bundle="HTMLALT_RESOURCES" altKey="submit.submit">
+			<bean:message key="button.submit"/>
+		</html:submit>
 	</td>
 	<td>
 		<logic:present name="portugal">

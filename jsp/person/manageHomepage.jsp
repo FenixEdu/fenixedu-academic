@@ -24,9 +24,12 @@ width: 0.5em;
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="submitHomepage"/>
 
 	<p>
-	<bean:message key="label.homepage.activated" bundle="HOMEPAGE_RESOURCES"/>
-	<html:radio bundle="HTMLALT_RESOURCES" altKey="radio.activated" property="activated" value="true" onchange="this.form.submit()"/><bean:message key="label.homepage.activated.yes" bundle="HOMEPAGE_RESOURCES"/>
-	<html:radio bundle="HTMLALT_RESOURCES" altKey="radio.activated" property="activated" value="false" onchange="this.form.submit()"/><bean:message key="label.homepage.activated.no" bundle="HOMEPAGE_RESOURCES"/>
+		<bean:message key="label.homepage.activated" bundle="HOMEPAGE_RESOURCES"/>
+		<html:radio bundle="HTMLALT_RESOURCES" altKey="radio.activated" property="activated" value="true" onchange="this.form.submit()"/><bean:message key="label.homepage.activated.yes" bundle="HOMEPAGE_RESOURCES"/>
+		<html:radio bundle="HTMLALT_RESOURCES" altKey="radio.activated" property="activated" value="false" onchange="this.form.submit()"/><bean:message key="label.homepage.activated.no" bundle="HOMEPAGE_RESOURCES"/>
+		<html:submit styleId="javascriptButtonID" styleClass="altJavaScriptSubmitButton" bundle="HTMLALT_RESOURCES" altKey="submit.submit">
+			<bean:message key="button.submit"/>
+		</html:submit>
 	</p>
 	
 

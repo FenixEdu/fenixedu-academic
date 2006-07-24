@@ -48,6 +48,9 @@ padding: 0.5em;
 	<html:select bundle="HTMLALT_RESOURCES" altKey="select.executionPeriodID" property="executionPeriodID" onchange="this.form.submit();">
 		<html:options collection="executionPeriods" property="idInternal" labelProperty="qualifiedName"/>
 	</html:select>
+	<html:submit styleId="javascriptButtonID" styleClass="altJavaScriptSubmitButton" bundle="HTMLALT_RESOURCES" altKey="submit.submit">
+		<bean:message key="button.submit"/>
+	</html:submit>
 </html:form>
 
 

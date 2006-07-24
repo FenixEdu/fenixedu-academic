@@ -113,6 +113,9 @@ else
 				<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.roleType" property="roleType" name="findPersonForm"/>
 				
 				</html:select>
+				<html:submit styleId="javascriptButtonID" styleClass="altJavaScriptSubmitButton" bundle="HTMLALT_RESOURCES" altKey="submit.submit">
+					<bean:message key="button.submit"/>
+				</html:submit>
 			</td>
 		</tr>
 	
@@ -126,6 +129,9 @@ else
 				<html:options collection="values" property="value" labelProperty="label"/>				
 				<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.degreeType" property="degreeType" name="findPersonForm"/>
 				</html:select>
+				<html:submit styleId="javascriptButtonID2" styleClass="altJavaScriptSubmitButton" bundle="HTMLALT_RESOURCES" altKey="submit.submit">
+					<bean:message key="button.submit"/>
+				</html:submit>
 			</td>
 			</tr>
 		</logic:present>

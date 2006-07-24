@@ -18,11 +18,14 @@
 	<br />
 	<html:select bundle="HTMLALT_RESOURCES" altKey="select.executionDegreeOID" property="executionDegreeOID" size="1"
 				 onchange='this.form.method.value=\'selectExecutionDegree\';this.form.page.value=\'0\';this.form.submit();'>
-	<html:option value=""/>
+		<html:option value=""/>
 		<html:options property="idInternal"
 					  labelProperty="infoDegreeCurricularPlan.infoDegree.nome"
 					  collection="infoExecutionDegrees" />
 	</html:select>
+	<html:submit styleId="javascriptButtonID" styleClass="altJavaScriptSubmitButton" bundle="HTMLALT_RESOURCES" altKey="submit.submit">
+		<bean:message key="button.submit"/>
+	</html:submit>
 	<br />
 	<br />
 	<logic:present name="infoGroup">
@@ -116,6 +119,9 @@
 									   value='<%= groupProposalOrderOfPreference.toString() %>'
 									   onchange='<%= onChange.toString() %>'
 								/>
+							<html:submit styleId="javascriptButtonID2" styleClass="altJavaScriptSubmitButton" bundle="HTMLALT_RESOURCES" altKey="submit.submit">
+								<bean:message key="button.submit"/>
+							</html:submit>
 						</td>
 						<td class="listClasses" rowspan="2">
 							<bean:write name="groupProposal" property="finalDegreeWorkProposal.proposalNumber"/>

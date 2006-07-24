@@ -73,7 +73,8 @@ margin-bottom: 0.25em;
 }
 </style>
 	<f:loadBundle basename="resources/StudentResources" var="bundle"/>	
-	
+	<f:loadBundle basename="resources/HtmlAltResources" var="htmlAltBundle"/>
+
 	<h:outputText value="<h2>#{bundle['link.exams.enrolment']}</h2>" escape="false"
 	  rendered="#{manageEvaluationsForStudent.evaluationTypeString == 'net.sourceforge.fenixedu.domain.Exam'}"/>
 	<h:outputText value="<h2>#{bundle['link.writtenTests.enrolment']}</h2>" escape="false"
@@ -87,6 +88,7 @@ margin-bottom: 0.25em;
 			   valueChangeListener="#{manageEvaluationsForStudent.changeExecutionPeriod}">
 				<f:selectItems value="#{manageEvaluationsForStudent.executionPeriodsLabels}" />
 			</fc:selectOneMenu>
+			<h:outputText value="<input value='#{htmlAltBundle['submit.sumbit']}' id='javascriptButtonID' class='altJavaScriptSubmitButton' alt='#{htmlAltBundle['submit.sumbit']}' type='submit'>" escape="false"/>
 		</h:panelGrid>
 		<h:outputText value="</div>	" escape="false"/>
 		

@@ -29,8 +29,14 @@
 		<table width="100%" class="infoop">
 			<tr>
 				<td><bean:message key="label.studentCurricularPlan" bundle="STUDENT_RESOURCES" /></td>
-				<td><html:select bundle="HTMLALT_RESOURCES" altKey="select.studentCPID" property="studentCPID"
-							onchange='this.form.submit();'> <html:options collection="allSCPs" property="value" labelProperty="label" /></html:select></td>
+				<td>
+					<html:select bundle="HTMLALT_RESOURCES" altKey="select.studentCPID" property="studentCPID"
+							onchange='this.form.submit();'> <html:options collection="allSCPs" property="value" labelProperty="label" />
+					</html:select>
+					<html:submit styleId="javascriptButtonID" styleClass="altJavaScriptSubmitButton" bundle="HTMLALT_RESOURCES" altKey="submit.submit">
+						<bean:message key="button.submit"/>
+					</html:submit>
+				</td>
 			</tr>
 			
 			<tr>
@@ -40,6 +46,9 @@
 						onchange='this.form.submit();' >
 						<html:options collection="enrollmentOptions" property="value" labelProperty="label"/>
 					</html:select>
+					<html:submit styleId="javascriptButtonID2" styleClass="altJavaScriptSubmitButton" bundle="HTMLALT_RESOURCES" altKey="submit.submit">
+						<bean:message key="button.submit"/>
+					</html:submit>
 				</td>
 			</tr>
 		</table>

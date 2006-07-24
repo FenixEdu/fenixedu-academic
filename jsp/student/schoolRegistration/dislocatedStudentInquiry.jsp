@@ -29,11 +29,21 @@
 			<td></td>
 			<td><bean:message key="label.yes" bundle="STUDENT_RESOURCES"/></td>
 			<td><bean:message key="label.no" bundle="STUDENT_RESOURCES"/></td>
+			<td></td>
 		</tr>
 		<tr>
 			<td><bean:message key="label.enrollment.dislocatedStudent.dislocated" bundle="STUDENT_RESOURCES" /></td>
-			<td><html:radio bundle="HTMLALT_RESOURCES" altKey="radio.dislocatedAnswer" property="dislocatedAnswer" value="true" onchange="this.form.method.value='prepareDislocatedStudentInquiry';this.form.submit();" /></td>
-			<td><html:radio bundle="HTMLALT_RESOURCES" altKey="radio.dislocatedAnswer" property="dislocatedAnswer" value="false" onchange="this.form.method.value='prepareDislocatedStudentInquiry';this.form.submit();" /></td>
+			<td>
+				<html:radio bundle="HTMLALT_RESOURCES" altKey="radio.dislocatedAnswer" property="dislocatedAnswer" value="true" onchange="this.form.method.value='prepareDislocatedStudentInquiry';this.form.submit();" />
+			</td>
+			<td>
+				<html:radio bundle="HTMLALT_RESOURCES" altKey="radio.dislocatedAnswer" property="dislocatedAnswer" value="false" onchange="this.form.method.value='prepareDislocatedStudentInquiry';this.form.submit();" />
+			</td>
+			<td>
+				<html:submit styleId="javascriptButtonID" styleClass="altJavaScriptSubmitButton" bundle="HTMLALT_RESOURCES" altKey="submit.submit">
+					<bean:message key="button.submit"/>
+				</html:submit>
+			</td>
 		</tr>
 	</table>
 	<p><em><bean:message

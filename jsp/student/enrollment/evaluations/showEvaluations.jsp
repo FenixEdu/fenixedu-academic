@@ -63,7 +63,8 @@ td.el_courses {
 text-align: left;
 }
 </style>
-	<f:loadBundle basename="resources/StudentResources" var="bundle"/>		
+	<f:loadBundle basename="resources/StudentResources" var="bundle"/>
+	<f:loadBundle basename="resources/HtmlAltResources" var="htmlAltBundle"/>
 	<h:outputText value="<h2>#{bundle['label.evaluations.enrolment']}</h2>" escape="false" />
 	<h:outputText value="<p><em>#{bundle['label.do.enrolment']}:</em> " escape="false" />
 	<h:outputLink value="#{displayEvaluationsToEnrol.contextPath}/student/enrollment/evaluations/showWrittenEvaluations.faces?evaluationType=1">
@@ -82,11 +83,13 @@ text-align: left;
 			   valueChangeListener="#{displayEvaluationsToEnrol.changeExecutionPeriod}">
 				<f:selectItems value="#{displayEvaluationsToEnrol.executionPeriodsLabels}" />
 			</fc:selectOneMenu>
+			<h:outputText value="<input value='#{htmlAltBundle['submit.sumbit']}' id='javascriptButtonID' class='altJavaScriptSubmitButton' alt='#{htmlAltBundle['submit.sumbit']}' type='submit'>" escape="false"/>
 			<h:outputText value="#{bundle['link.evaluations.enrolment']}: " styleClass="boldFontClass" />
 			<fc:selectOneMenu value="#{displayEvaluationsToEnrol.evaluationType}" onchange="this.form.submit();"
 			   valueChangeListener="#{displayEvaluationsToEnrol.changeEvaluationType}">
 				<f:selectItems value="#{displayEvaluationsToEnrol.evaluationTypes}" />
 			</fc:selectOneMenu>
+			<h:outputText value="<input value='#{htmlAltBundle['submit.sumbit']}' id='javascriptButtonID2' class='altJavaScriptSubmitButton' alt='#{htmlAltBundle['submit.sumbit']}' type='submit'>" escape="false"/>
 		</h:panelGrid>
 		<h:outputText value="</div>" escape="false" />
 		<h:outputText value="<br/>" escape="false"/>		

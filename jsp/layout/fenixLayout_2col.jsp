@@ -11,6 +11,14 @@
 <link href="<%= request.getContextPath() %>/CSS/dotist_print.css" rel="stylesheet" media="print" type="text/css" />
 <link href="<%= request.getContextPath() %>/CSS/transitional.css" rel="stylesheet" media="screen" type="text/css" />
 <title><bean:message key="dot.title" bundle="GLOBAL_RESOURCES"/> - <tiles:getAsString name="title" ignore="true" /></title>
+<script type="text/javascript">
+function hideButtons()
+{
+	document.getElementById("javascriptButtonID").style.visibility="hidden";
+	document.getElementById("javascriptButtonID2").style.visibility="hidden";
+	document.getElementById("javascriptButtonID3").style.visibility="hidden";
+}
+</script>
 
 
 </head>
@@ -53,5 +61,10 @@
     <tiles:insert attribute="footer" />
 </div>
 <!--End Footer -->
+
+<script type="text/javascript">
+	hideButtons()
+</script>
+
 </body>
 </html:html>

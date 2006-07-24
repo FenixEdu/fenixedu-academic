@@ -5,7 +5,7 @@
 <%@ taglib uri="/WEB-INF/jsf_fenix_components.tld" prefix="fc"%>
 
 <ft:tilesView definition="df.page.structure" attributeName="body-inline">
-
+<f:loadBundle basename="resources/HtmlAltResources" var="htmlAltBundle"/>
 <style>
 .eo_highlight { background-color: #ffc; }
 </style>
@@ -23,13 +23,10 @@
 		<fc:selectOneMenu value="#{organizationalStructure.choosenExecutionYearID}" onchange="this.form.submit();">
 			<f:selectItems value="#{organizationalStructure.executionYears}" />
 		</fc:selectOneMenu>
+		<h:outputText value="<input value='#{htmlAltBundle['submit.sumbit']}' id='javascriptButtonID' class='altJavaScriptSubmitButton' alt='#{htmlAltBundle['submit.sumbit']}' type='submit'>" escape="false"/>
 		<h:panelGroup >	
 			<h:outputText value="#{organizationalStructure.functions}" escape="false"/>		
 		</h:panelGroup>
-		
-		
-		
-						    				
 	</h:form>
 
 </ft:tilesView> 
