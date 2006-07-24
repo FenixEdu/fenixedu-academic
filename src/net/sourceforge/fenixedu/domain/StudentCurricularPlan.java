@@ -18,7 +18,7 @@ import net.sourceforge.fenixedu.domain.branch.BranchType;
 import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseEnrollmentType;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentCondition;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
-import net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationType;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degree.enrollment.CurricularCourse2Enroll;
 import net.sourceforge.fenixedu.domain.degree.enrollment.NotNeedToEnrollInCurricularCourse;
 import net.sourceforge.fenixedu.domain.degree.enrollment.rules.IEnrollmentRule;
@@ -1281,6 +1281,10 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     		}
     	}
     	return numberCompletedCourses;
+    }
+
+    public DegreeType getDegreeType() {
+        return getDegreeCurricularPlan().getDegree().getTipoCurso();
     }
 
 }
