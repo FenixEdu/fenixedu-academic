@@ -90,6 +90,7 @@ public class ManageTeacherInstitutionWorkingTimeDispatchAction extends FenixDisp
             institutionWorkingTimeForm.set("endTimeMinutes", String.valueOf(time.get(Calendar.MINUTE)));
 
             institutionWorkingTimeForm.set("weekDay", institutionWorkTime.getWeekDay().getName());
+            institutionWorkingTimeForm.set("institutionWorkTimeID", institutionWorkTime.getIdInternal());
         }
 
         institutionWorkingTimeForm.set("teacherNumber", String.valueOf(teacher.getTeacherNumber()));
