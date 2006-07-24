@@ -22,7 +22,7 @@ import org.apache.commons.collections.Predicate;
  */
 public class ExecutionYear extends ExecutionYear_Base implements Comparable {
 
-    public static final Comparator EXECUTION_YEAR_COMPARATOR_BY_YEAR = new BeanComparator("year", Collator.getInstance());
+    public static final Comparator<ExecutionYear> EXECUTION_YEAR_COMPARATOR_BY_YEAR = new BeanComparator("year", Collator.getInstance());
     
     public ExecutionYear() {
 		super();
