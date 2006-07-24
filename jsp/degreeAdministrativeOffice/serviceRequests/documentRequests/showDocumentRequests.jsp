@@ -1,0 +1,45 @@
+<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
+<%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
+<%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
+<%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
+<%@ taglib uri="/WEB-INF/enum.tld" prefix="e" %>
+
+<html:xhtml/>
+
+<h2><bean:message key="label.documentRequestsManagement.showDocumentRequests" /></h2>
+
+<hr><br/>
+
+<logic:messagesPresent message="true">
+		<ul>
+			<html:messages id="messages" message="true">
+				<li><span class="error0"><bean:write name="messages" /></span></li>
+			</html:messages>
+		</ul>
+		<br />
+</logic:messagesPresent>
+
+<logic:notEmpty name="documentRequestsResult">
+
+	<fr:view name="documentRequestsResult" schema="DocumentRequest.view-without-numberOfPages">
+		<fr:layout name="tabular">
+			<fr:property name="classes" value="tstyle4 thlight thright" />
+			
+			<fr:property name="linkFormat(view)" value="documentRequestsManagement.do?method=viewRequest&documentRequestId=${idInternal}"/>
+			<fr:property name="key(view)" value="label.documentRequestsManagement.viewRequest"/>
+
+			<fr:property name="linkFormat(edit)" value="documentRequestsManagement.do?method=editRequest&documentRequestId=${idInternal}"/>
+			<fr:property name="key(edit)" value="label.documentRequestsManagement.editRequest"/>
+			
+			<fr:property name="sortBy" value="urgentRequest=desc,creationDate=asc"/>
+		</fr:layout>
+	</fr:view>
+</logic:notEmpty>
+
+<logic:empty name="documentRequestsResult">
+	<bean:message key="label.documentRequestsManagement.noDocumentRequests" />
+</logic:empty>
+
+<html:form action="/documentRequestsManagement.do?method=prepareSearch">
+	<html:submit><bean:message key="label.documentRequestsManagement.back" /></html:submit>
+</html:form>

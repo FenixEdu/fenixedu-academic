@@ -67,8 +67,8 @@ public abstract class DocumentRequest extends DocumentRequest_Base {
 		super.setNumberOfPages(numberOfPages);
 		super.setUrgentRequest(urgentRequest);
 	}
-	
-	public boolean isUrgent() {
+
+	public boolean isUrgentRequest() {
 		return getUrgentRequest().booleanValue();
 	}
 
@@ -93,9 +93,9 @@ public abstract class DocumentRequest extends DocumentRequest_Base {
 	@Override
 	public void setNumberOfPages(Integer numberOfPages) {
 		throw new DomainException(
-		"error.serviceRequests.documentRequests.enclosing_type.cannot.modify.numberOfPages");
+				"error.serviceRequests.documentRequests.enclosing_type.cannot.modify.numberOfPages");
 	}
-	
+
 	@Override
 	public void setUrgentRequest(Boolean urgentRequest) {
 		throw new DomainException(

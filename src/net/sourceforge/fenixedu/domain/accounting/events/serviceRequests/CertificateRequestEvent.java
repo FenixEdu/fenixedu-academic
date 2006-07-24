@@ -98,7 +98,7 @@ public class CertificateRequestEvent extends CertificateRequestEvent_Base {
     }
 
     public boolean isUrgentRequest() {
-        return getCertificateRequest().isUrgent();
+        return getCertificateRequest().isUrgentRequest();
 
     }
 }

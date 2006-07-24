@@ -2,7 +2,7 @@
 	<slot name="creationDate" read-only="true" key="label.net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest.creationDate"/>
 	<slot name="studentCurricularPlan.student.studentNumber" read-only="true" key="label.net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest.studentCurricularPlan.student.studentNumber" />
 	<slot name="studentCurricularPlan.student.person.name" read-only="true" key="label.net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest.studentCurricularPlan.student.person.name"/>
-	<slot name="activeSituation.academicServiceRequestSituationType" key="label.net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest.activeSituation.academicServiceRequestSituationType" />
+	<slot name="academicServiceRequestSituationType" key="label.net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest.activeSituation.academicServiceRequestSituationType" />
 </schema>
 
 <schema name="AcademicServiceRequest.view-without-active-situation-type" extends="academicServiceRequest.view" type="net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest" bundle="APPLICATION_RESOURCES">
@@ -16,7 +16,7 @@
 	<slot name="justification" key="label.net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSituation.justification" />
 </schema>
 
-<schema name="AcademicServiceRequestSituation.view-without-justification" type="net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSituation" bundle="APPLICATION_RESOURCES" extends="academicServiceRequestSituation.view">
+<schema name="AcademicServiceRequestSituation.view-without-justification" type="net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSituation" bundle="APPLICATION_RESOURCES" extends="AcademicServiceRequestSituation.view">
 	<remove name="justification" />
 </schema>
 
@@ -25,16 +25,17 @@
 	<slot name="documentPurposeType" key="label.net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest.documentPurposeType" />
 	<slot name="otherDocumentPurposeTypeDescription" key="label.net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest.otherDocumentPurposeTypeDescription" />
 	<slot name="numberOfPages" key="label.net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest.numberOfPages" />
+	<slot name="academicServiceRequestSituationType" key="label.net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest.activeSituation.academicServiceRequestSituationType" />
 </schema>
 
-<schema name="DocumentRequest.view-without-numberOfPages" type="net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest"  extends="documentRequest.view" bundle="APPLICATION_RESOURCES">
+<schema name="DocumentRequest.view-without-numberOfPages" type="net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest" extends="DocumentRequest.view" bundle="APPLICATION_RESOURCES">
 	<remove name="numberOfPages" />
 </schema>
 
-<schema name="CertificateRequest.view" type="net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.CertificateRequest"  extends="documentRequest.view" bundle="APPLICATION_RESOURCES">
+<schema name="CertificateRequest.view" type="net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.CertificateRequest" extends="DocumentRequest.view" bundle="APPLICATION_RESOURCES">
 	<slot name="urgentRequest" key="label.net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.CertificateRequest.urgentRequest"/>
 </schema>
 
-<schema name="DegreeFinalizationCertificateRequest.view" type="net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DegreeFinalizationCertificateRequest"  extends="certificateRequest.view" bundle="APPLICATION_RESOURCES">
+<schema name="DegreeFinalizationCertificateRequest.view" type="net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DegreeFinalizationCertificateRequest"  extends="CertificateRequest.view" bundle="APPLICATION_RESOURCES">
 	<slot name="average" key="label.net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.CertificateRequest.average" />
 </schema>
