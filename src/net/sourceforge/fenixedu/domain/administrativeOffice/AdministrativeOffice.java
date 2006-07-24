@@ -87,11 +87,12 @@ public class AdministrativeOffice extends AdministrativeOffice_Base {
 	}
 
     public static AdministrativeOffice getResponsibleAdministrativeOffice(DegreeType degreeType) {
+    	
         switch (degreeType) {
         case DEGREE:
             return readByAdministrativeOfficeType(AdministrativeOfficeType.DEGREE);
-        case MASTER_DEGREE:
-            return readByAdministrativeOfficeType(AdministrativeOfficeType.MASTER_DEGREE);
+            
+        case MASTER_DEGREE:            
         case BOLONHA_ADVANCED_FORMATION_DIPLOMA:
             return readByAdministrativeOfficeType(AdministrativeOfficeType.MASTER_DEGREE);
         }

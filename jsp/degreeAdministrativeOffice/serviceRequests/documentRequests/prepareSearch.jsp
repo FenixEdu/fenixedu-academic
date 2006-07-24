@@ -22,7 +22,7 @@
 <html:form action="/documentRequestsManagement.do">
 	<html:hidden property="method" value="search" />
 	<br/>
-	<table>
+	<table class="tstyle4 thlight thright"">
 		<tr>
 			<td>
 				<bean:message key="label.documentRequestsManagement.searchDocumentRequests.documentRequestType" />:
@@ -42,7 +42,7 @@
 			<td>
 				<e:labelValues id="values" enumeration="net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSituationType" bundle="ENUMERATION_RESOURCES"/>
 				<html:select property="requestSituationType">
-					<html:option value=""><bean:message key="dropDown.Default" bundle="ENUMERATION_RESOURCES"/></html:option>	
+					<html:option value=""><bean:message key="dropDown.Default" bundle="ENUMERATION_RESOURCES"/></html:option>
 					<html:options collection="values" property="value" labelProperty="label"/>
 				</html:select>
 			</td>
@@ -52,7 +52,12 @@
 				<bean:message key="label.documentRequestsManagement.searchDocumentRequests.urgent" />:
 			</td>
 			<td>
-				<html:checkbox property="isUrgent" />
+				<html:select property="isUrgent">
+					<html:option value=""><bean:message key="dropDown.Default" bundle="ENUMERATION_RESOURCES"/></html:option>
+					<html:option value="true"><bean:message key="label.documentRequestsManagement.searchDocumentRequests.urgent.yes"/></html:option>
+					<html:option value="false"><bean:message key="label.documentRequestsManagement.searchDocumentRequests.urgent.no"/></html:option>
+				</html:select>
+				
 			</td>
 		</tr>
 		<tr>

@@ -19,6 +19,7 @@ import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -26,114 +27,140 @@ import org.apache.struts.action.DynaActionForm;
 
 public class DocumentRequestsManagementDispatchAction extends FenixDispatchAction {
 
-    public ActionForward showOperations(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) {
+	public ActionForward showOperations(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response) {
 
-        return mapping.findForward("showOperations");
-    }
+		return mapping.findForward("showOperations");
+	}
 
-    public ActionForward viewNewDocumentRequests(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) {
+	public ActionForward viewNewDocumentRequests(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response) {
 
-        return mapping.findForward("viewNewDocumentRequests");
-    }
+		return mapping.findForward("viewNewDocumentRequests");
+	}
 
-    public ActionForward prepareSearch(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) {
+	public ActionForward prepareSearch(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response) {
 
-        return mapping.findForward("prepareSearch");
-    }
+		return mapping.findForward("prepareSearch");
+	}
 
-    public ActionForward search(ActionMapping mapping, ActionForm actionForm,
-            HttpServletRequest request, HttpServletResponse response) {
+	public ActionForward search(ActionMapping mapping, ActionForm actionForm,
+			HttpServletRequest request, HttpServletResponse response) {
 
-        DynaActionForm form = (DynaActionForm) actionForm;
+		DynaActionForm form = (DynaActionForm) actionForm;
 
-        DocumentRequestType documentRequestType = (DocumentRequestType) getEnum(form,
-                "documentRequestType", DocumentRequestType.class);
+		DocumentRequestType documentRequestType = (DocumentRequestType) getEnum(form,
+				"documentRequestType", DocumentRequestType.class);
 
-        AcademicServiceRequestSituationType requestSituationType = (AcademicServiceRequestSituationType) getEnum(
-                form, "requestSituationType", AcademicServiceRequestSituationType.class);
+		AcademicServiceRequestSituationType requestSituationType = (AcademicServiceRequestSituationType) getEnum(
+				form, "requestSituationType", AcademicServiceRequestSituationType.class);
 
-        Boolean isUrgent = (Boolean) form.get("isUrgent");
-        Student student = getStudent(form.getString("studentNumber"));
+		String isUrgentString = form.getString("isUrgent");
+		Boolean isUrgent = StringUtils.isEmpty(isUrgentString) ? null : Boolean.valueOf(isUrgentString);
 
-        request.setAttribute("documentRequestsResult", getAdministrativeOffice().searchDocumentsBy(
-                documentRequestType, requestSituationType, isUrgent, student));
+		Student student = getStudent(form.getString("studentNumber"));
 
-        return mapping.findForward("showDocumentRequests");
-    }
+		request.setAttribute("documentRequestsResult", getAdministrativeOffice().searchDocumentsBy(
+				documentRequestType, requestSituationType, isUrgent, student));
 
-    public ActionForward viewDocumentRequest(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) {
+		request.setAttribute("url", buildUrlFrom(form));
 
-        request.setAttribute("documentRequest", getDocumentRequest(request));
+		return mapping.findForward("showDocumentRequests");
+	}
 
-        return mapping.findForward("viewDocumentRequest");
-    }
+	public ActionForward viewDocumentRequest(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response) {
 
-    private Student getStudent(String studentNumberString) {
-        try {
-            return Student.readStudentByNumberAndDegreeType(Integer.valueOf(studentNumberString),
-                    DegreeType.DEGREE);
-        } catch (NumberFormatException e) {
-            return null;
-        }
-    }
+		request.setAttribute("documentRequest", getDocumentRequest(request));
 
-    public AdministrativeOffice getAdministrativeOffice() {
-        return AdministrativeOffice.readByAdministrativeOfficeType(AdministrativeOfficeType.DEGREE);
-    }
+		return mapping.findForward("viewDocumentRequest");
+	}
 
-    private Enum getEnum(DynaActionForm form, String name, Class type) {
-        return (form.get(name) == null || form.getString(name).length() == 0) ? null : Enum.valueOf(
-                type, form.getString(name));
-    }
+	private String buildUrlFrom(DynaActionForm form) {
 
-    public ActionForward prepareEditDocumentRequest(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) {
+		final StringBuilder result = new StringBuilder();
 
-        final DocumentRequest documentRequest = getDocumentRequest(request);
-        final DocumentRequestEditBean documentRequestEditBean = new DocumentRequestEditBean(
-                documentRequest, getUserView(request).getPerson().getEmployee(), documentRequest
-                        .getActiveSituation().getAcademicServiceRequestSituationType(), documentRequest
-                        .getNumberOfPages());
-        request.setAttribute("documentRequestEditBean", documentRequestEditBean);
+		if (!StringUtils.isEmpty(form.getString("documentRequestType"))) {
+			result.append("&documentRequestType=").append(form.get("documentRequestType"));
+		}
 
-        return mapping.findForward("editDocumentRequest");
-    }
+		if (!StringUtils.isEmpty(form.getString("requestSituationType"))) {
+			result.append("&requestSituationType=").append(form.get("requestSituationType"));
+		}
 
-    public ActionForward editDocumentRequest(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
-            FenixServiceException {
-        final DocumentRequestEditBean documentRequestEditBean = (DocumentRequestEditBean) RenderUtils
-                .getViewState("documentRequestEdit").getMetaObject().getObject();
+		if (!StringUtils.isEmpty(form.getString("isUrgent"))) {
+			result.append("&isUrgent=").append(form.get("isUrgent"));
+		}
 
-        try {
-            ServiceManagerServiceFactory.executeService(getUserView(request), "EditDocumentRequest",
-                    new Object[] { documentRequestEditBean });
+		if (!StringUtils.isEmpty(form.getString("studentNumber"))) {
+			result.append("&studentNumber=").append(form.get("studentNumber"));
+		}
 
-            return viewDocumentRequest(mapping, form, request, response);
+		return result.toString();
+	}
 
-        } catch (DomainExceptionWithLabelFormatter ex) {
-            addActionMessage(request, ex.getKey(), solveLabelFormatterArgs(request, ex
-                    .getLabelFormatterArgs()));
-            request.setAttribute("documentRequestEditBean", documentRequestEditBean);
+	private Student getStudent(String studentNumberString) {
+		try {
+			return Student.readStudentByNumberAndDegreeType(Integer.valueOf(studentNumberString),
+					DegreeType.DEGREE);
+		} catch (NumberFormatException e) {
+			return null;
+		}
+	}
 
-            return mapping.findForward("editDocumentRequest");
-        } catch (DomainException ex) {
-            addActionMessage(request, ex.getKey(), ex.getArgs());
-            request.setAttribute("documentRequestEditBean", documentRequestEditBean);
+	public AdministrativeOffice getAdministrativeOffice() {
+		return AdministrativeOffice.readByAdministrativeOfficeType(AdministrativeOfficeType.DEGREE);
+	}
 
-            return mapping.findForward("editDocumentRequest");
-        }
+	private Enum getEnum(DynaActionForm form, String name, Class type) {
+		return StringUtils.isEmpty(form.getString(name)) ? null : Enum.valueOf(type, form
+				.getString(name));
+	}
 
-    }
+	public ActionForward prepareEditDocumentRequest(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response) {
 
-    private DocumentRequest getDocumentRequest(HttpServletRequest request) {
-        return (DocumentRequest) rootDomainObject
-                .readAcademicServiceRequestByOID(getRequestParameterAsInteger(request,
-                        "documentRequestId"));
-    }
-    
+		final DocumentRequest documentRequest = getDocumentRequest(request);
+		final DocumentRequestEditBean documentRequestEditBean = new DocumentRequestEditBean(
+				documentRequest, getUserView(request).getPerson().getEmployee(), documentRequest
+						.getActiveSituation().getAcademicServiceRequestSituationType(), documentRequest
+						.getNumberOfPages());
+		request.setAttribute("documentRequestEditBean", documentRequestEditBean);
+
+		return mapping.findForward("editDocumentRequest");
+	}
+
+	public ActionForward editDocumentRequest(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
+			FenixServiceException {
+		final DocumentRequestEditBean documentRequestEditBean = (DocumentRequestEditBean) RenderUtils
+				.getViewState("documentRequestEdit").getMetaObject().getObject();
+
+		try {
+			ServiceManagerServiceFactory.executeService(getUserView(request), "EditDocumentRequest",
+					new Object[] { documentRequestEditBean });
+
+			return viewDocumentRequest(mapping, form, request, response);
+
+		} catch (DomainExceptionWithLabelFormatter ex) {
+			addActionMessage(request, ex.getKey(), solveLabelFormatterArgs(request, ex
+					.getLabelFormatterArgs()));
+			request.setAttribute("documentRequestEditBean", documentRequestEditBean);
+
+			return mapping.findForward("editDocumentRequest");
+		} catch (DomainException ex) {
+			addActionMessage(request, ex.getKey(), ex.getArgs());
+			request.setAttribute("documentRequestEditBean", documentRequestEditBean);
+
+			return mapping.findForward("editDocumentRequest");
+		}
+
+	}
+
+	private DocumentRequest getDocumentRequest(HttpServletRequest request) {
+		return (DocumentRequest) rootDomainObject
+				.readAcademicServiceRequestByOID(getRequestParameterAsInteger(request,
+						"documentRequestId"));
+	}
 }

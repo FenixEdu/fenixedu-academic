@@ -208,7 +208,7 @@
 			<form-property name="method" type="java.lang.String" />
 			<form-property name="documentRequestType" type="java.lang.String" />
 			<form-property name="requestSituationType" type="java.lang.String" />
-			<form-property name="isUrgent" type="java.lang.Boolean" />
+			<form-property name="isUrgent" type="java.lang.String" />
 			<form-property name="studentNumber" type="java.lang.String" />
 			<form-property name="documentRequestId" type="java.lang.String" />
 	    </form-bean>

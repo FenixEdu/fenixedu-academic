@@ -21,14 +21,16 @@
 
 <logic:notEmpty name="documentRequestsResult">
 
+	<bean:define id="url" name="url"/>
+
 	<fr:view name="documentRequestsResult" schema="DocumentRequest.view-without-numberOfPages-documentPurposeTypeInformation">
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle4 thlight thright" />
 			
-			<fr:property name="linkFormat(view)" value="/documentRequestsManagement.do?method=viewDocumentRequest&documentRequestId=${idInternal}"/>
+			<fr:property name="linkFormat(view)" value="<%="/documentRequestsManagement.do?method=viewRequest&documentRequestId=${idInternal}" + url %>"/>
 			<fr:property name="key(view)" value="label.documentRequestsManagement.viewRequest"/>
 
-			<fr:property name="linkFormat(edit)" value="/documentRequestsManagement.do?method=prepareEditDocumentRequest&documentRequestId=${idInternal}"/>
+			<fr:property name="linkFormat(edit)" value="<%="/documentRequestsManagement.do?method=editRequest&documentRequestId=${idInternal}" + url %>"/>
 			<fr:property name="key(edit)" value="label.documentRequestsManagement.editRequest"/>
 			
 			<fr:property name="sortBy" value="urgentRequest=desc,creationDate=asc"/>
@@ -38,6 +40,8 @@
 
 <logic:empty name="documentRequestsResult">
 	<bean:message key="label.documentRequestsManagement.noDocumentRequests" />
+	<br/>
+	<br/>
 </logic:empty>
 
 <html:form action="/documentRequestsManagement.do?method=prepareSearch">
