@@ -20,6 +20,7 @@ import net.sourceforge.fenixedu.renderers.components.state.IViewState;
 import net.sourceforge.fenixedu.renderers.layouts.Layout;
 import net.sourceforge.fenixedu.renderers.model.MetaSlotKey;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
+import net.sourceforge.fenixedu.renderers.utils.RendererPropertyUtils;
 
 import org.apache.commons.beanutils.PropertyUtils;
 
@@ -129,7 +130,7 @@ public class AutoCompleteInputRenderer extends InputRenderer {
 
     /**
      * Allows you select the presentation format. If not set the value of the field given
-     * by {@link #setLabelField(String) labelField} is used. See {@link net.sourceforge.fenixedu.renderers.utils.RenderUtils#getFormatedProperties(String, Object)}
+     * by {@link #setLabelField(String) labelField} is used. See {@link net.sourceforge.fenixedu.renderers.utils.RenderUtils#getFormattedProperties(String, Object)}
      * to see the accepted format syntax. 
      * 
      * @property
@@ -311,6 +312,11 @@ public class AutoCompleteInputRenderer extends InputRenderer {
                 valueField.setId(key.toString() + "_AutoComplete");
                 valueField.setName(valueField.getId());
                 container.addChild(valueField);
+                
+                if (object != null) {
+                    Object idInternal = RendererPropertyUtils.getProperty(object, "idInternal", false);
+                    valueField.setValue(idInternal == null ? null : idInternal.toString());
+                }
 
                 valueField.setConverter(new AutoCompleteConverter(getClassName()));
                 
@@ -328,6 +334,11 @@ public class AutoCompleteInputRenderer extends InputRenderer {
                 textField.setOnKeyUp("javascript:autoCompleteKeyUpHandler(event, '" + textField.getId() + "', '" + TYPING_VALUE + "');");
                 container.addChild(textField);
 
+                if (object != null && getLabelField() != null) {
+                    String label = (String) RendererPropertyUtils.getProperty(object, getLabelField(), false);
+                    textField.setValue(label);
+                }
+                
                 if (getRawSlotName() != null) {
                     textField.setController(new UpdateRawNameController(getRawSlotName()));
                 }
@@ -368,8 +379,6 @@ public class AutoCompleteInputRenderer extends InputRenderer {
             }
 
             private void addScripts(HtmlInlineContainer container) {
-                HttpServletRequest request = getContext().getViewState().getRequest();
-                
                 HtmlLink link = new HtmlLink();
                 link.setModuleRelative(false);
                 link.setContextRelative(true);
