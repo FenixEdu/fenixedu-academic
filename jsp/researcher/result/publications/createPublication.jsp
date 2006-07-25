@@ -7,8 +7,7 @@
 <%@ taglib uri="/WEB-INF/enum.tld" prefix="e" %>
 
 <logic:present role="RESEARCHER">		
-	<bean:define id="resultPublicationType" name="resultPublicationType" type="java.lang.String"/>
-	<bean:define id="className" name="className" type="java.lang.String"/>
+	<bean:define id="publicationBean" name="publicationBean" type="net.sourceforge.fenixedu.dataTransferObject.research.result.publication.ResultPublicationCreationBean"/>
 
 	<!-- Insert new publication -->
 	<h2><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.result.publication.publicationsManagement"/></h2>
@@ -18,8 +17,8 @@
 	<html:form action="/publications/publicationsManagement"> 
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" />
 		<bean:message bundle="RESEARCHER_RESOURCES" key="researcher.result.publication.publicationType"/>
-		<e:labelValues id="resultPublicationTypes" enumeration="net.sourceforge.fenixedu.domain.research.result.publication.ResultPublication$ResultPublicationType" bundle="ENUMERATION_RESOURCES" />
-		<html:select bundle="HTMLALT_RESOURCES" altKey="select.resultPublicationType" value="<%=resultPublicationType%>" property="resultPublicationType">
+		<e:labelValues id="resultPublicationTypes" enumeration="net.sourceforge.fenixedu.dataTransferObject.research.result.publication.ResultPublicationCreationBean$ResultPublicationType" bundle="ENUMERATION_RESOURCES" />
+		<html:select bundle="HTMLALT_RESOURCES" altKey="select.resultPublicationType" value="<%=publicationBean.getPublicationType().toString()%>" property="resultPublicationType">
 			<html:options collection="resultPublicationTypes" property="value" labelProperty="label"  />
 		</html:select>
 		
@@ -28,21 +27,28 @@
 		</html:submit>
 	</html:form>
 	<br />
-	<h3><bean:message bundle="RESEARCHER_RESOURCES" key="<%="researcher.result.publication.publicationType." + resultPublicationType %>"/></h3>
+	<h3><bean:message bundle="RESEARCHER_RESOURCES" key="<%="researcher.result.publication.publicationType." + publicationBean.getPublicationType() %>"/></h3>
 
-<%-- TODO: type � obrigatorio, constru��o automatica  
---%>
-	<!-- schema depends on selected option -->
-	<fr:create id="createPublication" type="<%= className %>" schema="<%="result.publication.details." + resultPublicationType %>"
-			action="/publications/publicationsManagement.do?method=listPublications">
-		<fr:hidden slot="participation" name="participator"/>
+	<logic:messagesPresent message="true">
+		<html:messages id="messages" message="true" bundle="RESEARCHER_RESOURCES">
+			<span class="error"><bean:write name="messages" /></span>
+		</html:messages>
+		<br/><br/>
+	</logic:messagesPresent>
+
+	<fr:edit id="createPublication" name="publicationBean" type="net.sourceforge.fenixedu.dataTransferObject.research.result.publication.ResultPublicationCreationBean"
+			action="/publications/publicationsManagement.do?method=createResultPublication" schema="<%=publicationBean.getActiveSchema() %>">
 	    <fr:layout name="tabular">
     	    <fr:property name="classes" value="style1"/>
         	<fr:property name="columnClasses" value="listClasses,,"/>
 	    </fr:layout>
-
- 		<fr:destination name="invalid" path="<%="/publications/publicationsManagement.do?method=prepareCreatePublication&resultPublicationType=" + resultPublicationType %>"/>
+	    
+	    <fr:destination name="bookPartPostBack" path="/publications/publicationsManagement.do?method=changeBookPartTypePostBack"/>
+   		<fr:destination name="invalid" path="/publications/publicationsManagement.do?method=prepareCreatePublication"/>
       	<fr:destination name="cancel" path="/publications/publicationsManagement.do?method=listPublications"/>
-	</fr:create>
+	</fr:edit>
+
+
+
 
 </logic:present>
