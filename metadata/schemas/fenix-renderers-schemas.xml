@@ -756,5 +756,6 @@
 	&execution;
 	&cron;
 	&prices;
+	&serviceRequests;
     &functionalities;
 </schemas>
