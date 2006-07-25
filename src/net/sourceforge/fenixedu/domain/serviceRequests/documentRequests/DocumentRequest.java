@@ -32,11 +32,6 @@ public abstract class DocumentRequest extends DocumentRequest_Base {
                     "error.serviceRequests.documentRequests.DocumentRequest.documentRequestType.cannot.be.null");
         }
 
-        if (documentPurposeType == null) {
-            throw new DomainException(
-                    "error.serviceRequests.documentRequests.DocumentRequest.documentPurposeType.cannot.be.null");
-        }
-
         if (documentPurposeType == DocumentPurposeType.OTHER
                 && otherDocumentPurposeTypeDescription == null) {
             throw new DomainException(
