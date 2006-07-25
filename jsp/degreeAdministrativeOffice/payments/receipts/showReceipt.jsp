@@ -38,7 +38,7 @@
     </td>
     <td>
 <strong><bean:message key="label.payments.contributor" /></strong>:
-<fr:view name="receipt" property="contributor" schema="contributor.view">
+<fr:view name="receipt" property="contributorParty" schema="contributor.view">
 	<fr:layout name="tabular">
 		<fr:property name="classes" value="tstyle4" />
 	</fr:layout>

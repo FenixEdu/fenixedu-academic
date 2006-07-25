@@ -64,15 +64,15 @@
 						<td width="80%">&nbsp;</td>
 					</tr>
 					<tr>
-					  <td> <bean:message key="label.net.sourceforge.fenixedu.domain.Person.name" /> </td>
+					  <td> <bean:message key="label.net.sourceforge.fenixedu.domain.Person.name" bundle="APPLICATION_RESOURCES" /> </td>
 					  <td> <bean:write name="receipt" property="person.name"/> </td>
 					</tr>
 					<tr>
-					  <td> <bean:message key="label.net.sourceforge.fenixedu.domain.Person.idDocumentType" /> </td>
+					  <td> <bean:message key="label.net.sourceforge.fenixedu.domain.Person.idDocumentType" bundle="APPLICATION_RESOURCES"/> </td>
 					  <td> <bean:message name="receipt" property="person.idDocumentType.name" bundle="ENUMERATION_RESOURCES"/> </td>
 					</tr>
 					<tr>
-					  <td> <bean:message key="label.net.sourceforge.fenixedu.domain.Person.documentIdNumber" /> </td>
+					  <td> <bean:message key="label.net.sourceforge.fenixedu.domain.Person.documentIdNumber" bundle="APPLICATION_RESOURCES" /> </td>
 					  <td> <bean:write name="receipt" property="person.documentIdNumber"/> </td>
 					</tr>
 					<tr>
@@ -84,25 +84,29 @@
 						<td width="30%"><strong><bean:message  key="label.payments.printTemplates.receipt.contributor"/>:</strong></td>
 						<td width="70%">&nbsp;</td>
 					</tr>
-					<tr>
-						<td><bean:message
-							key="label.payments.contributorName" /></td>
-						<td><bean:write name="receipt"
-							property="contributor.contributorName" /></td>
-					</tr>
-					<tr>
-						<td><bean:message
-							key="label.payments.contributorAddress" /></td>
-						<td><bean:write name="receipt"
-							property="contributor.contributorAddress" /></td>
-					</tr>
-					<tr>
-						<td><bean:message
-							key="label.payments.contributorNumber" /></td>
-						<td><bean:write name="receipt"
-							property="contributor.contributorNumber" /></td>
-					</tr>
 
+					<tr>
+						<td><bean:message
+							key="label.net.sourceforge.fenixedu.domain.organizationalStructure.Party.name" bundle="APPLICATION_RESOURCES" />:</td>
+						<td><bean:write name="receipt"
+							property="contributorParty.name" /></td>
+					</tr>
+					<tr>
+						<td><bean:message
+							key="label.net.sourceforge.fenixedu.domain.organizationalStructure.Party.socialSecurityNumber" bundle="APPLICATION_RESOURCES" />:</td>
+						<td><bean:write name="receipt"
+							property="contributorParty.socialSecurityNumber" /></td>
+					</tr>
+					<tr>
+						<td><bean:message key="label.net.sourceforge.fenixedu.domain.organizationalStructure.Party.address" bundle="APPLICATION_RESOURCES" />:</td>
+						<td><bean:write name="receipt" property="contributorParty.address" /></td>
+					</tr>
+					<logic:notEmpty name="receipt" property="contributorParty.areaCode">
+					<tr>
+						<td><bean:message key="label.net.sourceforge.fenixedu.domain.organizationalStructure.Party.areaCode" bundle="APPLICATION_RESOURCES" /></td>
+						<td><bean:write name="receipt" property="contributorParty.areaCode" /> - <bean:write name="receipt" property="contributorParty.areaOfAreaCode" /></td>
+					</tr>
+					</logic:notEmpty>
 				</table>
 			</tr>
 		</table>
@@ -181,7 +185,7 @@
 	</tr>
 
 	<tr>
-		<td><br/><br/><jsp:include page="/posGraduacao/payments/commons/footer.jsp" flush="true" /></td>
+		<td><br/><br/><jsp:include page="/degreeAdministrativeOffice/payments/commons/footer.jsp" flush="true" /></td>
 	</tr>
 </table>
 

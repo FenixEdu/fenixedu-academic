@@ -26,7 +26,7 @@
 
 <br/>
 <strong><bean:message key="label.payments.contributor" /></strong>:
-<fr:view name="createReceiptBean" property="contributor" schema="contributor.view">
+<fr:view name="createReceiptBean" property="contributorParty" schema="contributor.view">
 	<fr:layout name="tabular">
 		<fr:property name="classes" value="tstyle4" />
 	</fr:layout>
@@ -63,3 +63,4 @@
 	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton" onclick="this.form.method.value='createReceipt';"><bean:message key="button.payments.createReceipt"/></html:submit>
 	<html:cancel bundle="HTMLALT_RESOURCES" altKey="cancel.cancel" styleClass="inputbutton" onclick="this.form.method.value='backToShowOperations';"><bean:message key="button.payments.back"/></html:cancel>
 </fr:form>
+

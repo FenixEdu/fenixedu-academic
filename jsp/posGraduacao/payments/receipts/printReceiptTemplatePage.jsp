@@ -84,25 +84,26 @@
 						<td width="30%"><strong><bean:message  key="label.masterDegree.administrativeOffice.payments.printTemplates.receipt.contributor"/>:</strong></td>
 						<td width="70%">&nbsp;</td>
 					</tr>
+
 					<tr>
 						<td><bean:message
-							key="label.masterDegree.administrativeOffice.payments.contributorName" />:</td>
+							key="label.net.sourceforge.fenixedu.domain.organizationalStructure.Party.name" bundle="APPLICATION_RESOURCES" />:</td>
 						<td><bean:write name="receipt"
 							property="contributorParty.name" /></td>
 					</tr>
 					<tr>
 						<td><bean:message
-							key="label.masterDegree.administrativeOffice.payments.contributorNumber" />:</td>
+							key="label.net.sourceforge.fenixedu.domain.organizationalStructure.Party.socialSecurityNumber" bundle="APPLICATION_RESOURCES" />:</td>
 						<td><bean:write name="receipt"
 							property="contributorParty.socialSecurityNumber" /></td>
 					</tr>
 					<tr>
-						<td><bean:message key="label.masterDegree.administrativeOffice.payments.contributorAddress" />:</td>
+						<td><bean:message key="label.net.sourceforge.fenixedu.domain.organizationalStructure.Party.address" bundle="APPLICATION_RESOURCES" />:</td>
 						<td><bean:write name="receipt" property="contributorParty.address" /></td>
 					</tr>
 					<logic:notEmpty name="receipt" property="contributorParty.areaCode">
 					<tr>
-						<td><bean:message key="label.person.postCode" /></td>
+						<td><bean:message key="label.net.sourceforge.fenixedu.domain.organizationalStructure.Party.areaCode" bundle="APPLICATION_RESOURCES" /></td>
 						<td><bean:write name="receipt" property="contributorParty.areaCode" /> - <bean:write name="receipt" property="contributorParty.areaOfAreaCode" /></td>
 					</tr>
 					</logic:notEmpty>
