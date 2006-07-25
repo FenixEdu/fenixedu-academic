@@ -10222,6 +10222,22 @@
 		</filterChains>
 	</service>
 	<service>
+		<name>EditBlueprintVersion</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.space.EditBlueprintVersion</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		<filterChains>			
+		</filterChains>
+	</service>
+	<service>
+		<name>DeleteBlueprintVersion</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.space.DeleteBlueprintVersion</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		<filterChains>			
+		</filterChains>
+	</service>
+	<service>
 		<name>EditCertificateRequestPR</name>
 		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.accounting.postingRules.serviceRequests.EditCertificateRequestPR</implementationClass>
 		<description />

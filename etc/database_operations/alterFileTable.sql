@@ -1,0 +1,1 @@
+alter table `FILE` add KEY `KEY_BLUEPRINT` (`KEY_BLUEPRINT`);

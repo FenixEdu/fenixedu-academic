@@ -1,7 +1,6 @@
 package net.sourceforge.fenixedu.domain.space;
 
-import java.text.Collator;
-import java.util.Comparator;
+import java.util.Iterator;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
@@ -9,13 +8,10 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
-import org.apache.commons.beanutils.BeanComparator;
 import org.joda.time.YearMonthDay;
 
-public class Blueprint extends Blueprint_Base {
-    
-    private static final Comparator BLUEPRINT_COMPARATOR_BY_VALID_UNTIL = new BeanComparator("validUntil", Collator.getInstance());
-    
+public class Blueprint extends Blueprint_Base implements Comparable<Blueprint> {
+
     private Blueprint() {
         super();
         setRootDomainObject(RootDomainObject.getInstance());
@@ -24,7 +20,7 @@ public class Blueprint extends Blueprint_Base {
     public Blueprint(Space space, BlueprintFile blueprintFile, Person person) {
         this();
         checkParameters(space, blueprintFile, person);
-        updateSpaceBlueprintsValidUntilDates(space);
+        closeCurrentSpaceBlueprint(space);
         setSpace(space);
         setBlueprintFile(blueprintFile);
         setCreationPerson(person);        
@@ -33,37 +29,41 @@ public class Blueprint extends Blueprint_Base {
     
     public void delete() {
         Space space = getSpace();
+        refreshBlueprintsDates(space);        
         removeSpace();               
-        removeCreationPerson();          
-        removeSpaceBlueprintsValidUntilDates(space);
-        getBlueprintFile().delete();
+        removeCreationPerson();                  
+        removeBlueprintFile();
         removeRootDomainObject();
         deleteDomainObject();        
     }
 
-    private void removeSpaceBlueprintsValidUntilDates(Space space) {
-        SortedSet<Blueprint> blueprints = new TreeSet<Blueprint>(BLUEPRINT_COMPARATOR_BY_VALID_UNTIL);
-        blueprints.addAll(space.getBlueprints());
-        if(!blueprints.isEmpty()) {
-            blueprints.last().openBlueprint(null);
+    private void refreshBlueprintsDates(Space space) {
+        SortedSet<Blueprint> blueprints = new TreeSet<Blueprint>(space.getBlueprints());                
+        if(!blueprints.isEmpty() && blueprints.last() != this) {
+            for (Iterator<Blueprint> iter = blueprints.iterator(); iter.hasNext(); ) {
+                Blueprint blueprint = iter.next();
+                if(blueprint == this) {
+                    Blueprint nextBlueprint = iter.next();
+                    nextBlueprint.updateValidFromDate(blueprint.getValidFrom());
+                    break;
+                }                
+            }
         }
     }
 
-    private void updateSpaceBlueprintsValidUntilDates(Space space) {
-        for (Blueprint blueprint : space.getBlueprints()) {
-            if(blueprint.getValidUntil() == null) {
-                blueprint.closeBlueprint(new YearMonthDay());
-                break;
-            }
+    private void closeCurrentSpaceBlueprint(Space space) {
+        SortedSet<Blueprint> blueprints = new TreeSet<Blueprint>(space.getBlueprints());
+        if(!blueprints.isEmpty()) {
+            blueprints.last().closeBlueprint();
         }
     }    
-  
-    private void closeBlueprint(YearMonthDay validFrom) {
-        super.setValidFrom(validFrom);
+    
+    private void closeBlueprint() {
+        super.setValidUntil(new YearMonthDay());
     }
     
-    private void openBlueprint(YearMonthDay validUntil) {
-        super.setValidUntil(validUntil);
+    private void updateValidFromDate(YearMonthDay yearMonthDay) {
+        super.setValidFrom(yearMonthDay);        
     }
     
     @Override
@@ -87,4 +87,14 @@ public class Blueprint extends Blueprint_Base {
            throw new DomainException("error.blueprint.no.person");
        } 
     }
+
+    public int compareTo(Blueprint blueprint) {
+        if (getValidUntil() == null) {
+            return 1;
+        } else if (blueprint.getValidUntil() == null) {
+            return -1;
+        } else {
+            return getValidUntil().compareTo(blueprint.getValidUntil());
+        }        
+    }    
 }

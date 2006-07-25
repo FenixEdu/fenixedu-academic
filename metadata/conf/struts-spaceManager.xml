@@ -76,6 +76,8 @@
         		type="net.sourceforge.fenixedu.presentationTier.Action.spaceManager.ManageSpaceBlueprintsDA"
         		parameter="method">                		
        		<forward name="showBlueprintVersions" path="show-blueprint-versions"/>        		        	       
+       		<forward name="createNewBlueprintVersion" path="create-new-blueprint-version"/>        		        	       
+       		
         </action>
 
         <action path="/showCreateSpaceForm"

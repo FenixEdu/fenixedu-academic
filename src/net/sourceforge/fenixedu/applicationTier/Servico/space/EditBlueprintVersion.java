@@ -1,7 +1,6 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.space;
 
 import org.joda.time.DateTime;
-import org.joda.time.YearMonthDay;
 
 import net.sourceforge.fenixedu.accessControl.AccessControl;
 import net.sourceforge.fenixedu.applicationTier.Service;
@@ -21,11 +20,13 @@ import pt.utl.ist.fenix.tools.file.FileMetadata;
 import pt.utl.ist.fenix.tools.file.FilePath;
 import pt.utl.ist.fenix.tools.file.Node;
 
-public class CreateNewBlueprintVersion extends Service {
-    
-    public Blueprint run(CreateBlueprintSubmissionBean blueprintSubmissionBean) throws FenixServiceException {
+public class EditBlueprintVersion extends Service {
+
+    public Blueprint run(Blueprint blueprint, CreateBlueprintSubmissionBean blueprintSubmissionBean) throws FenixServiceException {
         
-        String filename = new YearMonthDay().toString("yyyy-MM-dd");
+        blueprint.removeBlueprintFile();
+        
+        String filename = blueprint.getValidFrom().toString("yyyy-MM-dd");
         SpaceInformation spaceInformation = blueprintSubmissionBean.getSpaceInformation();
         Space space = spaceInformation.getSpace();
         
@@ -46,7 +47,8 @@ public class CreateNewBlueprintVersion extends Service {
 //                        .getChecksumAlgorithm(), fileDescriptor.getSize(), fileDescriptor.getUniqueId(),
 //                new RoleGroup(Role.getRoleByRoleType(RoleType.SPACE_MANAGER)));
 //
-//        new Blueprint(space, blueprintFile, person);
+//        
+//        blueprint.setBlueprintFile(blueprintFile);        
         
         BlueprintFile file = new BlueprintFile();       
         file.setFilename("fdfsdf");        
@@ -59,9 +61,11 @@ public class CreateNewBlueprintVersion extends Service {
         file.setPermittedGroup(new RoleGroup(Role.getRoleByRoleType(RoleType.SPACE_MANAGER)));
         file.setUploadTime(new DateTime());
         
-        return new Blueprint(space, file, person);
+        blueprint.setBlueprintFile(file);
+        
+        return blueprint;
     }
-
+    
     private FilePath getFilePath(SpaceInformation spaceInformation) {
         final FilePath filePath = new FilePath();
         filePath.addNode(new Node("Spaces", "Spaces"));

@@ -1,14 +1,18 @@
 package net.sourceforge.fenixedu.domain.space;
 
+import net.sourceforge.fenixedu.domain.accessControl.Group;
 import pt.utl.ist.fenix.tools.file.FileManagerFactory;
 import pt.utl.ist.fenix.tools.file.IFileManager;
-import net.sourceforge.fenixedu.domain.accessControl.Group;
 
 public class BlueprintFile extends BlueprintFile_Base {
-    
-    private BlueprintFile() {
-        super();   
-    }      
+
+    static {
+        BlueprintBlueprintFile.addListener(new BlueprintBlueprintFileListener());
+    }
+
+    public BlueprintFile() {
+        super();
+    }
     
     public BlueprintFile(String filename, String displayName, String mimeType, String checksum,
             String checksumAlgorithm, Integer size, String externalStorageIdentification,
@@ -17,16 +21,31 @@ public class BlueprintFile extends BlueprintFile_Base {
         init(filename, filename, mimeType, checksum, checksumAlgorithm, size,
                 externalStorageIdentification, permittedGroup);
     }
-    
+
     public void delete() {
         removeBlueprint();        
-        deleteFile();
         removeRootDomainObject();
         deleteDomainObject();
+        //deleteFile();
     }
 
     private void deleteFile() {
         final IFileManager fileManager = FileManagerFactory.getFileManager();
         fileManager.deleteFile(getExternalStorageIdentification());
+    }
+
+    public String getDirectDownloadUrlFormat() {
+        return FileManagerFactory.getFileManager().getDirectDownloadUrlFormat(
+                getExternalStorageIdentification(), getFilename());
+    }
+
+    private static class BlueprintBlueprintFileListener extends
+            dml.runtime.RelationAdapter<BlueprintFile, Blueprint> {
+        @Override
+        public void afterRemove(BlueprintFile blueprintFile, Blueprint blueprint) {
+            if (blueprintFile != null && blueprint != null) {
+                blueprintFile.delete();
+            }
+        }
     }
 }

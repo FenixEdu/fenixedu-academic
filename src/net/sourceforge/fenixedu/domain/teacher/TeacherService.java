@@ -30,11 +30,15 @@ public class TeacherService extends TeacherService_Base {
     }
 
     public TeacherService(Teacher teacher, ExecutionPeriod executionPeriod) {
-        super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        super();        
         if (teacher == null || executionPeriod == null) {
             throw new DomainException("arguments can't be null");
         }
+        TeacherService teacherService = teacher.getTeacherServiceByExecutionPeriod(executionPeriod);
+        if(teacherService != null) {
+            throw new DomainException("error.teacherService.already.exists.one.teacherService.in.executionPeriod");
+        }
+        setRootDomainObject(RootDomainObject.getInstance());
         setTeacher(teacher);
         setExecutionPeriod(executionPeriod);
     }
@@ -309,7 +313,7 @@ public class TeacherService extends TeacherService_Base {
     private static class TeacherServiceTeacherServiceItemListener extends dml.runtime.RelationAdapter<TeacherService, TeacherServiceItem> {
         @Override
         public void afterRemove(TeacherService teacherService, TeacherServiceItem serviceItem) {
-            if ((teacherService != null) && teacherService.getServiceItems().isEmpty()) {
+            if (teacherService != null && teacherService.getServiceItems().isEmpty()) {
                 teacherService.delete();
             }
         }

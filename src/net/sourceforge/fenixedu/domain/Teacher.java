@@ -364,7 +364,6 @@ public class Teacher extends Teacher_Base {
 
     public TeacherService getTeacherServiceByExecutionPeriod(final ExecutionPeriod executionPeriod) {
         return (TeacherService) CollectionUtils.find(getTeacherServices(), new Predicate() {
-
             public boolean evaluate(Object arg0) {
                 TeacherService teacherService = (TeacherService) arg0;
                 return teacherService.getExecutionPeriod() == executionPeriod;

@@ -62,6 +62,10 @@ public abstract class Space extends Space_Base {
     	return spaceInformations;
     }
     
+    public SortedSet<Blueprint> getOrderedBlueprints() {               
+        return new TreeSet<Blueprint>(getBlueprints());
+    }
+    
     public SortedSet<PersonSpaceOccupation> getActivePersonSpaceOccupations(){
         SortedSet<PersonSpaceOccupation> personSpaceOccupations = new TreeSet<PersonSpaceOccupation>(PersonSpaceOccupation.COMPARATOR_BY_PERSON_NAME_AND_OCCUPATION_INTERVAL);
         YearMonthDay current = new YearMonthDay();
@@ -131,12 +135,8 @@ public abstract class Space extends Space_Base {
     }
     
     public Blueprint getMostRecentBlueprint(){
-        for (Blueprint  blueprint : getBlueprints()) {
-            if(blueprint.getValidUntil() == null) {
-                return blueprint;
-            }
-        }
-        return null;
+        SortedSet<Blueprint> orderedBlueprints = getOrderedBlueprints();
+        return (!orderedBlueprints.isEmpty()) ? orderedBlueprints.last() : null;
     }
 
     public static class SpaceSpaceInformationListener extends RelationAdapter<Space, SpaceInformation> {

@@ -24,15 +24,15 @@
 	<bean:message bundle="SPACE_RESOURCES" key="label.versions"/>: 
 	<logic:iterate id="spaceInformation" name="selectedSpaceInformation" property="space.orderedSpaceInformations">
 		<bean:define id="spaceInformation" name="spaceInformation" toScope="request"/>
-			<logic:equal name="spaceInformation" property="idInternal" value="<%= selectedSpaceInformationIDString %>">
-				<bean:define id="spaceInformation2" name="spaceInformation"/>
+		<logic:equal name="spaceInformation" property="idInternal" value="<%= selectedSpaceInformationIDString %>">
+			<bean:define id="spaceInformation2" name="spaceInformation"/>
+			<jsp:include page="spaceInformationVersion.jsp"/>
+		</logic:equal>
+		<logic:notEqual name="spaceInformation" property="idInternal" value="<%= selectedSpaceInformationIDString %>">
+			<html:link page="/manageSpaces.do?method=manageSpace&page=0" paramId="spaceInformationID" paramName="spaceInformation" paramProperty="idInternal">
 				<jsp:include page="spaceInformationVersion.jsp"/>
-			</logic:equal>
-			<logic:notEqual name="spaceInformation" property="idInternal" value="<%= selectedSpaceInformationIDString %>">
-				<html:link page="/manageSpaces.do?method=manageSpace&page=0" paramId="spaceInformationID" paramName="spaceInformation" paramProperty="idInternal">
-					<jsp:include page="spaceInformationVersion.jsp"/>
-				</html:link>
-			</logic:notEqual>
+			</html:link>
+		</logic:notEqual>
 	</logic:iterate>
 	<br/><br/>
 

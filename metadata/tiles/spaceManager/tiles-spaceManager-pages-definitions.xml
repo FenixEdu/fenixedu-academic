@@ -36,5 +36,8 @@
     </definition>
     <definition name="show-blueprint-versions" extends="spaceManager.masterPage">
         <put name="body" value="/spaceManager/manageSpaceBlueprintVersions.jsp"></put>
+    </definition>
+    <definition name="create-new-blueprint-version" extends="spaceManager.masterPage">
+        <put name="body" value="/spaceManager/addNewBlueprintVersion.jsp"></put>
     </definition>       
 </tiles-definitions>
