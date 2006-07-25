@@ -34,21 +34,24 @@ public class DocumentRequestDispatchAction extends FenixDispatchAction {
         final Person person = SessionUtils.getUserView(request).getPerson();
         final Student student = person.getStudentByUsername();
         
-        if (student.getStudentCurricularPlansCount() > 1) {
+        if (!student.hasAnyStudentCurricularPlans()) {
+            final ActionMessages actionMessages = new ActionMessages();
+            actionMessages.add("error.student.curricularPlan.nonExistent", new ActionMessage("error.student.curricularPlan.nonExistent"));
+            saveMessages(request, actionMessages);
+        } else {
             request.setAttribute("student", student);
-            request.setAttribute("studentCurricularPlans", student.getStudentCurricularPlans());
             
+            if (student.getStudentCurricularPlansCount() > 1) {
+                request.setAttribute("studentCurricularPlans", student.getStudentCurricularPlans());
+            } 
+
             if (student.getActiveStudentCurricularPlan().getEnrolmentsExecutionYears().isEmpty()) {
                 final ActionMessages actionMessages = new ActionMessages();
                 actionMessages.add("message.no.enrolments", new ActionMessage("message.no.enrolments"));
                 saveMessages(request, actionMessages);
             } else {
-                request.setAttribute("executionYears", student.getActiveStudentCurricularPlan().getEnrolmentsExecutionYears());    
+                request.setAttribute("executionYears", student.getActiveStudentCurricularPlan().getEnrolmentsExecutionYears());        
             }
-        } else if (!student.hasAnyStudentCurricularPlans()) {
-            final ActionMessages actionMessages = new ActionMessages();
-            actionMessages.add("error.student.curricularPlan.nonExistent", new ActionMessage("error.student.curricularPlan.nonExistent"));
-            saveMessages(request, actionMessages);
         }
 
         return mapping.findForward("createDocumentRequests");
@@ -75,7 +78,7 @@ public class DocumentRequestDispatchAction extends FenixDispatchAction {
         return mapping.findForward("createDocumentRequests");
     }
     
-    public ActionForward view(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) {
+    public ActionForward viewDocumentRequestsToCreate(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) {
         final Person person = SessionUtils.getUserView(request).getPerson();
         final Student student = person.getStudentByUsername();
         request.setAttribute("student", student);
@@ -118,7 +121,7 @@ public class DocumentRequestDispatchAction extends FenixDispatchAction {
                 return mapping.findForward("createDocumentRequests");
             }
         } else if (chosenDocumentPurposeType != null) {
-            if (otherPurpose != null) {
+            if (!StringUtils.isEmpty(otherPurpose)) {
                 final ActionMessages actionMessages = new ActionMessages();
                 actionMessages.add("error.only.one.purpose", new ActionMessage("error.only.one.purpose"));
                 saveMessages(request, actionMessages);
@@ -191,7 +194,7 @@ public class DocumentRequestDispatchAction extends FenixDispatchAction {
         return documentRequestCreateBean;
     }
 
-    public ActionForward create(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) {
+    public ActionForward create(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException {
         final List<DocumentRequestCreateBean> toBeCreated = new ArrayList<DocumentRequestCreateBean>();
         
         final List<DocumentRequestCreateBean> documentRequestCreateBeans = (List<DocumentRequestCreateBean>) RenderUtils.getViewState().getMetaObject().getObject();
@@ -201,15 +204,8 @@ public class DocumentRequestDispatchAction extends FenixDispatchAction {
             }
         }
         
-        final List<String> messages;
         final Object[] args = { toBeCreated };
-        try {
-            messages = (List<String>) executeService(request, "CreateDocumentRequests", args);
-        } catch (FenixFilterException e) {
-            return mapping.getInputForward();
-        } catch (FenixServiceException e) {
-            return mapping.getInputForward();
-        }
+        final List<String> messages = (List<String>) executeService(request, "CreateDocumentRequests", args);
         
         for (final String message : messages) {
             final ActionMessages actionMessages = new ActionMessages();
@@ -220,4 +216,12 @@ public class DocumentRequestDispatchAction extends FenixDispatchAction {
         return mapping.findForward("createSuccess");
     }
 
+    public ActionForward viewDocumentRequests(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) {
+        final Person person = SessionUtils.getUserView(request).getPerson();
+        final Student student = person.getStudentByUsername();
+        request.setAttribute("documentRequests", student.getDocumentRequests());
+        
+        return mapping.findForward("viewDocumentRequests");
+    }
+    
 }

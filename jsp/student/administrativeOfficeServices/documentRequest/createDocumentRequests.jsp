@@ -17,7 +17,7 @@
 
 <logic:present name="student">
 	<html:form action="/documentRequest">
-		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="view" />
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="viewDocumentRequestsToCreate" />
 
 		<table class="tstyle4">
 			<tr>
