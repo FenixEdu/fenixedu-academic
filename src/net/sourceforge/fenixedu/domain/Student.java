@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.domain;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashSet;
@@ -18,6 +19,7 @@ import net.sourceforge.fenixedu.domain.onlineTests.DistributedTest;
 import net.sourceforge.fenixedu.domain.onlineTests.StudentTestQuestion;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 import net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuideEntry;
+import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest;
 import net.sourceforge.fenixedu.domain.space.OldRoom;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.StudentCurricularPlanState;
@@ -574,6 +576,16 @@ public class Student extends Student_Base {
             }
         }
         return false;
+    }
+
+    public Collection<DocumentRequest> getDocumentRequests() {
+        final Set<DocumentRequest> result = new TreeSet<DocumentRequest>();
+        
+        for (final StudentCurricularPlan studentCurricularPlan : getStudentCurricularPlansSet()) {
+            result.addAll(studentCurricularPlan.getDocumentRequests());
+        }
+        
+        return result;
     }
 
 }
