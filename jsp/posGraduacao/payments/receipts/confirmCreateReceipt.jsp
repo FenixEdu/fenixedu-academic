@@ -37,11 +37,11 @@
 <table>
   <tr>
   	<td>
-	  	<fr:view name="createReceiptBean" property="entries" schema="selectableEntryBean.view">
+	  	<fr:view name="createReceiptBean" property="selectedEntries" schema="entry.view">
 		<fr:layout name="tabular" >
 			<fr:property name="classes" value="tstyle4"/>
 	        <fr:property name="columnClasses" value="listClasses,,"/>
-			<fr:property name="sortBy" value="entry.whenRegistered=desc"/>
+			<fr:property name="sortBy" value="whenRegistered=desc"/>
 		</fr:layout>
 		</fr:view>
 	</td>
