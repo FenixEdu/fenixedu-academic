@@ -7,7 +7,7 @@
 
 <html>
     <head>
-    	<title><bean:message key="title.masterDegree.administrativeOffice.printGuide"/></title>
+    	<title><bean:message key="label.payments.printTemplates.guide"/></title>
     </head>
 
     <body>
@@ -60,15 +60,15 @@
             <td width="80%">&nbsp;</td>
           </tr>
           <tr>
-            <td> <bean:message key="label.net.sourceforge.fenixedu.domain.Person.name" /> </td>
+            <td> <bean:message key="label.net.sourceforge.fenixedu.domain.Person.name" bundle="APPLICATION_RESOURCES" /> </td>
             <td> <bean:write name="paymentsManagementDTO" property="person.name"/> </td>
           </tr>
           <tr>
-            <td> <bean:message key="label.net.sourceforge.fenixedu.domain.Person.idDocumentType" /> </td>
+            <td> <bean:message key="label.net.sourceforge.fenixedu.domain.Person.idDocumentType" bundle="APPLICATION_RESOURCES" /> </td>
             <td> <bean:message name="paymentsManagementDTO" property="person.idDocumentType.name" bundle="ENUMERATION_RESOURCES"/> </td>
           </tr>
           <tr>
-            <td> <bean:message key="label.net.sourceforge.fenixedu.domain.Person.documentIdNumber" /> </td>
+            <td> <bean:message key="label.net.sourceforge.fenixedu.domain.Person.documentIdNumber" bundle="APPLICATION_RESOURCES" /> </td>
             <td> <bean:write name="paymentsManagementDTO" property="person.documentIdNumber"/> </td>
           </tr>
 	  </table>
@@ -143,7 +143,7 @@
 	 
      <tr>	 
 	 <td>
-		 <jsp:include page="/posGraduacao/payments/commons/footer.jsp" flush="true" />
+		 <jsp:include page="/degreeAdministrativeOffice/payments/commons/footer.jsp" flush="true" />
     </td>
     </tr>
     </table>
