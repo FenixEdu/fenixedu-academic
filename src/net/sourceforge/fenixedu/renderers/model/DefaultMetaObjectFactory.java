@@ -93,7 +93,7 @@ public class DefaultMetaObjectFactory extends MetaObjectFactory {
             for (SignatureParameter parameter : setterSignature.getParameters()) {
                 SchemaSlotDescription description = parameter.getSlotDescription();
                 
-                for (MetaSlot slot : metaObject.getSlots()) {
+                for (MetaSlot slot : metaObject.getAllSlots()) {
                     if (slot.getName().equals(description.getSlotName())) {
                        compositeSlotSetter.addArgument(slot, parameter.getType());
                     }
