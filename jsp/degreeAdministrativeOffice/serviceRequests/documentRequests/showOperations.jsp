@@ -7,11 +7,18 @@
 <h2><bean:message key="label.documentRequestsManagement.operations" /></h2>
 
 <hr><br/>
-
+<logic:messagesPresent message="true">
+	<ul>
+		<html:messages id="messages" message="true">
+			<li><span class="error0"><bean:write name="messages" /></span></li>
+		</html:messages>
+	</ul>
+	<br />
+</logic:messagesPresent>
 <table>
 	<tr>
 		<td>
-			<html:link action="/documentRequestsManagement.do?method=viewNewRequests">
+			<html:link action="/documentRequestsManagement.do?method=viewNewDocumentRequests">
 					<bean:message key="label.documentRequestsManagement.newDocumentRequests" />
 			</html:link>
 		</td>
