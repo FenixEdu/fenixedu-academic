@@ -16,11 +16,11 @@ import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 /**
  * @author jpvl
  * 
- *  
+ * 
  */
 public abstract class ServiceUtils {
 
-    public static Object executeService(IUserView userView, String serviceName, Object[] serviceArgs)
+    public static Object executeService(IUserView userView, String serviceName, Object... serviceArgs)
             throws FenixServiceException, FenixFilterException {
         if (serviceArgs == null)
             serviceArgs = new Object[0];
