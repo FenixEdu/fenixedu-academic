@@ -216,6 +216,7 @@
 			<form-property name="isUrgent" type="java.lang.String" />
 			<form-property name="studentNumber" type="java.lang.String" />
 			<form-property name="documentRequestId" type="java.lang.String" />
+			<form-property name="documentIdsToProcess" type="java.lang.Integer[]" />
 	    </form-bean>
 
 	</form-beans>
