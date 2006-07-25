@@ -1,7 +1,5 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.space;
 
-import org.joda.time.DateTime;
-
 import net.sourceforge.fenixedu.accessControl.AccessControl;
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -36,32 +34,32 @@ public class EditBlueprintVersion extends Service {
 
         Person person = AccessControl.getUserView().getPerson();
         
-//        final FileMetadata fileMetadata = new FileMetadata(filename, person.getName());
-//
-//        final FileDescriptor fileDescriptor = FileManagerFactory.getFileManager().saveFile(
-//                getFilePath(space.getMostRecentSpaceInformation()), filename, true, fileMetadata,
-//                blueprintSubmissionBean.getInputStream());
-//
-//        BlueprintFile blueprintFile = new BlueprintFile(filename, filename,
-//                fileDescriptor.getMimeType(), fileDescriptor.getChecksum(), fileDescriptor
-//                        .getChecksumAlgorithm(), fileDescriptor.getSize(), fileDescriptor.getUniqueId(),
-//                new RoleGroup(Role.getRoleByRoleType(RoleType.SPACE_MANAGER)));
-//
+        final FileMetadata fileMetadata = new FileMetadata(filename, person.getName());
+
+        final FileDescriptor fileDescriptor = FileManagerFactory.getFileManager().saveFile(
+                getFilePath(space.getMostRecentSpaceInformation()), filename, true, fileMetadata,
+                blueprintSubmissionBean.getInputStream());
+
+        BlueprintFile blueprintFile = new BlueprintFile(filename, filename,
+                fileDescriptor.getMimeType(), fileDescriptor.getChecksum(), fileDescriptor
+                        .getChecksumAlgorithm(), fileDescriptor.getSize(), fileDescriptor.getUniqueId(),
+                new RoleGroup(Role.getRoleByRoleType(RoleType.SPACE_MANAGER)));
+
+        
+        blueprint.setBlueprintFile(blueprintFile);        
+        
+//        BlueprintFile file = new BlueprintFile();       
+//        file.setFilename("fdfsdf");        
+//        file.setDisplayName("dfsdf");
+//        file.setMimeType("dsfdsfds");
+//        file.setChecksum("dsfdsfgsdf");
+//        file.setChecksumAlgorithm("fdadsfds");
+//        file.setSize(1);
+//        file.setExternalStorageIdentification("asfdsfdsfs" + System.currentTimeMillis());
+//        file.setPermittedGroup(new RoleGroup(Role.getRoleByRoleType(RoleType.SPACE_MANAGER)));
+//        file.setUploadTime(new DateTime());
 //        
-//        blueprint.setBlueprintFile(blueprintFile);        
-        
-        BlueprintFile file = new BlueprintFile();       
-        file.setFilename("fdfsdf");        
-        file.setDisplayName("dfsdf");
-        file.setMimeType("dsfdsfds");
-        file.setChecksum("dsfdsfgsdf");
-        file.setChecksumAlgorithm("fdadsfds");
-        file.setSize(1);
-        file.setExternalStorageIdentification("asfdsfdsfs" + System.currentTimeMillis());
-        file.setPermittedGroup(new RoleGroup(Role.getRoleByRoleType(RoleType.SPACE_MANAGER)));
-        file.setUploadTime(new DateTime());
-        
-        blueprint.setBlueprintFile(file);
+//        blueprint.setBlueprintFile(file);
         
         return blueprint;
     }

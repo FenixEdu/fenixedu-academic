@@ -1,8 +1,5 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.space;
 
-import org.joda.time.DateTime;
-import org.joda.time.YearMonthDay;
-
 import net.sourceforge.fenixedu.accessControl.AccessControl;
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -15,6 +12,9 @@ import net.sourceforge.fenixedu.domain.space.Blueprint;
 import net.sourceforge.fenixedu.domain.space.BlueprintFile;
 import net.sourceforge.fenixedu.domain.space.Space;
 import net.sourceforge.fenixedu.domain.space.SpaceInformation;
+
+import org.joda.time.YearMonthDay;
+
 import pt.utl.ist.fenix.tools.file.FileDescriptor;
 import pt.utl.ist.fenix.tools.file.FileManagerFactory;
 import pt.utl.ist.fenix.tools.file.FileMetadata;
@@ -35,31 +35,31 @@ public class CreateNewBlueprintVersion extends Service {
 
         Person person = AccessControl.getUserView().getPerson();
         
-//        final FileMetadata fileMetadata = new FileMetadata(filename, person.getName());
-//
-//        final FileDescriptor fileDescriptor = FileManagerFactory.getFileManager().saveFile(
-//                getFilePath(space.getMostRecentSpaceInformation()), filename, true, fileMetadata,
-//                blueprintSubmissionBean.getInputStream());
-//
-//        BlueprintFile blueprintFile = new BlueprintFile(filename, filename,
-//                fileDescriptor.getMimeType(), fileDescriptor.getChecksum(), fileDescriptor
-//                        .getChecksumAlgorithm(), fileDescriptor.getSize(), fileDescriptor.getUniqueId(),
-//                new RoleGroup(Role.getRoleByRoleType(RoleType.SPACE_MANAGER)));
-//
-//        new Blueprint(space, blueprintFile, person);
+        final FileMetadata fileMetadata = new FileMetadata(filename, person.getName());
+
+        final FileDescriptor fileDescriptor = FileManagerFactory.getFileManager().saveFile(
+                getFilePath(space.getMostRecentSpaceInformation()), filename, true, fileMetadata,
+                blueprintSubmissionBean.getInputStream());
+
+        BlueprintFile blueprintFile = new BlueprintFile(filename, filename,
+                fileDescriptor.getMimeType(), fileDescriptor.getChecksum(), fileDescriptor
+                        .getChecksumAlgorithm(), fileDescriptor.getSize(), fileDescriptor.getUniqueId(),
+                new RoleGroup(Role.getRoleByRoleType(RoleType.SPACE_MANAGER)));
+
+        return new Blueprint(space, blueprintFile, person);
         
-        BlueprintFile file = new BlueprintFile();       
-        file.setFilename("fdfsdf");        
-        file.setDisplayName("dfsdf");
-        file.setMimeType("dsfdsfds");
-        file.setChecksum("dsfdsfgsdf");
-        file.setChecksumAlgorithm("fdadsfds");
-        file.setSize(1);
-        file.setExternalStorageIdentification("asfdsfdsfs" + System.currentTimeMillis());
-        file.setPermittedGroup(new RoleGroup(Role.getRoleByRoleType(RoleType.SPACE_MANAGER)));
-        file.setUploadTime(new DateTime());
-        
-        return new Blueprint(space, file, person);
+//        BlueprintFile file = new BlueprintFile();       
+//        file.setFilename("fdfsdf");        
+//        file.setDisplayName("dfsdf");
+//        file.setMimeType("dsfdsfds");
+//        file.setChecksum("dsfdsfgsdf");
+//        file.setChecksumAlgorithm("fdadsfds");
+//        file.setSize(1);
+//        file.setExternalStorageIdentification("asfdsfdsfs" + System.currentTimeMillis());
+//        file.setPermittedGroup(new RoleGroup(Role.getRoleByRoleType(RoleType.SPACE_MANAGER)));
+//        file.setUploadTime(new DateTime());
+//        
+//        return new Blueprint(space, file, person);
     }
 
     private FilePath getFilePath(SpaceInformation spaceInformation) {

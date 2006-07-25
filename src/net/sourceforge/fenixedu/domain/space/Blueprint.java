@@ -34,6 +34,7 @@ public class Blueprint extends Blueprint_Base implements Comparable<Blueprint> {
         removeCreationPerson();                  
         removeBlueprintFile();
         removeRootDomainObject();
+        openCurrentSpaceBlueprint(space);
         deleteDomainObject();        
     }
 
@@ -48,7 +49,7 @@ public class Blueprint extends Blueprint_Base implements Comparable<Blueprint> {
                     break;
                 }                
             }
-        }
+        } 
     }
 
     private void closeCurrentSpaceBlueprint(Space space) {
@@ -56,7 +57,18 @@ public class Blueprint extends Blueprint_Base implements Comparable<Blueprint> {
         if(!blueprints.isEmpty()) {
             blueprints.last().closeBlueprint();
         }
-    }    
+    } 
+    
+    private void openCurrentSpaceBlueprint(Space space) {
+        SortedSet<Blueprint> blueprints = new TreeSet<Blueprint>(space.getBlueprints());
+        if(!blueprints.isEmpty()) {
+            blueprints.last().openBlueprint();
+        }
+    } 
+    
+    private void openBlueprint(){
+        super.setValidUntil(null);
+    }
     
     private void closeBlueprint() {
         super.setValidUntil(new YearMonthDay());

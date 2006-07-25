@@ -98,7 +98,12 @@
 	<br/><br/>
 	
 	<p><b><bean:message bundle="SPACE_RESOURCES" key="label.bluePrint"/></b></p>
-	<html:img align="middle" src="<%= request.getContextPath() +"/images/clip_image002.jpg"%>" altKey="clip_image002" bundle="IMAGE_RESOURCES" />
+			
+	<bean:define id="blueprint" name="selectedSpaceInformation" property="space.mostRecentBlueprint"/>
+	<logic:notEmpty name="blueprint">
+		<bean:define id="directDownloadUrlFormat" name="blueprint" property="blueprintFile.directDownloadUrlFormat"/>
+		<html:img align="middle" src="<%= directDownloadUrlFormat.toString() %>" altKey="clip_image002" bundle="IMAGE_RESOURCES" />			
+	</logic:notEmpty>
 	<p><html:link page="/manageBlueprints.do?method=showBlueprintVersions&page=0" paramId="spaceInformationID" paramName="selectedSpaceInformation" paramProperty="idInternal">
 		<bean:message bundle="SPACE_RESOURCES" key="link.manage.blueprints"/>
 	</html:link></p>	

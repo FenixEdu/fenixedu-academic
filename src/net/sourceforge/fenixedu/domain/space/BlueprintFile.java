@@ -17,8 +17,9 @@ public class BlueprintFile extends BlueprintFile_Base {
     public BlueprintFile(String filename, String displayName, String mimeType, String checksum,
             String checksumAlgorithm, Integer size, String externalStorageIdentification,
             Group permittedGroup) {
+        
         this();
-        init(filename, filename, mimeType, checksum, checksumAlgorithm, size,
+        init(filename, displayName, mimeType, checksum, checksumAlgorithm, size,
                 externalStorageIdentification, permittedGroup);
     }
 
@@ -26,7 +27,7 @@ public class BlueprintFile extends BlueprintFile_Base {
         removeBlueprint();        
         removeRootDomainObject();
         deleteDomainObject();
-        //deleteFile();
+        deleteFile();
     }
 
     private void deleteFile() {

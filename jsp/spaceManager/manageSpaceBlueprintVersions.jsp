@@ -41,9 +41,9 @@
 		<br/>
 		<br/>
 		
-		<%--<bean:define id="directDownloadUrlFormat" name="selectedSpaceBlueprint" property="blueprintFile.directDownloadUrlFormat"/>
+		<bean:define id="directDownloadUrlFormat" name="selectedSpaceBlueprint" property="blueprintFile.directDownloadUrlFormat"/>
 		<html:img align="middle" src="<%= directDownloadUrlFormat.toString() %>" altKey="clip_image002" bundle="IMAGE_RESOURCES" />			
-		<br/>--%>
+		<br/><br/>
 		
 		<bean:define id="editLink">
 			/manageBlueprints.do?method=prepareEditBlueprintVersion&page=0&spaceInformationID=<bean:write name="selectedSpaceInformation" property="idInternal"/>&spaceBlueprintID=<bean:write name="selectedSpaceBlueprint" property="idInternal"/> 
