@@ -1,5 +1,9 @@
 package net.sourceforge.fenixedu.presentationTier.Action.degreeAdministrativeOffice.serviceRequests.documentRequests;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -12,11 +16,13 @@ import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.exceptions.DomainExceptionWithLabelFormatter;
+import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSituationType;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequestType;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 
 import org.apache.commons.lang.StringUtils;
@@ -34,9 +40,40 @@ public class DocumentRequestsManagementDispatchAction extends FenixDispatchActio
     }
 
     public ActionForward viewNewDocumentRequests(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) {
+            HttpServletRequest request, HttpServletResponse response) throws Exception {
 
+        List<AcademicServiceRequest> newAcademicServiceRequest = new ArrayList<AcademicServiceRequest>();
+        AdministrativeOffice administrativeOffice = AdministrativeOffice
+                .readByAdministrativeOfficeType(AdministrativeOfficeType.DEGREE);
+        newAcademicServiceRequest = (List<AcademicServiceRequest>) administrativeOffice
+                .getNewAcademicServiceRequests(administrativeOffice);
+
+        if (newAcademicServiceRequest.size() == 0) {
+            addActionMessage(request, "message.documentRequestsManagement.newServiceRequest.empty");
+            return mapping.findForward("showOperations");
+        }
+
+        request.setAttribute("academicServiceRequestList", newAcademicServiceRequest);
         return mapping.findForward("viewNewDocumentRequests");
+    }
+
+    public ActionForward processNewDocuments(ActionMapping mapping, ActionForm actionForm,
+            HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
+            FenixServiceException {
+
+        final List<Integer> documentIdsToProcess = Arrays
+                .asList((Integer[]) ((DynaActionForm) actionForm).get("documentIdsToProcess"));
+        try {
+            ServiceManagerServiceFactory.executeService(SessionUtils.getUserView(request),
+                    "ProcessNewAcademicServiceRequests", new Object[] {
+                            SessionUtils.getUserView(request).getPerson().getEmployee(),
+                            documentIdsToProcess });
+            return mapping.findForward("showOperations");
+        } catch (DomainException ex) {
+            addActionMessage(request, ex.getKey(), ex.getArgs());
+            return mapping.findForward("showOperations");
+        }
+
     }
 
     public ActionForward prepareSearch(ActionMapping mapping, ActionForm form,
