@@ -1,0 +1,51 @@
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 1.1//EN"
+	"http://jakarta.apache.org/struts/dtds/tiles-config_1_1.dtd">
+    
+<!-- Tiles definitions -->
+<tiles-definitions>
+
+    <definition name="functionalities.toplevel.view" extends="functionalities.master">
+        <put name="body" value="/manager/functionalities/view-toplevel.jsp"/>
+    </definition>
+            
+    <definition name="functionalities.module.view" extends="functionalities.master">
+        <put name="body" value="/manager/functionalities/view-module.jsp"/>
+    </definition>
+    
+    <definition name="functionalities.module.edit" extends="functionalities.master">
+        <put name="body" value="/manager/functionalities/edit-module.jsp"/>
+    </definition>
+
+    <definition name="functionalities.module.edit.toplevel" extends="functionalities.master">
+        <put name="body" value="/manager/functionalities/edit-toplevel-module.jsp"/>
+    </definition>
+
+    <definition name="functionalities.module.create" extends="functionalities.master">
+        <put name="body" value="/manager/functionalities/create-module.jsp"/>
+    </definition>
+
+    <definition name="functionalities.module.create.toplevel" extends="functionalities.master">
+        <put name="body" value="/manager/functionalities/create-toplevel-module.jsp"/>
+    </definition>
+
+    <definition name="functionalities.functionality.view" extends="functionalities.master">
+        <put name="body" value="/manager/functionalities/view-functionality.jsp"/>
+    </definition>
+    
+    <definition name="functionalities.functionality.edit" extends="functionalities.master">
+        <put name="body" value="/manager/functionalities/edit-functionality.jsp"/>
+    </definition>
+
+    <definition name="functionalities.functionality.edit.toplevel" extends="functionalities.master">
+        <put name="body" value="/manager/functionalities/edit-toplevel-functionality.jsp"/>
+    </definition>
+
+    <definition name="functionalities.functionality.create" extends="functionalities.master">
+        <put name="body" value="/manager/functionalities/create-functionality.jsp"/>
+    </definition>
+    
+    <definition name="functionalities.functionality.create.toplevel" extends="functionalities.master">
+        <put name="body" value="/manager/functionalities/create-toplevel-functionality.jsp"/>
+    </definition>
+
+</tiles-definitions>

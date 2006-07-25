@@ -3,7 +3,10 @@ package net.sourceforge.fenixedu.renderers.components;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import javax.servlet.jsp.PageContext;
 
@@ -52,8 +55,12 @@ public abstract class HtmlComponent implements Serializable {
     private String onKeyDown;
     private String onKeyUp;
     
+    // custom
+    private Map<String, String> custom;
+    
     public HtmlComponent() {
         this.visible = true;
+        this.custom = new HashMap<String, String>();
     }
 
     public String getClasses() {
@@ -196,6 +203,14 @@ public abstract class HtmlComponent implements Serializable {
         this.onMouseUp = onmouseup;
     }
 
+    public String getAttribute(String name) {
+        return this.custom.get(name);
+    }
+    
+    public void setAttribute(String name, String value) {
+        this.custom.put(name, value);
+    }
+    
     public List<HtmlComponent> getChildren() {
         return new ArrayList<HtmlComponent>();
     }
@@ -231,6 +246,10 @@ public abstract class HtmlComponent implements Serializable {
         tag.setAttribute("onkeyup", getOnKeyUp());
         
         tag.setVisible(isVisible());
+        
+        for (Entry<String, String> entry : this.custom.entrySet()) {
+            tag.setAttribute(entry.getKey(), entry.getValue());
+        }
         
         return tag;
     }

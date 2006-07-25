@@ -37,6 +37,7 @@ public class CompositeSlotSetter implements Serializable {
     public void addArgument(MetaSlot slot, Class type) {
         this.slots.add(slot);
         this.types.add(type);
+        slot.setSetterIgnored(true);
     }
     
     public void executeSetter() {

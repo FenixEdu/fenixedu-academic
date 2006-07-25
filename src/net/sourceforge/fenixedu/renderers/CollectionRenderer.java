@@ -455,6 +455,20 @@ public class CollectionRenderer extends OutputRenderer {
     }
     
     /**
+     * This property does the same work as visibleIf but does the
+     * opposite logic. If <code>true</code> then the link will not be shown. 
+     * 
+     * @property
+     */
+    public void setVisibleIfNot(String name, String value) {
+        getTableLink(name).setVisibleIfNot(value);
+    }
+    
+    public String getVisibleIfNot(String name) {
+        return getTableLink(name).getVisibleIfNot();
+    }
+
+    /**
      * This property allows you to exclude a control link from appearing 
      * in the last line of the generated table.
      * 
@@ -552,6 +566,22 @@ public class CollectionRenderer extends OutputRenderer {
         getTableLink(name).setLinkFormat(value);
     }
 
+    public String getCustomLink(String name) {
+        return getTableLink(name).getCustom();
+    }
+
+    /**
+     * If this property is specified all the others are ignored. This property
+     * allows you to specify the exact content to show as a link. Then content
+     * will be parsed with the same rules that apply to 
+     * {@link #setLinkFormat(String, String) linkFormat}.
+     * 
+     * @property
+     */
+    public void setCustomLink(String name, String value) {
+        getTableLink(name).setCustom(value);
+    }
+    
     public String getContextRelative(String name) {
         return Boolean.toString(getTableLink(name).isContextRelative());
     }
@@ -774,23 +804,40 @@ public class CollectionRenderer extends OutputRenderer {
                 }
             }
             
-            HtmlLink link = new HtmlLink();
-
-            if (tableLink.isContextRelativeSet()) {
-                link.setContextRelative(tableLink.isContextRelative());
+            if (tableLink.getVisibleIfNot() != null) {
+                try {
+                    Boolean notVisible = (Boolean) RendererPropertyUtils.getProperty(realObject, tableLink.getVisibleIfNot(), false);
+                    
+                    if (notVisible != null && notVisible) {
+                        return new HtmlText();
+                    }
+                } catch (ClassCastException e) {
+                    e.printStackTrace();
+                }
             }
 
-            link.setText(getLinkText(tableLink));
-            link.setModule(tableLink.getModule());
-
-            if (tableLink.getLinkFormat() != null) {
-                link.setUrl(RenderUtils.getFormatedProperties(tableLink.getLinkFormat(), realObject));
-            } else {
-                link.setUrl(tableLink.getLink());
-                setLinkParameters(object, link, tableLink);
+            if (tableLink.getCustom() != null) {
+                return new HtmlText(RenderUtils.getFormattedProperties(tableLink.getCustom(), realObject));
             }
-
-            return link;
+            else {
+                HtmlLink link = new HtmlLink();
+    
+                if (tableLink.isContextRelativeSet()) {
+                    link.setContextRelative(tableLink.isContextRelative());
+                }
+    
+                link.setText(getLinkText(tableLink));
+                link.setModule(tableLink.getModule());
+    
+                if (tableLink.getLinkFormat() != null) {
+                    link.setUrl(RenderUtils.getFormattedProperties(tableLink.getLinkFormat(), realObject));
+                } else {
+                    link.setUrl(tableLink.getLink());
+                    setLinkParameters(object, link, tableLink);
+                }
+    
+                return link;
+            }
         }
 
         protected String getLinkText(TableLink tableLink) {
@@ -910,7 +957,9 @@ public class CollectionRenderer extends OutputRenderer {
         private boolean excludeFromLast;
         private String linkFormat;
         private Boolean contextRelative;
+        private String custom;
         private String visibleIf;
+        private String visibleIfNot;
 
         public TableLink() {
             super();
@@ -1019,6 +1068,14 @@ public class CollectionRenderer extends OutputRenderer {
             this.visibleIf = visibleIf;
         }
 
+        public String getVisibleIfNot() {
+            return this.visibleIfNot;
+        }
+
+        public void setVisibleIfNot(String visibleIfNot) {
+            this.visibleIfNot = visibleIfNot;
+        }
+
         public Boolean isContextRelative() {
             return contextRelative;
         }
@@ -1029,6 +1086,14 @@ public class CollectionRenderer extends OutputRenderer {
 
         public boolean isContextRelativeSet() {
             return this.contextRelative != null;
+        }
+
+        public String getCustom() {
+            return this.custom;
+        }
+
+        public void setCustom(String custom) {
+            this.custom = custom;
         }
 
         public int compareTo(TableLink other) {

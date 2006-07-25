@@ -8,6 +8,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.renderers.ObjectChange;
 import net.sourceforge.fenixedu.applicationTier.Servico.renderers.ObjectKey;
 import net.sourceforge.fenixedu.renderers.model.InstanceCreator;
 import net.sourceforge.fenixedu.renderers.model.MetaObjectKey;
+import net.sourceforge.fenixedu.renderers.model.MetaSlot;
 
 public class CreationDomainMetaObject extends DomainMetaObject {
 
@@ -23,7 +24,7 @@ public class CreationDomainMetaObject extends DomainMetaObject {
     public MetaObjectKey getKey() {
         return new CreationMetaObjectKey(getType());
     }
-
+    
     @Override
     protected Object callService(List<ObjectChange> changes) {
         List<ObjectChange> newChanges = new ArrayList<ObjectChange>(changes);

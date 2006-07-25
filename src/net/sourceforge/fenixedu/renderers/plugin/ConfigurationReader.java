@@ -11,6 +11,7 @@ import java.util.Properties;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 
+import net.sourceforge.fenixedu.renderers.exceptions.NoRendererException;
 import net.sourceforge.fenixedu.renderers.exceptions.NoSuchSchemaException;
 import net.sourceforge.fenixedu.renderers.schemas.Schema;
 import net.sourceforge.fenixedu.renderers.schemas.SchemaSlotDescription;
@@ -211,7 +212,11 @@ public class ConfigurationReader {
                     
                     if (construtorSignature != null) {
                         for (SignatureParameter parameter : construtorSignature.getParameters()) {
-                            parameter.getSlotDescription().setSetterIgnored(true);
+                            SchemaSlotDescription slotDescription = parameter.getSlotDescription();
+                            
+                            if (parameter.getSlotDescription() != null) {
+                                slotDescription.setSetterIgnored(true);
+                            }
                         }
                     }
                 }
@@ -317,7 +322,13 @@ public class ConfigurationReader {
             String name = propertyElement.getAttributeValue("name");
             String value = propertyElement.getAttributeValue("value");
 
-            properties.setProperty(name, value);
+            if (value == null && !propertyElement.getContent().isEmpty()) {
+               value = propertyElement.getText();
+            }
+            
+            if (value != null) {
+                properties.setProperty(name, value);
+            }
         }
         
         return properties;
@@ -349,6 +360,10 @@ public class ConfigurationReader {
                     
                     RenderMode mode = RenderMode.getMode(modeName);
                     
+                    if (hasRenderer(layout, objectClass, mode)) {
+                        logger.warn(String.format("[%s] duplicated definition for type '%s' and layout '%s'", modeName, objectClass, layout));
+                    }
+
                     logger.debug("[" + modeName + "] adding new renderer: " + objectClass + "/" + layout + "/"
                             + rendererClass + "/" + rendererProperties);
                     RenderKit.getInstance().registerRenderer(mode, objectClass, layout, rendererClass,
@@ -358,6 +373,15 @@ public class ConfigurationReader {
                     e.printStackTrace();
                 }
             }
+        }
+    }
+
+    private boolean hasRenderer(String layout, Class objectClass, RenderMode mode) {
+        try {
+            return RenderKit.getInstance().getExactRendererDescription(mode, objectClass, layout) != null;
+        }
+        catch (NoRendererException e) {
+            return false;
         }
     }
 

@@ -32,9 +32,7 @@ public class MultiLanguageString implements Serializable {
 	public Collection<Language> getAllLanguages() {
 		return contentsMap.keySet();
 	}
-
-
-    
+   
     public String getContent() {
         return getContent(getContentLanguage());
     }
@@ -102,6 +100,13 @@ public class MultiLanguageString implements Serializable {
 		return result.toString();
 	}
     
+    /**
+     * @return true if this multi language string contains no languages
+     */
+    public boolean isEmpty() {
+        return this.getAllLanguages().isEmpty();
+    }
+
     public static MultiLanguageString importFromString(String string) {
         if (string == null) {
             return null;
@@ -123,4 +128,5 @@ public class MultiLanguageString implements Serializable {
         
         return mls;
     }
+
 }

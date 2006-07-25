@@ -1,0 +1,79 @@
+<schema name="functionalities.functionality.input" 
+        type="net.sourceforge.fenixedu.domain.functionalities.Functionality"
+        bundle="FUNCTIONALITY_RESOURCES">
+    <slot name="path" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+        <property name="size" value="40"/>
+    </slot>
+    <slot name="name" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredMultiLanguageStringValidator">
+        <property name="size" value="40"/>
+    </slot>
+    <slot name="title">
+        <property name="size" value="40"/>
+    </slot>
+    <slot name="description" layout="area">
+        <property name="rows" value="10"/>
+        <property name="columns" value="40"/>
+    </slot>
+</schema>
+
+<schema name="functionalities.concrete.functionality.create" 
+        type="net.sourceforge.fenixedu.domain.functionalities.ConcreteFunctionality"
+        extends="functionalities.functionality.input"
+        bundle="FUNCTIONALITY_RESOURCES"
+        constructor="name,path">
+</schema>
+
+<schema name="functionalities.module.create" 
+        type="net.sourceforge.fenixedu.domain.functionalities.Module"
+        extends="functionalities.functionality.input"
+        bundle="FUNCTIONALITY_RESOURCES"
+        constructor="name,path">
+    <slot name="path" key="label.module.path" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+        <property name="size" value="40"/>
+    </slot>
+</schema>
+
+<schema name="functionalities.functionality.view.simple" 
+        type="net.sourceforge.fenixedu.domain.functionalities.Functionality"
+        bundle="FUNCTIONALITY_RESOURCES">
+    <slot name="path"/>
+    <slot name="name"/>
+    <slot name="title"/>
+    <slot name="description"/>
+</schema>
+
+<schema name="functionalities.functionality.edit" 
+        type="net.sourceforge.fenixedu.domain.functionalities.Functionality"
+        extends="functionalities.functionality.input"
+        bundle="FUNCTIONALITY_RESOURCES">
+</schema>
+
+<schema name="functionalities.module.view.simple" 
+        type="net.sourceforge.fenixedu.domain.functionalities.Module"
+	    extends="functionalities.functionality.view.simple"
+        bundle="FUNCTIONALITY_RESOURCES">
+</schema>
+
+<schema name="functionalities.module.edit" 
+        type="net.sourceforge.fenixedu.domain.functionalities.Module"
+        extends="functionalities.module.create"
+        bundle="FUNCTIONALITY_RESOURCES">
+</schema>
+
+<schema name="functionalities.module.tree" 
+        type="net.sourceforge.fenixedu.domain.functionalities.Module"
+        bundle="FUNCTIONALITY_RESOURCES">
+    <slot name="name" layout="link">
+        <property name="destination" value="module.view"/>
+        <property name="useParent" value="true"/>
+    </slot>
+</schema>
+
+<schema name="functionalities.functionality.tree" 
+        type="net.sourceforge.fenixedu.domain.functionalities.ConcreteFunctionality"
+        bundle="FUNCTIONALITY_RESOURCES">
+    <slot name="name" layout="link">
+        <property name="destination" value="functionality.view"/>
+        <property name="useParent" value="true"/>
+    </slot>
+</schema>

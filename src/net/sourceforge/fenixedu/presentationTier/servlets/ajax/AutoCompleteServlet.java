@@ -129,7 +129,7 @@ public class AutoCompleteServlet extends HttpServlet {
                     responseHtml.append(BeanUtils.getProperty(element, labelField));
                 }
                 else {
-                    responseHtml.append(RenderUtils.getFormatedProperties(format, element));
+                    responseHtml.append(RenderUtils.getFormattedProperties(format, element));
                 }
                 
                 responseHtml.append("</li>");

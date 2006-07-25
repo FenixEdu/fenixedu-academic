@@ -16,6 +16,7 @@
 	<!ENTITY cron SYSTEM "cron-schemas.xml">
 	<!ENTITY prices SYSTEM "prices-schemas.xml">
 	<!ENTITY serviceRequests SYSTEM "serviceRequests-schemas.xml">
+    <!ENTITY functionalities SYSTEM "functionalities-schemas.xml">
 ]>
 
 <schemas>
@@ -755,5 +756,5 @@
 	&execution;
 	&cron;
 	&prices;
-	&serviceRequests;
+    &functionalities;
 </schemas>

@@ -70,5 +70,5 @@
 
 <!ATTLIST property
 	value CDATA #REQUIRED
-	name NMTOKEN #REQUIRED
+	name CDATA #REQUIRED
 >

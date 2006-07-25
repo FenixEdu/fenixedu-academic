@@ -80,9 +80,7 @@ Documentation:
     <!--@ This layout is only to be used for slots of domain objects and never for the top level object that is 
           beeing presented. It generates a link for the object details. The action called is configurable. The 
           default layout is set to the tabular presentation of the object. -->
-    <renderer type="java.lang.Object" layout="link" class="net.sourceforge.fenixedu.presentationTier.renderers.ObjectLinkRenderer">
-        <property name="destinyLayout" value="tabular"/>
-    </renderer>
+    <renderer type="java.lang.Object" layout="link" class="net.sourceforge.fenixedu.presentationTier.renderers.ObjectLinkRenderer"/>
 
     <renderer type="net.sourceforge.fenixedu.domain.Person" layout="person-email-identity" class="net.sourceforge.fenixedu.presentationTier.renderers.EmailIdentityRenderer"/>
   
@@ -134,10 +132,8 @@ Documentation:
 
     <!--@ The default presentation for a domain object consist of a link for it's details. The is the top level 
           version of the <tt>link</tt> layout. -->
-    <renderer type="net.sourceforge.fenixedu.domain.DomainObject" class="net.sourceforge.fenixedu.presentationTier.renderers.DomainObjectLinkRenderer">
-        <property name="subLayout" value="values"/>
-        <property name="subSchema" value="DomainObject.oid"/>
-        <property name="destinyLayout" value="tabular"/>
+    <renderer type="net.sourceforge.fenixedu.domain.DomainObject" class="net.sourceforge.fenixedu.renderers.FormatRenderer">
+        <property name="format" value="${class.simpleName}:${idInternal}"/>
     </renderer>
     
     <renderer mode="input" type="net.sourceforge.fenixedu.domain.DomainObject" layout="autoComplete" class="net.sourceforge.fenixedu.presentationTier.renderers.AutoCompleteInputRenderer">
@@ -166,6 +162,10 @@ Documentation:
     <!--@ Each object in the collection is presented with it's own layout and schema. This layouts works for several objects
           the same way that the <tt>values</tt> layouts works for slots. -->
     <renderer type="java.util.Collection" layout="flowLayout" class="net.sourceforge.fenixedu.presentationTier.renderers.FlowRenderer" />
+
+    <!--@ The tree layout allows a collection to be presented as a tree, that is, were you specify how an hierarchy is
+          formed and a structure made by lists inside lists is created. -->
+    <renderer type="java.util.Collection" layout="tree" class="net.sourceforge.fenixedu.presentationTier.renderers.TreeRenderer" />
 
     <!--@ The default layout for a list really creates an html list were each object is presented in a list item. -->
     <renderer type="java.util.List" class="net.sourceforge.fenixedu.renderers.ListRenderer"/>
@@ -327,10 +327,6 @@ Documentation:
     <renderer type="java.lang.Object" layout="nice-details-table" class="net.sourceforge.fenixedu.renderers.StandardObjectRenderer">
         <property name="classes" value="style1"/>
         <property name="columnClasses" value="listClasses,"/>
-    </renderer>
-    
-    <renderer type="java.lang.Object" layout="values-dash" class="net.sourceforge.fenixedu.renderers.ValuesRenderer">
-        <property name="htmlSeparator" value=" - "/>
     </renderer>
     
     <renderer type="java.lang.Object" layout="values-comma" class="net.sourceforge.fenixedu.renderers.ValuesRenderer">

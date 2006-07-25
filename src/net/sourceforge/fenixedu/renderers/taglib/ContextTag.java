@@ -40,9 +40,11 @@ public class ContextTag extends TagSupport {
     @Override
     public int doEndTag() throws JspException {
         try {
-            HtmlHiddenField hidden = new HtmlHiddenField(LifeCycleConstants.VIEWSTATE_LIST_PARAM_NAME, encodeViewStates());
+            if (! this.viewStates.isEmpty()) {
+                HtmlHiddenField hidden = new HtmlHiddenField(LifeCycleConstants.VIEWSTATE_LIST_PARAM_NAME, encodeViewStates());
         
-            hidden.draw(this.pageContext);
+                hidden.draw(this.pageContext);
+            }
         } catch (IOException e) {
             throw new JspException(e);
         }

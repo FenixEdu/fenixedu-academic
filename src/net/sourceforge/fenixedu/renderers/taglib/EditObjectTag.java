@@ -2,9 +2,7 @@ package net.sourceforge.fenixedu.renderers.taglib;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Hashtable;
 import java.util.List;
-import java.util.Map;
 import java.util.Properties;
 
 import javax.servlet.http.HttpServletRequest;
@@ -19,7 +17,6 @@ import net.sourceforge.fenixedu.renderers.components.converters.Converter;
 import net.sourceforge.fenixedu.renderers.components.state.HiddenSlot;
 import net.sourceforge.fenixedu.renderers.components.state.IViewState;
 import net.sourceforge.fenixedu.renderers.components.state.LifeCycleConstants;
-import net.sourceforge.fenixedu.renderers.components.state.ViewDestination;
 import net.sourceforge.fenixedu.renderers.components.state.ViewState;
 import net.sourceforge.fenixedu.renderers.contexts.InputContext;
 import net.sourceforge.fenixedu.renderers.contexts.PresentationContext;
@@ -31,7 +28,6 @@ import net.sourceforge.fenixedu.renderers.schemas.SchemaSlotDescription;
 import net.sourceforge.fenixedu.renderers.utils.RenderKit;
 import net.sourceforge.fenixedu.renderers.validators.HtmlValidator;
 
-import org.apache.struts.config.ModuleConfig;
 import org.apache.struts.taglib.TagUtils;
 
 public class EditObjectTag extends BaseRenderObjectTag {
@@ -48,8 +44,6 @@ public class EditObjectTag extends BaseRenderObjectTag {
     
     private String converter;
     
-    private Map<String, ViewDestination> destinations;
-    
     private List<HiddenSlot> hiddenSlots;
     
     private Properties validatorProperties;
@@ -60,7 +54,6 @@ public class EditObjectTag extends BaseRenderObjectTag {
         this.nested = false;
         this.visible = true;
         
-        this.destinations = new Hashtable<String, ViewDestination>();
         this.hiddenSlots = new ArrayList<HiddenSlot>();
         this.validatorProperties = new Properties();
     }
@@ -123,7 +116,6 @@ public class EditObjectTag extends BaseRenderObjectTag {
         this.slot = null;
         this.converter = null;
         this.validator = null;
-        this.destinations = new Hashtable<String, ViewDestination>();
         this.hiddenSlots = new ArrayList<HiddenSlot>();
         this.validatorProperties = new Properties();
     }
@@ -374,19 +366,6 @@ public class EditObjectTag extends BaseRenderObjectTag {
         return viewState;
     }
 
-    protected void setViewStateDestinations(IViewState viewState) {
-        viewState.setInputDestination(getInputDestination());
-
-        String currentPath = getCurrentPath();
-        ModuleConfig module = TagUtils.getInstance().getModuleConfig(pageContext);
-   
-        for (String name : this.destinations.keySet()) {
-            ViewDestination destination = this.destinations.get(name);
-            
-            viewState.addDestination(name, normalizeDestination(destination, currentPath, module.getPrefix()));
-        }
-    }
-
     protected Schema getComputedSchema(Object targetObject) {
         if (getSlot() == null && isVisible()) {
             return RenderKit.getInstance().findSchema(getSchema());
@@ -490,22 +469,6 @@ public class EditObjectTag extends BaseRenderObjectTag {
 
     protected MetaObject getNewMetaObject(Object targetObject, Schema schema) {
         return MetaObjectFactory.createObject(targetObject, schema);
-    }
-
-    private ViewDestination normalizeDestination(ViewDestination destination, String currentPath, String module) {
-        if (destination.getModule() == null) {
-            destination.setModule(module);
-        }
-
-        if (destination.getPath() == null) {
-            destination.setPath(currentPath);
-        }
-
-        return destination;
-    }
-
-    public void addDestination(String name, String path, String module, boolean redirect) {
-        this.destinations.put(name, new ViewDestination(path, module, redirect));
     }
 
     public void addHiddenSlot(String slot, boolean multiple, String value, Class<Converter> converter) {

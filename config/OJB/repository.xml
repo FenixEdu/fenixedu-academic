@@ -89,6 +89,7 @@
 <!ENTITY candidacy SYSTEM "repository_candidacy.xml">
 <!ENTITY administrativeOffice SYSTEM "repository_administrativeOffice.xml">
 <!ENTITY serviceRequests SYSTEM "repository_serviceRequests.xml">
+<!ENTITY functionalities SYSTEM "repository_functionalities.xml">
 ]>
 <descriptor-repository version="1.0" isolation-level="repeatable-read">
 
@@ -181,7 +182,6 @@
 	&cron;
 	&accounting;
 	&candidacy;
-	&administrativeOffice;
-	&serviceRequests;
-
+    &functionalities;
+    
 </descriptor-repository>

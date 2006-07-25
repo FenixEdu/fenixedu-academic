@@ -502,7 +502,7 @@
   <tag>
     <name>property</name>
     <tag-class>net.sourceforge.fenixedu.renderers.taglib.PropertyTag</tag-class>
-    <body-content>empty</body-content>
+    <body-content>JSP</body-content>
     <description>
     		Sets a specific property of the layout or validator.
     </description>
@@ -518,10 +518,10 @@
 
     <attribute>
       <name>value</name>
-      <required>true</required>
+      <required>false</required>
       <rtexprvalue>true</rtexprvalue>
       <description>
-        	The value of the property.
+        	The value of the property. If this property is specified the body of the tag is ignored.
       </description>
     </attribute>
   </tag>

@@ -3631,7 +3631,54 @@ class net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest ext
 			class net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.SchoolRegistrationCertificateRequest extends net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.CertificateRequest {
 				Integer keyExecutionYear;
 			}
+
+//
+// Functionalities
+//
+
+class net.sourceforge.fenixedu.domain.functionalities.Functionality extends net.sourceforge.fenixedu.domain.DomainObject {
+    String ojbConcreteClass;
+
+	MultiLanguageString name;
+	MultiLanguageString title;
+	MultiLanguageString description;
+	boolean enabled;
+	String path;
+	boolean relative;
 	
+	Integer orderInModule; /* used to allows ordering of functionalities in modules, see relation ModuleAggregatesFunctionalities */
+	
+	Integer keyModule;
+}
+
+	class net.sourceforge.fenixedu.domain.functionalities.ConcreteFunctionality extends net.sourceforge.fenixedu.domain.functionalities.Functionality {
+	}
+	
+	class net.sourceforge.fenixedu.domain.functionalities.Module extends net.sourceforge.fenixedu.domain.functionalities.Functionality {
+		Integer keyParent;
+	}
+
+relation ModuleAggregatesFunctionalities {
+	net.sourceforge.fenixedu.domain.functionalities.Functionality playsRole functionalities {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.functionalities.Module playsRole module;
+}
+
+relation ModuleHasSubModules {
+	net.sourceforge.fenixedu.domain.functionalities.Module playsRole modules {
+		multiplicity *;
+	}
+	
+	net.sourceforge.fenixedu.domain.functionalities.Module playsRole parent;
+}
+
+relation RootDomainObjectFunctionality {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.functionalities.Functionality playsRole functionalities {
+		multiplicity *;
+	}
+}
 
 /*
  * Relations definitions

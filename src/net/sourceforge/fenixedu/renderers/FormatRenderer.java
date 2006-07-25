@@ -59,7 +59,7 @@ public class FormatRenderer extends OutputRenderer {
                 return new HtmlText();
             }
             
-            String formatedObject = RenderUtils.getFormatedProperties(getFormat(), object);
+            String formatedObject = RenderUtils.getFormattedProperties(getFormat(), object);
             return new HtmlText(formatedObject);
         }
 

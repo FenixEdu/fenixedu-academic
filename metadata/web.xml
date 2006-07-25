@@ -337,6 +337,10 @@
             <param-value>/WEB-INF/conf/struts-manager.xml</param-value>
         </init-param>
         <init-param>
+            <param-name>config/manager/functionalities</param-name>
+            <param-value>/WEB-INF/conf/struts-functionalities.xml</param-value>
+        </init-param>
+        <init-param>
             <param-name>config/degreeAdministrativeOffice</param-name>
             <param-value>/WEB-INF/conf/struts-degreeAdministrativeOffice.xml</param-value>
         </init-param>

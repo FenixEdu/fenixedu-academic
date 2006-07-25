@@ -81,7 +81,7 @@ public class ClassAsLabelRenderer extends OutputRenderer {
                     return "label." + targetClass.getName();
                 }
                 else {
-                    return RenderUtils.getFormatedProperties(getLabelFormat(), targetClass);
+                    return RenderUtils.getFormattedProperties(getLabelFormat(), targetClass);
                 }
             }
             

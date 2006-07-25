@@ -99,7 +99,14 @@ public class RenderKit {
     /**
      * @exception NoRendererException if no renderer description could be found
      */
-    private RendererDescription getRendererDescription(RenderMode mode, Class type, String layout) {
+    public RendererDescription getExactRendererDescription(RenderMode mode, Class type, String layout) {
+        return registryMap.get(mode).getExactRenderDescription(type, layout);
+    }
+
+    /**
+     * @exception NoRendererException if no renderer description could be found
+     */
+    public RendererDescription getRendererDescription(RenderMode mode, Class type, String layout) {
         return registryMap.get(mode).getRenderDescription(type, layout);
     }
     
@@ -126,7 +133,7 @@ public class RenderKit {
     }
 
     /**
-     * This method is a convinience method. It works in a similar way as {@link #getRenderer(RenderMode, Class, String)}
+     * This method is a convenience method. It works in a similar way as {@link #getRenderer(RenderMode, Class, String)}
      * but the render mode is retrieved from the presentation context.
      */
     public Renderer getRenderer(PresentationContext context, Class type, String layout) {

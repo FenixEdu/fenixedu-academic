@@ -4,7 +4,6 @@ import java.io.IOException;
 
 import javax.servlet.jsp.JspException;
 
-import net.sourceforge.fenixedu.renderers.components.HtmlForm;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 
 public class FormTag extends ContextTag {

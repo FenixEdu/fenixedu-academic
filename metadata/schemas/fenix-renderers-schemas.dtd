@@ -40,7 +40,7 @@
   indicates that the constructor with types (java.lang.Integer, <type of s2>, java.util.Date)
   will be called with the values for slot s1, slot s2, and slot s3.
 -->
-<!ELEMENT schema ((remove+,slot*,setter*)|(slot+,setter*))>
+<!ELEMENT schema ((remove+,slot*,setter*)|(slot*,setter*))>
 
 <!ATTLIST schema
 	name ID #REQUIRED
@@ -132,10 +132,10 @@
   each slot value. Remember that the coosen renderer can be different every time
   so it is the renderer's responsability to undestand the properties passed.
   -->
-<!ELEMENT property EMPTY>
+<!ELEMENT property (#PCDATA)>
 
 <!ATTLIST property
-	value CDATA #REQUIRED
+	value CDATA #IMPLIED
 	name NMTOKEN #REQUIRED
 >
 

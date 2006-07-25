@@ -46,4 +46,14 @@ public class RendererRegistry {
         
         return layoutsTable.get(layout);
     }
+    
+    public RendererDescription getExactRenderDescription(Class objectType, String layout) {
+        Map<String, RendererDescription> layoutsTable = renderersTable.getUnspecific(objectType);
+        
+        if (layoutsTable == null) {
+            throw new NoRendererException(objectType, layout);
+        }
+        
+        return layoutsTable.get(layout);
+    }
 }

@@ -23,6 +23,7 @@ public class InstanceCreator implements Serializable {
     public void addArgument(MetaSlot slot, Class type) {
         this.slots.add(slot);
         this.argumentTypes.add(type);
+        slot.setSetterIgnored(true);
     }
     
     public Object createInstance() {
@@ -35,7 +36,7 @@ public class InstanceCreator implements Serializable {
             throw new RuntimeException("failed to create instance of " + this.type.getName() + " with arguments " + getArgumentTypes(), e);
         }
     }
-
+    
     public Class[] getArgumentTypes() {
         return this.argumentTypes.toArray(new Class[0]);
     }

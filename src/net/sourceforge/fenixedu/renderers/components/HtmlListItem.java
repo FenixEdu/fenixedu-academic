@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.renderers.components;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.jsp.PageContext;
@@ -8,18 +9,32 @@ import net.sourceforge.fenixedu.renderers.components.tags.HtmlTag;
 
 public class HtmlListItem extends HtmlComponent {
 
-    private HtmlComponent body;
+    private List<HtmlComponent> body;
     
     public HtmlListItem() {
         super();
+        
+        this.body = new ArrayList<HtmlComponent>();
     }
 
+    @Deprecated
     public void setBody(HtmlComponent body) {
-        this.body = body;
+        this.body = new ArrayList<HtmlComponent>();
+        this.body.add(body);
     }
     
+    @Deprecated
     public HtmlComponent getBody() {
-        return this.body;
+        if (this.body.isEmpty()) {
+            return null;
+        }
+        else {
+            return this.body.get(0);
+        }
+    }
+    
+    public void addChild(HtmlComponent component) {
+        this.body.add(component);
     }
 
     @Override
@@ -27,7 +42,7 @@ public class HtmlListItem extends HtmlComponent {
         List<HtmlComponent> children = super.getChildren();
         
         if (this.body != null) {
-            children.add(this.body);
+            children.addAll(this.body);
         }
         
         return children;
@@ -39,8 +54,8 @@ public class HtmlListItem extends HtmlComponent {
         
         tag.setName("li");
         
-        if (this.body != null) {
-            tag.addChild(this.body.getOwnTag(context));
+        for (HtmlComponent child : this.body) {
+            tag.addChild(child.getOwnTag(context));
         }
         
         return tag;

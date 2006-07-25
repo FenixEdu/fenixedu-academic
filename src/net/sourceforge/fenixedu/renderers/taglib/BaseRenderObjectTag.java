@@ -2,7 +2,9 @@ package net.sourceforge.fenixedu.renderers.taglib;
 
 import java.io.IOException;
 import java.util.Collection;
+import java.util.Hashtable;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 
 import javax.servlet.http.HttpServletRequest;
@@ -10,6 +12,9 @@ import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.TagSupport;
 
 import net.sourceforge.fenixedu.renderers.components.HtmlComponent;
+import net.sourceforge.fenixedu.renderers.components.converters.Converter;
+import net.sourceforge.fenixedu.renderers.components.state.HiddenSlot;
+import net.sourceforge.fenixedu.renderers.components.state.IViewState;
 import net.sourceforge.fenixedu.renderers.components.state.ViewDestination;
 import net.sourceforge.fenixedu.renderers.contexts.PresentationContext;
 import net.sourceforge.fenixedu.renderers.model.UserIdentityFactory;
@@ -39,8 +44,12 @@ public abstract class BaseRenderObjectTag extends TagSupport {
     
     private String sortBy;
     
+    private Map<String, ViewDestination> destinations;
+    
     public BaseRenderObjectTag() {
         super();
+        
+        this.destinations = new Hashtable<String, ViewDestination>();
     }
 
     @Override
@@ -54,6 +63,7 @@ public abstract class BaseRenderObjectTag extends TagSupport {
         this.layout = null;
         this.schema = null;
         this.properties = null;
+        this.destinations = new Hashtable<String, ViewDestination>();
     }
 
     public String getName() {
@@ -236,6 +246,39 @@ public abstract class BaseRenderObjectTag extends TagSupport {
         component.draw(pageContext);
     }
 
+    protected ViewDestination normalizeDestination(ViewDestination destination, String currentPath, String module) {
+        if (destination.getModule() == null) {
+            destination.setModule(module);
+        }
+
+        if (destination.getPath() == null) {
+            destination.setPath(currentPath);
+        }
+
+        return destination;
+    }
+
+    public void addDestination(String name, String path, String module, boolean redirect) {
+        this.destinations.put(name, new ViewDestination(path, module, redirect));
+    }
+
+    public Map<String, ViewDestination> getDestinations() {
+        return this.destinations;
+    }
+    
+    protected void setViewStateDestinations(IViewState viewState) {
+        viewState.setInputDestination(getInputDestination());
+
+        String currentPath = getCurrentPath();
+        ModuleConfig module = TagUtils.getInstance().getModuleConfig(pageContext);
+   
+        for (String name : getDestinations().keySet()) {
+            ViewDestination destination = getDestinations().get(name);
+            
+            viewState.addDestination(name, normalizeDestination(destination, currentPath, module.getPrefix()));
+        }
+    }
+
     protected ViewDestination getInputDestination() {
         String currentPath = getCurrentPath();
         ModuleConfig module = TagUtils.getInstance().getModuleConfig(pageContext);
@@ -265,4 +308,5 @@ public abstract class BaseRenderObjectTag extends TagSupport {
         
         return currentPath;
     }
+ 
 }

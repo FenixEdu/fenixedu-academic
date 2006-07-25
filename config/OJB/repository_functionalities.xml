@@ -1,0 +1,10 @@
+<class-descriptor class="net.sourceforge.fenixedu.domain.functionalities.Functionality" table="FUNCTIONALITY">
+    <extent-class class-ref="net.sourceforge.fenixedu.domain.functionalities.ConcreteFunctionality" />
+    <extent-class class-ref="net.sourceforge.fenixedu.domain.functionalities.Module" />
+</class-descriptor>
+
+<class-descriptor class="net.sourceforge.fenixedu.domain.functionalities.ConcreteFunctionality" table="FUNCTIONALITY">
+</class-descriptor>
+
+<class-descriptor class="net.sourceforge.fenixedu.domain.functionalities.Module" table="FUNCTIONALITY">
+</class-descriptor>

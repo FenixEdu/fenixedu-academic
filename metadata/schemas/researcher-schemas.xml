@@ -400,7 +400,8 @@
 
 <schema name="result.patentShortList" type="net.sourceforge.fenixedu.domain.research.result.patent.ResultPatent">
 	<slot name="title" layout="link">
-		<property name="viewPage" value="/patents/patentsManagement.do?method=preparePatentDetails"/>	
+        <property name="linkFormat"><![CDATA[/patents/patentsManagement.do?method=preparePatentDetails&oid=${idInternal}]]></property>
+        <property name="useParent" value="true"/>
 	</slot>
 	<slot name="registrationDate"/>
 </schema>
@@ -536,7 +537,8 @@
 <!-- Resume: only important details to show in publications management -->
 <schema name="result.publication.resume.Book" type="net.sourceforge.fenixedu.domain.research.result.publication.Book" bundle="RESEARCHER_RESOURCES">
 	<slot name="title" layout="link">
-		<property name="viewPage" value="/publications/publicationsManagement.do?method=preparePublicationDetails"/>
+        <property name="linkFormat"><![CDATA[/publications/publicationsManagement.do?method=preparePublicationDetails&oid=${idInternal}]]></property>
+        <property name="useParent" value="true"/>
 	</slot>
 	<slot name="publisher.name"/>
 	<slot name="year"/>
@@ -546,7 +548,8 @@
 </schema>
 <schema name="result.publication.resume.BookPart" type="net.sourceforge.fenixedu.domain.research.result.publication.Book" bundle="RESEARCHER_RESOURCES">
 	<slot name="title" layout="link">
-		<property name="viewPage" value="/publications/publicationsManagement.do?method=preparePublicationDetails"/>
+        <property name="linkFormat"><![CDATA[/publications/publicationsManagement.do?method=preparePublicationDetails&oid=${idInternal}]]></property>
+        <property name="useParent" value="true"/>
 	</slot>
 	<slot name="bookPartType"/>
 	<slot name="publisher.name"/>
@@ -557,7 +560,8 @@
 </schema>
 <schema name="result.publication.resume.Article" type="net.sourceforge.fenixedu.domain.research.result.publication.Article" bundle="RESEARCHER_RESOURCES">
 	<slot name="title" layout="link">
-		<property name="viewPage" value="/publications/publicationsManagement.do?method=preparePublicationDetails"/>
+        <property name="linkFormat"><![CDATA[/publications/publicationsManagement.do?method=preparePublicationDetails&oid=${idInternal}]]></property>
+        <property name="useParent" value="true"/>
 	</slot>
 	<slot name="journal"/>
 	<slot name="year"/>
@@ -567,7 +571,8 @@
 </schema>
 <schema name="result.publication.resume.Thesis" type="net.sourceforge.fenixedu.domain.research.result.publication.Thesis" bundle="RESEARCHER_RESOURCES">
 	<slot name="title" layout="link">
-		<property name="viewPage" value="/publications/publicationsManagement.do?method=preparePublicationDetails"/>
+        <property name="linkFormat"><![CDATA[/publications/publicationsManagement.do?method=preparePublicationDetails&oid=${idInternal}]]></property>
+        <property name="useParent" value="true"/>
 	</slot>
 	<slot name="thesisType"/>
 	<slot name="organization.name" key="label.school"/>
@@ -578,7 +583,8 @@
 </schema>
 <schema name="result.publication.resume.Manual" type="net.sourceforge.fenixedu.domain.research.result.publication.Manual" bundle="RESEARCHER_RESOURCES">
 	<slot name="title" layout="link">
-		<property name="viewPage" value="/publications/publicationsManagement.do?method=preparePublicationDetails"/>
+        <property name="linkFormat"><![CDATA[/publications/publicationsManagement.do?method=preparePublicationDetails&oid=${idInternal}]]></property>
+        <property name="useParent" value="true"/>
 	</slot>
 	<slot name="year"/>
 	<slot name="resultParticipations" schema="result.participations" layout="values">
@@ -587,7 +593,8 @@
 </schema>
 <schema name="result.publication.resume.TechnicalReport" type="net.sourceforge.fenixedu.domain.research.result.publication.TechnicalReport" bundle="RESEARCHER_RESOURCES">
 	<slot name="title" layout="link">
-		<property name="viewPage" value="/publications/publicationsManagement.do?method=preparePublicationDetails"/>
+        <property name="linkFormat"><![CDATA[/publications/publicationsManagement.do?method=preparePublicationDetails&oid=${idInternal}]]></property>
+        <property name="useParent" value="true"/>
 	</slot>
 	<slot name="organization.name"/>
 	<slot name="year"/>

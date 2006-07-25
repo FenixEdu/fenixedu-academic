@@ -207,6 +207,13 @@
 	</html:link>
 </li>
 
+<li class="navheader"><bean:message bundle="FUNCTIONALITY_RESOURCES" key="title.functionalities" /></li>
+<li> 
+    <html:link module="/manager/functionalities" page="/toplevel/view.do">
+        <bean:message bundle="FUNCTIONALITY_RESOURCES" key="link.functionalities" />
+    </html:link>
+</li>
+
 <li class="navheader"><bean:message bundle="MANAGER_RESOURCES" key="title.frameworks"/></li>
 <li>
 	<html:link module="/manager" page="/someStrutsPage.do?method=showFirstPage">

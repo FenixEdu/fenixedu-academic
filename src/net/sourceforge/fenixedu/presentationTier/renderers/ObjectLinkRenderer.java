@@ -5,15 +5,22 @@ import net.sourceforge.fenixedu.presentationTier.renderers.actions.NavigationAct
 import net.sourceforge.fenixedu.renderers.OutputRenderer;
 import net.sourceforge.fenixedu.renderers.components.HtmlComponent;
 import net.sourceforge.fenixedu.renderers.components.HtmlLink;
+import net.sourceforge.fenixedu.renderers.components.HtmlText;
+import net.sourceforge.fenixedu.renderers.components.state.ViewDestination;
 import net.sourceforge.fenixedu.renderers.layouts.Layout;
 import net.sourceforge.fenixedu.renderers.schemas.Schema;
 import net.sourceforge.fenixedu.renderers.utils.RenderKit;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 
 /**
- * This renderer can only be used to present a domain object's slot. It will generate a link to the
- * object's details. In the following example we are imitating the presentation of a person where the
- * slot <code>name</code> is presented by this renderer.
+ * This render is used to create a link out of an object. You choose the link format and
+ * some properties can be used to configure the link. You can also specify the link indirectly
+ * by specifing a destination and then defining a destination with that name in the place
+ * were ou use this renderer.
+ * 
+ * <p>
+ * The link body is configured through a sub rendering of the object with the specified
+ * layout and schema.
  * 
  * <p>
  * Example: <a href="#">Jane Doe</a>
@@ -22,91 +29,146 @@ import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
  */
 public class ObjectLinkRenderer extends OutputRenderer {
 
-    // TODO: remove constant action path
-    private static final String DEFAULT_PAGE = "/domain/view.do";
+    private boolean useParent;
+    
+    private String linkFormat;
 
-    private String viewPage;
-
+    private boolean contextRelative;
+    
+    private String destination;
+    
     private String subSchema;
 
     private String subLayout;
 
-    private String destinySchema;
-
-    private String destinyLayout;
-
+    private String key;
+    
+    private String bundle;
+    
     private String text;
 
-    private boolean isKey;
-
-    public ObjectLinkRenderer() {
-        super();
-
-        this.isKey = false;
+    public String getLinkFormat() {
+        return this.linkFormat;
     }
 
-    public String getViewPage() {
-        return this.viewPage;
+
+    /**
+     * This property allows you to specify the format of the final link.
+     * In this format you can use properties of the object being presented.
+     * For example:
+     * 
+     * <code>
+     *  format="/some/action.do?oid=${id}"
+     * </code>
+     * 
+     * @see RenderUtils#getFormattedProperties(String, Object)
+     * @property
+     */
+    public void setLinkFormat(String linkFormat) {
+        this.linkFormat = linkFormat;
+    }
+
+    public boolean isContextRelative() {
+        return this.contextRelative;
     }
 
     /**
-     * This property allows you to override the page or action that is used to show the object's details.
-     * The default page is {@value #DEFAULT_PAGE}. This renderer will generate a link for the specified
-     * page passing as arguments:
-     * <dl>
-     *   <dt>type</dt>
-     *   <dd>the the object type (as given by {@link NavigationAction#getTypeName(Class)})</dd>
-     * 
-     *   <dt>oid</dt>
-     *   <dd>the object id</dd>
-     * 
-     *   <dt>layout</dt>
-     *   <dd>the layout to be used in the presentation and specified by
-     *   {@link #setDestinyLayout(String) destinyLayout}. It may not be present.</dd>
-     * 
-     *   <dt>schema</dt>
-     *   <dd>the schema to be used in the presentation and specified by
-     *   {@link #setDestinySchema(String) destinySchema}. It may not be present.</dd>
-     * </dl>
+     * Indicates that th link specified should be relative to the context of the
+     * application and not to the current module. This also overrides the module
+     * if a destination is specified.
      * 
      * @property
      */
-    public void setViewPage(String viewPage) {
-        this.viewPage = viewPage;
+    public void setContextRelative(boolean contextRelative) {
+        this.contextRelative = contextRelative;
     }
 
-    public String getDestinyLayout() {
-        return destinyLayout;
+
+    public boolean isUseParent() {
+        return this.useParent;
     }
 
     /**
-     * The layout to be used in the detailed presentation of the object.
+     * This property can be used when presenting an object's slot.
+     * If this property is true the object that will be considered
+     * when replacing the properties in the link will be the parent object,
+     * that is, the object that contains the slot being presented.
+     * 
+     * <p>
+     * Off course, if this property is false (the default) the object
+     * that will be considered is the object initialy being presented.
      * 
      * @property
      */
-    public void setDestinyLayout(String destinyLayout) {
-        this.destinyLayout = destinyLayout;
+    public void setUseParent(boolean useParent) {
+        this.useParent = useParent;
     }
 
-    public String getDestinySchema() {
-        return destinySchema;
+    public String getDestination() {
+        return this.destination;
     }
 
     /**
-     * The schema to be used in the detailed presentation of the object.
+     * This property is an alternative to the use of the {@link #setLinkFormat(String) linkFormat}.
+     * With this property you can specify the name of the view state destination that will be used.
+     * This property allows you to select the concrete destination in each context were this
+     * configuration is used.
      * 
      * @property
      */
-    public void setDestinySchema(String destinySchema) {
-        this.destinySchema = destinySchema;
+    public void setDestination(String destination) {
+        this.destination = destination;
+    }
+
+    public String getText() {
+        return this.text;
+    }
+
+    /**
+     * The text to appear as the link text. This is a simple alternative to the full presentation
+     * of the object.
+     * 
+     * @property
+     */
+    public void setText(String text) {
+        this.text = text;
+    }
+
+    public String getKey() {
+        return this.key;
+    }
+
+    /**
+     * Instead of specifying thr {@link #setText(String) text} property you can specify a key,
+     * with this property, and a bundle with the {@link #setBundle(String) bundle}. 
+     * 
+     * @property
+     */
+    public void setKey(String key) {
+        this.key = key;
+    }
+
+    public String getBundle() {
+        return this.bundle;
+    }
+
+    /**
+     * The bundle were the {@link #setKey(String) key} will be fetched.
+     * 
+     * @property
+     */
+    public void setBundle(String bundle) {
+        this.bundle = bundle;
     }
 
     public String getSubLayout() {
-        return subLayout;
+        return this.subLayout;
     }
 
     /**
-     * The layout in which the slot's value should be presented.
+     * Specifies the sub layout that will be used for the body of the link, that is,
+     * the object will be presented using the layout specified and the result of that
+     * presentation will be the body of the link.
      * 
      * @property
      */
@@ -115,45 +177,17 @@ public class ObjectLinkRenderer extends OutputRenderer {
     }
 
     public String getSubSchema() {
-        return subSchema;
+        return this.subSchema;
     }
 
     /**
-     * If the slot's value is a complex value, that is, it's an object with slots, then this property can
-     * be used to indicate the layout in which it should be presented.
+     * The name of the schema to use in the presentation of the object for the body
+     * of the link.
      * 
-     * @property
+     * @property 
      */
     public void setSubSchema(String subSchema) {
         this.subSchema = subSchema;
-    }
-
-    public String getText() {
-        return text;
-    }
-
-    /**
-     * If you specify this slot then the sub object's presentation is ignored and this text is shown
-     * instead.
-     * 
-     * @property
-     */
-    public void setText(String text) {
-        this.text = text;
-    }
-
-    public boolean isKey() {
-        return isKey;
-    }
-
-    /**
-     * This property indicates that the value given in the {@link #setText(String) text} property is to
-     * be treated as a resource key.
-     * 
-     * @property
-     */
-    public void setKey(boolean isKey) {
-        this.isKey = isKey;
     }
 
     @Override
@@ -162,64 +196,79 @@ public class ObjectLinkRenderer extends OutputRenderer {
 
             @Override
             public HtmlComponent createComponent(Object object, Class type) {
-                HtmlLink link = new HtmlLink();
-
-                if (getText() != null) {
-                    link.setText(getLinkText());
-                } else {
-                    if (object == null) {
-                        return link;
-                    } else {
-                        link.setBody(renderLinkBody(object));
-                    }
+                Object usedObject = getTargetObject(object);
+                
+                if (usedObject == null) {
+                    return new HtmlText();
                 }
-
-                DomainObject domainObject = getDomainObject(object);
-                setupLink(link, domainObject);
+                
+                HtmlLink link = getLink(usedObject);
+                
+                String text = getLinkText();
+                if (text != null) {
+                    link.setText(text);
+                } else {
+                    link.setBody(getLinkBody(object));
+                }
 
                 return link;
             }
 
+            private HtmlComponent getLinkBody(Object object) {
+                Schema findSchema = RenderKit.getInstance().findSchema(getSubSchema());
+                return renderValue(object, findSchema, getSubLayout());
+            }
+
+            private String getLinkText() {
+                if (getText() != null) {
+                    return getText();
+                }
+                
+                if (getKey() == null) {
+                    return null;
+                }
+                
+                return RenderUtils.getResourceString(getBundle(), getKey());
+            }
+
+            private HtmlLink getLink(Object usedObject) {
+                HtmlLink link = new HtmlLink();
+                
+                String url;
+                
+                if (getDestination() != null) {
+                    ViewDestination destination = getContext().getViewState().getDestination(getDestination());
+                    link.setModule(destination.getModule());
+                    url = destination.getPath();
+                }
+                else {
+                    url = getLinkFormat();
+                }
+                
+                link.setUrl(RenderUtils.getFormattedProperties(url, usedObject));
+                
+                if (isContextRelative()) {
+                    link.setModule(null);
+                    link.setModuleRelative(false);
+                }
+                
+                return link;
+            }
+
+            private Object getTargetObject(Object object) {
+                if (isUseParent()) {
+                    if (getContext().getParentContext() != null) {
+                        return getContext().getParentContext().getMetaObject().getObject();
+                    }
+                    else {
+                        return null;
+                    }
+                }
+                else {
+                    return object;
+                }
+            }
+
         };
-    }
-
-    protected DomainObject getDomainObject(Object object) {
-        return (DomainObject) getContext().getParentContext().getMetaObject().getObject();
-    }
-
-    private void setupLink(HtmlLink link, DomainObject domainObject) {
-        link.setUrl(getViewUrl());
-
-        link.setParameter("oid", domainObject.getIdInternal().toString());
-        link.setParameter("type", NavigationAction.getTypeName(domainObject.getClass()));
-
-        if (getDestinyLayout() != null) {
-            link.setParameter("layout", getDestinyLayout());
-        }
-
-        if (getDestinySchema() != null) {
-            link.setParameter("schema", getDestinySchema());
-        }
-    }
-
-    private String getViewUrl() {
-        if (getViewPage() != null) {
-            return getViewPage();
-        } else {
-            return DEFAULT_PAGE;
-        }
-    }
-
-    private String getLinkText() {
-        if (isKey()) {
-            return RenderUtils.getResourceString(getText());
-        }
-
-        return getText();
-    }
-
-    private HtmlComponent renderLinkBody(Object object) {
-        Schema schema = RenderKit.getInstance().findSchema(getSubSchema());
-        return renderValue(object, schema, getSubLayout());
     }
 }
