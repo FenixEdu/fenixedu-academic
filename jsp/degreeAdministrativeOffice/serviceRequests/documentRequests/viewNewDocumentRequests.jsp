@@ -7,5 +7,29 @@
 <h2><bean:message key="label.documentRequestsManagement.newDocumentRequests" /></h2>
 
 <hr><br/>
-
-LOGIC GOES HERE!!!!
+<logic:messagesPresent message="true">
+	<ul>
+		<html:messages id="messages" message="true">
+			<li><span class="error0"><bean:write name="messages" /></span></li>
+		</html:messages>
+	</ul>
+	<br />
+</logic:messagesPresent>
+<logic:present name="academicServiceRequestList">
+	<html:form action="/documentRequestsManagement.do">
+	
+	<html:hidden property="method"/>
+		<fr:view name="academicServiceRequestList" schema="DocumentRequest.view-without-numberOfPages-academicServiceRequestSituationType">
+			<fr:layout name="tabular">
+					<fr:property name="classes" value="tstyle4 thlight thcenter" />
+					
+					<fr:property name="checkable" value="true" />
+					<fr:property name="checkboxName" value="documentIdsToProcess" />
+					<fr:property name="checkboxValue" value="idInternal" />		
+			</fr:layout>
+		</fr:view>
+		<html:submit onclick="this.form.method.value='processNewDocuments';"><bean:message key="label.documentRequestsManagement.process" /></html:submit>
+		<html:submit onclick="this.form.method.value='viewNewDocumentRequests';"><bean:message key="label.documentRequestsManagement.cancel" /></html:submit>
+		<html:submit onclick="this.form.method.value='showOperations';"><bean:message key="label.documentRequestsManagement.back" /></html:submit>
+	</html:form>
+</logic:present>
