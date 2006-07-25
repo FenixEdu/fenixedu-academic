@@ -223,6 +223,24 @@
 		<put name="body" value="/student/main_bd.jsp" />
 	</definition>
 		
-
-	
+	<definition name="df.page.documentRequest.createDocumentRequests" extends="definition.student.administrativeOfficeServices">
+		<put name="body" value="/student/administrativeOfficeServices/documentRequest/createDocumentRequests.jsp" />
+	</definition>
+		
+	<definition name="df.page.documentRequest.viewDocumentRequestsToCreate" extends="definition.student.administrativeOfficeServices">
+		<put name="body" value="/student/administrativeOfficeServices/documentRequest/viewDocumentRequestsToCreate.jsp" />
+	</definition>
+		
+	<definition name="df.page.documentRequest.createSuccess" extends="definition.student.administrativeOfficeServices">
+		<put name="body" value="/student/administrativeOfficeServices/documentRequest/createSuccess.jsp" />
+	</definition>
+		
+	<definition name="df.page.documentRequest.viewDocumentRequests" extends="definition.student.administrativeOfficeServices">
+		<put name="body" value="/student/administrativeOfficeServices/documentRequest/viewDocumentRequests.jsp" />
+	</definition>
+		
+	<definition name="df.page.documentRequest.viewDocumentRequest" extends="definition.student.administrativeOfficeServices">
+		<put name="body" value="/student/administrativeOfficeServices/documentRequest/viewDocumentRequest.jsp" />
+	</definition>
+		
 </tiles-definitions>

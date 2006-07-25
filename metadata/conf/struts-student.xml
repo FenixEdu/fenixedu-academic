@@ -94,10 +94,7 @@
 		<form-property name="degreeCurricularPlanID" type="java.lang.Integer" initial="0"/>        
       </form-bean>
       
-      
-      
-
-	<!-- ******************* LEEC Enrollment **************** -->
+	  <!-- ******************* LEEC Enrollment **************** -->
 	<form-bean name="curricularCoursesEnrollmentForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
 		<form-property name="studentNumber" type="java.lang.String"/>
 		<form-property name="specializationArea" type="java.lang.Integer"/>
@@ -251,8 +248,23 @@
 			<form-property name="autonomousStudy" type="java.lang.String"/>
 			<form-property name="other" type="java.lang.String"/>
 		</form-bean>
-		
-     </form-beans>
+
+		<form-bean name="documentRequestCreateForm" type="org.apache.struts.validator.DynaValidatorForm"
+			dynamic="true">
+			<form-property name="scpId" type="java.lang.Integer" />
+			<form-property name="chosenDocumentRequestTypes" type="java.lang.String[]" />
+			<form-property name="schoolRegistrationExecutionYearId" type="java.lang.Integer" />
+			<form-property name="enrolmentDetailed" type="java.lang.String" initial="false"/>
+			<form-property name="enrolmentExecutionYearId" type="java.lang.Integer" />	
+			<form-property name="degreeFinalizationAverage" type="java.lang.String" initial="false"/>
+			<form-property name="degreeFinalizationDetailed" type="java.lang.String" initial="false"/>			
+			<form-property name="chosenDocumentPurposeType" type="java.lang.String" />
+			<form-property name="otherPurpose" type="java.lang.String" />
+			<form-property name="notes" type="java.lang.String" />
+			<form-property name="urgentRequest" type="java.lang.String" initial="false"/>
+		</form-bean>
+
+    </form-beans>
     
     <!-- ========== Global Exception Definitions ============================== -->
 	<global-exceptions>
@@ -827,6 +839,19 @@
 			parameter="method"
 			type="net.sourceforge.fenixedu.presentationTier.Action.commons.VoidAction">
 			<forward name="Success" path="df.page.administrativeOfficeServicesIndex"/>
+		</action>
+  		
+		<action path="/documentRequest"
+			type="net.sourceforge.fenixedu.presentationTier.Action.student.administrativeOfficeServices.DocumentRequestDispatchAction"
+			name="documentRequestCreateForm"
+			scope="request"
+			parameter="method"
+			input="/administrativeOfficeServicesSection.do">
+			<forward name="createDocumentRequests" path="df.page.documentRequest.createDocumentRequests"/>
+			<forward name="viewDocumentRequestsToCreate" path="df.page.documentRequest.viewDocumentRequestsToCreate"/>
+			<forward name="createSuccess" path="df.page.documentRequest.createSuccess"/>
+			<forward name="viewDocumentRequests" path="df.page.documentRequest.viewDocumentRequests"/>
+			<forward name="viewDocumentRequest" path="df.page.documentRequest.viewDocumentRequest"/>
 		</action>
   		
 	</action-mappings>     

@@ -518,6 +518,16 @@
 		</filterChains>
 	</service>
 	<service>
+		<name>CreateDocumentRequests</name>
+		<implementationClass> 
+            net.sourceforge.fenixedu.applicationTier.Servico.student.administrativeOfficeServices.CreateDocumentRequests</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		<filterChains>
+			<chain name="StudentAuthorization" />
+		</filterChains>
+	</service>
+	<service>
 		<name>ReadShiftsByTypeFromExecutionCourse</name>
 		<implementationClass> 
             net.sourceforge.fenixedu.applicationTier.Servico.student.ReadShiftsByTypeFromExecutionCourse</implementationClass>

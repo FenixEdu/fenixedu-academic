@@ -70,3 +70,15 @@
 	<slot name="numberOfPages" key="label.net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest.numberOfPages" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" />
 </schema>
 
+<schema name="DocumentRequestCreateBean.viewToConfirmCreation" type="net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.serviceRequest.documentRequest.DocumentRequestCreateBean" bundle="APPLICATION_RESOURCES">
+	<slot name="toBeCreated"></slot>
+	<slot name="studentCurricularPlan.degreeCurricularPlan.name" read-only="true"/>
+	<slot name="chosenDocumentRequestType" read-only="true"/>
+	<slot name="chosenDocumentPurposeType" read-only="true"/>
+	<slot name="otherPurpose" read-only="true"/>	
+	<slot name="notes" read-only="true"/>	
+	<slot name="urgentRequest" read-only="true"/>	
+	<slot name="average" read-only="true"/>			
+	<slot name="detailed" read-only="true"/>			
+	<slot name="average" read-only="true"/>			
+</schema>
