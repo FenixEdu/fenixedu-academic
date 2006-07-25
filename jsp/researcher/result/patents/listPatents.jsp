@@ -5,13 +5,6 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 
-<span class="error"><html:errors/></span>
-<html:messages id="message" message="true" bundle="RESEARCHER_RESOURCES">
-	<span class="error">
-		<bean:write name="message"/>
-	</span>
-</html:messages>
-
 <logic:present role="RESEARCHER">
 	<h2 id='pageTitle'/> <bean:message bundle="RESEARCHER_RESOURCES" key="researcher.result.patent.patentsManagement.title"/> </h2>
 		
@@ -21,20 +14,24 @@
 	<br/>
 	<br/>
 	
-	<b><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.result.patent.listPatentsUseCase.title"/></b>
+	<%-- Action messages --%>
+	<logic:messagesPresent name="messages" message="true">
+		<html:messages id="messages" message="true" bundle="RESEARCHER_RESOURCES">
+			<p><span class="error"><bean:write name="messages"/></span></p>
+		</html:messages>
+	</logic:messagesPresent>
+	
+	<%-- Result Patents Listing --%>
+	<h4><bean:message key="researcher.result.patent.listPatentsUseCase.title" bundle="RESEARCHER_RESOURCES"/></h4>
 	<logic:empty name="resultPatents">
 		<p><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.result.patent.listPatentsUseCase.emptyList"/></p>
-		<br/>
 	</logic:empty>
 	
 	<logic:notEmpty name="resultPatents">
-		<fr:view name="resultPatents" layout="tabular-list">
-			<fr:layout>
-				<fr:property name="subLayout" value="values-comma"/>
-				<fr:property name="subSchema" value="result.patentShortList"/>
-				
+		<fr:view name="resultPatents" schema="result.patentShortList" >
+			<fr:layout name="tabular">
 				<fr:property name="link(edit)" value="/patents/patentsManagement.do?method=prepareEditPatent"/>
-				<fr:property name="param(edit)" value="idInternal/patentId"/>
+				<fr:property name="param(edit)" value="idInternal/resultId"/>
 				<fr:property name="key(edit)" value="link.edit"/>
 				<fr:property name="bundle(edit)" value="RESEARCHER_RESOURCES"/>
 				<fr:property name="order(edit)" value="1"/>
