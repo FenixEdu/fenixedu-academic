@@ -9992,6 +9992,33 @@
 		</filterChains>
 	</service>
 	<service>
+		<name>DeleteResultPublication</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.research.result.publication.DeleteResultPublication</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		<filterChains>
+			<chain name="ResearcherAuthorization" />
+		</filterChains>
+	</service>
+	<service>
+		<name>CreateResultPublication</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.research.result.publication.CreateResultPublication</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		<filterChains>
+			<chain name="ResearcherAuthorization" />
+		</filterChains>
+	</service>
+	<service>
+		<name>EditResultPublication</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.research.result.publication.EditResultPublication</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		<filterChains>
+			<chain name="ResearcherAuthorization" />
+		</filterChains>
+	</service>
+	<service>
 		<name>SetUserUID</name>
 		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.commons.SetUserUID</implementationClass>
 		<description />
