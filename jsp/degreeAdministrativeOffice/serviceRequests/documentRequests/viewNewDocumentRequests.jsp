@@ -29,7 +29,6 @@
 			</fr:layout>
 		</fr:view>
 		<html:submit onclick="this.form.method.value='processNewDocuments';"><bean:message key="label.documentRequestsManagement.process" /></html:submit>
-		<html:submit onclick="this.form.method.value='viewNewDocumentRequests';"><bean:message key="label.documentRequestsManagement.cancel" /></html:submit>
 		<html:submit onclick="this.form.method.value='showOperations';"><bean:message key="label.documentRequestsManagement.back" /></html:submit>
 	</html:form>
 </logic:present>
