@@ -65,10 +65,11 @@ public class DegreeFinalizationCertificateRequest extends DegreeFinalizationCert
 		super.internalChangeState(academicServiceRequestSituationType);
 
 		//TODO:
-		if (academicServiceRequestSituationType == AcademicServiceRequestSituationType.CONCLUDED) {
+		if (academicServiceRequestSituationType == AcademicServiceRequestSituationType.PROCESSING) {
 			new CertificateRequestEvent(getAdministrativeOffice(),
 					EventType.DEGREE_FINALIZATION_CERTIFICATE_REQUEST, getStudent().getPerson(), this);
 		}
+		
 	}
 
 }
