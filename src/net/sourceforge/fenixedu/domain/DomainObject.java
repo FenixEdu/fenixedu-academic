@@ -4,14 +4,12 @@
  */
 package net.sourceforge.fenixedu.domain;
 
-import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 import net.sourceforge.fenixedu.accessControl.AccessControl;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.OJB.SequenceUtil;
 import net.sourceforge.fenixedu.stm.Transaction;
@@ -25,7 +23,7 @@ import pt.utl.ist.fenix.tools.util.StringAppender;
 /**
  * @author jpvl
  */
-public abstract class DomainObject extends DomainObject_Base implements Serializable {
+public abstract class DomainObject extends DomainObject_Base {
 
     public class UnableToDetermineIdException extends DomainException {
         public UnableToDetermineIdException(Throwable cause) {
