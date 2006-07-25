@@ -567,4 +567,13 @@ public class Student extends Student_Base {
         return getDistributedTestsByExecutionCourse(executionCourse).size();
     }
 
+    public boolean hasSchoolRegistration(ExecutionYear executionYear) {
+        for (final StudentCurricularPlan studentCurricularPlan : getStudentCurricularPlansSet()) {
+            if (studentCurricularPlan.hasSchoolRegistration(executionYear)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 }

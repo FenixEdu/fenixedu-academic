@@ -43,8 +43,7 @@ public class EnrolmentCertificateRequest extends EnrolmentCertificateRequest_Bas
         if (executionYear == null) {
             throw new DomainException(
                     "error.serviceRequests.documentRequests.EnrolmentCertificateRequest.executionYear.cannot.be.null");
-        } else if (!getStudentCurricularPlan().getNotClosedExecutionYearsSinceSCPStart().contains(
-                executionYear)) {
+        } else if (!getStudentCurricularPlan().hasAnyEnrolmentForExecutionYear(executionYear)) {
             throw new DomainException(
                     "error.serviceRequests.documentRequests.EnrolmentCertificateRequest.executionYear.before.studentCurricularPlan.start");
         }

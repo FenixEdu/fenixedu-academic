@@ -1288,16 +1288,27 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
         return getDegreeCurricularPlan().getDegree().getTipoCurso();
     }
 
-    public Set<ExecutionYear> getNotClosedExecutionYearsSinceSCPStart() {
+    public Set<ExecutionYear> getEnrolmentsExecutionYears() {
         Set<ExecutionYear> result = new TreeSet<ExecutionYear>(ExecutionYear.EXECUTION_YEAR_COMPARATOR_BY_YEAR);
         
-        for (final ExecutionYear executionYear : ExecutionYear.readNotClosedExecutionYears()) {
-            if (executionYear.getBeginDateYearMonthDay().isAfter(getStartDateYearMonthDay())) {
-                result.add(executionYear);
-            }
+        for (final Enrolment enrolment : this.getEnrolmentsSet()) {
+            result.add(enrolment.getExecutionPeriod().getExecutionYear());
         }
         
         return result;
+    }
+    
+    public boolean hasAnyEnrolmentForExecutionYear(final ExecutionYear executionYear) {
+        for (Enrolment enrolment : this.getEnrolmentsSet()) {
+            if(enrolment.getExecutionPeriod().getExecutionYear().equals(executionYear)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean hasSchoolRegistration(ExecutionYear executionYear) {
+        return hasAnyEnrolmentForExecutionYear(executionYear);
     }
     
 }
