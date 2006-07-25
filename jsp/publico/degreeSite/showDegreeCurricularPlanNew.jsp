@@ -97,13 +97,6 @@
 					</html:submit>	
 				</td>
 			</tr>
-			<tr>
-				<td colspan="2">
-					<html:submit styleId="javascriptButtonID" styleClass="altJavaScriptSubmitButton" bundle="HTMLALT_RESOURCES" altKey="submit.submit">
-						<bean:message key="button.submit"/>
-					</html:submit>
-				</td>
-			</tr>
 		</table>
 	</html:form> 
 	
