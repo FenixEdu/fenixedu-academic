@@ -6,7 +6,6 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.research.result.ResultParticipation;
@@ -17,26 +16,23 @@ import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import org.apache.struts.action.ActionMessage;
-import org.apache.struts.action.ActionMessages;
 
 public class ResultPatentsManagementAction extends FenixDispatchAction {
 
     public ActionForward listPatents(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-        List<ResultPatent> resultPatents = new ArrayList<ResultPatent>();
+        final List<ResultPatent> resultPatents = new ArrayList<ResultPatent>();
         
         for(ResultParticipation participation : getUserView(request).getPerson().getPersonParticipationsWithPatents()) {
             resultPatents.add((ResultPatent)participation.getResult());
         }
         request.setAttribute("resultPatents", resultPatents);
-        
         return mapping.findForward("listPatents");
     }
 
     public ActionForward prepareCreatePatent(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
-        List<Person> participationsList = new ArrayList<Person>();
+        final List<Person> participationsList = new ArrayList<Person>();
 
         participationsList.add(getUserView(request).getPerson());
         request.setAttribute("participationsList", participationsList);
@@ -46,70 +42,90 @@ public class ResultPatentsManagementAction extends FenixDispatchAction {
 
     public ActionForward prepareEditPatent(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
-        //If we get here from Result Participation Management, id comes in an attribute 
-        Integer patentId = (Integer) request.getAttribute("patentId");
-        
-        //If we get here from Patents Management, id comes in a paremeter
-        if (patentId == null) {
-            patentId = Integer.valueOf(request.getParameter("patentId"));
+        final ResultPatent patent = readPatentFromRequest(request);
+
+        if(patent == null) {
+            return listPatents(mapping, form, request, response);
         }
-        ResultPatent patent = readPatentByOid(patentId);
         
-        request.setAttribute("patent", patent);
-        
+        final Person person = getUserView(request).getPerson();
+        if(!patent.hasPersonParticipation(person)){
+            addActionMessage(request,"researcher.result.editResult.participation.warning");
+        }
+
         return mapping.findForward("editPatent");
     }
     
     public ActionForward prepareEditPatentData(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
-        Integer patentId = Integer.valueOf(request.getParameter("patentId"));
-        ResultPatent patent = readPatentByOid(patentId);
-        
-        request.setAttribute("patent", patent);
+        final ResultPatent patent = readPatentFromRequest(request);
+        if (patent == null) {
+            return listPatents(mapping, form, request, response);
+        }
         
         return mapping.findForward("editPatentData");
     }
     
     public ActionForward preparePatentDetails(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
-        Integer resultId = Integer.valueOf(request.getParameter("oid"));
-        ResultPatent patent = (ResultPatent) readPatentByOid(resultId);
+        final ResultPatent patent = (ResultPatent) readPatentFromRequest(request);
+        if (patent == null) {
+            return listPatents(mapping, form, request, response);
+        }
         
-        request.setAttribute("patent", patent);
-       
         return mapping.findForward("patentDetails");
     }
 
     public ActionForward prepareDeletePatent(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
-        Integer resultId = Integer.valueOf(request.getParameter("resultId"));
-        ResultPatent patent = readPatentByOid(resultId);
+        final String from = request.getParameter("from");
+        final ResultPatent patent = readPatentFromRequest(request);
+        if (patent == null) {
+            return listPatents(mapping, form, request, response);
+        }
         
-        request.setAttribute("patent", patent);
-
+        if(from != null && !from.equals("")){
+            request.setAttribute("from", from);
+        }       
+        
         return mapping.findForward("deletePatent");
     }
 
     public ActionForward deletePatent(ActionMapping mapping, ActionForm actionForm,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
-        Object[] args = { Integer.valueOf(request.getParameter("resultId")) };
+        final Object[] args = { Integer.valueOf(request.getParameter("resultId")) };
         
-        try {
+        try{
             ServiceManagerServiceFactory.executeService(getUserView(request), "DeleteResultPatent", args);
-        } catch (FenixServiceException e) {
-            ActionMessages actionMessages = new ActionMessages();
-            actionMessages.add("Erro", new ActionMessage(e.getMessage()));
-            saveMessages(request, actionMessages);
+            addActionMessage(request,"researcher.result.deleted");
+        }
+        catch (FenixServiceException e) {
+            addActionMessage(request,"researcher.result.error.resultNotFound");
         }
 
-        return mapping.findForward("listPatents");
-    }
-
-    private ResultParticipation readResultParticipationByOid(Integer participationId) {
-        return (ResultParticipation) rootDomainObject.readResultParticipationByOID(participationId);
+        return listPatents(mapping, actionForm, request, response);
     }
     
-    private ResultPatent readPatentByOid(Integer patentId) throws FenixFilterException, FenixServiceException {
-        return (ResultPatent) rootDomainObject.readResultByOID(Integer.valueOf(patentId));
+    private ResultPatent readPatentFromRequest(HttpServletRequest request) throws Exception {
+        final String patentIdStr;
+        if(request.getParameterMap().containsKey("oid")) {
+            patentIdStr = request.getParameter("oid");
+        }
+        else {
+            //If we get here from Result Participation Management, id comes in an attribute
+            //If we get here from Patents Management, id comes in a paremeter
+            patentIdStr = request.getParameterMap().containsKey("resultId") ?
+                    request.getParameter("resultId") : (String) request.getAttribute("resultId");
+        }
+                
+        final ResultPatent patent = (ResultPatent) rootDomainObject.readResultByOID(Integer.valueOf(patentIdStr));
+        if (patent == null) {
+            addActionMessage(request,"researcher.result.error.resultNotFound");
+        }
+        else {
+            request.setAttribute("patent", patent);    
+        }
+        
+        return patent;
     }
 }
