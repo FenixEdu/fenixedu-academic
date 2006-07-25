@@ -3,12 +3,13 @@ package net.sourceforge.fenixedu.presentationTier.Action.research.result;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.research.result.ResultParticipationFullCreationBean;
 import net.sourceforge.fenixedu.dataTransferObject.research.result.ResultParticipationSimpleCreationBean;
-import net.sourceforge.fenixedu.domain.research.result.patent.ResultPatent;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.research.result.Result;
+import net.sourceforge.fenixedu.domain.research.result.patent.ResultPatent;
 import net.sourceforge.fenixedu.domain.research.result.publication.ResultPublication;
-import net.sourceforge.fenixedu.domain.research.result.publication.ResultPublication.ResultPublicationType;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
@@ -21,15 +22,10 @@ public class ResultParticipationManagementAction extends FenixDispatchAction {
 
     public ActionForward prepareEditParticipation(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
-        final Integer resultId = Integer.valueOf(request.getParameter("resultId"));
-        
-        //verify if field resultParticipationRole is to be active
-        Result result = rootDomainObject.readResultByOID(resultId);
-        
-        if(result==null) {
-            return mapping.findForward("editParticipation");    
+        final Result result = readResultFromRequest(request);
+        if(result==null){
+            return backToResultList(mapping, form, request, response);
         }
-        request.setAttribute("result", result);
         
         if(result instanceof ResultPublication)
         {
@@ -37,37 +33,44 @@ public class ResultParticipationManagementAction extends FenixDispatchAction {
                 request.setAttribute("participationsSchema","result.participationsWithRole");
         }
         
+        final Person person = getUserView(request).getPerson();
+        
+        if(!result.hasPersonParticipation(person)) {
+            addActionMessage(request, "researcher.result.editResult.participation.warning");
+        }
+        if(result.getResultParticipationsCount()==1){
+            addActionMessage(request, "researcher.result.lastConnection.warning");
+        }
+        
         return mapping.findForward("editParticipation");
     }
     
     public ActionForward changePersonsOrder(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
-        
-        final Integer resultId = Integer.valueOf(request.getParameter("resultId"));
-        final Integer participationId= Integer.valueOf(request.getParameter("oid"));
+        final Integer participationId = Integer.valueOf(request.getParameter("oid"));
         final Integer offset = Integer.valueOf(request.getParameter("offset"));
+        final Object[] args = { participationId, offset, getUserView(request).getPerson().getName() };
         
-        Object[] args = { resultId, participationId, offset };
-        ServiceUtils.executeService(getUserView(request), "ChangeResultParticipationsOrder", args);
+        try {
+            ServiceUtils.executeService(getUserView(request), "ChangeResultParticipationsOrder", args);            
+        }
+        catch (FenixServiceException e) {
+            addActionMessage(request, e.getMessage());
+        }
 
         return prepareEditParticipation(mapping,form,request,response);
     }
 
     public ActionForward removeParticipation(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
-        
         final Integer participationId = Integer.parseInt(request.getParameter("participationId"));
-        final Integer resultId = Integer.parseInt(request.getParameter("resultId"));
-        final String resultClassName = rootDomainObject.readResultByOID(resultId).getClass().getName();
+        final Object[] args = { participationId, getUserView(request).getPerson().getName() };
         
-        Object[] args = { participationId };
-        ServiceUtils.executeService(getUserView(request), "DeleteResultParticipation", args);
-      
-        final Result result = rootDomainObject.readResultByOID(resultId);
-        
-        if (result == null) {
-            request.setAttribute("resultClassName", resultClassName);
-            return backToResult(mapping,form,request,response);
+        try {
+            ServiceUtils.executeService(getUserView(request), "DeleteResultParticipation", args);    
+        }
+        catch (FenixServiceException e) {
+            addActionMessage(request, "researcher.result.error.participationNotFound");
         }
         
         return prepareEditParticipation(mapping,form,request,response);
@@ -76,13 +79,15 @@ public class ResultParticipationManagementAction extends FenixDispatchAction {
     public ActionForward prepareEditParticipationWithSimpleBean(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
         
-        ResultParticipationSimpleCreationBean simpleBean = new ResultParticipationSimpleCreationBean();
+        final ResultParticipationSimpleCreationBean simpleBean = new ResultParticipationSimpleCreationBean();
         request.setAttribute("simpleBean", simpleBean);
         mantainExternalStatus(request);
         
         //verify if field resultParticipationRole is to be active
-        final Integer resultId = Integer.valueOf(request.getParameter("resultId"));
-        Result result = rootDomainObject.readResultByOID(resultId);
+        final Result result = readResultFromRequest(request);
+        if(result==null){
+            return backToResultList(mapping, form, request, response);
+        }
         
         if(result instanceof ResultPublication)
         {
@@ -102,13 +107,16 @@ public class ResultParticipationManagementAction extends FenixDispatchAction {
     public ActionForward prepareEditParticipationWithFullBean(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
-        ResultParticipationFullCreationBean fullBean = new ResultParticipationFullCreationBean();
+        final ResultParticipationFullCreationBean fullBean = new ResultParticipationFullCreationBean();
         request.setAttribute("fullBean", fullBean);
         mantainExternalStatus(request);
         
         //verify if field resultParticipationRole is to be active
-        final Integer resultId = Integer.valueOf(request.getParameter("resultId"));
-        Result result = rootDomainObject.readResultByOID(resultId);
+        final Result result = readResultFromRequest(request);
+        if(result==null){
+            return backToResultList(mapping, form, request, response);
+        }
+        
         if(result instanceof ResultPublication)
         {
             if(((ResultPublication)result).haveResultPublicationRole())
@@ -122,12 +130,18 @@ public class ResultParticipationManagementAction extends FenixDispatchAction {
 
     public ActionForward createParticipationInternalPerson(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-
-        ResultParticipationSimpleCreationBean simpleBean = (ResultParticipationSimpleCreationBean) RenderUtils.getViewState().getMetaObject().getObject();
+        final ResultParticipationSimpleCreationBean simpleBean = (ResultParticipationSimpleCreationBean) RenderUtils.getViewState().getMetaObject().getObject();
         
         if(simpleBean.getPerson() != null) {
-            Integer oid = Integer.parseInt(request.getParameter("resultId"));
-            ServiceUtils.executeService(getUserView(request), "CreateResultParticipation", new Object[] {simpleBean, oid });
+            final Integer oid = Integer.parseInt(request.getParameter("resultId"));
+            final Object[] args = {simpleBean, oid, getUserView(request).getPerson().getName() };
+            
+            try {
+                ServiceUtils.executeService(getUserView(request), "CreateResultParticipation", args);
+            }
+            catch (FenixServiceException e) {
+                addActionMessage(request, "researcher.result.error.resultNotFound");
+            }
             
             mantainExternalStatus(request);
             return prepareEditParticipation(mapping,form,request,response);
@@ -141,26 +155,32 @@ public class ResultParticipationManagementAction extends FenixDispatchAction {
     
     public ActionForward createParticipationExternalPerson(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-
-        final Integer oid = Integer.parseInt(request.getParameter("resultId"));
+        final Result result = readResultFromRequest(request);
+        if(result==null){
+            return backToResultList(mapping, form, request, response);
+        }
         
         if (RenderUtils.getViewState().getMetaObject().getObject() instanceof ResultParticipationSimpleCreationBean) {
-            ResultParticipationSimpleCreationBean simpleBean = (ResultParticipationSimpleCreationBean) RenderUtils.getViewState().getMetaObject().getObject();
-            
-            if (simpleBean.getPerson() != null){
+            final ResultParticipationSimpleCreationBean simpleBean = (ResultParticipationSimpleCreationBean) RenderUtils.getViewState().getMetaObject().getObject();
 
-                ServiceUtils.executeService(getUserView(request), "CreateResultParticipation", new Object[] { simpleBean, oid });
+            if (simpleBean.getPerson() != null){
+                final Object[] args = {simpleBean, result.getIdInternal(), getUserView(request).getPerson().getName() };
+                
+                try {
+                    ServiceUtils.executeService(getUserView(request), "CreateResultParticipation", args);
+                }
+                catch (FenixServiceException e) {
+                    addActionMessage(request, "researcher.result.error.resultNotFound");
+                }
             }
             else {
-                ResultParticipationFullCreationBean fullBean = new ResultParticipationFullCreationBean();
+                final ResultParticipationFullCreationBean fullBean = new ResultParticipationFullCreationBean();
                 fullBean.setPersonName(simpleBean.getPersonName());
                 fullBean.setResultParticipationRole(simpleBean.getResultParticipationRole());
                 request.setAttribute("fullBean", fullBean);
                 mantainExternalStatus(request);
                 
-                //verify if field resultParticipationRole is to be active
-                final Integer resultId = Integer.valueOf(request.getParameter("resultId"));
-                Result result = rootDomainObject.readResultByOID(resultId);
+                //verify if field resultParticipationRole is to be active  
                 if(result instanceof ResultPublication)
                 {
                     if(((ResultPublication)result).haveResultPublicationRole())
@@ -173,40 +193,69 @@ public class ResultParticipationManagementAction extends FenixDispatchAction {
             }
         }
         else if (RenderUtils.getViewState().getMetaObject().getObject() instanceof ResultParticipationFullCreationBean) {
-            ResultParticipationFullCreationBean fullBean = (ResultParticipationFullCreationBean) RenderUtils.getViewState().getMetaObject().getObject();
-            ServiceUtils.executeService(getUserView(request), "CreateResultParticipation", new Object[] { fullBean, oid });
+            final ResultParticipationFullCreationBean fullBean = (ResultParticipationFullCreationBean) RenderUtils.getViewState().getMetaObject().getObject();
+            final Object[] args = {fullBean, result.getIdInternal(), getUserView(request).getPerson().getName() };
+          
+            try {
+                ServiceUtils.executeService(getUserView(request), "CreateResultParticipation", args);
+            }
+            catch (FenixServiceException e) {
+                addActionMessage(request, "researcher.result.error.resultNotFound");
+            }
         }
         return prepareEditParticipation(mapping,form,request,response);
     }
     
     public ActionForward backToResult(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
+        final Result result = readResultFromRequest(request);
+        if(result==null){
+            return backToResultList(mapping, form, request, response);
+        }
         
+        String forwardTo = null;
+        
+        if (result instanceof ResultPatent){
+            request.setAttribute("patentId", result.getIdInternal());
+            forwardTo = new String("editPatent");    
+        }
+        else if (result instanceof ResultPublication){
+            request.setAttribute("publicationId", result.getIdInternal());
+            forwardTo = new String("viewEditPublication");
+        }
+        
+        return mapping.findForward(forwardTo);
+    }
+    
+    private ActionForward backToResultList(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws Exception {
+        final String resultType = request.getParameterMap().containsKey("resultType") ?
+                request.getParameter("resultType") : (String) request.getAttribute("resultType");
+        String forwardTo = null;
+        
+        if (!(resultType == null || resultType.equals(""))) {
+            if(resultType.compareTo(ResultPatent.class.getSimpleName())==0){
+                forwardTo = new String("listPatents");
+            }
+            else {
+                forwardTo = new String("ListPublications");
+            }
+        }
+        return mapping.findForward(forwardTo);
+    }
+    
+    private Result readResultFromRequest(HttpServletRequest request) throws Exception {
         final Integer resultId = Integer.valueOf(request.getParameter("resultId"));
         final Result result = rootDomainObject.readResultByOID(resultId);
         
-        if(result==null){
-            final String resultClassName = request.getAttribute("resultClassName").toString();
-            if (!(resultClassName == null || resultClassName.equals(""))) {
-                if(resultClassName.compareTo(ResultPatent.class.getCanonicalName())==0){
-                    return mapping.findForward("listPatents");
-                }
-                else {
-                    return mapping.findForward("ListPublications");
-                }
-            }
+        if (result == null) {
+            addActionMessage(request, "researcher.result.error.resultNotFound");
+        }
+        else {
+            request.setAttribute("result", result);
         }
         
-        if (result instanceof ResultPatent){
-            request.setAttribute("patentId", resultId);
-            return mapping.findForward("editPatent");    
-        }
-        else if (result instanceof ResultPublication){
-            request.setAttribute("publicationId", resultId);
-            return mapping.findForward("viewEditPublication");
-        }
-
-        return null;
+        return result;
     }
     
     private void mantainExternalStatus(HttpServletRequest request) {
