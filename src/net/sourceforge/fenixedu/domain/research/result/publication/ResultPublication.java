@@ -3,19 +3,29 @@ package net.sourceforge.fenixedu.domain.research.result.publication;
 
 public class ResultPublication extends ResultPublication_Base {
     
-    public  ResultPublication() {
+    public ResultPublication() {
         super();
     }
     
-    public ResultPublicationType getResultPublicationType()
+    public void delete()
+    {
+        removePublisher();
+        removeOrganization();
+        super.delete();
+    }
+    
+    public String getResultPublicationTypeString()
     {
         String className = this.getClass().getName();
-        ResultPublicationType resultPublicationType = null;
         Integer lastPoint = className.lastIndexOf(".");
         String type = className.substring(lastPoint+1);
-        resultPublicationType = ResultPublicationType.valueOf(type);
         
-        return resultPublicationType;
+        if (this instanceof BookPart) {
+            //add bookPart type
+            type = type + "." +((BookPart)this).getBookPartType().toString();
+        }
+        
+        return type;
     }
     
     public Boolean haveResultPublicationRole()
@@ -24,27 +34,7 @@ public class ResultPublication extends ResultPublication_Base {
             return true;
         return false;
     }
-    
-    public enum ResultPublicationType {
-        /*Types based on BibTex*/
-        Book,
-        BookPart,
-        Article,
-        Inproceedings,
-        Proceedings,
-        Thesis,
-        Manual,
-        TechnicalReport,
-        Booklet,
-        Misc,
-        Unpublished;
-              
-        public static ResultPublicationType getDefaultResultPublicationType() {
-            return Book;
-        }
 
-    }
-    
     public enum ScopeType {
         LOCAL,
         NATIONAL,

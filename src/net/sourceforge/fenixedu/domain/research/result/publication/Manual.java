@@ -1,5 +1,8 @@
 package net.sourceforge.fenixedu.domain.research.result.publication;
 
+import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+
 /**
  * Technical documentation.
  * Required fields: title.
@@ -11,4 +14,21 @@ public class Manual extends Manual_Base {
         super();
     }
     
+    //constructor with required fields
+    public Manual(Person participator, String title) {
+        super();
+        if((participator == null) || (title == null))
+            throw new DomainException("error.publication.missingRequiredFields");
+        
+        setParticipation(participator);
+        setTitle(title);
+    }
+    
+    //edit with required fields
+    public void edit(String title) {
+        if(title == null)
+            throw new DomainException("error.publication.missingRequiredFields");
+        
+        setTitle(title);
+    }
 }
