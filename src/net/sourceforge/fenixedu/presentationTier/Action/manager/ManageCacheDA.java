@@ -119,7 +119,13 @@ public class ManageCacheDA extends FenixDispatchAction {
     			} else if (secondRole.getType().getFullName().equals(RootDomainObject.class.getName())) {
     				numberOfReadDomainObjects += loadDomainObjects(firstRole);
     			}
-                System.out.println("   total read is at: " + numberOfReadDomainObjects);
+                final Integer numberCachedItems = (Integer) ServiceUtils.executeService(null, "ReadNumberCachedItems", null);
+                final Runtime runtime = Runtime.getRuntime();
+                System.out.println("   total read: " + numberOfReadDomainObjects
+                        + " in cache: " + numberCachedItems
+                        + " free memory: " + runtime.freeMemory()
+                        + " total memory: " + runtime.totalMemory()
+                        + " max memory: " + runtime.maxMemory());
     		}
     	} finally {
     		final long endTime = System.currentTimeMillis();
