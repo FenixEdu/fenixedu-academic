@@ -110,6 +110,19 @@
 	</html:link>
 </li>
 
+<li class="navheader"><bean:message bundle="MANAGER_RESOURCES" key="title.equivalencies"/></li>
+<li> 
+	<html:link module="/manager" module="/manager" page="/prepareNotNeedToEnroll.do">
+		<bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="link.manager.notNeedToEnrol" />
+	</html:link>
+</li>
+
+<li> 
+	<html:link module="/manager" module="/manager" page="/curricularCourseEquivalencies.do?method=prepare">
+		<bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="link.manager.equivalencies" />
+	</html:link>
+</li>
+
 <li class="navheader"><bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="label.manageFiles"/></li>
 <li>
 	<html:link module="/manager" module="/manager" page="/generateFiles.do?method=firstPage">
