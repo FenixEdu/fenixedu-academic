@@ -1,10 +1,13 @@
 package net.sourceforge.fenixedu.renderers;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import net.sourceforge.fenixedu.renderers.components.HtmlComponent;
 import net.sourceforge.fenixedu.renderers.components.HtmlMenu;
 import net.sourceforge.fenixedu.renderers.components.HtmlMenuOption;
+import net.sourceforge.fenixedu.renderers.components.converters.ConversionException;
 import net.sourceforge.fenixedu.renderers.components.converters.Converter;
 import net.sourceforge.fenixedu.renderers.contexts.PresentationContext;
 import net.sourceforge.fenixedu.renderers.layouts.Layout;
@@ -226,8 +229,11 @@ public class MenuOptionListRenderer extends InputRenderer {
             RenderKit kit = RenderKit.getInstance();
             Schema schema = kit.findSchema(getEachSchema()); 
             
+            List<MetaObject> possibleMetaObjects = new ArrayList<MetaObject>();
+            
             for (Object obj : getPossibleObjects()) {
                 MetaObject metaObject = MetaObjectFactory.createObject(obj, schema);
+                possibleMetaObjects.add(metaObject);
                 MetaObjectKey key = metaObject.getKey();
                 
                 HtmlMenuOption option = menu.createOption(null);
@@ -253,9 +259,7 @@ public class MenuOptionListRenderer extends InputRenderer {
             }
             
             Converter converter = getConverter();
-            if (converter != null) {
-                menu.setConverter(new OptionConverter(converter));
-            }
+            menu.setConverter(new OptionConverter(possibleMetaObjects, converter));
             
             menu.setTargetSlot((MetaSlotKey) getInputContext().getMetaObject().getKey());
             return menu;
@@ -278,7 +282,7 @@ public class MenuOptionListRenderer extends InputRenderer {
 
         protected String getObjectLabel(Object object) {
             if (getFormat() != null) {
-                return RenderUtils.getFormatedProperties(getFormat(), object);
+                return RenderUtils.getFormattedProperties(getFormat(), object);
             }
             else {
                 return String.valueOf(object);
@@ -289,9 +293,11 @@ public class MenuOptionListRenderer extends InputRenderer {
     
     private static class OptionConverter extends Converter {
 
+        private List<MetaObject> metaObjects;
         private Converter converter;
 
-        public OptionConverter(Converter converter) {
+        public OptionConverter(List<MetaObject> metaObjects, Converter converter) {
+            this.metaObjects = metaObjects;
             this.converter = converter;
         }
 
@@ -303,7 +309,18 @@ public class MenuOptionListRenderer extends InputRenderer {
                 return null;
             }
             else {
-                return this.converter.convert(type, value);
+                if (this.converter != null) {
+                    return this.converter.convert(type, value);
+                }
+                else {
+                    for (MetaObject metaObject : this.metaObjects) {
+                        if (value.equals(metaObject.getKey().toString())) {
+                            return metaObject.getObject();
+                        }
+                    }
+                    
+                    throw new ConversionException("renderers.menuOption.convert.invalid.value");
+                }
             }
         }
         

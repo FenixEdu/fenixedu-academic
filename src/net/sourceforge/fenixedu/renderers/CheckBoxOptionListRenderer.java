@@ -1,10 +1,13 @@
 package net.sourceforge.fenixedu.renderers;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import net.sourceforge.fenixedu.renderers.components.HtmlCheckBox;
 import net.sourceforge.fenixedu.renderers.components.HtmlCheckBoxList;
 import net.sourceforge.fenixedu.renderers.components.HtmlComponent;
+import net.sourceforge.fenixedu.renderers.components.converters.ConversionException;
 import net.sourceforge.fenixedu.renderers.components.converters.Converter;
 import net.sourceforge.fenixedu.renderers.contexts.PresentationContext;
 import net.sourceforge.fenixedu.renderers.layouts.Layout;
@@ -218,12 +221,15 @@ public class CheckBoxOptionListRenderer extends InputRenderer {
             HtmlCheckBoxList listComponent = new HtmlCheckBoxList();
             listComponent.setSelectAllShown(isSelectAllShown());
             
+            List<MetaObject> possibleMetaObjects = new ArrayList<MetaObject>();
+            
             Collection possibleObjects = getPossibleObjects();
             for (Object obj : possibleObjects) {
                 Schema schema = RenderKit.getInstance().findSchema(getEachSchema());
                 String layout = getEachLayout();
                 
                 MetaObject metaObject = MetaObjectFactory.createObject(obj, schema);
+                possibleMetaObjects.add(metaObject);
                 MetaObjectKey key = metaObject.getKey();
                 
                 PresentationContext newContext = getContext().createSubContext(metaObject);
@@ -255,14 +261,48 @@ public class CheckBoxOptionListRenderer extends InputRenderer {
             // TODO: make providers only provide a converter for a single object
             //       make a wrapper converter that calls that converter for each value
             //       this allows converters to be used to menus and checkboxes 
-            Converter converter = getConverter();
-            if (converter != null) {
-                listComponent.setConverter(converter);
-            }
-            
+            listComponent.setConverter(new OptionConverter(possibleMetaObjects, getConverter()));
             listComponent.setTargetSlot((MetaSlotKey) getInputContext().getMetaObject().getKey());
+            
             return listComponent;
         }
+        
+    }
+    
+    private static class OptionConverter extends Converter {
 
+        private List<MetaObject> metaObjects;
+        private Converter converter;
+
+        public OptionConverter(List<MetaObject> metaObjects, Converter converter) {
+            this.metaObjects = metaObjects;
+            this.converter = converter;
+        }
+
+        @Override
+        public Object convert(Class type, Object value) {
+            String[] textValues = (String[]) value;
+            
+            if (textValues == null || textValues.length == 0) {
+                return null;
+            }
+            else {
+                if (this.converter != null) {
+                    return this.converter.convert(type, value);
+                }
+                else {
+                    List<Object> result = new ArrayList<Object>();
+                    
+                    for (MetaObject metaObject : this.metaObjects) {
+                        if (value.equals(metaObject.getKey().toString())) {
+                            result.add(metaObject.getObject());
+                        }
+                    }
+                    
+                    return result;
+                }
+            }
+        }
+        
     }
 }
