@@ -9,11 +9,17 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 
+import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.ResultPublicationCreationBean;
+import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.ResultPublicationCreationBean.ResultPublicationType;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.research.result.publication.*;
-import net.sourceforge.fenixedu.domain.research.result.publication.ResultPublication.ResultPublicationType;
+import net.sourceforge.fenixedu.domain.research.result.publication.BookPart.BookPartType;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
+import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -22,26 +28,47 @@ import org.apache.struts.action.ActionMapping;
 public class ResultPublicationsManagementDispatchAction extends FenixDispatchAction {
 
     public ActionForward listPublications(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws Exception {
+            HttpServletRequest request, HttpServletResponse response) {
         final IUserView userView = getUserView(request);
 
-        List<ResultPublication> publications = new ArrayList<ResultPublication>();
-        ResultPublication publication = null;
-
         List<ResultPublication> books = new ArrayList<ResultPublication>();
-/*        List<ResultPublication> bookParts = new ArrayList<ResultPublication>();
+        List<ResultPublication> bookParts = new ArrayList<ResultPublication>();
         List<ResultPublication> articles = new ArrayList<ResultPublication>();
-        List<ResultPublication> thesis = new ArrayList<ResultPublication>();
-        List<ResultPublication> conferences = new ArrayList<ResultPublication>();
+        List<ResultPublication> theses = new ArrayList<ResultPublication>();
+        List<ResultPublication> manuals = new ArrayList<ResultPublication>();
         List<ResultPublication> technicalReports = new ArrayList<ResultPublication>();
-        List<ResultPublication> otherPublications = new ArrayList<ResultPublication>();
-        List<ResultPublication> unstructureds = new ArrayList<ResultPublication>();*/
+        List<ResultPublication> booklets = new ArrayList<ResultPublication>();
+        List<ResultPublication> miscs = new ArrayList<ResultPublication>();
+        List<ResultPublication> unpublisheds = new ArrayList<ResultPublication>();
         
         for (ResultPublication resultPublication : userView.getPerson().getResultPublications()) {
             if(resultPublication instanceof Book) {
                 books.add(resultPublication);
             }
-              
+            else if(resultPublication instanceof BookPart) {
+                bookParts.add(resultPublication);
+            }
+            else if(resultPublication instanceof Article) {
+                articles.add(resultPublication);
+            }
+            else if(resultPublication instanceof Thesis) {
+                theses.add(resultPublication);
+            }
+            else if(resultPublication instanceof Manual) {
+                manuals.add(resultPublication);
+            }
+            else if(resultPublication instanceof TechnicalReport) {
+                technicalReports.add(resultPublication);
+            }
+            else if(resultPublication instanceof Booklet) {
+                booklets.add(resultPublication);
+            }
+            else if(resultPublication instanceof Misc) {
+                miscs.add(resultPublication);
+            }
+            else if(resultPublication instanceof Unpublished) {
+                unpublisheds.add(resultPublication);
+            }
         }
 
         //comparator by year in descendent order
@@ -60,27 +87,36 @@ public class ResultPublicationsManagementDispatchAction extends FenixDispatchAct
         };
         //order publications
         Collections.sort(books, YearComparator);
+        Collections.sort(bookParts, YearComparator);
+        Collections.sort(articles, YearComparator);
+        Collections.sort(theses, YearComparator);
+        Collections.sort(manuals, YearComparator);
+        Collections.sort(technicalReports, YearComparator);
+        Collections.sort(booklets, YearComparator);
+        Collections.sort(miscs, YearComparator);
+        Collections.sort(unpublisheds, YearComparator);
 
         request.setAttribute("books", books);
-        /*request.setAttribute("bookParts", bookParts);
+        request.setAttribute("bookParts", bookParts);
         request.setAttribute("articles", articles);
-        request.setAttribute("thesis", thesis);
-        request.setAttribute("conferences", conferences);
+        request.setAttribute("theses", theses);
+        request.setAttribute("manuals", manuals);
         request.setAttribute("technicalReports", technicalReports);
-        request.setAttribute("otherPublications", otherPublications);
-        request.setAttribute("unstructureds", unstructureds);*/
+        request.setAttribute("booklets", booklets);
+        request.setAttribute("miscs", miscs);
+        request.setAttribute("unpublisheds", unpublisheds);
         return mapping.findForward("ListPublications");
     }
 
     public ActionForward preparePublicationDetails(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws Exception {
+            HttpServletRequest request, HttpServletResponse response) {
 
         String publicationId = (String) request.getParameter("oid");
         ResultPublication publication = (ResultPublication) rootDomainObject.readResultByOID(Integer.valueOf(publicationId));
         request.setAttribute("publication", publication);
         
-        ResultPublicationType resultPublicationType = publication.getResultPublicationType();
-        request.setAttribute("resultPublicationType", resultPublicationType.toString());
+        request.setAttribute("resultPublicationType", publication.getResultPublicationTypeString());
+        
         if(publication.haveResultPublicationRole())
             request.setAttribute("participationsSchema","result.participationsWithRole");
         
@@ -88,7 +124,7 @@ public class ResultPublicationsManagementDispatchAction extends FenixDispatchAct
     }
     
     public ActionForward prepareViewEditPublication(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws Exception {
+            HttpServletRequest request, HttpServletResponse response) {
 
         //If we get here from Publications Management, id comes in a paremeter
         String id = request.getParameter("publicationId");
@@ -104,100 +140,158 @@ public class ResultPublicationsManagementDispatchAction extends FenixDispatchAct
         ResultPublication publication = (ResultPublication) rootDomainObject.readResultByOID(publicationId);
         request.setAttribute("publication", publication);
         
-        ResultPublicationType resultPublicationType = publication.getResultPublicationType();
-        request.setAttribute("resultPublicationType", resultPublicationType.toString());
+        request.setAttribute("resultPublicationType", publication.getResultPublicationTypeString());
+        
         if(publication.haveResultPublicationRole())
             request.setAttribute("participationsSchema","result.participationsWithRole");
 
         return mapping.findForward("ViewEditPublication");
     }
     
-    private String getAssociatedClassString(ResultPublicationType resultPublicationType)
-    {
-        String className="";
-        switch (resultPublicationType) {
-        case Book:
-            className=Book.class.getName();
-            break;
-        case BookPart:
-            className=BookPart.class.getName();
-            break;
-        case Article:
-            className=Article.class.getName();
-            break;
-        case Inproceedings:
-            className=Inproceedings.class.getName();
-            break;
-        case Proceedings:
-            className=Proceedings.class.getName();
-            break;
-        case Thesis:
-            className=Thesis.class.getName();
-            break;
-        case Manual:
-            className=Manual.class.getName();
-            break;
-        case TechnicalReport:
-            className=TechnicalReport.class.getName();
-            break;
-        case Booklet:
-            className=Booklet.class.getName();
-            break;
-        case Misc:
-            className=Misc.class.getName();
-            break;
-        case Unpublished:
-            className=Unpublished.class.getName();
-            break;
-        default:
-            break;
-        }
-        return className;
-    }
-    
     public ActionForward prepareCreatePublication(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws Exception {
+            HttpServletRequest request, HttpServletResponse response) {
        
         String resultPublicationType = request.getParameter("resultPublicationType");
+        ResultPublicationCreationBean publicationBean = null;
+        
         if (resultPublicationType != null)
         {
-            request.setAttribute("resultPublicationType",resultPublicationType);
-            request.setAttribute("className",getAssociatedClassString(ResultPublicationType.valueOf(resultPublicationType)));
+            //changing publication type
+            publicationBean = new ResultPublicationCreationBean();
+            publicationBean.setPublicationType(ResultPublicationType.valueOf(resultPublicationType));
+            
+            if(!publicationBean.getPublicationType().equals(ResultPublicationType.BookPart))
+                publicationBean.setActiveSchema("result.publication.create." + publicationBean.getPublicationType().toString());
+            else
+            {
+                publicationBean.setBookPartType(BookPartType.Inbook);
+                publicationBean.setActiveSchema("result.publication.create.BookPart.Inbook");
+            }
         }
         else
         {
-            request.setAttribute("resultPublicationType",ResultPublicationType.getDefaultResultPublicationType().toString());
-            request.setAttribute("className",getAssociatedClassString(ResultPublicationType.getDefaultResultPublicationType()));
+            //invalid submit or enter create publication
+            if(RenderUtils.getViewState() != null)
+            {
+                //invalid submit
+                publicationBean = (ResultPublicationCreationBean) RenderUtils.getViewState().getMetaObject().getObject();
+            }
+            else
+            {
+                //enter create publication
+                publicationBean = new ResultPublicationCreationBean();
+                publicationBean.setPublicationType(ResultPublicationType.getDefaultResultPublicationType());
+                publicationBean.setActiveSchema("result.publication.create." + publicationBean.getPublicationType().toString());
+            }
         }
         
-        request.setAttribute("participator", getUserView(request).getPerson());
+        publicationBean.setParticipator(getUserView(request).getPerson());
+        request.setAttribute("publicationBean", publicationBean);
+        return mapping.findForward("PreparedToCreate");
+    }
+
+    public ActionForward changeBookPartTypePostBack(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) {
+       
+        if (RenderUtils.getViewState() == null)
+            return listPublications(mapping, form, request, response);
+
+        ResultPublicationCreationBean publicationBean = (ResultPublicationCreationBean) RenderUtils.getViewState().getMetaObject().getObject();
+        if(publicationBean.getBookPartType() != null)
+        {
+            switch (publicationBean.getBookPartType()) {
+                case Inbook: 
+                    publicationBean.setActiveSchema("result.publication.create.BookPart.Inbook");
+                    break;
+                case Incollection:
+                    publicationBean.setActiveSchema("result.publication.create.BookPart.Incollection");
+                    break;
+            }
+        }
+        RenderUtils.invalidateViewState();
+        request.setAttribute("publicationBean", publicationBean);
+        
+        //check if editing or creating publication
+        if(publicationBean.getIdInternal() != null)
+            return mapping.findForward("PreparedToEdit");
         return mapping.findForward("PreparedToCreate");
     }
     
+    public ActionForward createResultPublication(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
+
+        ResultPublicationCreationBean publicationBean = (ResultPublicationCreationBean) RenderUtils.getViewState().getMetaObject().getObject();
+        try{
+            ServiceUtils.executeService(getUserView(request), "CreateResultPublication", new Object[] { publicationBean});
+        }catch(DomainException ex){
+            addActionMessage(request,ex.getKey());
+
+            request.setAttribute("publicationBean", publicationBean);
+            return mapping.findForward("PreparedToCreate");
+        }
+        catch(FenixServiceException ex) {
+            return listPublications(mapping,form,request,response);
+        }
+        return listPublications(mapping,form,request,response);
+    }
+    
     public ActionForward prepareEditPublicationData(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws Exception {
+            HttpServletRequest request, HttpServletResponse response) {
 
-        String publicationId = (String) request.getParameter("publicationId");
-        ResultPublication publication = (ResultPublication) rootDomainObject.readResultByOID(Integer
-                .valueOf(publicationId));
+        ResultPublicationCreationBean publicationBean = null;
 
-        request.setAttribute("publication", publication);
+        if(RenderUtils.getViewState() == null)
+        {
+            //enter edit publication
+            String publicationId = (String) request.getParameter("publicationId");
+            ResultPublication publication = (ResultPublication) rootDomainObject.readResultByOID(Integer.valueOf(publicationId));
+            
+            publicationBean = new ResultPublicationCreationBean();
+            publicationBean.fillFromPublication(publication);
+            
+            if(!publicationBean.getPublicationType().equals(ResultPublicationType.BookPart))
+                publicationBean.setActiveSchema("result.publication.create." + publicationBean.getPublicationType().toString());
+            else
+            {
+                publicationBean.setActiveSchema("result.publication.create.BookPart." + publicationBean.getBookPartType());
+            }
+        }
+        else
+        {
+            //invalid edition
+            publicationBean = (ResultPublicationCreationBean) RenderUtils.getViewState().getMetaObject().getObject();
+        }
         
-        ResultPublicationType resultPublicationType = publication.getResultPublicationType();
-        request.setAttribute("resultPublicationType", resultPublicationType.toString());
-        
+        request.setAttribute("publicationBean", publicationBean);
         return mapping.findForward("PreparedToEdit");
+    }
+    
+    public ActionForward editPublicationData(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws Exception {
+        
+        ResultPublicationCreationBean publicationBean = (ResultPublicationCreationBean) RenderUtils.getViewState().getMetaObject().getObject();
+        try{
+            ServiceUtils.executeService(getUserView(request), "EditResultPublication", new Object[] { publicationBean});
+        }catch(DomainException ex){
+            addActionMessage(request,ex.getKey());
+
+            request.setAttribute("publicationBean", publicationBean);
+            return mapping.findForward("PreparedToEdit");
+        }catch(FenixServiceException ex){
+            return listPublications(mapping,form,request,response);
+        }        
+                
+        return prepareViewEditPublication(mapping,form,request,response);
     }
 
     public ActionForward prepareDeletePublication(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws Exception {
+            HttpServletRequest request, HttpServletResponse response) {
 
         String publicationId = (String) request.getParameter("publicationId");
         ResultPublication publication = (ResultPublication) rootDomainObject.readResultByOID(Integer.valueOf(publicationId));
         request.setAttribute("publication", publication);
         
-        ResultPublicationType resultPublicationType = publication.getResultPublicationType();
-        request.setAttribute("resultPublicationType", resultPublicationType.toString());
+        request.setAttribute("resultPublicationType", publication.getResultPublicationTypeString());
+        
         if(publication.haveResultPublicationRole())
             request.setAttribute("participationsSchema","result.participationsWithRole");
 
@@ -205,10 +299,14 @@ public class ResultPublicationsManagementDispatchAction extends FenixDispatchAct
     }
 
     public ActionForward deletePublication(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws Exception {
+            HttpServletRequest request, HttpServletResponse response) {
 
         Object[] args = { Integer.valueOf(request.getParameter("resultId")) };
-            ServiceManagerServiceFactory.executeService(getUserView(request), "DeletePublication", args);
+        try {
+            ServiceManagerServiceFactory.executeService(getUserView(request), "DeleteResultPublication", args);
+        } catch (Exception e) {
+            return listPublications(mapping,form,request,response);
+        }
 
         return mapping.findForward("PublicationDeleted");
     }
