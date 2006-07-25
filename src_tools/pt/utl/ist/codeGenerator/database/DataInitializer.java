@@ -109,7 +109,7 @@ public class DataInitializer {
     	new Country("Angola", "Angolana", "ao");
     	new Country("Cabo Verde", "Cabo-Verdiana", "cv");
     	new Country("Guiné-Bissau", "Guineense-Bissau", "gw");
-    	new Country("Moçambique", "Moçambicana", "mz");
+    	new Country("Moçaambique", "Moçambicana", "mz");
     	new Country("São Tomé e Principe", "São Tomense", "st");
     	new Country("Brasil", "Brasileira", "br");
     	new Country("Bélgica", "Belga", "be");
@@ -123,7 +123,7 @@ public class DataInitializer {
     	new Country("Reino Unido", "Britânica", "uk");
     	new Country("Grécia", "Grega", "gr");
     	new Country("Finlândia", "Finlandesa", "fi");
-    	new Country("Áustria", "Austríaca", "at");
+    	new Country("Áustria", "Austréaca", "at");
     	new Country("Noruega", "Norueguesa", "no");
     	new Country("Suécia", "Sueca", "se");
     	new Country("Polónia", "Polaca", "pl");
