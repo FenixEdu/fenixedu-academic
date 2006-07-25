@@ -24,10 +24,10 @@
 	<%-- 
 	<li><html:link page="/curricularPlans/curricularPlansManagement.faces"><bean:message key="link.curricularPlansManagement"/></html:link></li>
 
-    
+    --%>        
     <li><html:link page="/pricesManagement.do?method=viewPrices"><bean:message key="link.pricesManagement" /></html:link></li>
 	<li><html:link page="/payments.do?method=prepareSearchPerson"><bean:message key="link.payments" /></html:link></li>
     <li><html:link page="/documentRequestsManagement.do?method=showOperations"><bean:message key="link.documentRequestsManagement" /></html:link></li>
-    --%>    
+
 
 </ul>     
