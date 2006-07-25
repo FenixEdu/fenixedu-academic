@@ -1289,7 +1289,8 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     }
 
     public Set<ExecutionYear> getEnrolmentsExecutionYears() {
-        Set<ExecutionYear> result = new TreeSet<ExecutionYear>(ExecutionYear.EXECUTION_YEAR_COMPARATOR_BY_YEAR);
+        final Comparator<ExecutionYear> comparator = new ReverseComparator(ExecutionYear.EXECUTION_YEAR_COMPARATOR_BY_YEAR); 
+        Set<ExecutionYear> result = new TreeSet<ExecutionYear>(comparator);
         
         for (final Enrolment enrolment : this.getEnrolmentsSet()) {
             result.add(enrolment.getExecutionPeriod().getExecutionYear());
