@@ -3,7 +3,7 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 
-<h2><bean:message key="title.equivalencies.curricular.course"/></h2>
+<h2><bean:message bundle="DEGREE_ADM_OFFICE" key="title.equivalencies.curricular.course"/></h2>
 
 <html:form action="/curricularCourseEquivalencies">
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="create"/>
@@ -16,11 +16,11 @@
 	<br />
 	<br />
 
-<bean:message key="label.choose.old.curricular.course"/>
+<bean:message bundle="DEGREE_ADM_OFFICE" key="label.choose.old.curricular.course"/>
 	<table>
 		<tr>
 			<th class="listClasses-header">
-				<bean:message key="label.choose.degree.old"/>
+				<bean:message bundle="DEGREE_ADM_OFFICE" key="label.choose.degree.old"/>
 			</th>
 			<td class="listClasses">
 				<html:select bundle="HTMLALT_RESOURCES" altKey="select.oldDegreeID" property="oldDegreeID" onchange="this.form.method.value='prepareCreate';this.form.submit();">
@@ -28,14 +28,14 @@
 					<html:options collection="infoDegrees" labelProperty="name" property="idInternal"/>
 				</html:select>
 				<html:submit styleId="javascriptButtonID" styleClass="altJavaScriptSubmitButton" bundle="HTMLALT_RESOURCES" altKey="submit.submit">
-					<bean:message key="button.submit"/>
+					<bean:message bundle="DEGREE_ADM_OFFICE" key="button.submit"/>
 				</html:submit>
 			</td>
 		</tr>
 		<logic:present name="oldInfoDegreeCurricularPlans">
 			<tr>
 				<th class="listClasses-header">
-					<bean:message key="label.choose.degree.curricular.plan.old"/>
+					<bean:message bundle="DEGREE_ADM_OFFICE" key="label.choose.degree.curricular.plan.old"/>
 				</th>
 				<td class="listClasses">
 					<html:select bundle="HTMLALT_RESOURCES" altKey="select.oldDegreeCurricularPlanID" property="oldDegreeCurricularPlanID" onchange="this.form.method.value='prepareCreate';this.form.submit();">
@@ -43,7 +43,7 @@
 						<html:options collection="oldInfoDegreeCurricularPlans" labelProperty="name" property="idInternal"/>
 					</html:select>
 					<html:submit styleId="javascriptButtonID2" styleClass="altJavaScriptSubmitButton" bundle="HTMLALT_RESOURCES" altKey="submit.submit">
-						<bean:message key="button.submit"/>
+						<bean:message bundle="DEGREE_ADM_OFFICE" key="button.submit"/>
 					</html:submit>
 				</td>
 			</tr>
@@ -51,7 +51,7 @@
 		<logic:present name="oldInfoCurricularCourses">
 			<tr>
 				<th class="listClasses-header">
-					<bean:message key="label.choose.curricular.course.old"/>
+					<bean:message bundle="DEGREE_ADM_OFFICE" key="label.choose.curricular.course.old"/>
 				</th>
 				<td class="listClasses">
 					<html:select bundle="HTMLALT_RESOURCES" altKey="select.oldCurricularCourseID" property="oldCurricularCourseID">
@@ -64,11 +64,11 @@
 	</table>
 
 <br />
-<bean:message key="label.choose.equivalent.curricular.course"/>
+<bean:message bundle="DEGREE_ADM_OFFICE" key="label.choose.equivalent.curricular.course"/>
 	<table>
 		<tr>
 			<th class="listClasses-header">
-				<bean:message key="label.choose.degree"/>
+				<bean:message bundle="DEGREE_ADM_OFFICE" key="label.choose.degree"/>
 			</th>
 			<td class="listClasses">
 				<html:select bundle="HTMLALT_RESOURCES" altKey="select.degreeID" property="degreeID" disabled="true">
@@ -80,7 +80,7 @@
 		<logic:present name="infoDegreeCurricularPlans">
 			<tr>
 				<th class="listClasses-header">
-					<bean:message key="label.choose.degree.curricular.plan"/>
+					<bean:message bundle="DEGREE_ADM_OFFICE" key="label.choose.degree.curricular.plan"/>
 				</th>
 				<td class="listClasses">
 					<html:select bundle="HTMLALT_RESOURCES" altKey="select.degreeCurricularPlanID" property="degreeCurricularPlanID" disabled="true">
@@ -93,7 +93,7 @@
 		<logic:present name="infoDegreeCurricularPlans">
 			<tr>
 				<th class="listClasses-header">
-					<bean:message key="label.choose.curricular.course"/>
+					<bean:message bundle="DEGREE_ADM_OFFICE" key="label.choose.curricular.course"/>
 				</th>
 				<td class="listClasses">
 					<html:select bundle="HTMLALT_RESOURCES" altKey="select.curricularCourseID" property="curricularCourseID">
@@ -109,6 +109,6 @@
 	<br/>
 
 	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton">
-		<bean:message key="link.curricular.course.equivalence.create"/>
+		<bean:message bundle="DEGREE_ADM_OFFICE" key="link.curricular.course.equivalence.create"/>
 	</html:submit>
 </html:form>

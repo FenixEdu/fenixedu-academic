@@ -637,7 +637,25 @@
 			<form-property name="periodGradeSubmissionNormalSeasonSecondSemesterEnd" type="java.lang.String" />
 			<form-property name="periodGradeSubmissionSpecialSeasonEnd" type="java.lang.String" />
 		</form-bean>
-				
+		
+		<form-bean name="curricularCourseEquivalenciesForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
+			<form-property name="page" type="java.lang.Integer" initial="0"/>
+			<form-property name="degreeID" type="java.lang.String"/>
+			<form-property name="degreeCurricularPlanID" type="java.lang.String"/>
+			<form-property name="curricularCourseID" type="java.lang.String"/>
+			<form-property name="oldDegreeID" type="java.lang.String"/>
+			<form-property name="oldDegreeCurricularPlanID" type="java.lang.String"/>
+			<form-property name="oldCurricularCourseID" type="java.lang.String"/>
+			<form-property name="curricularCourseEquivalencyID" type="java.lang.String"/>
+		</form-bean>
+
+		<form-bean name="equivalencesForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
+			<form-property name="method" type="java.lang.String"/>
+			<form-property name="studentNumber" type="java.lang.String"/>
+			<form-property name="curricularCoursesID" type="java.lang.Integer[]"/>
+			<form-property name="studentCurricularPlanID" type="java.lang.String"/>
+		</form-bean>	
+		
     </form-beans>
     
     <!-- ========== Global Exception Definitions ============================== -->
@@ -2000,6 +2018,34 @@
 		<forward name="showCronScript" path="df.show.cron.script"/>
 		<forward name="showCronScriptInvocationLog" path="df.show.cron.script.invocation.log"/>
 	</action>
+	
+       	<!-- ==================== Curricular Course Equivalencies ================== -->
+       	<action path="/curricularCourseEquivalencies"
+       			type="net.sourceforge.fenixedu.presentationTier.Action.degreeAdministrativeOffice.CurricularCourseEquivalenciesDA"
+				input="/curricularCourseEquivalencies.do?method=prepare&amp;page=0"
+				name="curricularCourseEquivalenciesForm"
+    	   		scope="request"
+       			parameter="method">
+			<exception type="net.sourceforge.fenixedu.domain.exceptions.DomainException"
+				key="error.exists.curricular.course.equivalency"
+				handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>
+       		<forward name="showEquivalencies" path="show-curricular-course-equivalencies"/>
+       		<forward name="showCreateEquivalencyForm" path="show-create-curricular-course-equivalencies"/>
+       	</action>
+       	
+      	<!-- =================== Equivalences =================== -->
+       	<action path="/showNotNeedToEnroll"
+	       	name="equivalencesForm"
+       		type="net.sourceforge.fenixedu.presentationTier.Action.degreeAdministrativeOffice.equivalences.ManageNotNeedToEnrollDispathAction"
+       		scope="request"
+			input=""
+       		parameter="method">
+       		<forward name="showNotNeedToEnroll" path="show-not-need-to-enroll"/>
+       		<forward name="insertNotNeedToEnroll" path="/showNotNeedToEnroll.do?method=prepareNotNeedToEnroll"/>
+       	</action>
+       	
+       	<action path="/prepareNotNeedToEnroll" forward="show-not-need-to-enroll"/>
+       	       		
 
 	</action-mappings>
 

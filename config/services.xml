@@ -8310,7 +8310,7 @@
         <description></description>
         <isTransactional>true</isTransactional>
 		<filterChains>
-			<chain name="DegreeAdministrativeOfficeAuthorization" />
+			<chain name="ManagerOrDegreeAdministrativeOfficeAuthorization" />
 		</filterChains>
     </service>    
         <service>
@@ -8319,7 +8319,7 @@
         <description></description>
         <isTransactional>true</isTransactional>
 		<filterChains>
-			<chain name="DegreeAdministrativeOfficeAuthorization" />
+			<chain name="ManagerOrDegreeAdministrativeOfficeAuthorization" />
 		</filterChains>
     </service>
     <service>
@@ -8410,6 +8410,7 @@
 		<description/>
 		<isTransactional>true</isTransactional>
 		<filterChains>
+			<chain name="ManagerOrDegreeAdministrativeOfficeAuthorization"/>
 		</filterChains>
 	</service>
 	<service>
@@ -8418,6 +8419,7 @@
 		<description/>
 		<isTransactional>true</isTransactional>
 		<filterChains>
+			<chain name="ManagerOrDegreeAdministrativeOfficeAuthorization"/>
 		</filterChains>
 	</service> 
 	<service>

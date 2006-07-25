@@ -588,4 +588,16 @@
 		<put name="body" value="/manager/showCronScriptInvocationLog.jsp" />
 	</definition>
 
+	<!-- ===================== Equivalences ====================== -->
+	<definition name="show-not-need-to-enroll" 
+		extends="definition.manager.masterPage">
+		<put name="body" value="/degreeAdministrativeOffice/equivalences/notNeedToEnroll.jsp"></put>
+	</definition>
+	<definition name="show-curricular-course-equivalencies" extends="definition.manager.masterPage">
+		<put name="body" value="/degreeAdministrativeOffice/equivalences/curricularCourseEquivalencies.jsp"></put>
+	</definition>
+	<definition name="show-create-curricular-course-equivalencies" extends="definition.manager.masterPage">
+		<put name="body" value="/degreeAdministrativeOffice/equivalences/createCurricularCourseEquivalencies.jsp"></put>
+	</definition>
+
 </tiles-definitions>
