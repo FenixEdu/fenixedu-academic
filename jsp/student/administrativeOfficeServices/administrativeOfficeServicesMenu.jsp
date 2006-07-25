@@ -8,5 +8,5 @@
 
 	<li class="navheader"><bean:message key="administrative.office.services"/></li>
 	<li><html:link page="/documentRequest.do?method=prepare" titleKey="documents.requirement.link.title"><bean:message key="documents.requirement"/></html:link></li>
-	<li><html:link page="/administrativeOfficeServicesSection.do" titleKey="documents.requirement.consult.link.title"><bean:message key="documents.requirement.consult"/></html:link></li>
+	<li><html:link page="/documentRequest.do?method=viewDocumentRequests" titleKey="documents.requirement.consult.link.title"><bean:message key="documents.requirement.consult"/></html:link></li>
 </ul>
