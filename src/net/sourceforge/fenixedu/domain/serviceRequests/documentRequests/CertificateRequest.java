@@ -25,6 +25,7 @@ public abstract class CertificateRequest extends CertificateRequest_Base {
         return (hasCertificateRequestEvent() && getCertificateRequestEvent().isClosed());
     }
 
+    @Override
     public void edit(AcademicServiceRequestSituationType academicServiceRequestSituationType,
             Employee employee, String justification, Integer numberOfPages) {
         if (isPayed() && !getNumberOfPages().equals(numberOfPages)) {

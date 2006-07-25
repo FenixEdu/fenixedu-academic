@@ -111,7 +111,7 @@ public abstract class AcademicServiceRequest extends AcademicServiceRequest_Base
                 .getAcademicServiceRequestSituationType() : null;
     }
 
-    protected void edit(AcademicServiceRequestSituationType academicServiceRequestSituationType,
+    public void edit(AcademicServiceRequestSituationType academicServiceRequestSituationType,
             Employee employee, String justification) {
 
         if (!isEditable()) {
@@ -119,7 +119,7 @@ public abstract class AcademicServiceRequest extends AcademicServiceRequest_Base
         }
 
         if (getAcademicServiceRequestSituationType() != academicServiceRequestSituationType) {
-        	
+
             checkRulesToChangeState(academicServiceRequestSituationType);
 
             internalChangeState(academicServiceRequestSituationType);
