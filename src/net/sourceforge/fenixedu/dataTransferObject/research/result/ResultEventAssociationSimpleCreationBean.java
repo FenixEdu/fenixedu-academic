@@ -9,15 +9,19 @@ import net.sourceforge.fenixedu.domain.research.result.ResultEventAssociation.Re
 public class ResultEventAssociationSimpleCreationBean implements Serializable {
     
     private DomainReference<Event> event;
-    private ResultEventAssociationRole role;
+    private String role;
     private String eventName;
 
+    public ResultEventAssociationSimpleCreationBean() {
+        role = ResultEventAssociationRole.getDefaultEventRoleType().toString();
+    }
+    
     public ResultEventAssociationRole getRole() {
-        return role;
+        return ResultEventAssociationRole.valueOf(role);
     }
 
     public void setRole(ResultEventAssociationRole associationRole) {
-        this.role = associationRole;
+        this.role = associationRole.toString();
     }
 
     public String getEventName() {

@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
+import net.sourceforge.fenixedu.domain.research.result.Result;
 import net.sourceforge.fenixedu.domain.research.result.ResultUnitAssociation.ResultUnitAssociationRole;;
 
 public class ResultUnitAssociationCreateBean implements Serializable {
@@ -39,5 +40,4 @@ public class ResultUnitAssociationCreateBean implements Serializable {
     public void setUnit(Unit unit) {
         this.unit = (unit != null) ? new DomainReference<Unit>(unit) : null;
     }
-
 }
