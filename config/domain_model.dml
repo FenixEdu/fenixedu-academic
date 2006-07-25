@@ -149,6 +149,7 @@ valueType net.sourceforge.fenixedu.domain.research.result.ResultUnitAssociation.
 valueType net.sourceforge.fenixedu.domain.research.result.ResultEventAssociation.ResultEventAssociationRole as ResultEventAssociationRole;
 valueType net.sourceforge.fenixedu.domain.research.result.ResultParticipation.ResultParticipationRole as ResultParticipationRole;
 valueType net.sourceforge.fenixedu.domain.research.event.EventParticipation.EventParticipationRole as EventParticipationRole;
+valueType net.sourceforge.fenixedu.util.Month																			as Month;
 
 /*
 *
@@ -3360,7 +3361,7 @@ class net.sourceforge.fenixedu.domain.research.result.Result extends net.sourcef
 
 	class net.sourceforge.fenixedu.domain.research.result.publication.ResultPublication extends net.sourceforge.fenixedu.domain.research.result.Result {
 		Integer year;
-		//Month;
+		Month month;
 		Integer keyPublisher;
 		Integer keyOrganization;
 	}
@@ -3378,7 +3379,8 @@ class net.sourceforge.fenixedu.domain.research.result.Result extends net.sourcef
 	}
 		class net.sourceforge.fenixedu.domain.research.result.publication.BookPart extends net.sourceforge.fenixedu.domain.research.result.publication.ResultPublication {
 			BookPartType bookPartType;
-			String chapterSection;
+			String chapter;
+			String bookTitle;
 			Integer firstPage;
 			Integer lastPage;
 			String address;
@@ -3387,7 +3389,7 @@ class net.sourceforge.fenixedu.domain.research.result.Result extends net.sourcef
 			String edition;
 		}
 		class net.sourceforge.fenixedu.domain.research.result.publication.Article extends net.sourceforge.fenixedu.domain.research.result.publication.ResultPublication {
-			String journalName;
+			String journal;
 			String volume;
 			String number;
 			Integer firstPage;
@@ -3413,14 +3415,13 @@ class net.sourceforge.fenixedu.domain.research.result.Result extends net.sourcef
 			String address;
 			Integer numberPages;
 			String language;
-			String local;
 		}
 		class net.sourceforge.fenixedu.domain.research.result.publication.Manual extends net.sourceforge.fenixedu.domain.research.result.publication.ResultPublication {
 			String edition;
 			String address;
 		}
 		class net.sourceforge.fenixedu.domain.research.result.publication.TechnicalReport extends net.sourceforge.fenixedu.domain.research.result.publication.ResultPublication {
-			String type;
+			String technicalReportType;
 			String number;
 			String address;
 			Integer numberPages;
