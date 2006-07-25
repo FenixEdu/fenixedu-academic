@@ -119,6 +119,7 @@ public class ManageCacheDA extends FenixDispatchAction {
     			} else if (secondRole.getType().getFullName().equals(RootDomainObject.class.getName())) {
     				numberOfReadDomainObjects += loadDomainObjects(firstRole);
     			}
+                System.out.println("   total read is at: " + numberOfReadDomainObjects);
     		}
     	} finally {
     		final long endTime = System.currentTimeMillis();
