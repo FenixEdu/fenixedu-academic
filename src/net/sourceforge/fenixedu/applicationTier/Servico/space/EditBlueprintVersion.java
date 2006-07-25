@@ -24,7 +24,9 @@ public class EditBlueprintVersion extends Service {
         
         blueprint.removeBlueprintFile();
         
-        String filename = blueprint.getValidFrom().toString("yyyy-MM-dd");
+        String filename = blueprintSubmissionBean.getSpaceInformation().getIdInternal() + String.valueOf(System.currentTimeMillis());
+        String displayName = blueprintSubmissionBean.getFilename();
+        
         SpaceInformation spaceInformation = blueprintSubmissionBean.getSpaceInformation();
         Space space = spaceInformation.getSpace();
         
@@ -40,7 +42,7 @@ public class EditBlueprintVersion extends Service {
                 getFilePath(space.getMostRecentSpaceInformation()), filename, true, fileMetadata,
                 blueprintSubmissionBean.getInputStream());
 
-        BlueprintFile blueprintFile = new BlueprintFile(filename, filename,
+        BlueprintFile blueprintFile = new BlueprintFile(filename, displayName,
                 fileDescriptor.getMimeType(), fileDescriptor.getChecksum(), fileDescriptor
                         .getChecksumAlgorithm(), fileDescriptor.getSize(), fileDescriptor.getUniqueId(),
                 new RoleGroup(Role.getRoleByRoleType(RoleType.SPACE_MANAGER)));

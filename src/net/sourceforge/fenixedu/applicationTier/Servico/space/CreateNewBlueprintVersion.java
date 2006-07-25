@@ -12,9 +12,6 @@ import net.sourceforge.fenixedu.domain.space.Blueprint;
 import net.sourceforge.fenixedu.domain.space.BlueprintFile;
 import net.sourceforge.fenixedu.domain.space.Space;
 import net.sourceforge.fenixedu.domain.space.SpaceInformation;
-
-import org.joda.time.YearMonthDay;
-
 import pt.utl.ist.fenix.tools.file.FileDescriptor;
 import pt.utl.ist.fenix.tools.file.FileManagerFactory;
 import pt.utl.ist.fenix.tools.file.FileMetadata;
@@ -25,7 +22,9 @@ public class CreateNewBlueprintVersion extends Service {
     
     public Blueprint run(CreateBlueprintSubmissionBean blueprintSubmissionBean) throws FenixServiceException {
         
-        String filename = new YearMonthDay().toString("yyyy-MM-dd");
+        String filename = blueprintSubmissionBean.getSpaceInformation().getIdInternal() + String.valueOf(System.currentTimeMillis());
+        String displayName = blueprintSubmissionBean.getFilename();
+        
         SpaceInformation spaceInformation = blueprintSubmissionBean.getSpaceInformation();
         Space space = spaceInformation.getSpace();
         
@@ -41,7 +40,7 @@ public class CreateNewBlueprintVersion extends Service {
                 getFilePath(space.getMostRecentSpaceInformation()), filename, true, fileMetadata,
                 blueprintSubmissionBean.getInputStream());
 
-        BlueprintFile blueprintFile = new BlueprintFile(filename, filename,
+        BlueprintFile blueprintFile = new BlueprintFile(filename, displayName,
                 fileDescriptor.getMimeType(), fileDescriptor.getChecksum(), fileDescriptor
                         .getChecksumAlgorithm(), fileDescriptor.getSize(), fileDescriptor.getUniqueId(),
                 new RoleGroup(Role.getRoleByRoleType(RoleType.SPACE_MANAGER)));
