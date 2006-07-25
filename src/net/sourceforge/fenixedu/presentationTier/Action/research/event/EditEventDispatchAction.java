@@ -171,7 +171,7 @@ public class EditEventDispatchAction extends FenixDispatchAction {
             if (event.getIdInternal().equals(oid)) {
                 request.setAttribute("selectedEvent", event);
                 List<ProjectEventAssociation> associations = event.getAssociatedProjects();
-                request.setAttribute("eventAssociations", associations);
+                request.setAttribute("projectAssociations", associations);
             }
         }  
         

@@ -25,7 +25,9 @@ public class ProjectsManagementDispatchAction extends FenixDispatchAction {
         List<Project> projects = new ArrayList<Project>();
 
         for(ProjectParticipation participation : userView.getPerson().getProjectParticipations()) {
-            projects.add(participation.getProject());
+            if (!projects.contains(participation.getProject())) {
+                projects.add(participation.getProject());
+            }
         }
         request.setAttribute("projects", projects);
         return mapping.findForward("Success");  

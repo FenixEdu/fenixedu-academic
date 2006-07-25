@@ -25,7 +25,9 @@ public class EventsManagementDispatchAction extends FenixDispatchAction {
         List<Event> events = new ArrayList<Event>();
 
         for(EventParticipation participation : userView.getPerson().getEventParticipations()) {
-            events.add(participation.getEvent());
+            if (!events.contains(participation.getEvent())) {
+                events.add(participation.getEvent());
+            }
         }
         request.setAttribute("events", events);
         return mapping.findForward("Success");  
