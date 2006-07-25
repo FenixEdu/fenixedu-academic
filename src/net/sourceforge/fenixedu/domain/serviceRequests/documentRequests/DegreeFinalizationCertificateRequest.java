@@ -1,8 +1,11 @@
 package net.sourceforge.fenixedu.domain.serviceRequests.documentRequests;
 
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.accounting.EventType;
+import net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.CertificateRequestEvent;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSituationType;
 
 public class DegreeFinalizationCertificateRequest extends DegreeFinalizationCertificateRequest_Base {
 
@@ -12,8 +15,8 @@ public class DegreeFinalizationCertificateRequest extends DegreeFinalizationCert
 
 	public DegreeFinalizationCertificateRequest(StudentCurricularPlan studentCurricularPlan,
 			AdministrativeOffice administrativeOffice, DocumentPurposeType documentPurposeType,
-			String otherDocumentPurposeTypeDescription, Boolean urgentRequest,
-			Boolean average, Boolean detailed) {
+			String otherDocumentPurposeTypeDescription, Boolean urgentRequest, Boolean average,
+			Boolean detailed) {
 		this();
 		init(studentCurricularPlan, administrativeOffice, documentPurposeType,
 				otherDocumentPurposeTypeDescription, urgentRequest, average, detailed);
@@ -21,32 +24,51 @@ public class DegreeFinalizationCertificateRequest extends DegreeFinalizationCert
 
 	protected void init(StudentCurricularPlan studentCurricularPlan,
 			AdministrativeOffice administrativeOffice, DocumentPurposeType documentPurposeType,
-			String otherDocumentPurposeTypeDescription, Boolean urgentRequest,
-			Boolean average, Boolean detailed) {
+			String otherDocumentPurposeTypeDescription, Boolean urgentRequest, Boolean average,
+			Boolean detailed) {
 		init(studentCurricularPlan, administrativeOffice,
 				DocumentRequestType.DEGREE_FINALIZATION_CERTIFICATE, documentPurposeType,
 				otherDocumentPurposeTypeDescription, urgentRequest);
 
 		checkParameters(average, detailed);
 		super.setAverage(average);
-        super.setDetailed(detailed);
+		super.setDetailed(detailed);
 	}
 
 	private void checkParameters(Boolean average, Boolean detailed) {
-        if (average == null) {
-            throw new DomainException(
-                    "error.serviceRequests.documentRequests.DegreeFinalizationCertificateRequest.average.cannot.be.null");
-        }
-        if (detailed == null) {
-            throw new DomainException(
-                    "error.serviceRequests.documentRequests.DegreeFinalizationCertificateRequest.detailed.cannot.be.null");
-        }
+		if (average == null) {
+			throw new DomainException(
+					"error.serviceRequests.documentRequests.DegreeFinalizationCertificateRequest.average.cannot.be.null");
+		}
+		if (detailed == null) {
+			throw new DomainException(
+					"error.serviceRequests.documentRequests.DegreeFinalizationCertificateRequest.detailed.cannot.be.null");
+		}
 	}
 
 	@Override
 	public void setAverage(Boolean average) {
 		throw new DomainException(
 				"error.serviceRequests.documentRequests.DegreeFinalizationCertificateRequest.cannot.modify.average");
+	}
+
+	@Override
+	public void setDetailed(Boolean detailed) {
+		throw new DomainException(
+				"error.serviceRequests.documentRequests.DegreeFinalizationCertificateRequest.cannot.modify.detailed");
+	}
+
+	@Override
+	protected void internalChangeState(
+			AcademicServiceRequestSituationType academicServiceRequestSituationType) {
+		
+		super.internalChangeState(academicServiceRequestSituationType);
+
+		//TODO:
+		if (academicServiceRequestSituationType == AcademicServiceRequestSituationType.CONCLUDED) {
+			new CertificateRequestEvent(getAdministrativeOffice(),
+					EventType.DEGREE_FINALIZATION_CERTIFICATE_REQUEST, getStudent().getPerson(), this);
+		}
 	}
 
 }

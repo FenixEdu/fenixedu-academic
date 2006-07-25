@@ -119,6 +119,7 @@ public abstract class AcademicServiceRequest extends AcademicServiceRequest_Base
         }
 
         if (getAcademicServiceRequestSituationType() != academicServiceRequestSituationType) {
+        	
             checkRulesToChangeState(academicServiceRequestSituationType);
 
             internalChangeState(academicServiceRequestSituationType);

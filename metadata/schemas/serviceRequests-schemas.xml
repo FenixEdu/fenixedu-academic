@@ -4,10 +4,6 @@
 	<slot name="student.person.name" key="label.net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest.studentCurricularPlan.student.person.name"/>
 </schema>
 
-<schema name="AcademicServiceRequest.view-without-active-situation-type" extends="AcademicServiceRequest.view" type="net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest" bundle="APPLICATION_RESOURCES">
-	<remove name="academicServiceRequestSituationType" />
-</schema>
-
 <schema name="AcademicServiceRequestSituation.view" type="net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSituation"  bundle="APPLICATION_RESOURCES">
 	<slot name="creationDate" key="label.net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSituation.creationDate" />
 	<slot name="employee.person.name" key="label.net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSituation.employee.person.name" />

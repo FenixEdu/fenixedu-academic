@@ -20,16 +20,14 @@
 	<li><html:link page="/curricularCourseEquivalencies.do?method=prepare"><bean:message key="label.navheader.equivalences" /></html:link></li>
 	<li class="navheader"><bean:message key="label.navheader.curriculums" /></li>
 	<li><html:link page="/curricularPlans/chooseCurricularPlan.faces"><bean:message key="link.consultCurriculum"/></html:link></li>
+
 	<%-- 
 	<li><html:link page="/curricularPlans/curricularPlansManagement.faces"><bean:message key="link.curricularPlansManagement"/></html:link></li>
-	
-    <li><html:link page="/payments.do?method=prepareSearchPerson"><bean:message key="link.payments" /></html:link></li>
-    <li><html:link page="/pricesManagement.do?method=viewPrices"><bean:message key="link.pricesManagement" /></html:link></li>
-
+    --%>
     
-   
+    <li><html:link page="/pricesManagement.do?method=viewPrices"><bean:message key="link.pricesManagement" /></html:link></li>
+	<li><html:link page="/payments.do?method=prepareSearchPerson"><bean:message key="link.payments" /></html:link></li>
     <li><html:link page="/documentRequestsManagement.do?method=showOperations"><bean:message key="link.documentRequestsManagement" /></html:link></li>
     
-    --%>
 
 </ul>     
