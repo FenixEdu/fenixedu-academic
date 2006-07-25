@@ -27,6 +27,17 @@
 	<slot name="academicServiceRequestSituationType" key="label.net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSituation.academicServiceRequestSituationType" />
 </schema>
 
+<schema name="DocumentRequest.view-without-numberOfPages-documentPurposeTypeInformation" type="net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest" bundle="APPLICATION_RESOURCES" extends="DocumentRequest.view">
+	<remove name="numberOfPages" />
+	<remove name="documentPurposeType" />
+	<remove name="otherDocumentPurposeTypeDescription" />
+</schema>
+
+<schema name="DocumentRequest.view-without-numberOfPages-academicServiceRequestSituationType" type="net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest" bundle="APPLICATION_RESOURCES" extends="DocumentRequest.view">
+	<remove name="numberOfPages" />
+	<remove name="academicServiceRequestSituationType"/>
+</schema>
+
 
 <schema name="DocumentRequest.view-simple" type="net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest" bundle="APPLICATION_RESOURCES">
 	<slot name="creationDate" read-only="true" key="label.net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest.creationDate"/>
