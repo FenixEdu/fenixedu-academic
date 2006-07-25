@@ -200,7 +200,12 @@ public class RenderUtils {
         return format.format(args);
     }
     
+    @Deprecated
     public static String getFormatedProperties(String format, Object object) {
+        return getFormattedProperties(format, object);
+    }
+
+    public static String getFormattedProperties(String format, Object object) {
         // "${a.b} - ${a.c} - ${b,-4.5tY}" 
         // String.format("%s - %s - %-4.5tY", object.getA().getB(), object.getA().getC(), object.getB())
         
