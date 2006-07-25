@@ -52,7 +52,7 @@ public class WeeklyWorkLoadDA extends FenixDispatchAction {
                     new DateMidnight(getEndOfExamsPeriod(executionPeriod, executionDegree)));
             final Period period = interval.toPeriod();
             int extraWeek = period.getDays() > 0 ? 1 : 0;
-            numberOfWeeks = (period.getYears() * 12 + period.getMonths()) * 4 + period.getWeeks() + extraWeek;
+            numberOfWeeks = (period.getYears() * 12 + period.getMonths()) * 4 + period.getWeeks() + extraWeek + 1;
             intervals = new Interval[numberOfWeeks];
             for (int i = 0; i < numberOfWeeks; i++) {
                 final DateTime start = interval.getStart().plusWeeks(i);

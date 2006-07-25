@@ -600,7 +600,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
             final Period period = executionPeriodInterval.toPeriod();
             int extraWeek = period.getDays() > 0 ? 1 : 0;
             numberOfWeeks = (period.getYears() * 12 + period.getMonths()) * 4 + period.getWeeks()
-                    + extraWeek;
+                    + extraWeek + 1;
             intervals = new Interval[numberOfWeeks];
             numberResponses = new int[numberOfWeeks];
             contactSum = new int[numberOfWeeks];

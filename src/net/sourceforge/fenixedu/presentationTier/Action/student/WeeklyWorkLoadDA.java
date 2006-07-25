@@ -56,7 +56,7 @@ public class WeeklyWorkLoadDA extends FenixDispatchAction {
             this.executionPeriodInterval = executionPeriodInterval;
             final Period period = executionPeriodInterval.toPeriod();
             int extraWeek = period.getDays() > 0 ? 1 : 0;
-            numberOfWeeks = (period.getYears() * 12 + period.getMonths()) * 4 + period.getWeeks() + extraWeek;
+            numberOfWeeks = (period.getYears() * 12 + period.getMonths()) * 4 + period.getWeeks() + extraWeek + 1;
             intervals = new Interval[numberOfWeeks];
             intervalTypes = new IntervalType[numberOfWeeks];
             for (int i = 0; i < numberOfWeeks; i++) {
