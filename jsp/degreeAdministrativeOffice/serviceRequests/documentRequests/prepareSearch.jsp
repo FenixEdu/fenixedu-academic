@@ -71,7 +71,7 @@
 	
 	</table>
 	
-	<html:submit><bean:message key="label.documentRequestsManagement.search" /></html:submit>
-	<html:submit onclick="this.form.method.value='showOperations';" ><bean:message key="label.documentRequestsManagement.back" /></html:submit>
+	<html:submit styleClass="inputbutton"><bean:message key="label.documentRequestsManagement.search" /></html:submit>
+	<html:submit onclick="this.form.method.value='showOperations';" styleClass="inputbutton"><bean:message key="label.documentRequestsManagement.back" /></html:submit>
 
 </html:form>

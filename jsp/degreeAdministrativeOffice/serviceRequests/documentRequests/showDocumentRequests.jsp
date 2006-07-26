@@ -46,5 +46,5 @@
 </logic:empty>
 
 <html:form action="/documentRequestsManagement.do?method=prepareSearch">
-	<html:submit><bean:message key="label.documentRequestsManagement.back" /></html:submit>
+	<html:submit styleClass="inputbutton"><bean:message key="label.documentRequestsManagement.back" /></html:submit>
 </html:form>

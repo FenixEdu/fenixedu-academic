@@ -58,6 +58,6 @@
 		<bean:define id="documentRequestId" name="documentRequest" property="idInternal" />
 		<html:hidden property="documentRequestId" value="<%= documentRequestId.toString() %>"/>
 		
-		<html:submit><bean:message key="label.documentRequestsManagement.back" /></html:submit>
+		<html:submit styleClass="inputbutton"><bean:message key="label.documentRequestsManagement.back" /></html:submit>
 	</html:form>
 </logic:notEqual>
