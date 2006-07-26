@@ -34,26 +34,32 @@ public class DocumentRequestDispatchAction extends FenixDispatchAction {
         final Person person = SessionUtils.getUserView(request).getPerson();
         final Student student = person.getStudentByUsername();
         
-        if (!student.hasAnyStudentCurricularPlans()) {
+        if (!student.getPayedTuition()) {
             final ActionMessages actionMessages = new ActionMessages();
-            actionMessages.add("error.student.curricularPlan.nonExistent", new ActionMessage("error.student.curricularPlan.nonExistent"));
+            actionMessages.add("error.message.tuitionNotPayed", new ActionMessage("error.message.tuitionNotPayed"));
             saveMessages(request, actionMessages);
         } else {
-            request.setAttribute("student", student);
-            
-            if (student.getStudentCurricularPlansCount() > 1) {
-                request.setAttribute("studentCurricularPlans", student.getStudentCurricularPlans());
-            } 
-
-            if (student.getActiveStudentCurricularPlan().getEnrolmentsExecutionYears().isEmpty()) {
+            if (!student.hasAnyStudentCurricularPlans()) {
                 final ActionMessages actionMessages = new ActionMessages();
-                actionMessages.add("message.no.enrolments", new ActionMessage("message.no.enrolments"));
+                actionMessages.add("error.student.curricularPlan.nonExistent", new ActionMessage("error.student.curricularPlan.nonExistent"));
                 saveMessages(request, actionMessages);
             } else {
-                request.setAttribute("executionYears", student.getActiveStudentCurricularPlan().getEnrolmentsExecutionYears());        
+                request.setAttribute("student", student);
+                
+                if (student.getStudentCurricularPlansCount() > 1) {
+                    request.setAttribute("studentCurricularPlans", student.getStudentCurricularPlans());
+                } 
+
+                if (student.getActiveStudentCurricularPlan().getEnrolmentsExecutionYears().isEmpty()) {
+                    final ActionMessages actionMessages = new ActionMessages();
+                    actionMessages.add("message.no.enrolments", new ActionMessage("message.no.enrolments"));
+                    saveMessages(request, actionMessages);
+                } else {
+                    request.setAttribute("executionYears", student.getActiveStudentCurricularPlan().getEnrolmentsExecutionYears());        
+                }
             }
         }
-
+        
         return mapping.findForward("createDocumentRequests");
     }
     
