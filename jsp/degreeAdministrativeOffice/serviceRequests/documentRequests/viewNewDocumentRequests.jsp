@@ -27,6 +27,7 @@
 				<fr:property name="checkable" value="true" />
 				<fr:property name="checkboxName" value="documentIdsToProcess" />
 				<fr:property name="checkboxValue" value="idInternal" />		
+				<fr:property name="sortBy" value="urgentRequest=desc,creationDate=desc"/>
 			</fr:layout>
 		</fr:view>
 		<html:submit onclick="this.form.method.value='processNewDocuments';" styleClass="inputbutton"><bean:message key="label.documentRequestsManagement.process" /></html:submit>
