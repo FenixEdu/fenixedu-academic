@@ -109,7 +109,7 @@ public class MetaSlot extends MetaObject {
         Schema schema = RenderKit.getInstance().findSchema(getSchema());
         
         Class type;
-        if (schema == null) {
+        if (schema != null) {
             type = schema.getType();
         }
         else {
