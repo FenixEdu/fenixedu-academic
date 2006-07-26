@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.domain.administrativeOffice;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
@@ -19,7 +18,6 @@ public class AdministrativeOffice extends AdministrativeOffice_Base {
     private AdministrativeOffice() {
         super();
         setRootDomainObject(RootDomainObject.getInstance());
-
     }
 
     public AdministrativeOffice(AdministrativeOfficeType administrativeOfficeType, Unit unit) {
@@ -38,7 +36,6 @@ public class AdministrativeOffice extends AdministrativeOffice_Base {
         }
 
         checkIfExistsAdministrativeOfficeForType(administrativeOfficeType);
-
     }
 
     private void checkIfExistsAdministrativeOfficeForType(
@@ -52,7 +49,7 @@ public class AdministrativeOffice extends AdministrativeOffice_Base {
             }
         }
     }
-
+    
     protected void init(AdministrativeOfficeType administrativeOfficeType, Unit unit) {
         checkParameters(administrativeOfficeType, unit);
         super.setAdministrativeOfficeType(administrativeOfficeType);
@@ -70,37 +67,7 @@ public class AdministrativeOffice extends AdministrativeOffice_Base {
     public void setUnit(Unit unit) {
         throw new DomainException("error.administrativeOffice.AdministrativeOffice.cannot.modify.unit");
     }
-
-    // static methods
-    public static AdministrativeOffice readByAdministrativeOfficeType(
-            AdministrativeOfficeType administrativeOfficeType) {
-
-        for (final AdministrativeOffice administrativeOffice : RootDomainObject.getInstance()
-                .getAdministrativeOffices()) {
-
-            if (administrativeOffice.getAdministrativeOfficeType() == administrativeOfficeType) {
-                return administrativeOffice;
-            }
-
-        }
-        return null;
-
-    }
-
-    public static AdministrativeOffice getResponsibleAdministrativeOffice(DegreeType degreeType) {
-
-        switch (degreeType) {
-        case DEGREE:
-            return readByAdministrativeOfficeType(AdministrativeOfficeType.DEGREE);
-
-        case MASTER_DEGREE:
-        case BOLONHA_ADVANCED_FORMATION_DIPLOMA:
-            return readByAdministrativeOfficeType(AdministrativeOfficeType.MASTER_DEGREE);
-        }
-
-        return null;
-    }
-
+    
     public List<DocumentRequest> searchDocumentsBy(DocumentRequestType documentRequestType,
             AcademicServiceRequestSituationType requestSituationType, Boolean isUrgent, Student student) {
 
@@ -143,13 +110,44 @@ public class AdministrativeOffice extends AdministrativeOffice_Base {
 
     public List<AcademicServiceRequest> getNewAcademicServiceRequests(
             AdministrativeOffice administrativeOffice) {
-        List<AcademicServiceRequest> newAcademicServiceRequest = new ArrayList<AcademicServiceRequest>();
-        for (AcademicServiceRequest academicServiceRequest : getAcademicServiceRequests()) {
+    	
+        final List<AcademicServiceRequest> result = new ArrayList<AcademicServiceRequest>();
+        for (final AcademicServiceRequest academicServiceRequest : getAcademicServiceRequests()) {
             if (academicServiceRequest.isNewRequest()) {
-                newAcademicServiceRequest.add(academicServiceRequest);
+                result.add(academicServiceRequest);
             }
         }
-        return newAcademicServiceRequest;
+        return result;
+    }
+
+    // static methods
+    public static AdministrativeOffice readByAdministrativeOfficeType(
+            AdministrativeOfficeType administrativeOfficeType) {
+
+        for (final AdministrativeOffice administrativeOffice : RootDomainObject.getInstance()
+                .getAdministrativeOffices()) {
+
+            if (administrativeOffice.getAdministrativeOfficeType() == administrativeOfficeType) {
+                return administrativeOffice;
+            }
+
+        }
+        return null;
+
+    }
+
+    public static AdministrativeOffice getResponsibleAdministrativeOffice(DegreeType degreeType) {
+
+        switch (degreeType) {
+        case DEGREE:
+            return readByAdministrativeOfficeType(AdministrativeOfficeType.DEGREE);
+
+        case MASTER_DEGREE:
+        case BOLONHA_ADVANCED_FORMATION_DIPLOMA:
+            return readByAdministrativeOfficeType(AdministrativeOfficeType.MASTER_DEGREE);
+        }
+
+        return null;
     }
 
 }

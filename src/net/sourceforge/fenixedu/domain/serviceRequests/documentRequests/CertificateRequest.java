@@ -7,33 +7,43 @@ import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSit
 
 public abstract class CertificateRequest extends CertificateRequest_Base {
 
-    protected CertificateRequest() {
-        super();
-    }
+	protected CertificateRequest() {
+		super();
+	}
 
-    @Override
-    public void setCertificateRequestEvent(CertificateRequestEvent certificateRequestEvent) {
-        throw new DomainException(
-                "error.serviceRequests.documentRequests.CertificateRequest.cannot.modify.certificateRequestEvent");
-    }
+	@Override
+	public void setCertificateRequestEvent(CertificateRequestEvent certificateRequestEvent) {
+		throw new DomainException(
+				"error.serviceRequests.documentRequests.CertificateRequest.cannot.modify.certificateRequestEvent");
+	}
 
-    public Integer getNumberOfUnits() {
-        return 0;
-    }
+	public Integer getNumberOfUnits() {
+		return 0;
+	}
 
-    private boolean isPayed() {
-        return (hasCertificateRequestEvent() && getCertificateRequestEvent().isClosed());
-    }
+	private boolean isPayed() {
+		return (hasCertificateRequestEvent() && getCertificateRequestEvent().isClosed());
+	}
 
-    @Override
-    public void edit(AcademicServiceRequestSituationType academicServiceRequestSituationType,
-            Employee employee, String justification, Integer numberOfPages) {
-        if (isPayed() && !getNumberOfPages().equals(numberOfPages)) {
-            throw new DomainException(
-                    "error.serviceRequests.documentRequests.CertificateRequest.cannot.change.numberOfPages.on.payed.certificates");
+	public void edit(AcademicServiceRequestSituationType academicServiceRequestSituationType,
+			Employee employee, String justification, Integer numberOfPages) {
+		if (isPayed() && !getNumberOfPages().equals(numberOfPages)) {
+			throw new DomainException(
+					"error.serviceRequests.documentRequests.CertificateRequest.cannot.change.numberOfPages.on.payed.certificates");
 
-        }
+		}
 
-        super.edit(academicServiceRequestSituationType, employee, justification, numberOfPages);
-    }
+		super.edit(academicServiceRequestSituationType, employee, justification, numberOfPages);
+	}
+
+	@Override
+	protected void internalChangeState(
+			AcademicServiceRequestSituationType academicServiceRequestSituationType, Employee employee) {
+		super.internalChangeState(academicServiceRequestSituationType, employee);
+
+		if ((academicServiceRequestSituationType == AcademicServiceRequestSituationType.CANCELLED || academicServiceRequestSituationType == AcademicServiceRequestSituationType.REJECTED)
+				&& hasCertificateRequestEvent()) {
+			getCertificateRequestEvent().cancel(employee);
+		}
+	}
 }

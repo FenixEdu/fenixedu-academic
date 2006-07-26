@@ -204,6 +204,8 @@ class net.sourceforge.fenixedu.domain.accounting.Event extends net.sourceforge.f
     AccountingEventState eventState;
     Integer keyPerson;
     Integer keyAdministrativeOffice;
+    DateTime whenCancelled;
+    Integer keyEmployeeResponsibleForCancel;
 }
 
 	class net.sourceforge.fenixedu.domain.accounting.events.candidacy.DFACandidacyEvent extends net.sourceforge.fenixedu.domain.accounting.Event {
@@ -9210,6 +9212,13 @@ relation AccountEntry {
 
 relation PersonAccountingEvent {
 	net.sourceforge.fenixedu.domain.Person playsRole person;
+	net.sourceforge.fenixedu.domain.accounting.Event playsRole events {
+		multiplicity *;
+	}
+}
+
+relation AccountingEventEmployeeResponsibleForCancel {
+	net.sourceforge.fenixedu.domain.Employee playsRole employeeResponsibleForCancel;
 	net.sourceforge.fenixedu.domain.accounting.Event playsRole events {
 		multiplicity *;
 	}

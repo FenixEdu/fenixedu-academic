@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.domain.serviceRequests.documentRequests;
 
+import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
 import net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.CertificateRequestEvent;
@@ -24,12 +25,12 @@ public class ApprovementCertificateRequest extends ApprovementCertificateRequest
 
 	@Override
 	protected void internalChangeState(
-			AcademicServiceRequestSituationType academicServiceRequestSituationType) {
-		
-		super.internalChangeState(academicServiceRequestSituationType);
+			AcademicServiceRequestSituationType academicServiceRequestSituationType, Employee employee) {
+
+		super.internalChangeState(academicServiceRequestSituationType, employee);
 
 		if (academicServiceRequestSituationType == AcademicServiceRequestSituationType.CONCLUDED) {
-			
+
 			new CertificateRequestEvent(getAdministrativeOffice(),
 					EventType.APPROVEMENT_CERTIFICATE_REQUEST, getStudent().getPerson(), this);
 		}

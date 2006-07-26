@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.domain.serviceRequests.documentRequests;
 
+import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
@@ -38,14 +39,14 @@ public class SchoolRegistrationCertificateRequest extends SchoolRegistrationCert
 	}
 
 	private void checkParameters(ExecutionYear executionYear) {
-        if (executionYear == null) {
-            throw new DomainException(
-                    "error.serviceRequests.documentRequests.SchoolRegistrationCertificateRequest.executionYear.cannot.be.null");
-        } else if (!getStudentCurricularPlan().hasSchoolRegistration(executionYear)) {
-            throw new DomainException(
-                    "error.serviceRequests.documentRequests.SchoolRegistrationCertificateRequest.executionYear.before.studentCurricularPlan.start");
-        }
-    }
+		if (executionYear == null) {
+			throw new DomainException(
+					"error.serviceRequests.documentRequests.SchoolRegistrationCertificateRequest.executionYear.cannot.be.null");
+		} else if (!getStudentCurricularPlan().hasSchoolRegistration(executionYear)) {
+			throw new DomainException(
+					"error.serviceRequests.documentRequests.SchoolRegistrationCertificateRequest.executionYear.before.studentCurricularPlan.start");
+		}
+	}
 
 	@Override
 	public void setExecutionYear(ExecutionYear executionYear) {
@@ -55,9 +56,9 @@ public class SchoolRegistrationCertificateRequest extends SchoolRegistrationCert
 
 	@Override
 	protected void internalChangeState(
-			AcademicServiceRequestSituationType academicServiceRequestSituationType) {
+			AcademicServiceRequestSituationType academicServiceRequestSituationType, Employee employee) {
 
-		super.internalChangeState(academicServiceRequestSituationType);
+		super.internalChangeState(academicServiceRequestSituationType, employee);
 
 		if (academicServiceRequestSituationType == AcademicServiceRequestSituationType.CONCLUDED) {
 

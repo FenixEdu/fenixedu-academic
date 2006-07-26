@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.domain.serviceRequests.documentRequests;
 
+import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
@@ -38,19 +39,19 @@ public class EnrolmentCertificateRequest extends EnrolmentCertificateRequest_Bas
 		super.setExecutionYear(executionYear);
 	}
 
-    private void checkParameters(Boolean detailed, ExecutionYear executionYear) {
-        if (detailed == null) {
-            throw new DomainException(
-                    "error.serviceRequests.documentRequests.EnrolmentCertificateRequest.detailed.cannot.be.null");
-        }
-        if (executionYear == null) {
-            throw new DomainException(
-                    "error.serviceRequests.documentRequests.EnrolmentCertificateRequest.executionYear.cannot.be.null");
-        } else if (!getStudentCurricularPlan().hasAnyEnrolmentForExecutionYear(executionYear)) {
-            throw new DomainException(
-                    "error.serviceRequests.documentRequests.EnrolmentCertificateRequest.executionYear.before.studentCurricularPlan.start");
-        }
-    }
+	private void checkParameters(Boolean detailed, ExecutionYear executionYear) {
+		if (detailed == null) {
+			throw new DomainException(
+					"error.serviceRequests.documentRequests.EnrolmentCertificateRequest.detailed.cannot.be.null");
+		}
+		if (executionYear == null) {
+			throw new DomainException(
+					"error.serviceRequests.documentRequests.EnrolmentCertificateRequest.executionYear.cannot.be.null");
+		} else if (!getStudentCurricularPlan().hasAnyEnrolmentForExecutionYear(executionYear)) {
+			throw new DomainException(
+					"error.serviceRequests.documentRequests.EnrolmentCertificateRequest.executionYear.before.studentCurricularPlan.start");
+		}
+	}
 
 	@Override
 	public void setExecutionYear(ExecutionYear executionYear) {
@@ -66,9 +67,9 @@ public class EnrolmentCertificateRequest extends EnrolmentCertificateRequest_Bas
 
 	@Override
 	protected void internalChangeState(
-			AcademicServiceRequestSituationType academicServiceRequestSituationType) {
+			AcademicServiceRequestSituationType academicServiceRequestSituationType, Employee employee) {
 
-		super.internalChangeState(academicServiceRequestSituationType);
+		super.internalChangeState(academicServiceRequestSituationType, employee);
 
 		if (academicServiceRequestSituationType == AcademicServiceRequestSituationType.CONCLUDED) {
 			new CertificateRequestEvent(getAdministrativeOffice(),

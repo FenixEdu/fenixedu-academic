@@ -122,7 +122,7 @@ public abstract class AcademicServiceRequest extends AcademicServiceRequest_Base
 
             checkRulesToChangeState(academicServiceRequestSituationType);
 
-            internalChangeState(academicServiceRequestSituationType);
+            internalChangeState(academicServiceRequestSituationType,employee);
 
             new AcademicServiceRequestSituation(this, academicServiceRequestSituationType, employee,
                     justification);
@@ -190,7 +190,7 @@ public abstract class AcademicServiceRequest extends AcademicServiceRequest_Base
     }
 
     protected void internalChangeState(
-            AcademicServiceRequestSituationType academicServiceRequestSituationType) {
+            AcademicServiceRequestSituationType academicServiceRequestSituationType, Employee employee) {
         // nothing to be done
     }
 
