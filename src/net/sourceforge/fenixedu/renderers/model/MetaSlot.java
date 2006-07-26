@@ -106,7 +106,17 @@ public class MetaSlot extends MetaObject {
      * @see RenderUtils#getSlotLabel(Class, String, String, String)
      */
     public String getLabel() {
-        return RenderUtils.getSlotLabel(getMetaObject().getType(), getName(), getBundle(), getLabelKey());
+        Schema schema = RenderKit.getInstance().findSchema(getSchema());
+        
+        Class type;
+        if (schema == null) {
+            type = schema.getType();
+        }
+        else {
+            type = getMetaObject().getType();
+        }
+        
+        return RenderUtils.getSlotLabel(type, getName(), getBundle(), getLabelKey());
     }
 
     public void setLabelKey(String key) {
