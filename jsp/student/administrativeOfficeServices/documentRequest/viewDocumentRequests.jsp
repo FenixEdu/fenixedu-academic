@@ -4,7 +4,7 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 
 <em><bean:message key="administrative.office.services"/></em>
-<h2><bean:message key="documents.requirement"/></h2>
+<h2><bean:message key="documents.requirement.consult"/></h2>
 
 <logic:messagesPresent message="true">
 	<span class="error">
@@ -14,17 +14,13 @@
 	</span>
 </logic:messagesPresent>
 
-<fr:view name="documentRequests" schema="DocumentRequest.view-without-numberOfPages-documentPurposeTypeInformation">
+<fr:view name="documentRequests" schema="DocumentRequest.summary-view-by-student">
 	<fr:layout name="tabular">
 		<fr:property name="classes" value="tstyle4 thlight thright" />
 		
-		<fr:property name="linkFormat(view)" value="/documentRequestsManagement.do?method=viewDocumentRequest&documentRequestId=${idInternal}"/>
-		<fr:property name="key(view)" value="label.documentRequestsManagement.viewRequest"/>
+		<fr:property name="linkFormat(view)" value="/documentRequest.do?method=viewDocumentRequest&documentRequestId=${idInternal}"/>
+		<fr:property name="key(view)" value="view"/>
 
-		<fr:property name="linkFormat(edit)" value="/documentRequestsManagement.do?method=prepareEditDocumentRequest&documentRequestId=${idInternal}"/>
-		<fr:property name="key(edit)" value="label.documentRequestsManagement.editRequest"/>
-		<fr:property name="visibleIf(edit)" value="editable"/>
-		
 		<fr:property name="sortBy" value="urgentRequest=desc,creationDate=desc"/>
 	</fr:layout>
 </fr:view>
