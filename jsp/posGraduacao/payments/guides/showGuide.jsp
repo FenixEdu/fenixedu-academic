@@ -4,6 +4,8 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
 
+<logic:present role="MASTER_DEGREE_ADMINISTRATIVE_OFFICE">
+
 <h2><bean:message key="label.masterDegree.administrativeOffice.payments.guide"/></h2>
 <br/>
 <strong><bean:message key="label.masterDegree.administrativeOffice.payments.person"/>:</strong>
@@ -45,3 +47,5 @@
 <logic:empty name="paymentsManagementDTO" property="selectedEntries">
 	<span class="error"><bean:message key="label.masterDegree.administrativeOffice.payments.not.found"/></span>
 </logic:empty>
+
+</logic:present>

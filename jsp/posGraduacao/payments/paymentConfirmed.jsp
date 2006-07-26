@@ -4,6 +4,8 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 
+<logic:present role="MASTER_DEGREE_ADMINISTRATIVE_OFFICE">
+
 <bean:define id="personId" name="person" property="idInternal"/>
 <html:form action="<%="/payments.do?personId=" + personId %>">
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" />
@@ -18,3 +20,5 @@
 	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton" onclick="this.form.method.value='showPaymentsWithoutReceipt';"><bean:message key="button.masterDegree.administrativeOffice.payments.createReceipt"/></html:submit>
 	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton" onclick="this.form.method.value='backToShowOperations';"><bean:message key="button.masterDegree.administrativeOffice.payments.back"/></html:submit>
 </html:form>
+
+</logic:present>

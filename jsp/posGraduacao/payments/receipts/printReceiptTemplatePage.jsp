@@ -5,6 +5,8 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/app.tld" prefix="app" %>
 
+<logic:present role="MASTER_DEGREE_ADMINISTRATIVE_OFFICE">
+
 <html>
 <head>
 <title><bean:message
@@ -191,3 +193,5 @@
 
 </body>
 </html>
+
+</logic:present>

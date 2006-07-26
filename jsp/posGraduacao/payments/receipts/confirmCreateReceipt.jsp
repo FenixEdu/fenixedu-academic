@@ -4,6 +4,8 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
 
+<logic:present role="MASTER_DEGREE_ADMINISTRATIVE_OFFICE">
+
 <h2><bean:message key="label.masterDegree.administrativeOffice.payments.confirmCreateReceipt" /></h2>
 <hr>
 <br/>
@@ -63,3 +65,5 @@
 	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton" onclick="this.form.method.value='createReceipt';"><bean:message key="button.masterDegree.administrativeOffice.payments.createReceipt"/></html:submit>
 	<html:cancel bundle="HTMLALT_RESOURCES" altKey="cancel.cancel" styleClass="inputbutton" onclick="this.form.method.value='backToShowOperations';"><bean:message key="button.masterDegree.administrativeOffice.payments.back"/></html:cancel>
 </fr:form>
+
+</logic:present>
