@@ -3,21 +3,12 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 
-<bean:define id="institutionUrl" type="java.lang.String">
-	<bean:message key="institution.url" bundle="GLOBAL_RESOURCES"/>
-</bean:define>
+<bean:define id="institutionUrl" type="java.lang.String"><bean:message key="institution.url" bundle="GLOBAL_RESOURCES"/></bean:define>
 <div class="breadcumbs">
-	<a href="<%= institutionUrl %>">
-		<bean:message key="institution.name.abbreviation" bundle="GLOBAL_RESOURCES"/>
-	</a>
-	<bean:define id="institutionUrlTeaching" type="java.lang.String">
-		<bean:message key="institution.url" bundle="GLOBAL_RESOURCES"/>
-		<bean:message key="link.institution" bundle="GLOBAL_RESOURCES"/>
-	</bean:define>
+	<a href="<%= institutionUrl %>"><bean:message key="institution.name.abbreviation" bundle="GLOBAL_RESOURCES"/></a>
+	<bean:define id="institutionUrlTeaching" type="java.lang.String"><bean:message key="institution.url" bundle="GLOBAL_RESOURCES"/><bean:message key="link.institution" bundle="GLOBAL_RESOURCES"/></bean:define>
 	&nbsp;&gt;&nbsp;
-	<a href="<%=institutionUrlTeaching%>">
-		<bean:message  bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.education"/>
-	</a>
+	<a href="<%=institutionUrlTeaching%>"><bean:message  bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.education"/></a>
 	<logic:present name="degree">
 		&nbsp;&gt;&nbsp;
 		<bean:write name="degree" property="sigla"/>
@@ -220,10 +211,16 @@
 				<table class="box" cellspacing="0">	
 			</logic:present>
 				<tr>
-					<td class="box_header"><strong><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.additionalInfo"/></strong></td>
+					<td class="box_header">
+						<strong>
+							<bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.additionalInfo"/>
+						</strong>
+					</td>
 				</tr>						
 				<tr>
-					<td class="box_cell"><p><bean:write name="degreeInfo" property="additionalInfo.content" filter="false"/></p></td>						
+					<td class="box_cell">
+						<bean:write name="degreeInfo" property="additionalInfo.content" filter="false"/>
+					</td>						
 				</tr>
 			<logic:empty name="degreeInfo" property="links" >
 				</table>
@@ -238,10 +235,14 @@
 				</logic:empty>
 			</logic:present>
 						<tr>
-							<td class="box_header"><strong><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.links"/></strong></td>
+							<td class="box_header">
+								<strong><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.links"/></strong>
+							</td>
 						</tr>
 						<tr>
-							<td class="box_cell"><p><bean:write name="degreeInfo" property="links.content" filter="false"/></p></td>	
+							<td class="box_cell">
+								<bean:write name="degreeInfo" property="links.content" filter="false"/>
+							</td>	
 						</tr>
 					</table>
 		</logic:notEmpty>
@@ -250,37 +251,37 @@
 	<!-- HISTORY -->
 	<logic:notEmpty name="degreeInfo" property="history" >
 		<h2 class="arrow_bullet"><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.history"/></h2>
-		<p><bean:write name="degreeInfo" property="history.content" filter="false"/></p>
+		<bean:write name="degreeInfo" property="history.content" filter="false"/>
 	</logic:notEmpty>
 
 	<!-- OBJECTIVES -->
 	<logic:notEmpty name="degreeInfo" property="objectives" >
 		<h2 class="arrow_bullet"><bean:message bundle="PUBLIC_DEGREE_INFORMATION"  key="public.degree.information.label.objectives"/></h2>
-	 	<p><bean:write name="degreeInfo" property="objectives.content" filter="false"/></p>
+	 	<bean:write name="degreeInfo" property="objectives.content" filter="false"/>
 	</logic:notEmpty>
 				  
 	<!-- DESIGNED FOR -->
 	<logic:notEmpty name="degreeInfo" property="designedFor" >
 		<h2 class="arrow_bullet"><bean:message bundle="PUBLIC_DEGREE_INFORMATION"  key="public.degree.information.label.designedFor"/></h2>
-	 	<p><bean:write name="degreeInfo" property="designedFor.content" filter="false"/></p>
+	 	<bean:write name="degreeInfo" property="designedFor.content" filter="false"/>
 	</logic:notEmpty>
 				  
 	<!-- PROFESSIONAL EXITS -->
 	<logic:notEmpty name="degreeInfo" property="professionalExits" >
 		<h2 class="arrow_bullet"><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.professionalExits"/></h2>
-		<p><bean:write name="degreeInfo" property="professionalExits.content" filter="false"/></p>  
+		<bean:write name="degreeInfo" property="professionalExits.content" filter="false"/>
 	</logic:notEmpty>
 
 	<!-- OPERATIONAL REGIME -->
 	<logic:notEmpty name="degreeInfo" property="operationalRegime" >
 		<h2 class="arrow_bullet"><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.operationalRegime"/></h2>
-		<p><bean:write name="degreeInfo" property="operationalRegime.content" filter="false"/></p>  
+		<bean:write name="degreeInfo" property="operationalRegime.content" filter="false"/>
 	</logic:notEmpty>
 
 	<!-- GRATUITY -->
 	<logic:notEmpty name="degreeInfo" property="gratuity" >
 		<h2 class="arrow_bullet"><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.gratuity"/></h2>
-		<p><bean:write name="degreeInfo" property="gratuity.content" filter="false"/></p>  
+		<bean:write name="degreeInfo" property="gratuity.content" filter="false"/>
 	</logic:notEmpty>
 
 	<logic:empty name="degreeInfo" property="description">
