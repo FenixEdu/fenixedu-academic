@@ -1315,7 +1315,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     }
 
     public Collection<DocumentRequest> getDocumentRequests() {
-        Set<DocumentRequest> result = new TreeSet<DocumentRequest>();
+        Set<DocumentRequest> result = new HashSet<DocumentRequest>();
         
         for (final AcademicServiceRequest academicServiceRequest : getAcademicServiceRequestsSet()) {
             if (academicServiceRequest instanceof DocumentRequest) {

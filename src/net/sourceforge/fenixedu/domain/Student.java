@@ -579,7 +579,7 @@ public class Student extends Student_Base {
     }
 
     public Collection<DocumentRequest> getDocumentRequests() {
-        final Set<DocumentRequest> result = new TreeSet<DocumentRequest>();
+        final Set<DocumentRequest> result = new HashSet<DocumentRequest>();
         
         for (final StudentCurricularPlan studentCurricularPlan : getStudentCurricularPlansSet()) {
             result.addAll(studentCurricularPlan.getDocumentRequests());
