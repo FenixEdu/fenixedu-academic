@@ -121,10 +121,12 @@ public class EMailAddress {
 	}
 
 	public void setAddress(String address) {
-		String[] components = address.split("@");
-		this.user = components[0];
-		if (components.length == 2) {
-			this.domain = components[1];
-		}
+        if (address != null) {
+            String[] components = address.split("@");
+            this.user = components[0];
+            if (components.length == 2) {
+                this.domain = components[1];
+            }
+        }
 	}
 }
