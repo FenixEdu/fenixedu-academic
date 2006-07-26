@@ -48,21 +48,7 @@ public class EditBlueprintVersion extends Service {
                 new RoleGroup(Role.getRoleByRoleType(RoleType.SPACE_MANAGER)));
 
         
-        blueprint.setBlueprintFile(blueprintFile);        
-        
-//        BlueprintFile file = new BlueprintFile();       
-//        file.setFilename("fdfsdf");        
-//        file.setDisplayName("dfsdf");
-//        file.setMimeType("dsfdsfds");
-//        file.setChecksum("dsfdsfgsdf");
-//        file.setChecksumAlgorithm("fdadsfds");
-//        file.setSize(1);
-//        file.setExternalStorageIdentification("asfdsfdsfs" + System.currentTimeMillis());
-//        file.setPermittedGroup(new RoleGroup(Role.getRoleByRoleType(RoleType.SPACE_MANAGER)));
-//        file.setUploadTime(new DateTime());
-//        
-//        blueprint.setBlueprintFile(file);
-        
+        blueprint.setBlueprintFile(blueprintFile);                
         return blueprint;
     }
     

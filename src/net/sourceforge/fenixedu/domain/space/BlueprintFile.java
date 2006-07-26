@@ -10,7 +10,7 @@ public class BlueprintFile extends BlueprintFile_Base {
         BlueprintBlueprintFile.addListener(new BlueprintBlueprintFileListener());
     }
 
-    public BlueprintFile() {
+    private BlueprintFile() {
         super();
     }
     
