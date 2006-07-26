@@ -5,7 +5,6 @@ import java.text.Collator;
 import java.util.Comparator;
 
 import net.sourceforge.fenixedu.domain.DomainReference;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
 
 import org.apache.commons.beanutils.BeanComparator;

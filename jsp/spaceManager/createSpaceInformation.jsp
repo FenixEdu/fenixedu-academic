@@ -11,9 +11,10 @@
 	<br/>
 	<br/>
 
-	<H2><bean:message bundle="SPACE_RESOURCES" key="link.edit.space"/></H2>
-	<br/>
-	<H3><bean:message bundle="SPACE_RESOURCES" key="link.edit.space.create.new.version"/></H3>
+	<H2><bean:message bundle="SPACE_RESOURCES" key="link.edit.space"/></H2>	
+	<ul>
+  		<li><H3><bean:message bundle="SPACE_RESOURCES" key="link.create.space.information"/></H3></li>  
+	</ul>
 	<br/>
 	
 	<logic:equal name="SpaceFactoryEditor" property="space.class.name" value="net.sourceforge.fenixedu.domain.space.Campus">

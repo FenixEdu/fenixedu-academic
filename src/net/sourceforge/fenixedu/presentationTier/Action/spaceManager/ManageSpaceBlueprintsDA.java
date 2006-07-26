@@ -131,6 +131,10 @@ public class ManageSpaceBlueprintsDA extends FenixDispatchAction {
 
         } catch (DomainException ex) {
             saveActionMessageOnRequest(request, ex.getKey(), ex.getArgs());
+            blueprint = spaceInformation.getSpace().getMostRecentBlueprint();
+        } catch (FileManagerException ex) {
+            saveActionMessageOnRequest(request, ex.getKey(), ex.getArgs());
+            blueprint = spaceInformation.getSpace().getMostRecentBlueprint();
         }
         
         setBlueprint(request, spaceInformation.getSpace().getMostRecentBlueprint());

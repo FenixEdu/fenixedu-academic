@@ -11,11 +11,12 @@
 	<br/>
 	<br/>
 
-	<H2><bean:message bundle="SPACE_RESOURCES" key="link.edit.space"/></H2>
+	<H2><bean:message bundle="SPACE_RESOURCES" key="link.edit.space"/></H2>	
+	<ul>
+  		<li><H3><bean:message bundle="SPACE_RESOURCES" key="link.edit.space.information"/></H3></li>  
+	</ul>
 	<br/>
-	<H3><bean:message bundle="SPACE_RESOURCES" key="link.edit.space.edit.version"/></H3>
-	<br/>
-
+	
 	<bean:define id="url" type="java.lang.String">/manageSpaces.do?method=manageSpace&page=0&spaceInformationID=<bean:write name="selectedSpaceInformation" property="idInternal"/></bean:define>
 
 	<logic:equal name="selectedSpaceInformation" property="space.class.name" value="net.sourceforge.fenixedu.domain.space.Campus">

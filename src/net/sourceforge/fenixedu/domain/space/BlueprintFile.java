@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.domain.space;
 
 import net.sourceforge.fenixedu.domain.accessControl.Group;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import pt.utl.ist.fenix.tools.file.FileManagerFactory;
 import pt.utl.ist.fenix.tools.file.IFileManager;
 
@@ -14,16 +15,20 @@ public class BlueprintFile extends BlueprintFile_Base {
         super();
     }
     
-    public BlueprintFile(String filename, String displayName, String mimeType, String checksum,
+    public BlueprintFile(Blueprint blueprint, String filename, String displayName, String mimeType, String checksum,
             String checksumAlgorithm, Integer size, String externalStorageIdentification,
             Group permittedGroup) {
         
         this();
+        if(blueprint == null) {
+            throw new DomainException("error.blueprintFile.no.blueprint");
+        }
+        setBlueprint(blueprint);
         init(filename, displayName, mimeType, checksum, checksumAlgorithm, size,
                 externalStorageIdentification, permittedGroup);
     }
 
-    public void delete() {
+    private void delete() {
         removeBlueprint();        
         removeRootDomainObject();
         deleteDomainObject();

@@ -20,38 +20,38 @@ import pt.utl.ist.fenix.tools.file.Node;
 
 public class EditBlueprintVersion extends Service {
 
-    public Blueprint run(Blueprint blueprint, CreateBlueprintSubmissionBean blueprintSubmissionBean) throws FenixServiceException {
-        
+    public Blueprint run(Blueprint blueprint, CreateBlueprintSubmissionBean blueprintSubmissionBean)
+            throws FenixServiceException {
+
         blueprint.removeBlueprintFile();
-        
-        String filename = blueprintSubmissionBean.getSpaceInformation().getIdInternal() + String.valueOf(System.currentTimeMillis());
+
+        String filename = blueprintSubmissionBean.getSpaceInformation().getIdInternal()
+                + String.valueOf(System.currentTimeMillis());
         String displayName = blueprintSubmissionBean.getFilename();
-        
+
         SpaceInformation spaceInformation = blueprintSubmissionBean.getSpaceInformation();
         Space space = spaceInformation.getSpace();
-        
-        if(space == null) {
+
+        if (space == null) {
             throw new FenixServiceException("error.blueprint.submission.no.space");
         }
 
         Person person = AccessControl.getUserView().getPerson();
-        
+
         final FileMetadata fileMetadata = new FileMetadata(filename, person.getName());
 
         final FileDescriptor fileDescriptor = FileManagerFactory.getFileManager().saveFile(
                 getFilePath(space.getMostRecentSpaceInformation()), filename, true, fileMetadata,
                 blueprintSubmissionBean.getInputStream());
 
-        BlueprintFile blueprintFile = new BlueprintFile(filename, displayName,
-                fileDescriptor.getMimeType(), fileDescriptor.getChecksum(), fileDescriptor
-                        .getChecksumAlgorithm(), fileDescriptor.getSize(), fileDescriptor.getUniqueId(),
-                new RoleGroup(Role.getRoleByRoleType(RoleType.SPACE_MANAGER)));
+        new BlueprintFile(blueprint, filename, displayName, fileDescriptor.getMimeType(), fileDescriptor
+                .getChecksum(), fileDescriptor.getChecksumAlgorithm(), fileDescriptor.getSize(),
+                fileDescriptor.getUniqueId(), new RoleGroup(Role
+                        .getRoleByRoleType(RoleType.SPACE_MANAGER)));
 
-        
-        blueprint.setBlueprintFile(blueprintFile);                
         return blueprint;
     }
-    
+
     private FilePath getFilePath(SpaceInformation spaceInformation) {
         final FilePath filePath = new FilePath();
         filePath.addNode(new Node("Spaces", "Spaces"));

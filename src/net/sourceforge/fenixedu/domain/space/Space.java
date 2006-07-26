@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.domain.space;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
@@ -27,7 +28,7 @@ public abstract class Space extends Space_Base {
     public SpaceInformation getSpaceInformation() {
         return getSpaceInformation(null);
     }
-    
+
     public SpaceInformation getSpaceInformation(final YearMonthDay when) {
         SpaceInformation selectedSpaceInformation = null;
 
@@ -53,88 +54,105 @@ public abstract class Space extends Space_Base {
     }
 
     public SortedSet<SpaceInformation> getOrderedSpaceInformations() {
-    	final TreeSet<SpaceInformation> spaceInformations = new TreeSet<SpaceInformation>(getSpaceInformations());
-    	YearMonthDay previousValidUntil = getCreatedOn();
-    	for (final SpaceInformation spaceInformation : spaceInformations) {
-    		spaceInformation.setValidFrom(previousValidUntil);
-    		previousValidUntil = spaceInformation.getValidUntil();
-    	}
-    	return spaceInformations;
+        final TreeSet<SpaceInformation> spaceInformations = new TreeSet<SpaceInformation>(
+                getSpaceInformations());
+        YearMonthDay previousValidUntil = getCreatedOn();
+        for (final SpaceInformation spaceInformation : spaceInformations) {
+            spaceInformation.setValidFrom(previousValidUntil);
+            previousValidUntil = spaceInformation.getValidUntil();
+        }
+        return spaceInformations;
     }
-    
-    public SortedSet<Blueprint> getOrderedBlueprints() {               
+
+    public SortedSet<Blueprint> getOrderedBlueprints() {
         return new TreeSet<Blueprint>(getBlueprints());
     }
-    
-    public SortedSet<PersonSpaceOccupation> getActivePersonSpaceOccupations(){
-        SortedSet<PersonSpaceOccupation> personSpaceOccupations = new TreeSet<PersonSpaceOccupation>(PersonSpaceOccupation.COMPARATOR_BY_PERSON_NAME_AND_OCCUPATION_INTERVAL);
-        YearMonthDay current = new YearMonthDay();
+
+    public List<PersonSpaceOccupation> getPersonSpaceOccupations() {
+        List<PersonSpaceOccupation> personSpaceOccupations = new ArrayList<PersonSpaceOccupation>();
         for (SpaceOccupation spaceOccupation : getSpaceOccupations()) {
-            if(spaceOccupation instanceof PersonSpaceOccupation && ((PersonSpaceOccupation)spaceOccupation).contains(current)) {
-                personSpaceOccupations.add((PersonSpaceOccupation)spaceOccupation);
+            if (spaceOccupation instanceof PersonSpaceOccupation) {
+                personSpaceOccupations.add((PersonSpaceOccupation) spaceOccupation);
             }
-        }        
+        }
         return personSpaceOccupations;
     }
-    
-    public SortedSet<PersonSpaceOccupation> getInactivePersonSpaceOccupations(){
-        SortedSet<PersonSpaceOccupation> personSpaceOccupations = new TreeSet<PersonSpaceOccupation>(PersonSpaceOccupation.COMPARATOR_BY_PERSON_NAME_AND_OCCUPATION_INTERVAL);
+
+    public SortedSet<PersonSpaceOccupation> getActivePersonSpaceOccupations() {
+        SortedSet<PersonSpaceOccupation> personSpaceOccupations = new TreeSet<PersonSpaceOccupation>(
+                PersonSpaceOccupation.COMPARATOR_BY_PERSON_NAME_AND_OCCUPATION_INTERVAL);
         YearMonthDay current = new YearMonthDay();
-        for (SpaceOccupation spaceOccupation : getSpaceOccupations()) {
-            if(spaceOccupation instanceof PersonSpaceOccupation && !((PersonSpaceOccupation)spaceOccupation).contains(current)) {
-                personSpaceOccupations.add((PersonSpaceOccupation)spaceOccupation);
+        for (PersonSpaceOccupation personSpaceOccupation : getPersonSpaceOccupations()) {
+            if (personSpaceOccupation.contains(current)) {
+                personSpaceOccupations.add(personSpaceOccupation);
             }
-        }  
+        }
         return personSpaceOccupations;
     }
-    
-    public SortedSet<SpaceResponsibility> getActiveSpaceResponsibility(){
-        SortedSet<SpaceResponsibility> spaceResponsibility = new TreeSet<SpaceResponsibility>(SpaceResponsibility.COMPARATOR_BY_UNIT_NAME_AND_RESPONSIBILITY_INTERVAL);
+
+    public SortedSet<PersonSpaceOccupation> getInactivePersonSpaceOccupations() {
+        SortedSet<PersonSpaceOccupation> personSpaceOccupations = new TreeSet<PersonSpaceOccupation>(
+                PersonSpaceOccupation.COMPARATOR_BY_PERSON_NAME_AND_OCCUPATION_INTERVAL);
+        YearMonthDay current = new YearMonthDay();
+        for (PersonSpaceOccupation personSpaceOccupation : getPersonSpaceOccupations()) {
+            if (!personSpaceOccupation.contains(current)) {
+                personSpaceOccupations.add(personSpaceOccupation);
+            }
+        }
+        return personSpaceOccupations;
+    }
+
+    public SortedSet<SpaceResponsibility> getActiveSpaceResponsibility() {
+        SortedSet<SpaceResponsibility> spaceResponsibility = new TreeSet<SpaceResponsibility>(
+                SpaceResponsibility.COMPARATOR_BY_UNIT_NAME_AND_RESPONSIBILITY_INTERVAL);
         YearMonthDay current = new YearMonthDay();
         for (SpaceResponsibility responsibility : getSpaceResponsibilitySet()) {
-            if(responsibility.isActive(current)) {
+            if (responsibility.isActive(current)) {
                 spaceResponsibility.add(responsibility);
             }
-        }        
+        }
         return spaceResponsibility;
     }
-    
-    public SortedSet<SpaceResponsibility> getInactiveSpaceResponsibility(){
-        SortedSet<SpaceResponsibility> spaceResponsibility = new TreeSet<SpaceResponsibility>(SpaceResponsibility.COMPARATOR_BY_UNIT_NAME_AND_RESPONSIBILITY_INTERVAL);
+
+    public SortedSet<SpaceResponsibility> getInactiveSpaceResponsibility() {
+        SortedSet<SpaceResponsibility> spaceResponsibility = new TreeSet<SpaceResponsibility>(
+                SpaceResponsibility.COMPARATOR_BY_UNIT_NAME_AND_RESPONSIBILITY_INTERVAL);
         YearMonthDay current = new YearMonthDay();
         for (SpaceResponsibility responsibility : getSpaceResponsibilitySet()) {
-            if(!responsibility.isActive(current)) {
+            if (!responsibility.isActive(current)) {
                 spaceResponsibility.add(responsibility);
             }
-        }        
+        }
         return spaceResponsibility;
     }
-    
+
     public void delete() {
-        for (final List<Space> containedSpaces = getContainedSpaces();
-                !containedSpaces.isEmpty(); containedSpaces.get(0).delete());
+        for ( ; !getContainedSpaces().isEmpty(); getContainedSpaces().get(0).delete());
+        for ( ; !getPersonSpaceOccupations().isEmpty(); getPersonSpaceOccupations().get(0).delete());
+        for ( ; !getBlueprints().isEmpty(); getBlueprints().get(0).delete());
         for (final SpaceInformation spaceInformation : getSpaceInformations()) {
             spaceInformation.deleteMaintainingReferenceToSpace();
-        }
+        }                    
         setSuroundingSpace(null);
         removeRootDomainObject();
         deleteDomainObject();
-    }   
-    
+    }
+
     public SpaceInformation getMostRecentSpaceInformation() {
         final List<SpaceInformation> spaceInformations = getSpaceInformations();
         SpaceInformation selectedSpaceInformation = null;
         for (final SpaceInformation spaceInformation : spaceInformations) {
             final YearMonthDay validUntil = spaceInformation.getValidUntil();
 
-            if (selectedSpaceInformation == null || validUntil.isAfter(selectedSpaceInformation.getValidUntil())) {
+            if (selectedSpaceInformation == null
+                    || validUntil.isAfter(selectedSpaceInformation.getValidUntil())) {
                 selectedSpaceInformation = spaceInformation;
             }
         }
         return selectedSpaceInformation;
     }
-    
-    public Blueprint getMostRecentBlueprint(){
+
+    public Blueprint getMostRecentBlueprint() {
         SortedSet<Blueprint> orderedBlueprints = getOrderedBlueprints();
         return (!orderedBlueprints.isEmpty()) ? orderedBlueprints.last() : null;
     }
@@ -143,16 +161,16 @@ public abstract class Space extends Space_Base {
 
         @Override
         public void beforeAdd(Space space, SpaceInformation spaceInformation) {
-        	if (space != null) {
-        		final YearMonthDay validUntil = new YearMonthDay();
-        		for (final SpaceInformation otherSpaceInformation : space.getSpaceInformations()) {
-        			final YearMonthDay otherValidUntil = otherSpaceInformation.getValidUntil();
-        			if (otherValidUntil == null) {
-        				otherSpaceInformation.setValidUntil(validUntil);
-        			} else if (otherSpaceInformation.getValidUntil().equals(validUntil)) {
-        				throw new DomainException("error.existing.space.information.for.current.day");
-        			}
-        		}
+            if (space != null) {
+                final YearMonthDay validUntil = new YearMonthDay();
+                for (final SpaceInformation otherSpaceInformation : space.getSpaceInformations()) {
+                    final YearMonthDay otherValidUntil = otherSpaceInformation.getValidUntil();
+                    if (otherValidUntil == null) {
+                        otherSpaceInformation.setValidUntil(validUntil);
+                    } else if (otherSpaceInformation.getValidUntil().equals(validUntil)) {
+                        throw new DomainException("error.existing.space.information.for.current.day");
+                    }
+                }
             }
         }
 
@@ -160,13 +178,14 @@ public abstract class Space extends Space_Base {
         public void afterRemove(Space space, SpaceInformation spaceInformation) {
             if (space != null) {
                 if (spaceInformation.getValidUntil() == null) {
-                    final SpaceInformation nextMostRecentSpaceInformation = space.getMostRecentSpaceInformation();
+                    final SpaceInformation nextMostRecentSpaceInformation = space
+                            .getMostRecentSpaceInformation();
                     if (nextMostRecentSpaceInformation != null) {
                         nextMostRecentSpaceInformation.setValidUntil(null);
                     }
                 }
             }
-        }       
+        }
 
     }
 

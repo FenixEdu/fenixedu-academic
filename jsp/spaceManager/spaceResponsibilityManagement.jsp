@@ -43,6 +43,12 @@
 	</logic:messagesPresent>
 
 	<h3><bean:message key="label.active.responsible.units" bundle="SPACE_RESOURCES"/>:</h3>
+	<bean:size id="activeSize" name="selectedSpaceInformation" property="space.activeSpaceResponsibility"/>
+	<logic:equal name="activeSize" value="0">
+		<span class="error">
+			<bean:message key="label.space.no.current.responsible.units" bundle="SPACE_RESOURCES"/>
+		</span>	
+	</logic:equal>
 	<fr:view schema="ViewSpaceResponsibleUnitsWithInterval" name="selectedSpaceInformation" property="space.activeSpaceResponsibility">
 		<fr:layout name="tabular">      			
    			<fr:property name="rowClasses" value="listClasses"/>	
@@ -66,6 +72,12 @@
 	<bean:write name="unitsList" filter="false"/>	
 	
 	<h3><bean:message key="label.other.responsible.units" bundle="SPACE_RESOURCES"/>:</h3>
+	<bean:size id="inactiveSize" name="selectedSpaceInformation" property="space.inactiveSpaceResponsibility"/>
+	<logic:equal name="inactiveSize" value="0">
+		<span class="error">
+			<bean:message key="label.space.no.other.responsible.units" bundle="SPACE_RESOURCES"/>
+		</span>	
+	</logic:equal>
 	<fr:view schema="ViewSpaceResponsibleUnitsWithInterval" name="selectedSpaceInformation" property="space.inactiveSpaceResponsibility">
 		<fr:layout name="tabular">      			
    			<fr:property name="rowClasses" value="listClasses"/>	

@@ -16,68 +16,76 @@ public class Blueprint extends Blueprint_Base implements Comparable<Blueprint> {
         super();
         setRootDomainObject(RootDomainObject.getInstance());
     }
-    
-    public Blueprint(Space space, BlueprintFile blueprintFile, Person person) {
+
+    public Blueprint(Space space, Person person) {
         this();
-        checkParameters(space, blueprintFile, person);
+        checkParameters(space, person);
+        checkNewBluePrintDates(space);
         closeCurrentSpaceBlueprint(space);
         setSpace(space);
-        setBlueprintFile(blueprintFile);
-        setCreationPerson(person);        
-        super.setValidFrom(new YearMonthDay());        
+        setCreationPerson(person);
+        super.setValidFrom(new YearMonthDay());
     }
-    
+
     public void delete() {
         Space space = getSpace();
-        refreshBlueprintsDates(space);        
-        removeSpace();               
-        removeCreationPerson();                  
+        refreshBlueprintsDates(space);
+        removeSpace();
+        removeCreationPerson();
         removeBlueprintFile();
         removeRootDomainObject();
         openCurrentSpaceBlueprint(space);
-        deleteDomainObject();        
+        deleteDomainObject();
+    }
+
+    public void deleteWithoutUpdateRemainingBlueprintDates() {
+        removeSpace();
+        removeCreationPerson();
+        removeBlueprintFile();
+        removeRootDomainObject();
+        deleteDomainObject();
     }
 
     private void refreshBlueprintsDates(Space space) {
-        SortedSet<Blueprint> blueprints = new TreeSet<Blueprint>(space.getBlueprints());                
-        if(!blueprints.isEmpty() && blueprints.last() != this) {
-            for (Iterator<Blueprint> iter = blueprints.iterator(); iter.hasNext(); ) {
+        SortedSet<Blueprint> blueprints = new TreeSet<Blueprint>(space.getBlueprints());
+        if (!blueprints.isEmpty() && blueprints.last() != this) {
+            for (Iterator<Blueprint> iter = blueprints.iterator(); iter.hasNext();) {
                 Blueprint blueprint = iter.next();
-                if(blueprint == this) {
+                if (blueprint == this) {
                     Blueprint nextBlueprint = iter.next();
                     nextBlueprint.updateValidFromDate(blueprint.getValidFrom());
                     break;
-                }                
+                }
             }
-        } 
+        }
     }
 
     private void closeCurrentSpaceBlueprint(Space space) {
         SortedSet<Blueprint> blueprints = new TreeSet<Blueprint>(space.getBlueprints());
-        if(!blueprints.isEmpty()) {
+        if (!blueprints.isEmpty()) {
             blueprints.last().closeBlueprint();
         }
-    } 
-    
+    }
+
     private void openCurrentSpaceBlueprint(Space space) {
         SortedSet<Blueprint> blueprints = new TreeSet<Blueprint>(space.getBlueprints());
-        if(!blueprints.isEmpty()) {
+        if (!blueprints.isEmpty()) {
             blueprints.last().openBlueprint();
         }
-    } 
-    
-    private void openBlueprint(){
+    }
+
+    private void openBlueprint() {
         super.setValidUntil(null);
     }
-    
+
     private void closeBlueprint() {
         super.setValidUntil(new YearMonthDay());
     }
-    
+
     private void updateValidFromDate(YearMonthDay yearMonthDay) {
-        super.setValidFrom(yearMonthDay);        
+        super.setValidFrom(yearMonthDay);
     }
-    
+
     @Override
     public void setValidFrom(YearMonthDay validFrom) {
         throw new DomainException("error.blueprint.invalid.validFrom.date");
@@ -88,16 +96,21 @@ public class Blueprint extends Blueprint_Base implements Comparable<Blueprint> {
         throw new DomainException("error.blueprint.invalid.validUntil.date");
     }
 
-    private void checkParameters(Space space, BlueprintFile blueprintFile, Person person) {
-       if(space == null) {
-           throw new DomainException("error.blueprint.no.space");
-       }
-       if(blueprintFile == null) {
-           throw new DomainException("error.blueprint.no.blueprintFile");
-       } 
-       if(person == null) {
-           throw new DomainException("error.blueprint.no.person");
-       } 
+    private void checkParameters(Space space, Person person) {
+        if (space == null) {
+            throw new DomainException("error.blueprint.no.space");
+        }
+        if (person == null) {
+            throw new DomainException("error.blueprint.no.person");
+        }
+    }
+
+    private void checkNewBluePrintDates(Space space) {
+        Blueprint mostRecentBlueprint = space.getMostRecentBlueprint();
+        if (mostRecentBlueprint != null
+                && mostRecentBlueprint.getValidFrom().isEqual(new YearMonthDay())) {
+            throw new DomainException("error.blueprint.validFrom.date.already.exists");
+        }
     }
 
     public int compareTo(Blueprint blueprint) {
@@ -107,6 +120,6 @@ public class Blueprint extends Blueprint_Base implements Comparable<Blueprint> {
             return -1;
         } else {
             return getValidUntil().compareTo(blueprint.getValidUntil());
-        }        
-    }    
+        }
+    }
 }

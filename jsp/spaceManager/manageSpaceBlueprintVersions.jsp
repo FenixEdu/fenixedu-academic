@@ -21,7 +21,8 @@
 			</html:messages>
 		</span>
 	</logic:messagesPresent>
-
+	<br/>
+	
 	<logic:notEmpty name="selectedSpaceBlueprint">					
 		<bean:define id="selectedSpaceBlueprintId" name="selectedSpaceBlueprint" property="idInternal" />
 		<logic:iterate id="blueprint" name="selectedSpaceInformation" property="space.orderedBlueprints">
@@ -58,7 +59,7 @@
 		<html:link page="<%= deleteLink %>">
 			<bean:message key="link.delete.space.information" bundle="SPACE_RESOURCES"/>
 		</html:link>&nbsp;											
-		
+				
 	</logic:notEmpty>
 	
 	<html:link page="/manageBlueprints.do?method=prepareCreateBlueprintVersion&page=0" paramId="spaceInformationID" paramName="selectedSpaceInformation" paramProperty="idInternal">

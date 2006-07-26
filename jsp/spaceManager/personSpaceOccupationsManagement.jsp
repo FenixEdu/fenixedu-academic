@@ -25,6 +25,12 @@
 	</logic:messagesPresent>
 	
 	<h3><bean:message key="label.active.occupations" bundle="SPACE_RESOURCES"/>:</h3>
+	<bean:size id="activeSize" name="selectedSpaceInformation" property="space.activePersonSpaceOccupations"/>
+	<logic:equal name="activeSize" value="0">
+		<span class="error">
+			<bean:message key="label.space.no.current.personOccupations" bundle="SPACE_RESOURCES"/>
+		</span>	
+	</logic:equal>
 	<fr:view schema="PersonSpaceOccupations" name="selectedSpaceInformation" property="space.activePersonSpaceOccupations">
 		<fr:layout name="tabular">      			
    			<fr:property name="rowClasses" value="listClasses"/>	
@@ -63,6 +69,12 @@
 	<br/>
 		
 	<h3><bean:message key="label.inactive.occupations" bundle="SPACE_RESOURCES"/>:</h3>
+	<bean:size id="inactiveSize" name="selectedSpaceInformation" property="space.inactivePersonSpaceOccupations"/>
+	<logic:equal name="inactiveSize" value="0">
+		<span class="error">
+			<bean:message key="label.space.no.other.personOccupations" bundle="SPACE_RESOURCES"/>
+		</span>	
+	</logic:equal>
 	<fr:view schema="PersonSpaceOccupations" name="selectedSpaceInformation" property="space.inactivePersonSpaceOccupations">
 		<fr:layout name="tabular">      			
    			<fr:property name="rowClasses" value="listClasses"/>	
