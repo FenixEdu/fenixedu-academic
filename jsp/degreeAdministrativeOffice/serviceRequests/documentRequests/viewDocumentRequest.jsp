@@ -20,7 +20,7 @@
 </logic:messagesPresent>
 
 
-<strong><bean:message  key="label.documentRequestManagement.documentRequestInformation"/></strong>
+<strong><bean:message  key="label.documentRequestsManagement.documentRequestInformation"/></strong>
 <bean:define id="simpleClassName" name="documentRequest" property="class.simpleName" />
 <fr:view name="documentRequest" schema="<%= simpleClassName  + ".view"%>">
 	<fr:layout name="tabular">
@@ -31,7 +31,7 @@
 
 <br/><br/>
 
-<strong><bean:message  key="label.documentRequestManagement.documentRequestSituation"/></strong>
+<strong><bean:message  key="label.documentRequestsManagement.documentRequestSituation"/></strong>
 <fr:view name="documentRequest" property="activeSituation" schema="AcademicServiceRequestSituation.view">
 	<fr:layout name="tabular">
 		<fr:property name="classes" value="tstyle4" />

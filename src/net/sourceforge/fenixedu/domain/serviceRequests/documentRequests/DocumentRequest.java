@@ -12,6 +12,7 @@ public abstract class DocumentRequest extends DocumentRequest_Base {
 
     protected DocumentRequest() {
         super();
+        super.setNumberOfPages(0);
     }
 
     public DocumentRequest(StudentCurricularPlan studentCurricularPlan,

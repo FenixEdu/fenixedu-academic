@@ -56,7 +56,7 @@
 <fr:form action='<%= "/payments.do?personId=" + personId %>'>
 
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" name="paymentsForm" property="method" />
-	<fr:edit id="createReceiptBean" name="createReceiptBean" visible="false" />
+	<fr:edit id="createReceiptBeanConfirm" name="createReceiptBean" visible="false" />
 	
 	<span class="warning0"><bean:message key="label.masterDegree.administrativeOffice.payments.confirmCreateReceiptQuestion"/></span>
 	<br/><br/>

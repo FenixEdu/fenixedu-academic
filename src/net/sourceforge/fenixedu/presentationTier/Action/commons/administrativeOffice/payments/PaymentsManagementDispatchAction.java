@@ -211,7 +211,7 @@ public abstract class PaymentsManagementDispatchAction extends FenixDispatchActi
             FenixServiceException {
 
         final CreateReceiptBean createReceiptBean = (CreateReceiptBean) RenderUtils.getViewState(
-                "createReceiptBean").getMetaObject().getObject();
+                "createReceiptBeanConfirm").getMetaObject().getObject();
 
         try {
             final Receipt receipt = (Receipt) ServiceUtils.executeService(getUserView(request),

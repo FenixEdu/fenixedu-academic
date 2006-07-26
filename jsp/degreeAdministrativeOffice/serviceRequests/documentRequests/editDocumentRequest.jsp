@@ -19,7 +19,7 @@
 	<br />
 </logic:messagesPresent>
 
-<strong><bean:message  key="label.documentRequestManagement.documentRequestInformation"/></strong>
+<strong><bean:message  key="label.documentRequestsManagement.documentRequestInformation"/></strong>
 <bean:define id="documentRequest" name="documentRequestEditBean" property="documentRequest"/>
 <bean:define id="simpleClassName" name="documentRequest" property="class.simpleName" />
 <fr:view name="documentRequestEditBean" property="documentRequest" schema="<%= simpleClassName  + ".view"%>">
@@ -43,7 +43,7 @@
 </fr:edit>
 </logic:equal>
 <logic:notEqual name="documentRequest" property="editable" value="true">
-	<strong><bean:message  key="label.documentRequestManagement.documentRequestSituation"/></strong>
+	<strong><bean:message  key="label.documentRequestsManagement.documentRequestSituation"/></strong>
 	<fr:view name="documentRequest" property="activeSituation" schema="AcademicServiceRequestSituation.view">
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle4" />
