@@ -31,7 +31,7 @@ public class SchoolRegistrationCertificateRequest extends SchoolRegistrationCert
 			String otherDocumentPurposeTypeDescription, Boolean urgentRequest,
 			ExecutionYear executionYear) {
 
-		init(studentCurricularPlan, administrativeOffice, DocumentRequestType.ENROLMENT_CERTIFICATE,
+		init(studentCurricularPlan, administrativeOffice, DocumentRequestType.SCHOOL_REGISTRATION_CERTIFICATE,
 				documentPurposeType, otherDocumentPurposeTypeDescription, urgentRequest);
 
 		checkParameters(executionYear);
@@ -60,8 +60,8 @@ public class SchoolRegistrationCertificateRequest extends SchoolRegistrationCert
 
 		super.internalChangeState(academicServiceRequestSituationType, employee);
 
-		if (academicServiceRequestSituationType == AcademicServiceRequestSituationType.CONCLUDED) {
-
+		if (academicServiceRequestSituationType == AcademicServiceRequestSituationType.CONCLUDED
+				&& !isFirstRequestFromExecutionYear()) {
 			new CertificateRequestEvent(getAdministrativeOffice(),
 					EventType.SCHOOL_REGISTRATION_CERTIFICATE_REQUEST, getStudent().getPerson(), this);
 		}
