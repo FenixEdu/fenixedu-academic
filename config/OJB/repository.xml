@@ -158,7 +158,6 @@
 	&projectsManagement;
 	&cms;
 	&contract;
-	&person_function;
 	&teacherServiceExemption;
 	&cmsWebsite;
 	&teacherServiceExemption;
@@ -182,6 +181,8 @@
 	&cron;
 	&accounting;
 	&candidacy;
+	&administrativeOffice;
+	&serviceRequests;
     &functionalities;
     
 </descriptor-repository>
