@@ -108,8 +108,7 @@ public class AdministrativeOffice extends AdministrativeOffice_Base {
         return result;
     }
 
-    public List<AcademicServiceRequest> getNewAcademicServiceRequests(
-            AdministrativeOffice administrativeOffice) {
+    public List<AcademicServiceRequest> getNewAcademicServiceRequests() {
     	
         final List<AcademicServiceRequest> result = new ArrayList<AcademicServiceRequest>();
         for (final AcademicServiceRequest academicServiceRequest : getAcademicServiceRequests()) {
