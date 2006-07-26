@@ -195,7 +195,7 @@ public class Assiduousness extends Assiduousness_Base {
                     && (assiduousnessRecord.getAnulation() == null || assiduousnessRecord.getAnulation()
                             .getState() == AnulationState.INVALID)) {
                 Interval leaveInterval = new Interval(assiduousnessRecord.getDate(),
-                        ((Leave) assiduousnessRecord).getEndDate());
+                        ((Leave) assiduousnessRecord).getEndDate().plusDays(1));
                 if (leaveInterval.overlaps(interval)) {
                     leavesList.add((Leave) assiduousnessRecord);
                 }
