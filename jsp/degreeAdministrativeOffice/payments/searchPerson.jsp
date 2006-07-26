@@ -5,6 +5,8 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 <%@ taglib uri="/WEB-INF/enum.tld" prefix="e"%>
 
+<logic:present role="DEGREE_ADMINISTRATIVE_OFFICE">
+
 <html:form action="/payments.do">
 
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" />
@@ -110,3 +112,5 @@
 	</table>
 
 </html:form>
+
+</logic:present>

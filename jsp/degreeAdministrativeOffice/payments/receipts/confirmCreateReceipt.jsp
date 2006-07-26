@@ -4,6 +4,8 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
 
+<logic:present role="DEGREE_ADMINISTRATIVE_OFFICE">
+
 <h2><bean:message key="label.payments.confirmCreateReceipt" /></h2>
 <hr>
 <br/>
@@ -64,3 +66,4 @@
 	<html:cancel bundle="HTMLALT_RESOURCES" altKey="cancel.cancel" styleClass="inputbutton" onclick="this.form.method.value='backToShowOperations';"><bean:message key="button.payments.back"/></html:cancel>
 </fr:form>
 
+</logic:present>

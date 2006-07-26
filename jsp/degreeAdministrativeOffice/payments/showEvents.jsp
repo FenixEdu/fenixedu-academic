@@ -4,6 +4,8 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 
+<logic:present role="DEGREE_ADMINISTRATIVE_OFFICE">
+
 <bean:define id="personId" name="paymentsManagementDTO" property="person.idInternal" />
 <fr:form action='<%= "/payments.do?personId=" + personId %>'>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" name="paymentsForm" property="method" />
@@ -53,3 +55,5 @@
 	</logic:empty>
 
 </fr:form>
+
+</logic:present>

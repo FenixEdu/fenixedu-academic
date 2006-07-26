@@ -6,6 +6,8 @@
 
 <html:xhtml/>
 
+<logic:present role="DEGREE_ADMINISTRATIVE_OFFICE">
+
 <h2><bean:message key="label.documentRequestsManagement.searchDocumentRequests" /></h2>
 
 <hr><br/>
@@ -75,3 +77,5 @@
 	<html:submit onclick="this.form.method.value='showOperations';" styleClass="inputbutton"><bean:message key="label.documentRequestsManagement.back" /></html:submit>
 
 </html:form>
+
+</logic:present>

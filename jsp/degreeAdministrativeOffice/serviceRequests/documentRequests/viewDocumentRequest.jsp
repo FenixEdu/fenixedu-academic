@@ -4,7 +4,7 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 
-
+<logic:present role="DEGREE_ADMINISTRATIVE_OFFICE">
 
 <h2><bean:message key="label.documentRequestsManagement.viewDocumentRequest" /></h2>
 
@@ -46,3 +46,5 @@
 	
 	<html:submit styleClass="inputbutton"><bean:message key="label.documentRequestsManagement.back" /></html:submit>
 </html:form>
+
+</logic:present>

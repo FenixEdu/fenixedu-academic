@@ -4,7 +4,7 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 
-
+<logic:present role="DEGREE_ADMINISTRATIVE_OFFICE">
 
 <h2><bean:message key="label.pricesManagement" /></h2>
 
@@ -53,3 +53,5 @@
 	</tr>
 </logic:iterate>
 </table>
+
+</logic:present>
