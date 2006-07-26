@@ -5,7 +5,6 @@ package net.sourceforge.fenixedu.presentationTier.Action.department;
 
 import java.text.ParseException;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
@@ -16,7 +15,6 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.commons.CollectionUtils;
 import net.sourceforge.fenixedu.commons.OrderedIterator;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.credits.CreditLineDTO;
@@ -31,7 +29,6 @@ import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
 
 import org.apache.commons.beanutils.BeanComparator;
-import org.apache.commons.collections.Predicate;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -62,16 +59,7 @@ public class ShowTeachersCreditsDepartmentListAction extends FenixAction {
         }
 
         dynaActionForm.set("executionPeriodId", executionPeriod.getIdInternal());
-        Collection<Category> categories = rootDomainObject.getCategorys();
-
-        List<Category> monitorCategories = (List<Category>) CollectionUtils.select(categories,
-                new Predicate() {
-                    public boolean evaluate(Object object) {
-                        Category category = (Category) object;
-                        return category.getCode().equals("MNL") || category.getCode().equals("MNT");
-                    }
-                });
-
+       
         List<TeacherWithCreditsDTO> teachersCredits = new ArrayList<TeacherWithCreditsDTO>();
         for (Department department : userView.getPerson().getManageableDepartmentCredits()) {
             
@@ -80,12 +68,10 @@ public class ShowTeachersCreditsDepartmentListAction extends FenixAction {
                     
             for (Teacher teacher : teachers) {
                 double managementCredits = teacher.getManagementFunctionsCredits(executionPeriod);
-                double serviceExemptionsCredits = teacher.getServiceExemptionCredits(executionPeriod);
-                int mandatoryLessonHours = 0;                
-                Category category = teacher.getCategoryForCreditsByPeriod(executionPeriod);
-                if (category != null && !monitorCategories.contains(category)) {
-                    mandatoryLessonHours = teacher.getMandatoryLessonHours(executionPeriod);
-                }
+                double serviceExemptionsCredits = teacher.getServiceExemptionCredits(executionPeriod);                                
+                Category category = teacher.getCategoryForCreditsByPeriod(executionPeriod);                
+                int mandatoryLessonHours = mandatoryLessonHours = teacher.getMandatoryLessonHours(executionPeriod);
+                
                 TeacherService teacherService = teacher
                         .getTeacherServiceByExecutionPeriod(executionPeriod);
                 CreditLineDTO creditLineDTO = new CreditLineDTO(executionPeriod, teacherService,

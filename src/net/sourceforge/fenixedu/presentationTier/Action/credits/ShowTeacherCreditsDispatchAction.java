@@ -21,7 +21,6 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.teacher.AdviseType;
-import net.sourceforge.fenixedu.domain.teacher.Category;
 import net.sourceforge.fenixedu.domain.teacher.InstitutionWorkTime;
 import net.sourceforge.fenixedu.domain.teacher.TeacherAdviseService;
 import net.sourceforge.fenixedu.domain.teacher.TeacherService;
@@ -79,25 +78,11 @@ public class ShowTeacherCreditsDispatchAction extends FenixDispatchAction {
                     new BeanComparator("beginDate"));
             request.setAttribute("personFunctions", orderedPersonFuntions);
         }
-
-        List<Category> categories = rootDomainObject.getCategorys();
-        List<Category> monitorCategories = (List<Category>) CollectionUtils.select(categories,
-                new Predicate() {
-                    public boolean evaluate(Object object) {
-                        Category category = (Category) object;
-                        return category.getCode().equals("MNL") || category.getCode().equals("MNT");
-                    }
-                });
-      
+            
         double managementCredits = teacher.getManagementFunctionsCredits(executionPeriod);
-        double serviceExemptionCredits = teacher.getServiceExemptionCredits(executionPeriod);
+        double serviceExemptionCredits = teacher.getServiceExemptionCredits(executionPeriod);        
+        int mandatoryLessonHours = teacher.getMandatoryLessonHours(executionPeriod);
         
-        int mandatoryLessonHours = 0;
-        Category category = teacher.getCategoryForCreditsByPeriod(executionPeriod);
-        if (!monitorCategories.contains(category)) {
-            mandatoryLessonHours = teacher.getMandatoryLessonHours(executionPeriod);
-        }
-
         CreditLineDTO creditLineDTO = new CreditLineDTO(executionPeriod, teacherService,
                 managementCredits, serviceExemptionCredits, mandatoryLessonHours, teacher);
 

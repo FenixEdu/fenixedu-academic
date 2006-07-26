@@ -34,4 +34,8 @@ public class Category extends Category_Base implements Comparable {
                 (getLongName().equals("PROFESSOR ASSOCIADO") && getCode().equals("PAS")) ||
                 (getLongName().equals("ASSISTENTE ESTAGIARIO") && (getCode().equals("ASE") || getCode().equals("ASG"))));
     }    
+    
+    public boolean isMonitorCategory() {
+        return getCode().equals("MNL") || getCode().equals("MNT");
+    }
 }
