@@ -62,21 +62,22 @@
 		<h:panelGrid styleClass="infoop" width="100%" columns="1">
 			<h:outputText value="#{bundle['label.publish.information']}" escape="false"/>
 		</h:panelGrid>
-		
+
 	</h:panelGrid>
 
 	<h:form>
 		<h:inputHidden binding="#{evaluationManagementBackingBean.executionCourseIdHidden}" />
 		<h:inputHidden binding="#{evaluationManagementBackingBean.evaluationIdHidden}" />
 
-		<h:outputText value="<br/>#{bundle['message.publishmentMessage']}: <br/>" escape="false"/>
+		<h:outputText value="<br/>#{bundle['message.publishmentMessage']}" escape="false"/>
+		<h:outputText value="(" /><h:outputText value="#{bundle['message.optional']}"/><h:outputText value="): <br/>" escape="false"/>
 		<h:inputTextarea cols="45" value="#{evaluationManagementBackingBean.publishMarksMessage}"/>
 		<h:outputText value="<br/><br/>#{bundle['message.sendSMS']}: <br/>" escape="false"/>
 		<h:selectBooleanCheckbox disabled="true" value="#{evaluationManagementBackingBean.sendSMS}"/>
 		<h:outputText styleClass="error" value="#{bundle['message.sms.unavailable']}"/>
 		<h:outputText value="<br/><br/>" escape="false"/>
 
-		<h:commandButton alt="#{htmlAltBundle['commandButton.insert']}" styleClass="inputbutton" action="#{evaluationManagementBackingBean.publishMarks}" value="#{bundle['button.insert']}"/>
+		<h:commandButton alt="#{htmlAltBundle['commandButton.insert']}" styleClass="inputbutton" action="#{evaluationManagementBackingBean.publishMarks}" value="#{bundle['button.post']}"/>
 		<h:commandButton alt="#{htmlAltBundle['commandButton.cancel']}" immediate="true" action="#{evaluationManagementBackingBean.evaluation.class.getSimpleName}" styleClass="inputbutton" value="#{bundle['button.cancel']}"/>				
 	</h:form>
 
