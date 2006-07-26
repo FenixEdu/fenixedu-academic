@@ -61,7 +61,7 @@ public class SchoolRegistrationCertificateRequest extends SchoolRegistrationCert
 		super.internalChangeState(academicServiceRequestSituationType, employee);
 
 		if (academicServiceRequestSituationType == AcademicServiceRequestSituationType.CONCLUDED
-				&& !isFirstRequestFromExecutionYear()) {
+				/*&& !isFirstRequestFromExecutionYear()*/) {
 			new CertificateRequestEvent(getAdministrativeOffice(),
 					EventType.SCHOOL_REGISTRATION_CERTIFICATE_REQUEST, getStudent().getPerson(), this);
 		}
