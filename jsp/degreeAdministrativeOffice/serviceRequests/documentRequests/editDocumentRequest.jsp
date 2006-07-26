@@ -34,7 +34,7 @@
 <logic:equal name="documentRequest" property="editable" value="true">
 <fr:edit id="documentRequestEdit" name="documentRequestEditBean" 
 		schema="DocumentRequestEditBean"
-		action="/documentRequestsManagement.do?method=editDocumentRequest">
+		action="<%="/documentRequestsManagement.do?method=editDocumentRequest"+ url%>">
 	<fr:layout name="tabular">
 		<fr:property name="classes" value="tstyle4" />
 		<fr:property name="columnClasses" value="listClasses,," />
