@@ -35,6 +35,15 @@ public class CreateEventDispatchAction extends FenixDispatchAction {
         return prepareCreateEventParticipation(mapping, form, request, response);
     }
 
+    public ActionForward prepareCreateFullEventParticipation(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
+        
+        EventParticipantionFullCreationBean fullBean = (EventParticipantionFullCreationBean) RenderUtils.getViewState().getMetaObject().getObject();
+        request.setAttribute("fullBean", fullBean);
+        
+        return prepareCreateEventParticipation(mapping, form, request, response);
+    }
+    
     public ActionForward createSimpleEventParticipation(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
         
