@@ -10268,6 +10268,15 @@
 		</filterChains>
 	</service>
 	<service>
+		<name>ProcessNewAcademicServiceRequests</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.serviceRequests.ProcessNewAcademicServiceRequests</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		<filterChains>
+			<chain name="DegreeOrMasterDegreeAdmininstrativeOfficeChain" />
+		</filterChains>
+	</service>
+	<service>
 		<name>MarkSheetsToConfirmSendMail</name>
 		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.degreeAdministrativeOffice.gradeSubmission.MarkSheetsToConfirmSendMail</implementationClass>
 		<description />
