@@ -12,6 +12,14 @@ public class TimePoint {
 
     private boolean nextDay;
 
+    public TimePoint(TimeOfDay timePoint, Attributes pointAttributes) {
+        TimeOfDay timeIn = new TimeOfDay(timePoint.getHourOfDay(), timePoint.getMinuteOfHour(), 0);
+        setTime(timeIn);
+        setPointAttributes(pointAttributes);
+        setIntervalAttributes(new Attributes());
+        setNextDay(false);
+    }
+    
     public TimePoint(TimeOfDay timePoint, AttributeType attribute) {
         TimeOfDay timeIn = new TimeOfDay(timePoint.getHourOfDay(), timePoint.getMinuteOfHour(), 0);
         setTime(timeIn);

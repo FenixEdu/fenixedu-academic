@@ -8,6 +8,7 @@ import java.util.List;
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.assiduousness.util.AttributeType;
+import net.sourceforge.fenixedu.domain.assiduousness.util.Attributes;
 import net.sourceforge.fenixedu.domain.assiduousness.util.JustificationType;
 import net.sourceforge.fenixedu.domain.assiduousness.util.TimePoint;
 import net.sourceforge.fenixedu.domain.assiduousness.util.Timeline;
@@ -89,8 +90,11 @@ public class Leave extends Leave_Base {
     // Converts a Leave interval to TimePoint
     public List<TimePoint> toTimePoints(AttributeType attribute) {
         List<TimePoint> timePointList = new ArrayList<TimePoint>();
-        timePointList.add(new TimePoint(getDate().toTimeOfDay(), attribute));
-        timePointList.add(new TimePoint((getDate().plus(getDuration())).toTimeOfDay(), attribute));
+        Attributes attributes = new Attributes();
+        attributes.addAttribute(attribute);
+        attributes.addAttribute(AttributeType.JUSTIFICATION);
+        timePointList.add(new TimePoint(getDate().toTimeOfDay(), attributes));
+        timePointList.add(new TimePoint((getDate().plus(getDuration())).toTimeOfDay(), attributes));
         return timePointList;
     }
 

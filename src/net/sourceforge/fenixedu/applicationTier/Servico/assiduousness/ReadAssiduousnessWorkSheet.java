@@ -232,8 +232,10 @@ public class ReadAssiduousnessWorkSheet extends Service {
         Interval overlapResult = thisDayWorkTimeInterval.overlap(dayBeforeWorkTimeInterval);
         if (overlapResult == null) {
             Interval gapResult = dayBeforeWorkTimeInterval.gap(thisDayWorkTimeInterval);
-            if (gapResult != null && !gapResult.contains(clocking)) {
-                return false;
+            if (gapResult != null) {
+                if (!gapResult.contains(clocking)) {
+                    return false;
+                }
             } else {
                 return dayBeforeWorkTimeInterval.contains(clocking);
             }

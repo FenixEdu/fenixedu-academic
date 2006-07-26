@@ -16,6 +16,6 @@ public enum AttributeType {
     //
     IRREGULAR,
     
-    // JUSTIFICATION
-    BALANCE;
+    JUSTIFICATION;
+    //BALANCE;
 }

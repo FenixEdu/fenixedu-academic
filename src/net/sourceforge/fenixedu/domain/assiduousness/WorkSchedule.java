@@ -102,7 +102,8 @@ public class WorkSchedule extends WorkSchedule_Base {
                         TimeOfDay lunchEnd = wsType.getMeal().getLunchEnd();
                         TimeInterval lunchTime = new TimeInterval(wsType.getMeal().getBeginMealBreak(),
                                 lunchEnd, false);
-                        if (lunchTime.contains(firstClockingDate, false)) {
+                        if (lunchTime.contains(firstClockingDate, false)
+                                && !workPeriod.isEqual(Duration.ZERO)) {
                             workPeriod = workPeriod.minus(new TimeInterval(firstClockingDate, lunchEnd,
                                     false).getDurationMillis());
                         }
@@ -110,16 +111,19 @@ public class WorkSchedule extends WorkSchedule_Base {
                     } else if (firstClockingDate != null
                             && firstClockingDate.isBefore(wsType.getMeal().getBeginMealBreak())) {
                         if (lastClockingDate != null
-                                && (lastClockingDate.isAfter(wsType.getMeal().getBeginMealBreak()) || lastClockingDate
+                                && (timeline.getLastWorkTimePoint().isNextDay()
+                                        || lastClockingDate
+                                                .isAfter(wsType.getMeal().getBeginMealBreak()) || lastClockingDate
                                         .isEqual(wsType.getMeal().getBeginMealBreak()))) {
                             if (wsType.getMeal().getEndOfMealBreakMinusDiscountInterval().contains(
-                                    lastClockingDate, false)) {
+                                    lastClockingDate, timeline.getLastWorkTimePoint().isNextDay())) {
                                 // descontar periodo de tempo desde fim da refeicao menos periodo
                                 // obrigatorio de refeicao ate' 'a ultima marcacao do funcionario
                                 workPeriod = workPeriod.minus((new TimeInterval(wsType.getMeal()
                                         .getEndOfMealBreakMinusMealDiscount(), lastClockingDate, false))
                                         .getDurationMillis());
-                            } else if (lastClockingDate.isAfter(wsType.getMeal().getEndMealBreak())) {
+                            } else if (timeline.getLastWorkTimePoint().isNextDay()
+                                    || lastClockingDate.isAfter(wsType.getMeal().getEndMealBreak())) {
                                 workPeriod = workPeriod.minus(wsType.getMeal()
                                         .getMandatoryMealDiscount());
                             }

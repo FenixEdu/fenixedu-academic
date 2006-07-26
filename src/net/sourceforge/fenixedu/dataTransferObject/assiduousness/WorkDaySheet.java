@@ -148,7 +148,7 @@ public class WorkDaySheet implements Serializable {
                 result.append(fmt.print(timeOfDay));
             }
         }
-        clockings = result.toString();
+        clockings = " " + result.toString();
     }
 
     public List<AssiduousnessRecord> getAssiduousnessRecords() {
