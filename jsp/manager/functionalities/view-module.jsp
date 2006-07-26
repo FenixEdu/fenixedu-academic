@@ -51,7 +51,6 @@
     <fr:layout>
         <fr:property name="treeId" value="<%= tree %>"/>
         <fr:property name="fieldId" value="tree-structure"/> <!-- reference to the hidden field above -->
-        <fr:property name="hideLinks" value="true"/>
 
         <fr:property name="eachLayout" value="values-dash"/>
         
@@ -63,7 +62,7 @@
 
         <fr:property name="childrenFor(Module)" value="orderedFunctionalities"/>
 
-        <fr:property name="links">
+        <fr:property name="hiddenLinks">
             <html:link page="<%= "/functionality/up.do?module=" + thisModule + "&functionality=${idInternal}" %>">
                 <bean:message key="link.functionality.up" bundle="FUNCTIONALITY_RESOURCES"/>
             </html:link>,
