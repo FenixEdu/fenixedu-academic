@@ -84,8 +84,12 @@ Documentation:
 
     <renderer type="net.sourceforge.fenixedu.domain.Person" layout="person-email-identity" class="net.sourceforge.fenixedu.presentationTier.renderers.EmailIdentityRenderer"/>
   
-    <renderer type="java.lang.String" class="net.sourceforge.fenixedu.renderers.StringRenderer">
-    		<property name="escaped" value="false"/>
+    <renderer type="java.lang.String" class="net.sourceforge.fenixedu.renderers.StringRenderer"/>
+    
+    <!--@ Considers that the string is html and as such does not escape it's content nor does it replace newlines. -->
+    <renderer type="java.lang.String" layout="html" class="net.sourceforge.fenixedu.renderers.StringRenderer">
+        <property name="newlineAware" value="false"/>
+        <property name="escaped" value="false"/>
     </renderer>
     
     <renderer type="java.lang.String" layout="person-short-name" class="net.sourceforge.fenixedu.presentationTier.renderers.PersonNameRenderer">
@@ -98,8 +102,6 @@ Documentation:
     <renderer type="net.sourceforge.fenixedu.domain.Shift" layout="shift-plain" class="net.sourceforge.fenixedu.presentationTier.renderers.ShiftPlainRenderer"/>
 
     <renderer type="net.sourceforge.fenixedu.util.MultiLanguageString" class="net.sourceforge.fenixedu.presentationTier.renderers.MultiLanguageStringRenderer"/>
-    
-    <renderer type="java.lang.String" layout="escapedNewLineAware" class="net.sourceforge.fenixedu.presentationTier.renderers.NewlineAwareStringRenderer"/>
     
     <renderer type="java.lang.Number" class="net.sourceforge.fenixedu.renderers.IntegerRenderer"/>
     <renderer type="int" class="net.sourceforge.fenixedu.renderers.IntegerRenderer"/>

@@ -20,6 +20,15 @@ public class StringRenderer extends OutputRenderer {
     
     private boolean escaped;
     
+    private boolean newlineAware;
+    
+    public StringRenderer() {
+        super();
+
+        setEscaped(true);
+        setNewlineAware(true);
+    }
+
     public boolean isEscaped() {
         return this.escaped;
     }
@@ -33,6 +42,19 @@ public class StringRenderer extends OutputRenderer {
      */
     public void setEscaped(boolean escaped) {
         this.escaped = escaped;
+    }
+
+    public boolean isNewlineAware() {
+        return this.newlineAware;
+    }
+
+    /**
+     * Indicates if all the newlines should be replaced by &lt;br/&gt;.
+     *   
+     * @property
+     */
+    public void setNewlineAware(boolean newlineAware) {
+        this.newlineAware = newlineAware;
     }
 
     public boolean isLink() {
@@ -83,7 +105,12 @@ public class StringRenderer extends OutputRenderer {
                 String string = String.valueOf(object);
                 
                 if (! isLink() || string == null) {
-                    return new HtmlText(string, isEscaped());
+                    if (isNewlineAware()) {
+                        return new HtmlText(replaceNewlines(string));
+                    }
+                    else {
+                        return new HtmlText(string, isEscaped());
+                    }
                 }
                 else {
                     HtmlLink link = new HtmlLink();
@@ -106,6 +133,20 @@ public class StringRenderer extends OutputRenderer {
                     
                     return link;
                 }
+            }
+
+            private String replaceNewlines(String string) {
+                StringBuilder result = new StringBuilder();
+                
+                String[] lines = string.split(System.getProperty("line.separator"), -1);
+                for (int i = 0; i < lines.length; i++) {
+                    String line = lines[i];
+
+                    result.append(HtmlText.escape(line));
+                    result.append("<br/>");
+                }
+                
+                return result.toString();
             }
             
         };

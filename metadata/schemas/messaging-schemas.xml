@@ -1,12 +1,12 @@
 <schema name="executionCourseForum.view.nameOnly" type="net.sourceforge.fenixedu.domain.messaging.ExecutionCourseForum">
-	<slot layout="escapedNewLineAware" name="name"/>
+	<slot name="name"/>
 </schema>
 
 <schema bundle="MESSAGING_RESOURCES" name="forum.view-full" type="net.sourceforge.fenixedu.domain.messaging.Forum">
 	<slot name="name" key="label.net.sourceforge.fenixedu.domain.messaging.Forum.name">
 		<property name="classes" value="bold"/>
 	</slot>
-	<slot name="description" layout="escapedNewLineAware" key="label.net.sourceforge.fenixedu.domain.messaging.Forum.description"/>
+	<slot name="description" key="label.net.sourceforge.fenixedu.domain.messaging.Forum.description"/>
 	<slot name="conversationThreadsCount" key="label.forum.totalConversationThreads"/>
 	<slot name="conversationMessagesCount" key="label.forum.totalConversationMessages"/>
 	<slot name="creationDate" key="label.net.sourceforge.fenixedu.domain.messaging.Forum.creationDate">
@@ -20,7 +20,7 @@
 </schema>
 
 <schema bundle="MESSAGING_RESOURCES" name="conversationThread.view-full" type="net.sourceforge.fenixedu.domain.messaging.ConversationThread">
-   	<slot name="subject" layout="escapedNewLineAware" key="label.net.sourceforge.fenixedu.domain.messaging.ConversationThread.subject"/>
+   	<slot name="subject" key="label.net.sourceforge.fenixedu.domain.messaging.ConversationThread.subject"/>
    	<slot name="creator" key="label.net.sourceforge.fenixedu.domain.messaging.ConversationThread.creator" layout="person-email-identity">
 		<property name="collapsed" value="true"/>
 		<property name="text" value="name"/>
@@ -56,15 +56,15 @@
 
 
 <schema bundle="MESSAGING_RESOURCES" name="forum.view-with-name-description-and-creation-date" type="net.sourceforge.fenixedu.domain.messaging.Forum">
-	<slot name="name" layout="escapedNewLineAware" key="label.net.sourceforge.fenixedu.domain.messaging.Forum.name"/>
-	<slot name="description" layout="escapedNewLineAware" key="label.net.sourceforge.fenixedu.domain.messaging.Forum.description"/>
+	<slot name="name" key="label.net.sourceforge.fenixedu.domain.messaging.Forum.name"/>
+	<slot name="description" key="label.net.sourceforge.fenixedu.domain.messaging.Forum.description"/>
 	<slot name="creationDate" key="label.net.sourceforge.fenixedu.domain.messaging.Forum.creationDate">
 		<property name="format" value="dd/MM/yyyy HH:mm:ss" />
 	</slot>
 </schema>
 
 <schema bundle="MESSAGING_RESOURCES" name="conversationThread.view-with-subject-creation-date-and-message-count" type="net.sourceforge.fenixedu.domain.messaging.Forum">
-	<slot name="subject" layout="escapedNewLineAware" key="label.net.sourceforge.fenixedu.domain.messaging.ConversationThread.subject">
+	<slot name="subject" key="label.net.sourceforge.fenixedu.domain.messaging.ConversationThread.subject">
 		<property name="classes" value="bold" />	
 	</slot>
 	<slot name="creationDate" key="label.net.sourceforge.fenixedu.domain.messaging.ConversationThread.creationDate">
@@ -82,7 +82,7 @@
 	<slot name="creationDate" key="label.net.sourceforge.fenixedu.domain.messaging.ConversationMessage.creationDate">
 		<property name="format" value="dd/MM/yyyy HH:mm:ss" />
 	</slot>
-	<slot name="body" key="label.net.sourceforge.fenixedu.domain.messaging.ConversationMessage.body"/>	
+	<slot name="body" layout="html" key="label.net.sourceforge.fenixedu.domain.messaging.ConversationMessage.body"/>	
 </schema>
 
 <schema bundle="MESSAGING_RESOURCES" name="announcementBoard.view-with-name-and-active-announcements-count-and-announcements-count" type="net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard">

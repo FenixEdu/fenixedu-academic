@@ -525,83 +525,83 @@
 			<property name="config" value="advanced"/>
 			<property name="columns" value="60"/>
 			<property name="rows" value="20"/>
-    	    <property name="eachClasses" value="multi-language-line"/>
-    	    <property name="classes" value="pbottom3"/>
+    	       <property name="eachClasses" value="multi-language-line"/>
+    	       <property name="classes" value="pbottom3"/>
 		</slot>
 		<slot name="objectives" layout="rich-text">
 			<property name="safe" value="true"/>
 			<property name="config" value="advanced"/>
 			<property name="columns" value="60"/>
 			<property name="rows" value="20"/>
-    	    <property name="eachClasses" value="multi-language-line"/>
-    	    <property name="classes" value="pbottom3"/>
+    	       <property name="eachClasses" value="multi-language-line"/>
+    	       <property name="classes" value="pbottom3"/>
 		</slot>
 		<slot name="designedFor" layout="rich-text">
 			<property name="safe" value="true"/>
 			<property name="config" value="advanced"/>
 			<property name="columns" value="60"/>
 			<property name="rows" value="20"/>
-    	    <property name="eachClasses" value="multi-language-line"/>
-    	    <property name="classes" value="pbottom3"/>
+    	       <property name="eachClasses" value="multi-language-line"/>
+    	       <property name="classes" value="pbottom3"/>
 		</slot>
 		<slot name="professionalExits" layout="rich-text">
 			<property name="safe" value="true"/>
 			<property name="config" value="advanced"/>
 			<property name="columns" value="60"/>
 			<property name="rows" value="20"/>
-    	    <property name="eachClasses" value="multi-language-line"/>
-    	    <property name="classes" value="pbottom3"/>
+    	       <property name="eachClasses" value="multi-language-line"/>
+    	       <property name="classes" value="pbottom3"/>
 		</slot>
 		<slot name="operationalRegime" layout="rich-text">
 			<property name="safe" value="true"/>
 			<property name="config" value="advanced"/>
 			<property name="columns" value="60"/>
 			<property name="rows" value="20"/>
-    	    <property name="eachClasses" value="multi-language-line"/>
-    	    <property name="classes" value="pbottom3"/>
+    	       <property name="eachClasses" value="multi-language-line"/>
+    	       <property name="classes" value="pbottom3"/>
 		</slot>
 		<slot name="gratuity" layout="rich-text">
 			<property name="safe" value="true"/>
 			<property name="config" value="advanced"/>
 			<property name="columns" value="60"/>
 			<property name="rows" value="20"/>
-    	    <property name="eachClasses" value="multi-language-line"/>
-    	    <property name="classes" value="pbottom3"/>
+    	       <property name="eachClasses" value="multi-language-line"/>
+    	       <property name="classes" value="pbottom3"/>
 		</slot>
 		<slot name="schoolCalendar" layout="rich-text">
 			<property name="safe" value="true"/>
 			<property name="config" value="advanced"/>
 			<property name="columns" value="60"/>
-    	    <property name="eachClasses" value="multi-language-line"/>
-    	    <property name="classes" value="pbottom3"/>
+    	       <property name="eachClasses" value="multi-language-line"/>
+    	       <property name="classes" value="pbottom3"/>
 		</slot>
 		<slot name="candidacyPeriod" layout="rich-text">
 			<property name="safe" value="true"/>
 			<property name="config" value="advanced"/>
 			<property name="columns" value="60"/>
-    	    <property name="eachClasses" value="multi-language-line"/>
-    	    <property name="classes" value="pbottom3"/>
+    	       <property name="eachClasses" value="multi-language-line"/>
+    	       <property name="classes" value="pbottom3"/>
 		</slot>
 		<slot name="selectionResultDeadline" layout="rich-text">
 			<property name="safe" value="true"/>
 			<property name="config" value="advanced"/>
 			<property name="columns" value="60"/>
-    	    <property name="eachClasses" value="multi-language-line"/>
-    	    <property name="classes" value="pbottom3"/>
+    	       <property name="eachClasses" value="multi-language-line"/>
+    	       <property name="classes" value="pbottom3"/>
 		</slot>
 		<slot name="enrolmentPeriod" layout="rich-text">
 			<property name="safe" value="true"/>
 			<property name="config" value="advanced"/>
 			<property name="columns" value="60"/>
-    	    <property name="eachClasses" value="multi-language-line"/>~
-    	    <property name="classes" value="pbottom3"/>
+    	       <property name="eachClasses" value="multi-language-line"/>~
+    	       <property name="classes" value="pbottom3"/>
 		</slot>
 		<slot name="additionalInfo" layout="rich-text">
 			<property name="safe" value="true"/>
 			<property name="config" value="advanced"/>
 			<property name="columns" value="60"/>
-    	    <property name="eachClasses" value="multi-language-line"/>
-    	    <property name="classes" value="pbottom3"/>
+    	       <property name="eachClasses" value="multi-language-line"/>
+    	       <property name="classes" value="pbottom3"/>
 		</slot>
 		<slot name="links" layout="rich-text">
 			<property name="safe" value="true"/>
@@ -641,22 +641,22 @@
 			<property name="eachClasses" value="multi-language-line"/>
     	    <property name="classes" value="pbottom3"/>
 		</slot>
-		<slot name="driftsInitial" layout="rich-text">
+		<slot name="driftsInitial">
 	        <property name="size" value="3"/>
 		</slot>
-		<slot name="driftsFirst" layout="rich-text">
+		<slot name="driftsFirst">
 	        <property name="size" value="3"/>
 		</slot>
-		<slot name="driftsSecond" layout="rich-text">
+		<slot name="driftsSecond">
 	        <property name="size" value="3"/>
 		</slot>
-		<slot name="markAverage" layout="rich-text">
+		<slot name="markAverage">
 	        <property name="size" value="3"/>
 		</slot>
-		<slot name="markMin" layout="rich-text">
+		<slot name="markMin">
 	        <property name="size" value="3"/>
 		</slot>
-		<slot name="markMax" layout="rich-text">
+		<slot name="markMax">
 	        <property name="size" value="3"/>
 		</slot>
 	</schema>
