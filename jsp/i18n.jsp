@@ -6,37 +6,37 @@
 <div id="version">
 	<html:form action="/changeLocaleTo.do">
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.windowLocation" property="windowLocation" value=""/>
-		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.newCountry" property="newCountry" value="<%= net.sourceforge.fenixedu._development.PropertiesManager.getProperty("language") %>"/>
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.newLanguage" property="newLanguage" value="<%= net.sourceforge.fenixedu._development.PropertiesManager.getProperty("language") %>"/>
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.newCountry" property="newCountry" value="<%= net.sourceforge.fenixedu._development.PropertiesManager.getProperty("location") %>"/>
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.newVariant" property="newVariant" value="<%= net.sourceforge.fenixedu._development.PropertiesManager.getProperty("variant") %>"/>
 
 		<logic:notEqual name="<%= org.apache.struts.Globals.LOCALE_KEY %>" property="language" value="pt">
 			<input type="image"
 					src="<%= request.getContextPath() %>/images/flags/pt.gif"
-					alt="<bean:message key="pt" bundle="IMAGE_RESOURCES" />"
-					title="Português"
+					alt="<bean:message key="language.pt" bundle="IMAGE_RESOURCES" />"
+					title="<bean:message key="language.pt" bundle="IMAGE_RESOURCES" />"
 					value="PT"
-					onclick="this.form.newLanguage.value='pt';this.form.newCountry.value='PT';this.form.newVariant.value='<%= net.sourceforge.fenixedu._development.PropertiesManager.getProperty("variant") %>';this.form.windowLocation.value=window.location;this.form.submit();"/>
+					onclick="this.form.newLanguage.value='pt';this.form.newCountry.value='PT';this.form.windowLocation.value=window.location;this.form.submit();"/>
 			<input class="activeflag"
 					type="image" src="<%= request.getContextPath() %>/images/flags/en.gif"
-					alt="<bean:message key="en" bundle="IMAGE_RESOURCES" />"
-					title="English"
+					alt="<bean:message key="language.en" bundle="IMAGE_RESOURCES" />"
+					title="<bean:message key="language.en" bundle="IMAGE_RESOURCES" />"
 					value="EN" 
-					onclick="this.form.newLanguage.value='en';this.form.newCountry.value='EN';this.form.newVariant.value='<%= net.sourceforge.fenixedu._development.PropertiesManager.getProperty("variant") %>';this.form.windowLocation.value=window.location;this.form.submit();"/>
+					onclick="this.form.newLanguage.value='en';this.form.newCountry.value='EN';this.form.windowLocation.value=window.location;this.form.submit();"/>
 		</logic:notEqual>
 					
 		<logic:notEqual name="<%= org.apache.struts.Globals.LOCALE_KEY %>" property="language" value="en">			
 			<input class="activeflag"
 					type="image" src="<%= request.getContextPath() %>/images/flags/pt.gif"
-					alt="<bean:message key="pt" bundle="IMAGE_RESOURCES" />"
-					title="Português"
+					alt="<bean:message key="language.pt" bundle="IMAGE_RESOURCES" />"
+					title="<bean:message key="language.pt" bundle="IMAGE_RESOURCES" />"
 					value="PT"
-					onclick="this.form.newLanguage.value='pt';this.form.newCountry.value='PT';this.form.newVariant.value='<%= net.sourceforge.fenixedu._development.PropertiesManager.getProperty("variant") %>';this.form.windowLocation.value=window.location;this.form.submit();"/>
+					onclick="this.form.newLanguage.value='pt';this.form.newCountry.value='PT';this.form.windowLocation.value=window.location;this.form.submit();"/>
 			<input type="image" src="<%= request.getContextPath() %>/images/flags/en.gif"
-					alt="<bean:message key="en" bundle="IMAGE_RESOURCES" />"
-					title="English"
+					alt="<bean:message key="language.en" bundle="IMAGE_RESOURCES" />"
+					title="<bean:message key="language.en" bundle="IMAGE_RESOURCES" />"
 					value="EN" 
-					onclick="this.form.newLanguage.value='en';this.form.newCountry.value='EN';this.form.newInstitution.value='<%= net.sourceforge.fenixedu._development.PropertiesManager.getProperty("variant") %>';this.form.windowLocation.value=window.location;this.form.submit();"/>
+					onclick="this.form.newLanguage.value='en';this.form.newCountry.value='EN';this.form.windowLocation.value=window.location;this.form.submit();"/>
 		</logic:notEqual>
 	</html:form>
 </div>

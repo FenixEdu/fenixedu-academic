@@ -16,22 +16,27 @@ public class ChangeLocale extends FenixAction {
 
     public ActionForward execute(ActionMapping mapping, ActionForm actionForm,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
+        final Locale locale = constructNewLocale(request);
+        request.getSession(true).setAttribute(Globals.LOCALE_KEY, locale);
+        final String windowLocation = request.getParameter("windowLocation");
+        System.out.println("windowLocation: " + windowLocation);
+        return forward(windowLocation);
+    }
+
+    private Locale constructNewLocale(HttpServletRequest request) {
         final String newLanguage = request.getParameter("newLanguage");
         final String newCountry = request.getParameter("newCountry");
-        final String newInstitution = request.getParameter("newVariant");
+        final String newVariant = request.getParameter("newVariant");
+        return newVariant == null ? new Locale(newLanguage, newCountry)
+                : new Locale(newLanguage, newCountry, newVariant);
+    }
 
-        request.getSession(false).setAttribute(Globals.LOCALE_KEY, new Locale(newLanguage, newCountry, newInstitution));
-
-        final String windowLocation = request.getParameter("windowLocation");
-
-        ActionForward actionForward = new ActionForward();
-
+    private ActionForward forward(final String windowLocation) {
+        final ActionForward actionForward = new ActionForward();
         actionForward.setContextRelative(true);
-
         actionForward.setName(windowLocation);
         actionForward.setPath(windowLocation);
         actionForward.setRedirect(true);
-
         return actionForward;
     }
 

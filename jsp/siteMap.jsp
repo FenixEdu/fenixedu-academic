@@ -27,16 +27,16 @@
 
 			<div class="breadcumbs"> </div><br/><br/>
 
-			&nbsp;&nbsp;<A href="loginPage.jsp">Login Page</A>
-<!--
+			&nbsp;&nbsp;<html:link href="loginPage.jsp">Login Page</html:link>
+<%--
 			&nbsp;&nbsp;<A href="#degrees">Degrees</A>
 			&nbsp;&nbsp;<A href="#units">Units</A>
 			&nbsp;&nbsp;<A href="#people">People</A>
 			&nbsp;&nbsp;<A href="#infrastructures">Infra-structures</A>
--->
+--%>
 			<hr style="margin-top: 2em; margin-bottom: 2em"/>
 
-<!--
+<%--
 			<a name="degrees"></a>
 			<h2>&nbsp;&nbsp;&nbsp;&nbsp;Degrees</h2>
 			<hr style="margin-top: 2em; margin-bottom: 2em"/>
@@ -52,7 +52,7 @@
 			<a name="infrastructures"></a>
 			<h2>&nbsp;&nbsp;&nbsp;&nbsp;Infra-structures</h2>
 			<hr style="margin-top: 2em; margin-bottom: 2em"/>
--->
+--%>
 
 			<!-- PRE-BOLONHA DEGREES -->
 			<h2><bean:message key="old.degrees" bundle="GLOBAL_RESOURCES"/></h2>
