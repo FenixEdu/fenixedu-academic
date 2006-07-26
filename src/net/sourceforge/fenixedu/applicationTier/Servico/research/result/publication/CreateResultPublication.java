@@ -94,6 +94,57 @@ public class CreateResultPublication extends Service {
             article.setPublisher(publisher);
             resultPublication = article;
         }break;
+        case Inproceedings: {
+            // create Inproceedings with required fields;
+            Inproceedings inproceedings = new Inproceedings(publicationBean.getParticipator(), publicationBean.getTitle(), publicationBean.getBookTitle(), publicationBean.getYear());
+            // fill optional fields
+            Unit publisher = publicationBean.getPublisher();
+            if (publisher == null)
+            {
+                if((publicationBean.getPublisherName() != null) && (publicationBean.getPublisherName().length() != 0))
+                    publisher = Unit.createNewExternalInstitution(publicationBean.getPublisherName());
+            }
+            inproceedings.setPublisher(publisher);
+            inproceedings.setAddress(publicationBean.getAddress());
+            
+            Unit organization = publicationBean.getOrganization();
+            if (organization == null)
+            {
+                if((publicationBean.getOrganizationName() != null) && (publicationBean.getOrganizationName().length() != 0))
+                    organization = Unit.createNewExternalInstitution(publicationBean.getOrganizationName());
+            }
+            inproceedings.setOrganization(organization);
+            
+            inproceedings.setFirstPage(publicationBean.getFirstPage());
+            inproceedings.setLastPage(publicationBean.getLastPage());
+            inproceedings.setNote(publicationBean.getNote());
+            inproceedings.setLanguage(publicationBean.getLanguage());
+            resultPublication = inproceedings;
+        }break;
+        case Proceedings: {
+            // create Proceedings with required fields;
+            Proceedings proceedings = new Proceedings(publicationBean.getParticipator(), publicationBean.getTitle(), publicationBean.getYear());
+            // fill optional fields
+            Unit publisher = publicationBean.getPublisher();
+            if (publisher == null)
+            {
+                if((publicationBean.getPublisherName() != null) && (publicationBean.getPublisherName().length() != 0))
+                    publisher = Unit.createNewExternalInstitution(publicationBean.getPublisherName());
+            }
+            proceedings.setPublisher(publisher);
+            proceedings.setAddress(publicationBean.getAddress());
+            
+            Unit organization = publicationBean.getOrganization();
+            if (organization == null)
+            {
+                if((publicationBean.getOrganizationName() != null) && (publicationBean.getOrganizationName().length() != 0))
+                    organization = Unit.createNewExternalInstitution(publicationBean.getOrganizationName());
+            }
+            proceedings.setOrganization(organization);
+
+            proceedings.setNote(publicationBean.getNote());
+            resultPublication = proceedings;
+        }break;
         case Thesis: {
             Unit school = publicationBean.getOrganization();
             if (school == null)

@@ -5,19 +5,11 @@ import java.io.Serializable;
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
-import net.sourceforge.fenixedu.domain.research.result.publication.Article;
-import net.sourceforge.fenixedu.domain.research.result.publication.Book;
-import net.sourceforge.fenixedu.domain.research.result.publication.BookPart;
-import net.sourceforge.fenixedu.domain.research.result.publication.Booklet;
-import net.sourceforge.fenixedu.domain.research.result.publication.Manual;
-import net.sourceforge.fenixedu.domain.research.result.publication.Misc;
-import net.sourceforge.fenixedu.domain.research.result.publication.ResultPublication;
-import net.sourceforge.fenixedu.domain.research.result.publication.TechnicalReport;
-import net.sourceforge.fenixedu.domain.research.result.publication.Thesis;
-import net.sourceforge.fenixedu.domain.research.result.publication.Unpublished;
+import net.sourceforge.fenixedu.domain.research.result.publication.*;
 import net.sourceforge.fenixedu.domain.research.result.publication.BookPart.BookPartType;
 import net.sourceforge.fenixedu.domain.research.result.publication.ResultPublication.ScopeType;
 import net.sourceforge.fenixedu.domain.research.result.publication.Thesis.ThesisType;
+
 import net.sourceforge.fenixedu.util.Month;
 
 public class ResultPublicationCreationBean implements Serializable{
@@ -126,6 +118,20 @@ public class ResultPublicationCreationBean implements Serializable{
             this.setIssn(article.getIssn());
             this.setLanguage(article.getLanguage());
             this.setScope(article.getScope());
+        }
+        else if(publication instanceof Inproceedings) {
+            this.setPublicationType(ResultPublicationType.Inproceedings);
+            Inproceedings inproceedings = (Inproceedings) publication;
+            this.setBookTitle(inproceedings.getBookTitle());
+            this.setAddress(inproceedings.getAddress());
+            this.setFirstPage(inproceedings.getFirstPage());
+            this.setLastPage(inproceedings.getLastPage());
+            this.setLanguage(inproceedings.getLanguage());
+        }
+        else if(publication instanceof Proceedings) {
+            this.setPublicationType(ResultPublicationType.Proceedings);
+            Proceedings proceedings = (Proceedings) publication;
+            this.setAddress(proceedings.getAddress());
         }
         else if(publication instanceof Thesis) {
             this.setPublicationType(ResultPublicationType.Thesis);

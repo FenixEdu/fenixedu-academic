@@ -96,6 +96,57 @@ public class EditResultPublication extends Service {
             }
             article.setPublisher(publisher);
         }break;
+        case Inproceedings: {
+            // edit Inproceedings with required fields;
+            Inproceedings inproceedings = (Inproceedings) publication;
+            inproceedings.edit(publicationBean.getTitle(), publicationBean.getBookTitle(), publicationBean.getYear());
+            // fill optional fields
+            Unit publisher = publicationBean.getPublisher();
+            if (publisher == null)
+            {
+                if((publicationBean.getPublisherName() != null) && (publicationBean.getPublisherName().length() != 0))
+                    publisher = Unit.createNewExternalInstitution(publicationBean.getPublisherName());
+            }
+            inproceedings.setPublisher(publisher);
+            inproceedings.setAddress(publicationBean.getAddress());
+            
+            Unit organization = publicationBean.getOrganization();
+            if (organization == null)
+            {
+                if((publicationBean.getOrganizationName() != null) && (publicationBean.getOrganizationName().length() != 0))
+                    organization = Unit.createNewExternalInstitution(publicationBean.getOrganizationName());
+            }
+            inproceedings.setOrganization(organization);
+            
+            inproceedings.setFirstPage(publicationBean.getFirstPage());
+            inproceedings.setLastPage(publicationBean.getLastPage());
+            inproceedings.setNote(publicationBean.getNote());
+            inproceedings.setLanguage(publicationBean.getLanguage());
+        }break;
+        case Proceedings: {
+            // edit Proceedings with required fields;
+            Proceedings proceedings = (Proceedings) publication;
+            proceedings.edit(publicationBean.getTitle(), publicationBean.getYear());
+            // fill optional fields
+            Unit publisher = publicationBean.getPublisher();
+            if (publisher == null)
+            {
+                if((publicationBean.getPublisherName() != null) && (publicationBean.getPublisherName().length() != 0))
+                    publisher = Unit.createNewExternalInstitution(publicationBean.getPublisherName());
+            }
+            proceedings.setPublisher(publisher);
+            proceedings.setAddress(publicationBean.getAddress());
+            
+            Unit organization = publicationBean.getOrganization();
+            if (organization == null)
+            {
+                if((publicationBean.getOrganizationName() != null) && (publicationBean.getOrganizationName().length() != 0))
+                    organization = Unit.createNewExternalInstitution(publicationBean.getOrganizationName());
+            }
+            proceedings.setOrganization(organization);
+
+            proceedings.setNote(publicationBean.getNote());
+        }break;
         case Thesis: {
             Unit school = publicationBean.getOrganization();
             if (school == null)

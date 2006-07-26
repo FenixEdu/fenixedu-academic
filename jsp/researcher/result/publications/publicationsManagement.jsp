@@ -84,8 +84,10 @@
 	<logic:notEmpty name="books">
 		<h3 id='books' class='cd_heading'/> <span> <bean:message bundle="RESEARCHER_RESOURCES" key="researcher.result.publication.books"/> </span> </h3>
 		<logic:iterate id="book" name="books">
-			<fr:view name="book" layout="tabular" schema="result.publication.resume.Book"/>
 	 		<bean:define id="bookId" name="book" property="idInternal"/>
+			<fr:view name="book" layout="tabular" schema="result.publication.resume.Book">
+			    <fr:destination name="viewPublicationDetails" path="<%="/publications/publicationsManagement.do?method=preparePublicationDetails&publicationId="+ bookId%>"/>
+			</fr:view>
 	 		<html:link page="<%="/publications/publicationsManagement.do?method=prepareViewEditPublication&publicationId="+ bookId%>"><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.result.publication.publicationsDetails" /></html:link>&nbsp;&nbsp;&nbsp;
 	 		<html:link page="<%="/publications/publicationsManagement.do?method=prepareDeletePublication&publicationId="+ bookId%>"><bean:message bundle="RESEARCHER_RESOURCES" key="link.remove" /></html:link>
 	  		<br /><br />
@@ -95,8 +97,10 @@
 	<logic:notEmpty name="bookParts">
 		<h3 id='booksParts' class='cd_heading'/> <span> <bean:message bundle="RESEARCHER_RESOURCES" key="researcher.result.publication.bookParts"/> </span> </h3>
 		<logic:iterate id="bookPart" name="bookParts">
-			<fr:view name="bookPart" layout="tabular" schema="result.publication.resume.BookPart"/>
 	 		<bean:define id="bookPartId" name="bookPart" property="idInternal"/>
+			<fr:view name="bookPart" layout="tabular" schema="result.publication.resume.BookPart">
+			    <fr:destination name="viewPublicationDetails" path="<%="/publications/publicationsManagement.do?method=preparePublicationDetails&publicationId="+ bookPartId%>"/>
+			</fr:view>
 	 		<html:link page="<%="/publications/publicationsManagement.do?method=prepareViewEditPublication&publicationId="+ bookPartId%>"><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.result.publication.publicationsDetails" /></html:link>&nbsp;&nbsp;&nbsp;
 	 		<html:link page="<%="/publications/publicationsManagement.do?method=prepareDeletePublication&publicationId="+ bookPartId%>"><bean:message bundle="RESEARCHER_RESOURCES" key="link.remove" /></html:link>
 	  		<br /><br />
@@ -106,10 +110,38 @@
 	<logic:notEmpty name="articles">
 		<h3 id='articles' class='cd_heading'/> <span> <bean:message bundle="RESEARCHER_RESOURCES" key="researcher.result.publication.articles"/> </span> </h3>
 		<logic:iterate id="article" name="articles">
-			<fr:view name="article" layout="tabular" schema="result.publication.resume.Article"/>
 			<bean:define id="articleId" name="article" property="idInternal"/>
+			<fr:view name="article" layout="tabular" schema="result.publication.resume.Article">
+			    <fr:destination name="viewPublicationDetails" path="<%="/publications/publicationsManagement.do?method=preparePublicationDetails&publicationId="+ articleId%>"/>
+			</fr:view>
 			<html:link page="<%="/publications/publicationsManagement.do?method=prepareViewEditPublication&publicationId="+ articleId%>"><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.result.publication.publicationsDetails" /></html:link>&nbsp;&nbsp;&nbsp;
 			<html:link page="<%="/publications/publicationsManagement.do?method=prepareDeletePublication&publicationId="+ articleId%>"><bean:message bundle="RESEARCHER_RESOURCES" key="link.remove" /></html:link>
+			<br /><br />
+		</logic:iterate>
+	</logic:notEmpty>
+
+	<logic:notEmpty name="inproceedings">
+		<h3 id='inproceedings' class='cd_heading'/> <span> <bean:message bundle="RESEARCHER_RESOURCES" key="researcher.result.publication.inproceedings"/> </span> </h3>
+		<logic:iterate id="inproceeding" name="inproceedings">
+			<bean:define id="inproceedingId" name="inproceeding" property="idInternal"/>
+			<fr:view name="inproceeding" layout="tabular" schema="result.publication.resume.Inproceedings">
+			    <fr:destination name="viewPublicationDetails" path="<%="/publications/publicationsManagement.do?method=preparePublicationDetails&publicationId="+ inproceedingId%>"/>
+			</fr:view>
+			<html:link page="<%="/publications/publicationsManagement.do?method=prepareViewEditPublication&publicationId="+ inproceedingId%>"><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.result.publication.publicationsDetails" /></html:link>&nbsp;&nbsp;&nbsp;
+			<html:link page="<%="/publications/publicationsManagement.do?method=prepareDeletePublication&publicationId="+ inproceedingId%>"><bean:message bundle="RESEARCHER_RESOURCES" key="link.remove" /></html:link>
+			<br /><br />
+		</logic:iterate>
+	</logic:notEmpty>
+	
+	<logic:notEmpty name="proceedings">
+		<h3 id='proceedings' class='cd_heading'/> <span> <bean:message bundle="RESEARCHER_RESOURCES" key="researcher.result.publication.proceedings"/> </span> </h3>
+		<logic:iterate id="proceeding" name="proceedings">
+			<bean:define id="proceedingId" name="proceeding" property="idInternal"/>
+			<fr:view name="proceeding" layout="tabular" schema="result.publication.resume.Proceedings">
+			    <fr:destination name="viewPublicationDetails" path="<%="/publications/publicationsManagement.do?method=preparePublicationDetails&publicationId="+ proceedingId%>"/>
+			</fr:view>
+			<html:link page="<%="/publications/publicationsManagement.do?method=prepareViewEditPublication&publicationId="+ proceedingId%>"><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.result.publication.publicationsDetails" /></html:link>&nbsp;&nbsp;&nbsp;
+			<html:link page="<%="/publications/publicationsManagement.do?method=prepareDeletePublication&publicationId="+ proceedingId%>"><bean:message bundle="RESEARCHER_RESOURCES" key="link.remove" /></html:link>
 			<br /><br />
 		</logic:iterate>
 	</logic:notEmpty>
@@ -117,8 +149,10 @@
 	<logic:notEmpty name="theses">
 		<h3 id='theses' class='cd_heading'/> <span> <bean:message bundle="RESEARCHER_RESOURCES" key="researcher.result.publication.theses"/> </span> </h3>
 		<logic:iterate id="thesis" name="theses">
-			<fr:view name="thesis" layout="tabular" schema="result.publication.resume.Thesis"/>
 			<bean:define id="thesisId" name="thesis" property="idInternal"/>
+			<fr:view name="thesis" layout="tabular" schema="result.publication.resume.Thesis">
+			    <fr:destination name="viewPublicationDetails" path="<%="/publications/publicationsManagement.do?method=preparePublicationDetails&publicationId="+ thesisId%>"/>
+			</fr:view>
 			<html:link page="<%="/publications/publicationsManagement.do?method=prepareViewEditPublication&publicationId="+ thesisId%>"><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.result.publication.publicationsDetails" /></html:link>&nbsp;&nbsp;&nbsp;
 			<html:link page="<%="/publications/publicationsManagement.do?method=prepareDeletePublication&publicationId="+ thesisId%>"><bean:message bundle="RESEARCHER_RESOURCES" key="link.remove" /></html:link>
 			<br /><br />
@@ -128,8 +162,10 @@
 	<logic:notEmpty name="manuals">
 		<h3 id='manuals' class='cd_heading'/> <span> <bean:message bundle="RESEARCHER_RESOURCES" key="researcher.result.publication.manuals"/> </span> </h3>
 		<logic:iterate id="manual" name="manuals">
-			<fr:view name="manual" layout="tabular" schema="result.publication.resume.Manual"/>
 			<bean:define id="manualId" name="manual" property="idInternal"/>
+			<fr:view name="manual" layout="tabular" schema="result.publication.resume.Manual">
+			    <fr:destination name="viewPublicationDetails" path="<%="/publications/publicationsManagement.do?method=preparePublicationDetails&publicationId="+ manualId%>"/>
+			</fr:view>
 			<html:link page="<%="/publications/publicationsManagement.do?method=prepareViewEditPublication&publicationId="+ manualId%>"><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.result.publication.publicationsDetails" /></html:link>&nbsp;&nbsp;&nbsp;
 			<html:link page="<%="/publications/publicationsManagement.do?method=prepareDeletePublication&publicationId="+ manualId%>"><bean:message bundle="RESEARCHER_RESOURCES" key="link.remove" /></html:link>
 			<br /><br />
@@ -139,8 +175,10 @@
 	<logic:notEmpty name="technicalReports">
 		<h3 id='technicalReports' class='cd_heading'/> <span> <bean:message bundle="RESEARCHER_RESOURCES" key="researcher.result.publication.technicalReports"/> </span> </h3>
 		<logic:iterate id="technicalReport" name="technicalReports">
-			<fr:view name="technicalReport" layout="tabular" schema="result.publication.resume.TechnicalReport"/>
 			<bean:define id="technicalReportId" name="technicalReport" property="idInternal"/>
+			<fr:view name="technicalReport" layout="tabular" schema="result.publication.resume.TechnicalReport">
+			    <fr:destination name="viewPublicationDetails" path="<%="/publications/publicationsManagement.do?method=preparePublicationDetails&publicationId="+ technicalReportId%>"/>
+			</fr:view>
 			<html:link page="<%="/publications/publicationsManagement.do?method=prepareViewEditPublication&publicationId="+ technicalReportId%>"><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.result.publication.publicationsDetails" /></html:link>&nbsp;&nbsp;&nbsp;
 			<html:link page="<%="/publications/publicationsManagement.do?method=prepareDeletePublication&publicationId="+ technicalReportId%>"><bean:message bundle="RESEARCHER_RESOURCES" key="link.remove" /></html:link>
 			<br /><br />
@@ -150,8 +188,10 @@
 	<logic:notEmpty name="booklets">
 		<h3 id='booklets' class='cd_heading'/> <span> <bean:message bundle="RESEARCHER_RESOURCES" key="researcher.result.publication.booklets"/> </span> </h3>
 		<logic:iterate id="booklet" name="booklets">
-			<fr:view name="booklet" layout="tabular" schema="result.publication.resume.Booklet"/>
 			<bean:define id="bookletId" name="booklet" property="idInternal"/>
+			<fr:view name="booklet" layout="tabular" schema="result.publication.resume.Booklet">
+			    <fr:destination name="viewPublicationDetails" path="<%="/publications/publicationsManagement.do?method=preparePublicationDetails&publicationId="+ bookletId%>"/>
+			</fr:view>
 			<html:link page="<%="/publications/publicationsManagement.do?method=prepareViewEditPublication&publicationId="+ bookletId%>"><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.result.publication.publicationsDetails" /></html:link>&nbsp;&nbsp;&nbsp;
 			<html:link page="<%="/publications/publicationsManagement.do?method=prepareDeletePublication&publicationId="+ bookletId%>"><bean:message bundle="RESEARCHER_RESOURCES" key="link.remove" /></html:link>
 			<br /><br />
@@ -161,8 +201,10 @@
 	<logic:notEmpty name="miscs">
 		<h3 id='miscs' class='cd_heading'/> <span> <bean:message bundle="RESEARCHER_RESOURCES" key="researcher.result.publication.miscs"/> </span> </h3>
 		<logic:iterate id="misc" name="miscs">
-			<fr:view name="misc" layout="tabular" schema="result.publication.resume.Misc"/>
 			<bean:define id="miscId" name="misc" property="idInternal"/>
+			<fr:view name="misc" layout="tabular" schema="result.publication.resume.Misc">
+			    <fr:destination name="viewPublicationDetails" path="<%="/publications/publicationsManagement.do?method=preparePublicationDetails&publicationId="+ miscId%>"/>
+			</fr:view>
 			<html:link page="<%="/publications/publicationsManagement.do?method=prepareViewEditPublication&publicationId="+ miscId%>"><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.result.publication.publicationsDetails" /></html:link>&nbsp;&nbsp;&nbsp;
 			<html:link page="<%="/publications/publicationsManagement.do?method=prepareDeletePublication&publicationId="+ miscId%>"><bean:message bundle="RESEARCHER_RESOURCES" key="link.remove" /></html:link>
 			<br /><br />
@@ -172,22 +214,15 @@
 	<logic:notEmpty name="unpublisheds">
 		<h3 id='unpublisheds' class='cd_heading'/> <span> <bean:message bundle="RESEARCHER_RESOURCES" key="researcher.result.publication.unpublisheds"/> </span> </h3>
 		<logic:iterate id="unpublished" name="unpublisheds">
-			<fr:view name="unpublished" layout="tabular" schema="result.publication.resume.Unpublished"/>
 			<bean:define id="unpublishedId" name="unpublished" property="idInternal"/>
+			<fr:view name="unpublished" layout="tabular" schema="result.publication.resume.Unpublished">
+			    <fr:destination name="viewPublicationDetails" path="<%="/publications/publicationsManagement.do?method=preparePublicationDetails&publicationId="+ unpublishedId%>"/>
+			</fr:view>
 			<html:link page="<%="/publications/publicationsManagement.do?method=prepareViewEditPublication&publicationId="+ unpublishedId%>"><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.result.publication.publicationsDetails" /></html:link>&nbsp;&nbsp;&nbsp;
 			<html:link page="<%="/publications/publicationsManagement.do?method=prepareDeletePublication&publicationId="+ unpublishedId%>"><bean:message bundle="RESEARCHER_RESOURCES" key="link.remove" /></html:link>
 			<br /><br />
 		</logic:iterate>
 	</logic:notEmpty>
-
-    <%--   
-		<logic:iterate id="publication" name="publications">
-			<bean:define id="resultType" name="publication" property="publicationType" type="net.sourceforge.fenixedu.domain.research.result.publication.PublicationType"/>
-		  	<u><bean:message bundle="RESEARCHER_RESOURCES" key="<%="researcher.result.publication.publicationType."+resultType.toString().toLowerCase() %>"/></u>
- 			<fr:view name="publication" layout="tabular" schema="<%="result.publication.resume."+resultType.toString().toLowerCase() %>"/>
-  			<br /><hr />
-		</logic:iterate>
-	--%>
 
 	<br />	<br />
 	<html:link page="/publications/publicationsManagement.do?method=prepareCreatePublication"><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.result.publication.publicationsManagement.insertPublication" /></html:link>

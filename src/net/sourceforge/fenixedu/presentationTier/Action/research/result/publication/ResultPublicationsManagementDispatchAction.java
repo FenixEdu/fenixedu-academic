@@ -34,6 +34,8 @@ public class ResultPublicationsManagementDispatchAction extends FenixDispatchAct
         List<ResultPublication> books = new ArrayList<ResultPublication>();
         List<ResultPublication> bookParts = new ArrayList<ResultPublication>();
         List<ResultPublication> articles = new ArrayList<ResultPublication>();
+        List<ResultPublication> inproceedings = new ArrayList<ResultPublication>();
+        List<ResultPublication> proceedings = new ArrayList<ResultPublication>();
         List<ResultPublication> theses = new ArrayList<ResultPublication>();
         List<ResultPublication> manuals = new ArrayList<ResultPublication>();
         List<ResultPublication> technicalReports = new ArrayList<ResultPublication>();
@@ -50,6 +52,12 @@ public class ResultPublicationsManagementDispatchAction extends FenixDispatchAct
             }
             else if(resultPublication instanceof Article) {
                 articles.add(resultPublication);
+            }
+            else if(resultPublication instanceof Inproceedings) {
+                inproceedings.add(resultPublication);
+            }
+            else if(resultPublication instanceof Proceedings) {
+                proceedings.add(resultPublication);
             }
             else if(resultPublication instanceof Thesis) {
                 theses.add(resultPublication);
@@ -89,6 +97,8 @@ public class ResultPublicationsManagementDispatchAction extends FenixDispatchAct
         Collections.sort(books, YearComparator);
         Collections.sort(bookParts, YearComparator);
         Collections.sort(articles, YearComparator);
+        Collections.sort(inproceedings, YearComparator);
+        Collections.sort(proceedings, YearComparator);
         Collections.sort(theses, YearComparator);
         Collections.sort(manuals, YearComparator);
         Collections.sort(technicalReports, YearComparator);
@@ -99,6 +109,8 @@ public class ResultPublicationsManagementDispatchAction extends FenixDispatchAct
         request.setAttribute("books", books);
         request.setAttribute("bookParts", bookParts);
         request.setAttribute("articles", articles);
+        request.setAttribute("inproceedings", inproceedings);
+        request.setAttribute("proceedings", proceedings);
         request.setAttribute("theses", theses);
         request.setAttribute("manuals", manuals);
         request.setAttribute("technicalReports", technicalReports);
@@ -111,7 +123,7 @@ public class ResultPublicationsManagementDispatchAction extends FenixDispatchAct
     public ActionForward preparePublicationDetails(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) {
 
-        String publicationId = (String) request.getParameter("oid");
+        String publicationId = (String) request.getParameter("publicationId");
         ResultPublication publication = (ResultPublication) rootDomainObject.readResultByOID(Integer.valueOf(publicationId));
         request.setAttribute("publication", publication);
         
