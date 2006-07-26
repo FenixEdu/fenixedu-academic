@@ -81,9 +81,10 @@ public class TreeRenderer extends OutputRenderer {
     private String eachLayout;
     private String eachSchema;
     
+    private String image;
     private String children;
     private String links;
-    private boolean hideLinks;
+    private String hiddenLinks;
     
     private String listClass;
     private String listStyle;
@@ -99,6 +100,7 @@ public class TreeRenderer extends OutputRenderer {
     private Map<String, String> classesMap;
     private Map<String, String> styleMap;
     private Map<String, String> linksMap;
+    private Map<String, String> hiddenLinksMap;
     private Map<String, String> imagesMap;
 
     public TreeRenderer() {
@@ -108,6 +110,7 @@ public class TreeRenderer extends OutputRenderer {
         this.classesMap = new HashMap<String, String>();
         this.styleMap = new HashMap<String, String>();
         this.linksMap = new HashMap<String, String>();
+        this.hiddenLinksMap = new HashMap<String, String>();
         this.imagesMap = new HashMap<String, String>();
         this.layoutsMap = new HashMap<String, String>();
         this.schemasMap = new HashMap<String, String>();
@@ -420,21 +423,22 @@ public class TreeRenderer extends OutputRenderer {
     public void setLinks(String links) {
         this.links = links;
     }
-
-    public boolean isHideLinks() {
-        return this.hideLinks;
+    
+    public String getHiddenLinks() {
+        return hiddenLinks;
     }
 
     /**
-     * Indicates the links should be ommited if the tree is draggable. Offcourse this is assumming
-     * that every link is a link to manipulate the tree in a way that is possible by drag and drop.
+     * This property is similar to the {@link #setLinks(String) links} property but the links
+     * defined with this property will be hidden when the tree is draggable. This property is
+     * usefull to specify links that simulate the same actions available by drag and drop.
      * 
      * @property
      */
-    public void setHideLinks(boolean hideLinks) {
-        this.hideLinks = hideLinks;
+    public void setHiddenLinks(String hiddenlinks) {
+        this.hiddenLinks = hiddenlinks;
     }
-   
+
     public String getLinksFor(String type) {
         return this.linksMap.get(type);
     }
@@ -446,6 +450,20 @@ public class TreeRenderer extends OutputRenderer {
      * @property
      */
     public void setLinksFor(String type, String method) {
+        this.linksMap.put(type, method);
+    }
+    
+    public String getHiddenLinksFor(String type) {
+        return this.linksMap.get(type);
+    }
+    
+    /**
+     * Specifies the hidden links that should appear near items corresponding to objects of the
+     * given type. The link text is replaced in the same way than {@link #setHiddenLinks(String)}.
+     * 
+     * @property
+     */
+    public void setHiddenLinksFor(String type, String method) {
         this.linksMap.put(type, method);
     }
     
@@ -474,6 +492,19 @@ public class TreeRenderer extends OutputRenderer {
      */
     public void setLinksStyle(String linksStyle) {
         this.linksStyle = linksStyle;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    /**
+     * Sets the path for the default image to be used for lists items.
+     * 
+     * @property
+     */
+    public void setImage(String image) {
+        this.image = image;
     }
 
     public String getImageFor(String type) {
@@ -558,10 +589,7 @@ public class TreeRenderer extends OutputRenderer {
             container.addChild(scriptA);
             container.addChild(scriptB);
             container.addChild(scriptC);
-            
-            if (isHideLinks()) {
-                container.addChild(scriptD);
-            }
+            container.addChild(scriptD);
             
             return container;
         }
@@ -574,7 +602,10 @@ public class TreeRenderer extends OutputRenderer {
                     "  var span = items[item];\n" +
                     "\n" +
                     "  if (span.className && span.className.indexOf('%s') >= 0) {\n" +
-                    "    span.style.display = 'none';\n" +
+                    "    var childSpans = span.getElementsByTagName('SPAN');\n" +
+                    "    if (childSpans.length > 0) {\n" +
+                    "      span.getElementsByTagName('SPAN')[0].style.display = 'none';\n" +
+                    "    }\n" +
                     "  }\n" +
                     "}\n",
                     getTreeId(), 
@@ -662,11 +693,18 @@ public class TreeRenderer extends OutputRenderer {
                 }
                 
                 String linksForItem = getLinksFor(object);
+                String hiddenLinksForItem = getHiddenLinksFor(object);
                 
-                if (linksForItem != null) {
+                if (linksForItem != null || hiddenLinksForItem != null) {
                     HtmlContainer linksContainer = new HtmlInlineContainer();
                     linksContainer.setClasses(getUsableLinksClasses());
                     linksContainer.setStyle(getLinksStyle());
+
+                    if (hiddenLinksForItem != null) {
+                        HtmlContainer hiddenContainer = new HtmlInlineContainer();
+                        hiddenContainer.addChild(new HtmlText(RenderUtils.getFormattedProperties(hiddenLinksForItem, object)));
+                        linksContainer.addChild(hiddenContainer);
+                    }
                     
                     linksContainer.addChild(new HtmlText(RenderUtils.getFormattedProperties(linksForItem, object)));
                     item.addChild(linksContainer);
@@ -731,8 +769,12 @@ public class TreeRenderer extends OutputRenderer {
             return getValueFor(object, TreeRenderer.this.linksMap, getLinks());
         }
         
+        private String getHiddenLinksFor(Object object) {
+            return getValueFor(object, TreeRenderer.this.linksMap, getHiddenLinks());
+        }
+
         private String getImageFor(Object object) {
-            return getValueFor(object, TreeRenderer.this.imagesMap, null);
+            return getValueFor(object, TreeRenderer.this.imagesMap, getImage());
         }
 
         private String getSchemaFor(Object object) {
