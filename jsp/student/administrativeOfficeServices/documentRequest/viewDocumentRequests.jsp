@@ -13,14 +13,18 @@
 		</html:messages>
 	</span>
 </logic:messagesPresent>
-<%-- 
-<logic:iterate id="documentRequest" name="documentRequests">
-	<bean:define id="simpleClassName" name="documentRequest" property="class.simpleName" />
-	<fr:view name="documentRequest" schema="<%= simpleClassName  + ".view"%>">
-		<fr:layout name="tabular">
-			<fr:property name="classes" value="tstyle4" />
-			<fr:property name="columnClasses" value="listClasses,," />
-		</fr:layout>
-	</fr:view>
-</logic:iterate>
---%>
+
+<fr:view name="documentRequests" schema="DocumentRequest.view-without-numberOfPages-documentPurposeTypeInformation">
+	<fr:layout name="tabular">
+		<fr:property name="classes" value="tstyle4 thlight thright" />
+		
+		<fr:property name="linkFormat(view)" value="/documentRequestsManagement.do?method=viewDocumentRequest&documentRequestId=${idInternal}"/>
+		<fr:property name="key(view)" value="label.documentRequestsManagement.viewRequest"/>
+
+		<fr:property name="linkFormat(edit)" value="/documentRequestsManagement.do?method=prepareEditDocumentRequest&documentRequestId=${idInternal}"/>
+		<fr:property name="key(edit)" value="label.documentRequestsManagement.editRequest"/>
+		<fr:property name="visibleIf(edit)" value="editable"/>
+		
+		<fr:property name="sortBy" value="urgentRequest=desc,creationDate=desc"/>
+	</fr:layout>
+</fr:view>
