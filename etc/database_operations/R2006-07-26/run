@@ -26,3 +26,8 @@ function executeWithTempFile() {
 	rm tmp.sql
 	echo
 }
+
+execute "Alter Table Result" alterTableResult.sql
+execute "alter FILE table" alterFileTable.sql
+execute "Creating tables for functionalities" CreateFunctionalitiesTables.sql
+execute "Changing table AccountingEvent" AlterTableAccountingEvent.sql
