@@ -64,15 +64,15 @@
 	<slot name="numberOfPages" key="label.net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest.numberOfPages" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" />
 </schema>
 
-<schema name="DocumentRequestCreateBean.viewToConfirmCreation" type="net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.serviceRequest.documentRequest.DocumentRequestCreateBean" bundle="APPLICATION_RESOURCES">
-	<slot name="toBeCreated"></slot>
-	<slot name="studentCurricularPlan.degreeCurricularPlan.name" read-only="true"/>
-	<slot name="chosenDocumentRequestType" read-only="true"/>
-	<slot name="chosenDocumentPurposeType" read-only="true"/>
-	<slot name="otherPurpose" read-only="true"/>	
-	<slot name="notes" read-only="true"/>	
-	<slot name="urgentRequest" read-only="true"/>	
-	<slot name="average" read-only="true"/>			
-	<slot name="detailed" read-only="true"/>			
-	<slot name="average" read-only="true"/>			
+<schema name="DocumentRequestCreateBean.viewToConfirmCreation" type="net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.serviceRequest.documentRequest.DocumentRequestCreateBean" bundle="STUDENT_RESOURCES">
+	<slot name="toBeCreated" key="submit"></slot>
+	<slot name="studentCurricularPlan.degreeCurricularPlan.name" read-only="true" key="label.curricularplan"/>
+	<slot name="chosenDocumentRequestType" read-only="true" key="document.to.request"/>
+	<slot name="chosenDocumentPurposeType" read-only="true" key="document.purpose"/>
+	<slot name="otherPurpose" read-only="true" key="otherPurpose"/>	
+	<slot name="notes" read-only="true" key="notes"/>
+	<slot name="urgentRequest" read-only="true" key="urgency.charge.view"/>
+	<slot name="average" read-only="true" key="average.view"/>			
+	<slot name="detailed" read-only="true" key="detailed.view"/>			
+	<slot name="average" read-only="true" key="average.view"/>
 </schema>
