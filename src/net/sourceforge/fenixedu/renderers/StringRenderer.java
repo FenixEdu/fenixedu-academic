@@ -142,8 +142,11 @@ public class StringRenderer extends OutputRenderer {
                 for (int i = 0; i < lines.length; i++) {
                     String line = lines[i];
 
+                    if (i > 0) {
+                        result.append("<br/>");
+                    }
+                    
                     result.append(HtmlText.escape(line));
-                    result.append("<br/>");
                 }
                 
                 return result.toString();
