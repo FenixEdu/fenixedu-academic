@@ -21,7 +21,7 @@
 	<html:form action="/documentRequestsManagement.do">
 		<html:hidden property="method"/>
 		
-		<fr:view name="academicServiceRequestList" schema="DocumentRequest.view-without-numberOfPages-academicServiceRequestSituationType">
+		<fr:view name="academicServiceRequestList" schema="DocumentRequest.view-without-numberOfPages">
 			<fr:layout name="tabular">
 				<fr:property name="classes" value="tstyle4 thlight thcenter" />
 				<fr:property name="checkable" value="true" />
