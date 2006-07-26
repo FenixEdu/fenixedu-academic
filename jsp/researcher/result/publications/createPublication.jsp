@@ -48,7 +48,4 @@
       	<fr:destination name="cancel" path="/publications/publicationsManagement.do?method=listPublications"/>
 	</fr:edit>
 
-
-
-
 </logic:present>
