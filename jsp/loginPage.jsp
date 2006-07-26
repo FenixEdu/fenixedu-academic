@@ -55,16 +55,16 @@
 						</td>
 					</tr>
 				</table>
+				<br />
+				<div class="wrapper">
+					<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.ok" styleClass="button" property="ok">
+						<bean:message key="button.submit" />
+					</html:submit>
+					<html:reset bundle="HTMLALT_RESOURCES" altKey="reset.reset" styleClass="button">
+						<bean:message key="button.clean" />
+					</html:reset>
+				</div>
 			</html:form>
-			<br />
-			<div class="wrapper">
-				<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.ok" styleClass="button" property="ok">
-					<bean:message key="button.submit" />
-				</html:submit>
-				<html:reset bundle="HTMLALT_RESOURCES" altKey="reset.reset" styleClass="button">
-					<bean:message key="button.clean" />
-				</html:reset>
-			</div>
 			<br />
 			<div>
 				<center>
