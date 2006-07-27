@@ -237,33 +237,29 @@ public class CheckBoxOptionListRenderer extends InputRenderer {
             HtmlCheckBoxList listComponent = new HtmlCheckBoxList();
             listComponent.setSelectAllShown(isSelectAllShown());
             
+            Schema schema = RenderKit.getInstance().findSchema(getEachSchema());
+            
             List<MetaObject> possibleMetaObjects;
-            Collection possibleObjects;
-            
+
             if (hasSavedPossibleMetaObjects()) {
-            	possibleMetaObjects = getPossibleMetaObjects();
-            	
-            	possibleObjects = new ArrayList<Object>();
-            	for (MetaObject metaObject: possibleMetaObjects) {
-            		possibleObjects.add(metaObject.getObject());
-            	}
-            }
-            else {
-            	possibleMetaObjects = new ArrayList<MetaObject>();
-            	possibleObjects = getPossibleObjects();
-            }
-            
-            
-            for (Object obj : possibleObjects) {
-                Schema schema = RenderKit.getInstance().findSchema(getEachSchema());
-                String layout = getEachLayout();
+                possibleMetaObjects = getPossibleMetaObjects();
+            } else {
+                possibleMetaObjects = new ArrayList<MetaObject>();
                 
-                MetaObject metaObject = MetaObjectFactory.createObject(obj, schema);
+                for (Object possibility : getPossibleObjects()) {
+                    possibleMetaObjects.add(MetaObjectFactory.createObject(possibility, schema));
+                }
+            }
+            
+            for (MetaObject metaObject : possibleMetaObjects) {
+                Object obj = metaObject.getObject();
                 MetaObjectKey key = metaObject.getKey();
                 
                 if (! hasSavedPossibleMetaObjects()) {
-                	possibleMetaObjects.add(metaObject);
+                    possibleMetaObjects.add(metaObject);
                 }
+                
+                String layout = getEachLayout();
                 
                 PresentationContext newContext = getContext().createSubContext(metaObject);
                 newContext.setLayout(layout);
@@ -279,20 +275,7 @@ public class CheckBoxOptionListRenderer extends InputRenderer {
             }
 
             if (isSaveOptions()) {
-            	savePossibleMetaObjects(possibleMetaObjects);
-            }
-            
-            if (collection != null) {
-                for (Object obj : collection) {
-                    if (! possibleObjects.contains(obj)) {
-                        Schema schema = RenderKit.getInstance().findSchema(getEachSchema());
-                        
-                        MetaObject metaObject = MetaObjectFactory.createObject(obj, schema);
-                        MetaObjectKey key = metaObject.getKey();
-                        
-                        listComponent.addHiddenOption(key.toString());
-                    }
-                }
+            	    savePossibleMetaObjects(possibleMetaObjects);
             }
             
             // TODO: make providers only provide a converter for a single object
@@ -331,27 +314,25 @@ public class CheckBoxOptionListRenderer extends InputRenderer {
         @Override
         public Object convert(Class type, Object value) {
             String[] textValues = (String[]) value;
-            
+
             if (textValues == null || textValues.length == 0) {
-                return null;
-            }
-            else {
+                return new ArrayList();
+            } else {
                 if (this.converter != null) {
                     return this.converter.convert(type, value);
-                }
-                else {
+                } else {
                     List<Object> result = new ArrayList<Object>();
-                    
+
                     for (MetaObject metaObject : this.metaObjects) {
-                    	for (int i = 0; i < textValues.length; i++) {
-							String textValue = textValues[i];
-							
-	                        if (textValue.equals(metaObject.getKey().toString())) {
-	                            result.add(metaObject.getObject());
-	                        }
-						}
+                        for (int i = 0; i < textValues.length; i++) {
+                            String textValue = textValues[i];
+
+                            if (textValue.equals(metaObject.getKey().toString())) {
+                                result.add(metaObject.getObject());
+                            }
+                        }
                     }
-                    
+
                     return result;
                 }
             }

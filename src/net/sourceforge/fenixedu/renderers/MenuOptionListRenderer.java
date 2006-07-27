@@ -51,6 +51,8 @@ public class MenuOptionListRenderer extends InputRenderer {
     
     private String sortBy;
     
+    private boolean saveOptions;
+    
     private String defaultText;
     private String bundle;
     private boolean key;
@@ -165,6 +167,20 @@ public class MenuOptionListRenderer extends InputRenderer {
     public void setKey(boolean key) {
         this.key = key;
     }
+    
+    public boolean isSaveOptions() {
+        return saveOptions;
+    }
+
+    /**
+     * Allows the possible object list to be persisted between requests,
+     * meaning that the provider is invoked only once.
+     * 
+     * @property
+     */
+    public void setSaveOptions(boolean saveOptions) {
+        this.saveOptions = saveOptions;
+    }
 
     @Override
     protected Layout getLayout(Object object, Class type) {
@@ -229,12 +245,25 @@ public class MenuOptionListRenderer extends InputRenderer {
             RenderKit kit = RenderKit.getInstance();
             Schema schema = kit.findSchema(getEachSchema()); 
             
-            List<MetaObject> possibleMetaObjects = new ArrayList<MetaObject>();
+            List<MetaObject> possibleMetaObjects;
             
-            for (Object obj : getPossibleObjects()) {
-                MetaObject metaObject = MetaObjectFactory.createObject(obj, schema);
-                possibleMetaObjects.add(metaObject);
+            if (hasSavedPossibleMetaObjects()) {
+                possibleMetaObjects = getPossibleMetaObjects();
+            } else {
+                possibleMetaObjects = new ArrayList<MetaObject>();
+                
+                for (Object possibility : getPossibleObjects()) {
+                    possibleMetaObjects.add(MetaObjectFactory.createObject(possibility, schema));
+                }
+            }
+            
+            for (MetaObject metaObject : possibleMetaObjects) {
+                Object obj = metaObject.getObject();
                 MetaObjectKey key = metaObject.getKey();
+                
+                if (! hasSavedPossibleMetaObjects()) {
+                    possibleMetaObjects.add(metaObject);
+                }
                 
                 HtmlMenuOption option = menu.createOption(null);
                 option.setValue(key.toString());
@@ -258,11 +287,27 @@ public class MenuOptionListRenderer extends InputRenderer {
                 }
             }
             
+            if (isSaveOptions()) {
+                savePossibleMetaObjects(possibleMetaObjects);
+            }
+            
             Converter converter = getConverter();
             menu.setConverter(new OptionConverter(possibleMetaObjects, converter));
             
             menu.setTargetSlot((MetaSlotKey) getInputContext().getMetaObject().getKey());
             return menu;
+        }
+        
+        private boolean hasSavedPossibleMetaObjects() {
+            return getInputContext().getViewState().getLocalAttribute("options") != null;
+        }
+
+        private List<MetaObject> getPossibleMetaObjects() {
+            return (List<MetaObject>) getInputContext().getViewState().getLocalAttribute("options");
+        }
+        
+        private void savePossibleMetaObjects(List<MetaObject> possibleMetaObjects) {
+            getInputContext().getViewState().setLocalAttribute("options", possibleMetaObjects);
         }
 
         // TODO: duplicate code, id=menu.getDefaultTitle
@@ -314,7 +359,7 @@ public class MenuOptionListRenderer extends InputRenderer {
                 }
                 else {
                     for (MetaObject metaObject : this.metaObjects) {
-                        if (value.equals(metaObject.getKey().toString())) {
+                        if (textValue.equals(metaObject.getKey().toString())) {
                             return metaObject.getObject();
                         }
                     }
