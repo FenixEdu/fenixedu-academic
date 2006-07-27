@@ -54,7 +54,7 @@
 					valueChangeListener="#{CurricularRulesManagement.onChangeCurricularRuleTypeDropDown}">
 				<f:selectItems binding="#{CurricularRulesManagement.curricularRuleTypeItems}"/>
 			</fc:selectOneMenu>
-			<h:outputText value="<input value='#{htmlAltBundle['submit.sumbit']}' id='javascriptButtonID' class='altJavaScriptSubmitButton' alt='#{htmlAltBundle['submit.sumbit']}' type='submit'>" escape="false"/>
+			<h:outputText value="<input value='#{htmlAltBundle['submit.sumbit']}' id='javascriptButtonID' class='altJavaScriptSubmitButton' alt='#{htmlAltBundle['submit.sumbit']}' type='submit'/>" escape="false"/>
 			<h:outputText value="</p>" escape="false"/>
 			
 			<h:panelGroup rendered="#{CurricularRulesManagement.selectedCurricularRuleType == 'PRECEDENCY_APPROVED_DEGREE_MODULE' 

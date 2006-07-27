@@ -4,26 +4,15 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ page import="net.sourceforge.fenixedu.domain.Degree" %>
 
-<bean:define id="institutionUrl" type="java.lang.String">
-	<bean:message key="institution.url" bundle="GLOBAL_RESOURCES"/>
-</bean:define>
+<bean:define id="institutionUrl" type="java.lang.String"><bean:message key="institution.url" bundle="GLOBAL_RESOURCES"/></bean:define>
 <div class="breadcumbs">
-	<a href="<%= institutionUrl %>">
-		<bean:message key="institution.name.abbreviation" bundle="GLOBAL_RESOURCES"/>
-	</a>
-	<bean:define id="institutionUrlTeaching" type="java.lang.String">
-		<bean:message key="institution.url" bundle="GLOBAL_RESOURCES"/>
-		<bean:message key="link.institution" bundle="GLOBAL_RESOURCES"/>
-	</bean:define>
+	<a href="<%= institutionUrl %>"><bean:message key="institution.name.abbreviation" bundle="GLOBAL_RESOURCES"/></a>
+	<bean:define id="institutionUrlTeaching" type="java.lang.String"><bean:message key="institution.url" bundle="GLOBAL_RESOURCES"/><bean:message key="link.institution" bundle="GLOBAL_RESOURCES"/></bean:define>
 	&nbsp;&gt;&nbsp;
-	<a href="<%=institutionUrlTeaching%>">
-		<bean:message  bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.education"/>
-	</a>
+	<a href="<%=institutionUrlTeaching%>"><bean:message  bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.education"/></a>
 	<logic:present name="infoDegree">
 		&nbsp;&gt;&nbsp;
-		<html:link page="<%= "/showDegreeSite.do?method=showDescription&amp;degreeID=" + request.getAttribute("degreeID").toString() %>">
-			<bean:write name="infoDegree" property="sigla"/>
-		</html:link>
+		<html:link page="<%= "/showDegreeSite.do?method=showDescription&amp;degreeID=" + request.getAttribute("degreeID").toString() %>"><bean:write name="infoDegree" property="sigla"/></html:link>
 	</logic:present>
 	&nbsp;&gt;&nbsp;
 	<bean:message key="public.degree.information.label.classes"  bundle="PUBLIC_DEGREE_INFORMATION" />
@@ -40,7 +29,7 @@
 	<bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.classes"/>
 </h2>
 
-<em><span class="error0"><html:errors/></span></em>
+<em><span class="error0"><!-- Error messages go here --><html:errors/></span></em>
 
 <!-- BOOLEAN RENDER VALUES -->
 <bean:define id="numberRowsCurrent" name="classViewsTableCurrent" property="numberRows" />
@@ -80,7 +69,7 @@
 		<%  java.util.Iterator iter = degree.buildFullCurricularYearList().iterator();
 			while (iter.hasNext()) {
 				Integer curricularYear = (Integer)iter.next(); %>
-			<td class="subheader" width="75px"><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.year"/> <%= String.valueOf(curricularYear) %></td>
+			<td class="subheader" width="75"><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.year"/> <%= String.valueOf(curricularYear) %></td>
 		<% } %>
 		</tr>
 	
@@ -102,8 +91,6 @@
 												+ pageContext.findAttribute("className").toString()
 												+ "&amp;degreeInitials="
 												+ pageContext.findAttribute("degreeInitials").toString()
-												+ "&amp;nameDegreeCurricularPlan="
-												+ pageContext.findAttribute("nameDegreeCurricularPlan").toString()
 												+ "&amp;degreeCurricularPlanID="
 												+ pageContext.findAttribute("degreeCurricularPlanID").toString()
 												+ "&amp;degreeID="
@@ -157,8 +144,6 @@
 												+ pageContext.findAttribute("className").toString()
 												+ "&amp;degreeInitials="
 												+ pageContext.findAttribute("degreeInitials").toString()
-												+ "&amp;nameDegreeCurricularPlan="
-												+ pageContext.findAttribute("nameDegreeCurricularPlan").toString()
 												+ "&amp;degreeCurricularPlanID="
 												+ pageContext.findAttribute("degreeCurricularPlanID").toString()
 												+ "&amp;degreeID="

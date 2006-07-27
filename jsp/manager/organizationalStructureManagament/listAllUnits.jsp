@@ -47,7 +47,7 @@
 			onchange="this.form.submit();">
 			<f:selectItems value="#{organizationalStructureBackingBean.listingTypeToUnits}"/>				
 		</fc:selectOneMenu>		
-		<h:outputText value="<input value='#{htmlAltBundle['submit.sumbit']}' id='javascriptButtonID' class='altJavaScriptSubmitButton' alt='#{htmlAltBundle['submit.sumbit']}' type='submit'>" escape="false"/>
+		<h:outputText value="<input value='#{htmlAltBundle['submit.sumbit']}' id='javascriptButtonID' class='altJavaScriptSubmitButton' alt='#{htmlAltBundle['submit.sumbit']}' type='submit'/>" escape="false"/>
 			
 		<h:outputText value="<br/><br/>#{organizationalStructureBackingBean.units}" escape="false"/>
 				

@@ -54,7 +54,7 @@
 					<h:selectOneMenu value="#{createExecutionDegrees.choosenExecutionYearID}" onchange="this.form.submit();" valueChangeListener="#{createExecutionDegrees.onChoosenExecutionYearChanged}">
 						<f:selectItems value="#{createExecutionDegrees.executionYears}" />
 					</h:selectOneMenu>
-					<h:outputText value="<input value='#{htmlAltBundle['submit.sumbit']}' id='javascriptButtonID' class='altJavaScriptSubmitButton' alt='#{htmlAltBundle['submit.sumbit']}' type='submit'>" escape="false"/>
+					<h:outputText value="<input value='#{htmlAltBundle['submit.sumbit']}' id='javascriptButtonID' class='altJavaScriptSubmitButton' alt='#{htmlAltBundle['submit.sumbit']}' type='submit'/>" escape="false"/>
 				<h:outputText value="</p>" escape="false"/>
 				<h:outputText value="<p><label>Campus:</label>" escape="false"/>
 					<h:selectOneMenu value="#{createExecutionDegrees.campus}" >

@@ -82,7 +82,7 @@ table.executionCoursesWithoutWrittenEvaluations td {
 				<h:selectOneMenu value="#{CoordinatorEvaluationsBackingBean.executionPeriodID}" onchange="this.form.submit()">
 					<f:selectItems value="#{CoordinatorEvaluationsBackingBean.executionPeriodSelectItems}"/>
 				</h:selectOneMenu>
-				<h:outputText value="<input value='#{htmlAltBundle['submit.sumbit']}' id='javascriptButtonID' class='altJavaScriptSubmitButton' alt='#{htmlAltBundle['submit.sumbit']}' type='submit'>" escape="false"/>
+				<h:outputText value="<input value='#{htmlAltBundle['submit.sumbit']}' id='javascriptButtonID' class='altJavaScriptSubmitButton' alt='#{htmlAltBundle['submit.sumbit']}' type='submit'/>" escape="false"/>
 
 				<h:outputText value="#{bundle['property.curricularYear']}: " escape="false" />
 				<h:selectOneMenu value="#{CoordinatorEvaluationsBackingBean.curricularYearID}" onchange="this.form.submit()">

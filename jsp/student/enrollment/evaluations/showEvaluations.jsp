@@ -83,7 +83,7 @@ text-align: left;
 			   valueChangeListener="#{displayEvaluationsToEnrol.changeExecutionPeriod}">
 				<f:selectItems value="#{displayEvaluationsToEnrol.executionPeriodsLabels}" />
 			</fc:selectOneMenu>
-			<h:outputText value="<input value='#{htmlAltBundle['submit.sumbit']}' id='javascriptButtonID' class='altJavaScriptSubmitButton' alt='#{htmlAltBundle['submit.sumbit']}' type='submit'>" escape="false"/>
+			<h:outputText value="<input value='#{htmlAltBundle['submit.sumbit']}' id='javascriptButtonID' class='altJavaScriptSubmitButton' alt='#{htmlAltBundle['submit.sumbit']}' type='submit'/>" escape="false"/>
 			<h:outputText value="#{bundle['link.evaluations.enrolment']}: " styleClass="boldFontClass" />
 			<fc:selectOneMenu value="#{displayEvaluationsToEnrol.evaluationType}" onchange="this.form.submit();"
 			   valueChangeListener="#{displayEvaluationsToEnrol.changeEvaluationType}">

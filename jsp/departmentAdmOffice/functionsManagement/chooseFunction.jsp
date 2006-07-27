@@ -61,7 +61,7 @@
 			<fc:selectOneMenu disabled="#{functionsManagementBackingBean.disabledVar == 1}" onchange="this.form.submit();" value="#{functionsManagementBackingBean.executionPeriod}">
 				<f:selectItems value="#{functionsManagementBackingBean.executionPeriods}"/>
 			</fc:selectOneMenu>
-			<h:outputText value="<input value='#{htmlAltBundle['submit.sumbit']}' id='javascriptButtonID' class='altJavaScriptSubmitButton' alt='#{htmlAltBundle['submit.sumbit']}' type='submit'>" escape="false"/>
+			<h:outputText value="<input value='#{htmlAltBundle['submit.sumbit']}' id='javascriptButtonID' class='altJavaScriptSubmitButton' alt='#{htmlAltBundle['submit.sumbit']}' type='submit'/>" escape="false"/>
 			<h:outputText value=""/>
 			
 			<h:outputText value="<b>#{bundle['label.duration']}</b>" escape="false"/>

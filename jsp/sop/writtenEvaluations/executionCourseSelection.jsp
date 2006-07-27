@@ -31,7 +31,7 @@
 	 						onchange="this.form.submit();" valueChangeListener="#{SOPEvaluationManagementBackingBean.enableDropDowns}">
 				<f:selectItems value="#{SOPEvaluationManagementBackingBean.executionPeriods}" />
 			</h:selectOneMenu>
-			<h:outputText value="<input value='#{htmlAltBundle['submit.sumbit']}' id='javascriptButtonID' class='altJavaScriptSubmitButton' alt='#{htmlAltBundle['submit.sumbit']}' type='submit'>" escape="false"/>
+			<h:outputText value="<input value='#{htmlAltBundle['submit.sumbit']}' id='javascriptButtonID' class='altJavaScriptSubmitButton' alt='#{htmlAltBundle['submit.sumbit']}' type='submit'/>" escape="false"/>
 			
 			<h:outputText value="#{bundleSOP['property.context.degree']}: " />
 			<h:selectOneMenu id="chosenExecutionDegreeID" value="#{SOPEvaluationManagementBackingBean.chosenExecutionDegreeID}"

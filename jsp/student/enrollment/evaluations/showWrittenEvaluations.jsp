@@ -88,7 +88,7 @@ margin-bottom: 0.25em;
 			   valueChangeListener="#{manageEvaluationsForStudent.changeExecutionPeriod}">
 				<f:selectItems value="#{manageEvaluationsForStudent.executionPeriodsLabels}" />
 			</fc:selectOneMenu>
-			<h:outputText value="<input value='#{htmlAltBundle['submit.sumbit']}' id='javascriptButtonID' class='altJavaScriptSubmitButton' alt='#{htmlAltBundle['submit.sumbit']}' type='submit'>" escape="false"/>
+			<h:outputText value="<input value='#{htmlAltBundle['submit.sumbit']}' id='javascriptButtonID' class='altJavaScriptSubmitButton' alt='#{htmlAltBundle['submit.sumbit']}' type='submit'/>" escape="false"/>
 		</h:panelGrid>
 		<h:outputText value="</div>	" escape="false"/>
 		

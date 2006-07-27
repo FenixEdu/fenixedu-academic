@@ -87,7 +87,7 @@ text-align: right;
 					onchange="this.form.submit();">
 					<f:selectItems binding="#{viewTeacherService.executionYearItems}"/>
 				</fc:selectOneMenu>
-				<h:outputText value="<input value='#{htmlAltBundle['submit.sumbit']}' id='javascriptButtonID' class='altJavaScriptSubmitButton' alt='#{htmlAltBundle['submit.sumbit']}' type='submit'>" escape="false"/>
+				<h:outputText value="<input value='#{htmlAltBundle['submit.sumbit']}' id='javascriptButtonID' class='altJavaScriptSubmitButton' alt='#{htmlAltBundle['submit.sumbit']}' type='submit'/>" escape="false"/>
 			 	<h:outputText value="#{bundle['label.common.courseSemester']}&nbsp;" escape="false" styleClass="leftColumn" />
 				<fc:selectOneMenu value="#{viewTeacherService.selectedExecutionPeriodID}"
 					onchange="this.form.submit();">

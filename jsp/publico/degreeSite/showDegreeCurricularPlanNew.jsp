@@ -26,9 +26,7 @@
 	&nbsp;&gt;&nbsp;<bean:message bundle="PUBLIC_DEGREE_INFORMATION"  key="public.degree.information.label.curriculum"/>		
 </div>	
 
-<p><span class="error"><html:errors/></span></p>
-
-<style>@import "<%= request.getContextPath() %>/CSS/table-adjustment.css";</style>
+<p><span class="error"><!-- Error messages go here. --><html:errors/></span></p>
 
 	<h1>
 	   <bean:define id="degreeType" name="infoDegreeCurricularPlan" property="infoDegree.tipoCurso.name"/>
@@ -64,7 +62,7 @@
 		</logic:notEmpty>	
 	</h2>
 
-	<html:form action="/prepareConsultCurricularPlanNew.do" method="GET" >
+	<html:form action="/prepareConsultCurricularPlanNew.do" method="get" >
 		<html:hidden alt="<%= SessionConstants.EXECUTION_PERIOD_OID %>" property="<%= SessionConstants.EXECUTION_PERIOD_OID %>" value="<%= ""+request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID)%>" />
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.degreeID" property="degreeID" value="<%= ""+request.getAttribute("degreeID")%>" />
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.degreeCurricularPlanID" property="degreeCurricularPlanID" value="<%= pageContext.findAttribute("degreeCurricularPlanID").toString() %>" />	
@@ -139,11 +137,11 @@
 		<tr>
 			<% if (pageContext.findAttribute("indiceID").toString().equals("44")){%>		
 				<th colspan="11" scope="col">
-					 <center><bean:write name="curricularCourseScopeElem" property="infoBranch.name"/></center>
+					 <center><!--Branch name goes here--><bean:write name="curricularCourseScopeElem" property="infoBranch.name"/></center>
 				</th>
 			<%}else{ %>
 				<th colspan="10" scope="col">
-					 <center><bean:write name="curricularCourseScopeElem" property="infoBranch.name"/></center>
+					 <center><!--Branch name goes here--><bean:write name="curricularCourseScopeElem" property="infoBranch.name"/></center>
 				</th>
 			<%}%>
 		</tr>
@@ -155,8 +153,8 @@
 				<td colspan="6" class="subheader">&nbsp;</td>
 				<td colspan="4" class="subheader"><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.hoursPerWeek" /></td>
 			<%}%>
-		</tr>	
 		</tr>
+		<tr>
 			<td class="subheader"><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.semester.abbr"/></td>
 			<td class="subheader"><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.curricularCourse"/></td>
 			<td class="subheader"><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.anotation"/></td>
@@ -177,7 +175,7 @@
 				  <logic:equal name="curricularCourseScopeElem" property="infoCurricularSemester.infoCurricularYear.year" value="<%= pageContext.findAttribute("currentYear").toString()%>">					 
 						<tr>
 							<th colspan="11" scope="col">
-								 <center><bean:write name="curricularCourseScopeElem" property="infoBranch.name"/></center>
+								 <center><!--Branch name goes here--><bean:write name="curricularCourseScopeElem" property="infoBranch.name"/></center>
 							</th>
 						</tr>
 						<bean:define id="currentCode" name="curricularCourseScopeElem" property="infoBranch.code"/>
@@ -224,7 +222,7 @@
 					<bean:define id="currentCode" name="curricularCourseScopeElem" property="infoBranch.code"/>
 					<tr>
 						<th colspan="11" scope="col">
-							 <center><bean:write name="curricularCourseScopeElem" property="infoBranch.name"/></center>
+							 <center><!--Branch name goes here--><bean:write name="curricularCourseScopeElem" property="infoBranch.name"/></center>
 						</th>
 						</tr>
 					<tr>
@@ -251,7 +249,7 @@
 					 <logic:notEqual name="curricularCourseScopeElem" property="infoCurricularSemester.infoCurricularYear.year" value="<%= pageContext.findAttribute("currentYear").toString()%>">
 					
 					</table>
-					<p/>
+					<br/>
 					 <table class="tab_lay" cellspacing="0" cellpadding="5">
 					 <% if (row.intValue() % 2 !=0) count=1; else count=0; %>
 
@@ -269,7 +267,7 @@
 					<bean:define id="currentCode" name="curricularCourseScopeElem" property="infoBranch.code"/>
 					<tr>
 						<th colspan="11" scope="col">
-							 <center><bean:write name="curricularCourseScopeElem" property="infoBranch.name"/></center>
+							 <center><!--Branch name goes here--><bean:write name="curricularCourseScopeElem" property="infoBranch.name"/></center>
 						</th>
 					</tr>
 					<tr>
@@ -334,10 +332,10 @@
 </logic:present>
 
 <logic:notPresent name="allActiveCurricularCourseScopes">
-	<p><span class="error"><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.error.impossibleCurricularPlan" /></span></p>
+	<p><span class="error"><!-- Error messages go here. --><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.error.impossibleCurricularPlan" /></span></p>
 </logic:notPresent>
 <logic:empty name="allActiveCurricularCourseScopes">
-	<p><span class="error"><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.error.impossibleCurricularPlan" /></span></p>
+	<p><span class="error"><!-- Error messages go here. --><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.error.impossibleCurricularPlan" /></span></p>
 </logic:empty>
 	
 </logic:present>

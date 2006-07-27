@@ -3,26 +3,15 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 
-<bean:define id="institutionUrl" type="java.lang.String">
-	<bean:message key="institution.url" bundle="GLOBAL_RESOURCES"/>
-</bean:define>
+<bean:define id="institutionUrl" type="java.lang.String"><bean:message key="institution.url" bundle="GLOBAL_RESOURCES"/></bean:define>
 <div class="breadcumbs">
-	<a href="<%= institutionUrl %>">
-		<bean:message key="institution.name.abbreviation" bundle="GLOBAL_RESOURCES"/>
-	</a>
-	<bean:define id="institutionUrlTeaching" type="java.lang.String">
-		<bean:message key="institution.url" bundle="GLOBAL_RESOURCES"/>
-		<bean:message key="link.institution" bundle="GLOBAL_RESOURCES"/>
-	</bean:define>
+	<a href="<%= institutionUrl %>"><bean:message key="institution.name.abbreviation" bundle="GLOBAL_RESOURCES"/></a>
+	<bean:define id="institutionUrlTeaching" type="java.lang.String"><bean:message key="institution.url" bundle="GLOBAL_RESOURCES"/><bean:message key="link.institution" bundle="GLOBAL_RESOURCES"/></bean:define>
 	&nbsp;&gt;&nbsp;
-	<a href="<%=institutionUrlTeaching%>">
-		<bean:message  bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.education"/>
-	</a>
+	<a href="<%=institutionUrlTeaching%>"><bean:message  bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.education"/></a>
 	<logic:present name="infoDegree">
 		&nbsp;&gt;&nbsp;
-		<html:link page="<%= "/showDegreeSite.do?method=showDescription&amp;degreeID=" + request.getAttribute("degreeID").toString() %>">
-			<bean:write name="infoDegree" property="sigla"/>
-		</html:link>
+		<html:link page="<%= "/showDegreeSite.do?method=showDescription&amp;degreeID=" + request.getAttribute("degreeID").toString() %>"><bean:write name="infoDegree" property="sigla"/></html:link>
 	</logic:present>
 	&nbsp;&gt;&nbsp;
 	<bean:message key="public.degree.information.label.courseSites"  bundle="PUBLIC_DEGREE_INFORMATION" />
@@ -35,7 +24,7 @@
 	<bean:write name="infoDegree" property="nome"/>
 </h1>
 
-<em><span class="error0"><html:errors/></span></em>
+<em><span class="error0"><!-- Error messages go here --><html:errors/></span></em>
 
 <h2 class="greytxt">
 	<bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.courseSites"/>
@@ -86,7 +75,6 @@
 
 <!-- CURRENT EXECUTION PERIOD -->
 <logic:equal value="true" name="renderCurrentExecutionPeriod">
-	<p id="currentSem">
 	<table class="tab_lay" cellspacing="0" width="90%">
 		<tr>
 			<th colspan="2" scope="col">
@@ -110,7 +98,7 @@
 					<logic:notEmpty name="executionCourseView">
 						<bean:define id="executionCourseOID" name="executionCourseView" property="executionCourseOID"/>
 						
-						<html:link page="<%= "/viewSiteExecutionCourse.do?method=firstPage&objectCode="
+						<html:link page="<%= "/viewSiteExecutionCourse.do?method=firstPage&amp;objectCode="
 											 + pageContext.findAttribute("executionCourseOID").toString()
 										%>" >
 							<bean:write name="executionCourseView" property="executionCourseName"/>
@@ -137,7 +125,7 @@
 				<td class="<%= rowColor %>" width="50%">
 					<logic:notEmpty name="executionCourseView">
 						<bean:define id="executionCourseOID" name="executionCourseView" property="executionCourseOID"/>
-						<html:link page="<%= "/viewSiteExecutionCourse.do?method=firstPage&objectCode="
+						<html:link page="<%= "/viewSiteExecutionCourse.do?method=firstPage&amp;objectCode="
 											 + pageContext.findAttribute("executionCourseOID").toString()
 										%>" >
 							<bean:write name="executionCourseView" property="executionCourseName"/>
@@ -162,7 +150,7 @@
 				<td class="<%= rowColor %>" colspan="2">
 					<logic:notEmpty name="executionCourseView">
 						<bean:define id="executionCourseOID" name="executionCourseView" property="executionCourseOID"/>
-						<html:link page="<%= "/viewSiteExecutionCourse.do?method=firstPage&objectCode="
+						<html:link page="<%= "/viewSiteExecutionCourse.do?method=firstPage&amp;objectCode="
 											 + pageContext.findAttribute("executionCourseOID").toString()
 										%>" >
 							<bean:write name="executionCourseView" property="executionCourseName"/>
@@ -175,12 +163,11 @@
 			<% } %>
 		</logic:greaterThan>
 	</table>
-	</p>
+	<br/>
 </logic:equal>
 
 <!-- PREVIOUS EXECUTION PERIOD -->
 <logic:equal value="true" name="renderPreviousExecutionPeriod">
-	<p id="otherSem">
 	<table class="tab_lay" cellspacing="0" width="90%">
 		<tr>
 			<th colspan="2" scope="col">
@@ -203,7 +190,7 @@
 				<td class="<%= rowColor %>" width="50%">
 					<logic:notEmpty name="executionCourseView">
 						<bean:define id="executionCourseOID" name="executionCourseView" property="executionCourseOID"/>
-						<html:link page="<%= "/viewSiteExecutionCourse.do?method=firstPage&objectCode="
+						<html:link page="<%= "/viewSiteExecutionCourse.do?method=firstPage&amp;objectCode="
 											 + pageContext.findAttribute("executionCourseOID").toString()
 										%>" >
 							<bean:write name="executionCourseView" property="executionCourseName"/>
@@ -229,7 +216,7 @@
 				<td class="<%= rowColor %>" width="50%">
 					<logic:notEmpty name="executionCourseView">
 						<bean:define id="executionCourseOID" name="executionCourseView" property="executionCourseOID"/>
-						<html:link page="<%= "/viewSiteExecutionCourse.do?method=firstPage&objectCode="
+						<html:link page="<%= "/viewSiteExecutionCourse.do?method=firstPage&amp;objectCode="
 											 + pageContext.findAttribute("executionCourseOID").toString()
 										%>" >
 							<bean:write name="executionCourseView" property="executionCourseName"/>
@@ -254,7 +241,7 @@
 				<td class="<%= rowColor %>" colspan="2">
 					<logic:notEmpty name="executionCourseView">
 						<bean:define id="executionCourseOID" name="executionCourseView" property="executionCourseOID"/>
-						<html:link page="<%= "/viewSiteExecutionCourse.do?method=firstPage&objectCode="
+						<html:link page="<%= "/viewSiteExecutionCourse.do?method=firstPage&amp;objectCode="
 											 + pageContext.findAttribute("executionCourseOID").toString()
 										%>" >
 							<bean:write name="executionCourseView" property="executionCourseName"/>
@@ -267,5 +254,5 @@
 			<% } %>
 		</logic:greaterThan>
 	</table>
-	</p>
+	<br/>
 </logic:equal>

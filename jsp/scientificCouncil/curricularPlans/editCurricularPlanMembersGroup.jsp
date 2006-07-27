@@ -43,7 +43,7 @@
 			<h:selectOneMenu value="#{CurricularPlansMembersManagementBackingBean.selectedDepartmentID}" onchange="submit()">
 				<f:selectItems value="#{CurricularPlansMembersManagementBackingBean.departments}"  />
 			</h:selectOneMenu>
-			<h:outputText value="<input value='#{htmlAltBundle['submit.sumbit']}' id='javascriptButtonID' class='altJavaScriptSubmitButton' alt='#{htmlAltBundle['submit.sumbit']}' type='submit'>" escape="false"/>
+			<h:outputText value="<input value='#{htmlAltBundle['submit.sumbit']}' id='javascriptButtonID' class='altJavaScriptSubmitButton' alt='#{htmlAltBundle['submit.sumbit']}' type='submit'/>" escape="false"/>
 		</h:panelGrid>
 
 		<h:panelGroup rendered="#{!empty CurricularPlansMembersManagementBackingBean.departmentEmployees}">

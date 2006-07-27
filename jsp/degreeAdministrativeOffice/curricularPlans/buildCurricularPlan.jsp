@@ -25,7 +25,7 @@
 		<h:selectOneMenu value="#{CurricularCourseManagement.executionYearID}" onchange="this.form.submit();">
 			<f:selectItems value="#{CurricularCourseManagement.executionYearItems}" />
 		</h:selectOneMenu>
-		<h:outputText value="<input value='#{htmlAltBundle['submit.sumbit']}' id='javascriptButtonID' class='altJavaScriptSubmitButton' alt='#{htmlAltBundle['submit.sumbit']}' type='submit'>" escape="false"/>
+		<h:outputText value="<input value='#{htmlAltBundle['submit.sumbit']}' id='javascriptButtonID' class='altJavaScriptSubmitButton' alt='#{htmlAltBundle['submit.sumbit']}' type='submit'/>" escape="false"/>
 		<h:outputText value="</p>" escape="false"/>
 		<h:outputText value="</fieldset></div>" escape="false"/>
 	

@@ -21,7 +21,7 @@
 					<html:option key="choose.execution.period" value=""/>
 					<html:options collection="executionPeriods" property="value" labelProperty="label"/>
 				</html:select>
-				<h:outputText value="<input value='#{htmlAltBundle['submit.sumbit']}' id='javascriptButtonID' class='altJavaScriptSubmitButton' alt='#{htmlAltBundle['submit.sumbit']}' type='submit'>" escape="false"/>
+				<h:outputText value="<input value='#{htmlAltBundle['submit.sumbit']}' id='javascriptButtonID' class='altJavaScriptSubmitButton' alt='#{htmlAltBundle['submit.sumbit']}' type='submit'/>" escape="false"/>
 			</p>		
 		</logic:notEmpty>
 	</html:form>

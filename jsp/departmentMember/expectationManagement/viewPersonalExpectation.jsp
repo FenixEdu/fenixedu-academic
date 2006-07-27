@@ -41,7 +41,7 @@
 				<fc:selectOneMenu id="dropDownListExecutionYearID" value="#{teacherExpectationManagement.selectedExecutionYearID}" onchange="this.form.submit();" valueChangeListener="#{teacherExpectationManagement.onExecutionYearChanged}">
 					<f:selectItems value="#{teacherExpectationManagement.executionYears}" />
 				</fc:selectOneMenu>
-				<h:outputText value="<input value='#{htmlAltBundle['submit.sumbit']}' id='javascriptButtonID' class='altJavaScriptSubmitButton' alt='#{htmlAltBundle['submit.sumbit']}' type='submit'>" escape="false"/>
+				<h:outputText value="<input value='#{htmlAltBundle['submit.sumbit']}' id='javascriptButtonID' class='altJavaScriptSubmitButton' alt='#{htmlAltBundle['submit.sumbit']}' type='submit'/>" escape="false"/>
 			</h:panelGrid>
 		</h:panelGroup>
 		<h:panelGroup rendered="#{empty teacherExpectationManagement.executionYears}">

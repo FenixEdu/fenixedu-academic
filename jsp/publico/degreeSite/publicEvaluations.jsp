@@ -10,29 +10,6 @@
 	<f:loadBundle basename="resources/ApplicationResources" var="bundleApplication"/>
 	<f:loadBundle basename="resources/EnumerationResources" var="bundleEnum"/>
 
-<style>@import url(<%= request.getContextPath() %>/CSS/dotist_calendars.css);</style>
-
-<style>
-.greyBorderClass {
-	background-color: #EBECED;
-	border-style: solid;
-	border-width: 1px;
-	border-color: #909090;
-	width: 100%
-}
-.blackBorderClass {
-	background-color: #ffffff;
-	border-style: solid;
-	border-width: 1px;
-	border-color: #909090
-}
-.boldFontClass { 
-	font-weight: bold
-}
-</style>
-
-
-
 	<h:form>
 		<h:outputText escape="false" value="<input alt='input.degreeID' id='degreeID' name='degreeID' type='hidden' value='#{publicEvaluations.degreeID}'/>"/>
 
@@ -55,7 +32,7 @@
 					onchange="this.form.submit();">
 				<f:selectItems value="#{publicEvaluations.degreeCurricularPlanSelectItems}"/>
 			</h:selectOneMenu>
-			<h:outputText value="<input value='#{htmlAltBundle['submit.sumbit']}' id='javascriptButtonID' class='altJavaScriptSubmitButton' alt='#{htmlAltBundle['submit.sumbit']}' type='submit'>" escape="false"/>
+			<h:outputText value="<input value='#{htmlAltBundle['submit.sumbit']}' id='javascriptButtonID' class='altJavaScriptSubmitButton' alt='#{htmlAltBundle['submit.sumbit']}' type='submit'/>" escape="false"/>
 			<h:outputText value="</p>" escape="false"/>
 
 			<h:outputText value="<p>#{bundle['public.execution.period']}: " escape="false"/>
@@ -63,7 +40,7 @@
 					onchange="this.form.submit();">
 				<f:selectItems value="#{publicEvaluations.executionPeriodSelectItems}"/>
 			</h:selectOneMenu>
-			<h:outputText value="<input value='#{htmlAltBundle['submit.sumbit']}' id='javascriptButtonID2' class='altJavaScriptSubmitButton' alt='#{htmlAltBundle['submit.sumbit']}' type='submit'>" escape="false"/>
+			<h:outputText value="<input value='#{htmlAltBundle['submit.sumbit']}' id='javascriptButtonID2' class='altJavaScriptSubmitButton' alt='#{htmlAltBundle['submit.sumbit']}' type='submit'/>" escape="false"/>
 			<h:outputText value="</p>" escape="false"/>
 	
 			<h:outputText value="<p>#{bundle['public.curricular.year']}: " escape="false"/>
@@ -72,7 +49,7 @@
 				<f:selectItem itemLabel="#{bundle['public.curricular.years.all']}" itemValue=""/>
 				<f:selectItems value="#{publicEvaluations.curricularYearSelectItems}"/>
 			</h:selectOneMenu>
-			<h:outputText value="<input value='#{htmlAltBundle['submit.sumbit']}' id='javascriptButtonID3' class='altJavaScriptSubmitButton' alt='#{htmlAltBundle['submit.sumbit']}' type='submit'>" escape="false"/>
+			<h:outputText value="<input value='#{htmlAltBundle['submit.sumbit']}' id='javascriptButtonID3' class='altJavaScriptSubmitButton' alt='#{htmlAltBundle['submit.sumbit']}' type='submit'/>" escape="false"/>
 			<h:outputText value="</p>" escape="false"/>
 	
 			<h:outputText value="<br/>" escape="false"/>
