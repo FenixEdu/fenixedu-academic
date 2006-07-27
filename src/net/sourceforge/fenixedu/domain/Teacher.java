@@ -596,7 +596,7 @@ public class Teacher extends Teacher_Base {
 
         OccupationPeriod occupationPeriod = executionPeriod.getLessonsPeriod();
         if (occupationPeriod == null) {
-            return 0;
+            return 0.0;
         }
 
         List<TeacherServiceExemption> serviceExemptions = getServiceExemptionsWithoutMedicalSituations(
