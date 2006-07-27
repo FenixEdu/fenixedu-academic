@@ -34,11 +34,6 @@ public class PreCandidacySituation extends PreCandidacySituation_Base {
         checkConditionsToForward();
     }
     
-    //FIXME: METHOD TO REMOVE!!
-    public boolean canChangePersonalData(){
-        return true;
-    }
-
     public Set<String> getValidNextStates() {
         Set<String> nextStates = new HashSet<String>();
         nextStates.add(CandidacySituationType.STAND_BY.toString());
