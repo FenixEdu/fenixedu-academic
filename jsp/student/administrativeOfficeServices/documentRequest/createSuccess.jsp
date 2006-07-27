@@ -2,10 +2,10 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/enum.tld" prefix="e" %>
-<%@ page import="net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequestType" %> 
 
 <em><bean:message key="administrative.office.services"/></em>
 <h2><bean:message key="documents.requirement"/></h2>
+<hr/><br/>
 
 <logic:messagesPresent message="true">
 	<span class="error">
@@ -15,3 +15,6 @@
 	</span>
 </logic:messagesPresent>
 
+<logic:messagesNotPresent>
+	<p class="success0"><bean:message key="success.in.all.document.request.creation"/></p>
+</logic:messagesNotPresent>
