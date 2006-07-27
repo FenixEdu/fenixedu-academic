@@ -363,6 +363,7 @@ margin-left: 10.5em;
 .noindent { margin-left: 0; padding-left: 0; }
 .attention { background-color: #ffa; padding: 0 0.25em;}
 .attention2 { background-color: #ffa; color: #d60;}
+.fright { float: right;}
 
 .pbottom1 { padding-bottom: 1em;}
 .pbottom2 { padding-bottom: 2em;}

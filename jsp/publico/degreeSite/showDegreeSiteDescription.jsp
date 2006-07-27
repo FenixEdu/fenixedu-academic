@@ -130,7 +130,6 @@
 		<p><bean:write name="degreeInfo" property="description.content" filter="false"/></p>
 	</logic:notEmpty>
 	
-	<div class="col_right">
 		<!-- DEADLINES -->	
 		<logic:empty name="degreeInfo" property="schoolCalendar">
 		<logic:empty name="degreeInfo" property="candidacyPeriod">
@@ -142,7 +141,7 @@
 		</logic:empty>	
 		</logic:empty>
 		<logic:notPresent name="doNotRenderDeadLines">
-					<table class="box" cellspacing="0">
+					<table class="box" cellspacing="0" style="float: right;">
 						<tr>
 							<td class="box_header">
 								<strong>
@@ -208,7 +207,7 @@
 		<!-- ADDITIONAL INFO -->
 		<logic:notEmpty name="degreeInfo" property="additionalInfo" >	
 			<logic:present name="doNotRenderDeadLines">
-				<table class="box" cellspacing="0">	
+				<table class="box" cellspacing="0" style="float: right;">	
 			</logic:present>
 				<tr>
 					<td class="box_header">
@@ -231,7 +230,7 @@
 		<logic:notEmpty name="degreeInfo" property="links" >
 			<logic:present name="doNotRenderDeadLines">
 				<logic:empty name="degreeInfo" property="additionalInfo" >	
-					<table class="box" cellspacing="0">	
+					<table class="box" cellspacing="0" style="float: right;">	
 				</logic:empty>
 			</logic:present>
 						<tr>
@@ -246,7 +245,7 @@
 						</tr>
 					</table>
 		</logic:notEmpty>
-	</div>
+
 	
 	<!-- HISTORY -->
 	<logic:notEmpty name="degreeInfo" property="history" >
