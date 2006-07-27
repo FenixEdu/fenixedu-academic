@@ -1,6 +1,9 @@
 package net.sourceforge.fenixedu.domain.serviceRequests.documentRequests;
 
+import java.util.Arrays;
+
 import net.sourceforge.fenixedu.domain.Employee;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.CertificateRequestEvent;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSituationType;
@@ -45,5 +48,10 @@ public abstract class CertificateRequest extends CertificateRequest_Base {
 				&& hasCertificateRequestEvent()) {
 			getCertificateRequestEvent().cancel(employee);
 		}
+	}
+
+	protected boolean isFirstRequestFromExecutionYear() {
+		return getStudentCurricularPlan().getSucessfullyFinishedDocumentRequestsBy(
+				ExecutionYear.readCurrentExecutionYear(), getDocumentRequestType()).isEmpty();
 	}
 }

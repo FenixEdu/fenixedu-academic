@@ -71,7 +71,8 @@ public class EnrolmentCertificateRequest extends EnrolmentCertificateRequest_Bas
 
 		super.internalChangeState(academicServiceRequestSituationType, employee);
 
-		if (academicServiceRequestSituationType == AcademicServiceRequestSituationType.CONCLUDED) {
+		if (academicServiceRequestSituationType == AcademicServiceRequestSituationType.CONCLUDED
+				&& !isFirstRequestFromExecutionYear()) {
 			new CertificateRequestEvent(getAdministrativeOffice(),
 					EventType.ENROLMENT_CERTIFICATE_REQUEST, getStudent().getPerson(), this);
 		}
