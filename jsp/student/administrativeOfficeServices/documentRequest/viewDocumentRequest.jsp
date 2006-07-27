@@ -5,6 +5,7 @@
 
 <em><bean:message key="administrative.office.services"/></em>
 <h2><bean:message key="documents.requirement.consult"/></h2>
+<hr/><br/>
 
 <logic:messagesPresent message="true">
 	<span class="error">
