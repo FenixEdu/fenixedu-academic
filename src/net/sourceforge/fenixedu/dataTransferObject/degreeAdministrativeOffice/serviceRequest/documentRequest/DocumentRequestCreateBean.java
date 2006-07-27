@@ -1,6 +1,8 @@
 package net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.serviceRequest.documentRequest;
 
 import java.io.Serializable;
+import java.util.Collection;
+import java.util.HashSet;
 
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
@@ -29,6 +31,8 @@ public class DocumentRequestCreateBean implements Serializable {
     private DomainReference<ExecutionYear> executionYear;
 
     private Boolean toBeCreated;
+    
+    private Collection<String> warningsToReport;
     
     public DocumentRequestCreateBean() {
     }
@@ -114,6 +118,42 @@ public class DocumentRequestCreateBean implements Serializable {
 
     public void setToBeCreated(Boolean toBeCreated) {
         this.toBeCreated = toBeCreated;
+    }
+
+    /**
+     * This method is only needed to report warnings to the user. While we don't
+     * have enough info in our database to decide on what cases the document
+     * request should abort (acording to the Administrative Office rules shown
+     * in the use cases), warnings must be shown to the user.
+     * 
+     * @return
+     */
+    public Collection<String> getWarningsToReport() {
+        if (warningsToReport == null) {
+            warningsToReport = new HashSet<String>();
+            
+            if (chosenDocumentRequestType == DocumentRequestType.APPROVEMENT_CERTIFICATE) {
+                if (chosenDocumentPurposeType == DocumentPurposeType.PROFESSIONAL) {
+                    warningsToReport.add("aprovementType.professionalPurpose.fithGrade");
+                    warningsToReport.add("aprovementType.professionalPurpose.thirdGrade");
+                }
+
+                warningsToReport.add("aprovementType.finished.degree");
+            }
+            
+            if (chosenDocumentRequestType == DocumentRequestType.DEGREE_FINALIZATION_CERTIFICATE) {
+                warningsToReport.add("degreeFinalizationType.withoutDegreeCertificate");
+            }
+        } 
+        
+        return warningsToReport;
+    }
+    
+    public boolean hasWarningsToReport() {
+        if (warningsToReport == null) {
+            getWarningsToReport(); 
+        }
+        return !warningsToReport.isEmpty();
     }
 
 }

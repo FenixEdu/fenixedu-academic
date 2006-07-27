@@ -99,6 +99,7 @@ public class DocumentRequestDispatchAction extends FenixDispatchAction {
             return mapping.findForward("createDocumentRequests");
         }
 
+        warningsToReport.clear();
         getAndSetDocumentRequestCreateBeans(request, dynaActionForm, getAndSetStudentCurricularPlans(request, dynaActionForm), chosenDocumentRequestTypes, chosenDocumentPurposeType, otherPurpose, dynaActionForm.getString("notes"), Boolean.valueOf(dynaActionForm.getString("urgentRequest")));
 
         return mapping.findForward("viewDocumentRequestsToCreate");
@@ -134,6 +135,8 @@ public class DocumentRequestDispatchAction extends FenixDispatchAction {
         return otherPurpose;
     }
 
+    private static final List<String> warningsToReport = new ArrayList<String>();
+    
     private void getAndSetDocumentRequestCreateBeans(HttpServletRequest request, final DynaActionForm dynaActionForm, StudentCurricularPlan studentCurricularPlan, final List<String> chosenDocumentRequestTypes, final DocumentPurposeType chosenDocumentPurposeType, final String otherPurpose, final String notes, final Boolean urgentRequest) {
         final List<DocumentRequestCreateBean> documentRequestCreateBeans = new ArrayList<DocumentRequestCreateBean>();
         
@@ -145,6 +148,7 @@ public class DocumentRequestDispatchAction extends FenixDispatchAction {
             documentRequestCreateBeans.add(documentRequestCreateBean);
         }
 
+        request.setAttribute("warningsToReport", warningsToReport);
         request.setAttribute("documentRequestCreateBeans", documentRequestCreateBeans);
     }
 
@@ -191,6 +195,10 @@ public class DocumentRequestDispatchAction extends FenixDispatchAction {
         documentRequestCreateBean.setAverage(average);
         documentRequestCreateBean.setDetailed(detailed);
         documentRequestCreateBean.setExecutionYear(executionYear);
+        
+        if (documentRequestCreateBean.hasWarningsToReport()) {
+            warningsToReport.addAll(documentRequestCreateBean.getWarningsToReport());
+        }
 
         return documentRequestCreateBean;
     }
