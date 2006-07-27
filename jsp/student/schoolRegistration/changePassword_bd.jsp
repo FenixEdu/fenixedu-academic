@@ -2,16 +2,15 @@
 <html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 
-<p><strong>Pï¿?gina 1 de 6</strong></p>
+<p><strong><bean:message key="studentRegistration.page1.of.6" /></strong></p>
 
 <div style="width: 50%; margin: 0 24%;">
 	
 	<div style="text-align: center;">
-	<h2>Alteraï¿?ï¿?o da Password</h2>
-	<p><strong>Por razï¿?es de seguranï¿?a deve mudar a sua password.</strong></p>
+	<h2><bean:message key="title.studentRegistration.changepass" /></h2>
+	<p><strong><bean:message key="title.studentRegistration.changepass.warningMessage" /></strong></p>
 	<p style="color: #770; background-color: #ffe;">
-	<strong>Atenï¿?ï¿?o:</strong> A alteraï¿?ï¿?o da password sï¿? terï¿? efeito quando terminar o processo de matrï¿?cula.
-	Se o processo for cancelado a nova password não ficarï¿? guardada.
+	<bean:message key="title.studentRegistration.changepass.infoMessage" />
 	</p>
 	</div>
 <div class="infoop">
