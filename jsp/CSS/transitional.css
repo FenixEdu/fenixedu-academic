@@ -145,7 +145,7 @@ width: 35%;
 .tstyle1b th, .tstyle6 th { background: #fafaf6 url(../../pics/back_32yellow.gif) left bottom repeat-x;}
 .tstyle1c th { background: #f6f8fa url(../../pics/back_32blue.gif) left bottom repeat-x; }
 .tstyle3 th { background-color: #eee; }
-.tstyle2 th { background: #f8f8f8 url(../../pics/back_32gray.gif) left bottom repeat-x; }
+.tstyle2 th { background: #f5f5f5 /*url(../../pics/back_32gray.gif) left bottom repeat-x*/; }
 .tstyle4 th { background: #eee; }
 .tstyle5 th { background: #f5f5f5; }
 
@@ -154,7 +154,7 @@ width: 35%;
 .tstyle1a td { border: 1px solid #cccccc; }
 .tstyle1b td { border: 1px solid #ccccc2; }
 .tstyle1c td { border: 1px solid #c8cacc; }
-.tstyle2 td { border: none; border-bottom: 1px solid #ccc; }
+.tstyle2 td { border: none; border-bottom: 1px solid #ccc; border-top: 1px solid #ccc; }
 .tstyle3 td {border: 1px solid #ccc; background-color: #fafafa; }
 .tstyle4 td { border: 1px solid #ccc; background-color: #fafafa; }
 .tstyle5 td { padding: 0.3em; border: 1px solid #fff; background: #f5f5f5; }
@@ -367,6 +367,8 @@ margin-left: 10.5em;
 .pbottom1 { padding-bottom: 1em;}
 .pbottom2 { padding-bottom: 2em;}
 .pbottom3 { padding-bottom: 3em;}
+.pleft1 { padding-left: 2em; }
+.pleft2 { padding-left: 2em; }
 .mtop0 { margin-top: 0;}
 .mtop05 { margin-top: 0.5em;}
 .mtop1 { margin-top: 1em;}
@@ -443,7 +445,9 @@ margin-top: 0.5em;
 }
 
 
-
+/* input elements display */
+.input_hidden { display: none; }
+.input_inline { display: inline; }
 
 
 /**********************************************
