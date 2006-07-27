@@ -41,8 +41,6 @@
 
 	<logic:notEmpty name="sections" >
 		<logic:present name="infoSection" >
-<%-- 			<li><html:link page="<%=  request.getContextPath() + RequestUtils.getModuleName(request,application)%>"></html:link></li>
---%>
 			<app:generateSectionMenu name="sections" path="<%=  request.getContextPath() + RequestUtils.getModuleName(request,application)%>" activeSectionName="infoSection" />
 		</logic:present>
 		<logic:notPresent name="infoSection" >
@@ -63,31 +61,29 @@
 			<%
 				StringBuffer buffer = new StringBuffer();
 				buffer.append(ExecutionCourseAliasExpandingAction.emailAddressPrefix);
-				buffer.append(request.getParameter("objectCode")).append("&#64");
+				buffer.append(request.getParameter("objectCode")).append("@");
 				buffer.append(TeacherAdministrationViewerDispatchAction.mailingListDomainConfiguration());
 			%>
 		<bean:define id="advisoryText">
 			<bean:message  key="send.email.dynamicMailDistribution.link" bundle="PUBLIC_DEGREE_INFORMATION"/>
 		</bean:define>
-		<html:link href="<%="mailto:" +buffer.toString() %>" titleKey="send.email.dynamicMailDistribution.title" bundle="PUBLIC_DEGREE_INFORMATION">
-			<div class="email"><p><bean:message key="send.email.dynamicMailDistribution.link" bundle="PUBLIC_DEGREE_INFORMATION"/></p>
-		</html:link>
+		<li>
+			<div class="email"/>
+			<html:link href="<%="mailto:" +buffer.toString() %>" titleKey="send.email.dynamicMailDistribution.title" bundle="PUBLIC_DEGREE_INFORMATION">
+				<bean:message key="send.email.dynamicMailDistribution.link" bundle="PUBLIC_DEGREE_INFORMATION"/>
+			</html:link>
+		</li>
 	</logic:equal>
 
-	
 	<logic:notEqual name="executionCourse" property="site.dynamicMailDistribution" value="true">
-		<logic:notEmpty name="component" property="mail" >	
+		<logic:notEmpty name="component" property="mail" >
 			<bean:define id="siteMail" name="component" property="mail" />
-			<html:link href="<%= "mailto:" + pageContext.findAttribute("siteMail") %>" titleKey="send.email.singleMail.title" bundle="PUBLIC_DEGREE_INFORMATION">
-			<div class="email"><p><bean:message key="send.email.dynamicMailDistribution.link" bundle="PUBLIC_DEGREE_INFORMATION"/></p>
-			</html:link>
+			<li>
+				<div class="email"/>
+				<html:link href="<%= "mailto:" + pageContext.findAttribute("siteMail") %>" titleKey="send.email.singleMail.title" bundle="PUBLIC_DEGREE_INFORMATION">
+					<bean:message key="send.email.dynamicMailDistribution.link" bundle="PUBLIC_DEGREE_INFORMATION"/>
+				</html:link>
+			</li>
 		</logic:notEmpty>
 	</logic:notEqual>
-	
-
 </ul>
-
-
-
-	
-	

@@ -206,8 +206,8 @@ public class ExamsMapRenderer implements IExamsMapRenderer {
             strBuffer.append("<i>").append(getMessageResource(pageContext, "no.execution.courses.for.curricular.year")).append(curricularYear).append("</i>");
         } else {
             if (user.equals("public")) {
-                strBuffer.append("<table class='tab_exams_details' cellspacing='0px'>");
-                strBuffer.append("<tr><th rowspan='2' width='250px' class='ordYear'>");
+                strBuffer.append("<table class='tab_exams_details' cellspacing='0'>");
+                strBuffer.append("<tr><th rowspan='2' width='250' class='ordYear'>");
                 strBuffer
                         .append(getMessageResource(pageContext, "public.degree.information.label.year"));
                 strBuffer.append(" ");
@@ -223,21 +223,21 @@ public class ExamsMapRenderer implements IExamsMapRenderer {
                         .append(getMessageResource(pageContext, "public.degree.information.label.times"));
                 strBuffer.append(" 2");
                 strBuffer.append("</th></tr>");
-                strBuffer.append("<tr><td class='subheader' width='70px'>");
+                strBuffer.append("<tr><td class='subheader' width='70'>");
                 strBuffer.append(getMessageResource(pageContext, "public.degree.information.label.day"));
-                strBuffer.append("</td><td class='subheader' width='50px'>");
+                strBuffer.append("</td><td class='subheader' width='50'>");
                 strBuffer
                         .append(getMessageResource(pageContext, "public.degree.information.label.hour"));
-                strBuffer.append("</td><td class='subheader' width='130px'>");
+                strBuffer.append("</td><td class='subheader' width='130'>");
                 strBuffer
                         .append(getMessageResource(pageContext, "public.degree.information.label.room"));
                 strBuffer.append("</td>");
-                strBuffer.append("<td class='subheader' width='70px'>");
+                strBuffer.append("<td class='subheader' width='70'>");
                 strBuffer.append(getMessageResource(pageContext, "public.degree.information.label.day"));
-                strBuffer.append("</td>" + "<td class='subheader' width='50px'>");
+                strBuffer.append("</td>" + "<td class='subheader' width='50'>");
                 strBuffer
                         .append(getMessageResource(pageContext, "public.degree.information.label.hour"));
-                strBuffer.append("</td><td class='subheader' width='130px'>");
+                strBuffer.append("</td><td class='subheader' width='130'>");
                 strBuffer
                         .append(getMessageResource(pageContext, "public.degree.information.label.room"));
                 strBuffer.append("</td></tr>");
@@ -397,10 +397,10 @@ public class ExamsMapRenderer implements IExamsMapRenderer {
 
                         if (user.equals("public")) {
                             if (season1Exam == null && !hasComment) {
-                                strBuffer.append("<td colspan='3' class='" + rowClass + "'>&nbsp</td>");
+                                strBuffer.append("<td colspan='3' class='" + rowClass + "'>&nbsp;</td>");
                             }
                             if (season2Exam == null && !hasComment) {
-                                strBuffer.append("<td colspan='3' class='" + rowClass + "'>&nbsp</td>");
+                                strBuffer.append("<td colspan='3' class='" + rowClass + "'>&nbsp;</td>");
                             }
                         }
 

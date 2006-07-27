@@ -113,6 +113,7 @@
         <logic:notEmpty name="component" property="responsibleTeachers">	
 			<h2><bean:message key="label.lecturingTeachers"/></h2>	
             	<logic:iterate id="infoResponsableTeacher" name="component" property="responsibleTeachers">
+				<p style="margin-top: 6px; margin-bottom: 6px;">
 					<bean:define id="teacherID" type="java.lang.Integer" name="infoResponsableTeacher" property="idInternal"/>
 					<% net.sourceforge.fenixedu.domain.Person person = net.sourceforge.fenixedu.domain.RootDomainObject.getInstance().readTeacherByOID(teacherID).getPerson();
 					   request.setAttribute("person", person);
@@ -148,29 +149,29 @@
 			</logic:empty>
             <logic:iterate id="infoTeacher" name="component" property="lecturingTeachers">
 				<p style="margin-top: 6px; margin-bottom: 6px;">
-				<bean:define id="teacherID" type="java.lang.Integer" name="infoTeacher" property="idInternal"/>
-				<% net.sourceforge.fenixedu.domain.Person person = net.sourceforge.fenixedu.domain.RootDomainObject.getInstance().readTeacherByOID(teacherID).getPerson();
-				   request.setAttribute("person", person);
-				%>
-				<logic:present name="person" property="homepage">
-					<logic:notPresent name="person" property="homepage.activated">
+					<bean:define id="teacherID" type="java.lang.Integer" name="infoTeacher" property="idInternal"/>
+					<% net.sourceforge.fenixedu.domain.Person person = net.sourceforge.fenixedu.domain.RootDomainObject.getInstance().readTeacherByOID(teacherID).getPerson();
+					   request.setAttribute("person", person);
+					%>
+					<logic:present name="person" property="homepage">
+						<logic:notPresent name="person" property="homepage.activated">
+							<bean:write name="person" property="name"/>
+						</logic:notPresent>
+						<logic:present name="person" property="homepage.activated">
+							<logic:equal name="person" property="homepage.activated" value="true">
+								<% final String appContext = net.sourceforge.fenixedu._development.PropertiesManager.getProperty("app.context"); %>
+								<% final String context = (appContext != null && appContext.length() > 0) ? "/" + appContext : ""; %>
+								<bean:define id="homepageURL" type="java.lang.String"><%= request.getScheme() %>://<%= request.getServerName() %>:<%= request.getServerPort() %><%= context %>/homepage/<bean:write name="person" property="user.userUId"/></bean:define>
+								<html:link href="<%= homepageURL %>"><bean:write name="person" property="name"/></html:link>
+							</logic:equal>
+							<logic:equal name="person" property="homepage.activated" value="false">
+								<bean:write name="person" property="name"/>
+							</logic:equal>
+						</logic:present>
+					</logic:present>
+					<logic:notPresent name="person" property="homepage">
 						<bean:write name="person" property="name"/>
 					</logic:notPresent>
-					<logic:present name="person" property="homepage.activated">
-						<logic:equal name="person" property="homepage.activated" value="true">
-							<% final String appContext = net.sourceforge.fenixedu._development.PropertiesManager.getProperty("app.context"); %>
-							<% final String context = (appContext != null && appContext.length() > 0) ? "/" + appContext : ""; %>
-							<bean:define id="homepageURL" type="java.lang.String"><%= request.getScheme() %>://<%= request.getServerName() %>:<%= request.getServerPort() %><%= context %>/homepage/<bean:write name="person" property="user.userUId"/></bean:define>
-							<html:link href="<%= homepageURL %>"><bean:write name="person" property="name"/></html:link>
-						</logic:equal>
-						<logic:equal name="person" property="homepage.activated" value="false">
-							<bean:write name="person" property="name"/>
-						</logic:equal>
-					</logic:present>
-				</logic:present>
-				<logic:notPresent name="person" property="homepage">
-					<bean:write name="person" property="name"/>
-				</logic:notPresent>
 				</p>
             </logic:iterate>	
         </logic:notEmpty>

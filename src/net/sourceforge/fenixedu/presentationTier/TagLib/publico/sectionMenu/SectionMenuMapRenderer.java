@@ -112,19 +112,18 @@ public class SectionMenuMapRenderer {
         else {
             if (((InfoSection) sections.get(iterator)).getSectionDepth().intValue() != 0
                     && iterator == sections.size() - 1) {
-                strBuffer.append("</dl>\n");
+                strBuffer.append("</dl></li>\n");
 
             } else {
                 if (iterator != sections.size() - 1) {
 
                     if (((InfoSection) sections.get(iterator + 1)).getSectionDepth().intValue() == 0
                             && ((InfoSection) sections.get(iterator)).getSectionDepth().intValue() != 0) {
-                        strBuffer.append("</dl>\n");
+                        strBuffer.append("</dl></li>\n");
                     }
                     if (((InfoSection) sections.get(iterator + 1)).getSectionDepth().intValue() != 0
                             && ((InfoSection) sections.get(iterator)).getSectionDepth().intValue() == 0) {
-                        strBuffer.append("<dl id=\"" + ((InfoSection) sections.get(iterator)).getName()
-                                + "\" style=\"display:" + getStyle(sections, iterator) + ";\">\n");
+                        strBuffer.append("<li><dl style=\"display:" + getStyle(sections, iterator) + ";\">\n");
                     }
                 }
             }

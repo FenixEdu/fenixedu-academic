@@ -7,35 +7,22 @@
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
 
 
-<bean:define id="institutionUrl" type="java.lang.String">
-	<bean:message key="institution.url" bundle="GLOBAL_RESOURCES"/>
-</bean:define>
+<bean:define id="institutionUrl" type="java.lang.String"><bean:message key="institution.url" bundle="GLOBAL_RESOURCES"/></bean:define>
 <div class="breadcumbs">
-	<a href="<%= institutionUrl %>">
-		<bean:message key="institution.name.abbreviation" bundle="GLOBAL_RESOURCES"/>
-	</a>
-	<bean:define id="institutionUrlTeaching" type="java.lang.String">
-		<bean:message key="institution.url" bundle="GLOBAL_RESOURCES"/>
-		<bean:message key="link.institution" bundle="GLOBAL_RESOURCES"/>
-	</bean:define>
+	<a href="<%= institutionUrl %>"><bean:message key="institution.name.abbreviation" bundle="GLOBAL_RESOURCES"/></a>
+	<bean:define id="institutionUrlTeaching" type="java.lang.String"><bean:message key="institution.url" bundle="GLOBAL_RESOURCES"/><bean:message key="link.institution" bundle="GLOBAL_RESOURCES"/></bean:define>
 	&nbsp;&gt;&nbsp;
-	<a href="<%=institutionUrlTeaching%>">
-		<bean:message  bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.education"/>
-	</a>
+	<a href="<%=institutionUrlTeaching%>"><bean:message  bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.education"/></a>
 	<logic:present name="degree">
 		&nbsp;&gt;&nbsp;
-		<html:link page="<%= "/showDegreeSite.do?method=showDescription&amp;degreeID=" + request.getAttribute("degreeID").toString() %>">
-			<bean:write name="degree" property="sigla"/>
-		</html:link>
+		<html:link page="<%= "/showDegreeSite.do?method=showDescription&amp;degreeID=" + request.getAttribute("degreeID").toString() %>"><bean:write name="degree" property="sigla"/></html:link>
 		&nbsp;&gt;&nbsp;
 
 		<logic:present name="<%=SessionConstants.INFO_DEGREE_CURRICULAR_PLAN%>">
 			<bean:define id="infoDegreeCurricularPlan" name="<%=SessionConstants.INFO_DEGREE_CURRICULAR_PLAN%>"/>
 		</logic:present>
 
-		<html:link page="<%= "/showDegreeSite.do?method=showCurricularPlan&amp;degreeID=" + request.getAttribute("degreeID").toString() + "&amp;degreeCurricularPlanID=" + pageContext.findAttribute("degreeCurricularPlanID").toString()+ "&amp;executionPeriodOID=" + request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID)  %>" >
-			<bean:write name="infoDegreeCurricularPlan" property="name" />
-		</html:link>
+		<html:link page="<%= "/showDegreeSite.do?method=showCurricularPlan&amp;degreeID=" + request.getAttribute("degreeID").toString() + "&amp;degreeCurricularPlanID=" + pageContext.findAttribute("degreeCurricularPlanID").toString()+ "&amp;executionPeriodOID=" + request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID)  %>" ><bean:write name="infoDegreeCurricularPlan" property="name" /></html:link>
 		&nbsp;&gt;&nbsp;
 		<bean:message key="public.degree.information.label.classes" bundle="PUBLIC_DEGREE_INFORMATION" /> 
 	</logic:present>
@@ -92,7 +79,7 @@
 	</logic:notPresent>
 	<logic:present name="lista" scope="request">
 		<bean:define id="listaNew" name="lista" />
-		<html:form action="/chooseContextDANew.do" method="GET">
+		<html:form action="/chooseContextDANew.do" method="get">
 			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.<%SessionConstants.EXECUTION_PERIOD_OID%>" property="<%SessionConstants.EXECUTION_PERIOD_OID%>" value="<%= ""+request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID)%>" />
 			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
 			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="nextPagePublic"/>
@@ -132,7 +119,16 @@
 					<bean:define id="classId" name="classview" property="idInternal"/>
 					<tr>
 					    <td class="<%= rowColor %>">	
-							<html:link page="<%= "/viewClassTimeTableNew.do?executionPeriodOID=" + pageContext.findAttribute(SessionConstants.EXECUTION_PERIOD_OID)+ "&amp;classId="+pageContext.findAttribute("classId") + "&amp;nameDegreeCurricularPlan=" +pageContext.findAttribute("nameDegreeCurricularPlan")+ "&amp;degreeInitials=" +pageContext.findAttribute("degreeInitials")+ "&amp;degreeID=" + request.getAttribute("degreeID") + "&amp;degreeCurricularPlanID=" + request.getAttribute("degreeCurricularPlanID")  %>" paramId="className" paramName="classview" paramProperty="nome">
+							<html:link page="<%= "/viewClassTimeTableNew.do?executionPeriodOID="
+							+ pageContext.findAttribute(SessionConstants.EXECUTION_PERIOD_OID)
+							+ "&amp;classId="
+							+ pageContext.findAttribute("classId")
+							+ "&amp;degreeInitials="
+							+ pageContext.findAttribute("degreeInitials")
+							+ "&amp;degreeID="
+							+ request.getAttribute("degreeID")
+							+ "&amp;degreeCurricularPlanID="
+							+ request.getAttribute("degreeCurricularPlanID")  %>" paramId="className" paramName="classview" paramProperty="nome">
 								<jsp:getProperty name="classview" property="nome"/>
 							</html:link>
 						</td>
