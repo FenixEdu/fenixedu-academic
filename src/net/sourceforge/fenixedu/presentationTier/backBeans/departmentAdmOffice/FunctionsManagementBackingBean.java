@@ -8,7 +8,6 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashSet;
@@ -120,9 +119,7 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
                         getEmployeeDepartmentUnit()))) {
             setErrorMessage("error.invalid.unit");
         } else if (!this.getUnit().getFunctions().contains(this.getFunction())) {
-            setErrorMessage("error.invalid.function");
-        } else if (this.getPerson().containsActivePersonFunction(this.getFunction())) {
-            setErrorMessage("error.duplicate.function");
+            setErrorMessage("error.invalid.function");        
         } else {
 
             DateFormat format = new SimpleDateFormat("dd/MM/yyyy");
@@ -180,21 +177,12 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
                 return "";
             }
 
-            if (this.getPerson().getInactivePersonFunctions().contains(this.getPersonFunction())
-                    && this.getPerson().containsActivePersonFunction(this.getFunction())
-                    && (DateFormatUtil.isAfter("yyyyMMdd", endDate_, Calendar.getInstance().getTime()) || DateFormatUtil
-                            .equalDates("yyyyMMdd", endDate_, Calendar.getInstance().getTime()))) {
-
-                setErrorMessage("error.duplicate.function");
-            } else {
-
-                final Object[] argsToRead = { this.getPersonFunctionID(), this.getFunctionID(),
-                        YearMonthDay.fromDateFields(beginDate_), YearMonthDay.fromDateFields(endDate_),
-                        credits };
-                ServiceUtils.executeService(getUserView(), "EditPersonFunction", argsToRead);
-                setErrorMessage("message.success");
-                return "alterFunction";
-            }
+            final Object[] argsToRead = { this.getPersonFunctionID(), this.getFunctionID(),
+                    YearMonthDay.fromDateFields(beginDate_), YearMonthDay.fromDateFields(endDate_),
+                    credits };
+            ServiceUtils.executeService(getUserView(), "EditPersonFunction", argsToRead);
+            setErrorMessage("message.success");
+            return "alterFunction";
 
         } catch (ParseException e) {
             setErrorMessage("error.date1.format");
@@ -278,17 +266,7 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
             }
         }
         return false;
-    }
-
-    public String verifyFunction() throws FenixFilterException, FenixServiceException {
-
-        if (this.getPerson().containsActivePersonFunction(this.getFunction())) {
-            setErrorMessage("error.duplicate.function");
-            return "";
-        }
-
-        return "confirmation";
-    }
+    }    
 
     public int getNumberOfPages() throws FenixFilterException, FenixServiceException {
         if ((getPersonsNumber() % SessionConstants.LIMIT_FINDED_PERSONS) != 0) {

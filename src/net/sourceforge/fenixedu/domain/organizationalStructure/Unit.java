@@ -350,15 +350,14 @@ public class Unit extends Unit_Base {
         return teachers;
     }
 
-    public List<Teacher> getAllCurrentTeachers() {
-        YearMonthDay currentDate = new YearMonthDay();
+    public List<Teacher> getAllCurrentTeachers() {        
         List<Teacher> teachers = new ArrayList<Teacher>();
         List<Employee> employees = getAllCurrentActiveWorkingEmployees();
         for (Employee employee : employees) {
             Teacher teacher = employee.getPerson().getTeacher();
             if (teacher != null) {
-                TeacherLegalRegimen legalRegimen = teacher.getLastLegalRegimenWithoutEndSituations();
-                if (legalRegimen != null && legalRegimen.isActive(currentDate)) {
+                TeacherLegalRegimen legalRegimen = teacher.getCurrentLegalRegimenWithoutEndSitutions();
+                if (legalRegimen != null) {
                     teachers.add(teacher);
                 }
             }

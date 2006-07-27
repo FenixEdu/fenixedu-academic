@@ -31,6 +31,7 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Function;
 import net.sourceforge.fenixedu.domain.organizationalStructure.FunctionType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.person.Gender;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 import net.sourceforge.fenixedu.domain.person.MaritalStatus;
@@ -657,8 +658,18 @@ public class Person extends Person_Base {
     public List<PersonFunction> getPersonFunctions() {
         return new ArrayList(getParentAccountabilities(AccountabilityTypeEnum.MANAGEMENT_FUNCTION,
                 PersonFunction.class));
-            }
+    }
 
+    public List<PersonFunction> getPersonFunctions(Unit unit) {
+        List<PersonFunction> result = new ArrayList<PersonFunction>();
+        for (PersonFunction personFunction : getPersonFunctions()) {
+            if(personFunction.getUnit().equals(unit)) {
+                result.add(personFunction);
+            }
+        }
+        return result;
+    }
+    
     public boolean hasFunctionType(FunctionType functionType) {
         for (PersonFunction accountability : getActivePersonFunctions()) {
             if (accountability.getFunction().getFunctionType() == functionType) {

@@ -114,7 +114,7 @@
 
 		<h:panelGrid columns="3" rendered="#{managerFunctionsManagementBackingBean.numberOfFunctions > 0}">							
 			<h:panelGroup>
-				<fc:commandButton action="#{managerFunctionsManagementBackingBean.verifyFunction}" value="#{bundle['button.continue']}" styleClass="inputbutton">
+				<fc:commandButton action="confirmation" value="#{bundle['button.continue']}" styleClass="inputbutton">
 					<f:param id="disabledVar3" name="disabledVar" value="#{managerFunctionsManagementBackingBean.disabledVar}"/>
 				</fc:commandButton>							
 				<h:commandButton alt="#{htmlAltBundle['commandButton.person']}" action="alterUnit" immediate="true" value="#{bundle['button.choose.new.person']}" styleClass="inputbutton"/>						

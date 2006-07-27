@@ -29,49 +29,43 @@ import org.joda.time.YearMonthDay;
 
 public class ManagerFunctionsManagementBackingBean extends FunctionsManagementBackingBean {
 
-    public ManagerFunctionsManagementBackingBean() {
-
-    }
+    public ManagerFunctionsManagementBackingBean() { }
 
     public String associateNewFunction() throws FenixFilterException, FenixServiceException,
             ParseException {
 
-        if (this.getPerson().containsActivePersonFunction(this.getFunction())) {
-            setErrorMessage("error.duplicate.function");
-        } else {
+        DateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+        Double credits = Double.valueOf(this.getCredits());
 
-            DateFormat format = new SimpleDateFormat("dd/MM/yyyy");
-            Double credits = Double.valueOf(this.getCredits());
-
-            Date beginDate_ = null, endDate_ = null;
-            try {
-                if (this.getBeginDate() != null) {
-                    beginDate_ = format.parse(this.getBeginDate());
-                } else {
-                    setErrorMessage("error.notBeginDate");
-                    return "";
-                }
-                if (this.getEndDate() != null) {
-                    endDate_ = format.parse(this.getEndDate());
-                } else {
-                    setErrorMessage("error.notEndDate");
-                    return "";
-                }
-
-                final Object[] argsToRead = { this.getFunctionID(), this.getPersonID(), credits,
-                        YearMonthDay.fromDateFields(beginDate_), YearMonthDay.fromDateFields(endDate_) };
-                ServiceUtils.executeService(getUserView(), "AssociateNewFunctionToPerson", argsToRead);
-                setErrorMessage("message.success");
-                return "success";
-
-            } catch (ParseException e) {
-                setErrorMessage("error.date1.format");
-            } catch (FenixServiceException e) {
-                setErrorMessage(e.getMessage());
-            } catch (DomainException e) {
-                setErrorMessage(e.getMessage());
+        Date beginDate_ = null, endDate_ = null;
+        try {
+            if (this.getBeginDate() != null) {
+                beginDate_ = format.parse(this.getBeginDate());
+            } else {
+                setErrorMessage("error.notBeginDate");
+                return "";
             }
+            if (this.getEndDate() != null) {
+                endDate_ = format.parse(this.getEndDate());
+            } else {
+                setErrorMessage("error.notEndDate");
+                return "";
+            }
+
+            final Object[] argsToRead = { this.getFunctionID(), this.getPersonID(), credits,
+                    YearMonthDay.fromDateFields(beginDate_), YearMonthDay.fromDateFields(endDate_) };
+            ServiceUtils.executeService(getUserView(), "AssociateNewFunctionToPerson", argsToRead);
+            setErrorMessage("message.success");
+            return "success";
+
+        } catch (ParseException e) {
+            setErrorMessage("error.date1.format");
+        } catch (FenixServiceException e) {
+            setErrorMessage(e.getMessage());
+        } catch (DomainException e) {
+            setErrorMessage(e.getMessage());
         }
+
         return "";
     }
 

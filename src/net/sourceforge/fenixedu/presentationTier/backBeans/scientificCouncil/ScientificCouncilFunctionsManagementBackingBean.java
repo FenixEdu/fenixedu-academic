@@ -14,8 +14,7 @@ import net.sourceforge.fenixedu.presentationTier.backBeans.manager.personManagem
 import org.apache.commons.beanutils.BeanComparator;
 import org.joda.time.YearMonthDay;
 
-public class ScientificCouncilFunctionsManagementBackingBean extends
-        ManagerFunctionsManagementBackingBean {
+public class ScientificCouncilFunctionsManagementBackingBean extends ManagerFunctionsManagementBackingBean {
 
     protected void getUnitsList(Unit parentUnit, StringBuilder buffer, YearMonthDay currentDate) {
 
