@@ -15,6 +15,10 @@
 	</span>
 </logic:messagesPresent>
 
+<logic:empty name="documentRequests">
+	<p class="warning0"><bean:message key="no.document.requests"/><bean:write name="student" property="person.username"/></p>
+</logic:empty>
+
 <fr:view name="documentRequests" schema="DocumentRequest.summary-view-by-student">
 	<fr:layout name="tabular">
 		<fr:property name="classes" value="tstyle4 thlight thright" />
