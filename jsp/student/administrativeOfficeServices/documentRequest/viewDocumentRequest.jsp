@@ -15,10 +15,14 @@
 	</span>
 </logic:messagesPresent>
 
-<bean:define id="simpleClassName" name="documentRequests" property="class.simpleName" />
+<bean:define id="simpleClassName" name="documentRequest" property="class.simpleName" />
 <fr:view name="documentRequest" schema="<%= simpleClassName  + ".view"%>">
 	<fr:layout name="tabular">
 		<fr:property name="classes" value="tstyle4" />
 		<fr:property name="columnClasses" value="listClasses,," />
 	</fr:layout>
 </fr:view>
+
+<html:form action="/documentRequest.do?method=viewDocumentRequests">
+	<html:submit styleClass="inputbutton"><bean:message key="button.back" /></html:submit>
+</html:form>
