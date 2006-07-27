@@ -91,7 +91,7 @@ public class UIFenixCalendar extends UIInput {
             Calendar begin, Calendar end) throws IOException {
         writer.startElement("table", this);
         writer.writeAttribute("class", "fenixCalendar", null);
-        writer.writeAttribute("name", getFieldKey(context, key), null);
+        //writer.writeAttribute("name", getFieldKey(context, key), null);
 
         encodeMonthRow(writer, begin, context.getViewRoot().getLocale());
         encodeDaysOfWeek(writer, context.getViewRoot().getLocale());
