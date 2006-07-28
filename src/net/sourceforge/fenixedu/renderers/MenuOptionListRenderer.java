@@ -261,10 +261,6 @@ public class MenuOptionListRenderer extends InputRenderer {
                 Object obj = metaObject.getObject();
                 MetaObjectKey key = metaObject.getKey();
                 
-                if (! hasSavedPossibleMetaObjects()) {
-                    possibleMetaObjects.add(metaObject);
-                }
-                
                 HtmlMenuOption option = menu.createOption(null);
                 option.setValue(key.toString());
                 

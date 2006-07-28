@@ -255,10 +255,6 @@ public class CheckBoxOptionListRenderer extends InputRenderer {
                 Object obj = metaObject.getObject();
                 MetaObjectKey key = metaObject.getKey();
                 
-                if (! hasSavedPossibleMetaObjects()) {
-                    possibleMetaObjects.add(metaObject);
-                }
-                
                 String layout = getEachLayout();
                 
                 PresentationContext newContext = getContext().createSubContext(metaObject);
