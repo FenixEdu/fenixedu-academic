@@ -169,7 +169,9 @@
 			</p>
 			
 			<p style="margin-top: 2em;">
-				<bean:message key="urgency.charge"/>
+				<bean:message key="urgency.charge"/><br/>
+				<div class="warning0"><bean:message key="urgency.charge.explanation"/></div>
+				
 				<p>
 					<html:radio property="urgentRequest" value="true"/><bean:message key="label.yes"/>
 				</p>
