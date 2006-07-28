@@ -48,19 +48,25 @@
 					<h:dataTable style="padding-left: 40px;" value="#{scientificAreaUnit.competenceCourseGroupUnits}" var="competenceCourseGroupUnit">
 							<h:column>
 								<h:outputText value="<h2 class='arrow_bullet'>#{competenceCourseGroupUnit.name}</h2>" escape="false"/>
-								<h:dataTable value="#{competenceCourseGroupUnit.competenceCourses}" var="competenceCourse"
-										styleClass="showinfo1 smallmargin mtop05" style="width: 50em;" rowClasses="color2" columnClasses=",aright" rendered="#{!empty competenceCourseGroupUnit.competenceCourses}">
-	
-										<h:column rendered="#{competenceCourse.curricularStage.name == 'APPROVED'}">
-											<h:outputLink value="showCompetenceCourse.faces" style="text-decoration:none">
-												<h:outputText rendered="#{!CompetenceCourseManagement.renderInEnglish}" value="#{competenceCourse.name} (#{competenceCourse.acronym})"/>
-												<h:outputText rendered="#{CompetenceCourseManagement.renderInEnglish}" value="#{competenceCourse.nameEn} (#{competenceCourse.acronym})"/>
-												<f:param name="action" value="ccm"/>
-												<f:param name="competenceCourseID" value="#{competenceCourse.idInternal}"/>
-												<f:param name="selectedDepartmentUnitID" value="#{CompetenceCourseManagement.selectedDepartmentUnitID}"/>
-											</h:outputLink>
-										</h:column>
-								</h:dataTable>
+								<h:panelGroup rendered="#{!empty competenceCourseGroupUnit.competenceCourses}">
+								<h:outputText value="<table class='showinfo1 smallmargin mtop05' style='width: 50em;'" escape="false"/>
+								<fc:dataRepeater value="#{competenceCourseGroupUnit.competenceCourses}" var="competenceCourse">
+										<h:panelGroup rendered="#{competenceCourse.curricularStage.name == 'APPROVED'}">
+										<h:outputText value="<tr class='color2'><td>" escape="false"/>	
+
+										<h:outputLink value="showCompetenceCourse.faces" style="text-decoration:none">
+											<h:outputText rendered="#{!CompetenceCourseManagement.renderInEnglish}" value="#{competenceCourse.name} (#{competenceCourse.acronym})"/>
+											<h:outputText rendered="#{CompetenceCourseManagement.renderInEnglish}" value="#{competenceCourse.nameEn} (#{competenceCourse.acronym})"/>
+											<f:param name="action" value="ccm"/>
+											<f:param name="competenceCourseID" value="#{competenceCourse.idInternal}"/>
+											<f:param name="selectedDepartmentUnitID" value="#{CompetenceCourseManagement.selectedDepartmentUnitID}"/>
+										</h:outputLink>
+
+										<h:outputText value="</td></tr>" escape="false"/>
+										</h:panelGroup>
+								</fc:dataRepeater>
+								<h:outputText value="</table>" escape="false"/>
+								</h:panelGroup>
 							</h:column>
 					</h:dataTable>
 				</h:panelGroup>
