@@ -36,7 +36,7 @@
 			<fr:property name="key(edit)" value="label.documentRequestsManagement.editRequest"/>
 			<fr:property name="visibleIf(edit)" value="editable"/>
 			
-			<fr:property name="sortBy" value="urgentRequest=desc,creationDate=desc"/>
+			<fr:property name="sortBy" value="urgentRequest=desc,creationDate=asc"/>
 		</fr:layout>
 	</fr:view>
 </logic:notEmpty>
