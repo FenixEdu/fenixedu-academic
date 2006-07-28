@@ -4,10 +4,12 @@
 package net.sourceforge.fenixedu.domain;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PartyTypeEnum;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 
@@ -20,10 +22,33 @@ import org.joda.time.YearMonthDay;
  */
 public class Employee extends Employee_Base {
 
-    public Employee() {
+    public Employee(Person person, Integer employeeNumber, Boolean active) {
         super();
+        checkParameters(person, employeeNumber);
         setRootDomainObject(RootDomainObject.getInstance());
         setCreationDate(new DateTime());
+        setPerson(person);
+        setEmployeeNumber(employeeNumber);
+        setActive(active);
+        setAntiquity(new Date(System.currentTimeMillis()));
+        setWorkingHours(0); 
+        setAssiduousness(null);
+    }
+
+    private void checkParameters(Person person, Integer employeeNumber) {
+        if(person == null) {
+            throw new DomainException("error.employee.no.person");
+        }
+        if(employeeNumber == null) {
+            throw new DomainException("error.employee.no.employeeNumber");
+        } 
+        checkEmployeeNumber(employeeNumber);
+    }
+
+    private void checkEmployeeNumber(Integer employeeNumber) {       
+        if(readByNumber(employeeNumber) != null) {
+            throw new DomainException("error.employee.already.exists.one.employee.with.same.number");
+        }
     }
 
     public Department getCurrentDepartmentWorkingPlace() {

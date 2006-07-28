@@ -15,9 +15,9 @@ import org.joda.time.YearMonthDay;
 public class TeacherServiceExemption extends TeacherServiceExemption_Base {
 
     public TeacherServiceExemption(Teacher teacher, Date beginDate, Date endDate, ServiceExemptionType type, String institution) {
-        super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        super();        
         checkParameters(teacher, beginDate, endDate, type);
+        setRootDomainObject(RootDomainObject.getInstance());
         setEnd(endDate);
         setStart(beginDate);
         setTeacher(teacher);
@@ -37,7 +37,8 @@ public class TeacherServiceExemption extends TeacherServiceExemption_Base {
         }
         if (endDate != null && endDate.before(beginDate)) {
             throw new DomainException("error.serviceExemption.endDateBeforeBeginDate");
-        }      
+        }
+        //checkTeacherServiceExemptionsDatesIntersection(teacher, beginDate, endDate, type);
     }
 
     public void delete() {
@@ -46,6 +47,20 @@ public class TeacherServiceExemption extends TeacherServiceExemption_Base {
         super.deleteDomainObject();
     }
     
+//    private void checkTeacherServiceExemptionsDatesIntersection(Teacher teacher, Date begin, Date end, ServiceExemptionType type) {
+//        for (TeacherServiceExemption serviceExemption : teacher.getServiceExemptionSituations()) {
+//            if (serviceExemption.getType().equals(type) && serviceExemption.checkDatesIntersections(begin, end)) {
+//                System.out.println("Teacher Number: " + teacher.getTeacherNumber());
+//                throw new DomainException("error.teacherLegalRegimen.dates.intersection");
+//            }
+//        }
+//    }
+//
+//    private boolean checkDatesIntersections(Date begin, Date end) {
+//        return ((end == null || this.getStart().before(end))
+//                && (this.getEnd() == null || this.getEnd().after(begin)));
+//    } 
+        
     public boolean belongsToPeriod(YearMonthDay beginDate, YearMonthDay endDate) {
         return (!this.getStartYearMonthDay().isAfter(endDate) && (this.getEndYearMonthDay() == null || 
                 !this.getEndYearMonthDay().isBefore(beginDate)));

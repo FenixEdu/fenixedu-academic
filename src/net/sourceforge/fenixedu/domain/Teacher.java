@@ -78,9 +78,28 @@ public class Teacher extends Teacher_Base {
 
     };
 
-    public Teacher() {
+    public Teacher(Integer teacherNumber, Person person) {
         super();
+        checkParamaters(person, teacherNumber);
         setRootDomainObject(RootDomainObject.getInstance());
+        setPerson(person);
+        setTeacherNumber(teacherNumber);
+    }
+
+    private void checkParamaters(Person person, Integer teacherNumber) {
+        if(person == null) {
+            throw new DomainException("error.teacher.no.person");
+        }
+        if(teacherNumber == null) {
+            throw new DomainException("error.teacher.no.teacherNumber");
+        } 
+        checkTeacherNumber(teacherNumber);        
+    }
+
+    private void checkTeacherNumber(Integer teacherNumber) {        
+        if(readByNumber(teacherNumber) != null) {
+            throw new DomainException("error.teacher.already.exists.one.teacher.with.same.number");
+        }
     }
 
     /***************************************************************************

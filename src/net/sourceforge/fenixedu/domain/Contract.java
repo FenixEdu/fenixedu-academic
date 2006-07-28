@@ -42,6 +42,7 @@ public class Contract extends Contract_Base {
         if (endDate != null && endDate.before(beginDate)) {
             throw new DomainException("error.contract.endDateBeforeBeginDate");
         }
+        //checkContractDatesIntersection(employee, beginDate, endDate);
     }
 
 	public boolean belongsToPeriod(YearMonthDay beginDate, YearMonthDay endDate) {
@@ -50,9 +51,22 @@ public class Contract extends Contract_Base {
     }
 
     public boolean isActive(YearMonthDay currentDate) {
-        return (!this.getBeginDateYearMonthDay().isAfter(currentDate) &&
-                (this.getEndDateYearMonthDay() == null || !this.getEndDateYearMonthDay().isBefore(currentDate)));            
+        return (!this.getBeginDateYearMonthDay().isAfter(currentDate) && (this.getEndDateYearMonthDay() == null || !this
+                .getEndDateYearMonthDay().isBefore(currentDate)));
     }
+
+//    private void checkContractDatesIntersection(Employee employee, Date begin, Date end) {
+//        for (Contract contract : employee.getContracts()) {
+//            if (contract.checkDatesIntersections(begin, end)) {
+//                throw new DomainException("error.employee.contract.dates.intersection");
+//            }
+//        }        
+//    }
+//    
+//    private boolean checkDatesIntersections(Date begin, Date end) {
+//        return ((end == null || !this.getBeginDate().after(end))
+//                && (this.getEndDate() == null || !this.getEndDate().before(begin)));
+//    } 
 
     public void delete() {
         removeEmployee();
