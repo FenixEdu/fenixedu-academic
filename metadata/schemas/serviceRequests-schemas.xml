@@ -60,7 +60,7 @@
 
 <schema name="EnrolmentCertificateRequest.view" type="net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.EnrolmentCertificateRequest"  extends="CertificateRequest.view" bundle="APPLICATION_RESOURCES">
 	<slot name="executionYear.year" key="label.executionYear"/>
-	<slot name="detailed" key="label.net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.EnrolmentCertificateRequest.average" />
+	<slot name="detailed" key="label.net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.EnrolmentCertificateRequest.detailed" />
 </schema>
 
 <schema name="SchoolRegistrationCertificateRequest.view" type="net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.SchoolRegistrationCertificateRequest"  extends="CertificateRequest.view" bundle="APPLICATION_RESOURCES">
