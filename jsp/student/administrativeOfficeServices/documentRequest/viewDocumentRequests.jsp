@@ -26,6 +26,6 @@
 		<fr:property name="linkFormat(view)" value="/documentRequest.do?method=viewDocumentRequest&documentRequestId=${idInternal}"/>
 		<fr:property name="key(view)" value="view"/>
 
-		<fr:property name="sortBy" value="urgentRequest=desc,creationDate=desc"/>
+		<fr:property name="sortBy" value="creationDate=desc, documentRequestType=asc, urgentRequest=desc"/>
 	</fr:layout>
 </fr:view>

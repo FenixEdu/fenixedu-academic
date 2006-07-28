@@ -52,15 +52,19 @@
 
 <schema name="DegreeFinalizationCertificateRequest.view" type="net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DegreeFinalizationCertificateRequest"  extends="CertificateRequest.view" bundle="APPLICATION_RESOURCES">
 	<slot name="average" key="label.net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.CertificateRequest.average" />
+	<slot name="detailed" key="label.net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.CertificateRequest.detailed" />	
 </schema>
 
 <schema name="ApprovementCertificateRequest.view" type="net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.ApprovementCertificateRequest"  extends="CertificateRequest.view" bundle="APPLICATION_RESOURCES">
 </schema>
 
 <schema name="EnrolmentCertificateRequest.view" type="net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.EnrolmentCertificateRequest"  extends="CertificateRequest.view" bundle="APPLICATION_RESOURCES">
+	<slot name="executionYear.year" key="label.executionYear"/>
+	<slot name="detailed" key="label.net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.EnrolmentCertificateRequest.average" />
 </schema>
 
 <schema name="SchoolRegistrationCertificateRequest.view" type="net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.SchoolRegistrationCertificateRequest"  extends="CertificateRequest.view" bundle="APPLICATION_RESOURCES">
+	<slot name="executionYear.year" key="label.executionYear"/>
 </schema>
 
 
