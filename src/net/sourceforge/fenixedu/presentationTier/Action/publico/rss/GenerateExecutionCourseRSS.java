@@ -41,7 +41,7 @@ public abstract class GenerateExecutionCourseRSS extends RSSAction{
     	for (final DomainObject domainObject : ((Collection<DomainObject>) getObjects(executionCourse))) {
 			final ItemIF item = new Item();
 			fillItem(item, domainObject);
-			final String localUrl = commonLocalUrl + domainObject.getIdInternal().toString();
+			final String localUrl = commonLocalUrl + getIdPrefix() + domainObject.getIdInternal().toString();
 			item.setLink(new URL(request.getScheme(), request.getServerName(), request.getServerPort(), localUrl));
 			channel.addItem(item);
 		}
@@ -49,12 +49,14 @@ public abstract class GenerateExecutionCourseRSS extends RSSAction{
     	return channel;
 	}
 
-	public abstract String getDescriptionPrefix();
+    public abstract String getDescriptionPrefix();
 
  	public abstract String getMethodName();
 
  	public abstract Set getObjects(final ExecutionCourse executionCourse);
 
 	public abstract void fillItem(final ItemIF item, final DomainObject domainObject);
+
+    public abstract String getIdPrefix();
 
 }

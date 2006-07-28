@@ -53,8 +53,9 @@
 	<p><em><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="no.execution.courses.for.previous.execution.period"/></em></p>
 </logic:equal>
 
-<!-- TOP LINKS -->
+
 <ul>
+	<!-- TOP LINKS -->
 	<logic:equal value="true" name="renderCurrentExecutionPeriod">
 		<logic:equal value="true" name="renderPreviousExecutionPeriod">
 			<li><a href="#currentSem">

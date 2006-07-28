@@ -36,3 +36,5 @@ update DEGREE_INFO set ACCESS_REQUISITES = 'pt32:Bla bla bla xpto bla bla bla bl
 update DEGREE_INFO set CANDIDACY_DOCUMENTS = 'pt32:Bla bla bla xpto bla bla bla blaen32:Zla Xla Yla wpto bla bla bla bla';
 update DEGREE_INFO set QUALIFICATION_LEVEL = 'pt32:Bla bla bla xpto bla bla bla blaen32:Zla Xla Yla wpto bla bla bla bla';
 update DEGREE_INFO set RECOGNITIONS = 'pt32:Bla bla bla xpto bla bla bla blaen32:Zla Xla Yla wpto bla bla bla bla';
+update SUMMARY set SUMMARY.SUMMARY_TEXT = 'Bla bla bla bla ypto bla blb blrerrr';
+update BIBLIOGRAPHIC_REFERENCE set BIBLIOGRAPHIC_REFERENCE.TITLE = 'Bla bla bla bla bla';

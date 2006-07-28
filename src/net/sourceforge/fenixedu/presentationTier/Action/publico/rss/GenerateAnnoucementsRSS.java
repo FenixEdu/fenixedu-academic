@@ -32,4 +32,9 @@ public class GenerateAnnoucementsRSS extends GenerateExecutionCourseRSS {
 		item.setDescription(announcement.getInformation());
 	}
 
+    @Override
+    public String getIdPrefix() {
+        return "a";
+    }
+
 }

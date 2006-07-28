@@ -30,9 +30,26 @@
 		<bean:define id="linkRSS" type="java.lang.String"><%=request.getScheme()%>://<%=request.getServerName()%>:<%=request.getServerPort()%><%=context%></bean:define>
 	<table>
 		<tr>
-			<td style="border-bottom: 1px solid #eee; padding: 0.5em 1em;"><strong><bean:message key="label.announcements"/></strong></td>
-			<td style="border-bottom: 1px solid #eee; padding: 0.5em 1em;"><a href="<%= linkRSS %><%="/publico/announcementsRSS.do?id=" + pageContext.findAttribute("executionCourseCode")%>"><%= linkRSS %><%="/publico/announcementsRSS.do?id=" + pageContext.findAttribute("executionCourseCode")%></a></td>
-			<td style="border-bottom: 1px solid #eee; padding: 0.5em 1em;"><a href="<%= linkRSS %><%="/publico/announcementsRSS.do?id=" + pageContext.findAttribute("executionCourseCode")%>"><img src="<%= request.getContextPath() %>/images/rss_ico.gif" alt="<bean:message key="rss_ico" bundle="IMAGE_RESOURCES" />" /></td>
+			<td style="border-bottom: 1px solid #eee; padding: 0.5em 1em;">
+				<strong><bean:message key="label.announcements"/></strong>
+			</td>
+			<td style="border-bottom: 1px solid #eee; padding: 0.5em 1em;">
+				<a href="<%= linkRSS %><%="/publico/announcementsRSS.do?id=" + pageContext.findAttribute("executionCourseCode")%>"><%= linkRSS %><%="/publico/announcementsRSS.do?id=" + pageContext.findAttribute("executionCourseCode")%></a>
+			</td>
+			<td style="border-bottom: 1px solid #eee; padding: 0.5em 1em;">
+				<a href="<%= linkRSS %><%="/publico/announcementsRSS.do?id=" + pageContext.findAttribute("executionCourseCode")%>"><img src="<%= request.getContextPath() %>/images/rss_ico.gif" alt="<bean:message key="rss_ico" bundle="IMAGE_RESOURCES" />" /></a>
+			</td>
+		</tr>
+		<tr>
+			<td style="border-bottom: 1px solid #eee; padding: 0.5em 1em;">
+				<strong><bean:message key="label.summaries"/></strong>
+			</td>
+			<td style="border-bottom: 1px solid #eee; padding: 0.5em 1em;">
+				<a href="<%= linkRSS %><%="/publico/summariesRSS.do?id=" + pageContext.findAttribute("executionCourseCode")%>"><%= linkRSS %><%="/publico/summariesRSS.do?id=" + pageContext.findAttribute("executionCourseCode")%></a>
+			</td>
+			<td style="border-bottom: 1px solid #eee; padding: 0.5em 1em;">
+				<a href="<%= linkRSS %><%="/publico/summariesRSS.do?id=" + pageContext.findAttribute("executionCourseCode")%>"><img src="<%= request.getContextPath() %>/images/rss_ico.gif" alt="<bean:message key="rss_ico" bundle="IMAGE_RESOURCES" />" /></a>
+			</td>
 		</tr>
 	</table>
 </logic:present>

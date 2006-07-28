@@ -57,6 +57,8 @@
 		</html:link>
 	</li>
 
+</ul>
+
 	<logic:equal name="executionCourse" property="site.dynamicMailDistribution" value="true">
 			<%
 				StringBuffer buffer = new StringBuffer();
@@ -67,23 +69,21 @@
 		<bean:define id="advisoryText">
 			<bean:message  key="send.email.dynamicMailDistribution.link" bundle="PUBLIC_DEGREE_INFORMATION"/>
 		</bean:define>
-		<li>
-			<div class="email"/>
+		<div class="email"><p>
 			<html:link href="<%="mailto:" +buffer.toString() %>" titleKey="send.email.dynamicMailDistribution.title" bundle="PUBLIC_DEGREE_INFORMATION">
 				<bean:message key="send.email.dynamicMailDistribution.link" bundle="PUBLIC_DEGREE_INFORMATION"/>
 			</html:link>
-		</li>
+		</p></div>
 	</logic:equal>
 
+	
 	<logic:notEqual name="executionCourse" property="site.dynamicMailDistribution" value="true">
-		<logic:notEmpty name="component" property="mail" >
+		<logic:notEmpty name="component" property="mail" >	
 			<bean:define id="siteMail" name="component" property="mail" />
-			<li>
-				<div class="email"/>
-				<html:link href="<%= "mailto:" + pageContext.findAttribute("siteMail") %>" titleKey="send.email.singleMail.title" bundle="PUBLIC_DEGREE_INFORMATION">
-					<bean:message key="send.email.dynamicMailDistribution.link" bundle="PUBLIC_DEGREE_INFORMATION"/>
-				</html:link>
-			</li>
+			<div class="email"><p>
+			<html:link href="<%= "mailto:" + pageContext.findAttribute("siteMail") %>" titleKey="send.email.singleMail.title" bundle="PUBLIC_DEGREE_INFORMATION">
+				<bean:message key="send.email.dynamicMailDistribution.link" bundle="PUBLIC_DEGREE_INFORMATION"/>
+			</html:link>
+			</p></div>
 		</logic:notEmpty>
 	</logic:notEqual>
-</ul>

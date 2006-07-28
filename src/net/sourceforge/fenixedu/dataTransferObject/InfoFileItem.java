@@ -122,6 +122,8 @@ public class InfoFileItem extends InfoObject {
         this.permittedGroupType = fileItemPermittedGroupType;
     }
     
-    
+    public String getHtmlFriendlyFilename() {
+        return getFilename().replaceAll("&", "&amp;").replaceAll(" ", "%20");
+    }
 
 }

@@ -22,24 +22,24 @@
 				<div class="info-lst">
 					<table cellpadding="2" cellspacing="2">
 						<tr>
-							<td width="70px"><strong><bean:message key="label.bibliography.title" /></strong></td>
+							<td width="70"><strong><bean:message key="label.bibliography.title" /></strong></td>
 							<td><bean:write name="bibliographicReference" property="title" filter="false"/></td>
 						</tr>
 						<logic:notEmpty name="bibliographicReference" property="authors">
 						<tr>
-							<td width="70px"><strong><bean:message key="label.bibliography.authors" /></strong></td>
+							<td width="70"><strong><bean:message key="label.bibliography.authors" /></strong></td>
 							<td><bean:write name="bibliographicReference" property="authors" filter="false"/></td>
 						</tr>
 						</logic:notEmpty>
 						<logic:notEmpty name="bibliographicReference" property="reference">				
 							<tr>
-								<td width="70px"><strong><bean:message key="label.bibliography.reference" /></strong></td>
+								<td width="70"><strong><bean:message key="label.bibliography.reference" /></strong></td>
 								<td><bean:write name="bibliographicReference" property="reference" filter="false"/></td>
 							</tr>
 						</logic:notEmpty>
 						<logic:notEmpty name="bibliographicReference" property="year">
 							<tr>
-								<td width="70px"><strong><bean:message key="label.bibliography.year" /></strong></td>
+								<td width="70"><strong><bean:message key="label.bibliography.year" /></strong></td>
 								<td><bean:write name="bibliographicReference" property="year" filter="false"/></td>
 							</tr>
 						</logic:notEmpty>
@@ -57,24 +57,24 @@
 				<div class="info-lst">
 					<table cellpadding="1" cellspacing="2">
 						<tr>
-							<td width="70px"><strong><bean:message key="label.bibliography.title" /></strong></td>
+							<td width="70"><strong><bean:message key="label.bibliography.title" /></strong></td>
 							<td><bean:write name="bibliographicReference" property="title" filter="false"/></td>
 						</tr>
 						<logic:notEmpty name="bibliographicReference" property="authors">
 						<tr>
-							<td width="70px"><strong><bean:message key="label.bibliography.authors" /></strong></td>
+							<td width="70"><strong><bean:message key="label.bibliography.authors" /></strong></td>
 							<td><bean:write name="bibliographicReference" property="authors" filter="false"/></td>
 						</tr>
 						</logic:notEmpty>
 						<logic:notEmpty name="bibliographicReference" property="reference">				
 						<tr>
-							<td width="70px"><strong><bean:message key="label.bibliography.reference" /></strong></td>
+							<td width="70"><strong><bean:message key="label.bibliography.reference" /></strong></td>
 							<td><bean:write name="bibliographicReference" property="reference" filter="false"/></td>
 						</tr>
 						</logic:notEmpty>
 						<logic:notEmpty name="bibliographicReference" property="year">
 						<tr>
-							<td width="70px"><strong><bean:message key="label.bibliography.year" /></strong></td>
+							<td width="70"><strong><bean:message key="label.bibliography.year" /></strong></td>
 							<td><bean:write name="bibliographicReference" property="year" filter="false"/></td>
 						</tr>
 						</logic:notEmpty>

@@ -736,12 +736,14 @@
 		</action>
 
 	<!-- =========== RSS ======================== -->
-	<action path="/announcementsRSS"
-    		type="net.sourceforge.fenixedu.presentationTier.Action.publico.rss.GenerateAnnoucementsRSS"
-    		>
-	</action>
-
-
+		<action path="/announcementsRSS"
+    			type="net.sourceforge.fenixedu.presentationTier.Action.publico.rss.GenerateAnnoucementsRSS"
+    			>
+		</action>
+		<action path="/summariesRSS"
+    			type="net.sourceforge.fenixedu.presentationTier.Action.publico.rss.GenerateSummariesRSS"
+    			>
+		</action>
      </action-mappings>     
     
     <!-- ========== Controller Configuration ================================ -->

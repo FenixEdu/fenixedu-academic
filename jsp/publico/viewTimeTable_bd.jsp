@@ -20,10 +20,10 @@
 			<th colspan="4"><bean:message key="label.hoursPerWeek"/></th>
 		</tr>
 		<tr>
-			<td class="subheader" width="100px"><bean:message key="property.executionCourse.theoreticalHours"/></td>
-			<td class="subheader" width="100px"><bean:message key="property.executionCourse.practicalHours"/></td>
-			<td class="subheader" width="100px"><bean:message key="property.executionCourse.theoreticalPracticalHours"/></td>
-			<td class="subheader" width="100px"><bean:message key="property.executionCourse.labHours"/></td>
+			<td class="subheader" width="100"><bean:message key="property.executionCourse.theoreticalHours"/></td>
+			<td class="subheader" width="100"><bean:message key="property.executionCourse.practicalHours"/></td>
+			<td class="subheader" width="100"><bean:message key="property.executionCourse.theoreticalPracticalHours"/></td>
+			<td class="subheader" width="100"><bean:message key="property.executionCourse.labHours"/></td>
 		</tr>
 		<tr>
 			<td>

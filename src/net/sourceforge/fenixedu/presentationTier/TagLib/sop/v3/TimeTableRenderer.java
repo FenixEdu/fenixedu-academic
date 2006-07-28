@@ -249,7 +249,7 @@ public class TimeTableRenderer {
             hourDaysTitle = "???label.timesAndDays???";
         }
 
-        strBuffer.append("<th>");
+        strBuffer.append("<tr><th>");
         strBuffer.append(hourDaysTitle);
         strBuffer.append("</th>\r\n");
 
@@ -269,6 +269,7 @@ public class TimeTableRenderer {
             strBuffer.append(timeTable.getDayColumn(index).getLabel());
             strBuffer.append("</th>\r\n");
         }
+        strBuffer.append("</tr>");
     }
 
     protected InfoLessonWrapper[] resolveColisions(List lessonSlotList, DayColumn dayColumn) {

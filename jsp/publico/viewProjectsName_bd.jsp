@@ -20,7 +20,6 @@
 				<th><bean:message key="label.groupingName" /></th>
 				<th><bean:message key="label.groupingDescription" /></th>
 				<th><bean:message key="label.executionCourses" /></th>
-			</td>
 			</tr>
 			<logic:iterate id="infoGroupProperties" name="component" property="infoGroupPropertiesList" >
 			<tr>

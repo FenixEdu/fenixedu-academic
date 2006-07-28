@@ -67,7 +67,7 @@
 
 	<logic:iterate id="summary" name="component" property="infoSummaries" type="net.sourceforge.fenixedu.dataTransferObject.InfoSummary">
 		<bean:define id="summaryCode" name="summary" property="idInternal" />
-		<div id="summary">
+		<div id="s<%= summary.getIdInternal().toString() %>">
 			<logic:present name="summary" property="infoShift">
 			<h3>
 				<bean:write name="summary" property="summaryDateInput"/>
@@ -113,9 +113,9 @@
 				</logic:notEmpty>
 			</logic:present>
 		
-			<p><bean:write name="summary" property="summaryText" filter="false"/></p>
+			<bean:write name="summary" property="summaryText" filter="false"/><br/>
 		
-			<div id="details">
+			<div class="details">
 				<span class="updated-date">
 					<bean:message key="message.modifiedOn" />
 					<bean:write name="summary" property="lastModifiedDateFormatted" />

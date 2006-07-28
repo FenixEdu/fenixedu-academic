@@ -13,9 +13,7 @@
 	</logic:empty> 
 
 	<logic:notEmpty name="component" property="infoSiteStudentsAndGroupsList">
-	
-	<table class="tab_complex" width="70%" cellspacing="1" cellpadding="2">
-	
+
 	<logic:equal name="ShiftChosenType" value="1">
 	<h2><bean:message key="title.viewStudentsAndGroupsByShift"/></h2>
 	</logic:equal>
@@ -45,6 +43,8 @@
 	
 	<br/>	
 	<br/>
+	
+	<table class="tab_complex" width="70%" cellspacing="1" cellpadding="2">
 	
 	<tr>
 		<th><bean:message key="label.studentGroupNumber" /></th>

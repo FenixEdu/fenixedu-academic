@@ -22,8 +22,8 @@
 	</tr>
 	<logic:iterate id="evaluation" name="evaluations">
 		<bean:define id="evaluationOID" name="evaluation" property="idInternal"/>
-		<tr>
-			<logic:equal name="evaluation" property="class.name" value="net.sourceforge.fenixedu.domain.onlineTests.OnlineTest">
+		<logic:equal name="evaluation" property="class.name" value="net.sourceforge.fenixedu.domain.onlineTests.OnlineTest">
+			<tr>
 				<td>
 					<bean:message key="label.online.test"/>: <bean:write name="evaluation" property="distributedTest.title"/>
 				</td>
@@ -32,8 +32,8 @@
 						<bean:message key="label.publishedMarks"/>
 					</html:link>
 				</td>
-			</logic:equal>
-		</tr>
+			</tr>
+		</logic:equal>
 	</logic:iterate>
 </table>
 
@@ -46,8 +46,8 @@
 	</tr>
 	<logic:iterate id="evaluation" name="evaluations">
 		<bean:define id="evaluationOID" name="evaluation" property="idInternal"/>
-		<tr>
-			<logic:equal name="evaluation" property="class.name" value="net.sourceforge.fenixedu.domain.Project">
+		<logic:equal name="evaluation" property="class.name" value="net.sourceforge.fenixedu.domain.Project">
+			<tr>
 				<td>
 					<bean:message key="label.project"/>: <bean:write name="evaluation" property="name"/>
 				</td>
@@ -62,8 +62,8 @@
 						<bean:message key="label.publishedMarks"/>
 					</html:link>
 				</td>
-			</logic:equal>
-		</tr>
+			</tr>
+		</logic:equal>
 	</logic:iterate>
 </table>
 

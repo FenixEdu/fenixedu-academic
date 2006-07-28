@@ -32,4 +32,9 @@ public class GenerateSummariesRSS extends GenerateExecutionCourseRSS {
 		item.setDescription(summary.getSummaryText());
 	}
 
+    @Override
+    public String getIdPrefix() {
+        return "s";
+    }
+
 }
