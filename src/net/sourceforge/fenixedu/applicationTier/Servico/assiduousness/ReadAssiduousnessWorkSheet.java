@@ -185,6 +185,10 @@ public class ReadAssiduousnessWorkSheet extends Service {
         employeeWorkSheet.setWorkDaySheetList(workSheet);
         employeeWorkSheet.setEmployee(assiduousness.getEmployee());
         Unit unit = assiduousness.getEmployee().getLastWorkingPlaceByPeriod(beginDate, endDate);
+        if (assiduousness.getEmployee().getLastContract() != null
+                && assiduousness.getEmployee().getLastContract().getMailingUnit() != null) {
+            unit = assiduousness.getEmployee().getLastContract().getMailingUnit();
+        }
         employeeWorkSheet.setUnit(unit);
         if (unit != null) {
             employeeWorkSheet.setUnitCode(unit.getCostCenterCode().toString());
