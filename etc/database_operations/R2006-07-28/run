@@ -26,3 +26,6 @@ function executeWithTempFile() {
 	rm tmp.sql
 	echo
 }
+
+execute "Create Material Table" createMaterialTable.sql
+execute "Create PersonExtension Table" createPersonExtensionTable.sql
