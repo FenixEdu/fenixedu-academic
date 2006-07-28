@@ -106,6 +106,8 @@ public class Assiduousness extends Assiduousness_Base {
                     workDaySheet.setBalanceTime(Duration.ZERO.minus(
                             workDaySheet.getWorkSchedule().getWorkScheduleType().getNormalWorkPeriod()
                                     .getWorkPeriodDuration()).toPeriod());
+                    workDaySheet.setUnjustifiedTime(workDaySheet.getWorkSchedule().getWorkScheduleType()
+                            .getFixedWorkPeriod().getWorkPeriodDuration());
                     if (balanceLeaves.isEmpty()) {
                         workDaySheet.setNotes(workDaySheet.getNotes().concat("FALTA INJ"));
                     }
