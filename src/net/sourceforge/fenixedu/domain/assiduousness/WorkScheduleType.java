@@ -117,9 +117,10 @@ public class WorkScheduleType extends WorkScheduleType_Base {
     }
 
     public Duration getMaximumContinuousWorkPeriod() {
-        if (getMeal() == null || getMeal().getMinimumMealBreakInterval().equals(Duration.ZERO)) {
-            return null;
-        }
-        return maximumContinuousWorkPeriod;
+//        if (getMeal() == null || getMeal().getMinimumMealBreakInterval().equals(Duration.ZERO)) {
+//            return null;
+//        }
+//        return maximumContinuousWorkPeriod;
+        return null;
     }
 }
