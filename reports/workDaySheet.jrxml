@@ -25,11 +25,12 @@
 
 
 	<field name="workScheduleAcronym" class="java.lang.String"/>
-	<field name="dateFormatted" class="java.lang.String"/>
+	<field name="date.dayOfMonth" class="java.lang.Integer"/>
 	<field name="balanceTimeFormatted" class="java.lang.String"/>
 	<field name="notes" class="java.lang.String"/>
 	<field name="unjustifiedTimeFormatted" class="java.lang.String"/>
 	<field name="clockingsFormatted" class="java.lang.String"/>
+	<field name="weekDay" class="java.lang.String"/>
 
 		<background>
 			<band height="0"  isSplitAllowed="true" >
@@ -44,30 +45,14 @@
 			</band>
 		</pageHeader>
 		<columnHeader>
-			<band height="20"  isSplitAllowed="true" >
-				<staticText>
-					<reportElement
-						mode="Opaque"
-						x="0"
-						y="0"
-						width="70"
-						height="20"
-						forecolor="#000000"
-						backcolor="#CCCCCC"
-						key="staticText-1"/>
-					<box topBorder="Thin" topBorderColor="#000000" leftBorder="Thin" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="Thin" bottomBorderColor="#000000"/>
-					<textElement textAlignment="Center" verticalAlignment="Middle">
-						<font fontName="Verdana"/>
-					</textElement>
-				<text><![CDATA[Data]]></text>
-				</staticText>
+			<band height="25"  isSplitAllowed="true" >
 				<staticText>
 					<reportElement
 						mode="Opaque"
 						x="70"
 						y="0"
 						width="53"
-						height="20"
+						height="25"
 						forecolor="#000000"
 						backcolor="#CCCCCC"
 						key="staticText-2"/>
@@ -83,7 +68,7 @@
 						x="123"
 						y="0"
 						width="30"
-						height="20"
+						height="25"
 						forecolor="#000000"
 						backcolor="#CCCCCC"
 						key="staticText-3"/>
@@ -99,7 +84,7 @@
 						x="153"
 						y="0"
 						width="30"
-						height="20"
+						height="25"
 						forecolor="#000000"
 						backcolor="#CCCCCC"
 						key="staticText-4"/>
@@ -115,7 +100,7 @@
 						x="183"
 						y="0"
 						width="80"
-						height="20"
+						height="25"
 						forecolor="#000000"
 						backcolor="#CCCCCC"
 						key="staticText-5"/>
@@ -131,7 +116,7 @@
 						x="263"
 						y="0"
 						width="250"
-						height="20"
+						height="25"
 						forecolor="#000000"
 						backcolor="#CCCCCC"
 						key="staticText-6"/>
@@ -140,6 +125,39 @@
 						<font fontName="Verdana"/>
 					</textElement>
 				<text><![CDATA[Marcações]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						mode="Opaque"
+						x="25"
+						y="0"
+						width="45"
+						height="25"
+						forecolor="#000000"
+						backcolor="#CCCCCC"
+						key="staticText-7"
+						isPrintWhenDetailOverflows="true"/>
+					<box topBorder="Thin" topBorderColor="#000000" leftBorder="Thin" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="Thin" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Verdana"/>
+					</textElement>
+				<text><![CDATA[Dia da Semana]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						mode="Opaque"
+						x="0"
+						y="0"
+						width="25"
+						height="25"
+						forecolor="#000000"
+						backcolor="#CCCCCC"
+						key="staticText-1"/>
+					<box topBorder="Thin" topBorderColor="#000000" leftBorder="Thin" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="Thin" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Verdana"/>
+					</textElement>
+				<text><![CDATA[Dia]]></text>
 				</staticText>
 			</band>
 		</columnHeader>
@@ -163,14 +181,14 @@
 					<reportElement
 						x="0"
 						y="0"
-						width="70"
+						width="25"
 						height="15"
 						key="textField"/>
 					<box topBorder="None" topBorderColor="#000000" leftBorder="Thin" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="Thin" bottomBorderColor="#000000"/>
 					<textElement textAlignment="Center">
 						<font fontName="Verdana"/>
 					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA[$F{dateFormatted}]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.Number"><![CDATA[$F{date.dayOfMonth}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
@@ -211,7 +229,7 @@
 					</textElement>
 				<textFieldExpression   class="java.lang.String"><![CDATA[$F{unjustifiedTimeFormatted}+" "]]></textFieldExpression>
 				</textField>
-				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+				<textField isStretchWithOverflow="false" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						x="263"
 						y="0"
@@ -222,7 +240,20 @@
 					<textElement>
 						<font fontName="Verdana"/>
 					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA[" "+$F{clockingsFormatted}]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{clockingsFormatted}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="25"
+						y="0"
+						width="45"
+						height="15"
+						key="textField-1"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="Thin" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="Thin" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Left">
+						<font fontName="Verdana"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{weekDay}]]></textFieldExpression>
 				</textField>
 			</band>
 		</detail>

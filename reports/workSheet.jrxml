@@ -72,7 +72,7 @@
 					<reportElement
 						mode="Transparent"
 						x="249"
-						y="103"
+						y="110"
 						width="114"
 						height="15"
 						forecolor="#000000"
@@ -88,9 +88,9 @@
 					<reportElement
 						mode="Transparent"
 						x="249"
-						y="51"
+						y="52"
 						width="243"
-						height="24"
+						height="26"
 						forecolor="#000000"
 						key="textField-2"
 						stretchType="RelativeToBandHeight"/>
@@ -103,9 +103,9 @@
 				<textField isStretchWithOverflow="false" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						x="249"
-						y="76"
+						y="81"
 						width="243"
-						height="24"
+						height="26"
 						key="textField"/>
 					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
 					<textElement>
@@ -116,7 +116,7 @@
 				<textField isStretchWithOverflow="false" pattern="" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						x="378"
-						y="103"
+						y="110"
 						width="114"
 						height="15"
 						key="textField"/>
