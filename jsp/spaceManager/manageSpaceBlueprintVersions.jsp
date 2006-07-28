@@ -20,8 +20,8 @@
 				<bean:write name="message"/>
 			</html:messages>
 		</span>
-	</logic:messagesPresent>
-	<br/>
+		<br/>
+	</logic:messagesPresent>	
 	
 	<logic:notEmpty name="selectedSpaceBlueprint">					
 		<bean:define id="selectedSpaceBlueprintId" name="selectedSpaceBlueprint" property="idInternal" />
@@ -61,6 +61,13 @@
 		</html:link>&nbsp;											
 				
 	</logic:notEmpty>
+	
+	<logic:empty name="selectedSpaceBlueprint">
+		<span class="error">
+			<bean:message key="label.space.no.blueprints" bundle="SPACE_RESOURCES"/>
+		</span>	
+		<br/><br/>
+	</logic:empty>
 	
 	<html:link page="/manageBlueprints.do?method=prepareCreateBlueprintVersion&page=0" paramId="spaceInformationID" paramName="selectedSpaceInformation" paramProperty="idInternal">
 		<bean:message key="link.edit.space.create.new.version" bundle="SPACE_RESOURCES"/>

@@ -1,0 +1,13 @@
+CREATE TABLE `MATERIAL` (
+  `ID_INTERNAL` int(11) NOT NULL default '0',
+  `KEY_ROOT_DOMAIN_OBJECT` int(11) default NULL,
+  `OJB_CONCRETE_CLASS` text,
+  `KEY_OWNER` int(11) NOT NULL default '0',  
+  `BAR_CODE_NUMBER` int(11) default NULL,
+  `NUMBER` int(11) default NULL,
+  `ACQUISITION` varchar(10) NOT NULL default '0000-00-00',
+  `CEASE` varchar(10) default NULL,
+  PRIMARY KEY  (`ID_INTERNAL`),
+  KEY `KEY_OWNER` (`KEY_OWNER`),
+  KEY `KEY_ROOT_DOMAIN_OBJECT` (`KEY_ROOT_DOMAIN_OBJECT`)
+) ENGINE=InnoDB; 

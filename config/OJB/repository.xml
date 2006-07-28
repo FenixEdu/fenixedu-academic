@@ -90,6 +90,7 @@
 <!ENTITY administrativeOffice SYSTEM "repository_administrativeOffice.xml">
 <!ENTITY serviceRequests SYSTEM "repository_serviceRequests.xml">
 <!ENTITY functionalities SYSTEM "repository_functionalities.xml">
+<!ENTITY material SYSTEM "repository_material.xml">
 ]>
 <descriptor-repository version="1.0" isolation-level="repeatable-read">
 
@@ -184,5 +185,6 @@
 	&administrativeOffice;
 	&serviceRequests;
     &functionalities;
+    &material;
     
 </descriptor-repository>

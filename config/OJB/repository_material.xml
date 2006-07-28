@@ -1,0 +1,10 @@
+<class-descriptor class="net.sourceforge.fenixedu.domain.material.Material" table="MATERIAL">
+    <extent-class class-ref="net.sourceforge.fenixedu.domain.material.Extension" />   
+</class-descriptor>
+
+<class-descriptor class="net.sourceforge.fenixedu.domain.material.Extension" table="MATERIAL">
+</class-descriptor>
+
+<class-descriptor class="net.sourceforge.fenixedu.domain.material.PersonExtension" table="PERSON_EXTENSION">
+</class-descriptor>
+

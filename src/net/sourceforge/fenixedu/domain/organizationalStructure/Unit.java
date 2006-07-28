@@ -174,37 +174,29 @@ public class Unit extends Unit_Base {
             allInactiveSubUnits.addAll(subUnit.getAllInactiveSubUnits(currentDate));
         }
         return new ArrayList<Unit>(allInactiveSubUnits);
-    }
-    
-    private void checkCostCenterCode(Integer costCenterCode) {
-        if (costCenterCode != null) {
-            List<Unit> allUnits = readAllUnits();
-            for (Unit unit : allUnits) {
-                if (!unit.equals(this) && unit.getCostCenterCode() != null
-                        && unit.getCostCenterCode().equals(costCenterCode)) {
-                    throw new DomainException("error.costCenter.alreadyExists");
-                }
-            }
-        }
-    }
+    }      
 
     public void edit(String unitName, Integer unitCostCenter, String acronym, Date beginDate,
             Date endDate, PartyTypeEnum type, String webAddress) {
-
-        checkCostCenterCode(unitCostCenter);
-        checkUnitDates(beginDate, endDate);
-        if (acronym != null && !acronym.equals("") && this.getType() != null) {
-            checkAcronym(acronym, this.getType());
-        }
-        this.setName(unitName);
-        this.setBeginDate(beginDate);
-        this.setEndDate(endDate);
-        this.setType(type);
-        this.setCostCenterCode(unitCostCenter);
-        this.setWebAddress(webAddress);
-        this.setAcronym(acronym);
+       
+        checkUnitDates(beginDate, endDate);        
+        setCostCenterCode(unitCostCenter);
+        checkAcronym(acronym, this.getType());        
+        setName(unitName);
+        setBeginDate(beginDate);
+        setEndDate(endDate);
+        setType(type);        
+        setWebAddress(webAddress);
+        setAcronym(acronym);
     }
 
+    private void checkCostCenterCode(Integer costCenterCode) {               
+        Unit unit = readByCostCenterCode(costCenterCode);
+        if (unit != null && !unit.equals(this)) {
+            throw new DomainException("error.costCenter.alreadyExists");
+        }
+    }
+    
     private void checkUnitDates(Date beginDate, Date endDate) {
         if(beginDate == null) {
             throw new DomainException("error.unit.no.beginDate");
@@ -214,7 +206,7 @@ public class Unit extends Unit_Base {
         }
     }
 
-    private void checkAcronym(String acronym, PartyTypeEnum partyTypeEnum) {
+    private void checkAcronym(String acronym, PartyTypeEnum partyTypeEnum) {        
         Unit unit = readUnitByAcronymAndType(acronym, partyTypeEnum);
         if (unit != null && !unit.equals(this)) {
             throw new DomainException("error.existent.acronym");
@@ -519,13 +511,26 @@ public class Unit extends Unit_Base {
      * because acronyms of this two types are unique. *
      */
     public static Unit readUnitByAcronymAndType(String acronym, PartyTypeEnum partyTypeEnum) {
-        if (partyTypeEnum.equals(PartyTypeEnum.DEGREE_UNIT)
+        if (acronym != null && !acronym.equals("") && partyTypeEnum != null
+                && (partyTypeEnum.equals(PartyTypeEnum.DEGREE_UNIT)
                 || partyTypeEnum.equals(PartyTypeEnum.DEPARTMENT)
-                || partyTypeEnum.equals(PartyTypeEnum.ACADEMIC_SERVICES_SUPERVISION)) {
+                || partyTypeEnum.equals(PartyTypeEnum.ACADEMIC_SERVICES_SUPERVISION))) {
             for (Unit unit : readAllUnits()) {
                 if (unit.getAcronym() != null && unit.getAcronym().equals(acronym)
                         && unit.getType() != null && unit.getType().equals(partyTypeEnum)) {
                     return unit;
+                }
+            }
+        }
+        return null;
+    }
+    
+    public static Unit readByCostCenterCode(Integer costCenterCode) {
+        if(costCenterCode != null) {                   
+            for (Party party : RootDomainObject.getInstance().getPartys()) {
+                if(party instanceof Unit && ((Unit)party).getCostCenterCode() != null &&
+                        ((Unit)party).getCostCenterCode().equals(costCenterCode)) {
+                    return (Unit) party;
                 }
             }
         }
@@ -548,6 +553,16 @@ public class Unit extends Unit_Base {
         }
         return result;
     }
+    
+    @Override
+    public void setCostCenterCode(Integer costCenterCode) {
+        checkCostCenterCode(costCenterCode);
+        super.setCostCenterCode(costCenterCode);
+    }
+    
+    public Set<Unit> getParentByOrganizationalStructureAccountabilityType() {
+        return (Set) getParentParties(AccountabilityTypeEnum.ORGANIZATIONAL_STRUCTURE, getClass());
+    }
 
     public static Unit createNewUnit(String unitName, Integer costCenterCode, String acronym,
             Date beginDate, Date endDate, PartyTypeEnum type, Unit parentUnit,
@@ -558,8 +573,16 @@ public class Unit extends Unit_Base {
             throw new DomainException("error.unit.empty.name");
         }
 
-        Unit unit = new Unit();
-        unit.edit(unitName, costCenterCode, acronym, beginDate, endDate, type, webAddress);
+        Unit unit = new Unit();       
+        unit.checkUnitDates(beginDate, endDate);               
+        unit.checkAcronym(acronym, type);        
+        unit.setCostCenterCode(costCenterCode);
+        unit.setName(unitName);
+        unit.setBeginDate(beginDate);
+        unit.setEndDate(endDate);
+        unit.setType(type);               
+        unit.setWebAddress(webAddress);
+        unit.setAcronym(acronym);
         if (parentUnit != null && accountabilityType != null) {
             unit.addParentUnit(parentUnit, accountabilityType);
         }
@@ -586,11 +609,7 @@ public class Unit extends Unit_Base {
                 .readAccountabilityTypeByType(AccountabilityTypeEnum.ORGANIZATIONAL_STRUCTURE));
 
         return institutionUnit;
-    }
-
-    public Set<Unit> getParentByOrganizationalStructureAccountabilityType() {
-    	return (Set) getParentParties(AccountabilityTypeEnum.ORGANIZATIONAL_STRUCTURE, getClass());
-    }
+    }  
 
     public static Party createContributor(String contributorName, String contributorNumber,
             String contributorAddress, String areaCode, String areaOfAreaCode, String area,
@@ -613,5 +632,4 @@ public class Unit extends Unit_Base {
         
         return contributor;
     }
-    
 }

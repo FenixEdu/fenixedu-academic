@@ -70,11 +70,11 @@ public class PersonSpaceOccupation extends PersonSpaceOccupation_Base {
     }
     
     private void checkPersonSpaceOccupationIntersection(final YearMonthDay begin, final YearMonthDay end, Person person, Space space) {
-        checkPersonSpaceOccupationInterval(begin, end);   
-        List<PersonSpaceOccupation> personSpaceOccupations = person.getPersonSpaceOccupations();        
+        checkPersonSpaceOccupationInterval(begin, end);
+        List<PersonSpaceOccupation> personSpaceOccupations = person.getPersonSpaceOccupations();
         for (PersonSpaceOccupation personSpaceOccupation : personSpaceOccupations) {
-            if(!personSpaceOccupation.equals(this) &&
-                    personSpaceOccupation.getSpace().equals(space) && personSpaceOccupation.checkIntersections(begin, end)) {
+            if (!personSpaceOccupation.equals(this) && personSpaceOccupation.getSpace().equals(space)
+                    && personSpaceOccupation.checkIntersections(begin, end)) {
                 throw new DomainException("error.person.space.occupation.intersection");
             }
         }

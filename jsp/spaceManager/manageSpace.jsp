@@ -175,7 +175,7 @@
 	</html:link></p>
 	<br/>
 	
-	<p><b><bean:message bundle="SPACE_RESOURCES" key="label.reponsible.unit"/></b></p>
+	<p><b><bean:message bundle="SPACE_RESOURCES" key="label.active.responsible.units"/></b></p>
 	<fr:view schema="ViewSpaceResponsibleUnits" name="selectedSpaceInformation" property="space.activeSpaceResponsibility" />
 	<p><html:link page="/manageSpaceResponsibility.do?method=showSpaceResponsibility&page=0" paramId="spaceInformationID" paramName="selectedSpaceInformation" paramProperty="idInternal">
 		<bean:message bundle="SPACE_RESOURCES" key="link.manage.space.responsibility"/>
@@ -188,4 +188,10 @@
 		<bean:message bundle="SPACE_RESOURCES" key="link.manage.occupations"/>
 	</html:link></p>
 
+	<br/>	
+	<p><b><bean:message bundle="SPACE_RESOURCES" key="label.active.material.occupations"/></b></p>
+	<fr:view schema="ViewSpaceMaterial" name="selectedSpaceInformation" property="space.activeSpaceMaterial" />	
+	<p><html:link page="/manageMaterialSpaceOccupations.do?method=showMaterialSpaceOccupation&page=0" paramId="spaceInformationID" paramName="selectedSpaceInformation" paramProperty="idInternal">
+		<bean:message bundle="SPACE_RESOURCES" key="link.manage.material.occupations"/>
+	</html:link></p>
 </logic:present>	

@@ -10,23 +10,35 @@ public class PersonFunction extends PersonFunction_Base {
     public PersonFunction(Party parentParty, Party childParty, Function function, YearMonthDay begin, YearMonthDay end, Double credits) {        
         super();
         checkParameters(parentParty, childParty, function, begin, end);
-        checkContractDatesIntersection((Person)childParty, (Unit)parentParty, function, begin, end, true);
+        checkPersonFunctionDatesIntersection((Person)childParty, (Unit)parentParty , function, begin, end);
+        super.setBeginDate(begin);
+        super.setEndDate(end);
         setParentParty(parentParty);
         setChildParty(childParty);
         setAccountabilityType(function);
-        setCredits(credits);        
-        setBeginDate(begin);        
-        setEndDate(end);
+        setCredits(credits);                
     }
     
     public void edit(YearMonthDay begin, YearMonthDay end, Double credits) {                
-        checkPersonFunctionDates(begin, end);   
-        checkContractDatesIntersection(getPerson(), getUnit(), getFunction(), begin, end, false);
-        setCredits(credits);
-        setBeginDate(begin);        
-        setEndDate(end);
-    }
+        checkParameters(getUnit(), getPerson(), getFunction(), begin, end);
+        checkPersonFunctionDatesIntersection(getPerson(), getUnit(), getFunction(), begin, end);
+        super.setBeginDate(begin);
+        super.setEndDate(end);
+        setCredits(credits);        
+    }    
     
+    @Override
+    public void setBeginDate(YearMonthDay beginDate) {
+        checkPersonFunctionDatesIntersection(getPerson(), getUnit(), getFunction(), beginDate, getEndDate());
+        super.setBeginDate(beginDate);
+    }
+
+    @Override
+    public void setEndDate(YearMonthDay endDate) {
+        checkPersonFunctionDatesIntersection(getPerson(), getUnit(), getFunction(), getBeginDate(), endDate);
+        super.setEndDate(endDate);
+    }
+
     private void checkParameters(Party parentParty, Party childParty, Function function, YearMonthDay begin, YearMonthDay end) {
         if(parentParty == null) {
             throw new DomainException("error.personFunction.no.unit");
@@ -37,10 +49,6 @@ public class PersonFunction extends PersonFunction_Base {
         if(function == null) {
             throw new DomainException("error.personFunction.no.function");
         }
-        checkPersonFunctionDates(begin, end);        
-    }    
-
-    private void checkPersonFunctionDates(YearMonthDay begin, YearMonthDay end) {
         if(begin == null) {
             throw new DomainException("error.personFunction.no.beginDate");
         }
@@ -49,19 +57,16 @@ public class PersonFunction extends PersonFunction_Base {
         }
         if (end != null && end.isBefore(begin)) {
             throw new DomainException("error.personFunction.endDateBeforeBeginDate");
-        }        
-    }
+        }          
+    }       
     
-    private void checkContractDatesIntersection(Person person, Unit unit, Function function,
-            YearMonthDay begin, YearMonthDay end, boolean create) {
+    private void checkPersonFunctionDatesIntersection(Person person, Unit unit, Function function,
+            YearMonthDay begin, YearMonthDay end) {
         
         for (PersonFunction personFunction : person.getPersonFunctions(unit)) {
-            if (create || !personFunction.equals(this)) {
-                if (personFunction.getFunction().equals(function)
-                        && personFunction.checkDatesIntersections(begin, end)) {
-                    throw new DomainException(
-                            "error.personFunction.dates.intersection.for.same.function");
-                }
+            if (!personFunction.equals(this) && personFunction.getFunction().equals(function)
+                    && personFunction.checkDatesIntersections(begin, end)) {
+                throw new DomainException("error.personFunction.dates.intersection.for.same.function");
             }
         }
     }

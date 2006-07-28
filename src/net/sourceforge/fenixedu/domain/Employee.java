@@ -24,15 +24,21 @@ public class Employee extends Employee_Base {
 
     public Employee(Person person, Integer employeeNumber, Boolean active) {
         super();
-        checkParameters(person, employeeNumber);
-        setRootDomainObject(RootDomainObject.getInstance());
+        checkParameters(person, employeeNumber);        
+        setEmployeeNumber(employeeNumber);        
         setCreationDate(new DateTime());
-        setPerson(person);
-        setEmployeeNumber(employeeNumber);
+        setPerson(person);        
         setActive(active);
         setAntiquity(new Date(System.currentTimeMillis()));
         setWorkingHours(0); 
         setAssiduousness(null);
+        setRootDomainObject(RootDomainObject.getInstance());
+    }
+
+    @Override
+    public void setEmployeeNumber(Integer employeeNumber) {
+        checkEmployeeNumber(employeeNumber);
+        super.setEmployeeNumber(employeeNumber);
     }
 
     private void checkParameters(Person person, Integer employeeNumber) {
@@ -41,12 +47,12 @@ public class Employee extends Employee_Base {
         }
         if(employeeNumber == null) {
             throw new DomainException("error.employee.no.employeeNumber");
-        } 
-        checkEmployeeNumber(employeeNumber);
+        }         
     }
 
-    private void checkEmployeeNumber(Integer employeeNumber) {       
-        if(readByNumber(employeeNumber) != null) {
+    private void checkEmployeeNumber(Integer employeeNumber) {
+        Employee employee = readByNumber(employeeNumber);
+        if(employee != null && !employee.equals(this)) {
             throw new DomainException("error.employee.already.exists.one.employee.with.same.number");
         }
     }
@@ -163,7 +169,8 @@ public class Employee extends Employee_Base {
 
     public static Employee readByNumber(final Integer employeeNumber) {
         for (final Employee employee : RootDomainObject.getInstance().getEmployees()) {
-            if (employee.getEmployeeNumber().equals(employeeNumber)) {
+            if (employee.getEmployeeNumber() != null && 
+                    employee.getEmployeeNumber().equals(employeeNumber)) {
                 return employee;
             }
         }

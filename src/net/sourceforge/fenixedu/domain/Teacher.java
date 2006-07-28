@@ -80,10 +80,16 @@ public class Teacher extends Teacher_Base {
 
     public Teacher(Integer teacherNumber, Person person) {
         super();
-        checkParamaters(person, teacherNumber);
+        checkParamaters(person, teacherNumber);        
+        setTeacherNumber(teacherNumber);        
+        setPerson(person);                
         setRootDomainObject(RootDomainObject.getInstance());
-        setPerson(person);
-        setTeacherNumber(teacherNumber);
+    }
+
+    @Override
+    public void setTeacherNumber(Integer teacherNumber) {
+        checkTeacherNumber(teacherNumber);
+        super.setTeacherNumber(teacherNumber);
     }
 
     private void checkParamaters(Person person, Integer teacherNumber) {
@@ -92,12 +98,12 @@ public class Teacher extends Teacher_Base {
         }
         if(teacherNumber == null) {
             throw new DomainException("error.teacher.no.teacherNumber");
-        } 
-        checkTeacherNumber(teacherNumber);        
+        }                
     }
 
-    private void checkTeacherNumber(Integer teacherNumber) {        
-        if(readByNumber(teacherNumber) != null) {
+    private void checkTeacherNumber(Integer teacherNumber) {
+        Teacher teacher = readByNumber(teacherNumber);
+        if(teacher != null && !teacher.equals(this)) {
             throw new DomainException("error.teacher.already.exists.one.teacher.with.same.number");
         }
     }
@@ -927,7 +933,8 @@ public class Teacher extends Teacher_Base {
 
     public static Teacher readByNumber(final Integer teacherNumber) {
         for (final Teacher teacher : RootDomainObject.getInstance().getTeachers()) {
-            if (teacher.getTeacherNumber().equals(teacherNumber)) {
+            if (teacher.getTeacherNumber() != null && 
+                    teacher.getTeacherNumber().equals(teacherNumber)) {
                 return teacher;
             }
         }

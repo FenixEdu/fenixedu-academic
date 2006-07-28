@@ -10,9 +10,15 @@ public class JavaYearMonthDay2SqlStringFieldConversion implements FieldConversio
         if (object != null) {
             YearMonthDay yearMonthDay = (YearMonthDay) object;
 
-            return String.format("%d-%02d-%02d", yearMonthDay.get(DateTimeFieldType.year()),
+            String dateString = String.format("%d-%02d-%02d", yearMonthDay.get(DateTimeFieldType.year()),
                     yearMonthDay.get(DateTimeFieldType.monthOfYear()), yearMonthDay
                             .get(DateTimeFieldType.dayOfMonth()));
+            
+            if(dateString.length() != 10) {
+                return null;
+            }
+            
+            return dateString;
         }
         return null;
     }

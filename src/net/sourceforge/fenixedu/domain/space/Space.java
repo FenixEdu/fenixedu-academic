@@ -7,6 +7,7 @@ import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.material.Material;
 
 import org.joda.time.YearMonthDay;
 
@@ -77,6 +78,16 @@ public abstract class Space extends Space_Base {
         }
         return personSpaceOccupations;
     }
+    
+    public List<MaterialSpaceOccupation> getMaterialSpaceOccupations() {
+        List<MaterialSpaceOccupation> materialSpaceOccupations = new ArrayList<MaterialSpaceOccupation>();
+        for (SpaceOccupation spaceOccupation : getSpaceOccupations()) {
+            if (spaceOccupation instanceof MaterialSpaceOccupation) {
+                materialSpaceOccupations.add((MaterialSpaceOccupation) spaceOccupation);
+            }
+        }
+        return materialSpaceOccupations;
+    }
 
     public SortedSet<PersonSpaceOccupation> getActivePersonSpaceOccupations() {
         SortedSet<PersonSpaceOccupation> personSpaceOccupations = new TreeSet<PersonSpaceOccupation>(
@@ -124,6 +135,17 @@ public abstract class Space extends Space_Base {
             }
         }
         return spaceResponsibility;
+    }
+    
+    public SortedSet<Material> getActiveSpaceMaterial() {
+        SortedSet<Material> spaceMaterial = new TreeSet<Material>(Material.COMPARATOR_BY_CLASS_NAME);
+        YearMonthDay current = new YearMonthDay();
+        for (MaterialSpaceOccupation materialSpaceOccupation : getMaterialSpaceOccupations()) {
+            if (materialSpaceOccupation.isActive(current)) {
+                spaceMaterial.add(materialSpaceOccupation.getAssociatedMaterial());
+            }
+        }
+        return spaceMaterial;
     }
 
     public void delete() {

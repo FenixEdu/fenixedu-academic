@@ -130,3 +130,12 @@
 		<property name="fileNameSlot" value="filename"/>
 	</slot>
 </schema>
+<schema name="ViewSpaceMaterial" type="net.sourceforge.fenixedu.domain.material.Material" bundle="SPACE_RESOURCES">
+	<slot name="class" layout="label">
+		<property name="labelFormat" value="label.${simpleName}" />
+		<property name="bundle" value="SPACE_RESOURCES" />
+	</slot>
+	<slot name="barCodeNumber"/>
+	<slot name="owner.name"/>
+	<slot name="owner.costCenterCode"/>					
+</schema>

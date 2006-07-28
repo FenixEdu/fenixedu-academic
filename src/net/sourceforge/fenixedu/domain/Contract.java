@@ -39,7 +39,7 @@ public class Contract extends Contract_Base {
         if(beginDate == null) {
             throw new DomainException("error.contract.no.beginDate");
         }
-        if (endDate != null && endDate.before(beginDate)) {
+        if(endDate != null && endDate.before(beginDate)) {
             throw new DomainException("error.contract.endDateBeforeBeginDate");
         }
         //checkContractDatesIntersection(employee, beginDate, endDate);
