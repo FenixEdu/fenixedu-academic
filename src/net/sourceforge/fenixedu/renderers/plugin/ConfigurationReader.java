@@ -85,6 +85,7 @@ public class ConfigurationReader {
                 String schemaName         = schemaElement.getAttributeValue("name");
                 String typeName           = schemaElement.getAttributeValue("type");
                 String extendedSchemaName = schemaElement.getAttributeValue("extends");
+                String refinedSchemaName  = schemaElement.getAttributeValue("refines");
                 String schemaBundle       = schemaElement.getAttributeValue("bundle");
                 String constructor        = schemaElement.getAttributeValue("constructor");
 
@@ -96,7 +97,12 @@ public class ConfigurationReader {
                     e.printStackTrace();
                     continue;
                 }
-                    
+
+                if (extendedSchemaName != null && refinedSchemaName != null) {
+                    logger.error("schema '" + schemaName + "' cannot extend '" + extendedSchemaName + "' and refine '" + refinedSchemaName + "' at the same time");
+                    continue;
+                }
+                
                 Schema extendedSchema;
                 try {
                     extendedSchema = RenderKit.getInstance().findSchema(extendedSchemaName);
@@ -106,15 +112,34 @@ public class ConfigurationReader {
                     continue;
                 }
 
+                Schema refinedSchema;
+                try {
+                    refinedSchema = RenderKit.getInstance().findSchema(refinedSchemaName);
+                } catch (NoSuchSchemaException e) {
+                    logger.error("schema '" + schemaName + "' cannot refine '" + refinedSchemaName + "', schema not found");
+                    e.printStackTrace();
+                    continue;
+                }
+                
                 if (extendedSchema != null && !extendedSchema.getType().isAssignableFrom(type)) {
                     logger.warn("schema '" + schemaName + "' is defined for type '" + typeName + "' that is not a subclass of the type '" + extendedSchema.getType().getName() + "' specified in the extended schema");
                 }
                 
-                Schema schema = new Schema(schemaName, type, extendedSchema);
+                Schema schema;
+                if (extendedSchema != null) {
+                    schema = new Schema(schemaName, type, extendedSchema);
+                }
+                else if (refinedSchema != null) {
+                    schema = refinedSchema;
+                    schema.setType(type);
+                }
+                else {
+                    schema = new Schema(schemaName, type);
+                }
 
                 List removeElements = schemaElement.getChildren("remove");
-                if (extendedSchemaName == null && removeElements.size() > 0) {
-                    logger.warn("schema '" + schemaName + "' specifies slots to be removed but it does not extend a schema");
+                if (extendedSchemaName == null && refinedSchema == null && removeElements.size() > 0) {
+                    logger.warn("schema '" + schemaName + "' specifies slots to be removed but it does not extend or refine schema");
                 }
                 else {
                     for (Iterator removeIterator = removeElements.iterator(); removeIterator.hasNext();) {
@@ -224,6 +249,11 @@ public class ConfigurationReader {
                 schema.setConstructor(construtorSignature);
                 
                 List setterElements = schemaElement.getChildren("setter");
+                
+                if (! setterElements.isEmpty()) {
+                    schema.getSpecialSetters().clear();
+                }
+                
                 for (Iterator setterIterator = setterElements.iterator(); setterIterator.hasNext();) {
                     Element setterElement = (Element) setterIterator.next();
 
@@ -239,6 +269,11 @@ public class ConfigurationReader {
                     }
                 }
                 
+                if (refinedSchema != null) {
+                    schema = new Schema(schemaName, type, refinedSchema);
+                    schema.setConstructor(refinedSchema.getConstructor());
+                }
+
                 logger.debug("adding new schema: " + schema.getName());
                 RenderKit.getInstance().registerSchema(schema);
             }

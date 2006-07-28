@@ -28,6 +28,10 @@ public class Schema {
             for (SchemaSlotDescription slotDescription : baseSchema.getSlotDescriptions()) {
                 addSlotDescription(slotDescription);
             }
+            
+            for (Signature signature : baseSchema.getSpecialSetters()) {
+                addSpecialSetter(signature);
+            }
         }
     }
 
@@ -41,6 +45,10 @@ public class Schema {
 
     public Class getType() {
         return type;
+    }
+
+    public void setType(Class type) {
+        this.type = type;
     }
 
     public Signature getConstructor() {
@@ -90,7 +98,18 @@ public class Schema {
     }
     
     public void removeSlotDescription(SchemaSlotDescription slotDescription) {
-        this.slotDescriptions.remove(slotDescription);
+        if (this.slotDescriptions.remove(slotDescription)) {
+            for (Iterator<Signature> iter = getSpecialSetters().iterator(); iter.hasNext();) {
+                Signature signature = iter.next();
+
+                for (SignatureParameter parameter : signature.getParameters()) {
+                    if (parameter.getSlotDescription().equals(slotDescription)) {
+                        iter.remove();
+                        break;
+                    }
+                }
+            }
+        }
     }
 
     public void addSpecialSetter(Signature setterSignature) {
