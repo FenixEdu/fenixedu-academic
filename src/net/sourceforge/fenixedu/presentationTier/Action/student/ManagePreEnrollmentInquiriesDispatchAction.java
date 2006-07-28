@@ -15,18 +15,14 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCountry;
-import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
-import net.sourceforge.fenixedu.dataTransferObject.student.InfoDislocatedStudent;
+import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
-import net.sourceforge.fenixedu.util.StudentPersonalDataAuthorizationChoice;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
-import org.apache.struts.action.ActionError;
-import org.apache.struts.action.ActionErrors;
+import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -39,138 +35,124 @@ import org.apache.struts.action.DynaActionForm;
 
 public class ManagePreEnrollmentInquiriesDispatchAction extends FenixDispatchAction {
 
-    public ActionForward prepareDislocatedStudentInquiry(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
-            FenixServiceException {
+	public ActionForward prepareDislocatedStudentInquiry(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
+			FenixServiceException {
 
-        IUserView userView = SessionUtils.getUserView(request);
-        InfoStudent infoStudent = (InfoStudent) ServiceManagerServiceFactory.executeService(userView,
-                "ReadStudentByUsername", new Object[] { userView.getUtilizador() });
+		final Student student = getStudent(request);
 
-        DynaActionForm studentDataInquiryForm = (DynaActionForm) form;
-        studentDataInquiryForm.set("studentID", infoStudent.getIdInternal());
+		final DynaActionForm studentDataInquiryForm = (DynaActionForm) form;
+		studentDataInquiryForm.set("studentID", student.getIdInternal());
 
-        InfoDislocatedStudent infoDislocatedStudent = (InfoDislocatedStudent) ServiceManagerServiceFactory
-                .executeService(userView, "ReadDislocatedStudentByStudentID", new Object[] { infoStudent
-                        .getIdInternal() });
+		if (student.hasDislocatedStudent()) {
+			return mapping.findForward("proceedToPersonalDataInquiry");
+		}
+		
+		// TODO: later these questions will not be here
+		final IUserView userView = getUserView(request);
+		final List infoCountries = (List) ServiceManagerServiceFactory.executeService(userView,
+				"ReadAllCountries", null);
 
-        if (infoDislocatedStudent != null) {
-            return mapping.findForward("proceedToPersonalDataInquiry");
-        }
+		List uniqueInfoCountries = new ArrayList();
+		Integer defaultCountryID = null;
+		for (Iterator iter = infoCountries.iterator(); iter.hasNext();) {
+			InfoCountry infoCountry = (InfoCountry) iter.next();
+			if (!containsCountry(uniqueInfoCountries, infoCountry)) {
+				uniqueInfoCountries.add(infoCountry);
+				if (infoCountry.getName().equalsIgnoreCase("PORTUGAL")) {
+					defaultCountryID = infoCountry.getIdInternal();
+				}
+			}
+		}
+		Collections.sort(uniqueInfoCountries, new BeanComparator("name"));
+		
+		studentDataInquiryForm.set("countryID", defaultCountryID);
+		
+		request.setAttribute("infoCountries", uniqueInfoCountries);
+		request.setAttribute("infoDistricts", rootDomainObject.getDistricts());
 
-        final List infoCountries = (List) ServiceManagerServiceFactory.executeService(userView,
-                "ReadAllCountries", null);
+		if (studentDataInquiryForm.get("dislocatedCountryID") != null) {
+			Integer dislocatedCountryID = (Integer) studentDataInquiryForm.get("dislocatedCountryID");
+			if (dislocatedCountryID.equals(defaultCountryID)) {
+				request.setAttribute("portugal", "portugal");
+			}
+		}
 
-        List uniqueInfoCountries = new ArrayList();
-        Integer defaultCountryID = null;
-        for (Iterator iter = infoCountries.iterator(); iter.hasNext();) {
-            InfoCountry infoCountry = (InfoCountry) iter.next();
-            if (!containsCountry(uniqueInfoCountries, infoCountry)) {
-                uniqueInfoCountries.add(infoCountry);
-                if (infoCountry.getName().equalsIgnoreCase("PORTUGAL")) {
-                    defaultCountryID = infoCountry.getIdInternal();
-                }
-            }
-        }
-        Collections.sort(uniqueInfoCountries, new BeanComparator("name"));
-        studentDataInquiryForm.set("countryID", defaultCountryID);
-        request.setAttribute("infoCountries", uniqueInfoCountries);
+		if (studentDataInquiryForm.get("dislocatedAnswer") != null) {
+			String dislocatedAnswer = (String) studentDataInquiryForm.get("dislocatedAnswer");
+			if (dislocatedAnswer.equalsIgnoreCase("true")) {
+				request.setAttribute("dislocated", "dislocated");
+			}
+		}
 
-        List infoDistricts = (List) ServiceManagerServiceFactory.executeService(userView,
-                "ReadAllDistricts", null);
-        request.setAttribute("infoDistricts", infoDistricts);
+		return mapping.findForward("showDislocatedStudentInquiry");
+	}
 
-        if (studentDataInquiryForm.get("dislocatedCountryID") != null) {
-            Integer dislocatedCountryID = (Integer) studentDataInquiryForm.get("dislocatedCountryID");
-            if (dislocatedCountryID.equals(defaultCountryID)) {
-                request.setAttribute("portugal", "portugal");
-            }
-        }
+	public ActionForward registerDislocatedStudentInquiryAnswers(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
+			FenixServiceException {
 
-        if (studentDataInquiryForm.get("dislocatedAnswer") != null) {
-            String dislocatedAnswer = (String) studentDataInquiryForm.get("dislocatedAnswer");
-            if (dislocatedAnswer.equalsIgnoreCase("true")) {
-                request.setAttribute("dislocated", "dislocated");
-            }
-        }
+		final Student student = getStudent(request);
 
-        return mapping.findForward("showDislocatedStudentInquiry");
-    }
+		final DynaActionForm studentDataInquiryForm = (DynaActionForm) form;
+		final Integer countryID = (Integer) studentDataInquiryForm.get("countryID");
+		final String dislocatedStudent = studentDataInquiryForm.getString("dislocatedAnswer");
+		Integer districtID = null;
+		Integer dislocatedCountryID = null;
+		if (!StringUtils.isEmpty(dislocatedStudent) && dislocatedStudent.equalsIgnoreCase("true")) {
+			dislocatedCountryID = (Integer) studentDataInquiryForm.get("dislocatedCountryID");
+			districtID = (Integer) studentDataInquiryForm.get("districtID");
+		}
 
-    public ActionForward registerDislocatedStudentInquiryAnswers(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
-            FenixServiceException {
+		final Object[] args = { student.getIdInternal(), countryID, dislocatedCountryID, districtID };
+		ServiceManagerServiceFactory.executeService(getUserView(request), "WriteDislocatedStudentAnswer", args);
 
-        IUserView userView = SessionUtils.getUserView(request);
-        InfoStudent infoStudent = (InfoStudent) ServiceManagerServiceFactory.executeService(userView,
-                "ReadStudentByUsername", new Object[] { userView.getUtilizador() });
+		return mapping.findForward("proceedToPersonalDataInquiry");
+	}
 
-        DynaActionForm studentDataInquiryForm = (DynaActionForm) form;
-        Integer countryID = (Integer) studentDataInquiryForm.get("countryID");
-        String dislocatedStudent = (String) studentDataInquiryForm.get("dislocatedAnswer");
-        Integer districtID = null;
-        Integer dislocatedCountryID = null;
-        if (dislocatedStudent != null && dislocatedStudent.equalsIgnoreCase("true")) {
-            dislocatedCountryID = (Integer) studentDataInquiryForm.get("dislocatedCountryID");
-            districtID = (Integer) studentDataInquiryForm.get("districtID");
-        }
+	public ActionForward preparePersonalDataInquiry(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response) {
 
-        Object[] args = { infoStudent.getIdInternal(), countryID, dislocatedCountryID, districtID };
-        ServiceManagerServiceFactory.executeService(userView, "WriteDislocatedStudentAnswer", args);
+		final Student student = getStudent(request);
 
-        return mapping.findForward("proceedToPersonalDataInquiry");
-    }
+		if (student.getActualPersonalDataAuthorizationAnswer() != null) {
+			return mapping.findForward("proceedToEnrollment");
+		}
 
-    public ActionForward preparePersonalDataInquiry(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
-            FenixServiceException {
+		return mapping.findForward("showAuthorizationInquiry");
+	}
 
-        IUserView userView = SessionUtils.getUserView(request);
-        InfoStudent infoStudent = (InfoStudent) ServiceManagerServiceFactory.executeService(userView,
-                "ReadStudentByUsername", new Object[] { userView.getUtilizador() });
+	public ActionForward registerPersonalDataInquiryAnswer(ActionMapping mapping, ActionForm actionForm,
+			HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
+			FenixServiceException {
 
-        Object[] args = { infoStudent.getIdInternal() };
-        StudentPersonalDataAuthorizationChoice spdaChoice = (StudentPersonalDataAuthorizationChoice) ServiceManagerServiceFactory
-                .executeService(userView, "ReadActualPersonalDataAuthorizationAnswer", args);
+		final Student student = getStudent(request);
 
-        if (spdaChoice != null) {
-            return mapping.findForward("proceedToEnrollment");
-        }
+		final DynaActionForm form = (DynaActionForm) actionForm;
+		final String answer = form.getString("authorizationAnswer");
 
-        return mapping.findForward("showAuthorizationInquiry");
-    }
+		if (StringUtils.isEmpty(answer)) {
+			addActionMessage(request, "error.enrollment.personalInquiry.mandatory");
+			return mapping.getInputForward();
+		}
+		ServiceManagerServiceFactory.executeService(getUserView(request),
+				"WriteStudentPersonalDataAuthorizationAnswer", new Object[] { student.getIdInternal(),
+						answer });
 
-    public ActionForward registerPersonalDataInquiryAnswer(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
-            FenixServiceException {
+		return mapping.findForward("proceedToEnrollment");
+	}
 
-        IUserView userView = SessionUtils.getUserView(request);
-        InfoStudent infoStudent = (InfoStudent) ServiceManagerServiceFactory.executeService(userView,
-                "ReadStudentByUsername", new Object[] { userView.getUtilizador() });
+	private boolean containsCountry(List infoCountries, final InfoCountry country) {
+		return CollectionUtils.exists(infoCountries, new Predicate() {
 
-        DynaActionForm inquiryForm = (DynaActionForm) form;
-        String answer = (String) inquiryForm.get("authorizationAnswer");
-        if (answer == null || answer.equals("")) {
-            ActionErrors actionErrors = new ActionErrors();
-            actionErrors.add("error", new ActionError("error.enrollment.personalInquiry.mandatory"));
-            saveErrors(request, actionErrors);
-            return mapping.getInputForward();
-        }
-
-        Object[] args = { infoStudent.getIdInternal(), answer };
-        ServiceManagerServiceFactory.executeService(userView,
-                "WriteStudentPersonalDataAuthorizationAnswer", args);
-
-        return mapping.findForward("proceedToEnrollment");
-    }
-
-    private boolean containsCountry(List infoCountries, final InfoCountry country) {
-        return CollectionUtils.exists(infoCountries, new Predicate() {
-
-            public boolean evaluate(Object arg0) {
-                InfoCountry infoCountry = (InfoCountry) arg0;
-                return infoCountry.getName().equalsIgnoreCase(country.getName());
-            }
-        });
-    }
+			public boolean evaluate(Object arg0) {
+				InfoCountry infoCountry = (InfoCountry) arg0;
+				return infoCountry.getName().equalsIgnoreCase(country.getName());
+			}
+		});
+	}
+	
+	private Student getStudent(HttpServletRequest request) {
+		return getUserView(request).getPerson().getStudentByUsername();
+	}
 }

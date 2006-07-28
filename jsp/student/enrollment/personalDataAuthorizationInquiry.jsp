@@ -1,8 +1,9 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
-<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
+<%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ page import="net.sourceforge.fenixedu.util.StudentPersonalDataAuthorizationChoice" %>
+<html:xhtml/>
 
 <html:form action="/studentPersonalDataAuthorization?method=registerPersonalDataInquiryAnswer">
 
@@ -13,7 +14,14 @@
 <p><bean:message key="label.info.dislocatedStudent.inquiry"/>:</p>
 </div>
 
-<html:errors/>
+<logic:messagesPresent message="true">
+	<ul>
+		<html:messages id="messages" message="true">
+			<li><span class="error0"><bean:write name="messages" /></span></li>
+		</html:messages>
+	</ul>
+	<br />
+</logic:messagesPresent>
 <br/>
 <b><bean:message key="label.enrollment.personalData.authorization"/></b>
 <br/><br/>
