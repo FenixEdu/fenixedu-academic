@@ -66,7 +66,7 @@ public class ExtensionSpaceOccupation extends ExtensionSpaceOccupation_Base {
     }
 
     @Override
-    public Material getAssociatedMaterial() {        
+    public Material getMaterial() {        
         return (Material) getExtension();
     }  
 }

@@ -90,47 +90,39 @@ public abstract class Space extends Space_Base {
     }
 
     public SortedSet<PersonSpaceOccupation> getActivePersonSpaceOccupations() {
-        SortedSet<PersonSpaceOccupation> personSpaceOccupations = new TreeSet<PersonSpaceOccupation>(
-                PersonSpaceOccupation.COMPARATOR_BY_PERSON_NAME_AND_OCCUPATION_INTERVAL);
-        YearMonthDay current = new YearMonthDay();
-        for (PersonSpaceOccupation personSpaceOccupation : getPersonSpaceOccupations()) {
-            if (personSpaceOccupation.contains(current)) {
-                personSpaceOccupations.add(personSpaceOccupation);
-            }
-        }
-        return personSpaceOccupations;
+        return getPersonSpaceOccupationsByState(true);
     }
 
     public SortedSet<PersonSpaceOccupation> getInactivePersonSpaceOccupations() {
+        return getPersonSpaceOccupationsByState(false);
+    }
+    
+    private SortedSet<PersonSpaceOccupation> getPersonSpaceOccupationsByState(boolean state) {
         SortedSet<PersonSpaceOccupation> personSpaceOccupations = new TreeSet<PersonSpaceOccupation>(
                 PersonSpaceOccupation.COMPARATOR_BY_PERSON_NAME_AND_OCCUPATION_INTERVAL);
         YearMonthDay current = new YearMonthDay();
         for (PersonSpaceOccupation personSpaceOccupation : getPersonSpaceOccupations()) {
-            if (!personSpaceOccupation.contains(current)) {
+            if (personSpaceOccupation.contains(current) == state) {
                 personSpaceOccupations.add(personSpaceOccupation);
             }
         }
         return personSpaceOccupations;
     }
-
+    
     public SortedSet<SpaceResponsibility> getActiveSpaceResponsibility() {
-        SortedSet<SpaceResponsibility> spaceResponsibility = new TreeSet<SpaceResponsibility>(
-                SpaceResponsibility.COMPARATOR_BY_UNIT_NAME_AND_RESPONSIBILITY_INTERVAL);
-        YearMonthDay current = new YearMonthDay();
-        for (SpaceResponsibility responsibility : getSpaceResponsibilitySet()) {
-            if (responsibility.isActive(current)) {
-                spaceResponsibility.add(responsibility);
-            }
-        }
-        return spaceResponsibility;
+        return getSpaceResponsabilityByState(true);
     }
 
     public SortedSet<SpaceResponsibility> getInactiveSpaceResponsibility() {
+        return getSpaceResponsabilityByState(false);
+    }
+    
+    private SortedSet<SpaceResponsibility> getSpaceResponsabilityByState(boolean state) {
         SortedSet<SpaceResponsibility> spaceResponsibility = new TreeSet<SpaceResponsibility>(
                 SpaceResponsibility.COMPARATOR_BY_UNIT_NAME_AND_RESPONSIBILITY_INTERVAL);
         YearMonthDay current = new YearMonthDay();
         for (SpaceResponsibility responsibility : getSpaceResponsibilitySet()) {
-            if (!responsibility.isActive(current)) {
+            if (responsibility.isActive(current) == state) {
                 spaceResponsibility.add(responsibility);
             }
         }
@@ -142,11 +134,30 @@ public abstract class Space extends Space_Base {
         YearMonthDay current = new YearMonthDay();
         for (MaterialSpaceOccupation materialSpaceOccupation : getMaterialSpaceOccupations()) {
             if (materialSpaceOccupation.isActive(current)) {
-                spaceMaterial.add(materialSpaceOccupation.getAssociatedMaterial());
+                spaceMaterial.add(materialSpaceOccupation.getMaterial());
             }
         }
         return spaceMaterial;
     }
+    
+    public SortedSet<MaterialSpaceOccupation> getActiveMaterialSpaceOccupations() {
+        return getMaterialSpaceOccupationsByState(true);
+    }
+
+    public SortedSet<MaterialSpaceOccupation> getInactiveMaterialSpaceOccupations() {
+        return getMaterialSpaceOccupationsByState(false);
+    }  
+    
+    private SortedSet<MaterialSpaceOccupation> getMaterialSpaceOccupationsByState(boolean state) {
+        SortedSet<MaterialSpaceOccupation> materialOccupations = new TreeSet<MaterialSpaceOccupation>(Material.COMPARATOR_BY_CLASS_NAME);
+        YearMonthDay current = new YearMonthDay();
+        for (MaterialSpaceOccupation materialSpaceOccupation : getMaterialSpaceOccupations()) {
+            if (materialSpaceOccupation.isActive(current) == state) {
+                materialOccupations.add(materialSpaceOccupation);
+            }
+        }
+        return materialOccupations;
+    }    
 
     public void delete() {
         for ( ; !getContainedSpaces().isEmpty(); getContainedSpaces().get(0).delete());

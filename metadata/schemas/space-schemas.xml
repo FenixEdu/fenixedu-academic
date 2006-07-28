@@ -139,3 +139,14 @@
 	<slot name="owner.name"/>
 	<slot name="owner.costCenterCode"/>					
 </schema>
+<schema name="ViewMaterialSpaceOccupations" type="net.sourceforge.fenixedu.domain.space.MaterialSpaceOccupation" bundle="SPACE_RESOURCES">
+	<slot name="class" layout="label">
+		<property name="labelFormat" value="label.${simpleName}" />
+		<property name="bundle" value="SPACE_RESOURCES" />
+	</slot>
+	<slot name="begin" />
+	<slot name="end" />
+	<slot name="material.barCodeNumber"/>
+	<slot name="material.owner.name"/>
+	<slot name="material.owner.costCenterCode"/>					
+</schema>

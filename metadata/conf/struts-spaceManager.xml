@@ -48,8 +48,7 @@
         <action path="/manageSpaces"
         		type="net.sourceforge.fenixedu.presentationTier.Action.spaceManager.ManageSpacesDA"
         		parameter="method"
-        		name="spaceContextForm"
-        		>
+        		name="spaceContextForm">
             <forward name="ShowSpaces" path="index"/>
             <forward name="ManageSpace" path="show-manage-space-form"/>
             <forward name="ShowCreateSubSpaceForm" path="show-create-sub-space-form"/>
@@ -79,23 +78,22 @@
        		<forward name="createNewBlueprintVersion" path="create-new-blueprint-version"/>        		        	              		
         </action>
         
-         <action path="/manageMaterialSpaceOccupations"        		
+        <action path="/manageMaterialSpaceOccupations"        		
         		type="net.sourceforge.fenixedu.presentationTier.Action.spaceManager.ManageMaterialSpaceOccupationsDA"
         		parameter="method">                		
-       		<forward name="showMaterialSpaceOccupation" path="show-material-space-occupation"/>        		        	              		
+       		<forward name="showMaterialSpaceOccupations" path="show-material-space-occupations"/>        		        	              		
+       		<forward name="insertMaterialOccupation" path="insert-material-occupation"/>        		        	              		       		
         </action>
 
         <action path="/showCreateSpaceForm"
         		type="net.sourceforge.fenixedu.presentationTier.Action.commons.VoidAction"
         		name="spaceContextForm"
         		scope="request"
-        		forward="show-create-space-form"
-        		/>
+        		forward="show-create-space-form"/>
 
         <action path="/roomClassification"
         		type="net.sourceforge.fenixedu.presentationTier.Action.spaceManager.RoomClassificationDA"
-        		parameter="method"
-        		>
+        		parameter="method">
        		<forward name="ViewRoomClassifications" path="room-classification-form"/>
         </action>
     </action-mappings>

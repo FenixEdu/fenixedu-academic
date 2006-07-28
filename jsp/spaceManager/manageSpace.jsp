@@ -191,7 +191,7 @@
 	<br/>	
 	<p><b><bean:message bundle="SPACE_RESOURCES" key="label.active.material.occupations"/></b></p>
 	<fr:view schema="ViewSpaceMaterial" name="selectedSpaceInformation" property="space.activeSpaceMaterial" />	
-	<p><html:link page="/manageMaterialSpaceOccupations.do?method=showMaterialSpaceOccupation&page=0" paramId="spaceInformationID" paramName="selectedSpaceInformation" paramProperty="idInternal">
+	<p><html:link page="/manageMaterialSpaceOccupations.do?method=showMaterialSpaceOccupations&page=0" paramId="spaceInformationID" paramName="selectedSpaceInformation" paramProperty="idInternal">
 		<bean:message bundle="SPACE_RESOURCES" key="link.manage.material.occupations"/>
 	</html:link></p>
 </logic:present>	
