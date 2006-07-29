@@ -8,4 +8,25 @@ function hideButtons()
 	document.getElementById("javascriptButtonID5").style.visibility="hidden";
 	document.getElementById("javascriptButtonID6").style.visibility="hidden";
 	document.getElementById("javascriptButtonID7").style.visibility="hidden";
+	document.getElementById("id0").style.visibility="visible";
+	document.getElementById("id1").style.visibility="visible";
+	document.getElementById("id2").style.visibility="visible";
+	document.getElementById("id3").style.visibility="visible";
+	document.getElementById("id4").style.visibility="visible";
+	document.getElementById("id5").style.visibility="visible";
+	document.getElementById("id6").style.visibility="visible";
+	document.getElementById("id7").style.visibility="visible";
+	document.getElementById("id8").style.visibility="visible";
+	document.getElementById("id9").style.visibility="visible";
+	document.getElementById("id10").style.visibility="visible";
+	document.getElementById("id11").style.visibility="visible";
+	document.getElementById("id12").style.visibility="visible";
+	document.getElementById("id13").style.visibility="visible";
+	document.getElementById("id14").style.visibility="visible";
+	document.getElementById("id15").style.visibility="visible";
+	document.getElementById("id16").style.visibility="visible";
+	document.getElementById("id17").style.visibility="visible";
+	document.getElementById("id18").style.visibility="visible";
+	document.getElementById("id19").style.visibility="visible";
+	document.getElementById("id20").style.visibility="visible";
 }

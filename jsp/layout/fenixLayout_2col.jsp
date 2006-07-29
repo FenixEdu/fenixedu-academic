@@ -12,6 +12,100 @@
 <link href="<%= request.getContextPath() %>/CSS/transitional.css" rel="stylesheet" media="screen" type="text/css" />
 <title><bean:message key="dot.title" bundle="GLOBAL_RESOURCES"/> - <tiles:getAsString name="title" ignore="true" /></title>
 <script type="text/javascript" src="<%= request.getContextPath() %>/CSS/scripts/hideButtons.js"></script>
+<style type="text/css">
+div.pass_warning {
+font-weight: normal;
+color: #000;
+line-height: 1.4em;
+padding: 0.5em;
+margin-bottom: 1em;
+}
+div.pass_warning strong {
+background-color: #ffa;
+}
+div.pass_container {
+float: left;
+}
+div.pass_left {
+margin-top: 1em;
+width: 29em;
+float: left;
+}
+div.pass_req {
+background-color: #fafadd;
+margin-left: 1em;
+border: 1px solid #ccc;
+margin-left: 30em;
+padding: 0.5em;
+}
+.tdcheck {
+vertical-align: top;
+width: 0.5em;
+}
+
+table.search {
+background-color: #f5f5f5;
+border-collapse: collapse;
+}
+table.search tr td {
+border: 1px solid #fff;
+padding: 0.3em;
+}
+.leftcolumn {
+text-align: right;
+}
+
+div.pp {
+border: 1px solid #ccc;
+padding-bottom: 0;
+margin: 0.5em 0;
+width: 100%;
+float: left;
+}
+
+table.ppid {
+padding: 0.5em;
+width: 100%;
+background-color: #eee;
+}
+div.pp img {
+float: right;
+margin: 4px;
+border: 1px solid #ccc;
+background-color: #eee;
+padding: 2px;
+}
+table.ppdetails {
+background-color: #fff;
+border-collapse: collapse;
+margin: 0.5em 1em;
+}
+table.pphigh {
+background-color: #ffa;
+}
+table.ppdetails tr td {
+padding: 0.25em;
+}
+table.ppdetails td.ppleft {
+text-align: right;
+width: 10em;
+}
+table.ppdetails td.ppright {
+}
+table.ppdetails td.ppright2 {
+width: 10em;
+}
+table.ppdetails td.ppleft_mail {
+text-align: right;
+width: 10em;
+}
+table.ppdetails tr.highlight {
+}
+table.ppdetails td.highlight {
+background-color: #ffffea;
+}
+
+</style>
 </head>
 <body>
 <%-- Layout component parameters : title, context, header, navGeral, navLocal, body, footer --%>

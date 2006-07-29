@@ -13,13 +13,6 @@
 
 <p><span class="error"><!-- Error messages go here --><html:errors /></span></p>
 
-<style type="text/css">
-.tdcheck {
-vertical-align: top;
-width: 0.5em;
-}
-</style>
-
 <html:form action="/manageHomepage">
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="submitHomepage"/>
 
@@ -129,7 +122,7 @@ width: 0.5em;
 				</td>
 				<td>
 					<logic:iterate id="studentCurricularPlan" name="UserView" property="person.activeStudentCurricularPlansSortedByDegreeTypeAndDegreeName" length="1">
-						<bean:define id="url" type="java.lang.String"><%= request.getContextPath() %>/publico/showDegreeSite.do?method=showDescription&degreeID=<bean:write name="studentCurricularPlan" property="degreeCurricularPlan.degree.idInternal"/></bean:define>
+						<bean:define id="url" type="java.lang.String"><%= request.getContextPath() %>/publico/showDegreeSite.do?method=showDescription&amp;degreeID=<bean:write name="studentCurricularPlan" property="degreeCurricularPlan.degree.idInternal"/></bean:define>
 						<html:link href="<%= url %>">
 							<logic:present name="studentCurricularPlan" property="specialization.name">
 								<logic:equal name="studentCurricularPlan" property="specialization.name" value="SPECIALIZATION">
@@ -148,7 +141,7 @@ width: 0.5em;
 					</logic:iterate>
 					<logic:iterate id="studentCurricularPlan" name="UserView" property="person.activeStudentCurricularPlansSortedByDegreeTypeAndDegreeName" offset="1">
 						,
-						<bean:define id="url" type="java.lang.String"><%= request.getContextPath() %>/publico/showDegreeSite.do?method=showDescription&degreeID=<bean:write name="studentCurricularPlan" property="degreeCurricularPlan.degree.idInternal"/></bean:define>
+						<bean:define id="url" type="java.lang.String"><%= request.getContextPath() %>/publico/showDegreeSite.do?method=showDescription&amp;degreeID=<bean:write name="studentCurricularPlan" property="degreeCurricularPlan.degree.idInternal"/></bean:define>
 						<html:link href="<%= url %>">
 							<logic:present name="studentCurricularPlan" property="specialization.name">
 								<logic:equal name="studentCurricularPlan" property="specialization.name" value="SPECIALIZATION">
@@ -177,7 +170,7 @@ width: 0.5em;
 				<td>
 					<logic:iterate id="attend" name="personAttends" length="1">
 						<bean:define id="executionCourse" name="attend" property="disciplinaExecucao"/>
-						<bean:define id="url" type="java.lang.String"><%= request.getContextPath() %>/publico/viewSiteExecutionCourse.do?method=firstPage&objectCode=<bean:write name="executionCourse" property="idInternal"/></bean:define>
+						<bean:define id="url" type="java.lang.String"><%= request.getContextPath() %>/publico/viewSiteExecutionCourse.do?method=firstPage&amp;objectCode=<bean:write name="executionCourse" property="idInternal"/></bean:define>
 						<html:link href="<%= url %>">
 							<bean:write name="executionCourse" property="nome"/>
 						</html:link>
@@ -185,7 +178,7 @@ width: 0.5em;
 					<logic:iterate id="attend" name="personAttends" offset="1">
 						,
 						<bean:define id="executionCourse" name="attend" property="disciplinaExecucao"/>
-						<bean:define id="url" type="java.lang.String"><%= request.getContextPath() %>/publico/viewSiteExecutionCourse.do?method=firstPage&objectCode=<bean:write name="executionCourse" property="idInternal"/></bean:define>
+						<bean:define id="url" type="java.lang.String"><%= request.getContextPath() %>/publico/viewSiteExecutionCourse.do?method=firstPage&amp;objectCode=<bean:write name="executionCourse" property="idInternal"/></bean:define>
 						<html:link href="<%= url %>">
 							<bean:write name="executionCourse" property="nome"/>
 						</html:link>
@@ -203,7 +196,7 @@ width: 0.5em;
 				</td>
 				<td>
 					<logic:iterate id="studentCurricularPlan" name="UserView" property="person.completedStudentCurricularPlansSortedByDegreeTypeAndDegreeName" length="1">
-						<bean:define id="url" type="java.lang.String"><%= request.getContextPath() %>/publico/showDegreeSite.do?method=showDescription&degreeID=<bean:write name="studentCurricularPlan" property="degreeCurricularPlan.degree.idInternal"/></bean:define>
+						<bean:define id="url" type="java.lang.String"><%= request.getContextPath() %>/publico/showDegreeSite.do?method=showDescription&amp;degreeID=<bean:write name="studentCurricularPlan" property="degreeCurricularPlan.degree.idInternal"/></bean:define>
 						<html:link href="<%= url %>">
 							<logic:present name="studentCurricularPlan" property="specialization.name">
 								<logic:equal name="studentCurricularPlan" property="specialization.name" value="SPECIALIZATION">
@@ -222,7 +215,7 @@ width: 0.5em;
 					</logic:iterate>
 					<logic:iterate id="studentCurricularPlan" name="UserView" property="person.completedStudentCurricularPlansSortedByDegreeTypeAndDegreeName" offset="1">
 						,
-						<bean:define id="url" type="java.lang.String"><%= request.getContextPath() %>/publico/showDegreeSite.do?method=showDescription&degreeID=<bean:write name="studentCurricularPlan" property="degreeCurricularPlan.degree.idInternal"/></bean:define>
+						<bean:define id="url" type="java.lang.String"><%= request.getContextPath() %>/publico/showDegreeSite.do?method=showDescription&amp;degreeID=<bean:write name="studentCurricularPlan" property="degreeCurricularPlan.degree.idInternal"/></bean:define>
 						<html:link href="<%= url %>">
 							<logic:present name="studentCurricularPlan" property="specialization.name">
 								<logic:equal name="studentCurricularPlan" property="specialization.name" value="SPECIALIZATION">
@@ -324,7 +317,7 @@ width: 0.5em;
 			<td class="tdcheck">
 				<html:checkbox bundle="HTMLALT_RESOURCES" altKey="checkbox.showAlternativeHomepage" property="showAlternativeHomepage" value="true"/>
 			</td>
-			<td td>
+			<td>
 				<bean:define id="url" type="java.lang.String" name="UserView" property="person.webAddress"/>
 				<html:link href="<%= url %>">
 					<bean:write name="UserView" property="person.webAddress"/>
@@ -343,14 +336,14 @@ width: 0.5em;
 					</td>
 					<td>
 						<logic:iterate id="executionCourse" name="UserView" property="person.teacher.currentExecutionCourses" length="1">
-							<bean:define id="url" type="java.lang.String"><%= request.getContextPath() %>/publico/viewSiteExecutionCourse.do?method=firstPage&objectCode=<bean:write name="executionCourse" property="idInternal"/></bean:define>
+							<bean:define id="url" type="java.lang.String"><%= request.getContextPath() %>/publico/viewSiteExecutionCourse.do?method=firstPage&amp;objectCode=<bean:write name="executionCourse" property="idInternal"/></bean:define>
 							<html:link href="<%= url %>">
 								<bean:write name="executionCourse" property="nome"/>
 							</html:link>
 						</logic:iterate>
 						<logic:iterate id="executionCourse" name="UserView" property="person.teacher.currentExecutionCourses" offset="1">
 							, 
-							<bean:define id="url" type="java.lang.String"><%= request.getContextPath() %>/publico/viewSiteExecutionCourse.do?method=firstPage&objectCode=<bean:write name="executionCourse" property="idInternal"/></bean:define>
+							<bean:define id="url" type="java.lang.String"><%= request.getContextPath() %>/publico/viewSiteExecutionCourse.do?method=firstPage&amp;objectCode=<bean:write name="executionCourse" property="idInternal"/></bean:define>
 							<html:link href="<%= url %>">
 								<bean:write name="executionCourse" property="nome"/>
 							</html:link>
