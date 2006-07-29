@@ -15,7 +15,7 @@
 
 <table>
 	<tr><td class="infoop"><bean:message key="message.addInstructions"/></td></tr>
-	<tr><td><span class="error"><html:errors/></span><br /></td></tr>
+	<tr><td><span class="error"><!-- Error messages go here --><html:errors /></span><br /></td></tr>
 </table>
 <html:form action="/itemsManagement">
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
@@ -78,7 +78,7 @@
 		</tr>--%>
 
 		<tr>
-			<td colspan="2"><hr><i><b><bean:message key="label.publishment" /></b></i></hr> - <bean:message key="message.publish.help" /><br /><br /></td>
+			<td colspan="2"><hr/><i><b><bean:message key="label.publishment" /></b></i></hr> - <bean:message key="message.publish.help" /><br /><br /></td>
 		</tr>
 
 		<tr>
@@ -98,7 +98,7 @@
 			</td>
 		</tr>
 		<tr>
-			<td colspan="2"><hr></hr></td>
+			<td colspan="2"><hr/></hr></td>
 		</tr>
 	</table>
 	<br/>

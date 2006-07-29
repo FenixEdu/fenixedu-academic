@@ -9,7 +9,7 @@
 <li><html:link module="/manager" module="/manager" page="/createEditCompetenceCourse.do?method=prepareCreate"><bean:message bundle="MANAGER_RESOURCES" key="label.manager.insert.competence.course"/></html:link></li>
 </ul>
 <br/>
-<span class="error"><html:errors /></span>
+<span class="error"><!-- Error messages go here --><html:errors /></span>
 <br/>
 <html:form action="/competenceCourseManagement">
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="deleteCompetenceCourses"/>

@@ -24,17 +24,17 @@ form { margin: 0; padding: 0; }
 <html:form action="/editStudentGroupShift" method="get">
 <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
 
-<span class="error"><html:errors/></span>
+<span class="error"><!-- Error messages go here --><html:errors /></span>
 
 <br/>
 
-<span class="error"><html:errors property="shiftType"/></span>
+<span class="error"><!-- Error messages go here --><html:errors property="shiftType"/></span>
 
 <table width="50%" cellpadding="0" border="0">
 	<tr>
 		<td><bean:message key="label.editStudentGroupShift.oldShift"/></td>
 		<td><bean:write name="shift" property="nome"/></td>
-		<td><span class="error"><html:errors property="shiftType"/></span></td>
+		<td><span class="error"><!-- Error messages go here --><html:errors property="shiftType"/></span></td>
 	</tr>
 	<tr>
 	 	<td><bean:message key="message.editStudentGroupShift"/></td>
@@ -43,7 +43,7 @@ form { margin: 0; padding: 0; }
     		<html:options collection="shiftsList" property="value" labelProperty="label"/>
 	    	</html:select>
 	    </td>
-		<td><span class="error"><html:errors property="shiftType"/></span></td>
+		<td><span class="error"><!-- Error messages go here --><html:errors property="shiftType"/></span></td>
 	</tr>	
 </table>
 

@@ -10,7 +10,7 @@
 <logic:present name="infoSiteStudentsAndGroups">
 
 
-<span class="error"><html:errors/></span>
+<span class="error"><!-- Error messages go here --><html:errors /></span>
 <br/>
 
 	<logic:empty name="infoSiteStudentsAndGroups" property="infoSiteStudentsAndGroupsList">

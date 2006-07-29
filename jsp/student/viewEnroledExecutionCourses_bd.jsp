@@ -12,7 +12,7 @@
 	<logic:empty name="infoExecutionCourses">
 		<h2><bean:message key="message.executionCourses.not.available"/></h2>
 		<br/>
-		<span class="error"><html:errors/></span>
+		<span class="error"><!-- Error messages go here --><html:errors /></span>
 		<br/>
 	</logic:empty>
 
@@ -25,7 +25,7 @@
 	
 		<p><em><bean:message key="title.ChooseExecutionCourse"/></em>:</p>
 	
-		<span class="error"><html:errors/></span>
+		<span class="error"><!-- Error messages go here --><html:errors /></span>
 
 
 	<table class="style1">	

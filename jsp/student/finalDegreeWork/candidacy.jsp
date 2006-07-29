@@ -6,7 +6,7 @@
 <%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="dt" %>
 
 <h2><bean:message key="title.finalDegreeWork.candidacy"/></h2>
-<span class="error"><html:errors /></span>
+<span class="error"><!-- Error messages go here --><html:errors /></span>
 <html:form action="/finalDegreeWorkCandidacy" focus="executionDegreeOID">
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="somemethod"/>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>

@@ -99,7 +99,7 @@
 	</logic:greaterThan>
 </logic:present>
 
-<p><span class="error"><html:errors/></span></p>
+<p><span class="error"><!-- Error messages go here --><html:errors /></span></p>
 
 <!-- 	CURRICULAR COURSE SCOPES  -->
 <logic:present name="infoCurricularCourse" property="infoScopes">

@@ -19,7 +19,7 @@
 <bean:define id="professorships" name="bodyComponent" property="infoProfessorships" />
 <bean:define id="rooms" name="bodyComponent" property="infoRooms" />
 
-<span class="error"><html:errors/>
+<span class="error"><!-- Error messages go here --><html:errors />
  <logic:present name="errors">
   <bean:write name="errors" filter="true" />
  </logic:present >

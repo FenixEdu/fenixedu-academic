@@ -10,8 +10,8 @@
 <logic:present name="publico.infoRooms" >
   <h2><bean:message key="title.chooseRoom"/></h2>
   <br/>
-  <span class="error"><html:errors/></span>	
-		<html:form action="/viewRoom.do" method="GET">
+  <span class="error"><!-- Error messages go here --><html:errors /></span>	
+		<html:form action="/viewRoom.do" method="get">
 			<html:hidden alt="<%=SessionConstants.EXECUTION_PERIOD_OID%>" property="<%=SessionConstants.EXECUTION_PERIOD_OID%>" value="<%= ""+request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID)%>" />
 			
 			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.name" name="roomForm" property="name"/>

@@ -22,7 +22,7 @@
 		&nbsp;&gt;&nbsp;<bean:message key="label.degreeEvaluation"/>
 	</div>
 
-<p><span class="error"><html:errors/></span></p>
+<p><span class="error"><!-- Error messages go here --><html:errors /></span></p>
 
 	<h1>
 		Avalia&ccedil;&atilde;o do Funcionamento das Disciplinas
@@ -75,7 +75,7 @@
 	<br/>
 	
 	<logic:present name="emptyOldInquiriesSummaries">
-		<hr></hr>
+		<hr/></hr>
 		<h2>N&atilde;o foram encontrados dados</h2>
 	</logic:present>
 	

@@ -8,7 +8,7 @@
 <%@page import="net.sourceforge.fenixedu.presentationTier.Action.teacher.TeacherAdministrationViewerDispatchAction"%>
 
 <p>
-<span class="error"><html:errors/></span>
+<span class="error"><!-- Error messages go here --><html:errors /></span>
 </p>
 
 <h2><bean:message key="title.personalizationOptions"/></h2>

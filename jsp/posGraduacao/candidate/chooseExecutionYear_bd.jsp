@@ -13,7 +13,7 @@
 	<h2><bean:message key="title.masterDegree.administrativeOffice.chooseExecutionYear" /></h2>
 </logic:notPresent>
 <br /><br />
-<span class="error"><html:errors/></span>
+<span class="error"><!-- Error messages go here --><html:errors /></span>
 <bean:define id="path" type="java.lang.String" scope="request" property="path" name="<%= Globals.MAPPING_KEY %>" />
 <bean:define id="executionYearList" name="<%= SessionConstants.EXECUTION_YEAR_LIST %>" scope="request" />
 <bean:define id="executionDegree" name="<%= SessionConstants.EXECUTION_DEGREE %>" scope="request" />

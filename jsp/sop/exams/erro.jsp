@@ -5,7 +5,7 @@
 <%@ page import="org.apache.struts.Globals" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
 
-<span class="error"><html:errors/></span>
+<span class="error"><!-- Error messages go here --><html:errors /></span>
 <h1>
 ERRO!!!!!
 </h1>

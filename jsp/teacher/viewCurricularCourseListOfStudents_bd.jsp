@@ -11,7 +11,7 @@
 --%>
 <logic:present name="siteView">
 <bean:define id="curricularCourses" name="siteView" property="component" type="net.sourceforge.fenixedu.dataTransferObject.InfoSiteAssociatedCurricularCourses"/>
-    <span class="error"><html:errors/></span>
+    <span class="error"><!-- Error messages go here --><html:errors /></span>
 
     <table>        
     	<logic:iterate id="curricularCourse" name="curricularCourses" property="associatedCurricularCourses" indexId="index" > 

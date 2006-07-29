@@ -33,7 +33,7 @@
 
 		<br />
 			
-		<span class="error"><html:errors/></span>
+		<span class="error"><!-- Error messages go here --><html:errors /></span>
 	
 		<bean:define id="nrOfElements" name="infoSiteStudentGroup" property="nrOfElements"/>
 		<b><bean:message key="label.nrOfElements"/> </b><bean:write name="nrOfElements"/>
@@ -67,7 +67,7 @@
 	</div>
 --%>
 
-	<span class="error"><html:errors/></span> 	
+	<span class="error"><!-- Error messages go here --><html:errors /></span> 	
 
 <div class="infoop">
 	<ul>

@@ -5,7 +5,7 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <h2><bean:message key="title.student.enrollment.improvment" /></h2>
 <br />
-<span class="error"><html:errors/></span>
+<span class="error"><!-- Error messages go here --><html:errors /></span>
 <table width="100%" border="0" cellpadding="0" cellspacing="0">
 	<tr>
 		<td align="center" class="infoselected">
@@ -84,7 +84,7 @@
 		<bean:message key="message.no.already.improvment.enrollments"/>
 	</p>
 </logic:empty>
-<hr>
+<hr/>
 <br />
 <table width="100%">
 	<tr>
@@ -151,5 +151,5 @@
 	</p>
 	<br />
 </logic:empty>
-<hr>
+<hr/>
 <br />

@@ -2,7 +2,7 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %><html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 
-<p><span class="error"><html:errors/></span></p>
+<p><span class="error"><!-- Error messages go here --><html:errors /></span></p>
 
 <h2><bean:message key="label.coordinator.studentInformation"/></h2>
 

@@ -9,7 +9,7 @@
 
 <center>
 
-<span class="error"><html:errors/></span>
+<span class="error"><!-- Error messages go here --><html:errors /></span>
 	
 <bean:define id="sibsPaymentFileEntries" name="<%= SessionConstants.SIBS_PAYMENT_FILE_ENTRIES %>" scope="request"/>
 

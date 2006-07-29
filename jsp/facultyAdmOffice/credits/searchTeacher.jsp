@@ -7,7 +7,7 @@
 <p class="infoop">
 	<bean:message key="label.search.for.creditsSheet"/>
 </p>
-<span class="error"><html:errors /></span>
+<span class="error"><!-- Error messages go here --><html:errors /></span>
 <html:form action="/teacherSearchForTeacherCreditsSheet" focus="teacherNumber">
 	<input alt="input.method" type="hidden" name="method" value="doSearch"/>
 	<input alt="input.page" type="hidden" name="page" value="1"/>

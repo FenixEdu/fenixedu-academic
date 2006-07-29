@@ -7,7 +7,7 @@
 
 <logic:present name="infoMetadataList">
 	<bean:define id="objectCode" value="<%=(pageContext.findAttribute("objectCode")).toString()%>" />
-	<span class="error"><html:errors /></span>
+	<span class="error"><!-- Error messages go here --><html:errors /></span>
 
 	<logic:present name="successfulChanged">
 		<logic:equal name="successfulChanged" value="false">

@@ -11,7 +11,7 @@
 <br />
 <h2><bean:message key="title.insertAnnouncement"/></h2>
 
-<span class="error"><html:errors/>
+<span class="error"><!-- Error messages go here --><html:errors />
 	<logic:present name="errors">
 		<bean:write name="errors" filter="true" />
 	</logic:present	>
@@ -28,7 +28,7 @@
 <br />
 <html:textarea bundle="HTMLALT_RESOURCES" altKey="textarea.title" rows="2" cols="65" name="insertAnnouncementForm" property="title" >
 </html:textarea>
-<span class="error"><html:errors property="title"/></span>
+<span class="error"><!-- Error messages go here --><html:errors property="title"/></span>
 <br />
 <br />	
 <strong><bean:message key="label.information" /></strong>
@@ -73,7 +73,7 @@
 	<html:textarea bundle="HTMLALT_RESOURCES" altKey="textarea.information" rows="20" cols="80" property="information" > </html:textarea>
 </logic:notPresent>
 
-<span class="error"><html:errors property="information"/></span>
+<span class="error"><!-- Error messages go here --><html:errors property="information"/></span>
 <br />
 <br />
 

@@ -5,7 +5,7 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
 <h2><bean:message key="title.search.rooms"/></h2>
-<span class="error"><html:errors/></span>
+<span class="error"><!-- Error messages go here --><html:errors /></span>
 <br />
 <br />
 <table width="100%">
@@ -13,7 +13,7 @@
 		<td class="infoop"><bean:message key="message.search.rooms" /></td>
 	</tr>
 </table>
-<html:form action="/chooseRoomsForm" method="GET">
+<html:form action="/chooseRoomsForm" method="get">
 	<html:hidden alt="<%=SessionConstants.EXECUTION_PERIOD_OID%>"  property="<%=SessionConstants.EXECUTION_PERIOD_OID%>" value="<%= ""+request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID)%>" />
 
     <table border="0" cellpadding="0" cellspacing="0">

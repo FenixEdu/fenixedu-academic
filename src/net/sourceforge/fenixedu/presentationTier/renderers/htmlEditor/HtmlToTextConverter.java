@@ -314,17 +314,17 @@ public class HtmlToTextConverter extends TidyConverter {
                 "  <li> pois é <ol><li>um dois tres um dois tres um dois tres um dois tres um dois tres um dois tres um dois tres um dois tres um dois tres um dois tres <li>dois</ol>\n"+
                 "  <li> Isto é outro teste\n"+
                 "</ol>\n" +
-                "<hr>\n"+
+                "<hr/>\n"+
                 "<blockquote>isto é um teste <p>com bastante texto</p> para fazer wrap desta coisa isto ldksjfslkdj flskdfj slakfjsalk lsdkfj slakfj salkjd lakfj " +
                 "<blockquote>tem que crescer mais um bocado para fazer wrap<br/>asdasdsa</blockquote>asdsadsadds</blockquote>" +
-                "<hr>\n" +
+                "<hr/>\n" +
                 "<p>" +
-                "agora é código da classe <code>BlaBlabla</code>\n<hr>" +
+                "agora é código da classe <code>BlaBlabla</code>\n<hr/>" +
                 "<pre>\n" +
                 "    ...\n" +
                 "    java() {\n" +
                 "      print();\n" +
-                "    }</pre><hr>")));
+                "    }</pre><hr/>")));
     }
 
 }

@@ -12,7 +12,7 @@
 
 <p><strong>Página 6 de 6</strong></p>
 
-<p align="center"><span class="error"><html:errors/></span></p>
+<p align="center"><span class="error"><!-- Error messages go here --><html:errors /></span></p>
 
 <div style="text-align: center; width: 60%; margin: 0 19%;">
 	<logic:present name="studentRegistered" scope="request">

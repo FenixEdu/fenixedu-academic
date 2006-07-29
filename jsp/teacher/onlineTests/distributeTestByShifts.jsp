@@ -55,7 +55,7 @@ function cleanSelect() {
 
 <table>
 	<tr>
-		<td><b><bean:message key="message.selectShifts"/></b></td><td/><td/><td/><td><span class="error"><html:errors property="selected"/></span></td>
+		<td><b><bean:message key="message.selectShifts"/></b></td><td/><td/><td/><td><span class="error"><!-- Error messages go here --><html:errors property="selected"/></span></td>
 	</tr>
 	<tr><td></td>
 		<td><b><bean:message key="label.allShifts"/></b></td>

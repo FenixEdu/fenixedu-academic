@@ -5,7 +5,7 @@
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
 <h2><bean:message bundle="MANAGER_RESOURCES" key="title.manage.roles"/></h2>
 <br />
-<span class="error"><html:errors/></span>
+<span class="error"><!-- Error messages go here --><html:errors /></span>
 <html:messages id="message" message="true" bundle="MANAGER_RESOURCES">
 	<span class="error">
 		<bean:write name="message"/>

@@ -12,7 +12,7 @@
 		</logic:equal>
 	</logic:present>
 </p>
-<span class="error"><html:errors/></span>
+<span class="error"><!-- Error messages go here --><html:errors /></span>
 <html:form action="/showTeacherProfessorshipsForManagement">
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.idInternal" property="idInternal" />	
 	<table width="100%">

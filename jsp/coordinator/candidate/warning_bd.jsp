@@ -4,7 +4,7 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 
-<span class="error"><html:errors/></span>
+<span class="error"><!-- Error messages go here --><html:errors /></span>
     <html:form action="/displayListToSelectCandidates.do?method=next">
         <h2>AVISO:<br />
         O número de candidatos aceites excede o limite de vagas.

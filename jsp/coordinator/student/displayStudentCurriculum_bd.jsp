@@ -5,7 +5,7 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
 <%@ page import="net.sourceforge.fenixedu.domain.curriculum.EnrollmentState" %>
-  <span class="error"><html:errors/></span>
+  <span class="error"><!-- Error messages go here --><html:errors /></span>
   <bean:define id="curriculum" name="<%= SessionConstants.CURRICULUM %>" scope="request" />
   <bean:size id="enrolmentNumber" name="<%= SessionConstants.CURRICULUM %>" scope="request" />
   <bean:define id="student" name="<%= SessionConstants.STUDENT_CURRICULAR_PLAN %>" scope="request" />

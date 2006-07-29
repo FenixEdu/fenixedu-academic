@@ -66,7 +66,7 @@ function invertSelect(){
 			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1" />
 			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="downloadTestMarks" />
 			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.objectCode" property="objectCode" value="<%=(pageContext.findAttribute("objectCode")).toString()%>" />
-			<span class="error"><html:errors /></span>
+			<span class="error"><!-- Error messages go here --><html:errors /></span>
 			<table>
 				<tr>
 					<td class="listClasses-header"></td>

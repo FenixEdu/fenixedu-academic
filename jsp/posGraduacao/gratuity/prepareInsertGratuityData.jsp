@@ -5,7 +5,7 @@
 <%@ taglib uri="/WEB-INF/enum.tld" prefix="e" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
 <h2><bean:message key="link.masterDegree.gratuity.insert"/></h2>
-<span class="error"><html:errors/></span>
+<span class="error"><!-- Error messages go here --><html:errors /></span>
 <html:form action="/insertGratuityDataDA">  
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="prepareInsertGratuityData" />
 	<logic:present name="showNextSelects">

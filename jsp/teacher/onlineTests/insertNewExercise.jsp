@@ -20,7 +20,7 @@
 <logic:present name="asc">
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.asc" property="asc" value="<%=(pageContext.findAttribute("asc")).toString()%>"/>
 </logic:present>
-<span class="error"><html:errors/></span>
+<span class="error"><!-- Error messages go here --><html:errors /></span>
 	<table>
 		<tr>
 			<td><bean:message key="label.xmlZipFile"/></td>

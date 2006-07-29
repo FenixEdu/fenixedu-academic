@@ -7,7 +7,7 @@
 <%@ page import="net.sourceforge.fenixedu.domain.accessControl.Group" %>
 <%@ page import="net.sourceforge.fenixedu.domain.accessControl.GroupTypes"%>
 
-<span class="error"><html:errors/></span>
+<span class="error"><!-- Error messages go here --><html:errors /></span>
 	<logic:present name="group">
 		<bean:define id="group" name="group" type="net.sourceforge.fenixedu.domain.PersonalGroup"/>
 		<bean:define id="readableGroupType" value="<%= GroupTypes.userGroupTypeByClass(group.getGroup().getClass()).toString() %>"/>

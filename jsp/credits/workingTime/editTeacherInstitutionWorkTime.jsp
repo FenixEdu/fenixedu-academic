@@ -30,7 +30,7 @@
 
 
 <logic:messagesPresent>
-	<span class="error"><html:errors/></span>
+	<span class="error"><!-- Error messages go here --><html:errors /></span>
 </logic:messagesPresent>
 
 <html:form action="/institutionWorkingTimeManagement">

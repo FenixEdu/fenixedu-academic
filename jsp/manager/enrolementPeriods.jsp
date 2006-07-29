@@ -6,7 +6,7 @@
 
 <h2><bean:message bundle="MANAGER_RESOURCES" key="title.manage.enrolement.period"/></h2>
 
-<span class="error"><html:errors/></span>
+<span class="error"><!-- Error messages go here --><html:errors /></span>
 
 <br />
 <br />

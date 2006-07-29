@@ -6,7 +6,7 @@
 
 <h2><bean:message key="title.student.enrollment" /></h2>
 
-<span class="error"><html:errors/></span>
+<span class="error"><!-- Error messages go here --><html:errors /></span>
 <html:form action="/curricularCoursesEnrollment" focus="studentNumber">
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="start"/>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>

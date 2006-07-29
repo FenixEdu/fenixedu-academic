@@ -11,7 +11,7 @@
 <p>Mostrar s� : 
 <!-- first option-->
 <logic:notPresent name="filterNextSelectOptions">
-<html:form action="/printAllCandidatesList.do?method=prepareSecondFilter" method="POST">
+<html:form action="/printAllCandidatesList.do?method=prepareSecondFilter" method="post">
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.degreeCurricularPlanID" property="degreeCurricularPlanID" value="<%= request.getParameter("degreeCurricularPlanID") %>"/>
 	<html:select bundle="HTMLALT_RESOURCES" altKey="select.filterBy" property="filterBy">
 		<html:optionsCollection name="filterSelectOptions"/>

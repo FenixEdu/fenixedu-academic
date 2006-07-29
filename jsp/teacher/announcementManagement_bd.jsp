@@ -5,7 +5,7 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="dt" %>
 <br />
-<span class="error"><html:errors/>
+<span class="error"><!-- Error messages go here --><html:errors />
 	<logic:present name="errors">
 		<bean:write name="errors" filter="true" />
 	</logic:present	>

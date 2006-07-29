@@ -3,7 +3,7 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 
-<span class="error"><html:errors property="error.default" /></span>
+<span class="error"><!-- Error messages go here --><html:errors property="error.default" /></span>
 <h2>Inserir Sub-Secção</h2>
 <br />
 
@@ -25,7 +25,7 @@
 	</td>
 	<td>
 		<html:text bundle="HTMLALT_RESOURCES" altKey="text.name" property="name" />
-			<span class="error"><html:errors property="name"/></span>
+			<span class="error"><!-- Error messages go here --><html:errors property="name"/></span>
 	</td>
 </tr>
 <tr>
@@ -39,7 +39,7 @@
 			<html:options collection="sections" labelProperty="name" property="sectionOrder"/>
 			
 		</html:select>
-		<span class="error"><html:errors property="sectionOrder"/></span>
+		<span class="error"><!-- Error messages go here --><html:errors property="sectionOrder"/></span>
 	</td>
 	</logic:present>
 	<logic:notPresent name="sections">

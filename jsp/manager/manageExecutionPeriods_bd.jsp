@@ -21,7 +21,7 @@ processar.
 	<%--
 	<html:form action="/createExecutionPeriodForm">
 		Criar Periodo Execução: 
-		<span class="error"><html:errors /></span>
+		<span class="error"><!-- Error messages go here --><html:errors /></span>
 		<br />
 		<table>
 			<tr>

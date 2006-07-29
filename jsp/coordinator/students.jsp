@@ -15,7 +15,7 @@
 	<f:loadBundle basename="resources/ApplicationResources" var="bundle"/>
 	<f:loadBundle basename="resources/EnumerationResources" var="bundleEnum"/>
 
-	<h:outputFormat value="<h2>#{bundle['list.students']}</h2/><hr>" escape="false"/>
+	<h:outputFormat value="<h2>#{bundle['list.students']}</h2/><hr/>" escape="false"/>
 
 	<h:form>
 		<h:outputText escape="false" value="<input alt='input.degreeCurricularPlanID' id='degreeCurricularPlanID' name='degreeCurricularPlanID' type='hidden' value='#{CoordinatorStudentsBackingBean.degreeCurricularPlanID}'/>"/>

@@ -12,7 +12,7 @@
 
 	<h2><bean:message
 		key="label.payments.paymentsWithoutReceipt" /></h2>
-	<hr>
+	<hr/>
 	<br/>
 	
 	

@@ -9,7 +9,7 @@
 <%@ page import="net.sourceforge.fenixedu.util.Data" %>
 
 
-<span class="error"><html:errors/></span>
+<span class="error"><!-- Error messages go here --><html:errors /></span>
 
 <h2><bean:message key="label.students.listMarks"/></h2>
 <br />

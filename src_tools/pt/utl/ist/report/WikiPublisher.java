@@ -67,7 +67,7 @@ public class WikiPublisher {
             loginNameValuePairs[1] = new NameValuePair("username", wikiUsername);
             loginNameValuePairs[2] = new NameValuePair("password", wikiPassword);
             loginNameValuePairs[3] = new NameValuePair("login", "Login");
-            loginNameValuePairs[4] = new NameValuePair("method", "POST");
+            loginNameValuePairs[4] = new NameValuePair("method", "post");
             method.setQueryString(loginNameValuePairs);
             executeMethod(httpClient, method);
 

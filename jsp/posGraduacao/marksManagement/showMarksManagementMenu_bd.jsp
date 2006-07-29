@@ -21,7 +21,7 @@
 		</tr>
 	</table>
 	<br />
-	<span class="error"><html:errors/></span>
+	<span class="error"><!-- Error messages go here --><html:errors /></span>
 	<bean:define id="courseId" name="oneInfoEnrollment" property="infoCurricularCourse.idInternal"/>
 	<ul>
 	    <li>

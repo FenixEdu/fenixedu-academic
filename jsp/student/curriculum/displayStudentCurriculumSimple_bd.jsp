@@ -9,7 +9,7 @@
 <%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoEnrolmentInExtraCurricularCourse" %>
 <%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoEnrolment" %>
 
-  <span class="error"><html:errors/></span>
+  <span class="error"><!-- Error messages go here --><html:errors /></span>
 
   <bean:define id="curriculum" name="<%= SessionConstants.CURRICULUM %>" scope="request" />
   <bean:size id="enrolmentNumber" name="<%= SessionConstants.CURRICULUM %>" scope="request" />

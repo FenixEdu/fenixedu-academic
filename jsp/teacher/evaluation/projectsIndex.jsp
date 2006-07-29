@@ -16,7 +16,7 @@
 		<h:commandLink action="enterCreateProject">
 			<h:outputFormat value="<br/>#{bundle['link.create.project']}<br/><br/>" escape="false"/>
 		</h:commandLink>
-		<h:outputText value="<hr>" escape="false" />
+		<h:outputText value="<hr/>" escape="false" />
 		
 		<h:panelGroup rendered="#{empty projectManagementBackingBean.associatedProjects}" >
 			<h:outputText value="#{bundle['message.projects.not.scheduled']}" />

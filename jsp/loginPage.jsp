@@ -21,16 +21,16 @@
 				<h1>Login</h1>
 				<p><bean:message key="message.login.page" bundle="GLOBAL_RESOURCES" /></p>
 				<div id="alert">
-					<p><span class="error"><html:errors property="invalidAuthentication" /></span></p>
-					<p><span class="error"><html:errors property="errors.noAuthorization" /></span></p>
-					<p><span class="error"><html:errors property="error.invalid.session" /></span></p>
+					<p><span class="error"><!-- Error messages go here --><html:errors property="invalidAuthentication" /></span></p>
+					<p><span class="error"><!-- Error messages go here --><html:errors property="errors.noAuthorization" /></span></p>
+					<p><span class="error"><!-- Error messages go here --><html:errors property="error.invalid.session" /></span></p>
 				</div>
 			</div>
 			<html:form action="/login" focus="username">
 				<table align="center" border="0">
 					<tr>
 						<td colspan="2">
-							<span class="error"><html:errors property="username" /></span>
+							<span class="error"><!-- Error messages go here --><html:errors property="username" /></span>
 						</td>
 					</tr>
 					<tr>
@@ -43,7 +43,7 @@
 					</tr>
 					<tr>
 						<td colspan="2">
-							<span class="error"><html:errors property="password" /></span>
+							<span class="error"><!-- Error messages go here --><html:errors property="password" /></span>
 						</td>
 					</tr>
 					<tr>

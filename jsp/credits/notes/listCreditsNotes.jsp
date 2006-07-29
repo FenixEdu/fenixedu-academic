@@ -17,7 +17,7 @@
 	<em><bean:message key="<%="label."+noteType %>" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></em>
 	<h2><bean:message key="label.observations" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></h2>
 
-	<span class="error"><html:errors/></span>
+	<span class="error"><!-- Error messages go here --><html:errors /></span>
 	<html:messages id="message" message="true">
 		<span class="error">
 			<bean:write name="message"/>

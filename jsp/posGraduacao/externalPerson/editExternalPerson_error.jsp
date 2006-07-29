@@ -4,7 +4,7 @@
 
 <h2 align="center"><bean:message key="link.masterDegree.administrativeOffice.externalPersons.edit"/></h2>
 <center>
-<span class="error"><html:errors/></span>
+<span class="error"><!-- Error messages go here --><html:errors /></span>
 
 
 </center>

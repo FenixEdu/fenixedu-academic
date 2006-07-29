@@ -39,7 +39,7 @@ padding: 0;
 
 	<html:form action="/groupEnrolment" method="get">
 
-	<h2><span class="error"><html:errors/></span></h2>		 
+	<h2><span class="error"><!-- Error messages go here --><html:errors /></span></h2>		 
 
 	<bean:define id="groupNumber" name="groupNumber"/>
 

@@ -9,7 +9,7 @@
 		<h2><bean:message key="message.no.seminaries.to.enroll"/></h2>
 </logic:empty>
 <logic:notEmpty name="listSeminaries" >
-	<span class="error"><html:errors /></span>
+	<span class="error"><!-- Error messages go here --><html:errors /></span>
 	<h2 class="redtxt">Informações de utilização:</h2>
 	<p>Existem várias modalidades de inscrição. Para mais informações consultar regulamento do seminário.</p>
 	<h2><bean:message key="label.seminariesToEnroll"/></h2>

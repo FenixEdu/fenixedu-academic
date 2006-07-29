@@ -8,7 +8,7 @@
 <%@ page import="java.lang.Integer" %>
 
 <h2><bean:message key="label.coordinator.degreeCurricular.history"/></h2>
-<span class="error"><html:errors/></span>
+<span class="error"><!-- Error messages go here --><html:errors /></span>
 <logic:present name="curricularCourseScopesHashMap">
 	<logic:iterate id="curricularCourseScopeElem" name="allCurricularCourseScopes" type="InfoCurricularCourseScope" length="1">
 		<bean:define id="currentSemester" name="curricularCourseScopeElem" property="infoCurricularSemester.semester"/>

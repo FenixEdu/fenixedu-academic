@@ -7,7 +7,7 @@
 <bean:define id="yearsList" name="<%= SessionConstants.ENROLMENT_YEAR_LIST_KEY %>" scope="request"/>
 <bean:define id="semestersList" name="<%= SessionConstants.ENROLMENT_SEMESTER_LIST_KEY %>"  scope="request"/>
 <h2><bean:message key="title.student.enrolment.without.rules" bundle="DEGREE_ADM_OFFICE"/></h2>
-<span class="error"><html:errors/></span>
+<span class="error"><!-- Error messages go here --><html:errors /></span>
 <br />
 <html:form action="/courseEnrolmentWithoutRulesManagerDA">
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="readCoursesToEnroll"/>

@@ -4,7 +4,7 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ page import="java.util.Calendar" %>
 <%@ page import="net.sourceforge.fenixedu.util.Mes" %>
-<span class="error"><html:errors/></span>
+<span class="error"><!-- Error messages go here --><html:errors /></span>
 <logic:present name="infoWebSiteSection">
 	<table width="100%" align="center">
 		<logic:iterate id="item" name="infoWebSiteSection" property="infoItemsList">

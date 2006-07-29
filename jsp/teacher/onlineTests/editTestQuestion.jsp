@@ -11,7 +11,7 @@
 	<bean:define id="exerciseCode" name="infoQuestion" property="idInternal" />
 	<bean:define id="metadataId" name="infoQuestion" property="infoMetadata.idInternal" />
 	<bean:define id="testQuestionCode" name="infoTestQuestion" property="idInternal" />
-	<span class="error"><html:errors /></span>
+	<span class="error"><!-- Error messages go here --><html:errors /></span>
 
 	<html:form action="/testQuestionEdition">
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1" />

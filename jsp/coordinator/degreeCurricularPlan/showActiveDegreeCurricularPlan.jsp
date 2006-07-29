@@ -3,7 +3,7 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <h2><bean:message key="label.coordinator.degreeCurricular.active"/></h2>
-<span class="error"><html:errors/></span>
+<span class="error"><!-- Error messages go here --><html:errors /></span>
 <logic:present name="allActiveCurricularCourseScopes">
 			<logic:iterate id="curricularCourseScopeElem" name="allActiveCurricularCourseScopes" type="net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseScope" length="1">
 				<bean:define id="currentSemester" name="curricularCourseScopeElem" property="infoCurricularSemester.semester"/>

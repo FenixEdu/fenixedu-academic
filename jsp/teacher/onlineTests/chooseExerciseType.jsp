@@ -31,7 +31,7 @@ function selectQuestionType(){
 <%if (pageContext.findAttribute("exerciseCode")!=null){%>
 <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.exerciseCode" property="exerciseCode" value="<%=(pageContext.findAttribute("exerciseCode")).toString()%>"/>
 <%}%>
-<span class="error"><html:errors/></span>
+<span class="error"><!-- Error messages go here --><html:errors /></span>
 <table>
 	<tr><td class="infoop"><bean:message key="message.chooseQuestionType.information" /></td></tr>
 </table>

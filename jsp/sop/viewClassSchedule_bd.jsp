@@ -97,7 +97,7 @@
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="edit"/>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value= "1"/>
 
-	<span class="error"><html:errors/></span>
+	<span class="error"><!-- Error messages go here --><html:errors /></span>
    	<br />
    	<html:text bundle="HTMLALT_RESOURCES" altKey="text.className" property="className"/>
    	<br />

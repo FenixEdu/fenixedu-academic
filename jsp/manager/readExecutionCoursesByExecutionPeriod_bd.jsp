@@ -30,7 +30,7 @@
 	<br/>
 </logic:notPresent>--%>
 
-<span class="error"><html:errors/></span>
+<span class="error"><!-- Error messages go here --><html:errors /></span>
 
 <logic:notEmpty name="infoExecutionCoursesList" scope="request">
 	<logic:present name="name" scope="request">

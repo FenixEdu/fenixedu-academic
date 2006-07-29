@@ -18,7 +18,7 @@
 		<h:outputText escape="false" value="<input alt='input.curricularYearID' id='curricularYearID' name='curricularYearID' type='hidden' value='#{CoordinatorEvaluationsBackingBean.curricularYearID}'/>"/>
 		<h:outputText escape="false" value="<input alt='input.date' id='date' name='date' type='hidden' value='#{CoordinatorEvaluationsBackingBean.date}'/>"/>
 		<h:outputText escape="false" value="<input alt='input.begin' id='begin' name='begin' type='hidden' value='#{CoordinatorEvaluationsBackingBean.begin}'/>"/>
-		<h:outputFormat value="<h2>#{bundle['link.create.evaluation']}</h2/><hr>" escape="false"/>
+		<h:outputFormat value="<h2>#{bundle['link.create.evaluation']}</h2/><hr/>" escape="false"/>
 
 		<h:outputText styleClass="error" rendered="#{!empty CoordinatorEvaluationsBackingBean.errorMessage}"
 				value="#{bundle[CoordinatorEvaluationsBackingBean.errorMessage]}<br/>" escape="false" />

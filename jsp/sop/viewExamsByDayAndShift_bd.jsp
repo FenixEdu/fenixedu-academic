@@ -16,7 +16,7 @@
 </table>
 <br />
 <br />
-<span class="error"><html:errors/></span>
+<span class="error"><!-- Error messages go here --><html:errors /></span>
 <bean:define id="deleteConfirm">
 	return confirm('<bean:message key="message.confirm.delete.exam"/>')
 </bean:define>

@@ -9,7 +9,7 @@
     <title><bean:message key="label.person.title.changePersonalInfo" /></title>
   </head>
   <body>
-<span class="error"><html:errors/></span>
+<span class="error"><!-- Error messages go here --><html:errors /></span>
   <bean:define id="personalInfo" name="<%= SessionConstants.PERSONAL_INFO_KEY %>" scope="session"/>
   <html:form action="/changePersonalInfoDispatchAction?method=change">
 

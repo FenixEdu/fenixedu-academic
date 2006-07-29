@@ -50,7 +50,7 @@
 <br />
 <logic:present name="infoMetadataList">
 	<bean:define id="objectCode" value="<%=(pageContext.findAttribute("objectCode")).toString()%>" />
-	<span class="error"><html:errors /></span>
+	<span class="error"><!-- Error messages go here --><html:errors /></span>
 	<table>
 		<tr>
 			<td class="infoop"><bean:message key="message.exercisesFirstPage.information" /></td>

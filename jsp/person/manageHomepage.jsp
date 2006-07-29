@@ -11,7 +11,7 @@
 <p class="mvert0"><bean:message key="message.homepage.info" bundle="HOMEPAGE_RESOURCES"/></p>
 </div>
 
-<p><span class="error"><html:errors/></span></p>
+<p><span class="error"><!-- Error messages go here --><html:errors /></span></p>
 
 <style type="text/css">
 .tdcheck {

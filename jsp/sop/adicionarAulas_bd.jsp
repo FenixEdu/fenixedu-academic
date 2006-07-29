@@ -22,7 +22,7 @@
         <br/>
 		 <center>  <bean:message key="message.add.lessons.to.shift"/>  </center>
             <br/>
-        <span class="error"><html:errors/></span>
+        <span class="error"><!-- Error messages go here --><html:errors /></span>
         <html:form action="/adicionarAulasForm">
             <center> <b> <bean:message key="listAulas.available"/> </b> </center>
             <br/>

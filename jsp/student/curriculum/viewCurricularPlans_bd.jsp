@@ -11,7 +11,7 @@
 <%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoStudent" %>
 <%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoPerson" %>
 
-<span class="error"><html:errors/></span>
+<span class="error"><!-- Error messages go here --><html:errors /></span>
 <bean:define id="studentCPList" name="studentCPs" scope="request" />
 <bean:define id="link">/viewCurriculum.do?method=getCurriculum&page=0&studentCPID=</bean:define>
 <%= ((List) studentCPList).size()%> <bean:message key="label.student.studentCPFound"/>

@@ -15,7 +15,7 @@
 <logic:present name="siteView" property="component">
 	<bean:define id="infoEvaluationList" name="siteView" property="component.infoEvaluations"/>  
 	<p></p>
-	<span class="error"><html:errors/></span>	
+	<span class="error"><!-- Error messages go here --><html:errors /></span>	
 	<p></p>
 	<bean:size id="infoEvaluationListSize" name="infoEvaluationList"/>
 	<logic:equal name="infoEvaluationListSize" value="0">

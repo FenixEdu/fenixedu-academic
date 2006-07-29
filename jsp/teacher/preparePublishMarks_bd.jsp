@@ -3,7 +3,7 @@
 <html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
-<span class="error"><html:errors property="error.default" /></span>
+<span class="error"><!-- Error messages go here --><html:errors property="error.default" /></span>
 <h2><bean:message key="message.publishment" /></h2>
 <br />
 <logic:present name="siteView">
@@ -23,7 +23,7 @@
 				</td>
 				<td>
 					<html:textarea bundle="HTMLALT_RESOURCES" altKey="textarea.publishmentMessage" rows="2" cols="60" property="publishmentMessage" ></html:textarea>
-					<span class="error"><html:errors property="publishmentMessage"/></span>
+					<span class="error"><!-- Error messages go here --><html:errors property="publishmentMessage"/></span>
 				</td>
 			</tr>
 			<tr>
@@ -32,7 +32,7 @@
 				</td>
 				<td>
 					<html:checkbox bundle="HTMLALT_RESOURCES" altKey="checkbox.sendSMS" property="sendSMS" disabled="true"/>
-					<span class="error"><html:errors property="sendSMS"/></span>
+					<span class="error"><!-- Error messages go here --><html:errors property="sendSMS"/></span>
 				</td>
 				<td>
 				<span class="error">Serviço Indisponível</span>

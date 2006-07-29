@@ -39,7 +39,7 @@
  </logic:present>
  
 
-<hr>
+<hr/>
 <bean:define id="semInt" name="semester" type="java.lang.Integer"/>
 <bean:define id="teacher" name="teacherType" type="java.lang.Integer"/>
 		
@@ -48,7 +48,7 @@
 </h1>
 
 <h2>Consulta Por Curso</h2>
-<html:form action="/searchProfessorships" method="GET">
+<html:form action="/searchProfessorships" method="get">
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="showProfessorshipsByExecutionDegree"/>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.semester" property="semester" value='<%= request.getAttribute("semester").toString() %>'/>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.teacherType" property="teacherType" value='<%= request.getAttribute("teacherType").toString() %>'/>
@@ -76,7 +76,7 @@
 </html:form>
 
 <h2>Consulta Por Departmento</h2>
-<html:form action="/searchProfessorships" method="GET" >
+<html:form action="/searchProfessorships" method="get" >
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="showTeachersBodyByDepartment"/>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.semester" property="semester" value='<%= request.getAttribute("semester").toString() %>'/>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.teacherType" property="teacherType" value='<%= request.getAttribute("teacherType").toString() %>'/>

@@ -65,7 +65,7 @@
 	<br />
 </logic:present>
 
-<span class="error"><html:errors/><br /><br /></span>
+<span class="error"><!-- Error messages go here --><html:errors /><br /><br /></span>
 <logic:present name="sucessfulSetOfDegreeProposalPeriod">
 	<span class="sucessfulOperarion"><bean:message key="finalDegreeWorkProposal.setProposalPeriod.sucess"/><br /><br /></span>
 </logic:present>

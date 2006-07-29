@@ -4,7 +4,7 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/app.tld" prefix="app" %>
 <h2><bean:message bundle="MANAGER_RESOURCES" key="link.manager.teachersManagement.removeECAssociation" /></h2>
-<span class="error"><html:errors /></span>
+<span class="error"><!-- Error messages go here --><html:errors /></span>
 <html:form action="/dissociateProfShipsAndRespFor">
 	<input alt="input.method" type="hidden" name="method" value="prepareDissociateECShowProfShipsAndRespFor"/>
 	<input alt="input.page" type="hidden" name="page" value="1"/>

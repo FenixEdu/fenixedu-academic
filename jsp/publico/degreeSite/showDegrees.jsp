@@ -5,7 +5,7 @@
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
 <%@ page import="net.sourceforge.fenixedu.domain.degree.DegreeType" %>
 
-<p><span class="error"><html:errors/></span></p>
+<p><span class="error"><!-- Error messages go here --><html:errors /></span></p>
 
 <logic:present name="degreesList">
 

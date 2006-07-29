@@ -15,7 +15,7 @@
 	</logic:iterate> 
 </logic:notEmpty>
 
-<span class="error"><html:errors/></span>
+<span class="error"><!-- Error messages go here --><html:errors /></span>
 
 <bean:define id="sectionName" name="sectionName"/>
 <bean:define id="itemsSize" name="itemsSize"/>

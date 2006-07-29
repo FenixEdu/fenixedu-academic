@@ -34,7 +34,7 @@
 	<logic:iterate id="infoInquiryStatisticsList" name="infoInquiryStatistics" type="net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoInquiryStatistics">
 		<bean:define id="testQuestion" name ="infoInquiryStatisticsList" property="infoStudentTestQuestion" type="net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoStudentTestQuestion"/>
 		<bean:define id="index" value="0"/>
-		<tr><td><hr></td></tr>
+		<tr><td><hr/></td></tr>
 		<bean:define id="question" name="testQuestion" property="question" type="net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoQuestion"/>
 		<bean:define id="questionCode" name="question" property="idInternal"/>
 		<bean:define id="questionOrder" name="testQuestion" property="testQuestionOrder"/>
@@ -144,7 +144,7 @@
 			<%} %> 
 			</table></td></tr>
 	</logic:iterate>
-	<tr><td><hr></td></tr>
+	<tr><td><hr/></td></tr>
 	</table>
 	<br/>
 	<br/>

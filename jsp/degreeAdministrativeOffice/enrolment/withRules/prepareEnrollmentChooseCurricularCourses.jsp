@@ -49,7 +49,7 @@ input { font-size: 11px; }
 
 
 <h2><bean:message key="title.student.enrollment.simple" bundle="STUDENT_RESOURCES"/></h2>
-<span class="error"><html:errors/></span>
+<span class="error"><!-- Error messages go here --><html:errors /></span>
 <html:form action="/curricularCoursesEnrollment">
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="enrollmentConfirmation" />
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.studentNumber" property="studentNumber" />

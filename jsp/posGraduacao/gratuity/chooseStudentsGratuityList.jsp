@@ -6,7 +6,7 @@
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
 
 <h2><bean:message key="link.masterDegree.administrativeOffice.gratuity.listStudents"/></h2>
-<span class="error"><html:errors/></span>
+<span class="error"><!-- Error messages go here --><html:errors /></span>
 
 <html:form action="/studentsGratuityList" >
 <logic:notPresent name="showNextSelects">

@@ -6,7 +6,7 @@
 <%@ page import="org.apache.struts.Globals" %>
 
 
-<span class="error"><html:errors/></span>
+<span class="error"><!-- Error messages go here --><html:errors /></span>
 		<bean:define id="path" type="java.lang.String" scope="request" property="path" name="<%= Globals.MAPPING_KEY %>" />
 		<bean:define id="link">
 		<bean:write name="path"/>.do?method=prepareSecondChooseMasterDegree<%= "&" %>candidateID=

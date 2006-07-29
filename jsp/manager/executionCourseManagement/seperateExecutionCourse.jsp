@@ -9,7 +9,7 @@
 	<bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="title.manager.executionCourseManagement.seperate.executionCourse"/>
 </h2>
 
-<span class="error"><html:errors/></span>
+<span class="error"><!-- Error messages go here --><html:errors /></span>
 
 <logic:present name="infoExecutionCourse">
 	<bean:define id="executionCourseID" name="infoExecutionCourse" property="idInternal"/>

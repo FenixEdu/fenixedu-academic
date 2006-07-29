@@ -16,8 +16,8 @@
 		</tr>
 	</table>
 	<br/>
-<span class="error"><html:errors/></span>        
-<html:form action="/viewSiteExecutionCourse" method="GET">
+<span class="error"><!-- Error messages go here --><html:errors /></span>        
+<html:form action="/viewSiteExecutionCourse" method="get">
 	<input alt="input.method" type="hidden" name="method" value="firstPage">       		
    	<%-- hide previous form for validation matters --%>
 	<html:hidden alt="<%=SessionConstants.EXECUTION_PERIOD_OID%>" property="<%=SessionConstants.EXECUTION_PERIOD_OID%>" value="<%= ""+request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID)%>" />

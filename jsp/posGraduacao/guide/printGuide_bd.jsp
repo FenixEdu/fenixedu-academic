@@ -10,7 +10,7 @@
     <title><bean:message key="title.masterDegree.administraiveOffice.createGuide" /></title>
   </head>
   <body>
-   <span class="error"><html:errors/></span>
+   <span class="error"><!-- Error messages go here --><html:errors /></span>
      <bean:define id="guide" name="<%= SessionConstants.GUIDE %>" scope="session" />
 	<h2><bean:message key="label.masterDegree.administrativeOffice.guideCreationSuccess" /></h2>
    <table>

@@ -26,7 +26,7 @@
 		</tr>
 		<tr>
 			<td><html:text bundle="HTMLALT_RESOURCES" altKey="text.title" size="50" name="infoTest" property="title" /></td>
-			<td><span class="error"><html:errors /></span></td>
+			<td><span class="error"><!-- Error messages go here --><html:errors /></span></td>
 			<tr />
 			<tr>
 				<td><bean:message key="label.test.information" /></td>

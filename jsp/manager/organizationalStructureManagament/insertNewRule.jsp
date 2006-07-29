@@ -5,7 +5,7 @@
 <%@ taglib uri="/WEB-INF/enum.tld" prefix="e" %>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
 
-<span class="error"><html:errors/></span>
+<span class="error"><!-- Error messages go here --><html:errors /></span>
 <html:messages id="message" message="true" bundle="MANAGER_RESOURCES">
 	<span class="error">
 		<bean:write name="message"/>

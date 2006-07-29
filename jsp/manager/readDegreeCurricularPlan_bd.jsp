@@ -28,7 +28,7 @@
 <%--	<li><html:link module="/manager" page="<%="/insertExecutionDegree.do?method=prepareInsert&degreeId=" + request.getParameter("degreeId") + "&amp;degreeCurricularPlanId=" + request.getParameter("degreeCurricularPlanId")%>"><bean:message bundle="MANAGER_RESOURCES" key="label.manager.insert.executionDegree"/></html:link></li>--%>
 </ul>
 
-<span class="error"><html:errors/></span>
+<span class="error"><!-- Error messages go here --><html:errors /></span>
 
 <br/>
 <h3><bean:message bundle="MANAGER_RESOURCES" key="label.manager.curricularCourses"/></h3>

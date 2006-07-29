@@ -4,7 +4,7 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 
 <div  align="center"  >
-	<span class="error"><html:errors/></span>
+	<span class="error"><!-- Error messages go here --><html:errors /></span>
 	<br />
 	<h2 style="text-align:center"><bean:message key="title.student.shift.enrollment" /></h2>
 

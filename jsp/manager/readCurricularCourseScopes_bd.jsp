@@ -17,7 +17,7 @@
 	</tr>
 </table>
 
-<span class="error"><html:errors/></span>
+<span class="error"><!-- Error messages go here --><html:errors /></span>
 	
 <h3><bean:message bundle="MANAGER_RESOURCES" key="label.manager.viewAllcurricularCourseScopes"/></h3>
 

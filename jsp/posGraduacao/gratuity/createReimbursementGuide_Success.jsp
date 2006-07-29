@@ -5,7 +5,7 @@
 
 <center>
 	<h2><bean:message key="message.masterDegree.reimbursementGuide.createReimbursementGuideSuccess"/></h2>
-	<span class="error"><html:errors/></span>
+	<span class="error"><!-- Error messages go here --><html:errors /></span>
 
 	<bean:define id="reimbursementGuideId" name="<%= SessionConstants.REIMBURSEMENT_GUIDE %>" scope="request"/>
 	<bean:define id="linkViewReimbursementGuideDetails">

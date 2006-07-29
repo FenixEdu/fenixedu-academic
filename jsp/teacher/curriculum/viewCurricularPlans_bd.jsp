@@ -6,7 +6,7 @@
 <%@ page import="org.apache.struts.Globals" %>
 <%@ page import="java.util.List" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
-<span class="error"><html:errors/></span>
+<span class="error"><!-- Error messages go here --><html:errors /></span>
 <bean:define id="studentCPList" name="studentCPs" scope="request" />
 <bean:define id="link">/finalWorkManagement.do?method=getCurriculum&page=0&studentCPID=</bean:define>
 <%= ((List) studentCPList).size()%> <bean:message key="label.student.studentCPFound"/>

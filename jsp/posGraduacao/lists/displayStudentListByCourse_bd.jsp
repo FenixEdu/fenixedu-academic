@@ -8,7 +8,7 @@
 <logic:present name="jspTitle">
 	<h2><bean:write name="jspTitle" /></h2>
 </logic:present>
-<span class="error"><html:errors/></span>
+<span class="error"><!-- Error messages go here --><html:errors /></span>
 <br />
 <logic:present name="<%=SessionConstants.ENROLMENT_LIST%>">
 	<bean:define id="enrolmentList" name="<%=SessionConstants.ENROLMENT_LIST%>" scope="request" />

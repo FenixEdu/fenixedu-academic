@@ -8,7 +8,7 @@
 <bean:define id="component" name="siteView" property="component"/>
 <bean:define id="curricularCourses" name="component" property="curricularCourses"/>
 
-<span class="error"><html:errors/></span>
+<span class="error"><!-- Error messages go here --><html:errors /></span>
 <center><table>
 <tr>
 <th class="listClasses-header"><bean:message key="label.name"/></th>

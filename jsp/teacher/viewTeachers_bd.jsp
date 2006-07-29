@@ -12,7 +12,7 @@
 		</td>
 	</tr>
 </table>
-<span class="error"><html:errors/></span>	
+<span class="error"><!-- Error messages go here --><html:errors /></span>	
 <h2><bean:message key="title.teachers"/></h2>
 <logic:present name="siteView">
 <bean:define id="infoSiteTeachers" name="siteView" property="component"/>

@@ -31,7 +31,7 @@ padding: 0.5em;
 </style>
 
    <h2><bean:message key ="title.person.changepass" /></h2>
-   <span class="error"><html:errors/></span>
+   <span class="error"><!-- Error messages go here --><html:errors /></span>
 <div class="pass_container">
    <div class="pass_left">
     <html:form action="/changePasswordForm">

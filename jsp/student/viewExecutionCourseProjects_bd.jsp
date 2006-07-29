@@ -15,7 +15,7 @@ td.listClasses p { margin: 6px 0; padding: 0; }
 
 <h2><bean:message key="title.ExecutionCourseProjects.short"/></h2>
 
-	<span class="error"><html:errors/></span> 	
+	<span class="error"><!-- Error messages go here --><html:errors /></span> 	
 			
 	<logic:empty name="infoGroupPropertiesList">
 	<h2><bean:message key="message.infoGroupPropertiesList.not.available" /></h2>

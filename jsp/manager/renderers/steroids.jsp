@@ -140,7 +140,7 @@
     <!-- Code -->
     <div>
         <p><strong>Code</strong></p>
-        <pre>&lt;form method=&quot;POST&quot; action=&quot;&lt;%= request.getContextPath() + &quot;/manager/renderers/steroids.do&quot; %&gt;&quot;&gt;
+        <pre>&lt;form method=&quot;post&quot; action=&quot;&lt;%= request.getContextPath() + &quot;/manager/renderers/steroids.do&quot; %&gt;&quot;&gt;
     &lt;table border=&quot;1&quot;&gt;
         &lt;tr&gt;
             &lt;td&gt;
@@ -183,7 +183,7 @@
     <div>
         <p><strong>Result</strong></p>
         <div style="border: 1px solid #000; padding: 20px 20px 20px 20px" >
-            <form method="POST" action="<%= request.getContextPath() + "/manager/renderers/steroids.do" %>">
+            <form method="post" action="<%= request.getContextPath() + "/manager/renderers/steroids.do" %>">
                 <table border="1">
                     <tr>
                         <td>
@@ -258,7 +258,7 @@
     <!-- Code -->
     <div>
         <p><strong>Code</strong></p>
-        <pre>&lt;form method=&quot;POST&quot; action=&quot;&lt;%= request.getContextPath() + &quot;/manager/renderers/steroids.do&quot; %&gt;&quot;&gt;
+        <pre>&lt;form method=&quot;post&quot; action=&quot;&lt;%= request.getContextPath() + &quot;/manager/renderers/steroids.do&quot; %&gt;&quot;&gt;
     &lt;table border=&quot;1&quot;&gt;
         &lt;tr&gt;
             &lt;td&gt;
@@ -283,7 +283,7 @@
     <div>
         <p><strong>Result</strong></p>
         <div style="border: 1px solid #000; padding: 20px 20px 20px 20px" >
-            <form method="POST" action="<%= request.getContextPath() + "/manager/renderers/steroids.do" %>">
+            <form method="post" action="<%= request.getContextPath() + "/manager/renderers/steroids.do" %>">
                 <table border="1">
                     <tr>
                         <td>

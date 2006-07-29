@@ -21,7 +21,7 @@
 	<p class="mvert025"><b><bean:message key="label.execution-period" /></b> <bean:write name="executionPeriod" property="name"/> - <bean:write name="executionPeriod" property="executionYear.year"/></p>
 </div>
 
-<span class="error"><html:errors/></span>
+<span class="error"><!-- Error messages go here --><html:errors /></span>
 <html:messages id="message" message="true">
 	<span class="error">
 		<bean:write name="message" filter="false"/>
@@ -43,7 +43,7 @@
 
 <p class="mtop2 mbottom0"><strong><bean:message key="label.support-lessons.management"/></strong></p>
 
-<span class="error"><html:errors/></span>
+<span class="error"><!-- Error messages go here --><html:errors /></span>
 <logic:empty name="supportLessonList">
 	<br />
 	<span class="error"><bean:message key="message.support-lessons-list.empty"/></span>

@@ -3,7 +3,7 @@
 <html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
-<span class="error"><html:errors/></span>
+<span class="error"><!-- Error messages go here --><html:errors /></span>
 <br />
 <logic:present name="candidateEnrolments">
 	<bean:message key="label.degree" />:<bean:write name="executionDegree" property="infoDegreeCurricularPlan.infoDegree.nome"/><br />

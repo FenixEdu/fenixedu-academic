@@ -8,7 +8,7 @@
 
 <center>
 
-	<span class="error"><html:errors/></span>
+	<span class="error"><!-- Error messages go here --><html:errors /></span>
 	<br/>
 
 	<logic:present name="<%= SessionConstants.EXTERNAL_PERSONS_LIST %>" scope="request">

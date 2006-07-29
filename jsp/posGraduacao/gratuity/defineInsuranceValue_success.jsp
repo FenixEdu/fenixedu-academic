@@ -6,7 +6,7 @@
 
 <center>
 	<h2><bean:message key="message.masterDegree.gratuity.insuranceDefinition.success"/></h2>
-	<span class="error"><html:errors/></span>
+	<span class="error"><!-- Error messages go here --><html:errors /></span>
 	
 
 </center>

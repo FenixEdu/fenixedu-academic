@@ -7,7 +7,7 @@
 	<bean:message key="title.manage.schedule"/>
 </h2>
 
-<span class="error"><html:errors/></span>
+<span class="error"><!-- Error messages go here --><html:errors /></span>
 
 <html:form action="/chooseContext" focus="executionDegreeOID">
 

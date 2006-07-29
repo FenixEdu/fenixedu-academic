@@ -4,7 +4,7 @@
 <h2>Gest&atilde;o de Exames</h2>
 <p>Seleccione a op&ccedil;&atilde;o pretendida para criar, editar ou visualisar a calendariza&ccedil&atilde;o dos exames. <br />
 Pode alterar em baixo o período de execu&ccedil&atilde;o seleccionado.</p>
-<span class="error"><html:errors /></span>
+<span class="error"><!-- Error messages go here --><html:errors /></span>
 <html:form action="/mainExamsNew">
 <table border="0" cellspacing="0" cellpadding="0">
   <tr>

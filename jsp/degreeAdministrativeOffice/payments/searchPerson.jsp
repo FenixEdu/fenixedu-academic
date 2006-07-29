@@ -12,7 +12,7 @@
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" />
 
 	<h2><bean:message key="label.payments" /></h2>
-	<hr>
+	<hr/>
 
 	<logic:messagesPresent message="true">
 		<ul>

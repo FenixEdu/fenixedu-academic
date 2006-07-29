@@ -8,7 +8,7 @@
 
 <logic:present role="DIRECTIVE_COUNCIL">
 
-	<span class="error"><html:errors/></span>
+	<span class="error"><!-- Error messages go here --><html:errors /></span>
 	<html:messages id="message" message="true" bundle="DEFAULT">
 		<span class="error">
 			<bean:write name="message"/>

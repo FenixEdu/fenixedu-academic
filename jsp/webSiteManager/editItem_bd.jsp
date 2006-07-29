@@ -13,7 +13,7 @@
 	</logic:iterate> 
 </logic:notEmpty>
 
-<span class="error"><html:errors/></span>
+<span class="error"><!-- Error messages go here --><html:errors /></span>
 
 <html:form action="/editItemsManagement">
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
@@ -77,7 +77,7 @@
 		</tr>--%>
 
 		<tr>
-			<td colspan="2"><hr><i><b><bean:message key="label.publishment" /></b></i></hr> - <bean:message key="message.publish.help" /><br /><br /></td>
+			<td colspan="2"><hr/><i><b><bean:message key="label.publishment" /></b></i></hr> - <bean:message key="message.publish.help" /><br /><br /></td>
 		</tr>
 
 		<tr>
@@ -97,7 +97,7 @@
 			</td>
 		</tr>
 		<tr>
-			<td colspan="2"><hr></hr></td>
+			<td colspan="2"><hr/></hr></td>
 		</tr>
 	</table>
 	<br/>

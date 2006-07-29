@@ -6,7 +6,7 @@
 <%@ page import="java.util.List" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
 
-   <span class="error"><html:errors/></span>
+   <span class="error"><!-- Error messages go here --><html:errors /></span>
 
   <bean:define id="masterDegreeCPlanList" name="<%= SessionConstants.MASTER_DEGREE_CURRICULAR_PLAN_LIST %>" scope="request" />
   <bean:define id="link">/listMasterDegreesCandidate.do?method=prepareChooseExecutionYear<%= "&" %>page=0<%= "&" %>curricularPlanID=</bean:define>

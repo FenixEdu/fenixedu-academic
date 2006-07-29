@@ -8,7 +8,7 @@
 <bean:define id="studentList" name="studentList" scope="request"/>
 
 <h2 align="left"><bean:message key="title.masterDegree.administrativeOffice.chooseStudent"/></h2>
-<span class="error"><html:errors/></span>
+<span class="error"><!-- Error messages go here --><html:errors /></span>
 <table border="0" cellspacing="3" cellpadding="10">
 	<tr>
 		<th align="left"><bean:message key="label.masterDegree.administrativeOffice.studentNumber"/></th>

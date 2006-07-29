@@ -7,7 +7,7 @@
 
 <bean:define id="branchesIds" name="branchesIds" scope="request"/>
 
-<span class="error"><html:errors/><p><bean:message bundle="MANAGER_RESOURCES" key="label.manager.delete.branches.warning"/></p></span>
+<span class="error"><!-- Error messages go here --><html:errors /><p><bean:message bundle="MANAGER_RESOURCES" key="label.manager.delete.branches.warning"/></p></span>
 
 	<html:form action="/manageBranches" method="get">
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.degreeId" property="degreeId" />

@@ -13,7 +13,7 @@
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.executionPeriodOID" property="executionPeriodOID"/>
 	
 	<h2>Procurar Exames por Data</h2>
-	<span class="error"><html:errors/></span>
+	<span class="error"><!-- Error messages go here --><html:errors /></span>
 	<table>
 		<tr>
 			<td>

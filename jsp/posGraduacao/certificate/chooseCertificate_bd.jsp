@@ -8,7 +8,7 @@
 <h2><bean:message key="label.certificate.create" /></h2>
 <bean:define id="certificateList" name="<%= SessionConstants.CERTIFICATE_LIST %>"/>
 <br />
-<span class="error"><html:errors/></span>
+<span class="error"><!-- Error messages go here --><html:errors /></span>
    <table>
     <html:form action="/chooseCertificateInfoAction?method=choose">
        <!-- Requester Number -->

@@ -36,7 +36,7 @@
 		
 		<h2><bean:message key="message.shifts.not.available"/></h2>
 		
-		<span class="error"><html:errors/></span> 	
+		<span class="error"><!-- Error messages go here --><html:errors /></span> 	
 		<br/>
 		<br/>
 		<br/>
@@ -107,7 +107,7 @@
     	<bean:message key="link.viewAllStudentsAndGroups"/>
     	</html:link>
 		<br/>
-		<span class="error"><html:errors/></span> 	
+		<span class="error"><!-- Error messages go here --><html:errors /></span> 	
 		<br/>
 		<br/>
 	<logic:greaterThan name="numberOfStudentsOutsideAttendsSet" value="0">
@@ -170,7 +170,7 @@
     	<bean:message key="link.viewAllStudentsAndGroups"/>
     	</html:link>
     	<br/>
-		 <span class="error"><html:errors/></span> 	
+		 <span class="error"><!-- Error messages go here --><html:errors /></span> 	
 		<br/>
 		<br/>
 		<logic:greaterThan name="numberOfStudentsOutsideAttendsSet" value="0">

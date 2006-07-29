@@ -6,7 +6,7 @@
 
 <h2><bean:message key="message.credits.top"/></h2>
 
-<p><span class="error"><html:errors/></span></p>
+<p><span class="error"><!-- Error messages go here --><html:errors /></span></p>
 
 <html:form action="/creditsReport">
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method"/>

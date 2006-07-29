@@ -16,7 +16,7 @@
 </table>
 <h2><bean:message key="title.manage.aulas"/></h2>
 <br />
-<span class="error"><html:errors/></span>
+<span class="error"><!-- Error messages go here --><html:errors /></span>
 <br />
 <bean:message key="message.weekdays"/>
 <br />

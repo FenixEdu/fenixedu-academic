@@ -25,30 +25,30 @@
 			<h4>
 				<bean:message key="message.bibliographicReferenceTitle"/>
 			</h4>
-			<span class="error"><html:errors property="title"/></span>
+			<span class="error"><!-- Error messages go here --><html:errors property="title"/></span>
 			<html:textarea bundle="HTMLALT_RESOURCES" altKey="textarea.title" property="title" cols="56" rows="4"/>
 			<br/>
 			<h4>
 				<bean:message key="message.bibliographicReferenceAuthors"/>
 			</h4>
-			<span class="error"><html:errors property="authors"/></span>
+			<span class="error"><!-- Error messages go here --><html:errors property="authors"/></span>
 			<html:textarea bundle="HTMLALT_RESOURCES" altKey="textarea.authors" property="authors" cols="56" rows="4"/>
 			<h4>
 				<bean:message key="message.bibliographicReferenceReference"/>
 			</h4>
-			<span class="error"><html:errors property="reference"/></span>
+			<span class="error"><!-- Error messages go here --><html:errors property="reference"/></span>
 			<html:textarea bundle="HTMLALT_RESOURCES" altKey="textarea.reference" property="reference" cols="56" rows="2"/>
 			<br/>
 			<h4>
 				<bean:message key="message.bibliographicReferenceYear"/>
 			</h4>
-			<span class="error"><html:errors property="year"/></span>
+			<span class="error"><!-- Error messages go here --><html:errors property="year"/></span>
 			<html:text bundle="HTMLALT_RESOURCES" altKey="text.year" property="year"/>
 			<br/>
 			<h4>
 				<bean:message key="message.bibliographicReferenceOptional"/>
 			</h4>
-			<span class="error"><html:errors property="optional"/></span>
+			<span class="error"><!-- Error messages go here --><html:errors property="optional"/></span>
 			<html:select bundle="HTMLALT_RESOURCES" altKey="select.optional" property="optional">
 				<html:option key="option.bibliographicReference.optional" value="true"/>
 				<html:option key="option.bibliographicReference.recommended" value="false"/>

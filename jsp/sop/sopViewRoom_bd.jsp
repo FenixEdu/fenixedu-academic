@@ -6,7 +6,7 @@
 <%@ taglib uri="/WEB-INF/app.tld" prefix="app" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.TagLib.sop.v3.TimeTableType" %>
-<span class="error"><html:errors/></span>  
+<span class="error"><!-- Error messages go here --><html:errors /></span>  
 <h2><bean:message key="title.view.room"/></h2>
 <br />
 <html:form action="/viewRoom">

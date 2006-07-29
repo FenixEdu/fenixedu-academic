@@ -7,7 +7,7 @@
 <bean:define id="component" name="siteView" property="component"/>
 <bean:define id="degreeList" name="component" property="degrees"/>
 
-<span class="error"><html:errors/></span>
+<span class="error"><!-- Error messages go here --><html:errors /></span>
 <table width="100%" border="0" cellpadding="0" cellspacing="0">
           <tr>
             <td class="infoop"><bean:message key="message.public.degree.choose"/></td>

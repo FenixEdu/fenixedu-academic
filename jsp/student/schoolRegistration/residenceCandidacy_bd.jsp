@@ -9,9 +9,9 @@
 <p><strong>Página 5 de 6</strong></p>
 
  <h2 style="text-align: center;"><bean:message key="schoolRegistration.Header.residenceTitle"/></h2>
-	<p align="center"><span class="error"><html:errors property="residenceCandidate"/></span></p>	
-	<p align="center"><span class="error"><html:errors property="dislocated"/></span></p>
-	<p align="center"><span class="error"><html:errors property="observations"/></span></p>
+	<p align="center"><span class="error"><!-- Error messages go here --><html:errors property="residenceCandidate"/></span></p>	
+	<p align="center"><span class="error"><!-- Error messages go here --><html:errors property="dislocated"/></span></p>
+	<p align="center"><span class="error"><!-- Error messages go here --><html:errors property="observations"/></span></p>
 
 <div style="width:70%; margin: 0 15%;">
 <div class="infoop">

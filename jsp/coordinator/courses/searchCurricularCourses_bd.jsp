@@ -6,7 +6,7 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="dt" %>
 
-<span class="error"><html:errors /></span>
+<span class="error"><!-- Error messages go here --><html:errors /></span>
 <html:form action="/executionCoursesInformation" >
 <table border="0" cellspacing="0" cellpadding="0">
 	<tr>

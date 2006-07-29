@@ -23,7 +23,7 @@
 		<!-- <div class="infoop"><bean:message key="label.student.viewStudentsAndGroupsByShift.description" /></div> -->
 	</logic:notEmpty>		
 
-<span class="error"><html:errors/></span>
+<span class="error"><!-- Error messages go here --><html:errors /></span>
 
 	<p><strong>Agrupamento:</strong> <span class="infoop4"><bean:write name="infoSiteStudentsAndGroups" property="infoGrouping.name"/></span></p>
 
@@ -122,7 +122,7 @@
         </tbody>
 	</table>
 
-<span class="error"><html:errors/></span>
+<span class="error"><!-- Error messages go here --><html:errors /></span>
 
 	<p>
 		<html:link page="<%="/viewShiftsAndGroups.do?method=execute&amp;executionCourseCode=" + request.getParameter("executionCourseCode")+ "&amp;groupPropertiesCode=" + request.getParameter("groupPropertiesCode")%>">

@@ -29,7 +29,7 @@
     	 
       <br/>
       <br/>
-      <span class="error"><html:errors/></span>
+      <span class="error"><!-- Error messages go here --><html:errors /></span>
       <br/>
 
 	<bean:define id="action">/editGuideSituation.do?method=editGuideSituation<%= "&" %>year=<bean:write name="infoGuide" property="year"/><%= "&" %>number=<bean:write name="infoGuide" property="number"/><%= "&" %>version=<bean:write name="infoGuide" property="version"/>

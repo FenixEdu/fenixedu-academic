@@ -57,7 +57,7 @@ public class FormTag extends ContextTag {
             formHead.append("enctype=\"" + getEncoding() + "\" ");
         }
         
-        formHead.append("method=\"POST\">\n");
+        formHead.append("method=\"post\">\n");
         
         try {
             pageContext.getOut().write(formHead.toString());

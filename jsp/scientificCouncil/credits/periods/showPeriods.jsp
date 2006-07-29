@@ -7,9 +7,9 @@
 
 <logic:present role="SCIENTIFIC_COUNCIL">
 
-	<span class="error"><html:errors/></span>
+	<span class="error"><!-- Error messages go here --><html:errors /></span>
 	<logic:messagesPresent>
-		<span class="error"><html:errors/></span>
+		<span class="error"><!-- Error messages go here --><html:errors /></span>
 	</logic:messagesPresent>
 
 	<p><h2><bean:message key="link.define.periods"/></h2></p>

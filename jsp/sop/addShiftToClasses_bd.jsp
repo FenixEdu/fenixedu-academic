@@ -13,7 +13,7 @@
         </table>
         <br/>
 
-<span class="error"><html:errors/></span>
+<span class="error"><!-- Error messages go here --><html:errors /></span>
 <logic:present name="siteView">
 <bean:define id="component" name="siteView" property="component"/>
 <br/>

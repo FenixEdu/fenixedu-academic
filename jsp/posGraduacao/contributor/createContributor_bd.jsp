@@ -5,7 +5,7 @@
 
 <title><bean:message key="title.masterDegree.administrativeOffice.createContributor" /></title>
 
-<span class="error"><html:errors/></span>
+<span class="error"><!-- Error messages go here --><html:errors /></span>
 
 <h2><bean:message key="label.action.contributors.create" /></h2>
 

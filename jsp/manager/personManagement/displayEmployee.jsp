@@ -15,5 +15,5 @@
           </tr>
           </html:link>
 		</table>
-    <hr>
+    <hr/>
 </logic:present>

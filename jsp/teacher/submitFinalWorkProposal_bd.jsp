@@ -40,7 +40,7 @@
 
 	<b><bean:message key="label.teacher.finalWork.title"/>:</b>
 	<br/><html:text bundle="HTMLALT_RESOURCES" altKey="text.title" property="title" size="85"/>
-	<hr><br/>
+	<hr/><br/>
 
 	<b><bean:message key="label.teacher.finalWork.responsable"/>:</b>
 	<table width="100%">
@@ -181,7 +181,7 @@
 	<b><bean:message key="label.teacher.finalWork.credits"/>:</b>
 	<html:text bundle="HTMLALT_RESOURCES" altKey="text.responsibleCreditsPercentage" property="responsibleCreditsPercentage" size="3" maxlength="3"/>% /
 	<html:text bundle="HTMLALT_RESOURCES" altKey="text.coResponsibleCreditsPercentage" property="coResponsibleCreditsPercentage" size="3" maxlength="3"/>%
-	<br/><hr>
+	<br/><hr/>
 
 	<b><bean:message key="label.teacher.finalWork.framing"/>:</b>
 	<br/><html:textarea bundle="HTMLALT_RESOURCES" altKey="textarea.framing" property="framing" rows="4" cols="80"/>
@@ -200,7 +200,7 @@
 	<br/><br/>
 	<b><bean:message key="label.teacher.finalWork.url"/>:</b>
 	<br/><html:text bundle="HTMLALT_RESOURCES" altKey="text.url" property="url" size="80"/>
-	<br/><hr>
+	<br/><hr/>
 	<br/><b><bean:message key="label.teacher.finalWork.priority.info"/></b><br/><br/>
 
 	<table>
@@ -218,7 +218,7 @@
 		</logic:iterate>
 	</table>
 
-	<br/><hr><br/>
+	<br/><hr/><br/>
 	<table cellspacing="2">
 		<tr>
 			<th><bean:message key="label.teacher.finalWork.numberOfGroupElements"/>:</th>
@@ -239,7 +239,7 @@
 			<td><html:radio bundle="HTMLALT_RESOURCES" altKey="radio.degreeType" value="<%= net.sourceforge.fenixedu.domain.degree.DegreeType.MASTER_DEGREE.toString() %>" property="degreeType"/><bean:message bundle="ENUMERATION_RESOURCES" key="<%= net.sourceforge.fenixedu.domain.degree.DegreeType.MASTER_DEGREE.toString() %>"/></td>
 		</tr>
 	</table>
-	<br/><hr><br/>
+	<br/><hr/><br/>
 	<b><bean:message key="label.teacher.finalWork.observations"/>:</b>
 	<br/><html:textarea bundle="HTMLALT_RESOURCES" altKey="textarea.observations" property="observations" rows="4" cols="80"/><br/><br/>
 	<b><bean:message key="label.teacher.finalWork.location"/>:</b>

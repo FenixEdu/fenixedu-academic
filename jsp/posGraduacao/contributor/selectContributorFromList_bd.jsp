@@ -14,7 +14,7 @@
   <body>
    
    
-    <span class="error"><html:errors/></span>
+    <span class="error"><!-- Error messages go here --><html:errors /></span>
     <bean:define id="contributorList" name="<%= SessionConstants.CONTRIBUTOR_LIST %>" scope="session" />
     <bean:define id="title" name="<%= SessionConstants.CONTRIBUTOR_ACTION %>" scope="session" />
         

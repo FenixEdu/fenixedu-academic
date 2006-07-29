@@ -11,7 +11,7 @@
 		</tr>
 	</table>
         <html:errors/>
-        <html:form action="/chooseRoomsForm" method="GET">
+        <html:form action="/chooseRoomsForm" method="get">
             <table border="0" cellpadding="0" cellspacing="0">
                 <tr>
                     <td class="tall-td">

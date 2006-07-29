@@ -20,7 +20,7 @@
 <bean:define id="shifts" name="bodyComponent" property="infoShifts" />
 <bean:define id="shiftSelected" name="bodyComponent" property="infoSummary.infoShift" />
 
-<span class="error"><html:errors/></span>
+<span class="error"><!-- Error messages go here --><html:errors /></span>
 
 <h2><bean:message key="title.summary.edit" /></h2>
 

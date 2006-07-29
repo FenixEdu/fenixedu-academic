@@ -16,7 +16,7 @@
 	</tr>
 	<tr>
 		<h3><bean:message bundle="MANAGER_RESOURCES" key="label.manager.teachers.modification"/></h3>
-		<span class="error"><html:errors/></span>
+		<span class="error"><!-- Error messages go here --><html:errors /></span>
 	</tr>
 </table>
 

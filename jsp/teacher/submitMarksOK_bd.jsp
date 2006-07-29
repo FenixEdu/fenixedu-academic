@@ -13,7 +13,7 @@
 
 <logic:messagesPresent>
 	<p><h2><bean:message key="label.errors.notSubmited"/><br/><br/>
-	<span class="error"><html:errors/></span>
+	<span class="error"><!-- Error messages go here --><html:errors /></span>
 </logic:messagesPresent>
 
 

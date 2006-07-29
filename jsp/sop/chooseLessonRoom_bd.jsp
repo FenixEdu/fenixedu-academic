@@ -13,7 +13,7 @@
 </table>
 <br />
 <h2><bean:message key="title.criarAula"/></h2>
-<span class="error"><html:errors/></span>
+<span class="error"><!-- Error messages go here --><html:errors /></span>
 <bean:message key="message.createLesson"/>
 	<html:form action="/criarAulaForm" focus="nomeSala" >
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="2"/>

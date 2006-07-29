@@ -20,7 +20,7 @@
 <bean:define id="shifts" name="bodyComponent" property="infoShifts" />
 <bean:define id="shiftSelected" name="bodyComponent" property="infoSummary.infoShift" />
 
-<span class="error"><html:errors/>
+<span class="error"><!-- Error messages go here --><html:errors />
 	<logic:present name="errors">
 		<bean:write name="errors" filter="true" />
 	</logic:present	>

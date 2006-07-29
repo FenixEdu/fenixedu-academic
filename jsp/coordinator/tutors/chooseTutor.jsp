@@ -3,7 +3,7 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <h2><bean:message key="label.tutor"/></h2>
-<span class="error"><html:errors/></span><br/>
+<span class="error"><!-- Error messages go here --><html:errors /></span><br/>
 
 <html:form action="/tutorManagement" focus="tutorNumber">
 

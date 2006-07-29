@@ -5,7 +5,7 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ page import="net.sourceforge.fenixedu.domain.FileItemPermittedGroupType" %>
 
-<span class="error"><html:errors/></span>
+<span class="error"><!-- Error messages go here --><html:errors /></span>
   
 <h3><bean:message key="label.teacher.siteAdministration.editItemFilePermissions.editPermissions"/></h3>
 

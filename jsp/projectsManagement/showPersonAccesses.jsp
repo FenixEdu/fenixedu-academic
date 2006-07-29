@@ -158,10 +158,10 @@ function getIndex(input){
 						</tr>
 					</logic:present>
 					<tr>
-						<td><span class="error"><html:errors property="beginDay" /><html:errors property="beginMonth" /><html:errors property="beginYear" /></span></td>
+						<td><span class="error"><!-- Error messages go here --><html:errors property="beginDay" /><html:errors property="beginMonth" /><html:errors property="beginYear" /></span></td>
 					</tr>
 					<tr>
-						<td><span class="error"><html:errors property="endDay" /><html:errors property="endMonth" /><html:errors property="endYear" /></span></td>
+						<td><span class="error"><!-- Error messages go here --><html:errors property="endDay" /><html:errors property="endMonth" /><html:errors property="endYear" /></span></td>
 					</tr>
 				</table>
 				<table border="0" cellpadding="0" cellspacing="0">

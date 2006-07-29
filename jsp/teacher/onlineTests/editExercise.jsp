@@ -106,12 +106,12 @@ function back(){
 			<tr>
 				<td><b><bean:message key="label.test.learningTime" /></b><bean:message key="message.hourFormat" />:</td>
 				<td><html:text bundle="HTMLALT_RESOURCES" altKey="text.learningTimeFormatted" size="8" name="infoMetadata" property="learningTimeFormatted" /></td>
-				<td><span class="error"><html:errors property="learningTimeFormatted" /></span></td>
+				<td><span class="error"><!-- Error messages go here --><html:errors property="learningTimeFormatted" /></span></td>
 			</tr>
 			<tr>
 				<td><b><bean:message key="label.exam.enrollment.year" />:</b></td>
 				<td><html:text bundle="HTMLALT_RESOURCES" altKey="text.level" size="2" name="infoMetadata" property="level" /></td>
-				<td><span class="error"><html:errors property="level" /></span></td>
+				<td><span class="error"><!-- Error messages go here --><html:errors property="level" /></span></td>
 			</tr>
 		</table>
 		<br />

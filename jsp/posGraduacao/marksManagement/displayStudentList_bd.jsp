@@ -26,7 +26,7 @@
 		</logic:iterate>
 	</table>
 	<br />
-	<span class="error"><html:errors/></span>
+	<span class="error"><!-- Error messages go here --><html:errors /></span>
 	<bean:size id="studentListSize" name="studentList"/>
     <h3><bean:write name="studentListSize"/>&nbsp;<bean:message key="label.masterDegree.administrativeOffice.studentsFound"/></h3>        
     <logic:notEqual name="studentListSize" value="0">       

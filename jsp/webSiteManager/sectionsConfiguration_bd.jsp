@@ -6,7 +6,7 @@
 
 <bean:define id="sectionsList" name="infoWebSite" property="sections" />
 <h2><bean:message key="label.sections.configuration"/></h2>
-<span class="error"><html:errors/></span>
+<span class="error"><!-- Error messages go here --><html:errors /></span>
 
 <html:form action="/sectionsConfiguration">
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="configureSections"/>

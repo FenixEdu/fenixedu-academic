@@ -9,7 +9,7 @@
 <bean:message key="message.cientificPublications" />
 </h3>
 <logic:messagesPresent>
-		<span class="error"><html:errors/></span>
+		<span class="error"><!-- Error messages go here --><html:errors /></span>
 </logic:messagesPresent>
 <p class="infoop"><span class="emphasis-box">1</span>
 <bean:message key="message.publications.management" /></p>

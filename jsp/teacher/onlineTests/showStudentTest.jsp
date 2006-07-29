@@ -10,7 +10,7 @@
 <bean:define id="pageType" value='<%=request.getParameter("pageType")%>'/>
 <bean:define id="correctionType" value='<%=request.getParameter("correctionType")%>'/>
 
-<span class="error"><html:errors/></span>
+<span class="error"><!-- Error messages go here --><html:errors /></span>
 <br/>
 <br/>
 <table width="100%" border="0" cellpadding="0" cellspacing="10">
@@ -23,7 +23,7 @@
 			<bean:define id="studentId" name="student" property="idInternal"/>
 		</logic:equal>
 		
-		<tr><td><hr></td></tr>
+		<tr><td><hr/></td></tr>
 		<bean:define id="question" name="testQuestion" property="question" type="net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoQuestion"/>
 		<bean:define id="distributedTest" name="testQuestion" property="distributedTest" type="net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoDistributedTest"/>
 		<bean:define id="questionCode" name="question" property="idInternal"/>
@@ -446,7 +446,7 @@
 		}%>
 		<tr><td>
 	</logic:iterate>
-	</td></tr><tr><td><hr></td></tr>
+	</td></tr><tr><td><hr/></td></tr>
 </table><br/><br/>
 </logic:notEmpty>
 </logic:present>

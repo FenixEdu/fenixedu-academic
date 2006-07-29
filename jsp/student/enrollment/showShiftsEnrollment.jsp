@@ -6,7 +6,7 @@
 
 <h2><bean:message key="message.student.shift.enrollment" /></h2>
 
-<span class="error"><html:errors/></span>
+<span class="error"><!-- Error messages go here --><html:errors /></span>
 <logic:notPresent name="infoShiftEnrollment" >
 	<span class="error"><bean:message key="error.notAuthorized.ShiftEnrollment" /></span>
 </logic:notPresent>

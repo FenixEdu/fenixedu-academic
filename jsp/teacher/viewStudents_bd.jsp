@@ -20,7 +20,7 @@
 <bean:define id="commonComponent" name="siteView" property="commonComponent" type="net.sourceforge.fenixedu.dataTransferObject.InfoSiteCommon"/>
 <bean:define id="infosGroups" name="infosGroups" type="java.util.List"/>
 <bean:define id="projects" name="projects" type="java.util.List"/>
-    <span class="error"><html:errors/></span>
+    <span class="error"><!-- Error messages go here --><html:errors /></span>
 	<bean:size id="studentsListSize" name="studentsComponent" property="students"/>
 
 <table width="100%" cellpadding="0" cellspacing="0">

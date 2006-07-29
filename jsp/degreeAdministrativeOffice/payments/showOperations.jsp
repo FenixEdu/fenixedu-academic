@@ -8,7 +8,7 @@
 
 <h2><bean:message key="label.payments.operations" /></h2>
 
-<hr><br/>
+<hr/><br/>
 
 <strong><bean:message
 	key="label.payments.person" />:</strong>

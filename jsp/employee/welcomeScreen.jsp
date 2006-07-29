@@ -4,7 +4,7 @@
 
 <h2>Funcionário</h2>
 
-<p><span class="error"><html:errors/></span></p>
+<p><span class="error"><!-- Error messages go here --><html:errors /></span></p>
 
 <p class="mvert05">Bem vindo área de Funcionário.</p>
 <p class="mvert05">Aqui poderá consultar a sua informação sobre a Assiduidade.</p>

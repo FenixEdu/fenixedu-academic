@@ -14,7 +14,7 @@
 <h4><bean:message key="message.credits.masterDegree.curricularPlan"/>:  <bean:write name="executionDegree" property="degreeCurricularPlan.name"/><br/>
 <bean:message key="message.credits.masterDegree.executionYear"/>: <bean:write name="executionDegree" property="executionYear.year"/></h4>
 
-<span class="error"><html:errors/></span>
+<span class="error"><!-- Error messages go here --><html:errors /></span>
 
 <html:form action="/masterDegreeCreditsManagement">
 

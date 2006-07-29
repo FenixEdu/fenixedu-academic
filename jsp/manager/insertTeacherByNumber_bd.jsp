@@ -16,7 +16,7 @@
       		<h3><bean:message bundle="MANAGER_RESOURCES" key="message.insert.professorShip" /></h3>
 	</tr>
 </table>
-<span class="error"><html:errors/></span>
+<span class="error"><!-- Error messages go here --><html:errors /></span>
 
 <html:form action="/insertProfessorShipByNumber" method="get">
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="insert" /> 

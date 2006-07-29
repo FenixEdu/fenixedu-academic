@@ -36,7 +36,7 @@
 	}		
 </style>
 
-<span class="error"><html:errors/></span>
+<span class="error"><!-- Error messages go here --><html:errors /></span>
 <html:messages id="message" message="true">
 	<span class="error">
 		<bean:write name="message"/>

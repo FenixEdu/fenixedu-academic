@@ -78,9 +78,9 @@ width: 20em;
           <!-- Data de Emissao do Documento de Identificacao -->
           <tr>
           	<td></td>
-          	<td><span class="error"><html:errors property="dayOfEmissionDateOfDocumentId"/></span>
-				<span class="error"><html:errors property="monthOfEmissionDateOfDocumentId"/></span>
-				<span class="error"><html:errors property="yearOfEmissionDateOfDocumentId"/></span>
+          	<td><span class="error"><!-- Error messages go here --><html:errors property="dayOfEmissionDateOfDocumentId"/></span>
+				<span class="error"><!-- Error messages go here --><html:errors property="monthOfEmissionDateOfDocumentId"/></span>
+				<span class="error"><!-- Error messages go here --><html:errors property="yearOfEmissionDateOfDocumentId"/></span>
 			</td>
 		  </tr>
           <tr>
@@ -94,9 +94,9 @@ width: 20em;
           <!-- Data de Validade do Documento de Identificacao -->
           <tr>
           	<td></td>
-          	<td><span class="error"><html:errors property="dayOfExpirationDateOfDocumentId"/></span>
-				<span class="error"><html:errors property="monthOfExpirationDateOfDocumentId"/></span>
-				<span class="error"><html:errors property="yearOfExpirationDateOfDocumentId"/></span>
+          	<td><span class="error"><!-- Error messages go here --><html:errors property="dayOfExpirationDateOfDocumentId"/></span>
+				<span class="error"><!-- Error messages go here --><html:errors property="monthOfExpirationDateOfDocumentId"/></span>
+				<span class="error"><!-- Error messages go here --><html:errors property="yearOfExpirationDateOfDocumentId"/></span>
 			</td>
 		  </tr>
           <tr>
@@ -110,7 +110,7 @@ width: 20em;
           <!-- Numero de Contribuinte -->
           <tr>
           	<td></td>
-          	<td><span class="error"><html:errors property="contributorNumber"/></span></td>
+          	<td><span class="error"><!-- Error messages go here --><html:errors property="contributorNumber"/></span></td>
           </tr>
           <tr>
             <td class="leftcell"><bean:message key="label.person.contributorNumber" bundle="DEFAULT" /></td>
@@ -124,7 +124,7 @@ width: 20em;
           <!-- Estado Civil -->
           <tr>
           	<td></td>
-          	<td><span class="error"><html:errors property="maritalStatus"/></span><td>
+          	<td><span class="error"><!-- Error messages go here --><html:errors property="maritalStatus"/></span><td>
           </tr>
           <tr>
             <td class="leftcell"><bean:message key="label.person.maritalStatus" bundle="DEFAULT" /></td>
@@ -166,7 +166,7 @@ width: 20em;
           <!-- Freguesia de Naturalidade -->
           <tr>
           	<td></td>
-          	<td><span class="error"><html:errors property="parishOfBirth"/></span></td>
+          	<td><span class="error"><!-- Error messages go here --><html:errors property="parishOfBirth"/></span></td>
 	      </tr>
           <tr>
             <td class="leftcell"><bean:message key="label.person.birthPlaceParish" bundle="DEFAULT" /> <span class="redtxt">*</span></td>
@@ -175,7 +175,7 @@ width: 20em;
           <!-- Concelho de Naturalidade -->
           <tr>
           	<td></td>
-          	<td><span class="error"><html:errors property="districtSubvisionOfBirth"/></span></td>
+          	<td><span class="error"><!-- Error messages go here --><html:errors property="districtSubvisionOfBirth"/></span></td>
 		  </tr>
           <tr>
             <td class="leftcell"><bean:message key="label.person.birthPlaceMunicipality" bundle="DEFAULT" /> <span class="redtxt">*</span></td>
@@ -184,7 +184,7 @@ width: 20em;
            <!-- Distrito de Naturalidade -->
           <tr>
           	<td></td>
-          	<td><span class="error"><html:errors property="districtOfBirth"/></span></td> 
+          	<td><span class="error"><!-- Error messages go here --><html:errors property="districtOfBirth"/></span></td> 
           </tr>
           <tr>
             <td class="leftcell"><bean:message key="label.person.birthPlaceDistrict" bundle="DEFAULT" /> <span class="redtxt">*</span></td>
@@ -193,7 +193,7 @@ width: 20em;
           <!-- Nome do Pai -->
           <tr>
           	<td></td>
-          	<td><span class="error"><html:errors property="nameOfFather"/></span></td>
+          	<td><span class="error"><!-- Error messages go here --><html:errors property="nameOfFather"/></span></td>
           </tr>
           <tr>
             <td class="leftcell"><bean:message key="label.person.fatherName" bundle="DEFAULT" /> <span class="redtxt">*</span></td>
@@ -202,7 +202,7 @@ width: 20em;
           <!-- Nome da Mae -->
           <tr>
           	<td></td>
-          	<td><span class="error"><html:errors property="nameOfMother" /></td>
+          	<td><span class="error"><!-- Error messages go here --><html:errors property="nameOfMother" /></td>
 		  </tr>		
           <tr>
             <td class="leftcell"><bean:message key="label.person.motherName" bundle="DEFAULT" /> <span class="redtxt">*</span></td>
@@ -222,7 +222,7 @@ width: 20em;
           <!-- Morada -->
           <tr>
           	<td></td
-          	<td><span class="error"><html:errors property="address"/></span></td>
+          	<td><span class="error"><!-- Error messages go here --><html:errors property="address"/></span></td>
           </tr>
           <tr>
             <td class="leftcell"><bean:message key="label.person.address" bundle="DEFAULT" /> <span class="redtxt">*</span></td>
@@ -248,7 +248,7 @@ width: 20em;
           <!-- Area do Codigo Postal -->
           <tr>
           	<td></td>
-          	<td><span class="error"><html:errors property="areaOfAreaCode"/></span></td>
+          	<td><span class="error"><!-- Error messages go here --><html:errors property="areaOfAreaCode"/></span></td>
           </tr>
           <tr>
             <td class="leftcell"><bean:message key="label.person.areaOfPostCode" bundle="DEFAULT" />  <span class="redtxt">*</span></td>
@@ -257,7 +257,7 @@ width: 20em;
           <!-- Localidade de Residencia -->
           <tr>
           	<td></td>
-          	<td><span class="error"><html:errors property="area"/></span></td>
+          	<td><span class="error"><!-- Error messages go here --><html:errors property="area"/></span></td>
           </tr>
           <tr>
             <td class="leftcell"><bean:message key="label.person.place" bundle="DEFAULT" /> <span class="redtxt">*</span></td>
@@ -266,7 +266,7 @@ width: 20em;
           <!-- Freguesia de Residencia -->
           <tr>
           	<td></td>
-          	<td><span class="error"><html:errors property="parishOfResidence"/></span></td>
+          	<td><span class="error"><!-- Error messages go here --><html:errors property="parishOfResidence"/></span></td>
           </tr>
           <tr>
             <td class="leftcell"><bean:message key="label.person.addressParish" bundle="DEFAULT" /> <span class="redtxt">*</span></td>
@@ -275,7 +275,7 @@ width: 20em;
           <!-- Concelho de Residencia -->
           <tr>
           	<td></td>
-          	<td><span class="error"><html:errors property="districtSubdivisionOfResidence"/></span></td>
+          	<td><span class="error"><!-- Error messages go here --><html:errors property="districtSubdivisionOfResidence"/></span></td>
           </tr>
           <tr>
             <td class="leftcell"><bean:message key="label.person.addressMunicipality" bundle="DEFAULT" /> <span class="redtxt">*</span></td>
@@ -284,7 +284,7 @@ width: 20em;
           <!-- Distrito de Residencia -->
           <tr>
           	<td></td>
-          	<td><span class="error"><html:errors property="districtOfResidence"/></span></td>
+          	<td><span class="error"><!-- Error messages go here --><html:errors property="districtOfResidence"/></span></td>
           </tr>
           <tr>
             <td class="leftcell"><bean:message key="label.person.addressDistrict" bundle="DEFAULT" /> <span class="redtxt">*</span></td>
@@ -304,7 +304,7 @@ width: 20em;
           <!-- Telefone -->
           <tr>
           	<td></td>
-          	<td><span class="error"><html:errors property="phone"/></span><td>
+          	<td><span class="error"><!-- Error messages go here --><html:errors property="phone"/></span><td>
           </tr>
           <tr>
             <td class="leftcell"><bean:message key="label.person.telephone" bundle="DEFAULT" /> <span class="redtxt">*</span></td>
@@ -313,7 +313,7 @@ width: 20em;
           <!-- Telemovel -->
           <tr>
           	<td></td>
-          	<td><span class="error"><html:errors property="mobile"/></span><td>
+          	<td><span class="error"><!-- Error messages go here --><html:errors property="mobile"/></span><td>
           </tr>
           <tr>
             <td class="leftcell"><bean:message key="label.person.mobilePhone" bundle="DEFAULT" /></td>
@@ -322,7 +322,7 @@ width: 20em;
           <!-- E-Mail -->
           <tr>
           	<td></td>
-          	<td><span class="error"><html:errors property="email"/></span></td>
+          	<td><span class="error"><!-- Error messages go here --><html:errors property="email"/></span></td>
           </tr>
           <tr>
             <td class="leftcell"><bean:message key="label.person.email" bundle="DEFAULT" /></td>

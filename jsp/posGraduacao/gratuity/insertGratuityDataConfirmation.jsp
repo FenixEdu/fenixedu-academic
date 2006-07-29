@@ -5,7 +5,7 @@
 <%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="dt"%>
 <%@ page import="java.lang.Boolean"%>
 <h2><bean:message key="link.masterDegree.gratuity.insert"/></h2>
-<span class="error"><html:errors/></span>
+<span class="error"><!-- Error messages go here --><html:errors /></span>
 <p />
 <logic:present name="infoGratuityValues">
 	<table width="100%" border="0" cellpadding="0" cellspacing="0">

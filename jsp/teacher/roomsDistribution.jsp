@@ -11,7 +11,7 @@
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.objectCode" property="objectCode"/>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.evaluationCode" property="evaluationCode"/>
 	<logic:present name="<%= Globals.ERROR_KEY %>">
-		<span class="error"><html:errors/></span><br/><br/>
+		<span class="error"><!-- Error messages go here --><html:errors /></span><br/><br/>
 	</logic:present>
 	<table width="100%" cellpadding="0" cellspacing="0">
 		<tr>

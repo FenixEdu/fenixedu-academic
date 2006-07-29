@@ -13,7 +13,7 @@
 <h2 align="center"><bean:message key="link.masterDegree.administrativeOffice.gratuity.gratuitySituationDetails"/></h2>
 
 <center>
-	<span class="error"><html:errors/></span>
+	<span class="error"><!-- Error messages go here --><html:errors /></span>
 	
 	<bean:define id="student" name="<%= SessionConstants.STUDENT %>" scope="request"/>
 	<bean:define id="gratuitySituation" name="<%= SessionConstants.GRATUITY_SITUATION %>" scope="request"/>

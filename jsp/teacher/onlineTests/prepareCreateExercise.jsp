@@ -89,7 +89,7 @@ function remove(i){
 <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.conditionId" property="conditionId"/>
 <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.evaluationQuestion" property="evaluationQuestion"/>
 <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.exerciseCode" property="exerciseCode"/>
-<span class="error"><html:errors/></span>
+<span class="error"><!-- Error messages go here --><html:errors /></span>
 
 
 <logic:empty name="exerciseCreationForm" property="exerciseCode">

@@ -22,7 +22,7 @@ dia <bean:write name="<%=SessionConstants.EXAM_DATEANDTIME_STR%>"/>
  <br/>
 
 <html:form action="/associateRoomToExam">
-	<span class="error"><html:errors /></span>
+	<span class="error"><!-- Error messages go here --><html:errors /></span>
 	Ordenar por: 
 	<html:radio bundle="HTMLALT_RESOURCES" altKey="radio.sortBy" property="sortBy" value="capacity" onclick="this.form.method.value='prepare';this.form.submit();"/> Capacidade
 	<html:radio bundle="HTMLALT_RESOURCES" altKey="radio.sortBy" property="sortBy" value="building" onclick="this.form.method.value='prepare';this.form.submit();"/> Edificio

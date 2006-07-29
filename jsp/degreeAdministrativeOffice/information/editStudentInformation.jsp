@@ -9,7 +9,7 @@
 <%@ page import="net.sourceforge.fenixedu.util.State" %>
 <%@ page import="net.sourceforge.fenixedu.util.Data" %>
 <%@ page import="java.util.Date" %>
-<span class="error"><html:errors/></span>
+<span class="error"><!-- Error messages go here --><html:errors /></span>
 
 
 

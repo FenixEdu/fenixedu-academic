@@ -9,7 +9,7 @@
 <br />
 <bean:define id="marksListComponent" name="siteView" property="component" type="net.sourceforge.fenixedu.dataTransferObject.InfoSiteMarks"/>
 <bean:define id="infoEvaluation" name="marksListComponent" property="infoEvaluation" type="net.sourceforge.fenixedu.dataTransferObject.InfoEvaluation"/>
-<span class="error"><html:errors/></span>
+<span class="error"><!-- Error messages go here --><html:errors /></span>
 <table width="90%" align="center">
 	<tr>
 		<td colspan="3" align="center">

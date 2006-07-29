@@ -12,7 +12,7 @@
 
 	<h2><bean:message key="label.payments.currentEvents" /></h2>
 	
-	<hr><br/>
+	<hr/><br/>
 	
 	<logic:messagesPresent message="true">
 		<ul>

@@ -8,6 +8,6 @@
 	<body>
 		<h1><bean:message key="error.not.found"/></h1>
 		<br />
-		<span class="error"><html:errors /></span>
+		<span class="error"><!-- Error messages go here --><html:errors /></span>
 	</body>
 </html>

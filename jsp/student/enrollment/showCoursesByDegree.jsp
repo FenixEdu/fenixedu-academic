@@ -9,7 +9,7 @@
 
 <div class="center" >
 	<h2><bean:message key="title.student.shift.enrollment" /></h2>
-	<span class="error"><html:errors/></span>
+	<span class="error"><!-- Error messages go here --><html:errors /></span>
 
 	<p class="left">Aqui pode, <strong>a tï¿?tulo condicional</strong>, escolher disciplinas em que não se encontra inscrito curricularmente  mas nas quais pretende efectuar reserva de turma/turnos. Por exemplo, sobre as seguintes condiï¿?ï¿?es:</p>
 	

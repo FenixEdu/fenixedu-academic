@@ -5,7 +5,7 @@
 
 <h2><bean:message key="title.student.curriculum"/></h2>
 
-<span class="error"><html:errors/></span>
+<span class="error"><!-- Error messages go here --><html:errors /></span>
 
 <html:form action="/viewCurriculum" focus="studentNumber">
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="getStudentCP"/>

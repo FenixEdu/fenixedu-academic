@@ -9,7 +9,7 @@
 
 <center>
 	<h2><bean:message key="title.masterDegree.administrativeOffice.guide.reimbursementGuide.createReimbursementGuide"/></h2>
-	<span class="error"><html:errors/></span>
+	<span class="error"><!-- Error messages go here --><html:errors /></span>
 </center>
 
 <bean:define id="guide" name="<%= SessionConstants.GUIDE %>" scope="request"/>

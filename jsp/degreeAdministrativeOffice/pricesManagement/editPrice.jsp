@@ -9,7 +9,7 @@
 <h2><bean:message
 	key="label.pricesManagement.edit" /></h2>
 
-<hr>
+<hr/>
 <br />
 
 <logic:messagesPresent message="true">

@@ -7,7 +7,7 @@
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
 <%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlanWithDegree"%>
 
-<span class="error"><html:errors/></span>
+<span class="error"><!-- Error messages go here --><html:errors /></span>
 
 <bean:define id="coordinatedInfoDegreeCurricularPlans" name="<%= SessionConstants.MASTER_DEGREE_LIST %>" scope="session" />
 <bean:define id="link">/chooseDegree.do?degreeCurricularPlanID=</bean:define>

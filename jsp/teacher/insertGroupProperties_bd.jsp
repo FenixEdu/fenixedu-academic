@@ -18,7 +18,7 @@
 	</tr>
 </table>
 <br/>
-<span class="error"><html:errors/></span>
+<span class="error"><!-- Error messages go here --><html:errors /></span>
 
 <html:form action="/createGroupProperties">
 <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
@@ -54,7 +54,7 @@
 				<html:text bundle="HTMLALT_RESOURCES" altKey="text.enrolmentEndHour" size="5" property="enrolmentEndHour"/>
 				<i>(dd/mm/aaaa <bean:message key="label.at" /> hh:mm)</i><br />	
 			</td>		
-			<%--<td><span class="error"><html:errors property="enrolmentEndDay"/></span></td>--%>
+			<%--<td><span class="error"><!-- Error messages go here --><html:errors property="enrolmentEndDay"/></span></td>--%>
 		</tr>
     
     	<tr>

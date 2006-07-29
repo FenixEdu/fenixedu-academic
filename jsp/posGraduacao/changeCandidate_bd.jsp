@@ -19,7 +19,7 @@
    <table>
  		<bean:define id="infoCandidate" name="<%= SessionConstants.MASTER_DEGREE_CANDIDATE %>" scope="request"/>
    	<bean:define id="personalInfo" name="infoCandidate" property="infoPerson" />
-    	<span class="error"><html:errors/></span>
+    	<span class="error"><!-- Error messages go here --><html:errors /></span>
 <h2><bean:message key="label.person.title.changePersonalInfo" /></h2>
        	<!-- Dados Pessoais -->
 <table width="100%" cellspacing="0">    

@@ -4,7 +4,7 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <h2><bean:message bundle="MANAGER_RESOURCES" key="label.manager.mergePersons" /></h2>
 <br />
-<span class="error"><html:errors/></span>
+<span class="error"><!-- Error messages go here --><html:errors /></span>
 
 <bean:define id="linkLeft">
 	/mergePersons.do?method=mergeProperty&person2ID=<bean:write name="person2ID" />&person1ID=<bean:write name="person1ID" />&source=2&slotName=

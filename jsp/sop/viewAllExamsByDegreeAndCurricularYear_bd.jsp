@@ -28,7 +28,7 @@
 		</table>
 	    <br />
 	    <br />
-	    <span class="error"><html:errors/></span>
+	    <span class="error"><!-- Error messages go here --><html:errors /></span>
 		<logic:notPresent name="infoViewAllExams" property="infoExecutionCourseAndExamsList">
 			<table cellspacing="0">
 				<tr align="center">

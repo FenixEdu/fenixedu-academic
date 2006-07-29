@@ -9,7 +9,7 @@
 <script language="JavaScript" type="text/javascript" src="<%= request.getContextPath() %>/javaScript/editor/richtext.js"></script>
 <script language="JavaScript" type="text/javascript" src="<%= request.getContextPath() %>/javaScript/editor/htmleditor.js"></script>
 
-<span class="error"><html:errors/>
+<span class="error"><!-- Error messages go here --><html:errors />
 	<logic:present name="errors">
 		<bean:write name="errors" filter="true" />
 	</logic:present	>
@@ -35,7 +35,7 @@
 			<bean:message key="message.itemName"/>
 		</td>
 		<td>
-			<html:text bundle="HTMLALT_RESOURCES" altKey="text.name" property="name" /><span class="error"><html:errors property="name"/></span>
+			<html:text bundle="HTMLALT_RESOURCES" altKey="text.name" property="name" /><span class="error"><!-- Error messages go here --><html:errors property="name"/></span>
 		</td>
 	</tr>
 	<tr>
@@ -48,7 +48,7 @@
 				<html:options collection="itemsList" labelProperty="name" property="itemOrder" />
 			
 			</html:select>
-			<span class="error"><html:errors property="itemOrder"/></span>
+			<span class="error"><!-- Error messages go here --><html:errors property="itemOrder"/></span>
 		</td>
 	</tr>
 	<tr>
@@ -60,7 +60,7 @@
 				<html:option key="label.no" value="false"></html:option>
 				<html:option key="label.yes" value="true"></html:option>
 			</html:select>
-			<span class="error"><html:errors property="urgent"/></span>
+			<span class="error"><!-- Error messages go here --><html:errors property="urgent"/></span>
 		</td>
 	</tr>
 	<tr>
@@ -113,7 +113,7 @@
 			<logic:notPresent name="verEditor">	
 				<html:textarea bundle="HTMLALT_RESOURCES" altKey="textarea.information" rows="20" cols="80" property="information"/>
 			</logic:notPresent>
-			<span class="error"><html:errors property="information"/></span>
+			<span class="error"><!-- Error messages go here --><html:errors property="information"/></span>
 		</td>
 	</tr>
 </table>

@@ -8,7 +8,7 @@
 
 <h2><bean:message key="label.masterDegree.administrativeOffice.payments.operations" /></h2>
 
-<hr><br/>
+<hr/><br/>
 
 <strong><bean:message
 	key="label.masterDegree.administrativeOffice.payments.person" />:</strong>

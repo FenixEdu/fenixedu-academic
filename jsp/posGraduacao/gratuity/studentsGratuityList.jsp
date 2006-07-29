@@ -14,7 +14,7 @@
 </logic:iterate>	
 	
 <h2><bean:message key="link.masterDegree.administrativeOffice.gratuity.listStudents"/></h2>
-<span class="error"><html:errors/></span>
+<span class="error"><!-- Error messages go here --><html:errors /></span>
 <p />
 <table width="100%" border="0" cellpadding="0" cellspacing="0">
 	<tr>

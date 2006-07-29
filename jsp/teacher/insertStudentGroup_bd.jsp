@@ -20,7 +20,7 @@
 	</table>
 	<br/>
 	
-<h2><span class="error"><html:errors/></span></h2>
+<h2><span class="error"><!-- Error messages go here --><html:errors /></span></h2>
 <br/>
 
 <b><bean:message key="message.insertStudentGroupData"/></b>

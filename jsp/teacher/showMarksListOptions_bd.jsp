@@ -26,7 +26,7 @@
  	<html:form action="/writeMarks.do" enctype="multipart/form-data">
  	
 	<logic:messagesPresent>
-		<span class="error"><html:errors/></span><br/><br/>
+		<span class="error"><!-- Error messages go here --><html:errors /></span><br/><br/>
 	</logic:messagesPresent>
 	
  	<%--<bean:define id="commonComponent" name="siteView" property="commonComponent" type="net.sourceforge.fenixedu.dataTransferObject.InfoSiteCommon"/>--%>

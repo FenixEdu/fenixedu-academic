@@ -4,7 +4,7 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-tiles.tld" prefix="tiles" %>
-<span class="error"><html:errors/></span>	
+<span class="error"><!-- Error messages go here --><html:errors /></span>	
 
 <bean:define id="component" name="siteView" property="component"/>
 <logic:notEmpty name="component" property="infoExam">

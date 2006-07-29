@@ -4,7 +4,7 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="dt" %>
 
-<span class="error"><html:errors/><br /></span>
+<span class="error"><!-- Error messages go here --><html:errors /><br /></span>
 <logic:present name="infoScheduleing">
 	<span class="error">
 		<bean:message key="finalDegreeWorkProposal.ProposalPeriod.interval"/>

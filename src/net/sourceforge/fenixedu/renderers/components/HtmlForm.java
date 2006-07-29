@@ -15,8 +15,8 @@ import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 
 public class HtmlForm extends HtmlComponent implements Controllable {
 
-    public static String POST = "POST";
-    public static String GET  = "GET";
+    public static String POST = "post";
+    public static String GET  = "get";
     
     public static String URL_ENCODED = "application/x-www-form-urlencoded";
     public static String FORM_DATA   = "multipart/form-data";

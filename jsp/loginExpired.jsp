@@ -50,7 +50,7 @@
 			</div>
 			<table align="center" border="0">
 				<tr>
-					<td><span class="error"><html:errors/></span></td>
+					<td><span class="error"><!-- Error messages go here --><html:errors /></span></td>
 				</tr>
 			</table>
 			<html:form action="/loginExpired" focus="username" >

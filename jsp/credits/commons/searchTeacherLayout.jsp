@@ -10,7 +10,7 @@
 	<bean:message name="searchInfo"/>
 </p>
 
-<span class="error"><html:errors/>
+<span class="error"><!-- Error messages go here --><html:errors />
  <logic:present name="errors">
   <bean:write name="errors" filter="true" />
  </logic:present >

@@ -16,7 +16,7 @@
 <br />
 <h2><bean:message key="title.manage.turnos"/></h2>
 <br />
-<span class="error"><html:errors/></span>
+<span class="error"><!-- Error messages go here --><html:errors /></span>
 <jsp:include page="createShift.jsp"/>
 
 <br />

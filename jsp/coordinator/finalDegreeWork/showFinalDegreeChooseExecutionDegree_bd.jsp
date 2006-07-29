@@ -7,7 +7,7 @@
 <bean:define id="degreeCurricularPlanID" name="degreeCurricularPlanID"/>
 
 <br />
-<span class="error"><html:errors/><br /><br /></span>
+<span class="error"><!-- Error messages go here --><html:errors /><br /><br /></span>
 
 <bean:message key="choose.execution.year.for.final.degree.work.managment"/>
 <br />

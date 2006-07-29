@@ -9,7 +9,7 @@
 	<bean:define id="evaluation" name="siteView" property="component" type="net.sourceforge.fenixedu.dataTransferObject.InfoEvaluation"/>  
 	<h2><bean:message key="title.evaluation.enrolment.management" arg0="<%= evaluation.getEvaluationType().toString() %>"/></h2>
 	<br />
-	<span class="error"><html:errors/></span>	
+	<span class="error"><!-- Error messages go here --><html:errors /></span>	
 	<bean:define id="evaluationCode" name="evaluation" property="idInternal"/>			
 	<logic:equal name="evaluation" property="evaluationType" value="<%= EvaluationType.EXAM_STRING %>">
 		<table> 	

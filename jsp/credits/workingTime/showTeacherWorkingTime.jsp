@@ -16,7 +16,7 @@
 	<p class="mvert025"><b><bean:message key="label.execution-period" />:</b> <bean:write name="executionPeriod" property="name"/> - <bean:write name="executionPeriod" property="executionYear.year"/></p>
 </div>
 
-<span class="error"><html:errors/></span>
+<span class="error"><!-- Error messages go here --><html:errors /></span>
 <html:messages id="message" message="true">
 	<span class="error">
 		<bean:write name="message"/>

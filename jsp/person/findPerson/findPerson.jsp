@@ -89,7 +89,7 @@ else
 
 
 <h2><bean:message key="label.manager.findPerson"/></h2>
-<span class="error"><html:errors/></span>
+<span class="error"><!-- Error messages go here --><html:errors /></span>
 
 <!-- <table><tr><td colspan="2" class="infoop"><bean:message key="info.person.findPerson"/></td></tr></table> -->
 

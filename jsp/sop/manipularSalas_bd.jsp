@@ -14,7 +14,7 @@
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.executionPeriodId" property="executionPeriodId" value="<%= ""+request.getAttribute("executionPeriodId")%>"/>	
 <h2><bean:message key="manipularSalas.titleSuccess"/></h2>
   <br/>
-  <span class="error"><html:errors/></span>
+  <span class="error"><!-- Error messages go here --><html:errors /></span>
   <logic:present name="<%= SessionConstants.SELECTED_ROOMS%>" scope="request">
     <table border="0" cellpadding="5">
       <%! int i; %>

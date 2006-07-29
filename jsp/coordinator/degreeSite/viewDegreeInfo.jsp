@@ -13,7 +13,7 @@
 
 	<h2 class="mbottom2"><bean:message key="title.coordinator.degreeSite.edit" /> <bean:write name="currentDegreeInfo" property="executionYear.year"/></h2>
 
-	<p><span class="error"><html:errors /></span></p>
+	<p><span class="error"><!-- Error messages go here --><html:errors /></span></p>
 
 	<logic:present name="info">
 		<bean:define id="info" name="info" scope="request" />			

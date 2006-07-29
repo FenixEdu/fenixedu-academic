@@ -20,7 +20,7 @@
 		<br/><br/>
 		<table>
 			<tr><td><bean:message key="label.test.title"/></td></tr>
-			<tr><td><html:text bundle="HTMLALT_RESOURCES" altKey="text.title" size="50" property="title"/><span class="error"><html:errors/></span></td><tr/>
+			<tr><td><html:text bundle="HTMLALT_RESOURCES" altKey="text.title" size="50" property="title"/><span class="error"><!-- Error messages go here --><html:errors /></span></td><tr/>
 			<tr><td><bean:message key="label.test.information"/></td></tr>
 			<tr><td><html:textarea bundle="HTMLALT_RESOURCES" altKey="textarea.information" rows="7" cols="45" property="information"/></td><tr/>
 		</table>

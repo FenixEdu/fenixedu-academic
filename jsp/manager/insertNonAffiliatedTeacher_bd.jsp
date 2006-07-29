@@ -19,7 +19,7 @@
 	</tr>
 </table>
 
-<span class="error"><html:errors/></span>
+<span class="error"><!-- Error messages go here --><html:errors /></span>
 <html:messages id="message" message="true" bundle="MANAGER_RESOURCES">
 	<span class="error">
 		<bean:write name="message"/>
@@ -97,7 +97,7 @@
 			</tr>
 		</logic:notPresent>
 		<logic:present parameter="insertInstitution"> 
-			<tr><td colspan="2"><hr></td></tr>
+			<tr><td colspan="2"><hr/></td></tr>
 			<tr>
 				<td>Introduza o nome da institui��o:</td>
 				<td>
@@ -107,7 +107,7 @@
 			<tr>
 				<td><html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton" onclick="this.form.method.value='insertInstitution'">Inserir Institui��o</html:submit></td>
 			</tr>
-			<tr><td colspan="2"><hr></td></tr>			
+			<tr><td colspan="2"><hr/></td></tr>			
 		</logic:present>	
 	</table>
 	<br/>

@@ -8,7 +8,7 @@
 <br/>
 <br/>
 
-<span class="error"><html:errors/></span>
+<span class="error"><!-- Error messages go here --><html:errors /></span>
 
 <logic:notEmpty name="curricularCourses">
 	<html:form action="/curricularCoursesCompetenceCourse">

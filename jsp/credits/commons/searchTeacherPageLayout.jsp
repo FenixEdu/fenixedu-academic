@@ -19,7 +19,7 @@
 	<bean:message name="searchInfo"/>
 </p>
 
-<p><span class="error"><html:errors/></span></p>
+<p><span class="error"><!-- Error messages go here --><html:errors /></span></p>
 
 <logic:present name="teacherNotFound">
 <p>

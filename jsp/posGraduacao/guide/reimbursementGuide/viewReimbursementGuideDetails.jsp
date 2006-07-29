@@ -18,7 +18,7 @@
 		<bean:message key="title.masterDegree.administrativeOffice.guide.reimbursementGuide.viewReimbursementGuideDetails" 
 					arg0='<%= pageContext.findAttribute("number").toString() %>'/>
 	</h2>
-	<span class="error"><html:errors/></span>
+	<span class="error"><!-- Error messages go here --><html:errors /></span>
 </center>
 
 <table>

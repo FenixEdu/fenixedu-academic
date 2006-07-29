@@ -4,7 +4,7 @@
 <html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/app.tld" prefix="app" %>
-<span class="error"><html:errors /></span>
+<span class="error"><!-- Error messages go here --><html:errors /></span>
 <html:form action="/teacherSearch" focus="teacherNumber">
 	<input alt="input.method" type="hidden" name="method" value="searchByNumber"/>
 	<input alt="input.page" type="hidden" name="page" value="1"/>

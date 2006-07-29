@@ -19,7 +19,7 @@
 
 <br/>
 
-<span class="error"><html:errors/></span>
+<span class="error"><!-- Error messages go here --><html:errors /></span>
 
 <logic:present name='<%= InquiriesUtil.DEGREE_CURRICULAR_PLANS_LIST %>'>
 		<p class="caps"><strong>

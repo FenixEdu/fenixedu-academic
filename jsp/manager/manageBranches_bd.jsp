@@ -9,7 +9,7 @@
 	<li><html:link module="/manager" page="<%="/manageBranches.do?method=prepareInsert&degreeId=" + request.getParameter("degreeId") + "&amp;degreeCurricularPlanId=" + request.getParameter("degreeCurricularPlanId")%>"><bean:message bundle="MANAGER_RESOURCES" key="label.manager.insert.branch"/></html:link></li>
 </ul>
 
-<span class="error"><html:errors/></span>
+<span class="error"><!-- Error messages go here --><html:errors /></span>
 
 <logic:notPresent name="infoBranchesList">
 	<bean:message bundle="MANAGER_RESOURCES" key="label.manager.no.branches"/>

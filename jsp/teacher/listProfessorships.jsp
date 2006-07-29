@@ -9,7 +9,7 @@
 <% final String context = (appContext != null && appContext.length() > 0) ? "/" + appContext : ""; %>
 <bean:define id="hostURL" type="java.lang.String"><%= request.getScheme() %>://<%= request.getServerName() %>:<%= request.getServerPort() %><%= context %>/</bean:define>
 
-<span class="error"><html:errors/></span>
+<span class="error"><!-- Error messages go here --><html:errors /></span>
 
 <h2><bean:message key="label.professorships"/></h2>
 

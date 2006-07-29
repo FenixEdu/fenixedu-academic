@@ -25,7 +25,7 @@
 <html:textarea bundle="HTMLALT_RESOURCES" altKey="textarea.title" rows="2" cols="65" name="announcement" property="title" >
 </html:textarea>
 
-<span class="error"><html:errors/>
+<span class="error"><!-- Error messages go here --><html:errors />
 	<logic:present name="errors">
 		<bean:write name="errors" filter="true" />
 	</logic:present	>

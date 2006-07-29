@@ -5,7 +5,7 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 
 <h2><bean:message key="title.studentListByCourse" /></h2>
-<span class="error"><html:errors/></span>
+<span class="error"><!-- Error messages go here --><html:errors /></span>
 <br />
 <logic:present name="curricularCourses">
 	<logic:notEmpty name="curricularCourses">

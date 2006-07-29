@@ -9,7 +9,7 @@
 
 <h2><bean:message key="label.title.dislocatedStudent.inquiry" bundle="STUDENT_RESOURCES" /></h2>
 
-	<span class="error"><html:errors /></span> <html:form action="/dislocatedStudent">
+	<span class="error"><!-- Error messages go here --><html:errors /></span> <html:form action="/dislocatedStudent">
 	<br/>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="prepareResidenceCandidacy" />
 

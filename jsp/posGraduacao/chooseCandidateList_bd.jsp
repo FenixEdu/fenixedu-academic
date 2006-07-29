@@ -6,7 +6,7 @@
 <%@ taglib uri="/WEB-INF/enum.tld" prefix="e" %>
 <%@ page import="org.apache.struts.Globals" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
-<span class="error"><html:errors/></span>
+<span class="error"><!-- Error messages go here --><html:errors /></span>
 <bean:define id="executionDegree" name="<%= SessionConstants.EXECUTION_DEGREE %>" scope="request"/>
      <bean:define id="executionYearName" name="<%= SessionConstants.EXECUTION_YEAR %>"/>
     <bean:define id="degreeList" name="<%= SessionConstants.DEGREE_LIST %>" scope="session" />

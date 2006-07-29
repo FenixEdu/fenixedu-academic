@@ -27,7 +27,7 @@
 		<h:outputText escape="false" value="<input alt='input.begin' id='begin' name='begin' type='hidden' value='#{CoordinatorEvaluationsBackingBean.begin}'/>"/>
 		<h:outputText escape="false" value="<input alt='input.end' id='end' name='end' type='hidden' value='#{CoordinatorEvaluationsBackingBean.end}'/>"/>
 
-		<h:outputFormat value="<h2>#{bundle['link.edit.evaluation']}</h2/><hr>" escape="false"/>
+		<h:outputFormat value="<h2>#{bundle['link.edit.evaluation']}</h2/><hr/>" escape="false"/>
 
 		<h:outputText styleClass="error" rendered="#{!empty CoordinatorEvaluationsBackingBean.errorMessage}"
 				value="#{bundle[CoordinatorEvaluationsBackingBean.errorMessage]}<br/>" escape="false" />

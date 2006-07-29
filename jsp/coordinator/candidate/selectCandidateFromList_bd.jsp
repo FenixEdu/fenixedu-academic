@@ -9,7 +9,7 @@
 <%@ page import="net.sourceforge.fenixedu.util.Data" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
 <jsp:include page="../context.jsp"/>
-<p><span class="error"><html:errors/></span></p>
+<p><span class="error"><!-- Error messages go here --><html:errors /></span></p>
 <p>
     <bean:define id="candidateList" name="masterDegreeCandidateList" scope="request" />
     <bean:define id="degreeCurricularPlanID" name="degreeCurricularPlanID" scope="request" />        

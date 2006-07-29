@@ -9,7 +9,7 @@
 	<center><font color='#034D7A' size='5'> <b> <bean:message key="title.room.occupation"/> </b> </font></center>
 	<br/>
 	<logic:present name="publico.semester" >
-	<html:form action="/viewRoomOcupation.do" method="GET">
+	<html:form action="/viewRoomOcupation.do" method="get">
 
 		<table align="center" border="5" cellpadding='20' cellspacing='10'>
 			<bean:define id="i" value="i_index" />

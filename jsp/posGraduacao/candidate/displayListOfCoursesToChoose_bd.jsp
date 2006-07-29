@@ -8,7 +8,7 @@
 	<h2><bean:write name="jspTitle" /></h2>
 	<br />
 </logic:present>
-<span class="error"><html:errors/></span>
+<span class="error"><!-- Error messages go here --><html:errors /></span>
 
 
 <%--

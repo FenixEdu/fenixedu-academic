@@ -14,7 +14,7 @@
 	<bean:define id="executionPeriodOID" name="executionPeriodOID"/>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.executionPeriodOID" property="executionPeriodOID" value="<%= executionPeriodOID.toString() %>"/>
 
-	<span class="error"><html:errors/></span>
+	<span class="error"><!-- Error messages go here --><html:errors /></span>
 
 	<table>
 		<tr>

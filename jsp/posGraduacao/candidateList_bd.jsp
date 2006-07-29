@@ -8,7 +8,7 @@
 <%@ page import="java.util.Date" %>
 <%@ page import="net.sourceforge.fenixedu.util.Data" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
-    <span class="error"><html:errors/></span>
+    <span class="error"><!-- Error messages go here --><html:errors /></span>
     	<bean:define id="candidateList" name="<%= SessionConstants.MASTER_DEGREE_CANDIDATE_LIST %>" scope="session" />
     	<bean:define id="findQuery" name="<%= SessionConstants.MASTER_DEGREE_CANDIDATE_QUERY %>" scope="session" />
     	<bean:define id="title" name="<%= SessionConstants.MASTER_DEGREE_CANDIDATE_ACTION %>" scope="session" /> 

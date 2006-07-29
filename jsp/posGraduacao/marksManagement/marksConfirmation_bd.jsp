@@ -22,7 +22,7 @@
 		</logic:iterate>
 	</table>
 	<br />
-	<span class="error"><html:errors/></span>
+	<span class="error"><!-- Error messages go here --><html:errors /></span>
 	<bean:define id="teacher" name="infoSiteEnrolmentEvaluation" property="infoTeacher"/>
 	<bean:define id="availableEvaluationDate" name="infoSiteEnrolmentEvaluation" property="lastEvaluationDate"/>
 	<html:form action="/marksConfirmation">

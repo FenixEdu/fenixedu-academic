@@ -372,7 +372,7 @@
 	</tr>
 </table> 
 <br/><br/>
-<hr>
+<hr/>
 <br/>
 <%-- QUALIFICATIONS INFORMATION --%>
 
@@ -501,7 +501,7 @@
 	<br/><bean:message key="message.grant.qualification.nonExistentContracts"/>&nbsp;
 </logic:notPresent>
 <br/><br/>
-<hr>
+<hr/>
 <br/>
 
 <%-- CONTRACT INFORMATION --%>

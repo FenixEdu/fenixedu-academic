@@ -2,7 +2,7 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 
-<p><span class="error"><html:errors/></span></p>
+<p><span class="error"><!-- Error messages go here --><html:errors /></span></p>
 
 <logic:notPresent name="infoExecutionDegree" >
 	<bean:message bundle="MANAGER_RESOURCES" key="error.invalidExecutionDegree" />

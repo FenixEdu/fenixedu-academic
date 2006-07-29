@@ -8,7 +8,7 @@
 
 <h2><bean:message key="label.pricesManagement" /></h2>
 
-<hr><br/>
+<hr/><br/>
 
 <logic:messagesPresent message="true">
 	<ul>

@@ -28,7 +28,7 @@
         </table>
         <br/>
         <h2><bean:message key="title.choose.discipline"/></h2>
-        <span class="error"><html:errors /></span>
+        <span class="error"><!-- Error messages go here --><html:errors /></span>
         <html:form action="<%= path %>">        
         	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="2"/>
 

@@ -47,7 +47,7 @@
 </table>
 <br/>
 <table>
-	<tr><td><hr></td></tr>
+	<tr><td><hr/></td></tr>
 	<logic:iterate id="testQuestion" name="infoTestQuestionList" type="net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoTestQuestion">
 	<tr>
 		<td><b><bean:message key="message.tests.question" />:</b>&nbsp;<bean:write name="testQuestion" property="testQuestionOrder"/></td></tr>
@@ -73,7 +73,7 @@
 			<jsp:param name="showResponses" value="false"/>
 		</jsp:include>
 	</td></tr>
-	<tr><td><hr></td></tr>
+	<tr><td><hr/></td></tr>
 	</logic:iterate>
 </table>
 <br/>

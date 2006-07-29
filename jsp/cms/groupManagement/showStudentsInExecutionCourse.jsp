@@ -9,7 +9,7 @@
 <%@ page import="java.util.TreeSet" %>
 <%@ page import="net.sourceforge.fenixedu.domain.Student" %>
 
-<span class="error"><html:errors/></span>
+<span class="error"><!-- Error messages go here --><html:errors /></span>
 	<logic:present name="elements">
 		
 		<bean:size name="elements" id="numberOfElements" />		

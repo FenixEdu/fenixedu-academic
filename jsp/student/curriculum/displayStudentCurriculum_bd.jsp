@@ -14,7 +14,7 @@
 <%@ page import="net.sourceforge.fenixedu.dataTransferObject.util.InfoStudentCurricularPlansWithSelectedEnrollments" %>
 <%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlan" %>
 
-<span class="error"><html:errors/></span>
+<span class="error"><!-- Error messages go here --><html:errors /></span>
   
 <h2><bean:message key="message.student.curriculum" bundle="STUDENT_RESOURCES" /></h2>
 

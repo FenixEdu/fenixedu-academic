@@ -12,7 +12,7 @@
       <font color="#023264" size="-1">
         <h2>          A sua situaï¿?ï¿?o actual não lhe permite alterar a informação da sua candidatura !         </h2>
       </font>
-      <hr>
+      <hr/>
     </div>  
    
    <table>

@@ -4,7 +4,7 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
         <h2><bean:message key="title.manage.schedule"/></h2>
-        <span class="error"><html:errors/></span>
+        <span class="error"><!-- Error messages go here --><html:errors /></span>
         <html:form action="/escolherContextoForm">
 
 		<html:hidden alt="<%= SessionConstants.EXECUTION_PERIOD_OID %>" property="<%= SessionConstants.EXECUTION_PERIOD_OID %>"

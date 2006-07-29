@@ -4,12 +4,12 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %> 
 
 <strong>Página 3 de 6</strong>
-<p align="center"><span class="error"><html:errors /></span></p>
+<p align="center"><span class="error"><!-- Error messages go here --><html:errors /></span></p>
 <table cellpadding="10">
 <tr align="center"><td><h2><bean:message key="schoolRegistrationHeader.title"/></h2></td></tr>
-<tr><td><hr></td></tr>
+<tr><td><hr/></td></tr>
 <tr align="justify"><td><h2><bean:message key="schoolRegistrationHeader.lawStatement"/></h2></td></tr>
-<tr><td><hr></td></tr>
+<tr><td><hr/></td></tr>
 <tr>
 	<td></td>
 	<td>Sim</td> 

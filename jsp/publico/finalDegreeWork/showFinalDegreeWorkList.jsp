@@ -6,7 +6,7 @@
 <%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="dt" %>
 
 <h2><bean:message key="title.finalDegreeWorkProposals"/></h2>
-<span class="error"><html:errors /></span>
+<span class="error"><!-- Error messages go here --><html:errors /></span>
 	<table border="0" cellspacing="0" cellpadding="0">
 		<tr>
 			<td nowrap="nowrap">

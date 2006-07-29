@@ -44,7 +44,7 @@
 
 <logic:notEmpty name="curricularCourseMap">
 
-	<br/><br/><hr>
+	<br/><br/><hr/>
 	<h3><bean:write name="executionPeriod" property="executionYear.year"/> - <bean:write name="executionPeriod" property="semester"/>� Sem</h3>
 	<br/>
 	<strong><bean:message key="label.markSheet.printMarkSheetsWeb.markSheets.lefToPrint"/></strong>:

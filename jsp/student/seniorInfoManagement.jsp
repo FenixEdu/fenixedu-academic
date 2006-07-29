@@ -82,7 +82,7 @@
 	      </td></tr>
 		  <tr>
 			<td colspan="2">&nbsp;
-				<span class="error"><html:errors/></span>
+				<span class="error"><!-- Error messages go here --><html:errors /></span>
 			</td>
 		  </tr>
 		  <tr>

@@ -10,7 +10,7 @@
 
 <html:form action="/dislocatedStudent?method=prepareDislocatedStudentInquiry">
 	<h2 style="text-align: center;"><bean:message key="label.schoolRegistration.personalData.inquiry"/></h2>
-	<span class="error"><html:errors/></span>
+	<span class="error"><!-- Error messages go here --><html:errors /></span>
 	<br/>
 
 <br/>

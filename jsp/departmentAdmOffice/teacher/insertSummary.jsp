@@ -19,7 +19,7 @@
 <bean:define id="professorships" name="bodyComponent" property="infoProfessorships" />
 <bean:define id="rooms" name="bodyComponent" property="infoRooms" />
 
-<span class="error"><html:errors/></span>
+<span class="error"><!-- Error messages go here --><html:errors /></span>
 
 <h2><bean:message key="title.summary.insert" /></h2>
 

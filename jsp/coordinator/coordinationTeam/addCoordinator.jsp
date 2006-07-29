@@ -8,7 +8,7 @@
 
 <h3><bean:message key="title.addCoordinator"/></h3>
 <html:form action="/addCoordinator">
-<span class="error"><html:errors/></span><br/>
+<span class="error"><!-- Error messages go here --><html:errors /></span><br/>
 <bean:define id="infoExecutionDegreeId" name="infoExecutionDegreeId"/>
 <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.infoExecutionDegreeId" property="infoExecutionDegreeId" value="<%=  infoExecutionDegreeId.toString() %>"/>
 <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="AddCoordinator" />

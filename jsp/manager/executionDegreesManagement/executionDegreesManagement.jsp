@@ -39,7 +39,7 @@
 	</fieldset>
 	</div>
 
-<span class="error"><html:errors/><br/></span>
+<span class="error"><!-- Error messages go here --><html:errors /><br/></span>
 <br/>
 <logic:notEmpty name="executionDegrees">
 

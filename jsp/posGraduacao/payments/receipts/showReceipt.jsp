@@ -7,7 +7,7 @@
 <logic:present role="MASTER_DEGREE_ADMINISTRATIVE_OFFICE">
 
 <h2><bean:message key="label.masterDegree.administrativeOffice.payments.receipt" /></h2>
-<hr>
+<hr/>
 <br/>
 
 <logic:messagesPresent message="true">

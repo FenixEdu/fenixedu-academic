@@ -6,7 +6,7 @@
 
 <h3><bean:message bundle="MANAGER_RESOURCES" key="label.manager.precedences.management"/></h3>
 
-<span class="error"><html:errors/></span>
+<span class="error"><!-- Error messages go here --><html:errors /></span>
 
 <logic:present name="precedences" scope="request">
 <logic:notEmpty name="precedences" scope="request">

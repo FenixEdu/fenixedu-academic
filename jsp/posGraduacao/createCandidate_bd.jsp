@@ -7,7 +7,7 @@
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
 <h2><bean:message key="title.masterDegree.administrativeOffice.createCandidate" /></h2>
 <br />
-<span class="error"><html:errors/></span>  
+<span class="error"><!-- Error messages go here --><html:errors /></span>  
    <table>
     <logic:present name="<%= SessionConstants.EXECUTION_DEGREE %>">
     	<bean:define id="executionDegree" name="<%= SessionConstants.EXECUTION_DEGREE %>" scope="request"/>

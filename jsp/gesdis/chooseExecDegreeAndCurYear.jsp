@@ -5,7 +5,7 @@
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
 
 <bean:write name="executionPeriodName"/><br/>
-<span class="error"><html:errors/></span>
+<span class="error"><!-- Error messages go here --><html:errors /></span>
 <html:form action="/copySiteExecutionCourse">
 	<input alt="input.method" type="hidden" name="method" value="showExecutionCourses"/>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.executionPeriod" property="executionPeriod"/>

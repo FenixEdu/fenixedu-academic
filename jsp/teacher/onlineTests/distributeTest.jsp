@@ -140,7 +140,7 @@ function getIndex(input){
 	</tr>
 </table>
 <br/>
-<span class="error"><html:errors property="InvalidTime"/></span>
+<span class="error"><!-- Error messages go here --><html:errors property="InvalidTime"/></span>
 <table>
 	<tr><td colspan="2"><bean:message key="message.testBeginDate"/><bean:message key="message.dateFormat"/></td></tr>
 	<tr>
@@ -149,14 +149,14 @@ function getIndex(input){
 		<html:text bundle="HTMLALT_RESOURCES" altKey="text.beginMonthFormatted" maxlength="2" size="2" property="beginMonthFormatted" onkeyup="changeFocus(this)"/>
 		/
 		<html:text bundle="HTMLALT_RESOURCES" altKey="text.beginYearFormatted" maxlength="4" size="4" property="beginYearFormatted" onkeyup="changeFocus(this)"/></td>
-		<td><span class="error"><html:errors property="beginDayFormatted"/><html:errors property="beginMonthFormatted"/><html:errors property="beginYearFormatted"/></span></td>
+		<td><span class="error"><!-- Error messages go here --><html:errors property="beginDayFormatted"/><html:errors property="beginMonthFormatted"/><html:errors property="beginYearFormatted"/></span></td>
 	<tr/>
 	<tr><td colspan="2"><bean:message key="message.testBeginHour"/><bean:message key="message.hourFormat"/></td></tr>
 	<tr>
 		<td><html:text bundle="HTMLALT_RESOURCES" altKey="text.beginHourFormatted" maxlength="2" size="2" property="beginHourFormatted" onkeyup="changeFocus(this)"/>
 		:
 		<html:text bundle="HTMLALT_RESOURCES" altKey="text.beginMinuteFormatted" maxlength="2" size="2" property="beginMinuteFormatted" onkeyup="changeFocus(this)"/>
-		<td><span class="error"><html:errors property="beginHourFormatted"/><html:errors property="beginMinuteFormatted"/></span></td>
+		<td><span class="error"><!-- Error messages go here --><html:errors property="beginHourFormatted"/><html:errors property="beginMinuteFormatted"/></span></td>
 	<tr/>
 	<tr><td colspan="2"><bean:message key="message.testEndDate"/><bean:message key="message.dateFormat"/></td></tr>
 	<tr>
@@ -165,14 +165,14 @@ function getIndex(input){
 		<html:text bundle="HTMLALT_RESOURCES" altKey="text.endMonthFormatted" maxlength="2" size="2" property="endMonthFormatted" onkeyup="changeFocus(this)"/>
 		/
 		<html:text bundle="HTMLALT_RESOURCES" altKey="text.endYearFormatted" maxlength="4" size="4" property="endYearFormatted" onkeyup="changeFocus(this)"/></td>
-		<td><span class="error"><html:errors property="endDayFormatted"/><html:errors property="endMonthFormatted"/><html:errors property="endYearFormatted"/></span></td>
+		<td><span class="error"><!-- Error messages go here --><html:errors property="endDayFormatted"/><html:errors property="endMonthFormatted"/><html:errors property="endYearFormatted"/></span></td>
 	<tr/>
 	<tr><td colspan="2"><bean:message key="message.testEndHour"/><bean:message key="message.hourFormat"/></td></tr>
 	<tr>
 		<td><html:text bundle="HTMLALT_RESOURCES" altKey="text.endHourFormatted" maxlength="2" size="2" property="endHourFormatted" onkeyup="changeFocus(this)"/>
 		:
 		<html:text bundle="HTMLALT_RESOURCES" altKey="text.endMinuteFormatted" maxlength="2" size="2" property="endMinuteFormatted" onkeyup="changeFocus(this)"/></td>
-		<td><span class="error"><html:errors property="endHourFormatted"/><html:errors property="endMinuteFormatted"/></span></td>
+		<td><span class="error"><!-- Error messages go here --><html:errors property="endHourFormatted"/><html:errors property="endMinuteFormatted"/></span></td>
 	<tr/>
 </table>
 <br/>

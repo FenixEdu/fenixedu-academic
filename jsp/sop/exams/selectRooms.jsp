@@ -14,7 +14,7 @@ Se quiser ver todas as salas não preencha nenhum.
 <html:link page="<%= "/roomExamSearch.do?method=search" %>">aqui</html:link>. 
 --%>
 <br/>
-<span class="error"><html:errors/></span>
+<span class="error"><!-- Error messages go here --><html:errors /></span>
 <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="search"/> 
 <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/> 
 <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.executionPeriodOID" property="executionPeriodOID"/> 

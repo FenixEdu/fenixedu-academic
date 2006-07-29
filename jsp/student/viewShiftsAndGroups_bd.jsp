@@ -39,7 +39,7 @@
 	</logic:iterate>
 --%>
 	
-	<span class="error"><html:errors/></span>
+	<span class="error"><!-- Error messages go here --><html:errors /></span>
 
 	<ul>
 	<li><html:link page="<%="/viewExecutionCourseProjects.do?method=execute&executionCourseCode=" + request.getParameter("executionCourseCode")%>"><bean:message key="link.backToProjects"/></html:link> - <bean:message key="link.backToProjects.description"/></li>

@@ -9,7 +9,7 @@
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
 
 
-   <span class="error"><html:errors/><br/></span>
+   <span class="error"><!-- Error messages go here --><html:errors /><br/></span>
 
    <table>
     <bean:define id="infoGuide" name="<%= SessionConstants.GUIDE%>" />

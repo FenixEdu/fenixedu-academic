@@ -23,7 +23,7 @@
 </table>
 <br/>
 
-<h2><span class="error"><html:errors/></span></h2>
+<h2><span class="error"><!-- Error messages go here --><html:errors /></span></h2>
 <br/>
 
 <table width="100%" border="0" style="text-align: left;">

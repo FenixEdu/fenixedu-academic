@@ -9,7 +9,7 @@
 			 
 <bean:define id="infoShiftsPercentageList" name="infoShiftPercentageList" scope="request" />
 
-<span class="error"><html:errors/></span>
+<span class="error"><!-- Error messages go here --><html:errors /></span>
 
 <html:form action="/executionCourseShiftsPercentageManager">
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="accept"/>

@@ -10,7 +10,7 @@
 
 <h2><bean:message key="label.documentRequestsManagement.showDocumentRequests" /></h2>
 
-<hr><br/>
+<hr/><br/>
 
 <logic:messagesPresent message="true">
 		<ul>

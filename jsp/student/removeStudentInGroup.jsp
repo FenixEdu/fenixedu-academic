@@ -20,7 +20,7 @@ padding: 0;
 	<h2><bean:message key="message.infoSiteStudentGroupList.not.available" /></h2>
 </logic:empty> 
 
-	<h2><span class="error"><html:errors/></span></h2>
+	<h2><span class="error"><!-- Error messages go here --><html:errors /></span></h2>
 	
 	<logic:notEmpty name="infoSiteStudentGroup" property="infoSiteStudentInformationList">
 

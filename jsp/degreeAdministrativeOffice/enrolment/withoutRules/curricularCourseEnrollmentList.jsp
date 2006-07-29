@@ -6,7 +6,7 @@
 <%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoEnrolment" %>
 
 <h2><bean:message key="title.student.enrolment.without.rules" bundle="DEGREE_ADM_OFFICE" /></h2>
-<span class="error"><html:errors/></span>
+<span class="error"><!-- Error messages go here --><html:errors /></span>
 <br />
 <%-- HELP UNENROLL --%>
 <table width="100%">
@@ -93,7 +93,7 @@
 		</html:form>
 	</logic:greaterThan>
 </logic:present>
-<hr>
+<hr/>
 <br />
 <%-- HELP ENROLL --%>
 <table width="100%">
@@ -116,7 +116,7 @@
 			<bean:message key="button.enroll" bundle="DEGREE_ADM_OFFICE"/>
 	</html:submit>
 </html:form>
-<hr>
+<hr/>
 <br />
 <%-- HELP ANOTHER STUDENT OR CANCEL --%>
 <html:form action="/courseEnrolmentWithoutRulesManagerDA">

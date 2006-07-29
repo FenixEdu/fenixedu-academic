@@ -30,7 +30,7 @@
 <p class="mbottom05 mtop1"><strong><bean:message key="label.teacher-dfp-student.add-student"/></strong></p>
 
 
-<span class="error"><html:errors /></span>
+<span class="error"><!-- Error messages go here --><html:errors /></span>
 <logic:messagesPresent message="true">
 	<hr class="error"/><u><b>Para prosseguir deverá corrigir os seguintes erros:</b></u><br/>		
 	<ul>

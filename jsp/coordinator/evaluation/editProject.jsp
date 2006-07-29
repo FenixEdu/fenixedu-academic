@@ -19,7 +19,7 @@
 			<h:inputHidden binding="#{coordinatorProjectsManagementBackingBean.executionCourseIdHidden}" />
 			<h:inputHidden binding="#{coordinatorProjectsManagementBackingBean.evaluationIdHidden}" />
 	
-			<h:outputFormat value="<h2>#{bundle['link.edit.project']}</h2/><hr>" escape="false"/>
+			<h:outputFormat value="<h2>#{bundle['link.edit.project']}</h2/><hr/>" escape="false"/>
 			
 			<%-- ERROR MESSAGE --%>
 			<h:outputText styleClass="error" rendered="#{!empty coordinatorProjectsManagementBackingBean.errorMessage}"

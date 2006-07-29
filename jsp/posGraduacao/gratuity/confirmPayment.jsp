@@ -9,7 +9,7 @@
 	
 <h2 align="center"><bean:message key="<%= title %>"/></h2>
 <center>
-	<span class="error"><html:errors/></span>
+	<span class="error"><!-- Error messages go here --><html:errors /></span>
 	<br/><br/>
 	
 	<bean:define id="contributor" name="<%= SessionConstants.CONTRIBUTOR %>" scope="request"/>

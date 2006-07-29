@@ -15,7 +15,7 @@
 </strong>
 <bean:message key="message.copySite.information.whatIsCopied" />
 <br/><br/>
-<span class="error"><html:errors/></span>
+<span class="error"><!-- Error messages go here --><html:errors /></span>
 <logic:present name="<%= SessionConstants.LIST_EXECUTION_PERIODS %>">
 	<html:form action="/copySiteExecutionCourse">  
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="prepareChooseExecDegreeAndCurYear"/>

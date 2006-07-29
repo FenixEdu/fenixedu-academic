@@ -8,7 +8,7 @@
 	import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants"%>
 
 <body>
-<span class="error"><html:errors /></span>
+<span class="error"><!-- Error messages go here --><html:errors /></span>
 <table width="100%" cellspacing="0">
 	<tr>
 		<td class="infoop" width="50px"><span class="emphasis-box">1</span></td>

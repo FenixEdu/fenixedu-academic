@@ -9,14 +9,14 @@
 	<br />
 </logic:present>
 
-<p><span class="error"><html:errors/></span></p>
+<p><span class="error"><!-- Error messages go here --><html:errors /></span></p>
 
 <br />
 
 <logic:present name="candidate">
 
 	<h2><bean:message key="title.candidate.studyPlan" /></h2>
-	<p><span class="error"><html:errors/></span></p>
+	<p><span class="error"><!-- Error messages go here --><html:errors /></span></p>
 	<table width="100%" cellspacing="0">
 	  <tr>
 	  	<td class="infoop" width="50px"><span class="emphasis-box">1</span>

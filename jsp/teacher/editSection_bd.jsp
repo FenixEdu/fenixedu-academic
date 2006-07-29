@@ -11,7 +11,7 @@
 <bean:define id="section" name="sections" property="section"/>
 
 <h2><bean:message key="button.editSection" /></h2>
-<span class="error"><html:errors property="error.default"/></span>
+<span class="error"><!-- Error messages go here --><html:errors property="error.default"/></span>
 <html:form action="/editSection">
 <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
 <table>
@@ -25,7 +25,7 @@
 			<br />
 			<br />
 			<html:text bundle="HTMLALT_RESOURCES" altKey="text.name" name="section" property="name" />
-			<span class="error"><html:errors property="name"/></span>
+			<span class="error"><!-- Error messages go here --><html:errors property="name"/></span>
 		</td>
 	</tr>
 	<tr>
@@ -51,7 +51,7 @@
 			</logic:notPresent>
 				<option value="-1" <bean:write name="selected"/>><bean:message key="label.end" /></option>
 		</html:select>
-		<span class="error"><html:errors property="sectionOrder"/></span>
+		<span class="error"><!-- Error messages go here --><html:errors property="sectionOrder"/></span>
 	</td>
 	</logic:present>
 	<logic:notPresent name="sections">

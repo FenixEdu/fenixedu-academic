@@ -14,7 +14,7 @@
 	</p>
 	</div>
 <div class="infoop">
-	<p style="text-align: center"><span class="error"><html:errors/></span></p>
+	<p style="text-align: center"><span class="error"><!-- Error messages go here --><html:errors /></span></p>
 	
 	<html:form action="/viewPersonalInfo?method=visualizeFirstTimeStudentPersonalInfoAction">
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="2"/>

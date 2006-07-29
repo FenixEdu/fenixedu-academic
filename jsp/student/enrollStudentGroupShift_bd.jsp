@@ -20,7 +20,7 @@
 		
 <html:form action="/enrollStudentGroupShift" method="get">
 <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
-<span class="error"><html:errors/></span>
+<span class="error"><!-- Error messages go here --><html:errors /></span>
 
 <br/>
 <br/>		 
@@ -28,7 +28,7 @@
 <table width="50%" cellpadding="0" border="0">
 		
 		<tr>
-			<td><span class="error"><html:errors property="shiftType"/></span></td>
+			<td><span class="error"><!-- Error messages go here --><html:errors property="shiftType"/></span></td>
 		</tr>
 		
 		<tr>
@@ -40,7 +40,7 @@
     	</html:select>
     	</td>
 			
-			<td><span class="error"><html:errors property="shiftType"/></span></td>
+			<td><span class="error"><!-- Error messages go here --><html:errors property="shiftType"/></span></td>
 		</tr>	
 
  

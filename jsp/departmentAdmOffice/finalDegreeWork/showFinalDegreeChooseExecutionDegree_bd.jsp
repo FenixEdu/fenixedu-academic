@@ -6,7 +6,7 @@
 
 <h2><bean:message key="link.manage.final.degree.works"/></h2>
 <br />
-<span class="error"><html:errors/></span>
+<span class="error"><!-- Error messages go here --><html:errors /></span>
 <bean:message key="choose.execution.year.for.final.degree.work.managment"/>
 <br />
 <table>

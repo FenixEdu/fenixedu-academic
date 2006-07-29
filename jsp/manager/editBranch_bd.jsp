@@ -4,7 +4,7 @@
 
 <h2><bean:message bundle="MANAGER_RESOURCES" key="label.manager.edit.branch" /></h2>
 
-<span class="error"><html:errors/></span>
+<span class="error"><!-- Error messages go here --><html:errors /></span>
 
 <html:form action="/manageBranches" method="get">
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.degreeId" property="degreeId" value="<%= request.getParameter("degreeId") %>"/>

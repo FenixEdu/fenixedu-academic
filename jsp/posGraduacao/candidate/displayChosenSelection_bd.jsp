@@ -8,7 +8,7 @@
 <%@ page import="net.sourceforge.fenixedu.util.SituationName" %>
 
 
-<span class="error"><html:errors/></span>
+<span class="error"><!-- Error messages go here --><html:errors /></span>
 	<br />
 	<h2>Ordenação de Candidatos Suplentes</h2>
 	<br />

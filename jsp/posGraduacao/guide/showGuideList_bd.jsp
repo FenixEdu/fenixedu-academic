@@ -12,7 +12,7 @@
 <%@ page import="net.sourceforge.fenixedu.util.State" %>
 <%@ page import="net.sourceforge.fenixedu.util.Data" %>
 
-   <span class="error"><html:errors/></span>
+   <span class="error"><!-- Error messages go here --><html:errors /></span>
 
     <bean:define id="guideList" name="<%= SessionConstants.GUIDE_LIST %>" scope="request" />
     

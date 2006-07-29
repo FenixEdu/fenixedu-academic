@@ -25,7 +25,7 @@
 <bean:define id="path" type="java.lang.String" scope="request" property="path" name="<%= Globals.MAPPING_KEY %>" />
 <bean:parameter id="nextPage" name="nextPage" />
 <bean:parameter id="inputPage" name="inputPage" />
-<html:form action="<%=path%>" method="GET">
+<html:form action="<%=path%>" method="get">
 	<input alt="input.method" type="hidden" name="method" value="nextPagePublic"/>
 	<input alt="input.nextPage" type="hidden" name="nextPage" value="<%= nextPage %>"/>
 	<input alt="input.inputPage" type="hidden" name="inputPage" value="<%= inputPage %>"/>

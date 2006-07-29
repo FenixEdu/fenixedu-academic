@@ -2,7 +2,7 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 
  <strong>Página 7 de 7</strong>
-<p align="center"><span class="error"><html:errors/></span></p>
+<p align="center"><span class="error"><!-- Error messages go here --><html:errors /></span></p>
 
 <html:form action="/declaration.do?method=logOff" >
 <table align="center" border="0" cellpadding="5" cellspacing="5">

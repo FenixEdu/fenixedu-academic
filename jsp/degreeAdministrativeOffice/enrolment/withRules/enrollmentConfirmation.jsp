@@ -19,7 +19,7 @@ font-weight: bold;
 
 
 <h2><bean:message key="title.student.enrollment.resume" bundle="STUDENT_RESOURCES"/></h2>
-<span class="error"><html:errors/></span>
+<span class="error"><!-- Error messages go here --><html:errors /></span>
 
 	<div class="infoselected">
 	<p><b><bean:message bundle="APPLICATION_RESOURCES" key="label.student"/>:</b> <bean:write name="infoStudentEnrolmentContext" property="infoStudentCurricularPlan.infoStudent.infoPerson.nome" /> / 

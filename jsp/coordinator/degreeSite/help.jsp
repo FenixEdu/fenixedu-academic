@@ -6,4 +6,4 @@
 
 <p><bean:message key="text.coordinator.degreeSite.help"/></p>
 
-<p><span class="error"><html:errors/></span></p>
+<p><span class="error"><!-- Error messages go here --><html:errors /></span></p>

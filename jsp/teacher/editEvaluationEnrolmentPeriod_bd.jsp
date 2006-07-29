@@ -14,7 +14,7 @@
 			<td class="infoop"><bean:message key="label.period.information" /></td>
 		</tr>
 	</table>
-	<span class="error"><html:errors/></span>	
+	<span class="error"><!-- Error messages go here --><html:errors /></span>	
 	<bean:define id="evaluationCode" name="evaluation" property="idInternal"/>			
 	<logic:equal name="evaluation" property="evaluationType" value="<%= EvaluationType.EXAM_STRING %>">
 		<html:form action="/examEnrollmentEditionManager" > 

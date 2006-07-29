@@ -6,7 +6,7 @@
 <%@ page import="java.util.Map" %>
 <%@ page import="java.util.TreeMap" %>
 
-<span class="error"><html:errors/></span>
+<span class="error"><!-- Error messages go here --><html:errors /></span>
 	<logic:present name="seminaries">
 		<logic:present name="cases">
 			<logic:present name="modalities">
