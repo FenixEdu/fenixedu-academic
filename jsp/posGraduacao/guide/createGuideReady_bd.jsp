@@ -9,7 +9,7 @@
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
 
 
-   <span class="error"><html:errors/><br></span>
+   <span class="error"><html:errors/><br/></span>
 
    <table>
     <bean:define id="infoGuide" name="<%= SessionConstants.GUIDE%>" />
@@ -85,8 +85,8 @@
 
 		<!-- List of Items in the Guide -->
 	</table>
-	<br>
-	<br>
+	<br/>
+	<br/>
 	<table>
 		<logic:iterate id="guideEntry" name="infoGuide" property="infoGuideEntries" >
 		<tr>
@@ -113,9 +113,9 @@
     </table>
     
 
-	<br>
-	<br>
-	<br>
+	<br/>
+	<br/>
+	<br/>
 	
 	<bean:message key="label.masterDegree.administrativeOffice.guideSituation"/>
 	<table>

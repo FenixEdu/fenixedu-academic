@@ -38,3 +38,5 @@ update DEGREE_INFO set QUALIFICATION_LEVEL = 'pt32:Bla bla bla xpto bla bla bla 
 update DEGREE_INFO set RECOGNITIONS = 'pt32:Bla bla bla xpto bla bla bla blaen32:Zla Xla Yla wpto bla bla bla bla';
 update SUMMARY set SUMMARY.SUMMARY_TEXT = 'Bla bla bla bla ypto bla blb blrerrr';
 update BIBLIOGRAPHIC_REFERENCE set BIBLIOGRAPHIC_REFERENCE.TITLE = 'Bla bla bla bla bla';
+update DEGREE_CURRICULAR_PLAN set DEGREE_CURRICULAR_PLAN.DESCRIPTION = 'Bla blab blabb blabbb blabbbb';
+update DEGREE_CURRICULAR_PLAN set DEGREE_CURRICULAR_PLAN.DESCRIPTION_EN = 'Bla blab blabb blabbb blabbbb';

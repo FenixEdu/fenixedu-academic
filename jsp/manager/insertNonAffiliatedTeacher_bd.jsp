@@ -47,7 +47,7 @@
 		</tr>
 	</table>
 	
-	<br>
+	<br/>
 
 	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton" onclick="this.form.method.value='search'">
 		<bean:message bundle="MANAGER_RESOURCES" key="button.search"/>

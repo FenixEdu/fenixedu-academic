@@ -29,8 +29,8 @@
               <td>
                 <table border="0" width="100%" height="100%">
                   <tr align="left"> 
-                    <td>&nbsp;<b>INSTITUTO SUPERIOR TÉCNICO</b><br>
-                      &nbsp;<b>Secretaria da Pós-Graduação</b><br>
+                    <td>&nbsp;<b>INSTITUTO SUPERIOR TÉCNICO</b><br/>
+                      &nbsp;<b>Secretaria da Pós-Graduação</b><br/>
                       &nbsp;<b>Centro de Custo 0212</b>
                       <hr size="1">
                     </td>
@@ -214,9 +214,9 @@
          <td colspan="2" valign="bottom">
            &nbsp;<div align="center">&nbsp;</div>
            <div align="center">&nbsp;</div>
-           <div align="center"><b>O Funcionário</b> <br>
-            <br>
-            <br>
+           <div align="center"><b>O Funcionário</b> <br/>
+            <br/>
+            <br/>
            </div>
           <hr align="center" width="300" size="1">
          </td>

@@ -37,7 +37,7 @@ public class SectionChooserRenderer implements ISectionMenuSlotContentRenderer {
 
         strBuffer.append(infoSection.getName());
 
-        strBuffer.append("</a><br>");
+        strBuffer.append("</a><br/>");
 
         return strBuffer;
     }

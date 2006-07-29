@@ -111,7 +111,7 @@
 		
 		<html:link page="/editGrantCostCenter.do?method=prepareEditGrantCostCenterForm">
 			<bean:message key="link.create.grant.costcenter"/>
-		</html:link><br><br>--%>
+		</html:link><br/><br/>--%>
 		</td>
 		</tr>	
 		

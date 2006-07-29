@@ -39,8 +39,8 @@
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.alteredField" property="alteredField"/>
 
 	<b><bean:message key="label.teacher.finalWork.title"/>:</b>
-	<br><html:text bundle="HTMLALT_RESOURCES" altKey="text.title" property="title" size="85"/>
-	<hr><br>
+	<br/><html:text bundle="HTMLALT_RESOURCES" altKey="text.title" property="title" size="85"/>
+	<hr><br/>
 
 	<b><bean:message key="label.teacher.finalWork.responsable"/>:</b>
 	<table width="100%">
@@ -74,7 +74,7 @@
 			</td>
 		</tr>
 	</table>
-	<br><br>
+	<br/><br/>
 
 	<logic:empty name="finalWorkInformationForm" property="companionName">
 	<logic:empty name="finalWorkInformationForm" property="companionMail">
@@ -114,7 +114,7 @@
 			</td>
 		</tr>
 	</table>
-	<br><br>
+	<br/><br/>
 	</logic:empty>
 	</logic:empty>
 	</logic:empty>
@@ -175,33 +175,33 @@
 			</td>
 		</tr>
 	</table>
-	<br><br>
+	<br/><br/>
 	</logic:empty>
 				
 	<b><bean:message key="label.teacher.finalWork.credits"/>:</b>
 	<html:text bundle="HTMLALT_RESOURCES" altKey="text.responsibleCreditsPercentage" property="responsibleCreditsPercentage" size="3" maxlength="3"/>% /
 	<html:text bundle="HTMLALT_RESOURCES" altKey="text.coResponsibleCreditsPercentage" property="coResponsibleCreditsPercentage" size="3" maxlength="3"/>%
-	<br><hr>
+	<br/><hr>
 
 	<b><bean:message key="label.teacher.finalWork.framing"/>:</b>
-	<br><html:textarea bundle="HTMLALT_RESOURCES" altKey="textarea.framing" property="framing" rows="4" cols="80"/>
-	<br><br>
+	<br/><html:textarea bundle="HTMLALT_RESOURCES" altKey="textarea.framing" property="framing" rows="4" cols="80"/>
+	<br/><br/>
 	<b><bean:message key="label.teacher.finalWork.objectives"/>:</b>
-	<br><html:textarea bundle="HTMLALT_RESOURCES" altKey="textarea.objectives" property="objectives" rows="4" cols="80"/>
-	<br><br>
+	<br/><html:textarea bundle="HTMLALT_RESOURCES" altKey="textarea.objectives" property="objectives" rows="4" cols="80"/>
+	<br/><br/>
 	<b><bean:message key="label.teacher.finalWork.description"/>:</b>
-	<br><html:textarea bundle="HTMLALT_RESOURCES" altKey="textarea.description" property="description" rows="8" cols="80"/>
-	<br><br>
+	<br/><html:textarea bundle="HTMLALT_RESOURCES" altKey="textarea.description" property="description" rows="8" cols="80"/>
+	<br/><br/>
 	<b><bean:message key="label.teacher.finalWork.requirements"/>:</b>
-	<br><html:textarea bundle="HTMLALT_RESOURCES" altKey="textarea.requirements" property="requirements" rows="8" cols="80"/>
-	<br><br>
+	<br/><html:textarea bundle="HTMLALT_RESOURCES" altKey="textarea.requirements" property="requirements" rows="8" cols="80"/>
+	<br/><br/>
 	<b><bean:message key="label.teacher.finalWork.deliverable"/>:</b>
-	<br><html:textarea bundle="HTMLALT_RESOURCES" altKey="textarea.deliverable" property="deliverable" rows="4" cols="80"/>
-	<br><br>
+	<br/><html:textarea bundle="HTMLALT_RESOURCES" altKey="textarea.deliverable" property="deliverable" rows="4" cols="80"/>
+	<br/><br/>
 	<b><bean:message key="label.teacher.finalWork.url"/>:</b>
-	<br><html:text bundle="HTMLALT_RESOURCES" altKey="text.url" property="url" size="80"/>
-	<br><hr>
-	<br><b><bean:message key="label.teacher.finalWork.priority.info"/></b><br><br>
+	<br/><html:text bundle="HTMLALT_RESOURCES" altKey="text.url" property="url" size="80"/>
+	<br/><hr>
+	<br/><b><bean:message key="label.teacher.finalWork.priority.info"/></b><br/><br/>
 
 	<table>
 		<logic:iterate id="branch" name="branches">
@@ -218,7 +218,7 @@
 		</logic:iterate>
 	</table>
 
-	<br><hr><br>
+	<br/><hr><br/>
 	<table cellspacing="2">
 		<tr>
 			<th><bean:message key="label.teacher.finalWork.numberOfGroupElements"/>:</th>
@@ -239,12 +239,12 @@
 			<td><html:radio bundle="HTMLALT_RESOURCES" altKey="radio.degreeType" value="<%= net.sourceforge.fenixedu.domain.degree.DegreeType.MASTER_DEGREE.toString() %>" property="degreeType"/><bean:message bundle="ENUMERATION_RESOURCES" key="<%= net.sourceforge.fenixedu.domain.degree.DegreeType.MASTER_DEGREE.toString() %>"/></td>
 		</tr>
 	</table>
-	<br><hr><br>
+	<br/><hr><br/>
 	<b><bean:message key="label.teacher.finalWork.observations"/>:</b>
-	<br><html:textarea bundle="HTMLALT_RESOURCES" altKey="textarea.observations" property="observations" rows="4" cols="80"/><br><br>
+	<br/><html:textarea bundle="HTMLALT_RESOURCES" altKey="textarea.observations" property="observations" rows="4" cols="80"/><br/><br/>
 	<b><bean:message key="label.teacher.finalWork.location"/>:</b>
-	<br><html:text bundle="HTMLALT_RESOURCES" altKey="text.location" property="location" size="81"/><br>
+	<br/><html:text bundle="HTMLALT_RESOURCES" altKey="text.location" property="location" size="81"/><br/>
 
 
-	<br><br><html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton"><bean:message key="button.submit"/></html:submit></td>
+	<br/><br/><html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton"><bean:message key="button.submit"/></html:submit></td>
 </html:form>

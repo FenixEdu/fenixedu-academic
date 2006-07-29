@@ -124,7 +124,7 @@ text-align: right;
 			<h:outputText value="<th>#{bundle['label.teacherService.teacher.credits']}</th>" escape="false" />
 			<h:outputText value="<th>#{bundle['label.teacherService.teacher.totalLecturedHours']}</th>" escape="false" />
 			<h:outputText value="<th>#{bundle['label.teacherService.teacher.availability']}</th>" escape="false" />
-			<h:outputText value="<th>#{bundle['label.teacherService.teacher.accumulatedCredits']} <br> #{viewTeacherService.previousExecutionYear.year}</th>" escape="false" />
+			<h:outputText value="<th>#{bundle['label.teacherService.teacher.accumulatedCredits']} <br/> #{viewTeacherService.previousExecutionYear.year}</th>" escape="false" />
 		<h:outputText value="</tr>" escape="false" />
 		<f:verbatim>
 			<fc:dataRepeater value="#{viewTeacherService.teacherServiceDTO}" var="teacher">

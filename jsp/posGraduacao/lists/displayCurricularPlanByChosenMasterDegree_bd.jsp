@@ -16,8 +16,8 @@
     <h3><%= ((List) masterDegreeCPlanList).size()%> <bean:message key="label.masterDegree.administrativeOffice.curricularPlanFound"/></h3>        
     <% if (((List) masterDegreeCPlanList).size() != 0) { %>
     </p>
-    <bean:message key="label.masterDegree.chooseOne"/><br><br>
-	<bean:message key="label.masterDegree.administrativeOffice.curricularPlans" /><br>
+    <bean:message key="label.masterDegree.chooseOne"/><br/><br/>
+	<bean:message key="label.masterDegree.administrativeOffice.curricularPlans" /><br/>
   	<% } %>
   
   	<logic:iterate id="degreeCurricularPlan" name="masterDegreeCPlanList">
@@ -27,7 +27,7 @@
     	<html:link page='<%= pageContext.findAttribute("degreeCurricularPlanLink").toString() %>'>
 			<bean:write name="degreeCurricularPlan" property="infoDegree.nome"/> - 
 			<bean:write name="degreeCurricularPlan" property="name"/>
-			<br>
+			<br/>
         </html:link>
 	</logic:iterate>
 

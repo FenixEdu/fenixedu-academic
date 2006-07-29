@@ -40,7 +40,7 @@
 		<h3><bean:write name="enrolmentsSize"/> <bean:message key="label.masterDegree.administrativeOffice.studentsFound"/></h3>        
 	</p>
 	<logic:notEqual name="enrolmentsSize" value="0">
-		<bean:message key="label.masterDegree.chooseOne"/><br><br><br>
+		<bean:message key="label.masterDegree.chooseOne"/><br/><br/><br/>
 		<table>
 			<tr>
 				<th class="listClasses-header"><bean:message key="label.candidate.number" /></th>

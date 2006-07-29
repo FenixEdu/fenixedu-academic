@@ -14,7 +14,7 @@
 
 
 	<h3><bean:message bundle="MANAGER_RESOURCES" key="label.operator.choosePerson" /></h3>
-	<br>
+	<br/>
 
 	<table>
 		<tr>

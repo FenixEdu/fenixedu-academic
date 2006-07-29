@@ -32,7 +32,7 @@
 		<logic:notPresent name="homepage" property="person.employee.currentDepartmentWorkingPlace">
 			<li>
 				<bean:define id="homepageID" name="homepage" property="idInternal"/>
-				<html:link page="<%= "/viewHomepage.do?method=show&homepageID=" + homepageID.toString() %>">
+				<html:link page="<%= "/viewHomepage.do?method=show&amp;homepageID=" + homepageID.toString() %>">
 					<bean:message bundle="HOMEPAGE_RESOURCES" key="link.homepage.home"/>
 				</html:link>
 		    </li>

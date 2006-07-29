@@ -7,7 +7,7 @@
 
 <logic:present name="shiftsList">
 	
-<br>
+<br/>
 
 	<table width="100%" cellpadding="0" cellspacing="0">
 		<tr>
@@ -16,14 +16,14 @@
 			</td>
 		</tr>
 	</table>
-	<br>
+	<br/>
 		
 <html:form action="/enrollStudentGroupShift" method="get">
 <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
 <span class="error"><html:errors/></span>
 
-<br>
-<br>		 
+<br/>
+<br/>		 
 
 <table width="50%" cellpadding="0" border="0">
 		
@@ -45,7 +45,7 @@
 
  
 </table>
-<br>
+<br/>
 
 <table>
 <tr>

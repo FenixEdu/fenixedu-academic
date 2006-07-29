@@ -27,7 +27,7 @@ public class MasterDegreeCurricularPlanStrategy extends DegreeCurricularPlanStra
     }
 
     /**
-     * Checks if the Master Degree Student has finished his scholar part. <br>
+     * Checks if the Master Degree Student has finished his scholar part. <br/>
      * All his credits are added and compared to the ones required by his Degree
      * Curricular Plan.
      * 

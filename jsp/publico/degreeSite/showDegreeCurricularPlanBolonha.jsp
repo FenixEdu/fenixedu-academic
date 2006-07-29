@@ -5,7 +5,6 @@
 
 <ft:tilesView locale="<%=request.getAttribute(org.apache.struts.Globals.LOCALE_KEY).toString()%>" definition="definition.public.mainPageIST" attributeName="body-inline">
 	<f:loadBundle basename="resources/HtmlAltResources" var="htmlAltBundle"/>
-	<style>@import "<%= request.getContextPath() %>/CSS/transitional.css";</style>
 	<f:loadBundle basename="resources/ApplicationResources" var="applicationBundle"/>
 	<f:loadBundle basename="resources/GlobalResources" var="globalBundle"/>
 	<f:loadBundle basename="resources/PublicDegreeInformation" var="publicDegreeInfoBundle"/>
@@ -38,10 +37,10 @@
 
 	<h:outputText value="<br/><br/>" escape="false"/>
 	
-	<h:outputFormat value="<p><h1>#{enumerationBundle[CurricularCourseManagement.degreeCurricularPlan.degree.bolonhaDegreeType.name]}" escape="false"/>
+	<h:outputFormat value="<h1>#{enumerationBundle[CurricularCourseManagement.degreeCurricularPlan.degree.bolonhaDegreeType.name]}" escape="false"/>
 	<h:outputFormat value="#{publicDegreeInfoBundle['public.degree.information.label.in']}"/>
 	<h:outputFormat value="#{CurricularCourseManagement.degreeLocaleSensitiveName}"/>
-	<h:outputFormat value="</h1></p>" escape="false"/>
+	<h:outputFormat value="</h1>" escape="false"/>
 
 	<h:outputFormat value="<h2 class='greytxt'>#{publicDegreeInfoBundle['public.degree.information.label.curricularPlan']}" escape="false"/>
 	<h:outputFormat value="#{CurricularCourseManagement.degreeCurricularPlan.name}"/>

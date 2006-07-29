@@ -21,11 +21,11 @@
 				   arg2='<%= pageContext.findAttribute("year").toString() %>' 
 	  />
 	 </strong>
-  	 <br>
-  	 <br>
+  	 <br/>
+  	 <br/>
       <span class="error"><html:errors/></span>
-      <br>
-  	 <br>
+      <br/>
+  	 <br/>
 
      <table>
           <tr>
@@ -39,8 +39,8 @@
           </tr>
      </table>
      
-     <br>
-     <br>
+     <br/>
+     <br/>
      
      <table>
           <tr> 
@@ -85,7 +85,7 @@
 		</tr>
 	</table>
 
-	<br>
+	<br/>
 	
 	<bean:define id="link">/editGuideInformation.do?method=editGuideInformation<%= "&" 
 %>page=0<%= "&" 
@@ -108,8 +108,8 @@
       </tr> 
 	</table>
 	
-	<br>
-	<br>
+	<br/>
+	<br/>
 	
  	 <table>
 		<tr align="center">

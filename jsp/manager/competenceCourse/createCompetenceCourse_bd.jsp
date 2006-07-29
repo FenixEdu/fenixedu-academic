@@ -6,7 +6,7 @@
 
 <h2><bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="label.manager.create.competence.course" /></h2>
 
-<br>
+<br/>
 
 <span class="error"><html:errors/></span>
 
@@ -45,7 +45,7 @@
 		</tr>
 	</table>
 	
-	<br>
+	<br/>
 	
 	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton">
 		<bean:message bundle="MANAGER_RESOURCES" key="button.save"/>

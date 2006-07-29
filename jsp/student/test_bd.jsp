@@ -6,7 +6,7 @@
 <%@ taglib uri="/WEB-INF/struts-tiles.tld" prefix="tiles" %>
 
 <html:form action="showStudentGroupInfo.do" method="get">
-Numero:	    <html:text bundle="HTMLALT_RESOURCES" altKey="text.username" property="username"/><br>
+Numero:	    <html:text bundle="HTMLALT_RESOURCES" altKey="text.username" property="username"/><br/>
 Password:	<html:text bundle="HTMLALT_RESOURCES" altKey="text.password" property="password"/>
 	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" value="OK"/>
 </html:form>

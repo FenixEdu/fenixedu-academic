@@ -498,7 +498,7 @@
 </logic:iterate>
 </logic:present>
 <logic:notPresent name="infoQualificationList">
-	<br><bean:message key="message.grant.qualification.nonExistentContracts"/>&nbsp;
+	<br/><bean:message key="message.grant.qualification.nonExistentContracts"/>&nbsp;
 </logic:notPresent>
 <br/><br/>
 <hr>
@@ -506,7 +506,7 @@
 
 <%-- CONTRACT INFORMATION --%>
 
-<b><bean:message key="label.grant.contract.information"/></b><br>
+<b><bean:message key="label.grant.contract.information"/></b><br/>
 <logic:present name="infoListGrantContractList">
     <logic:iterate id="infoListGrantContract" name="infoListGrantContractList">
 	<br/><br/>
@@ -580,7 +580,7 @@
 		<tr>
 			<td>
 				<b><bean:message key="label.grant.contract.regime.list.information"/>&nbsp;
-				<bean:write name="infoListGrantContract" property="infoGrantContract.contractNumber"/></b><br>
+				<bean:write name="infoListGrantContract" property="infoGrantContract.contractNumber"/></b><br/>
 			</td>
 		</tr>
 	</table>

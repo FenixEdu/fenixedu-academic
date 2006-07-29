@@ -30,12 +30,12 @@
       </object>
     </td>
     <td width="300" align="center" valign="middle">
-      <br>
+      <br/>
       <div align="center" style="color:#000080; font-size:28px;letter-spacing:10pt ">
        PASSWORD
       </div>
       <hr width="250" noshade>
-      <br><b><font color="#000080"><bean:message key="aviso.passwordEmail" /></font></b><br>
+      <br/><b><font color="#000080"><bean:message key="aviso.passwordEmail" /></font></b><br/>
       <html:form action="/forgotPassword" focus="username">               
         <div style="font-size:14px">
           <table align="center" border="0" width="300" celspaccing="0" cellpadding="0" >
@@ -57,7 +57,7 @@
             </tr>            
           </table>
         </div>
-        <br>
+        <br/>
         <html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" value="Submit" style="color:#000080; width=75px; background-color:#B1BBD6; height=20px; font-size=10px"/>     
         <html:reset bundle="HTMLALT_RESOURCES" altKey="reset.reset" style="color:#000080; width=75px; background-color:#B1BBD6; height=20px; font-size=10px"/>    
         <html:cancel bundle="HTMLALT_RESOURCES" altKey="cancel.cancel" style="color:#000080; width=75px; background-color:#B1BBD6; height=20px; font-size=10px"/>

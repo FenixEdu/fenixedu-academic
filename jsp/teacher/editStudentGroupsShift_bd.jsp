@@ -174,8 +174,8 @@
 <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
 <bean:message key="message.editStudentGroupsShift"/>
 
-<br>
-<br>		 
+<br/>
+<br/>		 
 <table width="60%" cellpadding="0" border="0">
 
 	
@@ -238,14 +238,14 @@
 	 </logic:iterate>
  </table>
 
-<br>
-<br>
+<br/>
+<br/>
 <html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton"><bean:message key="button.join"/>                    		         	
 </html:submit>
 <html:reset bundle="HTMLALT_RESOURCES" altKey="reset.reset" styleClass="inputbutton"><bean:message key="label.clear"/>
 </html:reset>
-<br>
-<br>
+<br/>
+<br/>
 
 <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="editStudentGroupsShift"/>
 <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.objectCode"  property="objectCode" value="<%= pageContext.findAttribute("objectCode").toString() %>" />

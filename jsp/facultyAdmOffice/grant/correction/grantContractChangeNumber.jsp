@@ -26,7 +26,7 @@
 	 <tr>
 	 	<td><bean:message key="info.grant.correct.grantcontract.newcontractnumber"/>(<bean:message key="label.grant.new.contract.number.correction"/>)</td>
 	 </tr>
-	</table><br><br>
+	</table><br/><br/>
 
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="changeNumberContract"/>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.action" property="action" value="changeNumberContract"/>

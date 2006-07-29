@@ -22,7 +22,7 @@
     <%= ((List) guideList).size()%> <bean:message key="label.masterDegree.administrativeOffice.guidesFound"/>        
 
     <% if (((List) guideList).size() != 0) { %>
-    <br><bean:message key="label.masterDegree.chooseOne"/><br>
+    <br/><bean:message key="label.masterDegree.chooseOne"/><br/>
 	<table>
     	<tr>
     		<td><bean:message key="label.masterDegree.administrativeOffice.guideNumber" /></td>

@@ -85,7 +85,7 @@ import org.apache.struts.util.LabelValueBean;
  *       was found.</li>
  *       </u>
  * 
- * <b>Notes: </b> <br>
+ * <b>Notes: </b> <br/>
  * 
  * <pre>
  * <li>
@@ -132,9 +132,9 @@ public class SearchAction extends DispatchAction {
      * @param request
      * @param response
      * @return if search result size equals to 1 returns <code>list-one</code>
-     *         forward. <br>
+     *         forward. <br/>
      *         if search result size greater then 1 returns
-     *         <code>list-many</code> forward. <br>
+     *         <code>list-many</code> forward. <br/>
      *         if search result size equals to 0 returns
      *         <code>inputForward</code>
      * 

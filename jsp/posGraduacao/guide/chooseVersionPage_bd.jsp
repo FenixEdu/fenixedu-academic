@@ -24,7 +24,7 @@
 
 	
     <%= ((List) versionList).size()%> <bean:message key="label.masterDegree.administrativeOffice.versionsFound"/>        
-    <br><bean:message key="label.masterDegree.chooseOne"/><br>
+    <br/><bean:message key="label.masterDegree.chooseOne"/><br/>
     <% if (((List) versionList).size() != 0) { %>
 	<table>
     	<tr>

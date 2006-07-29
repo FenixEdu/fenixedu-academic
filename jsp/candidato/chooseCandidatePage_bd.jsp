@@ -12,7 +12,7 @@
 
 <%= ((List) candidateList).size() %> <bean:message key="label.masterDegree.administrativeOffice.candidatesFound"/>        
 
-<br><bean:message key="label.masterDegree.chooseOne"/><br>
+<br/><bean:message key="label.masterDegree.chooseOne"/><br/>
 
 <logic:iterate id="candidate" name="candidateList" indexId="indexCandidate">
 	<bean:define id="candidateLink">

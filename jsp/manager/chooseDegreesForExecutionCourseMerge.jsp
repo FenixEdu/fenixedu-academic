@@ -5,7 +5,7 @@
 
 
 
-<br>
+<br/>
 
 <span class="error"><html:errors/></span>
 

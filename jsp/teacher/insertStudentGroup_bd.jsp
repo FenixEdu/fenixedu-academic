@@ -18,10 +18,10 @@
 			</td>
 		</tr>
 	</table>
-	<br>
+	<br/>
 	
 <h2><span class="error"><html:errors/></span></h2>
-<br>
+<br/>
 
 <b><bean:message key="message.insertStudentGroupData"/></b>
 <br/>
@@ -40,7 +40,7 @@
 	</tr>
 
 </table>
-<br>
+<br/>
 
 <logic:empty name="infoSiteStudentGroup" property="infoSiteStudentInformationList">
 <h2>
@@ -80,7 +80,7 @@
 
 </table>
 </logic:notEmpty>
-<br>
+<br/>
 
 
 

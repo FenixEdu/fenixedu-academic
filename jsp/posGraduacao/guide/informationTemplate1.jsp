@@ -30,8 +30,8 @@
               <td>
                 <table border="0" width="100%" height="100%">
                   <tr valign="top" align="left"> 
-                    <td>&nbsp;<b>INSTITUTO SUPERIOR TÉCNICO</b><br>
-                      &nbsp;<b>Secretaria da Pós-Graduação</b><br>
+                    <td>&nbsp;<b>INSTITUTO SUPERIOR TÉCNICO</b><br/>
+                      &nbsp;<b>Secretaria da Pós-Graduação</b><br/>
                       <hr size="1">
                     </td>
                   </tr>

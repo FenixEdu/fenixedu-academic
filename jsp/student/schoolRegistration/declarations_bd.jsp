@@ -24,6 +24,6 @@
 	</td>
 </tr>
 </table>
-<br><br>
+<br/><br/>
 <p align="center"><html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" value="Terminar" styleClass="inputbutton"/></p>
 </html:form>

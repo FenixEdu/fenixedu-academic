@@ -28,7 +28,7 @@
 	 	<td><bean:message key="info.grant.correct.grantcontract.move.newgrantowner"/>(<bean:message key="label.new.grant.owner"/>)</td>
 	 </tr>
 	 
-	</table><br><br>
+	</table><br/><br/>
 
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="moveContract"/>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.action" property="action" value="moveContract"/>

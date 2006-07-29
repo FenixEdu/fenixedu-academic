@@ -39,7 +39,7 @@
 		</tr>			
 	</table>
 	
-	<br>
+	<br/>
 
 	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton">
 		<bean:message bundle="MANAGER_RESOURCES" key="button.save"/>

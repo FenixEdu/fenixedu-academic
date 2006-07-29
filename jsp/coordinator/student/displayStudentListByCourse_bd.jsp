@@ -18,7 +18,7 @@
     <h3><%= ((List) enrolmentList).size()%> <bean:message key="label.masterDegree.administrativeOffice.studentsFound"/></h3>        
     <% if (((List) enrolmentList).size() != 0) { %>
         </p>
-        <bean:message key="label.masterDegree.chooseOne"/><br><br><br>
+        <bean:message key="label.masterDegree.chooseOne"/><br/><br/><br/>
         
         <logic:equal name="viewPhoto" value="true">
 	        <html:link page="<%= "/listStudentsForCoordinator.do?method=getStudentsFromDCP&page=0&amp;viewPhoto=false&degreeCurricularPlanID=" + degreeCurricularPlanID %>">

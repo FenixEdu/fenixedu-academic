@@ -88,7 +88,7 @@
 		 		</logic:iterate>
 	 		</logic:present>		 							
 		</table>
-		<br>
+		<br/>
 		<html:submit><bean:message bundle="MANAGER_RESOURCES" key="label.manager.save.modifications"/></html:submit>
 	</html:form> 	
 </logic:present>

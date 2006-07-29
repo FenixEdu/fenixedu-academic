@@ -86,7 +86,7 @@
 								<logic:iterate id="teacherShiftPercentage"	name="infoShiftPercentage" property="teacherShiftPercentageList" indexId="indexPercentage">						
 						    		<bean:write name="teacherShiftPercentage" property="infoProfessorship.infoTeacher.infoPerson.nome" />
 			 						&nbsp;-&nbsp;<bean:write name="teacherShiftPercentage" property="percentage" />
-			 						<br>
+			 						<br/>
 								</logic:iterate> 					
 							</td>						
 							</tr>

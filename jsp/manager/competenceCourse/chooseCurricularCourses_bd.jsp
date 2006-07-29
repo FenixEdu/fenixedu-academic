@@ -5,8 +5,8 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>			
 <h2><bean:message bundle="MANAGER_RESOURCES" key="label.manager.competence.course.management"/></h2>
 
-<br>
-<br>
+<br/>
+<br/>
 
 <span class="error"><html:errors/></span>
 
@@ -49,8 +49,8 @@
 			 </logic:iterate>
 			
 		</table>
-		<br>
-		<br>	
+		<br/>
+		<br/>	
 		<html:submit>
 		   <bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="label.manager.associate.curricularCourses"/>
 		</html:submit>

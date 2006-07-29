@@ -39,3 +39,12 @@ p.breadcumbs a:hover{ text-decoration: none; color: #999; }
 .grey999 { color: #999; }
 .revision { font-size: 0.9em; color: #999; }
 .skip { visibility: hidden; }
+
+.invisible th, .invisible td {
+padding: 0.25em;
+}
+.invisible th {
+text-align: right;
+font-weight: normal;
+vertical-align: top;
+}

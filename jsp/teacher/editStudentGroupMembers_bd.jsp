@@ -44,8 +44,8 @@
 <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
 <bean:message key="message.editStudentGroupMembers.RemoveMembers"/>
 
-<br>
-<br>		 
+<br/>
+<br/>		 
 <table width="50%" cellpadding="0" border="0">
 
 	
@@ -82,13 +82,13 @@
  
 </table>
 
-<br>
+<br/>
 <html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton"><bean:message key="button.remove"/>                    		         	
 </html:submit>
 <html:reset bundle="HTMLALT_RESOURCES" altKey="reset.reset" styleClass="inputbutton"><bean:message key="label.clear"/>
 </html:reset>
-<br>
-<br>
+<br/>
+<br/>
 
 <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="deleteStudentGroupMembers"/>
 <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.objectCode"  property="objectCode" value="<%= pageContext.findAttribute("objectCode").toString() %>" />
@@ -123,8 +123,8 @@
 
 <logic:notEmpty name="infoStudentList"> 
 <bean:message key="message.editStudentGroupMembers.InsertMembers"/>
-<br>
-<br>
+<br/>
+<br/>
 
 <table width="50%" cellpadding="0" border="0">
 
@@ -161,7 +161,7 @@
 	 
 
 </table>
-<br>
+<br/>
 
 <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="insertStudentGroupMembers"/>
 <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.objectCode"  property="objectCode" value="<%= pageContext.findAttribute("objectCode").toString() %>" />

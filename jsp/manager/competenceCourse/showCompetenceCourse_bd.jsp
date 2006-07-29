@@ -22,9 +22,9 @@
 	<li><html:link module="/manager" module="/manager" page="/curricularCoursesCompetenceCourse.do?method=readDegrees" paramId="competenceCourseID" paramName="competenceCourse" paramProperty="idInternal"><bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="label.manager.associate.curricularCourses"/></html:link></li>
 </ul>
 
-<br>
+<br/>
 <span class="error"><html:errors/></span>
-<br>
+<br/>
 
 
 <table width="70%" cellpadding="0" border="0">
@@ -39,7 +39,7 @@
 		</tr>
 	</logic:iterate>
 </table>
-<br>
+<br/>
 	
 <h3><bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="label.manager.curricularCourses"/></h3>
 
@@ -80,8 +80,8 @@
  				</tr>
  			</logic:iterate>						
 		</table>
-		<br>
-		<br>	
+		<br/>
+		<br/>	
 		<html:submit>
 		   <bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="label.manager.delete.selected.competences"/>
 		</html:submit>

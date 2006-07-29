@@ -440,7 +440,7 @@ public class ExamsMapRenderer implements IExamsMapRenderer {
                                     strBuffer.append("</td>");
                                     strBuffer.append("<td>");
                                     strBuffer.append(season1Exam.getDate());
-                                    strBuffer.append("<br>");
+                                    strBuffer.append("<br/>");
                                     strBuffer.append(season1Exam.getBeginningHour());
                                     strBuffer.append("-");
                                     strBuffer.append(season1Exam.getEndHour());
@@ -503,7 +503,7 @@ public class ExamsMapRenderer implements IExamsMapRenderer {
                                     if (user.equals("sop")) {
                                         strBuffer.append(getMessageResource(pageContext,
                                                 "public.degree.information.label.rooms"));
-                                        strBuffer.append("<br>");
+                                        strBuffer.append("<br/>");
                                     } else if (user.equals("public")) {
                                         strBuffer.append("<td class='" + rowClass + "'>");
                                     }
@@ -585,7 +585,7 @@ public class ExamsMapRenderer implements IExamsMapRenderer {
                                     strBuffer.append("</td>");
                                     strBuffer.append("<td>");
                                     strBuffer.append(season2Exam.getDate());
-                                    strBuffer.append("<br>");
+                                    strBuffer.append("<br/>");
                                     strBuffer.append(season2Exam.getBeginningHour());
                                     strBuffer.append("-");
                                     strBuffer.append(season2Exam.getEndHour());
@@ -648,7 +648,7 @@ public class ExamsMapRenderer implements IExamsMapRenderer {
                                         strBuffer.append(getMessageResource(pageContext,
                                                 "public.degree.information.label.rooms")
                                                 + ":");
-                                        strBuffer.append("<br>");
+                                        strBuffer.append("<br/>");
                                     } else if (user.equals("public")) {
                                         strBuffer.append("<td class='" + rowClass + "'>");
                                     }

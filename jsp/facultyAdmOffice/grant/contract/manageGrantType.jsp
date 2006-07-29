@@ -34,7 +34,7 @@
 	<bean:message key="message.grant.type.creation"/>:&nbsp;
 	<html:link page="/editGrantType.do?method=prepareEditGrantTypeForm">
 		<bean:message key="link.create.grant.type"/>
-	</html:link><br><br>
+	</html:link><br/><br/>
 
     <table border="0" cellspacing="1" cellpadding="1">
     <%-- Table with grant type description rows --%>

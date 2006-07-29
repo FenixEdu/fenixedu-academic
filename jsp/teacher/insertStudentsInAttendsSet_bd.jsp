@@ -65,8 +65,8 @@ function cleanSelect() {
 
 <logic:notEmpty name="infoStudentList"> 
 <bean:message key="message.editAttendsSetMembers.InsertMembers"/>
-<br>
-<br>
+<br/>
+<br/>
 
 <table width="50%" cellpadding="0" border="0">
 
@@ -109,7 +109,7 @@ function cleanSelect() {
 	 </logic:iterate>
 
 </table>
-<br>
+<br/>
 
 <html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton"><bean:message key="button.insertAluno"/>                    		         	
 </html:submit>       

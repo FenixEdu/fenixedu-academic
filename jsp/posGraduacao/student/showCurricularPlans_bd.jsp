@@ -32,6 +32,6 @@
 	        		
         			<bean:write name="studentCP" property="infoStudent.number" />
                 </html:link>
-                <br>
+                <br/>
         	</logic:iterate>
 	<% } %>

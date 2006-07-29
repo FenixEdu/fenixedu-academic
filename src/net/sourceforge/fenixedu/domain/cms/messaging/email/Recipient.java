@@ -11,7 +11,7 @@ import javax.mail.Message;
 /**
  * @author <a href="mailto:goncalo@ist.utl.pt">Goncalo Luiz</a> <br/> <br/>
  *         <br/> Created on 11:48:24,8/Fev/2006
- *         <br>
+ *         <br/>
  *         In the current version all recipients are added to BCC despite of the specified RecipientType
  * @version $Id$
  */

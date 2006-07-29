@@ -320,5 +320,5 @@
        		<bean:message key="link.masterDegree.administrativeOffice.changePassword" />
        	</html:link>
    <% } %>
-   	<br>
+   	<br/>
 	</html:form>

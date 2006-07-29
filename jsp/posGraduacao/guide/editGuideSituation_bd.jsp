@@ -27,10 +27,10 @@
     	 />
     	</strong>
     	 
-      <br>
-      <br>
+      <br/>
+      <br/>
       <span class="error"><html:errors/></span>
-      <br>
+      <br/>
 
 	<bean:define id="action">/editGuideSituation.do?method=editGuideSituation<%= "&" %>year=<bean:write name="infoGuide" property="year"/><%= "&" %>number=<bean:write name="infoGuide" property="number"/><%= "&" %>version=<bean:write name="infoGuide" property="version"/>
 	</bean:define>
@@ -40,8 +40,8 @@
   <html:form action='<%= pageContext.findAttribute("action").toString() %>'>
    	  <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>  
    <strong><bean:message key="label.masterDegree.administrativeOffice.activeSituation" /></strong>
-   <br>
-   <br>
+   <br/>
+   <br/>
    <table border="0">
   	   
        <tr>

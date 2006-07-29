@@ -8,8 +8,8 @@
 <ul style="list-style-type: square;">
 <li><html:link module="/manager" page="/insertDegree.do?method=prepareInsert"><bean:message bundle="MANAGER_RESOURCES" key="label.manager.insert.degree"/></html:link></li>
 </ul>
-<br>
-<br>
+<br/>
+<br/>
 
 <span class="error"><html:errors/></span>
 
@@ -55,8 +55,8 @@
 	
 </table>
 
-<br>
-<br>	
+<br/>
+<br/>	
 
   <html:submit bundle="HTMLALT_RESOURCES" altKey='submit.submit' onclick='<%=onclick.toString() %>'>
   

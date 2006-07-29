@@ -26,9 +26,9 @@
 	<li><html:link module="/manager" page="<%="/editCurriculum.do?method=prepareEdit&amp;degreeId=" + request.getParameter("degreeId") + "&amp;degreeCurricularPlanId=" + request.getParameter("degreeCurricularPlanId") + "&amp;curricularCourseId=" + request.getParameter("curricularCourseId")%>"><bean:message bundle="MANAGER_RESOURCES" key="label.manager.edit.curriculum"/></html:link></li>
 </ul>
 
-<br>
+<br/>
 <span class="error"><html:errors/></span>
-<br>
+<br/>
 
 <logic:present name="basic">
 		<h2><font color="#0066CC"><bean:message bundle="MANAGER_RESOURCES" key="label.manager.curricularCourse.message.basic"/></font></h2>
@@ -103,7 +103,7 @@
 			<bean:write name="infoCurricularCourse" property="enrollmentAllowed"/>
 		</td>
 </table>
-<br>
+<br/>
 	
 <h3><bean:message bundle="MANAGER_RESOURCES" key="label.manager.executionCourses"/></h3>
 

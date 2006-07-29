@@ -35,7 +35,7 @@ import org.apache.commons.beanutils.PropertyUtils;
  * service is created for most cases so that it's as efficient as possible.
  * 
  * <p>
- * Example: <br>
+ * Example: <br/>
  * <input type="text" value="po" style="width: 20em;"/>
  * <div style="margin-top: -10px; border: 1px solid #eee; width: 20em;">
  *  <ul>

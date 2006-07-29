@@ -44,7 +44,7 @@
 	</div>	
 
 
-	<br><br><br>
+	<br/><br/><br/>
 	<%= studentData.get(7) %>
 	<p align="center"><bean:message key="print.declaration.techniqueSignature"/></p>
 	<div class="break-before">

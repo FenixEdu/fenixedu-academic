@@ -76,6 +76,6 @@
 	    			<bean:write name="linkDescription"/>
 	            </html:link>
             </logic:notPresent>
-            <br>
+            <br/>
     	</logic:iterate>
 <% } %>

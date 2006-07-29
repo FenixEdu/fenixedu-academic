@@ -13,7 +13,7 @@
 <bean:define id="infoSiteGroupProperties" name="siteView" property="component"/>
 <bean:define id="infoGrouping" name="infoSiteGroupProperties" property="infoGrouping"/>
 
-<br>
+<br/>
 <table width="100%" cellpadding="0" cellspacing="0">
 	<tr>
 		<td class="infoop">
@@ -21,10 +21,10 @@
 		</td>
 	</tr>
 </table>
-<br>
+<br/>
 
 <h2><span class="error"><html:errors/></span></h2>
-<br>
+<br/>
 
 <table width="100%" border="0" style="text-align: left;">
         <tbody>
@@ -128,13 +128,13 @@
 		<tr>
 			<th class="listClasses-header" align="left">
 			<bean:message key="message.groupPropertiesMaximumCapacity"/>:
-			<br><bean:message key="label.teacher.insertGroupProperties.MaximumCapacityDescription"/>
-			<br>
+			<br/><bean:message key="label.teacher.insertGroupProperties.MaximumCapacityDescription"/>
+			<br/>
          	</th>
 			
 			<td class="listClasses" align="left">
 			<logic:empty name="infoGrouping" property="maximumCapacity">
-			<br>
+			<br/>
 			</logic:empty>
 			<logic:notEmpty name="infoGrouping" property="maximumCapacity">
 			<bean:write name="infoGrouping" property="maximumCapacity" />
@@ -146,13 +146,13 @@
     	
     		<th class="listClasses-header" align="left">
 			<bean:message key="message.groupPropertiesMinimumCapacity"/>:
-			<br><bean:message key="label.teacher.insertGroupProperties.MinimumCapacityDescription"/>
-			<br>
+			<br/><bean:message key="label.teacher.insertGroupProperties.MinimumCapacityDescription"/>
+			<br/>
          	</th>
     	
 			<td class="listClasses" align="left">
 			<logic:empty name="infoGrouping" property="minimumCapacity">
-			<br>
+			<br/>
 			</logic:empty>
 			<logic:notEmpty name="infoGrouping" property="minimumCapacity">
 			<bean:write name="infoGrouping" property="minimumCapacity" />
@@ -164,13 +164,13 @@
 		
 			<th class="listClasses-header" align="left">
 			<bean:message key="message.groupPropertiesIdealCapacity"/>:
-			<br><bean:message key="label.teacher.insertGroupProperties.IdealCapacityDescription"/>
-			<br>
+			<br/><bean:message key="label.teacher.insertGroupProperties.IdealCapacityDescription"/>
+			<br/>
          	</th>
 		
 			<td class="listClasses" align="left">
 			<logic:empty name="infoGrouping" property="idealCapacity">
-			<br>
+			<br/>
 			</logic:empty>
 			<logic:notEmpty name="infoGrouping" property="idealCapacity">
 			<bean:write name="infoGrouping" property="idealCapacity" />
@@ -186,7 +186,7 @@
 			
 			<td class="listClasses" align="left">
 			<logic:empty name="infoGrouping" property="groupMaximumNumber">
-			<br>
+			<br/>
 			</logic:empty>
 			<logic:notEmpty name="infoGrouping" property="groupMaximumNumber">
 			<bean:write name="infoGrouping" property="groupMaximumNumber" />

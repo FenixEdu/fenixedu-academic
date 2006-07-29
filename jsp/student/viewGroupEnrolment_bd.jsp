@@ -86,7 +86,7 @@ padding: 0;
 	
 	<logic:notEmpty name="infoStudents">
 	
-	<br>
+	<br/>
 	<table class="style1" width="80%" cellpadding="0" border="0">	
 		
 	
@@ -110,7 +110,7 @@ padding: 0;
 	 
 
 		</table>
-		<br>
+		<br/>
 	</logic:notEmpty>
 	</logic:present>
 

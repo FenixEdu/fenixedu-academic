@@ -6,5 +6,5 @@
 <html:link page="/viewStudentSchedule.do" paramId="userName" paramName="studentPerson" paramProperty="username" target="_blank">
 	<bean:message key="link.student.schedule"/>
 </html:link> 
-<br></br>
+<br/></br>
 <jsp:include page="/student/curriculum/displayStudentCurriculum_bd.jsp"/>

@@ -9,7 +9,7 @@
   <body>
   
     <html:link page="/guideSection.do"><bean:message key="link.treasury.guide" />
-    </html:link><br>
+    </html:link><br/>
     
     <html:link forward="logoff">
 	<bean:message key="link.logout"/>

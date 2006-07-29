@@ -102,7 +102,7 @@ public class EnrollmentDeclarations extends FenixDispatchAction {
         List allMonths = Data.getMonths();
         LabelValueBean label = (LabelValueBean) allMonths.get(calendar.get(Calendar.MONTH) + 1);
         String month = label.getLabel();
-        String partEight = "Secretaria dos Serviços Académicos do Instituto Superior Técnico,<br>em Lisboa, "
+        String partEight = "Secretaria dos Serviços Académicos do Instituto Superior Técnico,<br/>em Lisboa, "
                 + calendar.get(Calendar.DAY_OF_MONTH)
                 + " de "
                 + month

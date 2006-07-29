@@ -5,7 +5,7 @@
 <bean:define id="degreeCurricularPlanID" name="degreeCurricularPlanID" scope="request" />
 
 <bean:message key="label.coordinator.candidate" />
-<br>
+<br/>
 <ul>
 	<li><html:link
 		page='<%= "/candidateOperation.do?method=getCandidates&action=visualize&page=0&degreeCurricularPlanID=" + degreeCurricularPlanID %>'>

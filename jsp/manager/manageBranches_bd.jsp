@@ -59,7 +59,7 @@
 	 		</logic:iterate>
 		</table>
 		
-		<br>
+		<br/>
 			
   		<html:submit bundle="HTMLALT_RESOURCES" altKey='submit.submit' onclick='<%=onclick.toString() %>'>
    			<bean:message bundle="MANAGER_RESOURCES" key="label.manager.delete.selected.branches"/>

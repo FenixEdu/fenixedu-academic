@@ -309,7 +309,7 @@
 			 				<dt:format patternId="hoursPattern">
 								<bean:write name="institutionWorkTime" property="endTime.time"/>
 							</dt:format>
-							<br>		
+							<br/>		
 						</logic:equal>					
 					</logic:iterate>
 				</td>					

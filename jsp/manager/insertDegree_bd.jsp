@@ -7,7 +7,7 @@
 
 <h2><bean:message bundle="MANAGER_RESOURCES" key="message.insertDegree" /></h2>
 
-<br>
+<br/>
 
 <span class="error"><html:errors/></span>
 
@@ -64,7 +64,7 @@
 		</tr>		
 	</table>
 	
-	<br>
+	<br/>
 
 	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton">
 		<bean:message bundle="MANAGER_RESOURCES" key="button.save"/>

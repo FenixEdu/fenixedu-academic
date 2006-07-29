@@ -27,8 +27,8 @@
               <td>
                 <table border="0" width="100%" height="100%">
                   <tr valign="top" align="left"> 
-                    <td>&nbsp;<b>INSTITUTO SUPERIOR TÉCNICO</b><br>
-                      &nbsp;<b>Centro de Informï¿½tica do Instituto Superior Técnico</b><br>
+                    <td>&nbsp;<b>INSTITUTO SUPERIOR TÉCNICO</b><br/>
+                      &nbsp;<b>Centro de Informï¿½tica do Instituto Superior Técnico</b><br/>
                       <hr size="1">
                     </td>
                   </tr>

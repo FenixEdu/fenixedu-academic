@@ -76,18 +76,18 @@
 	 			</logic:iterate>			
 			</table>
 			
-<br>
+<br/>
 
 		<html:submit bundle="HTMLALT_RESOURCES" altKey='submit.submit' onclick='<%=onclick.toString() %>'><bean:message bundle="MANAGER_RESOURCES" key="label.manager.delete.selected.curricularCourses"/></html:submit>
 	</html:form> 
 </logic:notEmpty>	 	
 </logic:present>
 
-<br>
+<br/>
 
 
 <!-- 
-<br>
+<br/>
 <h3><bean:message bundle="MANAGER_RESOURCES" key="label.manager.executionDegrees"/></h3>
 
 <logic:empty name="executionDegreesList">
@@ -250,7 +250,7 @@
 	 			</logic:iterate>						
 			</table>
 			
-<br>	
+<br/>	
 
 		<html:submit bundle="HTMLALT_RESOURCES" altKey='submit.submit' onclick='<%=onclick.toString() %>'><bean:message bundle="MANAGER_RESOURCES" key="label.manager.delete.selected.executionDegrees"/></html:submit>
 	</html:form> 

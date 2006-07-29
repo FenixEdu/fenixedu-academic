@@ -17,7 +17,7 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 
 /**
- * This class contains all the information regarding a Reimbursement Guide. <br>
+ * This class contains all the information regarding a Reimbursement Guide. <br/>
  * 
  * @author <a href="mailto:joao.mota@ist.utl.pt">Jo�o Mota </a>
  */

@@ -23,7 +23,7 @@
 			              <td>
 			                <table border="0" width="100%" height="100%">
 			                  <tr valign="top" align="left"> 
-			                    <td>&nbsp;<b><bean:message key="label.masterDegree.candidateListFilter.ISTTitle"/></b><br>
+			                    <td>&nbsp;<b><bean:message key="label.masterDegree.candidateListFilter.ISTTitle"/></b><br/>
 			                      <hr size="1">
 			                    </td>
 			                  </tr>

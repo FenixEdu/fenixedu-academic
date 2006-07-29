@@ -137,7 +137,7 @@ public class CRUDTeacherDegreeFinalProjectStudent extends CRUDActionByOID {
             result.append(infoTeacher.getTeacherNumber()).append("-").append(
                     infoTeacher.getInfoPerson().getNome());
             result.append(" ( ").append(infoTeacherDegreeFinalProjectStudent.getPercentage()).append(
-                    "% )<br>");
+                    "% )<br/>");
         }
         Object arguments[] = { result.toString() };
         return arguments;

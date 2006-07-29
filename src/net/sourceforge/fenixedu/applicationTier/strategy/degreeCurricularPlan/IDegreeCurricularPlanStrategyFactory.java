@@ -6,7 +6,7 @@ import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 /**
  * 
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt)
- * @author Joana Mota (jccm@rnl.ist.utl.pt) <br>
+ * @author Joana Mota (jccm@rnl.ist.utl.pt) <br/>
  * 
  * Factory for Degree Curricular Plan related operations
  *  

@@ -2,7 +2,7 @@
   <tr align="center"> 
     <td>
       <b>
-    	&nbsp;IMPORTANTE:<br>
+    	&nbsp;IMPORTANTE:<br/>
     	&nbsp;&nbsp;PARA QUE A SUA CANDIDATURA TENHA CONTINUIDADE, TERÁ DE PREENCHER</br>
     	&nbsp;&nbsp;OS DADOS PESSOAIS E OS DADOS DE LICENCIATURA NA PÁGINA INTERNET INDICADA</br>
     	&nbsp;&nbsp;NO PORTAL DO CANDIDATO A PÓS-GRADUAÇÕES.</br>

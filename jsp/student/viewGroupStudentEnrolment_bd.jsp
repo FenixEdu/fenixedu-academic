@@ -72,12 +72,12 @@ form { margin: 0; padding: 0; }
 	</table>
 
 </logic:notEmpty>
-<br>
-<br>
+<br/>
+<br/>
 <bean:message key="label.confirmGroupStudentEnrolment" />
 
-<br>
-<br>
+<br/>
+<br/>
 	<table>
 		<tr>
 			  <td><html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton"><bean:message key="button.finalize.enrolment"/>

@@ -26,8 +26,8 @@
 <%--
 <logic:notPresent name="name" scope="request">
 	<html:link module="/manager" page="<%= "/insertExecutionCourse.do?method=prepareInsert&executionPeriodId=" + request.getParameter("executionPeriodId") %>"><bean:message bundle="MANAGER_RESOURCES" key="label.manager.insert.execution.course"/></html:link>
-	<br>
-	<br>
+	<br/>
+	<br/>
 </logic:notPresent>--%>
 
 <span class="error"><html:errors/></span>
@@ -43,7 +43,7 @@
 			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.executionPeriodId" property="executionPeriodId" value="<%= request.getParameter("executionPeriodId") %>"/>
 	
 			<b><bean:message bundle="MANAGER_RESOURCES" key="list.title.execution.course.toAssociate"/><b>
-			<br>
+			<br/>
 			</br>
 			<table>
 				<tr>
@@ -91,7 +91,7 @@
 	
 	<logic:notPresent name="name" scope="request">
 		<b><bean:message bundle="MANAGER_RESOURCES" key="list.title.execution.courses"/></b>
-		<br>
+		<br/>
 		</br>
 		<html:form action="/deleteExecutionCourses" method="get">
 			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.executionPeriodId" property="executionPeriodId" value="<%= request.getParameter("executionPeriodId") %>"/>

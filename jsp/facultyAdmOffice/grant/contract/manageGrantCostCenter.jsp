@@ -33,7 +33,7 @@
 	<bean:message key="message.grant.costcenter.creation"/>:&nbsp;
 	<html:link page="/editGrantCostCenter.do?method=prepareEditGrantCostCenterForm">
 		<bean:message key="link.create.grant.costcenter"/>
-	</html:link><br><br>
+	</html:link><br/><br/>
 
 
     <table border="0" cellspacing="1" cellpadding="1">

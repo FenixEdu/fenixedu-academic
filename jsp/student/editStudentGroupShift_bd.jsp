@@ -13,7 +13,7 @@ form { margin: 0; padding: 0; }
 
 <logic:present name="shiftsList">
 	
-<br>
+<br/>
 
 	<div class="infoop2">
 		<bean:message key="label.student.EditStudentGroupShift.description" />

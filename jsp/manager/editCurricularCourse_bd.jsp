@@ -6,7 +6,7 @@
 <%@ taglib uri="/WEB-INF/enum.tld" prefix="e" %>
 
 <h2><bean:message bundle="MANAGER_RESOURCES" key="label.manager.edit.curricularCourse" /></h2>
-<br>
+<br/>
 
 <span class="error"><html:errors/></span>
 <table>
@@ -192,7 +192,7 @@
 		</tr>
 	</table>
 	
-	<br>
+	<br/>
 
 <br />
 <html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton">

@@ -32,7 +32,7 @@
 	<%= request.getAttribute("searchTarget").toString() %>
 </logic:notPresent>
 </h2>
-	<br>
+	<br/>
 
 <logic:notPresent name="detailedProfessorShipsListofLists">
 	<table>
@@ -42,7 +42,7 @@
 			</font>
 		</td>
 	</table>
-	<br>
+	<br/>
 </logic:notPresent>
 
 	

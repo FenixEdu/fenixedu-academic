@@ -171,7 +171,7 @@ public class AcceptNewProjectProposal extends Service {
 						+ " da disciplina "
 						+ executionCourse.getNome()
 						+ "!"
-						+ "<br>A partir deste momento poder-se-á dirijir à área de gestão de grupos da disciplina "
+						+ "<br/>A partir deste momento poder-se-á dirijir à área de gestão de grupos da disciplina "
 						+ personExecutionCourse.getNome() + " para gerir a nova co-avaliação.");
 
 		advisory.setMessage(msg);

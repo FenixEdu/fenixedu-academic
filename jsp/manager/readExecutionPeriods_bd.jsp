@@ -22,7 +22,7 @@
 <logic:present name="<%= SessionConstants.LIST_EXECUTION_PERIODS %>" scope="request">
 
 	<b><bean:message bundle="MANAGER_RESOURCES" key="list.title.execution.periods"/></b>
-	<br>
+	<br/>
 	</br>
 	<table>
 		<tr>

@@ -331,7 +331,7 @@ public class UICourseGroup extends UIDegreeModule {
 
         writer.startElement("td", this);
         writer.writeAttribute("class", "highlight2 smalltxt", null);
-        writer.writeAttribute("class", "aright", null);
+        writer.writeAttribute("align", "right", null);
         
         encodeSumsLoadFooterElement(sums, "contactLessonHoursAcronym", 0);
         encodeSumsLoadFooterElement(sums, "autonomousWorkAcronym", 1);

@@ -8,9 +8,9 @@
 <ul style="list-style-type: square;">
 <li><html:link module="/manager" module="/manager" page="/createEditCompetenceCourse.do?method=prepareCreate"><bean:message bundle="MANAGER_RESOURCES" key="label.manager.insert.competence.course"/></html:link></li>
 </ul>
-<br>
+<br/>
 <span class="error"><html:errors /></span>
-<br>
+<br/>
 <html:form action="/competenceCourseManagement">
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="deleteCompetenceCourses"/>
 	<table>
@@ -60,8 +60,8 @@
 				 </logic:iterate>
 				
 			</table>
-			<br>
-			<br>	
+			<br/>
+			<br/>	
 			<html:submit>
 			   <bean:message bundle="MANAGER_RESOURCES" key="label.manager.delete.selected.competences"/>
 			</html:submit>

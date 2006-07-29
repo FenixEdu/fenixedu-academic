@@ -25,7 +25,7 @@
             <font size="5" face="Arial, Helvetica, sans-serif">
               <bean:message key="alterarPassword.titulo"/>
             </font>
-          </div><br>
+          </div><br/>
       </td>
     </tr>
     <tr>
@@ -39,7 +39,7 @@
             <font size="3" face="Arial, Helvetica, sans-serif">
               <bean:message key="confirmacao.alterarPassword"/>
             </font>
-          </div><br>
+          </div><br/>
       </td>
     </tr>
     <tr>
@@ -53,7 +53,7 @@
       </td>
     </tr>      
     <tr>
-      <td><br></td>       
+      <td><br/></td>       
     </tr>
     <tr bgcolor='#ffffff'>
       <td> 

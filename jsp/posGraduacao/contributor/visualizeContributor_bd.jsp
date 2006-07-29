@@ -11,7 +11,7 @@
   </head>
   <body>
      <h2><bean:message key="label.action.contributors.visualize" /></h2>
-     <br>
+     <br/>
     <table>
      <bean:define id="contributor" name="<%= SessionConstants.CONTRIBUTOR %>" scope="session"/>
         <logic:present name="contributor">
@@ -56,8 +56,8 @@
           </tr>
         </logic:present>
     </table>
-    <br>
-    <br>
+    <br/>
+    <br/>
     <html:link page="/editContributor.do?method=prepareEdit">
     	<bean:message key="link.masterDegree.administrativeOffice.editContributor" />
     </html:link>

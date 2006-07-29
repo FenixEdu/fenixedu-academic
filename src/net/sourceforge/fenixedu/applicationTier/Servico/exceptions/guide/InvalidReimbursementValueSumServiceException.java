@@ -8,8 +8,8 @@ package net.sourceforge.fenixedu.applicationTier.Servico.exceptions.guide;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 
 /**
- * @author <a href="mailto:joao.mota@ist.utl.pt">João Mota </a> <br>
- *         <strong>Description: </strong> <br>
+ * @author <a href="mailto:joao.mota@ist.utl.pt">João Mota </a> <br/>
+ *         <strong>Description: </strong> <br/>
  *         This exception is throw when one tries to create a reimbursement
  *         guide associated with a payment guide and the sum of the new value
  *         with all the other reimbursement guides's values of the payment guide

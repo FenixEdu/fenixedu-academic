@@ -74,9 +74,9 @@
 <logic:notPresent name="infoExecutionCourses">
 		
 	<h2><bean:message key="message.executionCourses.not.available"/></h2>
-	<br>
+	<br/>
 	span class="error"><html:errors/></span>
-	<br>
+	<br/>
 	
 </logic:notPresent>
 

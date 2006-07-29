@@ -4,7 +4,7 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
 
-<bean:write name="executionPeriodName"/><br>
+<bean:write name="executionPeriodName"/><br/>
 <span class="error"><html:errors/></span>
 <html:form action="/copySiteExecutionCourse">
 	<input alt="input.method" type="hidden" name="method" value="showExecutionCourses"/>

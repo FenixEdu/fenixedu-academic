@@ -16,7 +16,7 @@
 
 <html:form action="/editGroupProperties">
 <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
-<br>
+<br/>
 
 <table width="100%" cellpadding="0" cellspacing="0">
 	<tr>
@@ -25,10 +25,10 @@
 		</td>
 	</tr>
 </table>
-<br>
+<br/>
 
 <h2><span class="error"><html:errors/></span></h2>
-<br>
+<br/>
 <table>
 		<tr>
 			<td><bean:message key="message.groupPropertiesName"/></td>
@@ -107,9 +107,9 @@
 
 		<tr>
 			<td><bean:message key="message.groupPropertiesMaximumCapacity"/>
-			<br><bean:message key="label.teacher.insertGroupProperties.MaximumCapacityDescription"/>
-			<br>
-			<br>
+			<br/><bean:message key="label.teacher.insertGroupProperties.MaximumCapacityDescription"/>
+			<br/>
+			<br/>
 			</td>
 			
 			<td>
@@ -124,9 +124,9 @@
 		</tr>	
     	<tr>
 			<td><bean:message key="message.groupPropertiesMinimumCapacity"/>
-			<br><bean:message key="label.teacher.insertGroupProperties.MinimumCapacityDescription"/>
-			<br>
-			<br>
+			<br/><bean:message key="label.teacher.insertGroupProperties.MinimumCapacityDescription"/>
+			<br/>
+			<br/>
 			</td>
 			<td>
 			<logic:empty name="groupProperties" property="minimumCapacity">
@@ -140,9 +140,9 @@
 		</tr>
 		<tr>
 			<td><bean:message key="message.groupPropertiesIdealCapacity"/>
-			<br><bean:message key="label.teacher.insertGroupProperties.IdealCapacityDescription"/>
-			<br>
-			<br>
+			<br/><bean:message key="label.teacher.insertGroupProperties.IdealCapacityDescription"/>
+			<br/>
+			<br/>
 			</td>
 			<td>
 			<logic:empty name="groupProperties" property="idealCapacity">

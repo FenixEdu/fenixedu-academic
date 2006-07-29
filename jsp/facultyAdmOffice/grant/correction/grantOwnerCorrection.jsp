@@ -27,7 +27,7 @@
 	</tr>
 	 
 	 
-	</table><br><br>
+	</table><br/><br/>
 
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="changeAssociatedPerson"/>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>

@@ -17,7 +17,7 @@ import org.apache.log4j.Logger;
  * enum's name.
  * 
  * <p>
- * Example:<br>
+ * Example:<br/>
  * Choose a {@link java.lang.annotation.ElementType element type}:
  * <select>
  *  <option>Type</option>

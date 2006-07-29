@@ -5,7 +5,7 @@
 
 <h2><bean:message bundle="MANAGER_RESOURCES" key="label.manager.insert.executionDegree" /></h2>
 
-<br>
+<br/>
 
 <span class="error"><html:errors/></span>
 
@@ -48,7 +48,7 @@
 		</tr>
 	</table>
 	
-	<br>
+	<br/>
 	
 <table>
 		<tr>

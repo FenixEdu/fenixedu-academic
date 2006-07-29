@@ -54,9 +54,9 @@
 			</table>
 		</logic:notEmpty>
 		<logic:empty name="infoSiteTeacherInformation" property="infoQualifications">
-			<br>&nbsp;</br>
+			<br/>&nbsp;</br>
 			<bean:message key="label.teachersInformation.notModified" />
-			<br>&nbsp;</br>			
+			<br/>&nbsp;</br>			
 			</logic:empty>
 		<br/>
 		<p class="infoop"><span class="emphasis-box">2</span>
@@ -84,9 +84,9 @@
 			</table>
 		</logic:notEmpty>
 		<logic:empty name="infoSiteTeacherInformation" property="infoTeachingCareers">
-			<br>&nbsp;</br>
+			<br/>&nbsp;</br>
 			<bean:message key="label.teachersInformation.notModified" />
-			<br>&nbsp;</br>			
+			<br/>&nbsp;</br>			
 		</logic:empty>
 		<br />
 		<p class="infoop"><span class="emphasis-box">3</span>
@@ -113,9 +113,9 @@
 			</table>
 		</logic:notEmpty>
 		<logic:empty name="infoSiteTeacherInformation" property="infoProfessionalCareers">
-			<br>&nbsp;</br>
+			<br/>&nbsp;</br>
 			<bean:message key="label.teachersInformation.notModified" />
-			<br>&nbsp;</br>
+			<br/>&nbsp;</br>
 		</logic:empty>
 		<br/>
 		<p class="infoop"><span class="emphasis-box">4</span>
@@ -135,9 +135,9 @@
 			</table>
 		</logic:notEmpty>
 		<logic:empty name="infoSiteTeacherInformation" property="infoExternalActivities">
-			<br>&nbsp;</br>
+			<br/>&nbsp;</br>
 			<bean:message key="label.teachersInformation.notModified" />
-			<br>&nbsp;</br>
+			<br/>&nbsp;</br>
 		</logic:empty>
 		<br/>
 		<p class="infoop"><span class="emphasis-box">5</span>
@@ -154,9 +154,9 @@
 			</table>
 		</logic:notEmpty>
 		<logic:empty name="infoSiteTeacherInformation" property="infoDidaticPublications">
-			<br>&nbsp;</br>
+			<br/>&nbsp;</br>
 			<bean:message key="label.teachersInformation.notModified" />
-			<br>&nbsp;</br>
+			<br/>&nbsp;</br>
 		</logic:empty>
 		<br />
 		<p class="infoop"><span class="emphasis-box">6</span>
@@ -173,9 +173,9 @@
 			</table>
 		</logic:notEmpty>
 		<logic:empty name="infoSiteTeacherInformation" property="infoCientificPublications">
-			<br>&nbsp;</br>
+			<br/>&nbsp;</br>
 			<bean:message key="label.teachersInformation.notModified" />
-			<br>&nbsp;</br>
+			<br/>&nbsp;</br>
 		</logic:empty>
 		<br />
 		<p class="infoop"><span class="emphasis-box">7</span>
@@ -250,9 +250,9 @@
 			</table>
 		</logic:present>
 		<logic:notPresent name="infoSiteTeacherInformation" property="infoServiceProviderRegime.providerRegimeType">
-			<br>&nbsp;</br>
+			<br/>&nbsp;</br>
 			<bean:message key="label.teachersInformation.notModified" />
-			<br>&nbsp;</br>			
+			<br/>&nbsp;</br>			
 		</logic:notPresent>
 		<br />
 		<p class="infoop"><span class="emphasis-box">9</span>
@@ -368,7 +368,7 @@
 			<bean:write name="infoSiteTeacherInformation" property="infoExecutionPeriod.infoExecutionYear.year" />
 			<bean:message key="label.doublePoint" />
 		</p>
-		<br>&nbsp;</br>
+		<br/>&nbsp;</br>
 		<bean:message key="message.teacherInformation.notYetAvailable" />
-		<br>&nbsp;</br>
+		<br/>&nbsp;</br>
 </logic:present>

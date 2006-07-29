@@ -63,7 +63,7 @@
 		
 		<table width="100%">		
 			<logic:iterate id="infoStudentCurricularPlan" name="selectedStudentCPs">
-				<tr><td><br></br></td></tr>
+				<tr><td><br/></br></td></tr>
 	
 				<tr>
 					<td colspan=5>
@@ -81,7 +81,7 @@
 				</tr>				
 				
 				
-				<tr><td><br></br></td></tr>
+				<tr><td><br/></br></td></tr>
 				
 				
 		
@@ -166,7 +166,7 @@
 						<span class="error"><bean:message key="message.no.enrolments" bundle="STUDENT_RESOURCES"/></span>
 					</td></tr>
 				</logic:equal>
-				<tr><td><br></br><br></br></td></tr>			
+				<tr><td><br/></br><br/></br></td></tr>			
 				
 			</logic:iterate>
 		</table>

@@ -6,7 +6,7 @@
 <%@ taglib uri="/WEB-INF/enum.tld" prefix="e" %>
 
 <h2><bean:message bundle="MANAGER_RESOURCES" key="message.editDegree" /></h2>
-<br>
+<br/>
 
 <span class="error"><html:errors/></span>
 
@@ -71,7 +71,7 @@
 
 	
 
-<br>
+<br/>
 <html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton">
 <bean:message bundle="MANAGER_RESOURCES" key="button.save"/>
 </html:submit>

@@ -23,9 +23,9 @@
 			              <td>
 			                <table border="0" width="100%" height="100%">
 			                  <tr valign="top" align="left"> 
-			                    <td>&nbsp;<b>INSTITUTO SUPERIOR TÉCNICO</b><br>
-				                    &nbsp;<b>Curso: <bean:write name="infoExecutionDegree" property="infoDegreeCurricularPlan.infoDegree.nome"/><br>
-				                    &nbsp;<b>Ano Lectivo: <bean:write name="infoExecutionDegree" property="infoExecutionYear.year"/><br>
+			                    <td>&nbsp;<b>INSTITUTO SUPERIOR TÉCNICO</b><br/>
+				                    &nbsp;<b>Curso: <bean:write name="infoExecutionDegree" property="infoDegreeCurricularPlan.infoDegree.nome"/><br/>
+				                    &nbsp;<b>Ano Lectivo: <bean:write name="infoExecutionDegree" property="infoExecutionYear.year"/><br/>
 			                      <hr size="1">
 			                    </td>
 			                  </tr>

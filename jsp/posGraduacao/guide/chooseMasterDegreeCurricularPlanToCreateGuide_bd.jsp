@@ -14,8 +14,8 @@
 <logic:present name="<%= SessionConstants.MASTER_DEGREE_CURRICULAR_PLAN_LIST %>" scope="request">
 	<bean:define id="masterDegreeCPlanList" name="<%= SessionConstants.MASTER_DEGREE_CURRICULAR_PLAN_LIST %>" scope="request" />
 	<h3><%= ((List) masterDegreeCPlanList).size()%> <bean:message key="label.masterDegree.administrativeOffice.curricularPlanFound"/></h3>        
-	<bean:message key="label.masterDegree.chooseOne"/><br><br>
-	<bean:message key="label.masterDegree.administrativeOffice.curricularPlans" /><br>
+	<bean:message key="label.masterDegree.chooseOne"/><br/><br/>
+	<bean:message key="label.masterDegree.administrativeOffice.curricularPlans" /><br/>
  	<logic:iterate id="degreeCurricularPlan" name="masterDegreeCPlanList">
     	<bean:define id="degreeCurricularPlanLink">
     		<bean:write name="link"/><bean:write name="degreeCurricularPlan" property="idInternal"/>
@@ -23,7 +23,7 @@
     	<html:link page='<%= pageContext.findAttribute("degreeCurricularPlanLink").toString() %>'>
 			<bean:write name="degreeCurricularPlan" property="infoDegree.nome"/> - 
 			<bean:write name="degreeCurricularPlan" property="name"/>
-			<br>
+			<br/>
        	</html:link>
 	</logic:iterate>
 </logic:present>

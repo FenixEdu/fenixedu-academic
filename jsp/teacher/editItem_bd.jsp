@@ -111,7 +111,7 @@
 			//-->
 			</script>
 					
-			<noscript>JavaScript must be enable to use this form <br> </noscript>
+			<noscript>JavaScript must be enable to use this form <br/> </noscript>
 				
 			<script language="JavaScript" type="text/javascript"> 
 			<!--
@@ -148,7 +148,7 @@
 <html:reset bundle="HTMLALT_RESOURCES" altKey="reset.reset"  styleClass="inputbutton">
 	<bean:message key="label.clear"/>
 </html:reset>
-<br><br>
+<br/><br/>
 <bean:message key="message.text.editor.requires"/>
 </html:form>
 </logic:present>

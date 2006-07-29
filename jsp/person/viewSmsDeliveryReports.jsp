@@ -14,7 +14,7 @@
 <h2><bean:message key="title.person.sms.deliveryReports"/></h2>
 
 <html:messages id="msg" message="true">
-	<span class="sucessfulOperarion"><bean:write name="msg"/></span><br>
+	<span class="sucessfulOperarion"><bean:write name="msg"/></span><br/>
 </html:messages>
 <span class="error">
 	<html:errors/>

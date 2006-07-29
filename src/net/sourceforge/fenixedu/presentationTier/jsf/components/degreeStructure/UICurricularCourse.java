@@ -147,7 +147,7 @@ public class UICurricularCourse extends UIDegreeModule {
         writer.startElement("td", this);
         if (!this.curricularCourse.isOptional()) {
             writer.writeAttribute("class", "smalltxt", null);
-            writer.writeAttribute("class", "aright", null);
+            writer.writeAttribute("align", "right", null);
             
             writer.startElement("span", this);
             writer.writeAttribute("style", "color: #888", null);
@@ -170,7 +170,7 @@ public class UICurricularCourse extends UIDegreeModule {
 
             writer.startElement("td", this);
             writer.writeAttribute("class", "smalltxt", null);
-            writer.writeAttribute("class", "aright", null);
+            writer.writeAttribute("align", "right", null);
             writer.append(this.getBundleValue("BolonhaManagerResources", "credits.abbreviation")).append(" ");
             writer.append(this.curricularCourse.getEctsCredits(curricularPeriod).toString());
         } else {
@@ -207,7 +207,7 @@ public class UICurricularCourse extends UIDegreeModule {
         writer.startElement("td", this);
         if (!this.curricularCourse.isOptional()) {
             writer.writeAttribute("class", "smalltxt", null);
-            writer.writeAttribute("class", "aright", null);
+            writer.writeAttribute("align", "right", null);
             
             writer.startElement("span", this);
             writer.writeAttribute("style", "color: #888", null);
@@ -230,7 +230,7 @@ public class UICurricularCourse extends UIDegreeModule {
 
             writer.startElement("td", this);
             writer.writeAttribute("class", "smalltxt", null);
-            writer.writeAttribute("class", "aright", null);
+            writer.writeAttribute("align", "right", null);
             writer.append(this.getBundleValue("BolonhaManagerResources", "credits.abbreviation")).append(" ");
             writer.append(this.curricularCourse.getCompetenceCourse().getEctsCredits(previousContext.getCurricularPeriod().getOrder() + 1).toString());
         } else {

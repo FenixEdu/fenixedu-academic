@@ -70,7 +70,7 @@ public class OutputUtils {
 
     /**
      * Escapes HTML meta characters "&", " <", ">" and turns "\n" line breaks
-     * into HTML line breaks ("<BR>
+     * into HTML line breaks ("<br/>
      * ");
      * 
      * @param text
@@ -81,7 +81,7 @@ public class OutputUtils {
         String result = text.replaceAll("&", "&amp;");
         result = result.replaceAll("<", "&lt;");
         result = result.replaceAll(">", "&gt;");
-        result = result.replaceAll("\n", "<BR>\n");
+        result = result.replaceAll("\n", "<br/>\n");
         return result;
     }
 }

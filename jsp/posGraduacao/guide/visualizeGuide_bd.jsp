@@ -83,8 +83,8 @@
           </tr>
 
 	</table>
-	<br>
-	<br>
+	<br/>
+	<br/>
 	<table>
 		<tr align="center">
 			<td><bean:message key="label.masterDegree.administrativeOffice.documentType" /></td>
@@ -118,8 +118,8 @@
          </tr>
      </table>
      
-     <br>
-     <br>
+     <br/>
+     <br/>
      <table>
 		<tr>
 			<td><bean:message key="label.masterDegree.administrativeOffice.creationDate" /></td>
@@ -135,13 +135,13 @@
 		</tr>
      </table>
 
-	<br>
-	<br>
+	<br/>
+	<br/>
 
 	<strong><bean:message key="label.masterDegree.administrativeOffice.guideSituationList" /></strong>
 	
-	<br>
-	<br>
+	<br/>
+	<br/>
 
 
 		<logic:notEmpty name="infoGuide" property="infoGuideSituations">
@@ -193,7 +193,7 @@
 	         	<% } 
 %>
 	          </table>
-	          <br><br>
+	          <br/><br/>
 	         </logic:iterate>
          </logic:notEmpty>
 		<logic:empty  name="infoGuide" property="infoGuideSituations">
@@ -201,8 +201,8 @@
         </logic:empty>
 
 
-	<br>	
-	<br>
+	<br/>	
+	<br/>
 
     <bean:define id="arguments"><%= "&" 
 %>page=0<%= "&" 

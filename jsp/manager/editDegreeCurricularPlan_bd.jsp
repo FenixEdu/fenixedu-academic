@@ -6,7 +6,7 @@
 <%@ taglib uri="/WEB-INF/enum.tld" prefix="e" %>
 
 <h2><bean:message bundle="MANAGER_RESOURCES" key="message.edit.DegreeCP" /></h2>
-<br>
+<br/>
 
 <html:messages id="msg" message="true">
 	<span class="error"><bean:write name="msg" /></span>

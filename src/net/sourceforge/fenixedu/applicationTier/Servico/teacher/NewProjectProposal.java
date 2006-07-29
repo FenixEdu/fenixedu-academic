@@ -196,7 +196,7 @@ public class NewProjectProposal extends Service {
         msg = new String("Recebeu uma proposta de co-avaliação da disciplina "
                 + startExecutionCourse.getNome() + " para a disciplina " + goalExecutionCourse.getNome()
                 + " relativa ao agrupamento " + groupProperties.getName() + "!"
-                + "<br>Para mais informações dirija-se à área de gestão de grupos da disciplina "
+                + "<br/>Para mais informações dirija-se à área de gestão de grupos da disciplina "
                 + goalExecutionCourse.getNome() + ".");
 
         advisory.setMessage(msg);

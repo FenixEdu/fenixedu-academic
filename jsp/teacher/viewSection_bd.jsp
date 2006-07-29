@@ -131,7 +131,7 @@
 		
   	</logic:present>
   	
-<br> 
-<br> 
+<br/> 
+<br/> 
 </logic:iterate>
 </logic:present>

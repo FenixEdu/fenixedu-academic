@@ -184,7 +184,7 @@
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.executionDegreeOID" property="executionDegreeOID" value="<%= executionDegreeOID.toString() %>"/>
 
 	<html:messages id="msg" message="true">
-		<span class="sucessfulOperarion"><bean:write name="msg"/></span><br>
+		<span class="sucessfulOperarion"><bean:write name="msg"/></span><br/>
 	</html:messages>
 
 	<strong><bean:message key="finalDegreeWorkCandidacy.setRequirements.header"/>:</strong>

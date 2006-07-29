@@ -231,7 +231,7 @@ public class UIDegreeCurricularPlan extends UIInput {
 
         writer.startElement("td", this);
         writer.writeAttribute("class", "highlight2 smalltxt", null);
-        writer.writeAttribute("align", "aright", null);
+        writer.writeAttribute("align", "right", null);
         //writer.writeAttribute("style", "width: 13em;", null);
         
         encodeSumsLoadFooterElement(sums, "contactLessonHoursAcronym", 0);
@@ -324,14 +324,14 @@ public class UIDegreeCurricularPlan extends UIInput {
         this.facesContext = facesContext;
         this.writer = facesContext.getResponseWriter();
         
-        writer.startElement("br", this);
+        writer.startElement("p", this);
         writer.append("&nbsp;");
-        writer.endElement("br");
+        writer.endElement("p");
 
+        writer.append(this.getBundleValue("BolonhaManagerResources", "subtitle")).append(":\n");
         writer.startElement("ul", this);
         writer.writeAttribute("class", "nobullet", null);
         writer.writeAttribute("style", "padding-left: 0pt; font-style: italic;", null);
-        writer.append(this.getBundleValue("BolonhaManagerResources", "subtitle")).append(":\n");
 
         encodeSubtitleElement("EnumerationResources", RegimeType.SEMESTRIAL.toString() + ".ACRONYM", RegimeType.SEMESTRIAL.toString(), null);
         encodeSubtitleElement("EnumerationResources", RegimeType.ANUAL.toString() + ".ACRONYM", RegimeType.ANUAL.toString(), null);
@@ -346,7 +346,6 @@ public class UIDegreeCurricularPlan extends UIInput {
         explanation.append(this.getBundleValue("BolonhaManagerResources", "autonomousWorkAcronym"));
         explanation.append(")");
         encodeSubtitleElement("BolonhaManagerResources", "totalLoadAcronym", "totalLoad", explanation);
-        
         writer.endElement("ul");
     }
 

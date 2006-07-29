@@ -53,7 +53,7 @@
 		<tr>
 	    	<td colspan="4" class="infoop"><bean:message key="label.marksOnline.instructions" /></td>
 		</tr>
-		<tr><td><br></br></td></tr>
+		<tr><td><br/></br></td></tr>
 		<tr>
 			
 			<th class="listClasses-header">

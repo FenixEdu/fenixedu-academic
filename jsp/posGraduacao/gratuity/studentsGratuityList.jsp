@@ -20,28 +20,28 @@
 	<tr>
 		<td align="center" class="infoselected">
 			<bean:define id="executionYearLabel"><%=pageContext.findAttribute("executionYear")%></bean:define>	
-			<b><bean:message key="label.masterDegree.gratuity.executionYear" /></b>&nbsp;<bean:write name="executionYearLabel"/><br>
+			<b><bean:message key="label.masterDegree.gratuity.executionYear" /></b>&nbsp;<bean:write name="executionYearLabel"/><br/>
 
 			<bean:define id="degreeString"><%=pageContext.findAttribute("degree").toString()%></bean:define>	
 			<logic:notEqual name="degreeString" value="all">0
 				<bean:define id="degreeId"><%= pageContext.findAttribute("degree").toString().substring(pageContext.findAttribute("degree").toString().indexOf("#")+1)%></bean:define>
 				<bean:define id="degreeLabel"><%= degreeString.toString().substring(0, degreeString.toString().indexOf(">"))%></bean:define>	
-				<b><bean:message key="label.qualification.degree" /></b>&nbsp;<bean:write name="degreeLabel"/><br>
+				<b><bean:message key="label.qualification.degree" /></b>&nbsp;<bean:write name="degreeLabel"/><br/>
 			</logic:notEqual>
 			<logic:equal name="degreeString" value="all">
-				<b><bean:message key="label.qualification.degree" /></b>&nbsp;<bean:message key="label.masterDegree.gratuity.all"/><br>
+				<b><bean:message key="label.qualification.degree" /></b>&nbsp;<bean:message key="label.masterDegree.gratuity.all"/><br/>
 			</logic:equal>
 	
 			<bean:define id="specializationLabel"><%=pageContext.findAttribute("specialization")%></bean:define>	
 			<logic:equal name="specializationLabel" value="all">
-				<b><bean:message key="label.masterDegree.gratuity.specializationArea" /></b>&nbsp;<bean:message key="label.gratuitySituationType.all"/><br>			
+				<b><bean:message key="label.masterDegree.gratuity.specializationArea" /></b>&nbsp;<bean:message key="label.gratuitySituationType.all"/><br/>			
 			</logic:equal>
 			<logic:notEqual name="specializationLabel" value="all">
-				<b><bean:message key="label.masterDegree.gratuity.specializationArea" /></b>&nbsp;<bean:write name="specializationLabel"/><br>	
+				<b><bean:message key="label.masterDegree.gratuity.specializationArea" /></b>&nbsp;<bean:write name="specializationLabel"/><br/>	
 			</logic:notEqual>
 			
 			<bean:define id="gratuitySituationName"><%=pageContext.findAttribute("situation")%></bean:define>	
-			<b><bean:message key="label.masterDegree.gratuity.situation" /></b>&nbsp;<bean:message name="gratuitySituationName" bundle="ENUMERATION_RESOURCES"/><br>					
+			<b><bean:message key="label.masterDegree.gratuity.situation" /></b>&nbsp;<bean:message name="gratuitySituationName" bundle="ENUMERATION_RESOURCES"/><br/>					
 		</td>
 	</tr>
 </table>

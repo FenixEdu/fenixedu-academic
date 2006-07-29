@@ -39,7 +39,7 @@
     <h3><%= ((List) studentList).size()%> <bean:message key="label.masterDegree.administrativeOffice.studentsFound"/></h3>        
     <% if (((List) studentList).size() != 0) { %>
         </p>
-        <bean:message key="label.masterDegree.chooseOne"/><br><br><br>
+        <bean:message key="label.masterDegree.chooseOne"/><br/><br/><br/>
     
         <table>
         	<tr>

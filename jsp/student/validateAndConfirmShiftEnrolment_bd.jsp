@@ -10,7 +10,7 @@
 </h3>		
    <logic:present name="infoStudentShiftEnrolment">
 	   <logic:present name="infoStudentShiftEnrolment" property="currentEnrolment">
-			<br>
+			<br/>
 <table>
 
   			<tr><th>Estes sï¿½o os turnos onde estava inscrito até agora:</th></tr>
@@ -26,7 +26,7 @@
    	 	<!-- show errors here -->
    	 </logic:present>
      <logic:present name="infoStudentShiftEnrolment" property="newShifts">
-	 	<br>
+	 	<br/>
 <table>
 		<tr><th>Turnos em que deixou de estar inscrito:</th></tr>
 	     <logic:iterate name="infoStudentShiftEnrolment" id="shiftPairs" property="newShifts">
@@ -40,7 +40,7 @@
 		     </logic:iterate>
     	 </logic:iterate>
 </table>
-		<br><br>
+		<br/><br/>
 <table>
 		<tr><th>Turnos em que se inscreveu:</th></tr>
     	 <logic:iterate name="infoStudentShiftEnrolment" id="shiftPairs" property="newShifts">
@@ -55,9 +55,9 @@
     	 </logic:iterate>
 </table>
    	 </logic:present>
-   	 <br><br>
+   	 <br/><br/>
    	 <logic:present name="infoStudentShiftEnrolment" property="errors">
-   	 	<br>
+   	 	<br/>
 <table>
 		<tr><th>Foram encontrados os seguintes problemas:</th></tr>
    	 	<logic:iterate name="infoStudentShiftEnrolment" id="error" property="errors">

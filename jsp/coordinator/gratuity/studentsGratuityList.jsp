@@ -41,15 +41,15 @@
 <table width="100%" border="0" cellpadding="0" cellspacing="0">
 	<tr>
 		<td align="center" class="infoselected">
-			<b><bean:message key="label.masterDegree.gratuity.executionYear" /></b>&nbsp;<bean:write name="chosenYear"/><br>
+			<b><bean:message key="label.masterDegree.gratuity.executionYear" /></b>&nbsp;<bean:write name="chosenYear"/><br/>
 
 			<bean:define id="degreeString"><%=pageContext.findAttribute("degree").toString()%></bean:define>	
 		
-			<b><bean:message key="label.qualification.degree" /></b>&nbsp;<bean:write name="degree"/><br>
+			<b><bean:message key="label.qualification.degree" /></b>&nbsp;<bean:write name="degree"/><br/>
 
-			<b><bean:message key="label.masterDegree.gratuity.specializationArea" /></b>&nbsp;<bean:message key="label.gratuitySituationType.all"/><br>			
+			<b><bean:message key="label.masterDegree.gratuity.specializationArea" /></b>&nbsp;<bean:message key="label.gratuitySituationType.all"/><br/>			
 
-			<b><bean:message key="label.masterDegree.gratuity.situation" /></b>&nbsp;<bean:message key="label.gratuitySituationType.all"/><br>					
+			<b><bean:message key="label.masterDegree.gratuity.situation" /></b>&nbsp;<bean:message key="label.gratuitySituationType.all"/><br/>					
 		</td>
 	</tr>
 </table>

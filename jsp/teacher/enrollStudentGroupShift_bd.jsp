@@ -9,7 +9,7 @@
  <bean:define id="component" name="siteView" property="component" />
 
 	
-<br>
+<br/>
 
 	<table width="100%" cellpadding="0" cellspacing="0">
 		<tr>
@@ -18,14 +18,14 @@
 			</td>
 		</tr>
 	</table>
-	<br>
+	<br/>
 		
 <html:form action="/enrollStudentGroupShift" method="get">
 <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
 <span class="error"><html:errors/></span>
 
-<br>
-<br>		 
+<br/>
+<br/>		 
 
 <table width="50%" cellpadding="0" border="0">
 		
@@ -58,8 +58,8 @@
 		<html:reset bundle="HTMLALT_RESOURCES" altKey="reset.reset" styleClass="inputbutton"><bean:message key="label.clear"/>
 		</html:reset>
 	</td>		
-<br>
-<br>
+<br/>
+<br/>
 <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="enrollStudentGroupShift"/>
 <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.objectCode"  property="objectCode" value="<%= pageContext.findAttribute("objectCode").toString() %>" />
 <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.studentGroupCode"  property="studentGroupCode" value="<%= request.getParameter("studentGroupCode") %>" />

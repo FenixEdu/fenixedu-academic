@@ -28,21 +28,21 @@
 		<tr>
 			<html:textarea bundle="HTMLALT_RESOURCES" altKey="textarea.generalObjectivesEn" property="generalObjectivesEn" rows="8" cols="60"/>
 		</tr>
-		<br>
+		<br/>
 		<tr>
 			<b><bean:message bundle="MANAGER_RESOURCES" key="message.operacionalObjectivesEn"/></b>
 		</tr>
 		<tr>
 			<html:textarea bundle="HTMLALT_RESOURCES" altKey="textarea.operacionalObjectivesEn" property="operacionalObjectivesEn" rows="8" cols="60"/>
 		</tr>
-		<br>
+		<br/>
 		<tr>
 			<b><bean:message bundle="MANAGER_RESOURCES" key="message.programEn"/></b>
 		</tr>
 		<tr>
 			<html:textarea bundle="HTMLALT_RESOURCES" altKey="textarea.programEn" property="programEn" rows="8" cols="60"/>
 		</tr>
-<%--		<br>
+<%--		<br/>
 		<tr>
 			<b><bean:message bundle="MANAGER_RESOURCES" key="message.evaluationElementsEn"/></b>
 		</tr>

@@ -42,8 +42,8 @@
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
 	<bean:message key="message.editAttendsSetMembers.RemoveMembers"/>
 
-	<br>
-	<br>		 
+	<br/>
+	<br/>		 
 	<table width="50%" cellpadding="0" border="0">
 		<tr>
 			<td class="listClasses-header"></td>
@@ -66,13 +66,13 @@
 		 	</tr>	
 		</logic:iterate>
 	</table>
-	<br>
+	<br/>
 	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton"><bean:message key="button.removeAluno"/>               		         	
 	</html:submit>
 	<html:reset bundle="HTMLALT_RESOURCES" altKey="reset.reset" styleClass="inputbutton"><bean:message key="label.clear"/>
 	</html:reset>
-	<br>
-	<br>
+	<br/>
+	<br/>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="deleteAttendsSetMembers"/>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.objectCode" property="objectCode" value="<%= pageContext.findAttribute("objectCode").toString() %>" />
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.groupPropertiesCode" property="groupPropertiesCode" value="<%= request.getParameter("groupPropertiesCode") %>" />
@@ -101,8 +101,8 @@
 
 <logic:notEmpty name="infoStudentList"> 
 <bean:message key="message.editAttendsSetMembers.InsertMembers"/>
-<br>
-<br>
+<br/>
+<br/>
 
 <table width="50%" cellpadding="0" border="0">
 
@@ -138,7 +138,7 @@
 	 
 
 </table>
-<br>
+<br/>
 
 <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="insertAttendsSetMembers"/>
 <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.objectCode"  property="objectCode" value="<%= pageContext.findAttribute("objectCode").toString() %>" />

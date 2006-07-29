@@ -5,7 +5,7 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
 
-<br>
+<br/>
 <bean:message key="message.copySite.information.destination" />
 <strong><bean:write name="siteView" property="commonComponent.executionCourse.nome"/></strong>
 <bean:message key="message.copySite.information.destination.ofperiod" />
@@ -14,7 +14,7 @@
 <bean:write name="siteView" property="commonComponent.executionCourse.infoExecutionPeriod.infoExecutionYear.year"/>
 </strong>
 <bean:message key="message.copySite.information.whatIsCopied" />
-<br><br>
+<br/><br/>
 <span class="error"><html:errors/></span>
 <logic:present name="<%= SessionConstants.LIST_EXECUTION_PERIODS %>">
 	<html:form action="/copySiteExecutionCourse">  

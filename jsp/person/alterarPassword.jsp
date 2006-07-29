@@ -23,7 +23,7 @@
             <font size="5" face="Arial, Helvetica, sans-serif">
               <bean:message key="alterarPassword.titulo" />
             </font>
-          </div><br>
+          </div><br/>
         </td>
       </tr>
 
@@ -87,7 +87,7 @@
       </tr>
 
       <tr>
-        <td colspan='2'><br></td>       
+        <td colspan='2'><br/></td>       
       </tr>
 
       <tr>

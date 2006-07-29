@@ -23,7 +23,7 @@
 	 <tr>
 	  	<td><bean:message key="info.grant.correct.grantcontract.delete.numcontrato"/>(<bean:message key="label.grant.contract.number"/> de contrato)</td>
 	 </tr>
-	</table><br><br>
+	</table><br/><br/>
 
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="deleteContract"/>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.action" property="action" value="deleteContract"/>

@@ -33,8 +33,8 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.util.State;
 
 /**
- * @author <a href="mailto:joao.mota@ist.utl.pt">Jo�o Mota </a> <br>
- *         <strong>Description: </strong> <br>
+ * @author <a href="mailto:joao.mota@ist.utl.pt">Jo�o Mota </a> <br/>
+ *         <strong>Description: </strong> <br/>
  *         This service edits a reimbursement guide. Editing a reimbursement
  *         guide is in reallity the creation of a new reimbursement guide
  *         situation associated with the reimbursement guide in question. The

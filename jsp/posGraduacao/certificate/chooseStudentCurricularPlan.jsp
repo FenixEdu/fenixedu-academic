@@ -19,7 +19,7 @@
 		<tr>
 			<td align="center" class="infoselected">
 				<logic:iterate id="studentCurricularPlan" name="studentCurricularPlans" length="1">
-					<b><bean:message key="student" /></b>&nbsp;<bean:write name="studentCurricularPlan" property="infoStudent.number" />&nbsp;<bean:write name="studentCurricularPlan" property="infoStudent.infoPerson.nome" /><br>
+					<b><bean:message key="student" /></b>&nbsp;<bean:write name="studentCurricularPlan" property="infoStudent.number" />&nbsp;<bean:write name="studentCurricularPlan" property="infoStudent.infoPerson.nome" /><br/>
 
 				</logic:iterate>
 			</td>

@@ -4,7 +4,7 @@
 
 <h2><bean:message bundle="MANAGER_RESOURCES" key="label.manager.insert.executionCourse" /></h2>
 
-<br>
+<br/>
 
 <span class="error"><html:errors/></span>
 
@@ -116,7 +116,7 @@
 				
 	</table>
 	
-	<br>
+	<br/>
 	
 	
 	

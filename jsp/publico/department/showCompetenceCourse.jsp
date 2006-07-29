@@ -5,7 +5,6 @@
 
 <ft:tilesView locale="<%=request.getAttribute(org.apache.struts.Globals.LOCALE_KEY).toString()%>" definition="definition.public.department" attributeName="body-inline">
 	<f:loadBundle basename="resources/HtmlAltResources" var="htmlAltBundle"/>
-	<style type="text/css">@import "<%= request.getContextPath() %>/CSS/transitional.css";</style>
 	
 	<f:loadBundle basename="resources/BolonhaManagerResources" var="bolonhaBundle"/>
 	<f:loadBundle basename="resources/EnumerationResources" var="enumerationBundle"/>
@@ -56,7 +55,7 @@
 	</h:panelGroup>
 	<h:panelGroup rendered="#{!empty CompetenceCourseManagement.competenceCourse.associatedCurricularCourses}">
 		<fc:dataRepeater value="#{CompetenceCourseManagement.competenceCourse.associatedCurricularCourses}" var="curricularCourse">
-			<h:outputText value="<p style='margin-left: 0px;'>" escape="false"/>
+			<h:outputText value="<p style='margin-left: 0px;'><i>" escape="false"/>
 			<h:outputLink value="../showDegreeSite.do" >
 				<h:outputText value="#{curricularCourse.parentDegreeCurricularPlan.name}"/>
 				<f:param name="method" value="showCurricularPlan"/>

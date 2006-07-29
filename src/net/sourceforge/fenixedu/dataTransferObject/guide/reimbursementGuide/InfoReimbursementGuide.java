@@ -22,7 +22,7 @@ import org.apache.commons.collections.Transformer;
 /**
  * 
  * 
- * This class contains all the information regarding a Reimbursement Guide. <br>
+ * This class contains all the information regarding a Reimbursement Guide. <br/>
  * 
  * @author <a href="mailto:joao.mota@ist.utl.pt">João Mota </a>
  * 

@@ -13,7 +13,7 @@
 		
 		<html:messages id="msg" message="true">
 			<br/>
-			<span class="sucessfulOperarion"><bean:write name="msg"/></span><br>
+			<span class="sucessfulOperarion"><bean:write name="msg"/></span><br/>
 			<br/>
 		</html:messages>
 

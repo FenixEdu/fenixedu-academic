@@ -27,8 +27,8 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.util.State;
 
 /**
- * @author <a href="mailto:joao.mota@ist.utl.pt">Jo�o Mota </a> <br>
- *         <strong>Description: </strong> <br>
+ * @author <a href="mailto:joao.mota@ist.utl.pt">Jo�o Mota </a> <br/>
+ *         <strong>Description: </strong> <br/>
  *         This service creates a reimbursement guide and associates it with a
  *         payment guide. It also creates the reimbursement guide situation and
  *         sets it to the ISSUED state. If any problem occurs during the
@@ -38,7 +38,7 @@ import net.sourceforge.fenixedu.util.State;
  *         reimbursement exceeds the total of the payment guide an
  *         InvalidReimbursementValueServiceException is thrown and if the sum of
  *         all the reimbursements associated with the payment guide exceeds the
- *         total an InvalidReimbursementValueSumServiceException is thrown. <br>
+ *         total an InvalidReimbursementValueSumServiceException is thrown. <br/>
  *         The service also generates the number of the new reimbursement guide
  *         using a sequential method.
  */

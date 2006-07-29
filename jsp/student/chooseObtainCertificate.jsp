@@ -23,7 +23,7 @@
                 		</tr>
                 		<tr valign='center'>
                     		<td align='center' colspan='2' nowrap>
-                        		<br>
+                        		<br/>
                     		</td>
                 		</tr>
                 		<tr valign='center'>

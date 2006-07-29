@@ -17,7 +17,7 @@ import net.sourceforge.fenixedu.domain.Person;
  * @author <a href="mailto:sana@ist.utl.pt">Shezad Anavarali </a>
  * @author <a href="mailto:naat@ist.utl.pt">Nadir Tarmahomed </a>
  * 
- * <strong>Description: </strong> <br>
+ * <strong>Description: </strong> <br/>
  * This service counts the number of sent Sms's by a person, in a date period
  * delimited by starDate(inclusive) and endDate(exclusive)
  * 
