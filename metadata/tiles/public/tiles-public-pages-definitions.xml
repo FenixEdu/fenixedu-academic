@@ -171,4 +171,25 @@
 	<definition name="execution-course-first-page" extends="definition.public.executionCourse">
 		<put name="body" value="/publico/executionCourse/firstPage.jsp"/>
 	</definition>
+
+	<definition name="chooseRoom" page="/layout/publicGesDisLayout_2col.jsp">
+		<put name="title" value="Instituto Superior Técnico" />
+		<put name="serviceName" value="Instituto Superior Técnico" />
+		<put name="symbols_row" value="/publico/degreeSite/symbolsRow.jsp" />
+		<put name="profile_navigation" value="/publico/degreeSite/profileNavigation.jsp" />
+		<put name="lateral_nav" value="/publico/commonNavLocalPub.jsp" />
+		<put name="body" value="/publico/chooseRoom_bd.jsp" />
+		<put name="footer" value="/publico/commonFooterPub.jsp" />
+	</definition>	
+
+	<definition name="viewRoom" extends="chooseRoom">
+		<put name="title" value="Instituto Superior Técnico" />
+		<put name="serviceName" value="Instituto Superior Técnico" />
+		<put name="symbols_row" value="/publico/degreeSite/symbolsRow.jsp" />
+		<put name="profile_navigation" value="/publico/degreeSite/profileNavigation.jsp" />
+		<put name="lateral_nav" value="/publico/commonNavLocalPub.jsp" />
+		<put name="body" value="/publico/viewRoom_bd.jsp" />
+		<put name="footer" value="/publico/commonFooterPub.jsp" />
+	</definition>	
+
 </tiles-definitions>

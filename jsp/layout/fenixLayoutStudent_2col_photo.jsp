@@ -31,7 +31,7 @@
 	alt="Icon de Logout"
 	src="<%= request.getContextPath() %>/images/logoff-bar.gif"
 	alt="<bean:message key="logoff-bar" bundle="IMAGE_RESOURCES" />" /></a></div>
-<div></div> <%-- hack to make "hdr-nav" appear in IE --%>
+<div><!-- hack to make "hdr-nav" appear in IE --></div>
 <!-- End Header -->
 <!-- NavGeral -->
 <tiles:insert attribute="navGeral" />

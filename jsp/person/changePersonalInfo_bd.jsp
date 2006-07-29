@@ -4,18 +4,15 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/enum.tld" prefix="e" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
-<html>
-  <head>
-    <title><bean:message key="label.person.title.changePersonalInfo" /></title>
-  </head>
-  <body>
+
 <span class="error"><!-- Error messages go here --><html:errors /></span>
   <bean:define id="personalInfo" name="<%= SessionConstants.PERSONAL_INFO_KEY %>" scope="session"/>
   <html:form action="/changePersonalInfoDispatchAction?method=change">
 
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
+
 <h2><bean:message key="label.person.title.changePersonalInfo" /></h2>
         <table width="100%" cellspacing="0">
-      		<tr>
 
 <%--
             <% IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW); 
@@ -24,7 +21,7 @@
                    (userView.getCandidateView().changeablePersonalInfo())) { %>
 --%>
 <%--
-        	    <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="2"/>
+        	    
                 <!-- Estado Civil -->
                 <tr>
                  <td with="15%"><bean:message key="label.person.maritalStatus" /></td>
@@ -198,7 +195,6 @@
                 </tr>
          	<% }else { %>
 --%>
-    	   	    <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
 
 <%--                	
 				<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.name" property="name" />
@@ -285,4 +281,3 @@
 <html:reset bundle="HTMLALT_RESOURCES" altKey="reset.Reset" property="Reset" styleClass="inputbutton">Rep�r</html:reset>
       </html:form>  
   </body>
-</html>

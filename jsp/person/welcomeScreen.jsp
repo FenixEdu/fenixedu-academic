@@ -52,9 +52,8 @@
 	</table>
 	</logic:notEqual>
 </logic:present>
-<p>
-	<bean:message key="message.person.welcome.header"/>
-<p/>
-<p>
-	<bean:message key="message.person.welcome.body"/>
-</p>
+
+<br/>
+<bean:message key="message.person.welcome.header"/>
+<br/>
+<bean:message key="message.person.welcome.body"/>

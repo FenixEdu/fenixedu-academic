@@ -1,9 +1,6 @@
+<%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <div align="center">
-
-  <font color="#023264" size="-1">
-
-    <h2>          Os seus dados foram alterados com sucesso !         </h2>
-
-  </font>
-
+    <h2>
+    	<bean:message key="message.your.information.was.sucessully.changed"/>
+    </h2>
 </div>

@@ -355,7 +355,7 @@
               scope="request"
               validate="true"
               type="net.sourceforge.fenixedu.presentationTier.Action.publico.SelectRoomsFormAction">
-        <forward name="list" path="/chooseRoom.jsp"/>
+        <forward name="list" path="chooseRoom"/>
         <forward name="one" path="/siteViewer.do?method=roomViewer"/>        
       </action>
 
@@ -377,7 +377,7 @@
               scope="request"
               validate="true"
               type="net.sourceforge.fenixedu.presentationTier.Action.publico.SiteViewerDispatchAction">
-        <forward name="roomViewer" path="/viewRoom.jsp"/>
+        <forward name="roomViewer" path="viewRoom"/>
       </action>
 
 	 <action input="/chooseRoomsFormNew.do"
@@ -547,7 +547,7 @@
               	validate="false"
 				parameter="method"
 				type="net.sourceforge.fenixedu.presentationTier.Action.publico.SiteViewerDispatchAction">
-			<forward name="roomViewer" path="/viewRoom.jsp"/>
+			<forward name="roomViewer" path="viewRoom"/>
 			<forward name="executionCourseViewer" path="viewExecutionCourse"/>
 		</action>
 		<action path="/siteViewerRoomNew"
