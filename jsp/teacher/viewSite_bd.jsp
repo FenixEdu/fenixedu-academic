@@ -17,5 +17,5 @@
 
 <logic:messagesNotPresent property="error.exception.notAuthorized">
 	<img src="<%= request.getContextPath() %>/images/title_adminDisc.gif" alt="<bean:message key="title_adminDisc" bundle="IMAGE_RESOURCES" />" />
-	<p><bean:message key="label.instructions" /></p>
+	<bean:message key="label.instructions" />
 </logic:messagesNotPresent>

@@ -18,15 +18,14 @@
 				<bean:message key="link.home"/>
 			</html:link>
 		</li>
-
-		<!-- The following are links to the old execution course site -->
-
 		<li>
 			<html:link page="/copySiteExecutionCourse.do?method=prepareChooseExecutionPeriod" paramId="objectCode" paramName="executionCourse" paramProperty="idInternal">
 				<bean:message key="link.copySiteExecutionCourse"/>
 			</html:link>
 		</li>
-		<br/>
+	</ul>
+	<br/>
+	<ul>
 		<li>
 			<html:link page="/alternativeSite.do?method=prepareCustomizationOptions" paramId="objectCode" paramName="executionCourse" paramProperty="idInternal">
 				<bean:message key="link.personalizationOptions"/>
@@ -52,7 +51,9 @@
 				<bean:message key="link.teacher.executionCourseManagement.foruns"/>
 			</html:link>
 		</li>
-		<br/>
+	</ul>
+	<br/>
+	<ul>
 		<li>
 			<html:link page="/manageExecutionCourse.do?method=objectives" paramId="executionCourseID" paramName="executionCourse" paramProperty="idInternal">
 				<bean:message key="link.objectives"/>
@@ -73,7 +74,9 @@
 				<bean:message key="link.bibliography"/>
 			</html:link>
 		</li>
-		<br/>
+	</ul>
+	<br/>
+	<ul>
 		<li>
 			<html:link page="/teachersManagerDA.do?method=viewTeachersByProfessorship" paramId="objectCode" paramName="executionCourse" paramProperty="idInternal">
 				<bean:message key="link.teachers"/>
@@ -99,13 +102,17 @@
 				<bean:message key="link.groupsManagement"/>
 			</html:link>
 		</li>
-		<br/>
+	</ul>
+	<br/>
+	<ul>
 		<li>
 			<html:link page="/weeklyWorkLoad.do?method=prepare" paramId="executionCourseID" paramName="executionCourse" paramProperty="idInternal">
 				<bean:message key="link.weekly.work.load"/>
 			</html:link>
 		</li>
-		<br/>
+	</ul>
+	<br/>
+	<ul>
 		<li>
 			<html:link page="/viewCourseInformation.do" paramId="executionCourseId" paramName="executionCourse" paramProperty="idInternal">
 				<bean:message key="link.courseInformationManagement"/>
@@ -116,7 +123,9 @@
 				<bean:message key="link.teachingReportManagement"/>
 			</html:link>
 		</li>
-		<br/>
+	</ul>
+	<br/>
+	<ul>
 		<li>
 			<html:link href="<%= request.getContextPath()+"/publico/viewSiteExecutionCourse.do?method=firstPage" %>" paramId="objectCode" paramName="executionCourse" paramProperty="idInternal" target="_blank">
 				Ver Página da Disciplina

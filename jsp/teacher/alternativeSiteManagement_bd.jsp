@@ -14,6 +14,9 @@
 <h2><bean:message key="title.personalizationOptions"/></h2>
 <logic:present name="siteView"> 
 <html:form action="/alternativeSite" method="get">
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="editCustomizationOptions"/>
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.objectCode"  property="objectCode" value="<%= pageContext.findAttribute("objectCode").toString() %>" />
 <bean:define id="bodyComponent" name="siteView" property="component"/>
 <br />
 <table width="100%" cellpadding="0" cellspacing="0">
@@ -26,40 +29,41 @@
 </table>
 <br />
 <table width="100%">
-	<td width="200px">
+<tr>
+	<td width="200">
 		<bean:message key="message.siteAddress"/>
 	</td>
-	<td witdh="1px">
+	<td witdh="1">
 	</td>
 	<td><html:text bundle="HTMLALT_RESOURCES" altKey="text.siteAddress" property="siteAddress" size="30"/>
 	</td>
-	<td><span class="error" ><html:errors property="siteAddress"/></span>
+	<td><span class="error" ><!-- Error messages go here --><html:errors property="siteAddress"/></span>
 	</td>
 </tr>
 <tr>
-	<td width="200px">
+	<td width="200">
 		<bean:message key="message.mailAddressCourse"/>	 
 	</td>
-	<td width="1px">
+	<td width="1">
 		<html:radio bundle="HTMLALT_RESOURCES" altKey="radio.dynamicMailDistribution" property="dynamicMailDistribution" value="false"/>
 	</td>
 	<td>  	  
 	  <html:text bundle="HTMLALT_RESOURCES" altKey="text.mail" property="mail" size="30"/>
 	</td>
-	<td><span class="error" >
+	<td><span class="error" ><!-- Error messages go here -->
 	  <html:errors property="mail"/></span>
     </td>    
 </tr>
 <tr>
 	<td>
 	</td>
-	<td width="1px">
+	<td width="1">
 		<html:radio bundle="HTMLALT_RESOURCES" altKey="radio.dynamicMailDistribution" property="dynamicMailDistribution" value="true"/>
 	</td>
-	<td width="400px">
+	<td width="400">
 	  	<%=ExecutionCourseAliasExpandingAction.emailAddressPrefix%><%=request.getParameter("objectCode")%>&#64;<%=TeacherAdministrationViewerDispatchAction.mailingListDomainConfiguration() %>	
 	</td>		
-	<td><span class="error" >
+	<td><span class="error" ><!-- Error messages go here -->
 	  <html:errors property="dynamicMailDistribution"/></span>
     </td>    
 </tr>
@@ -82,7 +86,7 @@
 <br />
 <table width="100%" cellpadding="0" cellspacing="0">
 <tr>
-	<td width="200px" valign="top">
+	<td width="200" valign="top">
 		<bean:message key="message.initialStatement"/>
 	</td>	
 	<td><html:textarea bundle="HTMLALT_RESOURCES" altKey="textarea.initialStatement" name="bodyComponent" property="initialStatement" rows="10" cols="56"/> 
@@ -102,17 +106,14 @@
 <br />
 <table width="100%" cellpadding="0" cellspacing="0">
 <tr>
-	<td width="200px" valign="top">
+	<td width="200" valign="top">
 		<bean:message key="message.introduction"/>
 	</td>	
 	<td><html:textarea bundle="HTMLALT_RESOURCES" altKey="textarea.introduction" name="bodyComponent" property="introduction" rows="10" cols="56"/></td> 
 </tr>
 </table>
-<h3><table>
-<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="editCustomizationOptions"/>
-<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
-<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.objectCode"  property="objectCode" value="<%= pageContext.findAttribute("objectCode").toString() %>" />
-
+<br/>
+<table>
 <tr align="center">	
 	<td>
 	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.confirm" styleClass="inputbutton" property="confirm">
@@ -125,6 +126,6 @@
 	</html:reset>
 	</td>
 </tr>
-</table></h3>
+</table>
 </html:form>
 </logic:present>

@@ -13,6 +13,7 @@
 <link href="<%= request.getContextPath() %>/CSS/transitional.css" rel="stylesheet" media="screen" type="text/css" />
 <script type="text/javascript" src="<%= request.getContextPath() %>/script/gesdis-scripting.js"></script>
 <script type="text/javascript" src="<%= request.getContextPath() %>/CSS/scripts/hideButtons.js"></script>
+	<title><bean:message key="title.teaching"/></title>
 </head>
 <body>
 <%-- Layout component parameters : header, navLocal, body --%>
@@ -22,7 +23,16 @@
     <p><tiles:getAsString name="serviceName" /></p>
 </div>
 <bean:define id="supportLink" type="java.lang.String">mailto:<bean:message key="suporte.mail" bundle="GLOBAL_RESOURCES"/></bean:define>
-<div id="hdr-nav"><a href="<%= supportLink %>"><img alt="Icon de Suporte" src="<%= request.getContextPath() %>/images/sup-bar.gif" alt="<bean:message key="sup-bar" bundle="IMAGE_RESOURCES" />" /></a><a href="<%= request.getContextPath() %>/logoff.do"><img alt="Icon de Logout" src="<%= request.getContextPath() %>/images/logoff-bar.gif" alt="<bean:message key="logoff-bar" bundle="IMAGE_RESOURCES" />" /></a></div>
+<div id="hdr-nav">
+	<a href="<%= supportLink %>"><img
+			src="<%= request.getContextPath() %>/images/sup-bar.gif"
+			alt="<bean:message key="sup-bar" bundle="IMAGE_RESOURCES" />" />
+	</a>
+	<a href="<%= request.getContextPath() %>/logoff.do"><img
+			src="<%= request.getContextPath() %>/images/logoff-bar.gif"
+			alt="<bean:message key="logoff-bar" bundle="IMAGE_RESOURCES" />" />
+	</a>
+</div>
 <div><!-- hack to make "hdr-nav" appear in IE --></div>
 <!-- End Header -->
 <!-- NavGeral -->
