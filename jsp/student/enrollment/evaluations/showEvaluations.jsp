@@ -3,66 +3,6 @@
 <%@ taglib uri="/WEB-INF/html_basic.tld" prefix="h"%>
 <%@ taglib uri="/WEB-INF/jsf_fenix_components.tld" prefix="fc"%>
 <ft:tilesView definition="definition.student.masterPage" attributeName="body-inline">
-<style>
-div.evalcontainer {
-padding: 1em 0;
-}
-table.evallist {
-margin-bottom: 1em;
-text-align: center;
-border-collapse: collapse;
-}
-table.evallist tr {
-}
-table.evallist th {
-padding: 0.25em 0.5em;
-border: 1px solid #ccc;
-background-color: #eaeaea;
-font-weight: normal;
-}
-table.evallist td {
-border-top: 1px solid #ddd;
-border-bottom: 1px solid #ddd;
-border-left: 1px solid #ddd;
-border-right: 1px solid #ddd;
-padding: 0.25em 0.5em;
-}
-table.evallist td.evallist_empty {
-background-color: #fff;
-border: none;
-padding: 0.75em;
-}
-.left {
-text-align: left;
-}
-table.evallist td.title {
-padding: 0.5em;
-font-weight: bold;
-text-align: left;
-background-color: #f5f5f5;
-}
-
-table.search {
-background-color: #f5f5f5;
-border-collapse: collapse;
-}
-table.search tr td {
-border: 1px solid #fff;
-padding: 0.3em;
-}
-.leftcolumn {
-text-align: right;
-}
-tr.el_highlight {
-background-color: #fcfcee;
-}
-tr.el_highlight span.green {
-color: #272;
-}
-td.el_courses {
-text-align: left;
-}
-</style>
 	<f:loadBundle basename="resources/StudentResources" var="bundle"/>
 	<f:loadBundle basename="resources/HtmlAltResources" var="htmlAltBundle"/>
 	<h:outputText value="<h2>#{bundle['label.evaluations.enrolment']}</h2>" escape="false" />

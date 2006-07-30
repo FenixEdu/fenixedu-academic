@@ -8,17 +8,17 @@
 <logic:present name="badXmls">
 	<bean:size id="badXmlsListSize" name="badXmls" />
 	<logic:equal name="badXmlsListSize" value="0">
-		<span class="error"><bean:message key="message.sucessfullInsert" /></span>
+		<span class="error"><!-- Error messages go here --><bean:message key="message.sucessfullInsert" /></span>
 	</logic:equal>
 	<logic:notEqual name="badXmlsListSize" value="0">
 		<logic:iterate id="xmlName" name="badXmls" indexId="index">
 			<logic:equal name="index" value="0">
 				<logic:equal name="xmlName" value="badMetadata">
-					<span class="error"><bean:message key="message.not.insertedExercise" /></span>
+					<span class="error"><!-- Error messages go here --><bean:message key="message.not.insertedExercise" /></span>
 					<table>
 				</logic:equal>
 				<logic:notEqual name="xmlName" value="badMetadata">
-					<span class="error"><bean:message key="message.not.insertedList" /></span>
+					<span class="error"><!-- Error messages go here --><bean:message key="message.not.insertedList" /></span>
 					<table>
 				</logic:notEqual>
 			</logic:equal>
@@ -33,17 +33,17 @@
 </logic:present>
 <logic:present name="successfulDeletion">
 	<logic:equal name="successfulDeletion" value="true">
-		<span class="error"><bean:message key="message.successfulDeletion" /></span>
+		<span class="error"><!-- Error messages go here --><bean:message key="message.successfulDeletion" /></span>
 	</logic:equal>
 </logic:present>
 <logic:present name="successfulEdition">
 	<logic:equal name="successfulEdition" value="true">
-		<span class="error"><bean:message key="message.successfulExerciseEdition" /></span>
+		<span class="error"><!-- Error messages go here --><bean:message key="message.successfulExerciseEdition" /></span>
 	</logic:equal>
 </logic:present>
 <logic:present name="successfulCreation">
 	<logic:equal name="successfulCreation" value="true">
-		<span class="error"><bean:message key="message.successfulExerciseCreation" /></span>
+		<span class="error"><!-- Error messages go here --><bean:message key="message.successfulExerciseCreation" /></span>
 	</logic:equal>
 </logic:present>
 <br />
@@ -59,7 +59,7 @@
 	<br />
 	<bean:size id="metadatasSize" name="infoMetadataList" />
 	<logic:equal name="metadatasSize" value="0">
-		<span class="error"><bean:message key="message.tests.no.exercises" /></span>
+		<span class="error"><!-- Error messages go here --><bean:message key="message.tests.no.exercises" /></span>
 	</logic:equal>
 	<table>
 		<tr>

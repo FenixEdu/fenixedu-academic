@@ -45,7 +45,7 @@
 	</html:form>
 </logic:notEmpty>
 <logic:empty name="paymentsManagementDTO" property="selectedEntries">
-	<span class="error"><bean:message key="label.payments.not.found"/></span>
+	<span class="error"><!-- Error messages go here --><bean:message key="label.payments.not.found"/></span>
 </logic:empty>
 
 </logic:present>

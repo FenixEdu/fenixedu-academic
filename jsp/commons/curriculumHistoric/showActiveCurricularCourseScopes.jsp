@@ -5,7 +5,7 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <h2><bean:message key="label.curricularPlan"  bundle="CURRICULUM_HISTORIC_RESOURCES"/>&nbsp;-&nbsp;
 	<bean:write name="degreeCurricularPlan" property="name"/></h2>
-<span class="error"><html:errors bundle="CURRICULUM_HISTORIC_RESOURCES"/></span>
+<span class="error"><!-- Error messages go here --><html:errors bundle="CURRICULUM_HISTORIC_RESOURCES"/></span>
 <br />
 <logic:present name="allActiveCurricularCourseScopes">
 			<logic:iterate id="curricularCourseScopeElemList" name="allActiveCurricularCourseScopes" length="1">

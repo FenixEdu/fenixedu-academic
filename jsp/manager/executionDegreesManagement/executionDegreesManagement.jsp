@@ -7,7 +7,7 @@
 <h2>Editar <bean:message bundle="MANAGER_RESOURCES" key="label.manager.executionDegreeManagement"/></h2>
 
 <html:messages id="messages" message="true">
-	<span class="error"><bean:write name="messages" /></span>
+	<span class="error"><!-- Error messages go here --><bean:write name="messages" /></span>
 </html:messages>
 
 <html:form action="/executionDegreesManagement">

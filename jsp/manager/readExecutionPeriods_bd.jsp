@@ -23,7 +23,7 @@
 
 	<b><bean:message bundle="MANAGER_RESOURCES" key="list.title.execution.periods"/></b>
 	<br/>
-	</br>
+	<br/>
 	<table>
 		<tr>
 			<th class="listClasses-header"><bean:message bundle="MANAGER_RESOURCES" key="label.manager.execution.period.semester" />
@@ -68,7 +68,7 @@
 </logic:present>
 
 <logic:notPresent name="<%= SessionConstants.LIST_EXECUTION_PERIODS %>" scope="request">
-	<span class="error">
+	<span class="error"><!-- Error messages go here -->
 		<html:errors /><bean:message bundle="MANAGER_RESOURCES" key="errors.execution.period.none"/>
 	</span>
 </logic:notPresent>

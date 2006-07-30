@@ -45,7 +45,7 @@
 <br/>
 <br/>
      <center>
-            <span class="error">
+            <span class="error"><!-- Error messages go here -->
                     <bean:message key="title.editAulaOfTurnoXPTO"/>
                     <bean:write name="shift" property="nome" scope="request" filter="true"/>
             </span>

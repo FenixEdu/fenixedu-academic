@@ -8,7 +8,7 @@
 
 	<%-- Presenting Errors --%>
 	<logic:messagesPresent>
-	<p align="center"><span class="error">
+	<p align="center"><span class="error"><!-- Error messages go here -->
 	<html:errors/>
 	</span></p><br/>
 	</logic:messagesPresent>    

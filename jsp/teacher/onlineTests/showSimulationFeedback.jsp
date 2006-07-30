@@ -10,7 +10,7 @@
 	<bean:define id="errors" name="infoSiteStudentTestFeedback" property="errors"/>
 	<table>
 		<logic:iterate id="error" name="errors">
-			<tr><td><span class="error"><bean:write name="error"/></span></td></tr>
+			<tr><td><span class="error"><!-- Error messages go here --><bean:write name="error"/></span></td></tr>
 		</logic:iterate>
 		<tr>
 			<td><b><bean:message key="message.studentQuestionsAnsweredNumber"/></b></td>

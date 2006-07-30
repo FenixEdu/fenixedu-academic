@@ -10,7 +10,7 @@
 
 	<bean:size id="testsSize" name="infoTestList" />
 	<logic:equal name="testsSize" value="0">
-		<span class="error"><bean:message key="message.tests.no.tests" /></span>
+		<span class="error"><!-- Error messages go here --><bean:message key="message.tests.no.tests" /></span>
 	</logic:equal>
 	<logic:notEqual name="testsSize" value="0">
 		<table>

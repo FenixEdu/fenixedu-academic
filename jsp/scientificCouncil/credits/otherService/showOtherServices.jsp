@@ -58,7 +58,7 @@
 		</table>
 	</logic:present>
 	<logic:notPresent name="otherServices">
-		<span class="error"><bean:message key="message.otherTypeCreditLine.noRegists" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></span>
+		<span class="error"><!-- Error messages go here --><bean:message key="message.otherTypeCreditLine.noRegists" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></span>
 		<br/>
 	</logic:notPresent>
 </logic:present>	

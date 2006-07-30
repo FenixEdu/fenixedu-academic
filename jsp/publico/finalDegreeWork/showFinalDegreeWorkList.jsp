@@ -205,6 +205,6 @@
 		</table>
 	</logic:greaterThan>
 	<logic:lessEqual name="numberOfHeaders" value="0">
-		<span class="error"><bean:message key="finalDegreeWorkProposalHeaders.notPresent"/></span>
+		<span class="error"><!-- Error messages go here --><bean:message key="finalDegreeWorkProposalHeaders.notPresent"/></span>
 	</logic:lessEqual>	
 </logic:present>

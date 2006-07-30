@@ -35,7 +35,7 @@
 	<br/><br/>	
 			
 	<logic:messagesPresent message="true">
-		<span class="error">
+		<span class="error"><!-- Error messages go here -->
 			<html:messages id="message" message="true" bundle="SPACE_RESOURCES">
 				<bean:write name="message"/>
 			</html:messages>
@@ -45,7 +45,7 @@
 	<h3><bean:message key="label.active.responsible.units" bundle="SPACE_RESOURCES"/>:</h3>
 	<bean:size id="activeSize" name="selectedSpaceInformation" property="space.activeSpaceResponsibility"/>
 	<logic:equal name="activeSize" value="0">
-		<span class="error">
+		<span class="error"><!-- Error messages go here -->
 			<bean:message key="label.space.no.current.responsible.units" bundle="SPACE_RESOURCES"/>
 		</span>	
 	</logic:equal>
@@ -74,7 +74,7 @@
 	<h3><bean:message key="label.other.responsible.units" bundle="SPACE_RESOURCES"/>:</h3>
 	<bean:size id="inactiveSize" name="selectedSpaceInformation" property="space.inactiveSpaceResponsibility"/>
 	<logic:equal name="inactiveSize" value="0">
-		<span class="error">
+		<span class="error"><!-- Error messages go here -->
 			<bean:message key="label.space.no.other.responsible.units" bundle="SPACE_RESOURCES"/>
 		</span>	
 	</logic:equal>

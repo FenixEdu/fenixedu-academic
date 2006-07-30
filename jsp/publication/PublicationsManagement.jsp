@@ -6,7 +6,7 @@
 <h2><bean:message key="title.publications.Management"/></h2>
 <logic:present name="infoSitePublications"> 
 		<logic:messagesPresent>
-		<span class="error">
+		<span class="error"><!-- Error messages go here -->
 			<html:errors/>
 		</span>
 		</logic:messagesPresent>
@@ -25,7 +25,7 @@
 				</td>
 			</tr>
 		</table>
-		</br>
+		<br/>
 		<table class="infoselected" width="100%">
 			<tr>
 				<td width="70%"><b><bean:message key="message.teacherInformation.name" /></b>

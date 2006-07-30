@@ -115,5 +115,5 @@ Alunos Inscritos
 </logic:present>
 
 <logic:notPresent name="<%= SessionConstants.STUDENT_LIST %>" scope="request">
-	<span class="error"><bean:message key="errors.students.none.in.shift"/></span>	
+	<span class="error"><!-- Error messages go here --><bean:message key="errors.students.none.in.shift"/></span>	
 </logic:notPresent>

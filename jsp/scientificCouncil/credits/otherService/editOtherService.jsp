@@ -20,7 +20,7 @@
 		<br/>
 	</logic:messagesPresent>
 	<html:messages id="message" message="true">
-		<span class="error">
+		<span class="error"><!-- Error messages go here -->
 			<bean:write name="message"/>
 			<br/>
 		</span>

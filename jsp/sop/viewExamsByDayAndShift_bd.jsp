@@ -24,7 +24,7 @@
 	<table align="center">
 		<tr>
 			<td>
-				<span class="error"><bean:message key="message.exams.none.for.day.shift"/></span>
+				<span class="error"><!-- Error messages go here --><bean:message key="message.exams.none.for.day.shift"/></span>
 			</td>
 		</tr>
 	</table>

@@ -20,7 +20,7 @@ function back(){
 <br />
 <logic:present name="infoMetadata">
 	<logic:present name="successfulChanged">
-		<span class="error"><bean:message key="message.successfulChanged" /></span>
+		<span class="error"><!-- Error messages go here --><bean:message key="message.successfulChanged" /></span>
 		<br />
 		<table>
 			<logic:iterate id="changed" name="successfulChanged">

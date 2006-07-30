@@ -67,7 +67,7 @@
 		<td>
 			<strong><bean:message key="label.student.startDate" /></strong>
 			<html:text bundle="HTMLALT_RESOURCES" altKey="text.startDate" property="startDate" /> 
-			<span class="error"><bean:message key="message.dateFormat"/></span>
+			<span class="error"><!-- Error messages go here --><bean:message key="message.dateFormat"/></span>
 		</td>								
 	</tr>	
 	<tr>

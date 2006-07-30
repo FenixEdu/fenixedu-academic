@@ -7,11 +7,6 @@
 <%@ page import="net.sourceforge.fenixedu.util.InquiriesUtil" %>
 <%@ page import="net.sourceforge.fenixedu.domain.ShiftType" %>
 
-<style type="text/css">
-@import "<%= request.getContextPath() %>/CSS/inquiries_style.css";
-</style>
-
-
 <noscript>
 	<font class="error">
 		<bean:message key="error.message.inquiries.javascript.disabled" bundle="INQUIRIES_RESOURCES"/>

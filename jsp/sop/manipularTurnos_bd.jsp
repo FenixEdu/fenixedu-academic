@@ -94,7 +94,7 @@
 			<table>
 	        	<tr>
     	        	<td>
-        	        	<span class="error"> <bean:message key="errors.existTurnos"/></span>
+        	        	<span class="error"><!-- Error messages go here --> <bean:message key="errors.existTurnos"/></span>
                 	</td>
             	</tr>
             </table>

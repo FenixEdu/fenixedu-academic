@@ -39,7 +39,7 @@
 				<td><html:textarea bundle="HTMLALT_RESOURCES" altKey="textarea.generalObjectivesEn"  property="generalObjectivesEn" cols="50" rows="8"/></td>
 			</tr>
 		</table>   
-		</br>
+		<br/>
 		<table>	
 			<tr>
 				<td><strong><bean:message key="label.operacionalObjectives"/></strong></td>

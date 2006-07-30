@@ -12,7 +12,7 @@
 <h2><bean:message key="title.teacherInformation"/></h2>
 
 	<logic:messagesPresent>
-		<span class="error">
+		<span class="error"><!-- Error messages go here -->
 			<html:errors /> 
 		</span>
 	</logic:messagesPresent>	

@@ -30,7 +30,7 @@
     <table>
       <tr>
         <td>
-          <span class="error"><bean:message key="message.rooms.none"/></span>
+          <span class="error"><!-- Error messages go here --><bean:message key="message.rooms.none"/></span>
         </td>
       </tr>
     </table>

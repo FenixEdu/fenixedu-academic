@@ -15,7 +15,7 @@
 	<br/><br/>	
 			
 	<logic:messagesPresent message="true">
-		<span class="error">
+		<span class="error"><!-- Error messages go here -->
 			<html:messages id="message" message="true" bundle="SPACE_RESOURCES">
 				<bean:write name="message"/>
 			</html:messages>
@@ -30,7 +30,7 @@
 	<h3><bean:message key="label.active.material.occupations" bundle="SPACE_RESOURCES"/>:</h3>
 	<bean:size id="activeSize" name="selectedSpaceInformation" property="space.activeMaterialSpaceOccupations"/>
 	<logic:equal name="activeSize" value="0">
-		<span class="error">
+		<span class="error"><!-- Error messages go here -->
 			<bean:message key="label.space.no.current.materialOccupations" bundle="SPACE_RESOURCES"/>
 		</span>	
 	</logic:equal>
@@ -57,7 +57,7 @@
 	<h3><bean:message key="label.other.material.occupations" bundle="SPACE_RESOURCES"/>:</h3>
 	<bean:size id="inactiveSize" name="selectedSpaceInformation" property="space.inactiveMaterialSpaceOccupations"/>
 	<logic:equal name="inactiveSize" value="0">
-		<span class="error">
+		<span class="error"><!-- Error messages go here -->
 			<bean:message key="label.space.no.other.materialOccupations" bundle="SPACE_RESOURCES"/>
 		</span>	
 	</logic:equal>

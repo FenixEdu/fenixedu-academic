@@ -172,6 +172,6 @@ processar.
 
 <logic:notPresent name="<%= SessionConstants.LIST_EXECUTION_PERIODS %>"
 	scope="request">
-	<span class="error"> <html:errors /><bean:message
+	<span class="error"><!-- Error messages go here --> <html:errors /><bean:message
 		bundle="MANAGER_RESOURCES" key="errors.execution.period.none" /> </span>
 </logic:notPresent>

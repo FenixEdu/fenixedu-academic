@@ -6,7 +6,7 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 
 <html:messages id="message" message="true">
-	<span class="error"> <bean:write name="message" /> </span>
+	<span class="error"><!-- Error messages go here --> <bean:write name="message" /> </span>
 </html:messages>
 <h2><bean:message
 	key="label.projectSubmissions.viewProjectSubmissions.title" /></h2>
@@ -22,7 +22,7 @@
 
 <logic:notPresent name="noStudentGroupForGrouping">
 	<logic:empty name="projectSubmissions">
-		<span class="error"> <bean:message
+		<span class="error"><!-- Error messages go here --> <bean:message
 			key="label.projectSubmissions.viewProjectSubmissions.noProjectSubmissions" />
 		</span>
 	</logic:empty>
@@ -52,10 +52,10 @@
 		</html:link>
 	</logic:equal>
 	<logic:notEqual name="project" property="submissionPeriodOpen" value="true">
-	 	<span class="error"><bean:message key="error.project.submissionPeriodAlreadyExpired" bundle="APPLICATION_RESOURCES"/></span>
+	 	<span class="error"><!-- Error messages go here --><bean:message key="error.project.submissionPeriodAlreadyExpired" bundle="APPLICATION_RESOURCES"/></span>
 	</logic:notEqual>
 </logic:notPresent>
 <logic:present name="noStudentGroupForGrouping">
-	<span class="error"><bean:message key="label.projectSubmissions.viewProjectSubmissions.noStudentGroupForGrouping"/></span>
+	<span class="error"><!-- Error messages go here --><bean:message key="label.projectSubmissions.viewProjectSubmissions.noStudentGroupForGrouping"/></span>
 </logic:present>
 

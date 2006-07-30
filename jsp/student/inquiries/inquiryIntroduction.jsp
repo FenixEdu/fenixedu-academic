@@ -5,21 +5,8 @@
 <%@ page import="net.sourceforge.fenixedu.util.InquiriesUtil" %>
 <%@ page import="java.lang.StringBuilder" %>
 
-
-<style type="text/css">
-@import "<%= request.getContextPath() %>/CSS/inquiries_style.css";
-</style>
-
-<style type="text/css">
-#inquiry p {
-margin-top: 0;
-margin-bottom: 0;	
-}
-</style>
-
-
 <noscript>
-	<span class="error"><bean:message key="error.message.inquiries.javascript.disabled" bundle="INQUIRIES_RESOURCES"/></span>
+	<span class="error"><!-- Error messages go here --><bean:message key="error.message.inquiries.javascript.disabled" bundle="INQUIRIES_RESOURCES"/></span>
 </noscript>
 
 <bean:message key="message.inquiries.introduction" bundle="INQUIRIES_RESOURCES"/>

@@ -48,6 +48,6 @@
 		</table>
 	</logic:notEmpty>
 	<logic:empty name="coordinatorsList">
-		<span class="error"><bean:message key="message.noUserProjects" /></span>
+		<span class="error"><!-- Error messages go here --><bean:message key="message.noUserProjects" /></span>
 	</logic:empty>
 </logic:present>

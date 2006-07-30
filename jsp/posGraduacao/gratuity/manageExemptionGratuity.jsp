@@ -8,7 +8,7 @@
 
 <logic:present name="noGratuityValues">
 	<logic:equal name="noGratuityValues" value="true">
-		<br /><span class="error"><bean:message key="error.impossible.noGratuityValues" /></span>
+		<br /><span class="error"><!-- Error messages go here --><bean:message key="error.impossible.noGratuityValues" /></span>
 	</logic:equal>
 </logic:present>
 

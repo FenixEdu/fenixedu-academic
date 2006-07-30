@@ -185,7 +185,7 @@
 <br />
 </logic:notEmpty>
 <logic:empty name="infoExpensesReport" property="lines">
-	<span class="error"><bean:message key="message.noMovements" /></span>
+	<span class="error"><!-- Error messages go here --><bean:message key="message.noMovements" /></span>
 </logic:empty>
 <logic:present name="infoExpensesReport" property="summaryPTEReport">
 	<table class="printHeader">

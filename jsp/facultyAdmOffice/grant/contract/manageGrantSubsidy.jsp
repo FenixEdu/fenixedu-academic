@@ -8,7 +8,7 @@
 <%-- Presenting errors --%>
 <logic:messagesPresent>
 <center><b><bean:message key="label.grant.subsidy.information"/></b></center>
-<span class="error">
+<span class="error"><!-- Error messages go here -->
 	<html:errors/>
 </span><br/>
 </logic:messagesPresent>

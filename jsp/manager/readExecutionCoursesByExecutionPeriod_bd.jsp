@@ -44,7 +44,7 @@
 	
 			<b><bean:message bundle="MANAGER_RESOURCES" key="list.title.execution.course.toAssociate"/><b>
 			<br/>
-			</br>
+			<br/>
 			<table>
 				<tr>
 					<th class="listClasses-header">	
@@ -92,7 +92,7 @@
 	<logic:notPresent name="name" scope="request">
 		<b><bean:message bundle="MANAGER_RESOURCES" key="list.title.execution.courses"/></b>
 		<br/>
-		</br>
+		<br/>
 		<html:form action="/deleteExecutionCourses" method="get">
 			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.executionPeriodId" property="executionPeriodId" value="<%= request.getParameter("executionPeriodId") %>"/>
 			<bean:define id="onclick">
@@ -144,7 +144,7 @@
 </logic:notEmpty>
 
 <logic:empty name="infoExecutionCoursesList" scope="request">
-	<span class="error">
+	<span class="error"><!-- Error messages go here -->
 		<html:errors /><bean:message bundle="MANAGER_RESOURCES" key="errors.execution.courses.none"/>
 	</span>
 </logic:empty>

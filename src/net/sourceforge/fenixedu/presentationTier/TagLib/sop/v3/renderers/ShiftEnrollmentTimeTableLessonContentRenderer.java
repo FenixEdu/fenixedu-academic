@@ -40,7 +40,7 @@ public class ShiftEnrollmentTimeTableLessonContentRenderer implements LessonSlot
             InfoLesson lesson = (InfoLesson) showOccupation;
             strBuffer.append("<span class=\"float-left\"><a href=\"");
             strBuffer.append(getApplication());
-            strBuffer.append("/publico/viewSiteExecutionCourse.do?method=firstPage&objectCode=");
+            strBuffer.append("/publico/viewSiteExecutionCourse.do?method=firstPage&amp;objectCode=");
             strBuffer.append(lesson.getInfoShift().getInfoDisciplinaExecucao().getIdInternal()).append(
                     "\">");
 

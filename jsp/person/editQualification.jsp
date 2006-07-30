@@ -6,7 +6,7 @@
 <h2><bean:message key="title.teacherInformation"/></h2>
 
 <html:form action="/qualificationForm">
-<span class="error">
+<span class="error"><!-- Error messages go here -->
 	<html:errors/>
 </span>
 <br/>

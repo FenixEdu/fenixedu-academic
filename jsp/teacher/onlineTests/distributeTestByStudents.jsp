@@ -104,7 +104,7 @@ function cleanSelect() {
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="testsFirstPage"/>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.objectCode" property="objectCode" value="<%=(pageContext.findAttribute("objectCode")).toString()%>"/>
 		<table>
-		<tr><td><span class="error"><bean:message key="errors.existAlunosDeTurno"/></span></tr></td>
+		<tr><td><span class="error"><!-- Error messages go here --><bean:message key="errors.existAlunosDeTurno"/></span></tr></td>
 		<tr><td><html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton"><bean:message key="button.cancel"/></html:submit></tr></td>
 		</table>
 	</html:form>

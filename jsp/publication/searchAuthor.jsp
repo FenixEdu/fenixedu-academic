@@ -6,7 +6,7 @@
 
 <h2><bean:message key="title.publications.Management"/></h2>
 <logic:messagesPresent>
-		<span class="error">
+		<span class="error"><!-- Error messages go here -->
 			<html:errors property="nonValidating"/>
 			<html:errors property="nonValidatingName"/>
 			<html:errors property="nonValidatingOrganization"/>

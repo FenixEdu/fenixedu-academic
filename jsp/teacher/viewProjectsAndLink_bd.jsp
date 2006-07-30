@@ -143,7 +143,7 @@
                 		<logic:greaterThan name="count" value="1">
             		    <logic:iterate id="infoExportGrouping" name="infoGroupProperties" property="infoExportGroupings" >
                 		<bean:define id="infoExecutionCourse" name="infoExportGrouping" property="infoExecutionCourse" />
-							<bean:write name="infoExecutionCourse" property="nome"/></br>
+							<bean:write name="infoExecutionCourse" property="nome"/><br/>
                     	 </logic:iterate>
                     		</logic:greaterThan>
 						<logic:equal name="count" value="1">

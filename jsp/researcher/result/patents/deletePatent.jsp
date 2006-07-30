@@ -14,7 +14,7 @@
 	<br/>
 	
 	<%-- Action Messages --%>
-	<p><span class="error">
+	<p><span class="error"><!-- Error messages go here -->
 		<bean:message bundle="RESEARCHER_RESOURCES" key="researcher.result.deleteResult.warning"/>
 	</span></p>
 	

@@ -12,8 +12,8 @@
 	<bean:define id="attendsId" name="attend" property="idInternal" />
 	<bean:define id="projectsWithOnlineSubmission" name="executionCourse" property="projectsWithOnlineSubmission" />
 	<p class="mtop2 mbottom0"><strong><bean:write name="executionCourse" property="nome"/></strong></p>
-	<table>
-		<logic:notEmpty name="projectsWithOnlineSubmission">
+	<logic:notEmpty name="projectsWithOnlineSubmission">
+		<table>
 			<logic:iterate id="projectWithOnlineSubmission" name="projectsWithOnlineSubmission" type="net.sourceforge.fenixedu.domain.Project">
 				<bean:define id="projectId" name="projectWithOnlineSubmission" property="idInternal" />
 				<tr>
@@ -25,12 +25,12 @@
 					</td>
 				</tr>
 			</logic:iterate>
-		</logic:notEmpty>
-		<logic:empty name="projectsWithOnlineSubmission">
-			<span class="error">
-				<bean:message key="label.projectSubmissions.viewProjectsWithOnlineSubmission.noProjectsWithOnlineSubmissionForExecutionCourse"/>
-			</span>
-		</logic:empty>
-	</table>
+		</table>
+	</logic:notEmpty>
+	<logic:empty name="projectsWithOnlineSubmission">
+		<span class="error"><!-- Error messages go here -->
+			<bean:message key="label.projectSubmissions.viewProjectsWithOnlineSubmission.noProjectsWithOnlineSubmissionForExecutionCourse"/>
+		</span>
+	</logic:empty>
 </logic:iterate>
 

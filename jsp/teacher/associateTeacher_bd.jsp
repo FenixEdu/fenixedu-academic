@@ -13,7 +13,7 @@
 		</td>
 		<td><html:text bundle="HTMLALT_RESOURCES" altKey="text.teacherNumber"  property="teacherNumber"  />
 		</td>
-		<td><span class="error"><html:errors /></span >
+		<td><span class="error"><!-- Error messages go here --><html:errors /></span >
 		</td>
 	</tr>
 </table>

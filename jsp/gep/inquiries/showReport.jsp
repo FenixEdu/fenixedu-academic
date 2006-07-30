@@ -8,8 +8,6 @@
 <%@ page import="net.sourceforge.fenixedu.util.NumberUtils" %>
 
 
-<link href="<%= request.getContextPath() %>/CSS/inquiries_style.css" rel="stylesheet" type="text/css" />
-
 <p class="center">
 	<bean:message key="title.inquiries.GEP" bundle="INQUIRIES_RESOURCES"/>
 </p>

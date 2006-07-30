@@ -6,7 +6,7 @@
 <h2><bean:message key="title.publications.Management"/></h2>
 <logic:present name="infoPublication"> 
 		<logic:messagesPresent>
-		<span class="error">
+		<span class="error"><!-- Error messages go here -->
 			<html:errors/>
 		</span>
 		</logic:messagesPresent>

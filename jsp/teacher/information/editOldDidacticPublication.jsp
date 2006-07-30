@@ -21,7 +21,7 @@
 	<logic:notPresent name="infoOldPublication">
 		<bean:message key="message.publications.managementEdit" />
 	</logic:notPresent></p>
-	<span class="error">
+	<span class="error"><!-- Error messages go here -->
 		<html:errors/>
 	</span>
 	<br />

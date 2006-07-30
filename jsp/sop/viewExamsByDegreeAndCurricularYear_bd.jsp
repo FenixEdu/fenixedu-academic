@@ -22,7 +22,7 @@
 			<table width="100%">
 				<tr>
 					<td>
-						<span class="error"><bean:message key="message.exams.none.for.executionDegree.CurricularYear.ExecutionPeriod"/></span>
+						<span class="error"><!-- Error messages go here --><bean:message key="message.exams.none.for.executionDegree.CurricularYear.ExecutionPeriod"/></span>
 					</td>
 				</tr>
 			</table>

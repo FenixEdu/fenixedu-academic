@@ -5,7 +5,7 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
 
 <html:messages id="message" message="true" bundle="ADMIN_OFFICE_RESOURCES">
-	<span class="error"><bean:write name="message" /></span>
+	<span class="error"><!-- Error messages go here --><bean:write name="message" /></span>
 	<br/>
 </html:messages>
 <h2><strong><bean:message key="label.dfaCandidacy.create" bundle="ADMIN_OFFICE_RESOURCES"/></strong></h2>

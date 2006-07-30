@@ -8,8 +8,6 @@
 <%@ page import="net.sourceforge.fenixedu.util.InquiriesUtil" %>
 <%@ page import="net.sourceforge.fenixedu.util.NumberUtils" %>
 
-<link href="<%= request.getContextPath() %>/CSS/inquiries_style.css" rel="stylesheet" type="text/css" />
-
 <logic:present name="infoDegreeCurricularPlan">
 	
 	<div class="breadcumbs"><a href="http://www.ist.utl.pt/index.shtml">IST</a>

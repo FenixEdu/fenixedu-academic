@@ -228,9 +228,9 @@ public final class RenderTimeTableTag extends TagSupport {
                 if (!oddElement) {
                     result.append("<tr>\r\n");
                 }
-                result.append("<td width='60px'><b>");
+                result.append("<td width='60'><b>");
                 result.append(elem.getKey());
-                result.append("</b></td><td  style='vertical-align:top'>-</td><td wrap='wrap'>");
+                result.append("</b></td><td  style='vertical-align:top'>-</td><td>");
                 result.append(elem.getValue());
                 result.append("</td>");
                 if (oddElement) {
@@ -245,7 +245,7 @@ public final class RenderTimeTableTag extends TagSupport {
             // the legend of a quinzenal lesson?
             result.append("<tr><td style='vertical-align:top'><b>[Q]</b></td>");
             result.append("<td  style='vertical-align:top'>-</td>");
-            result.append("<td wrap='wrap'>");
+            result.append("<td>");
             result.append(getMessageResource(pageContext, "public.degree.information.label.biweekly"));
             result.append("</td></tr>");
 

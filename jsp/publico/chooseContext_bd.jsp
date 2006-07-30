@@ -4,7 +4,7 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ page import="org.apache.struts.Globals" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
-<span class="error">
+<span class="error"><!-- Error messages go here -->
 	<html:errors/>
 </span>
 <p><strong><font color="#FF0000">Atenção&nbsp;-&nbsp;</font>Se pretende consultar informação relativa a disciplinas de 4ï¿½ ou 5ï¿½ em 2003/2004 ou 5ï¿½ em 2004/2005 do curso de Informï¿½tica - Alameda, deve seleccionar o plano curricular "Licenciatura em Engenharia Informï¿½tica e de Computadores - LEIC - Currículo Antigo"</strong></p>

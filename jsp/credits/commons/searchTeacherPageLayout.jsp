@@ -23,7 +23,7 @@
 
 <logic:present name="teacherNotFound">
 <p>
-<span class="error">
+<span class="error"><!-- Error messages go here -->
 <bean:message key="message.indicates.error"/>:
 	<ul>
 		<li><bean:message key="message.teacher.not-found-or-not-belong-to-department"/></li>

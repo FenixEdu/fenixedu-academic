@@ -38,7 +38,7 @@
 
 <span class="error"><!-- Error messages go here --><html:errors /></span>
 <html:messages id="message" message="true">
-	<span class="error">
+	<span class="error"><!-- Error messages go here -->
 		<bean:write name="message"/>
 	</span>
 </html:messages>
@@ -53,7 +53,7 @@
 
 <bean:define id="teacherID" name="teacher" property="idInternal" />
 <logic:empty name="creditsLines">
-	<span class="error"><bean:message key="message.teacherCredit.notFound"/></span>
+	<span class="error"><!-- Error messages go here --><bean:message key="message.teacherCredit.notFound"/></span>
 </logic:empty>
 <logic:notEmpty name="creditsLines">
 	<table class="ts01" cellpadding="3" cellspacing="1">

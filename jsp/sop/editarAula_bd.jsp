@@ -21,7 +21,7 @@
 	<bean:message key="title.editAula"/>
 </h2>
 <br />
-<span class="error">
+<span class="error"><!-- Error messages go here -->
 	<html:errors/>
 </span>
 <html:form action="/editarAulaForm" focus="diaSemana">

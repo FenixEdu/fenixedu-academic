@@ -25,16 +25,16 @@
   
   <bean:message key="label.person.name" />
   <bean:write name="student" property="infoStudent.infoPerson.nome"/>
-  </br>
+  <br/>
   
   <bean:message key="label.degree.name" />:
   <bean:write name="student" property="infoDegreeCurricularPlan.infoDegree.nome"/>
-  </br>
+  <br/>
 
   <bean:message key="label.number" />
   <bean:write name="student" property="infoStudent.number"/>
-  </br>
-  </br>
+  <br/>
+  <br/>
   
   
   

@@ -62,7 +62,7 @@
 		
 		<br />
 		<div class="infoop">
-			<span class="error"><strong>Nota:</strong></span>
+			<span class="error"><!-- Error messages go here --><strong>Nota:</strong></span>
 			<br />&nbsp;&nbsp;&nbsp;&nbsp;Caso este Aluno tenha um número de Pós-Graduação que lhe foi atribuido antes do ano lectivo de <strong>2002/2003</strong> introduza-o aqui. 
 			<br />&nbsp;&nbsp;&nbsp;&nbsp;Caso este Aluno  ainda não tenha um número atribuido ou que essa atribuição tenha sido feita no decorrer do ano lectivo de <strong>2002/2003</strong> 
 			<br />&nbsp;&nbsp;&nbsp;&nbsp;deixe este campo vazio que o programa atribuirá um novo número ou associará o aluno ao seu respectivo número.

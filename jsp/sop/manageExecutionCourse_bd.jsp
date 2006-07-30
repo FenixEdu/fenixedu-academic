@@ -144,5 +144,5 @@ obdecem � nova carga definida.
 </logic:present>
 
 <logic:notPresent name="<%= SessionConstants.LIST_INFOCLASS %>" scope="request">
-	<span class="error"><bean:message key="message.executionCourse.classes.none"/></span>
+	<span class="error"><!-- Error messages go here --><bean:message key="message.executionCourse.classes.none"/></span>
 </logic:notPresent>

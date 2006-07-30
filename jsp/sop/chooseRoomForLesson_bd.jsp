@@ -22,7 +22,7 @@
 <h2>
 	<bean:message key="title.manage.aulas"/>
 </h2>
-<span class="error">
+<span class="error"><!-- Error messages go here -->
 	<html:errors/>
 </span>
 <html:form action="/manageLesson" focus="nomeSala">

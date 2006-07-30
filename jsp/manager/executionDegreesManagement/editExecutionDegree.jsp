@@ -7,7 +7,7 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
 
 <html:messages id="messages" message="true">
-	<span class="error"><bean:write name="messages" /></span>
+	<span class="error"><!-- Error messages go here --><bean:write name="messages" /></span>
 </html:messages>
 
 <html:form action="/executionDegreesManagement">

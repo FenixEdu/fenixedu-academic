@@ -107,7 +107,7 @@
          </logic:iterate>
         </logic:notEmpty>
 		<logic:empty name="infoGuide" property="infoGuideEntries">
-			<span class="error"><bean:message key="error.exception.masterDegree.nonExistingEntriesGuide" /></span>
+			<span class="error"><!-- Error messages go here --><bean:message key="error.exception.masterDegree.nonExistingEntriesGuide" /></span>
         </logic:empty>
         
          <tr>
@@ -197,7 +197,7 @@
 	         </logic:iterate>
          </logic:notEmpty>
 		<logic:empty  name="infoGuide" property="infoGuideSituations">
-			<span class="error"><bean:message key="error.exception.masterDegree.nonExistingSituationGuide" /></span>
+			<span class="error"><!-- Error messages go here --><bean:message key="error.exception.masterDegree.nonExistingSituationGuide" /></span>
         </logic:empty>
 
 

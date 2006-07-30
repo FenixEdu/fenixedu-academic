@@ -20,7 +20,7 @@ width: 20em;
  <h2><bean:message key="label.person.title.personalConsult" bundle="DEFAULT" /></h2>
 
 <logic:present name="incompleteData" scope="request">
-	<p align="center"><span class="error"><%= request.getAttribute("incompleteData") %></span></p>
+	<p align="center"><span class="error"><!-- Error messages go here --><%= request.getAttribute("incompleteData") %></span></p>
 </logic:present>
 <html:form action="/studentPersonalDataAuthorization?method=preparePersonalDataUseInquiry">
  <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="3"/>
@@ -231,7 +231,7 @@ width: 20em;
           <!-- Codigo Postal -->
           <tr>
           	<td></td>
-          	<td><span class="error">
+          	<td><span class="error"><!-- Error messages go here -->
           			<html:errors property="primaryAreaCode"/>
           			<html:errors property="secondaryAreaCode"/>
           		</span>

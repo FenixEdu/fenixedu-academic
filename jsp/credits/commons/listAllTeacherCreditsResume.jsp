@@ -53,7 +53,7 @@
 
 <bean:define id="teacherID" name="teacher" property="idInternal" />
 <logic:empty name="creditsLines">
-	<span class="error"><bean:message key="message.teacherCredit.notFound"/></span>
+	<span class="error"><!-- Error messages go here --><bean:message key="message.teacherCredit.notFound"/></span>
 </logic:empty>
 
 

@@ -14,7 +14,7 @@ Os enunciados e as respectivas chaves de correcï¿½ï¿½o estï¿½o disponíveis em <h
 </table>
 <br/>
 <logic:notPresent name="gaugingTestResult">
-<span class="error">Não fez a prova de aferiï¿½ï¿½o</span> 
+<span class="error"><!-- Error messages go here -->Não fez a prova de aferiï¿½ï¿½o</span> 
 </logic:notPresent>
 <logic:present name="gaugingTestResult">
 <table width="90%">

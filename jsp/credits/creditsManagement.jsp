@@ -35,7 +35,7 @@
 		/executionCourseShiftsPercentageManager.do?method=show&amp;teacherOID=<bean:write name="creditsView" property="infoCredits.infoTeacher.idInternal"/>
 	</bean:define>
 	<logic:empty name="creditsView" property="infoProfessorshipList">
-		<span class="error"><bean:message key="message.teacher.no.professorship"/></span>
+		<span class="error"><!-- Error messages go here --><bean:message key="message.teacher.no.professorship"/></span>
 	</logic:empty>
 	<logic:notEmpty name="creditsView" property="infoProfessorshipList">
 		<table width="100%" cellpadding="0" border="0">

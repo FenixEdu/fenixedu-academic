@@ -19,7 +19,7 @@
 <p class="infoop"><span class="emphasis-box">1</span>
 	<bean:message key="message.publications.choosePublicationType" />
 </p>
-	<span class="error">
+	<span class="error"><!-- Error messages go here -->
 		<html:errors/>
 	</span>
 	<br />

@@ -18,7 +18,7 @@
 </h3>
 <p class="infoop"><span class="emphasis-box">1</span>
 <bean:message key="message.teachingCareer.managementEdit" /></p>
-	<span class="error">
+	<span class="error"><!-- Error messages go here -->
 		<html:errors/>
 	</span>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>

@@ -8,7 +8,7 @@
 
 <span class="error"><!-- Error messages go here --><html:errors /></span>
 <logic:notPresent name="infoShiftEnrollment" >
-	<span class="error"><bean:message key="error.notAuthorized.ShiftEnrollment" /></span>
+	<span class="error"><!-- Error messages go here --><bean:message key="error.notAuthorized.ShiftEnrollment" /></span>
 </logic:notPresent>
 <logic:present name="infoShiftEnrollment" >
 	<bean:define id="executionDegreeId" name="infoShiftEnrollment" property="infoExecutionDegree.idInternal" />
@@ -364,7 +364,7 @@ width: 98%;
 			<logic:empty name="infoShiftEnrollment" property="infoShiftEnrollment">
 				<tr>
 					<td>
-						<span class="error"><bean:message key="message.warning.student.notYet.enroll" /></span>	
+						<span class="error"><!-- Error messages go here --><bean:message key="message.warning.student.notYet.enroll" /></span>	
 					</td>
 				</tr>				
 			</logic:empty>

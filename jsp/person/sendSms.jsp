@@ -5,7 +5,7 @@
 
 <h2><bean:message key="label.person.sendSms"/></h2>
 
-<span class="error">
+<span class="error"><!-- Error messages go here -->
 	Após uma fase de testes com sucesso, o serviço de envio de SMS encontra-se indisponível até ser celebrado um acordo com as operadoras.
 </span><br/>
 
@@ -15,7 +15,7 @@
 	<span class="sucessfulOperarion"><bean:write name="msg"/></span><br/>
 </html:messages>
 
-<span class="error">
+<span class="error"><!-- Error messages go here -->
 	<html:errors/>
 </span><br/>
 

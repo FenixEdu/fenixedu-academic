@@ -7,27 +7,6 @@
 	<f:loadBundle basename="resources/HtmlAltResources" var="htmlAltBundle"/>
 	<f:loadBundle basename="resources/StudentResources" var="bundle"/>
 
-<style>@import url(<%= request.getContextPath() %>/CSS/dotist_calendars.css);</style>
-
-<style>
-.greyBorderClass {
-	background-color: #EBECED;
-	border-style: solid;
-	border-width: 1px;
-	border-color: #909090;
-	width: 100%
-}
-.blackBorderClass {
-	background-color: #ffffff;
-	border-style: solid;
-	border-width: 1px;
-	border-color: #909090
-}
-.boldFontClass { 
-	font-weight: bold
-}
-</style>
-
 	<h:form>
 		<fc:viewState binding="#{studentCalendar.viewState}"/>
 		<h:outputText value="<h2>#{bundle['link.title.calendar']}</h2>" escape="false"/>

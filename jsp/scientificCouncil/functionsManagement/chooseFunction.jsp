@@ -125,7 +125,7 @@
 		<h:panelGrid columns="1">
 			<h:outputText value="<br/><br/>#{bundle['error.noFunction.in.unit']}" styleClass="error" 
 				escape="false" rendered="#{scientificCouncilFunctionsManagementBackingBean.numberOfFunctions <= 0}"/>					
-			<h:outputText value="</br></br><br/>" escape="false" />
+			<h:outputText value="<br/><br/><br/>" escape="false" />
 			<h:commandButton action="alterUnit" immediate="true" value="#{bundle['button.choose.new.person']}" styleClass="inputbutton"
 				rendered="#{scientificCouncilFunctionsManagementBackingBean.numberOfFunctions <= 0}"/>						
 		</h:panelGrid>

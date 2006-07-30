@@ -134,5 +134,5 @@
   </html:form>
 </logic:present>
 <logic:notPresent name="<%= SessionConstants.CLASSES %>" scope="request">
-	<span class="error"><bean:message key="listClasses.emptyClasses"/></span>
+	<span class="error"><!-- Error messages go here --><bean:message key="listClasses.emptyClasses"/></span>
 </logic:notPresent>

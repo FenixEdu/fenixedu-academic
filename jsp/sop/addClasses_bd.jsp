@@ -71,5 +71,5 @@
 </logic:present>
 
 <logic:notPresent name="<%= SessionConstants.CLASSES %>" scope="request">
-	<span class="error"><bean:message key="errors.classes.none"/></span>	
+	<span class="error"><!-- Error messages go here --><bean:message key="errors.classes.none"/></span>	
 </logic:notPresent>

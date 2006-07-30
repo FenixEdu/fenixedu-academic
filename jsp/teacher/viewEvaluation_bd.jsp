@@ -19,7 +19,7 @@
 	<p></p>
 	<bean:size id="infoEvaluationListSize" name="infoEvaluationList"/>
 	<logic:equal name="infoEvaluationListSize" value="0">
-		<span class="error"><bean:message key="message.no.evaluation.registered"/></span>
+		<span class="error"><!-- Error messages go here --><bean:message key="message.no.evaluation.registered"/></span>
 	</logic:equal>
 	<logic:notEqual name="infoEvaluationListSize" value="0">	
 		<logic:iterate id="evaluation" name="infoEvaluationList">	

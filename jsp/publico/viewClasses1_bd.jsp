@@ -139,7 +139,7 @@
 			</table>
 		</logic:present>
 		<logic:notPresent name="classList" >
-			<span class="error"><em><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.message.public.notfound.classes"/></em></span>
+			<span class="error"><!-- Error messages go here --><em><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.message.public.notfound.classes"/></em></span>
 		</logic:notPresent>
 
 	</logic:present>

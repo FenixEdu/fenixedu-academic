@@ -15,7 +15,7 @@
 </table>
 
 <p>
-	<span class="error">
+	<span class="error"><!-- Error messages go here -->
 		<html:errors/>
 	</span>
 	<span class="info">

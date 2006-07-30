@@ -30,7 +30,7 @@
 			</logic:notEmpty>
 		</tr>
 		<tr>
-			<td><span class="error"><bean:message key="message.printLayoutOrientation" /></span></td>
+			<td><span class="error"><!-- Error messages go here --><bean:message key="message.printLayoutOrientation" /></span></td>
 		</tr>
 	</table>
 	<br />
@@ -147,7 +147,7 @@
 <br />
 </logic:notEmpty>
 <logic:empty name="infoReport" property="lines">
-	<span class="error"><bean:message key="message.noMovements" /></span>
+	<span class="error"><!-- Error messages go here --><bean:message key="message.noMovements" /></span>
 </logic:empty>
 <br />
 <br />

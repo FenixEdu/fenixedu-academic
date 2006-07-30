@@ -63,7 +63,7 @@
 <br /><br />	
 
 <logic:notPresent name="exemptionGratuity" property="infoGratuityValues">
-	<span class="error"><bean:message key="error.impossible.noGratuityValues" /></span>
+	<span class="error"><!-- Error messages go here --><bean:message key="error.impossible.noGratuityValues" /></span>
 </logic:notPresent>
 
 </logic:present>

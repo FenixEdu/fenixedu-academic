@@ -7,7 +7,7 @@
 <h2 class="mbottom2"><bean:message key="title.coordinator.degreeSite.edit"/></h2>
 
 <p>
-	<span class="error">
+	<span class="error"><!-- Error messages go here -->
 		<html:errors/>
 	</span>
 </p>

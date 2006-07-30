@@ -65,7 +65,7 @@
 		<table align="center" border="0" cellpadding="0" cellspacing="0">
 			<tr>
 				<td>
-					<span class="error"><bean:message key="message.public.notfound.rooms"/></span>
+					<span class="error"><!-- Error messages go here --><bean:message key="message.public.notfound.rooms"/></span>
 				</td>
 			</tr>
 		</table>

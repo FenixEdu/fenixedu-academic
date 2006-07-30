@@ -41,7 +41,7 @@
 						<html:text bundle="HTMLALT_RESOURCES" altKey="text.enrollmentBeginTimeFormatted" size="5" property="enrollmentBeginTimeFormatted"/> 
 						<i>(dd/mm/aaaa <bean:message key="label.at" /> hh:mm)</i><br />
 					</td>
-					<td rowspan="2" wrap="wrap" width="20%">
+					<td rowspan="2" width="20%">
 						<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton">
 							<bean:message key="button.save"/>
 						</html:submit>

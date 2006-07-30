@@ -8,7 +8,7 @@
 <logic:present name="infoSiteTeacherInformation"> 
 	<html:form action="/teacherInformation">
 		<logic:messagesPresent>
-		<span class="error">
+		<span class="error"><!-- Error messages go here -->
 			<html:errors/>
 		</span>
 		</logic:messagesPresent>
@@ -32,7 +32,7 @@
 				</td>
 			</tr>
 		</table>
-		</br>
+		<br/>
 		<table class="infoselected" width="100%">
 			<tr>
 				<td width="70%"><b><bean:message key="message.teacherInformation.name" /></b>
@@ -101,9 +101,9 @@
 			</table>
 		</logic:notEmpty>
 		<logic:empty name="infoSiteTeacherInformation" property="infoQualifications">
-			<br/>&nbsp;</br>
+			<br/>&nbsp;<br/>
 			<bean:message key="label.teachersInformation.notModified" />
-			<br/>&nbsp;</br>			
+			<br/>&nbsp;<br/>			
 		</logic:empty>
 		<br />
 		<p class="infoop"><span class="emphasis-box">2</span>
@@ -137,9 +137,9 @@
 			</table>
 		</logic:notEmpty>
 		<logic:empty name="infoSiteTeacherInformation" property="infoTeachingCareers">
-			<br/>&nbsp;</br>
+			<br/>&nbsp;<br/>
 			<bean:message key="label.teachersInformation.notModified" />
-			<br/>&nbsp;</br>
+			<br/>&nbsp;<br/>
 		</logic:empty>
 		<br />
 		<p class="infoop"><span class="emphasis-box">3</span>
@@ -171,9 +171,9 @@
 			</table>
 		</logic:notEmpty>
 		<logic:empty name="infoSiteTeacherInformation" property="infoProfessionalCareers">
-			<br/>&nbsp;</br>
+			<br/>&nbsp;<br/>
 			<bean:message key="label.teachersInformation.notModified" />
-			<br/>&nbsp;</br>
+			<br/>&nbsp;<br/>
 		</logic:empty>
 		<br />
 		<p class="infoop"><span class="emphasis-box">4</span>
@@ -199,9 +199,9 @@
 			</table>
 		</logic:notEmpty>
 		<logic:empty name="infoSiteTeacherInformation" property="infoExternalActivities">
-			<br/>&nbsp;</br>
+			<br/>&nbsp;<br/>
 			<bean:message key="label.teachersInformation.notModified" />
-			<br/>&nbsp;</br>
+			<br/>&nbsp;<br/>
 		</logic:empty>
 		<br />
 		<!-- TJBF & PFON -->
@@ -225,9 +225,9 @@
 			</table>
 		</logic:notEmpty>
 		<logic:empty name="infoSiteTeacherInformation" property="infoDidaticPublications">
-			<br/>&nbsp;</br>
+			<br/>&nbsp;<br/>
 			<bean:message key="label.teachersInformation.notModified" />
-			<br/>&nbsp;</br>
+			<br/>&nbsp;<br/>
 		</logic:empty>
 		<br />
 		<p class="infoop"><span class="emphasis-box">6</span>
@@ -249,9 +249,9 @@
 			</table>
 		</logic:notEmpty>
 		<logic:empty name="infoSiteTeacherInformation" property="infoCientificPublications">
-			<br/>&nbsp;</br>
+			<br/>&nbsp;<br/>
 			<bean:message key="label.teachersInformation.notModified" />
-			<br/>&nbsp;</br>
+			<br/>&nbsp;<br/>
 		</logic:empty>
 		<br />
 		<!-- TJBF & PFON -->
@@ -343,9 +343,9 @@
 			</table>
 		</logic:notEmpty>
 		<logic:empty name="infoSiteTeacherInformation" property="infoLecturingExecutionCourses">
-			<br/>&nbsp;</br>
+			<br/>&nbsp;<br/>
 			<bean:message key="message.teacherInformation.noExecutionCourseLectured" />
-			<br/>&nbsp;</br>
+			<br/>&nbsp;<br/>
 		</logic:empty>
 		<br />
 		<p class="infoop"><span class="emphasis-box">10</span>

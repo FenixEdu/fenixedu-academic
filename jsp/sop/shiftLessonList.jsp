@@ -150,7 +150,7 @@ Aulas já atribuidas ao turno
 	  </html:form>
 	</logic:present>
 	<logic:notPresent name="shift" property="infoLessons">
-		<span class="error">
+		<span class="error"><!-- Error messages go here -->
 			<bean:message key="message.shift.lessons.none"/>
 		</span>
 		<br />

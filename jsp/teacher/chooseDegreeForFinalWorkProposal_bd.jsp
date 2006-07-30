@@ -6,7 +6,7 @@
 
 <span class="error"><!-- Error messages go here --><html:errors /><br /></span>
 <logic:present name="infoScheduleing">
-	<span class="error">
+	<span class="error"><!-- Error messages go here -->
 		<bean:message key="finalDegreeWorkProposal.ProposalPeriod.interval"/>
 		<dt:format pattern="dd/MM/yyyy HH:mm">
 			<bean:write name="infoScheduleing" property="startOfProposalPeriod.time"/>
@@ -259,10 +259,10 @@
 		</table>
 	</logic:greaterEqual>
 	<logic:lessThan name="finalDegreeWorkProposalHeaders" value="1">
-		<span class="error"><bean:message key="finalDegreeWorkProposalHeaders.notPresent"/></span>
+		<span class="error"><!-- Error messages go here --><bean:message key="finalDegreeWorkProposalHeaders.notPresent"/></span>
 	</logic:lessThan>
 </logic:present>
 
 <logic:notPresent name="finalDegreeWorkProposalHeaders">
-	<span class="error"><bean:message key="finalDegreeWorkProposalHeaders.notPresent"/></span>
+	<span class="error"><!-- Error messages go here --><bean:message key="finalDegreeWorkProposalHeaders.notPresent"/></span>
 </logic:notPresent>

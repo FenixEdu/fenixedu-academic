@@ -26,7 +26,7 @@
 	&nbsp;&gt;&nbsp;<bean:message bundle="PUBLIC_DEGREE_INFORMATION"  key="public.degree.information.label.curriculum"/>		
 </div>	
 
-<p><span class="error"><!-- Error messages go here. --><html:errors/></span></p>
+<p><span class="error"><!-- Error messages go here --><!-- Error messages go here. --><html:errors/></span></p>
 
 	<h1>
 	   <bean:define id="degreeType" name="infoDegreeCurricularPlan" property="infoDegree.tipoCurso.name"/>
@@ -332,10 +332,10 @@
 </logic:present>
 
 <logic:notPresent name="allActiveCurricularCourseScopes">
-	<p><span class="error"><!-- Error messages go here. --><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.error.impossibleCurricularPlan" /></span></p>
+	<p><span class="error"><!-- Error messages go here --><!-- Error messages go here. --><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.error.impossibleCurricularPlan" /></span></p>
 </logic:notPresent>
 <logic:empty name="allActiveCurricularCourseScopes">
-	<p><span class="error"><!-- Error messages go here. --><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.error.impossibleCurricularPlan" /></span></p>
+	<p><span class="error"><!-- Error messages go here --><!-- Error messages go here. --><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.error.impossibleCurricularPlan" /></span></p>
 </logic:empty>
 	
 </logic:present>

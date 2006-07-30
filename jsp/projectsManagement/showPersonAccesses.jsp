@@ -100,7 +100,7 @@ function getIndex(input){
 		</table>
 	</logic:notEmpty>
 	<logic:empty name="personAccessesList" scope="request">
-		<span class="error"><bean:message key="message.person.noProjectAccesses" /></span>
+		<span class="error"><!-- Error messages go here --><bean:message key="message.person.noProjectAccesses" /></span>
 	</logic:empty>
 	<br />
 	<br />
@@ -125,7 +125,7 @@ function getIndex(input){
 					<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.costCenter" property="costCenter" value="<%=cc.toString()%>" />
 				</logic:present>
 				<logic:present name="noProjectsSelected">
-					<span class="error"><bean:message key="errors.requiredProject" /></span>
+					<span class="error"><!-- Error messages go here --><bean:message key="errors.requiredProject" /></span>
 				</logic:present>
 				<table>
 					<tr>
@@ -149,12 +149,12 @@ function getIndex(input){
 				<table>
 					<logic:present name="invalidTime">
 						<tr>
-							<td><span class="error"><bean:message key="errors.invalid.time.interval" /></span></td>
+							<td><span class="error"><!-- Error messages go here --><bean:message key="errors.invalid.time.interval" /></span></td>
 						</tr>
 					</logic:present>
 					<logic:present name="invalidEndTime">
 						<tr>
-							<td><span class="error"><bean:message key="errors.invalidEndTime" /></span></td>
+							<td><span class="error"><!-- Error messages go here --><bean:message key="errors.invalidEndTime" /></span></td>
 						</tr>
 					</logic:present>
 					<tr>
@@ -184,7 +184,7 @@ function getIndex(input){
 		</logic:notEmpty>
 	</logic:present>
 	<logic:empty name="projectList">
-		<span class="error"><bean:message key="message.noOtherUserProjects" /></span>
+		<span class="error"><!-- Error messages go here --><bean:message key="message.noOtherUserProjects" /></span>
 	</logic:empty>
 	<br />
 	<br />

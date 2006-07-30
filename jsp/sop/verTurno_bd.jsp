@@ -48,5 +48,5 @@
 </table>
     </logic:present>
     <logic:notPresent name="infoAulasDeTurno" scope="request">
-<span class="error"><bean:message key="errors.existAulas"/></span>
+<span class="error"><!-- Error messages go here --><bean:message key="errors.existAulas"/></span>
 </logic:notPresent>

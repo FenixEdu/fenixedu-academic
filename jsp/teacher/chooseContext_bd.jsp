@@ -3,7 +3,7 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ page import="org.apache.struts.Globals" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
-<span class="error">
+<span class="error"><!-- Error messages go here -->
 	<html:errors/>
 </span>
 <br />

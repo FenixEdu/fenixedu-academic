@@ -6,7 +6,7 @@
 <%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="dt" %>
 
 <html:messages id="message" message="true" bundle="HOMEPAGE_RESOURCES">
-	<span class="error">
+	<span class="error"><!-- Error messages go here -->
 		<bean:write name="message"/>
 	</span>
 	<br/><br/>

@@ -43,7 +43,7 @@ else
 		</html:messages>
 </span>
 
-<span class="error">
+<span class="error"><!-- Error messages go here -->
 		 <%
 				int errorMessageNumber =0;
 				ActionMessages errorMessages = (ActionMessages) request.getAttribute(org.apache.struts.Globals.ERROR_KEY);

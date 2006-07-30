@@ -27,7 +27,7 @@
 		</logic:notEmpty>
 		<logic:empty name="executionCourse" property="foruns">
 			<tr>
-			<td><span class="error"><bean:message key="label.viewExecutionCourseForuns.noForumsForExecutionCourse" /></span></td>
+			<td><span class="error"><!-- Error messages go here --><bean:message key="label.viewExecutionCourseForuns.noForumsForExecutionCourse" /></span></td>
 			</tr>
 		</logic:empty>
 	</table>		

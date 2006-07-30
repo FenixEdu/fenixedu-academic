@@ -349,5 +349,5 @@ Turnos associados a turma:
 </logic:present>
 
 <logic:notPresent name="<%= SessionConstants.SHIFTS %>" scope="request">
-	<span class="error"><bean:message key="errors.shifts.none"/></span>	
+	<span class="error"><!-- Error messages go here --><bean:message key="errors.shifts.none"/></span>	
 </logic:notPresent>

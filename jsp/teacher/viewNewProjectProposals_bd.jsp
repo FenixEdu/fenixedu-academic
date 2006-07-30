@@ -73,7 +73,7 @@
                 	<td class="listClasses" align="left">
             		    <logic:iterate id="infoExportGrouping" name="infoGroupProperties" property="infoExportGroupings" >
 	                		<bean:define id="infoExecutionCourse" name="infoExportGrouping" property="infoExecutionCourse" />
-							<bean:write name="infoExecutionCourse" property="nome"/></br>
+							<bean:write name="infoExecutionCourse" property="nome"/><br/>
                     	 </logic:iterate>
                     </td>
                 	

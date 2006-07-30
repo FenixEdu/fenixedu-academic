@@ -16,7 +16,7 @@
 <br />
 <bean:define id="teacherNumber" name="infoTeacher" property="teacherNumber" />
 <logic:empty name="infoCredits">
-	<span class="error"><bean:message key="message.teacherCredit.notFound"/></span>
+	<span class="error"><!-- Error messages go here --><bean:message key="message.teacherCredit.notFound"/></span>
 </logic:empty>
 <logic:notEmpty name="infoCredits">
 	<table cellpadding="3" cellspacing="1">

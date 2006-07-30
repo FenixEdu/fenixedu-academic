@@ -34,7 +34,7 @@
 			</logic:notEmpty>
 		</tr>
 		<tr>
-			<td><span class="error"><bean:message key="message.printLayoutOrientation" /></span></td>
+			<td><span class="error"><!-- Error messages go here --><bean:message key="message.printLayoutOrientation" /></span></td>
 		</tr>
 	</table>
 	<br />
@@ -107,7 +107,7 @@
 		</tr>
 	</table>
 	<logic:empty name="infoSummaryReport" property="lines">
-		<span class="error"><bean:message key="message.noUserProjects" /></span>
+		<span class="error"><!-- Error messages go here --><bean:message key="message.noUserProjects" /></span>
 	</logic:empty>
 	<br />
 	<br />
@@ -116,5 +116,5 @@
 	<br />
 </logic:present>
 <logic:notPresent name="infoSummaryReport">
-	<span class="error"><bean:message key="message.noUserProjects" /></span>
+	<span class="error"><!-- Error messages go here --><bean:message key="message.noUserProjects" /></span>
 </logic:notPresent>

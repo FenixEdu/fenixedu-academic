@@ -89,7 +89,7 @@
 			<logic:notPresent name="classesList" scope="request">
 	    <tr>
 	       <td class="formTD">
-	         <span class="error"><bean:message key="listClasses.emptyClasses"/></span>
+	         <span class="error"><!-- Error messages go here --><bean:message key="listClasses.emptyClasses"/></span>
 	       </td>
 	    </tr>		      
 			</logic:notPresent>

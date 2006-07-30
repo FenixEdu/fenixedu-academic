@@ -5,7 +5,7 @@
 
 <h2><bean:message key="title.student.marksSheetConsult"/></h2>
 
-<span class="error"><html:errors bundle="CURRICULUM_HISTORIC_RESOURCES"/><br /></span>
+<span class="error"><!-- Error messages go here --><html:errors bundle="CURRICULUM_HISTORIC_RESOURCES"/><br /></span>
 
 	<strong><bean:message key="label.curriculumHistoric.chooseExecutionYear" bundle="CURRICULUM_HISTORIC_RESOURCES"/>:</strong><br />
 	<html:form action="/chooseExecutionYearAndDegreeCurricularPlan">

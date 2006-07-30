@@ -5,7 +5,7 @@
 <%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="dt" %>
 
 <html:messages id="messages" message="true">
-	<span class="error"><bean:write name="messages" /></span>
+	<span class="error"><!-- Error messages go here --><bean:write name="messages" /></span>
 </html:messages>
 
 <html:form action="/executionDegreesManagement">

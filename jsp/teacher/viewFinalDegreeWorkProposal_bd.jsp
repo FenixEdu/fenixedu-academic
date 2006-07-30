@@ -250,5 +250,5 @@
 	</table>
 </logic:present>
 <logic:notPresent name="finalDegreeWorkProposal">
-	<span class="error"><bean:message key="finalDegreeWorkProposal.notPresent"/></span>
+	<span class="error"><!-- Error messages go here --><bean:message key="finalDegreeWorkProposal.notPresent"/></span>
 </logic:notPresent>

@@ -67,7 +67,7 @@
 <bean:size id="listSize" name="teacherDfpStudentsList"/>
 
 <logic:equal name="listSize" value="0">
-	<span class="error"><bean:message key="label.teacher-dfp-student.no-students"/></span>
+	<span class="error"><!-- Error messages go here --><bean:message key="label.teacher-dfp-student.no-students"/></span>
 </logic:equal>
 
 <logic:greaterThan name="listSize" value="0">

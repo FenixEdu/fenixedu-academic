@@ -166,7 +166,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
                                             "check(document.getElementById('").append("aa").append(
                                             unit.getIdInternal()).append("'),document.getElementById('")
                                     .append(unit.getIdInternal()).append("'));return false;").append(
-                                            "\"> ");
+                                            "\"/> ");
                             buffer.append("<a href=\"").append(getContextPath()).append(
                                     "/person/organizationalStructure/chooseUnit.faces?unitID=").append(
                                     unit.getIdInternal()).append("&amp;subUnit=").append(
@@ -183,7 +183,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
                                 "\" ").append("indexed='true' onClick=\"").append(
                                 "check(document.getElementById('").append("aa").append(
                                 unit.getIdInternal()).append("'),document.getElementById('").append(
-                                unit.getIdInternal()).append("'));return false;").append("\"> ");
+                                unit.getIdInternal()).append("'));return false;").append("\"/> ");
                         buffer.append("<a href=\"").append(getContextPath()).append(
                                 "/person/organizationalStructure/chooseUnit.faces?unitID=").append(
                                 unit.getIdInternal()).append("&amp;subUnit=").append(
@@ -242,7 +242,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
                         .append("\" ").append("indexed='true' onClick=\"").append(
                                 "check(document.getElementById('").append("aa").append(
                                 subUnit.getIdInternal()).append("'),document.getElementById('").append(
-                                subUnit.getIdInternal()).append("'));return false;").append("\"> ");
+                                subUnit.getIdInternal()).append("'));return false;").append("\"/> ");
                 buffer.append("<a href=\"").append(getContextPath()).append(
                         "/person/organizationalStructure/chooseUnit.faces?unitID=").append(
                         subUnit.getIdInternal()).append("&amp;subUnit=").append(subUnit.getIdInternal())

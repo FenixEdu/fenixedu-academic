@@ -57,7 +57,7 @@
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.authorsName" property="authorsName" value="<%= authorsNameList[authorsIndex.intValue()] %>" />		
 	</logic:iterate>
 
-	<span class="error"><html:errors /></span >
+	<span class="error"><!-- Error messages go here --><html:errors /></span >
 
 	<p>
 		<bean:message key="message.publication.stringNomeSearch"/>: 

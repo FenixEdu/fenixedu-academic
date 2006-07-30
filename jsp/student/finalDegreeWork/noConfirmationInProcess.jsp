@@ -5,4 +5,4 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="dt" %>
 
-<span class="error"><bean:message key="error.message.NoConfirmationInProcessException"/></span>
+<span class="error"><!-- Error messages go here --><bean:message key="error.message.NoConfirmationInProcessException"/></span>

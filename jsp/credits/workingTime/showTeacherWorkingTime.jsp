@@ -18,7 +18,7 @@
 
 <span class="error"><!-- Error messages go here --><html:errors /></span>
 <html:messages id="message" message="true">
-	<span class="error">
+	<span class="error"><!-- Error messages go here -->
 		<bean:write name="message"/>
 	</span>
 </html:messages>
@@ -43,7 +43,7 @@
 
 <logic:notPresent name="institutionWorkTimeList">
 	<br />
-	<span class="error"><bean:message key="message.teacher-institution-working-time-list.empty"/></span>
+	<span class="error"><!-- Error messages go here --><bean:message key="message.teacher-institution-working-time-list.empty"/></span>
 	<br />
 </logic:notPresent>
 

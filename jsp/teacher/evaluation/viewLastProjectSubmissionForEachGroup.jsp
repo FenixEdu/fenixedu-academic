@@ -7,7 +7,7 @@
 
 
 <html:messages id="message" message="true">
-	<span class="error"> <bean:write name="message" /> </span>
+	<span class="error"><!-- Error messages go here --> <bean:write name="message" /> </span>
 </html:messages>
 <h2><bean:message
 	key="label.teacher.executionCourseManagement.evaluation.project.viewLastProjectSubmissionForEachGroup.title" /></h2>
@@ -23,7 +23,7 @@
 <bean:define id="downloadUrlPrefix" name="fileDownloadUrlFormat" />
 <bean:define id="executionCourseID" name="executionCourseID" />
 <logic:empty name="project" property="projectSubmissions">
-	<span class="error">
+	<span class="error"><!-- Error messages go here -->
 		<bean:message key="label.teacher.executionCourseManagement.evaluation.project.viewLastProjectSubmissionForEachGroup.noProjectSubmissions"/>
 	</span>
 </logic:empty>

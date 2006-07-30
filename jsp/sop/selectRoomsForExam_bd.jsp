@@ -80,7 +80,7 @@
 					(<bean:write name="infoRoom" property="capacidadeExame"/> lugares)<br/>
 					<%i++;%>
 				</logic:iterate>
-				</br>
+				<br/>
 			</logic:iterate>
 	</logic:present>
 	

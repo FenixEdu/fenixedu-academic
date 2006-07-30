@@ -6,7 +6,7 @@
 <%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoPerson" %>
 
 <h2><bean:message key="title.teacher.finalWorkInformation"/></h2>
-<span class="error">
+<span class="error"><!-- Error messages go here -->
 	<html:errors/><br />
 </span>
 

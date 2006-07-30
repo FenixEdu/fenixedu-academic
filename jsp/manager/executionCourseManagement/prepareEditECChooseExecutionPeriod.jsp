@@ -29,7 +29,7 @@
 	</html:form>
 </logic:present>
 <logic:notPresent name="<%= SessionConstants.LIST_EXECUTION_PERIODS %>">
-	<span class="error">
+	<span class="error"><!-- Error messages go here -->
 		<html:errors /><bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="error.manager.executionCourseManagement.noExecutionPeriods"/>
 	</span>
 </logic:notPresent>

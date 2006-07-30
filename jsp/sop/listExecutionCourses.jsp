@@ -130,6 +130,6 @@
 		</table>
 	</logic:notEqual>
 	<logic:equal name="numberInfoExecutionCourses" value="0">
-		<span class="error"><bean:message key="message.sop.search.execution.course.none"/></span>
+		<span class="error"><!-- Error messages go here --><bean:message key="message.sop.search.execution.course.none"/></span>
 	</logic:equal>
 </logic:present>

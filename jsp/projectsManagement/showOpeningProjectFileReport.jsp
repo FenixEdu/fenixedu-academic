@@ -25,7 +25,7 @@
 	<br />
 	<br />
 	<logic:empty name="infoOpeningProjectFileReport" property="projectCode">
-		<span class="error"><bean:message key="message.notAvailableOpeningProjectFile" /></span>
+		<span class="error"><!-- Error messages go here --><bean:message key="message.notAvailableOpeningProjectFile" /></span>
 	</logic:empty>
 	<logic:notEmpty name="infoOpeningProjectFileReport" property="projectCode">
 		<table class="box-table">

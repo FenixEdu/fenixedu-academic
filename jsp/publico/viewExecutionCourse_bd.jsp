@@ -8,12 +8,12 @@
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
 
 <logic:notPresent name="siteView">
-	<span class="error"><p><bean:message key="errors.invalidSiteExecutionCourse"/></p></span>
+	<span class="error"><!-- Error messages go here --><p><bean:message key="errors.invalidSiteExecutionCourse"/></p></span>
 </logic:notPresent>
 
 <logic:present name="siteView">
     <logic:notPresent name="siteView" property="component">
-		<span class="error"><p><bean:message key="message.public.notfound.executionCourse"/></p></span>
+		<span class="error"><!-- Error messages go here --><p><bean:message key="message.public.notfound.executionCourse"/></p></span>
 	</logic:notPresent>
 
 

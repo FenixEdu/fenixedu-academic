@@ -5,7 +5,7 @@
 
 
 <!-- AVISOS E ERROS -->
-<span class="error">
+<span class="error"><!-- Error messages go here -->
 <logic:notPresent name="studentsOfTutor">
 	<bean:message key="error.tutor.noStudent" />
 </logic:notPresent>

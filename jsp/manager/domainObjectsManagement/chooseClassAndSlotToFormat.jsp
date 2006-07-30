@@ -5,7 +5,7 @@
 <h2>Formata��o de Propriedades</h2>
 <br />
 <html:messages id="message" message="true" bundle="MANAGER_RESOURCES">
-	<span class="error"><bean:write name="message"/></span>
+	<span class="error"><!-- Error messages go here --><bean:write name="message"/></span>
 </html:messages>
 
 

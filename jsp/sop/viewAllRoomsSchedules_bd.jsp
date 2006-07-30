@@ -80,5 +80,5 @@
 	</logic:iterate>
 </logic:present>
 <logic:notPresent name="<%=SessionConstants.ALL_INFO_VIEW_ROOM_SCHEDULE %>" scope="request">
-	<span class="error"><bean:message key="message.rooms.notExisting"/></span>
+	<span class="error"><!-- Error messages go here --><bean:message key="message.rooms.notExisting"/></span>
 </logic:notPresent>

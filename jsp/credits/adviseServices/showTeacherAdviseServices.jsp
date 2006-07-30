@@ -35,7 +35,7 @@
 	<hr class="error"/><u><b>Para prosseguir deverá corrigir os seguintes erros:</b></u><br/>		
 	<ul>
 		<html:messages id="msg" message="true">
-			<span class="error"><li><i><bean:write name="msg"/></i></li></span>
+			<span class="error"><!-- Error messages go here --><li><i><bean:write name="msg"/></i></li></span>
 		</html:messages>
 	</ul>
 	<hr class="error"/>
@@ -82,7 +82,7 @@
 <br/>
 
 <logic:notPresent name="adviseServices">
-	<span class="error"><bean:message key="label.teacher-dfp-student.no-students"/></span>
+	<span class="error"><!-- Error messages go here --><bean:message key="label.teacher-dfp-student.no-students"/></span>
 	<br/>
 </logic:notPresent>
 

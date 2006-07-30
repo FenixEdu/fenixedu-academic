@@ -60,11 +60,11 @@
 			</fr:view>
 		</logic:notEmpty>
 		<logic:empty name="teacherPersonalExpectations" scope="request">
-			<span class="error"><bean:message key="label.viewDepartmentTeachersExpectations.noTeacherExpectationsMatchingCriteriaFound"/></span>
+			<span class="error"><!-- Error messages go here --><bean:message key="label.viewDepartmentTeachersExpectations.noTeacherExpectationsMatchingCriteriaFound"/></span>
 		</logic:empty>
 	</logic:notEmpty>
 	<logic:empty name="executionYears" scope="request">
-		<span class="error"><bean:message key="label.common.noExecutionsYearsDefined"/></span>
+		<span class="error"><!-- Error messages go here --><bean:message key="label.common.noExecutionsYearsDefined"/></span>
 	</logic:empty>
 </html:form>
 

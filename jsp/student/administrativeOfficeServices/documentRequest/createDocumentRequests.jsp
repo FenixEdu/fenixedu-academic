@@ -8,7 +8,7 @@
 <h2><bean:message key="documents.requirement"/></h2>
 
 <logic:messagesPresent message="true">
-	<span class="error">
+	<span class="error"><!-- Error messages go here -->
 		<html:messages id="message" message="true" bundle="STUDENT_RESOURCES">
 			<bean:write name="message"/>
 		</html:messages>
@@ -106,7 +106,7 @@
 
 <logic:messagesPresent message="true">
 	<p class="mtop05 mbottom1">
-	<span class="error">
+	<span class="error"><!-- Error messages go here -->
 		<html:messages id="message" message="true" bundle="STUDENT_RESOURCES">
 			<bean:write name="message"/>
 		</html:messages>

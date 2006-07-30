@@ -12,23 +12,25 @@
 <ul>
 	<li><bean:message key="message.warning.student.enrolmentClasses" /> <html:link page="<%= "/warningFirst.do" %>"><bean:message key="message.warning.student.enrolmentClasses.Fenix" /></html:link>.</li>
 	<li><bean:message key="message.warning.student.enrolmentClasses.labs" /></li>
-	<li><bean:message key="message.warning.student.enrolmentClasses.notEnroll" /></li>
-	<ul>
-		<li>Alunos Externos</li>
-		<li>Melhorias de Nota</li>
-		<li>Alunos inscritos em Época Especial 2003/2004</li>
-		<li>Alunos cuja inscrição ï¿½ efectuada pelo Coordenador de Licenciatura/Tutor</li>
-		<li>Alunos com processos de Equivalï¿½ncia em curso</li>
-	</ul>
-	<li><bean:message key="message.warning.student.enrolmentClasses.notEnroll.chooseCourse" /> <html:link page="<%= "/studentShiftEnrollmentManager.do?method=start&selectCourses=true" %>"><bean:message key="message.warning.student.enrolmentClasses.notEnroll.chooseCourse.link" /></html:link></li>
+	<li>
+		<bean:message key="message.warning.student.enrolmentClasses.notEnroll" />
+		<ul>
+			<li>Alunos Externos</li>
+			<li>Melhorias de Nota</li>
+			<li>Alunos inscritos em Época Especial 2003/2004</li>
+			<li>Alunos cuja inscrição ï¿½ efectuada pelo Coordenador de Licenciatura/Tutor</li>
+			<li>Alunos com processos de Equivalï¿½ncia em curso</li>
+		</ul>
+	</li>
+	<li><bean:message key="message.warning.student.enrolmentClasses.notEnroll.chooseCourse" /> <html:link page="<%= "/studentShiftEnrollmentManager.do?method=start&amp;selectCourses=true" %>"><bean:message key="message.warning.student.enrolmentClasses.notEnroll.chooseCourse.link" /></html:link></li>
 </ul>
 </div>
 
 <br />
 <html:form action="/studentShiftEnrollmentManager">
-	<input alt="input.method" type="hidden" name="method" value="start">
+	<input alt="input.method" type="hidden" name="method" value="start"/>
 	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton">
-	<bean:message key="button.continue.enrolment"/>
+		<bean:message key="button.continue.enrolment"/>
 	</html:submit>
 </html:form>
 

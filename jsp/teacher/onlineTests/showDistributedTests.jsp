@@ -26,23 +26,23 @@ function invertSelect(){
 
 	<logic:present name="successfulDistribution">
 		<logic:equal name="successfulDistribution" value="true">
-			<span class="error"><bean:message key="message.successfulDistribution" /></span>
+			<span class="error"><!-- Error messages go here --><bean:message key="message.successfulDistribution" /></span>
 		</logic:equal>
 	</logic:present>
 	<logic:present name="successfulEdition">
 		<logic:equal name="successfulEdition" value="true">
-			<span class="error"><bean:message key="message.successfulTestEdition" /></span>
+			<span class="error"><!-- Error messages go here --><bean:message key="message.successfulTestEdition" /></span>
 		</logic:equal>
 	</logic:present>
 	<logic:present name="successfulTestDeletion">
 		<logic:equal name="successfulTestDeletion" value="true">
-			<span class="error"><bean:message key="message.successfulTestDeletion" /></span>
+			<span class="error"><!-- Error messages go here --><bean:message key="message.successfulTestDeletion" /></span>
 		</logic:equal>
 	</logic:present>
 	<logic:present name="infoStudentList">
 		<logic:notEmpty name="infoStudentList">
 			<br/>
-			<span class="error"><bean:message key="message.insuccessfulAdvisoryDistribution" /></span>
+			<span class="error"><!-- Error messages go here --><bean:message key="message.insuccessfulAdvisoryDistribution" /></span>
 			<logic:iterate id="infoStudent" name="infoStudentList">
 				<br/>
 				<bean:write name="infoStudent" property="number"/>
@@ -53,7 +53,7 @@ function invertSelect(){
 	<br />
 	<bean:size id="distrubutedTestsSize" name="infoDistributedTests" />
 	<logic:equal name="distrubutedTestsSize" value="0">
-		<span class="error"><bean:message key="message.tests.no.distributedTests" /></span>
+		<span class="error"><!-- Error messages go here --><bean:message key="message.tests.no.distributedTests" /></span>
 	</logic:equal>
 	<logic:notEqual name="distrubutedTestsSize" value="0">
 		<table>

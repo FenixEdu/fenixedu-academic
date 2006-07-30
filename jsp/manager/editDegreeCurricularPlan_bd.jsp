@@ -9,7 +9,7 @@
 <br/>
 
 <html:messages id="msg" message="true">
-	<span class="error"><bean:write name="msg" /></span>
+	<span class="error"><!-- Error messages go here --><bean:write name="msg" /></span>
 </html:messages>
 
 <table>

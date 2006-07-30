@@ -70,7 +70,7 @@
 		<table align="center">
 			<tr>
 				<td>
-					<span class="error"><bean:message key="message.public.notfound.room"/></span>
+					<span class="error"><!-- Error messages go here --><bean:message key="message.public.notfound.room"/></span>
 				</td>
 			</tr>
 		</table>

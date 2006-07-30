@@ -10,6 +10,8 @@
 <link href="<%= request.getContextPath() %>/CSS/dotist_timetables.css" rel="stylesheet" type="text/css" />
 <link href="<%= request.getContextPath() %>/CSS/dotist_print.css" rel="stylesheet" media="print" type="text/css" />
 <link href="<%= request.getContextPath() %>/CSS/transitional.css" rel="stylesheet" media="screen" type="text/css" />
+<link href="<%= request.getContextPath() %>/CSS/dotist_calendars.css" rel="stylesheet" media="screen" type="text/css" />
+<link href="<%= request.getContextPath() %>/CSS/inquiries_style.css" rel="stylesheet" media="screen" type="text/css" />
 <title><bean:message key="dot.title" bundle="GLOBAL_RESOURCES"/> - <tiles:getAsString name="title" ignore="true" /></title>
 <script type="text/javascript" src="<%= request.getContextPath() %>/CSS/scripts/hideButtons.js"></script>
 <style type="text/css">
@@ -105,6 +107,94 @@ table.ppdetails td.highlight {
 background-color: #ffffea;
 }
 
+.greyBorderClass {
+	background-color: #EBECED;
+	border-style: solid;
+	border-width: 1px;
+	border-color: #909090;
+	width: 100%
+}
+.blackBorderClass {
+	background-color: #ffffff;
+	border-style: solid;
+	border-width: 1px;
+	border-color: #909090
+}
+.boldFontClass { 
+	font-weight: bold
+}
+
+.instructions {
+background-color: #fafadd;
+border: 1px solid #ccc;
+padding: 0.5em;
+/*float: left;*/
+}
+
+#inquiry p {
+margin-top: 0;
+margin-bottom: 0;	
+}
+
+div.evalcontainer {
+padding: 1em 0;
+}
+table.evallist {
+margin-bottom: 1em;
+text-align: center;
+border-collapse: collapse;
+}
+table.evallist tr {
+}
+table.evallist th {
+padding: 0.25em 0.5em;
+border: 1px solid #ccc;
+background-color: #eaeaea;
+font-weight: normal;
+}
+table.evallist td {
+border-top: 1px solid #ddd;
+border-bottom: 1px solid #ddd;
+border-left: 1px solid #ddd;
+border-right: 1px solid #ddd;
+padding: 0.25em 0.5em;
+}
+table.evallist td.evallist_empty {
+background-color: #fff;
+border: none;
+padding: 0.75em;
+}
+.left {
+text-align: left;
+}
+table.evallist td.title {
+padding: 0.5em;
+font-weight: bold;
+text-align: left;
+background-color: #f5f5f5;
+}
+
+table.search {
+background-color: #f5f5f5;
+border-collapse: collapse;
+}
+table.search tr td {
+border: 1px solid #fff;
+padding: 0.3em;
+}
+.leftcolumn {
+text-align: right;
+}
+tr.el_highlight {
+background-color: #fcfcee;
+}
+tr.el_highlight span.green {
+color: #272;
+}
+td.el_courses {
+text-align: left;
+}
+
 </style>
 </head>
 <body>
@@ -115,7 +205,7 @@ background-color: #ffffea;
 <!-- Header -->
 <div id="header">	
 	<img alt="<bean:message key="institution.logo" bundle="IMAGE_RESOURCES" />" src="<bean:message key="dot.logo" bundle="GLOBAL_RESOURCES" arg0="<%= request.getContextPath() %>"/>"/>
-    <p><tiles:getAsString name="serviceName" /></p>
+    <p><!-- Title goes here --><tiles:getAsString name="serviceName" /></p>
 </div>
 <bean:define id="supportLink" type="java.lang.String">mailto:<bean:message key="suporte.mail" bundle="GLOBAL_RESOURCES"/></bean:define>
 <div id="hdr-nav"><a href="<%= supportLink %>"><img src="<%= request.getContextPath() %>/images/sup-bar.gif" alt="<bean:message key="sup-bar" bundle="IMAGE_RESOURCES" />"/></a><a href="<%= request.getContextPath() %>/logoff.do"><img src="<%= request.getContextPath() %>/images/logoff-bar.gif" alt="<bean:message key="logoff-bar" bundle="IMAGE_RESOURCES" />"/></a></div>

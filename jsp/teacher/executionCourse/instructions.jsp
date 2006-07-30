@@ -6,13 +6,13 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 
 <p>
-	<span class="error">
+	<span class="error"><!-- Error messages go here -->
 		<html:errors/>
 	</span>
 </p>
 
 <logic:messagesPresent property="error.exception.notAuthorized">
-	<span class="error">
+	<span class="error"><!-- Error messages go here -->
 		<bean:message key="label.notAuthorized.courseInformation" />
 	</span>	
 </logic:messagesPresent>

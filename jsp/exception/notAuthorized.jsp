@@ -3,7 +3,7 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 
 	<center>
-		<span class="error"><bean:message key="message.error.notAuthorizedContents" /></span>
+		<span class="error"><!-- Error messages go here --><bean:message key="message.error.notAuthorizedContents" /></span>
 	</center>
 	<br/>
 	<br/>

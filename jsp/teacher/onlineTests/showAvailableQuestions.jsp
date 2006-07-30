@@ -328,7 +328,7 @@ function invertSelect(){
 	</html:form>
 	</logic:notEqual>
 	<logic:equal name="metadatasSize" value="0">
-		<span class="error"><bean:message key="message.tests.no.exercises" /></span>
+		<span class="error"><!-- Error messages go here --><bean:message key="message.tests.no.exercises" /></span>
 	</logic:equal>
 
 	<br />

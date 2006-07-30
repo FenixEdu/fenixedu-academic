@@ -70,12 +70,12 @@ function getIndex(input){
 		<table>
 			<logic:present name="invalidTime">
 				<tr>
-					<td><span class="error"><bean:message key="errors.invalid.time.interval" /></span></td>
+					<td><span class="error"><!-- Error messages go here --><bean:message key="errors.invalid.time.interval" /></span></td>
 				</tr>
 			</logic:present>
 			<logic:present name="invalidEndTime">
 				<tr>
-					<td><span class="error"><bean:message key="errors.invalidEndTime" /></span></td>
+					<td><span class="error"><!-- Error messages go here --><bean:message key="errors.invalidEndTime" /></span></td>
 				</tr>
 			</logic:present>
 			<tr>

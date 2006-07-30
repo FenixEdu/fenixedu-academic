@@ -4,7 +4,7 @@
 <html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <h2><bean:message key="link.gep.executionCoursesInformation" bundle="GEP_RESOURCES"/></h2>
-<span class="error">
+<span class="error"><!-- Error messages go here -->
 	<html:errors bundle="GEP_RESOURCES"/>
 </span>
 <logic:equal name="showNextSelects" value="false">

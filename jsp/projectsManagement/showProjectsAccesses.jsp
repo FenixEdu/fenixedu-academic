@@ -49,11 +49,11 @@
 		</table>
 	</logic:notEmpty>
 	<logic:empty name="projectsAccessesList" scope="request">
-		<span class="error"><bean:message key="message.noOtherUsers" /></span>
+		<span class="error"><!-- Error messages go here --><bean:message key="message.noOtherUsers" /></span>
 	</logic:empty>
 	<br />
 	<br />
 </logic:present>
 <logic:notPresent name="projectsAccessesList" scope="request">
-	<span class="error"><bean:message key="message.noUserProjects" /></span>
+	<span class="error"><!-- Error messages go here --><bean:message key="message.noUserProjects" /></span>
 </logic:notPresent>

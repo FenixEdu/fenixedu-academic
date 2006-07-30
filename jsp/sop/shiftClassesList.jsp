@@ -109,7 +109,7 @@ Turmas associadas ao turno:
   </html:form>
 </logic:present>
 <logic:notPresent name="shift" property="infoClasses">
-	<span class="error">
+	<span class="error"><!-- Error messages go here -->
 		<bean:message key="message.shift.classes.none"/>
 	</span>
 </logic:notPresent>

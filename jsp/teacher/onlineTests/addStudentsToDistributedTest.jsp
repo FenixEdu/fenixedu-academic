@@ -50,7 +50,7 @@ function cleanSelect() {
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="0"/>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="prepareEditDistributedTest"/>
 	<table>
-		<tr><td><span class="error"><bean:message key="message.unavailableStudents"/></span></tr></td>
+		<tr><td><span class="error"><!-- Error messages go here --><bean:message key="message.unavailableStudents"/></span></tr></td>
 		<tr><td><html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton"><bean:message key="label.back"/></html:submit></tr></td>
 	</table>
 </logic:equal>

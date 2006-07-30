@@ -25,6 +25,6 @@
 </logic:notEmpty>
 
 <logic:empty name="foruns">
-	<span class="error"><bean:message key="label.teacher.executionCourseManagement.viewForuns.noForuns"/></span>
+	<span class="error"><!-- Error messages go here --><bean:message key="label.teacher.executionCourseManagement.viewForuns.noForuns"/></span>
 </logic:empty>
   

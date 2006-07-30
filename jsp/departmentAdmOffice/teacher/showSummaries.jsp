@@ -186,5 +186,5 @@
 </logic:present>
 
 <logic:notPresent name="siteView"> 
-	<span class="error"><bean:message key="error.summary.impossible.show" /></span>
+	<span class="error"><!-- Error messages go here --><bean:message key="error.summary.impossible.show" /></span>
 </logic:notPresent>

@@ -20,12 +20,12 @@
 					<h2><bean:message bundle="MESSAGING_RESOURCES" key="label.viewThread.title"/></h2>
 					
 					<p class="mbottom0">
-					<html:link action="<%= contextPrefix + "method=viewForum&forumId="+ forumId %>">
+					<html:link action="<%= contextPrefix + "method=viewForum&amp;forumId="+ forumId %>">
 						Voltar ao f�rum
 					</html:link>
 					</p>
 <!--					
-					<html:link action="<%= contextPrefix + "method=viewForum&forumId="+ forumId %>">
+					<html:link action="<%= contextPrefix + "method=viewForum&amp;forumId="+ forumId %>">
 						<bean:write name="forum" property="name"/>
 					</html:link>
 					<bean:message bundle="MESSAGING_RESOURCES" key="messaging.breadCrumSeparator.label"/> 
@@ -46,7 +46,7 @@
 
 					<logic:notEqual name="showReplyBox" value="true">
 						<logic:equal name="loggedPersonCanWrite" value="true">
-							<html:link action="<%= contextPrefix + "method=prepareCreateMessage&forumId="+forumId+"&threadId="+threadId+"&showReplyBox=true&goToLastPage=true"%>">
+							<html:link action="<%= contextPrefix + "method=prepareCreateMessage&amp;forumId="+forumId+"&amp;threadId="+threadId+"&amp;showReplyBox=true&amp;goToLastPage=true"%>">
 								<bean:message bundle="MESSAGING_RESOURCES" key="link.viewThread.showReplyBox"/>
 							</html:link>
 						</logic:equal>
@@ -58,7 +58,7 @@
 						<fr:create id="createMessage"
 								type="net.sourceforge.fenixedu.dataTransferObject.messaging.CreateConversationMessageBean"
 					           schema="conversationMessage.create"
-					           action="<%= contextPrefix + "method=createMessage&forumId="+forumId+"&threadId="+threadId+"&showReplyBox=false&goToLastPage=true" %>">
+					           action="<%= contextPrefix + "method=createMessage&amp;forumId="+forumId+"&amp;threadId="+threadId+"&amp;showReplyBox=false&amp;goToLastPage=true" %>">
 					           
 					            <fr:layout name="tabular">
         							<fr:property name="classes" value="thlight mtop1"/>
@@ -69,7 +69,7 @@
 								<logic:present name="quotationText">
 				           			<fr:default slot="body" name="quotationText"/>
 								</logic:present>
-					           <fr:destination name="cancel" path="<%= contextPrefix + "method=viewThread&forumId="+forumId+"&threadId="+threadId+"&showReplyBox=false" %>"/>
+					           <fr:destination name="cancel" path="<%= contextPrefix + "method=viewThread&amp;forumId="+forumId+"&amp;threadId="+threadId+"&amp;showReplyBox=false" %>"/>
 						</fr:create>
 						<br/>
 					</logic:equal>
@@ -83,7 +83,7 @@
 							<bean:write name="pageNumber"/>
 						</logic:equal>
 						<logic:notEqual name="currentPageNumber" value="<%=pageNumber.toString()%>">
-							<html:link action="<%= contextPrefix +"method=viewThread&forumId=" + forumId.toString() + "&pageNumber=" + pageNumber +"&threadId="+threadId%>">								
+							<html:link action="<%= contextPrefix +"method=viewThread&amp;forumId=" + forumId.toString() + "&amp;pageNumber=" + pageNumber +"&amp;threadId="+threadId%>">								
 								<bean:write name="pageNumber"/>
 							</html:link>			
 						</logic:notEqual>
@@ -103,7 +103,7 @@
 						<logic:equal name="loggedPersonCanWrite" value="true">
 							<bean:define id="quotedMessageId" name="conversationMessage" property="idInternal" />
 							<p class="mtop05">
-							<html:link action="<%=contextPrefix.toString() + "method=prepareCreateMessage&showReplyBox=true&goToLastPage=true&threadId=" + threadId + "&forumId=" + forumId + "&quotedMessageId=" + quotedMessageId%>"> 
+							<html:link action="<%=contextPrefix.toString() + "method=prepareCreateMessage&showReplyBox=true&amp;goToLastPage=true&amp;threadId=" + threadId + "&amp;forumId=" + forumId + "&amp;quotedMessageId=" + quotedMessageId%>"> 
 								<bean:message key="messaging.viewThread.quote" bundle="MESSAGING_RESOURCES"/>
 							</html:link>
 							</p>
@@ -118,7 +118,7 @@
 							<bean:write name="pageNumber"/>
 						</logic:equal>
 						<logic:notEqual name="currentPageNumber" value="<%=pageNumber.toString()%>">
-							<html:link action="<%= contextPrefix + "method=viewThread&forumId=" + forumId.toString() + "&pageNumber=" + pageNumber +"&threadId="+threadId%>">								
+							<html:link action="<%= contextPrefix + "method=viewThread&amp;forumId=" + forumId.toString() + "&amp;pageNumber=" + pageNumber +"&amp;threadId="+threadId%>">								
 								<bean:write name="pageNumber"/>
 							</html:link>			
 						</logic:notEqual>

@@ -9,7 +9,7 @@
 <logic:messagesPresent>
 
 <center><b><bean:message key="label.grant.part.information"/></b></center>
-<span class="error">
+<span class="error"><!-- Error messages go here -->
 	<html:errors/>
 </span><br/>
 </logic:messagesPresent>

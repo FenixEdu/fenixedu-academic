@@ -17,7 +17,7 @@
 	<%-- Action messages --%>
 	<logic:messagesPresent name="messages" message="true">
 		<html:messages id="messages" message="true" bundle="RESEARCHER_RESOURCES">
-			<p><span class="error"><bean:write name="messages"/></span></p>
+			<p><span class="error"><!-- Error messages go here --><bean:write name="messages"/></span></p>
 		</html:messages>
 	</logic:messagesPresent>
 	

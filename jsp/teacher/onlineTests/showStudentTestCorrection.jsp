@@ -9,7 +9,7 @@
 	</logic:empty> <logic:notEmpty name="infoStudentTestQuestionList">
 
 		<logic:present name="successfulChanged">
-			<span class="error"><bean:message key="message.successfulChanged" /></span>
+			<span class="error"><!-- Error messages go here --><bean:message key="message.successfulChanged" /></span>
 			<br />
 			<table>
 				<logic:iterate id="changed" name="successfulChanged">
@@ -24,18 +24,18 @@
 			</table>
 		</logic:present>
 		<logic:present name="insuccessfulAdvisoryDistribution">
-			<span class="error"><bean:message key="message.insuccessfulAdvisoryDistributionForAll" /></span>
+			<span class="error"><!-- Error messages go here --><bean:message key="message.insuccessfulAdvisoryDistributionForAll" /></span>
 		</logic:present>
 		<logic:present name="studentWithoutAdvisory">
 			<bean:size id="infoStudentListSize" name="studentWithoutAdvisory" />
 			<logic:notEqual name="infoStudentListSize" value="0">
 				<table>
 					<tr>
-						<td><span class="error"><bean:message key="message.insuccessfulAdvisoryDistribution" /></span></td>
+						<td><span class="error"><!-- Error messages go here --><bean:message key="message.insuccessfulAdvisoryDistribution" /></span></td>
 					</tr>
 					<logic:iterate id="student" name="studentWithoutAdvisory">
 						<tr>
-							<td><span class="error"><bean:write name="student" property="number" /></span></td>
+							<td><span class="error"><!-- Error messages go here --><bean:write name="student" property="number" /></span></td>
 						</tr>
 					</logic:iterate>
 				</table>

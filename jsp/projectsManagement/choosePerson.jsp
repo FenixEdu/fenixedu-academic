@@ -6,13 +6,13 @@
 	&nbsp;-&nbsp;<bean:write name="infoCostCenter" property="description" />
 </logic:present></h2>
 <logic:present name="noPerson">
-	<span class="error"><bean:message key="errors.noPerson" /></span>
+	<span class="error"><!-- Error messages go here --><bean:message key="errors.noPerson" /></span>
 </logic:present>
 <logic:present name="noValidPerson">
-	<span class="error"><bean:message key="errors.noValidPerson" /></span>
+	<span class="error"><!-- Error messages go here --><bean:message key="errors.noValidPerson" /></span>
 </logic:present>
 <logic:present name="noUserProjects">
-	<span class="error"><bean:message key="message.noUserProjects" /></span>
+	<span class="error"><!-- Error messages go here --><bean:message key="message.noUserProjects" /></span>
 </logic:present>
 <logic:notPresent name="noUserProjects">
 	<table cellspacing="0">

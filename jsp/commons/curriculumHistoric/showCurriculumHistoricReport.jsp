@@ -5,7 +5,7 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ page import="net.sourceforge.fenixedu.domain.curriculum.EnrollmentState" %>
 <%@ page import="net.sourceforge.fenixedu.util.EnrolmentEvaluationState" %>
-<span class="error"><html:errors bundle="CURRICULUM_HISTORIC_RESOURCES"/></span>
+<span class="error"><!-- Error messages go here --><html:errors bundle="CURRICULUM_HISTORIC_RESOURCES"/></span>
 <logic:present name="infoCurriculumHistoricReport">
 	<bean:define id="executionYear" name="infoCurriculumHistoricReport" property="infoExecutionYear"/>
 	<bean:define id="semester" name="infoCurriculumHistoricReport" property="semester"/>

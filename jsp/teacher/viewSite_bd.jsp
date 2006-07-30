@@ -10,7 +10,7 @@
 </p>
 
 <logic:messagesPresent property="error.exception.notAuthorized">
-	<span class="error">
+	<span class="error"><!-- Error messages go here -->
 		<bean:message key="label.notAuthorized.courseInformation" />
 	</span>	
 </logic:messagesPresent>

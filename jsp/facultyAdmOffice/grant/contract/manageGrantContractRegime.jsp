@@ -8,7 +8,7 @@
 <%-- Presenting errors --%>
 <logic:messagesPresent>
 <center><b><bean:message key="label.grant.contract.regime.manage"/></b></center>
-<span class="error">
+<span class="error"><!-- Error messages go here -->
 	<html:errors/>
 </span><br/>
 </logic:messagesPresent>
@@ -162,7 +162,7 @@
             </td>
             <td class="listClasses">
                	<logic:equal name="infoGrantContractRegime" property="contractRegimeActive" value="true">
-                	<span class="error"><bean:message key="label.grant.contract.regime.active"/></span>
+                	<span class="error"><!-- Error messages go here --><bean:message key="label.grant.contract.regime.active"/></span>
    				</logic:equal>
                 <logic:equal name="infoGrantContractRegime" property="contractRegimeActive" value="false">
                 	<bean:message key="label.grant.contract.regime.desactive"/>

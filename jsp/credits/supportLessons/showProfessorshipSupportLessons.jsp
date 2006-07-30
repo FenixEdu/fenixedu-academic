@@ -23,7 +23,7 @@
 
 <span class="error"><!-- Error messages go here --><html:errors /></span>
 <html:messages id="message" message="true">
-	<span class="error">
+	<span class="error"><!-- Error messages go here -->
 		<bean:write name="message" filter="false"/>
 	</span>
 </html:messages>
@@ -46,7 +46,7 @@
 <span class="error"><!-- Error messages go here --><html:errors /></span>
 <logic:empty name="supportLessonList">
 	<br />
-	<span class="error"><bean:message key="message.support-lessons-list.empty"/></span>
+	<span class="error"><!-- Error messages go here --><bean:message key="message.support-lessons-list.empty"/></span>
 	<br />
 </logic:empty>
 

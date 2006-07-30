@@ -8,7 +8,7 @@
 <html:messages id="msg" message="true">
 	<span class="sucessfulOperarion"><bean:write name="msg"/></span><br/>
 </html:messages>
-<span class="error">
+<span class="error"><!-- Error messages go here -->
 	<html:errors/>
 </span><br/>
 	

@@ -13,7 +13,7 @@
 	<br/><br/>
 			
 	<logic:messagesPresent message="true">
-		<span class="error">
+		<span class="error"><!-- Error messages go here -->
 			<html:messages id="message" message="true" bundle="SPACE_RESOURCES">
 				<bean:write name="message"/>
 			</html:messages>

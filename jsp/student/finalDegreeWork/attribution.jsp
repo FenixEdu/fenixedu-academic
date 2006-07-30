@@ -141,7 +141,7 @@
 	</logic:present>
 
 	<logic:notPresent name="infoGroup">
-		<span class="error">
+		<span class="error"><!-- Error messages go here -->
 			<bean:message key="finalDegreeWork.candidacies.not.found"/>
 		</span>
 	</logic:notPresent>

@@ -11,7 +11,7 @@
 
 <span class="error"><!-- Error messages go here --><html:errors /></span>
 <html:messages id="message" message="true" bundle="APPLICATION_RESOURCES">
-	<span class="error">
+	<span class="error"><!-- Error messages go here -->
 		<bean:write name="message"/>
 	</span>
 </html:messages>

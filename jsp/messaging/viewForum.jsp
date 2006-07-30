@@ -6,7 +6,7 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
 
 <html:messages id="message" message="true" bundle="MESSAGING_RESOURCES">
-	<span class="error">
+	<span class="error"><!-- Error messages go here -->
 		<bean:write name="message"/>
 	</span>
 </html:messages>
@@ -45,7 +45,7 @@
 	</logic:equal>
 
 	<logic:empty name="conversationThreads">
-		<span class="error"><bean:message bundle="MESSAGING_RESOURCES" key="label.viewForum.noThreads"/></span>
+		<span class="error"><!-- Error messages go here --><bean:message bundle="MESSAGING_RESOURCES" key="label.viewForum.noThreads"/></span>
 	</logic:empty>
 	<logic:notEmpty name="conversationThreads">
 		<bean:message bundle="MESSAGING_RESOURCES" key="label.viewForum.page"/>
@@ -56,7 +56,7 @@
 				<bean:write name="pageNumber"/>
 			</logic:equal>
 			<logic:notEqual name="currentPageNumber" value="<%=pageNumber.toString()%>">
-				<html:link action="<%= contextPrefix + "method=viewForum&forumId=" + forumId.toString() + "&pageNumber=" + pageNumber%>">
+				<html:link action="<%= contextPrefix + "method=viewForum&amp;forumId=" + forumId.toString() + "&amp;pageNumber=" + pageNumber%>">
 					<bean:write name="pageNumber"/>
 				</html:link>			
 			</logic:notEqual>
@@ -84,7 +84,7 @@
 			</logic:equal>
 			<logic:notEqual name="currentPageNumber" value="<%=pageNumber.toString()%>">
 				<bean:define id="forumId" name="forum" property="idInternal" />
-				<html:link action="<%= contextPrefix + "method=viewForum&forumId=" + forumId.toString() + "&pageNumber=" + pageNumber%>">
+				<html:link action="<%= contextPrefix + "method=viewForum&amp;forumId=" + forumId.toString() + "&amp;pageNumber=" + pageNumber%>">
 					<bean:write name="pageNumber"/>
 				</html:link>			
 			</logic:notEqual>	

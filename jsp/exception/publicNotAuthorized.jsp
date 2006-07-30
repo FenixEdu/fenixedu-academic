@@ -24,7 +24,7 @@
 				</center>
 			</td>
 			<td>
-				<span class="error"><bean:message key="message.error.notAuthorizedContents" /></span>
+				<span class="error"><!-- Error messages go here --><bean:message key="message.error.notAuthorizedContents" /></span>
 			</td>
 		</tr>
 	</table>

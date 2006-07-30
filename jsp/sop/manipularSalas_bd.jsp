@@ -39,7 +39,7 @@
     <table>
       <tr>
         <td>
-          <span class="error"><bean:message key="manipularSalas.titleInsuccess"/></span>
+          <span class="error"><!-- Error messages go here --><bean:message key="manipularSalas.titleInsuccess"/></span>
         </td>
       </tr>
     </table>

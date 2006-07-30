@@ -3,7 +3,7 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %><html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <logic:notPresent name="infoShiftEnrollment" >
-	<span class="error"><bean:message key="error.notAuthorized.ShiftEnrollment" /></span>
+	<span class="error"><!-- Error messages go here --><bean:message key="error.notAuthorized.ShiftEnrollment" /></span>
 </logic:notPresent>
 <logic:present name="infoShiftEnrollment" >
 
@@ -90,7 +90,7 @@ table td { width: 50%; vertical-align: bottom; }
 			</logic:lessThan>
 			<logic:greaterEqual name="wantedCoursesSize" value="8">
 				<br />
-				<span class="error"><bean:message key="message.maximum.number.curricular.courses.to.enroll" arg0="8"/></span>
+				<span class="error"><!-- Error messages go here --><bean:message key="message.maximum.number.curricular.courses.to.enroll" arg0="8"/></span>
 			</logic:greaterEqual>		
 		</p>
 </div>
@@ -109,7 +109,7 @@ table td { width: 50%; vertical-align: bottom; }
 		</logic:present>
 		<logic:notPresent name="attendingCourses">
 			<br />
-			<span class="error"><bean:message key="message.noStudentExecutionCourses" /></span>
+			<span class="error"><!-- Error messages go here --><bean:message key="message.noStudentExecutionCourses" /></span>
 		</logic:notPresent>
 	</div>
 </td>

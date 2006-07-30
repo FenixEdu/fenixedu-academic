@@ -48,12 +48,12 @@
 <p />
 
 <logic:notPresent name="infoGratuitySituationList">
-	<span class="error"><bean:message key="error.masterDegree.gratuity.impossible.studentsGratuityList" /></span>
+	<span class="error"><!-- Error messages go here --><bean:message key="error.masterDegree.gratuity.impossible.studentsGratuityList" /></span>
 </logic:notPresent>
 
 <logic:present name="infoGratuitySituationList">
 	<logic:empty name="infoGratuitySituationList">
-		<span class="error"><bean:message key="error.masterDegree.gratuity.impossible.studentsGratuityList.empty" /></span>
+		<span class="error"><!-- Error messages go here --><bean:message key="error.masterDegree.gratuity.impossible.studentsGratuityList.empty" /></span>
 	</logic:empty>
 	<logic:notEmpty name="infoGratuitySituationList">
 		<bean:size id="sizeList" name="infoGratuitySituationList"/>
