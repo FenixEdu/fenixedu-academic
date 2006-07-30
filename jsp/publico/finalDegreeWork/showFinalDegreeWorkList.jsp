@@ -146,15 +146,18 @@
 					</td>
 					<td bgcolor="#eae7e4" align="center" rowspan="2">
 						<logic:present name="finalDegreeWorkProposalHeader" property="branches">
-							<table>
-								<logic:iterate id="branch" name="finalDegreeWorkProposalHeader" property="branches">
-									<tr>
-										<td bgcolor="#eae7e4" align="center" >
-											<bean:write name="branch" property="name"/>
-										</td>
-									</tr>
-								</logic:iterate>
-							</table>
+							<bean:size id="numberBranches" name="finalDegreeWorkProposalHeader" property="branches"/>
+							<logic:greaterThan name="numberBranches" value="0">
+								<table>
+									<logic:iterate id="branch" name="finalDegreeWorkProposalHeader" property="branches">
+										<tr>
+											<td bgcolor="#eae7e4" align="center" >
+												<bean:write name="branch" property="name"/>
+											</td>
+										</tr>
+									</logic:iterate>
+								</table>
+							</logic:greaterThan>
 						</logic:present>
 					</td>
 					<td bgcolor="#eae7e4" align="center" rowspan="2">
