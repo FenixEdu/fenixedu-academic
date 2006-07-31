@@ -53,9 +53,9 @@ public class WorkScheduleType extends WorkScheduleType_Base {
         return Duration.ZERO;
     }
 
-    public Duration checkMealDurationAccordingToRules(Duration lunchBreak) {
+    public Duration checkMealDurationAccordingToRules(Duration lunchBreak, boolean justification) {
         if (definedMeal()) {
-            if (lunchBreak.isShorterThan(getMeal().getMinimumMealBreakInterval())) {
+            if (!justification && lunchBreak.isShorterThan(getMeal().getMinimumMealBreakInterval())) {
                 return null;
             } else {
                 return ((Meal) getMeal()).calculateMealDiscount(lunchBreak);
@@ -117,10 +117,10 @@ public class WorkScheduleType extends WorkScheduleType_Base {
     }
 
     public Duration getMaximumContinuousWorkPeriod() {
-//        if (getMeal() == null || getMeal().getMinimumMealBreakInterval().equals(Duration.ZERO)) {
-//            return null;
-//        }
-//        return maximumContinuousWorkPeriod;
+        //        if (getMeal() == null || getMeal().getMinimumMealBreakInterval().equals(Duration.ZERO)) {
+        //            return null;
+        //        }
+        //        return maximumContinuousWorkPeriod;
         return null;
     }
 }

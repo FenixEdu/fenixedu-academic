@@ -46,9 +46,9 @@ public class WorkSchedule extends WorkSchedule_Base {
         TimeOfDay lastClockingDate = timeline.getLastWorkTimePoint().getTime();
         if (wsType.definedMeal()) {
             mealInterval = timeline.calculateMealBreakInterval(wsType.getMeal().getMealBreak());
-            if (mealInterval != null) {
+            if (mealInterval != null) {                
                 Duration lunchDiscount = wsType.checkMealDurationAccordingToRules(mealInterval
-                        .getDuration());
+                        .getDuration(),justificationInMealBreak(timeLeaves));
                 if (lunchDiscount != null) {
                     firstWorkPeriod = timeline.calculateWorkPeriodDuration(new TimePoint(mealInterval
                             .getStartTime(), false, null), null, new TimePoint(getWorkScheduleType()
