@@ -9,11 +9,10 @@ package net.sourceforge.fenixedu.presentationTier.Action.publico;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.publico.ReadExecutionDegreesByExecutionYearAndDegreeInitials;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
-import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
+import net.sourceforge.fenixedu.domain.SchoolClass;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixContextAction;
-import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -30,19 +29,22 @@ public class ViewClassTimeTableWithClassNameAndDegreeInitialsAction extends Feni
         super.execute(mapping, form, request, response);
 
         String degreeInitials = request.getParameter("degreeInitials");
-        String nameDegreeCurricularPlan = request.getParameter("nameDegreeCurricularPlan");
+//        String nameDegreeCurricularPlan = request.getParameter("nameDegreeCurricularPlan");
         String classIdString = request.getParameter("classId");
         if (degreeInitials == null && classIdString == null) {
             return mapping.getInputForward();
         }
 
-        InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request
-                .getAttribute(SessionConstants.EXECUTION_PERIOD);
+        final SchoolClass schoolClass = rootDomainObject.readSchoolClassByOID(Integer.valueOf(classIdString));
+        final InfoExecutionDegree infoExecutionDegree = ReadExecutionDegreesByExecutionYearAndDegreeInitials.getInfoExecutionDegree(schoolClass.getExecutionDegree());
 
-        Object[] args = { infoExecutionPeriod.getInfoExecutionYear(), degreeInitials,
-                nameDegreeCurricularPlan };
-        InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) ServiceUtils.executeService(
-                null, "ReadExecutionDegreesByExecutionYearAndDegreeInitials", args);
+//        InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request
+//                .getAttribute(SessionConstants.EXECUTION_PERIOD);
+//
+//        Object[] args = { infoExecutionPeriod.getInfoExecutionYear(), degreeInitials,
+//                nameDegreeCurricularPlan };
+//        InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) ServiceUtils.executeService(
+//                null, "ReadExecutionDegreesByExecutionYearAndDegreeInitials", args);
 
         request.setAttribute("exeDegree", infoExecutionDegree);
         return mapping.findForward("Sucess");

@@ -11,11 +11,13 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.publico.ReadExecutionDegreesByExecutionYearAndDegreeInitials;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteTimetable;
 import net.sourceforge.fenixedu.dataTransferObject.SiteView;
+import net.sourceforge.fenixedu.domain.SchoolClass;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixContextAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
@@ -71,15 +73,16 @@ public class ViewClassTimeTableActionNew extends FenixContextAction {
             return mapping.getInputForward();
 
         }
-        Object[] args = { infoExecutionPeriod.getInfoExecutionYear(), degreeInitials,
-                nameDegreeCurricularPlan };
-        InfoExecutionDegree infoExecutionDegree = new InfoExecutionDegree();
-        try {
-            infoExecutionDegree = (InfoExecutionDegree) ServiceUtils.executeService(null,
-                    "ReadExecutionDegreesByExecutionYearAndDegreeInitials", args);
-        } catch (FenixServiceException e1) {
-            throw new FenixActionException(e1);
-        }
+        final SchoolClass schoolClass = rootDomainObject.readSchoolClassByOID(classId);
+//        Object[] args = { infoExecutionPeriod.getInfoExecutionYear(), degreeInitials,
+//                nameDegreeCurricularPlan };
+        InfoExecutionDegree infoExecutionDegree = ReadExecutionDegreesByExecutionYearAndDegreeInitials.getInfoExecutionDegree(schoolClass.getExecutionDegree());
+//        try {
+//            infoExecutionDegree = (InfoExecutionDegree) ServiceUtils.executeService(null,
+//                    "ReadExecutionDegreesByExecutionYearAndDegreeInitials", args);
+//        } catch (FenixServiceException e1) {
+//            throw new FenixActionException(e1);
+//        }
         InfoDegreeCurricularPlan infoDegreeCurricularPlan = new InfoDegreeCurricularPlan();
         infoDegreeCurricularPlan = infoExecutionDegree.getInfoDegreeCurricularPlan();
         infoDegreeCurricularPlan.prepareEnglishPresentation(getLocale(request));

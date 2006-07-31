@@ -22,21 +22,21 @@ public class ReadExecutionDegreesByExecutionYearAndDegreeInitials extends Servic
             final String degreeInitials, final String nameDegreeCurricularPlan)
             throws ExcepcaoPersistencia {
 
-        DegreeCurricularPlan degreeCurricularPlan = DegreeCurricularPlan.readByNameAndDegreeSigla(nameDegreeCurricularPlan, degreeInitials);
+        final DegreeCurricularPlan degreeCurricularPlan = DegreeCurricularPlan.readByNameAndDegreeSigla(nameDegreeCurricularPlan, degreeInitials);
         final ExecutionDegree executionDegree = ExecutionDegree.getByDegreeCurricularPlanAndExecutionYear(degreeCurricularPlan,
                         infoExecutionYear.getYear());
-        final InfoExecutionDegree infoExecutionDegree = InfoExecutionDegree
-                .newInfoFromDomain(executionDegree);
-        if (executionDegree != null) {
-            final InfoDegreeCurricularPlan infoDegreeCurricularPlan = InfoDegreeCurricularPlan
-                    .newInfoFromDomain(executionDegree.getDegreeCurricularPlan());
-            infoExecutionDegree.setInfoDegreeCurricularPlan(infoDegreeCurricularPlan);
-            final InfoDegree infoDegree = InfoDegree.newInfoFromDomain(executionDegree
-                    .getDegreeCurricularPlan().getDegree());
-            infoDegreeCurricularPlan.setInfoDegree(infoDegree);
-        }
-
-        return infoExecutionDegree;
+        return getInfoExecutionDegree(executionDegree);
     }
+
+	public static InfoExecutionDegree getInfoExecutionDegree(final ExecutionDegree executionDegree) {
+		final InfoExecutionDegree infoExecutionDegree = InfoExecutionDegree.newInfoFromDomain(executionDegree);
+		if (executionDegree != null) {
+			final InfoDegreeCurricularPlan infoDegreeCurricularPlan = InfoDegreeCurricularPlan.newInfoFromDomain(executionDegree.getDegreeCurricularPlan());
+			infoExecutionDegree.setInfoDegreeCurricularPlan(infoDegreeCurricularPlan);
+			final InfoDegree infoDegree = InfoDegree.newInfoFromDomain(executionDegree.getDegreeCurricularPlan().getDegree());
+			infoDegreeCurricularPlan.setInfoDegree(infoDegree);
+		}
+		return infoExecutionDegree;
+	}
 
 }
