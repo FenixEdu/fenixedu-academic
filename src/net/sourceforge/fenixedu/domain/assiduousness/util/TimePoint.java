@@ -19,7 +19,7 @@ public class TimePoint {
         setIntervalAttributes(new Attributes());
         setNextDay(false);
     }
-    
+
     public TimePoint(TimeOfDay timePoint, AttributeType attribute) {
         TimeOfDay timeIn = new TimeOfDay(timePoint.getHourOfDay(), timePoint.getMinuteOfHour(), 0);
         setTime(timeIn);
@@ -126,6 +126,20 @@ public class TimePoint {
                 || (getPointAttributes().contains(attributes) && getIntervalAttributes().contains(
                         attribute1)) || (getPointAttributes().contains(attribute1) && getPointAttributes()
                 .contains(attributes)));
+    }
+
+    public AttributeType getWorkedAttribute(AttributeType attribute) {
+        for (AttributeType attributeType : DomainConstants.WORKED_ATTRIBUTES.getAttributes()) {
+            if ((getPointAttributes().contains(attribute) && getIntervalAttributes().contains(
+                    attributeType))
+                    || (getPointAttributes().contains(attributeType) && getIntervalAttributes()
+                            .contains(attribute))
+                    || (getPointAttributes().contains(attribute) && getPointAttributes().contains(
+                            attributeType))) {
+                return attributeType;
+            }
+        }
+        return null;
     }
 
 }

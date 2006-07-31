@@ -443,9 +443,8 @@ public class Timeline {
     public Duration calculateFixedPeriod(AttributeType fixedPeriodAttribute) {
         List<TimePoint> pointList = new ArrayList<TimePoint>();
         for (TimePoint point : getTimePoints()) {
-            // checks if the point is a WORKED in the fixed period
-            if (point.hasAttributes(fixedPeriodAttribute, DomainConstants.WORKED_ATTRIBUTES)) {
-                // || point.hasAttributes(fixedPeriodAttribute, AttributeType.BALANCE)) {
+            AttributeType workedAttribute = point.getWorkedAttribute(fixedPeriodAttribute);
+            if (workedAttribute != null && findIntervalEndPointByAttribute(workedAttribute) != null) {
                 pointList.add(point);
             }
         }
