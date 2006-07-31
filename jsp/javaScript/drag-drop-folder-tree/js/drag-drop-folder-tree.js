@@ -53,6 +53,7 @@
 		var saveParameter;
 		var fieldId;
 		var includeImage;
+		var movedClass;
 
 		this.saveParameter = 'saveString';
 
@@ -191,6 +192,11 @@
 			this.includeImage = include;
 		}
 		,
+		setMovedClass : function(movedClass) 
+		{
+			this.movedClass = movedClass;
+		}
+		,
 		expandAll : function()
 		{
 			var menuItems = document.getElementById(this.idOfTree).getElementsByTagName('LI');
@@ -264,9 +270,9 @@
 				thisNode = document.getElementById('dhtmlgoodies_treeNode'+inputId).getElementsByTagName('IMG')[0]; 
 			}else {
 				thisNode = this;
-				if(this.tagName=='A')thisNode = this.parentNode.getElementsByTagName('IMG')[0];	
-				
+				if(this.tagName != 'IMG')thisNode = this.parentNode.getElementsByTagName('IMG')[0];	
 			}
+			
 			if(thisNode.style.visibility=='hidden')return;		
 			var parentNode = thisNode.parentNode;
 			inputId = parentNode.id.replace(/[^0-9]/g,'');
@@ -336,10 +342,18 @@
 			JSTreeObj.floatingContainer.style.top = dragDrop_y + 'px';
 			
 			var thisObj = this;
-			if(thisObj.tagName=='A' || thisObj.tagName=='IMG') {
-				thisObj = thisObj.parentNode;
+	
+			if (thisObj != document.documentElement) {
+				while ((! thisObj.tagName) || (thisObj.tagName != 'LI')) {
+					if (thisObj.parentNode) {
+						thisObj = thisObj.parentNode;
+					}
+					else {
+						break;
+					}
+				}
 			}
-
+			
 			JSTreeObj.dragNode_noSiblings = false;
 			var tmpVar = thisObj.getAttribute('noSiblings');
 			if(!tmpVar)tmpVar = thisObj.noSiblings;
@@ -365,12 +379,12 @@
 				if(JSTreeObj.dragNode_noSiblings && eventSourceObj.tagName=='IMG') {
 					eventSourceObj = eventSourceObj.nextSibling;
 				}
-				if(JSTreeObj.dragNode_noChildren && eventSourceObj.tagName=='A') {
+				if(JSTreeObj.dragNode_noChildren && eventSourceObj.tagName != 'IMG') {
 					eventSourceObj = img;
 				}
 				
 				var tmpImg = tmpObj.getElementsByTagName('IMG')[0];
-				if((this.tagName=='A' || JSTreeObj.dragNode_noSiblings) && !JSTreeObj.dragNode_noChildren){
+				if((this.tagName != 'IMG' || JSTreeObj.dragNode_noSiblings) && !JSTreeObj.dragNode_noChildren){
 					tmpImg.src = tmpImg.src.replace('ind1','ind2');	
 					JSTreeObj.insertAsSub = true;
 					tmpObj.style.left = (JSTreeObj.getLeftPos(eventSourceObj) + JSTreeObj.indicator_offsetX_sub) + 'px';
@@ -447,6 +461,19 @@
 					tmpObj.parentNode.removeChild(tmpObj);						
 				}
 				
+				// set class
+				if (JSTreeObj.movedClass) {
+					var target = JSTreeObj.dragNode_source.getElementsByTagName('SPAN')[0];
+				
+					if (target.className) {
+						if (target.className.indexOf(JSTreeObj.movedClass) < 0) {
+							target.className = target.className + ' ' + JSTreeObj.movedClass;
+						}
+					}
+					else {
+						target.className = JSTreeObj.movedClass;
+					}
+				}
 			}else{
 				// Putting the item back to it's original location
 				
@@ -596,14 +623,12 @@
 		,
 		saveComplete : function(index)
 		{
-			alert(this.onComplete);
 			if (this.onComplete) {
 				this.onComplete();
 			}
 		}
 		,
 		reportError : function(index) {
-			alert(this.onError);
 			if (this.onError) {
 				this.onError();
 			}
@@ -643,7 +668,12 @@
 					subItems[0].id = 'tree_ul_' + treeUlCounter;
 					treeUlCounter++;
 				}
-				var aTag = menuItems[no].getElementsByTagName('A')[0];
+				
+				var aTag = menuItems[no].getElementsByTagName('*')[0];
+				if (aTag.tagName == 'IMG') {
+					aTag = menuItems[no].getElementsByTagName('*')[1];
+				}
+				
 				//aTag.onclick = JSTreeObj.showHideNode;
 				if(!noDrag)aTag.onmousedown = JSTreeObj.initDrag;
 				aTag.onmousemove = JSTreeObj.moveDragableNodes;

@@ -93,6 +93,8 @@ public class TreeRenderer extends OutputRenderer {
     private String linksClasses;
     private String linksStyle;
     
+    private String movedClass;
+    
     private Map<String, String> layoutsMap;
     private Map<String, String> schemasMap;
     
@@ -454,7 +456,7 @@ public class TreeRenderer extends OutputRenderer {
     }
     
     public String getHiddenLinksFor(String type) {
-        return this.linksMap.get(type);
+        return this.hiddenLinksMap.get(type);
     }
     
     /**
@@ -464,7 +466,7 @@ public class TreeRenderer extends OutputRenderer {
      * @property
      */
     public void setHiddenLinksFor(String type, String method) {
-        this.linksMap.put(type, method);
+        this.hiddenLinksMap.put(type, method);
     }
     
     public String getLinksClasses() {
@@ -492,6 +494,19 @@ public class TreeRenderer extends OutputRenderer {
      */
     public void setLinksStyle(String linksStyle) {
         this.linksStyle = linksStyle;
+    }
+    
+    public String getMovedClass() {
+        return this.movedClass;
+    }
+
+    /**
+     * Chooses the css class to apply to elements that have been moved.
+     * 
+     * @property
+     */
+    public void setMovedClass(String moveClass) {
+        this.movedClass = moveClass;
     }
 
     public String getImage() {
@@ -639,6 +654,10 @@ public class TreeRenderer extends OutputRenderer {
                 script.append(id + ".setOnError(" + getOnError() + ");\n");
             }
 
+            if (getMovedClass() != null) {
+                script.append(id + ".setMovedClass('" + getMovedClass() + "');\n");
+            }
+            
             if (TreeRenderer.this.imagesMap.size() > 0) {
                 script.append(id + ".setIncludeImage(false);\n");
             }
@@ -678,19 +697,7 @@ public class TreeRenderer extends OutputRenderer {
                     item.addChild(image);
                 }
                 
-                HtmlLink link = getLink(component);
-                
-                if (isDraggable() && link == null) {
-                    HtmlLink wrappingLink = new HtmlLink();
-                    wrappingLink.setContextRelative(false);
-                    wrappingLink.setUrl("#");
-                    
-                    wrappingLink.setBody(component);
-                    item.addChild(wrappingLink);
-                }
-                else {
-                    item.addChild(link);
-                }
+                item.addChild(component);
                 
                 String linksForItem = getLinksFor(object);
                 String hiddenLinksForItem = getHiddenLinksFor(object);
@@ -743,16 +750,6 @@ public class TreeRenderer extends OutputRenderer {
             }
         }
 
-        private HtmlLink getLink(HtmlComponent component) {
-            return (HtmlLink) component.getChild(new Predicate() {
-
-                public boolean evaluate(Object object) {
-                    return object instanceof HtmlLink;
-                }
-                
-            });
-        }
-
         private String getChildrenFor(Object object) {
             return getValueFor(object, TreeRenderer.this.childrenMap, getChildren());
         }
@@ -770,7 +767,7 @@ public class TreeRenderer extends OutputRenderer {
         }
         
         private String getHiddenLinksFor(Object object) {
-            return getValueFor(object, TreeRenderer.this.linksMap, getHiddenLinks());
+            return getValueFor(object, TreeRenderer.this.hiddenLinksMap, getHiddenLinks());
         }
 
         private String getImageFor(Object object) {
