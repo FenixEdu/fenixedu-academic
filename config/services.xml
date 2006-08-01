@@ -10317,4 +10317,31 @@
             <chain name="ManagerAuthorization" />
         </filterChains>
     </service>
+    <service>
+        <name>CreateSpecialSeasonEvaluations</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.degreeAdministrativeOffice.enrolment.specialSeason.CreateSpecialSeasonEvaluations</implementationClass>
+        <description />
+        <isTransactional>true</isTransactional>
+        <filterChains>
+            <chain name="DegreeAdministrativeOfficeAuthorization" />
+        </filterChains>
+    </service>
+    <service>
+        <name>DeleteSpecialSeasonEvaluations</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.degreeAdministrativeOffice.enrolment.specialSeason.DeleteSpecialSeasonEvaluations</implementationClass>
+        <description />
+        <isTransactional>true</isTransactional>
+        <filterChains>
+            <chain name="DegreeAdministrativeOfficeAuthorization" />
+        </filterChains>
+    </service>    
+    <service>
+        <name>ChangeSpecialSeasonCode</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.degreeAdministrativeOffice.enrolment.specialSeason.ChangeSpecialSeasonCode</implementationClass>
+        <description />
+        <isTransactional>true</isTransactional>
+        <filterChains>
+            <chain name="DegreeAdministrativeOfficeAuthorization" />
+        </filterChains>
+    </service>    
 </serviceDefinitions>
