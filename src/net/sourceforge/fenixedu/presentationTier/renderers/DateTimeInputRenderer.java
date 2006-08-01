@@ -26,6 +26,16 @@ import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 import org.apache.struts.util.RequestUtils;
 import org.joda.time.DateTime;
 
+/**
+ * This renderers provides a standard input presentation for a <code>DateTime</code> from the Joda framework.
+ * The user is aked for a date an hour and the minutes in three separate input fields.
+ * 
+ * <p>
+ * Example:
+ * <input type="text"/> <input type="text" size="2"/>hh:<input type="text" size="2"/>mm
+ * 
+ * @author cfgi
+ */
 public class DateTimeInputRenderer extends InputRenderer {
 
     private String dateFormat;

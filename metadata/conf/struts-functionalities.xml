@@ -40,6 +40,7 @@
             <forward name="edit"            path="functionalities.functionality.edit"/>
             <forward name="create"          path="functionalities.functionality.create"/>
             <forward name="create.toplevel" path="functionalities.functionality.create.toplevel"/>
+            <forward name="manage"          path="functionalities.functionality.manage"/>
         </action>
 
     </action-mappings>

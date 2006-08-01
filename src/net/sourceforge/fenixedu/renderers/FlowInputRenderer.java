@@ -3,8 +3,11 @@ package net.sourceforge.fenixedu.renderers;
 import java.util.Iterator;
 
 import net.sourceforge.fenixedu.renderers.components.HtmlComponent;
+import net.sourceforge.fenixedu.renderers.components.HtmlFormComponent;
 import net.sourceforge.fenixedu.renderers.components.HtmlInlineContainer;
+import net.sourceforge.fenixedu.renderers.components.HtmlLabel;
 import net.sourceforge.fenixedu.renderers.components.HtmlText;
+import net.sourceforge.fenixedu.renderers.components.Validatable;
 import net.sourceforge.fenixedu.renderers.layouts.FlowLayout;
 import net.sourceforge.fenixedu.renderers.layouts.Layout;
 import net.sourceforge.fenixedu.renderers.model.MetaObject;
@@ -26,17 +29,16 @@ import net.sourceforge.fenixedu.renderers.validators.HtmlValidator;
  * @author cfgi
  */
 public class FlowInputRenderer extends InputRenderer {
+
     private String eachClasses;
-
     private String eachStyle;
-
     private String eachSchema;
-
     private String eachLayout;
 
     private boolean eachInline = true;
-    
     private boolean labelExcluded = false;
+    
+    private String labelTerminator;
     
     public String getEachClasses() {
         return this.eachClasses;
@@ -152,6 +154,20 @@ public class FlowInputRenderer extends InputRenderer {
         this.validatorClasses = validatorClasses;
     }
     
+    public String getLabelTerminator() {
+        return this.labelTerminator;
+    }
+    
+    /**
+     * Chooses the suffix to be added to each label. If the label already contains
+     * that suffix then nothing will be added. See {@link StandardObjectRenderer#setLabelTerminator(String)}.
+     *
+     * @property
+     */
+    public void setLabelTerminator(String labelTerminator) {
+        this.labelTerminator = labelTerminator;
+    }
+    
     @Override
     protected Layout getLayout(Object object, Class type) {
         return new FlowObjectInputRenderer(getInputContext().getMetaObject());
@@ -174,21 +190,24 @@ public class FlowInputRenderer extends InputRenderer {
         protected HtmlComponent getNextComponent() {
             MetaSlot slot = iterator.next();
             
-            HtmlText label = new HtmlText(slot.getLabel());
             HtmlComponent component = renderSlot(slot);
-            HtmlValidator validator = getValidator(findValidatableComponent(component), slot); 
+            HtmlFormComponent validatedComponent = (HtmlFormComponent) findValidatableComponent(component);
+            HtmlValidator validator = getValidator(validatedComponent, slot); 
 
             if (isLabelExcluded() && validator == null) {
                 return component;
             }
 
-            return createContainer(label, component, validator);
+            return createContainer(slot, component, validatedComponent, validator);
         }
 
-        private HtmlInlineContainer createContainer(HtmlText label, HtmlComponent component, HtmlValidator validator) {
+        private HtmlInlineContainer createContainer(MetaSlot slot, HtmlComponent component, HtmlFormComponent validated, HtmlValidator validator) {
             HtmlInlineContainer container = new HtmlInlineContainer();
             
             if (! isLabelExcluded()) {
+                HtmlLabel label = new HtmlLabel();
+                label.setFor(slot.getKey().toString());
+                label.setText(addLabelTerminator(slot.getLabel()));
                 container.addChild(label);
             }
             
@@ -200,6 +219,23 @@ public class FlowInputRenderer extends InputRenderer {
             }
             
             return container;
+        }
+        
+        // duplicated code id=standard-renderer.label.addTerminator
+        protected String addLabelTerminator(String label) {
+            if (getLabelTerminator() == null) {
+                return label;
+            }
+            
+            if (label == null) {
+                return null;
+            }
+            
+            if (label.endsWith(getLabelTerminator())) {
+                return label;
+            }
+            
+            return label + getLabelTerminator();
         }
     }
 }

@@ -196,7 +196,9 @@ Documentation:
     
     <!--@ This layout allows several slots to be edited without a specific organization. Each slot's editor e shown after the
           previous. You can shoose to present the slot's label or not. -->
-    <renderer mode="input" type="java.lang.Object" layout="flow" class="net.sourceforge.fenixedu.renderers.FlowInputRenderer"/>
+    <renderer mode="input" type="java.lang.Object" layout="flow" class="net.sourceforge.fenixedu.renderers.FlowInputRenderer">
+            <property name="labelTerminator" value=":"/>
+    </renderer>
 
     <!--@ Can be used to fill a slot with one of many possible objects. The objects are presented in an html menu. 
           Note that since the selection is made through a menu the presentatio of each object must be short and 
