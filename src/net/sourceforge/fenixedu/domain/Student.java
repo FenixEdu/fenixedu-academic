@@ -12,6 +12,7 @@ import java.util.TreeSet;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentCondition;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Group;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.GroupStudent;
 import net.sourceforge.fenixedu.domain.gratuity.ReimbursementGuideState;
@@ -602,6 +603,57 @@ public class Student extends Student_Base {
 			}
 		}
 		return null;
+	}
+	
+	public SpecialSeasonCode getSpecialSeasonCodeByExecutionYear(ExecutionYear executionYear) {
+		for (YearStudentSpecialSeasonCode yearStudentSpecialSeasonCode : getYearStudentSpecialSeasonCodesSet()) {
+			if(yearStudentSpecialSeasonCode.getExecutionYear() == executionYear) {
+				return yearStudentSpecialSeasonCode.getSpecialSeasonCode();
+			}
+		}
+		return null;
+	}
+	
+	public void setSpecialSeasonCode(ExecutionYear executionYear, SpecialSeasonCode specialSeasonCode) {
+		if(specialSeasonCode == null) {
+			if(!getActiveStudentCurricularPlan().getSpecialSeasonEnrolments(executionYear).isEmpty()) {
+				throw new DomainException("error.cannot.change.specialSeasonCode");
+			} else {
+				deleteYearSpecialSeasonCode(executionYear);
+			}
+		} else {
+			if(specialSeasonCode.getMaxEnrolments() < getActiveStudentCurricularPlan().getSpecialSeasonEnrolments(executionYear).size()) {
+				throw new DomainException("error.cannot.change.specialSeasonCode");
+			} else {
+				changeYearSpecialSeasonCode(executionYear, specialSeasonCode);
+			}
+		}
+	}
+	
+	private void changeYearSpecialSeasonCode(ExecutionYear executionYear, SpecialSeasonCode specialSeasonCode) {
+		YearStudentSpecialSeasonCode yearStudentSpecialSeasonCode = getYearStudentSpecialSeasonCodeByExecutionYear(executionYear);
+		if(yearStudentSpecialSeasonCode != null) {
+			yearStudentSpecialSeasonCode.setSpecialSeasonCode(specialSeasonCode);
+		} else {
+			new YearStudentSpecialSeasonCode(this, executionYear, specialSeasonCode);
+		}
+	}
+
+	private YearStudentSpecialSeasonCode getYearStudentSpecialSeasonCodeByExecutionYear(ExecutionYear executionYear) {
+		for (YearStudentSpecialSeasonCode yearStudentSpecialSeasonCode : getYearStudentSpecialSeasonCodesSet()) {
+			if(yearStudentSpecialSeasonCode.getExecutionYear() == executionYear) {
+				return yearStudentSpecialSeasonCode;
+			}
+		}
+		return null;
+	}
+	
+	private void deleteYearSpecialSeasonCode(ExecutionYear executionYear) {
+		for (YearStudentSpecialSeasonCode yearStudentSpecialSeasonCode : getYearStudentSpecialSeasonCodesSet()) {
+			if(yearStudentSpecialSeasonCode.getExecutionYear() == executionYear) {
+				yearStudentSpecialSeasonCode.delete();
+			}
+		}
 	}
 
 }

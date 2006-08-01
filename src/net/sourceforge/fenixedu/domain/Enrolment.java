@@ -27,6 +27,7 @@ import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.commons.lang.StringUtils;
+import org.joda.time.DateTime;
 
 /**
  * @author dcs-rjao
@@ -730,4 +731,39 @@ public class Enrolment extends Enrolment_Base {
         }
         return false;
     }
+    
+    public void createSpecialSeasonEvaluation() {
+    	if(getEnrolmentEvaluationType() != EnrolmentEvaluationType.SPECIAL_SEASON && !isApproved()) {
+    		setEnrolmentEvaluationType(EnrolmentEvaluationType.SPECIAL_SEASON);
+    		if(getEnrollmentState() == EnrollmentState.ENROLLED) {
+    			setEnrolmentCondition(EnrollmentCondition.TEMPORARY);
+    		} else {
+    			setEnrollmentState(EnrollmentState.ENROLLED);
+    			setEnrolmentCondition(EnrollmentCondition.FINAL);
+    		}
+    		EnrolmentEvaluation enrolmentEvaluation = new EnrolmentEvaluation(this, EnrolmentEvaluationType.SPECIAL_SEASON, EnrolmentEvaluationState.TEMPORARY_OBJ);
+    		enrolmentEvaluation.setWhenDateTime(new DateTime());
+    	} else {
+    		throw new DomainException("error.invalid.enrolment.state");
+    	}
+    }
+    
+    public void deleteSpecialSeasonEvaluation() {
+    	if(getEnrolmentEvaluationType() == EnrolmentEvaluationType.SPECIAL_SEASON && getEnrollmentState().equals(EnrollmentState.ENROLLED) && hasSpecialSeason()) {
+    		setEnrolmentCondition(EnrollmentCondition.FINAL);
+    		setEnrolmentEvaluationType(EnrolmentEvaluationType.NORMAL);
+    		EnrolmentEvaluation enrolmentEvaluation = getEnrolmentEvaluationByEnrolmentEvaluationStateAndType(EnrolmentEvaluationState.TEMPORARY_OBJ, EnrolmentEvaluationType.SPECIAL_SEASON);
+    		if(enrolmentEvaluation != null) {
+    			enrolmentEvaluation.delete();
+    		}
+    		
+    		EnrolmentEvaluation normalEnrolmentEvaluation = getEnrolmentEvaluationByEnrolmentEvaluationStateAndType(EnrolmentEvaluationState.FINAL_OBJ, EnrolmentEvaluationType.NORMAL);
+    		if(normalEnrolmentEvaluation != null) {
+    			setEnrollmentState(normalEnrolmentEvaluation.getEnrollmentStateByGrade());
+    		}
+    	} else {
+    		throw new DomainException("error.invalid.enrolment.state");
+    	}
+    }
+    
 }

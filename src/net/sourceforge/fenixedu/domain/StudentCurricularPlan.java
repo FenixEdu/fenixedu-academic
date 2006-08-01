@@ -5,6 +5,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -19,6 +20,7 @@ import net.sourceforge.fenixedu.domain.branch.BranchType;
 import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseEnrollmentType;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentCondition;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
+import net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationType;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degree.enrollment.CurricularCourse2Enroll;
 import net.sourceforge.fenixedu.domain.degree.enrollment.NotNeedToEnrollInCurricularCourse;
@@ -1364,6 +1366,34 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 			}
 		}
 		return result;
-	}
-
+	}    
+	
+    public Collection<Enrolment> getSpecialSeasonToEnrol(ExecutionYear executionYear){
+    	Map<CurricularCourse, Enrolment> result = new HashMap<CurricularCourse, Enrolment>();
+    	
+    	for (Enrolment enrolment : getEnrolmentsSet()) {
+			if(enrolment.getEnrolmentEvaluationType() != EnrolmentEvaluationType.SPECIAL_SEASON && enrolment.getExecutionPeriod().getExecutionYear().equals(executionYear) && !enrolment.isApproved()) {
+				if(result.get(enrolment.getCurricularCourse()) != null) {
+					Enrolment enrolmentMap = result.get(enrolment.getCurricularCourse());
+					if(enrolment.getExecutionPeriod().compareTo(enrolmentMap.getExecutionPeriod()) > 0) {
+						result.put(enrolment.getCurricularCourse(), enrolment);
+					}
+				} else {
+					result.put(enrolment.getCurricularCourse(), enrolment);
+				} 
+			} 
+		}
+    	return new HashSet<Enrolment>(result.values());
+    }
+    
+    public Collection<Enrolment> getSpecialSeasonEnrolments(ExecutionYear executionYear){
+    	Set<Enrolment> result = new HashSet<Enrolment>();
+    	for (Enrolment enrolment : getEnrolmentsSet()) {
+    		if(enrolment.getEnrolmentEvaluationType() == EnrolmentEvaluationType.SPECIAL_SEASON && enrolment.getExecutionPeriod().getExecutionYear().equals(executionYear)) {
+    			result.add(enrolment);
+    		}
+    	}    		
+    	return result;
+    }
+    
 }
