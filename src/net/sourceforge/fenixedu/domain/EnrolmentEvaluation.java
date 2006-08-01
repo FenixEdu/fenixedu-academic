@@ -76,7 +76,15 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base implements Com
         generateCheckSum();
     }
 
-    public int compareTo(Object o) {
+    public EnrolmentEvaluation(Enrolment enrolment, EnrolmentEvaluationType enrolmentEvaluationType, EnrolmentEvaluationState evaluationState) {
+		this(enrolment, enrolmentEvaluationType);
+		if(evaluationState == null) {
+			throw new DomainException("error.enrolmentEvaluation.invalid.parameters");
+		}
+		setEnrolmentEvaluationState(evaluationState);
+	}
+
+	public int compareTo(Object o) {
         EnrolmentEvaluation enrolmentEvaluation = (EnrolmentEvaluation) o;
         EnrollmentState myEnrolmentState = this.getEnrollmentStateByGrade(this.getGrade());
         EnrollmentState otherEnrolmentState = this.getEnrollmentStateByGrade(enrolmentEvaluation
@@ -275,8 +283,14 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base implements Com
         return isTemporary();
     }
 
-    private boolean isTemporary() {
+    public boolean isTemporary() {
         return getEnrolmentEvaluationState().equals(EnrolmentEvaluationState.TEMPORARY_OBJ);
+    }
+    
+    public boolean isFinal() {
+        return getEnrolmentEvaluationState().equals(EnrolmentEvaluationState.FINAL_OBJ)
+        		|| getEnrolmentEvaluationState().equals(EnrolmentEvaluationState.RECTIFICATION_OBJ)
+        		|| getEnrolmentEvaluationState().equals(EnrolmentEvaluationState.RECTIFIED_OBJ);
     }
 
     public void delete() {
