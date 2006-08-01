@@ -1,0 +1,55 @@
+<schema name="specialSeason.choose.student"
+	type="net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.enrolment.SpecialSeasonEnrolmentBean">
+	<slot name="studentNumber" key="label.number" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		<property name="size" value="6" />
+		<property name="maxLength" value="5" />
+	</slot>
+	<slot name="executionYear" key="lable.executionYear" 
+			validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" layout="menu-select">
+		<property name="providerClass"
+			value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionYearsProvider" />
+		<property name="choiceType"
+			value="net.sourceforge.fenixedu.domain.ExecutionYear" />
+		<property name="format"
+			value="${year}" />			
+	</slot>
+</schema>
+
+<schema name="specialSeason.show.student"
+	type="net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.enrolment.SpecialSeasonEnrolmentBean">
+	<slot name="student.number" key="label.number" read-only="true"/>
+	<slot name="student.person.name" key="label.person.name" read-only="true"/>
+	<slot name="executionYear" layout="format" key="label.executionYear" read-only="true">
+		<property name="format" value="${year}" />
+	</slot>
+	<slot name="specialSeasonCode" key="label.specialSeasonCode" layout="menu-select-postback">
+		<property name="providerClass"
+			value="net.sourceforge.fenixedu.presentationTier.renderers.providers.SpecialSeasonCodesProvider" />
+		<property name="format" value="${code} - ${situation}" />
+		<property name="destination" value="postBack"/>
+	</slot>	
+</schema>
+
+<schema name="specialSeason.show.curricular.to.enrol"
+	type="net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.enrolment.SpecialSeasonToEnrolBean">
+	<slot name="toSubmit" key="label.blank" />	
+	<slot name="enrolment.curricularCourse.name" key="label.curricularCourse" read-only="true"/>
+	<slot name="enrolment.curricularCourse.degreeCurricularPlan.name" key="label.degreeCurricularPlan" read-only="true"/>	
+	<slot name="enrolment.executionPeriod" key="label.executionPeriod" layout="format" read-only="true">
+		<property name="format"
+			value="${executionYear.year} - ${semester}º Sem" />
+	</slot>
+	<slot name="enrolmentCondition" key="label.enrollment.state" read-only="true"/>
+</schema>
+
+<schema name="specialSeason.show.curricular.already.enroled"
+	type="net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.enrolment.SpecialSeasonToEnrolBean">
+	<slot name="toSubmit" key="label.blank" />	
+	<slot name="enrolment.curricularCourse.name" key="label.curricularCourse" read-only="true"/>	
+	<slot name="enrolment.curricularCourse.degreeCurricularPlan.name" key="label.degreeCurricularPlan" read-only="true"/>		
+	<slot name="enrolment.executionPeriod" key="label.executionPeriod" layout="format" read-only="true">
+		<property name="format"
+			value="${executionYear.year} - ${semester}º Sem" />
+	</slot>
+	<slot name="enrolment.enrolmentCondition" key="label.enrollment.state" read-only="true"/>	
+</schema>
