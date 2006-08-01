@@ -34,6 +34,17 @@
 		<put name="body" value="/degreeAdministrativeOffice/enrolment/improvment/prepareEnrollmentViewEnrolments.jsp"/>
 	</definition>
 	
+<!-- ************************************** Special Seasom Enrollment **************************** -->	
+	<definition name="df.page.specialSeason.prepareChooseStudent" extends="definition.degreeAdministrativeOffice.masterPage">
+		<put name="body" value="/degreeAdministrativeOffice/enrolment/specialSeason/prepareChooseStudent.jsp"/>
+	</definition>
+	<definition name="df.page.specialSeason.viewSpecialSeasonEnrolments" extends="definition.degreeAdministrativeOffice.masterPage">
+		<put name="body" value="/degreeAdministrativeOffice/enrolment/specialSeason/viewSpecialSeasonEnrolments.jsp"/>
+	</definition>
+	
+	
+
+	
 <!-- ************************************** Student Curriculum **************************** -->
 	<definition name="df.page.prepareViewStudentCurriculumChooseStudent" extends="definition.degreeAdministrativeOffice.masterPage">
 		<put name="body" value="/degreeAdministrativeOffice/curriculum/prepareViewStudentCurriculumChooseStudent.jsp"/>

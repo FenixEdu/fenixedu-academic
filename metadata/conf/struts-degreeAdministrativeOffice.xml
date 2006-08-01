@@ -301,6 +301,17 @@
 			<forward name="globalEnrolment" path="/globalEnrolment.do"/>
 			<forward name="prepareEnrollmentChooseStudent" path="df.page.prepareImprovmentEnrollmentChooseStudent"/>			
 		</action>
+
+		<!-- ****************** SpecialSeason Enrolment **************************** -->
+
+		
+		<action	path="/specialSeasonEnrolment"
+				type="net.sourceforge.fenixedu.presentationTier.Action.degreeAdministrativeOffice.specialSeason.SpecialSeasonEnrolmentDispatchAction"
+				parameter="method"
+				scope="request">
+			<forward name="prepareChooseStudent" path="df.page.specialSeason.prepareChooseStudent"/>
+			<forward name="viewSpecialSeasonEnrolments" path="df.page.specialSeason.viewSpecialSeasonEnrolments"/>
+		</action>
 		
 		<!-- ****************** View Student Curriculum **************************** -->
 		<action path="/viewStudentCurriculum"

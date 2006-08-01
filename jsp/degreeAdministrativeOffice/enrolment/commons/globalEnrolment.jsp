@@ -13,6 +13,10 @@
 	<li>
 		<html:link page="/improvmentEnrollment.do?method=prepareEnrollmentChooseStudent"><bean:message key="link.student.enrollment.improvment"/></html:link>
 	</li>
+	<li>
+		<html:link page="/specialSeasonEnrolment.do?method=prepareChooseStudent"><bean:message key="link.student.enrollment.specialSeason"/></html:link>
+	</li>
+	
 	<br />
 	<br />
 	<li>
