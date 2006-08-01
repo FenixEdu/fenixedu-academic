@@ -50,8 +50,10 @@ public class FormTag extends ContextTag {
             formHead.append("id=\"" + getId() + "\" ");
         }
         
-        String path = RenderUtils.getModuleRelativePath(getAction());
-        formHead.append("action=\"" + path + "\" ");
+        if (getAction() != null) {
+            String path = RenderUtils.getModuleRelativePath(getAction());
+            formHead.append("action=\"" + path + "\" ");
+        }
         
         if (getEncoding() != null) {
             formHead.append("enctype=\"" + getEncoding() + "\" ");
