@@ -513,3 +513,13 @@ background: url(../images/navlateral/minus01.gif) 0.4em 55% no-repeat; padding-l
 #navlateral ul li.minus a:hover, #navlateral ul li.minus a:active {
 background: #eee url(../images/navlateral/minus01.gif) 0.4em 55% no-repeat;
 }
+
+.dhidden {
+display: none;
+}
+.dinline {
+display: inline;
+}
+.dblock {
+display: block;
+}
