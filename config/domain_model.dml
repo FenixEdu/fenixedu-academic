@@ -3675,26 +3675,25 @@ class net.sourceforge.fenixedu.domain.functionalities.Functionality extends net.
 		Integer keyParent;
 	}
 
-relation ModuleAggregatesFunctionalities {
-	net.sourceforge.fenixedu.domain.functionalities.Functionality playsRole functionalities {
-		multiplicity *;
-	}
-	net.sourceforge.fenixedu.domain.functionalities.Module playsRole module;
-}
 
-relation ModuleHasSubModules {
-	net.sourceforge.fenixedu.domain.functionalities.Module playsRole modules {
-		multiplicity *;
-	}
+//
+// END OF Functionalities
+//
+
+class net.sourceforge.fenixedu.domain.SpecialSeasonCode extends net.sourceforge.fenixedu.domain.DomainObject {
 	
-	net.sourceforge.fenixedu.domain.functionalities.Module playsRole parent;
+	Integer code;
+	String situation;
+	Integer maxEnrolments;
+	
 }
 
-relation RootDomainObjectFunctionality {
-	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
-	net.sourceforge.fenixedu.domain.functionalities.Functionality playsRole functionalities {
-		multiplicity *;
-	}
+class net.sourceforge.fenixedu.domain.YearStudentSpecialSeasonCode extends net.sourceforge.fenixedu.domain.DomainObject {
+	
+	Integer keyExecutionYear;
+	Integer keySpecialSeasonCode;
+	Integer keyStudent;
+
 }
 
 /*
@@ -9461,6 +9460,63 @@ relation PersonExtensionPerson {
 relation PersonExtensionExtension {
 	net.sourceforge.fenixedu.domain.material.Extension playsRole extension;
 	net.sourceforge.fenixedu.domain.material.PersonExtension playsRole persons {
+		multiplicity *;
+	}
+}
+
+relation ModuleAggregatesFunctionalities {
+	net.sourceforge.fenixedu.domain.functionalities.Functionality playsRole functionalities {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.functionalities.Module playsRole module;
+}
+
+relation ModuleHasSubModules {
+	net.sourceforge.fenixedu.domain.functionalities.Module playsRole modules {
+		multiplicity *;
+	}
+	
+	net.sourceforge.fenixedu.domain.functionalities.Module playsRole parent;
+}
+
+relation RootDomainObjectFunctionality {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.functionalities.Functionality playsRole functionalities {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectYearStudentSpecialSeasonCode {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.YearStudentSpecialSeasonCode playsRole yearStudentSpecialSeasonCodes {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectSpecialSeasonCode {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.SpecialSeasonCode playsRole specialSeasonCodes {
+		multiplicity *;
+	}
+}
+
+relation YearStudentSpecialSeasonCodeStudent {
+	net.sourceforge.fenixedu.domain.Student playsRole student;
+	net.sourceforge.fenixedu.domain.YearStudentSpecialSeasonCode playsRole yearStudentSpecialSeasonCodes {
+		multiplicity *;
+	}
+}
+
+relation YearStudentSpecialSeasonCodeExecutionYear {
+	net.sourceforge.fenixedu.domain.ExecutionYear playsRole executionYear;
+	net.sourceforge.fenixedu.domain.YearStudentSpecialSeasonCode playsRole yearStudentSpecialSeasonCodes {
+		multiplicity *;
+	}
+}
+
+relation YearStudentSpecialSeasonCodeSpecialSeasonCode {
+	net.sourceforge.fenixedu.domain.SpecialSeasonCode playsRole specialSeasonCode;
+	net.sourceforge.fenixedu.domain.YearStudentSpecialSeasonCode playsRole yearStudentSpecialSeasonCodes {
 		multiplicity *;
 	}
 }
