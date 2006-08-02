@@ -574,7 +574,7 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable 
     }
 
     private boolean isSpecialAuthorization(MarkSheetType markSheetType, ExecutionPeriod executionPeriod, Date evaluationDate) {
-        return (markSheetType == MarkSheetType.SPECIAL_AUTHORIZATION && executionPeriod.containsDay(evaluationDate));
+        return (markSheetType == MarkSheetType.SPECIAL_AUTHORIZATION);
     }
 
     private boolean checkOccupationPeriod(Date evaluationDate, ExecutionPeriod executionPeriod, MarkSheetType markSheetType) {
