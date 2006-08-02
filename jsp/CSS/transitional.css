@@ -514,7 +514,7 @@ background: url(../images/navlateral/minus01.gif) 0.4em 55% no-repeat; padding-l
 background: #eee url(../images/navlateral/minus01.gif) 0.4em 55% no-repeat;
 }
 
-.dhidden {
+.dnone {
 display: none;
 }
 .dinline {
