@@ -32,6 +32,7 @@
 		<!-- ******************* Improvment Enrollment **************** -->
 		<form-bean name="improvmentEnrolmentForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
 			<form-property name="studentNumber" type="java.lang.Integer"/>
+			<form-property name="studentID" type="java.lang.Integer"/>
 			<form-property name="executionPeriod" type="java.lang.String"/>			
 			<form-property name="degreeType" type="java.lang.String"/>
 			<form-property name="enrolments" type="java.lang.Integer[]"/>
