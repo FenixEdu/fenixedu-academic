@@ -153,12 +153,7 @@ public class HtmlTag {
                 }
             }
             
-            if (this.children.size() == 0 && this.text == null) {
-                writer.write("/>");
-            }
-            else {
-                writer.write('>');
-            }
+            writer.write('>');
         }
         
         if (this.text != null) {
@@ -171,12 +166,10 @@ public class HtmlTag {
             writer.write(indent);
         }
         
-        if (! (this.children.size() == 0 && this.text == null)) {
-            if (name != null) {
-                writer.write("</");
-                writer.write(name);
-                writer.write('>');
-            }
+        if (name != null) {
+            writer.write("</");
+            writer.write(name);
+            writer.write('>');
         }
         
     }    
