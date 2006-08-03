@@ -38,6 +38,8 @@ public class FlowRenderer extends OutputRenderer {
     private String emptyMessageKey;
 
     private String emptyMessageClasses;
+    
+    private String emptyMessageBundle;
 
     private String eachInline;
     
@@ -119,8 +121,8 @@ public class FlowRenderer extends OutputRenderer {
 
     /**
      * When the given collection is empty this key will be used
-     * to fecth an according message for the situation. The bundle
-     * used is the module's default bundle. 
+     * to fetch an according message for the situation. The bundle
+     * used is the module's default bundle if no other is provided.
      * 
      * @property
      */
@@ -142,7 +144,22 @@ public class FlowRenderer extends OutputRenderer {
         this.emptyMessageClasses = emptyMessageClasses;
     }
 
-    public String getEachInline() {
+    public String getEmptyMessageBundle() {
+		return emptyMessageBundle;
+	}
+
+    /**
+     * When emptyMessageKey is used to specify wich resource key
+     * will be used when the collection is empty, this property allows
+     * to specify wich bundle will be used to fetch the key.
+     * 
+     * @property
+     */
+	public void setEmptyMessageBundle(String emptyMessageBundle) {
+		this.emptyMessageBundle = emptyMessageBundle;
+	}
+
+	public String getEachInline() {
         return this.eachInline;
     }
 
