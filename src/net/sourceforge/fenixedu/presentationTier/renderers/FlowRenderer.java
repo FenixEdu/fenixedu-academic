@@ -188,7 +188,7 @@ public class FlowRenderer extends OutputRenderer {
                 HtmlComponent component = null;
 
                 if ((getEmptyMessageKey() != null) && (hasMoreComponents() == false)) {
-                    component = new HtmlText(RenderUtils.getResourceString(getEmptyMessageKey()));
+                    component = new HtmlText(RenderUtils.getResourceString(getEmptyMessageBundle(), getEmptyMessageKey()));
                     this.empty = true;
                 } else {
                     component = super.createComponent(object, type);
