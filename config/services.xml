@@ -6051,7 +6051,7 @@
             net.sourceforge.fenixedu.applicationTier.Servico.degreeAdministrativeOffice.enrolment.improvment.ImprovmentEnrollService</implementationClass>
 		<isTransactional>True</isTransactional>
 		<filterChains>
-			<chain name="EnrolmentImprovmentAuthorization" />
+			<chain name="DegreeAdministrativeOfficeAuthorization" />
 		</filterChains>
 	</service>
 	<service>
@@ -6061,7 +6061,7 @@
             net.sourceforge.fenixedu.applicationTier.Servico.degreeAdministrativeOffice.enrolment.improvment.ImprovmentUnEnrollService</implementationClass>
 		<isTransactional>True</isTransactional>
 		<filterChains>
-			<chain name="EnrolmentImprovmentAuthorization" />
+			<chain name="DegreeAdministrativeOfficeAuthorization" />
 		</filterChains>
 	</service>
 	<service>
