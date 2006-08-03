@@ -308,7 +308,9 @@ Documentation:
     <!--@ Presents a list were each object is presented with it's own layout and schema in a list item. Each item has
           an checkbox associated. This layout allows to choose several objects from a list. Only the choosen object will
           be part o the list that is created and used as the slot's value.  -->
-    <renderer mode="input" type="java.util.List" layout="option-select" class="net.sourceforge.fenixedu.presentationTier.renderers.InputCheckBoxListRenderer"/>
+    <renderer mode="input" type="java.util.List" layout="option-select" class="net.sourceforge.fenixedu.presentationTier.renderers.InputCheckBoxListRenderer">
+    	<property name="eachClasses" value="dinline" />
+    </renderer>
     
     <!--@ This layout allows you to construct a list of objects for input. The deletion if managed by the renderer the
           addition of objects to the list must be handled by an external action. -->
