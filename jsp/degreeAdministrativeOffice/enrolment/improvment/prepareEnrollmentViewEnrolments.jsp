@@ -10,12 +10,12 @@
 	<tr>
 		<td align="center" class="infoselected">
 			<b><bean:message key="label.student.enrollment.number"/></b>
-			<bean:write name="improvmentEnrolmentContext" property="infoStudent.number" />&nbsp;-&nbsp;
-			<bean:write name="improvmentEnrolmentContext" property="infoStudent.infoPerson.nome" />
+			<bean:write name="student" property="number" />&nbsp;-&nbsp;
+			<bean:write name="student" property="person.nome" />
 			<br />
 			<b><bean:message key="label.student.enrollment.executionPeriod"/></b>
-			<bean:write name="improvmentEnrolmentContext" property="infoExecutionPeriod.name" />&nbsp;				
-			<bean:write name="improvmentEnrolmentContext" property="infoExecutionPeriod.infoExecutionYear.year" />
+			<bean:write name="executionPeriod" property="name" />&nbsp;				
+			<bean:write name="executionPeriod" property="executionYear.year" />
 		</td>
 	</tr>
 </table>
@@ -28,14 +28,15 @@
 	</tr>
 </table>
 <br />
-<logic:notEmpty name="improvmentEnrolmentContext" property="alreadyEnrolled">
+<logic:notEmpty name="enroledImprovements" >
 	<br />
-	<bean:define id="alreadyEnroledList" name="improvmentEnrolmentContext" property="alreadyEnrolled"/>
 	<html:form action="/improvmentEnrollment">
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="improvmentUnenrollStudent"/>
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="2"/>
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.studentNumber" property="studentNumber"/>
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.executionPeriod" property="executionPeriod"/>
+		<bean:define id="studentID" name="student" property="idInternal"/>
+		<html:hidden property="studentID" value="<%= studentID.toString() %>"/>
 		
 		<table width="100%" border="0" cellpadding="0" cellspacing="0">
 			<tr>
@@ -51,17 +52,17 @@
 				<th class="listClasses-header">
 				</th>
 			</tr>
-			<logic:iterate id="infoEnrollment" name="alreadyEnroledList">
-				<bean:define id="infoEnrollmentId" name="infoEnrollment" property="idInternal" />
+			<logic:iterate id="enrollment" name="enroledImprovements">
+				<bean:define id="infoEnrollmentId" name="enrollment" property="idInternal" />
 				<tr>
 					<td class="listClasses">
-						<bean:write name="infoEnrollment" property="infoCurricularCourse.name"/>
+						<bean:write name="enrollment" property="curricularCourse.name"/>
 					</td>
 					<td class="listClasses">
-						<bean:write name="infoEnrollment" property="infoCurricularCourse.infoDegreeCurricularPlan.name"/>
+						<bean:write name="enrollment" property="curricularCourse.degreeCurricularPlan.name"/>
 					</td>
 					<td class="listClasses">
-						<bean:write name="infoEnrollment" property="infoExecutionPeriod.name"/>-<bean:write name="infoEnrollment" property="infoExecutionPeriod.infoExecutionYear.year"/>
+						<bean:write name="enrollment" property="executionPeriod.name"/>-<bean:write name="enrollment" property="executionPeriod.executionYear.year"/>
 					</td>
 					<td class="listClasses">
 						<html:multibox bundle="HTMLALT_RESOURCES" altKey="multibox.unenrolments" property="unenrolments" value="<%= infoEnrollmentId.toString() %>" />
@@ -79,7 +80,7 @@
 		</html:reset>			
 	</html:form>
 </logic:notEmpty>
-<logic:empty name="improvmentEnrolmentContext" property="alreadyEnrolled">
+<logic:empty name="enroledImprovements" >
 	<p class="error">
 		<bean:message key="message.no.already.improvment.enrollments"/>
 	</p>
@@ -94,14 +95,16 @@
 	</tr>
 </table>
 <br />
-<logic:notEmpty name="improvmentEnrolmentContext" property="improvmentsToEnroll">
+<logic:notEmpty name="enrolmentsToImprov" >
 	<br />
-	<bean:define id="enrollList" name="improvmentEnrolmentContext" property="improvmentsToEnroll"/>
 	<html:form action="/improvmentEnrollment">
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="improvmentEnrollStudent"/>
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="2"/>
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.studentNumber" property="studentNumber"/>
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.executionPeriod" property="executionPeriod"/>
+		<bean:define id="studentID" name="student" property="idInternal"/>
+		<html:hidden property="studentID" value="<%= studentID.toString() %>"/>
+		
 		
 		<table width="100%" border="0" cellpadding="0" cellspacing="0">
 			<tr>
@@ -117,17 +120,17 @@
 				<th class="listClasses-header">
 				</th>
 			</tr>
-			<logic:iterate id="infoEnrollment" name="enrollList">
-				<bean:define id="infoEnrollmentId" name="infoEnrollment" property="idInternal" />
+			<logic:iterate id="enrolment" name="enrolmentsToImprov">
+				<bean:define id="infoEnrollmentId" name="enrolment" property="idInternal" />
 				<tr>
 					<td class="listClasses">
-						<bean:write name="infoEnrollment" property="infoCurricularCourse.name"/>
+						<bean:write name="enrolment" property="curricularCourse.name"/>
 					</td>
 					<td class="listClasses">
-						<bean:write name="infoEnrollment" property="infoCurricularCourse.infoDegreeCurricularPlan.name"/>
+						<bean:write name="enrolment" property="curricularCourse.degreeCurricularPlan.name"/>
 					</td>
 					<td class="listClasses">
-						<bean:write name="infoEnrollment" property="infoExecutionPeriod.name"/>-<bean:write name="infoEnrollment" property="infoExecutionPeriod.infoExecutionYear.year"/>
+						<bean:write name="enrolment" property="executionPeriod.name"/>-<bean:write name="enrolment" property="executionPeriod.executionYear.year"/>
 					</td>
 					<td class="listClasses">
 						<html:multibox bundle="HTMLALT_RESOURCES" altKey="multibox.enrolments" property="enrolments" value="<%= infoEnrollmentId.toString() %>" />
@@ -145,7 +148,7 @@
 		</html:reset>			
 	</html:form>
 </logic:notEmpty>
-<logic:empty name="improvmentEnrolmentContext" property="improvmentsToEnroll">
+<logic:empty name="enrolmentsToImprov" >
 	<p class="error">
 		<bean:message key="message.no.improvment.enrollments"/>
 	</p>

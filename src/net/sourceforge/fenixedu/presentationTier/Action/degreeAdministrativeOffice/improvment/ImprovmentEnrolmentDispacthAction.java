@@ -12,12 +12,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
+import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.commons.CollectionUtils;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
-import net.sourceforge.fenixedu.dataTransferObject.enrollment.InfoImprovmentEnrolmentContext;
+import net.sourceforge.fenixedu.domain.Enrolment;
+import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
@@ -45,7 +48,7 @@ import org.apache.struts.util.LabelValueBean;
 public class ImprovmentEnrolmentDispacthAction extends FenixDispatchAction{
     
     public ActionForward prepareEnrollmentChooseStudent(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws Exception {
+            HttpServletRequest request, HttpServletResponse response) throws FenixFilterException  {
     	
     	ActionMessages messages = new ActionMessages();
         //execution years
@@ -74,43 +77,44 @@ public class ImprovmentEnrolmentDispacthAction extends FenixDispatchAction{
     }
     
     public ActionForward start(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws Exception {
-        IUserView userView = SessionUtils.getUserView(request);
+            HttpServletRequest request, HttpServletResponse response) throws FenixFilterException  {
         DynaActionForm actionForm = (DynaActionForm) form;
         ActionErrors errors = new ActionErrors();
         
         Integer studentNumber = (Integer) actionForm.get("studentNumber");
-        Integer executionPeriod = Integer.valueOf(actionForm.getString("executionPeriod"));
+        Integer executionPeriodID = Integer.valueOf(actionForm.getString("executionPeriod"));
         
-        Object[] args = {studentNumber, executionPeriod};
-        InfoImprovmentEnrolmentContext improvmentEnrolmentContext = null;
-        try {
-            improvmentEnrolmentContext = (InfoImprovmentEnrolmentContext) ServiceUtils.executeService(userView, "ReadImprovmentsToEnroll", args);
-        }catch (NotAuthorizedException e) {
-            e.printStackTrace();
-            errors.add("notauthorized", new ActionError("error.exception.notAuthorized2"));
+        Student student = Student.readStudentByNumberAndDegreeType(studentNumber, DegreeType.DEGREE);
+        if (student == null) {
+        	errors.add("noStudent", new ActionError("error.student.notExist", studentNumber.toString()));
             saveErrors(request, errors);
-            return mapping.getInputForward();
-        }catch(InvalidArgumentsServiceException iase) {
-            errors.add("noStudent", new ActionError(iase.getMessage(), studentNumber));
-            saveErrors(request, errors);
-            return mapping.getInputForward();
-        }catch(FenixServiceException fse) {
-            throw new FenixActionException(fse);
+            return prepareEnrollmentChooseStudent(mapping, form, request, response);
         }
         
-        ComparatorChain comparatorChain = new ComparatorChain();
-        comparatorChain.addComparator(new BeanComparator(
-        "infoExecutionPeriod.infoExecutionYear.year"));
-        comparatorChain.addComparator(new BeanComparator("infoExecutionPeriod.semester"));
-        comparatorChain.addComparator(new BeanComparator("infoCurricularCourse.name", Collator.getInstance()));
-        Collections.sort(improvmentEnrolmentContext.getImprovmentsToEnroll(), comparatorChain);
-        Collections.sort(improvmentEnrolmentContext.getAlreadyEnrolled(), comparatorChain);
+        ExecutionPeriod executionPeriod = rootDomainObject.readExecutionPeriodByOID(executionPeriodID);
         
-        request.setAttribute("improvmentEnrolmentContext", improvmentEnrolmentContext);
+        return readEnrolments(student, executionPeriod, mapping, form, request, response);
+        
+    }
+    
+    public ActionForward readEnrolments(Student student, ExecutionPeriod executionPeriod, ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response)  {
+    	
+        List<Enrolment> enrolmentsToImprov = student.getEnrolmentsToImprov(executionPeriod);
+        List<Enrolment> enroledImprovements = student.getEnroledImprovements();
+        
+        ComparatorChain comparatorChain = new ComparatorChain();
+        comparatorChain.addComparator(new BeanComparator("executionPeriod"));
+        comparatorChain.addComparator(new BeanComparator("curricularCourse.name", Collator.getInstance()));
+        Collections.sort(enrolmentsToImprov, comparatorChain);
+        Collections.sort(enroledImprovements, comparatorChain);
+        
+        request.setAttribute("student", student);
+        request.setAttribute("executionPeriod", executionPeriod);
+        request.setAttribute("enrolmentsToImprov", enrolmentsToImprov);
+        request.setAttribute("enroledImprovements", enroledImprovements);
         
         return mapping.findForward("prepareEnrolmentViewEnrolments");
-        
     }
 
     public ActionForward improvmentEnrollStudent(ActionMapping mapping, ActionForm form,
@@ -119,17 +123,22 @@ public class ImprovmentEnrolmentDispacthAction extends FenixDispatchAction{
         DynaActionForm actionForm = (DynaActionForm) form;
         ActionErrors errors = new ActionErrors();
         
-        Integer studentNumber = (Integer) actionForm.get("studentNumber");
         Integer[] enrolments = (Integer[]) actionForm.get("enrolments");
         if(enrolments == null || enrolments.length == 0) {
             return mapping.findForward("viewEnrolments");
         }
-        Object[] args = { studentNumber, userView.getUtilizador(), CollectionUtils.toList(enrolments)};
+        
+        Integer studentID = (Integer) actionForm.get("studentID");
+        Student student = rootDomainObject.readStudentByOID(studentID);
+
+        Integer executionPeriodID = Integer.valueOf(actionForm.getString("executionPeriod"));
+        ExecutionPeriod executionPeriod = rootDomainObject.readExecutionPeriodByOID(executionPeriodID);
+        
+        Object[] args = { student, executionPeriod, userView.getUtilizador(), CollectionUtils.toList(enrolments)};
         
         try {
             ServiceUtils.executeService(userView, "ImprovmentEnrollService", args);
-        }catch (NotAuthorizedException e) {
-            e.printStackTrace();
+        }catch (NotAuthorizedFilterException e) {
             errors.add("notauthorized", new ActionError("error.exception.notAuthorized2"));
             saveErrors(request, errors);
             return mapping.getInputForward();
@@ -137,8 +146,7 @@ public class ImprovmentEnrolmentDispacthAction extends FenixDispatchAction{
             throw new FenixActionException(fse);
         }
         
-        return mapping.findForward("viewEnrolments");
-        
+        return readEnrolments(student, executionPeriod, mapping, form, request, response);
     }
     
     public ActionForward improvmentUnenrollStudent(ActionMapping mapping, ActionForm form,
@@ -147,17 +155,22 @@ public class ImprovmentEnrolmentDispacthAction extends FenixDispatchAction{
         DynaActionForm actionForm = (DynaActionForm) form;
         ActionErrors errors = new ActionErrors();
         
-        Integer studentNumber = (Integer) actionForm.get("studentNumber");
         Integer[] enrolments = (Integer[]) actionForm.get("unenrolments");
         if(enrolments == null || enrolments.length == 0) {
             return mapping.findForward("viewEnrolments");
         }
-        Object[] args = { studentNumber, CollectionUtils.toList(enrolments)};
+        
+        Integer studentID = (Integer) actionForm.get("studentID");
+        Student student = rootDomainObject.readStudentByOID(studentID);
+
+        Integer executionPeriodID = Integer.valueOf(actionForm.getString("executionPeriod"));
+        ExecutionPeriod executionPeriod = rootDomainObject.readExecutionPeriodByOID(executionPeriodID);
+
+        Object[] args = { student, CollectionUtils.toList(enrolments)};
         
         try {
             ServiceUtils.executeService(userView, "ImprovmentUnEnrollService", args);
-        }catch (NotAuthorizedException e) {
-            e.printStackTrace();
+        }catch (NotAuthorizedFilterException e) {
             errors.add("notauthorized", new ActionError("error.exception.notAuthorized2"));
             saveErrors(request, errors);
             return mapping.getInputForward();
@@ -165,7 +178,7 @@ public class ImprovmentEnrolmentDispacthAction extends FenixDispatchAction{
             throw new FenixActionException(fse);
         }
         
-        return mapping.findForward("viewEnrolments");
+        return readEnrolments(student, executionPeriod, mapping, form, request, response);
     }
     
     private void sortExecutionPeriods(List executionPeriods, DynaActionForm form) {
