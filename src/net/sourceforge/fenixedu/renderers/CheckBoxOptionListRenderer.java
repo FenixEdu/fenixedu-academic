@@ -7,6 +7,7 @@ import java.util.List;
 import net.sourceforge.fenixedu.renderers.components.HtmlCheckBox;
 import net.sourceforge.fenixedu.renderers.components.HtmlCheckBoxList;
 import net.sourceforge.fenixedu.renderers.components.HtmlComponent;
+import net.sourceforge.fenixedu.renderers.components.HtmlLabel;
 import net.sourceforge.fenixedu.renderers.components.converters.ConversionException;
 import net.sourceforge.fenixedu.renderers.components.converters.Converter;
 import net.sourceforge.fenixedu.renderers.contexts.PresentationContext;
@@ -263,7 +264,14 @@ public class CheckBoxOptionListRenderer extends InputRenderer {
                 
                 RenderKit kit = RenderKit.getInstance();
                 HtmlComponent component = kit.render(newContext, obj);
-                HtmlCheckBox checkBox = listComponent.addOption(component, key.toString());
+                
+                HtmlLabel label = new HtmlLabel();
+                label.setBody(component);
+                label.setStyle(eachStyle);
+                label.setClasses(eachClasses);
+                
+                HtmlCheckBox checkBox = listComponent.addOption(label, key.toString());
+                label.setFor(checkBox);
                 
                 if (collection != null && collection.contains(obj)) {
                     checkBox.setChecked(true);
