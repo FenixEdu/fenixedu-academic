@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentCondition;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
@@ -605,6 +606,8 @@ public class Student extends Student_Base {
 		return null;
 	}
 	
+	//  Special Season 
+	
 	public SpecialSeasonCode getSpecialSeasonCodeByExecutionYear(ExecutionYear executionYear) {
 		for (YearStudentSpecialSeasonCode yearStudentSpecialSeasonCode : getYearStudentSpecialSeasonCodesSet()) {
 			if(yearStudentSpecialSeasonCode.getExecutionYear() == executionYear) {
@@ -655,5 +658,34 @@ public class Student extends Student_Base {
 			}
 		}
 	}
+	// end Special Season
+	
+	//  Improvement
+	
+	public List<Enrolment> getEnrolmentsToImprov(ExecutionPeriod executionPeriod) {
+		
+        if (executionPeriod == null) {
+            throw new DomainException("error.executionPeriod.notExist");
+        }
+        
+        List<Enrolment> enrolmentsToImprov = new ArrayList<Enrolment>();
+		for (StudentCurricularPlan scp : getStudentCurricularPlans()) {
+			if(scp.getDegreeCurricularPlan().getDegree().getTipoCurso().equals(DegreeType.DEGREE)) {
+				enrolmentsToImprov.addAll(scp.getEnrolmentsToImprov(executionPeriod));
+			}
+		}        
+		return enrolmentsToImprov;
+	}
+	
+	public List<Enrolment> getEnroledImprovements() {
+		List<Enrolment> enroledImprovements = new ArrayList<Enrolment>();
+		for (StudentCurricularPlan scp : getStudentCurricularPlans()) {
+			if(scp.getDegreeCurricularPlan().getDegree().getTipoCurso().equals(DegreeType.DEGREE)) {
+				enroledImprovements.addAll(scp.getEnroledImprovements());
+			}
+		}
+		return enroledImprovements;
+	}
+	
 
 }

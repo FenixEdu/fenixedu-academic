@@ -34,6 +34,7 @@ import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.Document
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequestType;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.StudentCurricularPlanState;
+import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.tools.enrollment.AreaType;
 import net.sourceforge.fenixedu.util.PeriodState;
 import net.sourceforge.fenixedu.util.State;
@@ -552,8 +553,8 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 		return true;
 	}
 
-	public List getAprovedEnrolmentsInExecutionPeriod(final ExecutionPeriod executionPeriod) {
-		return (List) CollectionUtils.select(getEnrolments(), new Predicate() {
+	public List<Enrolment> getAprovedEnrolmentsInExecutionPeriod(final ExecutionPeriod executionPeriod) {
+		return (List<Enrolment>) CollectionUtils.select(getEnrolments(), new Predicate() {
 			public boolean evaluate(Object obj) {
 				Enrolment enrollment = (Enrolment) obj;
 				if (enrollment.getEnrollmentState().equals(EnrollmentState.APROVED)
@@ -1406,8 +1407,8 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     	}    		
     	return result;
     }
-	
-	public boolean hasSpecialSeasonForActualExecutionPeriod() {
+    
+    	public boolean hasSpecialSeasonForActualExecutionPeriod() {
 		return hasSpecialSeasonFor(ExecutionPeriod.readActualExecutionPeriod());
 	}
 
@@ -1424,5 +1425,118 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 		}
 		return false;
 	}
+    
+    //  Improvement
+	public List<Enrolment> getEnroledImprovements() {
+		List<Enrolment> enroledImprovements = new ArrayList<Enrolment>();
+		for (Enrolment enrolment : getEnrolments()) {
+			if(enrolment.getEnrollmentState().equals(EnrollmentState.APROVED) && (enrolment.getImprovementEvaluation() != null)) {
+				enroledImprovements.add(enrolment);
+			}
+		}
+		return enroledImprovements;
+	}
+	
+	public List<Enrolment> getEnrolmentsToImprov(ExecutionPeriod executionPeriod) {
+        List<Enrolment> previousExecPeriodAprovedEnrol = new ArrayList<Enrolment>();
+        List<Enrolment> beforePreviousExecPeriodAprovedEnrol = new ArrayList<Enrolment>();
+        List<Enrolment> beforeBeforePreviousExecPeriodAprovedEnrol = new ArrayList<Enrolment>();
 
+		
+        ExecutionPeriod previousExecPeriod = executionPeriod.getPreviousExecutionPeriod();
+        ExecutionPeriod beforePreviousExecPeriod = previousExecPeriod.getPreviousExecutionPeriod();
+        ExecutionPeriod beforeBeforePreviousExecPeriod = beforePreviousExecPeriod
+                .getPreviousExecutionPeriod();
+        
+        if (previousExecPeriod != null) {
+            previousExecPeriodAprovedEnrol.addAll(getAprovedEnrolmentsNotImprovedInExecutionPeriod(previousExecPeriod));
+        }
+
+        if (beforePreviousExecPeriod != null) {
+            beforePreviousExecPeriodAprovedEnrol.addAll(getAprovedEnrolmentsNotImprovedInExecutionPeriod(beforePreviousExecPeriod));
+        }
+
+        if (beforeBeforePreviousExecPeriod != null) {
+            beforeBeforePreviousExecPeriodAprovedEnrol.addAll(getAprovedEnrolmentsNotImprovedInExecutionPeriod(beforeBeforePreviousExecPeriod));
+        }
+        
+        // From Before Before Previous ExecutionPeriod remove the ones with
+        // scope in
+        // Previous ExecutionPeriod
+        removeFromBeforeBeforePreviousExecutionPeriod(beforeBeforePreviousExecPeriodAprovedEnrol,
+                previousExecPeriod);
+
+        // From previous OccupationPeriod remove the ones that not take place in
+        // the
+        // Current OccupationPeriod
+        previousExecPeriodAprovedEnrol = removeNotInCurrentExecutionPeriod(
+                previousExecPeriodAprovedEnrol, executionPeriod);
+
+        List<Enrolment> res = (List<Enrolment>) CollectionUtils.union(beforePreviousExecPeriodAprovedEnrol,
+                previousExecPeriodAprovedEnrol);
+
+        res = (List<Enrolment>) CollectionUtils.union(beforeBeforePreviousExecPeriodAprovedEnrol, res);
+        
+		return res;
+	}
+	
+	private List<Enrolment> getAprovedEnrolmentsNotImprovedInExecutionPeriod(ExecutionPeriod executionPeriod) {
+		List<Enrolment> result = new ArrayList<Enrolment>();
+		for (Enrolment enrolment : getEnrolments()) {
+			if(enrolment.getEnrollmentState().equals(EnrollmentState.APROVED) && enrolment.getExecutionPeriod().equals(executionPeriod)
+					&& !enrolment.hasImprovement()) {
+				result.add(enrolment);
+			}
+		}
+		return result;
+	}
+	
+    private void removeFromBeforeBeforePreviousExecutionPeriod(
+            List beforeBeforePreviousExecPeriodAprovedEnrol, final ExecutionPeriod previousExecPeriod) {
+        CollectionUtils.filter(beforeBeforePreviousExecPeriodAprovedEnrol, new Predicate() {
+
+            public boolean evaluate(Object arg0) {
+                Enrolment enrolment = (Enrolment) arg0;
+                List executionCourses = enrolment.getCurricularCourse().getAssociatedExecutionCourses();
+                for (Iterator iterator = executionCourses.iterator(); iterator.hasNext();) {
+                    ExecutionCourse executionCourse = (ExecutionCourse) iterator.next();
+                    if (executionCourse.getExecutionPeriod().equals(previousExecPeriod)) {
+                        return false;
+                    }
+                }
+                return true;
+            }
+
+        });
+    }
+    
+    private List<Enrolment> removeNotInCurrentExecutionPeriod(List<Enrolment> enrolments,
+            final ExecutionPeriod currentExecutionPeriod) {
+        final List<Enrolment> res = new ArrayList<Enrolment>();
+        for (final Enrolment enrolment : enrolments) {
+            final CurricularCourse curricularCourse = enrolment.getCurricularCourse();
+            Set<CurricularCourseScope> scopes = curricularCourse.findCurricularCourseScopesIntersectingPeriod(
+                    currentExecutionPeriod.getBeginDate(), currentExecutionPeriod.getEndDate());
+            if (scopes != null && !scopes.isEmpty()) {
+                CurricularCourseScope curricularCourseScope = (CurricularCourseScope) CollectionUtils
+                        .find(scopes, new Predicate() {
+
+                            public boolean evaluate(Object arg0) {
+                                CurricularCourseScope curricularCourseScope = (CurricularCourseScope) arg0;
+                                if (curricularCourseScope.getCurricularSemester().getSemester().equals(
+                                        currentExecutionPeriod.getSemester())
+                                        && (curricularCourseScope.getEndDate() == null || (curricularCourseScope
+                                                .getEnd().compareTo(new Date())) >= 0))
+                                    return true;
+                                return false;
+                            }
+                        });
+
+                if (curricularCourseScope != null)
+                    res.add(enrolment);
+            }
+
+        }
+        return res;
+    }    
 }
