@@ -245,12 +245,15 @@ public class HtmlCheckBoxList extends HtmlMultipleValueComponent {
 
     @Override
     public HtmlTag getOwnTag(PageContext context) {
+    	int index = 0;
         for (HtmlCheckBox checkBox : getCheckBoxes()) {
             checkBox.setName(getName());
             
             if (getTargetSlot() != null) {
                 checkBox.setTargetSlot(getTargetSlot());
             }
+            
+            checkBox.setId(checkBox.getName() + "/" + index++);
         }
 
         for (HtmlHiddenField hiddenField : getHiddenFields()) {
@@ -267,10 +270,7 @@ public class HtmlCheckBoxList extends HtmlMultipleValueComponent {
             
             String allCheckBoxId = getName() + "/all";
             
-            int index = 0;
-            for (HtmlCheckBox checkBox : getCheckBoxes()) {
-                checkBox.setId(checkBox.getName() + "/" + index++);
-                
+            for (HtmlCheckBox checkBox : getCheckBoxes()) {                
                 if (! checkBox.isChecked()) {
                     allChecked = false;
                 }
