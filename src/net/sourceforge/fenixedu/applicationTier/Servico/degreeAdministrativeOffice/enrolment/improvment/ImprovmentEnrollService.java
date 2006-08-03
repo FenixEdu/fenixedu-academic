@@ -10,7 +10,6 @@ import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Student;
-import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 /**
@@ -18,16 +17,14 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  */
 public class ImprovmentEnrollService extends Service {
 
-    public Object run(Integer studentNumber, String employeeUserName, List<Integer> enrolmentsIds)
+    public void run(Student student, ExecutionPeriod executionPeriod, String employeeUserName, List<Integer> enrolmentsIds)
             throws FenixServiceException, ExcepcaoPersistencia {
 
-        Student student = Student.readStudentByNumberAndDegreeType(studentNumber, DegreeType.DEGREE);
-        if (student == null) {
+        if (student == null || executionPeriod == null) {
             throw new InvalidArgumentsServiceException();
         }
 
         final Person person = Person.readPersonByUsername(employeeUserName);
-        final ExecutionPeriod currentExecutionPeriod = ExecutionPeriod.readActualExecutionPeriod();
 
         if (person == null) {
             throw new InvalidArgumentsServiceException();
@@ -44,10 +41,8 @@ public class ImprovmentEnrollService extends Service {
                 throw new InvalidArgumentsServiceException();
             }
 
-            enrollment.createEnrolmentEvaluationForImprovement(employee, currentExecutionPeriod, student);
+            enrollment.createEnrolmentEvaluationForImprovement(employee, executionPeriod, student);
         }
-
-        return Boolean.TRUE;
     }
 
 }
