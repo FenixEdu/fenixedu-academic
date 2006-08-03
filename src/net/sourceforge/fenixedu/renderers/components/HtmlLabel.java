@@ -12,6 +12,7 @@ public class HtmlLabel extends HtmlComponent {
     private String forName;
     private String onBlur;
     private String onFocus;
+	private HtmlFormComponent forComponent;
 
     public HtmlLabel() {
         super();
@@ -47,7 +48,19 @@ public class HtmlLabel extends HtmlComponent {
         this.forName = forName;
     }
 
-    public String getOnBlur() {
+	public void setFor(HtmlFormComponent component) {
+		this.forComponent = component;
+	}
+    
+	protected HtmlFormComponent getForComponent() {
+		return forComponent;
+	}
+
+	protected void setForComponent(HtmlFormComponent forComponent) {
+		this.forComponent = forComponent;
+	}
+
+	public String getOnBlur() {
         return this.onBlur;
     }
 
@@ -69,7 +82,7 @@ public class HtmlLabel extends HtmlComponent {
         
         tag.setName("label");
         
-        tag.setAttribute("for", getFor());
+        tag.setAttribute("for", calculateFor());
         tag.setAttribute("onblur", getOnBlur());
         tag.setAttribute("onfocus", getOnFocus());
         
@@ -83,5 +96,18 @@ public class HtmlLabel extends HtmlComponent {
         
         return tag;
     }
-    
+
+	private String calculateFor() {
+		if (getFor() != null) {
+			return getFor();
+		}
+		else {
+			if (getForComponent() != null) {
+				return getForComponent().getId();
+			}
+		}
+		
+		return null;
+	}
+
 }
