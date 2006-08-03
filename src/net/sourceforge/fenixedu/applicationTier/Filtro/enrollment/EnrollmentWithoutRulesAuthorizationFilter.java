@@ -1,7 +1,3 @@
-/*
- * Created on 19/Fev/2004
- *  
- */
 package net.sourceforge.fenixedu.applicationTier.Filtro.enrollment;
 
 import java.util.ArrayList;
@@ -11,102 +7,66 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.AuthorizationByManyRolesFilter;
 import net.sourceforge.fenixedu.dataTransferObject.InfoRole;
-import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
 import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
-/**
- * @author Tânia Pousão
- * 
- */
 public class EnrollmentWithoutRulesAuthorizationFilter extends AuthorizationByManyRolesFilter {
 
-    private static DegreeType DEGREE_TYPE = DegreeType.DEGREE;
+	private static DegreeType DEGREE_TYPE = DegreeType.DEGREE;
 
-    private static DegreeType MASTER_DEGREE_TYPE = DegreeType.MASTER_DEGREE;
+	private static DegreeType MASTER_DEGREE_TYPE = DegreeType.MASTER_DEGREE;
 
-    protected Collection getNeededRoles() {
-        List roles = new ArrayList();
+	protected Collection getNeededRoles() {
+		final List<InfoRole> roles = new ArrayList<InfoRole>();
 
-        InfoRole infoRole = new InfoRole();
-        infoRole.setRoleType(RoleType.DEGREE_ADMINISTRATIVE_OFFICE);
-        roles.add(infoRole);
+		roles.add(new InfoRole(RoleType.DEGREE_ADMINISTRATIVE_OFFICE));
+		roles.add(new InfoRole(RoleType.DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER));
+		roles.add(new InfoRole(RoleType.MASTER_DEGREE_ADMINISTRATIVE_OFFICE));
 
-        infoRole = new InfoRole();
-        infoRole.setRoleType(RoleType.DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER);
-        roles.add(infoRole);
+		return roles;
+	}
 
-        infoRole = new InfoRole();
-        infoRole.setRoleType(RoleType.MASTER_DEGREE_ADMINISTRATIVE_OFFICE);
-        roles.add(infoRole);
+	protected String hasPrevilege(IUserView id, Object[] arguments) {
 
-        return roles;
-    }
+		try {
+			final List<RoleType> roles = getRoleList(id.getRoles());
 
-    protected String hasPrevilege(IUserView id, Object[] arguments) {
-        try {
-            List roles = getRoleList(id.getRoles());
+			if (roles.contains(RoleType.MASTER_DEGREE_ADMINISTRATIVE_OFFICE)) {
 
-            if (roles.contains(RoleType.MASTER_DEGREE_ADMINISTRATIVE_OFFICE)) {
+				if (!checkDegreeType(arguments, MASTER_DEGREE_TYPE)) {
+					return new String("error.masterDegree.type");
+				}
 
-                // verify if the degree type is MASTER_DEGREE_OBJ
-                if (!verifyDegreeType(arguments, MASTER_DEGREE_TYPE)) {
-                    return new String("error.masterDegree.type");
-                }
-                // verify if the student to enroll is a master degree student
-                if (!verifyStudentType(arguments, MASTER_DEGREE_TYPE)) {
-                    return new String("error.student.degree.master");
-                }
-            }
+				if (!checkStudentType(arguments, MASTER_DEGREE_TYPE)) {
+					return new String("error.student.degree.master");
+				}
+			}
 
-            if (roles.contains(RoleType.DEGREE_ADMINISTRATIVE_OFFICE)
-                    || roles.contains(RoleType.DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER)) {
-                // verify if the degree type is LICENCIATURA_OBJ
-                if (!verifyDegreeType(arguments, DEGREE_TYPE)) {
-                    return new String("error.degree.type");
-                }
+			if (roles.contains(RoleType.DEGREE_ADMINISTRATIVE_OFFICE)
+					|| roles.contains(RoleType.DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER)) {
 
-                // verify if the student to enroll is a non master degree
-                // student
-                if (!verifyStudentType(arguments, DEGREE_TYPE)) {
-                    return new String("error.student.degree.nonMaster");
-                }
-            }
+				if (!checkDegreeType(arguments, DEGREE_TYPE)) {
+					return new String("error.degree.type");
+				}
 
-            return null;
-        } catch (Exception exception) {
-            exception.printStackTrace();
-            return "noAuthorization";
-        }
-    }
+				if (!checkStudentType(arguments, DEGREE_TYPE)) {
+					return new String("error.student.degree.nonMaster");
+				}
+			}
+			return null;
 
-    private boolean verifyDegreeType(Object[] arguments, DegreeType degreeType) {
-        boolean isEqual = false;
+		} catch (Exception exception) {
+			exception.printStackTrace();
+			return "noAuthorization";
+		}
+	}
 
-        if (arguments != null && arguments[1] != null) {
-            isEqual = degreeType.equals(arguments[1]);
-        }
+	private boolean checkDegreeType(Object[] args, DegreeType degreeType) {
+		return (args != null && args[1] != null && degreeType.equals(args[1]));
+	}
 
-        return isEqual;
-    }
-
-    private boolean verifyStudentType(Object[] arguments, DegreeType degreeType)
-            throws ExcepcaoPersistencia {
-        boolean isRightType = false;
-
-        if (arguments != null && arguments[0] != null) {
-            Integer studentNumber = ((InfoStudent) arguments[0]).getNumber();
-            if (studentNumber != null) {
-                Student student = Student.readStudentByNumberAndDegreeType(studentNumber, degreeType);
-                if (student != null) {
-                    isRightType = true; // right student curricular plan
-                }
-            }
-        }
-
-        return isRightType;
-    }
-
+	private boolean checkStudentType(Object[] args, DegreeType degreeType) {
+		return (args != null && args[0] != null) ? ((Student) args[0]).getDegreeType().equals(degreeType) : false;
+	}
 }

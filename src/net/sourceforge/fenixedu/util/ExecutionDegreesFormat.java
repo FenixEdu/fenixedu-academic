@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
+import net.sourceforge.fenixedu.domain.ExecutionDegree;
 
 import org.apache.struts.Globals;
 import org.apache.struts.util.LabelValueBean;
@@ -87,4 +88,39 @@ public class ExecutionDegreesFormat extends FenixUtil {
         }
         return false;
     }
+
+	public static List<LabelValueBean> buildLabelValueBeansForExecutionDegree(
+			List<ExecutionDegree> executionDegrees, MessageResources messageResources,
+			HttpServletRequest request) {
+
+		final Locale locale = (Locale) request.getAttribute(Globals.LOCALE_KEY);
+
+		final List<LabelValueBean> result = new ArrayList<LabelValueBean>();
+		for (final ExecutionDegree executionDegree : executionDegrees) {
+
+			final String degreeName = executionDegree.getDegreeCurricularPlan().getDegree().getName();
+			final String degreeType = messageResources.getMessage(locale, executionDegree
+					.getDegreeCurricularPlan().getDegree().getDegreeType().name());
+
+			String name = degreeType + " em " + degreeName;
+			name += (addDegreeCurricularPlanName(executionDegree, executionDegrees)) ? " - "
+					+ executionDegree.getDegreeCurricularPlan().getName() : "";
+
+			result.add(new LabelValueBean(name, executionDegree.getIdInternal().toString()));
+		}
+
+		return result;
+	}
+
+	private static boolean addDegreeCurricularPlanName(final ExecutionDegree selectedExecutionDegree,
+			final List<ExecutionDegree> executionDegrees) {
+		
+		for (final ExecutionDegree executionDegree : executionDegrees) {
+			if (executionDegree != selectedExecutionDegree
+					&& executionDegree.getDegree() == selectedExecutionDegree.getDegree()) {
+				return true;
+			}
+		}
+		return false;
+	}
 }

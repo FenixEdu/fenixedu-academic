@@ -240,6 +240,10 @@ public class CurricularCourse extends CurricularCourse_Base {
         }
         return activeScopesInExecutionPeriod;
     }
+    
+    public boolean hasActiveScopesInExecutionPeriod(final ExecutionPeriod executionPeriod) {
+    	return !getActiveScopesInExecutionPeriod(executionPeriod).isEmpty();
+    }
 
     public Set<CurricularCourseScope> getActiveScopesInExecutionYear(final ExecutionYear executionYear) {
         final Set<CurricularCourseScope> activeScopes = new HashSet<CurricularCourseScope>();
@@ -304,10 +308,8 @@ public class CurricularCourse extends CurricularCourse_Base {
         return result;
     }
 
-    public CurricularYear getCurricularYearByBranchAndSemester(final Branch branch,
-            final Integer semester) {
-        Date date = new Date();
-        return getCurricularYearByBranchAndSemester(branch, semester, date);
+    public CurricularYear getCurricularYearByBranchAndSemester(final Branch branch, final Integer semester) {
+        return getCurricularYearByBranchAndSemester(branch, semester, new Date());
     }
 
     public CurricularYear getCurricularYearByBranchAndSemester(final Branch branch,

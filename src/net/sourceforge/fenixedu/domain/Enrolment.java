@@ -17,6 +17,7 @@ import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
 import net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationType;
 import net.sourceforge.fenixedu.domain.curriculum.GradeFactory;
 import net.sourceforge.fenixedu.domain.curriculum.IGrade;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.log.EnrolmentLog;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup;
@@ -766,4 +767,13 @@ public class Enrolment extends Enrolment_Base {
     	}
     }
     
+    public EnrolmentEvaluation getLatestEnrolmentEvaluation() {
+		return (getStudentCurricularPlan().getDegreeType() == DegreeType.DEGREE) ? 
+				getLatestEnrolmentEvalution(this.getAllFinalEnrolmentEvaluations())
+				: getLatestEnrolmentEvalution(this.getEvaluations());
+	}
+    
+    private EnrolmentEvaluation getLatestEnrolmentEvalution(List<EnrolmentEvaluation> enrolmentEvaluations) {
+		return (enrolmentEvaluations == null || enrolmentEvaluations.isEmpty()) ? null : Collections.max(enrolmentEvaluations);
+	}
 }

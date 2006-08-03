@@ -2,6 +2,8 @@ package net.sourceforge.fenixedu.domain;
 
 import java.util.Date;
 
+import org.joda.time.YearMonthDay;
+
 public class EnrolmentPeriodInCurricularCoursesSpecialSeason extends EnrolmentPeriodInCurricularCoursesSpecialSeason_Base {
     
     public EnrolmentPeriodInCurricularCoursesSpecialSeason() {
@@ -17,5 +19,9 @@ public class EnrolmentPeriodInCurricularCoursesSpecialSeason extends EnrolmentPe
         setStartDate(startDate);
         setEndDate(endDate);
     }
+    
+    public boolean containsDate(YearMonthDay date) {
+		return !(getStartDateYearMonthDay().isAfter(date) || getEndDateYearMonthDay().isBefore(date));
+	}
 
 }

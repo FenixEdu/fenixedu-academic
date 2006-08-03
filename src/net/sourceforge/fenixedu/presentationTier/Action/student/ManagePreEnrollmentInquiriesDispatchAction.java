@@ -48,7 +48,7 @@ public class ManagePreEnrollmentInquiriesDispatchAction extends FenixDispatchAct
 			return mapping.findForward("proceedToPersonalDataInquiry");
 		}
 		
-		// TODO: later these questions will not be here
+		// TODO: these questions should not be here
 		final IUserView userView = getUserView(request);
 		final List infoCountries = (List) ServiceManagerServiceFactory.executeService(userView,
 				"ReadAllCountries", null);

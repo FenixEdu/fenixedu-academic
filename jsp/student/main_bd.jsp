@@ -1,7 +1,9 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
-<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
+<%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
+<html:xhtml/>
+
 <p>
 	<img src="<%= request.getContextPath() %>/images/portalEst-id.gif" alt="<bean:message key="portalEst-id" bundle="IMAGE_RESOURCES" />" />
 </p>
@@ -14,3 +16,12 @@
 <p>
 	<bean:message key="message.info.student" />
 </p>
+
+<logic:messagesPresent message="true">
+	<ul>
+		<html:messages id="messages" message="true">
+			<li><span class="error0"><bean:write name="messages" /></span></li>
+		</html:messages>
+	</ul>
+	<br />
+</logic:messagesPresent>

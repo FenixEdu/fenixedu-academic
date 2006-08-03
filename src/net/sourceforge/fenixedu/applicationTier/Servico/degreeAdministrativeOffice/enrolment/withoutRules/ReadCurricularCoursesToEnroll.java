@@ -1,28 +1,12 @@
-/*
- * Created on 18/Fev/2004
- *  
- */
 package net.sourceforge.fenixedu.applicationTier.Servico.degreeAdministrativeOffice.enrolment.withoutRules;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Iterator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.applicationTier.strategy.enrolment.context.InfoStudentEnrollmentContext;
-import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
-import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriodWithInfoExecutionYear;
-import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
-import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlan;
-import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlanWithInfoStudentAndDegree;
-import net.sourceforge.fenixedu.dataTransferObject.enrollment.InfoCurricularCourse2Enroll;
-import net.sourceforge.fenixedu.dataTransferObject.enrollment.InfoCurricularCourse2EnrollWithInfoCurricularCourse;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.CurricularCourseScope;
-import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.Student;
@@ -30,219 +14,148 @@ import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseEnrollmentType;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degree.enrollment.CurricularCourse2Enroll;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.collections.Predicate;
-import org.apache.commons.collections.Transformer;
-
-/**
- * @author Tânia Pousão
- * 
- */
 public class ReadCurricularCoursesToEnroll extends Service {
-    private static final int MAX_CURRICULAR_YEARS = 5;
 
-    private static final int MAX_CURRICULAR_SEMESTERS = 2;
+	private static final int MAX_CURRICULAR_YEARS = 5;
 
-    protected List findCurricularCourses(List curricularCourses,
-            StudentCurricularPlan studentCurricularPlan, ExecutionPeriod executionPeriod) {
-        final List result = new ArrayList();
-        for (final CurricularCourse curricularCourse : (List<CurricularCourse>) curricularCourses) {
-            if (!studentCurricularPlan.isCurricularCourseApprovedInCurrentOrPreviousPeriod(
-                    (CurricularCourse) curricularCourse, executionPeriod)
-                    && !studentCurricularPlan.isCurricularCourseEnrolledInExecutionPeriod(
-                            (CurricularCourse) curricularCourse, executionPeriod)) {
-                result.add(curricularCourse);
-            }
-        }
-        return result;
-    }
+	private static final int MAX_CURRICULAR_SEMESTERS = 2;
 
-    public Object run(InfoStudent infoStudent, DegreeType degreeType, Integer executionPeriodID,
-            Integer executionDegreeID, List curricularYearsList, List curricularSemestersList)
-            throws FenixServiceException, ExcepcaoPersistencia {
-        InfoStudentEnrollmentContext infoStudentEnrolmentContext = null;
+	protected List<CurricularCourse> findCurricularCourses(
+			final List<CurricularCourse> curricularCourses,
+			final StudentCurricularPlan studentCurricularPlan, final ExecutionPeriod executionPeriod) {
 
-        final ExecutionPeriod executionPeriod = rootDomainObject
-                .readExecutionPeriodByOID(executionPeriodID);
+		final List<CurricularCourse> result = new ArrayList<CurricularCourse>();
+		for (final CurricularCourse curricularCourse : curricularCourses) {
+			if (!studentCurricularPlan.isCurricularCourseApprovedInCurrentOrPreviousPeriod(
+					curricularCourse, executionPeriod)
+					&& !studentCurricularPlan.isCurricularCourseEnrolledInExecutionPeriod(
+							curricularCourse, executionPeriod)) {
+				result.add(curricularCourse);
+			}
+		}
+		return result;
+	}
 
-        if (infoStudent == null || infoStudent.getNumber() == null) {
-            throw new FenixServiceException("error.student.curriculum.noCurricularPlans");
-        }
-        Student student = Student.readStudentByNumberAndDegreeType(infoStudent.getNumber(), degreeType);
-        StudentCurricularPlan studentCurricularPlan = null;
-        if(student != null) {
-        	studentCurricularPlan = student.getActiveOrConcludedStudentCurricularPlan();
-        }
+	public List<CurricularCourse2Enroll> run(final Student student, final DegreeType degreeType,
+			final ExecutionPeriod executionPeriod, final Integer executionDegreeID,
+			final List<Integer> curricularYearsList, final List<Integer> curricularSemestersList)
+			throws FenixServiceException {
 
-        if (studentCurricularPlan == null) {
-            throw new FenixServiceException("error.student.curriculum.noCurricularPlans");
-        }
+		if (student == null) {
+			throw new FenixServiceException("error.student.curriculum.noCurricularPlans");
+		}
 
-        // Execution Degree
-        ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(executionDegreeID);
-        if (executionDegree == null) {
-            throw new FenixServiceException("error.degree.noData");
-        }
+		final StudentCurricularPlan studentCurricularPlan = student.getActiveOrConcludedStudentCurricularPlan();
+		if (studentCurricularPlan == null) {
+			throw new FenixServiceException("error.student.curriculum.noCurricularPlans");
+		}
 
-        // Degree Curricular Plan
-        DegreeCurricularPlan degreeCurricularPlan = executionDegree.getDegreeCurricularPlan();
+		final ExecutionDegree executionDegree = rootDomainObject
+				.readExecutionDegreeByOID(executionDegreeID);
+		if (executionDegree == null) {
+			throw new FenixServiceException("error.degree.noData");
+		}
 
-        if (degreeCurricularPlan == null || degreeCurricularPlan.getCurricularCourses() == null) {
-            throw new FenixServiceException("error.degree.noData");
-        }
+		if (executionDegree.getDegreeCurricularPlan() == null) {
+			throw new FenixServiceException("error.degree.noData");
+		}
 
-        // filters a list of curricular courses by all of its scopes that
-        // matters in relation to the selected semester and the selected
-        // year.
-        List curricularCoursesFromDegreeCurricularPlan = null;
-        final List curricularYearsListFinal = verifyYears(curricularYearsList);
-        final List curricularSemestersListFinal = verifySemesters(curricularSemestersList);
+		final List<CurricularCourse> possibleStudentCurricularCoursesToEnrol = findCurricularCourses(
+				executionDegree.getDegreeCurricularPlan().getCurricularCourses(), studentCurricularPlan,
+				executionPeriod);
 
-        curricularCoursesFromDegreeCurricularPlan = degreeCurricularPlan.getCurricularCourses();
-        curricularCoursesFromDegreeCurricularPlan = findCurricularCourses(
-                curricularCoursesFromDegreeCurricularPlan, studentCurricularPlan, executionPeriod);
-        if (!((curricularYearsList == null || curricularYearsList.size() <= 0) && (curricularSemestersList == null || curricularSemestersList
-                .size() <= 0))) {
+		final List<CurricularCourse> searchedCurricularCourses;
 
-            curricularCoursesFromDegreeCurricularPlan = (List) CollectionUtils.select(
-                    curricularCoursesFromDegreeCurricularPlan, new Predicate() {
-                        public boolean evaluate(Object arg0) {
-                            boolean result = false;
+		if (filterByYearAndSemester(curricularYearsList, curricularSemestersList)) {
+			
+			searchedCurricularCourses = getActiveAndFilteredCurricularCourses(
+					possibleStudentCurricularCoursesToEnrol, verifyYears(curricularYearsList),
+					verifySemesters(curricularSemestersList), executionPeriod);
+			
+		} else {
+			searchedCurricularCourses = getActiveCurricularCourses(
+					possibleStudentCurricularCoursesToEnrol, executionPeriod);
+		}
 
-                            CurricularCourse curricularCourse = (CurricularCourse) arg0;
-                            List scopes = curricularCourse
-                                    .getActiveScopesInExecutionPeriod(executionPeriod);
-                            Iterator iter = scopes.iterator();
-                            while (iter.hasNext() && !result) {
-                                CurricularCourseScope scope = (CurricularCourseScope) iter.next();
-                                if (curricularSemestersListFinal.contains(scope.getCurricularSemester()
-                                        .getSemester())
-                                        && curricularYearsListFinal.contains(scope
-                                                .getCurricularSemester().getCurricularYear().getYear())) {
-                                    result = true;
-                                }
-                            }
-                            return result;
-                        }
-                    });
-        } else {
-            curricularCoursesFromDegreeCurricularPlan = (List) CollectionUtils.select(
-                    curricularCoursesFromDegreeCurricularPlan, new Predicate() {
-                        public boolean evaluate(Object arg0) {
-                            CurricularCourse curricularCourse = (CurricularCourse) arg0;
-                            List scopes = curricularCourse
-                                    .getActiveScopesInExecutionPeriod(executionPeriod);
-                            if (scopes.isEmpty())
-                                return false;
-                            return true;
-                        }
-                    });
-        }
+		return createCurricularCourses2EnrolFrom(searchedCurricularCourses);
+	}
 
-        curricularCoursesFromDegreeCurricularPlan = (List) CollectionUtils.collect(
-                curricularCoursesFromDegreeCurricularPlan, new Transformer() {
+	private List<CurricularCourse2Enroll> createCurricularCourses2EnrolFrom(
+			List<CurricularCourse> searchedCurricularCourses) {
+		
+		final List<CurricularCourse2Enroll> result = new ArrayList<CurricularCourse2Enroll>();
+		for (final CurricularCourse curricularCourse : searchedCurricularCourses) {
+			result.add(new CurricularCourse2Enroll(curricularCourse,
+					CurricularCourseEnrollmentType.DEFINITIVE, false));
+		}
+		return result;
+	}
 
-                    public Object transform(Object arg0) {
-                        CurricularCourse2Enroll curricularCourse2Enroll = null;
+	private List<CurricularCourse> getActiveAndFilteredCurricularCourses(
+			List<CurricularCourse> possibleStudentCurricularCoursesToEnrol,
+			List<Integer> curricularYears, List<Integer> curricularSemesters,
+			ExecutionPeriod executionPeriod) {
 
-                        curricularCourse2Enroll = new CurricularCourse2Enroll();
-                        curricularCourse2Enroll.setCurricularCourse((CurricularCourse) arg0);
+		final List<CurricularCourse> result = new ArrayList<CurricularCourse>();
 
-                        curricularCourse2Enroll
-                                .setEnrollmentType(CurricularCourseEnrollmentType.DEFINITIVE);
-                        return curricularCourse2Enroll;
-                    }
-                });
+		for (final CurricularCourse curricularCourse : possibleStudentCurricularCoursesToEnrol) {
+			for (final CurricularCourseScope scope : curricularCourse
+					.getActiveScopesInExecutionPeriod(executionPeriod)) {
 
-        infoStudentEnrolmentContext = buildResult(studentCurricularPlan,
-                curricularCoursesFromDegreeCurricularPlan, executionPeriod);
-        if (infoStudentEnrolmentContext == null) {
-            throw new FenixServiceException("");
-        }
+				if (curricularYears
+						.contains(scope.getCurricularSemester().getCurricularYear().getYear())
+						&& curricularSemesters.contains(scope.getCurricularSemester().getSemester())) {
 
-        return infoStudentEnrolmentContext;
-    }
+					result.add(curricularCourse);
+					break;
+				}
+			}
+		}
+		return result;
+	}
 
-    private List verifyYears(List curricularYearsList) {
-        if (curricularYearsList != null && curricularYearsList.size() > 0) {
-            return curricularYearsList;
-        }
+	private List<CurricularCourse> getActiveCurricularCourses(
+			List<CurricularCourse> possibleStudentCurricularCoursesToEnrol,
+			ExecutionPeriod executionPeriod) {
 
-        return getListOfChosenCurricularYears();
-    }
+		final List<CurricularCourse> result = new ArrayList<CurricularCourse>();
+		for (final CurricularCourse curricularCourse : possibleStudentCurricularCoursesToEnrol) {
+			if (curricularCourse.hasActiveScopesInExecutionPeriod(executionPeriod)) {
+				result.add(curricularCourse);
+			}
+		}
+		return result;
+	}
 
-    private List getListOfChosenCurricularYears() {
-        List result = new ArrayList();
+	private boolean filterByYearAndSemester(List<Integer> curricularYearsList,
+			List<Integer> curricularSemestersList) {
+		return (!curricularYearsList.isEmpty() || !curricularSemestersList.isEmpty());
+	}
 
-        for (int i = 1; i <= MAX_CURRICULAR_YEARS; i++) {
-            result.add(new Integer(i));
-        }
-        return result;
-    }
+	private List<Integer> verifyYears(List<Integer> curricularYearsList) {
+		return curricularYearsList.isEmpty() ? getListOfChosenCurricularYears() : curricularYearsList;
+	}
 
-    private List verifySemesters(List curricularSemestersList) {
-        if (curricularSemestersList != null && curricularSemestersList.size() > 0) {
-            return curricularSemestersList;
-        }
+	private List<Integer> getListOfChosenCurricularYears() {
+		final List<Integer> result = new ArrayList<Integer>();
+		for (int i = 1; i <= MAX_CURRICULAR_YEARS; i++) {
+			result.add(Integer.valueOf(i));
+		}
+		return result;
+	}
 
-        return getListOfChosenCurricularSemesters();
-    }
+	private List<Integer> verifySemesters(List curricularSemestersList) {
+		return curricularSemestersList.isEmpty() ? getListOfChosenCurricularSemesters()
+				: curricularSemestersList;
+	}
 
-    private List getListOfChosenCurricularSemesters() {
-        List result = new ArrayList();
-
-        for (int i = 1; i <= MAX_CURRICULAR_SEMESTERS; i++) {
-            result.add(new Integer(i));
-        }
-        return result;
-    }
-
-    private InfoStudentEnrollmentContext buildResult(StudentCurricularPlan studentCurricularPlan,
-            List curricularCoursesToChoose, ExecutionPeriod executionPeriod) {
-        InfoStudentCurricularPlan infoStudentCurricularPlan = InfoStudentCurricularPlanWithInfoStudentAndDegree
-                .newInfoFromDomain(studentCurricularPlan);
-
-        InfoExecutionPeriod infoExecutionPeriod = InfoExecutionPeriodWithInfoExecutionYear
-                .newInfoFromDomain(executionPeriod);
-
-        List infoCurricularCoursesToChoose = new ArrayList();
-        if (curricularCoursesToChoose != null && curricularCoursesToChoose.size() > 0) {
-            infoCurricularCoursesToChoose = (List) CollectionUtils.collect(curricularCoursesToChoose,
-                    new Transformer() {
-                        public Object transform(Object input) {
-                            CurricularCourse2Enroll curricularCourse = (CurricularCourse2Enroll) input;
-                            return InfoCurricularCourse2EnrollWithInfoCurricularCourse
-                                    .newInfoFromDomain(curricularCourse);
-                        }
-                    });
-            Collections.sort(infoCurricularCoursesToChoose, new Comparator() {
-                public int compare(Object o1, Object o2) {
-                    InfoCurricularCourse2Enroll obj1 = (InfoCurricularCourse2Enroll) o1;
-                    InfoCurricularCourse2Enroll obj2 = (InfoCurricularCourse2Enroll) o2;
-                    return obj1.getInfoCurricularCourse().getName().compareTo(
-                            obj2.getInfoCurricularCourse().getName());
-                }
-            });
-        }
-
-        InfoStudentEnrollmentContext infoStudentEnrolmentContext = new InfoStudentEnrollmentContext();
-        infoStudentEnrolmentContext.setInfoStudentCurricularPlan(infoStudentCurricularPlan);
-        infoStudentEnrolmentContext
-                .setFinalInfoCurricularCoursesWhereStudentCanBeEnrolled(infoCurricularCoursesToChoose);
-        infoStudentEnrolmentContext.setInfoExecutionPeriod(infoExecutionPeriod);
-
-        return infoStudentEnrolmentContext;
-    }
-
-    /**
-     * @param studentNumber
-     * @return IStudent
-     * @throws ExcepcaoPersistencia
-     */
-    protected Student getStudent(Integer studentNumber) throws ExcepcaoPersistencia {
-        return Student.readStudentByNumberAndDegreeType(studentNumber, DegreeType.DEGREE);
-    }
+	private List<Integer> getListOfChosenCurricularSemesters() {
+		final List<Integer> result = new ArrayList<Integer>();
+		for (int i = 1; i <= MAX_CURRICULAR_SEMESTERS; i++) {
+			result.add(Integer.valueOf(i));
+		}
+		return result;
+	}
 
 }

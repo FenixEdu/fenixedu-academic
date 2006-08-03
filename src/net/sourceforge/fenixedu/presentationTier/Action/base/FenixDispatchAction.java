@@ -193,7 +193,7 @@ public abstract class FenixDispatchAction extends DispatchAction implements Exce
         return (FactoryExecutor) RenderUtils.getViewState().getMetaObject().getObject();
     }
 
-    private ActionMessages getActionMessages(HttpServletRequest request) {
+    protected ActionMessages getActionMessages(HttpServletRequest request) {
         return (ActionMessages) request.getAttribute(ACTION_MESSAGES_REQUEST_KEY);
     }
     

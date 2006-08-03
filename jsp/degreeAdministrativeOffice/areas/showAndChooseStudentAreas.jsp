@@ -1,18 +1,26 @@
 <%@ page language="java" %>
-<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %><html:xhtml/>
-<%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
+<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %><%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
+<html:xhtml/>
 
 <h2><bean:message key="title.student.change.areas"/></h2>
 
 <span class="error"><!-- Error messages go here --><html:errors /></span>
+<logic:messagesPresent message="true">
+	<ul>
+		<html:messages id="messages" message="true">
+			<li><span class="error0"><bean:write name="messages" /></span></li>
+		</html:messages>
+	</ul>
+	<br />
+</logic:messagesPresent>
+
 
 <html:form action="/changeStudentAreas.do">
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="showChangeOfStudentAreasConfirmation"/>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="2"/>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.studentNumber" property="studentNumber"/>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.degreeType" property="degreeType"/>
-	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.studentCurricularPlanID" property="studentCurricularPlanID"/>
 
 	<table>
 		<tr>
@@ -34,7 +42,7 @@
 					<html:option value="" key="label.student.enrollment.no.area">
 						<bean:message key="label.student.enrollment.no.area"/>
 					</html:option>
-					<bean:define id="specializationAreas" name="infoBranches" property="finalSpecializationAreas"/>
+					<bean:define id="specializationAreas" name="studentCurricularPlan" property="degreeCurricularPlan.specializationAreas"/>
 					<html:options collection="specializationAreas" property="idInternal" labelProperty="name"/>
 				</html:select>
 			</td>
@@ -48,7 +56,7 @@
 					<html:option value="" key="label.student.enrollment.no.area">
 						<bean:message key="label.student.enrollment.no.area"/>
 					</html:option>
-					<bean:define id="secondaryAreas" name="infoBranches" property="finalSecundaryAreas"/>
+					<bean:define id="secondaryAreas" name="studentCurricularPlan" property="degreeCurricularPlan.secundaryAreas"/>
 					<html:options collection="secondaryAreas" property="idInternal" labelProperty="name"/>
 				</html:select>
 			</td>

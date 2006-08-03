@@ -15,6 +15,10 @@ public enum EnrollmentCondition {
     
     VALIDATED,
     
-    INVISIBLE
+    INVISIBLE;
+    
+    public String getName() {
+    	return name();
+    }
     
 }

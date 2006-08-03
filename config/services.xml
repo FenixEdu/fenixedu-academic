@@ -5837,11 +5837,11 @@
 		</filterChains>
 	</service>
 	<service>
-		<name>ShowAvailableCurricularCoursesNew</name>
+		<name>ReadStudentCurricularPlanWithRulesForEnrollments</name>
 		<description>Returns information about student enrollments in curricular courses testing 
             enrollment period</description>
 		<implementationClass>
-            net.sourceforge.fenixedu.applicationTier.Servico.enrollment.ShowAvailableCurricularCourses</implementationClass>
+            net.sourceforge.fenixedu.applicationTier.Servico.enrollment.ReadStudentCurricularPlanWithRulesForEnrollments</implementationClass>
 		<isTransactional>True</isTransactional>
 		<filterChains>
 			<chain name="EnrollmentAuthorization" />
@@ -5875,16 +5875,6 @@
 		</filterChains>
 	</service>
 	<service>
-		<name>ReadSpecializationAndSecundaryAreasByStudent</name>
-		<description>Reads areas corrresponding to student curricular plan</description>
-		<implementationClass>
-            net.sourceforge.fenixedu.applicationTier.Servico.enrollment.ReadSpecializationAndSecundaryAreasByStudent</implementationClass>
-		<isTransactional>True</isTransactional>
-		<filterChains>
-			<chain name="EnrollmentAuthorization" />
-		</filterChains>
-	</service>
-	<service>
 		<name>ReadStudentsByTutor</name>
 		<description>Reads students associated with the teacher</description>
 		<implementationClass>
@@ -5911,16 +5901,6 @@
             net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadNotClosedPublicExecutionPeriods</implementationClass>
 		<isTransactional>True</isTransactional>
 		<filterChains />
-	</service>
-	<service>
-		<name>ReadStudentCurriculumForEnrollmentConfirmation</name>
-		<description>Reads student curriculum given student curricular plan id</description>
-		<implementationClass> 
-            net.sourceforge.fenixedu.applicationTier.Servico.commons.student.ReadStudentCurriculum</implementationClass>
-		<isTransactional>True</isTransactional>
-		<filterChains>
-			<chain name="EnrollmentAuthorization" />
-		</filterChains>
 	</service>
 	<service>
 		<name>InsertTutorShipWithOneStudent</name>
@@ -5994,10 +5974,10 @@
 		</filterChains>
 	</service>
 	<service>
-		<name>ShowAvailableCurricularCoursesWithoutEnrollmentPeriod</name>
+		<name>ReadStudentCurricularPlanForEnrollments</name>
 		<description>Returns information about student enrollments in curricular courses</description>
 		<implementationClass>
-            net.sourceforge.fenixedu.applicationTier.Servico.enrollment.ShowAvailableCurricularCoursesWithoutEnrollmentPeriod</implementationClass>
+            net.sourceforge.fenixedu.applicationTier.Servico.enrollment.ReadStudentCurricularPlanForEnrollments</implementationClass>
 		<isTransactional>True</isTransactional>
 		<filterChains>
 			<chain name="EnrollmentAuthorization" />
@@ -10317,7 +10297,7 @@
             <chain name="ManagerAuthorization" />
         </filterChains>
     </service>
-    <service>
+	<service>
         <name>CreateSpecialSeasonEvaluations</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.degreeAdministrativeOffice.enrolment.specialSeason.CreateSpecialSeasonEvaluations</implementationClass>
         <description />
@@ -10343,5 +10323,15 @@
         <filterChains>
             <chain name="DegreeAdministrativeOfficeAuthorization" />
         </filterChains>
-    </service>    
+    </service>
+    <service>
+		<name>ReadStudentCurricularPlanForEnrollmentsWithoutRules</name>
+		<description>read active or concluded student curricular plan from selected student</description>
+		<implementationClass>
+            net.sourceforge.fenixedu.applicationTier.Servico.degreeAdministrativeOffice.enrolment.withoutRules.ReadStudentCurricularPlanForEnrollmentsWithoutRules</implementationClass>
+		<isTransactional>True</isTransactional>
+		<filterChains>
+			<chain name="EnrollmentWithoutRulesAuthorization" />
+		</filterChains>
+	</service>
 </serviceDefinitions>

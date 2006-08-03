@@ -1,7 +1,3 @@
-/*
- * Created on 6/Fev/2004
- *  
- */
 package net.sourceforge.fenixedu.applicationTier.Filtro.enrollment;
 
 import java.util.ArrayList;
@@ -17,48 +13,31 @@ import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.Tutor;
 import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
-/**
- * @author Tânia Pousão
- *  
- */
 public class EnrollmentLEECAuthorizationFilter extends EnrollmentAuthorizationFilter {
     private static String DEGREE_LEEC_CODE = new String("LEEC");
 
     protected Collection getNeededRoles() {
-        List roles = new ArrayList();
+    	 final List<InfoRole> roles = new ArrayList<InfoRole>();
 
-        InfoRole infoRole = new InfoRole();
-        infoRole.setRoleType(RoleType.COORDINATOR);
-        roles.add(infoRole);
-
-        infoRole = new InfoRole();
-        infoRole.setRoleType(RoleType.TEACHER);
-        roles.add(infoRole);
-
-        infoRole = new InfoRole();
-        infoRole.setRoleType(RoleType.STUDENT);
-        roles.add(infoRole);
-
-        infoRole = new InfoRole();
-        infoRole.setRoleType(RoleType.DEGREE_ADMINISTRATIVE_OFFICE);
-        roles.add(infoRole);
-
-        infoRole = new InfoRole();
-        infoRole.setRoleType(RoleType.DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER);
-        roles.add(infoRole);
-        return roles;
+         roles.add(new InfoRole(RoleType.COORDINATOR));
+         roles.add(new InfoRole(RoleType.TEACHER));
+         roles.add(new InfoRole(RoleType.STUDENT));
+         roles.add(new InfoRole(RoleType.DEGREE_ADMINISTRATIVE_OFFICE));
+         roles.add(new InfoRole(RoleType.DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER));
+         
+         return roles;
     }
 
-    protected String hasPrevilege(IUserView id, Object[] arguments) {
+    protected String hasPrevilege(IUserView userView, Object[] arguments) {
+    	
         try {
-            List roles = getRoleList(id.getRoles());
+            final List<RoleType> roles = getRoleList(userView.getRoles());
 
             //verify if the student making the enrollment is a LEEC degree
             // student
             if (roles.contains(RoleType.STUDENT)) {
-                Student student = readStudent(id);
+                Student student = readStudent(userView);
                 if (student == null) {
                     return "noAuthorization";
                 }
@@ -66,11 +45,8 @@ public class EnrollmentLEECAuthorizationFilter extends EnrollmentAuthorizationFi
                 if (!verifyStudentLEEC(arguments)) {
                     return new String("error.student.degreeCurricularPlan.LEEC");
                 }
-                if (!curriculumOwner(student, id)) {
-                    return "noAuthorization";
-
-                }
-                Tutor tutor = verifyStudentWithTutor(student);
+                
+                final Tutor tutor = student.getAssociatedTutor();
                 if (tutor != null) {
                     return new String("error.enrollment.student.withTutor+"
                             + tutor.getTeacher().getTeacherNumber().toString() + "+"
@@ -84,7 +60,7 @@ public class EnrollmentLEECAuthorizationFilter extends EnrollmentAuthorizationFi
 
                 //verify if the coodinator is of the LEEC degree
                 if (roles.contains(RoleType.COORDINATOR) && arguments[0] != null) {
-                    Teacher teacher = readTeacher(id);
+                    Teacher teacher = readTeacher(userView);
                     if (teacher == null) {
                         return "noAuthorization";
                     }
@@ -93,37 +69,13 @@ public class EnrollmentLEECAuthorizationFilter extends EnrollmentAuthorizationFi
                         return "noAuthorization";
                     }
                 } else if (roles.contains(RoleType.TEACHER)) {
-                    Teacher teacher = readTeacher(id);
-                    if (teacher == null) {
-                        return "noAuthorization";
-                    }
-
-                    Student student = readStudent(arguments);
-                    if (student == null) {
-                        return "noAuthorization";
-                    }
-
-                    if (!student.hasAssociatedTutor()) {
-                        return new String("error.enrollment.notStudentTutor+"
-                                + student.getNumber().toString());
-                    }
+                    return checkTeacherInformation(userView, arguments);
 
                 } else if (roles.contains(RoleType.DEGREE_ADMINISTRATIVE_OFFICE)
                         || roles.contains(RoleType.DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER)) {
-                    StudentCurricularPlan studentCurricularPlan = readStudentCurricularPlan(arguments);
-
-                    if (studentCurricularPlan.getStudent() == null) {
-                        return "noAuthorization";
-                    }
-                    if (insideEnrollmentPeriod(studentCurricularPlan)) {
-                        Tutor tutor = verifyStudentWithTutor(studentCurricularPlan.getStudent());
-                        if (tutor != null) {
-                            return new String("error.enrollment.student.withTutor+"
-                                    + tutor.getTeacher().getTeacherNumber().toString() + "+"
-                                    + tutor.getTeacher().getPerson().getNome());
-                        }
-                    }
-                    return null;
+                	
+                   return checkDegreeAdministrativeOfficeInformation(arguments);
+                   
                 } else {
                     return "noAuthorization";
                 }
@@ -135,9 +87,9 @@ public class EnrollmentLEECAuthorizationFilter extends EnrollmentAuthorizationFi
         return null;
     }
 
-    private boolean verifyStudentLEEC(Object[] arguments)
-            throws ExcepcaoPersistencia {
-        StudentCurricularPlan studentCurricularPlan = readStudentCurricularPlan(arguments);
+    private boolean verifyStudentLEEC(Object[] args) {
+    	
+        final StudentCurricularPlan studentCurricularPlan = readStudent(args).getActiveStudentCurricularPlan();
         if (studentCurricularPlan == null) {
             return false;
         }
@@ -151,8 +103,7 @@ public class EnrollmentLEECAuthorizationFilter extends EnrollmentAuthorizationFi
         return DEGREE_LEEC_CODE.equals(degreeCode);
     }
 
-    private boolean verifyCoordinatorLEEC(Teacher teacher, Object[] arguments)
-            throws ExcepcaoPersistencia {
+    private boolean verifyCoordinatorLEEC(Teacher teacher, Object[] arguments) {
 
     	ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID((Integer) arguments[0]);
     	if(executionDegree == null) {

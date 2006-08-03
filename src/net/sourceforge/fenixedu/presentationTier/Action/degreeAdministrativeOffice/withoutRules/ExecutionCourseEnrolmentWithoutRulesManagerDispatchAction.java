@@ -1,35 +1,28 @@
-/*
- * Created on 17/Fev/2004
- *    
- */
 package net.sourceforge.fenixedu.presentationTier.Action.degreeAdministrativeOffice.withoutRules;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.applicationTier.strategy.enrolment.context.InfoStudentEnrollmentContext;
-import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
-import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
-import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
-import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
-import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlan;
-import net.sourceforge.fenixedu.dataTransferObject.comparators.ComparatorByNameForInfoExecutionDegree;
-import net.sourceforge.fenixedu.dataTransferObject.enrollment.InfoCurricularCourse2Enroll;
+import net.sourceforge.fenixedu.domain.ExecutionDegree;
+import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.Student;
+import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
+import net.sourceforge.fenixedu.domain.degree.enrollment.CurricularCourse2Enroll;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
+import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
 import net.sourceforge.fenixedu.util.ExecutionDegreesFormat;
 import net.sourceforge.fenixedu.util.PeriodState;
@@ -38,461 +31,395 @@ import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 import org.apache.commons.collections.comparators.ComparatorChain;
-import org.apache.struts.action.ActionError;
-import org.apache.struts.action.ActionErrors;
+import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
-import org.apache.struts.actions.DispatchAction;
 import org.apache.struts.util.LabelValueBean;
-import org.apache.struts.util.MessageResources;
-
-/**
- * @author Tânia Pousão
- *  
- */
-public class ExecutionCourseEnrolmentWithoutRulesManagerDispatchAction extends DispatchAction {
-    private static final int MAX_CURRICULAR_YEARS = 5;
-
-    private static final int MAX_CURRICULAR_SEMESTERS = 2;
-
-    public ActionForward exit(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
-        return mapping.findForward("exit");
-    }
-
-    public ActionForward prepareEnrollmentChooseStudentAndExecutionYear(ActionMapping mapping,
-            ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
-        ActionErrors errors = new ActionErrors();
-
-        //degree type's code
-        String degreeType = request.getParameter("degreeType");
-        if (degreeType == null) {
-            degreeType = (String) request.getAttribute("degreeType");
-            if (degreeType == null) {
-                DynaActionForm actionForm = (DynaActionForm) form;
-                degreeType = (String) actionForm.get("degreeType");
-            }
-        }
-              
-        request.setAttribute("degreeType", degreeType);
-
-        //execution years
-        List executionPeriods = null;
-        Object[] args = {DegreeType.valueOf(degreeType)};
-        try {
-            executionPeriods = (List) ServiceManagerServiceFactory.executeService(null,
-                    "ReadExecutionPeriodsEnrollmentFenix", args);
-        } catch (FenixServiceException e) {
-            errors.add("noExecutionYears", new ActionError("error.impossible.operations"));
-            saveErrors(request, errors);
-            return mapping.findForward("globalEnrolment");
-        }
-        if (executionPeriods == null || executionPeriods.size() <= 0) {
-            errors.add("noExecutionYears", new ActionError("error.impossible.operations"));
-            saveErrors(request, errors);
-            return mapping.findForward("globalEnrolment");
-        }
-
-        sortExecutionPeriods(executionPeriods, (DynaActionForm) form);
-
-        List executionYearLabels = buildLabelValueBeanForJsp(executionPeriods);
-        request.setAttribute("executionPeriods", executionYearLabels);
-
-        return mapping.findForward("prepareEnrollmentChooseStudentWithoutRules");
-    }
-
-    private void sortExecutionPeriods(List executionPeriods, DynaActionForm form) {
-        ComparatorChain comparator = new ComparatorChain();
-        comparator.addComparator(new BeanComparator("infoExecutionYear.year"), true);
-        comparator.addComparator(new BeanComparator("semester"), true);
-        Collections.sort(executionPeriods, comparator);
-
-        int size = executionPeriods.size();
-        for (int i = (size - 1); i >= 0; i--) {
-            InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) executionPeriods.get(i);
-            if (infoExecutionPeriod.getState().equals(PeriodState.CURRENT)) {
-                form.set("executionPeriod", infoExecutionPeriod.getIdInternal().toString());
-                break;
-            }
-        }
-    }
-
-    private List buildLabelValueBeanForJsp(List infoExecutionPeriods) {
-        List executionPeriodsLabels = new ArrayList();
-        CollectionUtils.collect(infoExecutionPeriods, new Transformer() {
-            public Object transform(Object arg0) {
-                InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) arg0;
-
-                LabelValueBean executionYear = new LabelValueBean(infoExecutionPeriod.getName() + " - " + infoExecutionPeriod.getInfoExecutionYear().getYear(),
-                        infoExecutionPeriod.getIdInternal().toString());
-                return executionYear;
-            }
-        }, executionPeriodsLabels);
-        return executionPeriodsLabels;
-    }
-
-    public ActionForward readEnrollments(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws Exception {
-        ActionErrors errors = new ActionErrors();
-        HttpSession session = request.getSession();
-        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
-
-        DynaActionForm prepareEnrolmentForm = (DynaActionForm) form;
-
-        Integer studentNumber = Integer.valueOf((String) prepareEnrolmentForm.get("studentNumber"));
-        InfoStudent infoStudent = new InfoStudent();
-        infoStudent.setNumber(studentNumber);
-
-        String executionPeriodID = (String) prepareEnrolmentForm.get("executionPeriod");
-
-        String degreeTypeCode = (String) prepareEnrolmentForm.get("degreeType");
-        DegreeType degreeType = DegreeType.valueOf(degreeTypeCode);
-
-        Object[] args = { infoStudent, degreeType, new Integer(executionPeriodID) };
-        InfoStudentEnrollmentContext infoStudentEnrolmentContext = null;
-        try {
-            infoStudentEnrolmentContext = (InfoStudentEnrollmentContext) ServiceManagerServiceFactory
-                    .executeService(userView, "ReadEnrollmentsWithStateEnrolledByStudent", args);
-
-        } catch (NotAuthorizedFilterException e) {
-            e.printStackTrace();
-
-            errors.add("notauthorized", new ActionError("error.exception.notAuthorized2"));
-            saveErrors(request, errors);
-
-            return mapping.getInputForward();
-        } catch (FenixServiceException e) {
-            e.printStackTrace();
-            if (e.getMessage() != null && e.getMessage().endsWith("noCurricularPlans")) {
-                errors.add("noStudentCurricularPlan", new ActionError(e.getMessage(), studentNumber));
-            } else if (e.getMessage() != null
-                    && e.getMessage().endsWith("not.from.chosen.execution.year")) {
-                errors.add("notFromChosenExecutionYear", new ActionError(e.getMessage(), studentNumber));
-            } else {
-                errors.add("noResult", new ActionError("error.impossible.operations"));
-            }
-
-            saveErrors(request, errors);
-            return mapping.getInputForward();
-        }
-
-        //check if student payed his tuition
-        if(infoStudentEnrolmentContext.getInfoStudentCurricularPlan().getInfoStudent().getPayedTuition().equals(Boolean.FALSE)) {
-        	errors.add("noTuition", new ActionError("error.message.noTuitonPayed"));
-        	saveErrors(request, errors);
-        }
-        
-        request.setAttribute("infoStudentEnrolmentContext", infoStudentEnrolmentContext);
-
-        return mapping.findForward("curricularCourseEnrollmentList");
-    }
-
-    public ActionForward unEnrollCourses(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws Exception {
-        ActionErrors errors = new ActionErrors();
-        HttpSession session = request.getSession();
-        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
-
-        DynaActionForm unEnrollForm = (DynaActionForm) form;
-        Integer studentNumber = Integer.valueOf((String) unEnrollForm.get("studentNumber"));
-        InfoStudent infoStudent = new InfoStudent();
-        infoStudent.setNumber(studentNumber);
-
-        /*String executionYear = (String) unEnrollForm.get("executionYear");
-        InfoExecutionYear infoExecutionYear = new InfoExecutionYear();
-        infoExecutionYear.setYear(executionYear);*/
-
-        String degreeTypeCode = (String) unEnrollForm.get("degreeType");
-        DegreeType degreeType = null;
-        if (degreeTypeCode != null && degreeTypeCode.length() > 0) {
-            degreeType = DegreeType.valueOf(degreeTypeCode);
-        }
-
-        Integer[] unenrollments = (Integer[]) unEnrollForm.get("unenrollments");
-        List unenrollmentsList = Arrays.asList(unenrollments);
-
-        Object[] args = { infoStudent, degreeType, unenrollmentsList };
-        try {
-            ServiceManagerServiceFactory.executeService(userView, "DeleteEnrollmentsList", args);
-        } catch (NotAuthorizedFilterException e) {
-
-            errors.add("notauthorized", new ActionError("error.exception.notAuthorized2"));
-            saveErrors(request, errors);
-
-            return mapping.getInputForward();
-        } catch (FenixServiceException e) {
-            e.printStackTrace();
-
-            errors.add("unenroll",
-                    new ActionError("error.impossible.operations.unenroll", studentNumber));
-            saveErrors(request, errors);
-
-            return mapping.getInputForward();
-        }
-
-        return mapping.findForward("readCurricularCourseEnrollmentList");
-    }
-
-    public ActionForward prepareEnrollmentCourses(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws Exception {
-        ActionErrors errors = new ActionErrors();
-        HttpSession session = request.getSession();
-        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
-
-        DynaActionForm prepareEnrolmentForm = (DynaActionForm) form;
-
-        Integer studentNumber = Integer.valueOf((String) prepareEnrolmentForm.get("studentNumber"));
-        InfoStudent infoStudent = new InfoStudent();
-        infoStudent.setNumber(studentNumber);
-
-        String executionPeriodID = (String) prepareEnrolmentForm.get("executionPeriod");
-        String studentCurricularPlan = (String) prepareEnrolmentForm.get("studentCurricularPlan");
-        /*InfoExecutionYear infoExecutionYear = new InfoExecutionYear();
-        infoExecutionYear.setYear(executionYear);*/
-
-        String degreeTypeCode = (String) prepareEnrolmentForm.get("degreeType");
-        DegreeType degreeType = DegreeType.valueOf(degreeTypeCode);
-
-        String executionDegreeString = (String) prepareEnrolmentForm.get("executionDegree");
-        Integer executionDegreeId = null;
-        if (executionDegreeString != null && executionDegreeString.length() > 0) {
-            executionDegreeId = Integer.valueOf((String) prepareEnrolmentForm.get("executionDegree"));
-        }
-
-        //read execution degrees
-        Object args[] = { infoStudent, degreeType, executionDegreeId, new Integer(executionPeriodID) };
-        List executionDegreeList = null;
-        InfoExecutionDegree infoExecutionDegreeSelected = null;
-        try {
-            
-            //get InfoStudent with InfoPerson to mantain context
-            Object argsStudent[] = {studentNumber, degreeType};
-            infoStudent = (InfoStudent) ServiceManagerServiceFactory.executeService(userView, "ReadStudentByNumberAndDegreeType", argsStudent);
-            if (infoStudent == null) {
-                throw new FenixServiceException();
-            }
-            
-            // it is return a list where the first element is the degree
-            // pre-select and the tail is all
-            // degrees
-            executionDegreeList = (List) ServiceManagerServiceFactory.executeService(userView,
-                    "PrepareDegreesListByStudentNumber", args);
-            if (executionDegreeList == null || executionDegreeList.size() < 0) {
-                throw new FenixServiceException();
-            }
-        } catch (FenixServiceException e) {
-            errors.add("impossibleOperation", new ActionError("error.impossible.operations"));
-            saveErrors(request, errors);
-            return mapping.findForward("readCurricularCourseEnrollmentList");
-        }
-        infoExecutionDegreeSelected = (InfoExecutionDegree) executionDegreeList.get(0);
-        executionDegreeList.remove(0);
-
-        Collections.sort(executionDegreeList, new ComparatorByNameForInfoExecutionDegree());
-        
-        MessageResources messageResources = this.getResources(request, "ENUMERATION_RESOURCES");
-        
-        List executionDegreeLabels = ExecutionDegreesFormat
-                .buildExecutionDegreeLabelValueBean(executionDegreeList, messageResources, request);
-        request.setAttribute(SessionConstants.DEGREE_LIST, executionDegreeLabels);
-
-        //read all curricular years and semester
-        List listOfChosenCurricularYears = getListOfChosenCurricularYears();
-        List listOfChosenCurricularSemesters = getListOfChosenCurricularSemesters();
-        request.setAttribute(SessionConstants.ENROLMENT_YEAR_LIST_KEY, listOfChosenCurricularYears);
-        request.setAttribute(SessionConstants.ENROLMENT_SEMESTER_LIST_KEY,
-                listOfChosenCurricularSemesters);
-
-        //maintenance of the form
-        DynaActionForm enrollForm = (DynaActionForm) form;
-        enrollForm.set("studentNumber", studentNumber.toString());
-        enrollForm.set("executionPeriod", executionPeriodID);
-        enrollForm.set("degreeType", degreeTypeCode);
-        enrollForm.set("executionDegree", infoExecutionDegreeSelected.getIdInternal().toString());
-
-        //maintenance of the Context with the student's number and name and
-        // execution year
-        InfoStudentEnrollmentContext infoStudentEnrolmentContext = maintenanceContext(infoStudent,
-                infoExecutionDegreeSelected.getInfoExecutionYear(), studentCurricularPlan);
-        request.setAttribute("infoStudentEnrolmentContext", infoStudentEnrolmentContext);
-
-        return mapping.findForward("choosesForEnrollment");
-    }
-
-    private List getListOfChosenCurricularYears() {
-        List result = new ArrayList();
-
-        for (int i = 1; i <= MAX_CURRICULAR_YEARS; i++) {
-            result.add(new Integer(i));
-        }
-        return result;
-    }
-
-    private List getListOfChosenCurricularSemesters() {
-        List result = new ArrayList();
-
-        for (int i = 1; i <= MAX_CURRICULAR_SEMESTERS; i++) {
-            result.add(new Integer(i));
-        }
-        return result;
-    }
-
-    private InfoStudentEnrollmentContext maintenanceContext(InfoStudent infoStudent,
-            InfoExecutionYear infoExecutionYear, String studentCurricularPlan) {
-        InfoStudentEnrollmentContext infoStudentEnrolmentContext = new InfoStudentEnrollmentContext();
-
-        InfoStudentCurricularPlan infoStudentCurricularPlan = new InfoStudentCurricularPlan();
-        infoStudentCurricularPlan.setInfoStudent(infoStudent);
-        InfoDegreeCurricularPlan infoDegreeCurricularPlan = new InfoDegreeCurricularPlan();
-        infoDegreeCurricularPlan.setName(studentCurricularPlan);
-        infoStudentCurricularPlan.setInfoDegreeCurricularPlan(infoDegreeCurricularPlan);
-        infoStudentEnrolmentContext.setInfoStudentCurricularPlan(infoStudentCurricularPlan);
-
-        InfoExecutionPeriod infoExecutionPeriod = new InfoExecutionPeriod();
-        infoExecutionPeriod.setInfoExecutionYear(infoExecutionYear);
-        infoStudentEnrolmentContext.setInfoExecutionPeriod(infoExecutionPeriod);
-        return infoStudentEnrolmentContext;
-    }
-
-    public ActionForward readCoursesToEnroll(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws Exception {
-        ActionErrors errors = new ActionErrors();
-        HttpSession session = request.getSession();
-        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
-
-        DynaActionForm enrollForm = (DynaActionForm) form;
-
-        Integer studentNumber = Integer.valueOf((String) enrollForm.get("studentNumber"));
-        InfoStudent infoStudent = new InfoStudent();
-        infoStudent.setNumber(studentNumber);
-
-        String executionPeriodID = (String) enrollForm.get("executionPeriod");
-        /*InfoExecutionYear infoExecutionYear = new InfoExecutionYear();
-        infoExecutionYear.setYear(executionYear);*/
-
-        String degreeTypeCode = (String) enrollForm.get("degreeType");
-        DegreeType degreeType = DegreeType.valueOf(degreeTypeCode);
-
-        Integer executionDegreeID = Integer.valueOf((String) enrollForm.get("executionDegree"));
-
-        Integer[] curricularYears = (Integer[]) enrollForm.get("curricularYears");
-        List curricularYearsList = Arrays.asList(curricularYears);
-
-        Integer[] curricularSemesters = (Integer[]) enrollForm.get("curricularSemesters");
-        List curricularSemestersList = Arrays.asList(curricularSemesters);
-
-        Object args[] = { infoStudent, degreeType, new Integer(executionPeriodID), executionDegreeID,
-                curricularYearsList, curricularSemestersList };
-        InfoStudentEnrollmentContext infoStudentEnrolmentContext = null;
-        try {
-            Integer userType = (Integer) enrollForm.get("userType");
-  
-            if(userType.equals(0)) {
-                infoStudentEnrolmentContext = (InfoStudentEnrollmentContext) ServiceManagerServiceFactory
-                .executeService(userView, "ReadCurricularCoursesToEnroll", args);
-            }
-            else {
-                infoStudentEnrolmentContext = (InfoStudentEnrollmentContext) ServiceManagerServiceFactory
-                .executeService(userView, "ReadCurricularCoursesToEnrollSuperUser", args);
-            }
-
-        } catch (NotAuthorizedFilterException e) {
-            e.printStackTrace();
-
-            errors.add("notauthorized", new ActionError("error.exception.notAuthorized2"));
-            saveErrors(request, errors);
-
-            return mapping.getInputForward();
-        } catch (FenixServiceException e) {
-            e.printStackTrace();
-            if (e.getMessage() != null && e.getMessage().endsWith("noCurricularPlans")) {
-                errors.add("noStudentCurricularPlan", new ActionError(e.getMessage(), studentNumber));
-            } else if (e.getMessage() != null && !e.getMessage().endsWith("noCurricularPlans")) {
-                errors.add("noResult", new ActionError(e.getMessage()));
-            } else {
-                errors.add("impossibleOperation", new ActionError("error.impossible.operations"));
-            }
-
-            saveErrors(request, errors);
-            return mapping.getInputForward();
-        }
-        
-        //check if student payed his tuition
-        if(infoStudentEnrolmentContext.getInfoStudentCurricularPlan().getInfoStudent().getPayedTuition().equals(Boolean.FALSE)) {
-        	errors.add("noTuition", new ActionError("error.message.noTuitonPayed"));
-        	saveErrors(request, errors);
-        }
-
-        request.setAttribute("infoStudentEnrolmentContext", infoStudentEnrolmentContext);
-        enrollForm.set("enrollmentTypes", getInitializedMap(infoStudentEnrolmentContext
-                .getFinalInfoCurricularCoursesWhereStudentCanBeEnrolled()));
-        return mapping.findForward("showCurricularCourseToEnroll");
-    }
-
-    /**
-     * @param curricularCourses2Enroll
-     * @return
-     */
-    private Object getInitializedMap(List curricularCourses2Enroll) {
-        Map map = new HashMap();
-        Iterator iter = curricularCourses2Enroll.iterator();
-        while (iter.hasNext()) {
-            InfoCurricularCourse2Enroll infoCurricularCourse2Enroll = (InfoCurricularCourse2Enroll) iter
-                    .next();
-            map.put(infoCurricularCourse2Enroll.getInfoCurricularCourse().getIdInternal(),
-                    new Integer(0));
-        }
-        return map;
-    }
-
-    public ActionForward enrollCourses(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws Exception {
-        ActionErrors errors = new ActionErrors();
-        HttpSession session = request.getSession();
-        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
-
-        DynaActionForm enrollForm = (DynaActionForm) form;
-        Integer studentNumber = Integer.valueOf((String) enrollForm.get("studentNumber"));
-        InfoStudent infoStudent = new InfoStudent();
-        infoStudent.setNumber(studentNumber);
-
-        String executionPeriodID = (String) enrollForm.get("executionPeriod");
-        /*InfoExecutionYear infoExecutionYear = new InfoExecutionYear();
-        infoExecutionYear.setYear(executionYear);*/
-
-        String degreeTypeCode = (String) enrollForm.get("degreeType");
-        DegreeType degreeType = DegreeType.valueOf(degreeTypeCode);
-
-        String[] curricularCourses = (String[]) enrollForm.get("curricularCourses");
-        List curricularCoursesList = Arrays.asList(curricularCourses);
-        Map optionalEnrollments = (HashMap) enrollForm.get("enrollmentTypes");
-        Object[] args = { infoStudent, degreeType, new Integer(executionPeriodID), curricularCoursesList,
-                optionalEnrollments, userView };
-        try {
-            ServiceManagerServiceFactory.executeService(userView, "WriteEnrollmentsList", args);
-        } catch (NotAuthorizedFilterException e) {
-            e.printStackTrace();
-
-            errors.add("notauthorized", new ActionError("error.exception.notAuthorized2"));
-            saveErrors(request, errors);
-
-            return mapping.getInputForward();
-        } catch (FenixServiceException e) {
-            e.printStackTrace();
-            if (e.getMessage() != null && e.getMessage().endsWith("noCurricularPlans")) {
-                errors.add("noStudentCurricularPlan", new ActionError(e.getMessage(), studentNumber));
-            } else if (e.getMessage() != null && !e.getMessage().endsWith("noCurricularPlans")) {
-                errors.add("noResult", new ActionError(e.getMessage()));
-            } else {
-                errors.add("impossibleOperation", new ActionError("error.impossible.operations"));
-            }
-
-            saveErrors(request, errors);
-            return mapping.getInputForward();
-        }
-
-        return mapping.findForward("readCurricularCourseEnrollmentList");
-    }
+
+public class ExecutionCourseEnrolmentWithoutRulesManagerDispatchAction extends FenixDispatchAction {
+
+	private static final int MAX_CURRICULAR_YEARS = 5;
+
+	private static final int MAX_CURRICULAR_SEMESTERS = 2;
+
+	public ActionForward exit(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		return mapping.findForward("exit");
+	}
+
+	public ActionForward prepareEnrollmentChooseStudentAndExecutionYear(ActionMapping mapping,
+			ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
+
+		List<InfoExecutionPeriod> executionPeriods = null;
+		try {
+			final Object[] args = { DegreeType.valueOf(readAndSetDegreeType(request,
+					(DynaActionForm) form)) };
+			executionPeriods = (List) ServiceManagerServiceFactory.executeService(null,
+					"ReadExecutionPeriodsEnrollmentFenix", args);
+
+		} catch (FenixServiceException e) {
+			addActionMessage(request, "error.impossible.operations");
+			return mapping.findForward("globalEnrolment");
+		}
+		if (executionPeriods == null || executionPeriods.size() <= 0) {
+			addActionMessage(request, "error.impossible.operations");
+			return mapping.findForward("globalEnrolment");
+		}
+
+		sortExecutionPeriods(executionPeriods, (DynaActionForm) form);
+
+		List executionYearLabels = buildLabelValueBeanForJsp(executionPeriods);
+		request.setAttribute("executionPeriods", executionYearLabels);
+
+		return mapping.findForward("prepareEnrollmentChooseStudentWithoutRules");
+	}
+
+	private String readAndSetDegreeType(HttpServletRequest request, DynaActionForm form) {
+		String degreeType = request.getParameter("degreeType");
+		if (degreeType == null) {
+			degreeType = (String) request.getAttribute("degreeType");
+			if (degreeType == null) {
+				degreeType = form.getString("degreeType");
+			}
+		}
+		request.setAttribute("degreeType", degreeType);
+		return degreeType;
+	}
+
+	private void sortExecutionPeriods(List executionPeriods, DynaActionForm form) {
+		ComparatorChain comparator = new ComparatorChain();
+		comparator.addComparator(new BeanComparator("infoExecutionYear.year"), true);
+		comparator.addComparator(new BeanComparator("semester"), true);
+		Collections.sort(executionPeriods, comparator);
+
+		int size = executionPeriods.size();
+		for (int i = (size - 1); i >= 0; i--) {
+			InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) executionPeriods.get(i);
+			if (infoExecutionPeriod.getState().equals(PeriodState.CURRENT)) {
+				form.set("executionPeriod", infoExecutionPeriod.getIdInternal().toString());
+				break;
+			}
+		}
+	}
+
+	private List buildLabelValueBeanForJsp(List infoExecutionPeriods) {
+		List executionPeriodsLabels = new ArrayList();
+		CollectionUtils.collect(infoExecutionPeriods, new Transformer() {
+			public Object transform(Object arg0) {
+				InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) arg0;
+
+				LabelValueBean executionYear = new LabelValueBean(infoExecutionPeriod.getName() + " - "
+						+ infoExecutionPeriod.getInfoExecutionYear().getYear(), infoExecutionPeriod
+						.getIdInternal().toString());
+				return executionYear;
+			}
+		}, executionPeriodsLabels);
+		return executionPeriodsLabels;
+	}
+
+	public ActionForward readEnrollments(ActionMapping mapping, ActionForm actionForm,
+			HttpServletRequest request, HttpServletResponse response) throws Exception {
+
+		final DynaActionForm form = (DynaActionForm) actionForm;
+
+		if (StringUtils.isEmpty(form.getString("studentNumber"))) {
+			addActionMessage(request, "error.no.student");
+			return mapping.getInputForward();
+		}
+
+		final Integer studentNumber = Integer.valueOf(form.getString("studentNumber"));
+		final ExecutionPeriod executionPeriod = getExecutionPeriod(form);
+
+		StudentCurricularPlan studentCurricularPlan = null;
+		try {
+			final Object[] args = { getStudent(form), getDegreeType(form), executionPeriod };
+			studentCurricularPlan = (StudentCurricularPlan) ServiceManagerServiceFactory.executeService(
+					getUserView(request), "ReadStudentCurricularPlanForEnrollmentsWithoutRules", args);
+
+		} catch (NotAuthorizedFilterException e) {
+			e.printStackTrace();
+			addActionMessage(request, "error.exception.notAuthorized2");
+			return mapping.getInputForward();
+
+		} catch (FenixServiceException e) {
+			e.printStackTrace();
+
+			if (e.getMessage() != null && e.getMessage().endsWith("noCurricularPlans")) {
+				addActionMessage(request, e.getMessage(), studentNumber.toString());
+			} else if (e.getMessage() != null
+					&& e.getMessage().endsWith("not.from.chosen.execution.year")) {
+				addActionMessage(request, e.getMessage(), studentNumber.toString());
+			} else {
+				addActionMessage(request, "error.impossible.operations");
+			}
+			return mapping.getInputForward();
+		}
+
+		checkIfStudentHasPayedTuition(request, studentCurricularPlan);
+
+		request.setAttribute("executionPeriod", executionPeriod);
+		request.setAttribute("studentCurricularPlan", studentCurricularPlan);
+		request.setAttribute("studentCurrentSemesterEnrollments", studentCurricularPlan
+				.getAllStudentEnrolledEnrollmentsInExecutionPeriod(executionPeriod));
+
+		return mapping.findForward("curricularCourseEnrollmentList");
+	}
+
+	private ExecutionPeriod getExecutionPeriod(final DynaActionForm form) {
+		return rootDomainObject.readExecutionPeriodByOID(Integer.valueOf(form.getString("executionPeriod")));
+	}
+
+	private DegreeType getDegreeType(final DynaActionForm form) {
+		return DegreeType.valueOf(form.getString("degreeType"));
+	}
+
+	private Student getStudent(final DynaActionForm form) {
+		final Integer studentNumber = Integer.valueOf(form.getString("studentNumber"));
+		return Student.readStudentByNumberAndDegreeType(studentNumber, getDegreeType(form));
+	}
+
+	private void checkIfStudentHasPayedTuition(HttpServletRequest request,
+			StudentCurricularPlan studentCurricularPlan) {
+		if (studentCurricularPlan.getStudent().getPayedTuition().equals(Boolean.FALSE)) {
+			addActionMessage(request, "error.message.noTuitonPayed");
+		}
+	}
+
+	public ActionForward unEnrollCourses(ActionMapping mapping, ActionForm actionForm,
+			HttpServletRequest request, HttpServletResponse response) throws Exception {
+
+		final DynaActionForm form = (DynaActionForm) actionForm;
+		
+		final Integer studentNumber = Integer.valueOf((String) form.get("studentNumber"));
+		final List<Integer> unenrollmentsList = Arrays.asList((Integer[]) form.get("unenrollments"));
+
+		try {
+			final Object[] args = { getStudent(form), getDegreeType(form), unenrollmentsList };
+			ServiceManagerServiceFactory.executeService(getUserView(request), "DeleteEnrollmentsList",
+					args);
+
+		} catch (NotAuthorizedFilterException e) {
+			addActionMessage(request, "error.exception.notAuthorized2");
+			return mapping.getInputForward();
+
+		} catch (DomainException e) {
+			addActionMessage(request, e.getMessage());
+			return mapping.getInputForward();
+
+		} catch (FenixServiceException e) {
+			e.printStackTrace();
+			addActionMessage(request, "error.impossible.operations.unenroll", studentNumber.toString());
+			return mapping.getInputForward();
+		}
+
+		return mapping.findForward("readCurricularCourseEnrollmentList");
+	}
+
+	public ActionForward prepareEnrollmentCourses(ActionMapping mapping, ActionForm actionForm,
+			HttpServletRequest request, HttpServletResponse response) throws Exception {
+
+		final DynaActionForm form = (DynaActionForm) actionForm;
+		final ExecutionPeriod executionPeriod = getExecutionPeriod(form);
+
+		StudentCurricularPlan studentCurricularPlan = null;
+		List<ExecutionDegree> result = null;
+		try {
+			
+			final Student student = getStudent(form);
+			studentCurricularPlan = student.getActiveOrConcludedStudentCurricularPlan();
+			
+			result = (List<ExecutionDegree>) ServiceManagerServiceFactory.executeService(
+					getUserView(request), "PrepareDegreesListByStudentNumber", new Object[] {
+							student, getDegreeType(form), executionPeriod });
+
+		} catch (NotAuthorizedFilterException e) {
+			e.printStackTrace();
+			addActionMessage(request, "error.exception.notAuthorized2");
+			return mapping.getInputForward();
+
+		} catch (FenixServiceException e) {
+			addActionMessage(request, "error.impossible.operations");
+			return mapping.findForward("readCurricularCourseEnrollmentList");
+		}
+
+		prepareEnrollmentCoursesInformation(request, form, studentCurricularPlan, result);
+
+		// set attributes used by courseEnrollment context
+		request.setAttribute("executionPeriod", executionPeriod);
+		request.setAttribute("studentCurricularPlan", studentCurricularPlan);
+
+		return mapping.findForward("choosesForEnrollment");
+	}
+
+	private void prepareEnrollmentCoursesInformation(final HttpServletRequest request,
+			final DynaActionForm form, final StudentCurricularPlan studentCurricularPlan,
+			final List<ExecutionDegree> result) {
+
+		setDefaultExecutionDegree(form, studentCurricularPlan, result);
+
+		sortExecutionDegrees(result);
+
+		request.setAttribute(SessionConstants.DEGREE_LIST, ExecutionDegreesFormat
+				.buildLabelValueBeansForExecutionDegree(result, getResources(request,
+						"ENUMERATION_RESOURCES"), request));
+
+		request.setAttribute(SessionConstants.ENROLMENT_YEAR_LIST_KEY, getListOfChosenCurricularYears());
+		request.setAttribute(SessionConstants.ENROLMENT_SEMESTER_LIST_KEY,
+				getListOfChosenCurricularSemesters());
+
+	}
+
+	private void setDefaultExecutionDegree(final DynaActionForm form,
+			final StudentCurricularPlan studentCurricularPlan,
+			final List<ExecutionDegree> executionDegrees) {
+
+		if (StringUtils.isEmpty(form.getString("executionDegree"))) {
+			List<ExecutionDegree> intersection = (List<ExecutionDegree>) CollectionUtils.intersection(
+					executionDegrees, studentCurricularPlan.getDegreeCurricularPlan()
+							.getExecutionDegreesSet());
+			form.set("executionDegree", intersection.get(0).getIdInternal().toString());
+		}
+	}
+
+	private void sortExecutionDegrees(List<ExecutionDegree> result) {
+		Collections.sort(result, new Comparator<ExecutionDegree>() {
+			public int compare(ExecutionDegree o1, ExecutionDegree o2) {
+				final String name = "" + o1.getDegree().getTipoCurso().name() + o1.getDegree().getName();
+				final String name2 = "" + o2.getDegree().getTipoCurso().name()
+						+ o2.getDegree().getName();
+				return name.compareToIgnoreCase(name2);
+			}
+		});
+	}
+
+	private List getListOfChosenCurricularYears() {
+		final List<Integer> result = new ArrayList<Integer>();
+		for (int i = 1; i <= MAX_CURRICULAR_YEARS; i++) {
+			result.add(Integer.valueOf(i));
+		}
+		return result;
+	}
+
+	private List getListOfChosenCurricularSemesters() {
+		final List<Integer> result = new ArrayList<Integer>();
+		for (int i = 1; i <= MAX_CURRICULAR_SEMESTERS; i++) {
+			result.add(Integer.valueOf(i));
+		}
+		return result;
+	}
+
+	public ActionForward readCoursesToEnroll(ActionMapping mapping, ActionForm actionForm,
+			HttpServletRequest request, HttpServletResponse response) throws Exception {
+
+		final DynaActionForm form = (DynaActionForm) actionForm;
+
+		final Integer studentNumber = Integer.valueOf(form.getString("studentNumber"));
+		final ExecutionPeriod executionPeriod = getExecutionPeriod(form);
+		
+		final Integer executionDegreeID = Integer.valueOf(form.getString("executionDegree"));
+		final List<Integer> curricularYearsList = Arrays.asList((Integer[]) form.get("curricularYears"));
+		final List<Integer> curricularSemesters = Arrays.asList((Integer[]) form.get("curricularSemesters"));
+
+		StudentCurricularPlan studentCurricularPlan = null;
+		List<CurricularCourse2Enroll> curricularCourses2Enroll = null;
+		try {
+
+			final Integer userType = (Integer) form.get("userType");
+			final Student student = getStudent(form);
+			studentCurricularPlan = student.getActiveOrConcludedStudentCurricularPlan();
+
+			if (userType.equals(0)) {
+				curricularCourses2Enroll = (List<CurricularCourse2Enroll>) ServiceManagerServiceFactory
+						.executeService(getUserView(request), "ReadCurricularCoursesToEnroll",
+								new Object[] { student, getDegreeType(form), executionPeriod,
+										executionDegreeID, curricularYearsList, curricularSemesters });
+
+			} else {
+				curricularCourses2Enroll = (List<CurricularCourse2Enroll>) ServiceManagerServiceFactory
+						.executeService(getUserView(request), "ReadCurricularCoursesToEnrollSuperUser",
+								new Object[] { student, getDegreeType(form), executionPeriod,
+										executionDegreeID, curricularYearsList, curricularSemesters });
+			}
+
+		} catch (NotAuthorizedFilterException e) {
+			e.printStackTrace();
+			addActionMessage(request, "error.exception.notAuthorized2");
+			return mapping.getInputForward();
+
+		} catch (FenixServiceException e) {
+			e.printStackTrace();
+			if (e.getMessage() != null && e.getMessage().endsWith("noCurricularPlans")) {
+				addActionMessage(request, e.getMessage(), studentNumber.toString());
+			} else if (e.getMessage() != null && !e.getMessage().endsWith("noCurricularPlans")) {
+				addActionMessage(request, e.getMessage());
+			} else {
+				addActionMessage(request, "error.impossible.operations");
+			}
+			return mapping.getInputForward();
+		}
+
+		checkIfStudentHasPayedTuition(request, studentCurricularPlan);
+
+		// set attributes used by courseEnrollment context
+		request.setAttribute("executionPeriod", executionPeriod);
+		request.setAttribute("studentCurricularPlan", studentCurricularPlan);
+
+		sortCurricularCourses2Enrol(curricularCourses2Enroll);
+		request.setAttribute("curricularCourses2Enroll", curricularCourses2Enroll);
+		form.set("enrollmentTypes", getInitializedMap(curricularCourses2Enroll));
+
+		return mapping.findForward("showCurricularCourseToEnroll");
+	}
+
+	private void sortCurricularCourses2Enrol(List<CurricularCourse2Enroll> curricularCourse2Enroll) {
+		Collections.sort(curricularCourse2Enroll, new Comparator<CurricularCourse2Enroll>() {
+			public int compare(CurricularCourse2Enroll o1, CurricularCourse2Enroll o2) {
+				return o1.getCurricularCourse().getName().compareTo(o2.getCurricularCourse().getName());
+			}
+		});
+	}
+
+	private Object getInitializedMap(List<CurricularCourse2Enroll> curricularCourses2Enroll) {
+		final Map result = new HashMap();
+		for (final CurricularCourse2Enroll curricularCourse2Enroll : curricularCourses2Enroll) {
+			result.put(curricularCourse2Enroll.getCurricularCourse().getIdInternal(), Integer.valueOf(0));
+		}
+		return result;
+	}
+
+	public ActionForward enrollCourses(ActionMapping mapping, ActionForm actionForm,
+			HttpServletRequest request, HttpServletResponse response) throws Exception {
+
+		final DynaActionForm form = (DynaActionForm) actionForm;
+
+		final Integer studentNumber = Integer.valueOf(form.getString("studentNumber"));
+		final List<String> curricularCourses = Arrays.asList((String[]) form.get("curricularCourses"));
+		final Map optionalEnrollments = (HashMap) form.get("enrollmentTypes");
+		
+		try {
+			ServiceManagerServiceFactory.executeService(getUserView(request), "WriteEnrollmentsList",
+					new Object[] { getStudent(form), getDegreeType(form), getExecutionPeriod(form), curricularCourses,
+							optionalEnrollments, getUserView(request) });
+
+		} catch (NotAuthorizedFilterException e) {
+			e.printStackTrace();
+			addActionMessage(request, "error.exception.notAuthorized2");
+			return mapping.getInputForward();
+
+		} catch (FenixServiceException e) {
+			e.printStackTrace();
+			if (e.getMessage() != null && e.getMessage().endsWith("noCurricularPlans")) {
+				addActionMessage(request, e.getMessage(), studentNumber.toString());
+			} else if (e.getMessage() != null && !e.getMessage().endsWith("noCurricularPlans")) {
+				addActionMessage(request, e.getMessage());
+			} else {
+				addActionMessage(request, "error.impossible.operations");
+			}
+			return mapping.getInputForward();
+		}
+
+		return mapping.findForward("readCurricularCourseEnrollmentList");
+	}
 }

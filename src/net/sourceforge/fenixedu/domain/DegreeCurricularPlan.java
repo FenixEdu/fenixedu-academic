@@ -371,12 +371,16 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
     }
 
     public ExecutionDegree getExecutionDegreeByYear(ExecutionYear executionYear) {
-        for (ExecutionDegree executionDegree : getExecutionDegrees()) {
-            if (executionDegree.getExecutionYear().equals(executionYear)) {
+        for (final ExecutionDegree executionDegree : getExecutionDegreesSet()) {
+            if (executionDegree.getExecutionYear() == executionYear) {
                 return executionDegree;
             }
         }
         return null;
+    }
+    
+    public boolean hasExecutionDegreeFor(ExecutionYear executionYear) {
+    	return getExecutionDegreeByYear(executionYear) != null;
     }
 
     public ExecutionDegree getMostRecentExecutionDegree() {
@@ -494,17 +498,15 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
     // BEGIN: Only for enrollment purposes
     // -------------------------------------------------------------
 
-    public List getListOfEnrollmentRules(StudentCurricularPlan studentCurricularPlan,
+    public List<IEnrollmentRule> getListOfEnrollmentRules(StudentCurricularPlan studentCurricularPlan,
             ExecutionPeriod executionPeriod) {
 
-        List<IEnrollmentRule> result = new ArrayList<IEnrollmentRule>();
+        final List<IEnrollmentRule> result = new ArrayList<IEnrollmentRule>(4);
 
         result.add(new MaximumNumberOfAcumulatedEnrollmentsRule(studentCurricularPlan, executionPeriod));
-        result.add(new MaximumNumberOfCurricularCoursesEnrollmentRule(studentCurricularPlan,
-                executionPeriod));
+        result.add(new MaximumNumberOfCurricularCoursesEnrollmentRule(studentCurricularPlan, executionPeriod));
         result.add(new PrecedencesEnrollmentRule(studentCurricularPlan, executionPeriod));
-        result.add(new PreviousYearsCurricularCourseEnrollmentRule(studentCurricularPlan,
-                executionPeriod));
+        result.add(new PreviousYearsCurricularCourseEnrollmentRule(studentCurricularPlan, executionPeriod));
 
         return result;
     }

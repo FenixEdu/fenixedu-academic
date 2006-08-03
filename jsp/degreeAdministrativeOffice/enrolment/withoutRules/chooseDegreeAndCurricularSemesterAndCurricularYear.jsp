@@ -1,14 +1,26 @@
 <%@ page language="java" %>
-<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %><html:xhtml/>
-<%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
+<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %><%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
-<bean:define id="infoExecutionDegreesNamesList" name="<%= SessionConstants.DEGREE_LIST %>" scope="request"/>
+<html:xhtml/>
+
+<bean:define id="executionDegreesNamesList" name="<%= SessionConstants.DEGREE_LIST %>" scope="request"/>
 <bean:define id="yearsList" name="<%= SessionConstants.ENROLMENT_YEAR_LIST_KEY %>" scope="request"/>
 <bean:define id="semestersList" name="<%= SessionConstants.ENROLMENT_SEMESTER_LIST_KEY %>"  scope="request"/>
+
 <h2><bean:message key="title.student.enrolment.without.rules" bundle="DEGREE_ADM_OFFICE"/></h2>
+
 <span class="error"><!-- Error messages go here --><html:errors /></span>
+<logic:messagesPresent message="true">
+	<ul>
+		<html:messages id="messages" message="true">
+			<li><span class="error0"><bean:write name="messages" /></span></li>
+		</html:messages>
+	</ul>
+	<br />
+</logic:messagesPresent>
 <br />
+
 <html:form action="/courseEnrolmentWithoutRulesManagerDA">
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="readCoursesToEnroll"/>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="2"/>
@@ -25,7 +37,7 @@
 		<tr>
 			<td colspan="2" align="left">
 				<html:select bundle="HTMLALT_RESOURCES" altKey="select.executionDegree" property="executionDegree" size="1">
-					<html:options collection="infoExecutionDegreesNamesList" property="value" labelProperty="label"/>
+					<html:options collection="executionDegreesNamesList" property="value" labelProperty="label"/>
 				</html:select>
 			</td>
 		</tr>

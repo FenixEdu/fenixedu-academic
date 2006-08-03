@@ -44,6 +44,7 @@ import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.Transformer;
 import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.commons.collections.comparators.ReverseComparator;
+import org.joda.time.YearMonthDay;
 
 /**
  * @author David Santos in Jun 24, 2004
@@ -148,6 +149,10 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 		// return a value
 		return null;
 	}
+	
+	public boolean hasSecundaryBranch() {
+		return (getSecundaryBranch() != null);
+	}
 
 	public void setSecundaryBranch(Branch secundaryBranch) {
 		// only StudentCurricularPlanLEEC and StudentCurricularPlanLEIC should
@@ -203,20 +208,16 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 
 		setOfCurricularCoursesToEnroll = initAcumulatedEnrollments(setOfCurricularCoursesToEnroll);
 
-		List enrollmentRules = getListOfEnrollmentRules(executionPeriod);
-		int size = enrollmentRules.size();
-
-		for (int i = 0; i < size; i++) {
-			IEnrollmentRule enrollmentRule = (IEnrollmentRule) enrollmentRules.get(i);
+		for (final IEnrollmentRule enrollmentRule : getListOfEnrollmentRules(executionPeriod)) {
 			setOfCurricularCoursesToEnroll = enrollmentRule.apply(setOfCurricularCoursesToEnroll);
 			if (setOfCurricularCoursesToEnroll.isEmpty()) {
 				break;
 			}
 		}
-
+		
 		return setOfCurricularCoursesToEnroll;
 	}
-
+	
 	public Integer getMinimumNumberOfCoursesToEnroll() {
 		return getStudent().getStudentKind().getMinCoursesToEnrol();
 	}
@@ -597,8 +598,11 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 
 	protected CurricularCourse2Enroll transformToCurricularCourse2Enroll(
 			CurricularCourse curricularCourse, ExecutionPeriod currentExecutionPeriod) {
+		
 		return new CurricularCourse2Enroll(curricularCourse, getCurricularCourseEnrollmentType(
-				curricularCourse, currentExecutionPeriod), new Boolean(false));
+				curricularCourse, currentExecutionPeriod), Boolean.FALSE, curricularCourse
+				.getCurricularYearByBranchAndSemester(this.getBranch(), currentExecutionPeriod
+						.getSemester()));
 	}
 
 	public List initAcumulatedEnrollments(List elements) {
@@ -789,7 +793,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 		this.acumulatedEnrollments = acumulatedEnrollments;
 	}
 
-	protected List getListOfEnrollmentRules(ExecutionPeriod executionPeriod) {
+	protected List<IEnrollmentRule> getListOfEnrollmentRules(ExecutionPeriod executionPeriod) {
 		return getDegreeCurricularPlan().getListOfEnrollmentRules(this, executionPeriod);
 	}
 
@@ -1089,14 +1093,17 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 			throws NotAuthorizedBranchChangeException, BothAreasAreTheSameServiceException,
 			InvalidArgumentsServiceException, DomainException {
 
-		if (!getCanChangeSpecializationArea())
+		if (!getCanChangeSpecializationArea()) {
 			throw new NotAuthorizedBranchChangeException();
+		}
 
-		if (areNewAreasCompatible(specializationArea, secundaryArea))
+		if (areNewAreasCompatible(specializationArea, secundaryArea)) {
 			setStudentAreasWithoutRestrictions(specializationArea, secundaryArea);
+		}
 
-		else
+		else {
 			throw new DomainException("error.student.curricular.plan.areas.conflict");
+		}
 	}
 
 	public GratuitySituation getGratuitySituationByGratuityValues(final GratuityValues gratuityValues) {
@@ -1307,9 +1314,13 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 		}
 		return numberCompletedCourses;
 	}
+	
+	public Degree getDegree() {
+		return getDegreeCurricularPlan().getDegree();
+	}
 
 	public DegreeType getDegreeType() {
-		return getDegreeCurricularPlan().getDegree().getTipoCurso();
+		return getDegree().getTipoCurso();
 	}
 
 	public Set<ExecutionYear> getEnrolmentsExecutionYears() {
@@ -1366,9 +1377,9 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 			}
 		}
 		return result;
-	}    
+	}
 	
-    public Collection<Enrolment> getSpecialSeasonToEnrol(ExecutionYear executionYear){
+	public Collection<Enrolment> getSpecialSeasonToEnrol(ExecutionYear executionYear){
     	Map<CurricularCourse, Enrolment> result = new HashMap<CurricularCourse, Enrolment>();
     	
     	for (Enrolment enrolment : getEnrolmentsSet()) {
@@ -1395,5 +1406,23 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     	}    		
     	return result;
     }
-    
+	
+	public boolean hasSpecialSeasonForActualExecutionPeriod() {
+		return hasSpecialSeasonFor(ExecutionPeriod.readActualExecutionPeriod());
+	}
+
+	public boolean hasSpecialSeasonFor(ExecutionPeriod executionPeriod) {
+		final ExecutionPeriod previousExecutionPeriod = executionPeriod.getPreviousExecutionPeriod();
+
+		if (isEnroledInSpecialSeason(previousExecutionPeriod)
+				|| isEnroledInSpecialSeason(previousExecutionPeriod.getPreviousExecutionPeriod())) {
+			final EnrolmentPeriodInCurricularCoursesSpecialSeason periodInCurricularCoursesSpecialSeason = getDegreeCurricularPlan()
+					.getEnrolmentPeriodInCurricularCoursesSpecialSeasonByExecutionPeriod(executionPeriod);
+
+			return (periodInCurricularCoursesSpecialSeason != null && periodInCurricularCoursesSpecialSeason
+					.containsDate(new YearMonthDay()));
+		}
+		return false;
+	}
+
 }

@@ -1,7 +1,3 @@
-/*
- * Created on Jul 5, 2004
- *
- */
 package net.sourceforge.fenixedu.applicationTier.Filtro.enrollment;
 
 import java.util.ArrayList;
@@ -10,8 +6,6 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.AuthorizationByManyRolesFilter;
-import net.sourceforge.fenixedu.applicationTier.Servico.enrollment.ShowAvailableCurricularCoursesWithoutEnrollmentPeriod;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.OutOfCurricularCourseEnrolmentPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoRole;
 import net.sourceforge.fenixedu.domain.Coordinator;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
@@ -20,164 +14,49 @@ import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.Tutor;
-import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.StudentCurricularPlanState;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 
-/**
- * @author João Mota
- * 
- */
 public class EnrollmentAuthorizationFilter extends AuthorizationByManyRolesFilter {
 
     private static final int LEIC_OLD_DCP = 10;
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see ServidorAplicacao.Filtro.AuthorizationByManyRolesFilter#getNeededRoles()
-     */
     protected Collection getNeededRoles() {
-        List roles = new ArrayList();
+        final List<InfoRole> roles = new ArrayList<InfoRole>();
 
-        InfoRole infoRole = new InfoRole();
-        infoRole.setRoleType(RoleType.COORDINATOR);
-        roles.add(infoRole);
-
-        infoRole = new InfoRole();
-        infoRole.setRoleType(RoleType.TEACHER);
-        roles.add(infoRole);
-
-        infoRole = new InfoRole();
-        infoRole.setRoleType(RoleType.STUDENT);
-        roles.add(infoRole);
-
-        infoRole = new InfoRole();
-        infoRole.setRoleType(RoleType.DEGREE_ADMINISTRATIVE_OFFICE);
-        roles.add(infoRole);
-
-        infoRole = new InfoRole();
-        infoRole.setRoleType(RoleType.DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER);
-        roles.add(infoRole);
+        roles.add(new InfoRole(RoleType.COORDINATOR));
+        roles.add(new InfoRole(RoleType.TEACHER));
+        roles.add(new InfoRole(RoleType.STUDENT));
+        roles.add(new InfoRole(RoleType.DEGREE_ADMINISTRATIVE_OFFICE));
+        roles.add(new InfoRole(RoleType.DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER));
+        
         return roles;
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see ServidorAplicacao.Filtro.AuthorizationByManyRolesFilter#hasPrevilege(ServidorAplicacao.IUserView,
-     *      java.lang.Object[])
-     */
-    protected String hasPrevilege(IUserView id, Object[] arguments) {
+    protected String hasPrevilege(IUserView userView, Object[] arguments) {
+    	
         try {
-            List roles = getRoleList(id.getRoles());
+            final List<RoleType> roles = getRoleList(userView.getRoles());
 
             if (roles.contains(RoleType.STUDENT)) {
-                Student student = readStudent(id);
-                if (student == null) {
-                    return "noAuthorization";
-                }
-                if (student.getPayedTuition() == null || student.getPayedTuition().equals(Boolean.FALSE)) {
-                    if(student.getInterruptedStudies().equals(Boolean.FALSE))
-                    	return "error.message.tuitionNotPayed";
-                }
-                if (student.getFlunked() == null || student.getFlunked().equals(Boolean.TRUE)) {
-                    return "error.message.flunked";
-                }
-                if (student.getRequestedChangeDegree() == null || student.getRequestedChangeDegree().equals(Boolean.TRUE)) {
-                    return "error.message.requested.change.degree";
-                }
-                if (!curriculumOwner(student, id)) {
-                    return "noAuthorization";
-                }
-                Tutor tutor = verifyStudentWithTutor(student);
-                if (tutor != null) {
-                    return new String("error.enrollment.student.withTutor+"
-                            + tutor.getTeacher().getTeacherNumber().toString() + "+"
-                            + tutor.getTeacher().getPerson().getNome());
-                }
-
-                // check if the student is in the list of secretary enrolments
-                // students
-                final SecretaryEnrolmentStudent secretaryEnrolmentStudent = student.getSecretaryEnrolmentStudents().isEmpty() ?
-                        null : student.getSecretaryEnrolmentStudents().iterator().next();
-                if (secretaryEnrolmentStudent != null) {
-                    return "error.message.secretaryEnrolmentStudent";
-                }
-
-                // check if the student is from old Leic Curricular Plan
-                List studentCurricularPlans = (List) CollectionUtils.select(student.getStudentCurricularPlans(), new Predicate(){
-                    public boolean evaluate(Object arg0) {
-                        StudentCurricularPlan scp = (StudentCurricularPlan) arg0;
-                        return scp.getCurrentState().equals(StudentCurricularPlanState.ACTIVE);
-                    }});
-               
-                boolean oldLeicStudent = CollectionUtils.exists(studentCurricularPlans, new Predicate() {
-                    public boolean evaluate(Object arg0) {
-
-                        StudentCurricularPlan studentCurricularPlan = (StudentCurricularPlan) arg0;
-                        return (studentCurricularPlan.getDegreeCurricularPlan().getIdInternal()
-                                .intValue() == LEIC_OLD_DCP);
-
-                    }
-                });
-                if (oldLeicStudent) {
-                    return "error.message.oldLeicStudent";
-                }
-
-                // TEMPORARY!!!
-                // if(student.getSpecialSeason() == null ||
-                // !student.getSpecialSeason().booleanValue()) {
-                // return "noAuthorization";
-                // }
+                return checkStudentInformation(userView);
 
             } else {
 
                 if (roles.contains(RoleType.COORDINATOR) && arguments[0] != null) {
-                    Teacher teacher = readTeacher(id);
-                    if (teacher == null) {
-                        return "noAuthorization";
-                    }
-
-                    if (!verifyCoordinator(teacher, arguments)) {
-                        return "noAuthorization";
-                    }
+                	return checkCoordinatorInformation(userView, arguments);
+                    
                 } else if (roles.contains(RoleType.TEACHER)) {
-                    Teacher teacher = readTeacher(id);
-                    if (teacher == null) {
-                        return "noAuthorization";
-                    }
-
-                    Student student = readStudent(arguments);
-                    if (student == null) {
-                        return "noAuthorization";
-                    }
-
-                    if (! student.hasAssociatedTutor()) {
-                        return new String("error.enrollment.notStudentTutor+"
-                                + student.getNumber().toString());
-                    }
+                	return checkTeacherInformation(userView, arguments);
 
                 } else if (roles.contains(RoleType.DEGREE_ADMINISTRATIVE_OFFICE)
-                        || roles.contains(RoleType.DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER)) {
-                    StudentCurricularPlan studentCurricularPlan = readStudentCurricularPlan(arguments);
-
-                    if (studentCurricularPlan.getStudent() == null) {
-                        return "noAuthorization";
-                    }
-                    if (insideEnrollmentPeriod(studentCurricularPlan)) {
-                        Tutor tutor = studentCurricularPlan.getStudent().getAssociatedTutor();
-                        if (tutor != null) {
-                            return new String("error.enrollment.student.withTutor+"
-                                    + tutor.getTeacher().getTeacherNumber().toString() + "+"
-                                    + tutor.getTeacher().getPerson().getNome());
-                        }
-                    }
-                    return null;
+                        || roles.contains(RoleType.DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER)) {                	
+                    
+                	return checkDegreeAdministrativeOfficeInformation(arguments);
+                    
                 } else {
                     return "noAuthorization";
                 }
@@ -186,81 +65,137 @@ public class EnrollmentAuthorizationFilter extends AuthorizationByManyRolesFilte
             exception.printStackTrace();
             return "noAuthorization";
         }
-        return null;
     }
 
-    /**
-     * @param arguments
-     * @param sp
-     * @return
-     */
-    protected boolean insideEnrollmentPeriod(StudentCurricularPlan studentCurricularPlan)
-    		throws ExcepcaoPersistencia {
-        try {
-            ShowAvailableCurricularCoursesWithoutEnrollmentPeriod
-                    .getEnrolmentPeriod(studentCurricularPlan);
-        } catch (OutOfCurricularCourseEnrolmentPeriod e) {
-            return false;
-        }
-        return true;
+	protected String checkDegreeAdministrativeOfficeInformation(Object[] args) {
+
+		final StudentCurricularPlan studentCurricularPlan = readStudent(args).getActiveStudentCurricularPlan();
+		if (studentCurricularPlan == null) {
+			return "noAuthorization";
+		}
+		if (insideEnrollmentPeriod(studentCurricularPlan)) {
+			final Tutor tutor = studentCurricularPlan.getStudent().getAssociatedTutor();
+			if (tutor != null) {
+				return new String("error.enrollment.student.withTutor+"
+						+ tutor.getTeacher().getTeacherNumber().toString() + "+"
+						+ tutor.getTeacher().getPerson().getNome());
+			}
+		}
+		return null;
+	}
+
+	protected String checkTeacherInformation(IUserView userView, Object[] arguments) {
+		
+		final Teacher teacher = readTeacher(userView);
+		if (teacher == null) {
+		    return "noAuthorization";
+		}
+
+		final Student student = readStudent(arguments);
+		if (student == null) {
+		    return "noAuthorization";
+		}
+
+		if (! student.hasAssociatedTutor()) {
+		    return new String("error.enrollment.notStudentTutor+"
+		            + student.getNumber().toString());
+		}
+		
+		return null;
+	}
+
+	private String checkCoordinatorInformation(IUserView userView, Object[] arguments) {
+		
+		final Teacher teacher = readTeacher(userView);
+		if (teacher == null) {
+		    return "noAuthorization";
+		}
+		if (!verifyCoordinator(teacher, arguments)) {
+		    return "noAuthorization";
+		}
+		
+		return null;
+	}
+
+	private String checkStudentInformation(IUserView userView) {
+		
+		final Student student = readStudent(userView);
+		if (student == null) {
+		    return "noAuthorization";
+		}
+		if (student.getPayedTuition() == null || student.getPayedTuition().equals(Boolean.FALSE)) {
+		    if(student.getInterruptedStudies().equals(Boolean.FALSE)) {
+		    	return "error.message.tuitionNotPayed";
+		    }
+		}
+		if (student.getFlunked() == null || student.getFlunked().equals(Boolean.TRUE)) {
+		    return "error.message.flunked";
+		}
+		if (student.getRequestedChangeDegree() == null || student.getRequestedChangeDegree().equals(Boolean.TRUE)) {
+		    return "error.message.requested.change.degree";
+		}
+		
+		if (student.hasAssociatedTutor()) {
+		    return new String("error.enrollment.student.withTutor+"
+		            + student.getAssociatedTutor().getTeacher().getTeacherNumber().toString() + "+"
+		            + student.getAssociatedTutor().getTeacher().getPerson().getNome());
+		}
+
+		// check if the student is in the list of secretary enrolments
+		// students
+		final SecretaryEnrolmentStudent secretaryEnrolmentStudent = student.getSecretaryEnrolmentStudents().isEmpty() ?
+		        null : student.getSecretaryEnrolmentStudents().iterator().next();
+		if (secretaryEnrolmentStudent != null) {
+		    return "error.message.secretaryEnrolmentStudent";
+		}
+
+		// check if the student is from old Leic Curricular Plan
+		List studentCurricularPlans = (List) CollectionUtils.select(student.getStudentCurricularPlans(), new Predicate(){
+		    public boolean evaluate(Object arg0) {
+		        StudentCurricularPlan scp = (StudentCurricularPlan) arg0;
+		        return scp.getCurrentState().equals(StudentCurricularPlanState.ACTIVE);
+		    }});
+            
+		boolean oldLeicStudent = CollectionUtils.exists(studentCurricularPlans, new Predicate() {
+		    public boolean evaluate(Object arg0) {
+
+		        StudentCurricularPlan studentCurricularPlan = (StudentCurricularPlan) arg0;
+		        return (studentCurricularPlan.getDegreeCurricularPlan().getIdInternal()
+		                .intValue() == LEIC_OLD_DCP);
+
+		    }
+		});
+		if (oldLeicStudent) {
+		    return "error.message.oldLeicStudent";
+		}
+		
+		return null;
+	}
+
+    protected boolean insideEnrollmentPeriod(StudentCurricularPlan studentCurricularPlan) {
+    	return (studentCurricularPlan.getDegreeCurricularPlan().getActualEnrolmentPeriod() != null);
     }
 
-    protected StudentCurricularPlan readStudentCurricularPlan(Object[] arguments)
-            throws ExcepcaoPersistencia {
-        StudentCurricularPlan studentCurricularPlan = null;
-        if (arguments[1] != null) {
-        	studentCurricularPlan = rootDomainObject.readStudentCurricularPlanByOID((Integer) arguments[1]);
-
-        } else {
-        	Student student = Student.readStudentByNumberAndDegreeType((Integer) arguments[2], DegreeType.DEGREE);
-        	studentCurricularPlan = student.getActiveOrConcludedStudentCurricularPlan();
-        }
-        return studentCurricularPlan;
+    protected Student readStudent(IUserView userView) {
+    	return userView.getPerson().getStudentByUsername();
     }
 
-    protected Student readStudent(IUserView id) throws ExcepcaoPersistencia {       
-        return Student.readByUsername(id.getUtilizador());
+    protected Student readStudent(Object[] arguments) {
+    	return  (arguments[1] != null) ? (Student) arguments[1] : null; 
     }
 
-    protected Student readStudent(Object[] arguments)
-            throws ExcepcaoPersistencia {
-        StudentCurricularPlan studentCurricularPlan = readStudentCurricularPlan(arguments);
-        if (studentCurricularPlan == null) {
-            return null;
-        }
-
-        return studentCurricularPlan.getStudent();
-    }
-
-    protected boolean curriculumOwner(Student student, IUserView id) {
-        if (!student.getPerson().getUsername().equals(id.getUtilizador())) {
-            return false;
-        }
-        return true;
-    }
-
-    /**
-     * @param integer
-     * @param sp
-     * @return
-     */
-    protected Tutor verifyStudentWithTutor(Student student)
-            throws ExcepcaoPersistencia {
-        return student.getAssociatedTutor();
-    }
-
-    protected Teacher readTeacher(IUserView id) throws ExcepcaoPersistencia {
+    protected Teacher readTeacher(IUserView id) {
         return Teacher.readTeacherByUsername(id.getUtilizador());
     }
 
-    protected boolean verifyCoordinator(Teacher teacher, Object[] arguments)
-            throws ExcepcaoPersistencia {
+    protected boolean verifyCoordinator(Teacher teacher, Object[] args) {
 
-        ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID((Integer) arguments[0]);
+        final ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID((Integer) args[0]);
         if(executionDegree == null) {
         	return false;
         }
-        Coordinator coordinator = executionDegree.getCoordinatorByTeacher(teacher);
+        
+        final Coordinator coordinator = executionDegree.getCoordinatorByTeacher(teacher);
         if (coordinator == null) {
             return false;
         }
@@ -270,12 +205,11 @@ public class EnrollmentAuthorizationFilter extends AuthorizationByManyRolesFilte
     		return false;
     	}
 
-        StudentCurricularPlan studentCurricularPlan = readStudentCurricularPlan(arguments);
+        final StudentCurricularPlan studentCurricularPlan = readStudent(args).getActiveStudentCurricularPlan();
         if (studentCurricularPlan == null) {
             return false;
         }
         return studentCurricularPlan.getDegreeCurricularPlan().equals(
                 coordinator.getExecutionDegree().getDegreeCurricularPlan());
-
     }
 }

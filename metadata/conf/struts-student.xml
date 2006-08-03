@@ -629,16 +629,8 @@
 		</action>  
     
     	<!-- *********************  Enrollment ********************** -->
-    	<action	path="/studentCurricularCoursesEnrollment"
-				type="net.sourceforge.fenixedu.presentationTier.Action.student.enrollment.StudentCurricularCoursesEnrollmentDispatchAction"
-				name="curricularCoursesEnrollmentForm"				
-				parameter="method"
-				scope="request"
-				validate="false">
-			<forward name="curricularCoursesEnrollment" path="/curricularCoursesEnrollment.do?method=start"/>
-		</action>
     	<action	path="/curricularCoursesEnrollment"
-				type="net.sourceforge.fenixedu.presentationTier.Action.degreeAdministrativeOffice.CurricularCoursesEnrollmentDispatchAction"
+				type="net.sourceforge.fenixedu.presentationTier.Action.student.enrollment.StudentCurricularCoursesEnrollmentDispatchAction"
 				name="curricularCoursesEnrollmentForm"				
 				parameter="method"
 				scope="request"
@@ -789,7 +781,7 @@
   			parameter="method"
   			>
   			<forward name="showAuthorizationInquiry" path="show-personal-data-use-inquiry"/>
-  			<forward name="proceedToEnrollment" path="/studentCurricularCoursesEnrollment.do?method=prepareEnrollment"/>
+  			<forward name="proceedToEnrollment" path="/curricularCoursesEnrollment.do?method=start"/>
   		</action>
   		
   		<action path="/dislocatedStudent"

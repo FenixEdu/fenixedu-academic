@@ -1,46 +1,31 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.degreeAdministrativeOffice.areas;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.BothAreasAreTheSameServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
-import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
 import net.sourceforge.fenixedu.domain.Branch;
+import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
-/**
- * @author David Santos in Apr 14, 2004
- */
 public class WriteStudentAreasWithoutRestrictions extends Service {
-    public WriteStudentAreasWithoutRestrictions() {
-    }
 
-    // The first 2 arguments are only used by the filter applyed to this
-    // service.
-    public void run(InfoStudent infoStudent, DegreeType degreeType, Integer studentCurricularPlanID,
-            Integer specializationAreaID, Integer secundaryAreaID) throws FenixServiceException, ExcepcaoPersistencia {
+	// student and degreeType used by filter
+	public void run(Student student, DegreeType degreeType, Integer specializationAreaID,
+			Integer secundaryAreaID) throws FenixServiceException {
 
-        StudentCurricularPlan studentCurricularPlan = rootDomainObject.readStudentCurricularPlanByOID(studentCurricularPlanID);
+		if (student == null) {
+			throw new NonExistingServiceException("error.invalid.student");
+		}
 
-        if (studentCurricularPlan == null) {
-            throw new NonExistingServiceException();
-        }
+		final StudentCurricularPlan studentCurricularPlan = student.getActiveOrConcludedStudentCurricularPlan();
+		if (studentCurricularPlan == null) {
+			throw new NonExistingServiceException("error.no.studentCurricularPlan");
+		}
 
-        Branch specializationArea = rootDomainObject.readBranchByOID(specializationAreaID);
+		final Branch specializationArea = rootDomainObject.readBranchByOID(specializationAreaID);
+		final Branch secundaryArea = (secundaryAreaID != null) ? rootDomainObject.readBranchByOID(secundaryAreaID) : null;
 
-        Branch secundaryArea = null;
-        if (secundaryAreaID != null) {
-            secundaryArea = rootDomainObject.readBranchByOID(secundaryAreaID);
-        }
-
-        try {
-            studentCurricularPlan.setStudentAreasWithoutRestrictions(specializationArea, secundaryArea);
-        } catch (DomainException e) {
-            throw new BothAreasAreTheSameServiceException();
-        }
-    }
-
+		studentCurricularPlan.setStudentAreasWithoutRestrictions(specializationArea, secundaryArea);
+	}
 }

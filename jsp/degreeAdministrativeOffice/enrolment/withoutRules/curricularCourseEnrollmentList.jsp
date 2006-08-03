@@ -1,13 +1,21 @@
 <%@ page language="java" %>
-<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %><html:xhtml/>
-<%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
+<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %><%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
-<%@ page import="net.sourceforge.fenixedu.domain.curriculum.CurricularCourseType" %>
-<%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoEnrolment" %>
+
+<html:xhtml/>
 
 <h2><bean:message key="title.student.enrolment.without.rules" bundle="DEGREE_ADM_OFFICE" /></h2>
 <span class="error"><!-- Error messages go here --><html:errors /></span>
+<logic:messagesPresent message="true">
+	<ul>
+		<html:messages id="messages" message="true">
+			<li><span class="error0"><bean:write name="messages" /></span></li>
+		</html:messages>
+	</ul>
+	<br />
+</logic:messagesPresent>
 <br />
+
 <%-- HELP UNENROLL --%>
 <table width="100%">
 	<tr>
@@ -17,9 +25,10 @@
 	</tr>
 </table>
 <br /><br />
-<logic:present name="infoStudentEnrolmentContext">
-	<bean:define id="infoEnrollmentsWithStateEnrolled" name="infoStudentEnrolmentContext" property="studentCurrentSemesterInfoEnrollments" />	
-	<bean:size id="enrollmentsSize" name="infoEnrollmentsWithStateEnrolled" />
+
+<logic:present name="studentCurricularPlan">
+
+	<bean:size id="enrollmentsSize" name="studentCurrentSemesterEnrollments" />
 	<strong><bean:message key="message.student.enrolled.curricularCourses" bundle="DEGREE_ADM_OFFICE" /></strong>
 	<br />
 	<logic:lessEqual  name="enrollmentsSize" value="0">
@@ -57,28 +66,31 @@
 						<bean:message key="label.unenroll"/>
 					</th>
 				</tr>
-				<logic:iterate id="infoEnrollment" name="infoEnrollmentsWithStateEnrolled">
-					<bean:define id="infoEnrollmentId" name="infoEnrollment" property="idInternal" />
+				<logic:iterate id="enrollment" name="studentCurrentSemesterEnrollments">
+					<bean:define id="enrollmentId" name="enrollment" property="idInternal" />
 					<tr>
-						<td class="listClasses" >
-							<bean:write name="infoEnrollment" property="infoCurricularCourse.name"/>
-							<% if ( !((InfoEnrolment) infoEnrollment).getEnrollmentTypeResourceKey().equals("option.curricularCourse.normal") ) {%>
-							(<bean:message name="infoEnrollment" property="enrollmentTypeResourceKey" />)
-							<% } %>
+						<td class="listClasses">
+							<bean:write name="enrollment" property="curricularCourse.name"/>
+							
+							<% if (enrollment instanceof net.sourceforge.fenixedu.domain.EnrolmentInExtraCurricularCourse) { %>
+								(<bean:message bundle="APPLICATION_RESOURCES" key="option.curricularCourse.extra"/>)
+							<% } else if (enrollment instanceof net.sourceforge.fenixedu.domain.EnrolmentInOptionalCurricularCourse) { %>
+								(<bean:message bundle="APPLICATION_RESOURCES" key="option.curricularCourse.optional"/>)
+			            	<% } %> 
 						</td>
 						<td class="listClasses">
-							<bean:write name="infoEnrollment" property="infoCurricularCourse.infoDegreeCurricularPlan.name"/>
+							<bean:write name="enrollment" property="curricularCourse.degreeCurricularPlan.name"/>
 						</td>
 						<td class="listClasses">
-							<bean:write name="infoEnrollment" property="infoExecutionPeriod.name"/>-<bean:write name="infoEnrollment" property="infoExecutionPeriod.infoExecutionYear.year"/>
+							<bean:write name="enrollment" property="executionPeriod.name"/>-<bean:write name="enrollment" property="executionPeriod.executionYear.year"/>
 						</td>
 						<td class="listClasses">
-							<bean:write name="infoEnrollment" property="infoCurricularCourse.enrollmentWeigth"/>
+							<bean:write name="enrollment" property="curricularCourse.enrollmentWeigth"/>
 						</td>
 						<td class="listClasses">
-							<bean:write name="infoEnrollment" property="accumulatedWeight"/>
+							<bean:write name="enrollment" property="accumulatedWeight"/>
 						</td>
-						<td class="listClasses"><html:multibox bundle="HTMLALT_RESOURCES" altKey="multibox.unenrollments" property="unenrollments" value="<%= infoEnrollmentId.toString() %>" /></td>
+						<td class="listClasses"><html:multibox bundle="HTMLALT_RESOURCES" altKey="multibox.unenrollments" property="unenrollments" value="<%= enrollmentId.toString() %>" /></td>
 					</tr>
 				</logic:iterate>
 			</table>
@@ -95,6 +107,7 @@
 </logic:present>
 <hr/>
 <br />
+
 <%-- HELP ENROLL --%>
 <table width="100%">
 	<tr>
@@ -110,10 +123,9 @@
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.executionPeriod" property="executionPeriod" />
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.degreeType" property="degreeType" />
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.userType" property="userType" />
-	<bean:define id="studentCurricularPlan" name="infoStudentEnrolmentContext"  property="infoStudentCurricularPlan.infoDegreeCurricularPlan.name"/>
-	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.studentCurricularPlan" property="studentCurricularPlan" value="<%=studentCurricularPlan.toString()%>"/>
+	
 	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton">
-			<bean:message key="button.enroll" bundle="DEGREE_ADM_OFFICE"/>
+		<bean:message key="button.enroll" bundle="DEGREE_ADM_OFFICE"/>
 	</html:submit>
 </html:form>
 <hr/>
@@ -125,7 +137,7 @@
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.degreeType" property="degreeType" />
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.userType" property="userType" />
 	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton">
-			<bean:message key="button.student.other" bundle="DEGREE_ADM_OFFICE"/>
+		<bean:message key="button.student.other" bundle="DEGREE_ADM_OFFICE"/>
 	</html:submit>
 	<html:cancel bundle="HTMLALT_RESOURCES" altKey="cancel.cancel" styleClass="inputbutton" onclick="this.form.method.value='exit';this.form.submit();">
 		<bean:message key="button.exit" bundle="DEGREE_ADM_OFFICE"/>

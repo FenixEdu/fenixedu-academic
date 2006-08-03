@@ -1,32 +1,46 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
-<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
+<html:xhtml/>
+
 <h2><bean:message key="title.student.enrollment" bundle="STUDENT_RESOURCES"/></h2>
+
 <span class="error"><!-- Error messages go here --><html:errors /></span>
+<logic:messagesPresent message="true">
+	<ul>
+		<html:messages id="messages" message="true">
+			<li><span class="error0"><bean:write name="messages" /></span></li>
+		</html:messages>
+	</ul>
+	<br />
+</logic:messagesPresent>
+
 <html:form action="/curricularCoursesEnrollment">
+
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="prepareEnrollmentChooseAreas" />
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="2" />
-	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.studentNumber" property="studentNumber" />
-	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.studentName" property="studentName" value="<%=pageContext.findAttribute("studentName").toString()%>"/>
-	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.executionPeriod" property="executionPeriod" value="<%=pageContext.findAttribute("executionPeriod").toString()%>"/>
-	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.executionYear" property="executionYear" value="<%=pageContext.findAttribute("executionYear").toString()%>"/>
-	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.studentCurricularPlanId" property="studentCurricularPlanId" value="<%=pageContext.findAttribute("studentCurricularPlanId").toString()%>"/>
+	
+	<bean:define id="executionPeriod" name="executionPeriod" />
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.executionPeriod" property="executionPeriod" value="<%= executionPeriod.toString() %>"/>
+	
+	<bean:define id="executionYear" name="executionYear" />
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.executionYear" property="executionYear" value="<%= executionYear.toString() %>"/>
+	
+	<bean:define id="studentNumber" name="studentCurricularPlan" property="student.number" />
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.studentNumber" property="studentNumber" value="<%= studentNumber.toString() %>" />
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.degreeCurricularPlanID" property="degreeCurricularPlanID" />
+	
 	<logic:present name="executionDegreeId">
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.executionDegreeId" property="executionDegreeId" value="<%=pageContext.findAttribute("executionDegreeId").toString()%>"/>
 	</logic:present>
+	
 	<table width="100%" border="0" cellpadding="0" cellspacing="0">
 		<tr>
 			<td align="center" class="infoselected">
-				<bean:define id="studentNumber"><%=pageContext.findAttribute("studentNumber")%></bean:define>
-				<bean:define id="studentName"><%=pageContext.findAttribute("studentName")%></bean:define>
-				<bean:define id="executionPeriod"><%=pageContext.findAttribute("executionPeriod")%></bean:define>
-				<bean:define id="executionYear"><%=pageContext.findAttribute("executionYear")%></bean:define>
 				<b><bean:message key="label.student.enrollment.number"/></b>
-				<bean:write name="studentNumber" />&nbsp;-&nbsp;
-				<bean:write name="studentName" />
+				<bean:write name="studentCurricularPlan" property="student.number" />&nbsp;-&nbsp;
+				<bean:write name="studentCurricularPlan" property="student.person.name" />
 				<br/>
 				<b><bean:message key="label.student.enrollment.executionPeriod"/></b>
 				<bean:write name="executionPeriod" />&nbsp;				
@@ -48,7 +62,6 @@
 			</td>
 			<td>
 				<br />
-				<bean:define id="specializationAreas" name="branches" property="finalSpecializationAreas" />
 				<html:select bundle="HTMLALT_RESOURCES" altKey="select.specializationArea" property="specializationArea">
 					<html:option value="" key="label.student.enrollment.no.area">
 						<bean:message key="label.student.enrollment.no.area"/>
@@ -62,12 +75,11 @@
 				<bean:message key="label.student.enrollment.secondaryArea" />
 			</td>
 			<td>
-				<bean:define id="secundaryAreas" name="branches" property="finalSecundaryAreas" />
 				<html:select bundle="HTMLALT_RESOURCES" altKey="select.secondaryArea" property="secondaryArea">
 					<html:option value="" key="label.student.enrollment.no.area">
 						<bean:message key="label.student.enrollment.no.area"/>
 					</html:option>
-					<html:options collection="secundaryAreas" property="idInternal" labelProperty="name"/>
+					<html:options collection="secondaryAreas" property="idInternal" labelProperty="name"/>
 				</html:select>
 			</td>
 		</tr>

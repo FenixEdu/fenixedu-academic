@@ -7,6 +7,7 @@ package net.sourceforge.fenixedu.domain.degree.enrollment;
 import java.io.Serializable;
 
 import net.sourceforge.fenixedu.domain.CurricularCourse;
+import net.sourceforge.fenixedu.domain.CurricularYear;
 import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseEnrollmentType;
 
 /**
@@ -14,95 +15,90 @@ import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseEnrollmentType
  */
 
 public class CurricularCourse2Enroll implements Serializable {
-    private CurricularCourse curricularCourse;
 
-    private CurricularCourseEnrollmentType enrollmentType;
+	private CurricularCourse curricularCourse;
 
-    private Integer accumulatedWeight;
+	private CurricularCourseEnrollmentType enrollmentType;
 
-    private Boolean optionalCurricularCourse;
+	private Integer accumulatedWeight;
 
-    /**
-     *  
-     */
-    public CurricularCourse2Enroll() {
-    }
+	private Boolean optionalCurricularCourse;
 
-    public CurricularCourse2Enroll(CurricularCourse curricularCourse,
-            CurricularCourseEnrollmentType enrollmentRuleType, Boolean optionalCurricularCourse) {
-        this.curricularCourse = curricularCourse;
-        this.enrollmentType = enrollmentRuleType;
-        this.optionalCurricularCourse = optionalCurricularCourse;
-    }
+	private CurricularYear curricularYear;
 
-    /**
-     * @return Returns the curricularCourse.
-     */
-    public CurricularCourse getCurricularCourse() {
-        return curricularCourse;
-    }
+	public CurricularCourse2Enroll() {
+	}
 
-    public Boolean getOptionalCurricularCourse() {
-        return optionalCurricularCourse;
-    }
+	public CurricularCourse2Enroll(CurricularCourse curricularCourse,
+			CurricularCourseEnrollmentType enrollmentRuleType, Boolean optionalCurricularCourse) {
+		this.curricularCourse = curricularCourse;
+		this.enrollmentType = enrollmentRuleType;
+		this.optionalCurricularCourse = optionalCurricularCourse;
+	}
 
-    public void setOptionalCurricularCourse(Boolean optionalCurricularCourse) {
-        this.optionalCurricularCourse = optionalCurricularCourse;
-    }
+	public CurricularCourse2Enroll(CurricularCourse curricularCourse,
+			CurricularCourseEnrollmentType enrollmentRuleType, Boolean optionalCurricularCourse,
+			CurricularYear curricularYear) {
+		
+		this(curricularCourse, enrollmentRuleType, optionalCurricularCourse);
+		this.curricularYear = curricularYear;
+	}
 
-    /**
-     * @param curricularCourse
-     *            The curricularCourse to set.
-     */
-    public void setCurricularCourse(CurricularCourse curricularCourse) {
-        this.curricularCourse = curricularCourse;
-    }
+	public CurricularCourse getCurricularCourse() {
+		return curricularCourse;
+	}
 
-    /**
-     * @return Returns the enrollmentRuleType.
-     */
-    public CurricularCourseEnrollmentType getEnrollmentType() {
-        return enrollmentType;
-    }
+	public Boolean getOptionalCurricularCourse() {
+		return optionalCurricularCourse;
+	}
 
-    /**
-     * @param enrollmentRuleType
-     *            The enrollmentRuleType to set.
-     */
-    public void setEnrollmentType(CurricularCourseEnrollmentType enrollmentRuleType) {
-        this.enrollmentType = enrollmentRuleType;
-    }
+	public void setOptionalCurricularCourse(Boolean optionalCurricularCourse) {
+		this.optionalCurricularCourse = optionalCurricularCourse;
+	}
 
-    /**
-     * @return Returns the accumulatedWeight.
-     */
-    public Integer getAccumulatedWeight() {
-        return accumulatedWeight;
-    }
+	public void setCurricularCourse(CurricularCourse curricularCourse) {
+		this.curricularCourse = curricularCourse;
+	}
 
-    /**
-     * @param accumulatedWeight
-     *            The accumulatedWeight to set.
-     */
-    public void setAccumulatedWeight(Integer accumulatedWeight) {
-        this.accumulatedWeight = accumulatedWeight;
-    }
+	public CurricularCourseEnrollmentType getEnrollmentType() {
+		return enrollmentType;
+	}
 
-    public String toString() {
-        return getCurricularCourse().getName() + " - " + getCurricularCourse().getCode() + " - "
-                + getEnrollmentType().toString() + " - " + getAccumulatedWeight().toString();
-    }
+	public void setEnrollmentType(CurricularCourseEnrollmentType enrollmentRuleType) {
+		this.enrollmentType = enrollmentRuleType;
+	}
 
-    public boolean isOptionalCurricularCourse() {
-        return optionalCurricularCourse.booleanValue();
-    }
+	public Integer getAccumulatedWeight() {
+		return accumulatedWeight;
+	}
 
-    public boolean equals(Object obj) {
-        if (obj instanceof CurricularCourse2Enroll) {
-            CurricularCourse2Enroll curricularCourse2Enroll = (CurricularCourse2Enroll) obj;
-            return this.getCurricularCourse().equals(curricularCourse2Enroll.getCurricularCourse());
-        }
-        return false;
-    }
+	public void setAccumulatedWeight(Integer accumulatedWeight) {
+		this.accumulatedWeight = accumulatedWeight;
+	}
+
+	public String toString() {
+		return getCurricularCourse().getName() + " - " + getCurricularCourse().getCode() + " - "
+				+ getEnrollmentType().toString() + " - " + getAccumulatedWeight().toString();
+	}
+
+	public boolean isOptionalCurricularCourse() {
+		return optionalCurricularCourse.booleanValue();
+	}
+
+	public boolean equals(Object obj) {
+		if (obj instanceof CurricularCourse2Enroll) {
+			CurricularCourse2Enroll curricularCourse2Enroll = (CurricularCourse2Enroll) obj;
+			return this.getCurricularCourse().equals(curricularCourse2Enroll.getCurricularCourse());
+		}
+		return false;
+	}
+
+	public CurricularYear getCurricularYear() {
+		return curricularYear;
+	}
+
+	public void setCurricularYear(CurricularYear curricularYear) {
+		this.curricularYear = curricularYear;
+	}
 
 }

@@ -6,6 +6,14 @@
 <h2><bean:message key="title.student.change.areas"/></h2>
 
 <span class="error"><!-- Error messages go here --><html:errors /></span>
+<logic:messagesPresent message="true">
+	<ul>
+		<html:messages id="messages" message="true">
+			<li><span class="error0"><bean:write name="messages" /></span></li>
+		</html:messages>
+	</ul>
+	<br />
+</logic:messagesPresent>
 
 <html:form action="/changeStudentAreas.do" focus="studentNumber">
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="showAndChooseStudentAreas"/>

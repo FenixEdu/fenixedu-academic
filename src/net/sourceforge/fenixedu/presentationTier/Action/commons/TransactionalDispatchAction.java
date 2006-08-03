@@ -2,13 +2,11 @@ package net.sourceforge.fenixedu.presentationTier.Action.commons;
 
 import javax.servlet.http.HttpServletRequest;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixTransactionException;
-import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionMapping;
-import org.apache.struts.actions.DispatchAction;
 
 /**
  * Contains util functions for struts transaction management.
@@ -16,7 +14,7 @@ import org.apache.struts.actions.DispatchAction;
  * @author David Santos 9/Jul/2003
  */
 
-public class TransactionalDispatchAction extends DispatchAction {
+public class TransactionalDispatchAction extends FenixDispatchAction {
 
     /**
      * Creates a token and saves it on request
@@ -70,10 +68,6 @@ public class TransactionalDispatchAction extends DispatchAction {
             createToken(request);
         }
 
-    }
-    
-    protected static IUserView getUserView(HttpServletRequest request) {
-        return SessionUtils.getUserView(request);
     }
 
 }
