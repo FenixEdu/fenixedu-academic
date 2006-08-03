@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
 
+import pt.utl.ist.fenix.tools.smtp.EmailSender;
+
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
@@ -23,7 +25,17 @@ public class PrintMarkSheet extends Service{
 		if(markSheet == null) {
 			throw new InvalidArgumentsServiceException("mark sheet cannot be null");
 		}
+		
 		printMarkSheet(markSheet, printerName);
+		
+		if(!markSheet.getPrinted()) {
+			markSheet.setPrinted(Boolean.TRUE);
+			
+			/*if(markSheet.getResponsibleTeacher().getPerson().getEmail() != null) {
+				EmailSender.send(null, "from", Collections.singletonList(markSheet.getResponsibleTeacher().getPerson().getEmail()), 
+						null, null, "subject", "message");
+			}*/
+		}
 	}
 	
 	
@@ -39,7 +51,5 @@ public class PrintMarkSheet extends Service{
 		if(!result) {
 			throw new UnableToPrintServiceException("error.print.failed");
 		}
-		markSheet.setPrinted(Boolean.TRUE);
 	}
-
 }
