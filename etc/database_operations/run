@@ -27,3 +27,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Update Bolonha Type in Curricular Rules" updateCurricularRulesBolonhaType.sql

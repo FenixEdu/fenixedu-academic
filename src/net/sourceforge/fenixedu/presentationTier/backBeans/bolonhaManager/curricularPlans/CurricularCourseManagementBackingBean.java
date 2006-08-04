@@ -181,7 +181,7 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
     }
 
     public List<SelectItem> getCurricularYears() {
-        final int years = getDegreeCurricularPlan().getDegree().getBolonhaDegreeType().getYears();
+        final int years = getDegreeCurricularPlan().getDegree().getDegreeType().getYears();
         final List<SelectItem> result = new ArrayList<SelectItem>(years);
         result.add(new SelectItem(this.NO_SELECTION, bolonhaBundle.getString("choose")));
         for (int i = 1; i <= years; i++) {

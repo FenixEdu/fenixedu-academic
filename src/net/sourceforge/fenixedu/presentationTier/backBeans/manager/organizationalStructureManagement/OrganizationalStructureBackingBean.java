@@ -22,7 +22,6 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterExce
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.Department;
-import net.sourceforge.fenixedu.domain.degree.BolonhaDegreeType;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Accountability;
@@ -133,18 +132,20 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 
         StringBuilder buffer = new StringBuilder();
         YearMonthDay currentDate = new YearMonthDay();
-        if (this.getUnit().getType() != null && this.getUnit().getType().equals(PartyTypeEnum.EXTERNAL_INSTITUTION)) {            
+        if (this.getUnit().getType() != null
+                && this.getUnit().getType().equals(PartyTypeEnum.EXTERNAL_INSTITUTION)) {
             buffer.append("<ul class='padding1 nobullet'>");
-            getSubUnitsListToChooseParentUnit(UnitUtils.readExternalInstitutionUnit(), buffer, currentDate);
+            getSubUnitsListToChooseParentUnit(UnitUtils.readExternalInstitutionUnit(), buffer,
+                    currentDate);
             closeULTag(buffer);
-        } else {            
+        } else {
             buffer.append("<ul class='padding1 nobullet'>");
             getSubUnitsListToChooseParentUnit(UnitUtils.readInstitutionUnit(), buffer, currentDate);
             closeULTag(buffer);
         }
         return buffer.toString();
     }
-    
+
     private void getSubUnitsListToChooseParentUnit(Unit parentUnit, StringBuilder buffer,
             YearMonthDay currentDate) throws FenixFilterException, FenixServiceException {
 
@@ -203,13 +204,15 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
             if (active) {
                 if (unit.isActive(currentDate) || !getAllSubUnits(active, unit, currentDate).isEmpty()) {
                     buffer.append("<ul class='padding1 nobullet'>");
-                    getSubUnitsList(unit, getSubUnits(active, unit, currentDate), buffer, currentDate, active);
+                    getSubUnitsList(unit, getSubUnits(active, unit, currentDate), buffer, currentDate,
+                            active);
                     buffer.append("</ul>");
                 }
             } else {
                 if (!unit.isActive(currentDate) || !getAllSubUnits(active, unit, currentDate).isEmpty()) {
-                    buffer.append("<ul class='padding1 nobullet'>");                    
-                    getSubUnitsList(unit, getSubUnits(active, unit, currentDate), buffer, currentDate, active);
+                    buffer.append("<ul class='padding1 nobullet'>");
+                    getSubUnitsList(unit, getSubUnits(active, unit, currentDate), buffer, currentDate,
+                            active);
                     buffer.append("</ul>");
                 }
             }
@@ -237,7 +240,8 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
         }
 
         for (Unit subUnit : subUnits) {
-            getSubUnitsList(subUnit, getSubUnits(active, subUnit, currentDate), buffer, currentDate, active);
+            getSubUnitsList(subUnit, getSubUnits(active, subUnit, currentDate), buffer, currentDate,
+                    active);
         }
 
         if (!subUnits.isEmpty()) {
@@ -250,7 +254,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 
         YearMonthDay currentDate = new YearMonthDay();
         StringBuilder buffer = new StringBuilder();
-        buffer.append("<ul class='padding1 nobullet'>");        
+        buffer.append("<ul class='padding1 nobullet'>");
         getSubUnitsListToChoosePrincipalFunction(UnitUtils.readInstitutionUnit(), buffer, currentDate);
         buffer.append("</ul>");
         return buffer.toString();
@@ -346,20 +350,17 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
                     selectItem.setLabel("(M) " + degree.getNome());
                 }
             } else if (degree.isBolonhaDegree()) {
-                if (degree.getBolonhaDegreeType().equals(BolonhaDegreeType.DEGREE)) {
+                if (degree.getDegreeType().equals(DegreeType.BOLONHA_DEGREE)) {
                     selectItem.setLabel("(L-B) " + degree.getNome());
-                } else if (degree.getBolonhaDegreeType().equals(BolonhaDegreeType.MASTER_DEGREE)) {
+                } else if (degree.getDegreeType().equals(DegreeType.BOLONHA_MASTER_DEGREE)) {
                     selectItem.setLabel("(M-B) " + degree.getNome());
-                } else if (degree.getBolonhaDegreeType().equals(
-                        BolonhaDegreeType.INTEGRATED_MASTER_DEGREE)) {
+                } else if (degree.getDegreeType().equals(DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE)) {
                     selectItem.setLabel("(MI) " + degree.getNome());
-                } else if (degree.getBolonhaDegreeType().equals(
-                        BolonhaDegreeType.ADVANCED_FORMATION_DIPLOMA)) {
+                } else if (degree.getDegreeType().equals(DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA)) {
                     selectItem.setLabel("(DFA) " + degree.getNome());
-                } else if (degree.getBolonhaDegreeType().equals(
-                        BolonhaDegreeType.ADVANCED_STUDIES_DIPLOMA)) {
+                } else if (degree.getDegreeType().equals(DegreeType.BOLONHA_ADVANCED_STUDIES_DIPLOMA)) {
                     selectItem.setLabel("(DEA) " + degree.getNome());
-                } else if (degree.getBolonhaDegreeType().equals(BolonhaDegreeType.SPECIALIZATION_DEGREE)) {
+                } else if (degree.getDegreeType().equals(DegreeType.BOLONHA_SPECIALIZATION_DEGREE)) {
                     selectItem.setLabel("(SD) " + degree.getNome());
                 }
             }
@@ -708,8 +709,8 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
     }
 
     private void openULTag(Unit parentUnit, StringBuilder buffer) {
-        buffer.append("<ul class='mvert0 nobullet' id=\"").append("aa").append(parentUnit.getIdInternal())
-                .append("\" ").append("style='display:none'>\r\n");
+        buffer.append("<ul class='mvert0 nobullet' id=\"").append("aa").append(
+                parentUnit.getIdInternal()).append("\" ").append("style='display:none'>\r\n");
     }
 
     private void putImage(Unit parentUnit, StringBuilder buffer) {

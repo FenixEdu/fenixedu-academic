@@ -31,7 +31,7 @@ public class EditContextFromCurricularCourse extends Service {
          */
         CurricularPeriod curricularPeriod = null;
         CurricularPeriodInfoDTO curricularPeriodInfoYear = null;
-        if (courseGroup.getParentDegreeCurricularPlan().getDegree().getBolonhaDegreeType().getYears() > 1) {
+        if (courseGroup.getParentDegreeCurricularPlan().getDegree().getDegreeType().getYears() > 1) {
             curricularPeriodInfoYear = new CurricularPeriodInfoDTO(year, CurricularPeriodType.YEAR);
         }
         final CurricularPeriodInfoDTO curricularPeriodInfoSemester = new CurricularPeriodInfoDTO(semester, CurricularPeriodType.SEMESTER);

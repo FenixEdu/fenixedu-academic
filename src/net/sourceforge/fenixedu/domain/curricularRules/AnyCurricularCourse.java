@@ -12,7 +12,7 @@ import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseType;
-import net.sourceforge.fenixedu.domain.degree.BolonhaDegreeType;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
@@ -22,7 +22,7 @@ public class AnyCurricularCourse extends AnyCurricularCourse_Base {
     protected AnyCurricularCourse(CurricularCourse curricularCourseToApplyRule,
             CourseGroup contextCourseGroup, ExecutionPeriod begin, ExecutionPeriod end,
             Double credits, Integer curricularPeriodOrder, Integer minimumYear, Integer maximumYear, 
-            BolonhaDegreeType bolonhaDegreeType, Degree degree, Unit departmentUnit) {
+            DegreeType degreeType, Degree degree, Unit departmentUnit) {
         
         super();
 
@@ -45,13 +45,13 @@ public class AnyCurricularCourse extends AnyCurricularCourse_Base {
         setCurricularPeriodOrder(curricularPeriodOrder);
         setMinimumYear(minimumYear);
         setMaximumYear(maximumYear);
-        setBolonhaDegreeType(bolonhaDegreeType);
+        setBolonhaDegreeType(degreeType);
         setDegree(degree);
         setDepartmentUnit(departmentUnit);
     }
     
     protected void edit(CourseGroup contextCourseGroup, Double credits, Integer curricularPeriodOrder,
-            Integer minimumYear, Integer maximumYear, BolonhaDegreeType bolonhaDegreeType, Degree degree, Unit departmentUnit) {
+            Integer minimumYear, Integer maximumYear, DegreeType degreeType, Degree degree, Unit departmentUnit) {
         
         checkYears(minimumYear, maximumYear);
         setContextCourseGroup(contextCourseGroup);
@@ -59,7 +59,7 @@ public class AnyCurricularCourse extends AnyCurricularCourse_Base {
         setCurricularPeriodOrder(curricularPeriodOrder);
         setMinimumYear(minimumYear);
         setMaximumYear(maximumYear);
-        setBolonhaDegreeType(bolonhaDegreeType);
+        setBolonhaDegreeType(degreeType);
         setDegree(degree);
         setDepartmentUnit(departmentUnit);
     }

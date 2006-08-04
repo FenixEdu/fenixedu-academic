@@ -16,7 +16,6 @@ import net.sourceforge.fenixedu.domain.Campus;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.degree.BolonhaDegreeType;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degree.degreeCurricularPlan.DegreeCurricularPlanState;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -32,41 +31,75 @@ import net.sourceforge.fenixedu.util.Data;
  */
 public class CreateExecutionDegreesForExecutionYear extends FenixBackingBean {
     private final ResourceBundle enumerationBundle = getResourceBundle("resources/EnumerationResources");
+
     private final ResourceBundle domainExceptionBundle = getResourceBundle("resources/DomainExceptionResources");
 
     private String chosenDegreeType;
+
     private Integer[] choosenDegreeCurricularPlansIDs;
+
     private Integer[] choosenBolonhaDegreeCurricularPlansIDs;
+
     private UISelectItems degreeCurricularPlansSelectItems;
+
     public UISelectItems bolonhaDegreeCurricularPlansSelectItems;
+
     private String campus;
+
     private Boolean temporaryExamMap;
+
     private Integer lessonSeason1BeginDay;
+
     private Integer lessonSeason1BeginMonth;
+
     private Integer lessonSeason1EndDay;
+
     private Integer lessonSeason1EndMonth;
+
     private Integer lessonSeason2BeginDay;
+
     private Integer lessonSeason2BeginMonth;
+
     private Integer lessonSeason2EndDay;
+
     private Integer lessonSeason2EndMonth;
+
     private Integer examsSeason1BeginDay;
+
     private Integer examsSeason1BeginMonth;
+
     private Integer examsSeason1EndDay;
+
     private Integer examsSeason1EndMonth;
+
     private Integer examsSeason2BeginDay;
+
     private Integer examsSeason2BeginMonth;
+
     private Integer examsSeason2EndDay;
+
     private Integer examsSeason2EndMonth;
+
     private Integer examsSpecialSeasonBeginDay;
+
     private Integer examsSpecialSeasonBeginMonth;
+
     private Integer examsSpecialSeasonEndDay;
+
     private Integer examsSpecialSeasonEndMonth;
+
     private Integer gradeSubmissionNormalSeason1EndDay;
+
     private Integer gradeSubmissionNormalSeason1EndMonth;
+
     private Integer gradeSubmissionNormalSeason2EndDay;
+
     private Integer gradeSubmissionNormalSeason2EndMonth;
+
     private Integer gradeSubmissionSpecialSeasonEndDay;
+
     private Integer gradeSubmissionSpecialSeasonEndMonth;
+
     private List<DegreeCurricularPlan> createdDegreeCurricularPlans;
 
     public CreateExecutionDegreesForExecutionYear() {
@@ -74,12 +107,15 @@ public class CreateExecutionDegreesForExecutionYear extends FenixBackingBean {
     }
 
     public List<SelectItem> getDegreeTypes() {
-        final List<SelectItem> result = new ArrayList<SelectItem>(BolonhaDegreeType.values().length + 1);
+        final List<SelectItem> result = new ArrayList<SelectItem>();
         result.add(new SelectItem("dropDown.Default", enumerationBundle.getString("dropDown.Default")));
-        for (final BolonhaDegreeType bolonhaDegreeType : BolonhaDegreeType.values()) {
-            result.add(new SelectItem(bolonhaDegreeType.name(), enumerationBundle.getString(bolonhaDegreeType.name())));
+        for (final DegreeType bolonhaDegreeType : DegreeType.values()) {
+            if (bolonhaDegreeType.isBolonhaType()) {
+                result.add(new SelectItem(bolonhaDegreeType.name(), enumerationBundle
+                        .getString(bolonhaDegreeType.name())));
+            }
         }
-        
+
         return result;
     }
 
@@ -100,12 +136,21 @@ public class CreateExecutionDegreesForExecutionYear extends FenixBackingBean {
                 result = Collections.EMPTY_LIST;
             } else {
                 result = new ArrayList<SelectItem>();
-                
-                final List<DegreeCurricularPlan> toShow = DegreeCurricularPlan.readByDegreeTypeAndState(degreeType, DegreeCurricularPlanState.ACTIVE);
-                Collections.sort(toShow, DegreeCurricularPlan.DEGREE_CURRICULAR_PLAN_COMPARATOR_BY_DEGREE_TYPE_AND_EXECUTION_DEGREE_AND_DEGREE_CODE);
-                
+
+                final List<DegreeCurricularPlan> toShow = DegreeCurricularPlan.readByDegreeTypeAndState(
+                        degreeType, DegreeCurricularPlanState.ACTIVE);
+                Collections
+                        .sort(
+                                toShow,
+                                DegreeCurricularPlan.DEGREE_CURRICULAR_PLAN_COMPARATOR_BY_DEGREE_TYPE_AND_EXECUTION_DEGREE_AND_DEGREE_CODE);
+
                 for (final DegreeCurricularPlan degreeCurricularPlan : toShow) {
-                    result.add(new SelectItem(degreeCurricularPlan.getIdInternal(), enumerationBundle.getString(degreeType.getName()) + " " + degreeCurricularPlan.getDegree().getName() + " - " + degreeCurricularPlan.getName()));
+                    result.add(new SelectItem(degreeCurricularPlan.getIdInternal(), enumerationBundle
+                            .getString(degreeType.getName())
+                            + " "
+                            + degreeCurricularPlan.getDegree().getName()
+                            + " - "
+                            + degreeCurricularPlan.getName()));
                 }
             }
             this.degreeCurricularPlansSelectItems = new UISelectItems();
@@ -121,23 +166,32 @@ public class CreateExecutionDegreesForExecutionYear extends FenixBackingBean {
 
     public UISelectItems getBolonhaDegreeCurricularPlansSelectItems() {
         if (this.bolonhaDegreeCurricularPlansSelectItems == null) {
-            final BolonhaDegreeType bolonhaDegreeType = BolonhaDegreeType.valueOf(getChosenDegreeType());
+            final DegreeType bolonhaDegreeType = DegreeType.valueOf(getChosenDegreeType());
 
             final List<DegreeCurricularPlan> toShow = new ArrayList<DegreeCurricularPlan>();
             for (final Degree degree : Degree.readBolonhaDegrees()) {
-                if (degree.getBolonhaDegreeType() == bolonhaDegreeType) {
-                    for (final DegreeCurricularPlan degreeCurricularPlan : degree.getActiveDegreeCurricularPlans()) {
+                if (degree.getDegreeType() == bolonhaDegreeType) {
+                    for (final DegreeCurricularPlan degreeCurricularPlan : degree
+                            .getActiveDegreeCurricularPlans()) {
                         if (!degreeCurricularPlan.isDraft()) {
                             toShow.add(degreeCurricularPlan);
                         }
                     }
                 }
             }
-            Collections.sort(toShow, DegreeCurricularPlan.DEGREE_CURRICULAR_PLAN_COMPARATOR_BY_DEGREE_TYPE_AND_EXECUTION_DEGREE_AND_DEGREE_CODE);
-            
+            Collections
+                    .sort(
+                            toShow,
+                            DegreeCurricularPlan.DEGREE_CURRICULAR_PLAN_COMPARATOR_BY_DEGREE_TYPE_AND_EXECUTION_DEGREE_AND_DEGREE_CODE);
+
             final List<SelectItem> result = new ArrayList<SelectItem>();
             for (final DegreeCurricularPlan degreeCurricularPlan : toShow) {
-                result.add(new SelectItem(degreeCurricularPlan.getIdInternal(), enumerationBundle.getString(bolonhaDegreeType.getName()) + " " + degreeCurricularPlan.getDegree().getName() + " - " + degreeCurricularPlan.getName()));
+                result.add(new SelectItem(degreeCurricularPlan.getIdInternal(), enumerationBundle
+                        .getString(bolonhaDegreeType.getName())
+                        + " "
+                        + degreeCurricularPlan.getDegree().getName()
+                        + " - "
+                        + degreeCurricularPlan.getName()));
             }
 
             this.bolonhaDegreeCurricularPlansSelectItems = new UISelectItems();
@@ -145,26 +199,14 @@ public class CreateExecutionDegreesForExecutionYear extends FenixBackingBean {
         }
         return this.bolonhaDegreeCurricularPlansSelectItems;
     }
-    
-    public void setBolonhaDegreeCurricularPlansSelectItems(UISelectItems bolonhaDegreeCurricularPlansSelectItems) {
+
+    public void setBolonhaDegreeCurricularPlansSelectItems(
+            UISelectItems bolonhaDegreeCurricularPlansSelectItems) {
         this.bolonhaDegreeCurricularPlansSelectItems = bolonhaDegreeCurricularPlansSelectItems;
     }
 
     private DegreeType getDegreeType(final String chosenDegreeType) {
-        final BolonhaDegreeType bolonhaDegreeType = BolonhaDegreeType.valueOf(chosenDegreeType);
-
-        switch (bolonhaDegreeType) {
-
-        case DEGREE:
-            return DegreeType.DEGREE;
-
-        case MASTER_DEGREE:
-            return DegreeType.MASTER_DEGREE;
-
-        default:
-            break;
-        }
-        return null;
+        return DegreeType.valueOf(chosenDegreeType);
     }
 
     public List getExecutionYears() {
@@ -181,26 +223,26 @@ public class CreateExecutionDegreesForExecutionYear extends FenixBackingBean {
 
     public void onChoosenExecutionYearChanged(ValueChangeEvent valueChangeEvent) {
         setChoosenExecutionYearID((Integer) valueChangeEvent.getNewValue());
-        
+
         setYearsAccordingToChosenExecutionYear();
     }
-    
+
     private void setYearsAccordingToChosenExecutionYear() {
         int beginYear = getChoosenExecutionYear().getBeginDateYearMonthDay().getYear();
         int endYear = getChoosenExecutionYear().getEndDateYearMonthDay().getYear();
-        
+
         setLessonSeason1BeginYear(beginYear);
         setLessonSeason1EndYear(beginYear);
         setExamsSeason1BeginYear(endYear);
         setExamsSeason1EndYear(endYear);
         setGradeSubmissionNormalSeason1EndYear(endYear);
-        
+
         setLessonSeason2BeginYear(endYear);
         setLessonSeason2EndYear(endYear);
         setExamsSeason2BeginYear(endYear);
         setExamsSeason2EndYear(endYear);
         setGradeSubmissionNormalSeason2EndYear(endYear);
-        
+
         setExamsSpecialSeasonBeginYear(endYear);
         setExamsSpecialSeasonEndYear(endYear);
         setGradeSubmissionSpecialSeasonEndYear(endYear);
@@ -247,39 +289,39 @@ public class CreateExecutionDegreesForExecutionYear extends FenixBackingBean {
         Calendar examsSeason2EndDate = Calendar.getInstance();
         examsSeason2EndDate.set(getExamsSeason2EndYear(), getExamsSeason2EndMonth(),
                 getExamsSeason2EndDay());
-        
+
         Calendar examsSpecialSeasonBeginDate = Calendar.getInstance();
-        examsSpecialSeasonBeginDate.set(getExamsSpecialSeasonBeginYear(), getExamsSpecialSeasonBeginMonth(),
-                getExamsSpecialSeasonBeginDay());
+        examsSpecialSeasonBeginDate.set(getExamsSpecialSeasonBeginYear(),
+                getExamsSpecialSeasonBeginMonth(), getExamsSpecialSeasonBeginDay());
 
         Calendar examsSpecialSeasonEndDate = Calendar.getInstance();
         examsSpecialSeasonEndDate.set(getExamsSpecialSeasonEndYear(), getExamsSpecialSeasonEndMonth(),
                 getExamsSpecialSeasonEndDay());
-        
+
         Calendar gradeSubmissionNormalSeason1EndDate = Calendar.getInstance();
-        gradeSubmissionNormalSeason1EndDate.set(getGradeSubmissionNormalSeason1EndYear(), getGradeSubmissionNormalSeason1EndMonth(),
-                getGradeSubmissionNormalSeason1EndDay());
-        
+        gradeSubmissionNormalSeason1EndDate.set(getGradeSubmissionNormalSeason1EndYear(),
+                getGradeSubmissionNormalSeason1EndMonth(), getGradeSubmissionNormalSeason1EndDay());
+
         Calendar gradeSubmissionNormalSeason2EndDate = Calendar.getInstance();
-        gradeSubmissionNormalSeason2EndDate.set(getGradeSubmissionNormalSeason2EndYear(), getGradeSubmissionNormalSeason2EndMonth(),
-                getGradeSubmissionNormalSeason2EndDay());
-        
+        gradeSubmissionNormalSeason2EndDate.set(getGradeSubmissionNormalSeason2EndYear(),
+                getGradeSubmissionNormalSeason2EndMonth(), getGradeSubmissionNormalSeason2EndDay());
+
         Calendar gradeSubmissionSpecialSeasonEndDate = Calendar.getInstance();
-        gradeSubmissionSpecialSeasonEndDate.set(getGradeSubmissionSpecialSeasonEndYear(), getGradeSubmissionSpecialSeasonEndMonth(),
-                getGradeSubmissionSpecialSeasonEndDay());
+        gradeSubmissionSpecialSeasonEndDate.set(getGradeSubmissionSpecialSeasonEndYear(),
+                getGradeSubmissionSpecialSeasonEndMonth(), getGradeSubmissionSpecialSeasonEndDay());
 
         Object[] args = { getChoosenDegreeCurricularPlansIDs(),
                 getChoosenBolonhaDegreeCurricularPlansIDs(), getChoosenExecutionYearID(), getCampus(),
                 getTemporaryExamMap(), lessonSeason1BeginDate, lessonSeason1EndDate,
                 lessonSeason2BeginDate, lessonSeason2EndDate, examsSeason1BeginDate,
-                examsSeason1EndDate, examsSeason2BeginDate, examsSeason2EndDate, 
+                examsSeason1EndDate, examsSeason2BeginDate, examsSeason2EndDate,
                 examsSpecialSeasonBeginDate, examsSpecialSeasonEndDate,
                 gradeSubmissionNormalSeason1EndDate, gradeSubmissionNormalSeason2EndDate,
-                gradeSubmissionSpecialSeasonEndDate};
+                gradeSubmissionSpecialSeasonEndDate };
 
-        
         try {
-            createdDegreeCurricularPlans = (List<DegreeCurricularPlan>) ServiceUtils.executeService(getUserView(), "CreateExecutionDegreesForExecutionYear", args);
+            createdDegreeCurricularPlans = (List<DegreeCurricularPlan>) ServiceUtils.executeService(
+                    getUserView(), "CreateExecutionDegreesForExecutionYear", args);
         } catch (FenixFilterException e) {
             throw new FenixActionException(e);
         } catch (FenixServiceException e) {
@@ -296,7 +338,7 @@ public class CreateExecutionDegreesForExecutionYear extends FenixBackingBean {
     public List<DegreeCurricularPlan> getCreatedDegreeCurricularPlans() {
         return createdDegreeCurricularPlans;
     }
-    
+
     public List getDays() {
         return Data.getMonthDaysSelectItems();
     }
@@ -329,7 +371,7 @@ public class CreateExecutionDegreesForExecutionYear extends FenixBackingBean {
     public ExecutionYear getChoosenExecutionYear() {
         return rootDomainObject.readExecutionYearByOID(getChoosenExecutionYearID());
     }
-    
+
     public Integer getChoosenExecutionYearID() {
         return (Integer) this.getViewState().getAttribute("choosenExecutionYearID");
     }
@@ -615,7 +657,8 @@ public class CreateExecutionDegreesForExecutionYear extends FenixBackingBean {
     }
 
     public void setGradeSubmissionNormalSeason1EndYear(Integer gradeSubmissionNormalSeason1EndYear) {
-        this.getViewState().setAttribute("gradeSubmissionNormalSeason1EndYear", gradeSubmissionNormalSeason1EndYear);
+        this.getViewState().setAttribute("gradeSubmissionNormalSeason1EndYear",
+                gradeSubmissionNormalSeason1EndYear);
     }
 
     public Integer getGradeSubmissionNormalSeason2EndDay() {
@@ -639,7 +682,8 @@ public class CreateExecutionDegreesForExecutionYear extends FenixBackingBean {
     }
 
     public void setGradeSubmissionNormalSeason2EndYear(Integer gradeSubmissionNormalSeason2EndYear) {
-        this.getViewState().setAttribute("gradeSubmissionNormalSeason2EndYear", gradeSubmissionNormalSeason2EndYear);
+        this.getViewState().setAttribute("gradeSubmissionNormalSeason2EndYear",
+                gradeSubmissionNormalSeason2EndYear);
     }
 
     public Integer getGradeSubmissionSpecialSeasonEndDay() {
@@ -663,7 +707,8 @@ public class CreateExecutionDegreesForExecutionYear extends FenixBackingBean {
     }
 
     public void setGradeSubmissionSpecialSeasonEndYear(Integer gradeSubmissionSpecialSeasonEndYear) {
-        this.getViewState().setAttribute("gradeSubmissionSpecialSeasonEndYear", gradeSubmissionSpecialSeasonEndYear);
+        this.getViewState().setAttribute("gradeSubmissionSpecialSeasonEndYear",
+                gradeSubmissionSpecialSeasonEndYear);
     }
 
 }

@@ -8,16 +8,16 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgume
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.GradeScale;
-import net.sourceforge.fenixedu.domain.degree.BolonhaDegreeType;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class EditDegree extends Service {
 
     public void run(Integer idInternal, String name, String nameEn, String acronym,
-            BolonhaDegreeType bolonhaDegreeType, Double ectsCredits, GradeScale gradeScale, String prevailingScientificArea) throws FenixServiceException, 
+            DegreeType degreeType, Double ectsCredits, GradeScale gradeScale, String prevailingScientificArea) throws FenixServiceException, 
             ExcepcaoPersistencia {
         if (idInternal == null || name == null || nameEn == null || acronym == null
-                || bolonhaDegreeType == null || ectsCredits == null) {
+                || degreeType == null || ectsCredits == null) {
             throw new InvalidArgumentsServiceException();
         }
 
@@ -27,7 +27,7 @@ public class EditDegree extends Service {
             throw new NonExistingServiceException();
         } else if (!degreeToEdit.getSigla().equalsIgnoreCase(acronym)
                 || !degreeToEdit.getNome().equalsIgnoreCase(name)
-                || !degreeToEdit.getBolonhaDegreeType().equals(bolonhaDegreeType)) {
+                || !degreeToEdit.getDegreeType().equals(degreeType)) {
 
         	final List<Degree> degrees = rootDomainObject.getDegrees();
             
@@ -39,14 +39,14 @@ public class EditDegree extends Service {
                     }
                     if ((degree.getNome().equalsIgnoreCase(name) || degree.getNameEn().equalsIgnoreCase(
                             nameEn))
-                            && degree.getDegreeType().equals(bolonhaDegreeType)) {
+                            && degree.getDegreeType().equals(degreeType)) {
                         throw new FenixServiceException("error.existing.degree.name.and.type");
                     }
                 }
             }
         }
 
-        degreeToEdit.edit(name, nameEn, acronym, bolonhaDegreeType, ectsCredits, gradeScale, prevailingScientificArea);
+        degreeToEdit.edit(name, nameEn, acronym, degreeType, ectsCredits, gradeScale, prevailingScientificArea);
     }
 
 }

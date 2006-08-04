@@ -26,7 +26,6 @@
 valueType net.sourceforge.fenixedu.domain.teacher.AdviseType									as AdviseType;
 valueType net.sourceforge.fenixedu.util.AgreementType                                           as AgreementType;
 valueType net.sourceforge.fenixedu.tools.enrollment.AreaType                                    as AreaType;
-valueType net.sourceforge.fenixedu.domain.degree.BolonhaDegreeType                              as BolonhaDegreeType;
 valueType net.sourceforge.fenixedu.domain.branch.BranchType                                     as BranchType;
 valueType net.sourceforge.fenixedu.util.CurricularCourseExecutionScope                          as CurricularCourseExecutionScope;
 valueType net.sourceforge.fenixedu.domain.curriculum.CurricularCourseType                       as CurricularCourseType;
@@ -723,7 +722,6 @@ class net.sourceforge.fenixedu.domain.Degree extends net.sourceforge.fenixedu.do
 	String sigla;
 	String code;
     DegreeType tipoCurso;
-    BolonhaDegreeType bolonhaDegreeType;
     Integer keyUnit;
     GradeScale gradeScale;
     Double ectsCredits;
@@ -951,7 +949,7 @@ class net.sourceforge.fenixedu.domain.curricularRules.CurricularRule extends net
             Integer curricularPeriodOrder;
             Integer minimumYear;
             Integer maximumYear;
-            BolonhaDegreeType bolonhaDegreeType;
+            DegreeType bolonhaDegreeType;
             Integer keyDegree;
             Integer keyDepartmentUnit;
         }
@@ -3679,7 +3677,7 @@ class net.sourceforge.fenixedu.domain.functionalities.Functionality extends net.
 //
 // END OF Functionalities
 //
-
+	
 class net.sourceforge.fenixedu.domain.SpecialSeasonCode extends net.sourceforge.fenixedu.domain.DomainObject {
 	
 	Integer code;
@@ -3694,7 +3692,7 @@ class net.sourceforge.fenixedu.domain.YearStudentSpecialSeasonCode extends net.s
 	Integer keySpecialSeasonCode;
 	Integer keyStudent;
 
-}
+	}
 
 /*
  * Relations definitions

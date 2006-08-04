@@ -5,7 +5,7 @@ package net.sourceforge.fenixedu.dataTransferObject.bolonhaManager;
 
 import net.sourceforge.fenixedu.dataTransferObject.CurricularPeriodInfoDTO;
 import net.sourceforge.fenixedu.dataTransferObject.DataTranferObject;
-import net.sourceforge.fenixedu.domain.degree.BolonhaDegreeType;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 
 public class CurricularRuleParametersDTO extends DataTranferObject {
     
@@ -21,7 +21,7 @@ public class CurricularRuleParametersDTO extends DataTranferObject {
     private Integer minimumYear;
     private Integer maximumYear;
     private Double credits;
-    private BolonhaDegreeType bolonhaDegreeType;
+    private DegreeType degreeType;
     
     public CurricularRuleParametersDTO() {
     }
@@ -97,10 +97,10 @@ public class CurricularRuleParametersDTO extends DataTranferObject {
     public void setCredits(Double credits) {
         this.credits = credits;
     }
-    public BolonhaDegreeType getBolonhaDegreeType() {
-        return bolonhaDegreeType;
+    public DegreeType getDegreeType() {
+        return degreeType;
     }
-    public void setBolonhaDegreeType(BolonhaDegreeType bolonhaDegreeType) {
-        this.bolonhaDegreeType = bolonhaDegreeType;
+    public void setDegreeType(DegreeType degreeType) {
+        this.degreeType = degreeType;
     }   
 }

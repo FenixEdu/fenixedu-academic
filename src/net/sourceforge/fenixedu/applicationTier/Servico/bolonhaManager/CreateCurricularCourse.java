@@ -73,7 +73,7 @@ public class CreateCurricularCourse extends Service {
          * 
          */
         CurricularPeriodInfoDTO curricularPeriodInfoYear = null;
-        if (degreeCurricularPlan.getDegree().getBolonhaDegreeType().getYears() > 1) {
+        if (degreeCurricularPlan.getDegree().getDegreeType().getYears() > 1) {
             curricularPeriodInfoYear = new CurricularPeriodInfoDTO(curricularCourseArgs.getYear(), CurricularPeriodType.YEAR);
         }
         final CurricularPeriodInfoDTO curricularPeriodInfoSemester = new CurricularPeriodInfoDTO(curricularCourseArgs.getSemester(), CurricularPeriodType.SEMESTER);

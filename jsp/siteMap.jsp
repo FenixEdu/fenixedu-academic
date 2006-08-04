@@ -75,32 +75,32 @@
 			<bean:define id="renderBolonha" type="java.lang.String" toScope="request" value="true"/>
 						
 			<bean:define id="degreeType" type="java.lang.String" toScope="request">
-				<%= net.sourceforge.fenixedu.domain.degree.BolonhaDegreeType.DEGREE.toString() %>
+				<%= net.sourceforge.fenixedu.domain.degree.DegreeType.BOLONHA_DEGREE.toString() %>
 			</bean:define>
 			<jsp:include page="degreesTable.jsp"/>
 			
 			<bean:define id="degreeType" type="java.lang.String" toScope="request">
-				<%= net.sourceforge.fenixedu.domain.degree.BolonhaDegreeType.MASTER_DEGREE.toString() %>
+				<%= net.sourceforge.fenixedu.domain.degree.DegreeType.BOLONHA_MASTER_DEGREE.toString() %>
 			</bean:define>
 			<jsp:include page="degreesTable.jsp"/>
 
 			<bean:define id="degreeType" type="java.lang.String" toScope="request">
-				<%= net.sourceforge.fenixedu.domain.degree.BolonhaDegreeType.INTEGRATED_MASTER_DEGREE.toString() %>
+				<%= net.sourceforge.fenixedu.domain.degree.DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE.toString() %>
 			</bean:define>
 			<jsp:include page="degreesTable.jsp"/>
 			
 			<bean:define id="degreeType" type="java.lang.String" toScope="request">
-				<%= net.sourceforge.fenixedu.domain.degree.BolonhaDegreeType.ADVANCED_STUDIES_DIPLOMA.toString() %>
+				<%= net.sourceforge.fenixedu.domain.degree.DegreeType.BOLONHA_ADVANCED_STUDIES_DIPLOMA.toString() %>
 			</bean:define>
 			<jsp:include page="degreesTable.jsp"/>
 			
 			<bean:define id="degreeType" type="java.lang.String" toScope="request">
-				<%= net.sourceforge.fenixedu.domain.degree.BolonhaDegreeType.ADVANCED_FORMATION_DIPLOMA.toString() %>
+				<%= net.sourceforge.fenixedu.domain.degree.DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA.toString() %>
 			</bean:define>
 			<jsp:include page="degreesTable.jsp"/>
 
 			<bean:define id="degreeType" type="java.lang.String" toScope="request">
-				<%= net.sourceforge.fenixedu.domain.degree.BolonhaDegreeType.SPECIALIZATION_DEGREE.toString() %>
+				<%= net.sourceforge.fenixedu.domain.degree.DegreeType.BOLONHA_SPECIALIZATION_DEGREE.toString() %>
 			</bean:define>
 			<jsp:include page="degreesTable.jsp"/>
 		</div>

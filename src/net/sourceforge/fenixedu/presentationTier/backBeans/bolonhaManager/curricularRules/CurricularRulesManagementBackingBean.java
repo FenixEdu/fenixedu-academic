@@ -32,7 +32,7 @@ import net.sourceforge.fenixedu.domain.curricularRules.MinimumNumberOfCreditsToE
 import net.sourceforge.fenixedu.domain.curricularRules.PrecedenceRule;
 import net.sourceforge.fenixedu.domain.curricularRules.RestrictionBetweenDegreeModules;
 import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseType;
-import net.sourceforge.fenixedu.domain.degree.BolonhaDegreeType;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
 import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
@@ -496,13 +496,13 @@ public class CurricularRulesManagementBackingBean extends FenixBackingBean {
                 && selectedCurricularRuleType.equals(CurricularRuleType.ANY_CURRICULAR_COURSE.name())) {
             
             final List<Degree> allDegrees = rootDomainObject.getDegrees();
-            final BolonhaDegreeType bolonhaDegreeType = (selectedDegreeType == null || selectedDegreeType
-                    .equals(NO_SELECTION_STRING)) ? null : BolonhaDegreeType.valueOf(selectedDegreeType);
+            final DegreeType bolonhaDegreeType = (selectedDegreeType == null || selectedDegreeType
+                    .equals(NO_SELECTION_STRING)) ? null : DegreeType.valueOf(selectedDegreeType);
             for (final Degree degree : allDegrees) {
                 if (degree.isBolonhaDegree()
-                        && (bolonhaDegreeType == null || degree.getBolonhaDegreeType() == bolonhaDegreeType)) {
+                        && (bolonhaDegreeType == null || degree.getDegreeType() == bolonhaDegreeType)) {
                     result.add(new SelectItem(degree.getIdInternal(), "["
-                            + enumerationResources.getString(degree.getBolonhaDegreeType().name()) + "] "
+                            + enumerationResources.getString(degree.getDegreeType().name()) + "] "
                             + degree.getNome()));
                 }
             }
@@ -744,7 +744,7 @@ public class CurricularRulesManagementBackingBean extends FenixBackingBean {
         parametersDTO.setMaximumLimit(getMaximumLimit());
         parametersDTO.setSelectedDegreeID((getSelectedDegreeID() == null || getSelectedDegreeID().equals(NO_SELECTION_INTEGER)) ? null : getSelectedDegreeID());
         parametersDTO.setSelectedDepartmentUnitID((getSelectedDepartmentUnitID() == null || getSelectedDepartmentUnitID().equals(NO_SELECTION_INTEGER)) ? null : getSelectedDepartmentUnitID());
-        parametersDTO.setBolonhaDegreeType((getSelectedDegreeType() == null || getSelectedDegreeType().equals(NO_SELECTION_STRING)) ? null : BolonhaDegreeType.valueOf(getSelectedDegreeType()));
+        parametersDTO.setDegreeType((getSelectedDegreeType() == null || getSelectedDegreeType().equals(NO_SELECTION_STRING)) ? null : DegreeType.valueOf(getSelectedDegreeType()));
         // must get these values like this to prevent override values
         parametersDTO.setMinimumYear((Integer) getViewState().getAttribute("minimumYear"));
         parametersDTO.setMaximumYear((Integer) getViewState().getAttribute("maximumYear"));

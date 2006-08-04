@@ -14,7 +14,6 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseType;
-import net.sourceforge.fenixedu.domain.degree.BolonhaDegreeType;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.gesdis.CourseReport;
@@ -117,7 +116,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 
     public void edit(String name, String acronym, double theoreticalHours,
             double theoreticalPraticalHours, double praticalHours, double laboratoryHours,
-            double seminaryHours, double problemsHours, double fieldWorkHours, 
+            double seminaryHours, double problemsHours, double fieldWorkHours,
             double trainingPeriodHours, double tutorialOrientationHours, String comment) {
 
         if (name == null || acronym == null || theoreticalHours < 0 || theoreticalPraticalHours < 0
@@ -251,12 +250,12 @@ public class ExecutionCourse extends ExecutionCourse_Base {
     }
 
     public Attends getAttendsByStudent(final Student student) {
-	for (final Attends attends : getAttendsSet()) {
-	    if (attends.getAluno() == student) {
-		return attends;
-	    }
-	}
-	return null;
+        for (final Attends attends : getAttendsSet()) {
+            if (attends.getAluno() == student) {
+                return attends;
+            }
+        }
+        return null;
     }
 
     public List<Exam> getAssociatedExams() {
@@ -882,14 +881,15 @@ public class ExecutionCourse extends ExecutionCourse_Base {
     public boolean hasExportGrouping(final Grouping grouping) {
         return getExportGrouping(grouping) != null;
     }
-    
-    public boolean hasScopeInGivenSemesterAndCurricularYearInDCP(CurricularYear curricularYear, DegreeCurricularPlan degreeCurricularPlan) {
+
+    public boolean hasScopeInGivenSemesterAndCurricularYearInDCP(CurricularYear curricularYear,
+            DegreeCurricularPlan degreeCurricularPlan) {
         for (CurricularCourse curricularCourse : this.getAssociatedCurricularCourses()) {
             if (curricularCourse.hasScopeInGivenSemesterAndCurricularYearInDCP(curricularYear,
                     degreeCurricularPlan, getExecutionPeriod())) {
-                        return true;
-                    }
-                }
+                return true;
+            }
+        }
         return false;
     }
 
@@ -974,67 +974,71 @@ public class ExecutionCourse extends ExecutionCourse_Base {
         for (CurricularCourse curricularCourse : this.getAssociatedCurricularCoursesSet()) {
             Degree degree = curricularCourse.getDegree();
             if (degree.getTipoCurso() == DegreeType.DEGREE
-                    || degree.getBolonhaDegreeType() == BolonhaDegreeType.DEGREE) {
+                    || degree.getTipoCurso() == DegreeType.BOLONHA_DEGREE) {
                 result.add(curricularCourse);
             }
         }
         return result;
     }
-    
-    public boolean hasAnyDegreeGradeToSubmit(ExecutionPeriod period, DegreeCurricularPlan degreeCurricularPlan) {
-		for (final CurricularCourse curricularCourse : this.getCurricularCoursesWithDegreeType()) {
-			if(degreeCurricularPlan == null || degreeCurricularPlan.equals(curricularCourse.getDegreeCurricularPlan())) {
-				if(curricularCourse.hasAnyDegreeGradeToSubmit(period)) {
-					return true;
-				}
-			}
-		}
-		return false;
-	}
-    
-	public boolean hasAnyDegreeMarkSheetToConfirm(ExecutionPeriod period, DegreeCurricularPlan degreeCurricularPlan) {
-		for (final CurricularCourse curricularCourse : this.getCurricularCoursesWithDegreeType()) {
-			if(degreeCurricularPlan == null || degreeCurricularPlan.equals(curricularCourse.getDegreeCurricularPlan())) {
-				if(curricularCourse.hasAnyDegreeMarkSheetToConfirm(period)) {
-					return true;
-				}
-			}
-		}
-		return false;
-	}
 
-	
-	public String nextShiftName(final ShiftType shiftType) {
-	int i = 1;
-	for (final Shift otherShift : getAssociatedShiftsSet()) {
-	    if (otherShift.getTipo() == shiftType) {
-		i++;
-	    }
-	}
-	return constructShiftName(shiftType, i);
+    public boolean hasAnyDegreeGradeToSubmit(ExecutionPeriod period,
+            DegreeCurricularPlan degreeCurricularPlan) {
+        for (final CurricularCourse curricularCourse : this.getCurricularCoursesWithDegreeType()) {
+            if (degreeCurricularPlan == null
+                    || degreeCurricularPlan.equals(curricularCourse.getDegreeCurricularPlan())) {
+                if (curricularCourse.hasAnyDegreeGradeToSubmit(period)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    public boolean hasAnyDegreeMarkSheetToConfirm(ExecutionPeriod period,
+            DegreeCurricularPlan degreeCurricularPlan) {
+        for (final CurricularCourse curricularCourse : this.getCurricularCoursesWithDegreeType()) {
+            if (degreeCurricularPlan == null
+                    || degreeCurricularPlan.equals(curricularCourse.getDegreeCurricularPlan())) {
+                if (curricularCourse.hasAnyDegreeMarkSheetToConfirm(period)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    public String nextShiftName(final ShiftType shiftType) {
+        int i = 1;
+        for (final Shift otherShift : getAssociatedShiftsSet()) {
+            if (otherShift.getTipo() == shiftType) {
+                i++;
+            }
+        }
+        return constructShiftName(shiftType, i);
     }
 
     public String constructShiftName(final ShiftType shiftType, final int n) {
-	final String number = n < 10 ? "0" + n : Integer.toString(n);
-	return StringAppender.append(getSigla(), shiftType.getSiglaTipoAula(), number);	
+        final String number = n < 10 ? "0" + n : Integer.toString(n);
+        return StringAppender.append(getSigla(), shiftType.getSiglaTipoAula(), number);
     }
 
     public SortedSet<Shift> getShiftsByTypeOrderedByShiftName(final ShiftType shiftType) {
-	final SortedSet<Shift> shifts = new TreeSet<Shift>(Shift.SHIFT_COMPARATOR_BY_NAME);
-	for (final Shift shift : getAssociatedShiftsSet()) {
-	    shifts.add(shift);
-	}
-	return shifts;
+        final SortedSet<Shift> shifts = new TreeSet<Shift>(Shift.SHIFT_COMPARATOR_BY_NAME);
+        for (final Shift shift : getAssociatedShiftsSet()) {
+            shifts.add(shift);
+        }
+        return shifts;
     }
 
     public void setShiftNames() {
-	final SortedSet<Shift> shifts = CollectionUtils.constructSortedSet(getAssociatedShiftsSet(), Shift.SHIFT_COMPARATOR_BY_TYPE_AND_ORDERED_LESSONS);
-	final int[] counters = new int[ShiftType.values().length];
-	for (final Shift shift : shifts) {
-	    final ShiftType shiftType = shift.getTipo();
-	    final String name = constructShiftName(shiftType, ++counters[shiftType.ordinal()]);
-	    shift.setNome(name);
-	}
+        final SortedSet<Shift> shifts = CollectionUtils.constructSortedSet(getAssociatedShiftsSet(),
+                Shift.SHIFT_COMPARATOR_BY_TYPE_AND_ORDERED_LESSONS);
+        final int[] counters = new int[ShiftType.values().length];
+        for (final Shift shift : shifts) {
+            final ShiftType shiftType = shift.getTipo();
+            final String name = constructShiftName(shiftType, ++counters[shiftType.ordinal()]);
+            shift.setNome(name);
+        }
     }
 
     public boolean hasProjectsWithOnlineSubmission() {

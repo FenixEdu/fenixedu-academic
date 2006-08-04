@@ -11,7 +11,6 @@ import java.util.Set;
 import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriod;
-import net.sourceforge.fenixedu.domain.degree.BolonhaDegreeType;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degree.degreeCurricularPlan.DegreeCurricularPlanState;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -57,11 +56,11 @@ public class Degree extends Degree_Base {
         this.setConcreteClassForDegreeCurricularPlans(concreteClassForDegreeCurricularPlans);
     }
 
-    public Degree(String name, String nameEn, String acronym, BolonhaDegreeType bolonhaDegreeType,
+    public Degree(String name, String nameEn, String acronym, DegreeType degreeType,
             Double ectsCredits, GradeScale gradeScale, String prevailingScientificArea) {
         this();
         commonFieldsChange(name, nameEn, acronym, gradeScale);
-        newStructureFieldsChange(bolonhaDegreeType, ectsCredits, prevailingScientificArea);
+        newStructureFieldsChange(degreeType, ectsCredits, prevailingScientificArea);
     }
 
     private void commonFieldsChange(String name, String nameEn, String code, GradeScale gradeScale) {
@@ -79,15 +78,15 @@ public class Degree extends Degree_Base {
         this.setGradeScale(gradeScale);
     }
 
-    private void newStructureFieldsChange(BolonhaDegreeType bolonhaDegreeType, Double ectsCredits,
+    private void newStructureFieldsChange(DegreeType degreeType, Double ectsCredits,
             String prevailingScientificArea) {
-        if (bolonhaDegreeType == null) {
+        if (degreeType == null) {
             throw new DomainException("degree.degree.type.not.null");
         } else if (ectsCredits == null) {
             throw new DomainException("degree.ectsCredits.not.null");
         }
 
-        this.setBolonhaDegreeType(bolonhaDegreeType);
+        this.setTipoCurso(degreeType);
         this.setEctsCredits(ectsCredits);
         this.setPrevailingScientificArea(prevailingScientificArea.trim());
     }
@@ -102,15 +101,15 @@ public class Degree extends Degree_Base {
         this.setTipoCurso(degreeType);
     }
 
-    public void edit(String name, String nameEn, String acronym, BolonhaDegreeType bolonhaDegreeType,
+    public void edit(String name, String nameEn, String acronym, DegreeType degreeType,
             Double ectsCredits, GradeScale gradeScale, String prevailingScientificArea) {
-        checkIfCanEdit(bolonhaDegreeType);
+        checkIfCanEdit(degreeType);
         commonFieldsChange(name, nameEn, acronym, gradeScale);
-        newStructureFieldsChange(bolonhaDegreeType, ectsCredits, prevailingScientificArea);
+        newStructureFieldsChange(degreeType, ectsCredits, prevailingScientificArea);
     }
 
-    private void checkIfCanEdit(final BolonhaDegreeType bolonhaDegreeType) {
-        if (!this.getBolonhaDegreeType().equals(bolonhaDegreeType) && hasAnyDegreeCurricularPlans()) {
+    private void checkIfCanEdit(final DegreeType degreeType) {
+        if (!this.getDegreeType().equals(degreeType) && hasAnyDegreeCurricularPlans()) {
             throw new DomainException("degree.cant.edit.bolonhaDegreeType");
         }
     }
@@ -174,25 +173,25 @@ public class Degree extends Degree_Base {
         }
     }
 
-    public Enum getDegreeType() {
-        return (isBolonhaDegree()) ? getBolonhaDegreeType() : getTipoCurso();
+    public DegreeType getDegreeType() {
+        return getTipoCurso();
     }
 
-    @Override
-    public void setBolonhaDegreeType(BolonhaDegreeType bolonhaDegreeType) {
-        super.setBolonhaDegreeType(bolonhaDegreeType);
-        final DegreeType degreeType = bolonhaDegreeType == null ? null : DegreeType.valueOf("BOLONHA_"
-                + bolonhaDegreeType.getName());
-        setTipoCurso(degreeType);
-    }
-
-    public void setDegreeType(Enum degreeType) {
-        if (degreeType instanceof BolonhaDegreeType) {
-            setBolonhaDegreeType((BolonhaDegreeType) degreeType);
-        } else {
-            setTipoCurso((DegreeType) degreeType);
-        }
-    }
+//    @Override
+//    public void setBolonhaDegreeType(BolonhaDegreeType bolonhaDegreeType) {
+//        super.setBolonhaDegreeType(bolonhaDegreeType);
+//        final DegreeType degreeType = bolonhaDegreeType == null ? null : DegreeType.valueOf("BOLONHA_"
+//                + bolonhaDegreeType.getName());
+//        setTipoCurso(degreeType);
+//    }
+//
+//    public void setDegreeType(Enum degreeType) {
+//        if (degreeType instanceof BolonhaDegreeType) {
+//            setBolonhaDegreeType((BolonhaDegreeType) degreeType);
+//        } else {
+//            setTipoCurso((DegreeType) degreeType);
+//        }
+//    }
 
     public DegreeCurricularPlan getNewDegreeCurricularPlan() {
         DegreeCurricularPlan degreeCurricularPlan = null;
@@ -254,8 +253,7 @@ public class Degree extends Degree_Base {
                 creator.addPersonRoles(bolonhaRole);
             }
 
-            CurricularPeriod curricularPeriod = new CurricularPeriod(this.getBolonhaDegreeType()
-                    .getCurricularPeriodType());
+            CurricularPeriod curricularPeriod = new CurricularPeriod(this.getDegreeType().getCurricularPeriodType());
 
             return new DegreeCurricularPlan(this, name, gradeScale, creator, curricularPeriod);
         } else {
@@ -264,7 +262,7 @@ public class Degree extends Degree_Base {
     }
 
     public boolean isBolonhaDegree() {
-        return this.getBolonhaDegreeType() != null;
+        return this.getTipoCurso().isBolonhaType();
     }
 
     public String getPresentationName() {
@@ -536,7 +534,7 @@ public class Degree extends Degree_Base {
         List<Integer> result = new ArrayList<Integer>();
 
         if (this.isBolonhaDegree()) {
-            for (int i = 1; i <= this.getBolonhaDegreeType().getYears(); i++) {
+            for (int i = 1; i <= this.getDegreeType().getYears(); i++) {
                 result.add(i);
             }
         } else if (this.getTipoCurso().equals(DegreeType.DEGREE)) {
@@ -625,6 +623,10 @@ public class Degree extends Degree_Base {
             }
         }
         return new ArrayList<ExecutionYear>(result);
+    }
+    
+    public DegreeType getBolonhaDegreeType(){
+        return this.getTipoCurso();
     }
     
 }

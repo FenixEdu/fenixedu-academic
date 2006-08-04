@@ -101,7 +101,7 @@ public class CurricularRulesManager {
         return new AnyCurricularCourse((CurricularCourse) degreeModuleToApplyRule, contextCourseGroup,
                 begin, end, parametersDTO.getCredits(), parametersDTO.getCurricularPeriodInfoDTO()
                         .getOrder(), parametersDTO.getMinimumYear(), parametersDTO.getMaximumYear(),
-                parametersDTO.getBolonhaDegreeType(), degree, departmentUnit);
+                parametersDTO.getDegreeType(), degree, departmentUnit);
     }
 
     private static CurricularRule createExclusiveness(DegreeModule firstExclusiveDegreeModule,
