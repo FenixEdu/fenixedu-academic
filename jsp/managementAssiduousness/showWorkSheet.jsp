@@ -78,6 +78,12 @@
 		<logic:present name="employeeWorkSheet" property="unjustifiedBalance">
 			<p class="mvert05"><bean:message key="label.totalUnjustified" />: <b><bean:write name="employeeWorkSheet" property="unjustifiedBalanceString"/></b></p>
 		</logic:present>
+		<logic:present name="employeeWorkSheet" property="complementaryWeeklyRest">
+			<p class="mvert05"><bean:message key="label.totalComplementaryWeeklyRest" />: <b><bean:write name="employeeWorkSheet" property="complementaryWeeklyRestString"/></b></p>
+		</logic:present>
+		<logic:present name="employeeWorkSheet" property="weeklyRest">
+			<p class="mvert05"><bean:message key="label.totalWeeklyRest" />: <b><bean:write name="employeeWorkSheet" property="weeklyRestString"/></b></p>
+		</logic:present>
 	</logic:notEmpty>
 	
 </logic:present>

@@ -29,6 +29,10 @@ public class WorkDaySheet implements Serializable {
 
     Duration unjustifiedTime;
 
+    Duration complementaryWeeklyRest;
+
+    Duration weeklyRest;
+
     String notes;
 
     List<AssiduousnessRecord> assiduousnessRecords;
@@ -169,6 +173,28 @@ public class WorkDaySheet implements Serializable {
 
     public void setWorkSchedule(WorkSchedule workSchedule) {
         this.workSchedule = workSchedule;
+    }
+
+    public Duration getComplementaryWeeklyRest() {
+        if (complementaryWeeklyRest == null) {
+            return Duration.ZERO;
+        }
+        return complementaryWeeklyRest;
+    }
+
+    public void setComplementaryWeeklyRest(Duration complementaryWeeklyRest) {
+        this.complementaryWeeklyRest = complementaryWeeklyRest;
+    }
+
+    public Duration getWeeklyRest() {
+        if (weeklyRest == null) {
+            return Duration.ZERO;
+        }
+        return weeklyRest;
+    }
+
+    public void setWeeklyRest(Duration weeklyRest) {
+        this.weeklyRest = weeklyRest;
     }
 
     public void discountBalanceLeaveInFixedPeriod(List<Leave> balanceLeaveList) {

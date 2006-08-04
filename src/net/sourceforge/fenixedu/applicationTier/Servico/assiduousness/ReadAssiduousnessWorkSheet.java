@@ -41,6 +41,8 @@ public class ReadAssiduousnessWorkSheet extends Service {
 
         Duration totalBalance = Duration.ZERO;
         Duration totalUnjustified = Duration.ZERO;
+        Duration totalComplementaryWeeklyRestBalance = Duration.ZERO;
+        Duration totalWeeklyRestBalance = Duration.ZERO;
 
         HashMap<YearMonthDay, WorkSchedule> workScheduleMap = new HashMap<YearMonthDay, WorkSchedule>();
         for (YearMonthDay thisDay = beginDate.minusDays(1); thisDay.isBefore(endDate.plusDays(1)); thisDay = thisDay
@@ -169,6 +171,10 @@ public class ReadAssiduousnessWorkSheet extends Service {
                     if (!thisDay.equals(today)) {
                         workDaySheet = assiduousness.calculateDailyBalance(workDaySheet, thisDay,
                                 isDayHoliday);
+                        totalComplementaryWeeklyRestBalance = totalComplementaryWeeklyRestBalance
+                                .plus(workDaySheet.getComplementaryWeeklyRest());
+                        totalWeeklyRestBalance = totalWeeklyRestBalance.plus(workDaySheet
+                                .getWeeklyRest());
                     }
                     workDaySheet.setNotes("");
                     if (isDayHoliday) {
@@ -198,11 +204,12 @@ public class ReadAssiduousnessWorkSheet extends Service {
         employeeWorkSheet.setTotalBalance(totalBalance);
         employeeWorkSheet.setUnjustifiedBalance(totalUnjustified);
 
+        employeeWorkSheet.setComplementaryWeeklyRest(totalComplementaryWeeklyRestBalance);
+        employeeWorkSheet.setWeeklyRest(totalWeeklyRestBalance);
         return employeeWorkSheet;
-    }
+    } // if returns false the clocking belongs to the clocking date // if returns true it may
 
-    // if returns false the clocking belongs to the clocking date
-    // if returns true it may belong to the clocking date or the day before
+    // belong to the clocking date or the day before
     private boolean overlapsSchedule(DateTime clocking,
             HashMap<YearMonthDay, WorkSchedule> workScheduleMap) {
         WorkSchedule thisDaySchedule = workScheduleMap.get(clocking.toYearMonthDay());

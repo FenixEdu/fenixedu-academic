@@ -1,7 +1,6 @@
 package net.sourceforge.fenixedu.domain.assiduousness;
 
 import java.util.ArrayList;
-import java.util.EnumSet;
 import java.util.Iterator;
 import java.util.List;
 
@@ -31,6 +30,8 @@ public class Assiduousness extends Assiduousness_Base {
     public static final TimeOfDay defaultStartWorkDay = new TimeOfDay(7, 30, 0, 0);
 
     public static final TimeOfDay defaultEndWorkDay = new TimeOfDay(23, 59, 59, 99);
+
+    public static final Duration normalWorkDayDuration = new Duration(25200000); // 7 hours
 
     public Assiduousness(Employee employee) {
         super();
@@ -117,20 +118,25 @@ public class Assiduousness extends Assiduousness_Base {
                 workDaySheet.discountBalanceLeaveInFixedPeriod(balanceLeaves);
             }
         } else {
-            final WeekDay dayOfWeek = WeekDay.fromJodaTimeToWeekDay(day.toDateTimeAtMidnight());
-            final EnumSet<WeekDay> enumSetWeekDay = EnumSet.range(WeekDay.MONDAY, WeekDay.FRIDAY);
-
-            if (!isDayHoliday && !workDaySheet.getAssiduousnessRecords().isEmpty()
-                    && enumSetWeekDay.contains(dayOfWeek)) {
+            if (!workDaySheet.getAssiduousnessRecords().isEmpty()) {
                 final Timeline timeline = new Timeline(day);
                 Iterator<AttributeType> attributesIt = DomainConstants.WORKED_ATTRIBUTES.getAttributes()
                         .iterator();
                 timeline.plotListInTimeline(workDaySheet.getAssiduousnessRecords(), workDaySheet
                         .getLeaves(), attributesIt, day);
-                final Duration worked = timeline.calculateWorkPeriodDuration(null, timeline
-                        .getTimePoints().iterator().next(), new TimePoint(defaultStartWorkDay,
-                        AttributeType.NULL), new TimePoint(defaultStartWorkDay, AttributeType.NULL),
-                        null);
+                Duration worked = timeline.calculateWorkPeriodDuration(null, timeline.getTimePoints()
+                        .iterator().next(), new TimePoint(defaultStartWorkDay, AttributeType.NULL),
+                        new TimePoint(defaultEndWorkDay, AttributeType.NULL), null);
+                Duration weeklyRestDuration = worked;
+                if (worked.isLongerThan(normalWorkDayDuration)) {
+                    weeklyRestDuration = normalWorkDayDuration;
+                }
+                final WeekDay dayOfWeek = WeekDay.fromJodaTimeToWeekDay(day.toDateTimeAtMidnight());
+                if (dayOfWeek.equals(WeekDay.SATURDAY) || isDayHoliday) {
+                    workDaySheet.setComplementaryWeeklyRest(weeklyRestDuration);
+                } else if (dayOfWeek.equals(WeekDay.SUNDAY)) {
+                    workDaySheet.setWeeklyRest(weeklyRestDuration);
+                }
                 workDaySheet.setBalanceTime(worked.toPeriod());
             }
         }

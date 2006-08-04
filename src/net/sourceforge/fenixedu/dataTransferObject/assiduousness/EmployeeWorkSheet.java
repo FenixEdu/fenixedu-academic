@@ -26,6 +26,10 @@ public class EmployeeWorkSheet implements Serializable {
 
     Duration unjustifiedBalance;
 
+    Duration weeklyRest;
+
+    Duration complementaryWeeklyRest;
+
     public String getTotalBalanceString() {
         PeriodFormatter fmt = new PeriodFormatterBuilder().printZeroAlways().appendHours()
                 .appendSeparator(":").minimumPrintedDigits(2).appendMinutes().toFormatter();
@@ -97,4 +101,37 @@ public class EmployeeWorkSheet implements Serializable {
     public void setWorkDaySheetList(List<WorkDaySheet> workDaySheetList) {
         this.workDaySheetList = workDaySheetList;
     }
+
+    public Duration getComplementaryWeeklyRest() {
+        return complementaryWeeklyRest;
+    }
+
+    public void setComplementaryWeeklyRest(Duration complementaryWeeklyRest) {
+        this.complementaryWeeklyRest = complementaryWeeklyRest;
+    }
+
+    public Duration getWeeklyRest() {
+        return weeklyRest;
+    }
+
+    public void setWeeklyRest(Duration weeklyRest) {
+        this.weeklyRest = weeklyRest;
+    }
+
+    public String getComplementaryWeeklyRestString() {
+        PeriodFormatter fmt = new PeriodFormatterBuilder().printZeroAlways().appendHours()
+                .appendSeparator(":").minimumPrintedDigits(2).appendMinutes().toFormatter();
+        MutablePeriod finalComplementaryWeeklyRestWork = new MutablePeriod(getComplementaryWeeklyRest()
+                .getMillis(), PeriodType.time());
+        return fmt.print(finalComplementaryWeeklyRestWork);
+    }
+
+    public String getWeeklyRestString() {
+        PeriodFormatter fmt = new PeriodFormatterBuilder().printZeroAlways().appendHours()
+                .appendSeparator(":").minimumPrintedDigits(2).appendMinutes().toFormatter();
+        MutablePeriod finalWeeklyRestExtraWork = new MutablePeriod(getWeeklyRest().getMillis(),
+                PeriodType.time());
+        return fmt.print(finalWeeklyRestExtraWork);
+    }
+
 }
