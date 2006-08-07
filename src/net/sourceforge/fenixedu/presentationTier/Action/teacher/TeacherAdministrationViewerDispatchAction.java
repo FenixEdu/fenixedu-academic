@@ -81,7 +81,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
 import net.sourceforge.fenixedu.presentationTier.mapping.SiteManagementActionMapping;
 import net.sourceforge.fenixedu.util.EnrolmentGroupPolicyType;
-import net.sourceforge.fenixedu.util.FileUtils;
+import pt.utl.ist.fenix.tools.util.FileUtils;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;

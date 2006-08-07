@@ -12,7 +12,7 @@ import java.util.Properties;
 import java.util.Map.Entry;
 
 import net.sourceforge.fenixedu._development.PropertiesManager;
-import net.sourceforge.fenixedu.util.FileUtils;
+import pt.utl.ist.fenix.tools.util.FileUtils;
 
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.ojb.broker.PersistenceBroker;
