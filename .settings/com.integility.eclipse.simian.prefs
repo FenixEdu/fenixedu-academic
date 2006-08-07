@@ -1,0 +1,24 @@
+#Mon Aug 07 13:52:12 WEST 2006
+balanceCurlyBraces=false
+balanceParentheses=false
+balanceSquareBrackets=false
+eclipse.preferences.version=1
+excludes=
+ignoreCharacterCase=true
+ignoreCharacters=false
+ignoreCurlyBraces=false
+ignoreIdentifierCase=true
+ignoreIdentifiers=false
+ignoreLiterals=false
+ignoreModifiers=true
+ignoreNumbers=false
+ignoreRegions=false
+ignoreStringCase=true
+ignoreStrings=false
+ignoreSubtypeNames=false
+ignoreVariableNames=false
+includes=*.java
+language=Java
+priority=1
+severity=1
+threshold=6
