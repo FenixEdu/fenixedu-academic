@@ -19,7 +19,6 @@ public class ChangeLocale extends FenixAction {
         final Locale locale = constructNewLocale(request);
         request.getSession(true).setAttribute(Globals.LOCALE_KEY, locale);
         final String windowLocation = request.getParameter("windowLocation");
-        System.out.println("windowLocation: " + windowLocation);
         return forward(windowLocation);
     }
 
@@ -33,7 +32,6 @@ public class ChangeLocale extends FenixAction {
 
     private ActionForward forward(final String windowLocation) {
         final ActionForward actionForward = new ActionForward();
-        actionForward.setContextRelative(true);
         actionForward.setName(windowLocation);
         actionForward.setPath(windowLocation);
         actionForward.setRedirect(true);
