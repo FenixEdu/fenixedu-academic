@@ -52,17 +52,18 @@ import org.apache.struts.validator.DynaValidatorForm;
  * @author mrsp and jdnf
  */
 public class CopySiteExecutionCourseAction extends FenixDispatchAction {
-    
-    public ActionForward prepareChooseExecutionPeriod(ActionMapping mapping,
-            ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException, FenixFilterException {
+
+    public ActionForward prepareChooseExecutionPeriod(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException,
+            FenixFilterException {
 
         IUserView userView = SessionUtils.getUserView(request);
         List infoExecutionPeriods = null;
-        
+
         try {
-            infoExecutionPeriods = (List) ServiceUtils.executeService(userView, "ReadExecutionPeriods", null);
-        
+            infoExecutionPeriods = (List) ServiceUtils.executeService(userView, "ReadExecutionPeriods",
+                    null);
+
         } catch (FenixServiceException ex) {
             throw new FenixActionException();
         }
@@ -70,15 +71,14 @@ public class CopySiteExecutionCourseAction extends FenixDispatchAction {
             // exclude closed execution periods
             infoExecutionPeriods = (List) CollectionUtils.select(infoExecutionPeriods, new Predicate() {
 
-                        public boolean evaluate(Object input) {
-                            InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) input;
-                            if (!infoExecutionPeriod.getState().equals(
-                                    PeriodState.CLOSED)) {
-                                return true;
-                            }
-                            return false;
-                        }
-                    });
+                public boolean evaluate(Object input) {
+                    InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) input;
+                    if (!infoExecutionPeriod.getState().equals(PeriodState.CLOSED)) {
+                        return true;
+                    }
+                    return false;
+                }
+            });
 
             ComparatorChain comparator = new ComparatorChain();
             comparator.addComparator(new BeanComparator("infoExecutionYear.year"), true);
@@ -88,7 +88,7 @@ public class CopySiteExecutionCourseAction extends FenixDispatchAction {
             List executionPeriodLabels = buildLabelValueBeanForJsp(infoExecutionPeriods);
 
             request.setAttribute(SessionConstants.LIST_EXECUTION_PERIODS, executionPeriodLabels);
-            
+
             ISiteComponent component = new InfoSite();
             readSiteView(request, component, null, null, null);
         }
@@ -107,34 +107,34 @@ public class CopySiteExecutionCourseAction extends FenixDispatchAction {
                 if (infoExecutionPeriod.getName() != null && infoExecutionPeriod.getName().length() > 0) {
                     labelPeriod = labelPeriod.concat(infoExecutionPeriod.getName() + " - ");
                 }
-                LabelValueBean executionPeriod = new LabelValueBean(labelPeriod.concat(infoExecutionPeriod.getInfoExecutionYear()
-                        	.getYear()), infoExecutionPeriod.getName()
-                        	+ " - "
-                        	+ infoExecutionPeriod.getInfoExecutionYear().getYear()
-                        	+ "~" + infoExecutionPeriod.getIdInternal().toString());
+                LabelValueBean executionPeriod = new LabelValueBean(labelPeriod
+                        .concat(infoExecutionPeriod.getInfoExecutionYear().getYear()),
+                        infoExecutionPeriod.getName() + " - "
+                                + infoExecutionPeriod.getInfoExecutionYear().getYear() + "~"
+                                + infoExecutionPeriod.getIdInternal().toString());
                 return executionPeriod;
             }
         }, executionPeriodLabels);
         return executionPeriodLabels;
     }
 
-    public ActionForward prepareChooseExecDegreeAndCurYear(
-            ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException, FenixFilterException {
+    public ActionForward prepareChooseExecDegreeAndCurYear(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException,
+            FenixFilterException {
 
         IUserView userView = SessionUtils.getUserView(request);
         buildCurricularYearLabelValueBean(request);
 
-        Integer executionPeriodId = separateLabel(form, request,
-                "executionPeriod", "executionPeriodId", "executionPeriodName");
+        Integer executionPeriodId = separateLabel(form, request, "executionPeriod", "executionPeriodId",
+                "executionPeriodName");
 
-        if(executionPeriodId == null){
+        if (executionPeriodId == null) {
             ActionErrors errors = new ActionErrors();
             errors.add("error", new ActionError("error.no.executionPeriod"));
             saveErrors(request, errors);
             return prepareChooseExecutionPeriod(mapping, form, request, response);
         }
-        
+
         Object args[] = { executionPeriodId };
         List executionDegreeList = null;
         try {
@@ -153,33 +153,28 @@ public class CopySiteExecutionCourseAction extends FenixDispatchAction {
 
         ISiteComponent component = new InfoSite();
         readSiteView(request, component, null, null, null);
-        
+
         return mapping.findForward("chooseExecDegreeAndCurYear");
     }
 
-    private void buildExecutionDegreeLabelValueBean(List executionDegreeList,
-            ArrayList courses) {
+    private void buildExecutionDegreeLabelValueBean(List executionDegreeList, ArrayList courses) {
 
         Iterator iterator = executionDegreeList.iterator();
         while (iterator.hasNext()) {
-            InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) iterator
-                    .next();
-            String name = infoExecutionDegree.getInfoDegreeCurricularPlan()
-                    .getInfoDegree().getNome();
-            name = infoExecutionDegree.getInfoDegreeCurricularPlan()
-                    .getInfoDegree().getTipoCurso().toString()
+            InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) iterator.next();
+            String name = infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getNome();
+            name = infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getTipoCurso()
+                    .toString()
                     + " em " + name;
-            name += duplicateInfoDegree(executionDegreeList,
-                    infoExecutionDegree) ? "-"
-                    + infoExecutionDegree.getInfoDegreeCurricularPlan()
-                            .getName() : "";
+            name += duplicateInfoDegree(executionDegreeList, infoExecutionDegree) ? "-"
+                    + infoExecutionDegree.getInfoDegreeCurricularPlan().getName() : "";
             courses.add(new LabelValueBean(name, name + "~"
                     + infoExecutionDegree.getIdInternal().toString()));
         }
     }
 
     private void buildCurricularYearLabelValueBean(HttpServletRequest request) {
-        
+
         ArrayList curricularYears = new ArrayList();
         curricularYears.add(new LabelValueBean("escolher", "0"));
         curricularYears.add(new LabelValueBean("1 ", "1"));
@@ -190,46 +185,42 @@ public class CopySiteExecutionCourseAction extends FenixDispatchAction {
         request.setAttribute(SessionConstants.CURRICULAR_YEAR_LIST_KEY, curricularYears);
     }
 
-    private boolean duplicateInfoDegree(List executionDegreeList,
-            InfoExecutionDegree infoExecutionDegree) {
+    private boolean duplicateInfoDegree(List executionDegreeList, InfoExecutionDegree infoExecutionDegree) {
 
-        InfoDegree infoDegree = infoExecutionDegree
-                .getInfoDegreeCurricularPlan().getInfoDegree();
+        InfoDegree infoDegree = infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree();
         Iterator iterator = executionDegreeList.iterator();
         while (iterator.hasNext()) {
-            InfoExecutionDegree infoExecutionDegree2 = (InfoExecutionDegree) iterator
-                    .next();
-            if (infoDegree.equals(infoExecutionDegree2
-                    .getInfoDegreeCurricularPlan().getInfoDegree())
+            InfoExecutionDegree infoExecutionDegree2 = (InfoExecutionDegree) iterator.next();
+            if (infoDegree.equals(infoExecutionDegree2.getInfoDegreeCurricularPlan().getInfoDegree())
                     && !(infoExecutionDegree.equals(infoExecutionDegree2)))
                 return true;
         }
         return false;
     }
 
-    public ActionForward showExecutionCourses(ActionMapping mapping,
-            ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException, FenixFilterException {
+    public ActionForward showExecutionCourses(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException,
+            FenixFilterException {
 
         IUserView userView = SessionUtils.getUserView(request);
 
-        Integer executionPeriodId = separateLabel(form, request,
-                "executionPeriod", "executionPeriodId", "executionPeriodName");
+        Integer executionPeriodId = separateLabel(form, request, "executionPeriod", "executionPeriodId",
+                "executionPeriodName");
 
         DynaActionForm copySiteForm = (DynaValidatorForm) form;
         Integer executionDegreeId = null;
         Integer curYear = null;
         Integer objectCode = null;
-        executionDegreeId = separateLabel(form, request, "executionDegree",
-                "executionDegreeId", "executionDegreeName");
-        if(executionDegreeId == null){
+        executionDegreeId = separateLabel(form, request, "executionDegree", "executionDegreeId",
+                "executionDegreeName");
+        if (executionDegreeId == null) {
             ActionErrors errors = new ActionErrors();
             errors.add("error", new ActionError("error.no.executionDegree"));
             saveErrors(request, errors);
             return prepareChooseExecDegreeAndCurYear(mapping, form, request, response);
         }
         curYear = Integer.valueOf((String) copySiteForm.get("curYear"));
-        if(curYear.equals(new Integer(0))){
+        if (curYear.equals(new Integer(0))) {
             ActionErrors errors = new ActionErrors();
             errors.add("error", new ActionError("error.no.curYear"));
             saveErrors(request, errors);
@@ -243,24 +234,22 @@ public class CopySiteExecutionCourseAction extends FenixDispatchAction {
         List infoExecutionCourses;
         try {
             infoExecutionCourses = (List) ServiceUtils.executeService(userView,
-                            "ReadExecutionCoursesByExecutionDegreeIdAndExecutionPeriodIdAndCurYear",
-                            args);
+                    "ReadExecutionCoursesByExecutionDegreeIdAndExecutionPeriodIdAndCurYear", args);
         } catch (FenixServiceException e) {
             throw new FenixActionException(e);
         }
 
         Collections.sort(infoExecutionCourses, new BeanComparator("nome"));
-        request.setAttribute(SessionConstants.EXECUTION_COURSE_LIST_KEY,
-                infoExecutionCourses);
+        request.setAttribute(SessionConstants.EXECUTION_COURSE_LIST_KEY, infoExecutionCourses);
 
         ISiteComponent component = new InfoSite();
         readSiteView(request, component, null, null, null);
-        
+
         return mapping.findForward("viewExecutionCourses");
     }
 
-    private Integer separateLabel(ActionForm form, HttpServletRequest request,
-            String property, String id, String name) {
+    private Integer separateLabel(ActionForm form, HttpServletRequest request, String property,
+            String id, String name) {
 
         DynaActionForm copySiteForm = (DynaActionForm) form;
 
@@ -289,31 +278,51 @@ public class CopySiteExecutionCourseAction extends FenixDispatchAction {
         return objectId;
     }
 
-    public ActionForward copySite(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) {        
-        IUserView userView = SessionUtils.getUserView(request);
-        
-        Integer executionCourseIDFrom = new Integer(request.getParameter("executionCourseId"));
-        Integer executionCourseIDTo = new Integer(request.getParameter("objectCode"));
+    public ActionForward chooseFeaturesToCopy(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
+            FenixActionException {
 
-        Object[] args = { executionCourseIDFrom, executionCourseIDTo };
+        DynaActionForm copySiteForm = (DynaActionForm) form;
+        copySiteForm.set("objectCode", request.getParameter("objectCode")); // executionCourseIDTo
+        copySiteForm.set("executionCourseID", new Integer(request.getParameter("executionCourseId"))); // executionCourseIDFrom
+
+        readSiteView(request, new InfoSite(), null, null, null);
+
+        return mapping.findForward("chooseFeaturesToCopy");
+    }
+
+    public ActionForward copySite(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
+        IUserView userView = SessionUtils.getUserView(request);
+
+        DynaActionForm copySiteForm = (DynaActionForm) form;
+
+        Integer executionCourseIDFrom = (Integer) copySiteForm.get("executionCourseID");
+        Integer executionCourseIDTo = Integer.valueOf((String) copySiteForm.get("objectCode"));
+        Boolean sectionsAndItems = (Boolean) copySiteForm.get("sectionsAndItems");
+        Boolean bibliographicReference = (Boolean) copySiteForm.get("bibliographicReference");
+        Boolean evaluationMethod = (Boolean) copySiteForm.get("evaluationMethod");
+
+        Object[] args = { executionCourseIDFrom, executionCourseIDTo, sectionsAndItems,
+                bibliographicReference, evaluationMethod };
         try {
-            ServiceManagerServiceFactory.executeService(userView, "CopySiteExecutionCourse",args);
-       
+            ServiceManagerServiceFactory.executeService(userView, "CopySiteExecutionCourse", args);
+
         } catch (Exception exception) {
             ActionErrors actionErrors = new ActionErrors();
-            actionErrors.add("impossible.copy.site" , new ActionError("error.copySite.impossible.copy"));
-            
+            actionErrors.add("impossible.copy.site", new ActionError("error.copySite.impossible.copy"));
+
             saveErrors(request, actionErrors);
-            
+
             return mapping.getInputForward();
         }
 
         return mapping.findForward("manageExecutionCourses");
     }
-    
+
     private SiteView readSiteView(HttpServletRequest request, ISiteComponent firstPageComponent,
-            Integer infoExecutionCourseCode, Object obj1, Object obj2) throws FenixActionException, FenixFilterException {
+            Integer infoExecutionCourseCode, Object obj1, Object obj2) throws FenixActionException,
+            FenixFilterException {
 
         HttpSession session = getSession(request);
 
@@ -347,7 +356,7 @@ public class CopySiteExecutionCourseAction extends FenixDispatchAction {
         }
 
     }
-    
+
     private Integer getObjectCode(HttpServletRequest request) {
         Integer objectCode = null;
         String objectCodeString = request.getParameter("objectCode");

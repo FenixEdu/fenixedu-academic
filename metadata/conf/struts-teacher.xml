@@ -794,6 +794,11 @@
         	<form-property name="executionPeriod" type="java.lang.String" initial="0"/>
         	<form-property name="executionDegree" type="java.lang.String" initial="0"/>
         	<form-property name="curYear" type="java.lang.String" initial="0"/>
+        	<form-property name="executionCourseID" type="java.lang.Integer" />
+        	<form-property name="sectionsAndItems" type="java.lang.Boolean" />
+        	<form-property name="bibliographicReference" type="java.lang.Boolean" />
+        	<form-property name="evaluationMethod" type="java.lang.Boolean" />
+        	<form-property name="method" type="java.lang.String" />        	
 		</form-bean>	
 
 
@@ -2204,6 +2209,7 @@
        		<forward name="chooseExecutionPeriod" path="choose-execution-period"/>
        		<forward name="chooseExecDegreeAndCurYear" path="choose-exec-degree-and-cur-year"/>
        		<forward name="viewExecutionCourses" path="view-execution-courses"/>
+       		<forward name="chooseFeaturesToCopy" path="choose-features-to-copy"/>
        		<forward name="manageExecutionCourses" path="/teacherAdministrationViewer.do?method=instructions&amp;page=0"/>       		       		       		       		
        	</action>
 		

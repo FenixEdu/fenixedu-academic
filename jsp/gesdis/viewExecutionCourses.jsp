@@ -32,7 +32,8 @@
 								</td>
 								<td class="listClasses">
 									<bean:define id="executionCourseId" name="executionCourse" property="idInternal"/> 
-									&nbsp;<html:link page="<%="/copySiteExecutionCourse.do?method=copySite&amp;objectCode=" + pageContext.findAttribute("objectCode") + "&amp;executionCourseId=" + executionCourseId.toString() %>">
+									
+									&nbsp;<html:link page="<%="/copySiteExecutionCourse.do?method=chooseFeaturesToCopy&amp;objectCode=" + pageContext.findAttribute("objectCode") + "&amp;executionCourseId=" + executionCourseId.toString() %>">
 										<bean:message key="link.copySite.do"/>
 									</html:link>
 								</td>

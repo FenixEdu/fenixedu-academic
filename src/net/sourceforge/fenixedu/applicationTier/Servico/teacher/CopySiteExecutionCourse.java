@@ -19,14 +19,17 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  */
 public class CopySiteExecutionCourse extends Service {
 
-    public void run(Integer executionCourseFromID, Integer executionCourseToID)
+    public void run(Integer executionCourseFromID, Integer executionCourseToID,
+            Boolean sectionsAndItems, Boolean bibliographicReference, Boolean evaluationMethod)
             throws ExcepcaoPersistencia, FenixServiceException, DomainException {
 
-        final ExecutionCourse executionCourseFrom = rootDomainObject.readExecutionCourseByOID(executionCourseFromID);
+        final ExecutionCourse executionCourseFrom = rootDomainObject
+                .readExecutionCourseByOID(executionCourseFromID);
         if (executionCourseFrom == null)
             throw new InvalidArgumentsServiceException();
 
-        final ExecutionCourse executionCourseTo = rootDomainObject.readExecutionCourseByOID(executionCourseToID);
+        final ExecutionCourse executionCourseTo = rootDomainObject
+                .readExecutionCourseByOID(executionCourseToID);
         if (executionCourseTo == null)
             throw new InvalidArgumentsServiceException();
 
@@ -44,9 +47,17 @@ public class CopySiteExecutionCourse extends Service {
         siteTo.edit(siteFrom.getInitialStatement(), siteFrom.getIntroduction(), siteFrom.getMail(),
                 siteFrom.getAlternativeSite());
 
-        ExecutionCourseUtils.deleteSectionsAndItemsIfExistFrom(siteTo);
-        ExecutionCourseUtils.copySectionsAndItems(siteFrom, siteTo);
-        ExecutionCourseUtils.copyBibliographicReference(executionCourseFrom, executionCourseTo);
-        ExecutionCourseUtils.copyEvaluationMethod(executionCourseFrom, executionCourseTo);
+        if (sectionsAndItems != null && sectionsAndItems) {
+            ExecutionCourseUtils.deleteSectionsAndItemsIfExistFrom(siteTo);
+            ExecutionCourseUtils.copySectionsAndItems(siteFrom, siteTo);
+        }
+
+        if (bibliographicReference != null && bibliographicReference) {
+            ExecutionCourseUtils.copyBibliographicReference(executionCourseFrom, executionCourseTo);
+        }
+
+        if (evaluationMethod != null && evaluationMethod) {
+            ExecutionCourseUtils.copyEvaluationMethod(executionCourseFrom, executionCourseTo);
+        }
     }
 }

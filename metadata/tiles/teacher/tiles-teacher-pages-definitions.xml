@@ -455,6 +455,11 @@
 		extends="copy.site.execution.course.page">
 		<put name="body" value="/gesdis/viewExecutionCourses.jsp"></put>
 	</definition>	
+	
+	<definition name="choose-features-to-copy" 
+		extends="copy.site.execution.course.page">
+		<put name="body" value="/gesdis/chooseFeaturesToCopy.jsp"></put>
+	</definition>		
 
 	<!-- =================== View Old Inquiries Teacher's Results ============== -->
 	<definition name="inquiry-choose-execution-period-and-course" 
