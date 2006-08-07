@@ -24,11 +24,11 @@ public class ProfessorshipTest extends DomainTestBase {
         executionCourse = new ExecutionCourse();
         executionCourse.setIdInternal(0);
         
-        teacher = new Teacher();
+//        teacher = new Teacher();
         teacher.setIdInternal(0);
         teacher.getCategory().setCanBeExecutionCourseResponsible(true);
         
-        teacher2 = new Teacher();
+//        teacher2 = new Teacher();
         teacher2.setIdInternal(1);
         
         summary = new Summary();

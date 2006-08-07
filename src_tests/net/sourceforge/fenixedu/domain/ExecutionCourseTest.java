@@ -45,7 +45,7 @@ public class ExecutionCourseTest extends DomainTestBase {
 
         room = new OldRoom();
 
-        teacher = new Teacher();
+//        teacher = new Teacher();
 
         professorship = new Professorship();
         professorship.setExecutionCourse(this.executionCourse);

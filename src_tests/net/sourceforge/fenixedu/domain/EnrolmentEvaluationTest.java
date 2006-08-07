@@ -115,7 +115,7 @@ public class EnrolmentEvaluationTest extends DomainTestBase {
 		notAprovedEvaluation.setGrade("RE");
 		notEvaluatedEvaluation.setGrade("NA");
 		
-		employee = new Employee();
+//		employee = new Employee();
 		aprovedEvaluation.setEmployee(employee);
 		notAprovedEvaluation.setEmployee(employee);
 		notEvaluatedEvaluation.setEmployee(employee);
@@ -129,7 +129,7 @@ public class EnrolmentEvaluationTest extends DomainTestBase {
 		evaluation = new EnrolmentEvaluation();
 
 		Person person = new Person();
-		Employee employee = new Employee();
+//		Employee employee = new Employee();
 		Enrolment enrolment = new Enrolment();
 		
 		evaluation.setPersonResponsibleForGrade(person);

@@ -24,7 +24,7 @@ public class OrientationTest extends DomainTestBase {
 	protected void setUp() throws Exception {
 		super.setUp();
 		
-		teacher = new Teacher();
+//		teacher = new Teacher();
 		
 		infoOrientationToCreate = new InfoOrientation();
 		infoOrientationToCreate.setOrientationType(OrientationType.DEGREE);

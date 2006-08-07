@@ -33,10 +33,10 @@ public class PublicationTeacherTest extends DomainTestBase {
         
         person1 = new Person();
         
-        teacher1 = new Teacher();
+//        teacher1 = new Teacher();
         teacher1.setPerson(person1);    
         
-        teacher2 = new Teacher();
+//        teacher2 = new Teacher();
         
         teachers = new ArrayList<Teacher>();
         teachers.add(teacher1);

@@ -24,7 +24,7 @@ public class PublicationsNumberTest extends DomainTestBase {
 	protected void setUp() throws Exception {
 		super.setUp();
 		
-		teacher = new Teacher();
+//		teacher = new Teacher();
 		
 		infoPublicationsNumberToCreate = new InfoPublicationsNumber();
 		infoPublicationsNumberToCreate.setNational(1);

@@ -32,7 +32,7 @@ public class ExternalActivityTest extends DomainTestBase {
 	
 	protected void setUp() throws Exception {
 		super.setUp();
-		teacher = new Teacher();
+//		teacher = new Teacher();
 		infoExternalActivityToCreate = new InfoExternalActivity();
 		infoExternalActivityToCreate.setActivity(activity);
 	}

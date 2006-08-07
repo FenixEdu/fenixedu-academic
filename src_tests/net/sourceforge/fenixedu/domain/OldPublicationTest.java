@@ -32,7 +32,7 @@ public class OldPublicationTest extends DomainTestBase {
 	
 	protected void setUp() throws Exception {
 		super.setUp();
-		teacher = new Teacher();
+//		teacher = new Teacher();
 	}
 	
 	private void initializeOldPublication(OldPublication oldPublication) {

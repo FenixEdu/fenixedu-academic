@@ -24,7 +24,7 @@ public class WeeklyOcupationTest extends DomainTestBase {
 	protected void setUp() throws Exception {
 		super.setUp();
 		
-		teacher = new Teacher();
+//		teacher = new Teacher();
 		infoWeeklyOcupationToCreate = new InfoWeeklyOcupation();
 		infoWeeklyOcupationToCreate.setOther(1);
 		infoWeeklyOcupationToCreate.setLecture(2);

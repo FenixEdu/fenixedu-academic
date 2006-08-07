@@ -16,8 +16,8 @@ public class OldInquiriesTeachersResTest extends DomainTestBase {
 		Degree degree = new Degree();
 		degree.addAssociatedOldInquiriesTeachersRes(oldITRToDelete);
 		
-		Teacher teacher = new Teacher();
-		teacher.addAssociatedOldInquiriesTeachersRes(oldITRToDelete);
+//		Teacher teacher = new Teacher();
+//		teacher.addAssociatedOldInquiriesTeachersRes(oldITRToDelete);
 	}
 	
 	public void testDelete() {

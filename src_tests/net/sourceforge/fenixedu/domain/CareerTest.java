@@ -56,7 +56,7 @@ public class CareerTest extends DomainTestBase {
 	
 	protected void setUp() throws Exception {
 		super.setUp();
-		teacher = new Teacher();
+//		teacher = new Teacher();
 
 		infoTeachingCareerToCreate = new InfoTeachingCareer();
 		infoTeachingCareerToCreate.setBeginYear(2003);

@@ -102,10 +102,10 @@ public class PersonTest extends DomainTestBase {
 
 		employeeRole = new Role(RoleType.EMPLOYEE, null, null, null);
 
-        teacher = new Teacher();
+//        teacher = new Teacher();
         teacher.setTeacherNumber(teacherNumber);
         
-        employee = new Employee();
+//        employee = new Employee();
         employee.setEmployeeNumber(employeeNumber);
 
         degreeStudent = new Student();
@@ -480,7 +480,7 @@ public class PersonTest extends DomainTestBase {
 		Person person = new Person(username, nome, Gender.MALE, address,
 				telefone, telemovel, enderecoWeb, email,
 				numDocumentoIdentificacao, IDDocumentType.EXTERNAL);
-        Teacher teacher = new Teacher();
+//        Teacher teacher = new Teacher();
         teacher.setTeacherNumber(Integer.valueOf(1));
         teacher.setPerson(person);
         Coordinator coordinator = new Coordinator();

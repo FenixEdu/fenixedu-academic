@@ -93,7 +93,7 @@ public class InquiriesTest extends DomainTestBase {
 		inquiriesCourse = new InquiriesCourse(executionCourse, executionDegreeCourse,
 				executionDegreeStudent, executionPeriod, schoolClass, infoInquiriesCourse, null, null, null);
 		
-		teacher = new Teacher();
+//		teacher = new Teacher();
 		nonAffiliatedTeacher = new NonAffiliatedTeacher();
 		
 		initializeInfoInquiriesTeacher();

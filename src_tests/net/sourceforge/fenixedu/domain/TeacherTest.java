@@ -44,7 +44,7 @@ public class TeacherTest extends DomainTestBase {
         person1 = new Person();
         person2 = new Person();
                 
-        teacher = new Teacher();
+//        teacher = new Teacher();
         teacher.setPerson(person1);
         
 //        publication = new Publication();
@@ -371,7 +371,7 @@ public class TeacherTest extends DomainTestBase {
         
         executionYear.addExecutionPeriods(executionPeriod);
         
-        teacher3 = new Teacher();
+//        teacher3 = new Teacher();
         teacher3.setIdInternal(0);
         
         executionCourse = new ExecutionCourse();

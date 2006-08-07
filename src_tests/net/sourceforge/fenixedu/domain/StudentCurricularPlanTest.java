@@ -71,8 +71,8 @@ public class StudentCurricularPlanTest extends DomainTestBase {
 		DegreeCurricularPlan dcp1 = new DegreeCurricularPlan();
 		studentCurricularPlanToDelete.setDegreeCurricularPlan(dcp1);
 		
-		Employee emp1 = new Employee();
-		studentCurricularPlanToDelete.setEmployee(emp1);
+//		Employee emp1 = new Employee();
+//		studentCurricularPlanToDelete.setEmployee(emp1);
 		
 		MasterDegreeThesis mdt1 = new MasterDegreeThesis();
 		studentCurricularPlanToDelete.setMasterDegreeThesis(mdt1);

@@ -31,7 +31,7 @@ public class SummaryTest extends DomainTestBase {
         executionCourse = new ExecutionCourse();
         executionCourse.setIdInternal(1);
 
-        teacher = new Teacher();
+//        teacher = new Teacher();
         teacher.setIdInternal(1);
 
         professorship = new Professorship();

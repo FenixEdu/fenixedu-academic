@@ -101,7 +101,7 @@ public class EnrolmentTest extends DomainTestBase {
 		executionCourseToEnrollImprovement = new ExecutionCourse();
 		studentToImprove = new Student();
 		executionPeriodForImprovement = new ExecutionPeriod();
-		someEmployee = new Employee();
+//		someEmployee = new Employee();
 		
 		executionCourseToEnrollImprovement.setExecutionPeriod(executionPeriodForImprovement);
 		curricularCourseToImprove.addAssociatedExecutionCourses(executionCourseToEnrollImprovement);
@@ -163,12 +163,12 @@ public class EnrolmentTest extends DomainTestBase {
 		EnrolmentEvaluation ee2 = new EnrolmentEvaluation();
 		
 		Person person = new Person();
-		Employee employee = new Employee();
+//		Employee employee = new Employee();
 		
 		ee1.setPersonResponsibleForGrade(person);
 		ee2.setPersonResponsibleForGrade(person);
-		ee1.setEmployee(employee);
-		ee2.setEmployee(employee);
+//		ee1.setEmployee(employee);
+//		ee2.setEmployee(employee);
 		
 		evaluations = new ArrayList<EnrolmentEvaluation>();
 		evaluations.add(ee1);
@@ -335,7 +335,7 @@ public class EnrolmentTest extends DomainTestBase {
 		emptyMark.setMark("");
 		
         examDate = DateFormatUtil.parse("yyyy/mm/dd","2001/04/15");
-		employeeSubmittingGrade = new Employee();
+//		employeeSubmittingGrade = new Employee();
 		personResponsibleForGrade = new Person();
 		observation = "submission";
 	}
