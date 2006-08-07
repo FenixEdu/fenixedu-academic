@@ -85,6 +85,7 @@ public class TreeRenderer extends OutputRenderer {
     private String children;
     private String links;
     private String hiddenLinks;
+    private boolean includeImage;
     
     private String listClass;
     private String listStyle;
@@ -122,6 +123,7 @@ public class TreeRenderer extends OutputRenderer {
         setItemStyle("vertical-align:middle;");
         
         setModuleRelative(true);
+        setIncludeImage(true);
     }
 
     public String getTreeId() {
@@ -519,6 +521,7 @@ public class TreeRenderer extends OutputRenderer {
      * @property
      */
     public void setImage(String image) {
+        setIncludeImage(false);
         this.image = image;
     }
 
@@ -533,7 +536,22 @@ public class TreeRenderer extends OutputRenderer {
      * @property
      */
     public void setImageFor(String type, String method) {
+        setIncludeImage(false);
         this.imagesMap.put(type, method);
+    }
+
+    public boolean isIncludeImage() {
+        return this.includeImage;
+    }
+
+    /**
+     * Specifies if the renderer should include the default images when the
+     * tree is draggable.
+     * 
+     * @property
+     */
+    public void setIncludeImage(boolean includeImage) {
+        this.includeImage = includeImage;
     }
 
     @Override
@@ -658,7 +676,7 @@ public class TreeRenderer extends OutputRenderer {
                 script.append(id + ".setMovedClass('" + getMovedClass() + "');\n");
             }
             
-            if (TreeRenderer.this.imagesMap.size() > 0) {
+            if (isIncludeImage()) {
                 script.append(id + ".setIncludeImage(false);\n");
             }
 
