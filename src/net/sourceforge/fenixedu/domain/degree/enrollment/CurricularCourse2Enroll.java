@@ -21,6 +21,8 @@ public class CurricularCourse2Enroll implements Serializable {
 	private CurricularCourseEnrollmentType enrollmentType;
 
 	private Integer accumulatedWeight;
+	
+	private Double ectsCredits;
 
 	private Boolean optionalCurricularCourse;
 
@@ -99,6 +101,14 @@ public class CurricularCourse2Enroll implements Serializable {
 
 	public void setCurricularYear(CurricularYear curricularYear) {
 		this.curricularYear = curricularYear;
+	}
+
+	public Double getEctsCredits() {
+	    return ectsCredits;
+	}
+
+	public void setEctsCredits(Double ectsCredits) {
+	    this.ectsCredits = ectsCredits;
 	}
 
 }

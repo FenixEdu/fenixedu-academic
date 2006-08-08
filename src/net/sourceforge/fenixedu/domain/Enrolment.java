@@ -45,6 +45,7 @@ public class Enrolment extends Enrolment_Base {
 	}
 
     private Integer accumulatedWeight;
+    private Double ectsCredits;
     /*static {
         EnrolmentEvaluation.EnrolmentEnrolmentEvaluation.addListener(new EnrolmentEnrolmentEvaluationListener());
     }*/
@@ -776,4 +777,12 @@ public class Enrolment extends Enrolment_Base {
     private EnrolmentEvaluation getLatestEnrolmentEvalution(List<EnrolmentEvaluation> enrolmentEvaluations) {
 		return (enrolmentEvaluations == null || enrolmentEvaluations.isEmpty()) ? null : Collections.max(enrolmentEvaluations);
 	}
+
+    public Double getEctsCredits() {
+        return ectsCredits;
+    }
+
+    public void setEctsCredits(Double ectsCredits) {
+        this.ectsCredits = ectsCredits;
+    }
 }
