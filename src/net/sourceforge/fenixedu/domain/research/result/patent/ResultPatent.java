@@ -1,7 +1,5 @@
 package net.sourceforge.fenixedu.domain.research.result.patent;
 
-import java.util.List;
-
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
@@ -13,17 +11,25 @@ public class ResultPatent extends ResultPatent_Base {
         super();
     }
     
-    public ResultPatent(String title, Partial registrationDate, Partial approvalDate, List<Person> participations, String modifyedBy) {
+    public ResultPatent(String title, Partial registrationDate, Partial approvalDate, Person participation) {
         this();
-        checkParameters(title, registrationDate, approvalDate, participations, modifyedBy);
+        checkParameters(title, registrationDate, approvalDate, participation);
         setTitle(title);
         setRegistrationDate(registrationDate);
         setApprovalDate(approvalDate);
-        setParticipations(participations);
-        setModificationDateAndAuthor(modifyedBy);
+        setParticipation(participation);
+        setModificationDateAndAuthor(participation.getName());
     }
     
-    private void checkParameters(String title, Partial registrationDate, Partial approvalDate, List<Person> participations, String modifyedBy) {
+    public void setPatentEdit(String title, Partial registrationDate, Partial approvalDate, Person participation){
+        checkParameters(title,registrationDate,approvalDate,participation);
+        this.setTitle(title);
+        this.setRegistrationDate(registrationDate);
+        this.setApprovalDate(approvalDate);
+        this.setModificationDateAndAuthor(participation.getName());
+    }
+    
+    private void checkParameters(String title, Partial registrationDate, Partial approvalDate, Person author) {
         if (title == null || title.equals("")) {
             throw new DomainException("error.ResultPatent.title.cannot.be.null");
         }
@@ -36,21 +42,9 @@ public class ResultPatent extends ResultPatent_Base {
         if(!isApprovalDateAfterRegistrationDate(approvalDate, registrationDate)){
             throw new DomainException("error.ResultPatent.approvalDate.before.registrationDate");
         }
-        if (participations == null || participations.size()==0) {
+        if (author == null) {
             throw new DomainException("error.ResultPatent.participations.cannot.be.null");
         }
-        if (modifyedBy == null || modifyedBy.equals("")) {
-            throw new DomainException("error.ResultAssociations.changedBy.null");
-        }
-    }
-    
-    public void setPatentEdit(String title, Partial registrationDate, Partial approvalDate, List<Person> participations, String modifyedBy){
-        checkParameters(title,registrationDate,approvalDate,participations,modifyedBy);
-        this.setTitle(title);
-        this.setRegistrationDate(registrationDate);
-        this.setApprovalDate(approvalDate);
-        this.setParticipations(participations);
-        this.setModificationDateAndAuthor(modifyedBy);
     }
     
     private boolean isApprovalDateAfterRegistrationDate(Partial approvalDate, Partial registrationDate) {
