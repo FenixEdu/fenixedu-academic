@@ -1,20 +1,39 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.research.result;
 
+import net.sourceforge.fenixedu.accessControl.AccessControl;
 import net.sourceforge.fenixedu.applicationTier.Service;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.research.result.ResultParticipation;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
-public class ChangeResultParticipationsOrder extends Service {
-    public void run(Integer resultParticipationId, Integer offset, String personName) throws ExcepcaoPersistencia, FenixServiceException {
-        final ResultParticipation resultParticipation = (ResultParticipation) rootDomainObject.readResultParticipationByOID(resultParticipationId);
-        
-        if(resultParticipation == null) {
-            throw new FenixServiceException("error.ResultParticipation.not.found");
+public class ChangeResultParticipationsOrder extends Service {    
+    /**
+     * The type of order changes can have in authors list.
+     */
+    public static enum OrderChange {
+        MoveUp,
+        MoveDown,
+        MoveTop,
+        MoveBottom,
+    }
+    
+    /**
+     * Changes the order position in the list according to the
+     * order change.
+     */
+    public void run(ResultParticipation participation, OrderChange orderChange) {
+        switch (orderChange) {
+        case MoveUp:
+            participation.moveUp();
+            break;
+        case MoveDown:
+            participation.moveDown();
+            break;
+        case MoveTop:
+            participation.moveTop();
+            break;
+        case MoveBottom:
+            participation.moveBottom();
+            break;
         }
-        
-        if(!resultParticipation.changeOrder(offset, personName)) {
-            throw new FenixServiceException("error.ResultParticipation.changeOrder");
-        }   
+        participation.setChangedBy(participation.getResult(), AccessControl.getUserView().getPerson());
     }
 }
