@@ -1736,6 +1736,10 @@ class net.sourceforge.fenixedu.domain.File extends net.sourceforge.fenixedu.doma
 	class net.sourceforge.fenixedu.domain.space.BlueprintFile extends net.sourceforge.fenixedu.domain.File {
 		Integer keyBlueprint;
 	}
+	
+	class net.sourceforge.fenixedu.domain.research.result.ResultDocumentFile extends net.sourceforge.fenixedu.domain.File {
+		Integer keyResult;
+	}
 
 class net.sourceforge.fenixedu.domain.FileEntry extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer keyPerson;
@@ -3369,6 +3373,7 @@ class net.sourceforge.fenixedu.domain.research.result.Result extends net.sourcef
 	String note;
 	String url;
     String ojbConcreteClass;
+    Integer keyResultDocumentFile;
 
 	DateTime lastModificationDate;
 	String modifyedBy;
@@ -7148,6 +7153,11 @@ relation OrganizationResultPublication {
 	net.sourceforge.fenixedu.domain.research.result.publication.ResultPublication playsRole organizationResultPublications {
 		multiplicity *;
 	}
+}
+
+relation ResultResultDocumentFile {
+	net.sourceforge.fenixedu.domain.research.result.Result playsRole result;
+	net.sourceforge.fenixedu.domain.research.result.ResultDocumentFile playsRole resultDocumentFile;
 }
 
 relation ProjectParticipationProject {
