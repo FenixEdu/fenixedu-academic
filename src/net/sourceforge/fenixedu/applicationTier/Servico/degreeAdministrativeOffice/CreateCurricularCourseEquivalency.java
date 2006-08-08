@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.degreeAdministrativeOffice;
 
+import java.util.Collections;
+
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.CurricularCourseEquivalence;
@@ -15,7 +17,7 @@ public class CreateCurricularCourseEquivalency extends Service {
         final CurricularCourse curricularCourse = (CurricularCourse) rootDomainObject.readDegreeModuleByOID(curricularCourseID);
         final CurricularCourse oldCurricularCourse = (CurricularCourse) rootDomainObject.readDegreeModuleByOID(oldCurricularCourseID);
 
-        new CurricularCourseEquivalence(degreeCurricularPlan, curricularCourse, oldCurricularCourse);
+        new CurricularCourseEquivalence(degreeCurricularPlan, curricularCourse, Collections.singleton(oldCurricularCourse));
     }
 
 }

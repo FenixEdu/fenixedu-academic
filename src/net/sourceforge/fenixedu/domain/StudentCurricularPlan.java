@@ -205,7 +205,9 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 		calculateStudentAcumulatedEnrollments(executionPeriod);
 
 		List<CurricularCourse2Enroll> setOfCurricularCoursesToEnroll = getCommonBranchAndStudentBranchesCourses(executionPeriod);
-
+		
+		initEctsCreditsToEnrol(setOfCurricularCoursesToEnroll, executionPeriod);
+		
 		setOfCurricularCoursesToEnroll = initAcumulatedEnrollments(setOfCurricularCoursesToEnroll);
 
 		for (final IEnrollmentRule enrollmentRule : getListOfEnrollmentRules(executionPeriod)) {
@@ -218,6 +220,12 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 		return setOfCurricularCoursesToEnroll;
 	}
 	
+	private void initEctsCreditsToEnrol(List<CurricularCourse2Enroll> setOfCurricularCoursesToEnroll, ExecutionPeriod executionPeriod) {
+	    for (CurricularCourse2Enroll curricularCourse2Enroll : setOfCurricularCoursesToEnroll) {
+		curricularCourse2Enroll.setEctsCredits(this.getEctsCredits(curricularCourse2Enroll.getCurricularCourse(), executionPeriod));
+	    }
+	}
+
 	public Integer getMinimumNumberOfCoursesToEnroll() {
 		return getStudent().getStudentKind().getMinCoursesToEnrol();
 	}
@@ -267,12 +275,21 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 		}
 
 		for (CurricularCourseEquivalence equiv : curricularCourse.getCurricularCourseEquivalences()) {
-			if (notNeedToEnroll(equiv.getOldCurricularCourse())) {
-				return true;
-			}
+		    if(allNotNeedToEnroll(equiv.getOldCurricularCourses())) {
+			return true;
+		    }
 		}
 
 		return false;
+	}
+
+	private boolean allNotNeedToEnroll(List<CurricularCourse> oldCurricularCourses) {
+	    for (CurricularCourse course : oldCurricularCourses) {
+		if (!notNeedToEnroll(course)) {
+		    return false;
+		}
+	    }
+	    return true;
 	}
 
 	protected boolean hasEquivalenceIn(CurricularCourse curricularCourse,
@@ -286,12 +303,21 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 		}
 
 		for (CurricularCourseEquivalence equiv : curricularCourse.getCurricularCourseEquivalences()) {
-			if (isThisCurricularCoursesInTheList(equiv.getOldCurricularCourse(), otherCourses)) {
-				return true;
-			}
+		    if(allCurricularCoursesInTheList(equiv.getOldCurricularCourses(), otherCourses)) {
+			return true;
+		    }
 		}
 
 		return false;
+	}
+
+	private boolean allCurricularCoursesInTheList(List<CurricularCourse> oldCurricularCourses, List<CurricularCourse> otherCourses) {
+	    for (CurricularCourse oldCurricularCourse : oldCurricularCourses) {
+		if (!isThisCurricularCoursesInTheList(oldCurricularCourse, otherCourses)) {
+			return false;
+		}
+	    }
+	    return true;
 	}
 
 	public boolean isCurricularCourseApprovedInCurrentOrPreviousPeriod(final CurricularCourse course,
@@ -403,14 +429,23 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	public List getAllStudentEnrolledEnrollmentsInExecutionPeriod(final ExecutionPeriod executionPeriod) {
 
 		calculateStudentAcumulatedEnrollments(executionPeriod);
-		return initAcumulatedEnrollments((List) CollectionUtils.select(
-				getStudentEnrollmentsWithEnrolledState(), new Predicate() {
+		List<Enrolment> enrolments = (List) CollectionUtils.select(
+			getStudentEnrollmentsWithEnrolledState(), new Predicate() {
 
-					public boolean evaluate(Object arg0) {
+				public boolean evaluate(Object arg0) {
 
-						return ((Enrolment) arg0).getExecutionPeriod().equals(executionPeriod);
-					}
-				}));
+					return ((Enrolment) arg0).getExecutionPeriod().equals(executionPeriod);
+				}
+			});
+
+		initEctsCredits(enrolments);
+		return initAcumulatedEnrollments(enrolments);
+	}
+
+	private void initEctsCredits(List<Enrolment> enrolments) {
+	    for (Enrolment enrolment : enrolments) {
+		enrolment.setEctsCredits(this.getEctsCredits(enrolment.getCurricularCourse(), enrolment.getExecutionPeriod()));
+	    }
 	}
 
 	public List<Enrolment> getAllStudentEnrollmentsInExecutionPeriod(
@@ -571,6 +606,22 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 				return enrollment.getEnrollmentState().equals(EnrollmentState.APROVED);
 			}
 		});
+	}
+	
+	public Double getEctsCredits(CurricularCourse curricularCourse, ExecutionPeriod executionPeriod) {
+	    if(getAcumulatedEnrollmentsMap() == null) {
+		calculateStudentAcumulatedEnrollments(executionPeriod);
+	    }
+	    
+	    Double factor;
+	    Integer curricularCourseAcumulatedEnrolments = (Integer) getAcumulatedEnrollmentsMap().get(curricularCourse.getCurricularCourseUniqueKeyForEnrollment());
+	    if(curricularCourseAcumulatedEnrolments == null || curricularCourseAcumulatedEnrolments.intValue() == 0) {
+		factor = 1.0;
+	    } else {
+		factor = 0.75;
+	    }
+	    
+	    return curricularCourse.getEctsCredits() * factor;
 	}
 
 	// -------------------------------------------------------------

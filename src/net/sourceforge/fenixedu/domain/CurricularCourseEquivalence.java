@@ -1,5 +1,9 @@
 package net.sourceforge.fenixedu.domain;
 
+import java.util.Collection;
+
+import org.apache.commons.collections.CollectionUtils;
+
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 /**
@@ -14,23 +18,29 @@ public class CurricularCourseEquivalence extends CurricularCourseEquivalence_Bas
     }
 
     public CurricularCourseEquivalence(final DegreeCurricularPlan degreeCurricularPlan,
-            final CurricularCourse curricularCourse, final CurricularCourse oldCurricularCourse) {
+            final CurricularCourse curricularCourse, final Collection<CurricularCourse> oldCurricularCourses) {
     	this();
-        for (final CurricularCourseEquivalence curricularCourseEquivalence : curricularCourse.getCurricularCourseEquivalences()) {
-            if (oldCurricularCourse.equals(curricularCourseEquivalence.getOldCurricularCourse())) {
-                throw new DomainException("error.exists.curricular.course.equivalency");
-            }
-        }
+    	checkIfEquivalenceAlreadyExists(curricularCourse, oldCurricularCourses);
 
         setDegreeCurricularPlan(degreeCurricularPlan);
         setEquivalentCurricularCourse(curricularCourse);
-        setOldCurricularCourse(oldCurricularCourse);
+        getOldCurricularCourses().addAll(oldCurricularCourses);
+    }
+
+    private void checkIfEquivalenceAlreadyExists(CurricularCourse curricularCourse, Collection<CurricularCourse> oldCurricularCourses) {
+	int size = oldCurricularCourses.size();
+	for (final CurricularCourseEquivalence curricularCourseEquivalence : curricularCourse.getCurricularCourseEquivalences()) {
+	    int sizeOld = curricularCourseEquivalence.getOldCurricularCoursesCount();
+	    if((size == sizeOld) && CollectionUtils.intersection(oldCurricularCourses, curricularCourseEquivalence.getOldCurricularCoursesSet()).size() == size) {
+		throw new DomainException("error.exists.curricular.course.equivalency");
+	    }
+	}
     }
 
     public void delete() {
         setDegreeCurricularPlan(null);
         setEquivalentCurricularCourse(null);
-        setOldCurricularCourse(null);
+        getOldCurricularCourses().clear();
 
         removeRootDomainObject();
         super.deleteDomainObject();

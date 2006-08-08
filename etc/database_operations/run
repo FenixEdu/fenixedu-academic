@@ -28,3 +28,6 @@ function executeWithTempFile() {
 }
 
 execute "alter table FILE (added keyResult)" alterTableFile.sql
+execute "Create Table OLD_CURRICULAR_COURSE_CURRICULAR_COURSE_EQUIVALENCE" createOLD_CURRICULAR_COURSE_CURRICULAR_COURSE_EQUIVALENCEtable.sql
+executeWithTempFile "Migrate CurricularCourseEquivalences" migrateCurricularCourseEquivalences.sql
+execute "Alter Table CurricularCourseEquivalence" alterCurricularCourseEquivalenceTable.sql

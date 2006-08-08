@@ -656,7 +656,6 @@ class net.sourceforge.fenixedu.domain.CreditsInScientificArea extends net.source
 
 
 class net.sourceforge.fenixedu.domain.CurricularCourseEquivalence extends net.sourceforge.fenixedu.domain.DomainObject {
-	Integer keyOldCurricularCourse;
 	Integer keyEquivalentCurricularCourse;
 	Integer keyDegreeCurricularPlan;
 }
@@ -3989,7 +3988,6 @@ relation CurricularCourseCourseEquivalency {
     net.sourceforge.fenixedu.domain.CurricularCourse playsRole curricularCourse;
 }
 
-
 relation CurricularCourseCurricularCourseEquivalence {
 	net.sourceforge.fenixedu.domain.CurricularCourseEquivalence playsRole curricularCourseEquivalences {
 		multiplicity *;
@@ -4011,7 +4009,9 @@ relation OldCurricularCourseCurricularCourseEquivalence {
 	net.sourceforge.fenixedu.domain.CurricularCourseEquivalence playsRole oldCurricularCourseEquivalences {
 		multiplicity *;
 	}
-	net.sourceforge.fenixedu.domain.CurricularCourse playsRole oldCurricularCourse;
+	net.sourceforge.fenixedu.domain.CurricularCourse playsRole oldCurricularCourses {
+		multiplicity *;
+	}
 }
 
 
@@ -4212,7 +4212,6 @@ relation DegreeCurricularPlanCurricularCourseEquivalence {
 		multiplicity *;
 	}
 }
-
 
 relation DegreeCurricularPlanDegreeModule {
     net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup playsRole root;
@@ -8592,13 +8591,6 @@ relation RootDomainObjectProjectAccess {
 	}
 }
 
-relation RootDomainObjectCurricularCourseEquivalence {
-	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
-	net.sourceforge.fenixedu.domain.CurricularCourseEquivalence playsRole curricularCourseEquivalences {
-		multiplicity *;
-	}
-}
-
 relation RootDomainObjectAccountabilityType {
 	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
 	net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityType playsRole accountabilityTypes {
@@ -9490,6 +9482,13 @@ relation ModuleHasSubModules {
 relation RootDomainObjectFunctionality {
 	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
 	net.sourceforge.fenixedu.domain.functionalities.Functionality playsRole functionalities {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectCurricularCourseEquivalence {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.CurricularCourseEquivalence playsRole xptos {
 		multiplicity *;
 	}
 }
