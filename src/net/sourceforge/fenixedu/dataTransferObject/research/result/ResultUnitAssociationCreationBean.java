@@ -5,16 +5,17 @@ import java.io.Serializable;
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.research.result.Result;
-import net.sourceforge.fenixedu.domain.research.result.ResultUnitAssociation.ResultUnitAssociationRole;;
+import net.sourceforge.fenixedu.domain.research.result.ResultUnitAssociation.ResultUnitAssociationRole;
 
-public class ResultUnitAssociationCreateBean implements Serializable {
-  
+public class ResultUnitAssociationCreationBean implements Serializable {
+    private DomainReference<Result> result;
     private DomainReference<Unit> unit;
     private String role;
     private String unitName;
 
-    public ResultUnitAssociationCreateBean() {
+    public ResultUnitAssociationCreationBean(Result resultReference) {
         role = ResultUnitAssociationRole.getDefaultUnitRoleType().toString();
+        this.result = new DomainReference<Result>(resultReference);
     }
     
     public ResultUnitAssociationRole getRole() {
@@ -39,5 +40,13 @@ public class ResultUnitAssociationCreateBean implements Serializable {
 
     public void setUnit(Unit unit) {
         this.unit = (unit != null) ? new DomainReference<Unit>(unit) : null;
+    }
+    
+    public Result getResult() {
+        return (this.result == null) ? null : this.result.getObject();
+    }
+
+    public void setResult(Result result) {
+        this.result = (result != null) ? new DomainReference<Result>(result) : null;
     }
 }
