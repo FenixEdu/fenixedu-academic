@@ -9920,6 +9920,15 @@
 			<chain name="ResearcherAuthorization" />
 		</filterChains>
 	</service>
+	<service>
+		<name>SaveResultParticipationsOrder</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.research.result.SaveResultParticipationsOrder</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		<filterChains>
+			<chain name="ResearcherAuthorization" />
+		</filterChains>
+	</service>
    	<service>
 		<name>DeleteResultParticipation</name>
 		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.research.result.DeleteResultParticipation</implementationClass>
