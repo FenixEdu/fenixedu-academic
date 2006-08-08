@@ -26,3 +26,5 @@ function executeWithTempFile() {
 	rm tmp.sql
 	echo
 }
+
+execute "Update Bolonha Type in Curricular Rules" updateCurricularRulesBolonhaType.sql
