@@ -22,8 +22,6 @@ import net.sourceforge.fenixedu.renderers.utils.RenderKit;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 import net.sourceforge.fenixedu.renderers.utils.RendererPropertyUtils;
 
-import org.apache.commons.collections.Predicate;
-
 /**
  * This renderer is a generic renderer that can be used to display simple list or tree views.
  * The usual way of using this renderer includes the configuration of the presentation of 
@@ -676,10 +674,7 @@ public class TreeRenderer extends OutputRenderer {
                 script.append(id + ".setMovedClass('" + getMovedClass() + "');\n");
             }
             
-            if (isIncludeImage()) {
-                script.append(id + ".setIncludeImage(false);\n");
-            }
-
+            script.append(id + ".setIncludeImage(" + isIncludeImage() + ");\n");
             script.append(id + ".initTree();\n");
             
             return script.toString();
