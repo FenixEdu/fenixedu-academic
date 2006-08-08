@@ -131,6 +131,13 @@
 			<forward name="EditEventParticipantUnits" path="events.editEventParticipantUnits"/>
 		</action>		
 		
+		<!-- Results Management -->
+		<action path="/resultPatents/*" forward="/patents/patentsManagement.do?method={1}"/>
+		<action path="/resultPublications/*" forward="/publications/publicationsManagement.do?method={1}"/>
+		<action path="/resultParticipations/*" forward="/result/resultParticipationManagement.do?method={1}"/>		
+		<action path="/resultDocumentFiles/*" forward="/result/resultDocumentFilesManagement.do?method={1}"/>
+		<action path="/resultAssociations/*" forward="/result/resultAssociationsManagement.do?method={1}"/>
+		
         <!-- Result Patents Management Action Mapping -->
 		<action path="/patents/patentsManagement"
 				name="resultsManagementForm" 
@@ -145,13 +152,26 @@
 		    <forward name="patentDetails" path="patents.details"/>
 		</action>
 
-		<!-- Result Participation Management Action Mapping -->	
+		<!-- Result Participation Management Action Mapping -->			
 		<action path="/result/resultParticipationManagement"
 				name="resultsManagementForm"
 				parameter="method"
 				scope="request"
 				type="net.sourceforge.fenixedu.presentationTier.Action.research.result.ResultParticipationManagementAction">
 			<forward name="editParticipation" path="result.participation"/>
+			<forward name="editPatent" path="/resultPatents/prepareEditPatent.do"/>
+			<forward name="viewEditPublication" path="/publications/publicationsManagement.do?method=prepareViewEditPublication"/>
+			<forward name="listPatents" path="/resultPatents/listPatents.do"/>
+			<forward name="ListPublications" path="/publications/publicationsManagement.do?method=listPublications"/>
+		</action>
+
+		<!-- Result Document Files Management Action Mapping -->
+		<action path="/result/resultDocumentFilesManagement"
+				name="resultsManagementForm"
+				parameter="method"
+				scope="request"
+				type="net.sourceforge.fenixedu.presentationTier.Action.research.result.ResultDocumentFilesManagementAction">
+			<forward name="manageDocumentFiles" path="result.documentFiles"/>
 			<forward name="editPatent" path="/patents/patentsManagement.do?method=prepareEditPatent"/>
 			<forward name="viewEditPublication" path="/publications/publicationsManagement.do?method=prepareViewEditPublication"/>
 			<forward name="listPatents" path="/patents/patentsManagement.do?method=listPatents"/>
