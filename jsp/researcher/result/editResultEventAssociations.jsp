@@ -6,13 +6,34 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 
 <logic:present role="RESEARCHER">
-	<bean:define id="resultId" name="result" property="idInternal" />
-	<bean:define id="resultType" name="result" property="class.simpleName"/>
 	<bean:define id="eventAssociations" name="result" property="resultEventAssociations"/>
-
-	<em><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.result.superUseCaseTitle"/></em>
 	
+	<!-- Action paths definitions -->
+	<bean:define id="requestParameters">
+		resultId=<bean:write name="result" property="idInternal"/>&resultType=<bean:write name="result" property="class.simpleName"/>
+	</bean:define>	
+	<bean:define id="createActionPath">
+		/result/resultAssociationsManagement.do?method=createEventAssociation&<bean:write name="requestParameters"/>
+	</bean:define>
+	<bean:define id="prepareEditActionPath">
+		/result/resultAssociationsManagement.do?method=prepareEditEventAssociations&<bean:write name="requestParameters"/>
+	</bean:define>
+	<bean:define id="removeLink">
+		/result/resultAssociationsManagement.do?method=removeEventAssociation&<bean:write name="requestParameters"/>
+	</bean:define>
+	<bean:define id="backLink">
+		/result/resultAssociationsManagement.do?method=backToResult&<bean:write name="requestParameters"/>		
+	</bean:define>
+	<bean:define id="cancelPath" value="<%= backLink %>"/>
+	<logic:equal name="creationSchema" value="resultEventAssociation.fullCreation">
+		<bean:define id="cancelPath" value="<%= prepareEditActionPath %>"/>
+	</logic:equal>
+	
+	<!-- Schema definitions -->
+	<bean:define id="creationSchema" name="creationSchema" type="java.lang.String"/>
+
 	<%-- Title --%>		
+	<em><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.result.superUseCaseTitle"/></em>
 	<h2><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.result.eventAssociations.useCaseTitle"/></h2>
 	
 	<%-- Warning/Error messages --%>
@@ -29,9 +50,7 @@
 	<logic:notEmpty name="eventAssociations">
 		<fr:view name="eventAssociations" layout="tabular" schema="resultEventAssociation.summary">
 			<fr:layout>
-				<fr:property name="link(remove)" value="<%= "/result/resultAssociationsManagement.do?method=removeEventAssociation" + 
-				        									"&resultId=" + resultId + 
-				        									"&resultType=" + resultType %>"/>
+				<fr:property name="link(remove)" value="<%= removeLink %>"/>
 				<fr:property name="param(remove)" value="idInternal/associationId"/>
 				<fr:property name="key(remove)" value="link.remove"/>
 				<fr:property name="bundle(remove)" value="RESEARCHER_RESOURCES"/>
@@ -41,26 +60,14 @@
 
 	<%-- Create new Result Event association --%>
 	<h3><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.result.eventAssociations.addNewEventAssociation"/></h3>
-	<%-- With existing event --%>	
-	<logic:present name="simpleBean">
-		<fr:edit 	id="simpleBean" name="simpleBean" schema="resultEventAssociation.simpleCreation"
-					action="<%="/result/resultAssociationsManagement.do?method=createEventAssociationSimple&resultId="+resultId+"&resultType="+resultType%>">
-			<fr:destination name="invalid" path="<%="/result/resultAssociationsManagement.do?method=prepareEditEventAssociations&resultId=" + resultId + "&resultType=" + resultType %>"/>		
-			<fr:destination name="cancel" path="<%="/result/resultAssociationsManagement.do?method=backToResult&resultId=" + resultId + "&resultType=" + resultType %>"/>
-		</fr:edit>
-	</logic:present>
-	<%-- With event creation --%>	
-	<logic:present name="fullBean">
-		<fr:edit 	id="fullBean" name="fullBean" schema="resultEventAssociation.fullCreation"
-					action="<%="/result/resultAssociationsManagement.do?method=createEventAssociationFull&resultId=" + resultId + "&resultType=" + resultType %>">
-			<fr:destination name="invalid" path="<%="/result/resultAssociationsManagement.do?method=prepareEditEventAssociations&resultId=" + resultId + "&resultType=" + resultType %>"/>		
-			<fr:destination name="cancel" path="<%="/result/resultAssociationsManagement.do?method=prepareEditEventAssociations&resultId=" + resultId + "&resultType=" + resultType %>"/>
-		</fr:edit>
-	</logic:present>
+	<fr:edit id="bean" name="bean" schema="<%= creationSchema %>" action="<%= createActionPath %>">
+		<fr:destination name="invalid" path="<%= prepareEditActionPath %>"/>		
+		<fr:destination name="cancel" path="<%= cancelPath %>"/>
+	</fr:edit>
 	<br/>
 	
 	<%-- Go to previous page --%>
-	<html:link page="<%="/result/resultAssociationsManagement.do?method=backToResult&resultId=" + resultId + "&resultType=" + resultType %>">
+	<html:link page="<%= backLink %>">
 		<bean:message bundle="RESEARCHER_RESOURCES" key="link.goBackToView" />
 	</html:link>
 </logic:present>
