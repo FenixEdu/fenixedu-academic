@@ -34,7 +34,7 @@
 		<p><em><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.result.editResult.participation.emptyList"/></em></p>
 	</logic:empty>
 	
-	<html:link page="<%="/result/resultParticipationManagement.do?method=prepareEditParticipation&resultId=" + patentId + "&resultType=" + resultType %>">
+	<html:link page="<%="/resultParticipations/prepareEditParticipation.do?resultId=" + patentId + "&resultType=" + resultType %>">
 		<bean:message bundle="RESEARCHER_RESOURCES" key="researcher.result.editResult.editParticipations" />
 	</html:link>
 	<br/>	
@@ -47,8 +47,21 @@
         	<fr:property name="columnClasses" value="listClasses,,"/>
 	    </fr:layout>
 	</fr:view>
-	<html:link page="<%="/patents/patentsManagement.do?method=prepareEditPatentData&resultId=" + patentId %>">
+	<html:link page="<%="/resultPatents/prepareEditPatentData.do?resultId=" + patentId %>">
 		<bean:message bundle="RESEARCHER_RESOURCES" key="researcher.result.editResult.editResultData" />
+	</html:link>
+	<br/>
+	
+	<%-- Documents --%>
+	<h3><bean:message bundle="RESEARCHER_RESOURCES" key="label.documents"/></h3>
+ 	<logic:present name="patent" property="resultDocumentFile">
+		<fr:view name="patent" property="resultDocumentFile" layout="tabular" schema="resultDocumentFile.summary"/>
+	</logic:present>
+	<logic:notPresent name="patent" property="resultDocumentFile">
+		<p><em><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultDocumentFiles.null"/></em></p>
+	</logic:notPresent>
+	<html:link page="<%="/resultDocumentFiles/prepareManageDocumentFiles.do?resultId=" + patentId + "&resultType=" + resultType %>">
+		<bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultDocumentFiles.managementLink" />
 	</html:link>
 	<br/>
 	
@@ -58,7 +71,7 @@
 	<logic:empty name="patent" property="resultEventAssociations">
 		<p><em><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.result.eventAssociations.emptyList"/></em></p>
 	</logic:empty>
-	<html:link page="<%="/result/resultAssociationsManagement.do?method=prepareEditEventAssociations&resultId=" + patentId + "&resultType=" + resultType %>">
+	<html:link page="<%="/resultAssociations/prepareEditEventAssociations.do?resultId=" + patentId + "&resultType=" + resultType %>">
 		<bean:message bundle="RESEARCHER_RESOURCES" key="researcher.result.eventAssociations.editEventsLink" />
 	</html:link>
 	<br/>
@@ -69,21 +82,21 @@
 	<logic:empty name="patent" property="resultUnitAssociations">
 		<p><em><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.result.unitAssociations.emptyList"/></em></p>
 	</logic:empty>
-	<html:link page="<%="/result/resultAssociationsManagement.do?method=prepareEditUnitAssociations&resultId=" + patentId + "&resultType=" + resultType %>">
+	<html:link page="<%="/resultAssociations/prepareEditUnitAssociations.do?resultId=" + patentId + "&resultType=" + resultType %>">
 		<bean:message bundle="RESEARCHER_RESOURCES" key="researcher.result.unitAssociations.editUnitsLink" />
 	</html:link>
 	<br/>
 	<br/>
 	
 	<%-- Delete Result Patent --%>
-	<h3><html:link page="<%= "/patents/patentsManagement.do?method=prepareDeletePatent&resultId=" + patentId + "&from=edit" %>">
+	<h3><html:link page="<%= "/resultPatents/prepareDeletePatent.do?resultId=" + patentId + "&from=edit" %>">
 		<bean:message bundle="RESEARCHER_RESOURCES" key="researcher.result.patent.deletePatentUseCase.title" />
 	</html:link></h3>
 	<br/>
 	<br/>
 	
 	<%-- Go back --%>
-	<html:link page="<%= "/patents/patentsManagement.do?method=listPatents" %>">
+	<html:link page="/resultPatents/listPatents.do">
 		<bean:message bundle="RESEARCHER_RESOURCES" key="researcher.project.editProject.goBackToView" />
 	</html:link>
 </logic:present>

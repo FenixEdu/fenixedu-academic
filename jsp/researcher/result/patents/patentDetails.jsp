@@ -54,7 +54,7 @@
 	</logic:empty>
 	<br/>
 	
-	<html:link page="<%= "/patents/patentsManagement.do?method=listPatents" %>">
+	<html:link page="<%= "/resultPatents/listPatents.do" %>">
 		<bean:message bundle="RESEARCHER_RESOURCES" key="researcher.project.editProject.goBackToView" />
 	</html:link>
 </logic:present>

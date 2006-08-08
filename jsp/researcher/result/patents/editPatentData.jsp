@@ -6,6 +6,14 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 
 <logic:present role="RESEARCHER">
+	<bean:define id="actionPath">
+		/resultPatents/prepareEditPatent.do?resultId=<bean:write name="patent" property="idInternal"/>
+	</bean:define>	
+	<bean:define id="cancelPath">
+		<%= actionPath %>
+	</bean:define>
+
+	<%-- Title messages --%>
 	<em><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.result.superUseCaseTitle"/></em>
 	<h2><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.result.patent.editPatentUseCase.title"/></h2>
 	<h3><bean:message bundle="RESEARCHER_RESOURCES" key="label.data"/></h3>	
@@ -17,18 +25,16 @@
 		</html:messages>
 	</logic:messagesPresent>
 	
-	<bean:define id="patentId" name="patent" property="idInternal"/>
-		
+	<%-- Form edit Patent Data --%>		
 	<fr:edit 	id="editPatent" name="patent" type="net.sourceforge.fenixedu.domain.research.result.patent.ResultPatent" 
 				schema="patent.edit"
-				action="<%="/patents/patentsManagement.do?method=prepareEditPatent&resultId=" + patentId %>">
-		<fr:hidden slot="modifyedBy" name="UserView" property="person.name"/>
-		<fr:hidden slot="participations" name="patent" property="participations"/>
+				action="<%= actionPath %>">
+		<fr:hidden slot="participation" name="UserView" property="person"/>
 	    <fr:layout name="tabular">
 	        <fr:property name="classes" value="style1"/>
 	        <fr:property name="columnClasses" value="listClasses,,"/>
 	    </fr:layout>
-   	    <fr:destination name="cancel" path="<%="/patents/patentsManagement.do?method=prepareEditPatent&resultId=" + patentId %>"/>
+   	    <fr:destination name="cancel" path="<%= cancelPath %>"/>
 	</fr:edit>
 </logic:present>
 <br/>

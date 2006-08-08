@@ -6,17 +6,13 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 
 <logic:present role="RESEARCHER">
+	<!-- Titles -->
 	<em><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.result.superUseCaseTitle"/></em>
-
 	<h2><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.result.patent.createPatentUseCase.title"/></h2>
-
+	
+	<!-- Author name -->
 	<h3><bean:message bundle="RESEARCHER_RESOURCES" key="label.resultParticipations"/></h3>
-	<fr:view name="participationsList" layout="tabular-list">
-		<fr:layout>
-			<fr:property name="subLayout" value="values"/>
-			<fr:property name="subSchema" value="result.creator.name"/>
-		</fr:layout>
-	</fr:view>
+	<fr:view name="UserView" property="person.name"/>
 	
 	<%-- Warning/Error messages --%>
 	<logic:messagesPresent name="messages" message="true">
@@ -29,8 +25,7 @@
 	<fr:create 	id="createPatent" type="net.sourceforge.fenixedu.domain.research.result.patent.ResultPatent" 
 				schema="patent.create"
 				action="/patents/patentsManagement.do?method=listPatents">
-		<fr:hidden slot="participations" multiple="true" name="participationsList"/>
-		<fr:hidden slot="modifyedBy" name="UserView" property="person.name"/>
+		<fr:hidden slot="participation" name="UserView" property="person"/>
 	    <fr:layout name="tabular">
 	        <fr:property name="classes" value="style1"/>
 	        <fr:property name="columnClasses" value="listClasses,,"/>
