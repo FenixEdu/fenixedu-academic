@@ -708,7 +708,7 @@
 					}
 				}
 				else {
-					folderImage = document.createElement('IMG');
+					folderImg = document.createElement('IMG');
 					folderImg.src = this.imageFolder + this.blankImage;
 					menuItems[no].insertBefore(folderImg, aTag);
 				}
