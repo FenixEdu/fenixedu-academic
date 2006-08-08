@@ -31,7 +31,7 @@ public class ResultEventAssociation extends ResultEventAssociation_Base {
             throw new DomainException("error.ResultAssociations.role.cannot.be.null");
         }
         if (personName == null || personName.equals("")) {
-            throw new DomainException("error.ResultAssociations.changedBy.null");
+            throw new DomainException("error.Result.person.not.found");
         }
         
         if(result.hasAssociationWithEventRole(event, role)) {

@@ -1,83 +1,185 @@
 package net.sourceforge.fenixedu.domain.research.result;
 
+import java.util.Comparator;
 import java.util.List;
 
+import net.sourceforge.fenixedu.accessControl.AccessControl;
+import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.research.result.ChangeResultParticipationsOrder.OrderChange;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.research.result.publication.ResultPublication;
+import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 
 public class ResultParticipation extends ResultParticipation_Base {
-    
+
+    /**
+     * Roles available for participation
+     */
+    public enum ResultParticipationRole {
+        AUTHOR,
+        EDITOR;
+
+        public static ResultParticipationRole getDefaultResultParticipationRole() {
+            return AUTHOR;
+        }
+    }
+
+    /**
+     * Comparator than can be used to order participations. 
+     */
+    public static class OrderComparator implements Comparator<ResultParticipation> {
+
+        public int compare(ResultParticipation rP1, ResultParticipation rP2) {
+            Integer order1 = rP1.getPersonOrder();
+            Integer order2 = rP2.getPersonOrder();
+            
+            return order1.compareTo(order2);
+        }
+    }
+
+    /**
+     * Default constructor
+     */
     public  ResultParticipation() {
         super();
         setRootDomainObject(RootDomainObject.getInstance());
     }
     
-    public ResultParticipation(Result result, Person person, Integer personOrder, ResultParticipationRole role, String modifyedBy) {
+    /**
+     * Creates a ResultParticipations with required fields
+     */
+    public ResultParticipation(Result result, Person person, ResultParticipationRole role, Person changedBy) {
         this();
-        checkParameters(result,person,personOrder,modifyedBy);
+        checkParameters(result,person, role, changedBy);
         setResult(result);
         setPerson(person);
-        setPersonOrder(personOrder);
-        setResultParticipationRole(role);
-        setChangedBy(modifyedBy);
+        setPersonOrder(result.getResultParticipationsCount());
+        if(isValidRoleForResult(result,role)) {
+            setResultParticipationRole(role);    
+        }
+        setChangedBy(result, AccessControl.getUserView().getPerson());
     }
     
-    private void checkParameters(Result result, Person person, Integer personOrder, String modifyedBy) {
+    /**
+     * Verify required fields for constructor.
+     */
+    private void checkParameters(Result result, Person person, ResultParticipationRole role, Person modifyedBy) {
         if (result == null) {
             throw new DomainException("error.Result.not.found");
         }
         if (person == null) {
             throw new DomainException("error.ResultParticipation.person.cannot.be.null");
         }
-        if (personOrder == null || personOrder < 0) {
-            throw new DomainException("error.ResultParticipation.personOrder.cannot.be.null");
+        if (modifyedBy == null) {
+            throw new DomainException("error.Result.person.not.found");
         }
-        if (modifyedBy == null || modifyedBy.equals("")) {
-            throw new DomainException("error.ResultAssociations.changedBy.null");
+        if (isValidRoleForResult(result,role)) {
+            if(result.hasPersonParticipationWithRole(person, role)) {
+                throw new DomainException("error.ResultParticipation.participation.exists");    
+            }
         }
-        if (result.hasPersonParticipation(person)) {
-            throw new DomainException("error.ResultParticipation.participation.exists");
+        else {
+            if(result.hasPersonParticipation(person)) {
+                throw new DomainException("error.ResultParticipation.participation.exists");
+            }
         }
     }
 
-    /** 
-     * This method is responsible for updating the last modification date and author of result.
+    /**
+     * Verify if role is required for the participation
      */
-    public void setChangedBy(String personName) {
-        this.getResult().setModificationDateAndAuthor(personName);
+    private boolean isValidRoleForResult(Result result, ResultParticipationRole role) {
+        if((result instanceof ResultPublication) && ((ResultPublication)result).haveResultPublicationRole()) {
+            return true;
+        }
+        return false;
     }
     
     /**
-     * Returns true if there is more then one ResultAuthorship (last one in the list).
+     * Update the last modification date and author name.
+     */
+    public void setChangedBy(Result result, Person person) {
+        result.setModificationDateAndAuthor(person.getName());
+    }
+    
+    /**
+     * Returns true if there are more than one participation. 
      */
     public boolean getIsNotLastResultParticipation() {
         return this.getResult().getResultParticipationsCount()>1;
+    }
+
+    /**
+     * Method used to call the service responsible for changing the participation order
+     */
+    public static void changeOrder(ResultParticipation participation, OrderChange orderChange) throws FenixFilterException, FenixServiceException {
+        ServiceUtils.executeService(AccessControl.getUserView(), "ChangeResultParticipationsOrder", participation, orderChange);
+    }
+    
+    /**
+     * Method used to call the service responsible for saving ResultParticipations order
+     */
+    public static void saveResultParticipationsOrder(Result result, List<ResultParticipation> participations) throws FenixFilterException, FenixServiceException {
+        ServiceUtils.executeService(AccessControl.getUserView(), "SaveResultParticipationsOrder", result, participations);
+    }
+    
+    /**
+     * Method used to call the service responsible for deleting a ResultParticipation
+     */ 
+    public static void deleteResultParticipation(ResultParticipation participation) throws FenixFilterException, FenixServiceException {
+        ServiceUtils.executeService(AccessControl.getUserView(), "DeleteResultParticipation", participation);
     }
     
     /**
      * Change result participation order.
      */
-    public boolean changeOrder(int offset, String personName) {
-        final List<ResultParticipation> resultParticipations = this.getResult().getResultParticipations();
+    protected void orderChange(int offset) {
+        final List<ResultParticipation> orderedParticipations = this.getResult().getOrderedParticipations();
+        final int newOrder = this.getPersonOrder() + offset;
         
-        if (offset == 1 || offset == -1) {
-            final int oldOrder = this.getPersonOrder();
-            final int newOrder = oldOrder + offset;
-            
-            if (newOrder >= 0 && newOrder < resultParticipations.size()) {
-                for (ResultParticipation participation : resultParticipations) {
-                    if(participation.getPersonOrder().intValue() == newOrder){
-                        participation.setPersonOrder(oldOrder);
-                        this.setPersonOrder(newOrder);
-                        this.setChangedBy(personName);
-                        return true;
-                    }
-                }
-            }
+        orderedParticipations.remove(this);
+        
+        //Participation will be the first element in list.
+        if(newOrder < 0){
+            orderedParticipations.add(0,this);
         }
-        return false;
+        //Participation will be the last element in list.
+        else if (newOrder > orderedParticipations.size()) {
+            orderedParticipations.add(orderedParticipations.size(), this);
+        }
+        //Participation will be on the newOrder in list.
+        else {
+            orderedParticipations.add(newOrder, this);
+        }
+        
+        //ResultParticipation list was re-arranged. Update personOrder slot (0,1,2...).
+        int index = 0;
+        for (ResultParticipation participation : orderedParticipations) {
+            participation.setPersonOrder(index++);
+        }
     }
+    
+    /**
+     * Available changes for Result Participations order.
+     */
+    public void moveUp() {
+        orderChange(-1);
+    }
+
+    public void moveDown() {
+        orderChange(1);
+    }
+
+    public void moveTop() {
+        orderChange(-Integer.MAX_VALUE);
+    }
+
+    public void moveBottom() {
+        orderChange(Integer.MAX_VALUE);
+    }   
     
     /** 
      * This method is responsible for deleting the object.
@@ -88,22 +190,5 @@ public class ResultParticipation extends ResultParticipation_Base {
 
         this.removeRootDomainObject();
         deleteDomainObject();
-    }
-    
-    public void delete(String personName) {
-        final Result result = this.getResult();
-        
-        this.delete();
-        
-        result.setModificationDateAndAuthor(personName);
-    }
-    
-    public enum ResultParticipationRole {
-        AUTHOR,
-        EDITOR;
-
-        public static ResultParticipationRole getDefaultResultParticipationRole() {
-            return AUTHOR;
-        }
     }
 }
