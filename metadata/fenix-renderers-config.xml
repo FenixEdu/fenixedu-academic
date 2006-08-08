@@ -82,6 +82,9 @@ Documentation:
           default layout is set to the tabular presentation of the object. -->
     <renderer type="java.lang.Object" layout="link" class="net.sourceforge.fenixedu.presentationTier.renderers.ObjectLinkRenderer"/>
 
+    <!--@ Presents the object's slots in a flow layout. With or without labels.  -->
+    <renderer type="java.lang.Object" layout="flow" class="net.sourceforge.fenixedu.renderers.FlowRenderer" />
+
     <renderer type="net.sourceforge.fenixedu.domain.Person" layout="person-email-identity" class="net.sourceforge.fenixedu.presentationTier.renderers.EmailIdentityRenderer"/>
   
     <renderer type="java.lang.String" class="net.sourceforge.fenixedu.renderers.StringRenderer"/>
@@ -163,7 +166,7 @@ Documentation:
     
     <!--@ Each object in the collection is presented with it's own layout and schema. This layouts works for several objects
           the same way that the <tt>values</tt> layouts works for slots. -->
-    <renderer type="java.util.Collection" layout="flowLayout" class="net.sourceforge.fenixedu.presentationTier.renderers.FlowRenderer" />
+    <renderer type="java.util.Collection" layout="flowLayout" class="net.sourceforge.fenixedu.presentationTier.renderers.FlowCollectionRenderer" />
 
     <!--@ The tree layout allows a collection to be presented as a tree, that is, were you specify how an hierarchy is
           formed and a structure made by lists inside lists is created. -->

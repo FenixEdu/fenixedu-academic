@@ -6,13 +6,9 @@ import net.sourceforge.fenixedu.renderers.components.HtmlContainer;
 import net.sourceforge.fenixedu.renderers.components.HtmlInlineContainer;
 
 public abstract class FlowLayout extends Layout {
+
     private String eachClasses;
-
     private String eachStyle;
-
-    private String eachSchema;
-
-    private String eachLayout;
 
     private boolean eachInline = true;
 
@@ -32,22 +28,6 @@ public abstract class FlowLayout extends Layout {
         return this.eachStyle;
     }
 
-    public String getEachLayout() {
-        return eachLayout;
-    }
-
-    public void setEachLayout(String eachLayout) {
-        this.eachLayout = eachLayout;
-    }
-
-    public String getEachSchema() {
-        return eachSchema;
-    }
-
-    public void setEachSchema(String eachSchema) {
-        this.eachSchema = eachSchema;
-    }
-
     public boolean isEachInline() {
         return eachInline;
     }
@@ -59,7 +39,7 @@ public abstract class FlowLayout extends Layout {
     @Override
     public String[] getPropertyNames() {
         return mergePropertyNames(super.getPropertyNames(), new String[] { "eachClasses", "eachStyle",
-                "eachLayout", "eachSchema", "eachInline" });
+                "eachInline" });
     }
 
     @Override
@@ -68,7 +48,7 @@ public abstract class FlowLayout extends Layout {
 
         while (hasMoreComponents()) {
             HtmlComponent component = getNextComponent();
-            
+
             addComponent(container, component);
         }
 
@@ -82,7 +62,7 @@ public abstract class FlowLayout extends Layout {
     protected void addComponent(HtmlComponent component, HtmlComponent child) {
         HtmlContainer eachContainer = getEachContainer();
         eachContainer.addChild(child);
-        
+
         ((HtmlContainer) component).addChild(eachContainer);
     }
 
@@ -93,8 +73,7 @@ public abstract class FlowLayout extends Layout {
     protected HtmlContainer getEachContainer() {
         if (isEachInline()) {
             return new HtmlInlineContainer();
-        }
-        else {
+        } else {
             return new HtmlBlockContainer();
         }
     }

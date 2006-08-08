@@ -6,8 +6,6 @@ import net.sourceforge.fenixedu.renderers.components.HtmlComponent;
 import net.sourceforge.fenixedu.renderers.components.HtmlFormComponent;
 import net.sourceforge.fenixedu.renderers.components.HtmlInlineContainer;
 import net.sourceforge.fenixedu.renderers.components.HtmlLabel;
-import net.sourceforge.fenixedu.renderers.components.HtmlText;
-import net.sourceforge.fenixedu.renderers.components.Validatable;
 import net.sourceforge.fenixedu.renderers.layouts.FlowLayout;
 import net.sourceforge.fenixedu.renderers.layouts.Layout;
 import net.sourceforge.fenixedu.renderers.model.MetaObject;
@@ -40,14 +38,13 @@ public class FlowInputRenderer extends InputRenderer {
     
     private String labelTerminator;
     
+    private boolean hideValidators;
+    private String validatorClasses;
+
     public String getEachClasses() {
         return this.eachClasses;
     }
     
-    private boolean hideValidators;
-    
-    private String validatorClasses;
-
     /**
      * Allows to specify the class attribute for each one
      * of the slot's presentation. 

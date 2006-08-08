@@ -23,7 +23,7 @@ import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
  * 
  * @author naat
  */
-public class FlowRenderer extends OutputRenderer {
+public class FlowCollectionRenderer extends OutputRenderer {
 
     private String eachLayout;
 
@@ -38,15 +38,9 @@ public class FlowRenderer extends OutputRenderer {
     private String emptyMessageKey;
 
     private String emptyMessageClasses;
-    
-    private String emptyMessageBundle;
 
     private String eachInline;
     
-    public FlowRenderer() {
-        super();
-    }
-
     public String getEachLayout() {
         return eachLayout;
     }
@@ -121,8 +115,8 @@ public class FlowRenderer extends OutputRenderer {
 
     /**
      * When the given collection is empty this key will be used
-     * to fetch an according message for the situation. The bundle
-     * used is the module's default bundle if no other is provided.
+     * to fecth an according message for the situation. The bundle
+     * used is the module's default bundle. 
      * 
      * @property
      */
@@ -144,22 +138,7 @@ public class FlowRenderer extends OutputRenderer {
         this.emptyMessageClasses = emptyMessageClasses;
     }
 
-    public String getEmptyMessageBundle() {
-		return emptyMessageBundle;
-	}
-
-    /**
-     * When emptyMessageKey is used to specify wich resource key
-     * will be used when the collection is empty, this property allows
-     * to specify wich bundle will be used to fetch the key.
-     * 
-     * @property
-     */
-	public void setEmptyMessageBundle(String emptyMessageBundle) {
-		this.emptyMessageBundle = emptyMessageBundle;
-	}
-
-	public String getEachInline() {
+    public String getEachInline() {
         return this.eachInline;
     }
 
@@ -188,7 +167,7 @@ public class FlowRenderer extends OutputRenderer {
                 HtmlComponent component = null;
 
                 if ((getEmptyMessageKey() != null) && (hasMoreComponents() == false)) {
-                    component = new HtmlText(RenderUtils.getResourceString(getEmptyMessageBundle(), getEmptyMessageKey()));
+                    component = new HtmlText(RenderUtils.getResourceString(getEmptyMessageKey()));
                     this.empty = true;
                 } else {
                     component = super.createComponent(object, type);
