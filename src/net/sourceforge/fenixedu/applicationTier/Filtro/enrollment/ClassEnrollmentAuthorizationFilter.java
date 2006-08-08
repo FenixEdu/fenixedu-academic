@@ -8,13 +8,11 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.Filtro;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
 import net.sourceforge.fenixedu.domain.EnrolmentPeriodInClasses;
 import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
-import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import pt.utl.ist.berserk.ServiceRequest;
 import pt.utl.ist.berserk.ServiceResponse;
 import pt.utl.ist.berserk.logic.filterManager.exceptions.FilterException;
@@ -29,29 +27,15 @@ public class ClassEnrollmentAuthorizationFilter extends Filtro {
 
     private static SimpleDateFormat comparableDateFormat = new SimpleDateFormat("yyyyMMdd");
 
-    public void execute(ServiceRequest request, ServiceResponse response) throws FilterException,
-            Exception {
+    public void execute(ServiceRequest request, ServiceResponse response) throws FilterException, Exception {
 
-        IUserView id = getRemoteUser(request);
-
-        StudentCurricularPlan studentCurricularPlan = null;
+        final Student student = getRemoteUser(request).getPerson().getStudentByUsername();
+        final StudentCurricularPlan studentCurricularPlan = student.getActiveStudentCurricularPlan(); 
         
-        Student student = id.getPerson().getStudentByType(DegreeType.DEGREE);
-        if(student != null) {
-        	studentCurricularPlan = student.getActiveStudentCurricularPlan();
-        }
-
-        if (studentCurricularPlan == null) {
-        	student = id.getPerson().getStudentByType(DegreeType.MASTER_DEGREE);
-        	if(student != null) {
-        		studentCurricularPlan = student.getActiveStudentCurricularPlan();
-        	}
-        }
-
         if (studentCurricularPlan != null) {
         	EnrolmentPeriodInClasses enrolmentPeriodInClasses = studentCurricularPlan.getDegreeCurricularPlan().getCurrentClassesEnrollmentPeriod();
-            if (enrolmentPeriodInClasses == null || enrolmentPeriodInClasses.getStartDate() == null
-                    || enrolmentPeriodInClasses.getEndDate() == null) {
+            if (enrolmentPeriodInClasses == null || enrolmentPeriodInClasses.getStartDateYearMonthDay() == null
+                    || enrolmentPeriodInClasses.getEndDateYearMonthDay() == null) {
                 throw new CurrentClassesEnrolmentPeriodUndefinedForDegreeCurricularPlan();
             }
 

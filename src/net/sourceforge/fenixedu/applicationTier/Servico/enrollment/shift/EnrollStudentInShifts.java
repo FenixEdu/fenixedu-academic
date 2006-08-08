@@ -1,26 +1,19 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.enrollment.shift;
 
-import java.util.List;
-
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
 import net.sourceforge.fenixedu.dataTransferObject.enrollment.shift.ShiftEnrollmentErrorReport;
-import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.Student;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class EnrollStudentInShifts extends Service {
 
-    public class StudentNotFoundServiceException extends FenixServiceException {
-    }
+    public class StudentNotFoundServiceException extends FenixServiceException {}
 
-    public ShiftEnrollmentErrorReport run(final Integer studentId, final Integer shiftId)
-            throws FenixServiceException, ExcepcaoPersistencia {
+    public ShiftEnrollmentErrorReport run(final Student student, final Integer shiftId) throws FenixServiceException {
+    	
         final ShiftEnrollmentErrorReport errorReport = new ShiftEnrollmentErrorReport();
 
-        final Student student = rootDomainObject.readStudentByOID(studentId);
         if (student == null) {
             throw new StudentNotFoundServiceException();
         }
@@ -29,20 +22,21 @@ public class EnrollStudentInShifts extends Service {
             throw new FenixServiceException("error.exception.notAuthorized.student.warningTuition");
         }
 
-        final Shift shift = rootDomainObject.readShiftByOID(shiftId);
-        if (shift == null) {
+        final Shift selectedShift = rootDomainObject.readShiftByOID(shiftId);
+        if (selectedShift == null) {
             errorReport.getUnExistingShifts().add(shiftId);
         }             
 
-        final Shift shiftFromStudent = findShiftOfSameTypeForSameExecutionCourse(student, shift);
-        if (shift != shiftFromStudent) {
+        final Shift shiftFromStudent = findShiftOfSameTypeForSameExecutionCourse(student, selectedShift);
+        
+        if (selectedShift != shiftFromStudent) {
             //Student is not yet enroled, so let's reserve the shift...
-            if (reserveShiftForStudent(student, shift)) {
+            if (selectedShift.reserveForStudent(student)) {
                 if (shiftFromStudent != null) {
                     shiftFromStudent.removeStudents(student);
                 }
             } else {
-                errorReport.getUnAvailableShifts().add(InfoShift.newInfoFromDomain(shift));
+                errorReport.getUnAvailableShifts().add(selectedShift);
             }
         }
 
@@ -50,29 +44,13 @@ public class EnrollStudentInShifts extends Service {
     }
 
     private Shift findShiftOfSameTypeForSameExecutionCourse(final Student student, final Shift shift) {
-        final ExecutionCourse executionCourse = shift.getDisciplinaExecucao();
-
-        final List<Shift> shiftsFromStudent = student.getShifts();
-        for (final Shift shiftFromStudent : shiftsFromStudent) {
-            if (shiftFromStudent.getTipo() == shift.getTipo()) {
-                final ExecutionCourse executionCourseFromStudent = shiftFromStudent.getDisciplinaExecucao();
-                if (executionCourseFromStudent == executionCourse) {
-                    return shiftFromStudent;
-                }
-            }
-        }
-
-        return null;
-    }
-
-    private boolean reserveShiftForStudent(Student student, Shift shift) {
-        final List<Student> students = shift.getStudents();
-        if (shift.getLotacao().intValue() > students.size()) {
-            students.add(student);
-            return true;
-        } else {
-            return false;
-        }
-    }
+		for (final Shift shiftFromStudent : student.getShifts()) {
+			if (shiftFromStudent.getTipo() == shift.getTipo()
+					&& shiftFromStudent.getDisciplinaExecucao() == shift.getDisciplinaExecucao()) {
+				return shiftFromStudent;
+			}
+		}
+		return null;
+	}    
 
 }

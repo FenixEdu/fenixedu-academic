@@ -1,9 +1,8 @@
-/*
- * Created on 10/Fev/2004
- */
 package net.sourceforge.fenixedu.presentationTier.Action.student.enrollment;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -11,266 +10,246 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
-import net.sourceforge.fenixedu.applicationTier.Servico.enrollment.shift.DeleteStudentAttendingCourse.AlreadyEnrolledInGroupServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.enrollment.shift.DeleteStudentAttendingCourse.AlreadyEnrolledInShiftServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.enrollment.shift.DeleteStudentAttendingCourse.AlreadyEnrolledServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.enrollment.shift.WriteStudentAttendingCourse.ReachedAttendsLimitServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
-import net.sourceforge.fenixedu.dataTransferObject.InfoClass;
-import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoLesson;
-import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.SchoolClass;
+import net.sourceforge.fenixedu.domain.Student;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.commons.TransactionalLookupDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixTransactionException;
-import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
 
+import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
-import org.apache.struts.action.ActionError;
-import org.apache.struts.action.ActionErrors;
+import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 
-/**
- * @author Tânia Pousão
- */
 public class ShiftStudentEnrollmentManagerLookupDispatchAction extends TransactionalLookupDispatchAction {
-    public ActionForward addCourses(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixTransactionException, FenixFilterException {
-        super.validateToken(request, form, mapping, "error.transaction.enrollment");
 
-        checkParameter(request);
-        ActionErrors errors = new ActionErrors();
-        HttpSession session = request.getSession();
-        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+	public ActionForward addCourses(ActionMapping mapping, ActionForm actionForm,
+			HttpServletRequest request, HttpServletResponse response) throws FenixTransactionException,
+			FenixFilterException {
 
-        // Read data from form
-        DynaActionForm enrollmentForm = (DynaActionForm) form;
-        Integer wantedCourse = (Integer) enrollmentForm.get("wantedCourse");
+		super.validateToken(request, actionForm, mapping, "error.transaction.enrollment");
 
-        Integer studentId = (Integer) enrollmentForm.get("studentId");
+		checkParameter(request);
 
-        InfoStudent infoStudent = new InfoStudent();
-        infoStudent.setIdInternal(studentId);
+		final IUserView userView = getUserView(request);
+		final DynaActionForm form = (DynaActionForm) actionForm;
+		final Integer executionCourseId = (Integer) form.get("wantedCourse");
 
-        // Add course
-        Object[] args = { infoStudent, wantedCourse };
-        Boolean result = Boolean.FALSE;
-        try {
-            result = (Boolean) ServiceManagerServiceFactory.executeService(userView,
-                    "WriteStudentAttendingCourse", args);
-        } catch (NotAuthorizedException exception) {
-            errors.add("error", new ActionError("error.attend.curricularCourse.impossibleToEnroll"));
-        } catch (ReachedAttendsLimitServiceException exception) {
-            errors.add("error", new ActionError("message.maximum.number.curricular.courses.to.enroll",
-                    new Integer(8)));
-        } catch (FenixServiceException exception) {
-            errors.add("error", new ActionError("errors.impossible.operation"));
-        }
-        if (!errors.isEmpty()) {
-            saveErrors(request, errors);
-            return mapping.getInputForward();
-        }
-        if (result.equals(Boolean.FALSE)) {
-            errors.add("error", new ActionError("errors.impossible.operation"));
-            saveErrors(request, errors);
+		try {
+			ServiceManagerServiceFactory.executeService(userView, "WriteStudentAttendingCourse",
+					new Object[] { getStudent(userView), executionCourseId });
 
-            return mapping.getInputForward();
-        }
+		} catch (NotAuthorizedException exception) {
+			addActionMessage(request, "error.attend.curricularCourse.impossibleToEnroll");
+			return mapping.getInputForward();
 
-        return mapping.findForward("prepareShiftEnrollment");
-    }
+		} catch (DomainException e) {
+			addActionMessage(request, e.getMessage(), e.getArgs());
+			return mapping.getInputForward();
 
-    public ActionForward removeCourses(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixTransactionException,
-            FenixFilterException {
-        super.validateToken(request, form, mapping, "error.transaction.enrollment");
+		} catch (FenixServiceException exception) {
+			addActionMessage(request, "errors.impossible.operation");
+			return mapping.getInputForward();
+		}
 
-        checkParameter(request);
+		return mapping.findForward("prepareShiftEnrollment");
+	}
 
-        ActionErrors errors = new ActionErrors();
-        HttpSession session = request.getSession();
-        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+	public ActionForward removeCourses(ActionMapping mapping, ActionForm actionForm,
+			HttpServletRequest request, HttpServletResponse response) throws FenixTransactionException,
+			FenixFilterException {
 
-        // Read data from form
-        DynaActionForm enrollmentForm = (DynaActionForm) form;
-        Integer removedCourse = (Integer) enrollmentForm.get("removedCourse");
+		super.validateToken(request, actionForm, mapping, "error.transaction.enrollment");
 
-        Integer studentId = (Integer) enrollmentForm.get("studentId");
+		checkParameter(request);
 
-        InfoStudent infoStudent = new InfoStudent();
-        infoStudent.setIdInternal(studentId);
+		final DynaActionForm form = (DynaActionForm) actionForm;
+		final Integer executionCourseId = (Integer) form.get("removedCourse");
+		if (executionCourseId == null) {
+			return mapping.findForward("prepareShiftEnrollment");
+		}
 
-        // Remove course
-        Object[] args = { infoStudent, removedCourse };
-        Boolean result = Boolean.FALSE;
-        try {
-            result = (Boolean) ServiceManagerServiceFactory.executeService(userView,
-                    "DeleteStudentAttendingCourse", args);
-        } catch (AlreadyEnrolledInGroupServiceException exception) {
-            errors.add("error", new ActionError("errors.student.already.enroled.in.group"));
-        } catch (AlreadyEnrolledServiceException exception) {
-            errors.add("error", new ActionError("errors.student.already.enroled"));
-        } catch (AlreadyEnrolledInShiftServiceException exception) {
-            errors.add("error", new ActionError("errors.student.already.enroled.in.shift"));
-        } catch (FenixServiceException exception) {
-            errors.add("error", new ActionError("errors.impossible.operation"));
-        }
-        if (!errors.isEmpty()) {
-            saveErrors(request, errors);
-            return mapping.getInputForward();
-        }
-        if (result.equals(Boolean.FALSE)) {
-            errors.add("error", new ActionError("errors.impossible.operation"));
-            saveErrors(request, errors);
+		final IUserView userView = getUserView(request);
+		final Student student = getStudent(userView);
 
-            return mapping.getInputForward();
-        }
+		try {
+			ServiceManagerServiceFactory.executeService(userView, "DeleteStudentAttendingCourse",
+					new Object[] { student, executionCourseId });
 
-        return mapping.findForward("prepareShiftEnrollment");
-    }
+		} catch (DomainException e) {
+			addActionMessage(request, e.getMessage());
+			return mapping.getInputForward();
 
-    public ActionForward proceedToShiftEnrolment(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
-            FenixServiceException {
-        checkParameter(request);
+		} catch (FenixServiceException e) {
+			addActionMessage(request, "errors.impossible.operation");
+			return mapping.getInputForward();
+		}
 
-        HttpSession session = request.getSession();
-        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+		return mapping.findForward("prepareShiftEnrollment");
+	}
 
-        Integer classIdSelected = readClassSelected(request);        
-        Integer studentId = Integer.valueOf((String)request.getParameter("studentId"));
-        Integer executionCourseID = null; 
-        String executionCourseIDString = request.getParameter("executionCourseID");
-        if ( executionCourseIDString != null && !executionCourseIDString.equals("")){
-            executionCourseID = Integer.valueOf(executionCourseIDString);
-            request.setAttribute("executionCourseID",executionCourseID.toString());
-            InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse) ServiceManagerServiceFactory
-                    .executeService(userView, "ReadExecutionCourseByOID",
-                            new Object[] { executionCourseID });
-            request.setAttribute("infoExecutionCourse", infoExecutionCourse);
-        }
-        if(studentId == null){
-            studentId = (Integer) request.getAttribute("studentId");
-        }
-        request.setAttribute("studentId", studentId);        
-        
-        Object[] args = { studentId, executionCourseID };
-        List infoClassList = (List) ServiceManagerServiceFactory.executeService(userView,
-                "ReadClassesByStudentID", args);   
-        
-        if(infoClassList == null || infoClassList.isEmpty()){
-            return mapping.findForward("prepareShiftEnrollment");
-        }
-        
-        request.setAttribute("infoClassList", infoClassList);
-        
-        Integer tempClassId = null;
-        if (classIdSelected != null) {
-            tempClassId = classIdSelected;            
-        } else {
-            tempClassId = ((InfoClass) infoClassList.get(0))
-                    .getIdInternal();            
-        }
+	public ActionForward proceedToShiftEnrolment(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
+			FenixServiceException {
 
-        request.setAttribute("classId", tempClassId);
-        final Integer classId = tempClassId;
+		checkParameter(request);
+		final Integer classIdSelected = readClassSelected(request);
 
-        List selectedClasses = (List) CollectionUtils.select(infoClassList, new Predicate() {
+		final IUserView userView = getUserView(request);
+		final Student student = getStudent(userView);
+		request.setAttribute("studentId", student.getIdInternal());
 
-            public boolean evaluate(Object arg0) {
-                InfoClass infoClass = (InfoClass) arg0;
-                return infoClass.getIdInternal().equals(classId);
-            }
-        });
+		final ExecutionCourse executionCourse = getExecutionCourse(request);
+		final List<SchoolClass> schoolClassesToEnrol = readStudentSchoolClassesToEnrolUsingExecutionCourse(
+				request, student, executionCourse);
+		request.setAttribute("schoolClassesToEnrol", schoolClassesToEnrol);
 
-        InfoClass infoClass = (InfoClass) selectedClasses.get(0);
-        request.setAttribute("infoClass", infoClass);                
-        
-        Object[] args1 = { userView.getUtilizador(), classId, executionCourseID };
-        List infoClasslessons = (List) ServiceManagerServiceFactory.executeService(userView,
-                "ReadClassTimeTableByStudent", args1);       
-        
-        int endTime = getEndTime(infoClasslessons);
-        request.setAttribute("infoClasslessons", infoClasslessons);
-        request.setAttribute("infoClasslessonsEndTime", new Integer(endTime));
+		if (schoolClassesToEnrol.isEmpty()) {
+			return mapping.findForward("prepareShiftEnrollment");
+		}
 
-        Object[] args2 = { userView.getUtilizador() };
-        List infoLessons = (List) ServiceManagerServiceFactory.executeService(userView,
-                "ReadStudentTimeTable", args2);
-        
-        int endTime2 = getEndTime(infoLessons);
-        request.setAttribute("infoLessons", infoLessons);
-        request.setAttribute("infoLessonsEndTime", new Integer(endTime2));
+		
+		final SchoolClass schoolClass = setSelectedSchoolClass(request, classIdSelected, schoolClassesToEnrol);
 
-        return mapping.findForward("showShiftsToEnroll");
-    }
+		// ****************************************************************************************
+		// TODO: remove after create RenderTimeTableTag
+		// ****************************************************************************************
 
-    /**
-     * @param infoLessons
-     * @return
-     */
-    private int getEndTime(List infoLessons) {
-        int endTime = 0;
-        for (Iterator iter = infoLessons.iterator(); iter.hasNext();) {
-            InfoLesson infoLesson = (InfoLesson) iter.next();
-            Calendar end = infoLesson.getFim();
-            int tempEnd = end.get(Calendar.HOUR_OF_DAY);
-            if( end.get(Calendar.MINUTE) > 0 ){
-                tempEnd = tempEnd + 1;
-            }
-            if(endTime < tempEnd){
-                endTime= tempEnd;
-            }
-        }
-        return endTime;
-    }
+		Object[] args1 = { student, schoolClass, executionCourse };
+		List infoClasslessons = (List) ServiceManagerServiceFactory.executeService(userView,
+				"ReadClassTimeTableByStudent", args1);
 
-    private void checkParameter(HttpServletRequest request) {
-        String selectCourses = request.getParameter("selectCourses");
-        if (selectCourses != null) {
-            request.setAttribute("selectCourses", selectCourses);
-        }
-    }
+		int endTime = getEndTime(infoClasslessons);
+		request.setAttribute("infoClasslessons", infoClasslessons);
+		request.setAttribute("infoClasslessonsEndTime", new Integer(endTime));
 
-    private Integer readClassSelected(HttpServletRequest request) {
-        String classIdSelectedString = request.getParameter("classId");
-        Integer classIdSelected = null;
-        if (classIdSelectedString != null) {
-            classIdSelected = Integer.valueOf(classIdSelectedString);
-        } else {
-            classIdSelected = (Integer) request.getAttribute("classId");
-        }
-        return classIdSelected;
-    }       
+		List infoLessons = (List) ServiceManagerServiceFactory.executeService(userView,
+				"ReadStudentTimeTable", new Object[] { student });
 
-    public ActionForward exitEnrollment(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) {
-        return mapping.findForward("studentFirstPage");
-    }
+		int endTime2 = getEndTime(infoLessons);
+		request.setAttribute("infoLessons", infoLessons);
+		request.setAttribute("infoLessonsEndTime", new Integer(endTime2));
 
-    public ActionForward prepareStartViewWarning(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws Exception {
-        return mapping.findForward("prepareEnrollmentViewWarning");
-    }
+		return mapping.findForward("showShiftsToEnroll");
+	}
 
-    protected Map getKeyMethodMap() {
-        Map map = new HashMap();
-        map.put("button.addCourse", "addCourses");
-        map.put("button.removeCourse", "removeCourses");
-        map.put("button.continue.enrolment", "prepareStartViewWarning");
-        map.put("button.exit.shift.enrollment", "exitEnrollment");
-        map.put("label.class", "proceedToShiftEnrolment");
-        map.put("link.shift.enrolement.edit", "proceedToShiftEnrolment");
-        map.put("button.clean", "proceedToShiftEnrolment");
-        return map;
-    }
+	private SchoolClass setSelectedSchoolClass(HttpServletRequest request, final Integer classIdSelected,
+			final List<SchoolClass> schoolClassesToEnrol) {
+		
+		final SchoolClass schoolClass;
+		if (classIdSelected != null) {
+			schoolClass = searchSchoolClassFrom(schoolClassesToEnrol, classIdSelected);
+		} else { // select first from list
+			schoolClass = schoolClassesToEnrol.get(0);
+		}
+		request.setAttribute("selectedSchoolClass", schoolClass);
+		
+		return schoolClass;
+	}
+
+	private SchoolClass searchSchoolClassFrom(final List<SchoolClass> schoolClassesToEnrol,
+			final Integer classId) {
+		return (SchoolClass) CollectionUtils.find(schoolClassesToEnrol, new Predicate() {
+			public boolean evaluate(Object object) {
+				return ((SchoolClass) object).getIdInternal().equals(classId);
+			}
+		});
+	}
+
+	private List<SchoolClass> readStudentSchoolClassesToEnrolUsingExecutionCourse(
+			HttpServletRequest request, final Student student, final ExecutionCourse executionCourse) {
+		
+		final List<SchoolClass> schoolClassesToEnrol = new ArrayList<SchoolClass>();
+		if (executionCourse != null) {
+			request.setAttribute("executionCourse", executionCourse);
+			schoolClassesToEnrol.addAll(student.getSchoolClassesToEnrolBy(executionCourse));
+
+		} else {
+			schoolClassesToEnrol.addAll(student.getSchoolClassesToEnrol());
+		}
+		
+		Collections.sort(schoolClassesToEnrol, new BeanComparator("nome"));
+		return schoolClassesToEnrol;
+	}
+
+	private ExecutionCourse getExecutionCourse(HttpServletRequest request) {
+		if (!StringUtils.isEmpty(request.getParameter("executionCourseID"))) {
+			return rootDomainObject.readExecutionCourseByOID(Integer.valueOf(request
+					.getParameter("executionCourseID")));
+		} else {
+			return null;
+		}
+	}
+
+	private int getEndTime(List infoLessons) {
+		int endTime = 0;
+		for (Iterator iter = infoLessons.iterator(); iter.hasNext();) {
+			InfoLesson infoLesson = (InfoLesson) iter.next();
+			Calendar end = infoLesson.getFim();
+			int tempEnd = end.get(Calendar.HOUR_OF_DAY);
+			if (end.get(Calendar.MINUTE) > 0) {
+				tempEnd = tempEnd + 1;
+			}
+			if (endTime < tempEnd) {
+				endTime = tempEnd;
+			}
+		}
+		return endTime;
+	}
+
+	private void checkParameter(HttpServletRequest request) {
+		final String selectCourses = request.getParameter("selectCourses");
+		if (selectCourses != null) {
+			request.setAttribute("selectCourses", selectCourses);
+		}
+	}
+
+	private Integer readClassSelected(HttpServletRequest request) {
+		String classIdSelectedString = request.getParameter("classId");
+		Integer classIdSelected = null;
+		if (classIdSelectedString != null) {
+			classIdSelected = Integer.valueOf(classIdSelectedString);
+		} else {
+			classIdSelected = (Integer) request.getAttribute("classId");
+		}
+		return classIdSelected;
+	}
+
+	public ActionForward exitEnrollment(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response) {
+		return mapping.findForward("studentFirstPage");
+	}
+
+	public ActionForward prepareStartViewWarning(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response) throws Exception {
+		return mapping.findForward("prepareEnrollmentViewWarning");
+	}
+
+	protected Map getKeyMethodMap() {
+		Map map = new HashMap();
+		map.put("button.addCourse", "addCourses");
+		map.put("button.removeCourse", "removeCourses");
+		map.put("button.continue.enrolment", "prepareStartViewWarning");
+		map.put("button.exit.shift.enrollment", "exitEnrollment");
+		map.put("label.class", "proceedToShiftEnrolment");
+		map.put("link.shift.enrolement.edit", "proceedToShiftEnrolment");
+		map.put("button.clean", "proceedToShiftEnrolment");
+		return map;
+	}
+
+	private Student getStudent(final IUserView userView) {
+		return userView.getPerson().getStudentByUsername();
+	}
 }

@@ -246,7 +246,7 @@ public class Student extends Student_Base {
 
 		for (StudentCurricularPlan studentCurricularPlan : getStudentCurricularPlans()) {
 			for (Enrolment enrolment : studentCurricularPlan.getEnrolments()) {
-				if (enrolment.getCondition() == EnrollmentCondition.INVISIBLE) {
+				if (enrolment.getEnrolmentCondition() == EnrollmentCondition.INVISIBLE) {
 					continue;
 				}
 
@@ -383,10 +383,9 @@ public class Student extends Student_Base {
 	}
 
 	public List<Attends> readAttendsInCurrentExecutionPeriod() {
-		List<Attends> attends = new ArrayList<Attends>();
-		for (Attends attend : this.getAssociatedAttends()) {
-			if (attend.getDisciplinaExecucao().getExecutionPeriod().getState().equals(
-					PeriodState.CURRENT)) {
+		final List<Attends> attends = new ArrayList<Attends>();
+		for (final Attends attend : this.getAssociatedAttendsSet()) {
+			if (attend.getDisciplinaExecucao().getExecutionPeriod().getState().equals(PeriodState.CURRENT)) {
 				attends.add(attend);
 			}
 		}
@@ -658,6 +657,7 @@ public class Student extends Student_Base {
 			}
 		}
 	}
+	
 	// end Special Season
 	
 	//  Improvement
@@ -687,5 +687,165 @@ public class Student extends Student_Base {
 		return enroledImprovements;
 	}
 	
+	public List<ExecutionCourse> getAttendingExecutionCoursesForCurrentExecutionPeriod() {
+		final List<ExecutionCourse> result = new ArrayList<ExecutionCourse>();
+		for (final Attends attends : getAssociatedAttendsSet()) {
+			if (attends.getDisciplinaExecucao().getExecutionPeriod().getState().equals(PeriodState.CURRENT)) {
+				result.add(attends.getDisciplinaExecucao());
+			}
+		}
+		return result;
+	}
+	
+	public List<ExecutionCourse> getAttendingExecutionCoursesFor(final ExecutionPeriod executionPeriod) {
+		final List<ExecutionCourse> result = new ArrayList<ExecutionCourse>();
+		for (final Attends attends : getAssociatedAttendsSet()) {
+			if (attends.getDisciplinaExecucao().getExecutionPeriod() == executionPeriod) {
+				result.add(attends.getDisciplinaExecucao());
+			}
+		}
+		return result;
+	}
+	
+	public List<Shift> getShiftsForCurrentExecutionPeriod() {
+		final List<Shift> result = new ArrayList<Shift>();
+		for (final Shift shift : getShiftsSet()) {
+			if (shift.getDisciplinaExecucao().getExecutionPeriod().getState()
+					.equals(PeriodState.CURRENT)) {
+				result.add(shift);
+			}
+		}
+		return result;
+	}
+	
+	public List<Shift> getShiftsFor(final ExecutionPeriod executionPeriod) {
+		final List<Shift> result = new ArrayList<Shift>();
+		for (final Shift shift : getShiftsSet()) {
+			if (shift.getDisciplinaExecucao().getExecutionPeriod() == executionPeriod) {
+				result.add(shift);
+			}
+		}
+		return result;
+	}
+	
+	public List<Shift> getShiftsFor(final ExecutionCourse executionCourse) {
+		final List<Shift> result = new ArrayList<Shift>();
+		for (final Shift shift : getShiftsSet()) {
+			if (shift.getDisciplinaExecucao() == executionCourse) {
+				result.add(shift);
+			}
+		}
+		return result;
+	}
+	
+	private int countNumberOfDistinctExecutionCoursesOfShiftsFor(final ExecutionPeriod executionPeriod) {
+		final Set<ExecutionCourse> result = new HashSet<ExecutionCourse>();
+		for (final Shift shift : getShiftsSet()) {
+			if (shift.getDisciplinaExecucao().getExecutionPeriod() == executionPeriod) {
+				result.add(shift.getDisciplinaExecucao());
+			}
+		}
+		return result.size();
+	}
+	
+	public Integer getNumberOfExecutionCoursesWithEnroledShiftsFor(final ExecutionPeriod executionPeriod) {
+		return getAttendingExecutionCoursesFor(executionPeriod).size()
+				- countNumberOfDistinctExecutionCoursesOfShiftsFor(executionPeriod);
+	}
+	
+	public Integer getNumberOfExecutionCoursesHavingNotEnroledShiftsFor(final ExecutionPeriod executionPeriod) {
+		int result = 0;
+		final List<Shift> enroledShifts = getShiftsFor(executionPeriod);
+		for (final ExecutionCourse executionCourse : getAttendingExecutionCoursesFor(executionPeriod)) {
+			for (final Shift shift : executionCourse.getAssociatedShiftsSet()) {
+				if (!enroledShiftsContainsShiftWithSameExecutionCourseAndShiftType(enroledShifts, shift)) {
+					result++;
+					break;
+				}
+			}
+		}
+		return Integer.valueOf(result);
+	}
 
+	private boolean enroledShiftsContainsShiftWithSameExecutionCourseAndShiftType(
+			final List<Shift> enroledShifts, final Shift shift) {
+		
+		return CollectionUtils.exists(enroledShifts, new Predicate() {
+			public boolean evaluate(Object object) {
+				Shift enroledShift = (Shift) object;
+				return enroledShift.getDisciplinaExecucao() == shift.getDisciplinaExecucao()
+						&& enroledShift.getTipo() == shift.getTipo();
+			}
+		});
+	}
+	
+	public Set<SchoolClass> getSchoolClassesToEnrol() {
+		final Set<SchoolClass> result = new HashSet<SchoolClass>();
+		for (final Attends attends : getAssociatedAttendsSet()) {
+			final ExecutionCourse executionCourse = attends.getDisciplinaExecucao();
+			
+			if (executionCourse.getExecutionPeriod().getState().equals(PeriodState.CURRENT)) {
+				result.addAll(getSchoolClassesToEnrolBy(executionCourse));
+			}
+		}
+		return result;
+	}
+	
+	public Set<SchoolClass> getSchoolClassesToEnrolBy(final ExecutionCourse executionCourse) {
+		Set<SchoolClass> schoolClasses = executionCourse.getSchoolClassesBy(getActiveStudentCurricularPlan().getDegreeCurricularPlan());
+		return schoolClasses.isEmpty() ? executionCourse.getSchoolClasses() : schoolClasses;
+	}
+
+	public void addAttendsTo(final ExecutionCourse executionCourse) {
+		
+		checkIfReachedAttendsLimit();
+		
+		if (readAttendByExecutionCourse(executionCourse) == null) {
+			final Attends attends = new Attends(this, executionCourse);
+			findAndSetEnrollmentForAttend(getActiveStudentCurricularPlan(), executionCourse, attends);
+		}
+	}
+	
+	private void findAndSetEnrollmentForAttend(final StudentCurricularPlan studentCurricularPlan,
+			final ExecutionCourse executionCourse, final Attends attends) {
+		
+		for (final CurricularCourse curricularCourse : executionCourse.getAssociatedCurricularCoursesSet()) {
+			final Enrolment enrolment = studentCurricularPlan
+					.getEnrolmentByCurricularCourseAndExecutionPeriod(curricularCourse,
+							executionCourse.getExecutionPeriod());
+			if (enrolment != null) {
+				attends.setEnrolment(enrolment);
+				break;
+			}
+		}
+	}
+
+	private static final int MAXIMUM_STUDENT_ATTENDS_PER_EXECUTION_PERIOD = 8;
+	private void checkIfReachedAttendsLimit() {
+		if (readAttendsInCurrentExecutionPeriod().size() >= MAXIMUM_STUDENT_ATTENDS_PER_EXECUTION_PERIOD) {
+			throw new DomainException("error.student.reached.attends.limit", String.valueOf(MAXIMUM_STUDENT_ATTENDS_PER_EXECUTION_PERIOD));
+		}
+	}
+	
+	public void removeAttendFor(final ExecutionCourse executionCourse) {
+		final Attends attend = readAttendByExecutionCourse(executionCourse);
+        if (attend != null) {
+            checkIfHasEnrolmentFor(attend);
+            checkIfHasShiftsFor(executionCourse);
+            attend.delete();
+        }
+	}
+
+	private void checkIfHasEnrolmentFor(final Attends attend) {
+		if (attend.hasEnrolment()) {
+			throw new DomainException("errors.student.already.enroled");
+		}
+	}
+
+	private void checkIfHasShiftsFor(final ExecutionCourse executionCourse) {
+		if (! getShiftsFor(executionCourse).isEmpty()) {
+			throw new DomainException("errors.student.already.enroled.in.shift");
+		}
+	}
+	
 }

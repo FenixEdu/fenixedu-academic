@@ -15,8 +15,6 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.joda.time.DateTime;
 import org.joda.time.Interval;
-import org.joda.time.Period;
-import org.joda.time.YearMonthDay;
 
 /**
  * Created on 11/Fev/2003
@@ -181,5 +179,15 @@ public class ExecutionYear extends ExecutionYear_Base implements Comparable {
 	public boolean containsDate(DateTime dateTime) {
 		return new Interval(getBeginDateYearMonthDay().toDateMidnight(), getEndDateYearMonthDay()
 				.plusDays(1).toDateMidnight()).contains(dateTime);
+	}
+
+	public List<ExecutionDegree> getExecutionDegreesFor(DegreeType degreeType) {
+		final List<ExecutionDegree> result = new ArrayList<ExecutionDegree>();
+		for (final ExecutionDegree executionDegree : getExecutionDegreesSet()) {
+			if (executionDegree.getDegreeCurricularPlan().getDegree().getDegreeType() == degreeType) {
+				result.add(executionDegree);
+			}
+		}
+		return result;
 	}
 }

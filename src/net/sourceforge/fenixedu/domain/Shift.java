@@ -163,5 +163,13 @@ public class Shift extends Shift_Base {
         }       
         return stringBuilder.toString();
     }
-
+    
+    public boolean reserveForStudent(final Student student) {
+        if (getLotacao().intValue() > getStudentsCount()) {
+            addStudents(student);
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

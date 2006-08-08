@@ -1,62 +1,49 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.student;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoLesson;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoRoom;
 import net.sourceforge.fenixedu.dataTransferObject.InfoRoomOccupation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.Lesson;
 import net.sourceforge.fenixedu.domain.OccupationPeriod;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.space.OldRoom;
 import net.sourceforge.fenixedu.domain.space.RoomOccupation;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class ReadStudentTimeTable extends Service {
 
-    public List run(String username) throws ExcepcaoPersistencia {
+    public List<InfoLesson> run(Student student) throws FenixServiceException {
 
-        Student student = Student.readByUsername(username);
-        ExecutionPeriod executionPeriod = ExecutionPeriod.readActualExecutionPeriod();
-
-        List studentShifts = new ArrayList();
-        List<Shift> shifts = student.getShifts();
-        for (Shift shift : shifts) {
-            if (shift.getDisciplinaExecucao().getExecutionPeriod().equals(executionPeriod)) {
-                studentShifts.add(shift);
-            }
+        if (student == null) {
+        	throw new FenixServiceException("error.service.readStudentTimeTable.noStudent");
         }
-
-        List lessons = new ArrayList();
-        Iterator shiftIter = studentShifts.iterator();
-        while (shiftIter.hasNext()) {
-            Shift shift = (Shift) shiftIter.next();
-            lessons.addAll(shift.getAssociatedLessons());
+        
+        final List<Lesson> lessons = new ArrayList<Lesson>();
+        for (final Shift shift : student.getShiftsForCurrentExecutionPeriod()) {
+        	lessons.addAll(shift.getAssociatedLessonsSet());
         }
-
-        Iterator iter = lessons.iterator();
-        List infoLessons = new ArrayList();
-        while (iter.hasNext()) {
-            Lesson lesson = (Lesson) iter.next();
-            InfoLesson infolesson = copyILesson2InfoLesson(lesson);
+        
+        final List<InfoLesson> result = new ArrayList<InfoLesson>(lessons.size());
+        for (final Lesson lesson : lessons) {
+        	InfoLesson infolesson = copyILesson2InfoLesson(lesson);
             Shift shift = lesson.getShift();
             InfoShift infoShift = InfoShift.newInfoFromDomain(shift);
-            InfoExecutionCourse infoExecutionCourse = InfoExecutionCourse.newInfoFromDomain(shift
-                    .getDisciplinaExecucao());
+            InfoExecutionCourse infoExecutionCourse = InfoExecutionCourse.newInfoFromDomain(shift.getDisciplinaExecucao());
             infoShift.setInfoDisciplinaExecucao(infoExecutionCourse);
             infolesson.setInfoShift(infoShift);
-            infoLessons.add(infolesson);
+            result.add(infolesson);
+        	
         }
 
-        return infoLessons;
+        return result;
     }
 
     private InfoLesson copyILesson2InfoLesson(Lesson lesson) {
@@ -92,7 +79,7 @@ public class ReadStudentTimeTable extends Service {
         if (sala != null) {
             infoRoom = new InfoRoom();
             infoRoom.setIdInternal(sala.getIdInternal());
-            infoRoom.setNome(sala.getNome());
+            infoRoom.setNome(sala.getName());
         }
         return infoRoom;
     }

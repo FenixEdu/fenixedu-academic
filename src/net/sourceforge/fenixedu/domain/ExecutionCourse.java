@@ -1061,4 +1061,24 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 
         return result;
     }
+
+	private Set<SchoolClass> getAllSchoolClassesOrBy(DegreeCurricularPlan degreeCurricularPlan) {
+		final Set<SchoolClass> result = new HashSet<SchoolClass>();
+		for (final Shift shift : getAssociatedShiftsSet()) {
+			for (final SchoolClass schoolClass : shift.getAssociatedClassesSet()) {
+				if (degreeCurricularPlan == null || schoolClass.getExecutionDegree().getDegreeCurricularPlan() == degreeCurricularPlan) {
+					result.add(schoolClass);
+				}
+			}
+		}
+		return result;
+	}
+
+	public Set<SchoolClass> getSchoolClassesBy(DegreeCurricularPlan degreeCurricularPlan) {
+		return getAllSchoolClassesOrBy(degreeCurricularPlan);
+	}
+
+	public Set<SchoolClass> getSchoolClasses() {
+		return getAllSchoolClassesOrBy(null);
+	}
 }

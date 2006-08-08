@@ -398,7 +398,7 @@ public class SchoolRegistrationAction extends TransactionalDispatchAction {
         HttpSession session = request.getSession(false);
         IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 
-        Object[] args = { userView.getUtilizador() };
+        Object[] args = { userView.getPerson().getStudentByUsername() };
         List infoLessons;
         try {
             infoLessons = (List) ServiceUtils.executeService(userView, "ReadStudentTimeTable", args);

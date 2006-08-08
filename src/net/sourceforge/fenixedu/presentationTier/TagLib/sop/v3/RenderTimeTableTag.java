@@ -37,7 +37,7 @@ import org.apache.struts.util.RequestUtils;
 
 public final class RenderTimeTableTag extends TagSupport {
 
-    private LessonSlotContentRenderer lessonSlotContentRenderer = new ClassTimeTableLessonContentRenderer();
+    private LessonSlotContentRenderer lessonSlotContentRenderer = null;
 
     private int type = 1;
 
@@ -112,26 +112,26 @@ public final class RenderTimeTableTag extends TagSupport {
         if (infoLessonList == null)
             throw new JspException(messages.getMessage("gerarHorario.listaAulas.naoExiste", name));
 
-        if ((String) pageContext.findAttribute("application") != null) {
-
-            setApplication((String) pageContext.findAttribute("application"));
-        }
-
-        if ((String) pageContext.findAttribute("studentID") != null) {
-            setStudentID((String) pageContext.findAttribute("studentID"));
-        }
-
-        if ((String) pageContext.findAttribute("classID") != null) {
-            setClassID((String) pageContext.findAttribute("classID"));
-        }
-
-        if ((String) pageContext.findAttribute("executionCourseID") != null) {
-            setExecutionCourseID((String) pageContext.findAttribute("executionCourseID"));
-        }
-
-        if ((String) pageContext.findAttribute("endTime") != null) {
-            setEndTime((String) pageContext.findAttribute("endTime"));
-        }
+//        if ((String) pageContext.findAttribute("application") != null) {
+//
+//            setApplication((String) pageContext.findAttribute("application"));
+//        }
+//
+//        if ((String) pageContext.findAttribute("studentID") != null) {
+//            setStudentID((String) pageContext.findAttribute("studentID"));
+//        }
+//
+//        if ((String) pageContext.findAttribute("classID") != null) {
+//            setClassID((String) pageContext.findAttribute("classID"));
+//        }
+//
+//        if ((String) pageContext.findAttribute("executionCourseID") != null) {
+//            setExecutionCourseID((String) pageContext.findAttribute("executionCourseID"));
+//        }
+//
+//        if ((String) pageContext.findAttribute("endTime") != null) {
+//            setEndTime((String) pageContext.findAttribute("endTime"));
+//        }
 
         // Gera o horário a partir da lista de aulas.
         Locale locale = (Locale) pageContext.findAttribute(Globals.LOCALE_KEY);
@@ -190,6 +190,13 @@ public final class RenderTimeTableTag extends TagSupport {
 
     public void release() {
         super.release();
+        
+        this.application = null;
+        this.studentID = null;
+        this.classID = null;
+        this.executionCourseID = null;
+        this.action = null;
+        this.endTime = null;
     }
 
     private String getMessageResource(PageContext pageContext, String key) {

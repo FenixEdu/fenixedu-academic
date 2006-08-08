@@ -5942,24 +5942,12 @@
 		</filterChains>
 	</service>
 	<service>
-		<name>PrepareInfoShiftEnrollmentByStudentNumber</name>
-		<description>Read all information needed for shift enrollment</description>
-		<implementationClass>
-            net.sourceforge.fenixedu.applicationTier.Servico.enrollment.shift.PrepareInfoShiftEnrollmentByStudentNumber</implementationClass>
-		<isTransactional>True</isTransactional>
-		<filterChains>
-			<chain name="StudentAuthorization" />
-			<chain name="ClassEnrollmentAuthorization" />
-		</filterChains>
-	</service>
-	<service>
 		<name>WriteStudentAttendingCourse</name>
 		<description>Writes the attending of a student in an execution course</description>
 		<implementationClass>
             net.sourceforge.fenixedu.applicationTier.Servico.enrollment.shift.WriteStudentAttendingCourse</implementationClass>
 		<isTransactional>True</isTransactional>
 		<filterChains>
-			<chain name="StudentShiftEnrollmentAuthorization" />
 			<chain name="ClassEnrollmentAuthorization" />
 		</filterChains>
 	</service>
@@ -5990,7 +5978,7 @@
             net.sourceforge.fenixedu.applicationTier.Servico.enrollment.shift.UnEnrollStudentFromShift</implementationClass>
 		<isTransactional>True</isTransactional>
 		<filterChains>
-			<chain name="StudentIsUserAndHasStudentRoleFilter" />
+			<chain name="StudentAuthorization" />
 			<chain name="ClassEnrollmentAuthorization" />
 		</filterChains>
 	</service>
@@ -6001,7 +5989,7 @@
             net.sourceforge.fenixedu.applicationTier.Servico.enrollment.shift.EnrollStudentInShifts</implementationClass>
 		<isTransactional>True</isTransactional>
 		<filterChains>
-			<chain name="StudentIsUserAndHasStudentRoleFilter" />
+			<chain name="StudentAuthorization" />
 			<chain name="ClassEnrollmentAuthorization" />
 		</filterChains>
 	</service>
@@ -8330,16 +8318,6 @@
 			<chain name="StudentAuthorization" />
 			<chain name="ClassEnrollmentAuthorization" />
 		</filterChains>
-    </service>  
-    <service>
-    	<name>ReadClassesByStudentID</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.enrollment.ReadClassesByStudentID</implementationClass>
-        <description></description>
-        <isTransactional>true</isTransactional>
-        <filterChains>
-			<chain name="StudentAuthorization" />
-			<chain name="ClassEnrollmentAuthorization" />
-		</filterChains>
     </service>
 	<service>
         <name>ReadActiveDegreeCurricularPlansByDegreeType</name>
@@ -10338,7 +10316,7 @@
 		<description>read active or concluded student curricular plan from selected student</description>
 		<implementationClass>
             net.sourceforge.fenixedu.applicationTier.Servico.degreeAdministrativeOffice.enrolment.withoutRules.ReadStudentCurricularPlanForEnrollmentsWithoutRules</implementationClass>
-		<isTransactional>True</isTransactional>
+		<isTransactional>true</isTransactional>
 		<filterChains>
 			<chain name="EnrollmentWithoutRulesAuthorization" />
 		</filterChains>

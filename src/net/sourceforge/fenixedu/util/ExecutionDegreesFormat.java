@@ -98,7 +98,7 @@ public class ExecutionDegreesFormat extends FenixUtil {
 		final List<LabelValueBean> result = new ArrayList<LabelValueBean>();
 		for (final ExecutionDegree executionDegree : executionDegrees) {
 
-			final String degreeName = executionDegree.getDegreeCurricularPlan().getDegree().getName();
+			final String degreeName = executionDegree.getDegree().getName();
 			final String degreeType = messageResources.getMessage(locale, executionDegree
 					.getDegreeCurricularPlan().getDegree().getDegreeType().name());
 
@@ -114,10 +114,10 @@ public class ExecutionDegreesFormat extends FenixUtil {
 
 	private static boolean addDegreeCurricularPlanName(final ExecutionDegree selectedExecutionDegree,
 			final List<ExecutionDegree> executionDegrees) {
-		
+
 		for (final ExecutionDegree executionDegree : executionDegrees) {
-			if (executionDegree != selectedExecutionDegree
-					&& executionDegree.getDegree() == selectedExecutionDegree.getDegree()) {
+			if (executionDegree.getDegree() == selectedExecutionDegree.getDegree()
+					&& executionDegree != selectedExecutionDegree) {
 				return true;
 			}
 		}
