@@ -83,7 +83,10 @@ Documentation:
     <renderer type="java.lang.Object" layout="link" class="net.sourceforge.fenixedu.presentationTier.renderers.ObjectLinkRenderer"/>
 
     <!--@ Presents the object's slots in a flow layout. With or without labels.  -->
-    <renderer type="java.lang.Object" layout="flow" class="net.sourceforge.fenixedu.renderers.FlowRenderer" />
+    <renderer type="java.lang.Object" layout="flow" class="net.sourceforge.fenixedu.renderers.FlowRenderer">
+    	<property name="labelTerminator" value=":" />
+    	<property name="labelStyle" value="font-weight: bold;" />
+    </renderer>
 
     <renderer type="net.sourceforge.fenixedu.domain.Person" layout="person-email-identity" class="net.sourceforge.fenixedu.presentationTier.renderers.EmailIdentityRenderer"/>
   
