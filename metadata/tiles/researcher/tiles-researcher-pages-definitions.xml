@@ -85,6 +85,10 @@
         extends="researcher.masterPage">
         <put name="body" value="/researcher/result/editResultEventAssociations.jsp"></put>
     </definition>
+    <definition name="result.documentFiles" 
+        extends="researcher.masterPage">
+        <put name="body" value="/researcher/result/manageResultDocumentFiles.jsp"></put>
+    </definition>
 
     <!-- Result patents definitions -->
     <definition name="patents.list" 
