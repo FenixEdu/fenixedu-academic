@@ -1,13 +1,5 @@
 <!-- ************************************************************************************************************ -->
 <!-- Definitions for net.sourceforge.fenixedu.domain.CurricularCourseEquivalence -->
 <!-- ************************************************************************************************************ -->
-<class-descriptor class="net.sourceforge.fenixedu.domain.CurricularCourseEquivalence" table="CURRICULAR_COURSE_EQUIVALENCE">
-	
-	
-	
-	
-	
-	
-	
-	
-</class-descriptor>
+<class-descriptor class="net.sourceforge.fenixedu.domain.CurricularCourseEquivalence" table="CURRICULAR_COURSE_EQUIVALENCE"/>	
+
