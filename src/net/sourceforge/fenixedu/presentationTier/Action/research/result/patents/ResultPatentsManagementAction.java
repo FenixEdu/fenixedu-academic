@@ -32,11 +32,6 @@ public class ResultPatentsManagementAction extends FenixDispatchAction {
 
     public ActionForward prepareCreatePatent(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
-        final List<Person> participationsList = new ArrayList<Person>();
-
-        participationsList.add(getUserView(request).getPerson());
-        request.setAttribute("participationsList", participationsList);
-        
         return mapping.findForward("createPatent");
     }
 
