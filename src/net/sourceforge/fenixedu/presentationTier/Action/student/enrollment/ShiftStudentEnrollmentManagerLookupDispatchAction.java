@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -120,27 +119,19 @@ public class ShiftStudentEnrollmentManagerLookupDispatchAction extends Transacti
 			return mapping.findForward("prepareShiftEnrollment");
 		}
 
-		
 		final SchoolClass schoolClass = setSelectedSchoolClass(request, classIdSelected, schoolClassesToEnrol);
 
-		// ****************************************************************************************
-		// TODO: remove after create RenderTimeTableTag
-		// ****************************************************************************************
+		final List infoClasslessons = (List) ServiceManagerServiceFactory.executeService(userView,
+				"ReadClassTimeTableByStudent", new Object[] { student, schoolClass, executionCourse });
 
-		Object[] args1 = { student, schoolClass, executionCourse };
-		List infoClasslessons = (List) ServiceManagerServiceFactory.executeService(userView,
-				"ReadClassTimeTableByStudent", args1);
-
-		int endTime = getEndTime(infoClasslessons);
 		request.setAttribute("infoClasslessons", infoClasslessons);
-		request.setAttribute("infoClasslessonsEndTime", new Integer(endTime));
+		request.setAttribute("infoClasslessonsEndTime", Integer.valueOf(getEndTime(infoClasslessons)));
 
-		List infoLessons = (List) ServiceManagerServiceFactory.executeService(userView,
+		final List infoLessons = (List) ServiceManagerServiceFactory.executeService(userView,
 				"ReadStudentTimeTable", new Object[] { student });
 
-		int endTime2 = getEndTime(infoLessons);
 		request.setAttribute("infoLessons", infoLessons);
-		request.setAttribute("infoLessonsEndTime", new Integer(endTime2));
+		request.setAttribute("infoLessonsEndTime", Integer.valueOf(getEndTime(infoLessons)));
 
 		return mapping.findForward("showShiftsToEnroll");
 	}
@@ -148,12 +139,8 @@ public class ShiftStudentEnrollmentManagerLookupDispatchAction extends Transacti
 	private SchoolClass setSelectedSchoolClass(HttpServletRequest request, final Integer classIdSelected,
 			final List<SchoolClass> schoolClassesToEnrol) {
 		
-		final SchoolClass schoolClass;
-		if (classIdSelected != null) {
-			schoolClass = searchSchoolClassFrom(schoolClassesToEnrol, classIdSelected);
-		} else { // select first from list
-			schoolClass = schoolClassesToEnrol.get(0);
-		}
+		final SchoolClass schoolClass = (classIdSelected != null) ? searchSchoolClassFrom(
+				schoolClassesToEnrol, classIdSelected) : schoolClassesToEnrol.get(0); 
 		request.setAttribute("selectedSchoolClass", schoolClass);
 		
 		return schoolClass;
@@ -193,13 +180,11 @@ public class ShiftStudentEnrollmentManagerLookupDispatchAction extends Transacti
 		}
 	}
 
-	private int getEndTime(List infoLessons) {
+	private int getEndTime(List<InfoLesson> infoLessons) {
 		int endTime = 0;
-		for (Iterator iter = infoLessons.iterator(); iter.hasNext();) {
-			InfoLesson infoLesson = (InfoLesson) iter.next();
-			Calendar end = infoLesson.getFim();
-			int tempEnd = end.get(Calendar.HOUR_OF_DAY);
-			if (end.get(Calendar.MINUTE) > 0) {
+		for(final InfoLesson infoLesson : infoLessons) {
+			int tempEnd = infoLesson.getFim().get(Calendar.HOUR_OF_DAY);
+			if (infoLesson.getFim().get(Calendar.MINUTE) > 0) {
 				tempEnd = tempEnd + 1;
 			}
 			if (endTime < tempEnd) {
