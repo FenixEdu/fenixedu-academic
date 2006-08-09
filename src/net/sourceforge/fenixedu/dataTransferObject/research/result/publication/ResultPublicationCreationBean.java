@@ -22,8 +22,9 @@ public class ResultPublicationCreationBean implements Serializable{
 
     private ResultPublicationType publicationType;
     private String activeSchema;
+    private String participationSchema;
     
-    private DomainReference<Person> participator;
+    private DomainReference<Person> person;
     private ResultParticipationRole resultParticipationRole;
     
     private DomainReference<Unit> publisher;
@@ -200,11 +201,11 @@ public class ResultPublicationCreationBean implements Serializable{
         }
     }
     
-    public Person getParticipator() {
-        return (this.participator == null) ? null : this.participator.getObject();
+    public Person getPerson() {
+        return (this.person == null) ? null : this.person.getObject();
     }
-    public void setParticipator(Person participator) {
-        this.participator = (participator != null) ? new DomainReference<Person>(participator) : null;
+    public void setPerson(Person person) {
+        this.person = (person != null) ? new DomainReference<Person>(person) : null;
     }
     public Unit getPublisher() {
         return (this.publisher == null) ? null : this.publisher.getObject();
@@ -459,6 +460,12 @@ public class ResultPublicationCreationBean implements Serializable{
 	public void setResultParticipationRole(
 			ResultParticipationRole resultParticipationRole) {
 		this.resultParticipationRole = resultParticipationRole;
+	}
+	public String getParticipationSchema() {
+		return participationSchema;
+	}
+	public void setParticipationSchema(String participationSchema) {
+		this.participationSchema = participationSchema;
 	}
 
 }
