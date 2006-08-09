@@ -8,10 +8,10 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.joda.time.DateTime;
-
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Person;
+
+import org.joda.time.DateTime;
 
 public class PaymentsManagementDTO implements Serializable {
 

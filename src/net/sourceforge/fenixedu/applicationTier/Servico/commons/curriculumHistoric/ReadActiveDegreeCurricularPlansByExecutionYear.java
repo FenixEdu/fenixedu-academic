@@ -11,7 +11,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlanWithD
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 import org.apache.commons.collections.CollectionUtils;

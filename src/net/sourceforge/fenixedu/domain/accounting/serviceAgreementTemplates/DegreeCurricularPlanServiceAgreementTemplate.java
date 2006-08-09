@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.domain.accounting.serviceAgreementTemplates;
 
-import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 

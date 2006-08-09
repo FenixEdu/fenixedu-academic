@@ -7,9 +7,6 @@ import javax.servlet.jsp.PageContext;
 
 import net.sourceforge.fenixedu.renderers.components.controllers.Controllable;
 import net.sourceforge.fenixedu.renderers.components.controllers.HtmlController;
-import net.sourceforge.fenixedu.renderers.components.controllers.HtmlSubmitButtonController;
-import net.sourceforge.fenixedu.renderers.components.state.ComponentLifeCycle;
-import net.sourceforge.fenixedu.renderers.components.state.IViewState;
 import net.sourceforge.fenixedu.renderers.components.tags.HtmlTag;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 

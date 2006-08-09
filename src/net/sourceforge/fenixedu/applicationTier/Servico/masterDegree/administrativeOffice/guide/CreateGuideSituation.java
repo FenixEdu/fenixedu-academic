@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administra
 import java.util.Date;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
-
 import net.sourceforge.fenixedu.domain.Guide;
 import net.sourceforge.fenixedu.domain.GuideSituation;
 import net.sourceforge.fenixedu.domain.GuideState;

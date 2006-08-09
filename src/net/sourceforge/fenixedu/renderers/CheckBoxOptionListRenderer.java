@@ -8,7 +8,6 @@ import net.sourceforge.fenixedu.renderers.components.HtmlCheckBox;
 import net.sourceforge.fenixedu.renderers.components.HtmlCheckBoxList;
 import net.sourceforge.fenixedu.renderers.components.HtmlComponent;
 import net.sourceforge.fenixedu.renderers.components.HtmlLabel;
-import net.sourceforge.fenixedu.renderers.components.converters.ConversionException;
 import net.sourceforge.fenixedu.renderers.components.converters.Converter;
 import net.sourceforge.fenixedu.renderers.contexts.PresentationContext;
 import net.sourceforge.fenixedu.renderers.layouts.Layout;

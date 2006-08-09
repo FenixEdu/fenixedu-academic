@@ -3,14 +3,14 @@ package net.sourceforge.fenixedu.presentationTier.Action.research.result;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.struts.action.ActionForm;
-import org.apache.struts.action.ActionForward;
-import org.apache.struts.action.ActionMapping;
-
 import net.sourceforge.fenixedu.domain.research.result.Result;
 import net.sourceforge.fenixedu.domain.research.result.patent.ResultPatent;
 import net.sourceforge.fenixedu.domain.research.result.publication.ResultPublication;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+
+import org.apache.struts.action.ActionForm;
+import org.apache.struts.action.ActionForward;
+import org.apache.struts.action.ActionMapping;
 
 public class ResultsManagementAction extends FenixDispatchAction {
     public ActionForward backToResult(ActionMapping mapping, ActionForm form,

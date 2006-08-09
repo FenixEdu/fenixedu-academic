@@ -97,7 +97,6 @@ import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.WrittenTest;
 import net.sourceforge.fenixedu.domain.onlineTests.OnlineTest;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.beanutils.BeanUtils;

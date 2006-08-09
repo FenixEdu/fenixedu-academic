@@ -695,14 +695,7 @@
         <description/>
         <invocationTiming>1</invocationTiming>
         <filterClass>net.sourceforge.fenixedu.applicationTier.Filtro.AccessControlFilter</filterClass>
-    </filterChain>    
-    <filterChain>
-        <name>StudentShiftEnrollmentAuthorization</name>
-        <expression>StudentShiftEnrollmentAuthorization</expression>
-        <description/>
-        <invocationTiming>1</invocationTiming>
-        <filterClass>net.sourceforge.fenixedu.applicationTier.Filtro.AccessControlFilter</filterClass>
-    </filterChain>    
+    </filterChain>
     <filterChain>
         <name>StudentIsUserAndHasStudentRoleFilter</name>
         <expression>StudentIsUserFilter &amp;&amp; StudentAuthorization</expression>

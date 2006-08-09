@@ -5,7 +5,6 @@ import java.util.Map;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
-
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Teacher;

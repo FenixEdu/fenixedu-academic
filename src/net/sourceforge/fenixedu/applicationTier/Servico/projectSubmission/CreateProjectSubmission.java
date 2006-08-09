@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.projectSubmission;
 
-import java.io.FileInputStream;
 import java.io.InputStream;
 
 import net.sourceforge.fenixedu.applicationTier.Service;

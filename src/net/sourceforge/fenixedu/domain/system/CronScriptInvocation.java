@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.domain.system;
 
-import java.io.PrintStream;
 import java.util.Comparator;
 
 import net.sourceforge.fenixedu.domain.RootDomainObject;

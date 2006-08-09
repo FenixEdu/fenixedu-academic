@@ -8,7 +8,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.framework.EditDomainObjectService;
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
 import net.sourceforge.fenixedu.dataTransferObject.grant.contract.InfoGrantContractMovement;
-
 import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantContract;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantContractMovement;

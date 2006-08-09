@@ -1,8 +1,9 @@
 package net.sourceforge.fenixedu.persistenceTier.Conversores;
 
+import net.sourceforge.fenixedu.domain.research.result.ResultEventAssociation.ResultEventAssociationRole;
+
 import org.apache.ojb.broker.accesslayer.conversions.ConversionException;
 import org.apache.ojb.broker.accesslayer.conversions.FieldConversion;
-import net.sourceforge.fenixedu.domain.research.result.ResultEventAssociation.ResultEventAssociationRole;
 
 public class ResultEventAssociationRole2SqlResultEventAssociationRoleConversion implements FieldConversion{
 

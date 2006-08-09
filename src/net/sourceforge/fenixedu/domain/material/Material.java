@@ -2,9 +2,9 @@ package net.sourceforge.fenixedu.domain.material;
 
 import java.util.Comparator;
 
-import org.apache.commons.beanutils.BeanComparator;
-
 import net.sourceforge.fenixedu.domain.RootDomainObject;
+
+import org.apache.commons.beanutils.BeanComparator;
 
 public class Material extends Material_Base {
     

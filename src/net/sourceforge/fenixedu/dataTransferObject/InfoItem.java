@@ -4,14 +4,11 @@
 package net.sourceforge.fenixedu.dataTransferObject;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.FileItem;
 import net.sourceforge.fenixedu.domain.Item;
-import net.sourceforge.fenixedu.fileSuport.FileSuportObject;
-import net.sourceforge.fenixedu.persistenceTier.fileSupport.JdbcMysqlFileSupport;
 
 import org.apache.commons.beanutils.BeanComparator;
 

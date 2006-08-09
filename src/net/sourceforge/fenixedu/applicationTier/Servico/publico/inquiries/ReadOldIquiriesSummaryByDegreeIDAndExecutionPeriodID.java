@@ -11,7 +11,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.InfoOldInquiriesSummary;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.inquiries.OldInquiriesSummary;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 

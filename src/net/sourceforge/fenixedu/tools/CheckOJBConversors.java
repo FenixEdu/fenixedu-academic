@@ -15,10 +15,7 @@ import org.apache.ojb.broker.metadata.ClassDescriptor;
 import org.apache.ojb.broker.metadata.FieldDescriptor;
 import org.apache.ojb.broker.metadata.MetadataManager;
 
-import com.crossdb.sql.Formatter;
-
 import antlr.ANTLRException;
-
 import dml.DmlCompiler;
 import dml.DomainClass;
 import dml.DomainModel;

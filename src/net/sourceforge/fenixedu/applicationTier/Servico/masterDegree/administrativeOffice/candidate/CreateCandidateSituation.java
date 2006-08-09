@@ -4,7 +4,6 @@ import java.util.Calendar;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.domain.CandidateSituation;
-
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.MasterDegreeCandidate;
 import net.sourceforge.fenixedu.domain.Person;

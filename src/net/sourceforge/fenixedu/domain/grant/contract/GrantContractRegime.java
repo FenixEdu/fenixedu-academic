@@ -4,10 +4,10 @@ import java.util.Calendar;
 import java.util.Comparator;
 import java.util.Date;
 
-import org.apache.commons.beanutils.BeanComparator;
-
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.util.DateFormatUtil;
+
+import org.apache.commons.beanutils.BeanComparator;
 
 public class GrantContractRegime extends GrantContractRegime_Base {
 

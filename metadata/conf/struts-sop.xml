@@ -638,31 +638,6 @@
           <forward name="Sucesso" path="/criarAula.jsp"/>
       </action>
 
-      <action attribute="aulaForm"
-              input="/prepararAula.do"
-              name="aulaForm"
-              path="/criarAulaForm"
-              scope="request"
-              type="net.sourceforge.fenixedu.presentationTier.Action.sop.LessonManagerDispatchAction"
-              parameter="operation"
-              validate="true"
-              >
-		<exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException"
-				   key="resources.Action.exceptions.ExistingActionException"
-                   handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"
-                   />
-		<exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.InterceptingActionException"
-				   key="resources.Action.exceptions.InterceptingActionException"
-                   handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"
-                   />
-        <exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.InvalidTimeIntervalActionException"
-        		   key="resources.Action.exceptions.InvalidTimeIntervalActionException"
-                   handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"
-                   />           
-		<forward name="Criar" path="/prepararAula.do"/>
-		<forward name="Atribuir Sala" path="/chooseLessonRoom.jsp"/>
-      </action>
-
       <action path="/escolherAulas"
               type="net.sourceforge.fenixedu.presentationTier.Action.sop.EscolherAulasFormAction"
               scope="request">
@@ -695,31 +670,6 @@
              scope="request">
          <forward name="Sucesso" path="/editarAula.jsp"/>
      </action>
-
-     <action attribute="aulaForm"
-             path="/editarAulaForm"
-             type="net.sourceforge.fenixedu.presentationTier.Action.sop.LessonManagerDispatchAction"
-             parameter="operation"
-             name="aulaForm"
-             scope="request"
-             input="/editarAulaForm.do?operation=input">
-		<exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException"
-				   key="resources.Action.exceptions.ExistingActionException"
-                   handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"
-                   />
-		<exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.InterceptingActionException"
-				   key="resources.Action.exceptions.InterceptingActionException"
-                   handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"
-                   />
-        <exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.InvalidTimeIntervalActionException"
-        		   key="resources.Action.exceptions.InvalidTimeIntervalActionException"
-                   handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"
-                   />
-         <forward name="Guardar" path="/escolherAulas.do"/>
-         <forward name="Sucesso" path="/escolherAulas.do"/>
-         <forward name="Alterar Sala" path="/changeLessonRoom.jsp"/>
-         <forward name="Input" path="/editarAula.jsp"/>
-	 </action>
 
       <!-- Gestao de Salas -->
       <action path="/prepararSalaForm"

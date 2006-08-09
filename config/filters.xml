@@ -633,14 +633,7 @@
             net.sourceforge.fenixedu.applicationTier.Filtro.student.StudentInformationOwnerAuthorizationFilter</implementationClass>
         <description/>
         <isTransactional>true</isTransactional>
-    </filter>         
-    <filter>
-        <name>StudentShiftEnrollmentAuthorization</name>
-        <implementationClass> 
-            net.sourceforge.fenixedu.applicationTier.Filtro.enrollment.shift.StudentShiftEnrollmentAuthorizationFilter</implementationClass>
-        <description/>
-        <isTransactional>true</isTransactional>
-    </filter>   
+    </filter>
     <filter>
         <name>StudentIsUserFilter</name>
         <implementationClass> 

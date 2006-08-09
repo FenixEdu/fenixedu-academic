@@ -12,7 +12,6 @@ import javax.mail.MessagingException;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
-import javax.mail.internet.MimeMessage.RecipientType;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.cms.CmsService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;

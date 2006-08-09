@@ -6,7 +6,6 @@ package net.sourceforge.fenixedu.applicationTier.Servico.coordinator;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
-
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.Teacher;

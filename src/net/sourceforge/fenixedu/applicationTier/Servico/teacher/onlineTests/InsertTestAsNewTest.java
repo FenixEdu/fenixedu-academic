@@ -9,7 +9,6 @@ import java.util.ResourceBundle;
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
-
 import net.sourceforge.fenixedu.domain.onlineTests.Test;
 import net.sourceforge.fenixedu.domain.onlineTests.TestQuestion;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;

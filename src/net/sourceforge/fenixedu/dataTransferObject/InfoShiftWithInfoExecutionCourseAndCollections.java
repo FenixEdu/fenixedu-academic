@@ -47,7 +47,7 @@ public class InfoShiftWithInfoExecutionCourseAndCollections extends InfoShiftWit
 
                 public Object transform(Object arg0) {
 
-                    return InfoLessonWithInfoRoomAndInfoExecutionCourse.newInfoFromDomain((Lesson) arg0);
+                    return InfoLesson.newInfoFromDomain((Lesson) arg0);
                 }
 
             });

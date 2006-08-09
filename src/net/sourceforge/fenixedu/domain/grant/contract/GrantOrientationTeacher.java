@@ -2,9 +2,9 @@ package net.sourceforge.fenixedu.domain.grant.contract;
 
 import java.util.Comparator;
 
-import org.apache.commons.beanutils.BeanComparator;
-
 import net.sourceforge.fenixedu.domain.RootDomainObject;
+
+import org.apache.commons.beanutils.BeanComparator;
 
 public class GrantOrientationTeacher extends GrantOrientationTeacher_Base {
 

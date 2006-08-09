@@ -17,7 +17,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgume
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidSituationServiceException;
 import net.sourceforge.fenixedu.domain.Advisory;
 import net.sourceforge.fenixedu.domain.Attends;
-
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExportGrouping;
 import net.sourceforge.fenixedu.domain.Grouping;

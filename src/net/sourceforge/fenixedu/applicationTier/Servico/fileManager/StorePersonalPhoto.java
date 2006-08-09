@@ -2,7 +2,6 @@ package net.sourceforge.fenixedu.applicationTier.Servico.fileManager;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoInexistente;
-
 import net.sourceforge.fenixedu.domain.FileEntry;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;

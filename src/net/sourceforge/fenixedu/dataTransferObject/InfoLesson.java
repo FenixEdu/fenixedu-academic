@@ -1,23 +1,10 @@
-/*
- * InfoLesson.java
- * 
- * Created on 31 de Outubro de 2002, 11:35
- */
-
 package net.sourceforge.fenixedu.dataTransferObject;
 
-/**
- * @author tfc130
- */
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
 
-import net.sourceforge.fenixedu.dataTransferObject.teacher.professorship.InfoSupportLesson;
 import net.sourceforge.fenixedu.domain.Lesson;
 import net.sourceforge.fenixedu.domain.ShiftType;
-import net.sourceforge.fenixedu.domain.SupportLesson;
 import net.sourceforge.fenixedu.util.DiaSemana;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -33,44 +20,87 @@ public class InfoLesson extends InfoShowOccupation implements ISmsDTO, Comparabl
         INFO_LESSON_COMPARATOR_CHAIN.addComparator(new BeanComparator("infoSala.nome"));
     }
     
-    protected DiaSemana _diaSemana;
-
-    protected Calendar _fim;
-
-    protected InfoRoom _infoSala;
-
-    protected Calendar _inicio;
-
-    protected ShiftType _tipo;
-
-    protected InfoShift _infoShift;
-
-    protected InfoRoomOccupation infoRoomOccupation;
-
-    protected Integer _frequency;
+    private Lesson lesson;
     
-    protected Integer _weekOfQuinzenalStart;
-    
-    private List infoShiftList = new ArrayList();
+    private InfoRoom infoSala;
+    private InfoShift infoShift;
+    private InfoRoomOccupation infoRoomOccupation;
 
-    public InfoLesson() {
+    public InfoLesson(Lesson lesson) {
+    	super.copyFromDomain(lesson);
+    	this.lesson = lesson;
     }
 
-    public InfoLesson(DiaSemana diaSemana, Calendar inicio, Calendar fim, ShiftType tipo,
-            InfoRoom infoSala, InfoRoomOccupation infoRoomOccupation, InfoShift shift) {
-        setDiaSemana(diaSemana);
-        setInicio(inicio);
-        setFim(fim);
-        setTipo(tipo);
-        setInfoSala(infoSala);
-        setInfoRoomOccupation(infoRoomOccupation);
-        setInfoShift(shift);
-        if (infoRoomOccupation != null) {
-        	setFrequency(infoRoomOccupation.getFrequency());
-        	setWeekOfQuinzenalStart(infoRoomOccupation.getWeekOfQuinzenalStart());
+    public DiaSemana getDiaSemana() {
+        return lesson.getDiaSemana();
+    }
+
+    public Calendar getFim() {
+        return lesson.getFim();
+    }
+
+    public Calendar getInicio() {
+        return lesson.getInicio();
+    }
+
+    public ShiftType getTipo() {
+        return lesson.getTipo();
+    }
+
+    public Integer getFrequency() {        
+        return lesson.getFrequency();
+    }
+    
+    public Integer getWeekOfQuinzenalStart() {
+        return lesson.getWeekOfQuinzenalStart();
+    }
+    
+    public String getWeekDay() {
+        final String result = getDiaSemana().getDiaSemana().toString();
+        if (result != null && result.equals("7")) {
+            return "S";
         }
+        if (result != null && result.equals("1")) {
+            return "D";
+        }
+        return result;
     }
 
+    public String getLessonDuration() {
+        int hours = this.getFim().get(Calendar.HOUR_OF_DAY) - this.getInicio().get(Calendar.HOUR_OF_DAY);
+        int minutes = this.getFim().get(Calendar.MINUTE) - this.getInicio().get(Calendar.MINUTE);
+
+        if (minutes < 0) {
+            minutes *= -1;
+            hours = hours - 1;
+        }
+
+        return hours + ":" + minutes;
+    }
+    
+    public InfoRoom getInfoSala() {
+        return (infoSala == null) ? infoSala = InfoRoom.newInfoFromDomain(lesson.getSala()) : infoSala;
+    }
+
+    public InfoShift getInfoShift() {
+        return (infoShift == null) ? infoShift = InfoShiftWithInfoExecutionCourse.newInfoFromDomain(lesson.getShift()) : infoShift;
+    }
+
+    public InfoRoomOccupation getInfoRoomOccupation() {
+    	if (infoRoomOccupation == null) {
+    		infoRoomOccupation = InfoRoomOccupationWithInfoRoomAndInfoPeriod.newInfoFromDomain(lesson.getRoomOccupation());
+    	}
+    	return infoRoomOccupation;
+	}
+
+    public static InfoLesson newInfoFromDomain(Lesson lesson) {
+    	return (lesson != null) ? new InfoLesson(lesson) : null;
+    }
+    
+    public int compareTo(InfoLesson arg0) {
+        return INFO_LESSON_COMPARATOR_CHAIN.compare(this, arg0);
+    }
+    
     public boolean equals(Object obj) {
         boolean resultado = false;
         if (obj instanceof InfoLesson) {
@@ -90,165 +120,22 @@ public class InfoLesson extends InfoShowOccupation implements ISmsDTO, Comparabl
         return resultado;
     }
 
-    public DiaSemana getDiaSemana() {
-        return _diaSemana;
-    }
-
-    public Calendar getFim() {
-        return _fim;
-    }
-
-    public InfoRoom getInfoSala() {
-        return _infoSala;
-    }
-
-    public List getInfoShiftList() {
-        return infoShiftList;
-    }
-
-    public Calendar getInicio() {
-        return _inicio;
-    }
-
-    public ShiftType getTipo() {
-        return _tipo;
-    }
-
-    public void setDiaSemana(DiaSemana diaSemana) {
-        _diaSemana = diaSemana;
-    }
-
-    public void setFim(Calendar fim) {
-        _fim = fim;
-    }
-
-    public void setInfoSala(InfoRoom infoSala) {
-        _infoSala = infoSala;
-    }
-
-    public void setInfoShiftList(List infoShiftList) {
-        this.infoShiftList = infoShiftList;
-    }
-
-    public void setInicio(Calendar inicio) {
-        _inicio = inicio;
-    }
-
-    public void setTipo(ShiftType tipo) {
-        _tipo = tipo;
-    }
-
-    public Integer getFrequency() {        
-        return _frequency;
-    }
-    
-    public void setFrequency(Integer frequency) {
-        _frequency = frequency;      
-    }
-    
-    public Integer getWeekOfQuinzenalStart() {
-        return _weekOfQuinzenalStart;
-    }
-    
-    public void setWeekOfQuinzenalStart(Integer weekOfQuinzenalStart) {
-        _weekOfQuinzenalStart = weekOfQuinzenalStart;
-    }
-    
-    public String getWeekDay() {
-        String result = getDiaSemana().getDiaSemana().toString();
-        if (result != null && result.equals("7")) {
-            result = "S";
-        }
-        if (result != null && result.equals("1")) {
-            result = "D";
-        }
-        return result;
-    }
-
-    public String getLessonDuration() {
-        int hours = this._fim.get(Calendar.HOUR_OF_DAY) - this._inicio.get(Calendar.HOUR_OF_DAY);
-        int minutes = this._fim.get(Calendar.MINUTE) - this._inicio.get(Calendar.MINUTE);
-
-        if (minutes < 0) {
-            minutes *= -1;
-            hours = hours - 1;
-        }
-
-        return hours + ":" + minutes;
-    }
-
-    public InfoShift getInfoShift() {
-        return _infoShift;
-    }
-
-    public void setInfoShift(InfoShift shift) {
-        _infoShift = shift;
-    }
-
-    public InfoRoomOccupation getInfoRoomOccupation() {
-        return infoRoomOccupation;
-    }
-
-    public void setInfoRoomOccupation(InfoRoomOccupation infoRoomOccupation) {
-        this.infoRoomOccupation = infoRoomOccupation;
-    }
-
-    public void copyFromDomain(Lesson lesson) {
-        super.copyFromDomain(lesson);
-        if (lesson != null) {
-            setDiaSemana(lesson.getDiaSemana());
-            setFim(lesson.getFim());
-            setInicio(lesson.getInicio());
-            setTipo(lesson.getTipo());
-            setFrequency(lesson.getFrequency());
-            setWeekOfQuinzenalStart(lesson.getWeekOfQuinzenalStart());
-        }
-    }
-
-    public static InfoLesson newInfoFromDomain(Lesson lesson) {
-        InfoLesson infoLesson = null;
-        if (lesson != null) {
-            infoLesson = new InfoLesson();
-            infoLesson.copyFromDomain(lesson);
-        }
-        return infoLesson;
-    }
-
     public String toSmsText() {
 
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("k:mm");
-        String beginTime = simpleDateFormat.format(_inicio.getTime());
-        String endTime = simpleDateFormat.format(_fim.getTime());
+        final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("k:mm");
+        final String beginTime = simpleDateFormat.format(getInicio().getTime());
+        final String endTime = simpleDateFormat.format(getFim().getTime());
 
         String result = "";
-        result += _diaSemana.toString() + "\n";
+        result += getDiaSemana().toString() + "\n";
         result += getInfoShift().getInfoDisciplinaExecucao().getSigla() + " ("
-                + _tipo.getSiglaTipoAula() + ")";
+                + getTipo().getSiglaTipoAula() + ")";
         result += "\n" + beginTime;
         result += "-" + endTime;
-        result += "\nSala=" + _infoSala.getNome();
+        result += "\nSala=" + getInfoSala().getNome();
         result += "\n\n";
 
         return result;
-    }
-
-    public int compareTo(InfoLesson arg0) {
-        return INFO_LESSON_COMPARATOR_CHAIN.compare(this, arg0);
-    }
-
-    public static InfoSupportLesson newInfoFromDomain(SupportLesson supportLesson) {
-        InfoSupportLesson infoSupportLesson = new InfoSupportLesson();
-        InfoProfessorship infoProfessorship = InfoProfessorship.newInfoFromDomain(supportLesson.getProfessorship());
-
-        infoSupportLesson.setEndTime(supportLesson.getEndTime());
-        infoSupportLesson.setIdInternal(supportLesson.getIdInternal());
-        infoSupportLesson.setPlace(supportLesson.getPlace());
-        infoSupportLesson.setStartTime(supportLesson.getStartTime());
-        infoSupportLesson.setWeekDay(supportLesson.getWeekDay());
-
-        infoSupportLesson.setInfoProfessorship(infoProfessorship);
-
-        return infoSupportLesson;
     }
 
 }

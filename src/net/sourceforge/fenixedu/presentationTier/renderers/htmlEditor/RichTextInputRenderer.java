@@ -2,10 +2,7 @@ package net.sourceforge.fenixedu.presentationTier.renderers.htmlEditor;
 
 import net.sourceforge.fenixedu.presentationTier.renderers.components.TinyMceEditor;
 import net.sourceforge.fenixedu.renderers.InputRenderer;
-import net.sourceforge.fenixedu.renderers.components.HtmlBlockContainer;
 import net.sourceforge.fenixedu.renderers.components.HtmlComponent;
-import net.sourceforge.fenixedu.renderers.components.HtmlLink;
-import net.sourceforge.fenixedu.renderers.components.HtmlScript;
 import net.sourceforge.fenixedu.renderers.layouts.Layout;
 import net.sourceforge.fenixedu.renderers.model.MetaSlotKey;
 

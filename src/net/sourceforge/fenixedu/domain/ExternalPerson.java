@@ -5,7 +5,6 @@ import java.util.Collection;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.person.Gender;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;

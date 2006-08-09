@@ -28,7 +28,6 @@ import net.sourceforge.fenixedu.domain.Project;
 import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.domain.WrittenTest;
-import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
 import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean;
 import net.sourceforge.fenixedu.presentationTier.jsf.components.util.CalendarLink;
 import net.sourceforge.fenixedu.util.PeriodState;

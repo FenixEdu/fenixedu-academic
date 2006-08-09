@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.domain.assiduousness.util;
 
-import net.sourceforge.fenixedu.domain.assiduousness.util.AttributeType;
 import java.util.EnumSet;
 
 // Set that represents which intervals are open in a timePoint.

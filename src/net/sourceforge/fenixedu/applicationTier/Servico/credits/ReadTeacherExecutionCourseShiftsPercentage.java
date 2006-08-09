@@ -11,7 +11,7 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
-import net.sourceforge.fenixedu.dataTransferObject.InfoLessonWithInfoRoom;
+import net.sourceforge.fenixedu.dataTransferObject.InfoLesson;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.credits.InfoShiftPercentage;
@@ -78,7 +78,7 @@ public class ReadTeacherExecutionCourseShiftsPercentage extends Service {
                     new Transformer() {
                         public Object transform(Object input) {
                             Lesson lesson = (Lesson) input;
-                            return InfoLessonWithInfoRoom.newInfoFromDomain(lesson);
+                            return InfoLesson.newInfoFromDomain(lesson);
                         }
                     });
             infoShiftPercentage.setInfoLessons(infoLessons);

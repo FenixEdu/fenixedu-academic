@@ -13,7 +13,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoStudentTestQuestion;
 import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoStudentTestQuestionWithAll;
-
 import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.onlineTests.DistributedTest;
 import net.sourceforge.fenixedu.domain.onlineTests.StudentTestLog;

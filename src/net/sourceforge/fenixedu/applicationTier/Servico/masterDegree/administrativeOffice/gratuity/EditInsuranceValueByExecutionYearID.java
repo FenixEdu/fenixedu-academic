@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administra
 import java.util.Date;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
-
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.InsuranceValue;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;

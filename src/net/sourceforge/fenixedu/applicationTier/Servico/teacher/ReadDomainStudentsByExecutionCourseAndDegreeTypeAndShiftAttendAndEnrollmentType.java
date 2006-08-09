@@ -15,7 +15,6 @@ import net.sourceforge.fenixedu.commons.CollectionUtils;
 import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;

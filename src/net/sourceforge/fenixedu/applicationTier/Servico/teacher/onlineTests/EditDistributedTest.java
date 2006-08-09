@@ -13,7 +13,6 @@ import net.sourceforge.fenixedu.dataTransferObject.comparators.CalendarDateCompa
 import net.sourceforge.fenixedu.dataTransferObject.comparators.CalendarHourComparator;
 import net.sourceforge.fenixedu.domain.Advisory;
 import net.sourceforge.fenixedu.domain.Attends;
-
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Mark;
 import net.sourceforge.fenixedu.domain.Student;

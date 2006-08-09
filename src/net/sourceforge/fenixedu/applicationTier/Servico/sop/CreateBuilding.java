@@ -5,7 +5,6 @@ import java.util.Set;
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.domain.Campus;
-
 import net.sourceforge.fenixedu.domain.space.OldBuilding;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 

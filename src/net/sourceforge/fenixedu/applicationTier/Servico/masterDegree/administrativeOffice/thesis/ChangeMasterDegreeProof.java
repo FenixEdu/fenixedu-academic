@@ -11,7 +11,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ScholarshipNo
 import net.sourceforge.fenixedu.applicationTier.strategy.degreeCurricularPlan.DegreeCurricularPlanStrategyFactory;
 import net.sourceforge.fenixedu.applicationTier.strategy.degreeCurricularPlan.IDegreeCurricularPlanStrategyFactory;
 import net.sourceforge.fenixedu.applicationTier.strategy.degreeCurricularPlan.strategys.IMasterDegreeCurricularPlanStrategy;
-
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.ExternalPerson;
 import net.sourceforge.fenixedu.domain.MasterDegreeProofVersion;

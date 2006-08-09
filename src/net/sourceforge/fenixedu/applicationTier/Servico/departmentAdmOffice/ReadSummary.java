@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 
@@ -68,13 +67,8 @@ public class ReadSummary extends Service {
                     final Shift turno = (Shift) arg0;
                     final InfoShift infoShift = InfoShift.newInfoFromDomain(turno);
                     infoShift.setInfoLessons(new ArrayList(turno.getAssociatedLessons().size()));
-                    for (final Iterator iterator = turno.getAssociatedLessons().iterator(); iterator
-                            .hasNext();) {
-                        final Lesson lesson = (Lesson) iterator.next();
-                        final InfoLesson infoLesson = InfoLesson.newInfoFromDomain(lesson);
-                        final InfoRoom infoRoom = InfoRoom.newInfoFromDomain(lesson.getSala());
-                        infoLesson.setInfoSala(infoRoom);
-                        infoShift.getInfoLessons().add(infoLesson);
+                    for (final Lesson lesson : turno.getAssociatedLessonsSet()) {
+                    	infoShift.getInfoLessons().add(InfoLesson.newInfoFromDomain(lesson));
                     }
                     return infoShift;
                 }

@@ -9,7 +9,6 @@ import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentCondition;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
@@ -592,20 +591,15 @@ public class Student extends Student_Base {
 	}
 
 	public StudentPersonalDataAuthorizationChoice getActualPersonalDataAuthorizationAnswer() {
-
-		for (final StudentPersonalDataAuthorization studentPersonalDataAuthorization : this
-				.getStudentPersonalDataAuthorizationsSet()) {
-
-			if (studentPersonalDataAuthorization.getExecutionYear().getState().equals(
-					PeriodState.CURRENT)) {
-
-				return studentPersonalDataAuthorization.getAnswer();
+		for (final StudentPersonalDataAuthorization dataAuthorization : this.getStudentPersonalDataAuthorizationsSet()) {
+			if (dataAuthorization.getExecutionYear().getState().equals(PeriodState.CURRENT)) {
+				return dataAuthorization.getAnswer();
 			}
 		}
 		return null;
 	}
 	
-	//  Special Season 
+	// Special Season
 	
 	public SpecialSeasonCode getSpecialSeasonCodeByExecutionYear(ExecutionYear executionYear) {
 		for (YearStudentSpecialSeasonCode yearStudentSpecialSeasonCode : getYearStudentSpecialSeasonCodesSet()) {
@@ -783,7 +777,6 @@ public class Student extends Student_Base {
 		final Set<SchoolClass> result = new HashSet<SchoolClass>();
 		for (final Attends attends : getAssociatedAttendsSet()) {
 			final ExecutionCourse executionCourse = attends.getDisciplinaExecucao();
-			
 			if (executionCourse.getExecutionPeriod().getState().equals(PeriodState.CURRENT)) {
 				result.addAll(getSchoolClassesToEnrolBy(executionCourse));
 			}

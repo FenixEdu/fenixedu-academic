@@ -7,7 +7,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.grant.GrantTy
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.grant.InvalidGrantPaymentEntityException;
 import net.sourceforge.fenixedu.dataTransferObject.grant.contract.InfoGrantContract;
 import net.sourceforge.fenixedu.dataTransferObject.grant.contract.InfoGrantOrientationTeacher;
-
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantContract;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantCostCenter;

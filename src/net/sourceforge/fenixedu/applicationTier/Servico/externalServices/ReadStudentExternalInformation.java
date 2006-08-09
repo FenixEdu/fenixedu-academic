@@ -37,11 +37,6 @@ import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.util.DateFormatUtil;
-
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.collections.Predicate;
-import org.apache.commons.collections.Transformer;
-
 import pt.utl.ist.fenix.tools.util.StringAppender;
 
 /**

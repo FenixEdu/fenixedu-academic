@@ -29,7 +29,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourseWithExecut
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriodWithInfoExecutionYear;
 import net.sourceforge.fenixedu.dataTransferObject.InfoLesson;
-import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteCommon;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacherWithPersonAndCategory;
 import net.sourceforge.fenixedu.dataTransferObject.TeacherAdministrationSiteView;
@@ -450,11 +449,6 @@ public class ReadCourseInformation extends Service {
         return infoCurricularCourses;
     }
 
-    /**
-     * @param scopes
-     * @param persistentSupport
-     * @return
-     */
     private List getInfoScopes(List scopes) {
         List infoScopes = new ArrayList();
         Iterator iter = scopes.iterator();
@@ -468,36 +462,13 @@ public class ReadCourseInformation extends Service {
         return infoScopes;
     }
 
-    /**
-     * @param executionCourse
-     * @param persistentSupport
-     * @return
-     * @throws ExcepcaoPersistencia
-     */
-    private List getInfoLessons(ExecutionCourse executionCourse)
-            throws ExcepcaoPersistencia {
-        List lessons = new ArrayList();
-
-        List shifts = executionCourse.getAssociatedShifts();
-        for (int i = 0; i < shifts.size(); i++) {
-            Shift shift = (Shift) shifts.get(i);
-            List aulasTemp = shift.getAssociatedLessons();
-
-            lessons.addAll(aulasTemp);
-        }
-
-        List infoLessons = new ArrayList();
-        Iterator iter = lessons.iterator();
-        while (iter.hasNext()) {
-            Lesson lesson = (Lesson) iter.next();
-
-            InfoLesson infoLesson = InfoLesson.newInfoFromDomain(lesson);
-            Shift shift = lesson.getShift();
-            InfoShift infoShift = InfoShift.newInfoFromDomain(shift);
-            infoLesson.setInfoShift(infoShift);
-
-            infoLessons.add(infoLesson);
-        }
-        return infoLessons;
+    private List<InfoLesson> getInfoLessons(ExecutionCourse executionCourse) {
+    	final List<InfoLesson> result = new ArrayList<InfoLesson>();
+    	for (final Shift shift : executionCourse.getAssociatedShiftsSet()) {
+    		for (final Lesson lesson : shift.getAssociatedLessonsSet()) {
+    			result.add(InfoLesson.newInfoFromDomain(lesson));
+    		}
+    	}
+    	return result;
     }
 }

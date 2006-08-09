@@ -5,7 +5,6 @@
 package net.sourceforge.fenixedu.presentationTier.Action.masterDegree.administrativeOffice.guide;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -20,7 +19,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidSituat
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NoActiveStudentCurricularPlanServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingContributorServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
-import net.sourceforge.fenixedu.dataTransferObject.InfoContributor;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGuide;
 import net.sourceforge.fenixedu.dataTransferObject.accounting.CreateReceiptBean;
@@ -47,7 +45,6 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.actions.DispatchAction;
-import org.apache.struts.util.LabelValueBean;
 
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt)

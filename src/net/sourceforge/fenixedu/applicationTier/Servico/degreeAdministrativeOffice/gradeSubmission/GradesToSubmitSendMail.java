@@ -7,7 +7,6 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.MarkSheet;
 import net.sourceforge.fenixedu.domain.Professorship;
 import pt.utl.ist.fenix.tools.smtp.EmailSender;
 

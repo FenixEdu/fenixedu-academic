@@ -1,7 +1,5 @@
 package net.sourceforge.fenixedu.presentationTier.Action.teacher;
 
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Constructor;
@@ -81,7 +79,6 @@ import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
 import net.sourceforge.fenixedu.presentationTier.mapping.SiteManagementActionMapping;
 import net.sourceforge.fenixedu.util.EnrolmentGroupPolicyType;
-import pt.utl.ist.fenix.tools.util.FileUtils;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;

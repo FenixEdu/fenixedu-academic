@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.applicationTier.Servico.accounting;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
-import net.sourceforge.fenixedu.domain.Contributor;
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accounting.Entry;

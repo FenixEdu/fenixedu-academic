@@ -5,7 +5,6 @@ package net.sourceforge.fenixedu.applicationTier.Servico.cms.basic;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.cms.CmsService;
 import net.sourceforge.fenixedu.domain.NotImplementedException;
-import net.sourceforge.fenixedu.domain.cms.Cms;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 /**

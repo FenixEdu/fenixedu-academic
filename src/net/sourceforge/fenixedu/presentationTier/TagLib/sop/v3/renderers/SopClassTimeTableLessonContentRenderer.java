@@ -1,7 +1,5 @@
 package net.sourceforge.fenixedu.presentationTier.TagLib.sop.v3.renderers;
 
-import java.util.List;
-
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularYear;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExam;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
@@ -32,8 +30,7 @@ public class SopClassTimeTableLessonContentRenderer implements LessonSlotContent
 
     public StringBuilder render(LessonSlot lessonSlot) {
         StringBuilder strBuffer = new StringBuilder();
-        //InfoLesson lesson =
-        // lessonSlot.getInfoLessonWrapper().getInfoLesson();
+
         InfoShowOccupation showOccupation = lessonSlot.getInfoLessonWrapper().getInfoShowOccupation();
 
         if (showOccupation instanceof InfoLesson) {
@@ -41,22 +38,19 @@ public class SopClassTimeTableLessonContentRenderer implements LessonSlotContent
 
             strBuffer.append(lesson.getInfoShift().getInfoDisciplinaExecucao().getSigla());
 
-            List infoShiftList = lesson.getInfoShiftList();
-            for (int index = 0; index < infoShiftList.size(); index++) {
-                InfoShift infoShift = (InfoShift) infoShiftList.get(index);
-                InfoExecutionCourse infoExecutionCourse = infoShift.getInfoDisciplinaExecucao();
-
-                strBuffer.append("&nbsp;(").append(
-                        "<a href='manageShift.do?method=prepareEditShift&amp;page=0").append(
-                        "&amp;shift_oid=").append(infoShift.getIdInternal()).append(
-                        "&amp;execution_course_oid=").append(infoExecutionCourse.getIdInternal())
-                        .append("&amp;executionPeriodOID=").append(
-                                infoExecutionCourse.getInfoExecutionPeriod().getIdInternal()).append(
-                                "&amp;curricular_year_oid=").append(infoCurricularYear.getIdInternal())
-                        .append("&amp;execution_degree_oid=")
-                        .append(infoExecutionDegree.getIdInternal()).append("'>").append(
-                                lesson.getTipo().getSiglaTipoAula()).append("</a>").append(")&nbsp;");
-            }
+            final InfoShift infoShift = lesson.getInfoShift();
+            InfoExecutionCourse infoExecutionCourse = infoShift.getInfoDisciplinaExecucao();
+            
+            strBuffer.append("&nbsp;(").append(
+            "<a href='manageShift.do?method=prepareEditShift&amp;page=0").append(
+            "&amp;shift_oid=").append(infoShift.getIdInternal()).append(
+            "&amp;execution_course_oid=").append(infoExecutionCourse.getIdInternal())
+            .append("&amp;executionPeriodOID=").append(
+            		infoExecutionCourse.getInfoExecutionPeriod().getIdInternal()).append(
+            				"&amp;curricular_year_oid=").append(infoCurricularYear.getIdInternal())
+            				.append("&amp;execution_degree_oid=")
+            				.append(infoExecutionDegree.getIdInternal()).append("'>").append(
+            						lesson.getTipo().getSiglaTipoAula()).append("</a>").append(")&nbsp;");
 
             if(lesson.getInfoRoomOccupation() != null) {
                 strBuffer.append(" <a href='pesquisarSala.do?name=").append(

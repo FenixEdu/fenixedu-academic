@@ -10,7 +10,6 @@ import net.sourceforge.fenixedu.domain.AreaCurricularCourseGroup;
 import net.sourceforge.fenixedu.domain.Branch;
 import net.sourceforge.fenixedu.domain.CurricularCourseGroup;
 import net.sourceforge.fenixedu.domain.OptionalCurricularCourseGroup;
-
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.tools.enrollment.AreaType;
 

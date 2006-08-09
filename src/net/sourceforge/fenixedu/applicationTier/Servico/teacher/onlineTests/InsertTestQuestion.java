@@ -9,7 +9,6 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoQuestion;
-
 import net.sourceforge.fenixedu.domain.onlineTests.Metadata;
 import net.sourceforge.fenixedu.domain.onlineTests.Question;
 import net.sourceforge.fenixedu.domain.onlineTests.Test;

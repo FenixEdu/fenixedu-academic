@@ -5,7 +5,6 @@ import java.util.Date;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
-
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.onlineTests.Test;
 import net.sourceforge.fenixedu.domain.onlineTests.TestScope;

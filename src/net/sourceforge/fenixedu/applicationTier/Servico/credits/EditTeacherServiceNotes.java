@@ -1,7 +1,5 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.credits;
 
-import org.apache.commons.lang.StringUtils;
-
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
@@ -10,6 +8,8 @@ import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.teacher.TeacherService;
 import net.sourceforge.fenixedu.domain.teacher.TeacherServiceNotes;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
+
+import org.apache.commons.lang.StringUtils;
 
 public class EditTeacherServiceNotes extends Service {
 

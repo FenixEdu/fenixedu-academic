@@ -10,7 +10,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.OutOfPeriodEx
 import net.sourceforge.fenixedu.dataTransferObject.InfoBranch;
 import net.sourceforge.fenixedu.dataTransferObject.finalDegreeWork.InfoProposal;
 import net.sourceforge.fenixedu.domain.Branch;
-
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal;

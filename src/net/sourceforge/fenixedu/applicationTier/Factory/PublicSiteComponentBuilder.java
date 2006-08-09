@@ -17,8 +17,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriodWithInfoExecutionYear;
 import net.sourceforge.fenixedu.dataTransferObject.InfoLesson;
-import net.sourceforge.fenixedu.dataTransferObject.InfoRoom;
-import net.sourceforge.fenixedu.dataTransferObject.InfoRoomOccupation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteClasses;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteTimetable;
@@ -28,8 +26,6 @@ import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.Lesson;
 import net.sourceforge.fenixedu.domain.SchoolClass;
 import net.sourceforge.fenixedu.domain.Shift;
-import net.sourceforge.fenixedu.domain.space.OldRoom;
-import net.sourceforge.fenixedu.domain.space.RoomOccupation;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 /**
@@ -113,13 +109,7 @@ public class PublicSiteComponentBuilder {
             Iterator lessonIterator = lessonList.iterator();
             while (lessonIterator.hasNext()) {
                 Lesson elem = (Lesson) lessonIterator.next();
-                InfoLesson infoLesson = copyILesson2InfoLesson(elem);
-
-                if (infoLesson != null) {
-                    infoLesson.setInfoShift(infoShift);
-                    infoLesson.getInfoShiftList().add(infoShift);
-                    infoLessonList.add(infoLesson);
-                }
+                infoLessonList.add(InfoLesson.newInfoFromDomain(elem));
             }
         }
         component.setInfoExecutionPeriod(infoExecutionPeriod);
@@ -129,35 +119,6 @@ public class PublicSiteComponentBuilder {
         return component;
     }
 
-    private InfoLesson copyILesson2InfoLesson(Lesson lesson) {
-        InfoLesson infoLesson = null;
-        if (lesson != null) {
-            infoLesson = new InfoLesson();
-            infoLesson.setIdInternal(lesson.getIdInternal());
-            infoLesson.setDiaSemana(lesson.getDiaSemana());
-            infoLesson.setFim(lesson.getFim());
-            infoLesson.setInicio(lesson.getInicio());
-            infoLesson.setTipo(lesson.getTipo());
-			infoLesson.setFrequency(lesson.getFrequency());
-			infoLesson.setWeekOfQuinzenalStart(lesson.getWeekOfQuinzenalStart());
-            // infoLesson.setInfoSala(copyISala2InfoRoom(lesson.getSala()));
-
-            RoomOccupation roomOccupation = lesson.getRoomOccupation();
-            OldRoom room = roomOccupation.getRoom();
-            InfoRoomOccupation infoRoomOccupation = InfoRoomOccupation.newInfoFromDomain(roomOccupation);
-            InfoRoom infoRoom = InfoRoom.newInfoFromDomain(room);
-            infoRoomOccupation.setInfoRoom(infoRoom);
-
-            infoLesson.setInfoRoomOccupation(infoRoomOccupation);
-
-        }
-        return infoLesson;
-    }
-
-    /**
-     * @param executionCourse
-     * @return
-     */
     private InfoExecutionCourse copyIExecutionCourse2InfoExecutionCourse(ExecutionCourse executionCourse) {
         InfoExecutionCourse infoExecutionCourse = null;
         if (executionCourse != null) {

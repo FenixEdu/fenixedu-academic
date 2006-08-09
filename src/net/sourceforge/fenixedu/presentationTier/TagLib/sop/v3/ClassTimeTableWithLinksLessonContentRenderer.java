@@ -5,8 +5,6 @@
  */
 package net.sourceforge.fenixedu.presentationTier.TagLib.sop.v3;
 
-import java.util.List;
-
 import net.sourceforge.fenixedu.dataTransferObject.InfoLesson;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShowOccupation;
 
@@ -39,10 +37,7 @@ public class ClassTimeTableWithLinksLessonContentRenderer implements LessonSlotC
                     .append("</a>");
 
             strBuffer.append("&nbsp;");
-            List infoShiftList = lesson.getInfoShiftList();
-            for (int index = 0; index < infoShiftList.size(); index++) {
-                strBuffer.append("&nbsp;(").append(lesson.getTipo().getSiglaTipoAula()).append(")&nbsp;");
-            }
+            strBuffer.append("&nbsp;(").append(lesson.getTipo().getSiglaTipoAula()).append(")&nbsp;");
 
             if(lesson.getInfoRoomOccupation() != null) {
                 strBuffer.append(lesson.getInfoRoomOccupation().getInfoRoom().getNome());

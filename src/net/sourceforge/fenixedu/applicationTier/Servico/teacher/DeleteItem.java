@@ -1,14 +1,9 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 
-import java.util.Collection;
-
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.notAuthorizedServiceDeleteException;
 import net.sourceforge.fenixedu.domain.Item;
-import net.sourceforge.fenixedu.fileSuport.FileSuportObject;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.fileSupport.JdbcMysqlFileSupport;
 
 /**
  * @author Fernanda Quitério

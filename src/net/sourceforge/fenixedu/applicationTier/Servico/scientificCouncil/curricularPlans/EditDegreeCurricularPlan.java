@@ -8,7 +8,6 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.GradeScale;
 import net.sourceforge.fenixedu.domain.degree.degreeCurricularPlan.DegreeCurricularPlanState;
 import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class EditDegreeCurricularPlan extends Service {
 

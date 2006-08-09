@@ -6,7 +6,6 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.CurricularCourseEquivalence;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
-
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class CreateCurricularCourseEquivalency extends Service {

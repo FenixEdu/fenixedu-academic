@@ -7,7 +7,6 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.Teacher;

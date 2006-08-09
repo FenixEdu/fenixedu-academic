@@ -9,7 +9,6 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.GuiderAlreadyChosenServiceException;
-
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.ExternalPerson;
 import net.sourceforge.fenixedu.domain.MasterDegreeThesis;

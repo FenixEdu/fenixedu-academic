@@ -8,10 +8,10 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
-import org.apache.commons.beanutils.BeanComparator;
-
 import net.sourceforge.fenixedu.domain.masterDegree.MasterDegreeClassification;
 import net.sourceforge.fenixedu.util.State;
+
+import org.apache.commons.beanutils.BeanComparator;
 
 /**
  * @author - Shezad Anavarali (sana@mega.ist.utl.pt) - Nadir Tarmahomed

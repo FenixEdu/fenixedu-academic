@@ -6,7 +6,6 @@ import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
-import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 
 public class DFACandidacyBean implements Serializable{
 

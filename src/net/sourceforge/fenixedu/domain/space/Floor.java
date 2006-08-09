@@ -4,8 +4,6 @@ import java.io.Serializable;
 import java.util.Comparator;
 
 import net.sourceforge.fenixedu.domain.DomainReference;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
-import net.sourceforge.fenixedu.domain.space.Floor.FloorFactory;
 import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
 
 import org.apache.commons.beanutils.BeanComparator;

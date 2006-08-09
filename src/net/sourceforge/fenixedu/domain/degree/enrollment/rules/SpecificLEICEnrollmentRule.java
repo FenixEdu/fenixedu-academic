@@ -23,7 +23,6 @@ import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseEnrollmentType;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
 import net.sourceforge.fenixedu.domain.degree.enrollment.CurricularCourse2Enroll;
-import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
 import net.sourceforge.fenixedu.domain.exceptions.EnrolmentRuleDomainException;
 
 import org.apache.commons.collections.CollectionUtils;

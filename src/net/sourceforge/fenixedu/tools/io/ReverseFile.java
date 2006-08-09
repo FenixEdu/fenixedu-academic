@@ -8,10 +8,10 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
-import pt.utl.ist.fenix.tools.util.FileUtils;
-
 import org.apache.jcs.access.exception.InvalidArgumentException;
 import org.apache.log4j.Logger;
+
+import pt.utl.ist.fenix.tools.util.FileUtils;
 
 /**
  * @author Luis Cruz

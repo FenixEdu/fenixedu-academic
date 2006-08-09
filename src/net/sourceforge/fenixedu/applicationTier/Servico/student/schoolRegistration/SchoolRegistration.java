@@ -10,7 +10,6 @@ import net.sourceforge.fenixedu.applicationTier.security.PasswordEncryptor;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
 import net.sourceforge.fenixedu.dataTransferObject.student.schoolRegistration.InfoResidenceCandidacy;
 import net.sourceforge.fenixedu.domain.Country;
-
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;

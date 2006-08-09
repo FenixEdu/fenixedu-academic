@@ -4,7 +4,6 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.domain.Country;
 import net.sourceforge.fenixedu.domain.DislocatedStudent;
 import net.sourceforge.fenixedu.domain.District;
-
 import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 

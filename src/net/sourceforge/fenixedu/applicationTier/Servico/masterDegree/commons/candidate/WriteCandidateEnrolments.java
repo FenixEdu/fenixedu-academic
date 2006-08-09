@@ -10,7 +10,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.domain.CandidateEnrolment;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
-
 import net.sourceforge.fenixedu.domain.MasterDegreeCandidate;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 

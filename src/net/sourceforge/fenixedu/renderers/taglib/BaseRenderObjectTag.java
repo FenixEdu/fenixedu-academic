@@ -12,8 +12,6 @@ import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.TagSupport;
 
 import net.sourceforge.fenixedu.renderers.components.HtmlComponent;
-import net.sourceforge.fenixedu.renderers.components.converters.Converter;
-import net.sourceforge.fenixedu.renderers.components.state.HiddenSlot;
 import net.sourceforge.fenixedu.renderers.components.state.IViewState;
 import net.sourceforge.fenixedu.renderers.components.state.ViewDestination;
 import net.sourceforge.fenixedu.renderers.contexts.PresentationContext;

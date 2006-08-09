@@ -12,7 +12,6 @@ import net.sourceforge.fenixedu.dataTransferObject.ExecutionCourseSiteView;
 import net.sourceforge.fenixedu.dataTransferObject.ISiteComponent;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoLesson;
-import net.sourceforge.fenixedu.dataTransferObject.InfoLessonWithInfoRoom;
 import net.sourceforge.fenixedu.dataTransferObject.InfoProfessorship;
 import net.sourceforge.fenixedu.dataTransferObject.InfoProfessorshipWithAll;
 import net.sourceforge.fenixedu.dataTransferObject.InfoRoom;
@@ -61,8 +60,7 @@ public class PrepareInsertSummary extends Service {
             final List<InfoLesson> infoLessons = new ArrayList<InfoLesson>(lessons.size());
             infoShift.setInfoLessons(infoLessons);
             for (final Lesson lesson : lessons) {
-                final InfoLesson infoLesson = InfoLessonWithInfoRoom.newInfoFromDomain(lesson);
-                infoLessons.add(infoLesson);
+                infoLessons.add(InfoLesson.newInfoFromDomain(lesson));
             }
         }
 
@@ -74,7 +72,7 @@ public class PrepareInsertSummary extends Service {
             infoRooms.add(infoRoom);
 
             infoRoom.setIdInternal(room.getIdInternal());
-            infoRoom.setNome(room.getNome());
+            infoRoom.setNome(room.getName());
         }
 
         Collections.sort(infoRooms, new BeanComparator("nome"));

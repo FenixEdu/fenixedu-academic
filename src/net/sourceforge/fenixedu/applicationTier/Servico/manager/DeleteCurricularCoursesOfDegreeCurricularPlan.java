@@ -13,7 +13,6 @@ import net.sourceforge.fenixedu.commons.CollectionUtils;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.CurricularCourseScope;
 import net.sourceforge.fenixedu.domain.Curriculum;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 

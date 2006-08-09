@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.renderers.plugin.upload;
 import java.io.IOException;
 import java.io.InputStream;
 
-
 import org.apache.struts.upload.FormFile;
 
 /**

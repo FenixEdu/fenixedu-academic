@@ -5,8 +5,6 @@ package net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.ca
 
 import java.util.List;
 
-import org.joda.time.DateTime;
-
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.candidacy.CandidacyDocumentUploadBean;
 import net.sourceforge.fenixedu.domain.Person;

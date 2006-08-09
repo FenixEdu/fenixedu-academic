@@ -36,10 +36,8 @@ public class InfoShiftWithInfoLessons extends InfoShift {
         List infoLessons = null;
         if (list != null) {
             infoLessons = (List) CollectionUtils.collect(list, new Transformer() {
-
                 public Object transform(Object arg0) {
-
-                    return InfoLessonWithInfoRoom.newInfoFromDomain((Lesson) arg0);
+                    return InfoLesson.newInfoFromDomain((Lesson) arg0);
                 }
 
             });

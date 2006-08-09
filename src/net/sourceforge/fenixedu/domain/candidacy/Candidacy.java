@@ -2,11 +2,10 @@ package net.sourceforge.fenixedu.domain.candidacy;
 
 import java.util.Collections;
 
-import org.apache.commons.beanutils.BeanComparator;
-import org.apache.commons.digester.SetRootRule;
-
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+
+import org.apache.commons.beanutils.BeanComparator;
 
 public abstract class Candidacy extends Candidacy_Base {
     

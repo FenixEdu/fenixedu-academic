@@ -18,7 +18,6 @@ import net.sourceforge.fenixedu.util.StringFormatter;
 import org.apache.ojb.broker.metadata.ClassDescriptor;
 import org.apache.ojb.broker.metadata.FieldDescriptor;
 import org.apache.ojb.broker.metadata.MetadataManager;
-import org.joda.time.chrono.AssembledChronology.Fields;
 
 /**
  * @author - Shezad Anavarali (shezad@ist.utl.pt)

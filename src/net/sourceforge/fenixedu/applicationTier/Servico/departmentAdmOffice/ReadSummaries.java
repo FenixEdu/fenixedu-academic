@@ -13,7 +13,6 @@ import net.sourceforge.fenixedu.dataTransferObject.ExecutionCourseSiteView;
 import net.sourceforge.fenixedu.dataTransferObject.ISiteComponent;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoLesson;
-import net.sourceforge.fenixedu.dataTransferObject.InfoRoom;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteCommon;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteSummaries;
@@ -80,13 +79,8 @@ public class ReadSummaries extends Service {
                     final InfoShift infoShift = InfoShift.newInfoFromDomain(turno);
                     infoShift.setInfoLessons(new ArrayList<InfoLesson>(turno.getAssociatedLessons()
                             .size()));
-                    for (final Iterator iterator = turno.getAssociatedLessons().iterator(); iterator
-                            .hasNext();) {
-                        final Lesson lesson = (Lesson) iterator.next();
-                        final InfoLesson infoLesson = InfoLesson.newInfoFromDomain(lesson);
-                        final InfoRoom infoRoom = InfoRoom.newInfoFromDomain(lesson.getSala());
-                        infoLesson.setInfoSala(infoRoom);
-                        infoShift.getInfoLessons().add(infoLesson);
+                    for (final Lesson lesson : turno.getAssociatedLessonsSet()) {
+                    	infoShift.getInfoLessons().add(InfoLesson.newInfoFromDomain(lesson));
                     }
                     return infoShift;
                 }

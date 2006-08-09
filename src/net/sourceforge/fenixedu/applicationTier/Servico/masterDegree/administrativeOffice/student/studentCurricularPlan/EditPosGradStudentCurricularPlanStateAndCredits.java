@@ -12,7 +12,6 @@ import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.Branch;
 import net.sourceforge.fenixedu.domain.CreditsInAnySecundaryArea;
 import net.sourceforge.fenixedu.domain.CreditsInScientificArea;
-
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.EnrolmentEquivalence;

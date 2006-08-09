@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.presentationTier.Action.managementAssiduousness;
 
-import java.util.Calendar;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -12,12 +11,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.assiduousness.EmployeeWorkSheet;
 import net.sourceforge.fenixedu.dataTransferObject.assiduousness.YearMonth;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
 import net.sourceforge.fenixedu.renderers.components.state.ViewState;

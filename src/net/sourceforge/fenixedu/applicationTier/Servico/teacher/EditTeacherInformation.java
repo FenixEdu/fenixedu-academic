@@ -7,7 +7,6 @@ import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoOrientation;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoPublicationsNumber;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoServiceProviderRegime;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoWeeklyOcupation;
-
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.teacher.Orientation;
 import net.sourceforge.fenixedu.domain.teacher.PublicationsNumber;

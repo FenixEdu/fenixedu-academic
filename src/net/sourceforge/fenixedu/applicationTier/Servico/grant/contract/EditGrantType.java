@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.applicationTier.Servico.grant.contract;
 import net.sourceforge.fenixedu.applicationTier.Servico.framework.EditDomainObjectService;
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
 import net.sourceforge.fenixedu.dataTransferObject.grant.contract.InfoGrantType;
-
 import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;

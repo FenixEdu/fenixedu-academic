@@ -5,7 +5,6 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.publication.InfoPublication;
-
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.publication.Publication;
 import net.sourceforge.fenixedu.domain.publication.PublicationType;

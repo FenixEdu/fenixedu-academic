@@ -6,7 +6,6 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCompetenceCourse;
 import net.sourceforge.fenixedu.domain.CompetenceCourse;
-import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
 
 public class ReadAllCompetenceCourses extends Service{
 

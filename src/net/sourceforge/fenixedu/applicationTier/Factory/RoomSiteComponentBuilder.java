@@ -12,21 +12,15 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.ISiteComponent;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExam;
-import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
-import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoLesson;
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoRoom;
-import net.sourceforge.fenixedu.dataTransferObject.InfoRoomOccupation;
-import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteRoomTimeTable;
 import net.sourceforge.fenixedu.dataTransferObject.InfoWrittenTest;
 import net.sourceforge.fenixedu.domain.Exam;
-import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.Lesson;
@@ -114,28 +108,11 @@ public class RoomSiteComponentBuilder {
                             }
                         }
                         if (add) {
-                            InfoLesson infoLesson = InfoLesson.newInfoFromDomain(aula);
                             Shift shift = aula.getShift();
                             if (shift == null) {
                                 continue;
                             }
-							InfoShift infoShift = InfoShift.newInfoFromDomain(shift);
-                            infoLesson.setInfoShift(infoShift);
-
-                            InfoRoomOccupation infoRoomOccupation = InfoRoomOccupation.newInfoFromDomain(aula.getRoomOccupation());
-                            InfoRoom infoRoom = InfoRoom.newInfoFromDomain(aula
-                                    .getRoomOccupation().getRoom());
-                            infoRoomOccupation.setInfoRoom(infoRoom);
-                            infoLesson.setInfoRoomOccupation(infoRoomOccupation);
-
-                            ExecutionCourse executionCourse = shift.getDisciplinaExecucao();
-                            InfoExecutionCourse infoExecutionCourse = InfoExecutionCourse.newInfoFromDomain(executionCourse);
-                            infoShift.setInfoDisciplinaExecucao(infoExecutionCourse);
-
-                            InfoExecutionPeriod infoExecutionPeriod = InfoExecutionPeriod.newInfoFromDomain(executionPeriod);
-                            infoExecutionCourse.setInfoExecutionPeriod(infoExecutionPeriod);
-
-                            infoShowOccupations.add(infoLesson);
+                            infoShowOccupations.add(InfoLesson.newInfoFromDomain(aula));
                         }
                     }
                 }

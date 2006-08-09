@@ -9,7 +9,6 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.person.InfoQualification;
 import net.sourceforge.fenixedu.domain.Country;
-
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Qualification;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;

@@ -6,7 +6,6 @@ package net.sourceforge.fenixedu.applicationTier.Servico.manager;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.support.InfoFAQSection;
-
 import net.sourceforge.fenixedu.domain.support.FAQSection;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 

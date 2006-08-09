@@ -2,12 +2,12 @@ package net.sourceforge.fenixedu.domain.serviceRequests;
 
 import java.util.Comparator;
 
-import org.apache.commons.lang.StringUtils;
-import org.joda.time.DateTime;
-
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+
+import org.apache.commons.lang.StringUtils;
+import org.joda.time.DateTime;
 
 public class AcademicServiceRequestSituation extends AcademicServiceRequestSituation_Base {
 

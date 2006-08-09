@@ -1,10 +1,10 @@
 package net.sourceforge.fenixedu.domain.assiduousness;
 
+import net.sourceforge.fenixedu.domain.RootDomainObject;
+
 import org.joda.time.Partial;
 import org.joda.time.TimeOfDay;
 import org.joda.time.YearMonthDay;
-
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 
 public class Justification extends Justification_Base {
 

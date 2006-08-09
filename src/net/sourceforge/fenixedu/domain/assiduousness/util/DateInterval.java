@@ -1,9 +1,9 @@
 package net.sourceforge.fenixedu.domain.assiduousness.util;
 
-import org.joda.time.Interval;
-import org.joda.time.YearMonthDay;
 import org.joda.time.DateTime;
+import org.joda.time.Interval;
 import org.joda.time.PeriodType;
+import org.joda.time.YearMonthDay;
 
 // The purpose of this class is to define Intervals with partials
 public class DateInterval {

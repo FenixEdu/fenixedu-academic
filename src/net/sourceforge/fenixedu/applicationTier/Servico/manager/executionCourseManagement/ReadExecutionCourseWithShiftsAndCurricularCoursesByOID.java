@@ -7,7 +7,6 @@ package net.sourceforge.fenixedu.applicationTier.Servico.manager.executionCourse
 
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse;
@@ -16,7 +15,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoLesson;
-import net.sourceforge.fenixedu.dataTransferObject.InfoRoom;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
@@ -34,8 +32,7 @@ public class ReadExecutionCourseWithShiftsAndCurricularCoursesByOID extends Serv
     public InfoExecutionCourse run(final Integer oid) throws ExcepcaoPersistencia {
         InfoExecutionCourse infoExecutionCourse = null;
 
-        ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(oid);
-
+        final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(oid);
         if (executionCourse != null) {
             infoExecutionCourse = InfoExecutionCourse.newInfoFromDomain(executionCourse);
 
@@ -57,22 +54,13 @@ public class ReadExecutionCourseWithShiftsAndCurricularCoursesByOID extends Serv
                 infoExecutionCourse.getAssociatedInfoCurricularCourses().add(infoCurricularCourse);
             }
 
-            infoExecutionCourse.setAssociatedInfoShifts(new ArrayList());
-            List shifts = executionCourse.getAssociatedShifts();
-            for (Iterator iterator = shifts.iterator(); iterator.hasNext();) {
-                Shift shift = (Shift) iterator.next();
-                InfoShift infoShift = InfoShift.newInfoFromDomain(shift);
-
-                infoShift.setInfoLessons(new ArrayList());
-                List lessons = shift.getAssociatedLessons();
-                for (int i = 0; i < lessons.size(); i++) {
-                    Lesson lesson = (Lesson) lessons.get(i);
-                    InfoLesson infoLesson = InfoLesson.newInfoFromDomain(lesson);
-                    infoLesson.setInfoSala(InfoRoom.newInfoFromDomain(lesson.getSala()));
-
-                    infoShift.getInfoLessons().add(infoLesson);
+            infoExecutionCourse.setAssociatedInfoShifts(new ArrayList(executionCourse.getAssociatedShiftsCount()));
+            for (final Shift shift : executionCourse.getAssociatedShiftsSet()) {
+            	final InfoShift infoShift = InfoShift.newInfoFromDomain(shift);
+                infoShift.setInfoLessons(new ArrayList(shift.getAssociatedLessonsCount()));
+                for (final Lesson lesson : shift.getAssociatedLessons()) {
+                	infoShift.getInfoLessons().add(InfoLesson.newInfoFromDomain(lesson));
                 }
-
                 infoExecutionCourse.getAssociatedInfoShifts().add(infoShift);
             }
         }

@@ -15,7 +15,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.guide.Invalid
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.guide.RequiredJustificationServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.guide.reimbursementGuide.InfoReimbursementGuideEntry;
 import net.sourceforge.fenixedu.domain.DocumentType;
-
 import net.sourceforge.fenixedu.domain.Guide;
 import net.sourceforge.fenixedu.domain.GuideEntry;
 import net.sourceforge.fenixedu.domain.GuideState;

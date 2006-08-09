@@ -14,7 +14,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingSe
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.guide.InvalidGuideSituationServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.guide.InvalidReimbursementValueServiceException;
 import net.sourceforge.fenixedu.domain.DocumentType;
-
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.GratuitySituation;

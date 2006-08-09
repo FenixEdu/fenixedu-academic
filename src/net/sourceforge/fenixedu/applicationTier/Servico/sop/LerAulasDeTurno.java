@@ -16,31 +16,24 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.InfoLesson;
-import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
 import net.sourceforge.fenixedu.dataTransferObject.ShiftKey;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Lesson;
 import net.sourceforge.fenixedu.domain.Shift;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class LerAulasDeTurno extends Service {
 
-    public List run(ShiftKey shiftKey) throws ExcepcaoPersistencia {
-    	final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(shiftKey.getInfoExecutionCourse().getIdInternal());
-    	final Shift shift = executionCourse.findShiftByName(shiftKey.getShiftName());
+	public List run(ShiftKey shiftKey) {
 
-        final List<Lesson> aulas = shift.getAssociatedLessons();
+		final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(shiftKey
+				.getInfoExecutionCourse().getIdInternal());
+		final Shift shift = executionCourse.findShiftByName(shiftKey.getShiftName());
 
-        List<InfoLesson> infoAulas = new ArrayList<InfoLesson>();
-        for (Lesson elem : aulas) {
-            InfoLesson infoLesson = InfoLesson.newInfoFromDomain(elem);
-
-            InfoShift infoShift = InfoShift.newInfoFromDomain(shift);
-            infoLesson.setInfoShift(infoShift);
-
-            infoAulas.add(infoLesson);
-        }
-        return infoAulas;
-    }
+		final List<InfoLesson> infoAulas = new ArrayList<InfoLesson>();
+		for (final Lesson lesson : shift.getAssociatedLessons()) {
+			infoAulas.add(InfoLesson.newInfoFromDomain(lesson));
+		}
+		return infoAulas;
+	}
 
 }

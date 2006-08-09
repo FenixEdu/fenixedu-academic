@@ -4,17 +4,9 @@ import java.text.Collator;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.SortedSet;
-import java.util.TreeSet;
 
-import net.sourceforge.fenixedu.domain.Attends;
-import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
-import net.sourceforge.fenixedu.domain.Student;
-import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.util.PeriodState;
 
 import org.apache.commons.beanutils.BeanComparator;
 

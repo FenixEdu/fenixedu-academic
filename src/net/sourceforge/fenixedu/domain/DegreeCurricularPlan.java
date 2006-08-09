@@ -484,7 +484,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
     }
 
     public EnrolmentPeriodInClasses getCurrentClassesEnrollmentPeriod() {
-		for (final EnrolmentPeriod enrolmentPeriod : this.getEnrolmentPeriods()) {
+		for (final EnrolmentPeriod enrolmentPeriod : this.getEnrolmentPeriodsSet()) {
 			if ((enrolmentPeriod instanceof EnrolmentPeriodInClasses)
 					&& enrolmentPeriod.getExecutionPeriod().getState().equals(PeriodState.CURRENT)) {
 				return (EnrolmentPeriodInClasses) enrolmentPeriod;

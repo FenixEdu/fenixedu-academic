@@ -5,8 +5,8 @@ import java.util.Collection;
 import java.util.List;
 
 import net.sourceforge.fenixedu.renderers.components.HtmlComponent;
+import net.sourceforge.fenixedu.renderers.model.MetaObjectCollection;
 import net.sourceforge.fenixedu.renderers.model.MetaObjectFactory;
-import net.sourceforge.fenixedu.renderers.model.MetaObjectCollection;;
 
 /**
  * {@inheritDoc}

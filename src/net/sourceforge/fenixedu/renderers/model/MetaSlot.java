@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.renderers.model;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 

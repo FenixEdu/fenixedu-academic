@@ -4,7 +4,6 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoCareer;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoProfessionalCareer;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoTeachingCareer;
-
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.teacher.Category;
 import net.sourceforge.fenixedu.domain.teacher.ProfessionalCareer;

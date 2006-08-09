@@ -11,7 +11,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPeriod;
 import net.sourceforge.fenixedu.domain.Campus;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
-
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.OccupationPeriod;

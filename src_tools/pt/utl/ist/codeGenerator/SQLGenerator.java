@@ -7,7 +7,6 @@ import java.util.Map;
 
 import net.sourceforge.fenixedu._development.MetadataManager;
 import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
-
 import pt.utl.ist.codeGenerator.database.DatabaseDescriptorFactory;
 import pt.utl.ist.codeGenerator.database.SqlTable;
 

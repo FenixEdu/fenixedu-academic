@@ -33,7 +33,6 @@ import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.Document
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequestType;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.StudentCurricularPlanState;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.tools.enrollment.AreaType;
 import net.sourceforge.fenixedu.util.PeriodState;
 import net.sourceforge.fenixedu.util.State;
@@ -193,7 +192,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	private void addNonInvisibleEnrolments(List<Enrolment> allEnrollments,
 			List<Enrolment> enrollmentsToAdd) {
 		for (Enrolment enrolment : enrollmentsToAdd) {
-			if (enrolment.getCondition() != EnrollmentCondition.INVISIBLE) {
+			if (enrolment.getEnrolmentCondition() != EnrollmentCondition.INVISIBLE) {
 				allEnrollments.add(enrolment);
 			}
 		}
@@ -443,8 +442,8 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	}
 
 	private void initEctsCredits(List<Enrolment> enrolments) {
-	    for (Enrolment enrolment : enrolments) {
-		enrolment.setEctsCredits(this.getEctsCredits(enrolment.getCurricularCourse(), enrolment.getExecutionPeriod()));
+	    for (final Enrolment enrolment : enrolments) {
+	    	enrolment.setEctsCredits(this.getEctsCredits(enrolment.getCurricularCourse(), enrolment.getExecutionPeriod()));
 	    }
 	}
 
@@ -465,7 +464,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 			public boolean evaluate(Object obj) {
 				Enrolment enrollment = (Enrolment) obj;
 				return (enrollment.getEnrollmentState().equals(EnrollmentState.ENROLLED) && enrollment
-						.getCondition().equals(EnrollmentCondition.TEMPORARY));
+						.getEnrolmentCondition().equals(EnrollmentCondition.TEMPORARY));
 			}
 		}));
 	}
@@ -801,7 +800,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 			public boolean evaluate(Object obj) {
 				Enrolment enrollment = (Enrolment) obj;
 				return enrollment.getEnrollmentState().equals(EnrollmentState.ENROLLED)
-						&& !enrollment.getCondition().equals(EnrollmentCondition.INVISIBLE);
+						&& !enrollment.getEnrolmentCondition().equals(EnrollmentCondition.INVISIBLE);
 			}
 		});
 	}
@@ -1344,7 +1343,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 		for (final StudentCurricularPlan studentCurricularPlan : getStudent()
 				.getStudentCurricularPlansSet()) {
 			for (Enrolment enrolment : studentCurricularPlan.getEnrolments()) {
-				if (enrolment.getCondition() != EnrollmentCondition.INVISIBLE
+				if (enrolment.getEnrolmentCondition() != EnrollmentCondition.INVISIBLE
 						&& enrolment.getEnrollmentState() == EnrollmentState.APROVED) {
 					final ExecutionPeriod executionPeriod = enrolment.getExecutionPeriod();
 					final ExecutionYear executionYear = executionPeriod.getExecutionYear();

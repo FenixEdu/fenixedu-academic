@@ -94,7 +94,7 @@ public class OldRoom extends OldRoom_Base {
 
     public static OldRoom findOldRoomByName(final String name) {
     	for (final OldRoom oldRoom : OldRoom.getOldRooms()) {
-    		if (oldRoom.getNome().equalsIgnoreCase(name)) {
+    		if (oldRoom.getName().equalsIgnoreCase(name)) {
     			return oldRoom;
     		}
     	}
@@ -108,7 +108,7 @@ public class OldRoom extends OldRoom_Base {
         final Set<OldRoom> result = new HashSet<OldRoom>();
         for (OldRoom room : oldRooms) {
             boolean isAcceptable = true;
-            if (nome != null && !room.getNome().equalsIgnoreCase(nome)) {
+            if (nome != null && !room.getName().equalsIgnoreCase(nome)) {
                 continue;
             }
             if (edificio != null && !room.getBuilding().getName().equalsIgnoreCase(edificio)) {

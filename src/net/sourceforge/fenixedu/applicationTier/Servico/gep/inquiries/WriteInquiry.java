@@ -10,7 +10,6 @@ import net.sourceforge.fenixedu.dataTransferObject.inquiries.InfoInquiriesRoom;
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.InfoInquiriesTeacher;
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.InfoInquiry;
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.InfoTeacherOrNonAffiliatedTeacherWithRemainingClassTypes;
-
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;

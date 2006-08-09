@@ -15,7 +15,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgume
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotExecuteException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.tests.InvalidXMLFilesException;
 import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoQuestion;
-
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.onlineTests.Metadata;
 import net.sourceforge.fenixedu.domain.onlineTests.Question;

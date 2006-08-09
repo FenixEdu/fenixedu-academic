@@ -1,7 +1,5 @@
 package net.sourceforge.fenixedu.presentationTier.renderers;
 
-import net.sourceforge.fenixedu.domain.DomainObject;
-import net.sourceforge.fenixedu.presentationTier.renderers.actions.NavigationAction;
 import net.sourceforge.fenixedu.renderers.OutputRenderer;
 import net.sourceforge.fenixedu.renderers.components.HtmlComponent;
 import net.sourceforge.fenixedu.renderers.components.HtmlLink;

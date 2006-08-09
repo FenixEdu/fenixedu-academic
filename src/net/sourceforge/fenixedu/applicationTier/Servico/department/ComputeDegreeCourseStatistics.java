@@ -10,9 +10,7 @@ import net.sourceforge.fenixedu.domain.CompetenceCourse;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.Enrolment;
-import net.sourceforge.fenixedu.domain.EnrolmentEvaluation;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
-import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class ComputeDegreeCourseStatistics extends ComputeCourseStatistics {

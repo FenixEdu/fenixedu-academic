@@ -1,8 +1,8 @@
 package net.sourceforge.fenixedu.domain;
 
-import org.joda.time.DateTime;
-
 import net.sourceforge.fenixedu.domain.accessControl.Group;
+
+import org.joda.time.DateTime;
 
 public abstract class File extends File_Base {
 

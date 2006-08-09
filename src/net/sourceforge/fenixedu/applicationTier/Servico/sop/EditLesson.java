@@ -10,6 +10,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InterceptingS
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidTimeIntervalServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoLesson;
 import net.sourceforge.fenixedu.dataTransferObject.InfoLessonServiceResult;
+import net.sourceforge.fenixedu.dataTransferObject.InfoRoomOccupation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShiftServiceResult;
 import net.sourceforge.fenixedu.domain.Lesson;
@@ -17,18 +18,18 @@ import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.domain.space.OldRoom;
 import net.sourceforge.fenixedu.domain.space.RoomOccupation;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.util.DiaSemana;
 
 public class EditLesson extends Service {
 
-    public Object run(InfoLesson aulaAntiga, InfoLesson aulaNova, InfoShift infoShift)
-            throws FenixServiceException, ExcepcaoPersistencia {
+    public Object run(InfoLesson aulaAntiga, DiaSemana weekDay, Calendar begin, Calendar end, Integer frequency, 
+    		Integer weekOfQuinzenalStart, InfoRoomOccupation infoRoomOccupation, InfoShift infoShift)
+            throws FenixServiceException {
         
         InfoLessonServiceResult result = null;        
         OldRoom salaNova = null;
-        if(aulaNova.getInfoSala() != null) {
-            salaNova = OldRoom.findOldRoomByName(aulaNova.getInfoSala().getNome());
+        if(infoRoomOccupation.getInfoRoom() != null) {
+            salaNova = OldRoom.findOldRoomByName(infoRoomOccupation.getInfoRoom().getNome());
         }
         
         Lesson aula = rootDomainObject.readLessonByOID(aulaAntiga.getIdInternal());
@@ -37,34 +38,33 @@ public class EditLesson extends Service {
 
         if (aula != null) {
             
-            result = valid(aulaNova.getInicio(), aulaNova.getFim());
+            result = valid(begin, end);
             if (result.getMessageType() == 1) {
                 throw new InvalidTimeIntervalServiceException();
             }
             
             boolean resultB = true;
-            if(aulaNova.getInfoRoomOccupation() != null) {
+            if(infoRoomOccupation != null) {
                 resultB = validNoInterceptingLesson(                    
-                        aulaNova.getInfoRoomOccupation().getStartTime(),
-                        aulaNova.getInfoRoomOccupation().getEndTime(), 
-                        aulaNova.getInfoRoomOccupation().getDayOfWeek(), 
-                        aulaNova.getInfoRoomOccupation().getFrequency(), 
-                        aulaNova.getInfoRoomOccupation().getWeekOfQuinzenalStart(), salaNova, roomOccupation);
+                		infoRoomOccupation.getStartTime(),
+                		infoRoomOccupation.getEndTime(), 
+                		infoRoomOccupation.getDayOfWeek(), 
+                		infoRoomOccupation.getFrequency(), 
+                		infoRoomOccupation.getWeekOfQuinzenalStart(), salaNova, roomOccupation);
             }
             
-            InfoShiftServiceResult infoShiftServiceResult = valid(shift, aula.getIdInternal(), aulaNova.getInicio(), aulaNova.getFim());
+            InfoShiftServiceResult infoShiftServiceResult = valid(shift, aula.getIdInternal(), begin, end);
             if (result.isSUCESS() && resultB && infoShiftServiceResult.isSUCESS()) {
          
-                aula.edit(aulaNova.getDiaSemana(), aulaNova.getInicio(), aulaNova.getFim(), aulaNova.getTipo(),
-                        salaNova, aulaNova.getFrequency(), aulaNova.getWeekOfQuinzenalStart());
+                aula.edit(weekDay, begin, end, infoShift.getTipo(), salaNova, frequency, weekOfQuinzenalStart);
                                 
                 if(salaNova != null) {
                     if(roomOccupation == null) {
                         roomOccupation = new RoomOccupation();
                     }
-                    roomOccupation.setDayOfWeek(aulaNova.getDiaSemana());
-                    roomOccupation.setStartTime(aulaNova.getInicio());
-                    roomOccupation.setEndTime(aulaNova.getFim());
+                    roomOccupation.setDayOfWeek(weekDay);
+                    roomOccupation.setStartTime(begin);
+                    roomOccupation.setEndTime(end);
                     roomOccupation.setRoom(salaNova);
                 }
 
@@ -87,7 +87,7 @@ public class EditLesson extends Service {
 
     private boolean validNoInterceptingLesson(Calendar startTime, Calendar endTime,
             DiaSemana dayOfWeek, Integer frequency, Integer week, OldRoom room, RoomOccupation oldroomOccupation)
-            throws FenixServiceException, ExcepcaoPersistencia {
+            throws FenixServiceException {
         
         final List<RoomOccupation> roomOccupations = room.getRoomOccupations();
         for (final RoomOccupation roomOccupation : roomOccupations) {
@@ -102,7 +102,7 @@ public class EditLesson extends Service {
         return true;
     }
 
-    private InfoShiftServiceResult valid(Shift shift, Integer lessonId, Calendar start, Calendar end) throws ExcepcaoPersistencia {
+    private InfoShiftServiceResult valid(Shift shift, Integer lessonId, Calendar start, Calendar end) {
         InfoShiftServiceResult result = new InfoShiftServiceResult();
         result.setMessageType(InfoShiftServiceResult.SUCCESS);
         double hours = getTotalHoursOfShiftType(shift, lessonId, start, end);
@@ -150,8 +150,7 @@ public class EditLesson extends Service {
         }
     }
 
-    private double getTotalHoursOfShiftType(Shift shift, Integer lessonId, Calendar start, Calendar end)
-            throws ExcepcaoPersistencia {
+    private double getTotalHoursOfShiftType(Shift shift, Integer lessonId, Calendar start, Calendar end) {
         double duration = 0;
         final List<Lesson> associatedLessons = shift.getAssociatedLessons();
         for (final Lesson lesson : associatedLessons) {
@@ -171,21 +170,10 @@ public class EditLesson extends Service {
         return Integer.valueOf(duration);
     }
 
-    /**
-     * To change the template for this generated type comment go to
-     * Window&gt;Preferences&gt;Java&gt;Code Generation&gt;Code and Comments
-     */
     public class InvalidLoadException extends FenixServiceException {
-        /**
-         * 
-         */
         private InvalidLoadException() {
             super();
         }
-
-        /**
-         * @param s
-         */
         InvalidLoadException(String s) {
             super(s);
         }

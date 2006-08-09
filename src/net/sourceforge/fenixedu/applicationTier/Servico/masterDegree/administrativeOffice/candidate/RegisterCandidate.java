@@ -21,7 +21,6 @@ import net.sourceforge.fenixedu.domain.Branch;
 import net.sourceforge.fenixedu.domain.CandidateEnrolment;
 import net.sourceforge.fenixedu.domain.CandidateSituation;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
-
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.GratuitySituation;

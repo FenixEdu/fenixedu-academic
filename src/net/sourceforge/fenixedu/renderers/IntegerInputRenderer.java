@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.renderers;
 
-import net.sourceforge.fenixedu.renderers.components.converters.ConversionException;
 import net.sourceforge.fenixedu.renderers.components.converters.Converter;
 import net.sourceforge.fenixedu.renderers.converters.IntegerNumberConverter;
 

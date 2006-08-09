@@ -2,7 +2,6 @@ package net.sourceforge.fenixedu.applicationTier.Servico.teacher.professorship;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.professorship.SupportLessonDTO;
-
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.SupportLesson;

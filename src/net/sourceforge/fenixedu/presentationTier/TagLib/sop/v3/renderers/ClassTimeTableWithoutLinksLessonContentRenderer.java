@@ -1,7 +1,5 @@
 package net.sourceforge.fenixedu.presentationTier.TagLib.sop.v3.renderers;
 
-import java.util.List;
-
 import net.sourceforge.fenixedu.dataTransferObject.InfoExam;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoLesson;
@@ -31,11 +29,8 @@ public class ClassTimeTableWithoutLinksLessonContentRenderer implements LessonSl
             }
 
             if (lessonSlot.isSinleSlot() || (lessonSlot.getInfoLessonWrapper().isFirstRowAlreadyAppended() && !lessonSlot.getInfoLessonWrapper().isSecondRowAlreadyAppended())) {
-                
-                List infoShiftList = lesson.getInfoShiftList();
-                for (int index = 0; index < infoShiftList.size(); index++) {
-                    strBuffer.append("(").append(lesson.getTipo().getSiglaTipoAula()).append(")&nbsp;");
-                }
+
+                strBuffer.append("(").append(lesson.getTipo().getSiglaTipoAula()).append(")&nbsp;");
 
                 if(lesson.getInfoRoomOccupation() != null) {
                     strBuffer.append(lesson.getInfoRoomOccupation().getInfoRoom().getNome());

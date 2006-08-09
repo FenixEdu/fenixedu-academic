@@ -5,8 +5,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
-import org.apache.commons.beanutils.BeanComparator;
-
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
@@ -14,7 +12,6 @@ import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoDistributedTe
 import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoQuestion;
 import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoStudentTestQuestion;
 import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoTestScope;
-
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.onlineTests.Question;
 import net.sourceforge.fenixedu.domain.onlineTests.Test;
@@ -24,6 +21,8 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.util.tests.CorrectionAvailability;
 import net.sourceforge.fenixedu.util.tests.TestType;
 import net.sourceforge.fenixedu.utilTests.ParseQuestion;
+
+import org.apache.commons.beanutils.BeanComparator;
 
 public class GenetareStudentTestForSimulation extends Service {
     public List run(Integer executionCourseId, Integer testId, String path, TestType testType, CorrectionAvailability correctionAvailability,

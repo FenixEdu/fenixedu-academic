@@ -23,7 +23,6 @@ import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoDistributedTe
 import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoSiteDistributedTestAdvisory;
 import net.sourceforge.fenixedu.domain.Advisory;
 import net.sourceforge.fenixedu.domain.Attends;
-
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Mark;
 import net.sourceforge.fenixedu.domain.Student;

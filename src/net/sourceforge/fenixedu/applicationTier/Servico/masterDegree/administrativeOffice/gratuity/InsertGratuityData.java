@@ -14,7 +14,6 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGratuityValues;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPaymentPhase;
-
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.GratuityValues;
 import net.sourceforge.fenixedu.domain.PaymentPhase;

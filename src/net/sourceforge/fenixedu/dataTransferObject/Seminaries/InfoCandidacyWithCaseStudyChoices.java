@@ -2,8 +2,8 @@ package net.sourceforge.fenixedu.dataTransferObject.Seminaries;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.Seminaries.SeminaryCandidacy;
 import net.sourceforge.fenixedu.domain.Seminaries.CaseStudyChoice;
+import net.sourceforge.fenixedu.domain.Seminaries.SeminaryCandidacy;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;

@@ -45,7 +45,6 @@ public class EnrollmentAuthorizationFilter extends AuthorizationByManyRolesFilte
                 return checkStudentInformation(userView);
 
             } else {
-
                 if (roles.contains(RoleType.COORDINATOR) && arguments[0] != null) {
                 	return checkCoordinatorInformation(userView, arguments);
                     

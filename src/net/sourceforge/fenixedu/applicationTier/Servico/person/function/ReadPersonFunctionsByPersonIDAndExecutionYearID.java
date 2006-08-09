@@ -3,14 +3,14 @@ package net.sourceforge.fenixedu.applicationTier.Servico.person.function;
 import java.util.Date;
 import java.util.List;
 
-import org.joda.time.YearMonthDay;
-
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
+
+import org.joda.time.YearMonthDay;
 
 /**
  * 

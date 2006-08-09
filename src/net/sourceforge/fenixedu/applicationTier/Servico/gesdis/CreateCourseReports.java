@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
-
 import net.sourceforge.fenixedu.domain.Evaluation;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;

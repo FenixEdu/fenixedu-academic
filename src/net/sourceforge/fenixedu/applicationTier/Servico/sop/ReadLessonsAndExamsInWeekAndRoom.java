@@ -18,17 +18,14 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExam;
-import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoLesson;
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoRoom;
 import net.sourceforge.fenixedu.dataTransferObject.InfoRoomOccupation;
-import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
 import net.sourceforge.fenixedu.dataTransferObject.InfoWrittenTest;
 import net.sourceforge.fenixedu.domain.Exam;
-import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.Lesson;
@@ -97,23 +94,11 @@ public class ReadLessonsAndExamsInWeekAndRoom extends Service {
                         }
                     }
                     if (add) {
-                        InfoLesson infoLesson = InfoLesson.newInfoFromDomain(aula);
                         Shift shift = aula.getShift();
                         if (shift == null) {
                             continue;
                         }
-                        InfoShift infoShift = InfoShift.newInfoFromDomain(shift);
-                        infoLesson.setInfoShift(infoShift);
-
-                        infoLesson.setInfoRoomOccupation(infoRoomOccupation);
-
-                        final ExecutionCourse executionCourse = shift.getDisciplinaExecucao();
-                        final InfoExecutionCourse infoExecutionCourse = InfoExecutionCourse.newInfoFromDomain(executionCourse);
-                        infoShift.setInfoDisciplinaExecucao(infoExecutionCourse);
-
-                        infoExecutionCourse.setInfoExecutionPeriod(infoExecutionPeriod);
-
-                        infoShowOccupations.add(infoLesson);
+                        infoShowOccupations.add(InfoLesson.newInfoFromDomain(aula));
                     }
                 }
             }

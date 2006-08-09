@@ -13,11 +13,9 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegreeWithInfoEx
 import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeCandidate;
 import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeCandidateWithInfoPerson;
 import net.sourceforge.fenixedu.domain.CandidateSituation;
-
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.MasterDegreeCandidate;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.domain.person.Gender;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 import net.sourceforge.fenixedu.domain.person.RoleType;

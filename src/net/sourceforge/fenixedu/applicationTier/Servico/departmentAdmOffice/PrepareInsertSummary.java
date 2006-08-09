@@ -64,13 +64,9 @@ public class PrepareInsertSummary extends Service {
                     final Shift turno = (Shift) arg0;
                     final InfoShift infoShift = InfoShift.newInfoFromDomain(turno);
                     infoShift.setInfoLessons(new ArrayList(turno.getAssociatedLessons().size()));
-                    for (final Iterator iterator = turno.getAssociatedLessons().iterator(); iterator
+                    for (final Iterator<Lesson> iterator = turno.getAssociatedLessons().iterator(); iterator
                             .hasNext();) {
-                        final Lesson lesson = (Lesson) iterator.next();
-                        final InfoLesson infoLesson = InfoLesson.newInfoFromDomain(lesson);
-                        final InfoRoom infoRoom = InfoRoom.newInfoFromDomain(lesson.getSala());
-                        infoLesson.setInfoSala(infoRoom);
-                        infoShift.getInfoLessons().add(infoLesson);
+                        infoShift.getInfoLessons().add(InfoLesson.newInfoFromDomain(iterator.next()));
                     }
                     return infoShift;
                 }

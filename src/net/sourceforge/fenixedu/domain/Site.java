@@ -8,14 +8,13 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.Date;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
-import org.joda.time.DateTime;
-
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+
+import org.joda.time.DateTime;
 
 /**
  * @author Ivo Brand�o

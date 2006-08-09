@@ -9,17 +9,17 @@ import java.util.Hashtable;
 import java.util.List;
 import java.util.Properties;
 
+import pt.utl.ist.renderers.ConfigurationNode;
+import pt.utl.ist.renderers.RendererNode;
+import pt.utl.ist.renderers.RenderersParser;
+import pt.utl.ist.renderers.template.Template;
+
 import com.sun.javadoc.ClassDoc;
 import com.sun.javadoc.Doc;
 import com.sun.javadoc.FieldDoc;
 import com.sun.javadoc.MethodDoc;
 import com.sun.javadoc.RootDoc;
 import com.sun.javadoc.Tag;
-
-import pt.utl.ist.renderers.ConfigurationNode;
-import pt.utl.ist.renderers.RendererNode;
-import pt.utl.ist.renderers.RenderersParser;
-import pt.utl.ist.renderers.template.Template;
 
 public class HtmlProducer implements DocumentationProducer {
     private static final String DOCUMENT_PROPERTIES = "/pt/utl/ist/renderers/html/document.properties";

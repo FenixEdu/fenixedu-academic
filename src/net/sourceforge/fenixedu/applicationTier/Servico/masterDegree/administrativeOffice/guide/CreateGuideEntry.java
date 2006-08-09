@@ -2,7 +2,6 @@ package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administra
 
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.domain.DocumentType;
-
 import net.sourceforge.fenixedu.domain.GraduationType;
 import net.sourceforge.fenixedu.domain.Guide;
 import net.sourceforge.fenixedu.domain.GuideEntry;

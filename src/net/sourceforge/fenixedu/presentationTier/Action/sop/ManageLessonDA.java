@@ -149,14 +149,6 @@ public class ManageLessonDA extends
 
             InfoLesson lessonBeingEdited = (InfoLesson) request.getAttribute(SessionConstants.LESSON);
 
-            InfoLesson infoLesson = new InfoLesson();
-            if (lessonBeingEdited != null) {
-                infoLesson.setIdInternal(lessonBeingEdited.getIdInternal());
-            }
-            infoLesson.setDiaSemana(weekDay);
-            infoLesson.setInicio(inicio);
-            infoLesson.setFim(fim);
-
             InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request
                     .getAttribute(SessionConstants.EXECUTION_PERIOD);
             InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) request
@@ -253,18 +245,8 @@ public class ManageLessonDA extends
         ActionErrors actionErrors = checkTimeIntervalAndWeekDay(inicio, fim, weekDay);
 
         if (actionErrors.isEmpty()) {
-       
-            InfoLesson infoLesson = new InfoLesson();
-            infoLesson.setDiaSemana(weekDay);
-            infoLesson.setInicio(inicio);
-            infoLesson.setFim(fim);
 
             InfoShift infoShift = (InfoShift) (request.getAttribute(SessionConstants.SHIFT));
-
-            infoLesson.setInfoShift(infoShift);
-
-            infoLesson.setTipo(infoShift.getTipo());
-            infoLesson.setInfoSala(infoSala);
 
             InfoRoomOccupation infoRoomOccupation = null;
             if(infoSala != null) {
@@ -275,8 +257,10 @@ public class ManageLessonDA extends
                 infoRoomOccupation.setInfoRoom(infoSala);
             }
             
+            Integer frequency = null;
+            Integer weekOfQuinzenalStart = null;
             if (quinzenal.booleanValue()) {
-                infoLesson.setFrequency(RoomOccupation.QUINZENAL);
+                frequency = RoomOccupation.QUINZENAL;
                 if (manageLessonForm.get("week") == null || manageLessonForm.get("week").equals("")) {
                     ActionError actionError = new ActionError("errors.emptyField.checkBoxTrue");
                     ActionErrors newActionErrors = new ActionErrors();
@@ -284,10 +268,9 @@ public class ManageLessonDA extends
                     saveErrors(request, newActionErrors);
                     return prepareCreate(mapping, form, request, response);
                 }
-                infoLesson.setWeekOfQuinzenalStart(new Integer(Integer
-                        .parseInt((String) manageLessonForm.get("week"))));
+                weekOfQuinzenalStart = Integer.valueOf(manageLessonForm.getString("week"));
             } else {
-                infoLesson.setFrequency(RoomOccupation.SEMANAL);
+                frequency = RoomOccupation.SEMANAL;
             }
 
             InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request
@@ -306,15 +289,13 @@ public class ManageLessonDA extends
             if(infoRoomOccupation != null) {
                 infoRoomOccupation.setInfoPeriod(infoPeriod);
             }
-
-            infoLesson.setInfoRoomOccupation(infoRoomOccupation);
-
-            Object args[] = { infoLesson, infoShift };
-
+            
             try {
+            	final Object args[] = { weekDay, inicio, fim, frequency, weekOfQuinzenalStart,
+						infoRoomOccupation, infoShift }; 
                 ServiceUtils.executeService(SessionUtils.getUserView(request), "CreateLesson", args);
+                
             } catch (CreateLesson.InvalidLoadException ex) {
-
                 if (ex.getMessage().endsWith("REACHED")) {
                     actionErrors.add("errors.shift.hours.limit.reached", new ActionError(
                             "errors.shift.hours.limit.reached"));
@@ -324,13 +305,13 @@ public class ManageLessonDA extends
                 }
                 saveErrors(request, actionErrors);
                 return mapping.getInputForward();
+                
             } catch (InterceptingLessonException ex) {
                 actionErrors.add("error.intercepting.lesson", 
                         new ActionError("error.intercepting.lesson"));
                 saveErrors(request, actionErrors);
                 return mapping.getInputForward();
             }
-
             return mapping.findForward("EditShift");
         }
         saveErrors(request, actionErrors);
@@ -445,16 +426,7 @@ public class ManageLessonDA extends
             infoRoom.setCapacidadeNormal(new Integer(0));
             infoRoom.setCapacidadeExame(new Integer(0));
 
-            InfoLesson infoLessonToCreateOrEdited = new InfoLesson();
-            infoLessonToCreateOrEdited.setDiaSemana(weekDay);
-            infoLessonToCreateOrEdited.setInicio(inicio);
-            infoLessonToCreateOrEdited.setFim(fim);
-
             InfoShift infoShift = (InfoShift) (request.getAttribute(SessionConstants.SHIFT));
-
-            infoLessonToCreateOrEdited.setInfoShift(infoShift);
-            infoLessonToCreateOrEdited.setTipo(infoShift.getTipo());
-            infoLessonToCreateOrEdited.setInfoSala(infoSala);
 
             InfoRoomOccupation infoRoomOccupation = null;
             if(infoSala != null) {
@@ -465,8 +437,10 @@ public class ManageLessonDA extends
                 infoRoomOccupation.setInfoRoom(infoSala);
             }
 
+            final Integer frequency;
+            Integer weekOfQuinzenalStart = null;
             if (quinzenal.booleanValue()) {
-                infoLessonToCreateOrEdited.setFrequency(RoomOccupation.QUINZENAL);
+            	frequency = RoomOccupation.QUINZENAL;
                 if (manageLessonForm.get("week") == null || manageLessonForm.get("week").equals("")) {
                     ActionError actionError = new ActionError("errors.emptyField.checkBoxTrue");
                     ActionErrors newActionErrors = new ActionErrors();
@@ -474,10 +448,9 @@ public class ManageLessonDA extends
                     saveErrors(request, newActionErrors);
                     return prepareEdit(mapping, form, request, response);
                 }
-                infoLessonToCreateOrEdited.setWeekOfQuinzenalStart(new Integer(Integer
-                        .parseInt((String) manageLessonForm.get("week"))));
+                weekOfQuinzenalStart = Integer.valueOf(manageLessonForm.getString("week"));
             } else {
-                infoLessonToCreateOrEdited.setFrequency(RoomOccupation.SEMANAL);
+            	frequency = RoomOccupation.SEMANAL;
             }
 
             InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request
@@ -497,16 +470,16 @@ public class ManageLessonDA extends
                 infoRoomOccupation.setInfoPeriod(infoPeriod);
             }
 
-            infoLessonToCreateOrEdited.setInfoRoomOccupation(infoRoomOccupation);
 
             String action = request.getParameter("action");
             if (action != null && action.equals("edit")) {
 
                 InfoLesson infoLessonOld = (InfoLesson) request.getAttribute(SessionConstants.LESSON);
 
-                Object argsEditLesson[] = { infoLessonOld, infoLessonToCreateOrEdited, infoShift };
 
                 try {
+                	final Object argsEditLesson[] = { infoLessonOld, weekDay, inicio, fim, frequency,
+							weekOfQuinzenalStart, infoRoomOccupation, infoShift };
                     ServiceUtils.executeService(SessionUtils.getUserView(request), "EditLesson",
                             argsEditLesson);
                 } catch (EditLesson.InvalidLoadException ex) {
@@ -531,8 +504,9 @@ public class ManageLessonDA extends
                 }
 
             } else {
-                Object argsCreateLesson[] = { infoLessonToCreateOrEdited, infoShift };
                 try {
+                	final Object argsCreateLesson[] = { weekDay, inicio, fim, frequency,
+							weekOfQuinzenalStart, infoRoomOccupation, infoShift };
                     ServiceUtils.executeService(SessionUtils.getUserView(request), "CreateLesson",
                             argsCreateLesson);
                 } catch (CreateLesson.InvalidLoadException ex) {

@@ -3,8 +3,6 @@ package net.sourceforge.fenixedu.dataTransferObject.accounting.postingRules.serv
 import java.io.Serializable;
 import java.math.BigDecimal;
 
-import org.joda.time.DateTime;
-
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.CertificateRequestPR;
 

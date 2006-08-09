@@ -12,7 +12,6 @@ import java.util.Properties;
 import java.util.Map.Entry;
 
 import net.sourceforge.fenixedu._development.PropertiesManager;
-import pt.utl.ist.fenix.tools.util.FileUtils;
 
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.ojb.broker.PersistenceBroker;
@@ -23,6 +22,8 @@ import org.apache.ojb.broker.core.ValueContainer;
 import org.apache.ojb.broker.metadata.ClassDescriptor;
 import org.apache.ojb.broker.metadata.FieldDescriptor;
 import org.apache.ojb.broker.query.Query;
+
+import pt.utl.ist.fenix.tools.util.FileUtils;
 
 /**
  * @author Pedro Santos & Rita Carvalho

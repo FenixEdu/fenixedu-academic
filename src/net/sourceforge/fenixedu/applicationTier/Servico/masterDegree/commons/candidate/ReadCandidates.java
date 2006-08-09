@@ -6,7 +6,6 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeCandidateWithInfoPerson;
-import net.sourceforge.fenixedu.domain.MasterDegreeCandidate;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 /**

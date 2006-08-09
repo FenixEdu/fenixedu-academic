@@ -9,21 +9,15 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
-import org.apache.commons.beanutils.BeanComparator;
-
-import net.sourceforge.fenixedu.renderers.CollectionRenderer.CollectionTabularLayout;
 import net.sourceforge.fenixedu.renderers.components.HtmlCheckBox;
 import net.sourceforge.fenixedu.renderers.components.HtmlComponent;
 import net.sourceforge.fenixedu.renderers.components.HtmlContainer;
-import net.sourceforge.fenixedu.renderers.components.HtmlHiddenField;
 import net.sourceforge.fenixedu.renderers.components.HtmlInlineContainer;
 import net.sourceforge.fenixedu.renderers.components.HtmlMultipleHiddenField;
-import net.sourceforge.fenixedu.renderers.components.HtmlMultipleValueComponent;
 import net.sourceforge.fenixedu.renderers.components.HtmlText;
 import net.sourceforge.fenixedu.renderers.components.controllers.HtmlController;
 import net.sourceforge.fenixedu.renderers.components.converters.Converter;
 import net.sourceforge.fenixedu.renderers.components.state.IViewState;
-import net.sourceforge.fenixedu.renderers.contexts.PresentationContext;
 import net.sourceforge.fenixedu.renderers.layouts.Layout;
 import net.sourceforge.fenixedu.renderers.layouts.TabularLayout;
 import net.sourceforge.fenixedu.renderers.model.MetaObject;
@@ -32,7 +26,8 @@ import net.sourceforge.fenixedu.renderers.model.MetaObjectFactory;
 import net.sourceforge.fenixedu.renderers.model.MetaSlot;
 import net.sourceforge.fenixedu.renderers.schemas.Schema;
 import net.sourceforge.fenixedu.renderers.utils.RenderKit;
-import net.sourceforge.fenixedu.renderers.utils.RenderMode;
+
+import org.apache.commons.beanutils.BeanComparator;
 
 public class TabularOptionInputRenderer extends InputRenderer {
 

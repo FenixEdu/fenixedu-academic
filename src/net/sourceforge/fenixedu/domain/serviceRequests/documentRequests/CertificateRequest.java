@@ -1,7 +1,5 @@
 package net.sourceforge.fenixedu.domain.serviceRequests.documentRequests;
 
-import java.util.Arrays;
-
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.CertificateRequestEvent;

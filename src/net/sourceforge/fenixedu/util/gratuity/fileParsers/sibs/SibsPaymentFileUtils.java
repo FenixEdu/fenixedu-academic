@@ -14,7 +14,6 @@ import java.util.Iterator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.gratuity.masterDegree.InvalidSibsPaymentFileFormatServiceException;
-
 import net.sourceforge.fenixedu.domain.gratuity.SibsPaymentStatus;
 import net.sourceforge.fenixedu.domain.gratuity.SibsPaymentType;
 import net.sourceforge.fenixedu.domain.gratuity.masterDegree.SibsPaymentFile;

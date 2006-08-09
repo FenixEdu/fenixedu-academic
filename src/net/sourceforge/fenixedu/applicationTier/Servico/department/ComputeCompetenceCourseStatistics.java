@@ -13,9 +13,7 @@ import net.sourceforge.fenixedu.dataTransferObject.department.CompetenceCourseSt
 import net.sourceforge.fenixedu.domain.CompetenceCourse;
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.Enrolment;
-import net.sourceforge.fenixedu.domain.EnrolmentEvaluation;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
-import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 import org.apache.commons.beanutils.BeanComparator;

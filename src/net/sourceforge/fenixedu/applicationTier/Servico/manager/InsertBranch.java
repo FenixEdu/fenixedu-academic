@@ -8,7 +8,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingSe
 import net.sourceforge.fenixedu.dataTransferObject.InfoBranch;
 import net.sourceforge.fenixedu.domain.Branch;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
-
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 /**

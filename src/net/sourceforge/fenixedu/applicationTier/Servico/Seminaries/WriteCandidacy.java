@@ -8,13 +8,12 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoCandidacy;
 import net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoCaseStudyChoice;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
-
 import net.sourceforge.fenixedu.domain.Student;
-import net.sourceforge.fenixedu.domain.Seminaries.SeminaryCandidacy;
 import net.sourceforge.fenixedu.domain.Seminaries.CaseStudy;
 import net.sourceforge.fenixedu.domain.Seminaries.CaseStudyChoice;
 import net.sourceforge.fenixedu.domain.Seminaries.Modality;
 import net.sourceforge.fenixedu.domain.Seminaries.Seminary;
+import net.sourceforge.fenixedu.domain.Seminaries.SeminaryCandidacy;
 import net.sourceforge.fenixedu.domain.Seminaries.Theme;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 

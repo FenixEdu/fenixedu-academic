@@ -11,8 +11,8 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoCandidacy;
 import net.sourceforge.fenixedu.domain.Student;
-import net.sourceforge.fenixedu.domain.Seminaries.SeminaryCandidacy;
 import net.sourceforge.fenixedu.domain.Seminaries.Seminary;
+import net.sourceforge.fenixedu.domain.Seminaries.SeminaryCandidacy;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.presentationTier.Action.Seminaries.Exceptions.BDException;
 

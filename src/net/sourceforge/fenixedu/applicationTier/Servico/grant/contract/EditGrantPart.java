@@ -5,7 +5,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.grant.InvalidGrantPaymentEntityException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.grant.InvalidPartResponsibleTeacherException;
 import net.sourceforge.fenixedu.dataTransferObject.grant.contract.InfoGrantPart;
-
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantPart;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantPaymentEntity;

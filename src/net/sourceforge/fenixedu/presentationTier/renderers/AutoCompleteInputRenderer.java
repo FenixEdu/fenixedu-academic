@@ -1,7 +1,5 @@
 package net.sourceforge.fenixedu.presentationTier.renderers;
 
-import javax.servlet.http.HttpServletRequest;
-
 import net.sourceforge.fenixedu.presentationTier.renderers.converters.DomainObjectKeyConverter;
 import net.sourceforge.fenixedu.renderers.InputRenderer;
 import net.sourceforge.fenixedu.renderers.components.HtmlBlockContainer;

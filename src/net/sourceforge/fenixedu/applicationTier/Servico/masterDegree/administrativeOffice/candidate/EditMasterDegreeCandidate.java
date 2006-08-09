@@ -13,7 +13,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeCandidate;
 import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeCandidateWithInfoPerson;
 import net.sourceforge.fenixedu.domain.CandidateSituation;
 import net.sourceforge.fenixedu.domain.Country;
-
 import net.sourceforge.fenixedu.domain.MasterDegreeCandidate;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;

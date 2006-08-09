@@ -12,7 +12,6 @@ import net.sourceforge.fenixedu.domain.Branch;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.CurricularCourseScope;
 import net.sourceforge.fenixedu.domain.CurricularSemester;
-
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 /**

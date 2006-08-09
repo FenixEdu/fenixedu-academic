@@ -17,7 +17,6 @@ import javax.servlet.http.HttpSession;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
-import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
 
 import org.apache.commons.beanutils.BeanUtils;

@@ -6,9 +6,8 @@ package net.sourceforge.fenixedu.domain;
 
 import java.util.List;
 
-import dml.runtime.RelationAdapter;
-
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import dml.runtime.RelationAdapter;
 
 /**
  * @author asnr and scpo

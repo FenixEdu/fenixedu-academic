@@ -17,7 +17,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServi
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonValidChangeServiceException;
 import net.sourceforge.fenixedu.domain.DocumentType;
-
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.GratuitySituation;
 import net.sourceforge.fenixedu.domain.Guide;

@@ -4,7 +4,6 @@ import java.io.Serializable;
 
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.MarkSheet;
 
 public class GradesToSubmitExecutionCourseSendMailBean implements Serializable{
 	

@@ -10,13 +10,9 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoLesson;
-import net.sourceforge.fenixedu.dataTransferObject.InfoRoom;
-import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Lesson;
 import net.sourceforge.fenixedu.domain.Shift;
-import net.sourceforge.fenixedu.domain.space.OldRoom;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 /**
  * 
@@ -24,7 +20,8 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  */
 public class LerAulasDeDisciplinaExecucao extends Service {
 
-    public Object run(final InfoExecutionCourse infoExecutionCourse) throws ExcepcaoPersistencia {
+    public Object run(final InfoExecutionCourse infoExecutionCourse) {
+    	
         final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID( infoExecutionCourse.getIdInternal());
         final List<Shift> shifts = executionCourse.getAssociatedShifts();
 
@@ -34,22 +31,8 @@ public class LerAulasDeDisciplinaExecucao extends Service {
         final List<InfoLesson> infoLessons = new ArrayList<InfoLesson>(estimatedNumberOfLessons);
 
         for (final Shift shift : shifts) {
-            final InfoShift infoShift = InfoShift.newInfoFromDomain(shift);
-
-            final List<Lesson> lessons = shift.getAssociatedLessons();
-            for (final Lesson lesson : lessons) {
-                //final InfoLesson infoLesson = 
-                //        InfoLessonWithInfoRoomAndInfoRoomOccupationAndInfoPeriod.newInfoFromDomain(lesson);
-                final InfoLesson infoLesson = InfoLesson.newInfoFromDomain(lesson);
-                infoLessons.add(infoLesson);
-
-                infoLesson.setInfoShift(infoShift);
-
-                final OldRoom room = lesson.getSala();
-                if(room != null) {
-                    final InfoRoom infoRoom = InfoRoom.newInfoFromDomain(room);
-                    infoLesson.setInfoSala(infoRoom);
-                }
+            for (final Lesson lesson : shift.getAssociatedLessons()) {
+                infoLessons.add(InfoLesson.newInfoFromDomain(lesson));
             }
         }
 

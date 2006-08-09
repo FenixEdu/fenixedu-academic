@@ -2,7 +2,6 @@ package net.sourceforge.fenixedu.applicationTier.Servico.research.event;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.dataTransferObject.research.ProjectEventAssociationFullCreationBean;
 import net.sourceforge.fenixedu.dataTransferObject.research.event.EventProjectAssociationFullCreationBean;
 import net.sourceforge.fenixedu.dataTransferObject.research.event.EventProjectAssociationSimpleCreationBean;
 import net.sourceforge.fenixedu.domain.research.event.Event;

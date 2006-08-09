@@ -18,7 +18,6 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import pt.utl.ist.berserk.ServiceRequest;
 import pt.utl.ist.berserk.ServiceResponse;
 import pt.utl.ist.berserk.logic.filterManager.exceptions.FilterException;

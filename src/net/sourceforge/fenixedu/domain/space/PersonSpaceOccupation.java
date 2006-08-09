@@ -4,12 +4,12 @@ import java.text.Collator;
 import java.util.Comparator;
 import java.util.List;
 
+import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
 import org.joda.time.YearMonthDay;
-
-import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 public class PersonSpaceOccupation extends PersonSpaceOccupation_Base {
     

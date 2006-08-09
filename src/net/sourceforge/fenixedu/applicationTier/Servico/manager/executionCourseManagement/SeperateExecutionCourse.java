@@ -8,7 +8,6 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.utils.ExecutionCourseUtils;
 import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
-
 import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
@@ -19,7 +18,6 @@ import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.StudentGroup;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;

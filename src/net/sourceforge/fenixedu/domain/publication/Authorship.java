@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.domain.publication;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.research.result.Result;
 
 public class Authorship extends Authorship_Base {
     

@@ -19,8 +19,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoLesson;
-import net.sourceforge.fenixedu.dataTransferObject.InfoRoom;
-import net.sourceforge.fenixedu.dataTransferObject.InfoRoomOccupation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
 import net.sourceforge.fenixedu.domain.CurricularYear;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
@@ -56,22 +54,7 @@ public class ReadShiftsByExecutionPeriodAndExecutionDegreeAndCurricularYear exte
             final InfoExecutionCourse infoExecutionCourse = InfoExecutionCourse.newInfoFromDomain((shift).getDisciplinaExecucao());
             infoShift.setInfoDisciplinaExecucao(infoExecutionCourse);
             for (final Lesson lesson : shift.getAssociatedLessons()) {
-            	final InfoLesson infoLesson = new InfoLesson();
-            	final InfoRoom infoRoom = InfoRoom.newInfoFromDomain(lesson.getSala());
-            	final InfoRoomOccupation infoRoomOccupation = InfoRoomOccupation.newInfoFromDomain(lesson
-                        .getRoomOccupation());
-
-                infoLesson.setDiaSemana(lesson.getDiaSemana());
-                infoLesson.setFim(lesson.getFim());
-                infoLesson.setIdInternal(lesson.getIdInternal());
-                infoLesson.setInicio(lesson.getInicio());
-                infoLesson.setTipo(lesson.getTipo());
-                infoLesson.setInfoSala(infoRoom);
-                infoLesson.setInfoRoomOccupation(infoRoomOccupation);
-    			infoLesson.setFrequency(lesson.getFrequency());
-    			infoLesson.setWeekOfQuinzenalStart(lesson.getWeekOfQuinzenalStart());
-
-                infoLesson.setInfoShift(infoShift);
+            	final InfoLesson infoLesson = InfoLesson.newInfoFromDomain(lesson);
                 infoShift.getInfoLessons().add(infoLesson);
 
             }

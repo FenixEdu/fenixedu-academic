@@ -6,7 +6,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.commons.externalPerson.I
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.research.result.ResultParticipationCreationBean;
-
 import net.sourceforge.fenixedu.domain.ExternalPerson;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.research.result.Result;

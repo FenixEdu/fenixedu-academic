@@ -24,13 +24,9 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlanWithD
 import net.sourceforge.fenixedu.dataTransferObject.InfoEvaluationMethod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourseWithExecutionPeriod;
-import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoItem;
 import net.sourceforge.fenixedu.dataTransferObject.InfoLesson;
-import net.sourceforge.fenixedu.dataTransferObject.InfoLessonWithInfoRoomAndInfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoProfessorshipWithAll;
-import net.sourceforge.fenixedu.dataTransferObject.InfoRoom;
-import net.sourceforge.fenixedu.dataTransferObject.InfoRoomOccupation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSection;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShiftWithAssociatedInfoClassesAndInfoLessons;
@@ -58,7 +54,6 @@ import net.sourceforge.fenixedu.domain.CurricularCourseScope;
 import net.sourceforge.fenixedu.domain.Evaluation;
 import net.sourceforge.fenixedu.domain.EvaluationMethod;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.Item;
 import net.sourceforge.fenixedu.domain.Lesson;
 import net.sourceforge.fenixedu.domain.Professorship;
@@ -71,8 +66,6 @@ import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.domain.Summary;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
@@ -381,7 +374,7 @@ public class ExecutionCourseSiteComponentBuilder {
 			List infoClasses = new ArrayList(classesShifts.size());
 
 			for (final Lesson lesson : lessons) {
-				infoLessons.add(InfoLessonWithInfoRoomAndInfoExecutionCourse.newInfoFromDomain(lesson));
+				infoLessons.add(InfoLesson.newInfoFromDomain(lesson));
 			}
 
 			for (final SchoolClass schoolClass : classesShifts) {
@@ -423,53 +416,11 @@ public class ExecutionCourseSiteComponentBuilder {
 		Iterator iterator = aulas.iterator();
 		infoLessonList = new ArrayList();
 		while (iterator.hasNext()) {
-			Lesson elem = (Lesson) iterator.next();
-			InfoLesson infoLesson = copyILesson2InfoLesson(elem);
-
-			infoLessonList.add(infoLesson);
+			infoLessonList.add(InfoLesson.newInfoFromDomain((Lesson) iterator.next()));
 		}
 
 		component.setLessons(infoLessonList);
 		return component;
-	}
-
-	private InfoLesson copyILesson2InfoLesson(Lesson lesson) {
-		InfoLesson infoLesson = null;
-		if (lesson != null) {
-			infoLesson = new InfoLesson();
-			infoLesson.setIdInternal(lesson.getIdInternal());
-			infoLesson.setDiaSemana(lesson.getDiaSemana());
-			infoLesson.setFim(lesson.getFim());
-			infoLesson.setInicio(lesson.getInicio());
-			infoLesson.setTipo(lesson.getTipo());
-			infoLesson.setFrequency(lesson.getFrequency());
-			infoLesson.setWeekOfQuinzenalStart(lesson.getWeekOfQuinzenalStart());
-
-			InfoRoomOccupation infoRoomOccupation = InfoRoomOccupation.newInfoFromDomain(lesson
-					.getRoomOccupation());
-			InfoRoom infoRoom = InfoRoom.newInfoFromDomain(lesson.getRoomOccupation().getRoom());
-			infoRoomOccupation.setInfoRoom(infoRoom);
-			infoLesson.setInfoRoomOccupation(infoRoomOccupation);
-
-			Shift shift = lesson.getShift();
-			InfoShift infoShift = InfoShift.newInfoFromDomain(shift);
-
-			infoShift.setInfoLessons(new ArrayList(1));
-			infoShift.getInfoLessons().add(infoLesson);
-
-			ExecutionCourse executionCourse = shift.getDisciplinaExecucao();
-			InfoExecutionCourse infoExecutionCourse = InfoExecutionCourse
-					.newInfoFromDomain(executionCourse);
-			infoShift.setInfoDisciplinaExecucao(infoExecutionCourse);
-
-			ExecutionPeriod executionPeriod = executionCourse.getExecutionPeriod();
-			InfoExecutionPeriod infoExecutionPeriod = InfoExecutionPeriod
-					.newInfoFromDomain(executionPeriod);
-			infoExecutionCourse.setInfoExecutionPeriod(infoExecutionPeriod);
-
-			infoLesson.setInfoShift(infoShift);
-		}
-		return infoLesson;
 	}
 
 	private ISiteComponent getInfoSiteAssociatedCurricularCourses(

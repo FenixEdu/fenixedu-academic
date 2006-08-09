@@ -16,7 +16,6 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.InfoClass;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoLesson;
-import net.sourceforge.fenixedu.dataTransferObject.InfoLessonWithInfoRoom;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
 import net.sourceforge.fenixedu.domain.Lesson;
 import net.sourceforge.fenixedu.domain.SchoolClass;
@@ -41,12 +40,7 @@ public class ReadShiftsByClass extends Service {
                 infoShift.setInfoLessons((List) CollectionUtils.collect(shift.getAssociatedLessons(),
                         new Transformer() {
                             public Object transform(Object arg0) {
-                                InfoLesson infoLesson = InfoLessonWithInfoRoom.newInfoFromDomain((Lesson) arg0);
-                                Shift shift = ((Lesson) arg0).getShift();
-                                InfoShift infoShift = InfoShift.newInfoFromDomain(shift);
-                                infoLesson.setInfoShift(infoShift);
-
-                                return infoLesson;
+                                return InfoLesson.newInfoFromDomain((Lesson) arg0);
                             }
                         }));
                 InfoExecutionCourse infoExecutionCourse = InfoExecutionCourse.newInfoFromDomain(shift

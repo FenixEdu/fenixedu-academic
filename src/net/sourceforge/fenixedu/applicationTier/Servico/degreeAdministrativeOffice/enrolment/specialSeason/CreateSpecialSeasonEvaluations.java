@@ -4,12 +4,10 @@ import java.util.Collection;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.EnrolmentException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.SpecialSeasonCode;
 import net.sourceforge.fenixedu.domain.Student;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 public class CreateSpecialSeasonEvaluations extends Service {
 	

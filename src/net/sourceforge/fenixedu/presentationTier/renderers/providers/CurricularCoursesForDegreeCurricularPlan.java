@@ -4,14 +4,14 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import org.apache.commons.beanutils.BeanComparator;
-
 import net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.gradeSubmission.MarkSheetManagementBaseBean;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
 import net.sourceforge.fenixedu.presentationTier.renderers.converters.DomainObjectKeyConverter;
 import net.sourceforge.fenixedu.renderers.DataProvider;
 import net.sourceforge.fenixedu.renderers.components.converters.Converter;
+
+import org.apache.commons.beanutils.BeanComparator;
 
 public class CurricularCoursesForDegreeCurricularPlan implements DataProvider {
 

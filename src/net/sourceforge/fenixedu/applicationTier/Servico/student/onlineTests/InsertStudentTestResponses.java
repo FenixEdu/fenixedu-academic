@@ -25,7 +25,6 @@ import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoSiteStudentTe
 import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoStudentTestQuestion;
 import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoStudentTestQuestionWithInfoQuestionAndInfoDistributedTest;
 import net.sourceforge.fenixedu.domain.Attends;
-
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Mark;
 import net.sourceforge.fenixedu.domain.Student;

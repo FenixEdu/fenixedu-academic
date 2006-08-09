@@ -7,13 +7,13 @@ package net.sourceforge.fenixedu.domain;
 import java.util.Calendar;
 import java.util.Comparator;
 
-import org.apache.commons.beanutils.BeanComparator;
-import org.apache.commons.collections.comparators.ComparatorChain;
-
 import net.sourceforge.fenixedu.domain.space.OldRoom;
 import net.sourceforge.fenixedu.domain.space.RoomOccupation;
 import net.sourceforge.fenixedu.util.DiaSemana;
 import net.sourceforge.fenixedu.util.date.TimePeriod;
+
+import org.apache.commons.beanutils.BeanComparator;
+import org.apache.commons.collections.comparators.ComparatorChain;
 
 public class Lesson extends Lesson_Base {
 
