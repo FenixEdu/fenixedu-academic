@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.domain.research.result.publication;
 
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.research.result.ResultParticipation.ResultParticipationRole;
 
 /**
  *  An article from a journal or magazine.
@@ -23,7 +24,8 @@ public class Article extends Article_Base {
         	|| (journal == null) || (journal.length() == 0) || (year == null))
             throw new DomainException("error.publication.missingRequiredFields");
         
-        setParticipation(participator);
+        //by default any participation is of type Author
+        setParticipation(participator, ResultParticipationRole.Author);
         setTitle(title);
         setJournal(journal);
         setYear(year);

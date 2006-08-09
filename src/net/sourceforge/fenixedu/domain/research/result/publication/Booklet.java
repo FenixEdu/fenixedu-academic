@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.domain.research.result.publication;
 
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.research.result.ResultParticipation.ResultParticipationRole;
 
 /**
  * A work that is printed and bound, but without a named publisher or sponsoring institution.
@@ -20,7 +21,8 @@ public class Booklet extends Booklet_Base {
         if((participator == null) || (title == null) || (title.length() == 0))
             throw new DomainException("error.publication.missingRequiredFields");
         
-        setParticipation(participator);
+        //by default any participation is of type Author
+        setParticipation(participator, ResultParticipationRole.Author);
         setTitle(title);
     }
     

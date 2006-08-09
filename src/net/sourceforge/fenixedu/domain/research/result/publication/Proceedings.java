@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.domain.research.result.publication;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.research.event.Event;
+import net.sourceforge.fenixedu.domain.research.result.ResultParticipation.ResultParticipationRole;
 
 /**
  * (collection: A collection of works. Same as Proceedings.)
@@ -24,7 +25,8 @@ public class Proceedings extends Proceedings_Base {
         if((participator == null) || (title == null) || (title.length() == 0) || (year == null) || (event == null))
             throw new DomainException("error.publication.missingRequiredFields");
         
-        setParticipation(participator);
+        //by default any participation is of type Editor
+        setParticipation(participator, ResultParticipationRole.Editor);
         setTitle(title);
         setYear(year);
         setEvent(event);

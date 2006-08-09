@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.domain.research.result.publication;
 
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.research.result.ResultParticipation.ResultParticipationRole;
 
 /**
  * A document with an author and title, but not formally published.
@@ -20,7 +21,8 @@ public class Unpublished extends Unpublished_Base {
         if((participator == null) || (title == null) || (title.length() == 0) || (note == null) || (note.length() == 0))
             throw new DomainException("error.publication.missingRequiredFields");
         
-        setParticipation(participator);
+        //by default any participation is of type Author
+        setParticipation(participator, ResultParticipationRole.Author);
         setTitle(title);
         setNote(note);
     }

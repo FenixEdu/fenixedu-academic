@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.domain.research.result.publication;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
+import net.sourceforge.fenixedu.domain.research.result.ResultParticipation.ResultParticipationRole;
 
 /**
  * mastersthesis
@@ -28,7 +29,8 @@ public class Thesis extends Thesis_Base {
         if((participator == null) || (title == null) || (title.length() == 0) || (thesisType == null) || (school == null) || (year == null))
             throw new DomainException("error.publication.missingRequiredFields");
         
-        setParticipation(participator);
+        //by default any participation is of type Author
+        setParticipation(participator, ResultParticipationRole.Author);
         setTitle(title);
         setThesisType(thesisType);
         setOrganization(school);

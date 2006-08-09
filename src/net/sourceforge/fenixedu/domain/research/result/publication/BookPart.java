@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.domain.research.result.publication;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
+import net.sourceforge.fenixedu.domain.research.result.ResultParticipation.ResultParticipationRole;
 
 
 /**
@@ -22,13 +23,13 @@ public class BookPart extends BookPart_Base {
     }
     
     //constructor Inbook with required fields
-    public BookPart(Person participator, BookPartType bookPartType, String title, String chapter, Integer firstPage,
+    public BookPart(Person participator, ResultParticipationRole participatorRole, BookPartType bookPartType, String title, String chapter, Integer firstPage,
             Integer lastPage, Unit publisher, Integer year) {
         super();
         //expected Inbook Type
         if(!bookPartType.equals(BookPartType.Inbook))
             throw new DomainException("error.publication.bookPart.wrongBookPartType");
-        if((participator == null) || (bookPartType == null) || (title == null) || (title.length() == 0) || (publisher == null) || (year == null))
+        if((participator == null) || (participatorRole == null) || (bookPartType == null) || (title == null) || (title.length() == 0) || (publisher == null) || (year == null))
             throw new DomainException("error.publication.missingRequiredFields");
         if((chapter == null) || (chapter.length() == 0))
         {
@@ -36,7 +37,7 @@ public class BookPart extends BookPart_Base {
                 throw new DomainException("error.publication.bookPart.needChapterOrPages ");
         }
         
-        setParticipation(participator);
+        setParticipation(participator, participatorRole);
         setBookPartType(bookPartType);
         setTitle(title);
         setPublisher(publisher);
@@ -47,16 +48,16 @@ public class BookPart extends BookPart_Base {
     }
     
     //constructor Incollection with required fields
-    public BookPart(Person participator, BookPartType bookPartType, String title, String bookTitle, Unit publisher, Integer year) {
+    public BookPart(Person participator, ResultParticipationRole participatorRole, BookPartType bookPartType, String title, String bookTitle, Unit publisher, Integer year) {
         super();
         //expected Incollection Type
         if(!bookPartType.equals(BookPartType.Incollection))
             throw new DomainException("error.wrongBookPartType");
-        if((participator == null) || (bookPartType == null) || (title == null) || (title.length() == 0) 
+        if((participator == null) || (participatorRole == null) || (bookPartType == null) || (title == null) || (title.length() == 0) 
         		|| (bookTitle == null) || (bookTitle.length() == 0) || (publisher == null) || (year == null))
             throw new DomainException("error.missingRequiredFields");
         
-        setParticipation(participator);
+        setParticipation(participator, participatorRole);
         setBookPartType(bookPartType);
         setTitle(title);
         setBookTitle(bookTitle);

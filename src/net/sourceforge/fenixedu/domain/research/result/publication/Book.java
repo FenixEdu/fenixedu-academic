@@ -1,8 +1,13 @@
 package net.sourceforge.fenixedu.domain.research.result.publication;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
+import net.sourceforge.fenixedu.domain.research.result.ResultParticipation;
+import net.sourceforge.fenixedu.domain.research.result.ResultParticipation.ResultParticipationRole;
 
 /**
  * A book with an explicit publisher.
@@ -18,12 +23,12 @@ public class Book extends Book_Base {
     }
     
     //constructor with required fields
-    public Book(Person participator, String title, Unit publisher, Integer year) {
+    public Book(Person participator, ResultParticipationRole participatorRole, String title, Unit publisher, Integer year) {
         super();
-        if((participator == null) || (title == null) || (title.length() == 0) || (publisher == null) || (year == null))
+        if((participator == null) || (participatorRole == null) || (title == null) || (title.length() == 0) || (publisher == null) || (year == null))
             throw new DomainException("error.publication.missingRequiredFields");
         
-        setParticipation(participator);
+        setParticipation(participator, participatorRole);
         setTitle(title);
         setPublisher(publisher);
         setYear(year);
@@ -37,5 +42,23 @@ public class Book extends Book_Base {
         setTitle(title);
         setPublisher(publisher);
         setYear(year);
+    }
+    
+    public List<ResultParticipation> getAuthors() {
+    	ArrayList<ResultParticipation> authors = new ArrayList<ResultParticipation>();
+    	for (ResultParticipation participation : this.getResultParticipations()) {
+			if(participation.getResultParticipationRole().equals(ResultParticipationRole.Author))
+				authors.add(participation);
+		}
+    	return authors;
+    }
+    
+    public List<ResultParticipation> getEditors() {
+    	ArrayList<ResultParticipation> editors = new ArrayList<ResultParticipation>();
+    	for (ResultParticipation participation : this.getResultParticipations()) {
+			if(participation.getResultParticipationRole().equals(ResultParticipationRole.Editor))
+				editors.add(participation);
+		}
+    	return  editors;
     }
 }

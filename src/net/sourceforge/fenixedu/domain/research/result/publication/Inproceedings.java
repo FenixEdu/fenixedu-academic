@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.domain.research.result.publication;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.research.event.Event;
+import net.sourceforge.fenixedu.domain.research.result.ResultParticipation.ResultParticipationRole;
 
 /**
  * (conference: The same as Inproceedings.)
@@ -19,13 +20,13 @@ public class Inproceedings extends Inproceedings_Base {
     }
     
     //constructor with required fields
-    public Inproceedings(Person participator, String title, String bookTitle, Integer year, Event event) {
+    public Inproceedings(Person participator, ResultParticipationRole participatorRole, String title, String bookTitle, Integer year, Event event) {
         super();
-        if((participator == null) || (title == null) || (title.length() == 0) || (bookTitle == null) || (bookTitle.length() == 0)
-        		|| (year == null) || (event == null))
+        if((participator == null) || (participatorRole == null) || (title == null) || (title.length() == 0) || (bookTitle == null)
+        		|| (bookTitle.length() == 0) || (year == null) || (event == null))
             throw new DomainException("error.publication.missingRequiredFields");
         
-        setParticipation(participator);
+        setParticipation(participator, participatorRole);
         setTitle(title);
         setBookTitle(bookTitle);
         setYear(year);

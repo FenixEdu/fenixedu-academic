@@ -189,6 +189,8 @@ public class ResultPublicationsManagementDispatchAction extends FenixDispatchAct
             {
                 //invalid submit
                 publicationBean = (ResultPublicationCreationBean) RenderUtils.getViewState().getMetaObject().getObject();
+                request.setAttribute("publicationBean", publicationBean);
+                return mapping.findForward("PreparedToCreate");
             }
             else
             {
@@ -199,7 +201,20 @@ public class ResultPublicationsManagementDispatchAction extends FenixDispatchAct
             }
         }
         
-        publicationBean.setParticipator(getUserView(request).getPerson());
+        switch(publicationBean.getPublicationType()){
+        	case Book:
+        	case BookPart:
+        	case Inproceedings:
+        	{
+        		publicationBean.setParticipationSchema("result.participationsWithRole");
+        	}break;
+        	default:
+        	{
+        		publicationBean.setParticipationSchema("result.participations");
+        	}break;
+        }
+        
+        publicationBean.setPerson(getUserView(request).getPerson());
         request.setAttribute("publicationBean", publicationBean);
         return mapping.findForward("PreparedToCreate");
     }
@@ -232,7 +247,7 @@ public class ResultPublicationsManagementDispatchAction extends FenixDispatchAct
     }
     
     public ActionForward createResultPublication(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
-
+    	ResultPublication publication = null;
         ResultPublicationCreationBean publicationBean = (ResultPublicationCreationBean) RenderUtils.getViewState().getMetaObject().getObject();
         if((publicationBean.getPublicationType().equals(ResultPublicationType.Inproceedings)) || publicationBean.getPublicationType().equals(ResultPublicationType.Proceedings))
         {
@@ -253,7 +268,7 @@ public class ResultPublicationsManagementDispatchAction extends FenixDispatchAct
         	}
         }
         try{
-            ServiceUtils.executeService(getUserView(request), "CreateResultPublication", new Object[] { publicationBean});
+            publication = (ResultPublication) ServiceUtils.executeService(getUserView(request), "CreateResultPublication", new Object[] { publicationBean});
         }catch(DomainException ex){
             addActionMessage(request,ex.getKey());
 
@@ -263,7 +278,9 @@ public class ResultPublicationsManagementDispatchAction extends FenixDispatchAct
         catch(FenixServiceException ex) {
             return listPublications(mapping,form,request,response);
         }
-        return listPublications(mapping,form,request,response);
+        request.setAttribute("publicationId",publication.getIdInternal());
+        return prepareViewEditPublication(mapping,form,request,response);
+        //return listPublications(mapping,form,request,response);
     }
     
     public ActionForward prepareEditPublicationData(ActionMapping mapping, ActionForm form,

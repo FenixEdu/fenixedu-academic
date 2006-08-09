@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.domain.research.result.publication;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
+import net.sourceforge.fenixedu.domain.research.result.ResultParticipation.ResultParticipationRole;
 
 /**
  * A report published by a school or other institution, usually numbered within a series.
@@ -23,7 +24,8 @@ public class TechnicalReport extends TechnicalReport_Base {
         if((participator == null) || (title == null) || (title.length() == 0) || (institution == null) || (year == null))
             throw new DomainException("error.publication.missingRequiredFields");
         
-        setParticipation(participator);
+        //by default any participation is of type Author
+        setParticipation(participator, ResultParticipationRole.Author);
         setTitle(title);
         setOrganization(institution);
         setYear(year);
