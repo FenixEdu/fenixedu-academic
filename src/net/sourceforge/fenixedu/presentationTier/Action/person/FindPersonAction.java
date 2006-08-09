@@ -17,7 +17,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.person.SearchPerson.Sear
 import net.sourceforge.fenixedu.applicationTier.Servico.person.SearchPerson.SearchPersonPredicate;
 import net.sourceforge.fenixedu.applicationTier.Servico.person.SearchPerson.SearchPersonResults;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
-import net.sourceforge.fenixedu.dataTransferObject.InfoRole;
+import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
@@ -272,7 +272,7 @@ public class FindPersonAction extends FenixDispatchAction {
                 new Predicate() {
 
                     public boolean evaluate(Object arg0) {
-                        InfoRole role = (InfoRole) arg0;
+                        Role role = (Role) arg0;
                         return role.getRoleType().equals(RoleType.EMPLOYEE)
                                 || role.getRoleType().equals(RoleType.TEACHER);
                     }

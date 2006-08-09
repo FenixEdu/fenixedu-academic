@@ -7,7 +7,6 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
-import net.sourceforge.fenixedu.dataTransferObject.InfoRole;
 import net.sourceforge.fenixedu.domain.Coordinator;
 import net.sourceforge.fenixedu.domain.MasterDegreeCandidate;
 import net.sourceforge.fenixedu.domain.Role;
@@ -50,8 +49,8 @@ public class ReadExecutionDegreeByCandidateIDAuthorizationFilter extends Filtro 
      */
     protected Collection getNeededRoles() {
         List roles = new ArrayList();
-        roles.add(new InfoRole(Role.getRoleByRoleType(RoleType.MASTER_DEGREE_ADMINISTRATIVE_OFFICE)));
-        roles.add(new InfoRole(Role.getRoleByRoleType(RoleType.COORDINATOR)));
+        roles.add(Role.getRoleByRoleType(RoleType.MASTER_DEGREE_ADMINISTRATIVE_OFFICE));
+        roles.add(Role.getRoleByRoleType(RoleType.COORDINATOR));
         return roles;
     }
 
@@ -108,7 +107,7 @@ public class ReadExecutionDegreeByCandidateIDAuthorizationFilter extends Filtro 
         List result = new ArrayList();
         Iterator iterator = roles.iterator();
         while (iterator.hasNext()) {
-            result.add(((InfoRole) iterator.next()).getRoleType());
+            result.add(((Role) iterator.next()).getRoleType());
         }
 
         return result;

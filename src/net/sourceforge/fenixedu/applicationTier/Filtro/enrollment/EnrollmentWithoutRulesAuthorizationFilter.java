@@ -6,7 +6,6 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.AuthorizationByManyRolesFilter;
-import net.sourceforge.fenixedu.dataTransferObject.InfoRole;
 import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
@@ -19,10 +18,10 @@ public class EnrollmentWithoutRulesAuthorizationFilter extends AuthorizationByMa
 	private static DegreeType MASTER_DEGREE_TYPE = DegreeType.MASTER_DEGREE;
 
 	protected Collection getNeededRoles() {
-		final List<InfoRole> roles = new ArrayList<InfoRole>();
-        roles.add(new InfoRole(Role.getRoleByRoleType(RoleType.DEGREE_ADMINISTRATIVE_OFFICE)));
-        roles.add(new InfoRole(Role.getRoleByRoleType(RoleType.DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER)));
-        roles.add(new InfoRole(Role.getRoleByRoleType(RoleType.MASTER_DEGREE_ADMINISTRATIVE_OFFICE)));
+		final List<Role> roles = new ArrayList<Role>();
+        roles.add(Role.getRoleByRoleType(RoleType.DEGREE_ADMINISTRATIVE_OFFICE));
+        roles.add(Role.getRoleByRoleType(RoleType.DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER));
+        roles.add(Role.getRoleByRoleType(RoleType.MASTER_DEGREE_ADMINISTRATIVE_OFFICE));
 		return roles;
 	}
 

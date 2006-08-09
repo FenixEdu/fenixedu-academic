@@ -6,7 +6,6 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.AuthorizationByManyRolesFilter;
-import net.sourceforge.fenixedu.dataTransferObject.InfoRole;
 import net.sourceforge.fenixedu.domain.Coordinator;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.Role;
@@ -26,12 +25,12 @@ public class EnrollmentAuthorizationFilter extends AuthorizationByManyRolesFilte
     private static final int LEIC_OLD_DCP = 10;
 
     protected Collection getNeededRoles() {
-        final List<InfoRole> roles = new ArrayList<InfoRole>();
-        roles.add(new InfoRole(Role.getRoleByRoleType(RoleType.COORDINATOR)));
-        roles.add(new InfoRole(Role.getRoleByRoleType(RoleType.TEACHER)));
-        roles.add(new InfoRole(Role.getRoleByRoleType(RoleType.STUDENT)));
-        roles.add(new InfoRole(Role.getRoleByRoleType(RoleType.DEGREE_ADMINISTRATIVE_OFFICE)));
-        roles.add(new InfoRole(Role.getRoleByRoleType(RoleType.DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER)));
+        final List<Role> roles = new ArrayList<Role>();
+        roles.add(Role.getRoleByRoleType(RoleType.COORDINATOR));
+        roles.add(Role.getRoleByRoleType(RoleType.TEACHER));
+        roles.add(Role.getRoleByRoleType(RoleType.STUDENT));
+        roles.add(Role.getRoleByRoleType(RoleType.DEGREE_ADMINISTRATIVE_OFFICE));
+        roles.add(Role.getRoleByRoleType(RoleType.DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER));
         return roles;
     }
 

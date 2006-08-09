@@ -8,7 +8,6 @@ import java.util.Set;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
-import net.sourceforge.fenixedu.dataTransferObject.InfoRole;
 import net.sourceforge.fenixedu.domain.Coordinator;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.MasterDegreeCandidate;
@@ -53,8 +52,8 @@ public class WriteCandidateEnrolmentsAuhorizationFilter extends Filtro {
      */
     protected Collection getNeededRoles() {
         List roles = new ArrayList();
-        roles.add(new InfoRole(Role.getRoleByRoleType(RoleType.MASTER_DEGREE_ADMINISTRATIVE_OFFICE)));
-        roles.add(new InfoRole(Role.getRoleByRoleType(RoleType.COORDINATOR)));
+        roles.add(Role.getRoleByRoleType(RoleType.MASTER_DEGREE_ADMINISTRATIVE_OFFICE));
+        roles.add(Role.getRoleByRoleType(RoleType.COORDINATOR));
         return roles;
     }
 
@@ -123,7 +122,7 @@ public class WriteCandidateEnrolmentsAuhorizationFilter extends Filtro {
         List result = new ArrayList();
         Iterator iterator = roles.iterator();
         while (iterator.hasNext()) {
-            result.add(((InfoRole) iterator.next()).getRoleType());
+            result.add(((Role) iterator.next()).getRoleType());
         }
 
         return result;

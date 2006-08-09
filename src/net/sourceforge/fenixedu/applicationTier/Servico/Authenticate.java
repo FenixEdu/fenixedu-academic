@@ -21,7 +21,6 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.security.PasswordEncryptor;
-import net.sourceforge.fenixedu.dataTransferObject.InfoRole;
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Role;
@@ -97,11 +96,7 @@ public class Authenticate extends Service implements Serializable {
         }
 
         public boolean hasRoleType(final RoleType roleType) {
-            if (roles == null) {
-                return false;
-            }
-            final InfoRole infoRole = new InfoRole(Role.getRoleByRoleType(roleType));
-            return roles.contains(infoRole);
+            return roles == null ? false : roles.contains(Role.getRoleByRoleType(roleType));
         }
 
         public Person getPerson() {
@@ -211,15 +206,14 @@ public class Authenticate extends Service implements Serializable {
         return receipt;
     }
 
-    protected Collection<InfoRole> getInfoRoles(final String username, final Collection personRoles,
+    protected Collection<Role> getInfoRoles(final String username, final Collection personRoles,
             final Set allowedRoles) {
-        final Map<RoleType, InfoRole> infoRoles = new HashMap<RoleType, InfoRole>(personRoles.size());
+        final Map<RoleType, Role> infoRoles = new HashMap<RoleType, Role>(personRoles.size());
         for (final Iterator iterator = personRoles.iterator(); iterator.hasNext();) {
             final Role role = (Role) iterator.next();
             final RoleType roleType = role.getRoleType();
             if (allowedRoles.contains(roleType)) {
-                final InfoRole infoRole = InfoRole.newInfoFromDomain(role);
-                infoRoles.put(roleType, infoRole);
+                infoRoles.put(roleType, role);
             }
         }
         filterRoles(infoRoles);
@@ -236,11 +230,11 @@ public class Authenticate extends Service implements Serializable {
         return new HashSet(0);
     }
 
-    protected void filterRoles(final Map<RoleType, InfoRole> infoRoles) {
+    protected void filterRoles(final Map<RoleType, Role> infoRoles) {
         filterEmployeeRoleForTeachers(infoRoles);
     }
 
-    protected void filterEmployeeRoleForTeachers(Map<RoleType, InfoRole> infoRoles) {
+    protected void filterEmployeeRoleForTeachers(Map<RoleType, Role> infoRoles) {
         if (infoRoles.containsKey(RoleType.TEACHER) && infoRoles.containsKey(RoleType.EMPLOYEE)) {
             infoRoles.remove(RoleType.EMPLOYEE);
         }

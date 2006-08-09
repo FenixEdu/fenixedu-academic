@@ -17,7 +17,6 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoAutenticacao;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.dataTransferObject.InfoRole;
 import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
@@ -72,17 +71,17 @@ public abstract class BaseAuthenticationAction extends FenixAction {
 
         Collection userRoles = userView.getRoles();
 
-        InfoRole firstTimeStudentInfoRole = new InfoRole(Role.getRoleByRoleType(RoleType.FIRST_TIME_STUDENT));
+        Role firstTimeStudentInfoRole = Role.getRoleByRoleType(RoleType.FIRST_TIME_STUDENT);
 
         if (userRoles.contains(firstTimeStudentInfoRole)) {
             // TODO impose a period time limit
-            InfoRole infoRole = getRole(RoleType.FIRST_TIME_STUDENT, userRoles);
+            Role infoRole = getRole(RoleType.FIRST_TIME_STUDENT, userRoles);
             return buildRoleForward(infoRole);
         } else {
-            InfoRole personInfoRole = new InfoRole(Role.getRoleByRoleType(RoleType.PERSON));
+            Role personInfoRole = Role.getRoleByRoleType(RoleType.PERSON);
             int numberOfSubApplications = getNumberOfSubApplications(userRoles);
             if (numberOfSubApplications == 1 || !userRoles.contains(personInfoRole)) {
-                final InfoRole firstInfoRole = ((userRoles.isEmpty()) ? null : (InfoRole) userRoles
+                final Role firstInfoRole = ((userRoles.isEmpty()) ? null : (Role) userRoles
                         .iterator().next());
                 return buildRoleForward(firstInfoRole);
             } else {
@@ -141,7 +140,7 @@ public abstract class BaseAuthenticationAction extends FenixAction {
         List subApplications = new ArrayList();
         Iterator iterator = userRoles.iterator();
         while (iterator.hasNext()) {
-            InfoRole infoRole = (InfoRole) iterator.next();
+            Role infoRole = (Role) iterator.next();
             String subApplication = infoRole.getPortalSubApplication();
             if (!subApplications.contains(subApplication) && !subApplication.equals("/teacher")) {
                 subApplications.add(subApplication);
@@ -154,7 +153,7 @@ public abstract class BaseAuthenticationAction extends FenixAction {
      * @param infoRole
      * @return
      */
-    private ActionForward buildRoleForward(InfoRole infoRole) {
+    private ActionForward buildRoleForward(Role infoRole) {
         ActionForward actionForward = new ActionForward();
         actionForward.setContextRelative(false);
         actionForward.setRedirect(false);
@@ -163,8 +162,8 @@ public abstract class BaseAuthenticationAction extends FenixAction {
         return actionForward;
     }
 
-    private InfoRole getRole(RoleType roleType, Collection<InfoRole> rolesList) {
-    	for (final InfoRole infoRole : rolesList) {
+    private Role getRole(RoleType roleType, Collection<Role> rolesList) {
+    	for (final Role infoRole : rolesList) {
     		if (infoRole.getRoleType() == roleType) {
     			return infoRole;
     		}

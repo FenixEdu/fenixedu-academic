@@ -7,7 +7,6 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
-import net.sourceforge.fenixedu.dataTransferObject.InfoRole;
 import net.sourceforge.fenixedu.domain.Coordinator;
 import net.sourceforge.fenixedu.domain.MasterDegreeCandidate;
 import net.sourceforge.fenixedu.domain.Role;
@@ -36,9 +35,9 @@ public class GetCandidatesByIDAuthorizationFilter extends Filtro {
      * @return The Needed Roles to Execute The Service
      */
     protected Collection getNeededRoles() {
-        List<InfoRole> roles = new ArrayList<InfoRole>();
-        roles.add(new InfoRole(Role.getRoleByRoleType(RoleType.MASTER_DEGREE_ADMINISTRATIVE_OFFICE)));
-        roles.add(new InfoRole(Role.getRoleByRoleType(RoleType.COORDINATOR)));
+        List<Role> roles = new ArrayList<Role>();
+        roles.add(Role.getRoleByRoleType(RoleType.MASTER_DEGREE_ADMINISTRATIVE_OFFICE));
+        roles.add(Role.getRoleByRoleType(RoleType.COORDINATOR));
         return roles;
     }
 
@@ -93,7 +92,7 @@ public class GetCandidatesByIDAuthorizationFilter extends Filtro {
         List<RoleType> result = new ArrayList<RoleType>();
         Iterator iterator = roles.iterator();
         while (iterator.hasNext()) {
-            result.add(((InfoRole) iterator.next()).getRoleType());
+            result.add(((Role) iterator.next()).getRoleType());
         }
 
         return result;

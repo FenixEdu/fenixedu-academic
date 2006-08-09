@@ -5,9 +5,8 @@
 package net.sourceforge.fenixedu.applicationTier.Filtro;
 
 import java.util.Collection;
-import java.util.Iterator;
 
-import net.sourceforge.fenixedu.dataTransferObject.InfoRole;
+import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 
 /**
@@ -19,13 +18,13 @@ public abstract class AuthorizationUtils {
      * @param collection
      * @return boolean
      */
-    public static boolean containsRole(Collection roles, RoleType role) {
-        Iterator rolesIterator = roles.iterator();
-        while (rolesIterator.hasNext()) {
-            InfoRole infoRole = (InfoRole) rolesIterator.next();
-            if (infoRole.getRoleType().equals(role))
-                return true;
-        }
-        return false;
+    public static boolean containsRole(Collection<Role> roles, RoleType roleType) {
+    	for (final Role otherRole : roles) {
+    		if (otherRole.getRoleType() == roleType) {
+    			return true;
+    		}
+    	}
+    	return false;
     }
+
 }
