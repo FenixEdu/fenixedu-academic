@@ -3384,7 +3384,6 @@ class net.sourceforge.fenixedu.domain.research.result.Result extends net.sourcef
 		Integer keyPublisher;
 		Integer keyOrganization;
 	}
-
 		class net.sourceforge.fenixedu.domain.research.result.publication.Book extends net.sourceforge.fenixedu.domain.research.result.publication.ResultPublication {
 			String address;
 			String volume;
@@ -3395,7 +3394,7 @@ class net.sourceforge.fenixedu.domain.research.result.Result extends net.sourcef
 			//Integer keyCountry;
 			String language;
 			ScopeType scope;
-	}
+		}
 		class net.sourceforge.fenixedu.domain.research.result.publication.BookPart extends net.sourceforge.fenixedu.domain.research.result.publication.ResultPublication {
 			BookPartType bookPartType;
 			String chapter;
@@ -3418,16 +3417,19 @@ class net.sourceforge.fenixedu.domain.research.result.Result extends net.sourcef
 			//Integer keyCountry;
 			ScopeType scope;
 		}
-		class net.sourceforge.fenixedu.domain.research.result.publication.Inproceedings extends net.sourceforge.fenixedu.domain.research.result.publication.ResultPublication {
-			String bookTitle;
-			String address;
-			Integer firstPage;
-			Integer lastPage;
-			String language;
+		class net.sourceforge.fenixedu.domain.research.result.publication.ConferenceArticles extends net.sourceforge.fenixedu.domain.research.result.publication.ResultPublication {
+			Integer keyEvent;
 		}
-		class net.sourceforge.fenixedu.domain.research.result.publication.Proceedings extends net.sourceforge.fenixedu.domain.research.result.publication.ResultPublication {
-			String address;
-		}
+			class net.sourceforge.fenixedu.domain.research.result.publication.Inproceedings extends net.sourceforge.fenixedu.domain.research.result.publication.ConferenceArticles {
+				String bookTitle;
+				String address;
+				Integer firstPage;
+				Integer lastPage;
+				String language;
+			}
+			class net.sourceforge.fenixedu.domain.research.result.publication.Proceedings extends net.sourceforge.fenixedu.domain.research.result.publication.ConferenceArticles {
+				String address;
+			}
 		class net.sourceforge.fenixedu.domain.research.result.publication.Thesis extends net.sourceforge.fenixedu.domain.research.result.publication.ResultPublication {
 			ThesisType thesisType;
 			//Integer keySchool; use keyOrganization
@@ -7150,6 +7152,13 @@ relation PublisherResultPublication {
 relation OrganizationResultPublication {
 	net.sourceforge.fenixedu.domain.organizationalStructure.Unit playsRole organization;
 	net.sourceforge.fenixedu.domain.research.result.publication.ResultPublication playsRole organizationResultPublications {
+		multiplicity *;
+	}
+}
+
+relation EventConferenceArticles {
+	net.sourceforge.fenixedu.domain.research.event.Event playsRole event;
+	net.sourceforge.fenixedu.domain.research.result.publication.ConferenceArticles playsRole eventConferenceArticles {
 		multiplicity *;
 	}
 }
