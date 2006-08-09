@@ -21,7 +21,7 @@ public class CreateResultPublication extends Service {
             if (publisher == null)
                 publisher = Unit.createNewExternalInstitution(publicationBean.getPublisherName());
             // create Book with required fields;
-            Book book = new Book(publicationBean.getParticipator(), publicationBean.getTitle(), publisher, publicationBean.getYear());
+            Book book = new Book(publicationBean.getPerson(), publicationBean.getResultParticipationRole(), publicationBean.getTitle(), publisher, publicationBean.getYear());
             // fill optional fields
             book.setVolume(publicationBean.getVolume());
             book.setSeries(publicationBean.getSeries());
@@ -44,7 +44,7 @@ public class CreateResultPublication extends Service {
             {
                 case Inbook:
                 {
-                    bookPart = new BookPart(publicationBean.getParticipator(), publicationBean.getBookPartType(), publicationBean.getTitle(),
+                    bookPart = new BookPart(publicationBean.getPerson(), publicationBean.getResultParticipationRole(), publicationBean.getBookPartType(), publicationBean.getTitle(),
                             publicationBean.getChapter(), publicationBean.getFirstPage(), publicationBean.getLastPage(), publisher, publicationBean.getYear());
                     bookPart.setVolume(publicationBean.getVolume());
                     bookPart.setSeries(publicationBean.getSeries());
@@ -54,7 +54,7 @@ public class CreateResultPublication extends Service {
                 break;
                 case Incollection:
                 {
-                    bookPart = new BookPart(publicationBean.getParticipator(), publicationBean.getBookPartType(), publicationBean.getTitle(),
+                    bookPart = new BookPart(publicationBean.getPerson(), publicationBean.getResultParticipationRole(), publicationBean.getBookPartType(), publicationBean.getTitle(),
                             publicationBean.getBookTitle(), publisher, publicationBean.getYear());
                     bookPart.setFirstPage(publicationBean.getFirstPage());
                     bookPart.setLastPage(publicationBean.getLastPage());
@@ -75,7 +75,7 @@ public class CreateResultPublication extends Service {
         }break;
         case Article: {
             // create Article with required fields;
-            Article article = new Article(publicationBean.getParticipator(), publicationBean.getTitle(), publicationBean.getJournal(), publicationBean.getYear());
+            Article article = new Article(publicationBean.getPerson(), publicationBean.getTitle(), publicationBean.getJournal(), publicationBean.getYear());
             // fill optional fields
             article.setVolume(publicationBean.getVolume());
             article.setNumber(publicationBean.getNumber());
@@ -103,7 +103,7 @@ public class CreateResultPublication extends Service {
         				publicationBean.getEventFee(), publicationBean.getEventType(), publicationBean.getEventName());
         	}
         	//create Inproceedings with required fields;
-            Inproceedings inproceedings = new Inproceedings(publicationBean.getParticipator(), publicationBean.getTitle(), publicationBean.getBookTitle(), publicationBean.getYear(), event);
+            Inproceedings inproceedings = new Inproceedings(publicationBean.getPerson(), publicationBean.getResultParticipationRole(), publicationBean.getTitle(), publicationBean.getBookTitle(), publicationBean.getYear(), event);
             //fill optional fields
             Unit publisher = publicationBean.getPublisher();
             if (publisher == null)
@@ -136,7 +136,7 @@ public class CreateResultPublication extends Service {
         				publicationBean.getEventFee(), publicationBean.getEventType(), publicationBean.getEventName());
         	}
             // create Proceedings with required fields;
-            Proceedings proceedings = new Proceedings(publicationBean.getParticipator(), publicationBean.getTitle(), publicationBean.getYear(), event);
+            Proceedings proceedings = new Proceedings(publicationBean.getPerson(), publicationBean.getTitle(), publicationBean.getYear(), event);
             // fill optional fields
             Unit publisher = publicationBean.getPublisher();
             if (publisher == null)
@@ -163,7 +163,7 @@ public class CreateResultPublication extends Service {
             if (school == null)
                 school = Unit.createNewExternalInstitution(publicationBean.getOrganizationName());
             // create Thesis with required fields;
-            Thesis thesis = new Thesis(publicationBean.getParticipator(), publicationBean.getThesisType(), publicationBean.getTitle(), school, publicationBean.getYear());
+            Thesis thesis = new Thesis(publicationBean.getPerson(), publicationBean.getThesisType(), publicationBean.getTitle(), school, publicationBean.getYear());
             // fill optional fields
             thesis.setAddress(publicationBean.getAddress());
             thesis.setNote(publicationBean.getNote());
@@ -173,7 +173,7 @@ public class CreateResultPublication extends Service {
         }break;
         case Manual: {
             // create Manual with required fields;
-            Manual manual = new Manual(publicationBean.getParticipator(), publicationBean.getTitle());
+            Manual manual = new Manual(publicationBean.getPerson(), publicationBean.getTitle());
             // fill optional fields
             Unit organization = publicationBean.getOrganization();
             if (organization == null)
@@ -194,7 +194,7 @@ public class CreateResultPublication extends Service {
             if (institution == null)
                 institution = Unit.createNewExternalInstitution(publicationBean.getOrganizationName());
             // create TechnicalReport with required fields;
-            TechnicalReport technicalReport = new TechnicalReport(publicationBean.getParticipator(), publicationBean.getTitle(), institution, publicationBean.getYear());
+            TechnicalReport technicalReport = new TechnicalReport(publicationBean.getPerson(), publicationBean.getTitle(), institution, publicationBean.getYear());
             // fill optional fields
             technicalReport.setTechnicalReportType(publicationBean.getTechnicalReportType());
             technicalReport.setNumber(publicationBean.getNumber());
@@ -206,7 +206,7 @@ public class CreateResultPublication extends Service {
         }break;
         case Booklet: {
             // create Booklet with required fields;
-            Booklet booklet = new Booklet(publicationBean.getParticipator(), publicationBean.getTitle());
+            Booklet booklet = new Booklet(publicationBean.getPerson(), publicationBean.getTitle());
             // fill optional fields
             booklet.setHowPublished(publicationBean.getHowPublished());
             booklet.setYear(publicationBean.getYear());
@@ -216,7 +216,7 @@ public class CreateResultPublication extends Service {
         }break;
         case Misc: {
             // create Misc with required fields;
-            Misc misc = new Misc(publicationBean.getParticipator(), publicationBean.getTitle());
+            Misc misc = new Misc(publicationBean.getPerson(), publicationBean.getTitle());
             // fill optional fields
             Unit publisher = publicationBean.getPublisher();
             if (publisher == null)
@@ -237,7 +237,7 @@ public class CreateResultPublication extends Service {
         }break;
         case Unpublished: {
             // create Unpublished with required fields;
-            Unpublished unpublished = new Unpublished(publicationBean.getParticipator(), publicationBean.getTitle(), publicationBean.getNote());
+            Unpublished unpublished = new Unpublished(publicationBean.getPerson(), publicationBean.getTitle(), publicationBean.getNote());
             // fill optional fields
             unpublished.setYear(publicationBean.getYear());
             resultPublication = unpublished;
