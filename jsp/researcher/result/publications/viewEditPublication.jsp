@@ -13,10 +13,9 @@
 		<bean:define id="newParticipationsSchema" name="participationsSchema" type="java.lang.String"/>
 	</logic:present>
 	
-	<em><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.result.superUseCaseTitle"/></em>
-	<h2><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.result.publication.publicationsDetails"/></h2>
+	<h2><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.result.publication.publicationsManagement"/></h2>
+	<h3><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.result.publication.publicationsDetails"/></h3>
 
-  	<br/>
 	<%-- Participations --%>
 	<h3><bean:message bundle="RESEARCHER_RESOURCES" key="label.resultParticipations"/></h3>
 	<fr:view name="publication" property="resultParticipations" schema="<%=newParticipationsSchema%>" layout="tabular">
