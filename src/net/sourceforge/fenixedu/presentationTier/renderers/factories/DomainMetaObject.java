@@ -1,9 +1,12 @@
 package net.sourceforge.fenixedu.presentationTier.renderers.factories;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.renderers.ObjectChange;
 import net.sourceforge.fenixedu.applicationTier.Servico.renderers.ObjectKey;
 import net.sourceforge.fenixedu.domain.DomainObject;
@@ -126,14 +129,20 @@ public class DomainMetaObject extends SimpleMetaObject {
     protected Object callService(List<ObjectChange> changes) {
         try {
             return ServiceUtils.executeService(getUserView(), getService(), getServiceArguments(changes));
-        } catch (DomainException e) {
-            throw e;
         } 
         catch (RuntimeException e) {
             throw e;
+        } catch (FenixServiceException e) {
+            if (e.getCause() instanceof InvocationTargetException) {
+                if (e.getCause().getCause() instanceof RuntimeException) {
+                    throw (RuntimeException) e.getCause().getCause();
+                }
+            }
+            
+            throw new DomainException("domain.metaobject.service.failed");
         }
         catch (Exception e) {
-            throw new DomainException("domain.metaobject.service.failed", e);
+            throw new DomainException("domain.metaobject.service.failed");
         }
     }
 

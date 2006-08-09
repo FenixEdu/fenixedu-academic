@@ -17,15 +17,21 @@ import org.apache.commons.beanutils.PropertyUtils;
 public class UpdateObjects extends Service {
     
     public Collection run(List<ObjectChange> changes) throws ExcepcaoPersistencia, ClassNotFoundException,
-            IllegalAccessException, InvocationTargetException, NoSuchMethodException, InstantiationException {
+            IllegalAccessException, NoSuchMethodException, InstantiationException {
         beforeRun(changes);
         
         Hashtable<ObjectKey, Object> objects = new Hashtable<ObjectKey, Object>();
 
         for (ObjectChange change : changes) {
-            Object object = getObject(objects, change);
+            try {
+                Object object = getObject(objects, change);
 
-            processChange(change, object);
+                processChange(change, object);
+            } catch (InvocationTargetException e) {
+                if (e.getCause() instanceof RuntimeException) {
+                    throw (RuntimeException) e.getCause().getCause();
+                }
+            }
         }
         
         afterRun(objects.values());
