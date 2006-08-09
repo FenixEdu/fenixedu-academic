@@ -21,8 +21,8 @@ import org.apache.commons.beanutils.PropertyUtils;
 
 public class SearchObjectsByMultiLanguageString extends Service implements AutoCompleteSearchService {
 
-    public List run(Class type, String value, int limit, Map<String, String> arguments) {
-        List result = new ArrayList();
+    public List<DomainObject> run(Class type, String value, int limit, Map<String, String> arguments) {
+    	List<DomainObject> result = new ArrayList<DomainObject>();
         
         String slotName  = arguments.get("slot");
         Collection<DomainObject> objects = RootDomainObject.readAllDomainObjects(type);
@@ -56,7 +56,7 @@ public class SearchObjectsByMultiLanguageString extends Service implements AutoC
                         }
                         
                         if (matches) {
-                            result.add(new DomainObjectWrapper(object.getIdInternal(), objectValue));
+                            result.add(object);
                             break;
                         }
                     }
@@ -75,28 +75,7 @@ public class SearchObjectsByMultiLanguageString extends Service implements AutoC
             }
         }
         
-        Collections.sort(result, new BeanComparator("text"));
+        Collections.sort(result, new BeanComparator(slotName + ".content"));
         return result;
-    }
-    
-    public static class DomainObjectWrapper {
-
-        private Integer idInternal;
-        private String text;
-
-        public DomainObjectWrapper(Integer idInternal, String text) {
-            super();
-            
-            this.idInternal = idInternal;
-            this.text = text;
-        }
-
-        public Integer getIdInternal() {
-            return idInternal;
-        }
-        
-        public String getText() {
-            return text;
-        }
     }
 }
