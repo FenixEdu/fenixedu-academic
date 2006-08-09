@@ -19,11 +19,11 @@ public class ResultParticipation extends ResultParticipation_Base {
      * Roles available for participation
      */
     public enum ResultParticipationRole {
-        AUTHOR,
-        EDITOR;
+        Author,
+        Editor;
 
         public static ResultParticipationRole getDefaultResultParticipationRole() {
-            return AUTHOR;
+            return Author;
         }
     }
 
