@@ -26,6 +26,13 @@ import pt.utl.ist.fenix.tools.file.FileManagerException;
 
 public class ManageSpaceBlueprintsDA extends FenixDispatchAction {
 
+    public ActionForward showBlueprintVersions(final ActionMapping mapping, final HttpServletRequest request,
+            final SpaceInformation spaceInformation, final Blueprint blueprint) {
+        setBlueprint(request, blueprint);
+        setSpaceInfo(request, spaceInformation);                
+        return mapping.findForward("showBlueprintVersions");
+    }
+
     public ActionForward showBlueprintVersions(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) {
 
@@ -36,9 +43,7 @@ public class ManageSpaceBlueprintsDA extends FenixDispatchAction {
             blueprint = spaceInformation.getSpace().getMostRecentBlueprint();
         }
 
-        setBlueprint(request, blueprint);
-        setSpaceInfo(request, spaceInformation);                
-        return mapping.findForward("showBlueprintVersions");
+        return showBlueprintVersions(mapping, request, spaceInformation, blueprint);
     }
 
     public ActionForward createBlueprintVersion(ActionMapping mapping, ActionForm form,
@@ -64,10 +69,7 @@ public class ManageSpaceBlueprintsDA extends FenixDispatchAction {
             newBlueprint = spaceInformation.getSpace().getMostRecentBlueprint();
         }
 
-        //RenderUtils.invalidateViewState();                
-        setBlueprint(request, newBlueprint);
-        setSpaceInfo(request, spaceInformation);        
-        return mapping.findForward("showBlueprintVersions");
+        return showBlueprintVersions(mapping, request, spaceInformation, newBlueprint);
     }
     
     public ActionForward prepareCreateBlueprintVersion(ActionMapping mapping, ActionForm form,
@@ -113,10 +115,7 @@ public class ManageSpaceBlueprintsDA extends FenixDispatchAction {
             blueprint = spaceInformation.getSpace().getMostRecentBlueprint();
         }
 
-        //RenderUtils.invalidateViewState();                
-        setBlueprint(request, blueprint);
-        setSpaceInfo(request, spaceInformation);        
-        return mapping.findForward("showBlueprintVersions");
+        return showBlueprintVersions(mapping, request, spaceInformation, blueprint);
     }
     
     public ActionForward deleteBlueprintVersion(ActionMapping mapping, ActionForm form,
