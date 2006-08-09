@@ -19,7 +19,8 @@ public class Article extends Article_Base {
     //constructor with required fields
     public Article(Person participator, String title, String journal, Integer year) {
         super();
-        if((participator == null) || (title == null) || (journal == null) || (year == null))
+        if((participator == null) || (title == null) || (title.length() == 0) 
+        	|| (journal == null) || (journal.length() == 0) || (year == null))
             throw new DomainException("error.publication.missingRequiredFields");
         
         setParticipation(participator);
@@ -30,7 +31,7 @@ public class Article extends Article_Base {
     
     //edit with required fields
     public void edit(String title, String journal, Integer year) {
-        if((title == null) || (journal == null) || (year == null))
+        if((title == null) || (title.length() == 0) || (journal == null) || (journal.length() == 0) || (year == null))
             throw new DomainException("error.publication.missingRequiredFields");
         
         setTitle(title);

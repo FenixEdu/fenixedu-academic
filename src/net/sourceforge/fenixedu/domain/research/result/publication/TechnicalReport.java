@@ -20,7 +20,7 @@ public class TechnicalReport extends TechnicalReport_Base {
     //constructor with required fields
     public TechnicalReport(Person participator, String title, Unit institution, Integer year) {
         super();
-        if((participator == null) || (title == null) || (institution == null) || (year == null))
+        if((participator == null) || (title == null) || (title.length() == 0) || (institution == null) || (year == null))
             throw new DomainException("error.publication.missingRequiredFields");
         
         setParticipation(participator);
@@ -31,7 +31,7 @@ public class TechnicalReport extends TechnicalReport_Base {
     
     //edit with required fields
     public void edit(String title, Unit institution, Integer year) {
-        if((title == null) || (institution == null) || (year == null))
+        if((title == null) || (title.length() == 0) || (institution == null) || (year == null))
             throw new DomainException("error.publication.missingRequiredFields");
         
         setTitle(title);

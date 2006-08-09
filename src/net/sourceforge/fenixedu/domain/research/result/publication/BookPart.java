@@ -28,7 +28,7 @@ public class BookPart extends BookPart_Base {
         //expected Inbook Type
         if(!bookPartType.equals(BookPartType.Inbook))
             throw new DomainException("error.publication.bookPart.wrongBookPartType");
-        if((participator == null) || (bookPartType == null) || (title == null) || (publisher == null) || (year == null))
+        if((participator == null) || (bookPartType == null) || (title == null) || (title.length() == 0) || (publisher == null) || (year == null))
             throw new DomainException("error.publication.missingRequiredFields");
         if((chapter == null) || (chapter.length() == 0))
         {
@@ -52,7 +52,8 @@ public class BookPart extends BookPart_Base {
         //expected Incollection Type
         if(!bookPartType.equals(BookPartType.Incollection))
             throw new DomainException("error.wrongBookPartType");
-        if((participator == null) || (bookPartType == null) || (title == null) || (bookTitle == null) || (publisher == null) || (year == null))
+        if((participator == null) || (bookPartType == null) || (title == null) || (title.length() == 0) 
+        		|| (bookTitle == null) || (bookTitle.length() == 0) || (publisher == null) || (year == null))
             throw new DomainException("error.missingRequiredFields");
         
         setParticipation(participator);
@@ -69,7 +70,7 @@ public class BookPart extends BookPart_Base {
         //expected Inbook Type
         if(!bookPartType.equals(BookPartType.Inbook))
             throw new DomainException("error.publication.bookPart.wrongBookPartType");
-        if((bookPartType == null) || (title == null) || (publisher == null) || (year == null))
+        if((bookPartType == null) || (title == null) || (title.length() == 0) || (publisher == null) || (year == null))
             throw new DomainException("error.publication.missingRequiredFields");
         if((chapter == null) || (chapter.length() == 0))
         {
@@ -98,7 +99,8 @@ public class BookPart extends BookPart_Base {
         //expected Incollection Type
         if(!bookPartType.equals(BookPartType.Incollection))
             throw new DomainException("error.wrongBookPartType");
-        if((bookPartType == null) || (title == null) || (bookTitle == null) || (publisher == null) || (year == null))
+        if((bookPartType == null) || (title == null) || (title.length() == 0) || (bookTitle == null) || (bookTitle.length() == 0)
+        		|| (publisher == null) || (year == null))
             throw new DomainException("error.missingRequiredFields");
         
         if(!this.getBookPartType().equals(bookPartType))

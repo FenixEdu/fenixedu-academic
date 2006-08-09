@@ -20,7 +20,7 @@ public class Book extends Book_Base {
     //constructor with required fields
     public Book(Person participator, String title, Unit publisher, Integer year) {
         super();
-        if((participator == null) || (title == null) || (publisher == null) || (year == null))
+        if((participator == null) || (title == null) || (title.length() == 0) || (publisher == null) || (year == null))
             throw new DomainException("error.publication.missingRequiredFields");
         
         setParticipation(participator);
@@ -31,7 +31,7 @@ public class Book extends Book_Base {
     
     //edit with required fields
     public void edit(String title, Unit publisher, Integer year) {
-        if((title == null) || (publisher == null) || (year == null))
+        if((title == null) || (title.length() == 0) || (publisher == null) || (year == null))
             throw new DomainException("error.publication.missingRequiredFields");
         
         setTitle(title);

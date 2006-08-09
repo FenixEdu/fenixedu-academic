@@ -19,7 +19,7 @@ public class Misc extends Misc_Base {
     //constructor with required fields, we need to have a title and a author
     public Misc(Person participator, String title) {
         super();
-        if((participator == null) || (title == null))
+        if((participator == null) || (title == null) || (title.length() == 0))
             throw new DomainException("error.publication.missingRequiredFields");
         
         setParticipation(participator);
@@ -28,7 +28,7 @@ public class Misc extends Misc_Base {
     
     //edit with required fields, we need to have a title
     public void edit(String title) {
-        if(title == null)
+        if((title == null) || (title.length() == 0))
             throw new DomainException("error.publication.missingRequiredFields");
         
         setTitle(title);

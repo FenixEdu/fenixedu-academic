@@ -17,7 +17,7 @@ public class Unpublished extends Unpublished_Base {
     //constructor with required fields
     public Unpublished(Person participator, String title, String note) {
         super();
-        if((participator == null) || (title == null) || (note == null))
+        if((participator == null) || (title == null) || (title.length() == 0) || (note == null) || (note.length() == 0))
             throw new DomainException("error.publication.missingRequiredFields");
         
         setParticipation(participator);
@@ -27,7 +27,7 @@ public class Unpublished extends Unpublished_Base {
     
     //edit with required fields
     public void edit(String title, String note) {
-        if((title == null) || (note == null))
+        if((title == null) || (title.length() == 0) || (note == null) || (note.length() == 0))
             throw new DomainException("error.publication.missingRequiredFields");
         
         setTitle(title);
