@@ -146,7 +146,7 @@
 	<slot name="event" layout="autoComplete" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
 		<property name="size" value="50"/>
 		<property name="rawSlotName" value="eventName"/>
-		<property name="labelField" value="text"/>
+		<property name="labelField" value="name.content"/>
 		<property name="indicatorShown" value="true"/>		
 		<property name="serviceName" value="SearchObjectsByMultiLanguageString"/>
 		<property name="serviceArgs" value="slot=name"/>
@@ -293,7 +293,7 @@
 	<slot name="project" layout="autoComplete" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
 		<property name="size" value="50"/>
 		<property name="rawSlotName" value="projectTitle"/>
-		<property name="labelField" value="text"/>
+		<property name="labelField" value="title.content"/>
 		<property name="indicatorShown" value="true"/>		
 		<property name="serviceName" value="SearchObjectsByMultiLanguageString"/>
 		<property name="serviceArgs" value="slot=title"/>
@@ -314,7 +314,7 @@
 	<slot name="event" layout="autoComplete" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
 		<property name="size" value="50"/>
 		<property name="rawSlotName" value="eventName"/>
-		<property name="labelField" value="text"/>
+		<property name="labelField" value="name.content"/>
 		<property name="indicatorShown" value="true"/>		
 		<property name="serviceName" value="SearchObjectsByMultiLanguageString"/>
 		<property name="serviceArgs" value="slot=name"/>
@@ -471,7 +471,7 @@
 	<slot name="event" layout="autoComplete" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
 		<property name="size" value="50"/>
 		<property name="rawSlotName" value="eventNameStr"/>
-		<property name="labelField" value="text"/>
+		<property name="labelField" value="name.content"/>
 		<property name="indicatorShown" value="true"/>		
 		<property name="serviceName" value="SearchObjectsByMultiLanguageString"/>
 		<property name="serviceArgs" value="slot=name"/>
@@ -558,6 +558,7 @@
 	</slot>
 	<slot name="bookTitle"/>
  	<slot name="year"/>
+ 	<slot name="event.name" key="label.event"/>
 	<slot name="resultParticipations" schema="result.participations" layout="values">
  		<property name="htmlSeparator" value=", "/>
 	</slot>
@@ -567,6 +568,7 @@
         <property name="destination" value="viewPublicationDetails"/>
 	</slot>
  	<slot name="year"/>
+ 	<slot name="event.name" key="label.event"/>
 	<slot name="resultParticipations" schema="result.participations" layout="values">
  		<property name="htmlSeparator" value=", "/>
 	</slot>
@@ -707,6 +709,7 @@
 	<slot name="bookTitle"/>
  	<slot name="year"/>
 	<slot name="month"/>
+	<slot name="event.name" key="label.event"/>
 	<slot name="publisher" layout="null-as-label">
 		<property name="label" value=""/>
 		<property name="subLayout" value="values"/>
@@ -728,6 +731,7 @@
 	<slot name="title"/>
  	<slot name="year"/>
 	<slot name="month"/>
+	<slot name="event.name" key="label.event"/>
 	<slot name="publisher" layout="null-as-label">
 		<property name="label" value=""/>
 		<property name="subLayout" value="values"/>
@@ -780,7 +784,7 @@
 		<property name="subLayout" value="values"/>
 		<property name="subSchema" value="unit.name"/>
 	</slot>
-	<slot name="address"/>
+	<slot name="address" key="label.local"/>
 	<slot name="technicalReportType"/>
 	<slot name="number"/>
 	<slot name="numberPages"/>
@@ -979,7 +983,7 @@
 	<slot name="title" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
 		<property name="size" value="60"/>
 	</slot>
-	<slot name="journal">
+	<slot name="journal" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
 		<property name="size" value="40"/>
 	</slot>
  	<slot name="year" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
@@ -1035,6 +1039,16 @@
 		<property name="size" value="5"/>
 	</slot>	
 	<slot name="month"/>
+	<slot name="event" layout="autoComplete" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		<property name="size" value="40"/>
+		<property name="rawSlotName" value="eventNameAutoComplete"/>
+		<property name="labelField" value="name.content"/>
+		<property name="indicatorShown" value="true"/>
+		<property name="serviceName" value="SearchObjectsByMultiLanguageString"/>
+		<property name="serviceArgs" value="slot=name"/>
+		<property name="className" value="net.sourceforge.fenixedu.domain.research.event.Event"/>				
+		<property name="minChars" value="3"/>
+	</slot>
 	<slot name="publisher" layout="autoComplete">
 		<property name="size" value="40"/>
 		<property name="rawSlotName" value="publisherName"/>
@@ -1075,6 +1089,25 @@
 		<property name="columns" value="60"/>
 	</slot>
 </schema>
+<schema name="result.publication.create.InproceedingsAndEvent" extends="result.publication.create.Inproceedings" type="net.sourceforge.fenixedu.dataTransferObject.research.result.publication.ResultPublicationCreationBean" bundle="RESEARCHER_RESOURCES">
+	<remove name="event"/>
+</schema>
+<schema name="result.publication.create.Event" type="net.sourceforge.fenixedu.dataTransferObject.research.result.publication.ResultPublicationCreationBean" bundle="RESEARCHER_RESOURCES">
+	<slot name="eventName" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredMultiLanguageStringValidator">
+		<property name="size" value="60"/>
+	</slot>
+	<slot name="eventType"/>
+	<slot name="eventLocal">
+		<property name="size" value="40"/>
+	</slot>
+	<slot name="eventStartDate" layout="year-month-day" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		<property name="size" value="10"/>
+	</slot>
+	<slot name="eventEndDate" layout="year-month-day" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		<property name="size" value="10"/>
+	</slot>
+	<slot name="eventFee"/>
+</schema>
 <schema name="result.publication.create.Proceedings" type="net.sourceforge.fenixedu.dataTransferObject.research.result.publication.ResultPublicationCreationBean" bundle="RESEARCHER_RESOURCES">
 	<slot name="title" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
 		<property name="size" value="60"/>
@@ -1083,11 +1116,21 @@
 		<property name="size" value="5"/>
 	</slot>	
 	<slot name="month"/>
+	<slot name="event" layout="autoComplete" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		<property name="size" value="40"/>
+		<property name="rawSlotName" value="eventNameAutoComplete"/>
+		<property name="labelField" value="name.content"/>
+		<property name="indicatorShown" value="true"/>
+		<property name="serviceName" value="SearchObjectsByMultiLanguageString"/>
+		<property name="serviceArgs" value="slot=name"/>
+		<property name="className" value="net.sourceforge.fenixedu.domain.research.event.Event"/>
+		<property name="minChars" value="3"/>
+	</slot>
 	<slot name="publisher" layout="autoComplete">
 		<property name="size" value="40"/>
 		<property name="rawSlotName" value="publisherName"/>
 		<property name="labelField" value="name"/>
-		<property name="indicatorShown" value="true"/>		
+		<property name="indicatorShown" value="true"/>
 		<property name="serviceName" value="SearchObjects"/>
 		<property name="serviceArgs" value="slot=name"/>
 		<property name="className" value="net.sourceforge.fenixedu.domain.organizationalStructure.Unit"/>				
@@ -1113,6 +1156,9 @@
 		<property name="rows" value="5"/>
 		<property name="columns" value="60"/>
 	</slot>
+</schema>
+<schema name="result.publication.create.ProceedingsAndEvent" extends="result.publication.create.Proceedings" type="net.sourceforge.fenixedu.dataTransferObject.research.result.publication.ResultPublicationCreationBean" bundle="RESEARCHER_RESOURCES">
+	<remove name="event"/>
 </schema>
 <schema name="result.publication.create.Thesis" type="net.sourceforge.fenixedu.dataTransferObject.research.result.publication.ResultPublicationCreationBean" bundle="RESEARCHER_RESOURCES">
 	<slot name="title" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
@@ -1168,10 +1214,10 @@
 		<property name="className" value="net.sourceforge.fenixedu.domain.organizationalStructure.Unit"/>				
 		<property name="minChars" value="3"/>
 	</slot>
-	<slot name="address">
+	<slot name="address" key="label.local">
 		<property name="size" value="40"/>
 	</slot>
-	<slot name="url" key="label.local">
+	<slot name="url">
 		<property name="size" value="40"/>
 	</slot>
 	<slot name="note" layout="longText">
@@ -1197,7 +1243,7 @@
 		<property name="className" value="net.sourceforge.fenixedu.domain.organizationalStructure.Unit"/>				
 		<property name="minChars" value="3"/>
 	</slot>
-	<slot name="address">
+	<slot name="address" key="label.local">
 		<property name="size" value="40"/>
 	</slot>
 	<slot name="technicalReportType">
