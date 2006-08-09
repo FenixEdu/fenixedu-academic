@@ -26,8 +26,6 @@
 		<form-bean name="publicationsForm" type="org.apache.struts.validator.DynaValidatorForm" 
             dynamic="true">
 			<form-property name="publicationId" type="java.lang.Integer"/>
-			<form-property name="publicationType" type="java.lang.String"/>
-			<form-property name="resultPublicationTypeId" type="java.lang.Integer"/>
 			<form-property name="method" type="java.lang.String"/>
         </form-bean>
     </form-beans>
