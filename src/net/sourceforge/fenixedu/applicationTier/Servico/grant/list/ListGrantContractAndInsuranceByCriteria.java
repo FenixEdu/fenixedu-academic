@@ -17,7 +17,6 @@ import net.sourceforge.fenixedu.domain.grant.contract.GrantContractRegime;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantInsurance;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantPart;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantSubsidy;
-import net.sourceforge.fenixedu.domain.grant.owner.GrantOwner;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.presentationTier.Action.grant.utils.SessionConstants;
 import net.sourceforge.fenixedu.util.DateFormatUtil;
@@ -117,7 +116,7 @@ public class ListGrantContractAndInsuranceByCriteria extends Service {
 			 }
 		}	 
 		GrantInsurance grantInsurance = (GrantInsurance)grantContractRegime.getGrantContract().getGrantInsurance();
-		InfoGrantInsurance infoGrantInsurance = new InfoGrantInsurance();
+		//InfoGrantInsurance infoGrantInsurance = new InfoGrantInsurance();
 		
 		 if (grantInsurance != null){
 			 final long MILLIS_PER_DAY = 1000 * 60 * 60 * 24;
