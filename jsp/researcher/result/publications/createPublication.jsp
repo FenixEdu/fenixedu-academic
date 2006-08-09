@@ -25,9 +25,8 @@
 			<bean:message key="button.change"/>
 		</html:submit>
 	</html:form>
-	<br />
-	<h3><bean:message bundle="RESEARCHER_RESOURCES" key="<%="researcher.result.publication.publicationType." + publicationBean.getPublicationType() %>"/></h3>
-
+	<br/><br/>
+	
 	<logic:messagesPresent message="true">
 		<html:messages id="messages" message="true" bundle="RESEARCHER_RESOURCES">
 			<span class="error"><!-- Error messages go here --><bean:write name="messages" /></span>
@@ -38,7 +37,14 @@
 	<fr:form action="/publications/publicationsManagement.do">
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" name="publicationsForm" property="method" />
 
+		<!-- Present Author -->
+		<fr:edit nested="true" id="author" name="publicationBean" type="net.sourceforge.fenixedu.dataTransferObject.research.result.publication.ResultPublicationCreationBean"
+				schema="<%=publicationBean.getParticipationSchema() %>">
+	   		<fr:destination name="invalid" path="/publications/publicationsManagement.do?method=prepareCreatePublication"/>
+		</fr:edit>
+		
 		<!-- Present publication fields -->
+		<h3><bean:message bundle="RESEARCHER_RESOURCES" key="<%="researcher.result.publication.publicationType." + publicationBean.getPublicationType() %>"/></h3>
 		<fr:edit nested="true" id="createPublication" name="publicationBean" type="net.sourceforge.fenixedu.dataTransferObject.research.result.publication.ResultPublicationCreationBean"
 				schema="<%=publicationBean.getActiveSchema() %>">
 	 	    <fr:layout name="tabular">
