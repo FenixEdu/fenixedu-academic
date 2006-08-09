@@ -10,6 +10,7 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.Filtro;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoRole;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
+import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.Teacher;
@@ -51,23 +52,10 @@ public class EquivalenceAuthorizationFilter extends Filtro {
 
     protected Collection getNeededRoles() {
         List roles = new ArrayList();
-
-        InfoRole infoRole = new InfoRole();
-        infoRole.setRoleType(RoleType.COORDINATOR);
-        roles.add(infoRole);
-
-        infoRole = new InfoRole();
-        infoRole.setRoleType(RoleType.DEGREE_ADMINISTRATIVE_OFFICE);
-        roles.add(infoRole);
-
-        infoRole = new InfoRole();
-        infoRole.setRoleType(RoleType.DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER);
-        roles.add(infoRole);
-
-        infoRole = new InfoRole();
-        infoRole.setRoleType(RoleType.MASTER_DEGREE_ADMINISTRATIVE_OFFICE);
-        roles.add(infoRole);
-
+        roles.add(new InfoRole(Role.getRoleByRoleType(RoleType.COORDINATOR)));
+        roles.add(new InfoRole(Role.getRoleByRoleType(RoleType.DEGREE_ADMINISTRATIVE_OFFICE)));
+        roles.add(new InfoRole(Role.getRoleByRoleType(RoleType.DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER)));
+        roles.add(new InfoRole(Role.getRoleByRoleType(RoleType.MASTER_DEGREE_ADMINISTRATIVE_OFFICE)));
         return roles;
     }
 

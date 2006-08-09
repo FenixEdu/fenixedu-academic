@@ -11,133 +11,51 @@ import net.sourceforge.fenixedu.domain.person.RoleType;
  * @author jpvl
  */
 public class InfoRole extends InfoObject implements Comparable {
-    private String portalSubApplication;
 
-    private String page;
+    private final Role role;
 
-    private String pageNameProperty;
-
-    private RoleType roleType;
-
-    public InfoRole() {
+    public InfoRole(final Role role) {
+        this.role = role;
     }
 
-    public InfoRole(RoleType roleType) {
-        setRoleType(roleType);
-    }
-
-    /**
-     * @return String
-     */
     public String getPage() {
-        return page;
+        return role.getPage();
     }
 
-    /**
-     * @return String
-     */
     public String getPageNameProperty() {
-        return pageNameProperty;
+        return role.getPageNameProperty();
     }
 
-    /**
-     * @return String
-     */
     public String getPortalSubApplication() {
-        return portalSubApplication;
+        return role.getPortalSubApplication();
     }
 
-    /**
-     * @return RoleType
-     */
     public RoleType getRoleType() {
-        return roleType;
-    }
-
-    /**
-     * Sets the page.
-     * 
-     * @param page
-     *            The page to set
-     */
-    public void setPage(String page) {
-        this.page = page;
-    }
-
-    /**
-     * Sets the pageNameProperty.
-     * 
-     * @param pageNameProperty
-     *            The pageNameProperty to set
-     */
-    public void setPageNameProperty(String pageNameProperty) {
-        this.pageNameProperty = pageNameProperty;
-    }
-
-    /**
-     * Sets the portalSubApplication.
-     * 
-     * @param portalSubApplication
-     *            The portalSubApplication to set
-     */
-    public void setPortalSubApplication(String portalSubApplication) {
-        this.portalSubApplication = portalSubApplication;
-    }
-
-    /**
-     * Sets the roleType.
-     * 
-     * @param roleType
-     *            The roleType to set
-     */
-    public void setRoleType(RoleType roleType) {
-        this.roleType = roleType;
+        return role.getRoleType();
     }
 
     public String toString() {
-        String result = "Info Role :\n";
-        result += "\n  - Page : " + page;
-        result += "\n  - PageNameProperty : " + pageNameProperty;
-        result += "\n  - PortalSubApplication : " + portalSubApplication;
-        result += "\n  - RoleType : " + roleType;
-
-        return result;
+        return role.toString();
     }
 
-    public boolean equals(Object o) {
-        return ((o instanceof InfoRole) && this.roleType.equals(((InfoRole) o).getRoleType()));
+    public boolean equals(final Object o) {
+        return o instanceof InfoRole && this.getRoleType() == ((InfoRole) o).getRoleType();
     }
 
     public int hashCode() {
-        return this.roleType.hashCode();
+        return this.getRoleType().hashCode();
     }
 
-    public void copyFromDomain(final Role role) {
-        super.copyFromDomain(role);
-        if (role != null) {
-            setPage(role.getPage());
-            setPageNameProperty(role.getPageNameProperty());
-            setPortalSubApplication(role.getPortalSubApplication());
-            setRoleType(role.getRoleType());
-        }
-    }
-
-    public static InfoRole newInfoFromDomain(final Role role) {
-        if (role != null) {
-            final InfoRole infoRole = new InfoRole();
-            infoRole.copyFromDomain(role);
-            return infoRole;
-        }
-
-        return null;
-    }
-
-    public int compareTo(Object o) {
+    public int compareTo(final Object o) {
         if (o != null && o instanceof InfoRole) {
             final InfoRole infoRole = (InfoRole) o;
             return getRoleType().compareTo(infoRole.getRoleType());
         }
         return 0;
+    }
+
+    public static InfoRole newInfoFromDomain(final Role role) {
+        return new InfoRole(role);
     }
 
 }

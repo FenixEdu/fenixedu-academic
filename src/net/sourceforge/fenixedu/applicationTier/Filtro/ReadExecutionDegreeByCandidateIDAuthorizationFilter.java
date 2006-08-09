@@ -10,6 +10,7 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFi
 import net.sourceforge.fenixedu.dataTransferObject.InfoRole;
 import net.sourceforge.fenixedu.domain.Coordinator;
 import net.sourceforge.fenixedu.domain.MasterDegreeCandidate;
+import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -49,15 +50,8 @@ public class ReadExecutionDegreeByCandidateIDAuthorizationFilter extends Filtro 
      */
     protected Collection getNeededRoles() {
         List roles = new ArrayList();
-
-        InfoRole infoRole = new InfoRole();
-        infoRole.setRoleType(RoleType.MASTER_DEGREE_ADMINISTRATIVE_OFFICE);
-        roles.add(infoRole);
-
-        infoRole = new InfoRole();
-        infoRole.setRoleType(RoleType.COORDINATOR);
-        roles.add(infoRole);
-
+        roles.add(new InfoRole(Role.getRoleByRoleType(RoleType.MASTER_DEGREE_ADMINISTRATIVE_OFFICE)));
+        roles.add(new InfoRole(Role.getRoleByRoleType(RoleType.COORDINATOR)));
         return roles;
     }
 

@@ -100,7 +100,7 @@ public class Authenticate extends Service implements Serializable {
             if (roles == null) {
                 return false;
             }
-            final InfoRole infoRole = new InfoRole(roleType);
+            final InfoRole infoRole = new InfoRole(Role.getRoleByRoleType(roleType));
             return roles.contains(infoRole);
         }
 

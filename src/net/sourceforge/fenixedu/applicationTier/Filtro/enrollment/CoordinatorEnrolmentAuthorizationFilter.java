@@ -13,6 +13,7 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.AuthorizationByManyRolesF
 import net.sourceforge.fenixedu.dataTransferObject.InfoRole;
 import net.sourceforge.fenixedu.domain.Coordinator;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
+import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.Teacher;
@@ -33,11 +34,7 @@ public class CoordinatorEnrolmentAuthorizationFilter extends AuthorizationByMany
      */
     protected Collection getNeededRoles() {
         List roles = new ArrayList();
-
-        InfoRole infoRole = new InfoRole();
-        infoRole.setRoleType(RoleType.COORDINATOR);
-        roles.add(infoRole);
-
+        roles.add(new InfoRole(Role.getRoleByRoleType(RoleType.COORDINATOR)));
         return roles;
     }
 

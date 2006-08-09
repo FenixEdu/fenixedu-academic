@@ -1,11 +1,14 @@
 package net.sourceforge.fenixedu.domain;
 
+import java.lang.ref.SoftReference;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.TreeSet;
@@ -444,12 +447,54 @@ public class Degree extends Degree_Base {
     // read static methods
     // -------------------------------------------------------------
 
-    public static Degree readBySigla(final String sigla) {
-        for (final Degree degree : RootDomainObject.getInstance().getDegrees()) {
-            if (degree.getSigla() != null && degree.getSigla().equalsIgnoreCase(sigla)) {
-                return degree;
+    private static final Map<String, SoftReference<Degree>> degrees = new HashMap<String, SoftReference<Degree>>();
+
+    private static void loadCache() {
+        synchronized (degrees) {
+            degrees.clear();
+            for (final Degree degree : RootDomainObject.getInstance().getDegrees()) {
+                degrees.put(degree.getSigla().toLowerCase(), new SoftReference<Degree>(degree));
             }
         }
+    }
+    private static void updateCache(final Degree degree, final String newLowerCaseSigla) {
+        final String currentLowerCaseSigla = degree.getSigla().toLowerCase();
+        synchronized (degrees) {
+            degrees.remove(currentLowerCaseSigla);
+            degrees.put(newLowerCaseSigla, new SoftReference<Degree>(degree));
+        }        
+    }
+
+    @Override
+    public void setSigla(final String sigla) {
+        updateCache(this, sigla.toLowerCase());
+        super.setSigla(sigla);
+    }
+
+    public static Degree readBySigla(final String sigla) {
+        if (degrees.isEmpty()) {
+            loadCache();
+        }
+        final String lowerCaseString = sigla.toLowerCase();
+        final SoftReference<Degree> degreeReference = degrees.get(lowerCaseString);
+        if (degreeReference != null) {
+            final Degree degree = degreeReference.get();
+            if (degree != null && degree.getRootDomainObject() == RootDomainObject.getInstance()
+                    && degree.getSigla().equalsIgnoreCase(lowerCaseString)) {
+                return degree;
+            } else {
+                loadCache();
+                final SoftReference<Degree> otherDegreeReference = degrees.get(lowerCaseString);
+                if (otherDegreeReference != null) {
+                    final Degree otherDegree = otherDegreeReference.get();
+                    if (otherDegree != null && otherDegree.getRootDomainObject() == RootDomainObject.getInstance()
+                            && otherDegree.getSigla().equalsIgnoreCase(lowerCaseString)) {
+                        return otherDegree;
+                    }
+                }
+            }
+        }
+
         return null;
     }
 

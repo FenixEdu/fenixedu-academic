@@ -16,6 +16,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoAutenticacao;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidPasswordServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoRole;
+import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
@@ -76,16 +77,14 @@ public class AuthenticationExpiredAction extends FenixDispatchAction {
 
                 Collection userRoles = userView.getRoles();
 
-                InfoRole firstTimeStudentInfoRole = new InfoRole();
-                firstTimeStudentInfoRole.setRoleType(RoleType.FIRST_TIME_STUDENT);
+                InfoRole firstTimeStudentInfoRole = new InfoRole(Role.getRoleByRoleType(RoleType.FIRST_TIME_STUDENT));
 
                 if (userRoles.contains(firstTimeStudentInfoRole)) {
                     // TODO impose a period time limit
                     InfoRole infoRole = getRole(RoleType.FIRST_TIME_STUDENT, userRoles);
                     return buildRoleForward(infoRole);
                 } else {
-                    InfoRole personInfoRole = new InfoRole();
-                    personInfoRole.setRoleType(RoleType.PERSON);
+                    InfoRole personInfoRole = new InfoRole(Role.getRoleByRoleType(RoleType.PERSON));
                     int numberOfSubApplications = getNumberOfSubApplications(userRoles);
                     if (numberOfSubApplications == 1 || !userRoles.contains(personInfoRole)) {
                         final InfoRole firstInfoRole = ((userRoles.isEmpty()) ? null
@@ -149,8 +148,7 @@ public class AuthenticationExpiredAction extends FenixDispatchAction {
 
     private InfoRole getRole(RoleType roleType, Collection rolesList) {
 
-        InfoRole infoRole = new InfoRole();
-        infoRole.setRoleType(roleType);
+        InfoRole infoRole = new InfoRole(Role.getRoleByRoleType(roleType));
 
         Iterator iterator = rolesList.iterator();
         while (iterator.hasNext()) {

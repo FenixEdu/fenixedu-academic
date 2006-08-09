@@ -7,6 +7,7 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.AuthorizationByManyRolesFilter;
 import net.sourceforge.fenixedu.dataTransferObject.InfoRole;
+import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.person.RoleType;
@@ -21,15 +22,8 @@ public class EnrolmentImprovmentAuthorization extends AuthorizationByManyRolesFi
 
     protected Collection getNeededRoles() {
         List<InfoRole> roles = new ArrayList<InfoRole>();
-
-        InfoRole infoRole = new InfoRole();
-        infoRole.setRoleType(RoleType.DEGREE_ADMINISTRATIVE_OFFICE);
-        roles.add(infoRole);
-
-        infoRole = new InfoRole();
-        infoRole.setRoleType(RoleType.DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER);
-        roles.add(infoRole);
-
+        roles.add(new InfoRole(Role.getRoleByRoleType(RoleType.DEGREE_ADMINISTRATIVE_OFFICE)));
+        roles.add(new InfoRole(Role.getRoleByRoleType(RoleType.DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER)));
         return roles;
     }
 

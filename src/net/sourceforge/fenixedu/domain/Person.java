@@ -1233,16 +1233,13 @@ public class Person extends Person_Base {
 
     public static Person readPersonByUsername(final String username) {
         final Login login = Login.readLoginByUsername(username);
-        User user = null;
-        if (login != null) {
-            user = login.getUser();
-        }
-        return (user != null) ? user.getPerson() : null;
+        final User user = login == null ? null : login.getUser();
+        return user == null ? null : user.getPerson();
     }
 
     public static Person readPersonByIstUsername(final String istUsername) {
         final User user = User.readUserByUserUId(istUsername);
-        return (user != null) ? user.getPerson() : null;
+        return user == null ? null : user.getPerson();
     }
 
     public static Collection<Person> readByDocumentIdNumber(final String documentIdNumber) {

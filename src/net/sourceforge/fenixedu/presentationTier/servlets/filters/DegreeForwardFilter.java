@@ -4,7 +4,10 @@
 package net.sourceforge.fenixedu.presentationTier.servlets.filters;
 
 import java.io.IOException;
+import java.lang.ref.SoftReference;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -58,16 +61,16 @@ public class DegreeForwardFilter implements Filter {
         this.filterConfig = null;
     }
 
-    public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain) throws IOException,
-            ServletException {
-        HttpServletRequest request = (HttpServletRequest) req;
-        HttpServletResponse response = (HttpServletResponse) res;
+    public void doFilter(final ServletRequest req, final ServletResponse res, final FilterChain chain)
+            throws IOException, ServletException {
+        final HttpServletRequest request = (HttpServletRequest) req;
+        final HttpServletResponse response = (HttpServletResponse) res;
 
-        String uri = request.getRequestURI();
-	if (uri.endsWith(".do")) {
-	    chain.doFilter(request, response);
-	    return;
-	}
+        final String uri = request.getRequestURI();
+        if (uri.endsWith(".do")) {
+            chain.doFilter(request, response);
+            return;
+        }
 
         String context = request.getContextPath();
         String newURI = uri.replaceFirst(app, "");
@@ -126,18 +129,11 @@ public class DegreeForwardFilter implements Filter {
     }
 
     private boolean isDegree(final String string) {
-        List<Degree> degrees = RootDomainObject.getInstance().getDegrees();
-
-        for (final Degree degree : degrees) {
-            if (degree.getSigla().equalsIgnoreCase(string)) {
-                return true;
-            }
-        }
-
-        return false;
+        return Degree.readBySigla(string) != null;
     }
 
-    private InfoExecutionPeriod getCurrentExecutionPeriod() throws FenixServiceException, FenixFilterException {
+    private InfoExecutionPeriod getCurrentExecutionPeriod() throws FenixServiceException,
+            FenixFilterException {
 
         InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) ServiceUtils.executeService(
                 null, "ReadCurrentExecutionPeriod", null);

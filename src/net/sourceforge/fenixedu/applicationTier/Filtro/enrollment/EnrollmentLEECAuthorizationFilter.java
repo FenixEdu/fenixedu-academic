@@ -8,6 +8,7 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.dataTransferObject.InfoRole;
 import net.sourceforge.fenixedu.domain.Coordinator;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
+import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.Teacher;
@@ -19,13 +20,11 @@ public class EnrollmentLEECAuthorizationFilter extends EnrollmentAuthorizationFi
 
     protected Collection getNeededRoles() {
     	 final List<InfoRole> roles = new ArrayList<InfoRole>();
-
-         roles.add(new InfoRole(RoleType.COORDINATOR));
-         roles.add(new InfoRole(RoleType.TEACHER));
-         roles.add(new InfoRole(RoleType.STUDENT));
-         roles.add(new InfoRole(RoleType.DEGREE_ADMINISTRATIVE_OFFICE));
-         roles.add(new InfoRole(RoleType.DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER));
-         
+         roles.add(new InfoRole(Role.getRoleByRoleType(RoleType.COORDINATOR)));
+         roles.add(new InfoRole(Role.getRoleByRoleType(RoleType.TEACHER)));
+         roles.add(new InfoRole(Role.getRoleByRoleType(RoleType.STUDENT)));
+         roles.add(new InfoRole(Role.getRoleByRoleType(RoleType.DEGREE_ADMINISTRATIVE_OFFICE)));
+         roles.add(new InfoRole(Role.getRoleByRoleType(RoleType.DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER)));
          return roles;
     }
 
