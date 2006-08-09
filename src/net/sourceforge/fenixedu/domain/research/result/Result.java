@@ -43,6 +43,10 @@ public class Result extends Result_Base {
         ResultParticipationRole role = ResultParticipationRole.getDefaultResultParticipationRole();
         new ResultParticipation(this, author, role, author);
     }
+    
+    public void setParticipation(Person participator, ResultParticipationRole participatorRole){
+        new ResultParticipation(this, participator, participatorRole, participator);
+    }
 
     /**
      * Returns true if already exists a result participation with the given person.
