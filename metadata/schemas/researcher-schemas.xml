@@ -406,12 +406,12 @@
 
 <!-- Schemas used for Result Participations Management -->
 <schema name="result.participations" type="net.sourceforge.fenixedu.domain.research.result.ResultParticipation" bundle="RESEARCHER_RESOURCES">
-	<slot name="person.name"/>
+	<slot name="person.name" read-only="true"/>
 </schema>
 
 <schema name="result.participationsWithRole" type="net.sourceforge.fenixedu.domain.research.result.ResultParticipation" bundle="RESEARCHER_RESOURCES">
-	<slot name="person.name"/>
-	<slot name="resultParticipationRole"/>
+	<slot name="person.name" read-only="true"/>
+	<slot name="resultParticipationRole" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
 </schema>
 
 <schema name="resultParticipation.creation" type="net.sourceforge.fenixedu.dataTransferObject.research.result.ResultParticipationCreationBean" bundle="RESEARCHER_RESOURCES">
@@ -527,7 +527,10 @@
 	</slot>
 	<slot name="publisher.name"/>
 	<slot name="year"/>
-	<slot name="resultParticipations" schema="result.participations" layout="values">
+	<slot name="authors" schema="result.participations" layout="values">
+ 		<property name="htmlSeparator" value=", "/>
+	</slot>
+	<slot name="editors" schema="result.participations" layout="values">
  		<property name="htmlSeparator" value=", "/>
 	</slot>
 </schema>
@@ -538,7 +541,10 @@
 	<slot name="bookPartType"/>
 	<slot name="publisher.name"/>
 	<slot name="year"/>
-	<slot name="resultParticipations" schema="result.participations" layout="values">
+	<slot name="authors" schema="result.participations" layout="values">
+ 		<property name="htmlSeparator" value=", "/>
+	</slot>
+	<slot name="editors" schema="result.participations" layout="values">
  		<property name="htmlSeparator" value=", "/>
 	</slot>
 </schema>
@@ -559,7 +565,10 @@
 	<slot name="bookTitle"/>
  	<slot name="year"/>
  	<slot name="event.name" key="label.event"/>
-	<slot name="resultParticipations" schema="result.participations" layout="values">
+	<slot name="authors" schema="result.participations" layout="values">
+ 		<property name="htmlSeparator" value=", "/>
+	</slot>
+	<slot name="editors" schema="result.participations" layout="values">
  		<property name="htmlSeparator" value=", "/>
 	</slot>
 </schema>
@@ -569,7 +578,7 @@
 	</slot>
  	<slot name="year"/>
  	<slot name="event.name" key="label.event"/>
-	<slot name="resultParticipations" schema="result.participations" layout="values">
+	<slot name="resultParticipations" schema="result.participations" layout="values" key="label.editors">
  		<property name="htmlSeparator" value=", "/>
 	</slot>
 </schema>
