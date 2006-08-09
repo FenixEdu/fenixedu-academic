@@ -20,17 +20,34 @@
 		<br/><br/>
 	</logic:messagesPresent>
 	
-	<!-- schema depends on selected option -->
-	<fr:edit id="editPublication" name="publicationBean"
-			action="<%="/publications/publicationsManagement.do?method=editPublicationData&publicationId=" + publicationBean.getIdInternal() %>"
-			schema="<%= publicationBean.getActiveSchema() %>">
-	    <fr:layout name="tabular">
-    	    <fr:property name="classes" value="style1"/>
-        	<fr:property name="columnClasses" value="listClasses,,"/>
-	    </fr:layout>
-	    
-	    <fr:destination name="bookPartPostBack" path="/publications/publicationsManagement.do?method=changeBookPartTypePostBack"/>
-   		<fr:destination name="invalid" path="/publications/publicationsManagement.do?method=prepareEditPublicationData"/>
-      	<fr:destination name="cancel" path="<%="/publications/publicationsManagement.do?method=prepareViewEditPublication&publicationId=" + publicationBean.getIdInternal() %>"/>
-	</fr:edit>
+	<fr:form action="/publications/publicationsManagement.do">
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" name="publicationsForm" property="method" />
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.publicationId" name="publicationsForm" property="publicationId" value="<%=publicationBean.getIdInternal().toString()%>"/>
+
+		<!-- Present publication fields -->
+		<fr:edit nested="true" id="editPublication" name="publicationBean" type="net.sourceforge.fenixedu.dataTransferObject.research.result.publication.ResultPublicationCreationBean"
+				schema="<%=publicationBean.getActiveSchema() %>">
+	 	    <fr:layout name="tabular">
+	    	    <fr:property name="classes" value="style1"/>
+	        	<fr:property name="columnClasses" value="listClasses,,"/>
+		    </fr:layout>
+		    <fr:destination name="bookPartPostBack" path="/publications/publicationsManagement.do?method=changeBookPartTypePostBack"/>
+	   		<fr:destination name="invalid" path="/publications/publicationsManagement.do?method=prepareEditPublicationData"/>
+		</fr:edit>
+
+		<!-- Create event in case of inproceedings or proceedings -->
+		<logic:equal name="publicationBean" property="createEvent" value="true">
+		<br/><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.result.publication.createEvent"/>
+			<fr:edit nested="true" id="createEvent" name="publicationBean" type="net.sourceforge.fenixedu.dataTransferObject.research.result.publication.ResultPublicationCreationBean"
+					schema="result.publication.create.Event">
+		 	    <fr:layout name="tabular">
+		    	    <fr:property name="classes" value="style1"/>
+		        	<fr:property name="columnClasses" value="listClasses,,"/>
+			    </fr:layout>
+		   		<fr:destination name="invalid" path="/publications/publicationsManagement.do?method=prepareEditPublicationData"/>
+			</fr:edit>
+		</logic:equal>	
+		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" onclick="this.form.method.value='editPublicationData';"><bean:message key="button.submit" /></html:submit>
+		<html:cancel bundle="HTMLALT_RESOURCES" altKey="cancel.cancel" onclick="this.form.method.value='prepareViewEditPublication';"><bean:message key="button.cancel" /></html:cancel>
+	</fr:form>
 </logic:present>

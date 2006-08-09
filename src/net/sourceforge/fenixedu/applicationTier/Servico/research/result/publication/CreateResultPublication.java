@@ -4,6 +4,7 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.ResultPublicationCreationBean;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
+import net.sourceforge.fenixedu.domain.research.event.Event;
 import net.sourceforge.fenixedu.domain.research.result.publication.*;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
@@ -95,9 +96,15 @@ public class CreateResultPublication extends Service {
             resultPublication = article;
         }break;
         case Inproceedings: {
-            // create Inproceedings with required fields;
-            Inproceedings inproceedings = new Inproceedings(publicationBean.getParticipator(), publicationBean.getTitle(), publicationBean.getBookTitle(), publicationBean.getYear());
-            // fill optional fields
+        	Event event = publicationBean.getEvent();
+        	if(event == null)
+        	{
+        		event = new Event(publicationBean.getEventEndDate(), publicationBean.getEventStartDate(), publicationBean.getEventLocal(),
+        				publicationBean.getEventFee(), publicationBean.getEventType(), publicationBean.getEventName());
+        	}
+        	//create Inproceedings with required fields;
+            Inproceedings inproceedings = new Inproceedings(publicationBean.getParticipator(), publicationBean.getTitle(), publicationBean.getBookTitle(), publicationBean.getYear(), event);
+            //fill optional fields
             Unit publisher = publicationBean.getPublisher();
             if (publisher == null)
             {
@@ -122,8 +129,14 @@ public class CreateResultPublication extends Service {
             resultPublication = inproceedings;
         }break;
         case Proceedings: {
+        	Event event = publicationBean.getEvent();
+        	if(event == null)
+        	{
+        		event = new Event(publicationBean.getEventEndDate(), publicationBean.getEventStartDate(), publicationBean.getEventLocal(),
+        				publicationBean.getEventFee(), publicationBean.getEventType(), publicationBean.getEventName());
+        	}
             // create Proceedings with required fields;
-            Proceedings proceedings = new Proceedings(publicationBean.getParticipator(), publicationBean.getTitle(), publicationBean.getYear());
+            Proceedings proceedings = new Proceedings(publicationBean.getParticipator(), publicationBean.getTitle(), publicationBean.getYear(), event);
             // fill optional fields
             Unit publisher = publicationBean.getPublisher();
             if (publisher == null)

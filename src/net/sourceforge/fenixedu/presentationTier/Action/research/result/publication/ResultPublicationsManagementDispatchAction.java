@@ -14,12 +14,14 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.ResultPublicationCreationBean;
 import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.ResultPublicationCreationBean.ResultPublicationType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.research.event.EventType;
 import net.sourceforge.fenixedu.domain.research.result.publication.*;
 import net.sourceforge.fenixedu.domain.research.result.publication.BookPart.BookPartType;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
+import net.sourceforge.fenixedu.util.MultiLanguageString;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -232,6 +234,24 @@ public class ResultPublicationsManagementDispatchAction extends FenixDispatchAct
     public ActionForward createResultPublication(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
 
         ResultPublicationCreationBean publicationBean = (ResultPublicationCreationBean) RenderUtils.getViewState().getMetaObject().getObject();
+        if((publicationBean.getPublicationType().equals(ResultPublicationType.Inproceedings)) || publicationBean.getPublicationType().equals(ResultPublicationType.Proceedings))
+        {
+        	if((publicationBean.getEvent() == null) && (publicationBean.getCreateEvent() == false))
+        	{
+        		if(publicationBean.getPublicationType().equals(ResultPublicationType.Inproceedings))
+        			publicationBean.setActiveSchema("result.publication.create.InproceedingsAndEvent");
+        		else
+        			publicationBean.setActiveSchema("result.publication.create.ProceedingsAndEvent");
+        		publicationBean.setEventName(new MultiLanguageString(publicationBean.getEventNameAutoComplete()));
+        		//default: event is a conference
+        		publicationBean.setEventType(EventType.Conference);
+        		publicationBean.setCreateEvent(true);
+        		RenderUtils.invalidateViewState();
+                request.setAttribute("publicationBean", publicationBean);
+                
+                return mapping.findForward("PreparedToCreate");
+        	}
+        }
         try{
             ServiceUtils.executeService(getUserView(request), "CreateResultPublication", new Object[] { publicationBean});
         }catch(DomainException ex){
@@ -281,6 +301,25 @@ public class ResultPublicationsManagementDispatchAction extends FenixDispatchAct
             HttpServletRequest request, HttpServletResponse response) throws Exception {
         
         ResultPublicationCreationBean publicationBean = (ResultPublicationCreationBean) RenderUtils.getViewState().getMetaObject().getObject();
+        
+        if((publicationBean.getPublicationType().equals(ResultPublicationType.Inproceedings)) || publicationBean.getPublicationType().equals(ResultPublicationType.Proceedings))
+        {
+        	if((publicationBean.getEvent() == null) && (publicationBean.getCreateEvent() == false))
+        	{
+        		if(publicationBean.getPublicationType().equals(ResultPublicationType.Inproceedings))
+        			publicationBean.setActiveSchema("result.publication.create.InproceedingsAndEvent");
+        		else
+        			publicationBean.setActiveSchema("result.publication.create.ProceedingsAndEvent");
+        		publicationBean.setEventName(new MultiLanguageString(publicationBean.getEventNameAutoComplete()));
+        		//default: event is a conference
+        		publicationBean.setEventType(EventType.Conference);
+        		publicationBean.setCreateEvent(true);
+        		RenderUtils.invalidateViewState();
+                request.setAttribute("publicationBean", publicationBean);
+                
+                return mapping.findForward("PreparedToEdit");
+        	}
+        }
         try{
             ServiceUtils.executeService(getUserView(request), "EditResultPublication", new Object[] { publicationBean});
         }catch(DomainException ex){

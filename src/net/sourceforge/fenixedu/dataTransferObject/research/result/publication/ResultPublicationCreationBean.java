@@ -2,15 +2,21 @@ package net.sourceforge.fenixedu.dataTransferObject.research.result.publication;
 
 import java.io.Serializable;
 
+import org.joda.time.YearMonthDay;
+
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
+import net.sourceforge.fenixedu.domain.research.event.Event;
+import net.sourceforge.fenixedu.domain.research.event.EventType;
+import net.sourceforge.fenixedu.domain.research.result.ResultParticipation.ResultParticipationRole;
 import net.sourceforge.fenixedu.domain.research.result.publication.*;
 import net.sourceforge.fenixedu.domain.research.result.publication.BookPart.BookPartType;
 import net.sourceforge.fenixedu.domain.research.result.publication.ResultPublication.ScopeType;
 import net.sourceforge.fenixedu.domain.research.result.publication.Thesis.ThesisType;
 
 import net.sourceforge.fenixedu.util.Month;
+import net.sourceforge.fenixedu.util.MultiLanguageString;
 
 public class ResultPublicationCreationBean implements Serializable{
 
@@ -18,6 +24,7 @@ public class ResultPublicationCreationBean implements Serializable{
     private String activeSchema;
     
     private DomainReference<Person> participator;
+    private ResultParticipationRole resultParticipationRole;
     
     private DomainReference<Unit> publisher;
     private String publisherName;
@@ -51,6 +58,20 @@ public class ResultPublicationCreationBean implements Serializable{
     private String howPublished;
     private String otherPublicationType;
     private Integer idInternal;
+    
+    
+    private DomainReference<Event> event;
+    private String eventNameAutoComplete;
+    private Boolean createEvent = false;
+    
+    //event creation needed to create a event
+    private MultiLanguageString eventName;
+    private EventType eventType;
+    private String eventLocal;
+    private YearMonthDay eventStartDate;
+    private YearMonthDay eventEndDate;
+    private Boolean eventFee;
+    
      
     public enum ResultPublicationType {
         /*Types based on BibTex*/
@@ -127,11 +148,13 @@ public class ResultPublicationCreationBean implements Serializable{
             this.setFirstPage(inproceedings.getFirstPage());
             this.setLastPage(inproceedings.getLastPage());
             this.setLanguage(inproceedings.getLanguage());
+            this.setEvent(inproceedings.getEvent());
         }
         else if(publication instanceof Proceedings) {
             this.setPublicationType(ResultPublicationType.Proceedings);
             Proceedings proceedings = (Proceedings) publication;
             this.setAddress(proceedings.getAddress());
+            this.setEvent(proceedings.getEvent());
         }
         else if(publication instanceof Thesis) {
             this.setPublicationType(ResultPublicationType.Thesis);
@@ -375,5 +398,67 @@ public class ResultPublicationCreationBean implements Serializable{
     public void setIdInternal(Integer idInternal) {
         this.idInternal = idInternal;
     }
+
+	public YearMonthDay getEventEndDate() {
+		return eventEndDate;
+	}
+	public void setEventEndDate(YearMonthDay eventEndDate) {
+		this.eventEndDate = eventEndDate;
+	}
+	public Boolean getEventFee() {
+		return eventFee;
+	}
+	public void setEventFee(Boolean eventFee) {
+		this.eventFee = eventFee;
+	}
+	public String getEventLocal() {
+		return eventLocal;
+	}
+	public void setEventLocal(String eventLocal) {
+		this.eventLocal = eventLocal;
+	}
+	public MultiLanguageString getEventName() {
+		return eventName;
+	}
+	public void setEventName(MultiLanguageString eventName) {
+		this.eventName = eventName;
+	}
+	public YearMonthDay getEventStartDate() {
+		return eventStartDate;
+	}
+	public void setEventStartDate(YearMonthDay eventStartDate) {
+		this.eventStartDate = eventStartDate;
+	}
+	public EventType getEventType() {
+		return eventType;
+	}
+	public void setEventType(EventType eventType) {
+		this.eventType = eventType;
+	}
+	public String getEventNameAutoComplete() {
+        return eventNameAutoComplete;
+    }
+    public void setEventNameAutoComplete(String name) {
+        this.eventNameAutoComplete = name;
+    }
+    public Event getEvent() {
+        return (this.event == null) ? null : this.event.getObject();
+    }
+    public void setEvent(Event event) {
+        this.event = (event != null) ? new DomainReference<Event>(event) : null;
+    }
+	public Boolean getCreateEvent() {
+		return createEvent;
+	}
+	public void setCreateEvent(Boolean createEvent) {
+		this.createEvent = createEvent;
+	}
+	public ResultParticipationRole getResultParticipationRole() {
+		return resultParticipationRole;
+	}
+	public void setResultParticipationRole(
+			ResultParticipationRole resultParticipationRole) {
+		this.resultParticipationRole = resultParticipationRole;
+	}
 
 }
