@@ -8,7 +8,10 @@
 <logic:present role="RESEARCHER">
 	<bean:define id="actionPath">
 		/resultPatents/prepareEditPatent.do?resultId=<bean:write name="patent" property="idInternal"/>
-	</bean:define>	
+	</bean:define>
+	<bean:define id="exceptionPath">
+		/resultPatents/prepareEditPatentData.do?resultId=<bean:write name="patent" property="idInternal"/>
+	</bean:define>
 	<bean:define id="cancelPath">
 		<%= actionPath %>
 	</bean:define>
@@ -27,13 +30,12 @@
 	
 	<%-- Form edit Patent Data --%>		
 	<fr:edit 	id="editPatent" name="patent" type="net.sourceforge.fenixedu.domain.research.result.patent.ResultPatent" 
-				schema="patent.edit"
-				action="<%= actionPath %>">
-		<fr:hidden slot="participation" name="UserView" property="person"/>
+				schema="patent.edit" action="<%= actionPath %>">
 	    <fr:layout name="tabular">
 	        <fr:property name="classes" value="style1"/>
 	        <fr:property name="columnClasses" value="listClasses,,"/>
 	    </fr:layout>
+	    <fr:destination name="exception" path="<%= exceptionPath %>"/>
    	    <fr:destination name="cancel" path="<%= cancelPath %>"/>
 	</fr:edit>
 </logic:present>

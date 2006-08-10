@@ -18,11 +18,9 @@
 		/result/resultDocumentFilesManagement.do?method=backToResult&resultId=<bean:write name="resultId"/>&resultType=<bean:write name="result" property="class.simpleName"/>
 	</bean:define>
 
-	<%-- Use Case Super Title --%>
+	<%-- Use Case Titles --%>
 	<em><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.result.superUseCaseTitle"/></em>
-	
-	<%-- Use Case Title --%>		
-	<h2><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultDocumentFiles.useCaseTitle"/></h2>
+	<h2><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultDocumentFiles.useCaseTitle"/>: <fr:view name="result" property="title"/></h2>
 	
 	<%-- Warning/Error messages --%>
 	<logic:messagesPresent name="messages" message="true">

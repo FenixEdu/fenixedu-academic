@@ -123,7 +123,7 @@
 			</fr:layout>
 		</fr:view>
 
-<%--
+
 		<!-- Publications -->
 		
 		<h3 id='publicationsTitle' class='cd_heading'/> <span> <bean:message bundle="RESEARCHER_RESOURCES" key="researcher.viewCurriculum.publicationsTitle"/> </span> </h3>
@@ -147,7 +147,7 @@
 		<logic:empty name="resultPatents">
 			<p><em><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.result.patent.listPatentsUseCase.emptyList"/></em></p>
 		</logic:empty>
---%>	
+
 </logic:present>
 		
 <br/>

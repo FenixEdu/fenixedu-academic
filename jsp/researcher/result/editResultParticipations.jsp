@@ -41,7 +41,7 @@
 	
 	<!-- Titles -->		
 	<em><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.result.superUseCaseTitle"/></em>
-	<h2><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.result.participations.useCaseTitle"/></h2>
+	<h2><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.result.participations.useCaseTitle"/>: <fr:view name="result" property="title"/></h2>
 	
 	<!-- Warning/Error messages -->
 	<logic:messagesPresent name="messages" message="true">

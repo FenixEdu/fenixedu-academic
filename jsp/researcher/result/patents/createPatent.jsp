@@ -24,12 +24,12 @@
 	<h3><bean:message bundle="RESEARCHER_RESOURCES" key="label.data"/></h3>	
 	<fr:create 	id="createPatent" type="net.sourceforge.fenixedu.domain.research.result.patent.ResultPatent" 
 				schema="patent.create"
-				action="/patents/patentsManagement.do?method=listPatents">
-		<fr:hidden slot="participation" name="UserView" property="person"/>
+				action="/patents/patentsManagement.do?method=prepareEditPatent">
 	    <fr:layout name="tabular">
 	        <fr:property name="classes" value="style1"/>
 	        <fr:property name="columnClasses" value="listClasses,,"/>
 	    </fr:layout>
+	    <fr:destination name="exception" path="/patents/patentsManagement.do?method=prepareCreatePatent"/>
 	    <fr:destination name="invalid" path="/patents/patentsManagement.do?method=prepareCreatePatent"/>
 	    <fr:destination name="cancel" path="/patents/patentsManagement.do?method=listPatents"/>
 	</fr:create>
