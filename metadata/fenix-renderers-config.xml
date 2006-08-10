@@ -204,6 +204,7 @@ Documentation:
           previous. You can shoose to present the slot's label or not. -->
     <renderer mode="input" type="java.lang.Object" layout="flow" class="net.sourceforge.fenixedu.renderers.FlowInputRenderer">
             <property name="labelTerminator" value=":"/>
+            <property name="labelStyle" value="display: inline; font-weight: bold;"/>
     </renderer>
 
     <!--@ Can be used to fill a slot with one of many possible objects. The objects are presented in an html menu. 

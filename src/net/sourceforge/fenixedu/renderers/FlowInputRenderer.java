@@ -37,6 +37,8 @@ public class FlowInputRenderer extends InputRenderer {
     private boolean labelExcluded = false;
     
     private String labelTerminator;
+	private String labelClasses;
+	private String labelStyle;
     
     private boolean hideValidators;
     private String validatorClasses;
@@ -164,8 +166,35 @@ public class FlowInputRenderer extends InputRenderer {
     public void setLabelTerminator(String labelTerminator) {
         this.labelTerminator = labelTerminator;
     }
-    
-    @Override
+
+	public String getLabelClasses() {
+		return labelClasses;
+	}
+
+	/**
+	 * Allows to specify the class of the element around the generated label
+	 * (when shown)
+	 * 
+	 * @property
+	 */
+	public void setLabelClasses(String labelClasses) {
+		this.labelClasses = labelClasses;
+	}
+
+	public String getLabelStyle() {
+		return labelStyle;
+	}
+
+	/**
+	 * Allows to specify the style applied to the generated label (when shown)
+	 * 
+	 * @property
+	 */
+	public void setLabelStyle(String labelStyle) {
+		this.labelStyle = labelStyle;
+	}
+
+	@Override
     protected Layout getLayout(Object object, Class type) {
         return new FlowObjectInputRenderer(getInputContext().getMetaObject());
     }
@@ -205,6 +234,8 @@ public class FlowInputRenderer extends InputRenderer {
                 HtmlLabel label = new HtmlLabel();
                 label.setFor(slot.getKey().toString());
                 label.setText(addLabelTerminator(slot.getLabel()));
+                label.setClasses(getLabelClasses());
+                label.setStyle(getLabelStyle());
                 container.addChild(label);
             }
             
