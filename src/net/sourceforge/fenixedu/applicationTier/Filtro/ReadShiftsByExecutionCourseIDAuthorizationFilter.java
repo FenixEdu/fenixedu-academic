@@ -13,13 +13,9 @@ import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.Professorship;
-import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-
-import org.apache.commons.collections.CollectionUtils;
-
 import pt.utl.ist.berserk.ServiceRequest;
 import pt.utl.ist.berserk.ServiceResponse;
 
@@ -44,9 +40,9 @@ public class ReadShiftsByExecutionCourseIDAuthorizationFilter extends Filtro {
     public void execute(ServiceRequest request, ServiceResponse response) throws Exception {
         IUserView id = getRemoteUser(request);
         Object[] argumentos = getServiceCallArguments(request);
-        if ((((id != null && id.getRoles() != null && !containsRole(id.getRoles()))
-                || (id != null && id.getRoles() != null && !hasPrivilege(id, argumentos))
-                || (id == null) || (id.getRoles() == null)))
+        if ((((id != null && id.getRoleTypes() != null && !containsRoleType(id.getRoleTypes()))
+                || (id != null && id.getRoleTypes() != null && !hasPrivilege(id, argumentos))
+                || (id == null) || (id.getRoleTypes() == null)))
                 && (!lecturesExecutionCourse(id, argumentos))) {
             throw new NotAuthorizedFilterException();
         }
@@ -55,10 +51,11 @@ public class ReadShiftsByExecutionCourseIDAuthorizationFilter extends Filtro {
     /**
      * @return The Needed Roles to Execute The Service
      */
-    protected Collection getNeededRoles() {
-        List roles = new ArrayList();
-        roles.add(Role.getRoleByRoleType(RoleType.TIME_TABLE_MANAGER));
-        roles.add(Role.getRoleByRoleType(RoleType.COORDINATOR));
+    @Override
+    protected Collection<RoleType> getNeededRoleTypes() {
+        List<RoleType> roles = new ArrayList<RoleType>();
+        roles.add(RoleType.TIME_TABLE_MANAGER);
+        roles.add(RoleType.COORDINATOR);
         return roles;
     }
 
@@ -68,78 +65,46 @@ public class ReadShiftsByExecutionCourseIDAuthorizationFilter extends Filtro {
      * @return
      */
     private boolean hasPrivilege(IUserView id, Object[] arguments) throws ExcepcaoPersistencia {
-
-        List roles = getRoleList(id.getRoles());
-        CollectionUtils.intersection(roles, getNeededRoles());
-
-        List roleTemp = new ArrayList();
-        roleTemp.add(RoleType.TIME_TABLE_MANAGER);
-        if (CollectionUtils.containsAny(roles, roleTemp)) {
+        if (id.hasRoleType(RoleType.TIME_TABLE_MANAGER)) {
             return true;
         }
 
-        roleTemp = new ArrayList();
-        roleTemp.add(RoleType.COORDINATOR);
-        if (CollectionUtils.containsAny(roles, roleTemp)) {
-
+        if (id.hasRoleType(RoleType.COORDINATOR)) {
             Teacher teacher = null;
             // Read The ExecutionDegree
-            try {
+            Integer executionCourseID = (Integer) arguments[0];
 
-                Integer executionCourseID = (Integer) arguments[0];
+            teacher = Teacher.readTeacherByUsername(id.getUtilizador());
 
-                teacher = Teacher.readTeacherByUsername(id.getUtilizador());
+            ExecutionCourse executionCourse = rootDomainObject
+                    .readExecutionCourseByOID(executionCourseID);
 
-                ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseID);
+            // For all Associated Curricular Courses
+            Iterator curricularCourseIterator = executionCourse.getAssociatedCurricularCourses()
+                    .iterator();
+            while (curricularCourseIterator.hasNext()) {
+                CurricularCourse curricularCourse = (CurricularCourse) curricularCourseIterator.next();
 
-                // For all Associated Curricular Courses
-                Iterator curricularCourseIterator = executionCourse.getAssociatedCurricularCourses()
-                        .iterator();
-                while (curricularCourseIterator.hasNext()) {
-                    CurricularCourse curricularCourse = (CurricularCourse) curricularCourseIterator
-                            .next();
+                // Read All Execution Degrees for this Degree Curricular
+                // Plan
 
-                    // Read All Execution Degrees for this Degree Curricular
-                    // Plan
+                List executionDegrees = curricularCourse.getDegreeCurricularPlan().getExecutionDegrees();
 
-                    List executionDegrees = curricularCourse.getDegreeCurricularPlan().getExecutionDegrees();
+                // Check if the Coordinator is the logged one
+                Iterator executionDegreesIterator = executionDegrees.iterator();
+                while (executionDegreesIterator.hasNext()) {
+                    ExecutionDegree executionDegree = (ExecutionDegree) executionDegreesIterator.next();
 
-                    // Check if the Coordinator is the logged one
-                    Iterator executionDegreesIterator = executionDegrees.iterator();
-                    while (executionDegreesIterator.hasNext()) {
-                        ExecutionDegree executionDegree = (ExecutionDegree) executionDegreesIterator
-                                .next();
+                    // modified by Tânia Pousão
+                    Coordinator coordinator = executionDegree.getCoordinatorByTeacher(teacher);
 
-                        // modified by Tânia Pousão
-                        Coordinator coordinator = executionDegree.getCoordinatorByTeacher(teacher);
-
-                        if (coordinator != null) {
-                            return true;
-                        }
-
-                        // if ((executionDegree.getCoordinator() != null)
-                        // &&
-                        // (executionDegree.getCoordinator().equals(teacher)))
-                        // {
-                        // return true;
-                        // }
+                    if (coordinator != null) {
+                        return true;
                     }
                 }
-            } catch (Exception e) {
-                return false;
             }
         }
         return false;
-    }
-
-    private List getRoleList(Collection roles) {
-        List result = new ArrayList();
-        Iterator iterator = roles.iterator();
-        while (iterator.hasNext()) {
-            result.add(((Role) iterator.next()).getRoleType());
-        }
-
-        return result;
     }
 
     private boolean lecturesExecutionCourse(IUserView id, Object[] argumentos) {

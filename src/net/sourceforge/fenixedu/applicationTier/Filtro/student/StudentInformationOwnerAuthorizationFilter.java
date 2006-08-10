@@ -1,7 +1,6 @@
 package net.sourceforge.fenixedu.applicationTier.Filtro.student;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Filtro.AuthorizationUtils;
 import net.sourceforge.fenixedu.applicationTier.Filtro.Filtro;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
@@ -28,8 +27,7 @@ public class StudentInformationOwnerAuthorizationFilter extends Filtro {
     public void execute(ServiceRequest request, ServiceResponse response) throws Exception {
         IUserView id = getRemoteUser(request);
 
-        if (id == null || id.getRoles() == null
-                || !AuthorizationUtils.containsRole(id.getRoles(), getRoleType())
+        if (id == null || id.getRoleTypes() == null || !id.hasRoleType(getRoleType())
                 || !curriculumOwner(id, request.getServiceParameters().parametersArray())) {
             throw new NotAuthorizedFilterException();
         }

@@ -18,7 +18,6 @@ import net.sourceforge.fenixedu.domain.finalDegreeWork.GroupProposal;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.Registration;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
@@ -46,7 +45,7 @@ public class StudentCurriculumAuthorizationFilter extends Filtro {
     public void execute(ServiceRequest request, ServiceResponse response) throws Exception {
         IUserView id = (IUserView) request.getRequester();
         String messageException = hasProvilege(id, request.getServiceParameters().parametersArray());
-        if ((id == null) || (id.getRoles() == null) || (!containsRole(id.getRoles()))
+        if ((id == null) || (id.getRoleTypes() == null) || (!containsRoleType(id.getRoleTypes()))
                 || (messageException != null)) {
             throw new NotAuthorizedFilterException(messageException);
         }
@@ -55,14 +54,15 @@ public class StudentCurriculumAuthorizationFilter extends Filtro {
     /**
      * @return The Needed Roles to Execute The Service
      */
-    protected Collection getNeededRoles() {
-        List roles = new ArrayList();
-        roles.add(Role.getRoleByRoleType(RoleType.MASTER_DEGREE_ADMINISTRATIVE_OFFICE));
-        roles.add(Role.getRoleByRoleType(RoleType.DEGREE_ADMINISTRATIVE_OFFICE));
-        roles.add(Role.getRoleByRoleType(RoleType.DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER));
-        roles.add(Role.getRoleByRoleType(RoleType.COORDINATOR));
-        roles.add(Role.getRoleByRoleType(RoleType.TEACHER));
-        roles.add(Role.getRoleByRoleType(RoleType.STUDENT));
+    @Override
+    protected Collection<RoleType> getNeededRoleTypes() {
+        List<RoleType> roles = new ArrayList<RoleType>();
+        roles.add(RoleType.MASTER_DEGREE_ADMINISTRATIVE_OFFICE);
+        roles.add(RoleType.DEGREE_ADMINISTRATIVE_OFFICE);
+        roles.add(RoleType.DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER);
+        roles.add(RoleType.COORDINATOR);
+        roles.add(RoleType.TEACHER);
+        roles.add(RoleType.STUDENT);
         return roles;
     }
 
@@ -82,9 +82,6 @@ public class StudentCurriculumAuthorizationFilter extends Filtro {
      * @return null if authorized string with message if not authorized
      */
     private String hasProvilege(IUserView id, Object[] arguments) {
-        List roles = getRoleList(id.getRoles());
-        CollectionUtils.intersection(roles, getNeededRoles());
-
         Integer studentCurricularPlanID = (Integer) arguments[1];
 
         StudentCurricularPlan studentCurricularPlan = null;
@@ -142,26 +139,21 @@ public class StudentCurriculumAuthorizationFilter extends Filtro {
             // check other possible authorizations
         }
 
-        List roleTemp = new ArrayList();
-        roleTemp.add(RoleType.MASTER_DEGREE_ADMINISTRATIVE_OFFICE);
-        if (CollectionUtils.containsAny(roles, roleTemp)) {
+        if (id.hasRoleType(RoleType.MASTER_DEGREE_ADMINISTRATIVE_OFFICE)) {
             if (!studentCurricularPlan.getDegreeCurricularPlan().getDegree().getTipoCurso().equals(
                     DegreeType.MASTER_DEGREE)
-                    && !(roles.contains(RoleType.DEGREE_ADMINISTRATIVE_OFFICE) || roles
-                            .contains(RoleType.DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER))) {
+                    && !(id.hasRoleType(RoleType.DEGREE_ADMINISTRATIVE_OFFICE)
+                            || id.hasRoleType(RoleType.DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER))) {
                 return "noAuthorization";
             }
-            if (!(roles.contains(RoleType.DEGREE_ADMINISTRATIVE_OFFICE) || roles
-                    .contains(RoleType.DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER))) {
+            if (!(id.hasRoleType(RoleType.DEGREE_ADMINISTRATIVE_OFFICE)
+                    || id.hasRoleType(RoleType.DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER))) {
                 return null;
             }
         }
 
         if (arguments[0] != null) {
-            roleTemp = new ArrayList();
-            roleTemp.add(RoleType.COORDINATOR);
-            if (CollectionUtils.containsAny(roles, roleTemp)) {
-                try {
+            if (id.hasRoleType(RoleType.COORDINATOR)) {
                     ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID((Integer) arguments[0]);
 
                     if (executionDegree == null) {
@@ -196,37 +188,10 @@ public class StudentCurriculumAuthorizationFilter extends Filtro {
                                             .getIdInternal())) {
                         return "noAuthorization";
                     }
-                    /*
-                     * IStudentCurricularPlanPersistente
-                     * persistentStudentCurricularPlan = sp
-                     * .getIStudentCurricularPlanPersistente(); List
-                     * activeStudentCurricularPlans =
-                     * persistentStudentCurricularPlan
-                     * .readAllActiveStudentCurricularPlan(studentCurricularPlan
-                     * .getStudent().getNumber()); boolean
-                     * hasAnActiveCurricularPlanThatCoincidesWithTheCoordinatorsCurricularPlan =
-                     * false; for (int i = 0; i <
-                     * activeStudentCurricularPlans.size(); i++) {
-                     * StudentCurricularPlan activeStudentCurricularPlan =
-                     * (StudentCurricularPlan) activeStudentCurricularPlans
-                     * .get(i); if (coordinator.getExecutionDegree()
-                     * .getDegreeCurricularPlan().getIdInternal().equals(
-                     * activeStudentCurricularPlan .getDegreeCurricularPlan()
-                     * .getIdInternal())) {
-                     * hasAnActiveCurricularPlanThatCoincidesWithTheCoordinatorsCurricularPlan =
-                     * true; } } if
-                     * (!hasAnActiveCurricularPlanThatCoincidesWithTheCoordinatorsCurricularPlan) {
-                     * return "noAuthorization"; }
-                     */
-                } catch (Exception e) {
-                    return "noAuthorization";
-                }
                 return null;
             }
         }
-        roleTemp = new ArrayList();
-        roleTemp.add(RoleType.STUDENT);
-        if (CollectionUtils.containsAny(roles, roleTemp)) {
+        if (id.hasRoleType(RoleType.STUDENT)) {
             try {
                 if (!id.getUtilizador().equals(
                         studentCurricularPlan.getStudent().getPerson().getUsername())) {
@@ -238,10 +203,7 @@ public class StudentCurriculumAuthorizationFilter extends Filtro {
             return null;
         }
 
-        roleTemp = new ArrayList();
-        roleTemp.add(RoleType.TEACHER);
-        if (CollectionUtils.containsAny(roles, roleTemp)) {
-            try {
+        if (id.hasRoleType(RoleType.TEACHER)) {
                 Teacher teacher = Teacher.readTeacherByUsername(id.getUtilizador());
                 if (teacher == null) {
                     return "noAuthorization";
@@ -251,17 +213,10 @@ public class StudentCurriculumAuthorizationFilter extends Filtro {
                     return new String("error.enrollment.notStudentTutor+"
                             + studentCurricularPlan.getStudent().getNumber().toString());
                 }
-
-            } catch (Exception e) {
-                return "noAuthorization";
-            }
             return null;
         }
 
-        roleTemp = new ArrayList();
-        roleTemp.add(RoleType.DEGREE_ADMINISTRATIVE_OFFICE);
-        roleTemp.add(RoleType.DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER);
-        if (CollectionUtils.containsAny(roles, roleTemp)) {
+        if (id.hasRoleType(RoleType.DEGREE_ADMINISTRATIVE_OFFICE) || id.hasRoleType(RoleType.DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER)) {
             if (!studentCurricularPlan.getDegreeCurricularPlan().getDegree().getTipoCurso().equals(
                     DegreeType.DEGREE)) {
                 return "noAuthorization";
@@ -271,11 +226,7 @@ public class StudentCurriculumAuthorizationFilter extends Filtro {
         return "noAuthorization";
     }
 
-    private boolean verifyStudentTutor(Teacher teacher, Registration student) throws ExcepcaoPersistencia {
-        if (student.getAssociatedTutor() == null) {
-            return false;
-        }
-        
-        return student.getAssociatedTutor().getTeacher().equals(teacher);
+    private boolean verifyStudentTutor(Teacher teacher, Registration registration) {
+        return registration.getAssociatedTutor() != null && registration.getAssociatedTutor().getTeacher().equals(teacher);
     }
 }

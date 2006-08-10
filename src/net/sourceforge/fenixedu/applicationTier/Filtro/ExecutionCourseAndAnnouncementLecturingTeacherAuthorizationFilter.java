@@ -35,8 +35,8 @@ public class ExecutionCourseAndAnnouncementLecturingTeacherAuthorizationFilter e
         IUserView id = getRemoteUser(request);
         Object[] arguments = getServiceCallArguments(request);
         try {
-            if ((id == null) || (id.getRoles() == null)
-                    || !AuthorizationUtils.containsRole(id.getRoles(), getRoleType())
+            if ((id == null) || (id.getRoleTypes() == null)
+                    || !id.hasRoleType(getRoleType())
                     || !announcementBelongsToTeacherExecutionCourses(id, arguments)) {
                 throw new NotAuthorizedFilterException();
             }

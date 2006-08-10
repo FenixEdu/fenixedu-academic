@@ -35,12 +35,12 @@ public class ExecutionDegreeCoordinatorAuthorizationFilter extends Filtro {
         final Object[] arguments = getServiceCallArguments(request);
         final Integer idInternal = (arguments[0] instanceof Integer) ? (Integer) arguments[0] : ((InfoObject)arguments[0]).getIdInternal();
 
-        if (userView == null || userView.getRoles() == null || !verifyCondition(userView, idInternal)) {
+        if (userView == null || userView.getRoleTypes() == null || !verifyCondition(userView, idInternal)) {
             throw new NotAuthorizedFilterException();
         }
 
-        if (((userView != null && userView.getRoles() != null && !verifyCondition(userView, idInternal)))
-                || (userView == null) || (userView.getRoles() == null)) {
+        if (((userView != null && userView.getRoleTypes() != null && !verifyCondition(userView, idInternal)))
+                || (userView == null) || (userView.getRoleTypes() == null)) {
             throw new NotAuthorizedFilterException();
         }
 

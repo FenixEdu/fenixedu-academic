@@ -51,8 +51,7 @@ public class CoordinatorAndLEECAuthorizationFilter extends AuthorizationByRoleFi
         IUserView id = getRemoteUser(request);
         Object[] argumentos = getServiceCallArguments(request);
 
-        if ((id == null) || (id.getRoles() == null)
-                || !AuthorizationUtils.containsRole(id.getRoles(), getRoleType())
+        if ((id == null) || (id.getRoleTypes() == null) || !id.hasRoleType(getRoleType())
                 || !coordinatorLEEC(id, argumentos)) {
             throw new NotAuthorizedFilterException();
         }

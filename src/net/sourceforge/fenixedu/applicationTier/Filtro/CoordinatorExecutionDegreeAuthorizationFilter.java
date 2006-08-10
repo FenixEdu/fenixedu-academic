@@ -23,7 +23,7 @@ import pt.utl.ist.berserk.ServiceResponse;
 /**
  * 
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt)
- *  
+ * 
  */
 public class CoordinatorExecutionDegreeAuthorizationFilter extends Filtro {
 
@@ -39,9 +39,9 @@ public class CoordinatorExecutionDegreeAuthorizationFilter extends Filtro {
     public void execute(ServiceRequest request, ServiceResponse response) throws Exception {
         IUserView id = getRemoteUser(request);
         Object[] argumentos = getServiceCallArguments(request);
-        if ((id != null && id.getRoles() != null && !containsRole(id.getRoles()))
-                || (id != null && id.getRoles() != null && !hasPrivilege(id, argumentos))
-                || (id == null) || (id.getRoles() == null)) {
+        if ((id != null && id.getRoleTypes() != null && !containsRoleType(id.getRoleTypes()))
+                || (id != null && id.getRoleTypes() != null && !hasPrivilege(id, argumentos))
+                || (id == null) || (id.getRoleTypes() == null)) {
             throw new NotAuthorizedFilterException();
         }
     }
@@ -49,10 +49,11 @@ public class CoordinatorExecutionDegreeAuthorizationFilter extends Filtro {
     /**
      * @return The Needed Roles to Execute The Service
      */
-    protected Collection getNeededRoles() {
-        List roles = new ArrayList();
-        roles.add(Role.getRoleByRoleType(RoleType.TIME_TABLE_MANAGER));
-        roles.add(Role.getRoleByRoleType(RoleType.COORDINATOR));
+    @Override
+    protected Collection<RoleType> getNeededRoleTypes() {
+        List<RoleType> roles = new ArrayList<RoleType>();
+        roles.add(RoleType.TIME_TABLE_MANAGER);
+        roles.add(RoleType.COORDINATOR);
         return roles;
     }
 
@@ -62,42 +63,31 @@ public class CoordinatorExecutionDegreeAuthorizationFilter extends Filtro {
      * @return
      */
     private boolean hasPrivilege(IUserView id, Object[] arguments) throws ExcepcaoPersistencia {
-
-        List roles = getRoleList(id.getRoles());
-        CollectionUtils.intersection(roles, getNeededRoles());
-
-        List roleTemp = new ArrayList();
-        roleTemp.add(RoleType.TIME_TABLE_MANAGER);
-        if (CollectionUtils.containsAny(roles, roleTemp)) {
+        if (id.hasRoleType(RoleType.TIME_TABLE_MANAGER)) {
             return true;
         }
 
-        roleTemp = new ArrayList();
-        roleTemp.add(RoleType.COORDINATOR);
-        if (CollectionUtils.containsAny(roles, roleTemp)) {
-            try {
-                Integer executionDegreeID = null;
-                if (arguments[1] instanceof InfoExecutionDegree) {
-                    executionDegreeID = ((InfoExecutionDegree) arguments[1]).getIdInternal();
-                } else if (arguments[0] instanceof Integer) {
-                    executionDegreeID = (Integer) arguments[0];
-                }
+        if (id.hasRoleType(RoleType.COORDINATOR)) {
+            Integer executionDegreeID = null;
+            if (arguments[1] instanceof InfoExecutionDegree) {
+                executionDegreeID = ((InfoExecutionDegree) arguments[1]).getIdInternal();
+            } else if (arguments[0] instanceof Integer) {
+                executionDegreeID = (Integer) arguments[0];
+            }
 
-                if (executionDegreeID == null) {
-                    return false;
-                }
-                Teacher teacher = Teacher.readTeacherByUsername(id.getUtilizador());
-                ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(executionDegreeID);
-                if(executionDegree == null) {
-                	return false;
-                }
-                Coordinator coordinator = executionDegree.getCoordinatorByTeacher(teacher);
-
-                if (coordinator != null) {
-                    return true;
-                }
-            } catch (Exception e) {
+            if (executionDegreeID == null) {
                 return false;
+            }
+            Teacher teacher = Teacher.readTeacherByUsername(id.getUtilizador());
+            ExecutionDegree executionDegree = rootDomainObject
+                    .readExecutionDegreeByOID(executionDegreeID);
+            if (executionDegree == null) {
+                return false;
+            }
+            Coordinator coordinator = executionDegree.getCoordinatorByTeacher(teacher);
+
+            if (coordinator != null) {
+                return true;
             }
         }
         return false;

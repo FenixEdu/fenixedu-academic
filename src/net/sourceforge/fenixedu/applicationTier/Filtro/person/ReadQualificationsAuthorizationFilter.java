@@ -1,7 +1,6 @@
 package net.sourceforge.fenixedu.applicationTier.Filtro.person;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Filtro.AuthorizationUtils;
 import net.sourceforge.fenixedu.applicationTier.Filtro.Filtro;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.Person;
@@ -27,7 +26,7 @@ public class ReadQualificationsAuthorizationFilter extends Filtro {
         Object[] arguments = getServiceCallArguments(request);
         try {
             //Verify if needed fields are null
-            if ((id == null) || (id.getRoles() == null)) {
+            if ((id == null) || (id.getRoleTypes() == null)) {
                 throw new NotAuthorizedException();
             }
 
@@ -37,12 +36,11 @@ public class ReadQualificationsAuthorizationFilter extends Filtro {
             // 2: The user ir a Teacher and the qualification is his own
             boolean valid = false;
 
-            if ((AuthorizationUtils.containsRole(id.getRoles(), getRoleTypeGrantOwnerManager()))
-                    && isGrantOwner((String) arguments[0])) {
+            if ((id.hasRoleType(getRoleTypeGrantOwnerManager())) && isGrantOwner((String) arguments[0])) {
                 valid = true;
             }
 
-            if (AuthorizationUtils.containsRole(id.getRoles(), getRoleTypeTeacher())) {
+            if (id.hasRoleType(getRoleTypeTeacher())) {
                 valid = true;
             }
 

@@ -32,8 +32,7 @@ public class DegreeCoordinatorAuthorizationFilter extends AuthorizationByRoleFil
         Object[] argumentos = getServiceCallArguments(request);
 
         try {
-            if ((id == null) || (id.getRoles() == null)
-                    || !AuthorizationUtils.containsRole(id.getRoles(), getRoleType())
+            if ((id == null) || (id.getRoleTypes() == null) || !id.hasRoleType(getRoleType())
                     || !isCoordinatorOfExecutionDegree(id, argumentos)) {
                 throw new NotAuthorizedFilterException();
             }

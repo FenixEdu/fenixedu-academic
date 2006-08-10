@@ -31,23 +31,20 @@ public class CreditsAuthorizationFilter extends Filtro {
         IUserView requester = getRemoteUser(request);
         Object[] arguments = getServiceCallArguments(request);
 
-        Collection roles = requester.getRoles();
         boolean authorizedRequester = false;
         // ATTENTION: ifs order matters...
-        if (AuthorizationUtils.containsRole(roles, RoleType.CREDITS_MANAGER)) {
+        if (requester.hasRoleType(RoleType.CREDITS_MANAGER)) {
             authorizedRequester = true;
-        } else if (AuthorizationUtils.containsRole(roles, RoleType.DEPARTMENT_CREDITS_MANAGER)) {
+        } else if (requester.hasRoleType(RoleType.DEPARTMENT_CREDITS_MANAGER)) {
             Teacher teacherToEdit = readTeacher(arguments[0]);
             Person requesterPerson = Person.readPersonByUsername(requester.getUtilizador());
             List departmentsWithAccessGranted = requesterPerson.getManageableDepartmentCredits();            
             Department department = teacherToEdit.getCurrentWorkingDepartment();
             authorizedRequester = departmentsWithAccessGranted.contains(department);
-
-        } else if (AuthorizationUtils.containsRole(roles, RoleType.TEACHER)) {
+        } else if (requester.hasRoleType(RoleType.TEACHER)) {
             Teacher teacherToEdit = readTeacher(arguments[0]);
             authorizedRequester = teacherToEdit.getPerson().getUsername().equals(
                     requester.getUtilizador());
-
         }
 
         if (!authorizedRequester) {

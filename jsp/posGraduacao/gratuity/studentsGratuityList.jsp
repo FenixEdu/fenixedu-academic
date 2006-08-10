@@ -7,8 +7,8 @@
 
 <bean:define id="userView" name="<%= SessionConstants.U_VIEW %>" scope="session"/>
 <% boolean masterDegreeUser = false; %>
-<logic:iterate id="role" name="userView" property="roles">
-	<logic:equal name="role" property="roleType" value="<%= RoleType.MASTER_DEGREE_ADMINISTRATIVE_OFFICE.toString() %>" >
+<logic:iterate id="roleType" name="userView" property="roleTypes">
+	<logic:equal name="roleType" value="<%= RoleType.MASTER_DEGREE_ADMINISTRATIVE_OFFICE.toString() %>" >
 		<% masterDegreeUser = true; %>
 	</logic:equal>	
 </logic:iterate>	

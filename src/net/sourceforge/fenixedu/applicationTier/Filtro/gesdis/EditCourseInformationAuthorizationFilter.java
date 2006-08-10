@@ -8,7 +8,6 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.AuthorizationByRoleFilter;
-import net.sourceforge.fenixedu.applicationTier.Filtro.AuthorizationUtils;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.gesdis.InfoCourseReport;
@@ -49,10 +48,9 @@ public class EditCourseInformationAuthorizationFilter extends AuthorizationByRol
         Object[] arguments = getServiceCallArguments(request);
 
         try {
-            if (((id != null && id.getRoles() != null && !AuthorizationUtils.containsRole(id.getRoles(),
-                    getRoleType())))
+            if (((id != null && id.getRoleTypes() != null && !id.hasRoleType(getRoleType())))
                     || (id == null)
-                    || (id.getRoles() == null)
+                    || (id.getRoleTypes() == null)
                     || (!isResponsibleFor(id, (InfoCourseReport) arguments[1]))) {
                 throw new NotAuthorizedException();
             }

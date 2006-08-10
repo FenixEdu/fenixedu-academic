@@ -5,7 +5,6 @@
 package net.sourceforge.fenixedu.applicationTier.Filtro.person;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Filtro.AuthorizationUtils;
 import net.sourceforge.fenixedu.applicationTier.Filtro.Filtro;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.dataTransferObject.person.InfoQualification;
@@ -34,12 +33,11 @@ public class QualificationManagerAuthorizationFilter extends Filtro {
 
         try {
             // Verify if needed fields are null
-            if ((id == null) || (id.getRoles() == null)) {
+            if ((id == null) || (id.getRoleTypes() == null)) {
                 throw new NotAuthorizedException();
             }
 
-            if (!AuthorizationUtils.containsRole(id.getRoles(), getRoleTypeGrantOwnerManager())
-                    && !AuthorizationUtils.containsRole(id.getRoles(), getRoleTypeTeacher()))
+            if (!id.hasRoleType(getRoleTypeGrantOwnerManager()) && !id.hasRoleType(getRoleTypeTeacher()))
                 throw new NotAuthorizedException();
 
             InfoQualification infoQualification = null;
@@ -54,12 +52,10 @@ public class QualificationManagerAuthorizationFilter extends Filtro {
             // 1: The user ir a Grant Owner Manager and the qualification
             // belongs to a Grant Owner
             // 2: The user ir a Teacher and the qualification is his own
-            if (AuthorizationUtils.containsRole(id.getRoles(), getRoleTypeGrantOwnerManager())
-                    && isGrantOwner(infoQualification))
+            if (id.hasRoleType(getRoleTypeGrantOwnerManager()) && isGrantOwner(infoQualification))
                 valid = true;
 
-            if (AuthorizationUtils.containsRole(id.getRoles(), getRoleTypeTeacher())
-                    && isOwnQualification(id.getUtilizador(), infoQualification))
+            if (id.hasRoleType(getRoleTypeTeacher()) && isOwnQualification(id.getUtilizador(), infoQualification))
                 valid = true;
 
             if (!valid)

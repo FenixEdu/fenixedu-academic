@@ -29,8 +29,8 @@ public class CurricularCourseLecturingTeacherAndNotBasicAndDegreeAeroAuthorizati
         IUserView id = getRemoteUser(request);
         Object[] argumentos = getServiceCallArguments(request);
 
-        if ((id == null) || (id.getRoles() == null)
-                || !AuthorizationUtils.containsRole(id.getRoles(), getRoleType())
+        if ((id == null) || (id.getRoleTypes() == null)
+                || !id.hasRoleType(getRoleType())
                 || !lecturesExecutionCourse(id, argumentos)
                 || !CurricularCourseBelongsExecutionCourse(id, argumentos)
                 || !CurricularCourseNotBasic(argumentos) || !CurricularCourseAeroDegree(argumentos)) {

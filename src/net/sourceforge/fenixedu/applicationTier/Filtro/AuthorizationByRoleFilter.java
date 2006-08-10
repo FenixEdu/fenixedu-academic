@@ -29,9 +29,8 @@ public abstract class AuthorizationByRoleFilter extends Filtro {
      */
     public void execute(ServiceRequest request, ServiceResponse response) throws Exception {
         IUserView userView = getRemoteUser(request);
-        if (((userView != null && userView.getRoles() != null && !AuthorizationUtils.containsRole(
-                userView.getRoles(), getRoleType())))
-                || (userView == null) || (userView.getRoles() == null)) {
+        if (((userView != null && userView.getRoleTypes() != null && !userView.hasRoleType(getRoleType())))
+                || (userView == null) || (userView.getRoleTypes() == null)) {
             throw new NotAuthorizedFilterException();
         }
 

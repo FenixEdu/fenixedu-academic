@@ -36,8 +36,8 @@ public class ExecutionCourseResponsibleForTeacherAuthorizationFilter extends Aut
         Object[] arguments = getServiceCallArguments(request);
 
         try {
-            if ((id == null) || (id.getRoles() == null)
-                    || !AuthorizationUtils.containsRole(id.getRoles(), getRoleType())
+            if ((id == null) || (id.getRoleTypes() == null)
+                    || !id.hasRoleType(getRoleType())
                     || !isResponsibleForExecutionCourse(id, arguments)) {
                 throw new NotAuthorizedFilterException();
             }

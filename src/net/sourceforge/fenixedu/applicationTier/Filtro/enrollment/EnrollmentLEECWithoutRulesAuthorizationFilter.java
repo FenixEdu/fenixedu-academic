@@ -11,7 +11,6 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.AuthorizationByManyRolesFilter;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
-import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.person.RoleType;
@@ -27,10 +26,11 @@ public class EnrollmentLEECWithoutRulesAuthorizationFilter extends Authorization
 
     private static DegreeType DEGREE_TYPE = DegreeType.DEGREE;
 
-    protected Collection getNeededRoles() {
-        List roles = new ArrayList();
-        roles.add(Role.getRoleByRoleType(RoleType.DEGREE_ADMINISTRATIVE_OFFICE));
-        roles.add(Role.getRoleByRoleType(RoleType.DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER));
+    @Override
+    protected Collection<RoleType> getNeededRoleTypes() {
+        List<RoleType> roles = new ArrayList<RoleType>();
+        roles.add(RoleType.DEGREE_ADMINISTRATIVE_OFFICE);
+        roles.add(RoleType.DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER);
         return roles;
     }
 

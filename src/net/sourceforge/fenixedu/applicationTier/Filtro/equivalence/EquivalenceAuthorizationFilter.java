@@ -2,14 +2,12 @@ package net.sourceforge.fenixedu.applicationTier.Filtro.equivalence;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.Filtro;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
-import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
@@ -39,75 +37,58 @@ public class EquivalenceAuthorizationFilter extends Filtro {
         }
     }
 
-    private List getRoleList(Collection roles) {
-        List result = new ArrayList();
-        Iterator iterator = roles.iterator();
-        while (iterator.hasNext()) {
-            result.add(((Role) iterator.next()).getRoleType());
-        }
-
-        return result;
-    }
-
-    protected Collection getNeededRoles() {
-        List roles = new ArrayList();
-        roles.add(Role.getRoleByRoleType(RoleType.COORDINATOR));
-        roles.add(Role.getRoleByRoleType(RoleType.DEGREE_ADMINISTRATIVE_OFFICE));
-        roles.add(Role.getRoleByRoleType(RoleType.DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER));
-        roles.add(Role.getRoleByRoleType(RoleType.MASTER_DEGREE_ADMINISTRATIVE_OFFICE));
+    @Override
+    protected Collection<RoleType> getNeededRoleTypes() {
+        List<RoleType> roles = new ArrayList<RoleType>();
+        roles.add(RoleType.COORDINATOR);
+        roles.add(RoleType.DEGREE_ADMINISTRATIVE_OFFICE);
+        roles.add(RoleType.DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER);
+        roles.add(RoleType.MASTER_DEGREE_ADMINISTRATIVE_OFFICE);
         return roles;
     }
 
     private String hasPrevilege(IUserView userView, Object[] serviceArgs) {
-        try {
-            if ((userView == null) || (userView.getRoles() == null)) {
-                return "errors.enrollment.equivalence.operation.not.authorized";
-            }
-
-            if (!containsAtLeastOneOfTheRoles(userView)) {
-                return "errors.enrollment.equivalence.operation.not.authorized";
-            }
-
-            List roles = getRoleList(userView.getRoles());
-
-            Integer studentNumber = (Integer) serviceArgs[0];
-            DegreeType degreeType = (DegreeType) serviceArgs[1];
-
-            Registration student = getStudent(studentNumber, degreeType);
-            if (student == null) {
-                return "errors.enrollment.equivalence.no.student.with.that.number.and.degreeType";
-            }
-
-            if (degreeType.equals(DegreeType.DEGREE)) {
-                if (!isThisStudentsDegreeTheOne(student)) {
-                    return "errors.enrollment.equivalence.data.not.authorized";
-                }
-            }
-
-            if ((roles.contains(RoleType.DEGREE_ADMINISTRATIVE_OFFICE) || roles
-                    .contains(RoleType.DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER))
-                    && (roles.contains(RoleType.MASTER_DEGREE_ADMINISTRATIVE_OFFICE))) {
-                if (!degreeType.equals(student.getDegreeType())) {
-                    return "errors.enrollment.equivalence.data.not.authorized";
-                }
-            } else if (roles.contains(RoleType.DEGREE_ADMINISTRATIVE_OFFICE)
-                    || roles.contains(RoleType.DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER)) {
-                if (!degreeType.equals(DegreeType.DEGREE)) {
-                    return "errors.enrollment.equivalence.data.not.authorized";
-                }
-            } else if (roles.contains(RoleType.MASTER_DEGREE_ADMINISTRATIVE_OFFICE)) {
-                if (!degreeType.equals(DegreeType.MASTER_DEGREE)) {
-                    return "errors.enrollment.equivalence.data.not.authorized";
-                }
-            } else if (roles.contains(RoleType.COORDINATOR)) {
-                if (!isThisACoordinatorOfThisStudentsDegree(userView, student)) {
-                    return "errors.enrollment.equivalence.data.not.authorized";
-                }
-            }
-
-        } catch (ExcepcaoPersistencia e) {
-            e.printStackTrace();
+        if ((userView == null) || (userView.getRoleTypes() == null)) {
             return "errors.enrollment.equivalence.operation.not.authorized";
+        }
+
+        if (!containsRoleType(userView.getRoleTypes())) {
+            return "errors.enrollment.equivalence.operation.not.authorized";
+        }
+
+        Integer studentNumber = (Integer) serviceArgs[0];
+        DegreeType degreeType = (DegreeType) serviceArgs[1];
+
+        Registration student = getStudent(studentNumber, degreeType);
+        if (student == null) {
+            return "errors.enrollment.equivalence.no.student.with.that.number.and.degreeType";
+        }
+
+        if (degreeType.equals(DegreeType.DEGREE)) {
+            if (!isThisStudentsDegreeTheOne(student)) {
+                return "errors.enrollment.equivalence.data.not.authorized";
+            }
+        }
+
+        if ((userView.hasRoleType(RoleType.DEGREE_ADMINISTRATIVE_OFFICE) || userView
+                .hasRoleType(RoleType.DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER))
+                && userView.hasRoleType(RoleType.MASTER_DEGREE_ADMINISTRATIVE_OFFICE)) {
+            if (!degreeType.equals(student.getDegreeType())) {
+                return "errors.enrollment.equivalence.data.not.authorized";
+            }
+        } else if (userView.hasRoleType(RoleType.DEGREE_ADMINISTRATIVE_OFFICE)
+                || userView.hasRoleType(RoleType.DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER)) {
+            if (!degreeType.equals(DegreeType.DEGREE)) {
+                return "errors.enrollment.equivalence.data.not.authorized";
+            }
+        } else if (userView.hasRoleType(RoleType.MASTER_DEGREE_ADMINISTRATIVE_OFFICE)) {
+            if (!degreeType.equals(DegreeType.MASTER_DEGREE)) {
+                return "errors.enrollment.equivalence.data.not.authorized";
+            }
+        } else if (userView.hasRoleType(RoleType.COORDINATOR)) {
+            if (!isThisACoordinatorOfThisStudentsDegree(userView, student)) {
+                return "errors.enrollment.equivalence.data.not.authorized";
+            }
         }
 
         return null;
@@ -115,31 +96,11 @@ public class EquivalenceAuthorizationFilter extends Filtro {
 
     /**
      * @param userView
-     * @param userRoles
-     * @return true/false
-     */
-    private boolean containsAtLeastOneOfTheRoles(IUserView userView) {
-        List neededRoles = getRoleList(getNeededRoles());
-        List userRoles = getRoleList(userView.getRoles());
-
-        for (int i = 0; i < neededRoles.size(); i++) {
-            if (userRoles.contains(neededRoles.get(i))) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    /**
-     * @param userView
      * @param student
      * @return true/false
      */
-    private boolean isThisACoordinatorOfThisStudentsDegree(IUserView userView, Registration student)
-            throws ExcepcaoPersistencia {
-        List executionDegreesOfThisCoordinator = getExecutionDegreesOfThisCoordinator(userView
-                .getUtilizador());
+    private boolean isThisACoordinatorOfThisStudentsDegree(IUserView userView, Registration student) {
+        List executionDegreesOfThisCoordinator = getExecutionDegreesOfThisCoordinator(userView.getUtilizador());
 
         List degreeCurricularPlansOfThisCoordinator = (List) CollectionUtils.collect(
                 executionDegreesOfThisCoordinator, new Transformer() {
@@ -161,7 +122,7 @@ public class EquivalenceAuthorizationFilter extends Filtro {
      * @return IStudent
      * @throws ExcepcaoPersistencia
      */
-    private Registration getStudent(Integer studentNumber, DegreeType degreeType) throws ExcepcaoPersistencia {
+    private Registration getStudent(Integer studentNumber, DegreeType degreeType) {
         return Registration.readStudentByNumberAndDegreeType(studentNumber, degreeType);
     }
 
@@ -170,18 +131,17 @@ public class EquivalenceAuthorizationFilter extends Filtro {
      * @return List
      * @throws ExcepcaoPersistencia
      */
-    private List getExecutionDegreesOfThisCoordinator(String username) throws ExcepcaoPersistencia {
+    private List getExecutionDegreesOfThisCoordinator(String username) {
         Teacher teacher = Teacher.readTeacherByUsername(username);
         return teacher.getCoordinatedExecutionDegrees();
     }
 
- 
     /**
      * @param student
      * @return true/false
      * @throws ExcepcaoPersistencia
      */
-    private boolean isThisStudentsDegreeTheOne(Registration student) throws ExcepcaoPersistencia {
+    private boolean isThisStudentsDegreeTheOne(Registration student) {
         StudentCurricularPlan studentCurricularPlan = student.getActiveStudentCurricularPlan();
         return studentCurricularPlan.getDegreeCurricularPlan().getDegree().getSigla().equals(
                 DEGREE_ACRONYM);

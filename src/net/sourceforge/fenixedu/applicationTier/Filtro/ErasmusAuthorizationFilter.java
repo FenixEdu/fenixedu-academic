@@ -8,8 +8,6 @@ package net.sourceforge.fenixedu.applicationTier.Filtro;
  * @version
  */
 
-import java.util.Collection;
-
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
@@ -28,10 +26,9 @@ public class ErasmusAuthorizationFilter extends Filtro {
      */
     public void execute(ServiceRequest request, ServiceResponse response) throws Exception {
         IUserView requester = getRemoteUser(request);
-        Collection roles = requester.getRoles();
         boolean authorizedRequester = false;
 
-        if (AuthorizationUtils.containsRole(roles, RoleType.ERASMUS))
+        if (requester.hasRoleType( RoleType.ERASMUS))
             authorizedRequester = true;
         if (!authorizedRequester) {
             throw new NotAuthorizedFilterException(" -----------> User = " + requester.getUtilizador()

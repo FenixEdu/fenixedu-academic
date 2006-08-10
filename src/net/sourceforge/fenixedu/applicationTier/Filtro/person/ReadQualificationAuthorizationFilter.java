@@ -1,7 +1,6 @@
 package net.sourceforge.fenixedu.applicationTier.Filtro.person;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Filtro.AuthorizationUtils;
 import net.sourceforge.fenixedu.applicationTier.Filtro.Filtro;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.Person;
@@ -30,7 +29,7 @@ public class ReadQualificationAuthorizationFilter extends Filtro {
             boolean isNew = ((arguments[0] == null) || ((Integer) arguments[0]).equals(new Integer(0)));
 
             // Verify if needed fields are null
-            if ((id == null) || (id.getRoles() == null)) {
+            if ((id == null) || (id.getRoleTypes() == null)) {
                 throw new NotAuthorizedException();
             }
 
@@ -43,21 +42,18 @@ public class ReadQualificationAuthorizationFilter extends Filtro {
             if (!isNew) {
                 boolean valid = false;
 
-                if ((AuthorizationUtils.containsRole(id.getRoles(), getRoleTypeGrantOwnerManager()))
-                        && isGrantOwner(objectId)) {
+                if (id.hasRoleType(getRoleTypeGrantOwnerManager()) && isGrantOwner(objectId)) {
                     valid = true;
                 }
 
-                if (AuthorizationUtils.containsRole(id.getRoles(), getRoleTypeTeacher())
-                        && isOwnQualification(id.getUtilizador(), objectId)) {
+                if (id.hasRoleType(getRoleTypeTeacher()) && isOwnQualification(id.getUtilizador(), objectId)) {
                     valid = true;
                 }
 
                 if (!valid)
                     throw new NotAuthorizedException();
             } else {
-                if (!AuthorizationUtils.containsRole(id.getRoles(), getRoleTypeGrantOwnerManager())
-                        && !AuthorizationUtils.containsRole(id.getRoles(), getRoleTypeTeacher()))
+                if (!id.hasRoleType(getRoleTypeGrantOwnerManager()) && !id.hasRoleType(getRoleTypeTeacher()))
                     throw new NotAuthorizedException();
             }
         } catch (RuntimeException e) {

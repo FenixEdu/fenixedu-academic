@@ -53,8 +53,8 @@ public class ExecutionCourseAndSummaryLecturingTeacherAuthorizationFilter extend
                 }
             } else if ((summary.getTeacher() != null) && (summary.getTeacher().equals(teacherLogged))) {
 
-            } else if ((id == null) || (id.getRoles() == null)
-                    || !AuthorizationUtils.containsRole(id.getRoles(), getRoleType())
+            } else if ((id == null) || (id.getRoleTypes() == null)
+                    || !id.hasRoleType(getRoleType())
                     || !lecturesExecutionCourse(id, arguments)
                     || !SummaryBelongsExecutionCourse(id, arguments)
                     || !summaryBelongsToTeacher(id, arguments) || !validTeacher(id, arguments)) {

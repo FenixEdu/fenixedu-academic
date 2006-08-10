@@ -8,7 +8,6 @@ package net.sourceforge.fenixedu.applicationTier.Filtro.student;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.AccessControlFilter;
-import net.sourceforge.fenixedu.applicationTier.Filtro.AuthorizationUtils;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.person.RoleType;
@@ -39,8 +38,7 @@ public class StudentCurricularPlanOwnerAuthorizationFilter extends
         IUserView id = (IUserView) request.getRequester();
         String messageException;
 
-        if (id == null || id.getRoles() == null
-                || !AuthorizationUtils.containsRole(id.getRoles(), getRoleType()))
+        if (id == null || id.getRoleTypes() == null || !id.hasRoleType(getRoleType()))
         {
             throw new NotAuthorizedFilterException();
         }

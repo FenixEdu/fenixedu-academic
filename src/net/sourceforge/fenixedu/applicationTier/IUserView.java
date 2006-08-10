@@ -17,7 +17,7 @@ public interface IUserView extends Serializable {
 
     public String getFullName();
 
-    public Collection getRoles();
+    public Collection<RoleType> getRoleTypes();
 
     boolean hasRoleType(final RoleType roleType);
     

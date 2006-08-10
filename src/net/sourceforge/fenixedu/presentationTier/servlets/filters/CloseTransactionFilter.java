@@ -30,29 +30,28 @@ public class CloseTransactionFilter implements Filter {
 			}
 		}
 
+        private InformationNotAvailable makeException() {
+            throw new InformationNotAvailable("property person not available on a public requester user view");            
+        }
+
 		public Person getPerson() {
-			throw new InformationNotAvailable(
-					"property person not available on a public requester user view");
+			throw makeException();
 		}
 
 		public String getUtilizador() {
-			throw new InformationNotAvailable(
-					"property person not available on a public requester user view");
+            throw makeException();
 		}
 
 		public String getFullName() {
-			throw new InformationNotAvailable(
-					"property person not available on a public requester user view");
+            throw makeException();
 		}
 
-		public Collection getRoles() {
-			throw new InformationNotAvailable(
-					"property person not available on a public requester user view");
-		}
+        public Collection<RoleType> getRoleTypes() {
+            throw makeException();
+        }
 
 		public boolean hasRoleType(RoleType roleType) {
-			throw new InformationNotAvailable(
-					"property person not available on a public requester user view");
+            throw makeException();
 		}
 
 		public boolean isPublicRequester() {

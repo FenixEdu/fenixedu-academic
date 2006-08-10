@@ -40,8 +40,8 @@ public class DeleteProfessorshipAuthorizationFilter extends AuthorizationByRoleF
 
             if ((id == null)
                     || (selectedProfessorship == null)
-                    || (id.getRoles() == null)
-                    || !AuthorizationUtils.containsRole(id.getRoles(), getRoleType())
+                    || (id.getRoleTypes() == null)
+                    || !id.hasRoleType(getRoleType())
                     || isSamePersonAsBeingRemoved(loggedPerson, selectedProfessorship.getTeacher()
                             .getPerson()) || selectedProfessorship.getResponsibleFor()) {
                 throw new NotAuthorizedFilterException();

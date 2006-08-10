@@ -38,8 +38,7 @@ public class DegreeAdministrativeOfficeAuthorizationFilter extends Authorization
     public void execute(ServiceRequest request, ServiceResponse response) throws FilterException,
             Exception {
         IUserView userView = (IUserView) request.getRequester();
-        if (!AuthorizationUtils.containsRole(userView.getRoles(),
-                RoleType.DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER)) {
+        if (!userView.hasRoleType(RoleType.DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER)) {
             super.execute(request, response);
         }
 

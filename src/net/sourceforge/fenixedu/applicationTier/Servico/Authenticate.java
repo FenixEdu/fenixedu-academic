@@ -80,23 +80,28 @@ public class Authenticate extends Service implements Serializable {
 
         final private DomainReference<Person> personRef;
 
-        final private Collection roles;
+        final private Collection<RoleType> roleTypes;
+
+        private transient Collection<Role> roles;
 
         private UserView(final Person person, final Set allowedRoles) {
             this.personRef = new DomainReference<Person>((Person) person);
 
-            final Collection infoRoles = getInfoRoles(person.getUsername(), person.getPersonRoles(),
+            final Collection<Role> roles = getInfoRoles(person.getUsername(), person.getPersonRoles(),
                     allowedRoles);
-            if (infoRoles != null) {
-                final SortedSet rolesSet = new TreeSet(infoRoles);
-                this.roles = Collections.unmodifiableSortedSet(rolesSet);
+            if (roles != null) {
+                final SortedSet<RoleType> rolesSet = new TreeSet<RoleType>();
+                for (final Role role : roles) {
+                    rolesSet.add(role.getRoleType());
+                }
+                this.roleTypes = Collections.unmodifiableSortedSet(rolesSet);
             } else {
-                this.roles = null;
+                this.roleTypes = null;
             }
         }
 
         public boolean hasRoleType(final RoleType roleType) {
-            return roles == null ? false : roles.contains(Role.getRoleByRoleType(roleType));
+            return roleTypes == null ? false : roleTypes.contains(roleType);
         }
 
         public Person getPerson() {
@@ -107,8 +112,8 @@ public class Authenticate extends Service implements Serializable {
             return getPerson().getUsername();
         }
 
-        public Collection getRoles() {
-            return roles;
+        public Collection<RoleType> getRoleTypes() {
+            return roleTypes;
         }
 
         public String getFullName() {

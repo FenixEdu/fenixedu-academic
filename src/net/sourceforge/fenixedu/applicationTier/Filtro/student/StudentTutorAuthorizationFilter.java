@@ -10,7 +10,6 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.AccessControlFilter;
-import net.sourceforge.fenixedu.applicationTier.Filtro.AuthorizationUtils;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.person.RoleType;
@@ -42,8 +41,7 @@ public class StudentTutorAuthorizationFilter extends AccessControlFilter {
         IUserView id = (IUserView) request.getRequester();
         String messageException;
 
-        if (id == null || id.getRoles() == null
-                || !AuthorizationUtils.containsRole(id.getRoles(), getRoleType())) {
+        if (id == null || id.getRoleTypes() == null || !id.hasRoleType(getRoleType())) {
             throw new NotAuthorizedFilterException();
         }
         messageException = studentTutor(id, request.getServiceParameters().parametersArray());

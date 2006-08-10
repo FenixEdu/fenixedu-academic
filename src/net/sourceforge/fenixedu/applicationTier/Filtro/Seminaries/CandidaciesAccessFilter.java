@@ -6,7 +6,6 @@
 package net.sourceforge.fenixedu.applicationTier.Filtro.Seminaries;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Filtro.AuthorizationUtils;
 import net.sourceforge.fenixedu.applicationTier.Filtro.Filtro;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
@@ -32,9 +31,8 @@ public class CandidaciesAccessFilter extends Filtro {
      */
     public void execute(ServiceRequest request, ServiceResponse response) throws Exception {
         IUserView id = getRemoteUser(request);
-        if (((id != null && id.getRoles() != null && !AuthorizationUtils.containsRole(id.getRoles(),
-                getRoleType())))
-                || (id == null) || (id.getRoles() == null)) {
+        if (((id != null && id.getRoleTypes() != null && !id.hasRoleType(getRoleType())))
+                || (id == null) || (id.getRoleTypes() == null)) {
             throw new NotAuthorizedException();
         }
 

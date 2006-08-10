@@ -21,18 +21,13 @@ import pt.utl.ist.berserk.ServiceResponse;
  */
 public abstract class AuthorizationByManyRolesFilter extends Filtro {
 
-	/**
-     * @return The Needed Roles to Execute The Service
-     */
-    abstract protected Collection getNeededRoles();
-
     public void execute(ServiceRequest request, ServiceResponse response) throws Exception {
         IUserView id = (IUserView) request.getRequester();
         String messageException = hasPrevilege(id, request.getServiceParameters().parametersArray());
 
-        if ((id != null && id.getRoles() != null && !containsRole(id.getRoles()))
-                || (id != null && id.getRoles() != null && messageException != null) || (id == null)
-                || (id.getRoles() == null)) {
+        if ((id != null && id.getRoleTypes() != null && !containsRoleType(id.getRoleTypes()))
+                || (id != null && id.getRoleTypes() != null && messageException != null) || (id == null)
+                || (id.getRoleTypes() == null)) {
             throw new NotAuthorizedFilterException(messageException);
         }
     }

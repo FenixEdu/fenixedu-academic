@@ -35,9 +35,8 @@ public class PublishedExamsMapAuthorizationFilter extends Filtro {
 
         		}
 
-        	} else if (((userView != null && userView.getRoles() != null && !AuthorizationUtils.containsRole(
-	                userView.getRoles(), getRoleType())))
-	                || (userView == null) || (userView.getRoles() == null)) {
+        	} else if (((userView != null && userView.getRoleTypes() != null && !userView.hasRoleType(getRoleType())))
+	                || (userView == null) || (userView.getRoleTypes() == null)) {
 
 	        	if (response.getReturnObject() instanceof InfoExamsMap) {
 

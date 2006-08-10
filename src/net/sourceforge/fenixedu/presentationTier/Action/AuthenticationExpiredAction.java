@@ -1,9 +1,9 @@
 package net.sourceforge.fenixedu.presentationTier.Action;
 
-import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.Iterator;
-import java.util.List;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -49,7 +49,7 @@ public class AuthenticationExpiredAction extends FenixDispatchAction {
 
             final IUserView userView = changePasswordAndAuthenticateUser(form, request);
 
-            if (userView == null || userView.getRoles().isEmpty()) {
+            if (userView == null || userView.getRoleTypes().isEmpty()) {
                 return authenticationFailedForward(mapping, request, "errors.noAuthorization");
             }
 
@@ -74,20 +74,14 @@ public class AuthenticationExpiredAction extends FenixDispatchAction {
                 session.setAttribute(SessionConstants.U_VIEW, userView);
                 session.setAttribute(SessionConstants.SESSION_IS_VALID, Boolean.TRUE);
 
-                Collection userRoles = userView.getRoles();
-
-                Role firstTimeStudentInfoRole = Role.getRoleByRoleType(RoleType.FIRST_TIME_STUDENT);
-
-                if (userRoles.contains(firstTimeStudentInfoRole)) {
+                if (userView.hasRoleType(RoleType.FIRST_TIME_STUDENT)) {
                     // TODO impose a period time limit
-                    Role infoRole = getRole(RoleType.FIRST_TIME_STUDENT, userRoles);
-                    return buildRoleForward(infoRole);
+                    return buildRoleForward(Role.getRoleByRoleType(RoleType.FIRST_TIME_STUDENT));
                 } else {
-                    Role personInfoRole = Role.getRoleByRoleType(RoleType.PERSON);
-                    int numberOfSubApplications = getNumberOfSubApplications(userRoles);
-                    if (numberOfSubApplications == 1 || !userRoles.contains(personInfoRole)) {
-                        final Role firstInfoRole = ((userRoles.isEmpty()) ? null
-                                : (Role) userRoles.iterator().next());
+                    int numberOfSubApplications = getNumberOfSubApplications(userView.getRoleTypes());
+                    if (numberOfSubApplications == 1 || !userView.hasRoleType(RoleType.PERSON)) {
+                        final Role firstInfoRole = ((userView.getRoleTypes().isEmpty()) ? null
+                                : Role.getRoleByRoleType(userView.getRoleTypes().iterator().next()));
                         return buildRoleForward(firstInfoRole);
                     } else {
                         return mapping.findForward("sucess");
@@ -119,12 +113,11 @@ public class AuthenticationExpiredAction extends FenixDispatchAction {
      * @param userRoles
      * @return
      */
-    private int getNumberOfSubApplications(Collection userRoles) {
-        List subApplications = new ArrayList();
-        Iterator iterator = userRoles.iterator();
-        while (iterator.hasNext()) {
-            Role infoRole = (Role) iterator.next();
-            String subApplication = infoRole.getPortalSubApplication();
+    private int getNumberOfSubApplications(Collection<RoleType> roleTypes) {
+        final Set<String> subApplications = new HashSet<String>();
+        for (final RoleType roleType : roleTypes) {
+            final Role role = Role.getRoleByRoleType(roleType);
+            final String subApplication = role.getPortalSubApplication();
             if (!subApplications.contains(subApplication) && !subApplication.equals("/teacher")) {
                 subApplications.add(subApplication);
             }

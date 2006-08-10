@@ -45,8 +45,7 @@ public class CurrentDegreeCoordinatorAuthorizationFilter extends AuthorizationBy
         IUserView id = getRemoteUser(request);
         Object[] argumentos = getServiceCallArguments(request);
         try {
-            if ((id == null) || (id.getRoles() == null)
-                    || !AuthorizationUtils.containsRole(id.getRoles(), getRoleType())
+            if ((id == null) || (id.getRoleTypes() == null) || !id.hasRoleType(getRoleType())
                     || !isCoordinatorOfCurrentExecutionDegree(id, argumentos)) {
                 throw new NotAuthorizedException();
             }

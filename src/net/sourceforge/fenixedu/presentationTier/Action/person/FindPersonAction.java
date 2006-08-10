@@ -17,7 +17,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.person.SearchPerson.Sear
 import net.sourceforge.fenixedu.applicationTier.Servico.person.SearchPerson.SearchPersonPredicate;
 import net.sourceforge.fenixedu.applicationTier.Servico.person.SearchPerson.SearchPersonResults;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
-import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
@@ -25,8 +24,6 @@ import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
 
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.collections.Predicate;
 import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
@@ -268,18 +265,7 @@ public class FindPersonAction extends FenixDispatchAction {
     }
 
     private boolean isEmployeeOrTeacher(IUserView userView) {
-        List employeeAndTeacherRoles = (List) CollectionUtils.select(userView.getRoles(),
-                new Predicate() {
-
-                    public boolean evaluate(Object arg0) {
-                        Role role = (Role) arg0;
-                        return role.getRoleType().equals(RoleType.EMPLOYEE)
-                                || role.getRoleType().equals(RoleType.TEACHER);
-                    }
-
-                });
-
-        return employeeAndTeacherRoles != null && employeeAndTeacherRoles.size() > 0;
+        return userView.hasRoleType(RoleType.EMPLOYEE) || userView.hasRoleType(RoleType.TEACHER);
     }
 
     private Boolean getCheckBoxValue(String value) {

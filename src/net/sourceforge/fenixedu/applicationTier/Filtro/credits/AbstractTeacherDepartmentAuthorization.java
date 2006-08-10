@@ -7,7 +7,6 @@ package net.sourceforge.fenixedu.applicationTier.Filtro.credits;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Filtro.AuthorizationUtils;
 import net.sourceforge.fenixedu.applicationTier.Filtro.Filtro;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
@@ -30,8 +29,7 @@ public abstract class AbstractTeacherDepartmentAuthorization extends Filtro {
     public void execute(ServiceRequest serviceRequest, ServiceResponse serviceResponse) throws Exception {
         IUserView requester = (IUserView) serviceRequest.getRequester();
         if ((requester == null)
-                || !AuthorizationUtils.containsRole(requester.getRoles(),
-                        RoleType.DEPARTMENT_CREDITS_MANAGER)) {
+                || !requester.hasRoleType(RoleType.DEPARTMENT_CREDITS_MANAGER)) {
             throw new NotAuthorizedException();
         }
 

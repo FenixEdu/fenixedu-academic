@@ -2,6 +2,8 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <html:xhtml/>
+<%@page import="net.sourceforge.fenixedu.domain.Role"%>
+<%@page import="net.sourceforge.fenixedu.domain.person.RoleType"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>	
 <%@ page import="org.apache.struts.Globals" %>	
@@ -11,7 +13,11 @@
 	<div id="navgeral">
 	<ul>
 		<bean:define id="userView" name="<%= SessionConstants.U_VIEW %>" scope="session"/>
-		<logic:iterate id="role" name="userView" property="roles">
+		<logic:iterate id="roleType" type="net.sourceforge.fenixedu.domain.person.RoleType" name="userView" property="roleTypes">
+			<%
+				final Role role = Role.getRoleByRoleType(roleType);
+				pageContext.setAttribute("role", role);
+			%>
 			<logic:notEqual name="role" property="roleType" value="net.sourceforge.fenixedu.domain.person.RoleType.GRANT_OWNER_MANAGER">
 				<logic:notEqual name="role" property="roleType" value="net.sourceforge.fenixedu.domain.person.RoleType.CREDITS_MANAGER">
 					<logic:notEqual name="role" property="roleType" value="net.sourceforge.fenixedu.domain.person.RoleType.DEPARTMENT_CREDITS_MANAGER">

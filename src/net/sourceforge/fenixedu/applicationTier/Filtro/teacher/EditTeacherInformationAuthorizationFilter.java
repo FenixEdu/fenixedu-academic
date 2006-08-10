@@ -6,7 +6,6 @@ package net.sourceforge.fenixedu.applicationTier.Filtro.teacher;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.AuthorizationByRoleFilter;
-import net.sourceforge.fenixedu.applicationTier.Filtro.AuthorizationUtils;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoServiceProviderRegime;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoWeeklyOcupation;
@@ -44,10 +43,9 @@ public class EditTeacherInformationAuthorizationFilter extends AuthorizationByRo
         IUserView id = getRemoteUser(request);
         Object[] arguments = getServiceCallArguments(request);
         try {
-            if (((id != null && id.getRoles() != null && !AuthorizationUtils.containsRole(id.getRoles(),
-                    getRoleType())))
+            if (((id != null && id.getRoleTypes() != null && !id.hasRoleType(getRoleType())))
                     || (id == null)
-                    || (id.getRoles() == null)
+                    || (id.getRoleTypes() == null)
                     || (!argumentsBelongToTeacher(id, (InfoServiceProviderRegime) arguments[0],
                             (InfoWeeklyOcupation) arguments[1]))) {
                 throw new NotAuthorizedException();

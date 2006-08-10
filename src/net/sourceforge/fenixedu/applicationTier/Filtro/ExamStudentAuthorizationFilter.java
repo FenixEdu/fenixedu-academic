@@ -33,8 +33,8 @@ public class ExamStudentAuthorizationFilter extends AuthorizationByRoleFilter {
         IUserView id = getRemoteUser(request);
         Object[] arguments = getServiceCallArguments(request);
         try {
-            if ((id == null) || (id.getRoles() == null)
-                    || !AuthorizationUtils.containsRole(id.getRoles(), getRoleType())
+            if ((id == null) || (id.getRoleTypes() == null)
+                    || !id.hasRoleType(getRoleType())
                     || !attendsEvaluationExecutionCourse(id, arguments)) {
                 throw new NotAuthorizedFilterException();
             }

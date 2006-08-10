@@ -2,11 +2,10 @@ package net.sourceforge.fenixedu.presentationTier.Action;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -42,7 +41,7 @@ public abstract class BaseAuthenticationAction extends FenixAction {
             String remoteHostName = getRemoteHostName(request);
             final IUserView userView = doAuthentication(form, request, remoteHostName);
 
-            if (userView.getRoles().isEmpty()) {
+            if (userView.getRoleTypes().isEmpty()) {
                 return getAuthenticationFailedForward(mapping, request, "errors.noAuthorization",
                         "errors.noAuthorization");
             }
@@ -69,20 +68,14 @@ public abstract class BaseAuthenticationAction extends FenixAction {
             HttpServletRequest request, IUserView userView, final HttpSession session) {
         createNewSession(request, session, userView);
 
-        Collection userRoles = userView.getRoles();
-
-        Role firstTimeStudentInfoRole = Role.getRoleByRoleType(RoleType.FIRST_TIME_STUDENT);
-
-        if (userRoles.contains(firstTimeStudentInfoRole)) {
+        if (userView.hasRoleType(RoleType.FIRST_TIME_STUDENT)) {
             // TODO impose a period time limit
-            Role infoRole = getRole(RoleType.FIRST_TIME_STUDENT, userRoles);
-            return buildRoleForward(infoRole);
+            return buildRoleForward(Role.getRoleByRoleType(RoleType.FIRST_TIME_STUDENT));
         } else {
-            Role personInfoRole = Role.getRoleByRoleType(RoleType.PERSON);
-            int numberOfSubApplications = getNumberOfSubApplications(userRoles);
-            if (numberOfSubApplications == 1 || !userRoles.contains(personInfoRole)) {
-                final Role firstInfoRole = ((userRoles.isEmpty()) ? null : (Role) userRoles
-                        .iterator().next());
+            int numberOfSubApplications = getNumberOfSubApplications(userView.getRoleTypes());
+            if (numberOfSubApplications == 1 || !userView.hasRoleType(RoleType.PERSON)) {
+                final Role firstInfoRole = userView.getRoleTypes().isEmpty() ?
+                        null : Role.getRoleByRoleType(userView.getRoleTypes().iterator().next());
                 return buildRoleForward(firstInfoRole);
             } else {
                 return mapping.findForward("sucess");
@@ -136,12 +129,11 @@ public abstract class BaseAuthenticationAction extends FenixAction {
      * @param userRoles
      * @return
      */
-    private int getNumberOfSubApplications(Collection userRoles) {
-        List subApplications = new ArrayList();
-        Iterator iterator = userRoles.iterator();
-        while (iterator.hasNext()) {
-            Role infoRole = (Role) iterator.next();
-            String subApplication = infoRole.getPortalSubApplication();
+    private int getNumberOfSubApplications(final Collection<RoleType> roleTypes) {
+        final Set<String> subApplications = new HashSet<String>();
+        for (final RoleType roleType : roleTypes) {
+            final Role role = Role.getRoleByRoleType(roleType);
+            final String subApplication = role.getPortalSubApplication();
             if (!subApplications.contains(subApplication) && !subApplication.equals("/teacher")) {
                 subApplications.add(subApplication);
             }
@@ -162,15 +154,6 @@ public abstract class BaseAuthenticationAction extends FenixAction {
         return actionForward;
     }
 
-    private Role getRole(RoleType roleType, Collection<Role> rolesList) {
-    	for (final Role infoRole : rolesList) {
-    		if (infoRole.getRoleType() == roleType) {
-    			return infoRole;
-    		}
-    	}
-        return null;
-    }
-    
     public static String getRemoteHostName(HttpServletRequest request) {
         String remoteHostName;
         try {

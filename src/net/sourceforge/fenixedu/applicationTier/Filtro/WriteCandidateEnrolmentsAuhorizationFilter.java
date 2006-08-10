@@ -15,9 +15,6 @@ import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-
-import org.apache.commons.collections.CollectionUtils;
-
 import pt.utl.ist.berserk.ServiceRequest;
 import pt.utl.ist.berserk.ServiceResponse;
 
@@ -40,9 +37,9 @@ public class WriteCandidateEnrolmentsAuhorizationFilter extends Filtro {
         IUserView id = getRemoteUser(request);
         Object[] argumentos = getServiceCallArguments(request);
 
-        if ((id != null && id.getRoles() != null && !containsRole(id.getRoles()))
-                || (id != null && id.getRoles() != null && !hasPrivilege(id, argumentos))
-                || (id == null) || (id.getRoles() == null)) {
+        if ((id != null && id.getRoleTypes() != null && !containsRoleType(id.getRoleTypes()))
+                || (id != null && id.getRoleTypes() != null && !hasPrivilege(id, argumentos))
+                || (id == null) || (id.getRoleTypes() == null)) {
             throw new NotAuthorizedFilterException();
         }
     }
@@ -50,10 +47,11 @@ public class WriteCandidateEnrolmentsAuhorizationFilter extends Filtro {
     /**
      * @return The Needed Roles to Execute The Service
      */
-    protected Collection getNeededRoles() {
-        List roles = new ArrayList();
-        roles.add(Role.getRoleByRoleType(RoleType.MASTER_DEGREE_ADMINISTRATIVE_OFFICE));
-        roles.add(Role.getRoleByRoleType(RoleType.COORDINATOR));
+    @Override
+    protected Collection<RoleType> getNeededRoleTypes() {
+        List<RoleType> roles = new ArrayList<RoleType>();
+        roles.add(RoleType.MASTER_DEGREE_ADMINISTRATIVE_OFFICE);
+        roles.add(RoleType.COORDINATOR);
         return roles;
     }
 
@@ -63,57 +61,43 @@ public class WriteCandidateEnrolmentsAuhorizationFilter extends Filtro {
      * @return
      */
     private boolean hasPrivilege(IUserView id, Object[] arguments) throws ExcepcaoPersistencia {
-
-        List roles = getRoleList(id.getRoles());
-        CollectionUtils.intersection(roles, getNeededRoles());
-
-        List roleTemp = new ArrayList();
-        roleTemp.add(RoleType.MASTER_DEGREE_ADMINISTRATIVE_OFFICE);
-        if (CollectionUtils.containsAny(roles, roleTemp)) {
+        if (id.hasRoleType(RoleType.MASTER_DEGREE_ADMINISTRATIVE_OFFICE)) {
             return true;
         }
 
-        roleTemp = new ArrayList();
-        roleTemp.add(RoleType.COORDINATOR);
-        if (CollectionUtils.containsAny(roles, roleTemp)) {
+        if (id.hasRoleType(RoleType.COORDINATOR)) {
+            Set<Integer> selection = (Set<Integer>) arguments[0];
+            Integer candidateID = (Integer) arguments[1];
+            Teacher teacher = id.getPerson().getTeacher();
 
-            Teacher teacher = null;
-            // Read The ExecutionDegree
-            try {
+            MasterDegreeCandidate masterDegreeCandidate = rootDomainObject
+                    .readMasterDegreeCandidateByOID(candidateID);
 
-            	Set<Integer> selection = (Set<Integer>) arguments[0];
-                Integer candidateID = (Integer) arguments[1];
-                teacher = Teacher.readTeacherByUsername(id.getUtilizador());
-
-                MasterDegreeCandidate masterDegreeCandidate = rootDomainObject.readMasterDegreeCandidateByOID(candidateID);
-
-                if (masterDegreeCandidate == null) {
-                    return false;
-                }
-
-                //modified by Tânia Pousão
-                Coordinator coordinator = masterDegreeCandidate.getExecutionDegree().getCoordinatorByTeacher(teacher);
-
-                if (coordinator == null) {
-                    return false;
-                }
-
-                for (Integer selectedCurricularCourse : selection) {
-					
-                    // Modified by Fernanda Quitério
-
-                    CurricularCourse curricularCourse = (CurricularCourse) rootDomainObject.readDegreeModuleByOID(selectedCurricularCourse);
-                    if (!curricularCourse.getDegreeCurricularPlan().equals(
-                            masterDegreeCandidate.getExecutionDegree().getDegreeCurricularPlan())) {
-                        return false;
-                    }
-
-                }
-                return true;
-
-            } catch (Exception e) {
+            if (masterDegreeCandidate == null) {
                 return false;
             }
+
+            // modified by Tânia Pousão
+            Coordinator coordinator = masterDegreeCandidate.getExecutionDegree()
+                    .getCoordinatorByTeacher(teacher);
+
+            if (coordinator == null) {
+                return false;
+            }
+
+            for (Integer selectedCurricularCourse : selection) {
+
+                // Modified by Fernanda Quitério
+
+                CurricularCourse curricularCourse = (CurricularCourse) rootDomainObject
+                        .readDegreeModuleByOID(selectedCurricularCourse);
+                if (!curricularCourse.getDegreeCurricularPlan().equals(
+                        masterDegreeCandidate.getExecutionDegree().getDegreeCurricularPlan())) {
+                    return false;
+                }
+
+            }
+            return true;
         }
         return true;
     }

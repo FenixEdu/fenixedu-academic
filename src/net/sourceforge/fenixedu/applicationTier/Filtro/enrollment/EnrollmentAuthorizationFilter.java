@@ -8,7 +8,6 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.AuthorizationByManyRolesFilter;
 import net.sourceforge.fenixedu.domain.Coordinator;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
-import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.domain.SecretaryEnrolmentStudent;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.Teacher;
@@ -24,33 +23,30 @@ public class EnrollmentAuthorizationFilter extends AuthorizationByManyRolesFilte
 
     private static final int LEIC_OLD_DCP = 10;
 
-    protected Collection getNeededRoles() {
-        final List<Role> roles = new ArrayList<Role>();
-        roles.add(Role.getRoleByRoleType(RoleType.COORDINATOR));
-        roles.add(Role.getRoleByRoleType(RoleType.TEACHER));
-        roles.add(Role.getRoleByRoleType(RoleType.STUDENT));
-        roles.add(Role.getRoleByRoleType(RoleType.DEGREE_ADMINISTRATIVE_OFFICE));
-        roles.add(Role.getRoleByRoleType(RoleType.DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER));
+    @Override
+    protected Collection<RoleType> getNeededRoleTypes() {
+        final List<RoleType> roles = new ArrayList<RoleType>();
+        roles.add(RoleType.COORDINATOR);
+        roles.add(RoleType.TEACHER);
+        roles.add(RoleType.STUDENT);
+        roles.add(RoleType.DEGREE_ADMINISTRATIVE_OFFICE);
+        roles.add(RoleType.DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER);
         return roles;
     }
 
     protected String hasPrevilege(IUserView userView, Object[] arguments) {
-    	
-        try {
-            final List<RoleType> roles = getRoleList(userView.getRoles());
-
-            if (roles.contains(RoleType.STUDENT)) {
+            if (userView.hasRoleType(RoleType.STUDENT)) {
                 return checkStudentInformation(userView);
 
             } else {
-                if (roles.contains(RoleType.COORDINATOR) && arguments[0] != null) {
+                if (userView.hasRoleType(RoleType.COORDINATOR) && arguments[0] != null) {
                 	return checkCoordinatorInformation(userView, arguments);
                     
-                } else if (roles.contains(RoleType.TEACHER)) {
+                } else if (userView.hasRoleType(RoleType.TEACHER)) {
                 	return checkTeacherInformation(userView, arguments);
 
-                } else if (roles.contains(RoleType.DEGREE_ADMINISTRATIVE_OFFICE)
-                        || roles.contains(RoleType.DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER)) {                	
+                } else if (userView.hasRoleType(RoleType.DEGREE_ADMINISTRATIVE_OFFICE)
+                        || userView.hasRoleType(RoleType.DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER)) {                	
                     
                 	return checkDegreeAdministrativeOfficeInformation(arguments);
                     
@@ -58,10 +54,6 @@ public class EnrollmentAuthorizationFilter extends AuthorizationByManyRolesFilte
                     return "noAuthorization";
                 }
             }
-        } catch (Exception exception) {
-            exception.printStackTrace();
-            return "noAuthorization";
-        }
     }
 
 	protected String checkDegreeAdministrativeOfficeInformation(Object[] args) {

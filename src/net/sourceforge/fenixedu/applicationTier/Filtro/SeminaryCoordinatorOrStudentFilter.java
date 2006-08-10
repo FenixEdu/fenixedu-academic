@@ -32,10 +32,9 @@ public class SeminaryCoordinatorOrStudentFilter extends Filtro {
     public void execute(ServiceRequest request, ServiceResponse response) throws Exception {
         IUserView id = getRemoteUser(request);
 
-        if (((id != null && id.getRoles() != null
-                && !AuthorizationUtils.containsRole(id.getRoles(), getRoleType1()) && !AuthorizationUtils
-                .containsRole(id.getRoles(), getRoleType2())))
-                || (id == null) || (id.getRoles() == null)) {
+        if (((id != null && id.getRoleTypes() != null
+                && !id.hasRoleType(getRoleType1()) && !id.hasRoleType(getRoleType2())))
+                || (id == null) || (id.getRoleTypes() == null)) {
             throw new NotAuthorizedFilterException();
         }
     }

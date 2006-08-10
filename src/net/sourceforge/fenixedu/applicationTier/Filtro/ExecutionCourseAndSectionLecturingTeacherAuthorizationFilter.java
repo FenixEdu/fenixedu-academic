@@ -37,8 +37,8 @@ public class ExecutionCourseAndSectionLecturingTeacherAuthorizationFilter extend
         IUserView id = getRemoteUser(request);
         Object[] arguments = getServiceCallArguments(request);
 
-        if ((id == null) || (id.getRoles() == null)
-                || !AuthorizationUtils.containsRole(id.getRoles(), getRoleType())
+        if ((id == null) || (id.getRoleTypes() == null)
+                || !id.hasRoleType(getRoleType())
                 || !lecturesExecutionCourse(id, arguments)
                 || !sectionBelongsExecutionCourse(id, arguments)) {
             throw new NotAuthorizedFilterException();

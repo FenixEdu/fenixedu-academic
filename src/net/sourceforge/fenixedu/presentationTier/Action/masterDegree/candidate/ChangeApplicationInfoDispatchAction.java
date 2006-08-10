@@ -132,7 +132,7 @@ public class ChangeApplicationInfoDispatchAction extends DispatchAction {
                 .get("specializationArea"));
         
         Boolean isNewPerson = false;
-        if(userView.getRoles().size() == 2){
+        if(userView.getRoleTypes().size() == 2){
             isNewPerson = true;
         }
 
@@ -225,7 +225,7 @@ public class ChangeApplicationInfoDispatchAction extends DispatchAction {
         changeApplicationInfoForm.set("candidateID", masterDegreeCandidate.getIdInternal());
         
         //if New Person -> All personal info can be changed
-        if(userView.getRoles().size() == 2){
+        if(userView.getRoleTypes().size() == 2){
             request.setAttribute("newPerson", "true");
         }
 
