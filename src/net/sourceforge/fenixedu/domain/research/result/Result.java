@@ -5,6 +5,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
+import net.sourceforge.fenixedu.accessControl.AccessControl;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
@@ -31,8 +32,8 @@ public class Result extends Result_Base {
      * This method is used when the result data is changed. Keeps record of the last modification 
      * date and author name.
      */
-    public void setModificationDateAndAuthor(String personName) {
-        setModifyedBy(personName);
+    public void setModificationDateAndAuthor() {
+        setModifyedBy(AccessControl.getUserView().getPerson().getName());
         setLastModificationDate(new DateTime());
     }
 

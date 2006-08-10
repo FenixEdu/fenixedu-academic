@@ -14,9 +14,10 @@ import org.apache.struts.action.ActionMapping;
 
 public class ResultsManagementAction extends FenixDispatchAction {
     public ActionForward backToResult(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws Exception {
+            HttpServletRequest request, HttpServletResponse response) {
         final Result result = readResultFromRequest(request);
         if(result==null){
+        	addActionMessage(request,"error.Result.not.found");
             return backToResultList(mapping, form, request, response);
         }
         
@@ -35,7 +36,7 @@ public class ResultsManagementAction extends FenixDispatchAction {
     }
     
     public ActionForward backToResultList(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws Exception {
+            HttpServletRequest request, HttpServletResponse response) {
         final String resultType = request.getParameterMap().containsKey("resultType") ?
                 request.getParameter("resultType") : (String) request.getAttribute("resultType");
         String forwardTo = null;
@@ -51,15 +52,16 @@ public class ResultsManagementAction extends FenixDispatchAction {
         return mapping.findForward(forwardTo);
     }
     
-    public Result readResultFromRequest(HttpServletRequest request) throws Exception {
-        final Integer resultId = Integer.valueOf(request.getParameter("resultId"));
-        final Result result = rootDomainObject.readResultByOID(resultId);
+    public Result readResultFromRequest(HttpServletRequest request) {
+    	String resultIdStr = (String) request.getAttribute("resultId");
         
-        if (result == null) {
-            addActionMessage(request, "error.Result.not.found");
+        if((resultIdStr==null || resultIdStr.equals("")) && request.getParameterMap().containsKey("resultId")) {
+        	resultIdStr = request.getParameter("resultId");
         }
-        else {
-            request.setAttribute("result", result);
+        
+        Result result = null;
+        if(resultIdStr!=null && !resultIdStr.equals("")){
+        	result = rootDomainObject.readResultByOID(Integer.valueOf(resultIdStr));	
         }
         return result;
     }

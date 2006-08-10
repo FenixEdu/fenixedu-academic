@@ -6,21 +6,20 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.research.result.ResultParticipation;
 import net.sourceforge.fenixedu.domain.research.result.patent.ResultPatent;
-import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
-import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.research.result.ResultsManagementAction;
+import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
-public class ResultPatentsManagementAction extends FenixDispatchAction {
+public class ResultPatentsManagementAction extends ResultsManagementAction {
 
     public ActionForward listPatents(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
+            HttpServletResponse response) {
         final List<ResultPatent> resultPatents = new ArrayList<ResultPatent>();
         
         for(ResultParticipation participation : getUserView(request).getPerson().getPersonParticipationsWithPatents()) {
@@ -31,12 +30,12 @@ public class ResultPatentsManagementAction extends FenixDispatchAction {
     }
 
     public ActionForward prepareCreatePatent(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws Exception {
+            HttpServletRequest request, HttpServletResponse response) {
         return mapping.findForward("createPatent");
     }
 
     public ActionForward prepareEditPatent(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws Exception {
+            HttpServletRequest request, HttpServletResponse response) {
         final ResultPatent patent = readPatentFromRequest(request);
 
         if(patent == null) {
@@ -87,35 +86,30 @@ public class ResultPatentsManagementAction extends FenixDispatchAction {
     }
 
     public ActionForward deletePatent(ActionMapping mapping, ActionForm actionForm,
-            HttpServletRequest request, HttpServletResponse response) throws Exception {
-        final Object[] args = { Integer.valueOf(request.getParameter("resultId")) };
+            HttpServletRequest request, HttpServletResponse response) {
+        final Integer resultId = Integer.valueOf(request.getParameter("resultId"));
         
-        try{
-            ServiceManagerServiceFactory.executeService(getUserView(request), "DeleteResultPatent", args);
-            addActionMessage(request,"researcher.result.deleted");
-        }
-        catch (FenixServiceException e) {
-            addActionMessage(request,"researcher.result.error.resultNotFound");
-        }
-
+        try {
+			ResultPatent.remove(resultId);
+			addActionMessage(request,"researcher.result.deleted");
+		} catch (Exception e) {
+			addActionMessage(request, e.getMessage());
+		} 
+        
         return listPatents(mapping, actionForm, request, response);
     }
     
-    private ResultPatent readPatentFromRequest(HttpServletRequest request) throws Exception {
-        final String patentIdStr;
-        if(request.getParameterMap().containsKey("oid")) {
-            patentIdStr = request.getParameter("oid");
-        }
-        else {
-            //If we get here from Result Participation Management, id comes in an attribute
-            //If we get here from Patents Management, id comes in a paremeter
-            patentIdStr = request.getParameterMap().containsKey("resultId") ?
-                    request.getParameter("resultId") : (String) request.getAttribute("resultId");
-        }
-                
-        final ResultPatent patent = (ResultPatent) rootDomainObject.readResultByOID(Integer.valueOf(patentIdStr));
+    private ResultPatent readPatentFromRequest(HttpServletRequest request) {
+    	ResultPatent patent = (ResultPatent) readResultFromRequest(request);
+    	
+    	if (patent==null) {
+    		try {
+    			patent = (ResultPatent) RenderUtils.getViewState().getMetaObject().getObject();	
+    		} catch (Exception e) {}
+    	}
+        
         if (patent == null) {
-            addActionMessage(request,"researcher.result.error.resultNotFound");
+        	addActionMessage(request,"error.Result.not.found");
         }
         else {
             request.setAttribute("patent", patent);    

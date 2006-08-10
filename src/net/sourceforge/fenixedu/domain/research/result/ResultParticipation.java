@@ -7,6 +7,7 @@ import net.sourceforge.fenixedu.accessControl.AccessControl;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.research.result.ChangeResultParticipationsOrder.OrderChange;
+import net.sourceforge.fenixedu.dataTransferObject.research.result.ResultParticipationCreationBean;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -60,7 +61,7 @@ public class ResultParticipation extends ResultParticipation_Base {
         if(isValidRoleForResult(result,role)) {
             setResultParticipationRole(role);    
         }
-        setChangedBy(result, AccessControl.getUserView().getPerson());
+        setChangedBy();
     }
     
     /**
@@ -101,8 +102,8 @@ public class ResultParticipation extends ResultParticipation_Base {
     /**
      * Update the last modification date and author name.
      */
-    public void setChangedBy(Result result, Person person) {
-        result.setModificationDateAndAuthor(person.getName());
+    public void setChangedBy() {
+        this.getResult().setModificationDateAndAuthor();
     }
     
     /**
@@ -113,7 +114,18 @@ public class ResultParticipation extends ResultParticipation_Base {
     }
 
     /**
+     * Method used to call the service responsible for creating a ResultParticipation
+     * @throws FenixServiceException 
+     * @throws FenixFilterException 
+     */
+    public static void createResultParticipation(ResultParticipationCreationBean bean) throws FenixFilterException, FenixServiceException {
+        ServiceUtils.executeService(AccessControl.getUserView(), "CreateResultParticipation", bean);
+    }
+    
+    /**
      * Method used to call the service responsible for changing the participation order
+     * @throws FenixServiceException 
+     * @throws FenixFilterException 
      */
     public static void changeOrder(ResultParticipation participation, OrderChange orderChange) throws FenixFilterException, FenixServiceException {
         ServiceUtils.executeService(AccessControl.getUserView(), "ChangeResultParticipationsOrder", participation, orderChange);
@@ -121,6 +133,8 @@ public class ResultParticipation extends ResultParticipation_Base {
     
     /**
      * Method used to call the service responsible for saving ResultParticipations order
+     * @throws FenixServiceException 
+     * @throws FenixFilterException 
      */
     public static void saveResultParticipationsOrder(Result result, List<ResultParticipation> participations) throws FenixFilterException, FenixServiceException {
         ServiceUtils.executeService(AccessControl.getUserView(), "SaveResultParticipationsOrder", result, participations);
@@ -128,6 +142,8 @@ public class ResultParticipation extends ResultParticipation_Base {
     
     /**
      * Method used to call the service responsible for deleting a ResultParticipation
+     * @throws FenixServiceException 
+     * @throws FenixFilterException 
      */ 
     public static void deleteResultParticipation(ResultParticipation participation) throws FenixFilterException, FenixServiceException {
         ServiceUtils.executeService(AccessControl.getUserView(), "DeleteResultParticipation", participation);
@@ -163,7 +179,7 @@ public class ResultParticipation extends ResultParticipation_Base {
     }
     
     /**
-     * Available changes for Result Participations order.
+     * Available changes/moves for Result Participations order.
      */
     public void moveUp() {
         orderChange(-1);

@@ -29,7 +29,7 @@ public class UpdateObjects extends Service {
                 processChange(change, object);
             } catch (InvocationTargetException e) {
                 if (e.getCause() instanceof RuntimeException) {
-                    throw (RuntimeException) e.getCause().getCause();
+                    throw (RuntimeException) e.getCause();
                 }
             }
         }

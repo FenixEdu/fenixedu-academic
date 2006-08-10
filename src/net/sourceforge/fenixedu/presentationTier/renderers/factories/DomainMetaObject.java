@@ -139,10 +139,10 @@ public class DomainMetaObject extends SimpleMetaObject {
                 }
             }
             
-            throw new DomainException("domain.metaobject.service.failed");
+            throw new DomainException("domain.metaobject.service.failed", e);
         }
         catch (Exception e) {
-            throw new DomainException("domain.metaobject.service.failed");
+            throw new DomainException("domain.metaobject.service.failed", e);
         }
     }
 

@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.research.result;
 
-import net.sourceforge.fenixedu.accessControl.AccessControl;
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.domain.research.result.ResultParticipation;
 
@@ -34,6 +33,6 @@ public class ChangeResultParticipationsOrder extends Service {
             participation.moveBottom();
             break;
         }
-        participation.setChangedBy(participation.getResult(), AccessControl.getUserView().getPerson());
+        participation.setChangedBy();
     }
 }
