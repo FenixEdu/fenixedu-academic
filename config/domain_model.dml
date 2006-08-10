@@ -773,6 +773,9 @@ class net.sourceforge.fenixedu.domain.DegreeCurricularPlan extends net.sourcefor
     class net.sourceforge.fenixedu.domain.DegreeCurricularPlanLEA extends net.sourceforge.fenixedu.domain.DegreeCurricularPlan {
     }
 
+    class net.sourceforge.fenixedu.domain.DegreeCurricularPlanLEAN extends net.sourceforge.fenixedu.domain.DegreeCurricularPlan {
+    }
+
 
 class net.sourceforge.fenixedu.domain.DegreeInfo extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer keyDegree;

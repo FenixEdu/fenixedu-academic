@@ -9,6 +9,7 @@
     <extent-class class-ref="net.sourceforge.fenixedu.domain.DegreeCurricularPlanLEM"/>
     <extent-class class-ref="net.sourceforge.fenixedu.domain.DegreeCurricularPlanLEA"/>    
     <extent-class class-ref="net.sourceforge.fenixedu.domain.DegreeCurricularPlanLET"/>    
+    <extent-class class-ref="net.sourceforge.fenixedu.domain.DegreeCurricularPlanLEAN"/> 
     
 	
 	
@@ -307,3 +308,9 @@
 			
 	
 </class-descriptor>
+<!-- *************************************************************************************************************** -->
+<!-- Definitions for net.sourceforge.fenixedu.domain.DegreeCurricularPlanLEAN --> 
+<!-- *************************************************************************************************************** -->
+<class-descriptor class="net.sourceforge.fenixedu.domain.DegreeCurricularPlanLEAN" table="DEGREE_CURRICULAR_PLAN"/>
+
+
