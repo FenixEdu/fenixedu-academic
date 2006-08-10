@@ -7,7 +7,7 @@ package net.sourceforge.fenixedu.applicationTier.Filtro.student;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.Filtro;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
-import net.sourceforge.fenixedu.domain.Student;
+import net.sourceforge.fenixedu.domain.student.Registration;
 import pt.utl.ist.berserk.ServiceRequest;
 import pt.utl.ist.berserk.ServiceResponse;
 import pt.utl.ist.berserk.logic.filterManager.exceptions.FilterException;
@@ -28,7 +28,7 @@ public class StudentIsUserFilter extends Filtro {
         Integer studentId = (Integer) serviceRequest.getArguments()[0];
         IUserView userView = getRemoteUser(serviceRequest);
         
-        Student student = rootDomainObject.readStudentByOID(
+        Registration student = rootDomainObject.readRegistrationByOID(
                 studentId);
         if (student == null || userView == null
                 || !userView.getUtilizador().equals(student.getPerson().getUsername())) {

@@ -20,10 +20,10 @@ import net.sourceforge.fenixedu.domain.CurricularYear;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Scheduleing;
+import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 /**
@@ -52,7 +52,7 @@ public class CheckCandidacyConditionsForFinalDegreeWork extends Service {
             throw new OutOfCandidacyPeriodException(start + " - " + end);
         }
 
-        Student student = findStudent(userView.getPerson());
+        Registration student = findStudent(userView.getPerson());
 
         if (scheduleing.getMinimumNumberOfCompletedCourses() == null) {
             throw new NumberOfNecessaryCompletedCoursesNotSpecifiedException();
@@ -116,9 +116,9 @@ public class CheckCandidacyConditionsForFinalDegreeWork extends Service {
         return true;
     }
 
-    private Student findStudent(final Person person) {
+    private Registration findStudent(final Person person) {
     	if (person != null) {
-    		final Student student = person.getStudentByType(DegreeType.DEGREE);
+    		final Registration student = person.getStudentByType(DegreeType.DEGREE);
     		return student == null ? person.getStudentByType(DegreeType.MASTER_DEGREE) : student;
     	}
     	return null;

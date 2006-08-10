@@ -25,7 +25,6 @@ import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.EnrolmentEvaluation;
-import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.Seminaries.CaseStudy;
 import net.sourceforge.fenixedu.domain.Seminaries.CaseStudyChoice;
@@ -33,6 +32,7 @@ import net.sourceforge.fenixedu.domain.Seminaries.Modality;
 import net.sourceforge.fenixedu.domain.Seminaries.Seminary;
 import net.sourceforge.fenixedu.domain.Seminaries.SeminaryCandidacy;
 import net.sourceforge.fenixedu.domain.Seminaries.Theme;
+import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.presentationTier.Action.Seminaries.Exceptions.BDException;
 
@@ -121,7 +121,7 @@ public class ReadCandidacies extends Service {
         List infoCandidacies = new LinkedList();
         
         for (SeminaryCandidacy candidacy : filteredCandidacies) {
-			Student student = candidacy.getStudent();
+			Registration student = candidacy.getStudent();
 			StudentCurricularPlan studentCurricularPlan = student.getActiveStudentCurricularPlan();
 			List enrollments = studentCurricularPlan.getEnrolments();
 

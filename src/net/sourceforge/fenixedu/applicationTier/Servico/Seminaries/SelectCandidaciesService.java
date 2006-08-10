@@ -16,10 +16,10 @@ import net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoSeminaryWithEq
 import net.sourceforge.fenixedu.dataTransferObject.Seminaries.SelectCandidaciesDTO;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.EnrolmentEvaluation;
-import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.Seminaries.Seminary;
 import net.sourceforge.fenixedu.domain.Seminaries.SeminaryCandidacy;
+import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -37,7 +37,7 @@ public class SelectCandidaciesService extends Service {
 
 		List<CandidacyDTO> infoCandidacies = new ArrayList<CandidacyDTO>();
 		for (SeminaryCandidacy candidacy : getCandidacies(seminaryID, seminaries)) {
-			Student student = candidacy.getStudent();
+			Registration student = candidacy.getStudent();
 			StudentCurricularPlan studentCurricularPlan = getStudentCurricularPlan(student);
 
 			CandidacyDTO candidacyDTO = new CandidacyDTO();
@@ -97,7 +97,7 @@ public class SelectCandidaciesService extends Service {
 		return infoClassification;
 	}
 
-	private StudentCurricularPlan getStudentCurricularPlan(Student student) {
+	private StudentCurricularPlan getStudentCurricularPlan(Registration student) {
 		long startDate = Long.MAX_VALUE;
 		StudentCurricularPlan selectedSCP = null;
 		for (StudentCurricularPlan studentCurricularPlan : student.getStudentCurricularPlans()) {

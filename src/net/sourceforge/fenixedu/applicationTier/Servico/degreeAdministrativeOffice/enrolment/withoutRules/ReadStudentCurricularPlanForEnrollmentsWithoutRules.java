@@ -4,13 +4,13 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
+import net.sourceforge.fenixedu.domain.student.Registration;
 
 public class ReadStudentCurricularPlanForEnrollmentsWithoutRules extends Service {
 
-	public StudentCurricularPlan run(Student student, DegreeType degreeType,
+	public StudentCurricularPlan run(Registration student, DegreeType degreeType,
 			ExecutionPeriod executionPeriod) throws FenixServiceException {
 
 		final StudentCurricularPlan studentCurricularPlan = (student == null) ? null : student.getActiveOrConcludedStudentCurricularPlan();

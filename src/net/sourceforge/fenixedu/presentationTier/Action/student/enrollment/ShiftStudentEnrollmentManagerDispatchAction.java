@@ -15,9 +15,9 @@ import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.Shift;
-import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
+import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.commons.TransactionalDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
@@ -57,7 +57,7 @@ public class ShiftStudentEnrollmentManagerDispatchAction extends TransactionalDi
 		}
 
 		final IUserView userView = getUserView(request);
-		final Student student = getStudent(userView);
+		final Registration student = getStudent(userView);
 		final ExecutionPeriod executionPeriod = ExecutionPeriod.readActualExecutionPeriod();
 		request.setAttribute("student", student);
 
@@ -71,7 +71,7 @@ public class ShiftStudentEnrollmentManagerDispatchAction extends TransactionalDi
 	}
 
 	private ActionForward prepareSelectCoursesInformation(ActionMapping mapping, ActionForm actionForm,
-			HttpServletRequest request, final Student student, final ExecutionPeriod executionPeriod) {
+			HttpServletRequest request, final Registration student, final ExecutionPeriod executionPeriod) {
 
 		final DynaActionForm form = (DynaActionForm) actionForm;
 		
@@ -110,7 +110,7 @@ public class ShiftStudentEnrollmentManagerDispatchAction extends TransactionalDi
 	}
 
 	private ActionForward prepareShiftEnrolmentInformation(ActionMapping mapping,
-			HttpServletRequest request, final IUserView userView, final Student student,
+			HttpServletRequest request, final IUserView userView, final Registration student,
 			final ExecutionPeriod executionPeriod) throws FenixFilterException {
 
 		try {
@@ -156,7 +156,7 @@ public class ShiftStudentEnrollmentManagerDispatchAction extends TransactionalDi
 		return result;
 	}
 
-	private ExecutionDegree getSelectedExecutionDegree(final DynaActionForm form, final Student student,
+	private ExecutionDegree getSelectedExecutionDegree(final DynaActionForm form, final Registration student,
 			final ExecutionPeriod executionPeriod, final List<ExecutionDegree> executionDegrees) {
 
 		final Integer executionDegreeIdChosen = (Integer) form.get("degree");
@@ -170,7 +170,7 @@ public class ShiftStudentEnrollmentManagerDispatchAction extends TransactionalDi
 		}
 	}
 
-	private ExecutionDegree searchForExecutionDegreeInStudent(final Student student,
+	private ExecutionDegree searchForExecutionDegreeInStudent(final Registration student,
 			final ExecutionPeriod executionPeriod) {
 		final StudentCurricularPlan studentCurricularPlan = student.getActiveStudentCurricularPlan();
 		if (studentCurricularPlan == null) {
@@ -193,7 +193,7 @@ public class ShiftStudentEnrollmentManagerDispatchAction extends TransactionalDi
 		return null;
 	}
 
-	private Student getStudent(final IUserView userView) {
+	private Registration getStudent(final IUserView userView) {
 		return userView.getPerson().getStudentByUsername();
 	}
 

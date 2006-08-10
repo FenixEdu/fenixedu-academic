@@ -41,7 +41,6 @@ import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.EnrolmentEvaluation;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseType;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
@@ -50,6 +49,7 @@ import net.sourceforge.fenixedu.domain.finalDegreeWork.GroupProposal;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.GroupStudent;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Scheduleing;
+import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
@@ -1260,7 +1260,7 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
 			if (proposal.getGroupAttributed() != null) {
 				int i = 0;
 				for (final GroupStudent groupStudent : proposal.getGroupAttributed().getGroupStudentsSet()) {
-					final Student student = groupStudent.getStudent();
+					final Registration student = groupStudent.getStudent();
 					row.setCell(student.getNumber().toString());
 					row.setCell(student.getPerson().getName());
 					maxNumberStudentsPerGroup = Math.max(maxNumberStudentsPerGroup, ++i);
@@ -1268,7 +1268,7 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
 			} else if (proposal.getGroupAttributedByTeacher() != null) {
 				int i = 0;
 				for (final GroupStudent groupStudent : proposal.getGroupAttributedByTeacher().getGroupStudentsSet()) {
-					final Student student = groupStudent.getStudent();
+					final Registration student = groupStudent.getStudent();
 					row.setCell(student.getNumber().toString());
 					row.setCell(student.getPerson().getName());
 					maxNumberStudentsPerGroup = Math.max(maxNumberStudentsPerGroup, ++i);
@@ -1335,12 +1335,12 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
 			}
 		}
 
-//		final SortedSet<Student> students = new TreeSet<Student>(Student.NUMBER_COMPARATOR);
+//		final SortedSet<Registration> students = new TreeSet<Registration>(Registration.NUMBER_COMPARATOR);
 		for (final ExecutionDegree otherExecutionDegree : scheduleing.getExecutionDegreesSet()) {
 			for (final Group group : otherExecutionDegree.getAssociatedFinalDegreeWorkGroupsSet()) {
 				if (!group.getGroupProposalsSet().isEmpty()) {
 					for (final GroupStudent groupStudent : group.getGroupStudentsSet()) {
-						final Student student = groupStudent.getStudent();
+						final Registration student = groupStudent.getStudent();
 						final StudentCurricularPlan studentCurricularPlan = student.getActiveOrConcludedStudentCurricularPlan();
 						if (studentCurricularPlan.getDegreeCurricularPlan() == degreeCurricularPlan) {
 							final Row row = spreadsheet.addRow();
@@ -1364,7 +1364,7 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
 		}
 	}
 
-    private String findGradeForCurricularCourse(final Student student, final CurricularCourse curricularCourse) {
+    private String findGradeForCurricularCourse(final Registration student, final CurricularCourse curricularCourse) {
     	final SortedSet<Enrolment> enrolments = new TreeSet<Enrolment>(Enrolment.REVERSE_COMPARATOR_BY_EXECUTION_PERIOD);
     	for (final StudentCurricularPlan studentCurricularPlan : student.getStudentCurricularPlansSet()) {
     		for (final Enrolment enrolment : studentCurricularPlan.getEnrolmentsSet()) {

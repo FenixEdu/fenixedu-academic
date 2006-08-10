@@ -10,6 +10,7 @@ import java.util.Date;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.util.EnrolmentGroupPolicyType;
 import net.sourceforge.fenixedu.util.ProposalState;
 
@@ -27,7 +28,7 @@ public class GroupingTest extends DomainTestBase {
 
     StudentGroup studentGroup;
 
-    Student student, student2, student3, student4, student5, student6, student7;
+    Registration student, student2, student3, student4, student5, student6, student7;
 
     Attends attend, attend2, attend3, attend4, attend5, attend6, attend7;
 
@@ -48,7 +49,7 @@ public class GroupingTest extends DomainTestBase {
             assertEquals("StudentGroup UnExpected", studentGroup, grouping.getStudentGroups().get(0));
         }
 
-        List<Student> students = new ArrayList();
+        List<Registration> students = new ArrayList();
         students.add(student3);
         students.add(student4);
 
@@ -369,25 +370,25 @@ public class GroupingTest extends DomainTestBase {
         exportGrouping2.setGrouping(grouping2);
         exportGrouping2.setExecutionCourse(executionCourse2);
 
-        student = new Student();
+        student = new Registration();
         student.setIdInternal(0);
 
-        student2 = new Student();
+        student2 = new Registration();
         student2.setIdInternal(1);
 
-        student3 = new Student();
+        student3 = new Registration();
         student3.setIdInternal(2);
 
-        student4 = new Student();
+        student4 = new Registration();
         student4.setIdInternal(3);
 
-        student5 = new Student();
+        student5 = new Registration();
         student5.setIdInternal(4);
 
-        student6 = new Student();
+        student6 = new Registration();
         student6.setIdInternal(5);
 
-        student7 = new Student();
+        student7 = new Registration();
         student7.setIdInternal(6);
 
         attend = new Attends();

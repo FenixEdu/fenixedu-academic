@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.domain;
 
+import net.sourceforge.fenixedu.domain.student.Registration;
+
 public class YearStudentSpecialSeasonCode extends YearStudentSpecialSeasonCode_Base {
 	
 	private YearStudentSpecialSeasonCode() {
@@ -7,7 +9,7 @@ public class YearStudentSpecialSeasonCode extends YearStudentSpecialSeasonCode_B
 		setRootDomainObject(RootDomainObject.getInstance());
 	}
     
-    public  YearStudentSpecialSeasonCode(Student student, ExecutionYear executionYear, SpecialSeasonCode specialSeasonCode) {
+    public  YearStudentSpecialSeasonCode(Registration student, ExecutionYear executionYear, SpecialSeasonCode specialSeasonCode) {
         this();
         setStudent(student);
         setExecutionYear(executionYear);

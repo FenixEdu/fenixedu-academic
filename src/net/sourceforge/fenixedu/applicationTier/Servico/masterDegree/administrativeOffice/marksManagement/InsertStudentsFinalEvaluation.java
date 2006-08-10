@@ -11,10 +11,10 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingSe
 import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolmentEvaluation;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.EnrolmentEvaluation;
-import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class InsertStudentsFinalEvaluation extends Service {
@@ -30,7 +30,7 @@ public class InsertStudentsFinalEvaluation extends Service {
         }
 
 		for (InfoEnrolmentEvaluation infoEnrolmentEvaluation : evaluations) {
-			final Student student = rootDomainObject.readStudentByOID(infoEnrolmentEvaluation.getInfoEnrolment().getInfoStudentCurricularPlan().getInfoStudent().getIdInternal());
+			final Registration student = rootDomainObject.readRegistrationByOID(infoEnrolmentEvaluation.getInfoEnrolment().getInfoStudentCurricularPlan().getInfoStudent().getIdInternal());
 			infoEnrolmentEvaluation.getInfoEnrolment().getInfoStudentCurricularPlan().getInfoStudent().setNumber(student.getNumber());
 
 			final EnrolmentEvaluation enrolmentEvaluationFromDb = findEnrolmentEvaluationByIDForStudent(student, infoEnrolmentEvaluation.getIdInternal());
@@ -46,7 +46,7 @@ public class InsertStudentsFinalEvaluation extends Service {
 		return infoEvaluationsWithError;
 	}
 
-	private EnrolmentEvaluation findEnrolmentEvaluationByIDForStudent(final Student student, final Integer idInternal) {
+	private EnrolmentEvaluation findEnrolmentEvaluationByIDForStudent(final Registration student, final Integer idInternal) {
 		for (final StudentCurricularPlan studentCurricularPlan : student.getStudentCurricularPlansSet()) {
 			for (final Enrolment enrolment : studentCurricularPlan.getEnrolmentsSet()) {
 				for (final EnrolmentEvaluation enrolmentEvaluation : enrolment.getEvaluationsSet()) {

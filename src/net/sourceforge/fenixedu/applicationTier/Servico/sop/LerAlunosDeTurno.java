@@ -21,7 +21,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
 import net.sourceforge.fenixedu.dataTransferObject.ShiftKey;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Shift;
-import net.sourceforge.fenixedu.domain.Student;
+import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class LerAlunosDeTurno extends Service {
@@ -30,11 +30,11 @@ public class LerAlunosDeTurno extends Service {
     	final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(keyTurno.getInfoExecutionCourse().getIdInternal());
     	final Shift shift = executionCourse.findShiftByName(keyTurno.getShiftName());
 
-        List<Student> alunos = shift.getStudents();
+        List<Registration> alunos = shift.getStudents();
 
         List infoAlunos = new ArrayList(alunos.size());
         for (final Iterator iterator = alunos.iterator(); iterator.hasNext();) {
-            Student elem = (Student) iterator.next();
+            Registration elem = (Registration) iterator.next();
             InfoPerson infoPessoa = new InfoPerson();
             infoPessoa.setNome(elem.getPerson().getNome());
             infoPessoa.setUsername(elem.getPerson().getUsername());

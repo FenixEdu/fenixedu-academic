@@ -23,10 +23,10 @@ import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.EnrolmentEvaluation;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.MarkSheet;
-import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 import net.sourceforge.fenixedu.util.EnrolmentEvaluationState;
@@ -184,7 +184,7 @@ public class MarkSheetCreateDispatchAction extends MarkSheetDispatchAction {
     	MarkSheetRectifyBean rectifyBean = (MarkSheetRectifyBean) RenderUtils.getViewState().getMetaObject().getObject();
     	
     	Integer studentNumber = rectifyBean.getStudentNumber();
-    	Student student = Student.readStudentByNumberAndDegreeType(studentNumber, DegreeType.DEGREE);
+    	Registration student = Registration.readStudentByNumberAndDegreeType(studentNumber, DegreeType.DEGREE);
     	if(student == null) {
     		ActionMessages actionMessages = new ActionMessages();
     		addMessage(request, actionMessages, "error.no.student", studentNumber.toString());

@@ -21,8 +21,8 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.GenericPair;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.StudentCurricularPlanState;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
@@ -38,26 +38,26 @@ public class CreateClassificationsForStudents extends Service {
 
     private static Transformer getEntryGradeTransformer = new Transformer() {
         public Object transform(Object input) {
-            return ((Student) input).getEntryGrade();
+            return ((Registration) input).getEntryGrade();
         }
     };
 
     private static Transformer getApprovationRatioTransformer = new Transformer() {
         public Object transform(Object input) {
-            return ((Student) input).getApprovationRatio();
+            return ((Registration) input).getApprovationRatio();
         }
     };
 
     private static Transformer getArithmeticMeanTransformer = new Transformer() {
         public Object transform(Object input) {
-            return ((Student) input).getArithmeticMean();
+            return ((Registration) input).getArithmeticMean();
         }
     };
 
     private static Closure setEntryGradeClosure = new Closure() {
         public void execute(Object input) {
             if (input instanceof GenericPair<?, ?>) {
-                GenericPair<Student, Character> pairStudentClassification = (GenericPair<Student, Character>) input;
+                GenericPair<Registration, Character> pairStudentClassification = (GenericPair<Registration, Character>) input;
                 pairStudentClassification.getLeft().setEntryGradeClassification(
                         pairStudentClassification.getRight());
             }
@@ -67,7 +67,7 @@ public class CreateClassificationsForStudents extends Service {
     private static Closure setApprovationRatioClosure = new Closure() {
         public void execute(Object input) {
             if (input instanceof GenericPair<?, ?>) {
-                GenericPair<Student, Character> pairStudentClassification = (GenericPair<Student, Character>) input;
+                GenericPair<Registration, Character> pairStudentClassification = (GenericPair<Registration, Character>) input;
                 pairStudentClassification.getLeft().setApprovationRatioClassification(
                         pairStudentClassification.getRight());
             }
@@ -77,7 +77,7 @@ public class CreateClassificationsForStudents extends Service {
     private static Closure setArithmeticMeanClosure = new Closure() {
         public void execute(Object input) {
             if (input instanceof GenericPair<?, ?>) {
-                GenericPair<Student, Character> pairStudentClassification = (GenericPair<Student, Character>) input;
+                GenericPair<Registration, Character> pairStudentClassification = (GenericPair<Registration, Character>) input;
                 pairStudentClassification.getLeft().setArithmeticMeanClassification(
                         pairStudentClassification.getRight());
             }
@@ -90,8 +90,8 @@ public class CreateClassificationsForStudents extends Service {
         
         ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();
 
-        List<Student> otherYearsStudents = new ArrayList<Student>();
-        List<Student> firstYearStudents = new ArrayList<Student>();
+        List<Registration> otherYearsStudents = new ArrayList<Registration>();
+        List<Registration> firstYearStudents = new ArrayList<Registration>();
 
         DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanID);
         List<StudentCurricularPlan> studentCurricularPlans = degreeCurricularPlan
@@ -99,7 +99,7 @@ public class CreateClassificationsForStudents extends Service {
 
         for (StudentCurricularPlan studentCurricularPlan : studentCurricularPlans) {
             if (studentCurricularPlan.getCurrentState() == StudentCurricularPlanState.ACTIVE) {
-                Student student = studentCurricularPlan.getStudent();
+                Registration student = studentCurricularPlan.getStudent();
                 if (student.getRegistrationYear() == currentExecutionYear) {
                     firstYearStudents.add(student);
                 } else {
@@ -113,19 +113,19 @@ public class CreateClassificationsForStudents extends Service {
         Arrays.sort(approvationRatioLimits);
         Arrays.sort(arithmeticMeanLimits);
 
-        HashMap<Character, List<Student>> splitedStudentsByEntryGrade = splitStudentsByClassification(
+        HashMap<Character, List<Registration>> splitedStudentsByEntryGrade = splitStudentsByClassification(
                 entryGradeLimits, firstYearStudents, "entryGrade", getEntryGradeTransformer,
                 setEntryGradeClosure);
         ByteArrayOutputStream entryGradeStream = studentsRenderer(splitedStudentsByEntryGrade,
                 getEntryGradeTransformer);
 
-        HashMap<Character, List<Student>> splitedStudentsByApprovationRatio = splitStudentsByClassification(
+        HashMap<Character, List<Registration>> splitedStudentsByApprovationRatio = splitStudentsByClassification(
                 approvationRatioLimits, otherYearsStudents, "approvationRatio",
                 getApprovationRatioTransformer, setApprovationRatioClosure);
         ByteArrayOutputStream approvationRatioStream = studentsRenderer(
                 splitedStudentsByApprovationRatio, getApprovationRatioTransformer);
 
-        HashMap<Character, List<Student>> splitedStudentsByArithmeticMean = splitStudentsByClassification(
+        HashMap<Character, List<Registration>> splitedStudentsByArithmeticMean = splitStudentsByClassification(
                 arithmeticMeanLimits, otherYearsStudents, "arithmeticMean",
                 getArithmeticMeanTransformer, setArithmeticMeanClosure);
         ByteArrayOutputStream arithmeticMeanStream = studentsRenderer(splitedStudentsByArithmeticMean,
@@ -135,26 +135,26 @@ public class CreateClassificationsForStudents extends Service {
 
     }
 
-    private HashMap<Character, List<Student>> splitStudentsByClassification(Integer[] limits,
-            List<Student> students, String field, Transformer fieldGetter, Closure fieldSetter) {
-        HashMap<Character, List<Student>> studentsClassifications = new HashMap<Character, List<Student>>(
+    private HashMap<Character, List<Registration>> splitStudentsByClassification(Integer[] limits,
+            List<Registration> students, String field, Transformer fieldGetter, Closure fieldSetter) {
+        HashMap<Character, List<Registration>> studentsClassifications = new HashMap<Character, List<Registration>>(
                 limits.length);
 
         Collections.sort(students, new BeanComparator(field));
         
-        List<Student> weakStudents = new ArrayList<Student>();
-        for (Student student : students) {
+        List<Registration> weakStudents = new ArrayList<Registration>();
+        for (Registration student : students) {
             if(((Double) fieldGetter.transform(student)) == 0.0){
                 weakStudents.add(student);
-                fieldSetter.execute(new GenericPair<Student, Character>(student, 'F'));
+                fieldSetter.execute(new GenericPair<Registration, Character>(student, 'F'));
             }
         }
         studentsClassifications.put('F', weakStudents);
-        List<Student> otherStudents = new ArrayList<Student>(students); 
+        List<Registration> otherStudents = new ArrayList<Registration>(students); 
         otherStudents.removeAll(weakStudents);
 
         char classification = 'A';
-        ListIterator<Student> studentsIter = otherStudents.listIterator(otherStudents.size());
+        ListIterator<Registration> studentsIter = otherStudents.listIterator(otherStudents.size());
         for (int i = limits.length - 1; i > 0; i--) {
 
             int groundLimitIndex = (int) Math.ceil(otherStudents.size() * (limits[i - 1] / 100.0));
@@ -165,9 +165,9 @@ public class CreateClassificationsForStudents extends Service {
             }
             
             int limitIndex = studentsIter.previousIndex() + 1;
-            for (Student student = studentsIter.previous(); (Double) fieldGetter.transform(student) > groundLimitValue; student = studentsIter
+            for (Registration student = studentsIter.previous(); (Double) fieldGetter.transform(student) > groundLimitValue; student = studentsIter
                     .previous()) {
-                fieldSetter.execute(new GenericPair<Student, Character>(student, classification));
+                fieldSetter.execute(new GenericPair<Registration, Character>(student, classification));
             }
             studentsIter.next();
             groundLimitIndex = studentsIter.nextIndex();
@@ -178,19 +178,19 @@ public class CreateClassificationsForStudents extends Service {
         }
 
         
-        List<Student> lastStudents = otherStudents.subList((int) Math.ceil(otherStudents.size()
+        List<Registration> lastStudents = otherStudents.subList((int) Math.ceil(otherStudents.size()
                 * (limits[0] / 100.0)), studentsIter.nextIndex());
-        for (Student lastStudent : lastStudents) {
-            fieldSetter.execute(new GenericPair<Student, Character>(lastStudent, 'E'));
+        for (Registration lastStudent : lastStudents) {
+            fieldSetter.execute(new GenericPair<Registration, Character>(lastStudent, 'E'));
         }
-        List<Student> allLastStudents = new ArrayList<Student>(lastStudents);
+        List<Registration> allLastStudents = new ArrayList<Registration>(lastStudents);
         allLastStudents.addAll(studentsClassifications.get('E'));
         studentsClassifications.put('E', allLastStudents); 
         return studentsClassifications;
     }
 
     private ByteArrayOutputStream studentsRenderer(
-            HashMap<Character, List<Student>> studentsClassifications, Transformer transformer) {
+            HashMap<Character, List<Registration>> studentsClassifications, Transformer transformer) {
 
         List<Character> keys = new ArrayList<Character>(studentsClassifications.keySet());
         Collections.sort(keys);
@@ -199,9 +199,9 @@ public class CreateClassificationsForStudents extends Service {
         Formatter fmt = new Formatter(outputStream);
 
         for (Character classification : keys) {
-            for (ListIterator<Student> studentIter = studentsClassifications.get(classification)
+            for (ListIterator<Registration> studentIter = studentsClassifications.get(classification)
                     .listIterator(studentsClassifications.get(classification).size()); studentIter.hasPrevious();) {
-                Student student = (Student) studentIter.previous();
+                Registration student = (Registration) studentIter.previous();
                 fmt.format("%d\t%s\t%f\t%c\n", student.getNumber(), student.getPerson().getNome(),
                         transformer.transform(student), classification);
             }

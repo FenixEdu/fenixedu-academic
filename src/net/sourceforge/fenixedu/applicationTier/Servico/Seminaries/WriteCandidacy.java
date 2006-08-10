@@ -8,13 +8,13 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoCandidacy;
 import net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoCaseStudyChoice;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
-import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.Seminaries.CaseStudy;
 import net.sourceforge.fenixedu.domain.Seminaries.CaseStudyChoice;
 import net.sourceforge.fenixedu.domain.Seminaries.Modality;
 import net.sourceforge.fenixedu.domain.Seminaries.Seminary;
 import net.sourceforge.fenixedu.domain.Seminaries.SeminaryCandidacy;
 import net.sourceforge.fenixedu.domain.Seminaries.Theme;
+import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 /**
@@ -32,8 +32,8 @@ public class WriteCandidacy extends Service {
         final Modality modality = rootDomainObject.readModalityByOID(infoCandidacy.getInfoModality().getIdInternal());        
         candidacy.setModality(modality);
 
-        // Student
-        final Student readStudent = rootDomainObject.readStudentByOID(infoCandidacy.getInfoStudent().getIdInternal());
+        // Registration
+        final Registration readStudent = rootDomainObject.readRegistrationByOID(infoCandidacy.getInfoStudent().getIdInternal());
         candidacy.setStudent(readStudent);
 
         // Seminary

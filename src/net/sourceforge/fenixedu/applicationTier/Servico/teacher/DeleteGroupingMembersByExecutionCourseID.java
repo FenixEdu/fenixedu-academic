@@ -15,8 +15,8 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidSituat
 import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Grouping;
-import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.StudentGroup;
+import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 /**
@@ -43,7 +43,7 @@ public class DeleteGroupingMembersByExecutionCourseID extends Service {
         List executionCourseStudentNumbers = new ArrayList();
         final List<Attends> attends = executionCourse.getAttends();
         for (final Attends attend : attends) {
-            final Student student = attend.getAluno();
+            final Registration student = attend.getAluno();
             executionCourseStudentNumbers.add(student.getNumber());
         }
 

@@ -14,8 +14,8 @@ import net.sourceforge.fenixedu.domain.Guide;
 import net.sourceforge.fenixedu.domain.GuideEntry;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.PersonAccount;
-import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
+import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.transactions.GratuityTransaction;
 import net.sourceforge.fenixedu.domain.transactions.TransactionType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -31,7 +31,7 @@ public class CreateGratuityTransaction extends Service {
         GuideEntry guideEntry = rootDomainObject.readGuideEntryByOID(guideEntryID);
 
         Guide guide = guideEntry.getGuide();
-        Student student = guide.getPerson().readStudentByDegreeType(DegreeType.MASTER_DEGREE);
+        Registration student = guide.getPerson().readStudentByDegreeType(DegreeType.MASTER_DEGREE);
         GratuitySituation gratuitySituation = student.readGratuitySituationByExecutionDegree(guide
                 .getExecutionDegree());
         PersonAccount personAccount = guide.getPerson().getAssociatedPersonAccount();

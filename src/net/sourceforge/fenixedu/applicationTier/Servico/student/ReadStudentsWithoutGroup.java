@@ -21,8 +21,8 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
 import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.Grouping;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.StudentGroup;
+import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.util.EnrolmentGroupPolicyType;
 
@@ -54,10 +54,10 @@ public class ReadStudentsWithoutGroup extends Service {
 
 		final List<Attends> attends = grouping.getAttends();
 
-		Student userStudent = null;
+		Registration userStudent = null;
 		for (final Iterator iterator = attends.iterator(); iterator.hasNext(); ) {
 			final Attends attend = (Attends) iterator.next();
-			final Student student = attend.getAluno();
+			final Registration student = attend.getAluno();
 			final Person person = student.getPerson();
 			if (person.getUsername().equalsIgnoreCase(username)) {
 				userStudent = student;
@@ -88,7 +88,7 @@ public class ReadStudentsWithoutGroup extends Service {
 		final List<InfoStudent> infoStudentList = new ArrayList<InfoStudent>(attendsWithOutGroupsSet.size());
 		for (final Iterator iterator = attendsWithOutGroupsSet.iterator(); iterator.hasNext(); ) {
 			final Attends attend = (Attends) iterator.next();
-			final Student student = attend.getAluno();
+			final Registration student = attend.getAluno();
 
 			if (!student.equals(userStudent)) {
 				final InfoStudent infoStudent2 = getInfoStudentFromStudent(student);
@@ -101,7 +101,7 @@ public class ReadStudentsWithoutGroup extends Service {
 		return infoSiteStudentsWithoutGroup;
 	}
 
-	protected InfoStudent getInfoStudentFromStudent(Student userStudent) {
+	protected InfoStudent getInfoStudentFromStudent(Registration userStudent) {
 		final InfoStudent infoStudent = InfoStudent
 				.newInfoFromDomain(userStudent);
 		final InfoPerson infoPerson = InfoPerson.newInfoFromDomain(userStudent

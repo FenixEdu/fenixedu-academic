@@ -12,11 +12,11 @@ import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Role;
-import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.person.RoleType;
+import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
 import net.sourceforge.fenixedu.util.StringNormalizer;
 
@@ -201,11 +201,11 @@ public class SearchPerson extends Service {
             return degreeType == null || verifyDegreeType(degree, person.getStudentByType(degreeType));
         }
 
-        private boolean verifyDegreeType(final Degree degree, final Student studentByType) {
+        private boolean verifyDegreeType(final Degree degree, final Registration studentByType) {
             return studentByType != null && (degree == null || verifyDegree(degree, studentByType));
         }
 
-        private boolean verifyDegree(final Degree degree, final Student studentByType) {
+        private boolean verifyDegree(final Degree degree, final Registration studentByType) {
             final StudentCurricularPlan studentCurricularPlan = studentByType
                     .getActiveStudentCurricularPlan();
             return (studentCurricularPlan != null && degree == studentCurricularPlan

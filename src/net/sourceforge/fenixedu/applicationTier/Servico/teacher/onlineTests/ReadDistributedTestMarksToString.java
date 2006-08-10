@@ -18,9 +18,9 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.onlineTests.DistributedTest;
 import net.sourceforge.fenixedu.domain.onlineTests.StudentTestQuestion;
+import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -100,7 +100,7 @@ public class ReadDistributedTestMarksToString extends Service {
         result.append("Número\tNome\t");
 
         ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseId);
-        List<Student> studentsFromAttendsList = (List) CollectionUtils.collect(executionCourse
+        List<Registration> studentsFromAttendsList = (List) CollectionUtils.collect(executionCourse
                 .getAttends(), new Transformer() {
 
             public Object transform(Object input) {
@@ -108,14 +108,14 @@ public class ReadDistributedTestMarksToString extends Service {
             }
         });
 
-        final Set<Student> students = new HashSet<Student>();
+        final Set<Registration> students = new HashSet<Registration>();
         for (final String distributedTestCode : distributedTestCodes) {
             final Integer distributedTestID = Integer.valueOf(distributedTestCode);
             final DistributedTest distributedTest = rootDomainObject.readDistributedTestByOID(distributedTestID);
             students.addAll(distributedTest.findStudents());
         }
 
-        List<Student> studentList = concatStudentsLists(studentsFromAttendsList, students);
+        List<Registration> studentList = concatStudentsLists(studentsFromAttendsList, students);
         Double[] maxValues = new Double[distributedTestCodes.length];
 
         for (int i = 0; i < distributedTestCodes.length; i++) {
@@ -129,7 +129,7 @@ public class ReadDistributedTestMarksToString extends Service {
                 result.append("%\t");
         }
 
-        for (Student student : studentList) {
+        for (Registration student : studentList) {
             result.append("\n");
             result.append(student.getNumber());
             result.append("\t");
@@ -172,12 +172,12 @@ public class ReadDistributedTestMarksToString extends Service {
         return result.toString();
     }
 
-    private List<Student> concatStudentsLists(Collection<Student> list1, Collection<Student> list2) {
+    private List<Registration> concatStudentsLists(Collection<Registration> list1, Collection<Registration> list2) {
 
-        List<Student> sortedStudents = new ArrayList<Student>();
+        List<Registration> sortedStudents = new ArrayList<Registration>();
         sortedStudents.addAll(list1);
 
-        for (Student student : list2) {
+        for (Registration student : list2) {
             if (!sortedStudents.contains(student))
                 sortedStudents.add(student);
         }

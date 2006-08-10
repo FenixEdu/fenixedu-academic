@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.domain;
 
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
+import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.StudentType;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.StudentCurricularPlanState;
 import net.sourceforge.fenixedu.util.EntryPhase;
@@ -17,8 +18,8 @@ public class StudentTest extends DomainTestBase {
 	private EntryPhase entryPhase = null;
 	private DegreeType degreeType = null;
 		
-	private Student studentWithActiveStudentCurricularPlan = null;
-	private Student studentWithoutActiveStudentCurricularPlan = null;
+	private Registration studentWithActiveStudentCurricularPlan = null;
+	private Registration studentWithoutActiveStudentCurricularPlan = null;
 	private StudentCurricularPlan activeStudentCurricularPlan = null;
 	
 	private void setUpForNewStudentCase() {
@@ -37,7 +38,7 @@ public class StudentTest extends DomainTestBase {
 		
 		setUpForNewStudentCase();
 		
-		Student student = new Student(person, studentNumber, studentKind, studentState, 
+		Registration student = new Registration(person, studentNumber, studentKind, studentState, 
 				payedTuition, enrolmentForbidden, entryPhase, degreeType);
 		
 		assertEquals("Failed to assign Person", student.getPerson(),person);
@@ -64,8 +65,8 @@ public class StudentTest extends DomainTestBase {
 	}
 
 	private void setUpGetActiveStudentCurricularPlan() {
-		studentWithActiveStudentCurricularPlan = new Student();
-		studentWithoutActiveStudentCurricularPlan = new Student();
+		studentWithActiveStudentCurricularPlan = new Registration();
+		studentWithoutActiveStudentCurricularPlan = new Registration();
 		
 		activeStudentCurricularPlan = new StudentCurricularPlan();
 		activeStudentCurricularPlan.setCurrentState(StudentCurricularPlanState.ACTIVE);

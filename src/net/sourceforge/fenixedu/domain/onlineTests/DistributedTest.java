@@ -14,7 +14,7 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.domain.RootDomainObject;
-import net.sourceforge.fenixedu.domain.Student;
+import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.util.tests.TestType;
 
 /**
@@ -119,7 +119,7 @@ public class DistributedTest extends DistributedTest_Base {
         setEndHourDate(date);
     }
     
-    public List<StudentTestLog> getStudentTestLogs(final Student student){
+    public List<StudentTestLog> getStudentTestLogs(final Registration student){
     	List<StudentTestLog> result = new ArrayList<StudentTestLog>();
     	for (final StudentTestLog studentTestLog : this.getStudentsLogs()) {
 			if(studentTestLog.getStudent().equals(student)) {
@@ -151,8 +151,8 @@ public class DistributedTest extends DistributedTest_Base {
         return studentTestQuestions;
     }
 
-    public Set<Student> findStudents() {
-        final Set<Student> students = new HashSet<Student>();
+    public Set<Registration> findStudents() {
+        final Set<Registration> students = new HashSet<Registration>();
         for (final StudentTestQuestion studentTestQuestion : getDistributedTestQuestionsSet()) {
             students.add(studentTestQuestion.getStudent());
         }
@@ -161,7 +161,7 @@ public class DistributedTest extends DistributedTest_Base {
 
     public SortedSet<StudentTestQuestion> findStudentTestQuestionsOfFirstStudentOrderedByTestQuestionOrder() {
         final SortedSet<StudentTestQuestion> studentTestQuestions = new TreeSet<StudentTestQuestion>(StudentTestQuestion.COMPARATOR_BY_TEST_QUESTION_ORDER);
-        final Student student = getDistributedTestQuestionsSet() != null ? getDistributedTestQuestionsSet().iterator().next().getStudent() : null;
+        final Registration student = getDistributedTestQuestionsSet() != null ? getDistributedTestQuestionsSet().iterator().next().getStudent() : null;
         for (final StudentTestQuestion studentTestQuestion : getDistributedTestQuestionsSet()) {
             if (student == studentTestQuestion.getStudent()) {
                 studentTestQuestions.add(studentTestQuestion);
@@ -178,7 +178,7 @@ public class DistributedTest extends DistributedTest_Base {
         return Double.valueOf(result);
     }
 
-    public Double calculateTestFinalMarkForStudent(final Student student) {
+    public Double calculateTestFinalMarkForStudent(final Registration student) {
         double result = 0;
         for (final StudentTestQuestion studentTestQuestion : getDistributedTestQuestionsSet()) {
             if (student == studentTestQuestion.getStudent()) {

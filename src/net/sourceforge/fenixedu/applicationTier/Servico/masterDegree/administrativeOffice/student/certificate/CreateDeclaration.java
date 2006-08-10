@@ -7,8 +7,8 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlanWithInfoStudentWithPersonAndDegree;
-import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.StudentCurricularPlanState;
 
@@ -22,7 +22,7 @@ public class CreateDeclaration extends Service {
 
         List infoStudentCurricularPlanList = new ArrayList();
 
-        Student student = Student.readStudentByNumberAndDegreeType(infoStudent.getNumber(), infoStudent.getDegreeType());
+        Registration student = Registration.readStudentByNumberAndDegreeType(infoStudent.getNumber(), infoStudent.getDegreeType());
         if(student == null) {
         	return null;
         }
@@ -55,7 +55,7 @@ public class CreateDeclaration extends Service {
 
         List infoStudentCurricularPlanList = new ArrayList();
 
-        Student student = Student.readStudentByNumberAndDegreeType(infoStudent.getNumber(), infoStudent.getDegreeType());
+        Registration student = Registration.readStudentByNumberAndDegreeType(infoStudent.getNumber(), infoStudent.getDegreeType());
         if(student == null) {
         	return null;
         }
@@ -87,7 +87,7 @@ public class CreateDeclaration extends Service {
         List studentCurricularPlanList = new ArrayList();
         List infoStudentCurricularPlanList = new ArrayList();
 
-        Student student = Student.readStudentByNumberAndDegreeType(infoStudent.getNumber(), infoStudent.getDegreeType());
+        Registration student = Registration.readStudentByNumberAndDegreeType(infoStudent.getNumber(), infoStudent.getDegreeType());
         if(student == null) {
         	return null;
         }

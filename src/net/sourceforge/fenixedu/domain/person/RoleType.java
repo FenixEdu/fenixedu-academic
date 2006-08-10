@@ -7,7 +7,7 @@ public enum RoleType {
 
     PERSON("Person"),
 
-    STUDENT("Student"),
+    STUDENT("Registration"),
 
     TEACHER("Teacher"),
     

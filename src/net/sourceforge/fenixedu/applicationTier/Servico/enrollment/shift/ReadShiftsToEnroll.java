@@ -9,11 +9,11 @@ import net.sourceforge.fenixedu.dataTransferObject.ShiftToEnrol;
 import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.ShiftType;
-import net.sourceforge.fenixedu.domain.Student;
+import net.sourceforge.fenixedu.domain.student.Registration;
 
 public class ReadShiftsToEnroll extends Service {
 
-	public List run(Student student) throws FenixServiceException {
+	public List run(Registration student) throws FenixServiceException {
 
 		checkStudentRestrictionsForShiftsEnrolments(student);
 
@@ -24,7 +24,7 @@ public class ReadShiftsToEnroll extends Service {
 		return result;
 	}
 
-	private void checkStudentRestrictionsForShiftsEnrolments(Student student)
+	private void checkStudentRestrictionsForShiftsEnrolments(Registration student)
 			throws FenixServiceException {
 		if (student == null) {
 			throw new FenixServiceException("errors.impossible.operation");

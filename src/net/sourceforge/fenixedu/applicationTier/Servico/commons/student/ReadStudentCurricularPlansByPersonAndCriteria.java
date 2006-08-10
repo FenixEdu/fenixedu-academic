@@ -21,8 +21,8 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlanWith
 import net.sourceforge.fenixedu.dataTransferObject.util.InfoStudentCurricularPlansWithSelectedEnrollments;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.util.EnrollmentStateSelectionType;
 import net.sourceforge.fenixedu.util.StudentCurricularPlanIDDomainType;
@@ -68,10 +68,10 @@ public class ReadStudentCurricularPlansByPersonAndCriteria extends Service {
 
             Iterator studentsIterator = students.iterator();
 
-            // para cada Student que esta Person �
+            // para cada Registration que esta Person �
             // juntar todos os SCP
             while (studentsIterator.hasNext()) {
-                Student student = (Student) studentsIterator.next();
+                Registration student = (Registration) studentsIterator.next();
 
                 // seleccionar todos os planos do aluno
                 studentCPsTemp = student.getStudentCurricularPlans();

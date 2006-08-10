@@ -40,10 +40,10 @@ import net.sourceforge.fenixedu.domain.Grouping;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.domain.Site;
-import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.StudentGroup;
 import net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationType;
+import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.StudentCurricularPlanState;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.util.AttendacyStateSelectionType;
@@ -179,7 +179,7 @@ public class ReadStudentsWithAttendsByExecutionCourse extends Service {
 					Attends attendance = (Attends) attendsIterator.next();
 
 					// if an attendance is related to a Shift
-					Student student = attendance.getAluno();
+					Registration student = attendance.getAluno();
 
 					if (turno.getStudents().contains(student)) {
 						collectedAttends.add(attendance);
@@ -195,13 +195,13 @@ public class ReadStudentsWithAttendsByExecutionCourse extends Service {
 
 		List infoCompositions = new ArrayList();
 		Iterator it = attends.iterator();
-		List<Student> alreadyAddedStudents = new ArrayList<Student>();
+		List<Registration> alreadyAddedStudents = new ArrayList<Registration>();
 
 		final Map<Integer, InfoShift> clonedShifts = new HashMap<Integer, InfoShift>();
 
 		while (it.hasNext()) {
 			Attends iFrequenta = (Attends) it.next();
-			Student studentToAdd = iFrequenta.getAluno();
+			Registration studentToAdd = iFrequenta.getAluno();
 			if (!alreadyAddedStudents.contains(studentToAdd)) {
 				alreadyAddedStudents.add(studentToAdd);
 				InfoCompositionOfAttendAndDegreeCurricularPlanAndShiftsAndStudentGroups infoComposition = new InfoCompositionOfAttendAndDegreeCurricularPlanAndShiftsAndStudentGroups();
@@ -350,8 +350,8 @@ public class ReadStudentsWithAttendsByExecutionCourse extends Service {
 			final Shift shift = (Shift) iterator.next();
 
 			boolean studentInShift = false;
-			List<Student> students = shift.getStudents();
-			for (Student student : students) {
+			List<Registration> students = shift.getStudents();
+			for (Registration student : students) {
 				if (student == attend.getAluno()) {
 					studentInShift = true;
 					break;

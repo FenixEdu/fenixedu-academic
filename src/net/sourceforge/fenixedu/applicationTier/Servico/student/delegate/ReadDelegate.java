@@ -8,8 +8,8 @@ import java.util.HashMap;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.student.InfoDelegate;
-import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.student.Delegate;
+import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 /**
@@ -22,7 +22,7 @@ public class ReadDelegate extends Service {
     public InfoDelegate run(HashMap hashMap) throws ExcepcaoPersistencia {
 
         final String user = (String) hashMap.get("user");
-        final Student student = Student.readByUsername(user);
+        final Registration student = Registration.readByUsername(user);
 
         Delegate delegate = null;
         if (!student.getDelegate().isEmpty()) {

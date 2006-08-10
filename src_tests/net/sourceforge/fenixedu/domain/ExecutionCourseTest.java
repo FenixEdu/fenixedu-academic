@@ -11,12 +11,13 @@ import net.sourceforge.fenixedu.applicationTier.utils.summary.SummaryUtils;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.space.OldRoom;
+import net.sourceforge.fenixedu.domain.student.Registration;
 
 public class ExecutionCourseTest extends DomainTestBase {
 
     private ExecutionCourse executionCourse;
 	private ExecutionCourse executionCourseToReadFrom = null;
-	private Student thisStudent = null;
+	private Registration thisStudent = null;
 	private Attends attendsForThisStudent = null;
     private Shift shift;
     private OldRoom room;
@@ -56,18 +57,18 @@ public class ExecutionCourseTest extends DomainTestBase {
 
     private void setUpForGetAttendsByStudentCase() {
 		executionCourseToReadFrom = new ExecutionCourse();
-		thisStudent = new Student();
+		thisStudent = new Registration();
 		attendsForThisStudent = new Attends();
 		
 		attendsForThisStudent.setAluno(thisStudent);
 		executionCourseToReadFrom.addAttends(attendsForThisStudent);
 		
 		Attends otherAttends1 = new Attends();
-		otherAttends1.setAluno(new Student());
+		otherAttends1.setAluno(new Registration());
 		executionCourseToReadFrom.addAttends(otherAttends1);
 		
 		Attends otherAttends2 = new Attends();
-		otherAttends2.setAluno(new Student());
+		otherAttends2.setAluno(new Registration());
 		executionCourseToReadFrom.addAttends(otherAttends2);
 	}
     

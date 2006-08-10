@@ -3,7 +3,7 @@
  */
 package net.sourceforge.fenixedu.dataTransferObject;
 
-import net.sourceforge.fenixedu.domain.Student;
+import net.sourceforge.fenixedu.domain.student.Registration;
 
 /**
  * @author Tânia Pousão
@@ -11,14 +11,14 @@ import net.sourceforge.fenixedu.domain.Student;
  */
 public class InfoStudentWithInfoPerson extends InfoStudent {
 
-    public void copyFromDomain(Student student) {
+    public void copyFromDomain(Registration student) {
         super.copyFromDomain(student);
         if (student != null) {
             setInfoPerson(InfoPerson.newInfoFromDomain(student.getPerson()));
         }
     }
 
-    public static InfoStudent newInfoFromDomain(Student student) {
+    public static InfoStudent newInfoFromDomain(Registration student) {
         InfoStudentWithInfoPerson infoStudent = null;
         if (student != null) {
             infoStudent = new InfoStudentWithInfoPerson();

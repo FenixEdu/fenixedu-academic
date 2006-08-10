@@ -13,6 +13,7 @@ import net.sourceforge.fenixedu.domain.person.Gender;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 import net.sourceforge.fenixedu.domain.person.MaritalStatus;
 import net.sourceforge.fenixedu.domain.person.RoleType;
+import net.sourceforge.fenixedu.domain.student.Registration;
 
 public class PersonTest extends DomainTestBase {
 
@@ -27,8 +28,8 @@ public class PersonTest extends DomainTestBase {
 	Role studentRole;
 	Role employeeRole;
 
-	Student degreeStudent;
-	Student masterDegreeStudent;
+	Registration degreeStudent;
+	Registration masterDegreeStudent;
     
     Teacher teacher;
     
@@ -108,11 +109,11 @@ public class PersonTest extends DomainTestBase {
 //        employee = new Employee();
         employee.setEmployeeNumber(employeeNumber);
 
-        degreeStudent = new Student();
+        degreeStudent = new Registration();
         degreeStudent.setNumber(degreeStudentNumber);
         degreeStudent.setDegreeType(DegreeType.DEGREE);                
 
-		masterDegreeStudent = new Student();
+		masterDegreeStudent = new Registration();
 		masterDegreeStudent.setDegreeType(DegreeType.MASTER_DEGREE);
         masterDegreeStudent.setNumber(masterDegreeStudentNumber);
 

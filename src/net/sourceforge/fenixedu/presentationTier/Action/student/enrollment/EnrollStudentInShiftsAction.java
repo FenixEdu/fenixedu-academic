@@ -11,7 +11,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.enrollment.shift.EnrollS
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.enrollment.shift.ShiftEnrollmentErrorReport;
 import net.sourceforge.fenixedu.domain.Shift;
-import net.sourceforge.fenixedu.domain.Student;
+import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 
@@ -59,7 +59,7 @@ public class EnrollStudentInShiftsAction extends FenixAction {
         return mapping.findForward("enrollmentConfirmation");
     }
     
-	private Student getStudent(final IUserView userView) {
+	private Registration getStudent(final IUserView userView) {
 		return userView.getPerson().getStudentByUsername();
 	}
 }

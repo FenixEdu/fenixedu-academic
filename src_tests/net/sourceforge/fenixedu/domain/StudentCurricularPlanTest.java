@@ -5,6 +5,7 @@ import java.util.Date;
 
 import net.sourceforge.fenixedu.domain.degree.enrollment.NotNeedToEnrollInCurricularCourse;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.StudentCurricularPlanState;
 import net.sourceforge.fenixedu.util.DateFormatUtil;
@@ -24,7 +25,7 @@ public class StudentCurricularPlanTest extends DomainTestBase {
 	private CurricularCourse curricularCourse = null;
 	private ExecutionPeriod executionPeriod = null;
 	
-	private Student studentForNewStudentCurricularPlan = null;
+	private Registration studentForNewStudentCurricularPlan = null;
 	private DegreeCurricularPlan degreeCurricularPlanForNewStudentCurricularPlan = null;
 	private Branch branchForNewStudentCurricularPlan = null;
 	private Date startDateForNewStudentCurricularPlan = null;
@@ -39,7 +40,7 @@ public class StudentCurricularPlanTest extends DomainTestBase {
 	protected void setUp() throws Exception {
 		super.setUp();
 		
-		Student student = new Student();
+		Registration student = new Registration();
 		DegreeCurricularPlan degreeCurricularPlan = new DegreeCurricularPlan();
 		
 		setUpChangeState(student, degreeCurricularPlan);
@@ -65,7 +66,7 @@ public class StudentCurricularPlanTest extends DomainTestBase {
 		Enrolment e1 = new Enrolment();
 		studentCurricularPlanToDelete.addEnrolments(e1);
 		
-		Student s1 = new Student();
+		Registration s1 = new Registration();
 		studentCurricularPlanToDelete.setStudent(s1);
 		
 		DegreeCurricularPlan dcp1 = new DegreeCurricularPlan();
@@ -116,12 +117,12 @@ public class StudentCurricularPlanTest extends DomainTestBase {
 
 
 
-	private void setUpCreate(Student student, DegreeCurricularPlan degreeCurricularPlan) throws ParseException {
+	private void setUpCreate(Registration student, DegreeCurricularPlan degreeCurricularPlan) throws ParseException {
 		newStudentCurricularPlan = new StudentCurricularPlan(student, degreeCurricularPlan,
 												StudentCurricularPlanState.ACTIVE, new Date());
 		
 		
-		studentForNewStudentCurricularPlan = new Student();
+		studentForNewStudentCurricularPlan = new Registration();
 		degreeCurricularPlanForNewStudentCurricularPlan = new DegreeCurricularPlan();
 		branchForNewStudentCurricularPlan = new Branch();
 		startDateForNewStudentCurricularPlan = DateFormatUtil.parse("yyyy/mm/dd", "2002/04/13");
@@ -132,7 +133,7 @@ public class StudentCurricularPlanTest extends DomainTestBase {
 	
 	
 	
-	private void setUpChangeState(Student student, DegreeCurricularPlan degreeCurricularPlan) {
+	private void setUpChangeState(Registration student, DegreeCurricularPlan degreeCurricularPlan) {
 		activeStudentCurricularPlan = new StudentCurricularPlan();
 		concludedStudentCurricularPlan = new StudentCurricularPlan();
 		
@@ -154,7 +155,7 @@ public class StudentCurricularPlanTest extends DomainTestBase {
 	
 	public void testCreate() {
 		assertTrue("Failed to assign DegreeCurricularPlan", newStudentCurricularPlan.hasDegreeCurricularPlan());
-		assertTrue("Failed to assign Student", newStudentCurricularPlan.hasStudent());
+		assertTrue("Failed to assign Registration", newStudentCurricularPlan.hasStudent());
 		assertNotNull("Failed to assign startDate", newStudentCurricularPlan.getStartDate());
 		assertNotNull("Failed to assign when", newStudentCurricularPlan.getWhen());
 		
@@ -168,7 +169,7 @@ public class StudentCurricularPlanTest extends DomainTestBase {
 				startDateForNewStudentCurricularPlan, stateForNewStudentCurricularPlan, 
 				givenCreditsForNewStudentCurricularPlan, specializationForNewStudentCurricularPlan) ;
 		
-		assertEquals("Failed to assign Student", scp.getStudent(),studentForNewStudentCurricularPlan);
+		assertEquals("Failed to assign Registration", scp.getStudent(),studentForNewStudentCurricularPlan);
 		assertEquals("Failed to assign DegreeCurricularPlan", scp.getDegreeCurricularPlan(),degreeCurricularPlanForNewStudentCurricularPlan);
 		assertEquals("Failed to assign Branch", scp.getBranch(),branchForNewStudentCurricularPlan);
 		assertEquals("Failed to assign startDate", scp.getStartDate(),startDateForNewStudentCurricularPlan);
@@ -207,7 +208,7 @@ public class StudentCurricularPlanTest extends DomainTestBase {
 		}
 		
 		assertFalse("Failed to dereference DegreeCurricularPlan", studentCurricularPlanToDelete.hasDegreeCurricularPlan());
-		assertFalse("Failed to dereference Student", studentCurricularPlanToDelete.hasStudent());
+		assertFalse("Failed to dereference Registration", studentCurricularPlanToDelete.hasStudent());
 		assertFalse("Failed to dereference Enrolments", studentCurricularPlanToDelete.hasAnyEnrolments());
 		assertFalse("Failed to dereference Branch", studentCurricularPlanToDelete.hasBranch());
 		assertFalse("Failed to dereference GratuitySituations", studentCurricularPlanToDelete.hasAnyGratuitySituations());

@@ -25,7 +25,6 @@ import net.sourceforge.fenixedu.domain.Advisory;
 import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Mark;
-import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.onlineTests.DistributedTest;
 import net.sourceforge.fenixedu.domain.onlineTests.DistributedTestAdvisory;
 import net.sourceforge.fenixedu.domain.onlineTests.Metadata;
@@ -35,6 +34,7 @@ import net.sourceforge.fenixedu.domain.onlineTests.StudentTestLog;
 import net.sourceforge.fenixedu.domain.onlineTests.StudentTestQuestion;
 import net.sourceforge.fenixedu.domain.onlineTests.Test;
 import net.sourceforge.fenixedu.domain.onlineTests.TestQuestion;
+import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.util.tests.TestQuestionChangesType;
 import net.sourceforge.fenixedu.util.tests.TestQuestionStudentsChangesType;
@@ -91,12 +91,12 @@ public class ChangeStudentTestQuestion extends Service {
                     currentDistributedTest, path.replace('\\', '/'))));
 
             if (studentsType.getType().intValue() == TestQuestionStudentsChangesType.THIS_STUDENT) {
-                Student student = rootDomainObject.readStudentByOID(studentId);
+                Registration student = rootDomainObject.readRegistrationByOID(studentId);
                 if (student == null)
                     throw new InvalidArgumentsServiceException();
             	studentsTestQuestionList.add(StudentTestQuestion.findStudentTestQuestion(oldQuestion, student, currentDistributedTest));
             } else if (studentsType.getType().intValue() == TestQuestionStudentsChangesType.STUDENTS_FROM_TEST) {
-                Student student = rootDomainObject.readStudentByOID(studentId);
+                Registration student = rootDomainObject.readRegistrationByOID(studentId);
                 if (student == null)
                     throw new InvalidArgumentsServiceException();
                 Integer order = StudentTestQuestion.findStudentTestQuestion(oldQuestion, student, currentDistributedTest).getTestQuestionOrder();
@@ -237,7 +237,7 @@ public class ChangeStudentTestQuestion extends Service {
         }
     }
 
-    private String getNewStudentMark(DistributedTest dt, Student s, double mark2Remove)
+    private String getNewStudentMark(DistributedTest dt, Registration s, double mark2Remove)
             throws ExcepcaoPersistencia {
         double totalMark = 0;
         Set<StudentTestQuestion> studentTestQuestionList = StudentTestQuestion.findStudentTestQuestions(s, dt);

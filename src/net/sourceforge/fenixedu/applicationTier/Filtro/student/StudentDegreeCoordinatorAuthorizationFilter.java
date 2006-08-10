@@ -15,13 +15,13 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.AuthorizationUtils;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
 import net.sourceforge.fenixedu.domain.Coordinator;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
-import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Group;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.GroupProposal;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal;
 import net.sourceforge.fenixedu.domain.person.RoleType;
+import net.sourceforge.fenixedu.domain.student.Registration;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
@@ -64,13 +64,13 @@ public class StudentDegreeCoordinatorAuthorizationFilter extends AccessControlFi
         try {
             String username = (String) arguments[0];
 
-            Student student1 = Student.readByUsername(username);
+            Registration student1 = Registration.readByUsername(username);
 
             List students = student1.getPerson().getStudents();
 
-            // for each of the Person's Student roles
+            // for each of the Person's Registration roles
             for (Iterator studentsIterator = students.iterator(); studentsIterator.hasNext();) {
-                Student student = (Student) studentsIterator.next();
+                Registration student = (Registration) studentsIterator.next();
 
                 Group group = student.findFinalDegreeWorkGroupForCurrentExecutionYear();
 
@@ -158,7 +158,7 @@ public class StudentDegreeCoordinatorAuthorizationFilter extends AccessControlFi
                         }
 
                         // if this is a coordinator of the Degree for this
-                        // Student
+                        // Registration
                         if (coordinator.getExecutionDegree().getDegreeCurricularPlan().getDegree()
                                 .getIdInternal().equals(
                                         studentCurricularPlan.getDegreeCurricularPlan().getDegree()

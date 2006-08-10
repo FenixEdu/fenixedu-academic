@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.domain;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.util.EvaluationType;
 
 public abstract class Evaluation extends Evaluation_Base {
@@ -12,7 +13,7 @@ public abstract class Evaluation extends Evaluation_Base {
 		setRootDomainObject(RootDomainObject.getInstance());
 	}
 
-	public List<ExecutionCourse> getAttendingExecutionCoursesFor(final Student student) {
+	public List<ExecutionCourse> getAttendingExecutionCoursesFor(final Registration student) {
         final List<ExecutionCourse> result = new ArrayList<ExecutionCourse>();
         for (final ExecutionCourse executionCourse : this.getAssociatedExecutionCourses()) {
             if (student.attends(executionCourse)) {

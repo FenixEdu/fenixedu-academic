@@ -16,10 +16,10 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Role;
-import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.person.RoleType;
+import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean;
 import net.sourceforge.fenixedu.util.PeriodState;
 import pt.utl.ist.fenix.tools.smtp.EmailSender;
@@ -88,7 +88,7 @@ public class SendMailBackingBean extends FenixBackingBean {
         if (degreeStudents.booleanValue() || masterDegreeStudents.booleanValue()) {
         	final Role role = Role.getRoleByRoleType(RoleType.STUDENT);
             for (final Person person : role.getAssociatedPersons()) {
-                Student student = null;
+                Registration student = null;
                 if (degreeStudents.booleanValue()) {
                     student = person.getStudentByType(DegreeType.DEGREE);
                 }

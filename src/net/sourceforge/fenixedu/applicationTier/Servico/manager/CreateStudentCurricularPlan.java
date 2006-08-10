@@ -6,9 +6,9 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
+import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.StudentCurricularPlanState;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
@@ -19,7 +19,7 @@ public class CreateStudentCurricularPlan extends Service {
             final Integer degreeCurricularPlanId, final Date startDate) throws ExcepcaoPersistencia,
             FenixServiceException {
 
-        final Student student = Student.readStudentByNumberAndDegreeType(studentNumber, degreeType);
+        final Registration student = Registration.readStudentByNumberAndDegreeType(studentNumber, degreeType);
         if (student == null) {
             throw new NonExistingServiceException("exception.student.does.not.exist");
         }

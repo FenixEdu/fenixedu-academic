@@ -10,9 +10,9 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgume
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlan;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlanWithInfoStudentAndInfoBranchAndSecondaryBranchAndInfoDegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
+import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class ReadPosGradStudentCurricularPlans extends Service {
@@ -20,7 +20,7 @@ public class ReadPosGradStudentCurricularPlans extends Service {
 	public List<InfoStudentCurricularPlan> run(Integer studentId) throws FenixServiceException, ExcepcaoPersistencia {
 		List<InfoStudentCurricularPlan> result = new ArrayList<InfoStudentCurricularPlan>();
 
-		Student student = rootDomainObject.readStudentByOID(studentId);
+		Registration student = rootDomainObject.readRegistrationByOID(studentId);
 		if (student == null) {
 			throw new InvalidArgumentsServiceException("invalidStudentId");
 		}

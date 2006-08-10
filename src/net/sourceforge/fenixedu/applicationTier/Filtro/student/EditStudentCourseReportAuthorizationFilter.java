@@ -12,10 +12,10 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.framework.DomainObjectAuthorizationFilter;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.CurricularCourseScope;
-import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.gesdis.StudentCourseReport;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.Delegate;
+import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.util.DelegateYearType;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -46,7 +46,7 @@ public class EditStudentCourseReportAuthorizationFilter extends DomainObjectAuth
     protected boolean verifyCondition(IUserView id, Integer objectId) {
         try {
 
-            Student student = Student.readByUsername(id.getUtilizador());
+            Registration student = Registration.readByUsername(id.getUtilizador());
 
             Delegate delegate = null;
             if (!student.getDelegate().isEmpty()) {

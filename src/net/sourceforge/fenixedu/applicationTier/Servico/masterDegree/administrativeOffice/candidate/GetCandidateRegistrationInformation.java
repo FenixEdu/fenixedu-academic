@@ -12,9 +12,9 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeCandidateWith
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlanWithInfoStudentAndDegree;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.MasterDegreeCandidate;
-import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
+import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 /**
@@ -28,7 +28,7 @@ public class GetCandidateRegistrationInformation extends Service {
 
         MasterDegreeCandidate masterDegreeCandidate = rootDomainObject.readMasterDegreeCandidateByOID(candidateID);
 
-        Student student = masterDegreeCandidate.getPerson().readStudentByDegreeType(
+        Registration student = masterDegreeCandidate.getPerson().readStudentByDegreeType(
                 DegreeType.MASTER_DEGREE);
 
         StudentCurricularPlan studentCurricularPlan = null;

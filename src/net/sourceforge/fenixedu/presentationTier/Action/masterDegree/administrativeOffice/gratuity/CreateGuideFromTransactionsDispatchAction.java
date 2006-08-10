@@ -61,7 +61,7 @@ public class CreateGuideFromTransactionsDispatchAction extends FenixDispatchActi
         InfoContributor infoContributor = readContributor(mapping, userView, contributorNumber);
         request.setAttribute(SessionConstants.CONTRIBUTOR, infoContributor);
 
-        // Read Student
+        // Read Registration
         InfoStudent infoStudent = readStudent(mapping, userView, studentId);
         request.setAttribute(SessionConstants.STUDENT, infoStudent);
 
@@ -112,7 +112,7 @@ public class CreateGuideFromTransactionsDispatchAction extends FenixDispatchActi
         // Read Contributor
         InfoContributor infoContributor = readContributor(mapping, userView, contributorNumber);
 
-        // Read Student
+        // Read Registration
         InfoStudent infoStudent = readStudent(mapping, userView, studentId);
 
         // Read Gratuity Situation

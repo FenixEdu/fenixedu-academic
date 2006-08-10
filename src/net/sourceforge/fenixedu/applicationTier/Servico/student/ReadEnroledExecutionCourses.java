@@ -14,7 +14,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoGrouping;
 import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Grouping;
-import net.sourceforge.fenixedu.domain.Student;
+import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.util.PeriodState;
 
@@ -38,7 +38,7 @@ public class ReadEnroledExecutionCourses extends Service {
         return false;
     }
 
-    private boolean checkStudentInAttendsSet(List allGroupProperties, Student student) {
+    private boolean checkStudentInAttendsSet(List allGroupProperties, Registration student) {
         boolean result = false;
 
         Iterator iter = allGroupProperties.iterator();
@@ -54,7 +54,7 @@ public class ReadEnroledExecutionCourses extends Service {
     public List run(String username) throws ExcepcaoPersistencia {
         List allInfoExecutionCourses = new ArrayList();
 
-        Student student = Student.readByUsername(username);
+        Registration student = Registration.readByUsername(username);
         List allAttend = student.getAssociatedAttends();
 
         Iterator iter = allAttend.iterator();

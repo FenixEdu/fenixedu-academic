@@ -2,7 +2,7 @@ package net.sourceforge.fenixedu.presentationTier.Action.sop.utils;
 
 public abstract class SessionConstants {
 
-    // Constants for Student Shift Enrolment
+    // Constants for Registration Shift Enrolment
     public static final String INFO_STUDENT_SHIFT_ENROLMENT_CONTEXT_KEY = "INFO_STUDENT_SHIFT_ENROLMENT_CONTEXT_KEY";
 
     public static String ROLES = "roles";
@@ -29,7 +29,7 @@ public abstract class SessionConstants {
     public static final String INFO_ENROLMENT_EVALUATION_KEY = "infoEnrolmentEvaluation";
 
     //
-    // Constants for Student Enrolment...
+    // Constants for Registration Enrolment...
     //
     public static final String INFO_ENROLMENT_CONTEXT_KEY = "INFO_ENROLMENT_CONTEXT_KEY";
 

@@ -16,13 +16,13 @@ import net.sourceforge.fenixedu.domain.GratuityValues;
 import net.sourceforge.fenixedu.domain.InsuranceValue;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.PersonAccount;
-import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.gratuity.SibsPaymentStatus;
 import net.sourceforge.fenixedu.domain.gratuity.SibsPaymentType;
 import net.sourceforge.fenixedu.domain.gratuity.masterDegree.SibsPaymentFile;
 import net.sourceforge.fenixedu.domain.gratuity.masterDegree.SibsPaymentFileEntry;
+import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization;
 import net.sourceforge.fenixedu.domain.transactions.GratuityTransaction;
 import net.sourceforge.fenixedu.domain.transactions.InsuranceTransaction;
@@ -89,9 +89,9 @@ public class ProcessSibsPaymentFile extends Service {
             // else { do persistentSupportecific code to insurance and
             // gratuities }
 
-            // DegreeType should be changed in future to support Degree Student
+            // DegreeType should be changed in future to support Degree Registration
             // gratuity
-            Student student = Student.readStudentByNumberAndDegreeType(sibsPaymentFileEntry
+            Registration student = Registration.readStudentByNumberAndDegreeType(sibsPaymentFileEntry
                     .getStudentNumber(), DegreeType.MASTER_DEGREE);
 
             int year = sibsPaymentFileEntry.getYear().intValue();

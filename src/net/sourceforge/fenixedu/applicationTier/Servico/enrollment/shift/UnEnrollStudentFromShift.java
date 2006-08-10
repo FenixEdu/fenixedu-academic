@@ -3,11 +3,11 @@ package net.sourceforge.fenixedu.applicationTier.Servico.enrollment.shift;
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Shift;
-import net.sourceforge.fenixedu.domain.Student;
+import net.sourceforge.fenixedu.domain.student.Registration;
 
 public class UnEnrollStudentFromShift extends Service {
 
-	public void run(final Student student, final Integer shiftId)
+	public void run(final Registration student, final Integer shiftId)
 			throws StudentNotFoundServiceException, ShiftNotFoundServiceException,
 			ShiftEnrolmentNotFoundServiceException, FenixServiceException {
 

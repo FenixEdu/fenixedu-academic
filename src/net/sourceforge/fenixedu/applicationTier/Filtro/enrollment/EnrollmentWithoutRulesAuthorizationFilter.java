@@ -7,9 +7,9 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.AuthorizationByManyRolesFilter;
 import net.sourceforge.fenixedu.domain.Role;
-import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.person.RoleType;
+import net.sourceforge.fenixedu.domain.student.Registration;
 
 public class EnrollmentWithoutRulesAuthorizationFilter extends AuthorizationByManyRolesFilter {
 
@@ -65,6 +65,6 @@ public class EnrollmentWithoutRulesAuthorizationFilter extends AuthorizationByMa
 	}
 
 	private boolean checkStudentType(Object[] args, DegreeType degreeType) {
-		return (args != null && args[0] != null) ? ((Student) args[0]).getDegreeType().equals(degreeType) : false;
+		return (args != null && args[0] != null) ? ((Registration) args[0]).getDegreeType().equals(degreeType) : false;
 	}
 }

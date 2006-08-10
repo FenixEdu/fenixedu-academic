@@ -31,6 +31,7 @@ import net.sourceforge.fenixedu.domain.gratuity.GratuitySituationType;
 import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequestType;
+import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.StudentCurricularPlanState;
 import net.sourceforge.fenixedu.tools.enrollment.AreaType;
@@ -598,7 +599,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 		});
 	}
 
-	protected List getAprovedEnrolments() {
+	public List getAprovedEnrolments() {
 		return (List) CollectionUtils.select(getEnrolments(), new Predicate() {
 			public boolean evaluate(Object obj) {
 				Enrolment enrollment = (Enrolment) obj;
@@ -1034,7 +1035,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	// END: Only for enrollment purposes (PROTECTED)
 	// -------------------------------------------------------------
 
-	public StudentCurricularPlan(Student student, DegreeCurricularPlan degreeCurricularPlan,
+	public StudentCurricularPlan(Registration student, DegreeCurricularPlan degreeCurricularPlan,
 			Branch branch, Date startDate, StudentCurricularPlanState currentState, Double givenCredits,
 			Specialization specialization) {
 
@@ -1045,7 +1046,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 		setSpecialization(specialization);
 	}
 
-	public StudentCurricularPlan(Student student, DegreeCurricularPlan degreeCurricularPlan,
+	public StudentCurricularPlan(Registration student, DegreeCurricularPlan degreeCurricularPlan,
 			StudentCurricularPlanState studentCurricularPlanState, Date startDate) {
 
 		this.setRootDomainObject(RootDomainObject.getInstance());
@@ -1076,7 +1077,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 
 	private boolean canSetStateToActive() {
 
-		final Student student = getStudent();
+		final Registration student = getStudent();
 		final DegreeCurricularPlan degreeCurricularPlan = getDegreeCurricularPlan();
 
 		for (StudentCurricularPlan otherStudentCurricularPlan : student.getStudentCurricularPlans()) {
@@ -1099,7 +1100,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 
 	private void inactivateTheActiveStudentCurricularPlan() {
 
-		final Student student = getStudent();
+		final Registration student = getStudent();
 		final DegreeCurricularPlan degreeCurricularPlan = getDegreeCurricularPlan();
 
 		for (StudentCurricularPlan otherStudentCurricularPlan : student.getStudentCurricularPlans()) {

@@ -16,8 +16,8 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoSiteStudentInformation;
 import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.Grouping;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.StudentGroup;
+import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -48,7 +48,7 @@ public class PrepareCreateStudentGroup extends Service {
 
         final List<InfoSiteStudentInformation> infoStudentInformationList = new ArrayList<InfoSiteStudentInformation>(attendsGrouping.size());
         for (Attends attend : attendsGrouping) {
-            final Student student = attend.getAluno();
+            final Registration student = attend.getAluno();
             final Person person = student.getPerson();
             InfoSiteStudentInformation infoSiteStudentInformation = new InfoSiteStudentInformation();
             infoSiteStudentInformation.setEmail(person.getEmail());

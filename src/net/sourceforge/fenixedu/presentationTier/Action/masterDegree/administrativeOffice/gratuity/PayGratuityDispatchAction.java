@@ -83,7 +83,7 @@ public class PayGratuityDispatchAction extends FenixDispatchAction {
         Integer gratuitySituationId = (Integer) payGratuityForm.get("gratuitySituationId");
         Integer insuranceExecutionYearId = (Integer) payGratuityForm.get("insuranceExecutionYearId");
 
-        // Read Student
+        // Read Registration
         InfoStudent infoStudent = readStudent(mapping, userView, studentId);
         request.setAttribute(SessionConstants.STUDENT, infoStudent);
 
@@ -166,7 +166,7 @@ public class PayGratuityDispatchAction extends FenixDispatchAction {
         // Read Contributor
         InfoContributor infoContributor = readContributor(mapping, userView, contributorNumber);
 
-        // Read Student
+        // Read Registration
         InfoStudent infoStudent = readStudent(mapping, userView, studentId);
 
         List infoGuideEntries = new ArrayList();

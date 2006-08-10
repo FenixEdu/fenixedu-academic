@@ -11,8 +11,8 @@ import java.util.Date;
 import net.sourceforge.fenixedu.applicationTier.Filtro.Filtro;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
 import net.sourceforge.fenixedu.domain.EnrolmentPeriodInClasses;
-import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.student.Registration;
 import pt.utl.ist.berserk.ServiceRequest;
 import pt.utl.ist.berserk.ServiceResponse;
 import pt.utl.ist.berserk.logic.filterManager.exceptions.FilterException;
@@ -29,7 +29,7 @@ public class ClassEnrollmentAuthorizationFilter extends Filtro {
 
     public void execute(ServiceRequest request, ServiceResponse response) throws FilterException, Exception {
 
-        final Student student = getRemoteUser(request).getPerson().getStudentByUsername();
+        final Registration student = getRemoteUser(request).getPerson().getStudentByUsername();
         final StudentCurricularPlan studentCurricularPlan = student.getActiveStudentCurricularPlan(); 
         
         if (studentCurricularPlan != null) {

@@ -21,10 +21,10 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.GratuitySituation;
 import net.sourceforge.fenixedu.domain.GratuityValues;
 import net.sourceforge.fenixedu.domain.InsuranceValue;
-import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.gratuity.SibsPaymentType;
+import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.util.gratuity.fileParsers.sibs.SibsOutgoingPaymentFileConstants;
@@ -81,7 +81,7 @@ public class GenerateOutgoingSibsPaymentFileByExecutionYearID extends Service {
                     }
                 }
 
-                Student student = studentCurricularPlan.getStudent();
+                Registration student = studentCurricularPlan.getStudent();
 
                 if (studentsWithInsuranceChecked.contains(student.getIdInternal()) == false) {
 
@@ -119,7 +119,7 @@ public class GenerateOutgoingSibsPaymentFileByExecutionYearID extends Service {
                         totalLines += addGratuityLines(outgoingSibsPaymentFile, gratuitySituation,
                                 shortYear, paymentEndDate);
                     } else {
-                        System.out.println("Student " + student.getNumber()
+                        System.out.println("Registration " + student.getNumber()
                                 + " does not have a gratuity situation for year "
                                 + executionDegree.getExecutionYear().getYear() + " Degree "
                                 + executionDegree.getDegreeCurricularPlan().getName());

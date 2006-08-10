@@ -6,7 +6,7 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.GuideEntry;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.PersonAccount;
-import net.sourceforge.fenixedu.domain.Student;
+import net.sourceforge.fenixedu.domain.student.Registration;
 
 /**
  * @author <a href="mailto:sana@ist.utl.pt">Shezad Anavarali </a>
@@ -37,7 +37,7 @@ public class InsuranceTransaction extends InsuranceTransaction_Base {
 			TransactionType transactionType, Boolean wasInternalBalance,
 			Person responsiblePerson, PersonAccount personAccount,
 			GuideEntry guideEntry, ExecutionYear executionYear,
-			Student student) {
+			Registration student) {
         setOjbConcreteClass(getClass().getName());
 		setValue(value);
 		setTransactionDate(transactionDate);

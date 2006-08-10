@@ -8,7 +8,7 @@ import java.util.Date;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
-import net.sourceforge.fenixedu.domain.Student;
+import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.util.EnrolmentAction;
 
 /**
@@ -17,7 +17,7 @@ import net.sourceforge.fenixedu.util.EnrolmentAction;
  */
 public class EnrolmentLog extends EnrolmentLog_Base {
 
-    public EnrolmentLog(EnrolmentAction action, Student student, CurricularCourse curricularCourse, ExecutionPeriod executionPeriod, String who) {
+    public EnrolmentLog(EnrolmentAction action, Registration student, CurricularCourse curricularCourse, ExecutionPeriod executionPeriod, String who) {
     	super();
     	setRootDomainObject(RootDomainObject.getInstance());
         this.setDate(new Date());

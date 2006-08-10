@@ -4,8 +4,8 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentWithInfoPerson;
-import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
+import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -20,14 +20,14 @@ public class ReadStudentsByNameIDnumberIDtypeAndStudentNumber extends Service {
     public List run(String studentName, String idNumber, IDDocumentType idType, Integer studentNumber)
             throws ExcepcaoPersistencia {
 
-        List masterDegreeStudents = Student
+        List masterDegreeStudents = Registration
                 .readMasterDegreeStudentsByNameDocIDNumberIDTypeAndStudentNumber(studentName, idNumber,
                         idType, studentNumber);
 
         return (List) CollectionUtils.collect(masterDegreeStudents, new Transformer() {
 
             public Object transform(Object arg0) {
-                Student student = (Student) arg0;
+                Registration student = (Registration) arg0;
                 return InfoStudentWithInfoPerson.newInfoFromDomain(student);
             }
 

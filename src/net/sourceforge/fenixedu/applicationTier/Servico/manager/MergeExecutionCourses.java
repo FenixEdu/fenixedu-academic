@@ -199,7 +199,7 @@ public class MergeExecutionCourses extends Service {
                 if (attends.hasEnrolment() && !otherAttends.hasAluno()) {
                     otherAttends.setEnrolment(attends.getEnrolment());
                 } else if (otherAttends.hasEnrolment() && attends.hasAluno()) {
-                    throw new FenixServiceException("Unable to merge execution courses. Student "
+                    throw new FenixServiceException("Unable to merge execution courses. Registration "
                             + attends.getAluno().getNumber() + " has an enrolment in both.");
                 }
                 for (; !attends.getAssociatedMarks().isEmpty(); otherAttends.addAssociatedMarks(attends

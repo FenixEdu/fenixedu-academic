@@ -13,8 +13,8 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
 import net.sourceforge.fenixedu.domain.Attends;
-import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.StudentGroup;
+import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 /**
@@ -38,7 +38,7 @@ public class ReadStudentsByStudentGroupID extends Service {
         while(iter.hasNext()) {
             Attends attend = (Attends) iter.next();
             Integer studentID = attend.getAluno().getIdInternal();
-            Student student = rootDomainObject.readStudentByOID(studentID);
+            Registration student = rootDomainObject.readRegistrationByOID(studentID);
             infoStudents.add(InfoStudent.newInfoFromDomain(student));
         }
         return infoStudents;

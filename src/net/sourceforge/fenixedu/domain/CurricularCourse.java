@@ -27,6 +27,7 @@ import net.sourceforge.fenixedu.domain.degreeStructure.RegimeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.precedences.Restriction;
 import net.sourceforge.fenixedu.domain.precedences.RestrictionHasEverBeenOrIsCurrentlyEnrolledInCurricularCourse;
+import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
 import net.sourceforge.fenixedu.util.DateFormatUtil;
 import net.sourceforge.fenixedu.util.EnrolmentEvaluationState;
@@ -798,7 +799,7 @@ public class CurricularCourse extends CurricularCourse_Base {
         return result;
     }
 
-    private List<Enrolment> getActiveEnrollments(ExecutionPeriod executionPeriod, Student student) {
+    private List<Enrolment> getActiveEnrollments(ExecutionPeriod executionPeriod, Registration student) {
         List<Enrolment> results = new ArrayList<Enrolment>();
         for (final CurriculumModule curriculumModule : getCurriculumModules()) {
             Enrolment enrollment = (Enrolment) curriculumModule;
@@ -848,7 +849,7 @@ public class CurricularCourse extends CurricularCourse_Base {
         return result;
     }
 
-    public Enrolment getEnrolmentByStudentAndYear(Student student, String year) {
+    public Enrolment getEnrolmentByStudentAndYear(Registration student, String year) {
         for (final CurriculumModule curriculumModule : getCurriculumModules()) {
             final Enrolment enrolment = (Enrolment) curriculumModule;
             if (enrolment.getStudentCurricularPlan().getStudent().equals(student)
@@ -859,7 +860,7 @@ public class CurricularCourse extends CurricularCourse_Base {
         return null;
     }
 
-    public List<Enrolment> getActiveEnrollments(Student student) {
+    public List<Enrolment> getActiveEnrollments(Registration student) {
         return getActiveEnrollments(null, student);
     }
 

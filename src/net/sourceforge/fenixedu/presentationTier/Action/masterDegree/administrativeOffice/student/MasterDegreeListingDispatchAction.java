@@ -110,7 +110,7 @@ public class MasterDegreeListingDispatchAction extends DispatchAction {
      * @param form
      * @param request
      * @param response
-     * @return The Student's from a Degree Curricular Plan
+     * @return The Registration's from a Degree Curricular Plan
      * @throws Exception
      */
     public ActionForward getStudentsFromDCP(ActionMapping mapping, ActionForm form,

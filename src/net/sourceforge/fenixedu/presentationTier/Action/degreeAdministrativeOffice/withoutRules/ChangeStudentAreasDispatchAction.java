@@ -7,10 +7,10 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServi
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
-import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
@@ -34,7 +34,7 @@ public class ChangeStudentAreasDispatchAction extends FenixDispatchAction {
 		final Integer studentNumber = Integer.valueOf(form.getString("studentNumber"));
 
 		try {
-			final Student student = Student.readStudentByNumberAndDegreeType(studentNumber,
+			final Registration student = Registration.readStudentByNumberAndDegreeType(studentNumber,
 					DegreeType.DEGREE);
 			final StudentCurricularPlan studentCurricularPlan = (StudentCurricularPlan) ServiceManagerServiceFactory
 					.executeService(getUserView(request), "ReadStudentCurricularPlanForEnrollments",
@@ -73,7 +73,7 @@ public class ChangeStudentAreasDispatchAction extends FenixDispatchAction {
 		final Integer specializationAreaID = (Integer) form.get("specializationAreaID");
 		final Integer secondaryAreaID = (Integer) form.get("secondaryAreaID");
 
-		final Student student = Student.readStudentByNumberAndDegreeType(studentNumber, degreeType);
+		final Registration student = Registration.readStudentByNumberAndDegreeType(studentNumber, degreeType);
 		try {
 			ServiceManagerServiceFactory.executeService(getUserView(request),
 					"WriteStudentAreasWithoutRestrictions", new Object[] { student, degreeType,

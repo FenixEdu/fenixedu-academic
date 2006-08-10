@@ -7,11 +7,11 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.EnrolmentExce
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.SpecialSeasonCode;
-import net.sourceforge.fenixedu.domain.Student;
+import net.sourceforge.fenixedu.domain.student.Registration;
 
 public class CreateSpecialSeasonEvaluations extends Service {
 	
-	public void run(Student student, ExecutionYear executionYear, Collection<Enrolment> enrolments) throws EnrolmentException {
+	public void run(Registration student, ExecutionYear executionYear, Collection<Enrolment> enrolments) throws EnrolmentException {
 
 		SpecialSeasonCode specialSeasonCode = student.getSpecialSeasonCodeByExecutionYear(executionYear);
 		

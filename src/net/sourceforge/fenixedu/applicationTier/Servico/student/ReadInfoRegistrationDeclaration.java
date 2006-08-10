@@ -16,9 +16,9 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
 import net.sourceforge.fenixedu.dataTransferObject.student.InfoRegistrationDeclaration;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
+import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 /**
@@ -30,7 +30,7 @@ public class ReadInfoRegistrationDeclaration extends Service {
     public InfoRegistrationDeclaration run(Integer studentNumber, DegreeType degreeType)
             throws FenixServiceException, ExcepcaoPersistencia {
 
-        Student student = Student.readStudentByNumberAndDegreeType(studentNumber, degreeType);
+        Registration student = Registration.readStudentByNumberAndDegreeType(studentNumber, degreeType);
         if (student == null) {
             throw new NonExistingStudentServiceException();
         }

@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.RootDomainObject;
-import net.sourceforge.fenixedu.domain.Student;
+import net.sourceforge.fenixedu.domain.student.Registration;
 
 
 /**
@@ -41,7 +41,7 @@ public class SeminaryCandidacy extends SeminaryCandidacy_Base {
         deleteDomainObject();
     }
 
-    public static List<SeminaryCandidacy> getByStudentAndSeminary(Student student, Seminary seminary) {
+    public static List<SeminaryCandidacy> getByStudentAndSeminary(Registration student, Seminary seminary) {
         List<SeminaryCandidacy> candidacies = new ArrayList<SeminaryCandidacy>();
         
         for (SeminaryCandidacy candidacy : RootDomainObject.getInstance().getCandidacys()) {

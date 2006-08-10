@@ -8,11 +8,11 @@ import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
-import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.exceptions.DomainExceptionWithLabelFormatter;
+import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.util.resources.LabelFormatter;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -194,7 +194,7 @@ public abstract class AcademicServiceRequest extends AcademicServiceRequest_Base
 		// nothing to be done
 	}
 
-	public Student getStudent() {
+	public Registration getStudent() {
 		return getStudentCurricularPlan().getStudent();
 	}
 

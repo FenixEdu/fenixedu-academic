@@ -23,10 +23,10 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.GratuitySituation;
 import net.sourceforge.fenixedu.domain.GratuityValues;
 import net.sourceforge.fenixedu.domain.InsuranceValue;
-import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.gratuity.SibsPaymentType;
+import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.util.gratuity.fileParsers.sibs.SibsOutgoingPaymentFileConstants;
@@ -257,7 +257,7 @@ public class GeneratePaymentLettersFileByExecutionYearID extends Service {
                     }
                 }
 
-                Student student = (studentCurricularPlan.getStudent());
+                Registration student = (studentCurricularPlan.getStudent());
 
                 GratuityLetterFileEntry gratuityLetterFileEntryInsurancePart = null;
 
@@ -305,7 +305,7 @@ public class GeneratePaymentLettersFileByExecutionYearID extends Service {
                         gratuityLetterFileEntry = createGratuityLetterFileEntryForGratuitySituation(
                                 gratuitySituation, shortYear, paymentEndDate);
                     } else {
-                        System.out.println("Student " + student.getNumber()
+                        System.out.println("Registration " + student.getNumber()
                                 + " does not have a gratuity situation for year "
                                 + executionDegree.getExecutionYear().getYear() + " Degree "
                                 + executionDegree.getDegreeCurricularPlan().getName());
@@ -635,32 +635,32 @@ public class GeneratePaymentLettersFileByExecutionYearID extends Service {
     // letterFiles.put(numberOfPhases, letterFile);
     // }
     //
-    // // Student number
+    // // Registration number
     // letterFile.append(gratuityLetterFileEntry.getStudentCurricularPlan().getStudent()
     // .getNumber()
     // + DATA_SEPARATOR);
     //
-    // // Student name
+    // // Registration name
     // letterFile.append(gratuityLetterFileEntry.getStudentCurricularPlan().getStudent()
     // .getPerson().getNome()
     // + DATA_SEPARATOR);
     //
-    // // Student address
+    // // Registration address
     // letterFile.append(gratuityLetterFileEntry.getStudentCurricularPlan().getStudent()
     // .getPerson().getMorada()
     // + DATA_SEPARATOR);
     //
-    // // Student localidade
+    // // Registration localidade
     // letterFile.append(gratuityLetterFileEntry.getStudentCurricularPlan().getStudent()
     // .getPerson().getLocalidade()
     // + DATA_SEPARATOR);
     //
-    // // Student cod. postal
+    // // Registration cod. postal
     // letterFile.append(gratuityLetterFileEntry.getStudentCurricularPlan().getStudent()
     // .getPerson().getCodigoPostal()
     // + DATA_SEPARATOR);
     //
-    // // Student localidade - cod. postal
+    // // Registration localidade - cod. postal
     // letterFile.append(gratuityLetterFileEntry.getStudentCurricularPlan().getStudent()
     // .getPerson().getLocalidadeCodigoPostal()
     // + DATA_SEPARATOR);
@@ -766,32 +766,32 @@ public class GeneratePaymentLettersFileByExecutionYearID extends Service {
 
             GratuityLetterFileEntry gratuityLetterFileEntry = (GratuityLetterFileEntry) iter.next();
 
-            // Student number
+            // Registration number
             letterFile.append(gratuityLetterFileEntry.getStudentCurricularPlan().getStudent()
                     .getNumber()
                     + DATA_SEPARATOR);
 
-            // Student name
+            // Registration name
             letterFile.append(gratuityLetterFileEntry.getStudentCurricularPlan().getStudent()
                     .getPerson().getNome()
                     + DATA_SEPARATOR);
 
-            // Student address
+            // Registration address
             letterFile.append(gratuityLetterFileEntry.getStudentCurricularPlan().getStudent()
                     .getPerson().getAddress()
                     + DATA_SEPARATOR);
 
-            // Student localidade
+            // Registration localidade
             letterFile.append(gratuityLetterFileEntry.getStudentCurricularPlan().getStudent()
                     .getPerson().getArea()
                     + DATA_SEPARATOR);
 
-            // Student cod. postal
+            // Registration cod. postal
             letterFile.append(gratuityLetterFileEntry.getStudentCurricularPlan().getStudent()
                     .getPerson().getAreaCode()
                     + DATA_SEPARATOR);
 
-            // Student localidade - cod. postal
+            // Registration localidade - cod. postal
             letterFile.append(gratuityLetterFileEntry.getStudentCurricularPlan().getStudent()
                     .getPerson().getAreaOfAreaCode()
                     + DATA_SEPARATOR);

@@ -16,10 +16,10 @@ import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Shift;
-import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
 import net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationType;
+import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.util.AttendacyStateSelectionType;
 
@@ -66,7 +66,7 @@ public class ReadDomainStudentsByExecutionCourseAndDegreeTypeAndShiftAttendAndEn
 			Attends attends = (Attends) arg0;
 			if (shiftIds == null) return true;
 			else {
-				Student student = attends.getAluno();
+				Registration student = attends.getAluno();
 				for (Integer shiftId : shiftIds) {
 					for (Shift shift : student.getShifts()) {
 						if (shift.getIdInternal().equals(shiftId)) {
@@ -133,7 +133,7 @@ public class ReadDomainStudentsByExecutionCourseAndDegreeTypeAndShiftAttendAndEn
 		}
 	}
 
-	public Collection<Student> run(Integer executionCourseId, List<Integer> curricularPlansIds,
+	public Collection<Registration> run(Integer executionCourseId, List<Integer> curricularPlansIds,
 			List<AttendacyStateSelectionType> enrollmentTypeFilters, List<Integer> shiftIds)
 			throws FenixServiceException, ExcepcaoPersistencia {
 

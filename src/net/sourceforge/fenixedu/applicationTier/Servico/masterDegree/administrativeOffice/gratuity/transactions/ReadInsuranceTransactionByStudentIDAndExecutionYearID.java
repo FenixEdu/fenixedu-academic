@@ -6,7 +6,7 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.transactions.InfoInsuranceTransaction;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.Student;
+import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.transactions.InsuranceTransaction;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
@@ -31,7 +31,7 @@ public class ReadInsuranceTransactionByStudentIDAndExecutionYearID extends Servi
 
         ExecutionYear executionYear = rootDomainObject.readExecutionYearByOID(executionYearId);
 
-        Student student = rootDomainObject.readStudentByOID(studentId);
+        Registration student = rootDomainObject.readRegistrationByOID(studentId);
 
         if ((executionYear == null) || (student == null)) {
             return null;

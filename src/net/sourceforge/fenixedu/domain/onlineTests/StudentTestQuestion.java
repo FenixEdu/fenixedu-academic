@@ -8,7 +8,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.RootDomainObject;
-import net.sourceforge.fenixedu.domain.Student;
+import net.sourceforge.fenixedu.domain.student.Registration;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
@@ -38,7 +38,7 @@ public class StudentTestQuestion extends StudentTestQuestion_Base {
         super.deleteDomainObject();
     }
 
-	public static Set<StudentTestQuestion> findStudentTestQuestions(final Student student, final DistributedTest distributedTest) {
+	public static Set<StudentTestQuestion> findStudentTestQuestions(final Registration student, final DistributedTest distributedTest) {
 		return findStudentTestQuestions(student.getStudentTestsQuestionsSet(), distributedTest);
 	}
 
@@ -56,7 +56,7 @@ public class StudentTestQuestion extends StudentTestQuestion_Base {
 		return studentTestQuestions;
 	}
 
-	public static StudentTestQuestion findStudentTestQuestion(final Question question, final Student student, final DistributedTest distributedTest) {
+	public static StudentTestQuestion findStudentTestQuestion(final Question question, final Registration student, final DistributedTest distributedTest) {
 		for (final StudentTestQuestion studentTestQuestion : question.getStudentTestsQuestionsSet()) {
 			if (distributedTest == studentTestQuestion.getDistributedTest() && student == studentTestQuestion.getStudent()) {
 				return studentTestQuestion;

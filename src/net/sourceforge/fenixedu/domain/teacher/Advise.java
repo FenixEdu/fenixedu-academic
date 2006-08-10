@@ -4,9 +4,9 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
-import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.student.Registration;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
@@ -18,7 +18,7 @@ public class Advise extends Advise_Base {
                 .addListener(new AdviseTeacherAdviseServiceListener());
     }
 
-    public Advise(Teacher teacher, Student student, AdviseType adviseType, ExecutionPeriod startPeriod,
+    public Advise(Teacher teacher, Registration student, AdviseType adviseType, ExecutionPeriod startPeriod,
             ExecutionPeriod endPeriod) {
         super();
         setRootDomainObject(RootDomainObject.getInstance());

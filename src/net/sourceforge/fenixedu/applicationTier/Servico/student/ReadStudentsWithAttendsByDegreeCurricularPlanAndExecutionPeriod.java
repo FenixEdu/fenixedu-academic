@@ -18,8 +18,8 @@ import net.sourceforge.fenixedu.dataTransferObject.inquiries.InfoInquiriesRegist
 import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
-import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.inquiries.InquiriesRegistry;
+import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -79,7 +79,7 @@ public class ReadStudentsWithAttendsByDegreeCurricularPlanAndExecutionPeriod ext
     }
 
     private void copyStudentInquiriesRegistries(
-            InfoStudentWithAttendsAndInquiriesRegistries currentStudent, Student aluno) {
+            InfoStudentWithAttendsAndInquiriesRegistries currentStudent, Registration aluno) {
 
         List<InquiriesRegistry> inquiriesRegistries = aluno.getAssociatedInquiriesRegistries();
         List<InfoInquiriesRegistry> infoRegistries = new ArrayList<InfoInquiriesRegistry>(

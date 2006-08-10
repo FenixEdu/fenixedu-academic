@@ -67,7 +67,7 @@ public class InfoFrequenta extends InfoObject {
 
     public String toString() {
         String result = "[ATTEND";
-        result += ", Student=" + _aluno;
+        result += ", Registration=" + _aluno;
         result += ", ExecutionCourse=" + _disciplinaExecucao;
         result += ", Enrolment=" + infoEnrolment;
         result += "]";

@@ -12,9 +12,9 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.AccessControlFilter;
 import net.sourceforge.fenixedu.applicationTier.Filtro.AuthorizationUtils;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
-import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.person.RoleType;
+import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import pt.utl.ist.berserk.ServiceRequest;
 import pt.utl.ist.berserk.ServiceResponse;
@@ -64,7 +64,7 @@ public class StudentTutorAuthorizationFilter extends AccessControlFilter {
 
             Teacher teacher = Teacher.readTeacherByUsername(id.getUtilizador());
 
-            Student student = Student.readByUsername(username);
+            Registration student = Registration.readByUsername(username);
             if (student == null) {
                 return "noAuthorization";
             }
@@ -91,8 +91,8 @@ public class StudentTutorAuthorizationFilter extends AccessControlFilter {
     /*
      * devolve true se teacher for tutor de algum dos students da lista
      */
-    private boolean verifyStudentTutor(Teacher teacher, List<Student> students) throws ExcepcaoPersistencia {
-        for (Student student : students) {
+    private boolean verifyStudentTutor(Teacher teacher, List<Registration> students) throws ExcepcaoPersistencia {
+        for (Registration student : students) {
             if (student.getAssociatedTutor() != null && student.getAssociatedTutor().getTeacher() == teacher) {
                 return true;
             }

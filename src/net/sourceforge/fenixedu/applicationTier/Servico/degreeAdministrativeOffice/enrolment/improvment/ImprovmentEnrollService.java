@@ -9,7 +9,7 @@ import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.Student;
+import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 /**
@@ -17,7 +17,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  */
 public class ImprovmentEnrollService extends Service {
 
-    public void run(Student student, ExecutionPeriod executionPeriod, String employeeUserName, List<Integer> enrolmentsIds)
+    public void run(Registration student, ExecutionPeriod executionPeriod, String employeeUserName, List<Integer> enrolmentsIds)
             throws FenixServiceException, ExcepcaoPersistencia {
 
         if (student == null || executionPeriod == null) {

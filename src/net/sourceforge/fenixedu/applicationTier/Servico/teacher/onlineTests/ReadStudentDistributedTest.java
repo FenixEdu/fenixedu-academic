@@ -11,9 +11,9 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoStudentTestQuestion;
 import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoStudentTestQuestionWithAll;
-import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.onlineTests.DistributedTest;
 import net.sourceforge.fenixedu.domain.onlineTests.StudentTestQuestion;
+import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.utilTests.ParseQuestion;
 
@@ -25,7 +25,7 @@ public class ReadStudentDistributedTest extends Service {
             ExcepcaoPersistencia {
         path = path.replace('\\', '/');
         List<InfoStudentTestQuestion> infoStudentTestQuestionList = new ArrayList<InfoStudentTestQuestion>();
-        Student student = rootDomainObject.readStudentByOID(studentId);
+        Registration student = rootDomainObject.readRegistrationByOID(studentId);
         if (student == null)
             throw new FenixServiceException();
         

@@ -13,12 +13,12 @@ import java.util.List;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoCategory;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Role;
-import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.person.Gender;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 import net.sourceforge.fenixedu.domain.person.MaritalStatus;
 import net.sourceforge.fenixedu.domain.person.RoleType;
+import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.StudentCurricularPlanState;
 
 /**
@@ -913,7 +913,7 @@ public class InfoPerson extends InfoObject {
 
                 List<InfoStudentCurricularPlan> infoStudentList = new ArrayList<InfoStudentCurricularPlan>();
 
-                for (Student student : person.getStudents()) {
+                for (Registration student : person.getStudents()) {
 
                     InfoStudent infoStudent = new InfoStudent();
                     InfoStudentCurricularPlan infoStudentCurricularPlan = new InfoStudentCurricularPlan();

@@ -32,25 +32,25 @@ public interface IDegreeCurricularPlanStrategy {
     public boolean checkMark(String mark, EvaluationType et);
 
     /**
-     * Calculate's the Student's regular average
+     * Calculate's the Registration's regular average
      * 
      * @param The
      *            student's Curricular Plan
      * @param The
      *            list of the students enrolment
-     * @return The Student's Average
+     * @return The Registration's Average
      */
     public Double calculateStudentRegularAverage(StudentCurricularPlan studentCurricularPlan)
             throws ExcepcaoPersistencia;
 
     /**
-     * Calculate's the Student's weighted average
+     * Calculate's the Registration's weighted average
      * 
      * @param The
      *            student's Curricular Plan
      * @param The
      *            list of the students enrolment
-     * @return The Student's Average
+     * @return The Registration's Average
      */
     public Double calculateStudentWeightedAverage(StudentCurricularPlan studentCurricularPlan)
             throws ExcepcaoPersistencia;

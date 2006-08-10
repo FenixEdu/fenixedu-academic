@@ -14,10 +14,10 @@ import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Role;
-import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.ResidenceCandidacies;
+import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class SchoolRegistration extends Service {
@@ -26,7 +26,7 @@ public class SchoolRegistration extends Service {
             final InfoResidenceCandidacy infoResidenceCandidacy) throws ExcepcaoPersistencia {
 
         final String username = userView.getUtilizador();
-        final Student student = Student.readByUsername(username);
+        final Registration student = Registration.readByUsername(username);
 
         final Person person = student.getPerson();
 
@@ -78,7 +78,7 @@ public class SchoolRegistration extends Service {
         return null;
     }
 
-    private void writeResidenceCandidacy(final Student student,
+    private void writeResidenceCandidacy(final Registration student,
             final InfoResidenceCandidacy infoResidenceCandidacy) throws ExcepcaoPersistencia {
 
         if (infoResidenceCandidacy != null) {
@@ -91,7 +91,7 @@ public class SchoolRegistration extends Service {
         }
     }
 
-    private void updateStudentInfo(final Student student) throws ExcepcaoPersistencia {
+    private void updateStudentInfo(final Registration student) throws ExcepcaoPersistencia {
 
         final ExecutionYear executionYear = ExecutionYear.readCurrentExecutionYear();
         student.setRegistrationYear(executionYear);

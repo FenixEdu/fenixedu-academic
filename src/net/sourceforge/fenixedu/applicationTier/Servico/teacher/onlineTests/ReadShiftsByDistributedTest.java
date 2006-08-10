@@ -15,8 +15,8 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgume
 import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Shift;
-import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.onlineTests.DistributedTest;
+import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 /**
@@ -28,7 +28,7 @@ public class ReadShiftsByDistributedTest extends Service {
 			throws FenixServiceException, ExcepcaoPersistencia {
 
         final DistributedTest distributedTest = rootDomainObject.readDistributedTestByOID(distributedTestId);
-        final Set<Student> students = distributedTest != null ? distributedTest.findStudents() : new HashSet<Student>();
+        final Set<Registration> students = distributedTest != null ? distributedTest.findStudents() : new HashSet<Registration>();
 
 		final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID( executionCourseId);
 		if (executionCourse == null) {
@@ -39,7 +39,7 @@ public class ReadShiftsByDistributedTest extends Service {
 
 		List<InfoShift> result = new ArrayList<InfoShift>();
 		for (Shift shift : shiftList) {
-			List<Student> shiftStudents = shift.getStudents();
+			List<Registration> shiftStudents = shift.getStudents();
 			if (!students.containsAll(shiftStudents)) {
 				result.add(InfoShift.newInfoFromDomain(shift));
 			}

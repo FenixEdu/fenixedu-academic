@@ -8,9 +8,9 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
-import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.person.RoleType;
+import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.teacher.Advise;
 import net.sourceforge.fenixedu.domain.teacher.AdviseType;
 import net.sourceforge.fenixedu.domain.teacher.TeacherAdviseService;
@@ -33,10 +33,10 @@ public class EditTeacherAdviseService extends Service {
         Teacher teacher = rootDomainObject.readTeacherByOID(teacherID);
         ExecutionPeriod executionPeriod = rootDomainObject.readExecutionPeriodByOID(executionPeriodID);
 
-        List<Student> students = rootDomainObject.getStudents();
-        Student student = (Student) CollectionUtils.find(students, new Predicate() {
+        List<Registration> students = rootDomainObject.getStudents();
+        Registration student = (Registration) CollectionUtils.find(students, new Predicate() {
             public boolean evaluate(Object arg0) {
-                Student tempStudent = (Student) arg0;
+                Registration tempStudent = (Registration) arg0;
                 return tempStudent.getNumber().equals(studentNumber);
             }
         });

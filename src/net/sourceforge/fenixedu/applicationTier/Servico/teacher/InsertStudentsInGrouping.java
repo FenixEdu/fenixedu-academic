@@ -16,7 +16,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidSituat
 import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Grouping;
-import net.sourceforge.fenixedu.domain.Student;
+import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 /**
@@ -49,7 +49,7 @@ public class InsertStudentsInGrouping extends Service {
             String number = (String) iterator.next();
             if (number.equals("Todos os Alunos")) {
             } else {
-                Student student = rootDomainObject.readStudentByOID(
+                Registration student = rootDomainObject.readRegistrationByOID(
                         new Integer(number));
                 students.add(student);
             }
@@ -59,7 +59,7 @@ public class InsertStudentsInGrouping extends Service {
 
         while (iterAttends.hasNext()) {
             Attends existingAttend = (Attends) iterAttends.next();
-            Student existingAttendStudent = existingAttend.getAluno();
+            Registration existingAttendStudent = existingAttend.getAluno();
 
             List studentsList = new ArrayList();
             studentsList.addAll(students);
@@ -67,7 +67,7 @@ public class InsertStudentsInGrouping extends Service {
 
             while (iteratorStudents.hasNext()) {
 
-                Student student = (Student) iteratorStudents.next();
+                Registration student = (Registration) iteratorStudents.next();
                 if (student.equals(existingAttendStudent)) {
                     throw new InvalidSituationServiceException();
                 }
@@ -80,7 +80,7 @@ public class InsertStudentsInGrouping extends Service {
 
         while (iterStudents1.hasNext()) {
             Attends attend = null;
-            Student student = (Student) iterStudents1.next();
+            Registration student = (Registration) iterStudents1.next();
 
             List listaExecutionCourses = new ArrayList();
             listaExecutionCourses.addAll(groupProperties.getExecutionCourses());

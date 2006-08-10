@@ -23,11 +23,11 @@ import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.GraduationType;
 import net.sourceforge.fenixedu.domain.MasterDegreeCandidate;
 import net.sourceforge.fenixedu.domain.Price;
-import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.masterDegree.GuideRequester;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
+import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
@@ -105,8 +105,8 @@ public class PrepareCreateGuide extends Service {
 
         if (requesterType.equals(GuideRequester.STUDENT.name())) {
 
-            Student student = null;
-            student = Student.readStudentByNumberAndDegreeType(number, DegreeType.MASTER_DEGREE);
+            Registration student = null;
+            student = Registration.readStudentByNumberAndDegreeType(number, DegreeType.MASTER_DEGREE);
             if (student == null)
                 throw new NonExistingServiceException("O Aluno", null);
 

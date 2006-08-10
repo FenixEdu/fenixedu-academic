@@ -9,9 +9,9 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
+import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 /**
@@ -24,7 +24,7 @@ public class ReadActiveStudentCurricularPlanByDegreeType extends Service {
             throws ExcepcaoPersistencia {
 
     	final Person person = userView.getPerson();
-    	final Student student = person.getStudentByType(degreeType);
+    	final Registration student = person.getStudentByType(degreeType);
 
         if(student != null) {
         	final StudentCurricularPlan studentCurricularPlan = student.getActiveOrConcludedStudentCurricularPlan();

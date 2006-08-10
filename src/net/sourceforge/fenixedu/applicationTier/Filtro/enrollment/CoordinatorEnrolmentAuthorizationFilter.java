@@ -13,11 +13,11 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.AuthorizationByManyRolesF
 import net.sourceforge.fenixedu.domain.Coordinator;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.Role;
-import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.person.RoleType;
+import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 /**
@@ -73,7 +73,7 @@ public class CoordinatorEnrolmentAuthorizationFilter extends AuthorizationByMany
 
             studentCurricularPlan = rootDomainObject.readStudentCurricularPlanByOID((Integer) arguments[1]);
         } else {
-        	Student student = Student.readStudentByNumberAndDegreeType((Integer) arguments[2], DegreeType.DEGREE);
+        	Registration student = Registration.readStudentByNumberAndDegreeType((Integer) arguments[2], DegreeType.DEGREE);
         	if(student != null) {
         		studentCurricularPlan = student.getActiveOrConcludedStudentCurricularPlan();
         	}
@@ -81,11 +81,11 @@ public class CoordinatorEnrolmentAuthorizationFilter extends AuthorizationByMany
         return studentCurricularPlan;
     }
 
-    protected Student readStudent(IUserView id) throws ExcepcaoPersistencia {        
-        return Student.readByUsername(id.getUtilizador());
+    protected Registration readStudent(IUserView id) throws ExcepcaoPersistencia {        
+        return Registration.readByUsername(id.getUtilizador());
     }
 
-    protected Student readStudent(Object[] arguments)
+    protected Registration readStudent(Object[] arguments)
             throws ExcepcaoPersistencia {
         StudentCurricularPlan studentCurricularPlan = readStudentCurricularPlan(arguments);
         if (studentCurricularPlan == null) {

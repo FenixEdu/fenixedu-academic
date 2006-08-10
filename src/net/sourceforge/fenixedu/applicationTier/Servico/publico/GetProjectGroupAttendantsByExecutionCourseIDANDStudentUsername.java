@@ -11,8 +11,8 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.StudentGroupAttendacyInformation;
 import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.StudentGroup;
+import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.presentationTier.Action.Seminaries.Exceptions.BDException;
 
@@ -28,7 +28,7 @@ public class GetProjectGroupAttendantsByExecutionCourseIDANDStudentUsername exte
     public StudentGroupAttendacyInformation run(Integer executionCourseID, String username)
             throws BDException, ExcepcaoPersistencia {
         
-        Student student = Student.readByUsername(username);
+        Registration student = Registration.readByUsername(username);
 
         ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseID);
 

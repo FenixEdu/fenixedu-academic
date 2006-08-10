@@ -11,6 +11,7 @@ import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.space.OldRoom;
+import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.teacher.DegreeTeachingService;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -164,7 +165,7 @@ public class Shift extends Shift_Base {
         return stringBuilder.toString();
     }
     
-    public boolean reserveForStudent(final Student student) {
+    public boolean reserveForStudent(final Registration student) {
         if (getLotacao().intValue() > getStudentsCount()) {
             addStudents(student);
             return true;

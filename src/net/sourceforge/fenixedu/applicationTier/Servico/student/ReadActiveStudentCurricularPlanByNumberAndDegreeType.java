@@ -3,9 +3,9 @@ package net.sourceforge.fenixedu.applicationTier.Servico.student;
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlan;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlanWithInfoStudentAndInfoBranchAndSecondaryBranchAndInfoDegreeCurricularPlanAndDegree;
-import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
+import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 /*
@@ -24,7 +24,7 @@ public class ReadActiveStudentCurricularPlanByNumberAndDegreeType extends Servic
 
     public InfoStudentCurricularPlan run(Integer studentNumber, DegreeType degreeType)
             throws ExcepcaoPersistencia {
-        Student student = Student.readStudentByNumberAndDegreeType(studentNumber, degreeType);
+        Registration student = Registration.readStudentByNumberAndDegreeType(studentNumber, degreeType);
         if(student == null) {
         	return null;
         }

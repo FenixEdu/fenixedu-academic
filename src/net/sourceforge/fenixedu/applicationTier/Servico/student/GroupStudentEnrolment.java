@@ -20,8 +20,8 @@ import net.sourceforge.fenixedu.applicationTier.strategy.groupEnrolment.strategy
 import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Grouping;
-import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.StudentGroup;
+import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.util.EMail;
 
@@ -47,7 +47,7 @@ public class GroupStudentEnrolment extends Service {
         if (studentGroup == null) {
             throw new InvalidArgumentsServiceException();
         }
-        final Student student = Student.readByUsername(username);
+        final Registration student = Registration.readByUsername(username);
         if (student == null) {
             throw new InvalidArgumentsServiceException();
         }
@@ -81,7 +81,7 @@ public class GroupStudentEnrolment extends Service {
         return Boolean.TRUE;
     }
 
-    private void informStudents(final StudentGroup studentGroup, final Student student, final Grouping grouping) {
+    private void informStudents(final StudentGroup studentGroup, final Registration student, final Grouping grouping) {
         final List<String> emails = new ArrayList<String>();
         for (final Attends attends : studentGroup.getAttends()) {
             emails.add(attends.getAluno().getPerson().getEmail());

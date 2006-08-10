@@ -23,12 +23,12 @@ import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoStudentTestQu
 import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Mark;
-import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.onlineTests.DistributedTest;
 import net.sourceforge.fenixedu.domain.onlineTests.OnlineTest;
 import net.sourceforge.fenixedu.domain.onlineTests.Question;
 import net.sourceforge.fenixedu.domain.onlineTests.StudentTestLog;
 import net.sourceforge.fenixedu.domain.onlineTests.StudentTestQuestion;
+import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.util.tests.ResponseProcessing;
 import net.sourceforge.fenixedu.util.tests.TestQuestionStudentsChangesType;
@@ -47,12 +47,12 @@ public class ChangeStudentTestQuestionValue extends Service {
         
         List<StudentTestQuestion> studentsTestQuestionList = new ArrayList<StudentTestQuestion>();
         if (studentsType.getType().intValue() == TestQuestionStudentsChangesType.THIS_STUDENT) {
-        	final Student student = rootDomainObject.readStudentByOID(studentId);
+        	final Registration student = rootDomainObject.readRegistrationByOID(studentId);
         	studentsTestQuestionList.add(StudentTestQuestion.findStudentTestQuestion(question, student, distributedTest));
         } else if (studentsType.getType().intValue() == TestQuestionStudentsChangesType.STUDENTS_FROM_TEST_VARIATION) {
             studentsTestQuestionList.addAll(StudentTestQuestion.findStudentTestQuestions(question, distributedTest));
         } else if (studentsType.getType().intValue() == TestQuestionStudentsChangesType.STUDENTS_FROM_TEST) {
-        	final Student student = rootDomainObject.readStudentByOID(studentId);
+        	final Registration student = rootDomainObject.readRegistrationByOID(studentId);
         	final StudentTestQuestion studentTestQuestion = StudentTestQuestion.findStudentTestQuestion(question, student, distributedTest);
             studentsTestQuestionList.addAll(distributedTest.findStudentTestQuestionsByTestQuestionOrder(studentTestQuestion.getTestQuestionOrder()));
         } else if (studentsType.getType().intValue() == TestQuestionStudentsChangesType.ALL_STUDENTS) {
@@ -101,7 +101,7 @@ public class ChangeStudentTestQuestionValue extends Service {
         return infoSiteDistributedTestAdvisoryList;
     }
 
-    private String getNewStudentMark(DistributedTest dt, Student s) throws ExcepcaoPersistencia {
+    private String getNewStudentMark(DistributedTest dt, Registration s) throws ExcepcaoPersistencia {
         double totalMark = 0;
         Set<StudentTestQuestion> studentTestQuestionList = StudentTestQuestion.findStudentTestQuestions(s, dt);
         for (StudentTestQuestion studentTestQuestion : studentTestQuestionList) {

@@ -12,9 +12,9 @@ import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
+import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.StudentCurricularPlanState;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
@@ -29,7 +29,7 @@ public class ChangeDegree extends Service {
         final Person personEmployee = Person.readPersonByUsername(employeeUsername);
         final Employee employee = personEmployee.getEmployee();
 
-        final Student student = Student.readStudentByNumberAndDegreeType(studentNumber, DegreeType.DEGREE);
+        final Registration student = Registration.readStudentByNumberAndDegreeType(studentNumber, DegreeType.DEGREE);
         StudentCurricularPlan currentActiveStudentCurricularPlan = null;
         if(student != null) {
         	currentActiveStudentCurricularPlan = student.getActiveStudentCurricularPlan();

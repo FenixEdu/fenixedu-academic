@@ -7,11 +7,11 @@ import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.EnrolmentInExtraCurricularCourse;
 import net.sourceforge.fenixedu.domain.EnrolmentInOptionalCurricularCourse;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
-import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseEnrollmentType;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentCondition;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
+import net.sourceforge.fenixedu.domain.student.Registration;
 
 /**
  * @author David Santos Jan 26, 2004
@@ -19,7 +19,7 @@ import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
 public class WriteEnrollment extends Service {
 
 	// some of these arguments may be null. they are only needed for filter
-	public Integer run(Integer executionDegreeId, Student student,
+	public Integer run(Integer executionDegreeId, Registration student,
 			Integer curricularCourseID, Integer executionPeriodID,
 			CurricularCourseEnrollmentType enrollmentType, Integer enrollmentClass, IUserView userView) {
 		

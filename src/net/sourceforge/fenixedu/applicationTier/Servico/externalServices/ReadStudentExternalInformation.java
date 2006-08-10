@@ -32,9 +32,9 @@ import net.sourceforge.fenixedu.domain.CurricularCourseScope;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
+import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.util.DateFormatUtil;
 import pt.utl.ist.fenix.tools.util.StringAppender;
@@ -55,7 +55,7 @@ public class ReadStudentExternalInformation extends Service
 		for (Iterator iter = students.iterator(); iter.hasNext();)
 		{
 			InfoStudentExternalInformation info = new InfoStudentExternalInformation();
-			Student student = (Student) iter.next();
+			Registration student = (Registration) iter.next();
 			if (student.getActiveStudentCurricularPlan() != null)
 			{
 
@@ -72,7 +72,7 @@ public class ReadStudentExternalInformation extends Service
 		return result;
 	}
 
-	private Collection buildAvailableRemainingCourses(final Student student) {
+	private Collection buildAvailableRemainingCourses(final Registration student) {
 		final Collection<CurricularCourse> allCourses = student.getActiveStudentCurricularPlan().getDegreeCurricularPlan().getCurricularCourses();
         final Collection<InfoExternalCurricularCourseInfo> availableInfos = new ArrayList<InfoExternalCurricularCourseInfo>();
         for (final CurricularCourse curricularCourse : allCourses) {
@@ -84,7 +84,7 @@ public class ReadStudentExternalInformation extends Service
 		return availableInfos;
 	}
 
-	private boolean studentIsNotApprovedInCurricularCourse(final Student student, final CurricularCourse curricularCourse) {
+	private boolean studentIsNotApprovedInCurricularCourse(final Registration student, final CurricularCourse curricularCourse) {
         for (final StudentCurricularPlan studentCurricularPlan : student.getStudentCurricularPlansSet()) {
             if (studentCurricularPlan.isCurricularCourseApproved(curricularCourse)) {
                 return true;
@@ -108,7 +108,7 @@ public class ReadStudentExternalInformation extends Service
 	 * @throws FenixServiceException
 	 * @throws ExcepcaoPersistencia
 	 */
-	private Collection buildExternalEnrollmentsInfo(Student student) throws FenixServiceException,
+	private Collection buildExternalEnrollmentsInfo(Registration student) throws FenixServiceException,
 			ExcepcaoPersistencia
 	{
 		Collection enrollments = new ArrayList();
@@ -184,7 +184,7 @@ public class ReadStudentExternalInformation extends Service
 	 * @param student
 	 * @return
 	 */
-	private InfoExternalDegreeCurricularPlanInfo buildExternalDegreeCurricularPlanInfo(Student student)
+	private InfoExternalDegreeCurricularPlanInfo buildExternalDegreeCurricularPlanInfo(Registration student)
 	{
 		InfoExternalDegreeCurricularPlanInfo info = new InfoExternalDegreeCurricularPlanInfo();
 		DegreeCurricularPlan degreeCurricularPlan = student.getActiveStudentCurricularPlan().getDegreeCurricularPlan();
@@ -223,7 +223,7 @@ public class ReadStudentExternalInformation extends Service
 	 * @param student
 	 * @return
 	 */
-	private InfoExternalDegreeBranchInfo buildExternalDegreeBranchInfo(Student student)
+	private InfoExternalDegreeBranchInfo buildExternalDegreeBranchInfo(Registration student)
 	{
 		InfoExternalDegreeBranchInfo info = new InfoExternalDegreeBranchInfo();
 		if (student.getActiveStudentCurricularPlan().getBranch() != null)

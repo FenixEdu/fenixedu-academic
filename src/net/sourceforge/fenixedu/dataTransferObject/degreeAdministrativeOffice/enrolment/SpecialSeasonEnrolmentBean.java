@@ -9,12 +9,12 @@ import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.SpecialSeasonCode;
-import net.sourceforge.fenixedu.domain.Student;
+import net.sourceforge.fenixedu.domain.student.Registration;
 
 public class SpecialSeasonEnrolmentBean implements Serializable{
 
 	private Integer studentNumber;
-	private DomainReference<Student> student;
+	private DomainReference<Registration> student;
 	private DomainReference<ExecutionYear> executionYear;
 	private Collection<SpecialSeasonToEnrolBean> specialSeasonToEnrol;
 	private Collection<SpecialSeasonToEnrolBean> specialSeasonAlreadyEnroled;
@@ -40,11 +40,11 @@ public class SpecialSeasonEnrolmentBean implements Serializable{
 			Collection<SpecialSeasonToEnrolBean> specialSeasonToEnrol) {
 		this.specialSeasonToEnrol = specialSeasonToEnrol;
 	}
-	public Student getStudent() {
+	public Registration getStudent() {
 		return (this.student != null ) ? student.getObject() : null;
 	}
-	public void setStudent(Student student) {
-		this.student = new DomainReference<Student>(student);
+	public void setStudent(Registration student) {
+		this.student = new DomainReference<Registration>(student);
 	}
 	public Integer getStudentNumber() {
 		return studentNumber;

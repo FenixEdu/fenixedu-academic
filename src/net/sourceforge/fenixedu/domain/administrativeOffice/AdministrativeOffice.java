@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.RootDomainObject;
-import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
@@ -12,6 +11,7 @@ import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSituationType;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequestType;
+import net.sourceforge.fenixedu.domain.student.Registration;
 
 public class AdministrativeOffice extends AdministrativeOffice_Base {
 
@@ -69,7 +69,7 @@ public class AdministrativeOffice extends AdministrativeOffice_Base {
     }
     
     public List<DocumentRequest> searchDocumentsBy(DocumentRequestType documentRequestType,
-            AcademicServiceRequestSituationType requestSituationType, Boolean isUrgent, Student student) {
+            AcademicServiceRequestSituationType requestSituationType, Boolean isUrgent, Registration student) {
 
         final List<DocumentRequest> result = new ArrayList<DocumentRequest>();
 

@@ -16,16 +16,16 @@ import net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoInexistente;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlanWithInfoStudentAndInfoBranchAndSecondaryBranchAndInfoDegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
+import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class ReadStudentCurricularPlansByNumberAndDegreeType extends Service {
 
     public List run(Integer studentNumber, DegreeType degreeType) throws ExcepcaoInexistente,
             FenixServiceException, ExcepcaoPersistencia {
-    	Student student = Student.readStudentByNumberAndDegreeType(studentNumber, degreeType);
+    	Registration student = Registration.readStudentByNumberAndDegreeType(studentNumber, degreeType);
     	if(student == null) {
     		throw new NonExistingServiceException();
     	}

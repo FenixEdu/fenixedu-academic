@@ -20,6 +20,7 @@ import net.sourceforge.fenixedu.domain.curriculum.IGrade;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.log.EnrolmentLog;
+import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup;
 import net.sourceforge.fenixedu.util.EnrolmentAction;
 import net.sourceforge.fenixedu.util.EnrolmentEvaluationState;
@@ -170,7 +171,7 @@ public class Enrolment extends Enrolment_Base {
     public void delete() {
     	createEnrolmentLog(EnrolmentAction.UNENROL);
     	//TODO: falta ver se � dos antigos enrolments ou dos novos
-        final Student student = getStudentCurricularPlan().getStudent();
+        final Registration student = getStudentCurricularPlan().getStudent();
 
         removeExecutionPeriod();
         removeStudentCurricularPlan();
@@ -385,7 +386,7 @@ public class Enrolment extends Enrolment_Base {
         }
     }
 
-    private void createAttend(Student student, CurricularCourse curricularCourse,
+    private void createAttend(Registration student, CurricularCourse curricularCourse,
             ExecutionPeriod executionPeriod) {
 
         List executionCourses = curricularCourse.getExecutionCoursesByExecutionPeriod(executionPeriod);
@@ -417,7 +418,7 @@ public class Enrolment extends Enrolment_Base {
     }
 
     public void createEnrolmentEvaluationForImprovement(Employee employee,
-            ExecutionPeriod currentExecutionPeriod, Student student) {
+            ExecutionPeriod currentExecutionPeriod, Registration student) {
 
         EnrolmentEvaluation enrolmentEvaluation = new EnrolmentEvaluation();
 
@@ -431,7 +432,7 @@ public class Enrolment extends Enrolment_Base {
     }
 
     private void createAttendForImprovment(final ExecutionPeriod currentExecutionPeriod,
-            final Student student) {
+            final Registration student) {
 
         List executionCourses = getCurricularCourse().getAssociatedExecutionCourses();
         ExecutionCourse currentExecutionCourse = (ExecutionCourse) CollectionUtils.find(
@@ -478,7 +479,7 @@ public class Enrolment extends Enrolment_Base {
 
             improvmentEnrolmentEvaluation.delete();
 
-            final Student student = getStudentCurricularPlan().getStudent();
+            final Registration student = getStudentCurricularPlan().getStudent();
             List<ExecutionCourse> executionCourses = getCurricularCourse()
                     .getAssociatedExecutionCourses();
 
@@ -600,7 +601,7 @@ public class Enrolment extends Enrolment_Base {
     	setDegreeModule(curricularCourse);
     }
     
-    protected void createEnrolmentLog(Student student, EnrolmentAction action) {
+    protected void createEnrolmentLog(Registration student, EnrolmentAction action) {
     	new EnrolmentLog(action, student, this.getCurricularCourse(), this.getExecutionPeriod(), getCurrentUser());
     }
     

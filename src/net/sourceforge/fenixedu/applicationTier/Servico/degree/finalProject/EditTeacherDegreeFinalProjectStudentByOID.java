@@ -9,10 +9,10 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
 import net.sourceforge.fenixedu.dataTransferObject.degree.finalProject.InfoTeacherDegreeFinalProjectStudent;
 import net.sourceforge.fenixedu.dataTransferObject.degree.finalProject.InfoTeacherDegreeFinalProjectStudentWithStudentAndPerson;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
-import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degree.finalProject.TeacherDegreeFinalProjectStudent;
+import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class EditTeacherDegreeFinalProjectStudentByOID extends Service {
@@ -21,7 +21,7 @@ public class EditTeacherDegreeFinalProjectStudentByOID extends Service {
             InfoTeacherDegreeFinalProjectStudent infoTeacherDegreeFinalProjectStudent)
             throws ExcepcaoPersistencia, FenixServiceException {
 
-        final Student student = Student.readStudentByNumberAndDegreeType(
+        final Registration student = Registration.readStudentByNumberAndDegreeType(
                 infoTeacherDegreeFinalProjectStudent.getInfoStudent().getNumber(), DegreeType.DEGREE);
         if (student == null) {
             throw new FenixServiceException("message.student-not-found");
@@ -52,7 +52,7 @@ public class EditTeacherDegreeFinalProjectStudentByOID extends Service {
 
     }
 
-    private void checkStudentFinalDegreeProjectPercentage(final Student student, final Teacher teacher,
+    private void checkStudentFinalDegreeProjectPercentage(final Registration student, final Teacher teacher,
             final ExecutionPeriod executionPeriod, Double percentage) throws StudentPercentageExceed {
 
         for (final TeacherDegreeFinalProjectStudent teacherDegreeFinalProjectStudent : student
@@ -78,7 +78,7 @@ public class EditTeacherDegreeFinalProjectStudentByOID extends Service {
     }
 
     private TeacherDegreeFinalProjectStudent getTeacherDegreeFinalProjectStudentFor(
-            final Teacher teacher, final Student student, final ExecutionPeriod executionPeriod) {
+            final Teacher teacher, final Registration student, final ExecutionPeriod executionPeriod) {
         for (final TeacherDegreeFinalProjectStudent teacherDegreeFinalProjectStudent : student
                 .getTeacherDegreeFinalProjectStudent()) {
             if (teacherDegreeFinalProjectStudent.getExecutionPeriod() == executionPeriod

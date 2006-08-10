@@ -32,7 +32,6 @@ import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Role;
-import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.grant.owner.GrantOwner;
@@ -41,6 +40,7 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Function;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.person.RoleType;
+import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
@@ -348,9 +348,9 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
                 }
             }
         } else if (personTypeAux.equals(RoleType.STUDENT)) {
-            List<Student> allStudents = new ArrayList<Student>();
+            List<Registration> allStudents = new ArrayList<Registration>();
             allStudents.addAll(rootDomainObject.getStudents());
-            for (Student student : allStudents) {
+            for (Registration student : allStudents) {
                 if (student.getNumber().equals(personNumber)) {
                     allPersons.add(student.getPerson());
                     return allPersons;

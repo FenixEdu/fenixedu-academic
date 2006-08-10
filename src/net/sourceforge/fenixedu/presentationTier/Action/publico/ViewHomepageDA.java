@@ -16,11 +16,11 @@ import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.FileEntry;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.homepage.Homepage;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
+import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.StudentCurricularPlanState;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
@@ -162,7 +162,7 @@ public class ViewHomepageDA extends FenixDispatchAction {
     public ActionForward listStudents(ActionMapping mapping, ActionForm actionForm,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
     	final SortedMap<Degree, SortedSet<Homepage>> homepages = new TreeMap<Degree, SortedSet<Homepage>>(Degree.DEGREE_COMPARATOR_BY_NAME_AND_DEGREE_TYPE);
-    	for (final Student student : rootDomainObject.getStudentsSet()) {
+    	for (final Registration student : rootDomainObject.getStudentsSet()) {
     		final StudentCurricularPlan studentCurricularPlan = student.getActiveStudentCurricularPlan();
     		if (studentCurricularPlan != null) {
     			final DegreeCurricularPlan degreeCurricularPlan = studentCurricularPlan.getDegreeCurricularPlan();
@@ -194,7 +194,7 @@ public class ViewHomepageDA extends FenixDispatchAction {
     public ActionForward listAlumni(ActionMapping mapping, ActionForm actionForm,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
     	final SortedMap<Degree, SortedSet<Homepage>> homepages = new TreeMap<Degree, SortedSet<Homepage>>(Degree.DEGREE_COMPARATOR_BY_NAME_AND_DEGREE_TYPE);
-    	for (final Student student : rootDomainObject.getStudentsSet()) {
+    	for (final Registration student : rootDomainObject.getStudentsSet()) {
     		for (final StudentCurricularPlan studentCurricularPlan : student.getStudentCurricularPlansSet()) {
    				final DegreeCurricularPlan degreeCurricularPlan = studentCurricularPlan.getDegreeCurricularPlan();
    				final Degree degree = degreeCurricularPlan.getDegree();

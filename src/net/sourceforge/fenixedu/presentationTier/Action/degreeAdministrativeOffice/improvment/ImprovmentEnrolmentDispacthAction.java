@@ -19,8 +19,8 @@ import net.sourceforge.fenixedu.commons.CollectionUtils;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
-import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
+import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
@@ -83,7 +83,7 @@ public class ImprovmentEnrolmentDispacthAction extends FenixDispatchAction{
         Integer studentNumber = (Integer) actionForm.get("studentNumber");
         Integer executionPeriodID = Integer.valueOf(actionForm.getString("executionPeriod"));
         
-        Student student = Student.readStudentByNumberAndDegreeType(studentNumber, DegreeType.DEGREE);
+        Registration student = Registration.readStudentByNumberAndDegreeType(studentNumber, DegreeType.DEGREE);
         if (student == null) {
         	errors.add("noStudent", new ActionError("error.student.notExist", studentNumber.toString()));
             saveErrors(request, errors);
@@ -96,7 +96,7 @@ public class ImprovmentEnrolmentDispacthAction extends FenixDispatchAction{
         
     }
     
-    public ActionForward readEnrolments(Student student, ExecutionPeriod executionPeriod, ActionMapping mapping, ActionForm form,
+    public ActionForward readEnrolments(Registration student, ExecutionPeriod executionPeriod, ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response)  {
     	
         List<Enrolment> enrolmentsToImprov = student.getEnrolmentsToImprov(executionPeriod);
@@ -128,7 +128,7 @@ public class ImprovmentEnrolmentDispacthAction extends FenixDispatchAction{
         }
         
         Integer studentID = (Integer) actionForm.get("studentID");
-        Student student = rootDomainObject.readStudentByOID(studentID);
+        Registration student = rootDomainObject.readRegistrationByOID(studentID);
 
         Integer executionPeriodID = Integer.valueOf(actionForm.getString("executionPeriod"));
         ExecutionPeriod executionPeriod = rootDomainObject.readExecutionPeriodByOID(executionPeriodID);
@@ -160,7 +160,7 @@ public class ImprovmentEnrolmentDispacthAction extends FenixDispatchAction{
         }
         
         Integer studentID = (Integer) actionForm.get("studentID");
-        Student student = rootDomainObject.readStudentByOID(studentID);
+        Registration student = rootDomainObject.readRegistrationByOID(studentID);
 
         Integer executionPeriodID = Integer.valueOf(actionForm.getString("executionPeriod"));
         ExecutionPeriod executionPeriod = rootDomainObject.readExecutionPeriodByOID(executionPeriodID);

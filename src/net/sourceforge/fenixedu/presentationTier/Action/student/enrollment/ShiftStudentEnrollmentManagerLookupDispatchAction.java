@@ -17,8 +17,8 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorized
 import net.sourceforge.fenixedu.dataTransferObject.InfoLesson;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.SchoolClass;
-import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.commons.TransactionalLookupDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixTransactionException;
@@ -81,7 +81,7 @@ public class ShiftStudentEnrollmentManagerLookupDispatchAction extends Transacti
 		}
 
 		final IUserView userView = getUserView(request);
-		final Student student = getStudent(userView);
+		final Registration student = getStudent(userView);
 
 		try {
 			ServiceManagerServiceFactory.executeService(userView, "DeleteStudentAttendingCourse",
@@ -107,7 +107,7 @@ public class ShiftStudentEnrollmentManagerLookupDispatchAction extends Transacti
 		final Integer classIdSelected = readClassSelected(request);
 
 		final IUserView userView = getUserView(request);
-		final Student student = getStudent(userView);
+		final Registration student = getStudent(userView);
 		request.setAttribute("studentId", student.getIdInternal());
 
 		final ExecutionCourse executionCourse = getExecutionCourse(request);
@@ -156,7 +156,7 @@ public class ShiftStudentEnrollmentManagerLookupDispatchAction extends Transacti
 	}
 
 	private List<SchoolClass> readStudentSchoolClassesToEnrolUsingExecutionCourse(
-			HttpServletRequest request, final Student student, final ExecutionCourse executionCourse) {
+			HttpServletRequest request, final Registration student, final ExecutionCourse executionCourse) {
 		
 		final List<SchoolClass> schoolClassesToEnrol = new ArrayList<SchoolClass>();
 		if (executionCourse != null) {
@@ -234,7 +234,7 @@ public class ShiftStudentEnrollmentManagerLookupDispatchAction extends Transacti
 		return map;
 	}
 
-	private Student getStudent(final IUserView userView) {
+	private Registration getStudent(final IUserView userView) {
 		return userView.getPerson().getStudentByUsername();
 	}
 }

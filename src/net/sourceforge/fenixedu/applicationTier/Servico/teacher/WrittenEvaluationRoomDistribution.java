@@ -7,10 +7,10 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.domain.WrittenEvaluationEnrolment;
 import net.sourceforge.fenixedu.domain.space.OldRoom;
+import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class WrittenEvaluationRoomDistribution extends Service {
@@ -23,7 +23,7 @@ public class WrittenEvaluationRoomDistribution extends Service {
         if (writtenEvaluation == null) {
             throw new FenixServiceException("error.noWrittenEvaluation");
         }
-        List<Student> studentsToDistribute;
+        List<Registration> studentsToDistribute;
         if (distributeOnlyEnroledStudents) {
             studentsToDistribute = readEnroledStudentsInWrittenEvaluation(writtenEvaluation);
         } else {
@@ -69,8 +69,8 @@ public class WrittenEvaluationRoomDistribution extends Service {
         return result;
     }
 
-    private List<Student> readEnroledStudentsInWrittenEvaluation(WrittenEvaluation writtenEvaluation) {
-        final List<Student> result = new ArrayList<Student>(writtenEvaluation
+    private List<Registration> readEnroledStudentsInWrittenEvaluation(WrittenEvaluation writtenEvaluation) {
+        final List<Registration> result = new ArrayList<Registration>(writtenEvaluation
                 .getWrittenEvaluationEnrolmentsCount());
         for (final WrittenEvaluationEnrolment writtenEvaluationEnrolment : writtenEvaluation
                 .getWrittenEvaluationEnrolments()) {
@@ -79,8 +79,8 @@ public class WrittenEvaluationRoomDistribution extends Service {
         return result;
     }
 
-    private List<Student> readAllStudentsAttendingExecutionCourses(WrittenEvaluation writtenEvaluation) {
-        final List<Student> result = new ArrayList<Student>();
+    private List<Registration> readAllStudentsAttendingExecutionCourses(WrittenEvaluation writtenEvaluation) {
+        final List<Registration> result = new ArrayList<Registration>();
         for (final ExecutionCourse executionCourse : writtenEvaluation.getAssociatedExecutionCourses()) {
             for (final Attends attend : executionCourse.getAttends()) {
                 if (!result.contains(attend.getAluno())) {

@@ -11,9 +11,9 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoStudentTestQuestion;
 import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoStudentTestQuestionWithInfoQuestionAndInfoDistributedTest;
-import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.onlineTests.DistributedTest;
 import net.sourceforge.fenixedu.domain.onlineTests.StudentTestQuestion;
+import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.util.tests.QuestionOption;
 import net.sourceforge.fenixedu.util.tests.ResponseProcessing;
@@ -29,7 +29,7 @@ public class ReadStudentTestQuestionImage extends Service {
     public String run(String userName, Integer distributedTestId, Integer questionId, Integer imageId,
             String feedbackId, String path) throws FenixServiceException, ExcepcaoPersistencia {
         path = path.replace('\\', '/');
-        Student student = Student.readByUsername(userName);
+        Registration student = Registration.readByUsername(userName);
         if (student == null)
             throw new FenixServiceException();
 

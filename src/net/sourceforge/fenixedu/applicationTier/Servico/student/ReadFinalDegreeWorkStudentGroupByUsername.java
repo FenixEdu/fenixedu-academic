@@ -15,13 +15,13 @@ import net.sourceforge.fenixedu.dataTransferObject.finalDegreeWork.InfoGroupProp
 import net.sourceforge.fenixedu.dataTransferObject.finalDegreeWork.InfoGroupStudent;
 import net.sourceforge.fenixedu.dataTransferObject.finalDegreeWork.InfoProposal;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Group;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.GroupProposal;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.GroupStudent;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal;
+import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 /**
@@ -30,7 +30,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class ReadFinalDegreeWorkStudentGroupByUsername extends Service {
 
     public InfoGroup run(final Person personUser) throws ExcepcaoPersistencia {
-	final Student student = personUser.getStudentByType(DegreeType.DEGREE);
+	final Registration student = personUser.getStudentByType(DegreeType.DEGREE);
         Group group = student.findFinalDegreeWorkGroupForCurrentExecutionYear();
         InfoGroup infoGroup = null;
         if (group != null) {
@@ -47,7 +47,7 @@ public class ReadFinalDegreeWorkStudentGroupByUsername extends Service {
                         InfoGroupStudent infoGroupStudent = new InfoGroupStudent();
                         infoGroupStudent.setIdInternal(groupStudent.getIdInternal());
 
-                        Student student1 = groupStudent.getStudent();
+                        Registration student1 = groupStudent.getStudent();
                         if (student1 != null) {
                             InfoStudent infoStudent = new InfoStudent();
                             infoStudent.setIdInternal(student1.getIdInternal());

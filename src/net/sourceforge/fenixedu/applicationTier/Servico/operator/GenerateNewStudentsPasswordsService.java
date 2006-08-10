@@ -14,8 +14,8 @@ import net.sourceforge.fenixedu.applicationTier.security.PasswordEncryptor;
 import net.sourceforge.fenixedu.applicationTier.utils.GeneratePassword;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.person.RoleType;
+import net.sourceforge.fenixedu.domain.student.Registration;
 
 /**
  * @author Nuno Correia
@@ -27,10 +27,10 @@ public class GenerateNewStudentsPasswordsService extends Service {
 
         List infoPersonList = new ArrayList();
 
-        List studentsList = Student.readAllStudentsBetweenNumbers(fromNumber, toNumber);
-        Set<Student> studentsUniqueList = new HashSet(studentsList);
+        List studentsList = Registration.readAllStudentsBetweenNumbers(fromNumber, toNumber);
+        Set<Registration> studentsUniqueList = new HashSet(studentsList);
 
-        for (Student student : studentsUniqueList) {
+        for (Registration student : studentsUniqueList) {
 
             Person person = student.getPerson();
             boolean isFirstTimeStudent = person.hasRole(RoleType.FIRST_TIME_STUDENT);

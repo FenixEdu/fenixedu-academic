@@ -6,6 +6,7 @@ import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
 import net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationType;
 import net.sourceforge.fenixedu.domain.curriculum.GradeFactory;
 import net.sourceforge.fenixedu.domain.curriculum.IGrade;
+import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.util.EnrolmentEvaluationState;
 
 
@@ -163,7 +164,7 @@ public class EnrolmentEvaluationTest extends DomainTestBase {
 		ExecutionCourse notCurrentExecutionCourse = new ExecutionCourse();
 		
 		StudentCurricularPlan studentCurricularPlan = new StudentCurricularPlan();
-		Student student = new Student();
+		Registration student = new Registration();
 		
 		enrolment.setCurricularCourse(curricularCourse);
 		enrolment.setStudentCurricularPlan(studentCurricularPlan);

@@ -7,7 +7,7 @@
 <%@ page import="java.util.TreeMap" %>
 <%@ page import="java.util.Set" %>
 <%@ page import="java.util.TreeSet" %>
-<%@ page import="net.sourceforge.fenixedu.domain.Student" %>
+<%@ page import="net.sourceforge.fenixedu.domain.student.Registration" %>
 
 <span class="error"><!-- Error messages go here --><html:errors /></span>
 	<logic:present name="elements">

@@ -145,7 +145,7 @@ public class CompetenceCourseTest extends DomainTestBase {
     }
 
     public void testGetActiveEnrollmentEvaluationsByStudent() {
-//        assertEquals("Active Enrollment Evaluations By Student Count", 5, competenceCourse.getActiveEnrollmentEvaluations(executionYear).size());
+//        assertEquals("Active Enrollment Evaluations By Registration Count", 5, competenceCourse.getActiveEnrollmentEvaluations(executionYear).size());
     }
 
     public void testGetAssociatedCurricularCoursesGroupedByDegree() {

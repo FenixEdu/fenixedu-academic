@@ -22,10 +22,10 @@ import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.EnrolmentEvaluation;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
-import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationType;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
+import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.util.EnrolmentEvaluationState;
 
@@ -55,8 +55,8 @@ public class ReadImprovmentsToEnroll extends Service {
         ExecutionPeriod beforeBeforePreviousExecPeriod = beforePreviousExecPeriod
                 .getPreviousExecutionPeriod();
 
-        // Read Student
-        Student student = Student.readStudentByNumberAndDegreeType(studentNumber, DegreeType.DEGREE);
+        // Read Registration
+        Registration student = Registration.readStudentByNumberAndDegreeType(studentNumber, DegreeType.DEGREE);
 
         if (student == null) {
             throw new InvalidArgumentsServiceException("error.student.notExist");
@@ -205,7 +205,7 @@ public class ReadImprovmentsToEnroll extends Service {
      * @param alreadyImprovedEnrolmentsInCurrentExecutionPeriod
      * @return
      */
-    private InfoImprovmentEnrolmentContext buildResult(Student student,
+    private InfoImprovmentEnrolmentContext buildResult(Registration student,
             ExecutionPeriod actualExecPeriod, List res,
             List alreadyImprovedEnrolmentsInCurrentExecutionPeriod) {
         InfoImprovmentEnrolmentContext improvmentEnrolmentContext = new InfoImprovmentEnrolmentContext();

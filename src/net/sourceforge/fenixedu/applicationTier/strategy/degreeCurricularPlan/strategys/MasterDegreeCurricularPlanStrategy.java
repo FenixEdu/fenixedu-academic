@@ -27,12 +27,12 @@ public class MasterDegreeCurricularPlanStrategy extends DegreeCurricularPlanStra
     }
 
     /**
-     * Checks if the Master Degree Student has finished his scholar part. <br/>
+     * Checks if the Master Degree Registration has finished his scholar part. <br/>
      * All his credits are added and compared to the ones required by his Degree
      * Curricular Plan.
      * 
      * @param The
-     *            Student's Curricular Plan
+     *            Registration's Curricular Plan
      * @return A boolean indicating if he has fineshed it or not.
      */
     public boolean checkEndOfScholarship(StudentCurricularPlan studentCurricularPlan)

@@ -12,6 +12,7 @@ import java.util.List;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.space.OldRoom;
 import net.sourceforge.fenixedu.domain.space.RoomOccupation;
+import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.util.DiaSemana;
 import net.sourceforge.fenixedu.util.Season;
 
@@ -193,11 +194,11 @@ public class ExamTest extends DomainTestBase {
         room2.createRoomOccupation(period, startTime, endTime, dayOfWeek, RoomOccupation.DIARIA, null,
                 exam);
 
-        // Student Enrolled in exam
+        // Registration Enrolled in exam
         WrittenEvaluationEnrolment writtenEvaluationEnrolment = new WrittenEvaluationEnrolment();
         writtenEvaluationEnrolment.setIdInternal(1);
 
-        Student student = new Student();
+        Registration student = new Registration();
         student.setIdInternal(1);
 
         writtenEvaluationEnrolment.setWrittenEvaluation(exam);

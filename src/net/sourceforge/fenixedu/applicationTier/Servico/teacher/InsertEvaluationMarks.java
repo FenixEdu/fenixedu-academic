@@ -26,8 +26,8 @@ import net.sourceforge.fenixedu.domain.Evaluation;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Mark;
 import net.sourceforge.fenixedu.domain.Site;
-import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 /**
@@ -128,7 +128,7 @@ public class InsertEvaluationMarks extends Service {
         return siteView;
     }
 
-    private boolean isValidMark(Evaluation evaluation, String mark, Student student) {
+    private boolean isValidMark(Evaluation evaluation, String mark, Registration student) {
         StudentCurricularPlan studentCurricularPlan = null;
         if(student != null) {
         	studentCurricularPlan = student.getActiveStudentCurricularPlan();

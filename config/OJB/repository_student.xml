@@ -1,7 +1,10 @@
 <!-- ************************************************************************************************************ -->
-<!-- Definitions for net.sourceforge.fenixedu.domain.Student -->
+<!-- Definitions for net.sourceforge.fenixedu.domain.student.Registration -->
 <!-- ************************************************************************************************************ -->
-<class-descriptor class="net.sourceforge.fenixedu.domain.Student" table="STUDENT">
+<class-descriptor class="net.sourceforge.fenixedu.domain.student.Registration" table="REGISTRATION">
+</class-descriptor>
+
+<class-descriptor class="net.sourceforge.fenixedu.domain.student.Student" table="STUDENT">
 </class-descriptor>
 
 <class-descriptor class="net.sourceforge.fenixedu.domain.student.PrecedentDegreeInformation" table="PRECEDENT_DEGREE_INFORMATION">

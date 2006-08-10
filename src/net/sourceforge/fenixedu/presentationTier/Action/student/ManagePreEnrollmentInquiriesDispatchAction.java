@@ -15,7 +15,7 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCountry;
-import net.sourceforge.fenixedu.domain.Student;
+import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
@@ -39,7 +39,7 @@ public class ManagePreEnrollmentInquiriesDispatchAction extends FenixDispatchAct
 			HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
 			FenixServiceException {
 
-		final Student student = getStudent(request);
+		final Registration student = getStudent(request);
 
 		final DynaActionForm studentDataInquiryForm = (DynaActionForm) form;
 		studentDataInquiryForm.set("studentID", student.getIdInternal());
@@ -92,7 +92,7 @@ public class ManagePreEnrollmentInquiriesDispatchAction extends FenixDispatchAct
 			HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
 			FenixServiceException {
 
-		final Student student = getStudent(request);
+		final Registration student = getStudent(request);
 
 		final DynaActionForm studentDataInquiryForm = (DynaActionForm) form;
 		final Integer countryID = (Integer) studentDataInquiryForm.get("countryID");
@@ -113,7 +113,7 @@ public class ManagePreEnrollmentInquiriesDispatchAction extends FenixDispatchAct
 	public ActionForward preparePersonalDataInquiry(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response) {
 
-		final Student student = getStudent(request);
+		final Registration student = getStudent(request);
 
 		if (student.getActualPersonalDataAuthorizationAnswer() != null) {
 			return mapping.findForward("proceedToEnrollment");
@@ -126,7 +126,7 @@ public class ManagePreEnrollmentInquiriesDispatchAction extends FenixDispatchAct
 			HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
 			FenixServiceException {
 
-		final Student student = getStudent(request);
+		final Registration student = getStudent(request);
 
 		final DynaActionForm form = (DynaActionForm) actionForm;
 		final String answer = form.getString("authorizationAnswer");
@@ -152,7 +152,7 @@ public class ManagePreEnrollmentInquiriesDispatchAction extends FenixDispatchAct
 		});
 	}
 	
-	private Student getStudent(HttpServletRequest request) {
+	private Registration getStudent(HttpServletRequest request) {
 		return getUserView(request).getPerson().getStudentByUsername();
 	}
 }

@@ -16,8 +16,8 @@ import net.sourceforge.fenixedu.dataTransferObject.comparators.CalendarHourCompa
 import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoDistributedTest;
 import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoSiteStudentDistributedTests;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.onlineTests.DistributedTest;
+import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 /**
@@ -27,7 +27,7 @@ public class ReadStudentTests extends Service {
 
     public Object run(String userName, Integer executionCourseId) throws ExcepcaoPersistencia {
         InfoSiteStudentDistributedTests infoSite = new InfoSiteStudentDistributedTests();
-        Student student = Student.readByUsername(userName);
+        Registration student = Registration.readByUsername(userName);
         ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseId);
         Set<DistributedTest> distributedTestList = student.getDistributedTestsByExecutionCourse(executionCourse);
         List<InfoDistributedTest> testToDoList = new ArrayList<InfoDistributedTest>();

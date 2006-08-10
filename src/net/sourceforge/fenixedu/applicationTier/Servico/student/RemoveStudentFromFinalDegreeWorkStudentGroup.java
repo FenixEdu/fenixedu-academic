@@ -6,9 +6,9 @@ package net.sourceforge.fenixedu.applicationTier.Servico.student;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Group;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.GroupStudent;
+import net.sourceforge.fenixedu.domain.student.Registration;
 
 import org.apache.commons.collections.Predicate;
 
@@ -24,7 +24,7 @@ public class RemoveStudentFromFinalDegreeWorkStudentGroup extends Service {
 
     public boolean run(String username, Integer groupOID, Integer studentToRemoveID) throws FenixServiceException {
         Group group = rootDomainObject.readGroupByOID(groupOID);
-        Student student = Student.readByUsername(username);
+        Registration student = Registration.readByUsername(username);
         
         if (group == null 
                 || student == null 

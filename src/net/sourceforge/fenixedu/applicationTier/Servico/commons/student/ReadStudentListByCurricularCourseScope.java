@@ -40,7 +40,7 @@ public class ReadStudentListByCurricularCourseScope extends Service {
 
     /**
      * @param studentCurricularPlans
-     * @return A list of Student curricular Plans without the duplicates
+     * @return A list of Registration curricular Plans without the duplicates
      * @throws ExcepcaoPersistencia
      */
     private List cleanList(List studentCurricularPlans, IUserView userView)

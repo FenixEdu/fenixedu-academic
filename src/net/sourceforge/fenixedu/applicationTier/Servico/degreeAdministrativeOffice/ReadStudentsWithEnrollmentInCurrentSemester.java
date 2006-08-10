@@ -12,8 +12,8 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentWithInfoPerson;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
-import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
+import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 /**
@@ -31,10 +31,10 @@ public class ReadStudentsWithEnrollmentInCurrentSemester extends Service {
         List degreeNames = new ArrayList();
         List allStudentsData = new ArrayList();
 
-        List studentsList = Student.readAllStudentsBetweenNumbers(fromNumber, toNumber);
+        List studentsList = Registration.readAllStudentsBetweenNumbers(fromNumber, toNumber);
 
         for (int iter = 0; iter < studentsList.size(); iter++) {
-            Student student = (Student) studentsList.get(iter);
+            Registration student = (Registration) studentsList.get(iter);
             // TODO se ele está inscrito no semestre actual é porque já pagou as
             // propinas...
             if (student.getPayedTuition().booleanValue() && studentHasEnrollments(student)) {
@@ -51,7 +51,7 @@ public class ReadStudentsWithEnrollmentInCurrentSemester extends Service {
         return allStudentsData;
     }
 
-    private boolean studentHasEnrollments(Student student) throws ExcepcaoPersistencia {
+    private boolean studentHasEnrollments(Registration student) throws ExcepcaoPersistencia {
 
         ExecutionPeriod executionPeriod = ExecutionPeriod.readActualExecutionPeriod();
 

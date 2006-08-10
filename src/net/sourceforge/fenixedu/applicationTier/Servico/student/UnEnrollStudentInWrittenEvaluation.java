@@ -3,8 +3,8 @@ package net.sourceforge.fenixedu.applicationTier.Servico.student;
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
-import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
+import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class UnEnrollStudentInWrittenEvaluation extends Service {
@@ -12,7 +12,7 @@ public class UnEnrollStudentInWrittenEvaluation extends Service {
     public void run(String username, Integer writtenEvaluationOID) throws FenixServiceException,
             ExcepcaoPersistencia {
 
-        final Student student = Student.readByUsername(username);
+        final Registration student = Registration.readByUsername(username);
 
         final WrittenEvaluation writtenEvaluation = (WrittenEvaluation) rootDomainObject
                 .readEvaluationByOID(writtenEvaluationOID);

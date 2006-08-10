@@ -15,6 +15,7 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.space.OldRoom;
 import net.sourceforge.fenixedu.domain.space.Room;
 import net.sourceforge.fenixedu.domain.space.RoomOccupation;
+import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.util.DateFormatUtil;
 import net.sourceforge.fenixedu.util.DiaSemana;
 import net.sourceforge.fenixedu.util.EvaluationType;
@@ -332,7 +333,7 @@ public class WrittenEvaluation extends WrittenEvaluation_Base {
         return date.getTime();
     }
 
-    public void enrolStudent(Student student) {
+    public void enrolStudent(Registration student) {
         for (WrittenEvaluationEnrolment writtenEvaluationEnrolment : student
                 .getWrittenEvaluationEnrolments()) {
             if (writtenEvaluationEnrolment.getWrittenEvaluation() == this) {
@@ -342,7 +343,7 @@ public class WrittenEvaluation extends WrittenEvaluation_Base {
         new WrittenEvaluationEnrolment(this, student);
     }
 
-    public void unEnrolStudent(Student student) {
+    public void unEnrolStudent(Registration student) {
         if (!this.validUnEnrollment()) {
             throw new DomainException("error.notAuthorizedUnEnrollment");
         }
@@ -369,7 +370,7 @@ public class WrittenEvaluation extends WrittenEvaluation_Base {
         return false;
     }
 
-    public void distributeStudentsByRooms(List<Student> studentsToDistribute, List<OldRoom> selectedRooms) {
+    public void distributeStudentsByRooms(List<Registration> studentsToDistribute, List<OldRoom> selectedRooms) {
 
         this.checkIfCanDistributeStudentsByRooms();
         this.checkRoomsCapacityForStudents(selectedRooms, studentsToDistribute.size());
@@ -377,7 +378,7 @@ public class WrittenEvaluation extends WrittenEvaluation_Base {
         for (final OldRoom room : selectedRooms) {
             for (int numberOfStudentsInserted = 0; numberOfStudentsInserted < room.getCapacidadeExame()
                     && !studentsToDistribute.isEmpty(); numberOfStudentsInserted++) {
-                final Student student = getRandomStudentFromList(studentsToDistribute);
+                final Registration student = getRandomStudentFromList(studentsToDistribute);
                 final WrittenEvaluationEnrolment writtenEvaluationEnrolment = this
                         .getWrittenEvaluationEnrolmentFor(student);
                 if (writtenEvaluationEnrolment == null) {
@@ -430,13 +431,13 @@ public class WrittenEvaluation extends WrittenEvaluation_Base {
         }
     }
 
-    private Student getRandomStudentFromList(List<Student> studentsToDistribute) {
+    private Registration getRandomStudentFromList(List<Registration> studentsToDistribute) {
         final Random randomizer = new Random();
         int pos = randomizer.nextInt(Math.abs(randomizer.nextInt()));
-        return (Student) studentsToDistribute.remove(pos % studentsToDistribute.size());
+        return (Registration) studentsToDistribute.remove(pos % studentsToDistribute.size());
     }
 
-    public WrittenEvaluationEnrolment getWrittenEvaluationEnrolmentFor(final Student student) {
+    public WrittenEvaluationEnrolment getWrittenEvaluationEnrolmentFor(final Registration student) {
         for (final WrittenEvaluationEnrolment writtenEvaluationEnrolment : student
                 .getWrittenEvaluationEnrolments()) {
             if (writtenEvaluationEnrolment.getWrittenEvaluation() == this) {

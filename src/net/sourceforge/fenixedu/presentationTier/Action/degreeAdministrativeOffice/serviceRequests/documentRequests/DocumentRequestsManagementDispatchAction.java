@@ -9,7 +9,6 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.serviceRequest.documentRequest.DocumentRequestEditBean;
-import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOfficeType;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
@@ -18,6 +17,7 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainExceptionWithLabelFormat
 import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSituationType;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequestType;
+import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
@@ -84,7 +84,7 @@ public class DocumentRequestsManagementDispatchAction extends FenixDispatchActio
 		String isUrgentString = form.getString("isUrgent");
 		Boolean isUrgent = StringUtils.isEmpty(isUrgentString) ? null : Boolean.valueOf(isUrgentString);
 
-		Student student = getStudent(form.getString("studentNumber"));
+		Registration student = getStudent(form.getString("studentNumber"));
 
 		request.setAttribute("documentRequestsResult", getAdministrativeOffice().searchDocumentsBy(
 				documentRequestType, requestSituationType, isUrgent, student));
@@ -126,9 +126,9 @@ public class DocumentRequestsManagementDispatchAction extends FenixDispatchActio
 		return result.toString();
 	}
 
-	private Student getStudent(String studentNumberString) {
+	private Registration getStudent(String studentNumberString) {
 		try {
-			return Student.readStudentByNumberAndDegreeType(Integer.valueOf(studentNumberString),
+			return Registration.readStudentByNumberAndDegreeType(Integer.valueOf(studentNumberString),
 					DegreeType.DEGREE);
 		} catch (NumberFormatException e) {
 			return null;

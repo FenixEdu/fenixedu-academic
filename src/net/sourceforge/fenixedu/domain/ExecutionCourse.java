@@ -20,6 +20,7 @@ import net.sourceforge.fenixedu.domain.gesdis.CourseReport;
 import net.sourceforge.fenixedu.domain.messaging.ExecutionCourseForum;
 import net.sourceforge.fenixedu.domain.onlineTests.Metadata;
 import net.sourceforge.fenixedu.domain.onlineTests.OnlineTest;
+import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.WeeklyWorkLoad;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
 import net.sourceforge.fenixedu.util.DateFormatUtil;
@@ -249,7 +250,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
         return res;
     }
 
-    public Attends getAttendsByStudent(final Student student) {
+    public Attends getAttendsByStudent(final Registration student) {
         for (final Attends attends : getAttendsSet()) {
             if (attends.getAluno() == student) {
                 return attends;

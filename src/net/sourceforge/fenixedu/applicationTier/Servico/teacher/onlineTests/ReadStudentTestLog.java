@@ -12,9 +12,9 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoStudentTestLog;
 import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoStudentTestLogWithStudentAndDistributedTest;
-import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.onlineTests.DistributedTest;
 import net.sourceforge.fenixedu.domain.onlineTests.StudentTestLog;
+import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 /**
@@ -25,7 +25,7 @@ public class ReadStudentTestLog extends Service {
 	public List run(Integer executionCourseId, Integer distributedTestId, Integer studentId)
 			throws FenixServiceException, ExcepcaoPersistencia {
 		List<InfoStudentTestLog> infoStudentTestLogList = new ArrayList<InfoStudentTestLog>();
-		Student student = rootDomainObject.readStudentByOID(
+		Registration student = rootDomainObject.readRegistrationByOID(
 				studentId);
 		if (student == null) {
 			throw new FenixServiceException();

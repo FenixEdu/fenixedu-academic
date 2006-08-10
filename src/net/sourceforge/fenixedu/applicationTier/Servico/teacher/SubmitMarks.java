@@ -27,9 +27,9 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.FinalEvaluation;
 import net.sourceforge.fenixedu.domain.FinalMark;
 import net.sourceforge.fenixedu.domain.OccupationPeriod;
-import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
+import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.util.Ftp;
 
@@ -255,7 +255,7 @@ public class SubmitMarks extends Service {
 			this.teacherMail = StringUtils.rightPad(teacherMail, 39, ' ');
 		}
 		
-		private void addLine(Student student, String season, FinalMark mark, ExecutionYear executionYear) {
+		private void addLine(Registration student, String season, FinalMark mark, ExecutionYear executionYear) {
 			StringBuilder builder = new StringBuilder();
 			builder.append(getDegreeCode());
 			builder.append(getCurricularYear());

@@ -10,11 +10,11 @@ import net.sourceforge.fenixedu.domain.Coordinator;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.domain.SecretaryEnrolmentStudent;
-import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.Tutor;
 import net.sourceforge.fenixedu.domain.person.RoleType;
+import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.StudentCurricularPlanState;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -88,7 +88,7 @@ public class EnrollmentAuthorizationFilter extends AuthorizationByManyRolesFilte
 		    return "noAuthorization";
 		}
 
-		final Student student = readStudent(arguments);
+		final Registration student = readStudent(arguments);
 		if (student == null) {
 		    return "noAuthorization";
 		}
@@ -116,7 +116,7 @@ public class EnrollmentAuthorizationFilter extends AuthorizationByManyRolesFilte
 
 	private String checkStudentInformation(IUserView userView) {
 		
-		final Student student = readStudent(userView);
+		final Registration student = readStudent(userView);
 		if (student == null) {
 		    return "noAuthorization";
 		}
@@ -173,12 +173,12 @@ public class EnrollmentAuthorizationFilter extends AuthorizationByManyRolesFilte
     	return (studentCurricularPlan.getDegreeCurricularPlan().getActualEnrolmentPeriod() != null);
     }
 
-    protected Student readStudent(IUserView userView) {
+    protected Registration readStudent(IUserView userView) {
     	return userView.getPerson().getStudentByUsername();
     }
 
-    protected Student readStudent(Object[] arguments) {
-    	return  (arguments[1] != null) ? (Student) arguments[1] : null; 
+    protected Registration readStudent(Object[] arguments) {
+    	return  (arguments[1] != null) ? (Registration) arguments[1] : null; 
     }
 
     protected Teacher readTeacher(IUserView id) {

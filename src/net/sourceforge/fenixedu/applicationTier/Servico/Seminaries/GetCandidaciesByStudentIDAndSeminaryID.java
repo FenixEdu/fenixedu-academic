@@ -10,9 +10,9 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoCandidacy;
-import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.Seminaries.Seminary;
 import net.sourceforge.fenixedu.domain.Seminaries.SeminaryCandidacy;
+import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.presentationTier.Action.Seminaries.Exceptions.BDException;
 
@@ -28,7 +28,7 @@ public class GetCandidaciesByStudentIDAndSeminaryID extends Service {
     public List run(Integer studentID, Integer seminaryID) throws BDException, ExcepcaoPersistencia {
         List candidaciesInfo = new LinkedList();
 
-        Student student = rootDomainObject.readStudentByOID(studentID);
+        Registration student = rootDomainObject.readRegistrationByOID(studentID);
         Seminary seminary = rootDomainObject.readSeminaryByOID(seminaryID);
 
         List<SeminaryCandidacy> candidacies = SeminaryCandidacy.getByStudentAndSeminary(student, seminary);

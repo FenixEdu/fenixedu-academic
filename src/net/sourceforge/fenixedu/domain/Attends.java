@@ -17,6 +17,7 @@ import java.util.Set;
 import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.WeeklyWorkLoad;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -38,8 +39,8 @@ public class Attends extends Attends_Base {
             final ExecutionCourse executionCourse1 = attends1.getDisciplinaExecucao();
             final ExecutionCourse executionCourse2 = attends2.getDisciplinaExecucao();
             if (executionCourse1 == executionCourse2) {
-                final Student student1 = attends1.getAluno();
-                final Student student2 = attends2.getAluno();
+                final Registration student1 = attends1.getAluno();
+                final Registration student2 = attends2.getAluno();
                 return student1.getNumber().compareTo(student2.getNumber());
             } else {
                 final ExecutionPeriod executionPeriod1 = executionCourse1.getExecutionPeriod();
@@ -60,7 +61,7 @@ public class Attends extends Attends_Base {
         setRootDomainObject(RootDomainObject.getInstance());
     }
 
-    public Attends(Student student, ExecutionCourse executionCourse) {
+    public Attends(Registration student, ExecutionCourse executionCourse) {
         this();
         setAluno(student);
         setDisciplinaExecucao(executionCourse);

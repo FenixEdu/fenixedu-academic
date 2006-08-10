@@ -10,13 +10,13 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
-import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class ImprovmentUnEnrollService extends Service {
 
-    public void run(Student student, List<Integer> enrolmentsIds)
+    public void run(Registration student, List<Integer> enrolmentsIds)
 			throws FenixServiceException, ExcepcaoPersistencia, DomainException {
 
         if (student == null) {

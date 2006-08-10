@@ -9,9 +9,9 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.student.InfoSenior;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.student.Senior;
+import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 /**
@@ -22,7 +22,7 @@ public class ReadSeniorInfoByUsername extends Service {
 
 	public InfoSenior run(IUserView userView) throws FenixServiceException, ExcepcaoPersistencia {
 		Person person = Person.readPersonByUsername(userView.getUtilizador());
-		Student student = person.getStudentByType(DegreeType.DEGREE);
+		Registration student = person.getStudentByType(DegreeType.DEGREE);
 
 		Senior senior = student.getSenior();
 

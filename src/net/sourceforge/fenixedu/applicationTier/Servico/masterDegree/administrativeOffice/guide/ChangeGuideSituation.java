@@ -25,8 +25,8 @@ import net.sourceforge.fenixedu.domain.GuideSituation;
 import net.sourceforge.fenixedu.domain.GuideState;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.PersonAccount;
-import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
+import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.transactions.GratuityTransaction;
 import net.sourceforge.fenixedu.domain.transactions.InsuranceTransaction;
 import net.sourceforge.fenixedu.domain.transactions.PaymentTransaction;
@@ -98,7 +98,7 @@ public class ChangeGuideSituation extends Service {
 
                 Person employeePerson = Person.readPersonByUsername(userView.getUtilizador());
                 Person studentPerson = guide.getPerson();
-                Student student = studentPerson.readStudentByDegreeType(DegreeType.MASTER_DEGREE);
+                Registration student = studentPerson.readStudentByDegreeType(DegreeType.MASTER_DEGREE);
                 ExecutionDegree executionDegree = guide.getExecutionDegree();
 
                 // Iterate Guide Entries to create Transactions

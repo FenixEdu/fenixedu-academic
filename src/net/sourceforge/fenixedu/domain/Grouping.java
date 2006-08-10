@@ -10,6 +10,7 @@ import java.util.Date;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.util.EnrolmentGroupPolicyType;
 import net.sourceforge.fenixedu.util.ProposalState;
 
@@ -117,7 +118,7 @@ public class Grouping extends Grouping_Base {
         return this.getAttends().size();
     }
 
-    public Attends getStudentAttend(Student student) {
+    public Attends getStudentAttend(Registration student) {
         for (final Attends attend : this.getAttends()) {
             if (attend.getAluno() == student) {
                 return attend;
@@ -244,7 +245,7 @@ public class Grouping extends Grouping_Base {
         }
     }
 
-    public void createStudentGroup(Shift shift, Integer groupNumber, List<Student> students) {
+    public void createStudentGroup(Shift shift, Integer groupNumber, List<Registration> students) {
 
         if (groupNumber == null || students == null)
             throw new NullPointerException();
@@ -261,14 +262,14 @@ public class Grouping extends Grouping_Base {
         else
             newStudentGroup = new StudentGroup(groupNumber, this);
 
-        for (Student student : students) {
+        for (Registration student : students) {
             Attends attend = getStudentAttend(student);
             newStudentGroup.addAttends(attend);
         }
     }
 
-    private void checkForStudentsInStudentGroupsAndGrouping(List<Student> students) {
-        for (Student student : students) {
+    private void checkForStudentsInStudentGroupsAndGrouping(List<Registration> students) {
+        for (Registration student : students) {
             Attends attend = getStudentAttend(student);
             for (final StudentGroup studentGroup : this.getStudentGroups()) {
                 if (studentGroup.getAttends().contains(attend))

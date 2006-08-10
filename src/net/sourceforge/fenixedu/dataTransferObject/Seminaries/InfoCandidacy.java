@@ -74,7 +74,7 @@ public class InfoCandidacy extends InfoObject {
         result += "Theme=" + this.theme.getIdInternal() + ";";
         result += "IdInternal=" + super.getIdInternal() + ";";
         result += "Motivation=" + this.motivation + ";";
-        result += "Student=" + this.getInfoStudent().getIdInternal() + ";";
+        result += "Registration=" + this.getInfoStudent().getIdInternal() + ";";
         result += "CaseStudyChoices" + this.caseStudyChoices + ";";
         result += "CurricularCourse=" + this.curricularCourse.getIdInternal() + ";";
         result += "Seminary:=" + this.infoSeminary.getIdInternal() + ";";

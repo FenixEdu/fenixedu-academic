@@ -7,9 +7,9 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.AuthorizationByManyRolesFilter;
 import net.sourceforge.fenixedu.domain.Role;
-import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.person.RoleType;
+import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 /**
@@ -58,7 +58,7 @@ public class EnrolmentImprovmentAuthorization extends AuthorizationByManyRolesFi
         if (arguments != null && arguments[0] != null) {
             Integer studentNumber = (Integer) arguments[0];
             if (studentNumber != null) {
-                Student student = Student.readStudentByNumberAndDegreeType(studentNumber, degreeType);
+                Registration student = Registration.readStudentByNumberAndDegreeType(studentNumber, degreeType);
                 if (student != null) {
                     isRightType = true; // right student curricular plan
                 }

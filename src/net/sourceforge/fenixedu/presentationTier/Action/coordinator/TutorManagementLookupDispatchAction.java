@@ -68,7 +68,7 @@ public class TutorManagementLookupDispatchAction extends LookupDispatchAction {
             if (e1.getMessage() != null && e1.getMessage().endsWith("Teacher")) {
                 errors.add("errors", new ActionError(e1.getMessage(), tutorNumber));
             }
-            if (e1.getMessage() != null && e1.getMessage().endsWith("Student")) {
+            if (e1.getMessage() != null && e1.getMessage().endsWith("Registration")) {
                 errors.add("errors", new ActionError(e1.getMessage(), studentNumber));
             } else {
                 errors.add("errors", new ActionError("error.tutor.impossibleOperation"));

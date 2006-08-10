@@ -5,8 +5,8 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.Filtro;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
-import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import pt.utl.ist.berserk.ServiceRequest;
 import pt.utl.ist.berserk.ServiceResponse;
@@ -17,7 +17,7 @@ public class PastEnrolmentsFilter extends Filtro {
     public void execute(ServiceRequest request, ServiceResponse response) throws Exception {
         Object[] args = request.getServiceParameters().parametersArray();
 
-        Student student = null;
+        Registration student = null;
         if (args[1] != null) {
             Integer studentCurricularPlanID = (Integer) args[1];
             StudentCurricularPlan studentCurricularPlan = rootDomainObject
@@ -25,7 +25,7 @@ public class PastEnrolmentsFilter extends Filtro {
             student = studentCurricularPlan.getStudent();
         } else if (args.length > 2 && args[2] != null) {
             Integer studentNumber = (Integer) args[2];
-            student = Student.readByUsername("L" + studentNumber);
+            student = Registration.readByUsername("L" + studentNumber);
         }
 
         if (student == null) {
@@ -48,8 +48,8 @@ public class PastEnrolmentsFilter extends Filtro {
         throw new NotAuthorizedFilterException("error.no.enrolment.two.previous.executions");
     }
 
-    protected Student readStudent(IUserView id) throws ExcepcaoPersistencia {
-        return Student.readByUsername(id.getUtilizador());
+    protected Registration readStudent(IUserView id) throws ExcepcaoPersistencia {
+        return Registration.readByUsername(id.getUtilizador());
     }
 
 }

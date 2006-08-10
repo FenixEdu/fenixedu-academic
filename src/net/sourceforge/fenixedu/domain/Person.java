@@ -43,6 +43,7 @@ import net.sourceforge.fenixedu.domain.research.result.patent.ResultPatent;
 import net.sourceforge.fenixedu.domain.research.result.publication.ResultPublication;
 import net.sourceforge.fenixedu.domain.sms.SentSms;
 import net.sourceforge.fenixedu.domain.sms.SmsDeliveryType;
+import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.StudentCurricularPlanState;
 import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
 import net.sourceforge.fenixedu.util.DateFormatUtil;
@@ -368,8 +369,8 @@ public class Person extends Person_Base {
         return false;
     }
 
-    public Student getStudentByType(DegreeType degreeType) {
-        for (Student student : this.getStudents()) {
+    public Registration getStudentByType(DegreeType degreeType) {
+        for (Registration student : this.getStudents()) {
             if (student.getDegreeType().equals(degreeType)) {
                 return student;
             }
@@ -377,8 +378,8 @@ public class Person extends Person_Base {
         return null;
     }
 
-    public Student getStudentByUsername() {
-        for (final Student student : this.getStudents()) {
+    public Registration getStudentByUsername() {
+        for (final Registration student : this.getStudents()) {
             if (getUsername().contains(student.getNumber().toString())) {
                 return student;
             }
@@ -942,8 +943,8 @@ public class Person extends Person_Base {
         return count;
     }
 
-    public Student readStudentByDegreeType(DegreeType degreeType) {
-        for (final Student student : this.getStudents()) {
+    public Registration readStudentByDegreeType(DegreeType degreeType) {
+        for (final Registration student : this.getStudents()) {
             if (student.getDegreeType().equals(degreeType)) {
                 return student;
             }
@@ -1304,7 +1305,7 @@ public class Person extends Person_Base {
     public SortedSet<StudentCurricularPlan> getActiveStudentCurricularPlansSortedByDegreeTypeAndDegreeName() {
         final SortedSet<StudentCurricularPlan> studentCurricularPlans = new TreeSet<StudentCurricularPlan>(
                 StudentCurricularPlan.STUDENT_CURRICULAR_PLAN_COMPARATOR_BY_DEGREE_TYPE_AND_DEGREE_NAME);
-        for (final Student student : getStudentsSet()) {
+        for (final Registration student : getStudentsSet()) {
             final StudentCurricularPlan studentCurricularPlan = student.getActiveStudentCurricularPlan();
             if (studentCurricularPlan != null) {
                 studentCurricularPlans.add(studentCurricularPlan);
@@ -1316,7 +1317,7 @@ public class Person extends Person_Base {
     public SortedSet<StudentCurricularPlan> getCompletedStudentCurricularPlansSortedByDegreeTypeAndDegreeName() {
         final SortedSet<StudentCurricularPlan> studentCurricularPlans = new TreeSet<StudentCurricularPlan>(
                 StudentCurricularPlan.STUDENT_CURRICULAR_PLAN_COMPARATOR_BY_DEGREE_TYPE_AND_DEGREE_NAME);
-        for (final Student student : getStudentsSet()) {
+        for (final Registration student : getStudentsSet()) {
             for (final StudentCurricularPlan studentCurricularPlan : student
                     .getStudentCurricularPlansSet()) {
                 if (studentCurricularPlan.getCurrentState() == StudentCurricularPlanState.CONCLUDED) {
@@ -1343,7 +1344,7 @@ public class Person extends Person_Base {
 
     public Set<Attends> getCurrentAttends() {
         final Set<Attends> attends = new HashSet<Attends>();
-        for (final Student student : getStudentsSet()) {
+        for (final Registration student : getStudentsSet()) {
             for (final Attends attend : student.getAssociatedAttendsSet()) {
                 final ExecutionCourse executionCourse = attend.getDisciplinaExecucao();
                 final ExecutionPeriod executionPeriod = executionCourse.getExecutionPeriod();
@@ -1413,7 +1414,7 @@ public class Person extends Person_Base {
     }
 
     private boolean hasStudentWithNumber(final Integer institutionalNumber) {
-        for (final Student student : getStudents()) {
+        for (final Registration student : getStudents()) {
             if (student.getNumber().equals(institutionalNumber)) {
                 return true;
             }

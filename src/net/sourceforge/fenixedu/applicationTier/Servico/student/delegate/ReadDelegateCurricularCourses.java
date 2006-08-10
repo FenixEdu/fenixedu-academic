@@ -15,8 +15,8 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.CurricularCourseScope;
 import net.sourceforge.fenixedu.domain.DomainObject;
-import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.student.Delegate;
+import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -53,7 +53,7 @@ public class ReadDelegateCurricularCourses extends SearchService {
     protected List doSearch(HashMap searchParameters) throws ExcepcaoPersistencia {
 
         final String user = (String) searchParameters.get("user");
-        final Student student = Student.readByUsername(user);
+        final Registration student = Registration.readByUsername(user);
 
         Delegate delegate = null;
         if (!student.getDelegate().isEmpty()) {

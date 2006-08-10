@@ -8,11 +8,11 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.domain.Coordinator;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.Role;
-import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.Tutor;
 import net.sourceforge.fenixedu.domain.person.RoleType;
+import net.sourceforge.fenixedu.domain.student.Registration;
 
 public class EnrollmentLEECAuthorizationFilter extends EnrollmentAuthorizationFilter {
     private static String DEGREE_LEEC_CODE = new String("LEEC");
@@ -35,7 +35,7 @@ public class EnrollmentLEECAuthorizationFilter extends EnrollmentAuthorizationFi
             //verify if the student making the enrollment is a LEEC degree
             // student
             if (roles.contains(RoleType.STUDENT)) {
-                Student student = readStudent(userView);
+                Registration student = readStudent(userView);
                 if (student == null) {
                     return "noAuthorization";
                 }

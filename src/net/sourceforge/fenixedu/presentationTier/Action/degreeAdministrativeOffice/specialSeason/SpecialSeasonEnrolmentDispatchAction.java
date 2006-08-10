@@ -15,11 +15,11 @@ import net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.en
 import net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.enrolment.SpecialSeasonToEnrolBean;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentCondition;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
@@ -76,7 +76,7 @@ public class SpecialSeasonEnrolmentDispatchAction extends FenixDispatchAction {
             HttpServletRequest request, HttpServletResponse response) {
     	SpecialSeasonEnrolmentBean specialSeasonEnrolmentBean = (SpecialSeasonEnrolmentBean) RenderUtils.getViewState().getMetaObject().getObject();
 
-    	Student student = Student.readStudentByNumberAndDegreeType(specialSeasonEnrolmentBean.getStudentNumber(), DegreeType.DEGREE);
+    	Registration student = Registration.readStudentByNumberAndDegreeType(specialSeasonEnrolmentBean.getStudentNumber(), DegreeType.DEGREE);
     	
     	if(student == null) {
     		addActionMessage(request, "error.student.notExist", specialSeasonEnrolmentBean.getStudentNumber().toString());

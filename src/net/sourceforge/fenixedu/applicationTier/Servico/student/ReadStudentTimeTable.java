@@ -8,11 +8,11 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.InfoLesson;
 import net.sourceforge.fenixedu.domain.Lesson;
 import net.sourceforge.fenixedu.domain.Shift;
-import net.sourceforge.fenixedu.domain.Student;
+import net.sourceforge.fenixedu.domain.student.Registration;
 
 public class ReadStudentTimeTable extends Service {
 
-    public List<InfoLesson> run(Student student) throws FenixServiceException {
+    public List<InfoLesson> run(Registration student) throws FenixServiceException {
 
         if (student == null) {
         	throw new FenixServiceException("error.service.readStudentTimeTable.noStudent");
@@ -22,7 +22,7 @@ public class ReadStudentTimeTable extends Service {
         for (final Shift shift : student.getShiftsForCurrentExecutionPeriod()) {
         	for (final Lesson lesson : shift.getAssociatedLessonsSet()) {
         		result.add(InfoLesson.newInfoFromDomain(lesson));
-        	}
+        }
         }
 
         return result;

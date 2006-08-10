@@ -2,7 +2,6 @@ package net.sourceforge.fenixedu.domain.student;
 
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
-import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.util.StudentPersonalDataAuthorizationChoice;
 
 public class StudentPersonalDataAuthorization extends StudentPersonalDataAuthorization_Base {
@@ -12,7 +11,7 @@ public class StudentPersonalDataAuthorization extends StudentPersonalDataAuthori
         setRootDomainObject(RootDomainObject.getInstance());
     }
     
-    public StudentPersonalDataAuthorization(Student student, ExecutionYear executionYear, 
+    public StudentPersonalDataAuthorization(Registration student, ExecutionYear executionYear, 
             StudentPersonalDataAuthorizationChoice studentPersonalDataAuthorizationChoice) {
         this();
         

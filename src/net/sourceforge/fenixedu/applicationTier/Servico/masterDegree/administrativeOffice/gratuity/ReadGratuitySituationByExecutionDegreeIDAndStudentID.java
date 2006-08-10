@@ -5,7 +5,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.InfoGratuitySituation;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.GratuitySituation;
-import net.sourceforge.fenixedu.domain.Student;
+import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 /**
@@ -22,7 +22,7 @@ public class ReadGratuitySituationByExecutionDegreeIDAndStudentID extends Servic
         InfoGratuitySituation infoGratuitySituation = null;
 
         ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(executionDegreeID);
-        Student student = rootDomainObject.readStudentByOID(studentID);
+        Registration student = rootDomainObject.readRegistrationByOID(studentID);
 
         if ((executionDegree == null) || (student == null)) {
             return null;

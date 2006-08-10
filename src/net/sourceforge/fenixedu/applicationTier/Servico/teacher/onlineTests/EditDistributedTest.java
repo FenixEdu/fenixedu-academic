@@ -15,11 +15,11 @@ import net.sourceforge.fenixedu.domain.Advisory;
 import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Mark;
-import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.onlineTests.DistributedTest;
 import net.sourceforge.fenixedu.domain.onlineTests.DistributedTestAdvisory;
 import net.sourceforge.fenixedu.domain.onlineTests.OnlineTest;
 import net.sourceforge.fenixedu.domain.onlineTests.StudentTestQuestion;
+import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.util.tests.CorrectionAvailability;
 import net.sourceforge.fenixedu.util.tests.TestType;
@@ -92,8 +92,8 @@ public class EditDistributedTest extends Service {
             OnlineTest onlineTest = new OnlineTest();
             onlineTest.setDistributedTest(distributedTest);
             onlineTest.addAssociatedExecutionCourses(executionCourse);
-            final Set<Student> students = distributedTest.findStudents();
-            for (Student student : students) {
+            final Set<Registration> students = distributedTest.findStudents();
+            for (Registration student : students) {
             	Set<StudentTestQuestion> studentTestQuestionList = StudentTestQuestion.findStudentTestQuestions(student, distributedTest);
                 double studentMark = 0;
                 for (StudentTestQuestion studentTestQuestion : studentTestQuestionList) {

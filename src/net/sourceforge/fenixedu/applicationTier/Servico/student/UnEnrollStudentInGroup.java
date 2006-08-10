@@ -14,8 +14,8 @@ import net.sourceforge.fenixedu.applicationTier.strategy.groupEnrolment.strategy
 import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Grouping;
-import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.StudentGroup;
+import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.util.EMail;
 
@@ -50,7 +50,7 @@ public class UnEnrollStudentInGroup extends Service {
             throw new InvalidSituationServiceException();
         }
 
-        Student student = Student.readByUsername(userName);
+        Registration student = Registration.readByUsername(userName);
 
         Grouping groupProperties = studentGroup.getGrouping();
 

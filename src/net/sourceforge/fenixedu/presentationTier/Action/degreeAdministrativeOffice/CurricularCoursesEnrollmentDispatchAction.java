@@ -19,7 +19,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.OutOfCurricul
 import net.sourceforge.fenixedu.domain.Branch;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
-import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseEnrollmentType;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
@@ -27,6 +26,7 @@ import net.sourceforge.fenixedu.domain.degree.enrollment.CurricularCourse2Enroll
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.exceptions.FenixDomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
+import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.commons.TransactionalDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
@@ -410,7 +410,7 @@ public class CurricularCoursesEnrollmentDispatchAction extends TransactionalDisp
 
 		readAndSetDegreeCurricularPlanID(request, form);
 
-		final Student student = getStudent(userView, form);
+		final Registration student = getStudent(userView, form);
 		setStudentCurrentSemesterEnrolments(request, userView, student);
 
 		if (!getActionMessages(request).isEmpty()) {
@@ -421,7 +421,7 @@ public class CurricularCoursesEnrollmentDispatchAction extends TransactionalDisp
 	}
 
 	private void setStudentCurrentSemesterEnrolments(HttpServletRequest request,
-			final IUserView userView, final Student student) throws FenixFilterException,
+			final IUserView userView, final Registration student) throws FenixFilterException,
 			FenixActionException {
 
 		try {
@@ -492,8 +492,8 @@ public class CurricularCoursesEnrollmentDispatchAction extends TransactionalDisp
 		Collections.sort(curriculum, chainComparator);
 	}
 
-	protected Student getStudent(IUserView userView, DynaActionForm form) {
+	protected Registration getStudent(IUserView userView, DynaActionForm form) {
 		final Integer studentNumber = Integer.valueOf(form.getString("studentNumber"));
-		return Student.readStudentByNumberAndDegreeType(studentNumber, DegreeType.DEGREE);
+		return Registration.readStudentByNumberAndDegreeType(studentNumber, DegreeType.DEGREE);
 	}
 }

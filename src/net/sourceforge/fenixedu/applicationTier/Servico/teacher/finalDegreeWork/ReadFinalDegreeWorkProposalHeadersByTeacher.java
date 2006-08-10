@@ -18,13 +18,13 @@ import net.sourceforge.fenixedu.dataTransferObject.finalDegreeWork.InfoGroupProp
 import net.sourceforge.fenixedu.dataTransferObject.finalDegreeWork.InfoGroupStudent;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Group;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.GroupProposal;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.GroupStudent;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Scheduleing;
+import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 /**
@@ -106,7 +106,7 @@ public class ReadFinalDegreeWorkProposalHeadersByTeacher extends Service {
 												infoGroupStudent
 														.setFinalDegreeDegreeWorkGroup(infoGroup);
 
-												Student student = groupStudent.getStudent();
+												Registration student = groupStudent.getStudent();
 												if (student != null) {
 													InfoStudent infoStudent = new InfoStudent();
 													infoStudent.setIdInternal(student.getIdInternal());

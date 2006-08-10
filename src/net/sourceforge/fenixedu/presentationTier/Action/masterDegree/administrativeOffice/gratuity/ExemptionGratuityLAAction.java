@@ -124,7 +124,7 @@ public class ExemptionGratuityLAAction extends LookupDispatchAction {
             infoGratuitySituation.setIdInternal(Integer.valueOf(gratuitySituationID));
         }
 
-        // Student Curricular Plan
+        // Registration Curricular Plan
         InfoStudentCurricularPlan infoStudentCurricularPlan = new InfoStudentCurricularPlan();
         infoStudentCurricularPlan.setIdInternal(Integer.valueOf(studentCurricularPlanID));
         infoGratuitySituation.setInfoStudentCurricularPlan(infoStudentCurricularPlan);

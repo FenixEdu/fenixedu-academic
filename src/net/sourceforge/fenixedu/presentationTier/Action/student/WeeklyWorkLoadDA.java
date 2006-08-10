@@ -16,7 +16,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
-import net.sourceforge.fenixedu.domain.Student;
+import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.WeeklyWorkLoad;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.renderers.components.state.LifeCycleConstants;
@@ -113,7 +113,7 @@ public class WeeklyWorkLoadDA extends FenixDispatchAction {
             final Collection<Attends> attends = new ArrayList<Attends>();
             request.setAttribute("attends", attends);
 
-            for (final Student student : getUserView(request).getPerson().getStudents()) {
+            for (final Registration student : getUserView(request).getPerson().getStudents()) {
                 for (final Attends attend : student.getOrderedAttends()) {
                     if (attend.getEnrolment() != null) {
                         final ExecutionCourse executionCourse = attend.getDisciplinaExecucao();
@@ -136,7 +136,7 @@ public class WeeklyWorkLoadDA extends FenixDispatchAction {
     }
 
     private Attends findFirstAttends(final HttpServletRequest request, final ExecutionPeriod selectedExecutionPeriod) throws FenixFilterException, FenixServiceException {
-        for (final Student student : getUserView(request).getPerson().getStudents()) {
+        for (final Registration student : getUserView(request).getPerson().getStudents()) {
             for (final Attends attend : student.getOrderedAttends()) {
                 final ExecutionCourse executionCourse = attend.getDisciplinaExecucao();
                 if (executionCourse.getExecutionPeriod() == selectedExecutionPeriod

@@ -13,8 +13,8 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseWithInfoDegree;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
-import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.presentationTier.Action.Seminaries.Exceptions.BDException;
 
@@ -31,7 +31,7 @@ public class ReadCurricularCoursesByUsername extends Service {
 	public List run(String username) throws BDException, ExcepcaoPersistencia, NonExistingServiceException {
 		List curricularCourses = new LinkedList();
 
-    	Student student = Student.readByUsername(username);
+    	Registration student = Registration.readByUsername(username);
     	if(student == null) {
     		throw new NonExistingServiceException();
     	}

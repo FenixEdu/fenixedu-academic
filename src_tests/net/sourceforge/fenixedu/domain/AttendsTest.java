@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.domain;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.student.Registration;
 
 public class AttendsTest extends DomainTestBase {
 
@@ -17,7 +18,7 @@ public class AttendsTest extends DomainTestBase {
 		attendNotToDelete3 = new Attends();
 		attendNotToDelete4 = new Attends();
 		
-		Student student = new Student();
+		Registration student = new Registration();
 		Enrolment enrolment = new Enrolment();
 		ExecutionCourse executionCourse = new ExecutionCourse();		
 		
@@ -105,7 +106,7 @@ public class AttendsTest extends DomainTestBase {
 		}
 		catch (DomainException e) {}
 
-		assertFalse("Failed to dereference Student", attendToDelete.hasAluno());
+		assertFalse("Failed to dereference Registration", attendToDelete.hasAluno());
 		assertFalse("Failed to dereference Enrolment", attendToDelete.hasEnrolment());
 		assertFalse("Failed to dereference ExecutionCourse", attendToDelete.hasDisciplinaExecucao());
 
@@ -125,7 +126,7 @@ public class AttendsTest extends DomainTestBase {
 	}
 
 	private void assertAttendsNotDereferenced(Attends attends) {
-		assertTrue("Should not dereference Student", attends.hasAluno());
+		assertTrue("Should not dereference Registration", attends.hasAluno());
 		assertTrue("Should not dereference Enrolment", attends.hasEnrolment());
 		assertTrue("Should not dereference ExecutionCourse", attends.hasDisciplinaExecucao());
 	}

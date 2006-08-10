@@ -38,7 +38,7 @@ public class SibsPaymentFileConstants {
 
     public static final int FIELD_REFERENCE_YEAR_MAX_SIZE = 2;
 
-    // Student number inside reference field
+    // Registration number inside reference field
     public static final int FIELD_REFERENCE_STUDENT_NUMBER_BEGIN_INDEX = 2;
 
     public static final int FIELD_REFERENCE_STUDENT_NUMBER_END_INDEX = 7;

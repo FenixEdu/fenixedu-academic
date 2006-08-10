@@ -15,7 +15,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidSituat
 import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Grouping;
-import net.sourceforge.fenixedu.domain.Student;
+import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 /**
@@ -40,7 +40,7 @@ public class InsertGroupingMembers extends Service {
         Iterator iterator = studentCodes.iterator();
 
         while (iterator.hasNext()) {
-            Student student = rootDomainObject.readStudentByOID((Integer) iterator
+            Registration student = rootDomainObject.readRegistrationByOID((Integer) iterator
                     .next());
             students.add(student);
         }
@@ -49,13 +49,13 @@ public class InsertGroupingMembers extends Service {
 
         while (iterAttends.hasNext()) {
             Attends existingAttend = (Attends) iterAttends.next();
-            Student existingAttendStudent = existingAttend.getAluno();
+            Registration existingAttendStudent = existingAttend.getAluno();
 
             Iterator iteratorStudents = students.iterator();
 
             while (iteratorStudents.hasNext()) {
 
-                Student student = (Student) iteratorStudents.next();
+                Registration student = (Registration) iteratorStudents.next();
                 if (student.equals(existingAttendStudent)) {
                     throw new InvalidSituationServiceException();
                 }
@@ -66,7 +66,7 @@ public class InsertGroupingMembers extends Service {
 
         while (iterStudents1.hasNext()) {
             Attends attend = null;
-            Student student = (Student) iterStudents1.next();
+            Registration student = (Registration) iterStudents1.next();
 
             List listaExecutionCourses = new ArrayList();
             listaExecutionCourses.addAll(groupProperties.getExecutionCourses());

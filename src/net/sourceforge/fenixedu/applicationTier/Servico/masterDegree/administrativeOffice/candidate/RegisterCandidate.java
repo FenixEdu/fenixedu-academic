@@ -29,12 +29,13 @@ import net.sourceforge.fenixedu.domain.MasterDegreeCandidate;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Qualification;
 import net.sourceforge.fenixedu.domain.Role;
-import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.StudentKind;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentCondition;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.person.RoleType;
+import net.sourceforge.fenixedu.domain.student.Registration;
+import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.student.StudentType;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.StudentCurricularPlanState;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -50,7 +51,7 @@ public class RegisterCandidate extends Service {
         MasterDegreeCandidate masterDegreeCandidate = rootDomainObject
                 .readMasterDegreeCandidateByOID(candidateID);
         Person person = masterDegreeCandidate.getPerson();
-        Student student = person.getStudentByType(DegreeType.MASTER_DEGREE);
+        Registration registration = person.getStudentByType(DegreeType.MASTER_DEGREE);
 
         checkCandidateSituation(masterDegreeCandidate.getActiveCandidateSituation());
 
@@ -61,13 +62,18 @@ public class RegisterCandidate extends Service {
         checkOldStudentNumber(studentNumber, person);
 
         // create new student
-        if (student == null) {
-            student = createNewStudent(studentNumber, person);
+        if (registration == null) {
+            registration = createNewRegistration(studentNumber, person);
         }
+        
+        if(person.getStudent() == null){
+            new Student(person, registration.getNumber());
+        }
+        person.getStudent().getRegistrations().add(registration);
 
-        checkDuplicateStudentCurricularPlan(masterDegreeCandidate, student);
+        checkDuplicateStudentCurricularPlan(masterDegreeCandidate, registration);
 
-        StudentCurricularPlan studentCurricularPlan = createNewStudentCurricularPlan(student, branchID,
+        StudentCurricularPlan studentCurricularPlan = createNewStudentCurricularPlan(registration, branchID,
                 masterDegreeCandidate);
 
         createEnrolments(userView, masterDegreeCandidate, studentCurricularPlan);
@@ -157,7 +163,7 @@ public class RegisterCandidate extends Service {
         }
     }
 
-    private StudentCurricularPlan createNewStudentCurricularPlan(Student student, Integer branchID,
+    private StudentCurricularPlan createNewStudentCurricularPlan(Registration student, Integer branchID,
             MasterDegreeCandidate masterDegreeCandidate) throws ExcepcaoPersistencia {
         Branch branch = rootDomainObject.readBranchByOID(branchID);
         DegreeCurricularPlan degreecurricularPlan = masterDegreeCandidate.getExecutionDegree()
@@ -170,15 +176,15 @@ public class RegisterCandidate extends Service {
         return studentCurricularPlan;
     }
 
-    private Student createNewStudent(Integer studentNumber, Person person) throws ExcepcaoPersistencia {
-        Student student;
+    private Registration createNewRegistration(Integer studentNumber, Person person) throws ExcepcaoPersistencia {
+        Registration student;
         if (studentNumber == null) {
-            studentNumber = Student.generateStudentNumber(DegreeType.MASTER_DEGREE);
+            studentNumber = Registration.generateStudentNumber(DegreeType.MASTER_DEGREE);
         }
 
         StudentKind studentKind = StudentKind.readByStudentType(StudentType.NORMAL);
         StudentState state = new StudentState(StudentState.INSCRITO);
-        student = new Student(person, studentNumber, studentKind, state, false, false,
+        student = new Registration(person, studentNumber, studentKind, state, false, false,
                 EntryPhase.FIRST_PHASE_OBJ, DegreeType.MASTER_DEGREE);
         student.setInterruptedStudies(false);
 
@@ -187,7 +193,7 @@ public class RegisterCandidate extends Service {
     }
 
     private void checkDuplicateStudentCurricularPlan(MasterDegreeCandidate masterDegreeCandidate,
-            Student student) throws ExistingServiceException {
+            Registration student) throws ExistingServiceException {
         List<StudentCurricularPlan> studentCurricularPlans = masterDegreeCandidate.getExecutionDegree()
                 .getDegreeCurricularPlan().getStudentCurricularPlans();
         for (StudentCurricularPlan scp : studentCurricularPlans) {
@@ -202,7 +208,7 @@ public class RegisterCandidate extends Service {
             throws ExcepcaoPersistencia, ExistingServiceException {
         if (studentNumber != null) {
 
-            Student existingStudent = Student.readStudentByNumberAndDegreeType(studentNumber,
+            Registration existingStudent = Registration.readStudentByNumberAndDegreeType(studentNumber,
                     DegreeType.MASTER_DEGREE);
 
             if (!existingStudent.getPerson().equals(person)) {

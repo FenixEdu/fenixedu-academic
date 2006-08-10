@@ -9,11 +9,11 @@ import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.CurricularCourseScope;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
-import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseEnrollmentType;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degree.enrollment.CurricularCourse2Enroll;
+import net.sourceforge.fenixedu.domain.student.Registration;
 
 public class ReadCurricularCoursesToEnroll extends Service {
 
@@ -37,7 +37,7 @@ public class ReadCurricularCoursesToEnroll extends Service {
 		return result;
 	}
 
-	public List<CurricularCourse2Enroll> run(final Student student, final DegreeType degreeType,
+	public List<CurricularCourse2Enroll> run(final Registration student, final DegreeType degreeType,
 			final ExecutionPeriod executionPeriod, final Integer executionDegreeID,
 			final List<Integer> curricularYearsList, final List<Integer> curricularSemestersList)
 			throws FenixServiceException {

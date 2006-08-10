@@ -25,7 +25,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.tests.NotAuth
 import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoSiteStudentDistributedTests;
 import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoSiteStudentTestFeedback;
 import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoStudentTestQuestion;
-import net.sourceforge.fenixedu.domain.Student;
+import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
@@ -56,7 +56,7 @@ public class StudentTestsAction extends FenixDispatchAction {
 
         List studentExecutionCoursesList = null;
         try {
-        	final Collection<Student> students = userView.getPerson().getStudentsSet();
+        	final Collection<Registration> students = userView.getPerson().getStudentsSet();
         	final Object[] args = { students.isEmpty() ? null : students.iterator().next() };
             studentExecutionCoursesList = (List) ServiceUtils.executeService(userView, "ReadExecutionCoursesByStudentTests", args);
         } catch (FenixServiceException e) {

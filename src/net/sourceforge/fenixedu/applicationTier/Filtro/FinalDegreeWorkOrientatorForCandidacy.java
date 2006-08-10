@@ -6,13 +6,13 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Group;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.GroupProposal;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.GroupStudent;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal;
+import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.util.StudentCurricularPlanIDDomainType;
 import pt.utl.ist.berserk.ServiceRequest;
 import pt.utl.ist.berserk.ServiceResponse;
@@ -50,7 +50,7 @@ public class FinalDegreeWorkOrientatorForCandidacy extends AccessControlFilter {
 	            for (final GroupProposal groupProposal : proposal.getGroupProposals()) {
 	                final Group group = groupProposal.getFinalDegreeDegreeWorkGroup();
 	                for (final GroupStudent groupStudent : group.getGroupStudents()) {
-	                    final Student student = groupStudent.getStudent();
+	                    final Registration student = groupStudent.getStudent();
 	                    for (final StudentCurricularPlan studentCurricularPlan : student
 	                            .getStudentCurricularPlans()) {
 	                        if (studentCurricularPlan.getIdInternal().equals(studentCurricularPlanId)) {

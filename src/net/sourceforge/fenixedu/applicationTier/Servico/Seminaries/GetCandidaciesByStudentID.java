@@ -28,7 +28,7 @@ public class GetCandidaciesByStudentID extends Service {
 	public List run(Integer id) throws BDException, ExcepcaoPersistencia {
 		List candidaciesInfo = new LinkedList();
 
-		List candidacies = rootDomainObject.readStudentByOID(id).getAssociatedCandidancies();
+		List candidacies = rootDomainObject.readRegistrationByOID(id).getAssociatedCandidancies();
 		for (Iterator iterator = candidacies.iterator(); iterator.hasNext();) {
 			SeminaryCandidacy candidacy = (SeminaryCandidacy) iterator.next();
 

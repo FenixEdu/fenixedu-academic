@@ -19,10 +19,10 @@ import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.EnrolmentEvaluation;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
+import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.util.EnrolmentEvaluationState;
 
@@ -62,7 +62,7 @@ public class ReadStudentMarksByCurricularCourse extends Service {
 
 		
 		List<StudentCurricularPlan> studentCurricularPlans = null;
-		Student student = Student.readStudentByNumberAndDegreeType(studentNumber, DegreeType.MASTER_DEGREE);
+		Registration student = Registration.readStudentByNumberAndDegreeType(studentNumber, DegreeType.MASTER_DEGREE);
 		if(student == null) {
 			throw new ExistingServiceException();
 		} 

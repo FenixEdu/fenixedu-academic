@@ -52,8 +52,8 @@ public class SecretaryEnrolmentStudentReason extends FenixValuedEnum {
     }
 
     public String toString() {
-        String result = "Secretary Enrolment Student Reason:\n";
-        result += "\n  - Secretary Enrolment Student Reason : " + this.getName();
+        String result = "Secretary Enrolment Registration Reason:\n";
+        result += "\n  - Secretary Enrolment Registration Reason : " + this.getName();
 
         return result;
     }

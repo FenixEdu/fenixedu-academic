@@ -10,11 +10,11 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.Filtro;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.Role;
-import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.person.RoleType;
+import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -73,7 +73,7 @@ public class EquivalenceAuthorizationFilter extends Filtro {
             Integer studentNumber = (Integer) serviceArgs[0];
             DegreeType degreeType = (DegreeType) serviceArgs[1];
 
-            Student student = getStudent(studentNumber, degreeType);
+            Registration student = getStudent(studentNumber, degreeType);
             if (student == null) {
                 return "errors.enrollment.equivalence.no.student.with.that.number.and.degreeType";
             }
@@ -136,7 +136,7 @@ public class EquivalenceAuthorizationFilter extends Filtro {
      * @param student
      * @return true/false
      */
-    private boolean isThisACoordinatorOfThisStudentsDegree(IUserView userView, Student student)
+    private boolean isThisACoordinatorOfThisStudentsDegree(IUserView userView, Registration student)
             throws ExcepcaoPersistencia {
         List executionDegreesOfThisCoordinator = getExecutionDegreesOfThisCoordinator(userView
                 .getUtilizador());
@@ -161,8 +161,8 @@ public class EquivalenceAuthorizationFilter extends Filtro {
      * @return IStudent
      * @throws ExcepcaoPersistencia
      */
-    private Student getStudent(Integer studentNumber, DegreeType degreeType) throws ExcepcaoPersistencia {
-        return Student.readStudentByNumberAndDegreeType(studentNumber, degreeType);
+    private Registration getStudent(Integer studentNumber, DegreeType degreeType) throws ExcepcaoPersistencia {
+        return Registration.readStudentByNumberAndDegreeType(studentNumber, degreeType);
     }
 
     /**
@@ -181,7 +181,7 @@ public class EquivalenceAuthorizationFilter extends Filtro {
      * @return true/false
      * @throws ExcepcaoPersistencia
      */
-    private boolean isThisStudentsDegreeTheOne(Student student) throws ExcepcaoPersistencia {
+    private boolean isThisStudentsDegreeTheOne(Registration student) throws ExcepcaoPersistencia {
         StudentCurricularPlan studentCurricularPlan = student.getActiveStudentCurricularPlan();
         return studentCurricularPlan.getDegreeCurricularPlan().getDegree().getSigla().equals(
                 DEGREE_ACRONYM);

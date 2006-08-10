@@ -7,9 +7,9 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGratuitySituation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGratuitySituationWithInfoPersonAndInfoExecutionDegree;
 import net.sourceforge.fenixedu.domain.GratuitySituation;
-import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
+import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 /**
@@ -22,7 +22,7 @@ public class UpdateAndReadGratuitySituationsByStudentNumber extends Service {
 
     public List<InfoGratuitySituation> run(Integer studentNumber) throws ExcepcaoPersistencia {
         
-        Student student = Student.readStudentByNumberAndDegreeType(studentNumber, DegreeType.MASTER_DEGREE);
+        Registration student = Registration.readStudentByNumberAndDegreeType(studentNumber, DegreeType.MASTER_DEGREE);
         List<StudentCurricularPlan> studentCurricularPlansList = student.getStudentCurricularPlans();
 
         List<InfoGratuitySituation> infoGratuitySituationsList = new ArrayList<InfoGratuitySituation>();

@@ -56,7 +56,7 @@ public class InfoShiftEnrollment extends DataTranferObject {
     private List infoExecutionDegreesList;
 
     /**
-     * Student enrolling
+     * Registration enrolling
      */
     private InfoStudent infoStudent;
     

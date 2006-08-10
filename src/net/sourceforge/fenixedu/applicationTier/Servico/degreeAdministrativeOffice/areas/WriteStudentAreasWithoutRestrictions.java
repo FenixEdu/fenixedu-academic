@@ -4,14 +4,14 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.domain.Branch;
-import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
+import net.sourceforge.fenixedu.domain.student.Registration;
 
 public class WriteStudentAreasWithoutRestrictions extends Service {
 
 	// student and degreeType used by filter
-	public void run(Student student, DegreeType degreeType, Integer specializationAreaID,
+	public void run(Registration student, DegreeType degreeType, Integer specializationAreaID,
 			Integer secundaryAreaID) throws FenixServiceException {
 
 		if (student == null) {

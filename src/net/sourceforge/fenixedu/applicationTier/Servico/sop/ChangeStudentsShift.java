@@ -9,7 +9,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.commons.SendMail;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Shift;
-import net.sourceforge.fenixedu.domain.Student;
+import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class ChangeStudentsShift extends Service {
@@ -29,10 +29,10 @@ public class ChangeStudentsShift extends Service {
         List<String> emptyList = new ArrayList<String>();
         List<String> toMails = new ArrayList<String>();
 
-        final List<Student> oldStudents = oldShift.getStudents();
-        final List<Student> newStudents = newShift.getStudents();
+        final List<Registration> oldStudents = oldShift.getStudents();
+        final List<Registration> newStudents = newShift.getStudents();
         while (!oldStudents.isEmpty()) {
-            final Student student = oldStudents.get(0);
+            final Registration student = oldStudents.get(0);
             if (!newStudents.contains(student)) {
                 newStudents.add(student);
 

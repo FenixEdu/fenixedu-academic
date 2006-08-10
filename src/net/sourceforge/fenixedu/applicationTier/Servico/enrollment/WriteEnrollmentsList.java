@@ -11,16 +11,16 @@ import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.EnrolmentInExtraCurricularCourse;
 import net.sourceforge.fenixedu.domain.EnrolmentInOptionalCurricularCourse;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
-import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseEnrollmentType;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentCondition;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
+import net.sourceforge.fenixedu.domain.student.Registration;
 
 public class WriteEnrollmentsList extends Service {
 
-	public void run(final Student student, DegreeType degreeType, ExecutionPeriod executionPeriod,
+	public void run(final Registration student, DegreeType degreeType, ExecutionPeriod executionPeriod,
 			List<String> curricularCourses, Map optionalEnrollments, IUserView userView)
 			throws FenixServiceException {
 

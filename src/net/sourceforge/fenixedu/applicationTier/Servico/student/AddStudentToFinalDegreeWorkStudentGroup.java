@@ -14,11 +14,11 @@ import net.sourceforge.fenixedu.domain.CurricularCourseScope;
 import net.sourceforge.fenixedu.domain.CurricularSemester;
 import net.sourceforge.fenixedu.domain.CurricularYear;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Group;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.GroupStudent;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Scheduleing;
+import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -32,7 +32,7 @@ public class AddStudentToFinalDegreeWorkStudentGroup extends Service {
     public boolean run(Integer groupOID, String username) throws ExcepcaoPersistencia,
             FenixServiceException {
         Group group = rootDomainObject.readGroupByOID(groupOID);
-        Student student = Student.readByUsername(username);
+        Registration student = Registration.readByUsername(username);
         if (group == null
                 || student == null
                 || group.getGroupStudents() == null
@@ -193,14 +193,14 @@ public class AddStudentToFinalDegreeWorkStudentGroup extends Service {
     }
 
     private class PREDICATE_FIND_GROUP_STUDENT_BY_STUDENT implements Predicate {
-        Student student = null;
+        Registration student = null;
 
         public boolean evaluate(Object arg0) {
             GroupStudent groupStudent = (GroupStudent) arg0;
             return student.getIdInternal().equals(groupStudent.getStudent().getIdInternal());
         }
 
-        public PREDICATE_FIND_GROUP_STUDENT_BY_STUDENT(Student student) {
+        public PREDICATE_FIND_GROUP_STUDENT_BY_STUDENT(Registration student) {
             super();
             this.student = student;
         }

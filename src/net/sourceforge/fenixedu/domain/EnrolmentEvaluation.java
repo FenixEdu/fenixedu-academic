@@ -10,6 +10,7 @@ import net.sourceforge.fenixedu.domain.curriculum.GradeFactory;
 import net.sourceforge.fenixedu.domain.curriculum.IGrade;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.util.EnrolmentEvaluationState;
 import net.sourceforge.fenixedu.util.FenixDigestUtils;
 import net.sourceforge.fenixedu.util.MarkType;
@@ -397,7 +398,7 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base implements Com
         super.setGrade((grade != null) ? grade.toUpperCase() : null);
     }
     
-    public Student getStudent() {
+    public Registration getStudent() {
         return this.getEnrolment().getStudentCurricularPlan().getStudent();
     }
     

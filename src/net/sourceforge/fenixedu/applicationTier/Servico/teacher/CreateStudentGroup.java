@@ -12,7 +12,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.Grouping;
 import net.sourceforge.fenixedu.domain.Shift;
-import net.sourceforge.fenixedu.domain.Student;
+import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 /**
@@ -28,7 +28,7 @@ public class CreateStudentGroup extends Service {
         List studentList = new ArrayList();
         for (final String studantUserName : studentUserNames) {
             Attends attend = grouping.getStudentAttend(studantUserName);
-            Student student = attend.getAluno();
+            Registration student = attend.getAluno();
             studentList.add(student);
         }
         return studentList;

@@ -1,4 +1,4 @@
-package net.sourceforge.fenixedu.domain;
+package net.sourceforge.fenixedu.domain.student;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -9,6 +9,31 @@ import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
+import net.sourceforge.fenixedu.domain.Attends;
+import net.sourceforge.fenixedu.domain.CurricularCourse;
+import net.sourceforge.fenixedu.domain.Enrolment;
+import net.sourceforge.fenixedu.domain.Evaluation;
+import net.sourceforge.fenixedu.domain.Exam;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.ExecutionDegree;
+import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.GratuitySituation;
+import net.sourceforge.fenixedu.domain.GratuityValues;
+import net.sourceforge.fenixedu.domain.GuideEntry;
+import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.Project;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.SchoolClass;
+import net.sourceforge.fenixedu.domain.Shift;
+import net.sourceforge.fenixedu.domain.SpecialSeasonCode;
+import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.StudentKind;
+import net.sourceforge.fenixedu.domain.Teacher;
+import net.sourceforge.fenixedu.domain.WrittenEvaluation;
+import net.sourceforge.fenixedu.domain.WrittenEvaluationEnrolment;
+import net.sourceforge.fenixedu.domain.WrittenTest;
+import net.sourceforge.fenixedu.domain.YearStudentSpecialSeasonCode;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentCondition;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
@@ -22,7 +47,6 @@ import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 import net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuideEntry;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest;
 import net.sourceforge.fenixedu.domain.space.OldRoom;
-import net.sourceforge.fenixedu.domain.student.StudentPersonalDataAuthorization;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.StudentCurricularPlanState;
 import net.sourceforge.fenixedu.domain.teacher.Advise;
@@ -38,7 +62,7 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.comparators.ReverseComparator;
 
-public class Student extends Student_Base {
+public class Registration extends Registration_Base {
 
 	private transient Double approvationRatio;
 
@@ -46,15 +70,15 @@ public class Student extends Student_Base {
 
 	private transient Integer approvedEnrollmentsNumber = 0;
 
-	public final static Comparator<Student> NUMBER_COMPARATOR = new BeanComparator("number");
+	public final static Comparator<Registration> NUMBER_COMPARATOR = new BeanComparator("number");
 
-	public Student() {
+	public Registration() {
 		super();
 		setRootDomainObject(RootDomainObject.getInstance());
 		this.setSpecialSeason(Boolean.FALSE);
 	}
 
-	public Student(Person person, Integer studentNumber, StudentKind studentKind, StudentState state,
+	public Registration(Person person, Integer studentNumber, StudentKind studentKind, StudentState state,
 			Boolean payedTuition, Boolean enrolmentForbidden, EntryPhase entryPhase,
 			DegreeType degreeType) {
 		this();
@@ -410,8 +434,8 @@ public class Student extends Student_Base {
 		return null;
 	}
 
-	public static Student readByUsername(String username) {
-		for (Student student : RootDomainObject.getInstance().getStudents()) {
+	public static Registration readByUsername(String username) {
+		for (Registration student : RootDomainObject.getInstance().getStudents()) {
 			if (student.getPerson() != null
 					&& student.getPerson().getUsername().equalsIgnoreCase(username)) {
 				return student;
@@ -420,8 +444,8 @@ public class Student extends Student_Base {
 		return null;
 	}
 
-	public static Student readStudentByNumberAndDegreeType(Integer number, DegreeType degreeType) {
-		for (Student student : RootDomainObject.getInstance().getStudents()) {
+	public static Registration readStudentByNumberAndDegreeType(Integer number, DegreeType degreeType) {
+		for (Registration student : RootDomainObject.getInstance().getStudents()) {
 			if (student.getNumber().equals(number) && student.getDegreeType().equals(degreeType)) {
 				return student;
 			}
@@ -429,14 +453,14 @@ public class Student extends Student_Base {
 		return null;
 	}
 
-	public static List<Student> readMasterDegreeStudentsByNameDocIDNumberIDTypeAndStudentNumber(
+	public static List<Registration> readMasterDegreeStudentsByNameDocIDNumberIDTypeAndStudentNumber(
 			String studentName, String docIdNumber, IDDocumentType idType, Integer studentNumber) {
 
-		final List<Student> students = new ArrayList();
+		final List<Registration> students = new ArrayList();
 		final String studentNameToMatch = (studentName == null) ? null : studentName.replaceAll("%",
 				".*").toLowerCase();
 
-		for (Student student : RootDomainObject.getInstance().getStudents()) {
+		for (Registration student : RootDomainObject.getInstance().getStudents()) {
 			Person person = student.getPerson();
 			if (student.getDegreeType().equals(DegreeType.MASTER_DEGREE)
 					&& ((studentNameToMatch != null && person.getName().toLowerCase().matches(
@@ -451,13 +475,13 @@ public class Student extends Student_Base {
 		return students;
 	}
 
-	public static List<Student> readAllStudentsBetweenNumbers(Integer fromNumber, Integer toNumber) {
+	public static List<Registration> readAllStudentsBetweenNumbers(Integer fromNumber, Integer toNumber) {
 		int fromNumberInt = fromNumber.intValue();
 		int toNumberInt = toNumber.intValue();
 
 		int studentNumberInt;
-		List<Student> students = new ArrayList();
-		for (Student student : RootDomainObject.getInstance().getStudents()) {
+		List<Registration> students = new ArrayList();
+		for (Registration student : RootDomainObject.getInstance().getStudents()) {
 			studentNumberInt = student.getNumber().intValue();
 			if (studentNumberInt >= fromNumberInt && studentNumberInt <= toNumberInt) {
 				students.add(student);
@@ -466,9 +490,9 @@ public class Student extends Student_Base {
 		return students;
 	}
 
-	public static List<Student> readStudentsByDegreeType(DegreeType degreeType) {
-		List<Student> students = new ArrayList();
-		for (Student student : RootDomainObject.getInstance().getStudents()) {
+	public static List<Registration> readStudentsByDegreeType(DegreeType degreeType) {
+		List<Registration> students = new ArrayList();
+		for (Registration student : RootDomainObject.getInstance().getStudents()) {
 			if (student.getDegreeType().equals(degreeType)) {
 				students.add(student);
 			}
@@ -478,7 +502,7 @@ public class Student extends Student_Base {
 
 	public static Integer generateStudentNumber(DegreeType degreeType) {
 		Integer number = Integer.valueOf(0);
-		List<Student> students = readStudentsByDegreeType(degreeType);
+		List<Registration> students = readStudentsByDegreeType(degreeType);
 		Collections.sort(students, new ReverseComparator(NUMBER_COMPARATOR));
 
 		if (!students.isEmpty()) {
@@ -590,16 +614,16 @@ public class Student extends Student_Base {
 		return result;
 	}
 
-	public StudentPersonalDataAuthorizationChoice getActualPersonalDataAuthorizationAnswer() {
-		for (final StudentPersonalDataAuthorization dataAuthorization : this.getStudentPersonalDataAuthorizationsSet()) {
-			if (dataAuthorization.getExecutionYear().getState().equals(PeriodState.CURRENT)) {
-				return dataAuthorization.getAnswer();
-			}
-		}
-		return null;
-	}
+    public StudentPersonalDataAuthorizationChoice getActualPersonalDataAuthorizationAnswer() {
+        for (final StudentPersonalDataAuthorization dataAuthorization : this.getStudentPersonalDataAuthorizationsSet()) {
+            if (dataAuthorization.getExecutionYear().getState().equals(PeriodState.CURRENT)) {
+                return dataAuthorization.getAnswer();
+            }
+        }
+        return null;
+    }
 	
-	// Special Season
+	//  Special Season 
 	
 	public SpecialSeasonCode getSpecialSeasonCodeByExecutionYear(ExecutionYear executionYear) {
 		for (YearStudentSpecialSeasonCode yearStudentSpecialSeasonCode : getYearStudentSpecialSeasonCodesSet()) {
@@ -777,6 +801,7 @@ public class Student extends Student_Base {
 		final Set<SchoolClass> result = new HashSet<SchoolClass>();
 		for (final Attends attends : getAssociatedAttendsSet()) {
 			final ExecutionCourse executionCourse = attends.getDisciplinaExecucao();
+			
 			if (executionCourse.getExecutionPeriod().getState().equals(PeriodState.CURRENT)) {
 				result.addAll(getSchoolClassesToEnrolBy(executionCourse));
 			}
@@ -840,5 +865,10 @@ public class Student extends Student_Base {
 			throw new DomainException("errors.student.already.enroled.in.shift");
 		}
 	}
+    
+    public boolean isActive(){
+        //FIXME: this sould not be hardcoded!!
+        return true;
+    }
 	
 }

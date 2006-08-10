@@ -4,7 +4,7 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.student;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
-import net.sourceforge.fenixedu.domain.Student;
+import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.StudentPersonalDataAuthorization;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.util.PeriodState;
@@ -17,7 +17,7 @@ import net.sourceforge.fenixedu.util.StudentPersonalDataAuthorizationChoice;
 public class ReadActualPersonalDataAuthorizationAnswer extends Service {
 
     public StudentPersonalDataAuthorizationChoice run(Integer studentID) throws ExcepcaoPersistencia {
-        final Student student = rootDomainObject.readStudentByOID(studentID);
+        final Registration student = rootDomainObject.readRegistrationByOID(studentID);
 
         for (final StudentPersonalDataAuthorization studentPersonalDataAuthorization :
                 student.getStudentPersonalDataAuthorizations()) {

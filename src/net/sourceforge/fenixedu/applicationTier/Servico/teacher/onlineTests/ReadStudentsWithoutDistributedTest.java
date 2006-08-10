@@ -14,8 +14,8 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentWithInfoPerson;
 import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.onlineTests.DistributedTest;
+import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 /**
@@ -28,7 +28,7 @@ public class ReadStudentsWithoutDistributedTest extends Service {
         final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseId);
         final List<Attends> attendList =executionCourse.getAttends();
         final DistributedTest distributedTest = rootDomainObject.readDistributedTestByOID(distributedTestId);
-        final Set<Student> students = distributedTest.findStudents();
+        final Set<Registration> students = distributedTest.findStudents();
         for (Attends attend : attendList) {
             if (!students.contains(attend.getAluno()))
                 infoStudentList.add(InfoStudentWithInfoPerson.newInfoFromDomain(attend.getAluno()));

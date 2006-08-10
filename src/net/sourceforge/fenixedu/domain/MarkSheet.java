@@ -8,6 +8,7 @@ import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.gradeSubmission.MarkSheetEnrolmentEvaluationBean;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.util.DateFormatUtil;
 import net.sourceforge.fenixedu.util.EnrolmentEvaluationState;
 import net.sourceforge.fenixedu.util.FenixDigestUtils;
@@ -402,7 +403,7 @@ public class MarkSheet extends MarkSheet_Base {
         return enrolmentEvaluations; 
     }
     
-    public EnrolmentEvaluation getEnrolmentEvaluationByStudent(Student student) {
+    public EnrolmentEvaluation getEnrolmentEvaluationByStudent(Registration student) {
         for (EnrolmentEvaluation enrolmentEvaluation : this.getEnrolmentEvaluationsSet()) {
             if(enrolmentEvaluation.getEnrolment().getStudentCurricularPlan().getStudent().equals(student)) {
                 return enrolmentEvaluation;

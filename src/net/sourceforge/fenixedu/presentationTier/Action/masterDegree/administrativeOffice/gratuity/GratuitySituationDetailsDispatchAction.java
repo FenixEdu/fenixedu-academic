@@ -44,7 +44,7 @@ public class GratuitySituationDetailsDispatchAction extends FenixDispatchAction 
         createGuideFromTransactionsForm.set("gratuitySituationId", new Integer(gratuitySituationId));
         createGuideFromTransactionsForm.set("studentId", new Integer(studentId));
 
-        //Read Student
+        //Read Registration
         InfoStudent infoStudent = null;
         Object argsStudent[] = { new Integer(studentId) };
         try {

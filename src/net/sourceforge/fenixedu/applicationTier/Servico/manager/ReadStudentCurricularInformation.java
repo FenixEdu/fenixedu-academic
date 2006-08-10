@@ -28,9 +28,9 @@ import net.sourceforge.fenixedu.domain.EnrolmentEvaluation;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
+import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -47,7 +47,7 @@ public class ReadStudentCurricularInformation extends Service {
 
         InfoStudent infoStudent = null;
 
-        Student student = Student.readStudentByNumberAndDegreeType(studentNumber, degreeType);
+        Registration student = Registration.readStudentByNumberAndDegreeType(studentNumber, degreeType);
         if(student != null) {
         	final List<StudentCurricularPlan> studentCurricularPlans = student.getStudentCurricularPlans(); 
 	        for (final Iterator iterator = studentCurricularPlans.iterator(); iterator.hasNext();) {
@@ -67,7 +67,7 @@ public class ReadStudentCurricularInformation extends Service {
         return infoStudentCurricularPlans;
     }
 
-    protected InfoStudent constructInfoStudent(final Student student) {
+    protected InfoStudent constructInfoStudent(final Registration student) {
         final InfoStudent infoStudent = InfoStudent.newInfoFromDomain(student);
         final InfoPerson infoPerson = new InfoPerson();
         final Person person = student.getPerson();

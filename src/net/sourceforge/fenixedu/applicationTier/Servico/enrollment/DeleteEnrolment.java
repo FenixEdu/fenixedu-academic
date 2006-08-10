@@ -7,11 +7,11 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Enrolment;
-import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.precedences.RestrictionByCurricularCourse;
 import net.sourceforge.fenixedu.domain.precedences.RestrictionHasEverBeenOrIsCurrentlyEnrolledInCurricularCourse;
+import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -24,7 +24,7 @@ import org.apache.commons.collections.Predicate;
 public class DeleteEnrolment extends Service {
 
     // some of these arguments may be null. they are only needed for filter
-    public void run(Integer executionDegreeId, Student student, Integer enrolmentID)
+    public void run(Integer executionDegreeId, Registration student, Integer enrolmentID)
             throws FenixServiceException, DomainException, ExcepcaoPersistencia {
 
         final StudentCurricularPlan studentCurricularPlan = student.getActiveStudentCurricularPlan();

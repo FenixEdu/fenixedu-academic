@@ -776,7 +776,6 @@ class net.sourceforge.fenixedu.domain.DegreeCurricularPlan extends net.sourcefor
     class net.sourceforge.fenixedu.domain.DegreeCurricularPlanLEAN extends net.sourceforge.fenixedu.domain.DegreeCurricularPlan {
     }
 
-
 class net.sourceforge.fenixedu.domain.DegreeInfo extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer keyDegree;
 	Integer keyExecutionYear;
@@ -2668,7 +2667,7 @@ class net.sourceforge.fenixedu.domain.StatusAssiduidade extends net.sourceforge.
 }
 
 
-class net.sourceforge.fenixedu.domain.Student extends net.sourceforge.fenixedu.domain.DomainObject {
+class net.sourceforge.fenixedu.domain.student.Registration extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer keyStudentKind;
 	Double entryGrade;
 	String istUniversity;
@@ -2696,8 +2695,13 @@ class net.sourceforge.fenixedu.domain.Student extends net.sourceforge.fenixedu.d
 	Integer keyAssociatedTutor;
 	Integer keyPersonalDataUseInquiryAnswers;
 	Integer keyPrecedentDegreeInformation;
+	Integer keyStudent;
 }
 
+class net.sourceforge.fenixedu.domain.student.Student extends net.sourceforge.fenixedu.domain.DomainObject {
+	Integer keyPerson;
+	Integer number;
+}
 
 class net.sourceforge.fenixedu.domain.gesdis.StudentCourseReport extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer keyCurricularCourse;
@@ -2915,6 +2919,7 @@ class net.sourceforge.fenixedu.domain.organizationalStructure.Party extends net.
 		Integer keyPais;
 		Integer keyCountryOfBirth;
 		Integer keyCountryOfResidence;		
+		Integer keyStudent;
 
 	    Gender gender;
 		String documentIdNumber;
@@ -3387,6 +3392,7 @@ class net.sourceforge.fenixedu.domain.research.result.Result extends net.sourcef
 		Integer keyPublisher;
 		Integer keyOrganization;
 	}
+
 		class net.sourceforge.fenixedu.domain.research.result.publication.Book extends net.sourceforge.fenixedu.domain.research.result.publication.ResultPublication {
 			String address;
 			String volume;
@@ -3397,7 +3403,7 @@ class net.sourceforge.fenixedu.domain.research.result.Result extends net.sourcef
 			//Integer keyCountry;
 			String language;
 			ScopeType scope;
-		}
+	}
 		class net.sourceforge.fenixedu.domain.research.result.publication.BookPart extends net.sourceforge.fenixedu.domain.research.result.publication.ResultPublication {
 			BookPartType bookPartType;
 			String chapter;
@@ -3424,15 +3430,15 @@ class net.sourceforge.fenixedu.domain.research.result.Result extends net.sourcef
 			Integer keyEvent;
 		}
 			class net.sourceforge.fenixedu.domain.research.result.publication.Inproceedings extends net.sourceforge.fenixedu.domain.research.result.publication.ConferenceArticles {
-				String bookTitle;
-				String address;
-				Integer firstPage;
-				Integer lastPage;
-				String language;
-			}
+			String bookTitle;
+			String address;
+			Integer firstPage;
+			Integer lastPage;
+			String language;
+		}
 			class net.sourceforge.fenixedu.domain.research.result.publication.Proceedings extends net.sourceforge.fenixedu.domain.research.result.publication.ConferenceArticles {
-				String address;
-			}
+			String address;
+		}
 		class net.sourceforge.fenixedu.domain.research.result.publication.Thesis extends net.sourceforge.fenixedu.domain.research.result.publication.ResultPublication {
 			ThesisType thesisType;
 			//Integer keySchool; use keyOrganization
@@ -3789,7 +3795,7 @@ relation AttendsStudent {
 	net.sourceforge.fenixedu.domain.Attends playsRole associatedAttends {
 		multiplicity *;
 	}
-	net.sourceforge.fenixedu.domain.Student playsRole aluno;
+	net.sourceforge.fenixedu.domain.student.Registration playsRole aluno;
 }
 
 relation AttendsWeeklyWorkLoad {
@@ -3912,7 +3918,7 @@ relation CandidacyStudent {
     net.sourceforge.fenixedu.domain.Seminaries.SeminaryCandidacy playsRole associatedCandidancies {
         multiplicity *;
     }
-    net.sourceforge.fenixedu.domain.Student playsRole student;
+    net.sourceforge.fenixedu.domain.student.Registration playsRole student;
 }
 
 relation CandidateEnrolmentCurricularCourse {
@@ -3993,6 +3999,7 @@ relation CurricularCourseCourseEquivalency {
     net.sourceforge.fenixedu.domain.CurricularCourse playsRole curricularCourse;
 }
 
+
 relation CurricularCourseCurricularCourseEquivalence {
 	net.sourceforge.fenixedu.domain.CurricularCourseEquivalence playsRole curricularCourseEquivalences {
 		multiplicity *;
@@ -4016,7 +4023,7 @@ relation OldCurricularCourseCurricularCourseEquivalence {
 	}
 	net.sourceforge.fenixedu.domain.CurricularCourse playsRole oldCurricularCourses {
 		multiplicity *;
-	}
+}
 }
 
 
@@ -4218,6 +4225,7 @@ relation DegreeCurricularPlanCurricularCourseEquivalence {
 	}
 }
 
+
 relation DegreeCurricularPlanDegreeModule {
     net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup playsRole root;
     
@@ -4292,7 +4300,7 @@ relation DelegateStudent {
 	net.sourceforge.fenixedu.domain.student.Delegate playsRole delegate {
 		multiplicity *;
 	}
-	net.sourceforge.fenixedu.domain.Student playsRole student;
+	net.sourceforge.fenixedu.domain.student.Registration playsRole student;
 }
 
 
@@ -4359,7 +4367,7 @@ relation DislocatedStudentDistrict {
 
 relation DislocatedStudentStudent {
 	net.sourceforge.fenixedu.domain.DislocatedStudent playsRole dislocatedStudent;
-	net.sourceforge.fenixedu.domain.Student playsRole student;
+	net.sourceforge.fenixedu.domain.student.Registration playsRole student;
 }
 
 relation DistributedTestAdvisories {
@@ -4594,7 +4602,7 @@ relation WrittenEvaluationEnrolmentStudent {
 	net.sourceforge.fenixedu.domain.WrittenEvaluationEnrolment playsRole writtenEvaluationEnrolments {
 		multiplicity *;
 	}
-	net.sourceforge.fenixedu.domain.Student playsRole student;
+	net.sourceforge.fenixedu.domain.student.Registration playsRole student;
 }
 
 relation ExecutionCourseAttends {
@@ -4928,7 +4936,7 @@ relation ForumSubscriptionForum {
 
 relation GaugingTestResultStudent {
     net.sourceforge.fenixedu.domain.gaugingTests.physics.GaugingTestResult playsRole associatedGaugingTestResult;
-    net.sourceforge.fenixedu.domain.Student playsRole student;
+    net.sourceforge.fenixedu.domain.student.Registration playsRole student;
 }
 
 relation GoalExecutionCourse {
@@ -5173,7 +5181,7 @@ relation GroupStudentStudent {
 	net.sourceforge.fenixedu.domain.finalDegreeWork.GroupStudent playsRole associatedGroupStudents {
 		multiplicity *;
 	}
-	net.sourceforge.fenixedu.domain.Student playsRole student;
+	net.sourceforge.fenixedu.domain.student.Registration playsRole student;
 }
 
 // remove
@@ -5314,7 +5322,7 @@ relation InquiriesRegistryStudent {
 	net.sourceforge.fenixedu.domain.inquiries.InquiriesRegistry playsRole associatedInquiriesRegistries {
 		multiplicity *;
 	}
-	net.sourceforge.fenixedu.domain.Student playsRole student;
+	net.sourceforge.fenixedu.domain.student.Registration playsRole student;
 }
 
 
@@ -5376,7 +5384,7 @@ relation InsuranceTransactionStudent {
 	net.sourceforge.fenixedu.domain.transactions.InsuranceTransaction playsRole insuranceTransactions {
 		multiplicity *;
 	}
-	net.sourceforge.fenixedu.domain.Student playsRole student;
+	net.sourceforge.fenixedu.domain.student.Registration playsRole student;
 }
 
 relation ItemFileItem {
@@ -5696,7 +5704,7 @@ relation PersonAdvisory {
 
 relation PersonalDataUseInquiryAnswersStudent {
     net.sourceforge.fenixedu.domain.student.PersonalDataUseInquiryAnswers playsRole personalDataUseInquiryAnswers;
-    net.sourceforge.fenixedu.domain.Student playsRole student;
+    net.sourceforge.fenixedu.domain.student.Registration playsRole student;
 }
 
 
@@ -5761,7 +5769,7 @@ relation PrecedenceRestriction {
 
 relation PrecedentDegreeInformationStudent {
 	net.sourceforge.fenixedu.domain.student.PrecedentDegreeInformation playsRole precedentDegreeInformation;
-	net.sourceforge.fenixedu.domain.Student playsRole student;
+	net.sourceforge.fenixedu.domain.student.Registration playsRole student;
 }
 
 relation ProjectGrouping {
@@ -5979,7 +5987,7 @@ relation ResidenceCandidaciesStudent {
     net.sourceforge.fenixedu.domain.student.ResidenceCandidacies playsRole associatedResidenceCandidacies {
         multiplicity *;
     }
-    net.sourceforge.fenixedu.domain.Student playsRole student;
+    net.sourceforge.fenixedu.domain.student.Registration playsRole student;
 }
 
 relation RoomLesson {
@@ -6085,7 +6093,7 @@ relation SentSmsPerson {
 
 relation SeniorStudent {
     net.sourceforge.fenixedu.domain.student.Senior playsRole senior;
-    net.sourceforge.fenixedu.domain.Student playsRole student;
+    net.sourceforge.fenixedu.domain.student.Registration playsRole student;
 }
 
 
@@ -6118,7 +6126,7 @@ relation ShiftStudent {
 	net.sourceforge.fenixedu.domain.Shift playsRole shifts {
 		multiplicity *;
 	}
-	net.sourceforge.fenixedu.domain.Student playsRole students {
+	net.sourceforge.fenixedu.domain.student.Registration playsRole students {
 		multiplicity *;
 	}
 }
@@ -6263,12 +6271,24 @@ relation StudentCurricularPlanNotNeedToEnrollInCurricularCourse {
     }
 }
 
+relation StudentPerson {
+    net.sourceforge.fenixedu.domain.student.Student playsRole student;
+    net.sourceforge.fenixedu.domain.Person playsRole person;
+}
+
+relation RegistrationStudent {
+    net.sourceforge.fenixedu.domain.student.Registration playsRole registrations {
+        multiplicity *;
+    }
+    net.sourceforge.fenixedu.domain.student.Student playsRole student;
+}
+
 relation StudentCurricularPlanStudent {
     net.sourceforge.fenixedu.domain.StudentCurricularPlan playsRole studentCurricularPlans {
         multiplicity *;
     }
 
-    net.sourceforge.fenixedu.domain.Student playsRole student;
+    net.sourceforge.fenixedu.domain.student.Registration playsRole student;
 }
 
 relation StudentDistributedTestLogs {
@@ -6282,7 +6302,7 @@ relation StudentEnrolmentLog {
 	net.sourceforge.fenixedu.domain.log.EnrolmentLog playsRole enrolmentLogs {
 		multiplicity *;
 	}
-	net.sourceforge.fenixedu.domain.Student playsRole student;
+	net.sourceforge.fenixedu.domain.student.Registration playsRole student;
 }
 
 relation ExecutionPeriodEnrolmentLog {
@@ -6293,7 +6313,7 @@ relation ExecutionPeriodEnrolmentLog {
 }
 
 relation StudentExecutionYear {
-    net.sourceforge.fenixedu.domain.Student playsRole students {
+    net.sourceforge.fenixedu.domain.student.Registration playsRole students {
         multiplicity *;
     }
 
@@ -6315,8 +6335,8 @@ relation StudentGroupBelongsToGrouping {
 	net.sourceforge.fenixedu.domain.Grouping playsRole grouping;
 }
 
-relation StudentPerson {
-    net.sourceforge.fenixedu.domain.Student playsRole students {
+relation RegistrationPerson {
+    net.sourceforge.fenixedu.domain.student.Registration playsRole students {
         multiplicity *;
     }
     
@@ -6327,11 +6347,11 @@ relation StudentSecretaryEnrolmentStudent {
 	net.sourceforge.fenixedu.domain.SecretaryEnrolmentStudent playsRole secretaryEnrolmentStudents {
 		multiplicity *;
 	}
-	net.sourceforge.fenixedu.domain.Student playsRole student;
+	net.sourceforge.fenixedu.domain.student.Registration playsRole student;
 }
 
 relation StudentStudentKind {
-	net.sourceforge.fenixedu.domain.Student playsRole students {
+	net.sourceforge.fenixedu.domain.student.Registration playsRole students {
 		multiplicity *;
 	}
 	net.sourceforge.fenixedu.domain.StudentKind playsRole studentKind;
@@ -6348,14 +6368,14 @@ relation StudentTestsQuestions {
     net.sourceforge.fenixedu.domain.onlineTests.StudentTestQuestion playsRole studentTestsQuestions {
         multiplicity *;
     }
-    net.sourceforge.fenixedu.domain.Student playsRole student;
+    net.sourceforge.fenixedu.domain.student.Registration playsRole student;
 }
 
 relation StudentTestsLogs {
     net.sourceforge.fenixedu.domain.onlineTests.StudentTestLog playsRole studentTestsLogs {
         multiplicity *;
     }
-    net.sourceforge.fenixedu.domain.Student playsRole student;
+    net.sourceforge.fenixedu.domain.student.Registration playsRole student;
 }
 
 relation TeachingCareerCategory {
@@ -6377,7 +6397,7 @@ relation TeacherDegreeFinalProjectStudentStudent {
     net.sourceforge.fenixedu.domain.degree.finalProject.TeacherDegreeFinalProjectStudent playsRole teacherDegreeFinalProjectStudent {
         multiplicity *;
     }
-    net.sourceforge.fenixedu.domain.Student playsRole student;
+    net.sourceforge.fenixedu.domain.student.Registration playsRole student;
 }
 
 
@@ -6491,7 +6511,7 @@ relation TransactionPersonAccount {
 
 relation TutorStudent {
     net.sourceforge.fenixedu.domain.Tutor playsRole associatedTutor;
-    net.sourceforge.fenixedu.domain.Student playsRole student;
+    net.sourceforge.fenixedu.domain.student.Registration playsRole student;
 }
 
 
@@ -6704,7 +6724,7 @@ relation StudentPersonalDataAuthorizationStudent {
     net.sourceforge.fenixedu.domain.student.StudentPersonalDataAuthorization playsRole studentPersonalDataAuthorizations {
     	multiplicity *;
     }
-    net.sourceforge.fenixedu.domain.Student playsRole student;
+    net.sourceforge.fenixedu.domain.student.Registration playsRole student;
 }
 
 relation StudentPersonalDataAuthorizationExecutionYear {
@@ -6911,7 +6931,7 @@ relation AdviseStudent {
 	net.sourceforge.fenixedu.domain.teacher.Advise playsRole advises {
 		multiplicity*;
 	}
-	net.sourceforge.fenixedu.domain.Student playsRole student;
+	net.sourceforge.fenixedu.domain.student.Registration playsRole student;
 }
 
 relation AdviseStartPeriod {
@@ -8038,7 +8058,7 @@ relation RootDomainObjectSchedule {
 
 relation RootDomainObjectStudent {
 	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
-	net.sourceforge.fenixedu.domain.Student playsRole students {
+	net.sourceforge.fenixedu.domain.student.Registration playsRole students {
 		multiplicity *;
 	}
 }
@@ -9520,7 +9540,7 @@ relation RootDomainObjectSpecialSeasonCode {
 }
 
 relation YearStudentSpecialSeasonCodeStudent {
-	net.sourceforge.fenixedu.domain.Student playsRole student;
+	net.sourceforge.fenixedu.domain.student.Registration playsRole student;
 	net.sourceforge.fenixedu.domain.YearStudentSpecialSeasonCode playsRole yearStudentSpecialSeasonCodes {
 		multiplicity *;
 	}

@@ -4,13 +4,13 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.enrollment.shift.ShiftEnrollmentErrorReport;
 import net.sourceforge.fenixedu.domain.Shift;
-import net.sourceforge.fenixedu.domain.Student;
+import net.sourceforge.fenixedu.domain.student.Registration;
 
 public class EnrollStudentInShifts extends Service {
 
     public class StudentNotFoundServiceException extends FenixServiceException {}
 
-    public ShiftEnrollmentErrorReport run(final Student student, final Integer shiftId) throws FenixServiceException {
+    public ShiftEnrollmentErrorReport run(final Registration student, final Integer shiftId) throws FenixServiceException {
     	
         final ShiftEnrollmentErrorReport errorReport = new ShiftEnrollmentErrorReport();
 
@@ -30,7 +30,7 @@ public class EnrollStudentInShifts extends Service {
         final Shift shiftFromStudent = findShiftOfSameTypeForSameExecutionCourse(student, selectedShift);
         
         if (selectedShift != shiftFromStudent) {
-            //Student is not yet enroled, so let's reserve the shift...
+            //Registration is not yet enroled, so let's reserve the shift...
             if (selectedShift.reserveForStudent(student)) {
                 if (shiftFromStudent != null) {
                     shiftFromStudent.removeStudents(student);
@@ -43,7 +43,7 @@ public class EnrollStudentInShifts extends Service {
         return errorReport;
     }
 
-    private Shift findShiftOfSameTypeForSameExecutionCourse(final Student student, final Shift shift) {
+    private Shift findShiftOfSameTypeForSameExecutionCourse(final Registration student, final Shift shift) {
 		for (final Shift shiftFromStudent : student.getShifts()) {
 			if (shiftFromStudent.getTipo() == shift.getTipo()
 					&& shiftFromStudent.getDisciplinaExecucao() == shift.getDisciplinaExecucao()) {

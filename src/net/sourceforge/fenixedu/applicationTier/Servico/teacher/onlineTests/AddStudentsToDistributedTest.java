@@ -17,11 +17,11 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgume
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
 import net.sourceforge.fenixedu.domain.Advisory;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.onlineTests.DistributedTest;
 import net.sourceforge.fenixedu.domain.onlineTests.DistributedTestAdvisory;
 import net.sourceforge.fenixedu.domain.onlineTests.Question;
 import net.sourceforge.fenixedu.domain.onlineTests.StudentTestQuestion;
+import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.util.tests.TestType;
 
@@ -48,7 +48,7 @@ public class AddStudentsToDistributedTest extends Service {
             questionList.addAll(studentTestQuestionExample.getQuestion().getMetadata().getVisibleQuestions());
 
             for (int j = 0; j < infoStudentList.size(); j++) {
-                Student student = rootDomainObject.readStudentByOID(
+                Registration student = rootDomainObject.readRegistrationByOID(
                         ((InfoStudent) infoStudentList.get(j)).getIdInternal());
                 if (StudentTestQuestion.findStudentTestQuestions(student, distributedTest).isEmpty()) {
                     StudentTestQuestion studentTestQuestion = new StudentTestQuestion();

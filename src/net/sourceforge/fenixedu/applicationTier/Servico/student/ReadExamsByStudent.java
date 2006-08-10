@@ -18,8 +18,8 @@ import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.Evaluation;
 import net.sourceforge.fenixedu.domain.Exam;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.WrittenEvaluationEnrolment;
+import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -39,7 +39,7 @@ public class ReadExamsByStudent extends Service {
         List infoExamsToEnroll = new ArrayList();
         List infoWrittenEvaluationEnrolmentList = new ArrayList();
 
-        Student student = Student.readByUsername(username);
+        Registration student = Registration.readByUsername(username);
 
         if (student != null) {
             List examsStudentRooms = student.getWrittenEvaluationEnrolments();

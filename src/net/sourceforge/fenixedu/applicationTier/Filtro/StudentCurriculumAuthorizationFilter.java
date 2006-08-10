@@ -10,7 +10,6 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFi
 import net.sourceforge.fenixedu.domain.Coordinator;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.Role;
-import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
@@ -18,6 +17,7 @@ import net.sourceforge.fenixedu.domain.finalDegreeWork.Group;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.GroupProposal;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal;
 import net.sourceforge.fenixedu.domain.person.RoleType;
+import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -102,7 +102,7 @@ public class StudentCurriculumAuthorizationFilter extends Filtro {
         }
 
         try {
-            Student student = studentCurricularPlan.getStudent();
+            Registration student = studentCurricularPlan.getStudent();
 
             Group group = student.findFinalDegreeWorkGroupForCurrentExecutionYear();
             if (group != null) {
@@ -271,7 +271,7 @@ public class StudentCurriculumAuthorizationFilter extends Filtro {
         return "noAuthorization";
     }
 
-    private boolean verifyStudentTutor(Teacher teacher, Student student) throws ExcepcaoPersistencia {
+    private boolean verifyStudentTutor(Teacher teacher, Registration student) throws ExcepcaoPersistencia {
         if (student.getAssociatedTutor() == null) {
             return false;
         }

@@ -9,11 +9,11 @@ import java.util.Collections;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
-import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.User;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
+import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.StudentType;
 
 /**
@@ -113,10 +113,10 @@ public class UsernameUtils extends FenixUtil {
                 throw new DomainException("error.person.addingInvalidRole", RoleType.EMPLOYEE.getName());
             }
         } else if (roleType.equals(RoleType.FIRST_TIME_STUDENT)) {
-            Student student = person.getStudentByType(DegreeType.DEGREE);
+            Registration student = person.getStudentByType(DegreeType.DEGREE);
             return "L" + student.getNumber();
         } else if (roleType.equals(RoleType.STUDENT)) {
-            Student student = person.getStudentByType(DegreeType.MASTER_DEGREE);            
+            Registration student = person.getStudentByType(DegreeType.MASTER_DEGREE);            
             if (student != null) {
                 StudentType studentType = student.getStudentKind().getStudentType();
                 if (studentType.equals(StudentType.NORMAL)) {
@@ -150,7 +150,7 @@ public class UsernameUtils extends FenixUtil {
                 || roleType.equals(RoleType.INSTITUCIONAL_PROJECTS_MANAGER)) {
             return "G" + person.getIdInternal();
         } else if (roleType.equals(RoleType.ALUMNI)) {
-            Student student = person.getStudentByType(DegreeType.DEGREE);
+            Registration student = person.getStudentByType(DegreeType.DEGREE);
             if (student != null) {
                 return "L" + student.getNumber();
             }

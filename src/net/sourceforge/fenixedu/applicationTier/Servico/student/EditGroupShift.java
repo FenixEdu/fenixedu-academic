@@ -23,8 +23,8 @@ import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Grouping;
 import net.sourceforge.fenixedu.domain.Shift;
-import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.StudentGroup;
+import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 import org.apache.struts.util.MessageResources;
@@ -59,7 +59,7 @@ public class EditGroupShift extends Service {
             throw new InvalidStudentNumberServiceException();
         }
 
-        final Student student = Student.readByUsername(username);
+        final Registration student = Registration.readByUsername(username);
 
         IGroupEnrolmentStrategyFactory enrolmentGroupPolicyStrategyFactory = GroupEnrolmentStrategyFactory
                 .getInstance();
@@ -85,7 +85,7 @@ public class EditGroupShift extends Service {
         return true;
     }
 
-    private boolean checkStudentInStudentGroup(Student student, StudentGroup studentGroup)
+    private boolean checkStudentInStudentGroup(Registration student, StudentGroup studentGroup)
             throws FenixServiceException {
         boolean found = false;
         List studentGroupAttends = studentGroup.getAttends();
@@ -100,7 +100,7 @@ public class EditGroupShift extends Service {
         return found;
     }
 
-    private void informStudents(final StudentGroup studentGroup, final Student student,
+    private void informStudents(final StudentGroup studentGroup, final Registration student,
             final Grouping grouping) {
         final List<String> emails = new ArrayList<String>();
         for (final Attends attends : studentGroup.getAttends()) {

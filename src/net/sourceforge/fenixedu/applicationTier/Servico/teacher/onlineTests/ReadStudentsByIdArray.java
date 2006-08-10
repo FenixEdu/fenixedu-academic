@@ -14,7 +14,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
 import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Shift;
-import net.sourceforge.fenixedu.domain.Student;
+import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 import org.apache.struts.util.LabelValueBean;
@@ -43,7 +43,7 @@ public class ReadStudentsByIdArray extends Service {
         for (LabelValueBean lvb : (ArrayList<LabelValueBean>) lavelValueBeanList) {
             if (!lvb.getLabel().equals(" (Ficha Fechada)")) {
                 Integer number = new Integer(lvb.getValue());
-                studentList.add(InfoStudent.newInfoFromDomain(Student.readAllStudentsBetweenNumbers(
+                studentList.add(InfoStudent.newInfoFromDomain(Registration.readAllStudentsBetweenNumbers(
                         number, number).get(0)));
             }
         }
@@ -60,8 +60,8 @@ public class ReadStudentsByIdArray extends Service {
                 continue;
             }
             Shift shift = rootDomainObject.readShiftByOID(new Integer(shifts[i]));
-            List<Student> studentList = shift.getStudents();
-            for (Student student : studentList) {
+            List<Registration> studentList = shift.getStudents();
+            for (Registration student : studentList) {
                 InfoStudent infoStudent = InfoStudent.newInfoFromDomain(student);
                 if (!infoStudentList.contains(infoStudent))
                     infoStudentList.add(infoStudent);
@@ -86,7 +86,7 @@ public class ReadStudentsByIdArray extends Service {
                 break;
             }
             InfoStudent infoStudent = InfoStudent.newInfoFromDomain(rootDomainObject
-                    .readStudentByOID(new Integer(students[i])));
+                    .readRegistrationByOID(new Integer(students[i])));
             if (!studentsList.contains(infoStudent))
                 studentsList.add(infoStudent);
 

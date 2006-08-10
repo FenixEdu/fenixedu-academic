@@ -15,8 +15,8 @@ package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administra
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentWithInfoPerson;
-import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
+import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class ReadStudentByNumberAndType extends Service {
@@ -32,7 +32,7 @@ public class ReadStudentByNumberAndType extends Service {
         // saber como é feita de facto a distinção
         // dos aluno, referente ao tipo, a partir da página de login.
         // ////////////////////////////////////////////////////////////////////////////////////////////////////////
-        Student student = Student.readStudentByNumberAndDegreeType(number, degreeType);
+        Registration student = Registration.readStudentByNumberAndDegreeType(number, degreeType);
 
         if (student != null) {
             infoStudent = InfoStudentWithInfoPerson.newInfoFromDomain(student);

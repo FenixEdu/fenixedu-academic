@@ -6,7 +6,7 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
 import net.sourceforge.fenixedu.domain.Shift;
-import net.sourceforge.fenixedu.domain.Student;
+import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class ReadStudentsByShiftID extends Service {
@@ -14,8 +14,8 @@ public class ReadStudentsByShiftID extends Service {
     public List run(final Integer executionCourseID, final Integer shiftID) throws ExcepcaoPersistencia {
         final List infoStudents = new LinkedList();
         final Shift shift = rootDomainObject.readShiftByOID(shiftID);
-        final List<Student> students = shift.getStudents();
-        for (final Student student : students) {
+        final List<Registration> students = shift.getStudents();
+        for (final Registration student : students) {
             infoStudents.add(InfoStudent.newInfoFromDomain(student));
         }
 

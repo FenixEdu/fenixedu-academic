@@ -2,9 +2,9 @@ package net.sourceforge.fenixedu.domain.degree.finalProject;
 
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
-import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.credits.event.ICreditsEventOriginator;
+import net.sourceforge.fenixedu.domain.student.Registration;
 
 public class TeacherDegreeFinalProjectStudent extends TeacherDegreeFinalProjectStudent_Base implements
         ICreditsEventOriginator {
@@ -14,7 +14,7 @@ public class TeacherDegreeFinalProjectStudent extends TeacherDegreeFinalProjectS
     }
 
     public TeacherDegreeFinalProjectStudent(ExecutionPeriod executionPeriod, Teacher teacher,
-            Student student) {
+            Registration student) {
     	this();
         setExecutionPeriod(executionPeriod);
         setTeacher(teacher);

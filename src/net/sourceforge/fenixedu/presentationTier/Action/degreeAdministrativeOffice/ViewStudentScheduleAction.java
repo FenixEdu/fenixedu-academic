@@ -5,7 +5,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.domain.Student;
+import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 
@@ -23,7 +23,7 @@ public class ViewStudentScheduleAction extends FenixAction {
 			HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
 			FenixServiceException {
 
-		final Object[] args = { Student.readByUsername(request.getParameter("userName")) };
+		final Object[] args = { Registration.readByUsername(request.getParameter("userName")) };
 		request.setAttribute("infoLessons", ServiceUtils.executeService(getUserView(request),
 				"ReadStudentTimeTable", args));
 

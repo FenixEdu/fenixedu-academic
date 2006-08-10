@@ -11,7 +11,7 @@ import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Shift;
-import net.sourceforge.fenixedu.domain.Student;
+import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -57,7 +57,7 @@ public class TransferCurricularCourse extends Service {
             throws ExcepcaoPersistencia {
         for (Attends attend : sourceExecutionCourse.getAttends()) {
             Enrolment enrollment = attend.getEnrolment();
-            final Student student = attend.getAluno();
+            final Registration student = attend.getAluno();
             if (enrollment != null) {
                 CurricularCourse associatedCurricularCourse = attend.getEnrolment()
                         .getCurricularCourse();
@@ -92,9 +92,9 @@ public class TransferCurricularCourse extends Service {
         List<Shift> shifts = sourceExecutionCourse.getAssociatedShifts();
 
         for (Shift shift : shifts) {
-            Iterator<Student> iter = shift.getStudentsIterator();
+            Iterator<Registration> iter = shift.getStudentsIterator();
             while (iter.hasNext()) {
-                Student student = iter.next();
+                Registration student = iter.next();
                 Attends attend = sourceExecutionCourse.getAttendsByStudent(student);
                 
                 if (attend.getEnrolment() != null && attend.getEnrolment().getCurricularCourse() == curricularCourse) {

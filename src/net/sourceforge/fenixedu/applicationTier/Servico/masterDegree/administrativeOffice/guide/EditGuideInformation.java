@@ -23,8 +23,8 @@ import net.sourceforge.fenixedu.domain.GuideSituation;
 import net.sourceforge.fenixedu.domain.GuideState;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.PersonAccount;
-import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
+import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.transactions.GratuityTransaction;
 import net.sourceforge.fenixedu.domain.transactions.InsuranceTransaction;
 import net.sourceforge.fenixedu.domain.transactions.PaymentTransaction;
@@ -165,7 +165,7 @@ public class EditGuideInformation extends Service {
                     guideEntry.setGuide(newGuideVersion);
 
                     Person studentPerson = guide.getPerson();
-                    Student student = Student.readByUsername(studentPerson.getUsername());
+                    Registration student = Registration.readByUsername(studentPerson.getUsername());
                     ExecutionDegree executionDegree = guide.getExecutionDegree();
 
                     // Write Gratuity Transaction

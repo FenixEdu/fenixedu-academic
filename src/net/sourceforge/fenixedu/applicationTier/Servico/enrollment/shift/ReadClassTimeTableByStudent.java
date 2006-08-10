@@ -10,11 +10,11 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Lesson;
 import net.sourceforge.fenixedu.domain.SchoolClass;
 import net.sourceforge.fenixedu.domain.Shift;
-import net.sourceforge.fenixedu.domain.Student;
+import net.sourceforge.fenixedu.domain.student.Registration;
 
 public class ReadClassTimeTableByStudent extends Service {
 
-	public List<InfoLesson> run(final Student student, final SchoolClass schoolClass,
+	public List<InfoLesson> run(final Registration student, final SchoolClass schoolClass,
 			final ExecutionCourse executionCourse) throws FenixServiceException {
 
 		if (student == null) {
@@ -41,7 +41,7 @@ public class ReadClassTimeTableByStudent extends Service {
 		for (final Shift shift : shifts) {
 			for (final Lesson lesson : shift.getAssociatedLessonsSet()) {
 				result.add(InfoLesson.newInfoFromDomain(lesson));
-			}
+		}
 		}
 
 		return result;

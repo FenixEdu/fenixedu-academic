@@ -9,6 +9,7 @@ import net.sourceforge.fenixedu.domain.curriculum.EnrollmentCondition;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
 import net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.util.DateFormatUtil;
 import net.sourceforge.fenixedu.util.EnrolmentEvaluationState;
 
@@ -47,7 +48,7 @@ public class EnrolmentTest extends DomainTestBase {
 	private ExecutionPeriod currentExecutionPeriod = null;
 	private EnrollmentCondition enrolmentCondition = null;
 	private String createdBy = null;
-	private Student thisStudent = null;
+	private Registration thisStudent = null;
 	
 	private Enrolment enrolmentToInitializeForAnotherExecutionPeriod = null;
 	private ExecutionCourse executionCourseToEnrollWithAttendsForThisStudent = null;
@@ -86,7 +87,7 @@ public class EnrolmentTest extends DomainTestBase {
 	private Enrolment enrolmentToImprove = null;
 	private CurricularCourse curricularCourseToImprove = null;
 	private ExecutionCourse executionCourseToEnrollImprovement = null;
-	private Student studentToImprove = null;
+	private Registration studentToImprove = null;
 	private ExecutionPeriod executionPeriodForImprovement = null;
 	private Employee someEmployee = null;
     
@@ -99,7 +100,7 @@ public class EnrolmentTest extends DomainTestBase {
 		enrolmentToImprove = new Enrolment();
 		curricularCourseToImprove = new CurricularCourse();
 		executionCourseToEnrollImprovement = new ExecutionCourse();
-		studentToImprove = new Student();
+		studentToImprove = new Registration();
 		executionPeriodForImprovement = new ExecutionPeriod();
 //		someEmployee = new Employee();
 		
@@ -125,8 +126,8 @@ public class EnrolmentTest extends DomainTestBase {
 		executionCourseToUnEnrollImprovement = new ExecutionCourse();
 		
 		StudentCurricularPlan scp = new StudentCurricularPlan();
-		Student student = new Student();
-		Student otherStudent = new Student();
+		Registration student = new Registration();
+		Registration otherStudent = new Registration();
 		CurricularCourse cc = new CurricularCourse();
 		ExecutionCourse ec1 = new ExecutionCourse();
 		ExecutionPeriod ep1 = new ExecutionPeriod();
@@ -343,8 +344,8 @@ public class EnrolmentTest extends DomainTestBase {
 	private void setUpForInitializeAsNewCase() {
 		enrolmentToInitialize = new Enrolment();
 		
-		thisStudent = new Student();
-		Student otherStudent = new Student();
+		thisStudent = new Registration();
+		Registration otherStudent = new Registration();
 		
 		Attends attends2 = new Attends();
 		attends2.setAluno(otherStudent);
@@ -560,7 +561,7 @@ public class EnrolmentTest extends DomainTestBase {
 		
 		assertTrue("Initialized Enrolment should only have 1 Attends", enrolmentToInitialize.getAttendsCount() == 1);
 		Attends attends = enrolmentToInitialize.getAttends().get(0);
-		assertEquals("Newly created Attends has wrong Student", attends.getAluno(),studentCurricularPlan.getStudent());
+		assertEquals("Newly created Attends has wrong Registration", attends.getAluno(),studentCurricularPlan.getStudent());
 		assertEquals("Newly created Attends has wrong ExecutionCourse", attends.getDisciplinaExecucao(),executionCourseToEnroll);
 		assertEquals("Newly created Attends has wrong Enrolment", attends.getEnrolment(),enrolmentToInitialize);
 		
@@ -570,7 +571,7 @@ public class EnrolmentTest extends DomainTestBase {
 		assertTrue("Initialized Enrolment should only have 1 Attends", enrolmentToInitializeForAnotherExecutionPeriod.getAttendsCount() == 1);
 		Attends att = enrolmentToInitializeForAnotherExecutionPeriod.getAttends().get(0);
 		assertEquals("Attends does not match expected", att,attendsToEnroll);
-		assertEquals("Attends has wrong Student", att.getAluno(),thisStudent);
+		assertEquals("Attends has wrong Registration", att.getAluno(),thisStudent);
 		assertEquals("Attends has wrong ExecutionCourse", att.getDisciplinaExecucao(),executionCourseToEnrollWithAttendsForThisStudent);
 		assertEquals("Attends has wrong Enrolment", att.getEnrolment(),enrolmentToInitializeForAnotherExecutionPeriod);
 		
@@ -659,7 +660,7 @@ public class EnrolmentTest extends DomainTestBase {
 		
 		assertFalse("EnrolmentEvaluation should have been dereferenced from Enrolment", improvementEnrolmentEvaluation.hasEnrolment());
 		assertFalse("ExecutionCourse should have been dereferenced from Attends", executionCourseToUnEnrollImprovement.hasAttends(attendsToDelete));
-		assertFalse("Attends should have been dereferenced from Student", attendsToDelete.hasAluno());
+		assertFalse("Attends should have been dereferenced from Registration", attendsToDelete.hasAluno());
 		
 		try {
 			enrolmentToUnEnrollImprovement.unEnrollImprovement(executionPeriodToUnEnrollImprovement);
@@ -695,7 +696,7 @@ public class EnrolmentTest extends DomainTestBase {
     public void testIsFirstTime() {
         setUpForIsFirstTimeCase();
         
-        assertTrue("Student should have no more than one enrollment", enrolmentG.isFirstTime());
-        assertFalse("Student should have more than one enrollment", enrolmentH.isFirstTime());
+        assertTrue("Registration should have no more than one enrollment", enrolmentG.isFirstTime());
+        assertFalse("Registration should have more than one enrollment", enrolmentH.isFirstTime());
     }
 }

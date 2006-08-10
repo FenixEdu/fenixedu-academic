@@ -19,7 +19,7 @@ import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Site;
-import net.sourceforge.fenixedu.domain.Student;
+import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -64,7 +64,7 @@ public class ReadStudentsByCurricularCourse extends Service {
         infoStudentList = (List) CollectionUtils.collect(enrolments, new Transformer() {
             public Object transform(Object input) {
                 Enrolment enrolment = (Enrolment) input;
-                Student student = enrolment.getStudentCurricularPlan().getStudent();
+                Registration student = enrolment.getStudentCurricularPlan().getStudent();
 
                 InfoStudent infoStudent = InfoStudentWithInfoPerson.newInfoFromDomain(student);
                 return infoStudent;
@@ -77,7 +77,7 @@ public class ReadStudentsByCurricularCourse extends Service {
         final List<Attends> attendList = site.getExecutionCourse().getAttends();
         final List<InfoStudent> infoStudentList = new ArrayList<InfoStudent>();
         for (final Attends attends : attendList) {
-            final Student student = attends.getAluno();
+            final Registration student = attends.getAluno();
             infoStudentList.add(InfoStudentWithInfoPerson.newInfoFromDomain(student));
         }
         return infoStudentList;

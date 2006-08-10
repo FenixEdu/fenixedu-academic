@@ -6,13 +6,13 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.OutOfCurricularCourseEnrolmentPeriod;
 import net.sourceforge.fenixedu.domain.EnrolmentPeriodInCurricularCourses;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
-import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.student.Registration;
 
 public class ReadStudentCurricularPlanWithRulesForEnrollments extends ReadStudentCurricularPlanForEnrollments {
 
 	@Override
-	public StudentCurricularPlan run(Integer executionDegreeId, Student student) throws FenixServiceException {
+	public StudentCurricularPlan run(Integer executionDegreeId, Registration student) throws FenixServiceException {
 
 		final ExecutionPeriod actualExecutionPeriod = ExecutionPeriod.readActualExecutionPeriod();
 		final StudentCurricularPlan studentCurricularPlan = findStudentCurricularPlan(student);

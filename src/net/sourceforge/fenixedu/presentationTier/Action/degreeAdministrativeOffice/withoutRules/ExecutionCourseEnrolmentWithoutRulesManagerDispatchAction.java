@@ -16,11 +16,11 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
-import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degree.enrollment.CurricularCourse2Enroll;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
@@ -175,9 +175,9 @@ public class ExecutionCourseEnrolmentWithoutRulesManagerDispatchAction extends F
 		return DegreeType.valueOf(form.getString("degreeType"));
 	}
 
-	private Student getStudent(final DynaActionForm form) {
+	private Registration getStudent(final DynaActionForm form) {
 		final Integer studentNumber = Integer.valueOf(form.getString("studentNumber"));
-		return Student.readStudentByNumberAndDegreeType(studentNumber, getDegreeType(form));
+		return Registration.readStudentByNumberAndDegreeType(studentNumber, getDegreeType(form));
 	}
 
 	private void checkIfStudentHasPayedTuition(HttpServletRequest request,
@@ -227,7 +227,7 @@ public class ExecutionCourseEnrolmentWithoutRulesManagerDispatchAction extends F
 		List<ExecutionDegree> result = null;
 		try {
 			
-			final Student student = getStudent(form);
+			final Registration student = getStudent(form);
 			studentCurricularPlan = student.getActiveOrConcludedStudentCurricularPlan();
 			
 			result = (List<ExecutionDegree>) ServiceManagerServiceFactory.executeService(
@@ -327,7 +327,7 @@ public class ExecutionCourseEnrolmentWithoutRulesManagerDispatchAction extends F
 		try {
 
 			final Integer userType = (Integer) form.get("userType");
-			final Student student = getStudent(form);
+			final Registration student = getStudent(form);
 			studentCurricularPlan = student.getActiveOrConcludedStudentCurricularPlan();
 
 			if (userType.equals(0)) {

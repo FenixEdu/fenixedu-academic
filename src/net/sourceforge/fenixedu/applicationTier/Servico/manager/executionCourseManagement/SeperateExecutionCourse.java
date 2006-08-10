@@ -15,8 +15,8 @@ import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.Grouping;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Shift;
-import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.StudentGroup;
+import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -91,7 +91,7 @@ public class SeperateExecutionCourse extends Service {
     private void fixStudentShiftEnrolements(final ExecutionCourse executionCourse) {
         for (final Shift shift : executionCourse.getAssociatedShifts()) {
             for (int i = 0; i < shift.getStudents().size(); i++) {
-                final Student student = shift.getStudents().get(i);
+                final Registration student = shift.getStudents().get(i);
                 if (!student.attends(executionCourse)) {
                     shift.removeStudents(student);
                 }

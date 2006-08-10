@@ -50,7 +50,7 @@ public class ReadStudentMarksListByCurricularCourse extends Service {
 
     /**
      * @param enrollments
-     * @return A list of Student curricular Plans without the duplicates
+     * @return A list of Registration curricular Plans without the duplicates
      * @throws ExcepcaoPersistencia
      */
     private List cleanList(List enrollments, IUserView userView) throws FenixServiceException,

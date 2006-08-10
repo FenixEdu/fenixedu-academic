@@ -14,6 +14,7 @@ import net.sourceforge.fenixedu.domain.inquiries.InquiriesRegistry;
 import net.sourceforge.fenixedu.domain.inquiries.InquiriesRoom;
 import net.sourceforge.fenixedu.domain.inquiries.InquiriesTeacher;
 import net.sourceforge.fenixedu.domain.space.OldRoom;
+import net.sourceforge.fenixedu.domain.student.Registration;
 
 import org.apache.commons.lang.NullArgumentException;
 
@@ -41,7 +42,7 @@ public class InquiriesTest extends DomainTestBase {
 	private InfoInquiriesRoom infoInquiriesRoom;
 	private OldRoom room;
 	
-	private Student student;
+	private Registration student;
 	
 	protected void setUp() throws Exception {
 		super.setUp();
@@ -110,7 +111,7 @@ public class InquiriesTest extends DomainTestBase {
 	}
 	
 	private void setUpCreateInquiriesRegistry() {
-		student = new Student();
+		student = new Registration();
 	}
 	
 	public void testCreateInquiriesCourse() {

@@ -18,8 +18,8 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.commons.CollectionUtils;
-import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.accessControl.FixedSetGroup;
+import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.cms.messaging.SendMailForm;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
@@ -37,7 +37,7 @@ public class SendMailToSelectedStudents extends ExecutionCourseSendMail {
 
 	private class StudentPersonTransformer implements Transformer {
 		public Object transform(Object input) {
-			return ((Student) input).getPerson();
+			return ((Registration) input).getPerson();
 		}
 
 	}
@@ -114,7 +114,7 @@ public class SendMailToSelectedStudents extends ExecutionCourseSendMail {
 			}
 
 			Object args[] = { executionCourseIdInteger, programIds, enrollmentTypeList, shiftIDs };
-			Collection<Student> students = (Collection<Student>) ServiceManagerServiceFactory.executeService(userView, "ReadDomainStudentsByExecutionCourseAndDegreeTypeAndShiftAttendAndEnrollmentType", args);
+			Collection<Registration> students = (Collection<Registration>) ServiceManagerServiceFactory.executeService(userView, "ReadDomainStudentsByExecutionCourseAndDegreeTypeAndShiftAttendAndEnrollmentType", args);
 
 			IGroup group = new FixedSetGroup(CollectionUtils.collect(students, new StudentPersonTransformer()));
 

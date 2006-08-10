@@ -61,7 +61,7 @@ public class DegreeTest extends DomainTestBase {
 //		ExecutionPeriod ep1 = new ExecutionPeriod();
 //		ExecutionYear ey1 = new ExecutionYear();
 //		
-//		Student student1 = new Student();
+//		Registration student1 = new Registration();
 //		Teacher teacher1 = new Teacher();
 //		Delegate d1 = new Delegate();
 //		d1.setStudent(student1);
@@ -188,7 +188,7 @@ public class DegreeTest extends DomainTestBase {
 		
 		for (Delegate delegate : degreeNotToDelete.getDelegate()) {
 			assertTrue("Should not have dereferenced Delegate from ExecutionYear", delegate.hasExecutionYear());
-			assertTrue("Should not have dereferenced Delegate from Student", delegate.hasStudent());
+			assertTrue("Should not have dereferenced Delegate from Registration", delegate.hasStudent());
 		}
 		
 		for (OldInquiriesCoursesRes oicr : degreeNotToDelete.getAssociatedOldInquiriesCoursesRes()) {

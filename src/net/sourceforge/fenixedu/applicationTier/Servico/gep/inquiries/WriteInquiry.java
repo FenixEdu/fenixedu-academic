@@ -16,11 +16,11 @@ import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.NonAffiliatedTeacher;
 import net.sourceforge.fenixedu.domain.SchoolClass;
 import net.sourceforge.fenixedu.domain.ShiftType;
-import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.inquiries.InquiriesCourse;
 import net.sourceforge.fenixedu.domain.inquiries.InquiriesRegistry;
 import net.sourceforge.fenixedu.domain.space.OldRoom;
+import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class WriteInquiry extends Service {
@@ -65,7 +65,7 @@ public class WriteInquiry extends Service {
 		ExecutionDegree executionDegreeCourse = rootDomainObject.readExecutionDegreeByOID(iic.getExecutionDegreeCourse().getIdInternal());
         ExecutionDegree executionDegreeStudent = rootDomainObject.readExecutionDegreeByOID(ii.getExecutionDegreeStudent().getIdInternal());
 		ExecutionPeriod executionPeriod = rootDomainObject.readExecutionPeriodByOID(ii.getExecutionPeriod().getIdInternal());
-        Student student = rootDomainObject.readStudentByOID(infoStudent.getIdInternal());
+        Registration student = rootDomainObject.readRegistrationByOID(infoStudent.getIdInternal());
 
 		SchoolClass schoolClass = null;
         if (iic.getStudentSchoolClass() != null) {
@@ -97,7 +97,7 @@ public class WriteInquiry extends Service {
     }
 
     private InquiriesRegistry writeInquiriesRegistry(final InquiriesCourse inquiriesCourse, final InfoStudent infoStudent) throws ExcepcaoPersistencia {
-        Student student = rootDomainObject.readStudentByOID(infoStudent.getIdInternal());
+        Registration student = rootDomainObject.readRegistrationByOID(infoStudent.getIdInternal());
         return new InquiriesRegistry(inquiriesCourse.getExecutionCourse(), inquiriesCourse.getExecutionPeriod(), student);
     }
     

@@ -31,7 +31,7 @@ public class InfoClassEnrollmentDetails extends DataTranferObject {
     private List infoShiftEnrolledList;
 
     /**
-     * Student enrolling
+     * Registration enrolling
      */
     private InfoStudent infoStudent;
 

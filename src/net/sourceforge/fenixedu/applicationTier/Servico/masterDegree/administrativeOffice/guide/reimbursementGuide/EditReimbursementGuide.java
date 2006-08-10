@@ -20,12 +20,12 @@ import net.sourceforge.fenixedu.domain.GratuitySituation;
 import net.sourceforge.fenixedu.domain.GuideEntry;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.PersonAccount;
-import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.gratuity.ReimbursementGuideState;
 import net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuide;
 import net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuideEntry;
 import net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuideSituation;
+import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.transactions.ReimbursementTransaction;
 import net.sourceforge.fenixedu.domain.transactions.TransactionType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -124,7 +124,7 @@ public class EditReimbursementGuide extends Service {
                             personAccount, reimbursementGuideEntry);
 
                     Person studentPerson = reimbursementGuide.getGuide().getPerson();
-                    Student student = studentPerson.readStudentByDegreeType(DegreeType.MASTER_DEGREE);
+                    Registration student = studentPerson.readStudentByDegreeType(DegreeType.MASTER_DEGREE);
                     ExecutionDegree executionDegree = reimbursementGuide.getGuide().getExecutionDegree();
 
                     GratuitySituation gratuitySituation = student

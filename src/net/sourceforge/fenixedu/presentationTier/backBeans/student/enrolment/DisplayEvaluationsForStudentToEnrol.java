@@ -17,9 +17,9 @@ import net.sourceforge.fenixedu.domain.Evaluation;
 import net.sourceforge.fenixedu.domain.Exam;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
-import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.WrittenTest;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean;
@@ -46,7 +46,7 @@ public class DisplayEvaluationsForStudentToEnrol extends FenixBackingBean {
     private ExecutionPeriod executionPeriod;
     private List<SelectItem> executionPeriodsLabels;
     private List<SelectItem> evaluationTypes;
-    private Student student;
+    private Registration student;
     private List<Evaluation> notEnroledEvaluations;
     private List<Evaluation> enroledEvaluations;
     private List<Evaluation> evaluationsWithoutEnrolmentPeriod;
@@ -228,11 +228,11 @@ public class DisplayEvaluationsForStudentToEnrol extends FenixBackingBean {
             rootDomainObject.readExecutionPeriodByOID(getExecutionPeriodID()) : executionPeriod;
     }
 
-    protected Student getStudent() {
+    protected Registration getStudent() {
         if (this.student == null) {
             try {
                 final Object args[] = { getUserView().getUtilizador() };
-                this.student = (Student) ServiceUtils.executeService(getUserView(),
+                this.student = (Registration) ServiceUtils.executeService(getUserView(),
                         "ReadStudentByUsernameForEvaluationEnrolment", args);
             } catch (FenixFilterException e) {
             } catch (FenixServiceException e) {

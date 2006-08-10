@@ -17,8 +17,8 @@ import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Grouping;
 import net.sourceforge.fenixedu.domain.Shift;
-import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.StudentGroup;
+import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 /**
@@ -131,7 +131,7 @@ public class ReadStudentGroupsExternalInformationByExecutionCourseIDAndStudentUs
         return result;
     }
 
-    private Collection findShifts(Student aluno, ExecutionCourse disciplinaExecucao)
+    private Collection findShifts(Registration aluno, ExecutionCourse disciplinaExecucao)
             throws ExcepcaoPersistencia {
         List<Shift> shifts = aluno.getShifts();
         List result = new ArrayList();

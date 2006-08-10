@@ -3,8 +3,8 @@ package net.sourceforge.fenixedu.applicationTier.Servico.student;
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentWithInfoPerson;
-import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
+import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 /**
@@ -17,10 +17,10 @@ public class ReadStudentByNumberAndAllDegreeTypes extends Service {
     public Object run(Integer number) throws ExcepcaoPersistencia {
         InfoStudent infoStudent = null;
 
-        Student student = Student.readStudentByNumberAndDegreeType(number, DegreeType.DEGREE);
+        Registration student = Registration.readStudentByNumberAndDegreeType(number, DegreeType.DEGREE);
 
         if (student == null) {
-            student = Student.readStudentByNumberAndDegreeType(number, DegreeType.MASTER_DEGREE);
+            student = Registration.readStudentByNumberAndDegreeType(number, DegreeType.MASTER_DEGREE);
         }
         if (student != null) {
             infoStudent = InfoStudentWithInfoPerson.newInfoFromDomain(student);

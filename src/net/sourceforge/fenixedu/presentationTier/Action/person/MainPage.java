@@ -13,7 +13,7 @@ import net.sourceforge.fenixedu.domain.Advisory;
 import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.Student;
+import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.WeeklyWorkLoad;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
@@ -61,7 +61,7 @@ public final class MainPage extends FenixAction {
     }
 
     private void addStudentNotifications(final Person person, final List<Advisory> advisories) throws FenixActionException {
-        for (final Student student : person.getStudents()) {
+        for (final Registration student : person.getStudents()) {
             for (final Attends attends : student.getAssociatedAttends()) {
                 if (attends.getEnrolment() != null) {
                     final ExecutionPeriod executionPeriod = attends.getDisciplinaExecucao().getExecutionPeriod();
