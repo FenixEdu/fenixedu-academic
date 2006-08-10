@@ -247,6 +247,7 @@ public class CreateResultPublication extends Service {
         //common fields
         resultPublication.setMonth(publicationBean.getMonth());
         resultPublication.setUrl(publicationBean.getUrl());
+        resultPublication.setModificationDateAndAuthor();
         
         return resultPublication;
     }
