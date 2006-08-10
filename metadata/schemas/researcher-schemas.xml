@@ -379,14 +379,12 @@
 </schema>
 
 <schema name="patent.create" type="net.sourceforge.fenixedu.domain.research.result.patent.ResultPatent" bundle="RESEARCHER_RESOURCES"
-		extends="patent-default" constructor="title,registrationDate,approvalDate,participation">
-	<slot name="participation" hidden="true"/>
+		extends="patent-default" constructor="title,registrationDate,approvalDate">
 </schema>
 
 <schema name="patent.edit" type="net.sourceforge.fenixedu.domain.research.result.patent.ResultPatent" 
 		bundle="RESEARCHER_RESOURCES" extends="patent-default">
-	<slot name="participation" hidden="true"/>
-	<setter signature="setPatentEdit(title,registrationDate,approvalDate,participation)"/>
+	<setter signature="setPatentEdit(title,registrationDate,approvalDate)"/>
 </schema>
 
 <schema name="patent.viewEditData" extends="patent-default" type="net.sourceforge.fenixedu.domain.research.result.patent.ResultPatent" bundle="RESEARCHER_RESOURCES">
@@ -398,7 +396,7 @@
 
 <schema name="result.patentShortList" type="net.sourceforge.fenixedu.domain.research.result.patent.ResultPatent">
 	<slot name="title" layout="link">
-        <property name="linkFormat"><![CDATA[/resultPatents/preparePatentDetails.do?oid=${idInternal}]]></property>
+        <property name="linkFormat"><![CDATA[/resultPatents/preparePatentDetails.do?resultId=${idInternal}]]></property>
         <property name="useParent" value="true"/>
 	</slot>
 	<slot name="registrationDate"/>
