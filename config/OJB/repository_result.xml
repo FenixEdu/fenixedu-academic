@@ -10,14 +10,18 @@
   <extent-class class-ref="net.sourceforge.fenixedu.domain.research.result.publication.Book" />
   <extent-class class-ref="net.sourceforge.fenixedu.domain.research.result.publication.BookPart" />
   <extent-class class-ref="net.sourceforge.fenixedu.domain.research.result.publication.Article" />
-  <extent-class class-ref="net.sourceforge.fenixedu.domain.research.result.publication.Inproceedings" />
-  <extent-class class-ref="net.sourceforge.fenixedu.domain.research.result.publication.Proceedings" />
+  <extent-class class-ref="net.sourceforge.fenixedu.domain.research.result.publication.ConferenceArticles" />
   <extent-class class-ref="net.sourceforge.fenixedu.domain.research.result.publication.Thesis" />
   <extent-class class-ref="net.sourceforge.fenixedu.domain.research.result.publication.Manual" />
   <extent-class class-ref="net.sourceforge.fenixedu.domain.research.result.publication.TechnicalReport" />
   <extent-class class-ref="net.sourceforge.fenixedu.domain.research.result.publication.Booklet" />
   <extent-class class-ref="net.sourceforge.fenixedu.domain.research.result.publication.Misc" />
   <extent-class class-ref="net.sourceforge.fenixedu.domain.research.result.publication.Unpublished" />
+</class-descriptor>
+
+<class-descriptor class="net.sourceforge.fenixedu.domain.research.result.publication.ConferenceArticles" table="RESULT">
+  <extent-class class-ref="net.sourceforge.fenixedu.domain.research.result.publication.Inproceedings" />
+  <extent-class class-ref="net.sourceforge.fenixedu.domain.research.result.publication.Proceedings" />
 </class-descriptor>
 
 <class-descriptor class="net.sourceforge.fenixedu.domain.research.result.publication.Book" table="RESULT"/>
@@ -33,7 +37,5 @@
 <class-descriptor class="net.sourceforge.fenixedu.domain.research.result.publication.Unpublished" table="RESULT"/>
 
 <class-descriptor class="net.sourceforge.fenixedu.domain.research.result.ResultParticipation" table="RESULT_PARTICIPATION"/>
-
 <class-descriptor class="net.sourceforge.fenixedu.domain.research.result.ResultEventAssociation" table="RESULT_EVENT_ASSOCIATION"/>
-
 <class-descriptor class="net.sourceforge.fenixedu.domain.research.result.ResultUnitAssociation" table="RESULT_UNIT_ASSOCIATION"/>
