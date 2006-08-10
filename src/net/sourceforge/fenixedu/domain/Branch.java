@@ -198,5 +198,14 @@ public class Branch extends Branch_Base {
 		}
 		return result;
 	}
+	
+	public CurricularCourseGroup getOptionalCurricularCourseGroupByName(final String name) {
+	    for (CurricularCourseGroup curricularCourseGroup : this.getCurricularCourseGroups()) {
+		if(( curricularCourseGroup instanceof OptionalCurricularCourseGroup ) && curricularCourseGroup.getName().equals(name)) {
+		    return curricularCourseGroup;
+		}
+	    }
+	    return null;
+	}
 
 }
