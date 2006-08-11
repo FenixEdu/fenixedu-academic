@@ -16,6 +16,7 @@ public class HtmlText extends HtmlComponent {
 
     public HtmlText(String text) {
         this.text = text;
+        this.escaped = true;
     }
 
     public HtmlText() {

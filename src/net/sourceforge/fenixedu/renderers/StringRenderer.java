@@ -106,7 +106,7 @@ public class StringRenderer extends OutputRenderer {
                 
                 if (! isLink() || string == null) {
                     if (isNewlineAware()) {
-                        return new HtmlText(replaceNewlines(string));
+                        return new HtmlText(replaceNewlines(string), false);
                     }
                     else {
                         return new HtmlText(string, isEscaped());
@@ -138,7 +138,7 @@ public class StringRenderer extends OutputRenderer {
             private String replaceNewlines(String string) {
                 StringBuilder result = new StringBuilder();
                 
-                String[] lines = string.split(System.getProperty("line.separator"), -1);
+                String[] lines = string.split("\\r\\n|\\n|\\r", -1);
                 for (int i = 0; i < lines.length; i++) {
                     String line = lines[i];
 
