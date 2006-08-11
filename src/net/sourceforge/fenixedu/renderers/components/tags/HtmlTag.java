@@ -17,20 +17,21 @@ public class HtmlTag {
     protected static String DEFAULT_INDENT = "  ";
     
     private String name;
+    private String text;
     
     private Map<String, String> attributes;
-    
-    private String text;
     
     private List<HtmlTag> children;
     
     private boolean visible;
+    private boolean indented;
 
     private HtmlTag() {
         this.attributes = new HashMap<String, String>();
         this.children = new ArrayList<HtmlTag>();
-        this.visible = true;
         this.text = "";
+        this.visible = true;
+        this.indented = true;
     }
     
     public HtmlTag(String name) {
@@ -59,6 +60,18 @@ public class HtmlTag {
 
     public void setVisible(boolean visible) {
         this.visible = visible;
+    }
+
+    public boolean isIndented() {
+        return this.indented;
+    }
+
+    public void setIndented(boolean idented) {
+        this.indented = idented;
+        
+        for (HtmlTag tag : getChildren()) {
+            tag.setIndented(this.indented);
+        }
     }
 
     public void copyAttributes(HtmlTag tag) {
@@ -100,6 +113,7 @@ public class HtmlTag {
     }
     
     public void addChild(HtmlTag tag) {
+        tag.setIndented(isIndented());
         this.children.add(tag);
     }
 
@@ -124,13 +138,18 @@ public class HtmlTag {
     }
     
     protected void writeBody(Writer writer, String indent) throws IOException {
-        if (getChildren().size() > 0) {
+        if (getChildren().size() > 0 && isIndented()) {
             writer.write('\n');
         }
         
         for (HtmlTag child : getChildren()) {
-            child.writeTag(writer, indent + DEFAULT_INDENT);
-            writer.write('\n');
+            if (isIndented()) {
+                child.writeTag(writer, indent + DEFAULT_INDENT);
+                writer.write('\n');
+            }
+            else {
+                child.writeTag(writer, "");
+            }
         }
     }
 
@@ -162,7 +181,7 @@ public class HtmlTag {
     }
         
     protected void writeCloseTag(Writer writer, String indent) throws IOException {
-        if (this.children.size() > 0) {
+        if (this.children.size() > 0 && isIndented()) {
             writer.write(indent);
         }
         
@@ -172,5 +191,6 @@ public class HtmlTag {
             writer.write('>');
         }
         
-    }    
+    }
+
 }

@@ -32,6 +32,7 @@ public abstract class HtmlComponent implements Serializable {
     };
     
     private boolean visible;
+    private boolean indented;
     
     // %coreattrs
     private String id;
@@ -59,8 +60,9 @@ public abstract class HtmlComponent implements Serializable {
     private Map<String, String> custom;
     
     public HtmlComponent() {
-        this.visible = true;
         this.custom = new HashMap<String, String>();
+        this.visible = true;
+        this.indented = true;
     }
 
     public String getClasses() {
@@ -121,6 +123,14 @@ public abstract class HtmlComponent implements Serializable {
 
     public void setVisible(boolean visible) {
         this.visible = visible;
+    }
+
+    public boolean isIndented() {
+        return this.indented;
+    }
+
+    public void setIndented(boolean idented) {
+        this.indented = idented;
     }
 
     public String getOnClick() {
@@ -246,6 +256,7 @@ public abstract class HtmlComponent implements Serializable {
         tag.setAttribute("onkeyup", getOnKeyUp());
         
         tag.setVisible(isVisible());
+        tag.setIndented(isIndented());
         
         for (Entry<String, String> entry : this.custom.entrySet()) {
             tag.setAttribute(entry.getKey(), entry.getValue());
