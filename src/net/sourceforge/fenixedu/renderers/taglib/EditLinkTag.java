@@ -68,7 +68,7 @@ public class EditLinkTag extends TagSupport {
         BaseRenderObjectTag tag = (BaseRenderObjectTag) findAncestorWithClass(this, BaseRenderObjectTag.class);
 
         if (tag == null) {
-            logger.warn("destination " + getName() + " specified but not parent tag supports destinations");
+            logger.warn("destination " + getName() + " specified but no parent tag supports destinations");
         }
         else {
             setDestination(tag, getPath(), getModule(), redirectToBoolean(getRedirect()));
