@@ -13,11 +13,7 @@ public class ReadStudentByUsername extends Service {
 
     public Object run(String username) throws ExcepcaoPersistencia {
         final Registration student = Registration.readByUsername(username);
-
-        if (student != null) {
-            return InfoStudent.newInfoFromDomain(student);
-        }
-
-        return null;
+        return student == null ? null : InfoStudent.newInfoFromDomain(student);
     }
+
 }

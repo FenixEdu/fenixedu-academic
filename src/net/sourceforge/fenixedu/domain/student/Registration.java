@@ -435,12 +435,12 @@ public class Registration extends Registration_Base {
 	}
 
 	public static Registration readByUsername(String username) {
-		for (Registration student : RootDomainObject.getInstance().getStudents()) {
-			if (student.getPerson() != null
-					&& student.getPerson().getUsername().equalsIgnoreCase(username)) {
-				return student;
-			}
-		}
+        final Person person = Person.readPersonByUsername(username);
+        if (person != null) {
+            for (final Registration registration : person.getStudentsSet()) {
+                return registration;
+            }
+        }
 		return null;
 	}
 

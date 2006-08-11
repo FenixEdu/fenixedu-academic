@@ -37,6 +37,7 @@ import net.sourceforge.fenixedu.dataTransferObject.inquiries.InfoRoomWithInfoInq
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.InfoTeacherOrNonAffiliatedTeacherWithRemainingClassTypes;
 import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
+import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.InvalidSessionActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
@@ -104,13 +105,12 @@ public class FillInquiryAction extends FenixDispatchAction {
 		
         IUserView userView = SessionUtils.getUserView(request);
 
-        Object argsStudentUserName[] = { userView.getUtilizador() };
-		InfoStudent infoStudent = (InfoStudent) ServiceUtils.executeService(userView, "ReadStudentByUsername", argsStudentUserName);
-        if (infoStudent == null) {
+        final Registration registration = userView.getPerson().getStudentsSet().iterator().next();
+        if (registration == null) {
             throw new InvalidSessionActionException();
         }
 
-        if (infoStudent.getDegreeType() != DegreeType.DEGREE) {
+        if (registration.getDegreeType() != DegreeType.DEGREE) {
             request.setAttribute(InquiriesUtil.INQUIRY_MESSAGE_KEY, "message.inquiries.not.open.for.non.degrees");     
             return actionMapping.findForward("inquiryIntroduction");            
         }
@@ -129,14 +129,14 @@ public class FillInquiryAction extends FenixDispatchAction {
         }
 
 		//THIS IS ONLY READING THE ENROLLED COURSES, AND NOT ALL THE ATTENDING ONES
-		Object[] argsStudentIdExecutionPeriodId = { infoStudent.getIdInternal(), currentExecutionPeriod.getIdInternal(), Boolean.TRUE, Boolean.TRUE };
+		Object[] argsStudentIdExecutionPeriodId = { registration.getIdInternal(), currentExecutionPeriod.getIdInternal(), Boolean.TRUE, Boolean.TRUE };
 		List<InfoAttendsWithProfessorshipTeachersAndNonAffiliatedTeachers> studentAttends =
 			(List<InfoAttendsWithProfessorshipTeachersAndNonAffiliatedTeachers>) ServiceUtils.executeService(userView, "student.ReadAttendsByStudentIdAndExecutionPeriodId", argsStudentIdExecutionPeriodId);
 		//Order by execution course name
 		Collections.sort(studentAttends, new BeanComparator("disciplinaExecucao.nome"));
 		
 		//Removing attends with no specified class types
-        Object[] argsStudent = { infoStudent };
+        Object[] argsStudent = { registration };
 		List<InfoInquiriesRegistry> studentInquiriesResgistries =
 			(List<InfoInquiriesRegistry>) ServiceUtils.executeService(userView, "inquiries.ReadInquiriesRegistriesByStudent", argsStudent);
 

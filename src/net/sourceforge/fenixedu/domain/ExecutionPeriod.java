@@ -173,15 +173,20 @@ public class ExecutionPeriod extends ExecutionPeriod_Base implements Comparable 
     // -------------------------------------------------------------
     // read static methods    
     // -------------------------------------------------------------
-    
+
+    private static transient ExecutionPeriod currentExecutionPeriod = null;
     public static ExecutionPeriod readActualExecutionPeriod() {
-        for (final ExecutionPeriod executionPeriod : RootDomainObject.getInstance()
-                .getExecutionPeriodsSet()) {
-            if (executionPeriod.getState().equals(PeriodState.CURRENT)) {
-                return executionPeriod;
+        if (currentExecutionPeriod == null
+                || currentExecutionPeriod.getRootDomainObject() != RootDomainObject.getInstance()
+                || !currentExecutionPeriod.getState().equals(PeriodState.CURRENT)) {
+            for (final ExecutionPeriod executionPeriod : RootDomainObject.getInstance().getExecutionPeriodsSet()) {
+                if (executionPeriod.getState().equals(PeriodState.CURRENT)) {
+                    currentExecutionPeriod = executionPeriod;
+                    break;
+                }
             }
         }
-        return null;
+        return currentExecutionPeriod;
     }
 
     public static List<ExecutionPeriod> readNotClosedExecutionPeriods() {
