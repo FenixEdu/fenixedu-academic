@@ -48,4 +48,8 @@
         <put name="body" value="/manager/functionalities/create-toplevel-functionality.jsp"/>
     </definition>
 
+    <definition name="functionalities.functionality.manage" extends="functionalities.master">
+        <put name="body" value="/manager/functionalities/manage-functionality.jsp"/>
+    </definition>
+
 </tiles-definitions>

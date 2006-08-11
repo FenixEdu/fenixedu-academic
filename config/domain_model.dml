@@ -3675,10 +3675,12 @@ class net.sourceforge.fenixedu.domain.functionalities.Functionality extends net.
 	boolean enabled;
 	String path;
 	boolean relative;
+	String parameters;
 	
 	Integer orderInModule; /* used to allows ordering of functionalities in modules, see relation ModuleAggregatesFunctionalities */
 	
 	Integer keyModule;
+	Integer keyAvailabilityPolicy;
 }
 
 	class net.sourceforge.fenixedu.domain.functionalities.ConcreteFunctionality extends net.sourceforge.fenixedu.domain.functionalities.Functionality {
@@ -3688,6 +3690,15 @@ class net.sourceforge.fenixedu.domain.functionalities.Functionality extends net.
 		Integer keyParent;
 	}
 
+class net.sourceforge.fenixedu.domain.functionalities.AvailabilityPolicy extends net.sourceforge.fenixedu.domain.DomainObject {
+	String ojbConcreteClass;
+	
+	Integer keyFunctionality;
+}
+
+	class net.sourceforge.fenixedu.domain.functionalities.GroupAvailability extends net.sourceforge.fenixedu.domain.functionalities.AvailabilityPolicy {
+		String expression;
+	}
 
 //
 // END OF Functionalities
@@ -9514,6 +9525,18 @@ relation ModuleHasSubModules {
 relation RootDomainObjectFunctionality {
 	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
 	net.sourceforge.fenixedu.domain.functionalities.Functionality playsRole functionalities {
+		multiplicity *;
+	}
+}
+
+relation FunctionalityHasAvailabilityPolicy {
+	net.sourceforge.fenixedu.domain.functionalities.Functionality playsRole functionality;
+	net.sourceforge.fenixedu.domain.functionalities.AvailabilityPolicy playsRole availabilityPolicy;
+}
+
+relation RootDomainObjectHasAvailabilityPolicy { 
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.functionalities.AvailabilityPolicy playsRole availabilityPolicy {
 		multiplicity *;
 	}
 }

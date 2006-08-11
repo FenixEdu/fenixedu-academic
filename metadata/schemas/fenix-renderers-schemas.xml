@@ -594,7 +594,7 @@
 			<property name="safe" value="true"/>
 			<property name="config" value="advanced"/>
 			<property name="columns" value="60"/>
-    	       <property name="eachClasses" value="multi-language-line"/>~
+    	       <property name="eachClasses" value="multi-language-line"/>
     	       <property name="classes" value="pbottom3"/>
 		</slot>
 		<slot name="additionalInfo" layout="rich-text">

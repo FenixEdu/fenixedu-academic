@@ -609,6 +609,10 @@ script.isAlive.check.slide=${script.isAlive.check.slide}
 		<ant antfile="build_codeGenerator.xml" target="generateDeprecatedDateGettersAndSetters"/>
 	</target>
 
+	<target name="generate-groups-language" 	description="Generate the parser for the groups language">
+		<ant antfile="build_codeGenerator.xml" target="generate-groups-language"/>
+	</target>
+
 	<target name="i18nDefault"
     		depends="prepare">
 		<copy encoding="${encoding}" todir="${build.home.webinf.classes}/resources">
@@ -621,7 +625,7 @@ script.isAlive.check.slide=${script.isAlive.check.slide}
 
 	<target name="compile-domain" 
           description="Compile application's domain"
-          depends="generate">
+          depends="generate, generate-groups-language">
 		<javac destdir="${build.home.webinf.classes}"
            extdirs="${lib}"
            debug="${compile.debug}"
@@ -693,7 +697,7 @@ script.isAlive.check.slide=${script.isAlive.check.slide}
 		</copy>
 	</target>
 
-	<target name="compile" description="Compile application" depends="i18nDefault, compile-domain,compile-renderers, write-all-properties, generate, base-compile, compile-reports">
+	<target name="compile" description="Compile application" depends="i18nDefault, compile-domain, compile-renderers, write-all-properties, generate, generate-groups-language, base-compile, compile-reports">
 		<ant antfile="build_accessControl.xml"/>
 	</target>
 

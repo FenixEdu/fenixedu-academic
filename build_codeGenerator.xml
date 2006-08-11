@@ -264,4 +264,37 @@
     	<antcall target="clean-all"/>
     </target>	
 	
+	<!--
+		Groups Language
+	  -->
+	
+	<property name="groups.language.file" value="${config}/groups-language.g"/>
+	<property name="groups.output.dir" value="${src_gen}/net/sourceforge/fenixedu/domain/accessControl/groups/language/"/>
+	
+	<target name="check-groups-language">
+		<uptodate property="groups.language.changed" targetfile="${groups.language.file}">
+			<srcfiles dir="${groups.output.dir}" includes="**/*.*"/>
+		</uptodate>
+	</target>
+	
+	<target name="prepare-groups-output-dir">
+		<mkdir dir="${groups.output.dir}"/>
+	</target>
+		
+	<target name="show-groups-message" unless="groups.language.changed">
+		<echo message="No need to compile groups language grammar: ${groups.language.file}"/>
+	</target>
+
+	<target name="generate-groups-language" description="Generates the parser for the groups language"
+			depends="prepare-groups-output-dir,check-groups-language,show-groups-message"
+			if="groups.language.changed">
+		<antlr target="${groups.language.file}" outputdirectory="${groups.output.dir}">
+			<classpath>
+				<fileset dir="${lib}">
+					<include name="**/antlr.jar"/>
+				</fileset>
+			</classpath>
+		</antlr>
+	</target>
+	
 </project>

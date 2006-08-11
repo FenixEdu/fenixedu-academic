@@ -10230,6 +10230,15 @@
 		<filterChains />
 	</service>
     <service>
+        <name>ChangeEnableInFunctionality</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.manager.functionalities.ChangeEnableInFunctionality</implementationClass>
+        <description />
+        <isTransactional>true</isTransactional>
+        <filterChains>
+            <chain name="ManagerAuthorization" />
+        </filterChains>
+    </service>
+    <service>
         <name>DeleteFunctionality</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.manager.functionalities.DeleteFunctionality</implementationClass>
         <description />
@@ -10241,6 +10250,15 @@
     <service>
         <name>MoveFunctionality</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.manager.functionalities.MoveFunctionality</implementationClass>
+        <description />
+        <isTransactional>true</isTransactional>
+        <filterChains>
+            <chain name="ManagerAuthorization" />
+        </filterChains>
+    </service>
+    <service>
+        <name>CreateGroupAvailability</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.manager.functionalities.CreateGroupAvailability</implementationClass>
         <description />
         <isTransactional>true</isTransactional>
         <filterChains>

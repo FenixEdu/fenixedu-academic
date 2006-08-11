@@ -21,17 +21,25 @@
 <fr:view name="module" property="name"/>
 
 <!-- ======================
-       module information
+          information
      ======================  -->
   
 <fr:view name="module" layout="tabular" schema="functionalities.module.view.simple"/>
 
-<html:link page="<%= "/module/edit.do?module=" + thisModule %>">
+<!-- ======================
+           links
+     ======================  -->
+
+<html:link page="/module/edit.do" paramId="module" paramName="module" paramProperty="idInternal">
     <bean:message key="link.module.edit" bundle="FUNCTIONALITY_RESOURCES"/>
 </html:link>
 
-<html:link page="<%= "/functionality/delete.do?functionality=" + thisModule %>">
+<html:link page="/functionality/delete.do" paramId="module" paramName="module" paramProperty="idInternal">
     <bean:message key="link.module.delete" bundle="FUNCTIONALITY_RESOURCES"/>
+</html:link>
+
+<html:link page="/functionality/manage.do" paramId="functionality" paramName="module" paramProperty="idInternal">
+    <bean:message key="link.module.manage" bundle="FUNCTIONALITY_RESOURCES"/>
 </html:link>
 
 <!-- ======================

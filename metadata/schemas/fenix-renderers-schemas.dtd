@@ -18,7 +18,12 @@
   The 'extends' attribute allows you to indicate that the schema beeing defined
   is an extension of the referred schema. This means that the schema beeing
   defined will include all the slots of the referred schema and can optionally
-  override some slot's definitions.
+  override or remove some definitions.
+  
+  The 'refines' attribute is similar to the 'extends' except that the schema 
+  being refined will be changed, that is, both schemas (the one being defined
+  and the one being refined) will have the same slots and definitions. Be
+  carefull when using this mechanism.
   
   The 'bundle' attribute is an abbreviation for the 'bundle' attribute of the
   inner slot elements. It specifies the bundle for every slot. You can override
@@ -46,6 +51,7 @@
 	name ID #REQUIRED
 	type CDATA #REQUIRED
 	extends IDREF #IMPLIED
+	refines IDREF #IMPLIED
 	bundle NMTOKEN #IMPLIED
 	constructor CDATA #IMPLIED
 >

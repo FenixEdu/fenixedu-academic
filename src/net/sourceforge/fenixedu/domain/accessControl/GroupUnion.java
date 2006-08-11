@@ -11,24 +11,24 @@ public final class GroupUnion extends NodeGroup {
 
     private static final long serialVersionUID = 1L;
 
-    public GroupUnion(IGroup ... groups) {
+    public GroupUnion(IGroup... groups) {
         super(groups);
     }
 
     public GroupUnion(Collection<IGroup> groups) {
         super(groups);
     }
-   
+
     @Override
     public Set<Person> getElements() {
-    	Set<Person> elements = new HashSet<Person>();
-    	
-    	for (IGroup child : this.getChildren()) {
-			elements.addAll(child.getElements());
-		}
-    	
-    	return elements;
-    	
+        Set<Person> elements = new HashSet<Person>();
+
+        for (IGroup child : getChildren()) {
+            elements.addAll(child.getElements());
+        }
+
+        return elements;
+
     }
 
     @Override
@@ -38,7 +38,7 @@ public final class GroupUnion extends NodeGroup {
                 return true;
             }
         }
-        
+
         return false;
     }
 }

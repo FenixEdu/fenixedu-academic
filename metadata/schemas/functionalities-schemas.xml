@@ -14,6 +14,9 @@
         <property name="rows" value="10"/>
         <property name="columns" value="40"/>
     </slot>
+    <slot name="parameters">
+        <property name="size" value="40"/>
+    </slot>
 </schema>
 
 <schema name="functionalities.concrete.functionality.create" 
@@ -40,6 +43,7 @@
     <slot name="name"/>
     <slot name="title"/>
     <slot name="description"/>
+    <slot name="parameters"/>
 </schema>
 
 <schema name="functionalities.functionality.edit" 
@@ -75,5 +79,13 @@
     <slot name="name" layout="link">
         <property name="destination" value="functionality.view"/>
         <property name="useParent" value="true"/>
+    </slot>
+</schema>
+
+<schema name="functionalities.expression" type="net.sourceforge.fenixedu.presentationTier.Action.manager.functionalities.ExpressionBean"
+        bundle="FUNCTIONALITY_RESOURCES">
+    <slot name="expression" layout="longText">
+        <property name="rows" value="5"/> 
+        <property name="columns" value="40"/> 
     </slot>
 </schema>

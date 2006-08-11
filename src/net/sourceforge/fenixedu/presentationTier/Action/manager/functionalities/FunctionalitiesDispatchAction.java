@@ -18,6 +18,25 @@ import org.apache.struts.action.ActionMapping;
 
 public class FunctionalitiesDispatchAction extends FenixDispatchAction {
 
+    public ActionForward forwardTo(ActionForward forward, HttpServletRequest request, Functionality functionality) throws Exception {
+        setBreadCrumbs(request, functionality);
+        request.setAttribute("functionality", functionality);
+        
+        return forward;
+    }
+    
+    public ActionForward forwardTo(ActionForward forward, HttpServletRequest request, Module module, boolean includeLast) throws Exception {
+        setBreadCrumbs(request, module, includeLast);
+        
+        if (includeLast) {
+            request.setAttribute("parent", module);
+        }
+        
+        request.setAttribute("module", module);
+        
+        return forward;
+    }
+    
     public ActionForward viewTopLevel(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
         List<Functionality> functionalities = Functionality.getOrderedTopLevelFunctionalities();
         request.setAttribute("functionalities", functionalities);

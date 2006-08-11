@@ -35,9 +35,7 @@ public class ModuleManagementAction extends FunctionalitiesDispatchAction {
             return viewTopLevel(mapping, actionForm, request, response);
         }
         else {
-            setBreadCrumbs(request, module);
-            request.setAttribute("module", module);
-            return mapping.findForward("edit");
+            return forwardTo(mapping.findForward("edit"), request, module, false);
         }
     }
     
@@ -48,9 +46,7 @@ public class ModuleManagementAction extends FunctionalitiesDispatchAction {
             return mapping.findForward("create.toplevel");
         }
         else {
-            setBreadCrumbs(request, module, true);
-            request.setAttribute("parent", module);
-            return mapping.findForward("create");
+            return forwardTo(mapping.findForward("create"), request, module, true);
         }
     }
 

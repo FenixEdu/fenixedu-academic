@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.domain.accessControl;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 import net.sourceforge.fenixedu.accessControl.IGroup;
@@ -32,8 +33,8 @@ public abstract class NodeGroup extends Group {
         this.children.addAll(groups);
     }
     
-    protected List<IGroup> getChildren() {
-        return this.children;
+    public List<IGroup> getChildren() {
+        return Collections.unmodifiableList(this.children);
     }
     
     @Override
@@ -42,7 +43,7 @@ public abstract class NodeGroup extends Group {
             return false;
         }
         
-        if (! this.getClass().isAssignableFrom(other.getClass())) {
+        if (! this.getClass().equals(other.getClass())) {
             return false;
         }
 

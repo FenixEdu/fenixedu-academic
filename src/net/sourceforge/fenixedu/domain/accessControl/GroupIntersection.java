@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.domain.accessControl;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.accessControl.IGroup;
@@ -11,8 +12,8 @@ import net.sourceforge.fenixedu.domain.Person;
 public final class GroupIntersection extends NodeGroup {
 
     private static final long serialVersionUID = 1L;
-    
-    public GroupIntersection(IGroup ... groups) {
+
+    public GroupIntersection(IGroup... groups) {
         super(groups);
     }
 
@@ -22,23 +23,24 @@ public final class GroupIntersection extends NodeGroup {
 
     @Override
     public Set<Person> getElements() {
-        Set<Person> elements = super.buildSet();
-        Collection<Person> elementsCollection = new ArrayList<Person>(); 
-        int childrenCount = this.getChildren().size();
-        if (childrenCount<2)
-        {
-        	throw new UnsupportedOperationException("An intersection is mathematically defined only for two or more sets");        	
+        Collection<Person> elementsCollection = null;
+
+        for (Iterator iter = getChildren().iterator(); iter.hasNext();) {
+            IGroup group = (IGroup) iter.next();
+
+            if (elementsCollection == null) {
+                elementsCollection = new ArrayList<Person>(group.getElements());
+            } else {
+                elementsCollection = CollectionUtils.intersection(elementsCollection, group.getElements());
+            }
         }
-        else
-        {
-        	elementsCollection.addAll(this.getChildren().get(0).getElements());
-        	for (IGroup group : this.getChildren()) {
-				elementsCollection = CollectionUtils.intersection(elementsCollection,group.getElements());
-			}
+
+        Set<Person> elements = buildSet();
+        if (elementsCollection != null) {
+            elements.addAll(elementsCollection);
         }
-        elements.addAll(elementsCollection);
-        
-        return super.freezeSet(elements);
+
+        return freezeSet(elements);
     }
 
     @Override
@@ -48,7 +50,7 @@ public final class GroupIntersection extends NodeGroup {
                 return false;
             }
         }
-        
+
         return true;
     }
 }
