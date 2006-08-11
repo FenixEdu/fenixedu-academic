@@ -13,4 +13,8 @@ public class ScientificArea extends ScientificArea_Base {
 		setRootDomainObject(RootDomainObject.getInstance());
 	}
 
+	public ScientificArea(final String name) {
+		this();
+		super.setName(name);
+	}
 }
