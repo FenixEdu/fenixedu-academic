@@ -21,6 +21,7 @@
         <li><a href="#validator">Validate input</a></li>
         <li><a href="#converter">Convert user input</a></li>
         <li><a href="#extend">Schemas can extend other schemas</a></li>
+        <li><a href="#refine">Refine <i>vs</i> extend</a></li>
         <li><a href="#default">Default values</a></li>
         <li><a href="#setters">Special setters and custom constructor: a better domain integration</a></li>
         <li><a href="#hidden">Declare hidden slots</a></li>
@@ -269,6 +270,35 @@
     through out the application. So, if you change a schema check the schemas that are extending that one. If your
     changes are too big you can choose to make a new schema or change the name and check wich dependencies
     fail (schemas can only extend existing schemas and an errors will be reported).
+</p>
+
+<a name="refine"></a>
+<h3>Refine <i>vs</i> extend</h3>
+
+<p>
+    You can also refine a previously define schema by using declaring something like:
+</p>
+
+<div style="border: 1px solid #000; padding: 20px 20px 20px 20px" >
+    <pre>
+&lt;schema name=&quot;person.filiation.refined&quot; type=&quot;net.sourceforge.fenixedu.domain.Person&quot; refines=&quot;person.personal&quot;&gt;
+  &lt;remove name=&quot;email&quot;/&gt;
+  &lt;slot name=&quot;nameOfFather&quot;/&gt;
+  &lt;slot name=&quot;nameOfMother&quot;/&gt;
+&lt;/schema&gt;
+</div>
+
+<p>
+    This example is similar to the previously. The difference is that the schema <code>person.personal</code>
+    is also changed. In the end the schema being defined and <code>person.personal</code> will be equal, that
+    is, will contain the same slots and the same definitions.
+</p>
+
+<p>
+    This technique can be usefull to separate changes made to a schema from the initial version
+    of the schema will keeping the most up-to-date definition. Nevertheless this technique should
+    be used with care since it's no longer be obvious wich slot's are included in a schema when
+    it's used.
 </p>
 
 <a name="default"></a>
