@@ -10,47 +10,16 @@ import net.sourceforge.fenixedu.util.PeriodState;
  */
 public class InfoExecutionYear extends InfoObject {
 
-    private String year;
+    private final ExecutionYear executionYear;
 
-    private PeriodState state;
-
-    private Date beginDate;
-
-    private Date endDate;
-
-    public InfoExecutionYear() {
+    public InfoExecutionYear(final ExecutionYear executionYear) {
+        this.executionYear = executionYear;
     }
 
-    public InfoExecutionYear(String year) {
-        setYear(year);
-    }
-
-    public InfoExecutionYear(Integer executionYearId) {
-        super(executionYearId);
-    }
-
-    /**
-     * Returns the year.
-     * 
-     * @return String
-     */
     public String getYear() {
-        return year;
+        return executionYear.getYear();
     }
 
-    /**
-     * Sets the year.
-     * 
-     * @param year
-     *            The year to set
-     */
-    public void setYear(String year) {
-        this.year = year;
-    }
-
-    /**
-     * @see java.lang.Object#equals(java.lang.Object)
-     */
     public boolean equals(Object obj) {
         if (obj instanceof InfoExecutionYear) {
             InfoExecutionYear infoExecutionYear = (InfoExecutionYear) obj;
@@ -60,27 +29,11 @@ public class InfoExecutionYear extends InfoObject {
     }
 
     public String toString() {
-        String result = "[INFOEXECUTIONYEAR";
-        result += ", year=" + year;
-        result += "]";
-        return result;
+        return executionYear.getYear();
     }
 
-    /**
-     * @return PeriodState
-     */
     public PeriodState getState() {
-        return state;
-    }
-
-    /**
-     * Sets the periodState.
-     * 
-     * @param periodState
-     *            The periodState to set
-     */
-    public void setState(PeriodState state) {
-        this.state = state;
+        return executionYear.getState();
     }
 
     public int compareTo(Object arg0) {
@@ -88,77 +41,32 @@ public class InfoExecutionYear extends InfoObject {
         return this.getYear().compareTo(infoExecutionYear.getYear());
     }
 
-    /**
-     * @return Returns the beginDate.
-     */
     public Date getBeginDate() {
-        return beginDate;
+        return executionYear.getBeginDate();
     }
 
-    /**
-     * @param beginDate
-     *            The beginDate to set.
-     */
-    public void setBeginDate(Date beginDate) {
-        this.beginDate = beginDate;
-    }
-
-    /**
-     * @return Returns the endDate.
-     */
     public Date getEndDate() {
-        return endDate;
+        return executionYear.getEndDate();
     }
 
-    /**
-     * @param endDate
-     *            The endDate to set.
-     */
-    public void setEndDate(Date endDate) {
-        this.endDate = endDate;
-    }
-
-    public void copyFromDomain(ExecutionYear year) {
-        super.copyFromDomain(year);
-        if (year != null) {
-            setBeginDate(year.getBeginDate());
-            setEndDate(year.getEndDate());
-            setState(year.getState());
-            setYear(year.getYear());
-        }
-    }
-
-    /**
-     * @param year
-     * @return
-     */
-    public static InfoExecutionYear newInfoFromDomain(ExecutionYear year) {
-        InfoExecutionYear infoExecutionYear = null;
-        if (year != null) {
-            infoExecutionYear = new InfoExecutionYear();
-            infoExecutionYear.copyFromDomain(year);
-        }
-        return infoExecutionYear;
-    }
-
-    public void copyToDomain(InfoExecutionYear infoExecutionYear, ExecutionYear executionYear) {
-        super.copyToDomain(infoExecutionYear, executionYear);
-        executionYear.setBeginDate(infoExecutionYear.getBeginDate());
-        executionYear.setEndDate(infoExecutionYear.getEndDate());
-        executionYear.setState(infoExecutionYear.getState());
-        executionYear.setYear(infoExecutionYear.getYear());
+    public static InfoExecutionYear newInfoFromDomain(final ExecutionYear executionYear) {
+        return executionYear == null ? null : new InfoExecutionYear(executionYear);
     }
 
     public String getNextExecutionYearYear() {
-        final int year1 = Integer.valueOf(year.substring(0, 4)).intValue() + 1;
-        final int year2 = Integer.valueOf(year.substring(5, 9)).intValue() + 1;
+        final int year1 = Integer.valueOf(getYear().substring(0, 4)).intValue() + 1;
+        final int year2 = Integer.valueOf(getYear().substring(5, 9)).intValue() + 1;
 
         final StringBuilder stringBuilder = new StringBuilder();
         return stringBuilder.append(year1).append('/').append(year2).toString();
     }
 
     public boolean after(InfoExecutionYear infoExecutionYear) {
-        return this.getBeginDate().after(infoExecutionYear.getEndDate());
+        return getBeginDate().after(infoExecutionYear.getEndDate());
     }
 
+    public InfoExecutionYear getNextInfoExecutionYear() {
+        final ExecutionYear nextExecutionYear = executionYear.getNextExecutionYear();
+        return nextExecutionYear == null ? null : InfoExecutionYear.newInfoFromDomain(nextExecutionYear);
+    }
 }

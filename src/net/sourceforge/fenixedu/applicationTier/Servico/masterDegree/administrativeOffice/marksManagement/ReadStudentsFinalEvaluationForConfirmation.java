@@ -42,7 +42,6 @@ public class ReadStudentsFinalEvaluationForConfirmation extends Service {
 
 		List infoEnrolmentEvaluations = new ArrayList();
 		InfoTeacher infoTeacher = new InfoTeacher();
-		InfoExecutionPeriod infoExecutionPeriod = new InfoExecutionPeriod();
 	
 		CurricularCourse curricularCourse = (CurricularCourse) rootDomainObject.readDegreeModuleByOID(curricularCourseCode);
 
@@ -106,7 +105,7 @@ public class ReadStudentsFinalEvaluationForConfirmation extends Service {
 			throw new NonExistingServiceException();
 		}
 		final ExecutionPeriod executionPeriod = ExecutionPeriod.readActualExecutionPeriod();
-		infoExecutionPeriod = InfoExecutionPeriod.newInfoFromDomain(executionPeriod);
+		InfoExecutionPeriod infoExecutionPeriod = InfoExecutionPeriod.newInfoFromDomain(executionPeriod);
 
 		InfoSiteEnrolmentEvaluation infoSiteEnrolmentEvaluation = new InfoSiteEnrolmentEvaluation();
 		infoSiteEnrolmentEvaluation.setEnrolmentEvaluations(infoEnrolmentEvaluations);

@@ -14,7 +14,7 @@ public class InfoEnrolmentWithCourseAndDegreeAndExecutionPeriodAndYear extends
     public void copyFromDomain(Enrolment enrolment) {
         super.copyFromDomain(enrolment);
         if (enrolment != null) {
-            setInfoExecutionPeriod(InfoExecutionPeriodWithInfoExecutionYear.newInfoFromDomain(enrolment
+            setInfoExecutionPeriod(InfoExecutionPeriod.newInfoFromDomain(enrolment
                     .getExecutionPeriod()));//with year
         }
     }

@@ -27,7 +27,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoEvaluationMethod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourseWithExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
-import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriodWithInfoExecutionYear;
+import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoLesson;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteCommon;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacherWithPersonAndCategory;
@@ -181,7 +181,7 @@ public class ReadCourseInformation extends Service {
             infoSiteEvaluationStatistics.setEvaluated(getEvaluated(enrolled));
             infoSiteEvaluationStatistics.setApproved(getApproved(enrolled));
 
-            InfoExecutionPeriod infoExecutionPeriod = InfoExecutionPeriodWithInfoExecutionYear
+            InfoExecutionPeriod infoExecutionPeriod = InfoExecutionPeriod
                     .newInfoFromDomain(executionPeriod);
             infoSiteEvaluationStatistics.setInfoExecutionPeriod(infoExecutionPeriod);
 
@@ -231,7 +231,7 @@ public class ReadCourseInformation extends Service {
 
             InfoSiteEvaluationStatistics infoSiteEvaluationStatistics = new InfoSiteEvaluationStatistics();
 
-            infoSiteEvaluationStatistics.setInfoExecutionPeriod(InfoExecutionPeriodWithInfoExecutionYear
+            infoSiteEvaluationStatistics.setInfoExecutionPeriod(InfoExecutionPeriod
                     .newInfoFromDomain(executionPeriod));
             List<Enrolment> enrolled = curricularCourse.getEnrolmentsByExecutionPeriod(executionPeriod);
             infoSiteEvaluationStatistics.setEnrolled(new Integer(enrolled.size()));

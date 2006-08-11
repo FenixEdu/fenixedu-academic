@@ -15,7 +15,7 @@ public class InfoExecutionCourseWithExecutionPeriod extends InfoExecutionCourse 
     public void copyFromDomain(ExecutionCourse executionCourse) {
         super.copyFromDomain(executionCourse);
         if (executionCourse != null) {
-            setInfoExecutionPeriod(InfoExecutionPeriodWithInfoExecutionYear
+            setInfoExecutionPeriod(InfoExecutionPeriod
                     .newInfoFromDomain(executionCourse.getExecutionPeriod()));
         }
     }

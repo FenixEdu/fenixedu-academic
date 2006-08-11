@@ -11,7 +11,7 @@ public class InfoClassWithAll extends InfoClassWithInfoExecutionDegree {
     public void copyFromDomain(SchoolClass turma) {
         super.copyFromDomain(turma);
         if (turma != null) {
-            setInfoExecutionPeriod(InfoExecutionPeriodWithInfoExecutionYear.newInfoFromDomain(turma
+            setInfoExecutionPeriod(InfoExecutionPeriod.newInfoFromDomain(turma
                     .getExecutionPeriod()));
         }
     }

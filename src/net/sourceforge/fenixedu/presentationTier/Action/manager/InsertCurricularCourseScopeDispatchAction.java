@@ -80,7 +80,7 @@ public class InsertCurricularCourseScopeDispatchAction extends FenixDispatchActi
             branchesList.add(new LabelValueBean(label, value));
         }
 
-        List infoExecutionPeriods = null;
+        List<InfoExecutionPeriod> infoExecutionPeriods = null;
         try {
             infoExecutionPeriods = (List) ServiceUtils.executeService(userView, "ReadExecutionPeriods",
                     null);
@@ -94,11 +94,8 @@ public class InsertCurricularCourseScopeDispatchAction extends FenixDispatchActi
                     .findForward("readCurricularCourse"));
 
         List executionPeriodsLabels = new ArrayList();
-        InfoExecutionPeriod infoExecutionPeriod = new InfoExecutionPeriod();
-        Iterator iterExecutionPeriods = infoExecutionPeriods.iterator();
         String labelExecutionPeriod, valueExecutionPeriod;
-        while (iterExecutionPeriods.hasNext()) {
-            infoExecutionPeriod = (InfoExecutionPeriod) iterExecutionPeriods.next();
+        for (final InfoExecutionPeriod infoExecutionPeriod : infoExecutionPeriods) {
             valueExecutionPeriod = Data.format2DayMonthYear(infoExecutionPeriod.getBeginDate(), "/");
             labelExecutionPeriod = Data.format2DayMonthYear(infoExecutionPeriod.getBeginDate(), "/");
             executionPeriodsLabels.add(new LabelValueBean(labelExecutionPeriod, valueExecutionPeriod));

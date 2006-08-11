@@ -12,7 +12,7 @@ import net.sourceforge.fenixedu.constants.publication.PublicationConstants;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseWithInfoDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourseWithExecutionPeriod;
-import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriodWithInfoExecutionYear;
+import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacherWithPersonAndCategory;
 import net.sourceforge.fenixedu.dataTransferObject.SiteView;
@@ -159,7 +159,7 @@ public class ReadTeacherInformation extends Service {
 
         // FIXME possible cause of error: this execution period is used for
         // what?
-        infoSiteTeacherInformation.setInfoExecutionPeriod(InfoExecutionPeriodWithInfoExecutionYear
+        infoSiteTeacherInformation.setInfoExecutionPeriod(InfoExecutionPeriod
                 .newInfoFromDomain(executionYear.getExecutionPeriods().get(0)));
         infoSiteTeacherInformation.setPersonFunctions(getPersonFunctions(teacher, executionYear));
 

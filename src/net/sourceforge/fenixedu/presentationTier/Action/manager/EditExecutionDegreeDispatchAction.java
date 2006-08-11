@@ -162,8 +162,7 @@ public class EditExecutionDegreeDispatchAction extends FenixDispatchAction {
 
         InfoExecutionDegree infoExecutionDegree = new InfoExecutionDegree();
 
-        InfoExecutionYear infoExecutionYear = new InfoExecutionYear();
-        infoExecutionYear.setIdInternal(new Integer(executionYearString));
+        InfoExecutionYear infoExecutionYear = new InfoExecutionYear(rootDomainObject.readExecutionYearByOID(Integer.valueOf(executionYearString)));
         infoExecutionDegree.setInfoExecutionYear(infoExecutionYear);
 
         //InfoTeacher infoTeacher = new InfoTeacher();

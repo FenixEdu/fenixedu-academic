@@ -4,7 +4,7 @@
 package net.sourceforge.fenixedu.dataTransferObject.teacher.credits;
 
 import net.sourceforge.fenixedu.dataTransferObject.DataTranferObject;
-import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriodWithInfoExecutionYear;
+import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.credits.InfoCredits;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoCategory;
 
@@ -25,7 +25,7 @@ public class TeacherCreditsDetailsDTO extends DataTranferObject {
 
     private Integer teacherNumber;
 
-    private InfoExecutionPeriodWithInfoExecutionYear infoExecution;
+    private InfoExecutionPeriod infoExecution;
 
     /**
      * @param infoTeacher
@@ -51,7 +51,7 @@ public class TeacherCreditsDetailsDTO extends DataTranferObject {
     /**
      * @return Returns the infoExecution.
      */
-    public InfoExecutionPeriodWithInfoExecutionYear getInfoExecution() {
+    public InfoExecutionPeriod getInfoExecution() {
         return infoExecution;
     }
 
@@ -59,7 +59,7 @@ public class TeacherCreditsDetailsDTO extends DataTranferObject {
      * @param infoExecution
      *            The infoExecution to set.
      */
-    public void setInfoExecution(InfoExecutionPeriodWithInfoExecutionYear infoExecution) {
+    public void setInfoExecution(InfoExecutionPeriod infoExecution) {
         this.infoExecution = infoExecution;
     }
 

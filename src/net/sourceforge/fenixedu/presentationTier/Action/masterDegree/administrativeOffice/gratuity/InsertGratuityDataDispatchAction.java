@@ -93,10 +93,7 @@ public class InsertGratuityDataDispatchAction extends DispatchAction {
         String executionYear = (String) gratuityForm.get("executionYear");
         request.setAttribute("executionYear", executionYear);
 
-        InfoExecutionYear infoExecutionYear = new InfoExecutionYear();
-        infoExecutionYear.setYear(executionYear);
-
-        Object args[] = { infoExecutionYear, DegreeType.MASTER_DEGREE };
+        Object args[] = { executionYear, DegreeType.MASTER_DEGREE };
         List executionDegreeList = null;
         try {
             executionDegreeList = (List) ServiceManagerServiceFactory.executeService(userView,

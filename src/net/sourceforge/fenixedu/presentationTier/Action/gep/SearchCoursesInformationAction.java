@@ -613,7 +613,7 @@ public class SearchCoursesInformationAction extends SearchAction {
 
         request.setAttribute("executionYear", infoExecutionYear.getYear());
 
-        Object[] args = { infoExecutionYear, DegreeType.DEGREE };
+        Object[] args = { executionYear, DegreeType.DEGREE };
         List infoExecutionDegrees = (List) ServiceUtils.executeService(userView,
                 "ReadExecutionDegreesByExecutionYearAndDegreeType", args);
         Collections.sort(infoExecutionDegrees, new Comparator() {

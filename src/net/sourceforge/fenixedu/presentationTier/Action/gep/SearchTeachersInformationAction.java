@@ -114,7 +114,7 @@ public class SearchTeachersInformationAction extends SearchAction {
 
         request.setAttribute("executionYear", infoExecutionYear.getYear());
 
-        Object[] argsExecutionDegrees = { infoExecutionYear, DegreeType.DEGREE };
+        Object[] argsExecutionDegrees = { executionYear, DegreeType.DEGREE };
         List infoExecutionDegrees = (List) ServiceUtils.executeService(userView,
                 "ReadExecutionDegreesByExecutionYearAndDegreeType", argsExecutionDegrees);
         Collections.sort(infoExecutionDegrees, new Comparator() {

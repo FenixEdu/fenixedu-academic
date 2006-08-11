@@ -22,7 +22,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlanWithD
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegreeWithInfoDegreeCurricularPlanAndExecutionYear;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
-import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriodWithInfoExecutionYear;
+import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
@@ -170,7 +170,7 @@ public class ChooseExamsMapContextDANew extends FenixContextDispatchAction {
                     executionDegree = degreeCurricularPlan.getMostRecentExecutionDegree();
                     
                     if (executionDegree != null) {
-                        infoExecutionPeriod = InfoExecutionPeriodWithInfoExecutionYear.newInfoFromDomain(executionDegree.getExecutionYear().readExecutionPeriodForSemester(1));
+                        infoExecutionPeriod = InfoExecutionPeriod.newInfoFromDomain(executionDegree.getExecutionYear().readExecutionPeriodForSemester(1));
                         request.setAttribute("indice", infoExecutionPeriod.getIdInternal());
                         chooseExamContextoForm.set("indice", infoExecutionPeriod.getIdInternal());
                         RequestUtils.setExecutionPeriodToRequest(request, infoExecutionPeriod);

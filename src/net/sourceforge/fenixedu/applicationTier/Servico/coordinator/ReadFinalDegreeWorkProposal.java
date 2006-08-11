@@ -123,9 +123,8 @@ public class ReadFinalDegreeWorkProposal extends Service {
                         proposal.getScheduleing().getExecutionDegrees().iterator().next().getIdInternal());
 
                 if (executionDegree.getExecutionYear() != null) {
-                    infoProposal.getExecutionDegree().setInfoExecutionYear(new InfoExecutionYear());
-                    infoProposal.getExecutionDegree().getInfoExecutionYear().setYear(
-                            executionDegree.getExecutionYear().getYear());
+                    infoProposal.getExecutionDegree().setInfoExecutionYear(
+                            InfoExecutionYear.newInfoFromDomain(executionDegree.getExecutionYear()));
                 }
 
                 if (executionDegree.getDegreeCurricularPlan() != null

@@ -8,7 +8,7 @@ import java.lang.reflect.InvocationTargetException;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
-import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriodWithInfoExecutionYear;
+import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
 import net.sourceforge.fenixedu.domain.inquiries.OldInquiriesSummary;
 
@@ -19,7 +19,7 @@ import net.sourceforge.fenixedu.domain.inquiries.OldInquiriesSummary;
 public class InfoOldInquiriesSummary extends InfoObject implements Comparable{
 
 	private Integer keyExecutionPeriod;
-	private InfoExecutionPeriodWithInfoExecutionYear executionPeriod;
+	private InfoExecutionPeriod executionPeriod;
 	
 	private Integer inquiryId;
 	
@@ -407,7 +407,7 @@ public class InfoOldInquiriesSummary extends InfoObject implements Comparable{
     /**
      * @param executionPeriod The executionPeriod to set.
      */
-    public void setExecutionPeriod(InfoExecutionPeriodWithInfoExecutionYear executionPeriod) {
+    public void setExecutionPeriod(InfoExecutionPeriod executionPeriod) {
         this.executionPeriod = executionPeriod;
     }
     /**
@@ -646,7 +646,7 @@ public class InfoOldInquiriesSummary extends InfoObject implements Comparable{
         setRepresentationQuota(oldInquiresSummary.getRepresentationQuota());
         setRoomAverage(oldInquiresSummary.getRoomAverage());
         setSemester(oldInquiresSummary.getSemester());
-        this.setExecutionPeriod(InfoExecutionPeriodWithInfoExecutionYear.newInfoFromDomain(oldInquiresSummary.getExecutionPeriod()));
+        this.setExecutionPeriod(InfoExecutionPeriod.newInfoFromDomain(oldInquiresSummary.getExecutionPeriod()));
         this.setDegree(InfoDegree.newInfoFromDomain(oldInquiresSummary.getDegree()));
         
     }

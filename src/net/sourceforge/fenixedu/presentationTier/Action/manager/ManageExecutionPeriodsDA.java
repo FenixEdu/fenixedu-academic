@@ -13,16 +13,10 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.manager.CreateExecutionPeriod.ExistingExecutionPeriod;
-import net.sourceforge.fenixedu.applicationTier.Servico.manager.CreateExecutionPeriod.InvalidExecutionPeriod;
-import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
-import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
 import net.sourceforge.fenixedu.dataTransferObject.comparators.ExecutionPeriodComparator;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.exceptions.InvalidArgumentsActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
@@ -31,7 +25,6 @@ import net.sourceforge.fenixedu.util.PeriodState;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import org.apache.struts.validator.DynaValidatorForm;
 
 /**
  * @author Luis Crus & Sara Ribeiro
@@ -69,88 +62,16 @@ public class ManageExecutionPeriodsDA extends FenixDispatchAction {
     /**
      * Prepare information to show existing execution periods and working areas.
      */
-    public ActionForward createExecutionPeriod(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws Exception {
-
-        DynaValidatorForm createExecutionPeriodForm = (DynaValidatorForm) form;
-
-        Integer semesterToCreate = new Integer((String) createExecutionPeriodForm
-                .get("semesterToCreate"));
-        String yearToCreate = (String) createExecutionPeriodForm.get("yearToCreate");
-        Integer semesterToExportDataFrom = new Integer((String) createExecutionPeriodForm
-                .get("semesterToExportDataFrom"));
-        String yearToExportDataFrom = (String) createExecutionPeriodForm.get("yearToExportDataFrom");
-
-        IUserView userView = SessionUtils.getUserView(request);
-
-        InfoExecutionYear infoExecutionYearToCreate = new InfoExecutionYear(yearToCreate);
-        InfoExecutionPeriod infoExecutionPeriodToCreate = new InfoExecutionPeriod("" + semesterToCreate
-                + " Semestre", infoExecutionYearToCreate);
-        infoExecutionPeriodToCreate.setSemester(new Integer(semesterToCreate.intValue()));
-        InfoExecutionYear infoExecutionYearToExportDataFrom = new InfoExecutionYear(yearToExportDataFrom);
-        InfoExecutionPeriod infoExecutionPeriodToExportDataFrom = new InfoExecutionPeriod(""
-                + semesterToExportDataFrom + " Semestre", infoExecutionYearToExportDataFrom);
-        infoExecutionPeriodToExportDataFrom.setSemester(semesterToExportDataFrom);
-
-        Object[] argsCreateWorkingArea = { infoExecutionPeriodToCreate,
-                infoExecutionPeriodToExportDataFrom };
-        try {
-            ServiceUtils.executeService(userView, "CreateExecutionPeriod", argsCreateWorkingArea);
-        } catch (InvalidExecutionPeriod ex) {
-            throw new InvalidArgumentsActionException("O periodo indicado para importar os dados", ex);
-        } catch (ExistingExecutionPeriod ex) {
-            throw new ExistingActionException("O periodo indicado", ex);
-        } catch (FenixServiceException ex) {
-            throw new FenixActionException("Problemas a criar o periodo execução.", ex);
-        }
-
-        return mapping.findForward("Sucess");
-    }
-
-    /**
-     * Prepare information to show existing execution periods and working areas.
-     */
-    public ActionForward deleteWorkingArea(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws Exception {
-
-        String year = request.getParameter("year");
-        Integer semester = new Integer(request.getParameter("semester"));
-
-        InfoExecutionYear infoExecutionYear = new InfoExecutionYear(year);
-        InfoExecutionPeriod infoExecutionPeriod = new InfoExecutionPeriod("AT:" + semester
-                + "º Semestre", infoExecutionYear);
-        infoExecutionPeriod.setSemester(new Integer(semester.intValue()));
-
-        IUserView userView = SessionUtils.getUserView(request);
-
-        Object[] argsDeleteWorkingArea = { infoExecutionPeriod };
-        try {
-            ServiceUtils.executeService(userView, "DeleteWorkingArea", argsDeleteWorkingArea);
-        } catch (FenixServiceException ex) {
-            throw new FenixActionException("Problemas a apagar a área de trabalho.", ex);
-        }
-
-        return prepare(mapping, form, request, response);
-    }
-
-    /**
-     * Prepare information to show existing execution periods and working areas.
-     */
     public ActionForward alterExecutionPeriodState(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-        Integer semester = new Integer(request.getParameter("semester"));
-        String periodStateToSet = request.getParameter("periodState");
-
-        InfoExecutionYear infoExecutionYear = new InfoExecutionYear(request.getParameter("year"));
-        InfoExecutionPeriod infoExecutionPeriod = new InfoExecutionPeriod(semester + " Semestre",
-                infoExecutionYear);
-        infoExecutionPeriod.setSemester(semester);
-
+        final String year = request.getParameter("year");
+        final Integer semester = new Integer(request.getParameter("semester"));
+        final String periodStateToSet = request.getParameter("periodState");
         final IUserView userView = SessionUtils.getUserView(request);
         final PeriodState periodState = new PeriodState(periodStateToSet);
 
-        final Object[] args = { infoExecutionPeriod, periodState };
+        final Object[] args = { year, semester, periodState };
         try {
             ServiceUtils.executeService(userView, "AlterExecutionPeriodState", args);
         } catch (InvalidArgumentsServiceException ex) {

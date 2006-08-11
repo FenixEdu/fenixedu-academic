@@ -205,17 +205,8 @@ public class FinalDegreeWorkProposalsDispatchAction extends FenixContextDispatch
     public class INFO_EXECUTION_YEAR_INCREMENTER implements Transformer {
 
         public Object transform(Object arg0) {
-            InfoExecutionYear infoExecutionYear = (InfoExecutionYear) arg0;
-            int seperatorIndex = infoExecutionYear.getYear().indexOf("/");
-            String year1 = infoExecutionYear.getYear().substring(0, seperatorIndex);
-            String year2 = infoExecutionYear.getYear().substring(seperatorIndex + 1,
-                    infoExecutionYear.getYear().length());
-
-            InfoExecutionYear transformedInfoExecutionYear = new InfoExecutionYear();
-            transformedInfoExecutionYear.setIdInternal(infoExecutionYear.getIdInternal());
-            transformedInfoExecutionYear.setYear("" + ((new Integer(year1)).intValue() + 1) + "/"
-                    + ((new Integer(year2)).intValue() + 1));
-            return transformedInfoExecutionYear;
+            final InfoExecutionYear infoExecutionYear = (InfoExecutionYear) arg0;
+            return infoExecutionYear.getNextInfoExecutionYear();
         }
     }
 

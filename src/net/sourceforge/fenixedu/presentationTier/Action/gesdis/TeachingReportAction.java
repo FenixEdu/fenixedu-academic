@@ -14,10 +14,10 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterExce
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
-import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
 import net.sourceforge.fenixedu.dataTransferObject.SiteView;
 import net.sourceforge.fenixedu.dataTransferObject.gesdis.InfoCourseReport;
 import net.sourceforge.fenixedu.dataTransferObject.gesdis.InfoSiteCourseInformation;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
@@ -62,14 +62,8 @@ public class TeachingReportAction extends DispatchAction {
             BeanUtils.copyProperties(infoCourseReport, dynaForm);
             Integer executionCourseId = (Integer) dynaForm.get("executionCourseId");
             Integer executionPeriodId = (Integer) dynaForm.get("executionPeriodId");
-            Integer executionYearId = (Integer) dynaForm.get("executionYearId");
 
-            InfoExecutionYear infoExecutionYear = new InfoExecutionYear();
-            infoExecutionYear.setIdInternal(executionYearId);
-
-            InfoExecutionPeriod infoExecutionPeriod = new InfoExecutionPeriod();
-            infoExecutionPeriod.setIdInternal(executionPeriodId);
-            infoExecutionPeriod.setInfoExecutionYear(infoExecutionYear);
+            InfoExecutionPeriod infoExecutionPeriod = new InfoExecutionPeriod(RootDomainObject.getInstance().readExecutionPeriodByOID(executionPeriodId));
 
             InfoExecutionCourse infoExecutionCourse = new InfoExecutionCourse();
             infoExecutionCourse.setIdInternal(executionCourseId);

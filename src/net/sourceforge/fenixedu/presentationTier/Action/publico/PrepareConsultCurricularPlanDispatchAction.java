@@ -142,15 +142,9 @@ public class PrepareConsultCurricularPlanDispatchAction extends FenixContextDisp
         DynaActionForm escolherContextoForm = (DynaActionForm) form;
         HttpSession session = request.getSession(true);
         SessionUtils.removeAttributtes(session, SessionConstants.CONTEXT_PREFIX);
-        InfoExecutionPeriod infoExecutionPeriod = new InfoExecutionPeriod();
 
         Integer executionYear = (Integer) escolherContextoForm.get("indice");
 
-        InfoExecutionYear infoExecutionYear = new InfoExecutionYear();
-        infoExecutionYear.setIdInternal(executionYear);
-        infoExecutionPeriod.setInfoExecutionYear(infoExecutionYear);
-
-        Integer semestre = infoExecutionPeriod.getSemester();
         Integer degreeCurricularPlanId = (Integer) request.getAttribute("degreeCurricularPlanID");
         if (degreeCurricularPlanId == null)
             degreeCurricularPlanId = Integer.valueOf(request.getParameter("degreeCurricularPlanID"));
@@ -166,10 +160,9 @@ public class PrepareConsultCurricularPlanDispatchAction extends FenixContextDisp
         Integer curricularYear = (Integer) escolherContextoForm.get("curYear");
         request.setAttribute("index", index);
         request.setAttribute("curYear", curricularYear);
-        request.setAttribute("semester", semestre);
         escolherContextoForm.set("index", index);
 
-        Object args[] = { infoExecutionYear };
+        Object args[] = { executionYear };
         List infoExecutionPeriodList;
         try {
             infoExecutionPeriodList = (List) ServiceUtils.executeService(null,

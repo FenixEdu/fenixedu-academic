@@ -7,7 +7,7 @@ package net.sourceforge.fenixedu.dataTransferObject.teacher.workTime;
 import java.util.Date;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
-import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriodWithInfoExecutionYear;
+import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacherWithPerson;
@@ -136,7 +136,7 @@ public class InfoTeacherInstitutionWorkTime extends InfoObject {
 
     public static InfoTeacherInstitutionWorkTime newInfoFromDomain(TeacherInstitutionWorkTime item) {
         InfoTeacher infoTeacher = InfoTeacherWithPerson.newInfoFromDomain(item.getTeacher());
-        InfoExecutionPeriod infoExecutionPeriod = InfoExecutionPeriodWithInfoExecutionYear.newInfoFromDomain(item.getExecutionPeriod());
+        InfoExecutionPeriod infoExecutionPeriod = InfoExecutionPeriod.newInfoFromDomain(item.getExecutionPeriod());
 
         InfoTeacherInstitutionWorkTime infoTeacherInstitutionWorkTime = new InfoTeacherInstitutionWorkTime();
         infoTeacherInstitutionWorkTime.setEndTime(item.getEndTime());

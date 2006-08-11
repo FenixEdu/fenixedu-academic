@@ -15,7 +15,6 @@ import net.sourceforge.fenixedu.dataTransferObject.ISiteComponent;
 import net.sourceforge.fenixedu.dataTransferObject.InfoClass;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
-import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriodWithInfoExecutionYear;
 import net.sourceforge.fenixedu.dataTransferObject.InfoLesson;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteClasses;
@@ -93,8 +92,7 @@ public class PublicSiteComponentBuilder {
         infoLessonList = new ArrayList();
 
         ExecutionPeriod executionPeriod = domainClass.getExecutionPeriod();
-        InfoExecutionPeriod infoExecutionPeriod = InfoExecutionPeriodWithInfoExecutionYear
-                .newInfoFromDomain(executionPeriod);
+        InfoExecutionPeriod infoExecutionPeriod = InfoExecutionPeriod.newInfoFromDomain(executionPeriod);
 
         for (final Iterator classIterator = shiftList.iterator(); classIterator.hasNext();) {
             Shift shift = (Shift) classIterator.next();
@@ -168,17 +166,8 @@ public class PublicSiteComponentBuilder {
      * @param period
      * @return
      */
-    private InfoExecutionPeriod copyIExecutionPeriod2InfoExecutionPeriod(ExecutionPeriod period) {
-        InfoExecutionPeriod infoExecutionPeriod = null;
-        if (period != null) {
-            infoExecutionPeriod = new InfoExecutionPeriod();
-            infoExecutionPeriod.setIdInternal(period.getIdInternal());
-            infoExecutionPeriod.setName(period.getName());
-            infoExecutionPeriod.setState(period.getState());
-            infoExecutionPeriod.setBeginDate(period.getBeginDate());
-            infoExecutionPeriod.setEndDate(period.getEndDate());
-            infoExecutionPeriod.setSemester(period.getSemester());
-        }
-        return infoExecutionPeriod;
+    private InfoExecutionPeriod copyIExecutionPeriod2InfoExecutionPeriod(ExecutionPeriod executionPeriod) {
+        return InfoExecutionPeriod.newInfoFromDomain(executionPeriod);
     }
+
 }

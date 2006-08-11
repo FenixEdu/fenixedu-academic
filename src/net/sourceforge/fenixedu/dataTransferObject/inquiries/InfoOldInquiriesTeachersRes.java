@@ -8,7 +8,7 @@ import java.lang.reflect.InvocationTargetException;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
-import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriodWithInfoExecutionYear;
+import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
 import net.sourceforge.fenixedu.domain.inquiries.OldInquiriesTeachersRes;
@@ -25,7 +25,7 @@ public class InfoOldInquiriesTeachersRes extends InfoObject implements
 	private Integer gepExecutionYear;
 
 	private Integer keyExecutionPeriod;
-	private InfoExecutionPeriodWithInfoExecutionYear executionPeriod;
+	private InfoExecutionPeriod executionPeriod;
 	private Integer semester;
 
 	private Integer keyDegree;
@@ -419,7 +419,7 @@ public class InfoOldInquiriesTeachersRes extends InfoObject implements
     /**
      * @param executionPeriod The executionPeriod to set.
      */
-    public void setExecutionPeriod(InfoExecutionPeriodWithInfoExecutionYear executionPeriod) {
+    public void setExecutionPeriod(InfoExecutionPeriod executionPeriod) {
         this.executionPeriod = executionPeriod;
     }
     /**
@@ -851,7 +851,7 @@ public class InfoOldInquiriesTeachersRes extends InfoObject implements
             setTolerance3_8(oldInquiresTeachersRes.getTolerance3_8());
             setTolerance3_9(oldInquiresTeachersRes.getTolerance3_9());
             setTotalNumberAnswers(oldInquiresTeachersRes.getTotalNumberAnswers());
-            this.setExecutionPeriod(InfoExecutionPeriodWithInfoExecutionYear.newInfoFromDomain(oldInquiresTeachersRes.getExecutionPeriod()));
+            this.setExecutionPeriod(InfoExecutionPeriod.newInfoFromDomain(oldInquiresTeachersRes.getExecutionPeriod()));
             this.setDegree(InfoDegree.newInfoFromDomain(oldInquiresTeachersRes.getDegree()));
             this.setTeacher(InfoTeacher.newInfoFromDomain(oldInquiresTeachersRes.getTeacher()));
         }

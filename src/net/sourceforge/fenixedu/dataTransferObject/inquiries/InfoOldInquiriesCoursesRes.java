@@ -8,7 +8,7 @@ import java.lang.reflect.InvocationTargetException;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
-import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriodWithInfoExecutionYear;
+import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
 import net.sourceforge.fenixedu.domain.inquiries.OldInquiriesCoursesRes;
 
@@ -25,7 +25,7 @@ public class InfoOldInquiriesCoursesRes extends InfoObject implements
 	private Integer semester;
 	
 	private Integer keyExecutionPeriod;
-	private InfoExecutionPeriodWithInfoExecutionYear executionPeriod;
+	private InfoExecutionPeriod executionPeriod;
 	
 	private Integer keyDegree;
 	private InfoDegree degree;
@@ -303,7 +303,7 @@ public class InfoOldInquiriesCoursesRes extends InfoObject implements
     /**
      * @param executionPeriod The executionPeriod to set.
      */
-    public void setExecutionPeriod(InfoExecutionPeriodWithInfoExecutionYear executionPeriod) {
+    public void setExecutionPeriod(InfoExecutionPeriod executionPeriod) {
         this.executionPeriod = executionPeriod;
     }
     /**
@@ -670,7 +670,7 @@ public class InfoOldInquiriesCoursesRes extends InfoObject implements
         setTolerance2_6(oldInquiriesCoursesRes.getTolerance2_6());
         //setTolerance2_7(oldInquiriesCoursesRes.getTolerance2_7());
         setTolerance2_8(oldInquiriesCoursesRes.getTolerance2_8());
-        this.setExecutionPeriod(InfoExecutionPeriodWithInfoExecutionYear.newInfoFromDomain(oldInquiriesCoursesRes.getExecutionPeriod()));
+        this.setExecutionPeriod(InfoExecutionPeriod.newInfoFromDomain(oldInquiriesCoursesRes.getExecutionPeriod()));
         this.setDegree(InfoDegree.newInfoFromDomain(oldInquiriesCoursesRes.getDegree()));
         
     }

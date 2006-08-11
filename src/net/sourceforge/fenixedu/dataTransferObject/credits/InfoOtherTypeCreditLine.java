@@ -4,7 +4,7 @@
 package net.sourceforge.fenixedu.dataTransferObject.credits;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
-import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriodWithInfoExecutionYear;
+import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
 import net.sourceforge.fenixedu.domain.credits.OtherTypeCreditLine;
 
@@ -65,7 +65,7 @@ public class InfoOtherTypeCreditLine extends InfoCreditLine {
 
     public static InfoOtherTypeCreditLine newInfoFromDomain(OtherTypeCreditLine otherTypeCreditLine) {
         InfoTeacher infoTeacher = InfoTeacher.newInfoFromDomain(otherTypeCreditLine.getTeacher());
-        InfoExecutionPeriod infoExecutionPeriod = InfoExecutionPeriodWithInfoExecutionYear.newInfoFromDomain(otherTypeCreditLine.getExecutionPeriod());
+        InfoExecutionPeriod infoExecutionPeriod = InfoExecutionPeriod.newInfoFromDomain(otherTypeCreditLine.getExecutionPeriod());
 
         InfoOtherTypeCreditLine infoOtherTypeCreditLine = new InfoOtherTypeCreditLine();
         infoOtherTypeCreditLine.setCredits(otherTypeCreditLine.getCredits());

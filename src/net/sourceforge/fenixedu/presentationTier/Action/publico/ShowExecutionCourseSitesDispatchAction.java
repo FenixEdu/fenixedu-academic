@@ -13,7 +13,7 @@ import net.sourceforge.fenixedu.commons.collections.Table;
 import net.sourceforge.fenixedu.dataTransferObject.ExecutionCourseView;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
-import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriodWithInfoExecutionYear;
+import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixContextDispatchAction;
@@ -94,7 +94,7 @@ public class ShowExecutionCourseSitesDispatchAction extends FenixContextDispatch
         InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request.getAttribute(SessionConstants.EXECUTION_PERIOD);
         final ExecutionPeriod executionPeriod = rootDomainObject.readExecutionPeriodByOID(infoExecutionPeriod.getIdInternal());
 
-        InfoExecutionPeriod previousInfoExecutionPeriod = (executionPeriod != null) ? InfoExecutionPeriodWithInfoExecutionYear.newInfoFromDomain(executionPeriod.getPreviousExecutionPeriod()) : null;
+        InfoExecutionPeriod previousInfoExecutionPeriod = (executionPeriod != null) ? InfoExecutionPeriod.newInfoFromDomain(executionPeriod.getPreviousExecutionPeriod()) : null;
 
         request.setAttribute("previousInfoExecutionPeriod", previousInfoExecutionPeriod);
         return previousInfoExecutionPeriod;

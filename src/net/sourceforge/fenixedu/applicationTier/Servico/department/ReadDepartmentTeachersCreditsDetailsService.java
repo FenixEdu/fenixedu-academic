@@ -6,7 +6,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriodWithInfoExecutionYear;
+import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.credits.InfoCredits;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoCategory;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.credits.TeacherCreditsDetailsDTO;
@@ -23,7 +23,7 @@ public class ReadDepartmentTeachersCreditsDetailsService extends Service {
 
         final ExecutionPeriod executionPeriod = readExecutionPeriod(searchParameters);
 
-        final InfoExecutionPeriodWithInfoExecutionYear infoExecutionPeriod = (InfoExecutionPeriodWithInfoExecutionYear) InfoExecutionPeriodWithInfoExecutionYear
+        final InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) InfoExecutionPeriod
                 .newInfoFromDomain(executionPeriod);
 
         List<Teacher> teachers = doSearch(searchParameters);

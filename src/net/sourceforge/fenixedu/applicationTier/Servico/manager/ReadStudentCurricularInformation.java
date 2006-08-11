@@ -15,7 +15,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
 import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolment;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
-import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlan;
@@ -116,8 +115,7 @@ public class ReadStudentCurricularInformation extends Service {
 
                 final InfoEnrollmentGrade infoEnrollmentGrade = new InfoEnrollmentGrade();
                 final InfoEnrolment infoEnrolment = new InfoEnrolment();
-                final InfoExecutionPeriod infoExecutionPeriod = new InfoExecutionPeriod();
-                final InfoExecutionYear infoExecutionYear = new InfoExecutionYear();
+                final InfoExecutionPeriod infoExecutionPeriod = InfoExecutionPeriod.newInfoFromDomain(executionPeriod);
                 final InfoCurricularCourse infoCurricularCourse = new InfoCurricularCourse();
                 final InfoDegreeCurricularPlan infoDegreeCurricularPlan = new InfoDegreeCurricularPlan();
                 final InfoDegree infoDegree = new InfoDegree();
@@ -125,12 +123,9 @@ public class ReadStudentCurricularInformation extends Service {
                 infoEnrollmentGrade.setInfoEnrollment(infoEnrolment);
                 infoEnrolment.setIdInternal(enrollment.getIdInternal());
                 infoEnrolment.setInfoExecutionPeriod(infoExecutionPeriod);
-                infoExecutionPeriod.setInfoExecutionYear(infoExecutionYear);
                 infoEnrolment.setInfoCurricularCourse(infoCurricularCourse);
                 infoCurricularCourse.setInfoDegreeCurricularPlan(infoDegreeCurricularPlan);
                 infoDegreeCurricularPlan.setInfoDegree(infoDegree);
-                infoExecutionYear.setYear(executionYear.getYear());
-                infoExecutionPeriod.setSemester(executionPeriod.getSemester());
                 infoDegree.setSigla(degree.getSigla());
                 infoCurricularCourse.setName(curricularCourse.getName());
                 infoCurricularCourse.setCode(curricularCourse.getCode());

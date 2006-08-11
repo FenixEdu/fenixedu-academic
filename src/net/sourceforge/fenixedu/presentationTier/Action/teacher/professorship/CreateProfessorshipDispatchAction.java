@@ -72,7 +72,7 @@ public class CreateProfessorshipDispatchAction extends DispatchAction {
     private List getExecutionDegrees(HttpServletRequest request) throws FenixServiceException, FenixFilterException {
         InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request
                 .getAttribute("infoExecutionPeriod");
-        Object[] arguments = { infoExecutionPeriod.getInfoExecutionYear(), null };
+        Object[] arguments = { infoExecutionPeriod.getInfoExecutionYear().getYear(), null };
         List<InfoExecutionDegree> executionDegrees = (List) executeService(
                 "ReadExecutionDegreesByExecutionYearAndDegreeType", request, arguments);
 

@@ -18,6 +18,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShiftGroupStatistics;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
@@ -53,7 +54,7 @@ public class ExecutionCourseInfoDispatchAction extends DispatchAction {
         InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) session
                 .getAttribute(SessionConstants.MASTER_DEGREE);
 
-        Object argsReadExecutionPeriods[] = { infoExecutionDegree.getInfoExecutionYear() };
+        Object argsReadExecutionPeriods[] = { infoExecutionDegree.getInfoExecutionYear().getIdInternal() };
         List executionPeriods = (List) ServiceManagerServiceFactory.executeService(userView,
                 "ReadExecutionPeriodsByExecutionYear", argsReadExecutionPeriods);
 
@@ -168,8 +169,7 @@ public class ExecutionCourseInfoDispatchAction extends DispatchAction {
         }
         request.setAttribute("executionCourseName", executionCourseName);
 
-        InfoExecutionPeriod infoExecutionPeriod = new InfoExecutionPeriod();
-        infoExecutionPeriod.setIdInternal(executionPeriodOID);
+        InfoExecutionPeriod infoExecutionPeriod = InfoExecutionPeriod.newInfoFromDomain(RootDomainObject.getInstance().readExecutionPeriodByOID(executionPeriodOID));
 
         if ((executionCourseName != null) && (executionCourseName.length() == 0)) {
             executionCourseName = null;

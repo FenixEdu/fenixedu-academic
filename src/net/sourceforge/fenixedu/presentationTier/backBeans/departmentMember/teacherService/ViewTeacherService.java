@@ -269,14 +269,10 @@ public class ViewTeacherService extends FenixBackingBean {
 
 	private List<Integer> buildExecutionPeriodsIDsList()
 			throws FenixFilterException, FenixServiceException {
-		InfoExecutionYear infoExecutionYear = (InfoExecutionYear) ServiceUtils
-				.executeService(getUserView(), "ReadExecutionYearByID",
-						new Object[] { this.getSelectedExecutionYearID() });
-
 		List<InfoExecutionPeriod> executionPeriods = (List<InfoExecutionPeriod>) ServiceUtils
 				.executeService(getUserView(),
 						"ReadExecutionPeriodsByExecutionYear",
-						new Object[] { infoExecutionYear });
+						new Object[] { this.getSelectedExecutionYearID() });
 
 		Collections.sort(executionPeriods, new BeanComparator("beginDate"));
 

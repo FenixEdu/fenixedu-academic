@@ -1059,16 +1059,6 @@
 		</filterChains>
 	</service>
 	<service>
-		<name>CreateExecutionPeriod</name>
-		<implementationClass> 
-            net.sourceforge.fenixedu.applicationTier.Servico.manager.CreateExecutionPeriod</implementationClass>
-		<description />
-		<isTransactional>true</isTransactional>
-		<filterChains>
-			<chain name="ManagerAuthorization" />
-		</filterChains>
-	</service>
-	<service>
 		<name>ReadAvailableExecutionPeriods</name>
 		<implementationClass> 
             net.sourceforge.fenixedu.applicationTier.Servico.manager.ReadAvailableExecutionPeriods</implementationClass>

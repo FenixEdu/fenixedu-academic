@@ -2,19 +2,17 @@ package net.sourceforge.fenixedu.applicationTier.Servico.manager;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.util.PeriodState;
 
 public class AlterExecutionPeriodState extends Service {
 
-    public void run(InfoExecutionPeriod infoExecutionPeriod, PeriodState periodState)
+    public void run(final String year, final Integer semester, final PeriodState periodState)
             throws FenixServiceException {
 
-        final ExecutionPeriod executionPeriod = ExecutionYear.readExecutionYearByName(
-                infoExecutionPeriod.getInfoExecutionYear().getYear()).readExecutionPeriodForSemester(infoExecutionPeriod.getSemester()); 
-
+        final ExecutionYear executionYear = ExecutionYear.readExecutionYearByName(year);
+        final ExecutionPeriod executionPeriod = executionYear.readExecutionPeriodForSemester(semester);
         if (executionPeriod == null) {
             throw new InvalidExecutionPeriod();
         }
