@@ -81,20 +81,7 @@ public class ShowClassesDispatchAction extends FenixContextDispatchAction {
     }
 
     private ClassView newClassView(final SchoolClass schoolClass) {
-    	final ExecutionDegree executionDegree = schoolClass.getExecutionDegree();
-    	final DegreeCurricularPlan degreeCurricularPlan = executionDegree.getDegreeCurricularPlan();
-    	final Degree degree = degreeCurricularPlan.getDegree();
-
-    	final ClassView classView = new ClassView();
-    	classView.setClassName(schoolClass.getNome());
-    	classView.setClassOID(schoolClass.getIdInternal());
-    	classView.setCurricularYear(schoolClass.getAnoCurricular());
-    	classView.setDegreeCurricularPlanID(degreeCurricularPlan.getIdInternal());
-    	classView.setDegreeInitials(degree.getSigla());
-    	classView.setExecutionPeriodOID(schoolClass.getExecutionPeriod().getIdInternal());
-    	classView.setNameDegreeCurricularPlan(degreeCurricularPlan.getName());
-    	classView.setSemester(schoolClass.getExecutionPeriod().getSemester());
-    	return classView;
+    	return new ClassView(schoolClass);
 	}
 
     private void getInfoDegreeCurricularPlan(HttpServletRequest request, Integer degreeOID) throws FenixServiceException, FenixFilterException {

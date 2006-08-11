@@ -4,89 +4,59 @@
  */
 package net.sourceforge.fenixedu.dataTransferObject;
 
-import java.io.Serializable;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
 
 /**
- *
+ * 
  * @author Luis Cruz
  * @version 1.1, Nov 5, 2004
  * @since 1.1
- *
+ * 
  */
-public class ExecutionCourseView implements Serializable
-{
-	
-	private Integer executionCourseOID;
-    private String executionCourseName;
-    private Integer semester;
+public class ExecutionCourseView {
+
+    private final ExecutionCourse executionCourse;
+
+    public ExecutionCourseView(final ExecutionCourse executionCourse) {
+        this.executionCourse = executionCourse;
+    }
+
     private Integer curricularYear;
-    private Integer executionPeriodOID;
-    
+
     private String anotation;
-    
+
     private String degreeCurricularPlanAnotation;
 
     public String getAnotation() {
         return anotation;
     }
-    
     public void setAnotation(String anotation) {
         this.anotation = anotation;
     }
-    
-    public Integer getCurricularYear()
-    {
+    public Integer getCurricularYear() {
         return curricularYear;
     }
-    public void setCurricularYear(Integer curricularYear)
-    {
+    public void setCurricularYear(Integer curricularYear) {
         this.curricularYear = curricularYear;
     }
-    public String getExecutionCourseName()
-    {
-        return executionCourseName;
-    }
-    public void setExecutionCourseName(String executionCourseName)
-    {
-        this.executionCourseName = executionCourseName;
-    }
-    public Integer getExecutionCourseOID()
-    {
-        return executionCourseOID;
-    }
-    public void setExecutionCourseOID(Integer executionCourseOID)
-    {
-        this.executionCourseOID = executionCourseOID;
-    }
-    public Integer getSemester()
-    {
-        return semester;
-    }
-    public void setSemester(Integer semester)
-    {
-        this.semester = semester;
-    }
-	/**
-	 * @return Returns the executionPeriodOID.
-	 */
-	public Integer getExecutionPeriodOID() {
-		return executionPeriodOID;
-	}
-	/**
-	 * @param executionPeriodOID The executionPeriodOID to set.
-	 */
-	public void setExecutionPeriodOID(Integer executionPeriodOID) {
-		this.executionPeriodOID = executionPeriodOID;
-	}
-
     public String getDegreeCurricularPlanAnotation() {
         return degreeCurricularPlanAnotation;
     }
-    
-
-    public void setDegreeCurricularPlanAnotation(
-            String degreeCurricularPlanAnotation) {
+    public void setDegreeCurricularPlanAnotation(String degreeCurricularPlanAnotation) {
         this.degreeCurricularPlanAnotation = degreeCurricularPlanAnotation;
     }
-    
+
+    public String getExecutionCourseName() {
+        return executionCourse.getNome();
+    }
+    public Integer getExecutionCourseOID() {
+        return executionCourse.getIdInternal();
+    }
+    public Integer getSemester() {
+        return executionCourse.getExecutionPeriod().getSemester();
+    }
+    public Integer getExecutionPeriodOID() {
+        return executionCourse.getExecutionPeriod().getIdInternal();
+    }
+
 }

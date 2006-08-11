@@ -35,15 +35,7 @@ public class ReadClassesForCurrentAndPreviousPeriodByDegree extends Service {
             SchoolClass klass = (SchoolClass) iterator.next();
             if (isInPeriodsAndForDegree(klass, degree, currentExecutionPeriod,
                     previouseExecutionPeriod)) {
-                ClassView classView = new ClassView();
-                classView.setClassName(klass.getNome());
-                classView.setClassOID(klass.getIdInternal());
-                classView.setCurricularYear(klass.getAnoCurricular());
-                classView.setSemester(klass.getExecutionPeriod().getSemester());
-                classView.setDegreeCurricularPlanID(klass.getExecutionDegree().getDegreeCurricularPlan().getIdInternal());
-                classView.setDegreeInitials(klass.getExecutionDegree().getDegreeCurricularPlan().getDegree().getSigla());
-                classView.setNameDegreeCurricularPlan(klass.getExecutionDegree().getDegreeCurricularPlan().getName());
-                classView.setExecutionPeriodOID(klass.getExecutionPeriod().getIdInternal());
+                ClassView classView = new ClassView(klass);
                 classViews.add(classView);
             }
         }

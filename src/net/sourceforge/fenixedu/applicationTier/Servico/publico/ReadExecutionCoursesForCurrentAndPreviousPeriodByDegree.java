@@ -37,12 +37,8 @@ public class ReadExecutionCoursesForCurrentAndPreviousPeriodByDegree extends Ser
                             String key = generateExecutionCourseKey(executionCourse,curricularCourseScope);
 
                             if (!processedExecutionCourses.contains(key)) {
-                                ExecutionCourseView executionCourseView = new ExecutionCourseView();
-                                executionCourseView.setExecutionCourseOID(executionCourse.getIdInternal());
-                                executionCourseView.setExecutionCourseName(executionCourse.getNome());
-                                executionCourseView.setSemester(executionCourse.getExecutionPeriod().getSemester());
+                                ExecutionCourseView executionCourseView = new ExecutionCourseView(executionCourse);
                                 executionCourseView.setCurricularYear(curricularCourseScope.getCurricularSemester().getCurricularYear().getYear());
-                                executionCourseView.setExecutionPeriodOID(executionCourse.getExecutionPeriod().getIdInternal());
                                 executionCourseView.setAnotation(curricularCourseScope.getAnotation());
                                 executionCourseView.setDegreeCurricularPlanAnotation(degreeCurricularPlan.getAnotation());
                                 

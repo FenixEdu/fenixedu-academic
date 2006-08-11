@@ -4,71 +4,51 @@
  */
 package net.sourceforge.fenixedu.dataTransferObject;
 
-import java.io.Serializable;
+import net.sourceforge.fenixedu.domain.SchoolClass;
 
 /**
  *
  * @author Luis Cruz
  *
  */
-public class ClassView implements Serializable {
+public class ClassView {
 
-    private Integer classOID;
-    private String className;
-    private Integer semester;
-    private Integer curricularYear;
+    private final SchoolClass schoolClass;
 
-    private Integer degreeCurricularPlanID;
-    private String degreeInitials;
-    private String nameDegreeCurricularPlan;
-    private Integer executionPeriodOID;
+    public ClassView(final SchoolClass schoolClass) {
+        this.schoolClass = schoolClass;
+    }
 
     public String getClassName() {
-        return className;
+        return schoolClass.getNome();
     }
-    public void setClassName(String className) {
-        this.className = className;
-    }
+
     public Integer getClassOID() {
-        return classOID;
+        return schoolClass.getIdInternal();
     }
-    public void setClassOID(Integer classOID) {
-        this.classOID = classOID;
-    }
+
     public Integer getCurricularYear() {
-        return curricularYear;
+        return schoolClass.getAnoCurricular();
     }
-    public void setCurricularYear(Integer curricularYear) {
-        this.curricularYear = curricularYear;
-    }
+
     public Integer getSemester() {
-        return semester;
+        return schoolClass.getExecutionPeriod().getSemester();
     }
-    public void setSemester(Integer semester) {
-        this.semester = semester;
-    }
+
     public Integer getDegreeCurricularPlanID() {
-        return degreeCurricularPlanID;
+        return schoolClass.getExecutionDegree().getDegreeCurricularPlan().getIdInternal();
     }
-    public void setDegreeCurricularPlanID(Integer degreeCurricularPlanID) {
-        this.degreeCurricularPlanID = degreeCurricularPlanID;
-    }
+
     public String getDegreeInitials() {
-        return degreeInitials;
+        return schoolClass.getExecutionDegree().getDegreeCurricularPlan().getDegree().getSigla();
     }
-    public void setDegreeInitials(String degreeInitials) {
-        this.degreeInitials = degreeInitials;
-    }
+
     public Integer getExecutionPeriodOID() {
-        return executionPeriodOID;
+        return schoolClass.getExecutionPeriod().getIdInternal();
     }
-    public void setExecutionPeriodOID(Integer executionPeriodOID) {
-        this.executionPeriodOID = executionPeriodOID;
-    }
+
     public String getNameDegreeCurricularPlan() {
-        return nameDegreeCurricularPlan;
+        return schoolClass.getExecutionDegree().getDegreeCurricularPlan().getName();
     }
-    public void setNameDegreeCurricularPlan(String nameDegreeCurricularPlan) {
-        this.nameDegreeCurricularPlan = nameDegreeCurricularPlan;
-    }
+
 }
