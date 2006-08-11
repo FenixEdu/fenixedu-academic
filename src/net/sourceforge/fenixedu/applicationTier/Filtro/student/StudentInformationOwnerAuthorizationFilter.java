@@ -15,15 +15,6 @@ import pt.utl.ist.berserk.ServiceResponse;
  */
 public class StudentInformationOwnerAuthorizationFilter extends Filtro {
 
-    public StudentInformationOwnerAuthorizationFilter() {
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see pt.utl.ist.berserk.logic.filterManager.IFilter#execute(pt.utl.ist.berserk.ServiceRequest,
-     *      pt.utl.ist.berserk.ServiceResponse)
-     */
     public void execute(ServiceRequest request, ServiceResponse response) throws Exception {
         IUserView id = getRemoteUser(request);
 
@@ -33,26 +24,9 @@ public class StudentInformationOwnerAuthorizationFilter extends Filtro {
         }
     }
 
-    /**
-     * @param id
-     * @param objects
-     * @return
-     */
     private boolean curriculumOwner(IUserView id, Object[] arguments) {
-        StudentCurricularPlan studentCurricularPlan;
-        try {
-            studentCurricularPlan = rootDomainObject.readStudentCurricularPlanByOID((Integer) arguments[1]);
-            if (studentCurricularPlan == null) {
-                return false;
-            }
-            if (!studentCurricularPlan.getStudent().getPerson().getUsername().equals(id.getUtilizador())) {
-                return false;
-            }
-        } catch (Exception exception) {
-            exception.printStackTrace();
-            return false;
-        }
-        return true;
+        final StudentCurricularPlan studentCurricularPlan = rootDomainObject.readStudentCurricularPlanByOID((Integer) arguments[1]);
+        return studentCurricularPlan != null && studentCurricularPlan.getStudent().getPerson() == id.getPerson();
     }
 
     protected RoleType getRoleType() {

@@ -7,6 +7,7 @@ package net.sourceforge.fenixedu.applicationTier.Filtro.coordinator;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.framework.DomainObjectAuthorizationFilter;
 import net.sourceforge.fenixedu.domain.Coordinator;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -21,7 +22,8 @@ public class DegreeCurricularPlanAuthorizationFilter extends DomainObjectAuthori
     @Override
     protected boolean verifyCondition(IUserView id, Integer degreeCurricularPlanID)
             throws ExcepcaoPersistencia {
-        final Teacher teacher = Teacher.readTeacherByUsername(id.getUtilizador());
+        final Person person = id.getPerson();
+        final Teacher teacher = person == null ? null : person.getTeacher();
 
         for (final Coordinator coordinator : teacher.getCoordinators()) {
             if (coordinator.getExecutionDegree().getDegreeCurricularPlan().getIdInternal().equals(

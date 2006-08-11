@@ -11,7 +11,6 @@ import java.util.List;
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoNonAffiliatedTeacher;
-import net.sourceforge.fenixedu.dataTransferObject.util.CopyUtils;
 import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.domain.inquiries.InquiriesTeacher;
 import net.sourceforge.fenixedu.util.InquiriesUtil;
@@ -248,7 +247,17 @@ public class InfoInquiriesTeacher extends InfoObject implements Comparable {
     public void copyFromDomain(InquiriesTeacher inquiriesTeacher) throws IllegalAccessException, InvocationTargetException, NoSuchMethodException {
         if (inquiriesTeacher != null) {
             super.copyFromDomain(inquiriesTeacher);
-	        CopyUtils.copyPropertiesNullConvertion(this, inquiriesTeacher);
+
+            setGlobalAppreciation(inquiriesTeacher.getGlobalAppreciation());
+            setIdInternal(inquiriesTeacher.getIdInternal());
+            setStudentAssiduity(inquiriesTeacher.getStudentAssiduity());
+            setTeacherAssiduity(inquiriesTeacher.getTeacherAssiduity());
+            setTeacherAssurance(inquiriesTeacher.getTeacherAssurance());
+            setTeacherAvailability(inquiriesTeacher.getTeacherAvailability());
+            setTeacherClarity(inquiriesTeacher.getTeacherClarity());
+            setTeacherInterestStimulation(inquiriesTeacher.getTeacherInterestStimulation());
+            setTeacherPunctuality(inquiriesTeacher.getTeacherPunctuality());
+            setTeacherReasoningStimulation(inquiriesTeacher.getTeacherReasoningStimulation());
 	        this.setInquiriesCourse(InfoInquiriesCourse.newInfoFromDomain(inquiriesTeacher.getInquiriesCourse()));
 			this.getClassTypes().add(inquiriesTeacher.getShiftType());
 			

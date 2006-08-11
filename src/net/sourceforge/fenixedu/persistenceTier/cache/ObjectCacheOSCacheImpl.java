@@ -6,7 +6,6 @@ package net.sourceforge.fenixedu.persistenceTier.cache;
 
 import java.util.Properties;
 
-import net.sourceforge.fenixedu.dataTransferObject.util.InfoObjectCache;
 import net.sourceforge.fenixedu.persistenceTier.cache.logging.CacheLog;
 
 import org.apache.ojb.broker.Identity;
@@ -62,7 +61,6 @@ public class ObjectCacheOSCacheImpl implements ObjectCache {
 
     public void remove(Identity oid) {
         try {
-            InfoObjectCache.remove(InfoObjectCache.getKey(oid));
             admin.flushEntry(oid.toString());
             CacheLog.incrementRemoves();
             numberOfCachedItems--;
@@ -73,7 +71,6 @@ public class ObjectCacheOSCacheImpl implements ObjectCache {
 
     private void removeForInsert(Identity oid) {
         try {
-            InfoObjectCache.remove(InfoObjectCache.getKey(oid));
             admin.flushEntry(oid.toString());
             CacheLog.incrementRemoves();
         } catch (Exception e) {
@@ -84,7 +81,6 @@ public class ObjectCacheOSCacheImpl implements ObjectCache {
     public void clear() {
         if (admin != null) {
             try {
-                InfoObjectCache.clear();
                 admin.flushAll();
                 CacheLog.incrementClears();
                 numberOfCachedItems = 0;

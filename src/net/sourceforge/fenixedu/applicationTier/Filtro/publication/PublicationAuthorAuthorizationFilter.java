@@ -15,9 +15,8 @@ public class PublicationAuthorAuthorizationFilter extends DomainObjectAuthorizat
     }
 
     protected boolean verifyCondition(IUserView id, Integer objectId) {
-
         final Publication publication = (Publication) rootDomainObject.readPublicationByOID(objectId);
-        final Person possibleAuthor = Person.readPersonByUsername(id.getUtilizador());
+        final Person possibleAuthor = id.getPerson();
         for (final Authorship authorship : publication.getPublicationAuthorships()) {
             if (authorship.getAuthor() == possibleAuthor) {
                 return true;
@@ -29,4 +28,5 @@ public class PublicationAuthorAuthorizationFilter extends DomainObjectAuthorizat
     protected boolean verifyCondition(IUserView id, InfoPublication infoPublication) {
         return verifyCondition(id,infoPublication.getIdInternal());
     }
+
 }

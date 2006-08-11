@@ -10,7 +10,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
-import net.sourceforge.fenixedu.dataTransferObject.util.CopyUtils;
 import net.sourceforge.fenixedu.domain.inquiries.InquiriesRegistry;
 
 /**
@@ -117,8 +116,7 @@ public class InfoInquiriesRegistry extends InfoObject implements Comparable {
         if (inquiriesRegistry != null) {
             super.copyFromDomain(inquiriesRegistry);
         }
-        
-        CopyUtils.copyPropertiesNullConvertion(this, inquiriesRegistry);
+        this.setIdInternal(inquiriesRegistry.getIdInternal());
         this.setExecutionPeriod(InfoExecutionPeriod.newInfoFromDomain(inquiriesRegistry.getExecutionPeriod()));
         this.setExecutionCourse(InfoExecutionCourse.newInfoFromDomain(inquiriesRegistry.getExecutionCourse()));
         this.setStudent(InfoStudent.newInfoFromDomain(inquiriesRegistry.getStudent()));        

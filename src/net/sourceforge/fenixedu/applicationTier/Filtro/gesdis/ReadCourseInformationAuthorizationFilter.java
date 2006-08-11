@@ -4,11 +4,10 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Filtro.gesdis;
 
-import java.util.List;
-
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.framework.DomainObjectAuthorizationFilter;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.person.RoleType;
@@ -25,21 +24,18 @@ public class ReadCourseInformationAuthorizationFilter extends DomainObjectAuthor
     }
 
     protected boolean verifyCondition(IUserView id, Integer executionCourseID) {
-        try {
-            Teacher teacher = Teacher.readTeacherByUsername(id.getUtilizador());
+        final Person person = id.getPerson();
+        final Teacher teacher = person == null ? null : person.getTeacher();
 
-            ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseID);
-
-            List<Professorship> professorships = executionCourse.getProfessorships();
-
-            for (Professorship professorship : professorships) {
-                if (professorship.getTeacher().equals(teacher))
+        if (teacher != null) {
+            for (final Professorship professorship : teacher.getProfessorshipsSet()) {
+                final ExecutionCourse executionCourse = professorship.getExecutionCourse();
+                if (executionCourse.getIdInternal().equals(executionCourseID)) {
                     return true;
+                }
             }
-
-            return false;
-        } catch (Exception e) {
-            return false;
         }
+        return false;
     }
+
 }

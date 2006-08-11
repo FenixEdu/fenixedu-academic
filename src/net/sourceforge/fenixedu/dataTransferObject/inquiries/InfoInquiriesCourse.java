@@ -11,7 +11,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
-import net.sourceforge.fenixedu.dataTransferObject.util.CopyUtils;
 import net.sourceforge.fenixedu.domain.inquiries.InquiriesCourse;
 import net.sourceforge.fenixedu.util.InquiriesUtil;
 
@@ -315,7 +314,15 @@ public class InfoInquiriesCourse extends InfoObject implements Comparable {
     public void copyFromDomain(InquiriesCourse inquiriesCourse) throws IllegalAccessException, InvocationTargetException, NoSuchMethodException {
         if (inquiriesCourse != null) {
             super.copyFromDomain(inquiriesCourse);
-	        CopyUtils.copyPropertiesNullConvertion(this, inquiriesCourse);
+            this.setClassCoordination(inquiriesCourse.getClassCoordination());
+            this.setContributionForGraduation(inquiriesCourse.getContributionForGraduation());
+            this.setEvaluationMethodAdequation(inquiriesCourse.getEvaluationMethodAdequation());
+            this.setGlobalAppreciation(inquiriesCourse.getGlobalAppreciation());
+            this.setPreviousKnowledgeArticulation(inquiriesCourse.getPreviousKnowledgeArticulation());
+            this.setStudentCurricularYear(inquiriesCourse.getStudentCurricularYear());
+            this.setStudentFirstEnrollment(inquiriesCourse.getStudentFirstEnrollment());
+            this.setStudyElementsContribution(inquiriesCourse.getStudyElementsContribution());
+            this.setWeeklySpentHours(inquiriesCourse.getWeeklySpentHours());
 	        this.setExecutionPeriod(InfoExecutionPeriod.newInfoFromDomain(inquiriesCourse.getExecutionPeriod()));
 	        this.setExecutionCourse(InfoExecutionCourse.newInfoFromDomain(inquiriesCourse.getExecutionCourse()));
 	        this.setExecutionDegreeCourse(InfoExecutionDegree.newInfoFromDomain(inquiriesCourse.getExecutionDegreeCourse()));

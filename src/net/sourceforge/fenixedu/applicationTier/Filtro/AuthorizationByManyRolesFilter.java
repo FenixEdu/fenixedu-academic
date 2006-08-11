@@ -4,14 +4,8 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Filtro;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
-import net.sourceforge.fenixedu.domain.Role;
-import net.sourceforge.fenixedu.domain.person.RoleType;
 import pt.utl.ist.berserk.ServiceRequest;
 import pt.utl.ist.berserk.ServiceResponse;
 
@@ -30,17 +24,6 @@ public abstract class AuthorizationByManyRolesFilter extends Filtro {
                 || (id.getRoleTypes() == null)) {
             throw new NotAuthorizedFilterException(messageException);
         }
-    }
-
-    /**
-     * @return The Needed Roles to Execute The Service but with InfoObjects
-     */
-    protected List<RoleType> getRoleList(Collection<Role> roles) {
-        List<RoleType> result = new ArrayList<RoleType>();
-        for (final Role role : roles) {
-        	result.add(role.getRoleType());
-        }
-        return result;
     }
 
     /**

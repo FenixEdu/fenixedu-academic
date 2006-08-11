@@ -24,5 +24,5 @@ public class OldInquiriesCoursesRes extends OldInquiriesCoursesRes_Base {
 		removeDegree();
 		deleteDomainObject();
 	}
-	
+
 }

@@ -12,6 +12,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorized
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.gesdis.InfoCourseReport;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.person.RoleType;
@@ -25,32 +26,17 @@ import pt.utl.ist.berserk.ServiceResponse;
  */
 public class EditCourseInformationAuthorizationFilter extends AuthorizationByRoleFilter {
 
-    public EditCourseInformationAuthorizationFilter() {
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see ServidorAplicacao.Filtro.AuthorizationByRoleFilter#getRoleType()
-     */
     protected RoleType getRoleType() {
         return RoleType.TEACHER;
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see ServidorAplicacao.Filtro.AuthorizationByRoleFilter#execute(pt.utl.ist.berserk.ServiceRequest,
-     *      pt.utl.ist.berserk.ServiceResponse)
-     */
     public void execute(ServiceRequest request, ServiceResponse response) throws Exception {
         IUserView id = getRemoteUser(request);
         Object[] arguments = getServiceCallArguments(request);
 
         try {
             if (((id != null && id.getRoleTypes() != null && !id.hasRoleType(getRoleType())))
-                    || (id == null)
-                    || (id.getRoleTypes() == null)
+                    || (id == null) || (id.getRoleTypes() == null)
                     || (!isResponsibleFor(id, (InfoCourseReport) arguments[1]))) {
                 throw new NotAuthorizedException();
             }
@@ -60,21 +46,19 @@ public class EditCourseInformationAuthorizationFilter extends AuthorizationByRol
     }
 
     private boolean isResponsibleFor(IUserView id, InfoCourseReport infoCourseReport) {
-        try {
-            Teacher teacher = Teacher.readTeacherByUsername(id.getUtilizador());
-            InfoExecutionCourse infoExecutionCourse = infoCourseReport.getInfoExecutionCourse();
-            ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(infoExecutionCourse.getIdInternal());
+        final Person person = id.getPerson();
+        final Teacher teacher = person == null ? null : person.getTeacher();
 
-            List<Professorship> responsiblesFor = executionCourse.responsibleFors();
-            
-			for(Professorship professorship : responsiblesFor){
-			    if(professorship.getTeacher().equals(teacher))
-                    return true;
-            }            
-            return false;
+        InfoExecutionCourse infoExecutionCourse = infoCourseReport.getInfoExecutionCourse();
+        ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(infoExecutionCourse
+                .getIdInternal());
 
-        } catch (Exception e) {
-            return false;
+        List<Professorship> responsiblesFor = executionCourse.responsibleFors();
+
+        for (Professorship professorship : responsiblesFor) {
+            if (professorship.getTeacher().equals(teacher))
+                return true;
         }
+        return false;
     }
 }

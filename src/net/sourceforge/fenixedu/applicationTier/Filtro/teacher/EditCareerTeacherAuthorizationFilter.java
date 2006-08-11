@@ -8,6 +8,7 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.framework.EditDomainObjectAuthorizationFilter;
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoCareer;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.teacher.Career;
@@ -15,32 +16,27 @@ import net.sourceforge.fenixedu.domain.teacher.Career;
 /**
  * @author Leonor Almeida
  * @author Sergio Montelobo
- *  
+ * 
  */
 public class EditCareerTeacherAuthorizationFilter extends EditDomainObjectAuthorizationFilter {
 
     protected boolean verifyCondition(IUserView id, InfoObject infoOject) {
-        try {
-            InfoCareer infoCareer = (InfoCareer) infoOject;
+        final Person person = id.getPerson();
+        final Teacher teacher = person == null ? null : person.getTeacher();
 
-            Teacher teacher = Teacher.readTeacherByUsername(id.getUtilizador());
+        final InfoCareer infoCareer = (InfoCareer) infoOject;
 
-            boolean isNew = (infoCareer.getIdInternal() == null)
-                    || (infoCareer.getIdInternal().equals(new Integer(0)));
-            if (isNew)
-                return true;
+        boolean isNew = infoCareer.getIdInternal() == null || infoCareer.getIdInternal().intValue() == 0;
+        if (isNew)
+            return true;
 
-            Career career = rootDomainObject.readCareerByOID(infoCareer
-                    .getIdInternal());
+        final Career career = rootDomainObject.readCareerByOID(infoCareer.getIdInternal());
 
-            return career.getTeacher().equals(teacher);
-        } catch (Exception e) {
-            return false;
-        }
+        return career.getTeacher() == teacher;
     }
 
     protected RoleType getRoleType() {
         return RoleType.TEACHER;
     }
-    
+
 }

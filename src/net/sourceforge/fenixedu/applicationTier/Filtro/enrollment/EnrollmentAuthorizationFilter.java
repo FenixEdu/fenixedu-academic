@@ -174,7 +174,7 @@ public class EnrollmentAuthorizationFilter extends AuthorizationByManyRolesFilte
     }
 
     protected Teacher readTeacher(IUserView id) {
-        return Teacher.readTeacherByUsername(id.getUtilizador());
+        return id.getPerson().getTeacher();
     }
 
     protected boolean verifyCoordinator(Teacher teacher, Object[] args) {

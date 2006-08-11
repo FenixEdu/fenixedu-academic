@@ -7,7 +7,6 @@ package net.sourceforge.fenixedu.dataTransferObject.inquiries;
 import java.lang.reflect.InvocationTargetException;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
-import net.sourceforge.fenixedu.dataTransferObject.util.CopyUtils;
 import net.sourceforge.fenixedu.domain.inquiries.InquiriesRoom;
 import net.sourceforge.fenixedu.util.InquiriesUtil;
 
@@ -132,8 +131,11 @@ public class InfoInquiriesRoom extends InfoObject implements Comparable {
         if (inquiriesRoom != null) {
             super.copyFromDomain(inquiriesRoom);
         }
-        
-        CopyUtils.copyPropertiesNullConvertion(this, inquiriesRoom);
+
+        this.setEnvironmentalConditions(inquiriesRoom.getEnvironmentalConditions());
+        this.setEnvironmentalConditions(inquiriesRoom.getEnvironmentalConditions());
+        this.setIdInternal(inquiriesRoom.getIdInternal());
+        this.setSpaceAdequation(inquiriesRoom.getSpaceAdequation());
         this.setInquiriesCourse(InfoInquiriesCourse.newInfoFromDomain(inquiriesRoom.getInquiriesCourse()));
         this.setRoom(InfoRoomWithInfoInquiriesRoom.newInfoFromDomain(inquiriesRoom.getRoom()));        
     }

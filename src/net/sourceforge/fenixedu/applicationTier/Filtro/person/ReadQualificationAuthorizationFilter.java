@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.applicationTier.Filtro.person;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.Filtro;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
-import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Qualification;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import pt.utl.ist.berserk.ServiceRequest;
@@ -46,7 +45,7 @@ public class ReadQualificationAuthorizationFilter extends Filtro {
                     valid = true;
                 }
 
-                if (id.hasRoleType(getRoleTypeTeacher()) && isOwnQualification(id.getUtilizador(), objectId)) {
+                if (id.hasRoleType(getRoleTypeTeacher()) && isOwnQualification(id, objectId)) {
                     valid = true;
                 }
 
@@ -66,8 +65,8 @@ public class ReadQualificationAuthorizationFilter extends Filtro {
         return qualification.getPerson().hasGrantOwner();
     }
 
-    private boolean isOwnQualification(String username, Integer objectId) {
+    private boolean isOwnQualification(IUserView userView, Integer objectId) {
         final Qualification qualification = rootDomainObject.readQualificationByOID(objectId);
-        return qualification.getPerson() == Person.readPersonByUsername(username);
+        return qualification.getPerson() == userView.getPerson();
     }
 }

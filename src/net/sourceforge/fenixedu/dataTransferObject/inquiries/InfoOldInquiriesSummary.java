@@ -10,7 +10,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriodWithInfoExecutionYear;
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
-import net.sourceforge.fenixedu.dataTransferObject.util.CopyUtils;
 import net.sourceforge.fenixedu.domain.inquiries.OldInquiriesSummary;
 
 /**
@@ -606,8 +605,47 @@ public class InfoOldInquiriesSummary extends InfoObject implements Comparable{
         if (oldInquiresSummary != null) {
             super.copyFromDomain(oldInquiresSummary);
         }
-        
-        CopyUtils.copyPropertiesNullConvertion(this, oldInquiresSummary);
+
+        setAverage2_2(oldInquiresSummary.getAverage2_2());
+        setAverage2_3(oldInquiresSummary.getAverage2_3());
+        setAverage2_4(oldInquiresSummary.getAverage2_4());
+        setAverage2_5(oldInquiresSummary.getAverage2_5());
+        setAverage2_6(oldInquiresSummary.getAverage2_6());
+        setAverage2_7_interval(oldInquiresSummary.getAverage2_7_interval());
+        setAverage2_7_numerical(oldInquiresSummary.getAverage2_7_numerical());
+        setAverage2_8(oldInquiresSummary.getAverage2_8());
+        setAverage3_10(oldInquiresSummary.getAverage3_10());
+        setAverage3_11(oldInquiresSummary.getAverage3_11());
+        setAverage3_3_interval(oldInquiresSummary.getAverage3_3_interval());
+        setAverage3_3_numerical(oldInquiresSummary.getAverage3_3_numerical());
+        setAverage3_4_interval(oldInquiresSummary.getAverage3_4_interval());
+        setAverage3_4_numerical(oldInquiresSummary.getAverage3_4_numerical());
+        setAverage3_5(oldInquiresSummary.getAverage3_5());
+        setAverage3_6(oldInquiresSummary.getAverage3_6());
+        setAverage3_7(oldInquiresSummary.getAverage3_7());
+        setAverage3_8(oldInquiresSummary.getAverage3_8());
+        setAverage3_9(oldInquiresSummary.getAverage3_9());
+        setAverage6_1(oldInquiresSummary.getAverage6_1());
+        setAverage6_2(oldInquiresSummary.getAverage6_2());
+        setAverage6_3(oldInquiresSummary.getAverage6_3());
+        setAverageAppreciationCourse(oldInquiresSummary.getAverageAppreciationCourse());
+        setAverageAppreciationTeachers(oldInquiresSummary.getAverageAppreciationTeachers());
+        setCourseCode(oldInquiresSummary.getCourseCode());
+        setCurricularYear(oldInquiresSummary.getCurricularYear());
+        setFirstEnrollment(oldInquiresSummary.getFirstEnrollment());
+        setGepCourseId(oldInquiresSummary.getGepCourseId());
+        setGepCourseName(oldInquiresSummary.getGepCourseName());
+        setGepDegreeName(oldInquiresSummary.getGepDegreeName());
+        setGepExecutionYear(oldInquiresSummary.getGepExecutionYear());
+        setIdInternal(oldInquiresSummary.getIdInternal());
+        setInquiryId(oldInquiresSummary.getInquiryId());
+        setNumberAnswers(oldInquiresSummary.getNumberAnswers());
+        setNumberApproved(oldInquiresSummary.getNumberApproved());
+        setNumberEnrollments(oldInquiresSummary.getNumberEnrollments());
+        setNumberEvaluated(oldInquiresSummary.getNumberEvaluated());
+        setRepresentationQuota(oldInquiresSummary.getRepresentationQuota());
+        setRoomAverage(oldInquiresSummary.getRoomAverage());
+        setSemester(oldInquiresSummary.getSemester());
         this.setExecutionPeriod(InfoExecutionPeriodWithInfoExecutionYear.newInfoFromDomain(oldInquiresSummary.getExecutionPeriod()));
         this.setDegree(InfoDegree.newInfoFromDomain(oldInquiresSummary.getDegree()));
         

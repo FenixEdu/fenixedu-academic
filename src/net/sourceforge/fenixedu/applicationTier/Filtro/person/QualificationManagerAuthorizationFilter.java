@@ -55,7 +55,7 @@ public class QualificationManagerAuthorizationFilter extends Filtro {
             if (id.hasRoleType(getRoleTypeGrantOwnerManager()) && isGrantOwner(infoQualification))
                 valid = true;
 
-            if (id.hasRoleType(getRoleTypeTeacher()) && isOwnQualification(id.getUtilizador(), infoQualification))
+            if (id.hasRoleType(getRoleTypeTeacher()) && isOwnQualification(id, infoQualification))
                 valid = true;
 
             if (!valid)
@@ -76,7 +76,7 @@ public class QualificationManagerAuthorizationFilter extends Filtro {
         }
     }
 
-    private boolean isOwnQualification(String username, InfoQualification infoQualification) {
+    private boolean isOwnQualification(IUserView userView, InfoQualification infoQualification) {
         boolean isNew = (infoQualification.getIdInternal() == null)
                 || (infoQualification.getIdInternal().equals(Integer.valueOf(0)));
         if (isNew) {
@@ -84,6 +84,6 @@ public class QualificationManagerAuthorizationFilter extends Filtro {
         }
         final Qualification qualification = rootDomainObject.readQualificationByOID(infoQualification
                 .getIdInternal());
-        return qualification.getPerson() == Person.readPersonByUsername(username);
+        return qualification.getPerson() == userView.getPerson();
     }
 }

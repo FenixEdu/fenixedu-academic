@@ -8,6 +8,7 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.Filtro;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
@@ -100,7 +101,7 @@ public class EquivalenceAuthorizationFilter extends Filtro {
      * @return true/false
      */
     private boolean isThisACoordinatorOfThisStudentsDegree(IUserView userView, Registration student) {
-        List executionDegreesOfThisCoordinator = getExecutionDegreesOfThisCoordinator(userView.getUtilizador());
+        List executionDegreesOfThisCoordinator = getExecutionDegreesOfThisCoordinator(userView);
 
         List degreeCurricularPlansOfThisCoordinator = (List) CollectionUtils.collect(
                 executionDegreesOfThisCoordinator, new Transformer() {
@@ -131,8 +132,9 @@ public class EquivalenceAuthorizationFilter extends Filtro {
      * @return List
      * @throws ExcepcaoPersistencia
      */
-    private List getExecutionDegreesOfThisCoordinator(String username) {
-        Teacher teacher = Teacher.readTeacherByUsername(username);
+    private List getExecutionDegreesOfThisCoordinator(IUserView userView) {
+        final Person person = userView.getPerson();
+        final Teacher teacher = person != null ? person.getTeacher() : null;
         return teacher.getCoordinatedExecutionDegrees();
     }
 

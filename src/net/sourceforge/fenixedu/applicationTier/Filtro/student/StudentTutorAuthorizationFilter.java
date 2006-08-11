@@ -11,10 +11,10 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.AccessControlFilter;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.Registration;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import pt.utl.ist.berserk.ServiceRequest;
 import pt.utl.ist.berserk.ServiceResponse;
 import pt.utl.ist.berserk.logic.filterManager.exceptions.FilterException;
@@ -27,15 +27,6 @@ import pt.utl.ist.berserk.logic.filterManager.exceptions.FilterException;
  */
 public class StudentTutorAuthorizationFilter extends AccessControlFilter {
 
-    public StudentTutorAuthorizationFilter() {
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see pt.utl.ist.berserk.logic.filterManager.IFilter#execute(pt.utl.ist.berserk.ServiceRequest,
-     *      pt.utl.ist.berserk.ServiceResponse)
-     */
     public void execute(ServiceRequest request, ServiceResponse response) throws FilterException,
             Exception {
         IUserView id = (IUserView) request.getRequester();
@@ -50,52 +41,42 @@ public class StudentTutorAuthorizationFilter extends AccessControlFilter {
 
     }
 
-    /*
-     * (String username, StudentCurricularPlanIDDomainType curricularPlanID,
-     * EnrollmentStateSelectionType criterio)
-     */
     // devolve null se tudo OK
     // noAuthorization se algum prob
     private String studentTutor(IUserView id, Object[] arguments) {
-        try {
-            String username = (String) arguments[0];
+        String username = (String) arguments[0];
 
-            Teacher teacher = Teacher.readTeacherByUsername(id.getUtilizador());
+        final Person person = id.getPerson();
+        final Teacher teacher = person == null ? null : person.getTeacher();
 
-            Registration student = Registration.readByUsername(username);
-            if (student == null) {
-                return "noAuthorization";
-            }
-
-            List allStudents = student.getPerson().getStudents();
-            if (allStudents == null || allStudents.isEmpty()) {
-                return "noAuthorization";
-            }
-
-            if (teacher == null) {
-                return "noAuthorization";
-            }
-
-            if (!verifyStudentTutor(teacher, allStudents)) {
-                return "error.enrollment.notStudentTutor+" + student.getNumber().toString();
-            }
-        } catch (Exception exception) {
-            exception.printStackTrace();
+        Registration student = Registration.readByUsername(username);
+        if (student == null) {
             return "noAuthorization";
+        }
+
+        List allStudents = student.getPerson().getStudents();
+        if (allStudents == null || allStudents.isEmpty()) {
+            return "noAuthorization";
+        }
+
+        if (teacher == null) {
+            return "noAuthorization";
+        }
+
+        if (!verifyStudentTutor(teacher, allStudents)) {
+            return "error.enrollment.notStudentTutor+" + student.getNumber().toString();
         }
         return null;
     }
 
-    /*
-     * devolve true se teacher for tutor de algum dos students da lista
-     */
-    private boolean verifyStudentTutor(Teacher teacher, List<Registration> students) throws ExcepcaoPersistencia {
+    private boolean verifyStudentTutor(Teacher teacher, List<Registration> students) {
         for (Registration student : students) {
-            if (student.getAssociatedTutor() != null && student.getAssociatedTutor().getTeacher() == teacher) {
+            if (student.getAssociatedTutor() != null
+                    && student.getAssociatedTutor().getTeacher() == teacher) {
                 return true;
             }
         }
-    
+
         return false;
     }
 

@@ -2,14 +2,12 @@ package net.sourceforge.fenixedu.applicationTier.Filtro;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
 import net.sourceforge.fenixedu.domain.Coordinator;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
-import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
@@ -32,16 +30,6 @@ import pt.utl.ist.berserk.ServiceResponse;
  */
 public class StudentCurriculumAuthorizationFilter extends Filtro {
 
-    public StudentCurriculumAuthorizationFilter() {
-        super();
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see pt.utl.ist.berserk.logic.filterManager.IFilter#execute(pt.utl.ist.berserk.ServiceRequest,
-     *      pt.utl.ist.berserk.ServiceResponse)
-     */
     public void execute(ServiceRequest request, ServiceResponse response) throws Exception {
         IUserView id = (IUserView) request.getRequester();
         String messageException = hasProvilege(id, request.getServiceParameters().parametersArray());
@@ -51,9 +39,6 @@ public class StudentCurriculumAuthorizationFilter extends Filtro {
         }
     }
 
-    /**
-     * @return The Needed Roles to Execute The Service
-     */
     @Override
     protected Collection<RoleType> getNeededRoleTypes() {
         List<RoleType> roles = new ArrayList<RoleType>();
@@ -66,128 +51,104 @@ public class StudentCurriculumAuthorizationFilter extends Filtro {
         return roles;
     }
 
-    private List getRoleList(Collection roles) {
-        List result = new ArrayList();
-        Iterator iterator = roles.iterator();
-        while (iterator.hasNext()) {
-            result.add(((Role) iterator.next()).getRoleType());
-        }
-
-        return result;
-    }
-
-    /**
-     * @param id
-     * @param argumentos
-     * @return null if authorized string with message if not authorized
-     */
     private String hasProvilege(IUserView id, Object[] arguments) {
         Integer studentCurricularPlanID = (Integer) arguments[1];
 
         StudentCurricularPlan studentCurricularPlan = null;
 
-        // Read The DegreeCurricularPlan
-        try {
-        	studentCurricularPlan = rootDomainObject.readStudentCurricularPlanByOID(studentCurricularPlanID);
-
-        } catch (Exception e) {
-            return "noAuthorization";
-        }
+        studentCurricularPlan = rootDomainObject.readStudentCurricularPlanByOID(studentCurricularPlanID);
 
         if (studentCurricularPlan == null || studentCurricularPlan.getStudent() == null) {
             return "noAuthorization";
         }
 
-        try {
-            Registration student = studentCurricularPlan.getStudent();
+        Registration student = studentCurricularPlan.getStudent();
 
-            Group group = student.findFinalDegreeWorkGroupForCurrentExecutionYear();
-            if (group != null) {
-                ExecutionDegree executionDegree = group.getExecutionDegree();
-                for (int i = 0; i < executionDegree.getCoordinatorsList().size(); i++) {
-                    Coordinator coordinator = executionDegree.getCoordinatorsList().get(i);
-                    if (coordinator.getTeacher().getPerson().getUsername().equals(id.getUtilizador())) {
-                        // The student is a candidate for a final degree work of
-                        // the degree of the
-                        // coordinator making the request. Allow access.
-                        return null;
-                    }
-                }
-
-                for (int i = 0; i < group.getGroupProposals().size(); i++) {
-                    GroupProposal groupProposal = group.getGroupProposals().get(i);
-                    Proposal proposal = groupProposal.getFinalDegreeWorkProposal();
-                    Teacher teacher = proposal.getOrientator();
-
-                    if (teacher.getPerson().getUsername().equals(id.getUtilizador())) {
-                        // The student is a candidate for a final degree work of
-                        // oriented by the
-                        // teacher making the request. Allow access.
-                        return null;
-                    }
-
-                    teacher = proposal.getCoorientator();
-                    if (teacher != null && teacher.getPerson().getUsername().equals(id.getUtilizador())) {
-                        // The student is a candidate for a final degree work of
-                        // cooriented by the
-                        // teacher making the request. Allow access.
-                        return null;
-                    }
+        Group group = student.findFinalDegreeWorkGroupForCurrentExecutionYear();
+        if (group != null) {
+            ExecutionDegree executionDegree = group.getExecutionDegree();
+            for (int i = 0; i < executionDegree.getCoordinatorsList().size(); i++) {
+                Coordinator coordinator = executionDegree.getCoordinatorsList().get(i);
+                if (coordinator.getTeacher().getPerson().getUsername().equals(id.getUtilizador())) {
+                    // The student is a candidate for a final degree work of
+                    // the degree of the
+                    // coordinator making the request. Allow access.
+                    return null;
                 }
             }
-        } catch (Exception e) {
-            // check other possible authorizations
+
+            for (int i = 0; i < group.getGroupProposals().size(); i++) {
+                GroupProposal groupProposal = group.getGroupProposals().get(i);
+                Proposal proposal = groupProposal.getFinalDegreeWorkProposal();
+                Teacher teacher = proposal.getOrientator();
+
+                if (teacher.getPerson().getUsername().equals(id.getUtilizador())) {
+                    // The student is a candidate for a final degree work of
+                    // oriented by the
+                    // teacher making the request. Allow access.
+                    return null;
+                }
+
+                teacher = proposal.getCoorientator();
+                if (teacher != null && teacher.getPerson().getUsername().equals(id.getUtilizador())) {
+                    // The student is a candidate for a final degree work of
+                    // cooriented by the
+                    // teacher making the request. Allow access.
+                    return null;
+                }
+            }
         }
 
         if (id.hasRoleType(RoleType.MASTER_DEGREE_ADMINISTRATIVE_OFFICE)) {
             if (!studentCurricularPlan.getDegreeCurricularPlan().getDegree().getTipoCurso().equals(
                     DegreeType.MASTER_DEGREE)
-                    && !(id.hasRoleType(RoleType.DEGREE_ADMINISTRATIVE_OFFICE)
-                            || id.hasRoleType(RoleType.DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER))) {
+                    && !(id.hasRoleType(RoleType.DEGREE_ADMINISTRATIVE_OFFICE) || id
+                            .hasRoleType(RoleType.DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER))) {
                 return "noAuthorization";
             }
-            if (!(id.hasRoleType(RoleType.DEGREE_ADMINISTRATIVE_OFFICE)
-                    || id.hasRoleType(RoleType.DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER))) {
+            if (!(id.hasRoleType(RoleType.DEGREE_ADMINISTRATIVE_OFFICE) || id
+                    .hasRoleType(RoleType.DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER))) {
                 return null;
             }
         }
 
         if (arguments[0] != null) {
             if (id.hasRoleType(RoleType.COORDINATOR)) {
-                    ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID((Integer) arguments[0]);
+                ExecutionDegree executionDegree = rootDomainObject
+                        .readExecutionDegreeByOID((Integer) arguments[0]);
 
-                    if (executionDegree == null) {
-                        return "noAuthorization";
-                    }
-                    
-                    List<Coordinator> coordinatorsList = executionDegree.getCoordinatorsList();
-                    if (coordinatorsList == null) {
-                        return "noAuthorization";
-                    }
+                if (executionDegree == null) {
+                    return "noAuthorization";
+                }
 
-                    final String username = id.getUtilizador();
-                    Coordinator coordinator = (Coordinator) CollectionUtils.find(coordinatorsList,
-                            new Predicate() {
+                List<Coordinator> coordinatorsList = executionDegree.getCoordinatorsList();
+                if (coordinatorsList == null) {
+                    return "noAuthorization";
+                }
 
-                                public boolean evaluate(Object input) {
-                                    Coordinator coordinatorTemp = (Coordinator) input;
-                                    if (username.equals(coordinatorTemp.getTeacher().getPerson()
-                                            .getUsername())) {
-                                        return true;
-                                    }
-                                    return false;
+                final String username = id.getUtilizador();
+                Coordinator coordinator = (Coordinator) CollectionUtils.find(coordinatorsList,
+                        new Predicate() {
+
+                            public boolean evaluate(Object input) {
+                                Coordinator coordinatorTemp = (Coordinator) input;
+                                if (username.equals(coordinatorTemp.getTeacher().getPerson()
+                                        .getUsername())) {
+                                    return true;
                                 }
-                            });
-                    if (coordinator == null) {
-                        return "noAuthorization";
-                    }
+                                return false;
+                            }
+                        });
+                if (coordinator == null) {
+                    return "noAuthorization";
+                }
 
-                    if (!coordinator.getExecutionDegree().getDegreeCurricularPlan().getDegree()
-                            .getIdInternal().equals(
-                                    studentCurricularPlan.getDegreeCurricularPlan().getDegree()
-                                            .getIdInternal())) {
-                        return "noAuthorization";
-                    }
+                if (!coordinator.getExecutionDegree().getDegreeCurricularPlan().getDegree()
+                        .getIdInternal().equals(
+                                studentCurricularPlan.getDegreeCurricularPlan().getDegree()
+                                        .getIdInternal())) {
+                    return "noAuthorization";
+                }
                 return null;
             }
         }
@@ -204,19 +165,20 @@ public class StudentCurriculumAuthorizationFilter extends Filtro {
         }
 
         if (id.hasRoleType(RoleType.TEACHER)) {
-                Teacher teacher = Teacher.readTeacherByUsername(id.getUtilizador());
-                if (teacher == null) {
-                    return "noAuthorization";
-                }
+            Teacher teacher = Teacher.readTeacherByUsername(id.getUtilizador());
+            if (teacher == null) {
+                return "noAuthorization";
+            }
 
-                if (!verifyStudentTutor(teacher, studentCurricularPlan.getStudent())) {
-                    return new String("error.enrollment.notStudentTutor+"
-                            + studentCurricularPlan.getStudent().getNumber().toString());
-                }
+            if (!verifyStudentTutor(teacher, studentCurricularPlan.getStudent())) {
+                return new String("error.enrollment.notStudentTutor+"
+                        + studentCurricularPlan.getStudent().getNumber().toString());
+            }
             return null;
         }
 
-        if (id.hasRoleType(RoleType.DEGREE_ADMINISTRATIVE_OFFICE) || id.hasRoleType(RoleType.DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER)) {
+        if (id.hasRoleType(RoleType.DEGREE_ADMINISTRATIVE_OFFICE)
+                || id.hasRoleType(RoleType.DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER)) {
             if (!studentCurricularPlan.getDegreeCurricularPlan().getDegree().getTipoCurso().equals(
                     DegreeType.DEGREE)) {
                 return "noAuthorization";
@@ -227,6 +189,7 @@ public class StudentCurriculumAuthorizationFilter extends Filtro {
     }
 
     private boolean verifyStudentTutor(Teacher teacher, Registration registration) {
-        return registration.getAssociatedTutor() != null && registration.getAssociatedTutor().getTeacher().equals(teacher);
+        return registration.getAssociatedTutor() != null
+                && registration.getAssociatedTutor().getTeacher().equals(teacher);
     }
 }

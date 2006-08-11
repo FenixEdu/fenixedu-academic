@@ -10,7 +10,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriodWithInfoExecutionYear;
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
-import net.sourceforge.fenixedu.dataTransferObject.util.CopyUtils;
 import net.sourceforge.fenixedu.domain.inquiries.OldInquiriesCoursesRes;
 
 /**
@@ -628,8 +627,49 @@ public class InfoOldInquiriesCoursesRes extends InfoObject implements
         if (oldInquiriesCoursesRes != null) {
             super.copyFromDomain(oldInquiriesCoursesRes);
         }
-        
-        CopyUtils.copyPropertiesNullConvertion(this, oldInquiriesCoursesRes);
+
+        setAverage2_2(oldInquiriesCoursesRes.getAverage2_2());
+        setAverage2_3(oldInquiriesCoursesRes.getAverage2_3());
+        setAverage2_4(oldInquiriesCoursesRes.getAverage2_4());
+        setAverage2_5(oldInquiriesCoursesRes.getAverage2_5());
+        setAverage2_6(oldInquiriesCoursesRes.getAverage2_6());
+        setAverage2_7(oldInquiriesCoursesRes.getAverage2_7());
+        setAverage2_8(oldInquiriesCoursesRes.getAverage2_8());
+        setCourseCode(oldInquiriesCoursesRes.getCourseCode());
+        setCurricularYear(oldInquiriesCoursesRes.getCurricularYear());
+        setDeviation2_2(oldInquiriesCoursesRes.getDeviation2_2());
+        setDeviation2_3(oldInquiriesCoursesRes.getDeviation2_3());
+        setDeviation2_4(oldInquiriesCoursesRes.getDeviation2_4());
+        setDeviation2_5(oldInquiriesCoursesRes.getDeviation2_5());
+        setDeviation2_6(oldInquiriesCoursesRes.getDeviation2_6());
+        //setDeviation2_7(oldInquiriesCoursesRes.getDeviation2_7());
+        setDeviation2_8(oldInquiriesCoursesRes.getDeviation2_8());
+        setFirstEnrollment(oldInquiriesCoursesRes.getFirstEnrollment());
+        setGepCourseId(oldInquiriesCoursesRes.getGepCourseId());
+        setGepCourseName(oldInquiriesCoursesRes.getGepCourseName());
+        setGepExecutionYear(oldInquiriesCoursesRes.getGepExecutionYear());
+        setIdInternal(oldInquiriesCoursesRes.getIdInternal());
+        setInquiryId(oldInquiriesCoursesRes.getInquiryId());
+        setNumAnswers2_2(oldInquiriesCoursesRes.getNumAnswers2_2());
+        setNumAnswers2_3(oldInquiriesCoursesRes.getNumAnswers2_3());
+        setNumAnswers2_4(oldInquiriesCoursesRes.getNumAnswers2_4());
+        //setNumAnswers2_5(oldInquiriesCoursesRes.getNumAnswers2_5());
+        setNumAnswers2_6(oldInquiriesCoursesRes.getNumAnswers2_6());
+        setNumAnswers2_7(oldInquiriesCoursesRes.getNumAnswers2_7());
+        setNumAnswers2_8(oldInquiriesCoursesRes.getNumAnswers2_8());
+        setNumberAnswers(oldInquiriesCoursesRes.getNumberAnswers());
+        setNumberApproved(oldInquiriesCoursesRes.getNumberApproved());
+        setNumberEnrollments(oldInquiriesCoursesRes.getNumberEnrollments());
+        setNumberEvaluated(oldInquiriesCoursesRes.getNumberEvaluated());
+        setRepresentationQuota(oldInquiriesCoursesRes.getRepresentationQuota());
+        setSemester(oldInquiriesCoursesRes.getSemester());
+        setTolerance2_2(oldInquiriesCoursesRes.getTolerance2_2());
+        setTolerance2_3(oldInquiriesCoursesRes.getTolerance2_3());
+        setTolerance2_4(oldInquiriesCoursesRes.getTolerance2_4());
+        setTolerance2_5(oldInquiriesCoursesRes.getTolerance2_5());
+        setTolerance2_6(oldInquiriesCoursesRes.getTolerance2_6());
+        //setTolerance2_7(oldInquiriesCoursesRes.getTolerance2_7());
+        setTolerance2_8(oldInquiriesCoursesRes.getTolerance2_8());
         this.setExecutionPeriod(InfoExecutionPeriodWithInfoExecutionYear.newInfoFromDomain(oldInquiriesCoursesRes.getExecutionPeriod()));
         this.setDegree(InfoDegree.newInfoFromDomain(oldInquiriesCoursesRes.getDegree()));
         

@@ -124,35 +124,27 @@ public class ServiceManagerDefaultImpl implements IServiceManagerWrapper {
 
             return serviceResult;
         } catch (ExcepcaoPersistencia e) {
-            e.printStackTrace();
             logger.error(e);
             throw new FenixServiceException(e);
         } catch (InvalidServiceException e) {
-            e.printStackTrace();
             logger.error(e);
             throw new FenixServiceException(e);
         } catch (FilterRetrieveException e) {
-            e.printStackTrace();
             logger.error(e);
             throw new FenixServiceException(e);
         } catch (InvalidFilterExpressionException e) {
-            e.printStackTrace();
             logger.error(e);
             throw new FenixServiceException(e);
         } catch (InvalidFilterException e) {
-            e.printStackTrace();
             logger.error(e);
             throw new FenixServiceException(e);
         } catch (ClassNotIFilterException e) {
-            e.printStackTrace();
             logger.error(e);
             throw new FenixServiceException(e);
         } catch (IncompatibleFilterException e) {
-            e.printStackTrace();
             logger.error(e);
             throw new FenixServiceException(e);
         } catch (FilterChainFailedException e) {
-            e.printStackTrace();
             logger.error(e);
             FilterChainFailedException filterChainFailedException = (FilterChainFailedException) e;
             Map failedPreFilters = filterChainFailedException.getFailedFilters(FilterInvocationTimingType.PRE);
@@ -167,10 +159,10 @@ public class ServiceManagerDefaultImpl implements IServiceManagerWrapper {
             }
             throw new FenixServiceException(e);
         } catch (ServiceManagerException e) {
-            e.printStackTrace();
             logger.error(e);
             throw new FenixServiceException(e);
         } catch (Throwable t) {
+            logger.error(t);
             throw new ExceptionWrapper(t);
         }
     }

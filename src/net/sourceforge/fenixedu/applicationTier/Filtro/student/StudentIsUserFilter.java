@@ -17,21 +17,14 @@ import pt.utl.ist.berserk.logic.filterManager.exceptions.FilterException;
  */
 public class StudentIsUserFilter extends Filtro {
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see pt.utl.ist.berserk.logic.filterManager.IFilter#execute(pt.utl.ist.berserk.ServiceRequest,
-     *      pt.utl.ist.berserk.ServiceResponse)
-     */
-    public void execute(ServiceRequest serviceRequest, ServiceResponse serviceResponse)
+    public void execute(final ServiceRequest serviceRequest, final ServiceResponse serviceResponse)
             throws FilterException, Exception {
-        Integer studentId = (Integer) serviceRequest.getArguments()[0];
-        IUserView userView = getRemoteUser(serviceRequest);
-        
-        Registration student = rootDomainObject.readRegistrationByOID(
-                studentId);
-        if (student == null || userView == null
-                || !userView.getUtilizador().equals(student.getPerson().getUsername())) {
+        final Integer studentId = (Integer) serviceRequest.getServiceParameters().getParameter(0);
+        final Registration student = rootDomainObject.readRegistrationByOID(studentId);
+
+        final IUserView userView = getRemoteUser(serviceRequest);
+
+        if (student == null || userView == null || userView.getPerson() != student.getPerson()) {
             throw new NotAuthorizedFilterException();
         }
 

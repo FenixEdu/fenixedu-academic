@@ -35,8 +35,8 @@ public abstract class AbstractTeacherDepartmentAuthorization extends Filtro {
 
         Integer teacherId = getTeacherId(serviceRequest.getServiceParameters().parametersArray());
         if (teacherId != null) {
-            
-            Person requesterPerson = Person.readPersonByUsername(requester.getUtilizador());
+
+            final Person requesterPerson = requester.getPerson();
 
             Teacher teacher = rootDomainObject.readTeacherByOID(teacherId);
 

@@ -1082,4 +1082,8 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 	public Set<SchoolClass> getSchoolClasses() {
 		return getAllSchoolClassesOrBy(null);
 	}
+
+    public boolean isLecturedIn(final ExecutionYear executionYear) {
+        return getExecutionPeriod().getExecutionYear() == executionYear;
+    }
 }

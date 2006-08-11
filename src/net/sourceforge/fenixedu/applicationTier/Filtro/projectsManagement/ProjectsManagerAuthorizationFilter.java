@@ -10,6 +10,7 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.AuthorizationByRoleFilter
 import net.sourceforge.fenixedu.applicationTier.Filtro.Filtro;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
 import net.sourceforge.fenixedu.domain.Employee;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.person.RoleType;
@@ -39,7 +40,8 @@ public class ProjectsManagerAuthorizationFilter extends AuthorizationByRoleFilte
 
         ServiceParameters s = request.getServiceParameters();
 
-        Teacher teacher = Teacher.readTeacherByUsername(userView.getUtilizador());
+        final Person person = userView.getPerson();
+        final Teacher teacher = person == null ? null : person.getTeacher();
         Integer userNumber = null;
         if (teacher != null)
             userNumber = teacher.getTeacherNumber();

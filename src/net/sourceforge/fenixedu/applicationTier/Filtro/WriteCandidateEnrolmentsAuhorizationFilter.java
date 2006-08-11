@@ -2,7 +2,6 @@ package net.sourceforge.fenixedu.applicationTier.Filtro;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -11,7 +10,6 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFi
 import net.sourceforge.fenixedu.domain.Coordinator;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.MasterDegreeCandidate;
-import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -24,15 +22,6 @@ import pt.utl.ist.berserk.ServiceResponse;
  */
 public class WriteCandidateEnrolmentsAuhorizationFilter extends Filtro {
 
-    public WriteCandidateEnrolmentsAuhorizationFilter() {
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see pt.utl.ist.berserk.logic.filterManager.IFilter#execute(pt.utl.ist.berserk.ServiceRequest,
-     *      pt.utl.ist.berserk.ServiceResponse)
-     */
     public void execute(ServiceRequest request, ServiceResponse response) throws Exception {
         IUserView id = getRemoteUser(request);
         Object[] argumentos = getServiceCallArguments(request);
@@ -44,9 +33,6 @@ public class WriteCandidateEnrolmentsAuhorizationFilter extends Filtro {
         }
     }
 
-    /**
-     * @return The Needed Roles to Execute The Service
-     */
     @Override
     protected Collection<RoleType> getNeededRoleTypes() {
         List<RoleType> roles = new ArrayList<RoleType>();
@@ -55,11 +41,6 @@ public class WriteCandidateEnrolmentsAuhorizationFilter extends Filtro {
         return roles;
     }
 
-    /**
-     * @param id
-     * @param argumentos
-     * @return
-     */
     private boolean hasPrivilege(IUserView id, Object[] arguments) throws ExcepcaoPersistencia {
         if (id.hasRoleType(RoleType.MASTER_DEGREE_ADMINISTRATIVE_OFFICE)) {
             return true;
@@ -100,16 +81,6 @@ public class WriteCandidateEnrolmentsAuhorizationFilter extends Filtro {
             return true;
         }
         return true;
-    }
-
-    private List getRoleList(Collection roles) {
-        List result = new ArrayList();
-        Iterator iterator = roles.iterator();
-        while (iterator.hasNext()) {
-            result.add(((Role) iterator.next()).getRoleType());
-        }
-
-        return result;
     }
 
 }
