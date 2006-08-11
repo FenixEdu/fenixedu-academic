@@ -358,6 +358,14 @@
 		parameter="method"
         scope="request"
         validate="false">
+			<exception type="net.sourceforge.fenixedu.applicationTier.Filtro.enrollment.ClassEnrollmentAuthorizationFilter$OutsideOfCurrentClassesEnrolmentPeriodForDegreeCurricularPlan"
+					key="error.message.OutsideOfCurrentClassesEnrolmentPeriodForDegreeCurricularPlan"
+					handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"
+			/>
+			<exception type="net.sourceforge.fenixedu.applicationTier.Filtro.enrollment.ClassEnrollmentAuthorizationFilter$CurrentClassesEnrolmentPeriodUndefinedForDegreeCurricularPlan"
+					key="error.message.CurrentClassesEnrolmentPeriodUndefinedForDegreeCurricularPlan"
+					handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"
+			/>
 			<exception type="net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException"
 					key="error.message.OutsideOfCurrentClassesEnrolmentPeriodForDegreeCurricularPlan"
 					handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"
