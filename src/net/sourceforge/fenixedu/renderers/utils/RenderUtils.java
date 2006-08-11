@@ -117,12 +117,16 @@ public class RenderUtils {
     }
     
     public static String getResourceString(String bundle, String key) {
+        return getResourceString(bundle, key, null);
+    }
+    
+    public static String getResourceString(String bundle, String key, Object[] args) {
         MessageResources resources = getMessageResources(bundle);
 
         Locale locale = getLocale();
 
         if (resources.isPresent(locale, key)) {
-            return resources.getMessage(locale, key);
+            return resources.getMessage(locale, key, args);
         }
         
         if (bundle != null) {
@@ -133,7 +137,7 @@ public class RenderUtils {
         MessageResources rendererResources = getMessageResources("RENDERER_RESOURCES");
         
         if (rendererResources.isPresent(locale, key)) {
-            return rendererResources.getMessage(locale, key);
+            return rendererResources.getMessage(locale, key, args);
         }
         
         return null;
