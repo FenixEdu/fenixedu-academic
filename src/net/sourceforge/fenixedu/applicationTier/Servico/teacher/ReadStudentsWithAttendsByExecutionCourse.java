@@ -18,7 +18,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoAttendsSummary;
 import net.sourceforge.fenixedu.dataTransferObject.InfoAttendsWithInfoStudentAndPersonAndInfoEnrollment;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCompositionOfAttendAndDegreeCurricularPlanAndShiftsAndStudentGroups;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
-import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlanWithDegree;
+import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourseWithExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoForReadStudentsWithAttendsByExecutionCourse;
@@ -229,7 +229,7 @@ public class ReadStudentsWithAttendsByExecutionCourse extends Service {
 
 				StudentCurricularPlan studentCurricularPlan = getStudentCurricularPlanFromAttends(iFrequenta);
 				DegreeCurricularPlan degreeCP = studentCurricularPlan.getDegreeCurricularPlan();
-				InfoDegreeCurricularPlan infoDCP = InfoDegreeCurricularPlanWithDegree.newInfoFromDomain(degreeCP);
+				InfoDegreeCurricularPlan infoDCP = InfoDegreeCurricularPlan.newInfoFromDomain(degreeCP);
 
 				infoComposition.setAttendingStudentInfoDCP(infoDCP);
 
@@ -401,7 +401,7 @@ public class ReadStudentsWithAttendsByExecutionCourse extends Service {
 		for (Iterator dcpIterator = degreeCPs.iterator(); dcpIterator.hasNext();) {
 			DegreeCurricularPlan dcp = (DegreeCurricularPlan) dcpIterator.next();
 
-			result.add(InfoDegreeCurricularPlanWithDegree.newInfoFromDomain(dcp));
+			result.add(InfoDegreeCurricularPlan.newInfoFromDomain(dcp));
 		}
 
 		return result;

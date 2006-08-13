@@ -1,13 +1,16 @@
 package net.sourceforge.fenixedu.dataTransferObject;
 
-import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.GradeScale;
 import net.sourceforge.fenixedu.domain.degree.degreeCurricularPlan.DegreeCurricularPlanState;
+import net.sourceforge.fenixedu.util.DateFormatUtil;
 import net.sourceforge.fenixedu.util.MarkType;
 
 /**
@@ -17,98 +20,34 @@ import net.sourceforge.fenixedu.util.MarkType;
  */
 public class InfoDegreeCurricularPlan extends InfoObject implements Comparable {
 
-    private static final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
+	private DegreeCurricularPlan degreeCurricularPlan;
 
-    private InfoDegree infoDegree;
+	private boolean showEnVersion = false;
 
-    private String name;
-
-    private DegreeCurricularPlanState state;
-
-    private Date initialDate;
-
-    private Date endDate;
-
-    private Integer degreeDuration;
-
-    private Integer minimalYearForOptionalCourses;
-
-    private Double neededCredits;
-
-    private MarkType markType;
-
-    private Integer numerusClausus;
-
-    private String description;
-
-    private String descriptionEn;
-
-    private String anotation;
-    
-    private GradeScale gradeScale;
-
-    // by gedl AT rnl dot IST dot UTL dot PT (August the 3rd, 2003)
-    private List curricularCourses;
-
-    private List infoExecutionDegrees;
-
-    public InfoDegreeCurricularPlan() {
-    }
-
-    public InfoDegreeCurricularPlan(String name, InfoDegree infoDegree) {
-        this();
-        setName(name);
-        setInfoDegree(infoDegree);
-    }
-
-    public InfoDegreeCurricularPlan(String nome, InfoDegree infoDegree, DegreeCurricularPlanState state,
-            Date initialDate, Date endDate) {
-        setName(nome);
-        setInfoDegree(infoDegree);
-        setState(state);
-        setInitialDate(initialDate);
-        setEndDate(endDate);
+    public InfoDegreeCurricularPlan(final DegreeCurricularPlan degreeCurricularPlan) {
+    	this.degreeCurricularPlan = degreeCurricularPlan;
     }
 
     public boolean equals(Object obj) {
-        boolean result = false;
-        if (obj instanceof InfoDegreeCurricularPlan) {
-            InfoDegreeCurricularPlan infoCurricularPlan = (InfoDegreeCurricularPlan) obj;
-            result = (this.getName().equals(infoCurricularPlan.getName()) && this.getInfoDegree()
-                    .equals(infoCurricularPlan.getInfoDegree()));
-        }
-        return result;
+    	return obj instanceof InfoDegreeCurricularPlan && degreeCurricularPlan == ((InfoDegreeCurricularPlan) obj).degreeCurricularPlan;
     }
 
     public String toString() {
-        String result = "[" + this.getClass().getName() + ": ";
-        result += "name = " + this.name + "; ";
-        result += "initialDate = " + this.initialDate + "; ";
-        result += "endDate = " + this.endDate + "; ";
-        result += "state = " + this.state + "; ";
-        result += "NeededCredits = " + this.neededCredits + "; ";
-        result += "degree = " + this.infoDegree + ";";
-        result += "Numerus Clausus = " + this.numerusClausus + ";";
-        result += "Curricular Courses=" + this.curricularCourses + ";";
-        result += "Descrição = " + this.description + ";";
-        result += "Anotation = " + this.anotation + ";";
-        result += "degree = " + this.infoDegree + ";";
-        result += "]";
-        return result;
+    	return degreeCurricularPlan.toString();
     }
 
     public String getLabel() {
-        final String degreeName = infoDegree.getNome();
-        final String initialDateString = simpleDateFormat.format(initialDate);
+        final String degreeName = degreeCurricularPlan.getDegree().getName();
+        final String initialDateString = DateFormatUtil.format("dd/MM/yyyy", degreeCurricularPlan.getInitialDate());
 
-        final int labelSize = degreeName.length() + initialDateString.length() + name.length() + 4;
+        final int labelSize = degreeName.length() + initialDateString.length() + degreeCurricularPlan.getName().length() + 4;
 
         final StringBuilder stringBuilder = new StringBuilder(labelSize);
         stringBuilder.append(degreeName);
         stringBuilder.append(" ");
         stringBuilder.append(initialDateString);
         stringBuilder.append(" - ");
-        stringBuilder.append(name);
+        stringBuilder.append(degreeCurricularPlan.getName());
         return stringBuilder.toString();
     }
 
@@ -116,141 +55,58 @@ public class InfoDegreeCurricularPlan extends InfoObject implements Comparable {
      * @return Needed Credtis to Finish the Degree
      */
     public Double getNeededCredits() {
-        return neededCredits;
-    }
-
-    /**
-     * @param neededCredits
-     */
-    public void setNeededCredits(Double neededCredits) {
-        this.neededCredits = neededCredits;
+        return degreeCurricularPlan.getNeededCredits();
     }
 
     /**
      * @return Date
      */
     public Date getEndDate() {
-        return endDate;
-    }
-
-    /**
-     * @return InfoDegree
-     */
-    public InfoDegree getInfoDegree() {
-        return infoDegree;
+        return degreeCurricularPlan.getEndDate();
     }
 
     /**
      * @return Date
      */
     public Date getInitialDate() {
-        return initialDate;
+        return degreeCurricularPlan.getInitialDate();
     }
 
     /**
      * @return String
      */
     public String getName() {
-        return name;
+        return degreeCurricularPlan.getName();
     }
 
     public String getPresentationName() {
-        return getInfoDegree().getNome() + " " + getName();
+        return degreeCurricularPlan.getDegree().getName() + " " + getName();
     }
 
     /**
      * @return DegreeCurricularPlanState
      */
     public DegreeCurricularPlanState getState() {
-        return state;
-    }
-
-    /**
-     * Sets the endDate.
-     * 
-     * @param endDate
-     *            The endDate to set
-     */
-    public void setEndDate(Date endDate) {
-        this.endDate = endDate;
-    }
-
-    /**
-     * Sets the infoDegree.
-     * 
-     * @param infoDegree
-     *            The infoDegree to set
-     */
-    public void setInfoDegree(InfoDegree infoDegree) {
-        this.infoDegree = infoDegree;
-    }
-
-    /**
-     * Sets the initialDate.
-     * 
-     * @param initialDate
-     *            The initialDate to set
-     */
-    public void setInitialDate(Date initialDate) {
-        this.initialDate = initialDate;
-    }
-
-    /**
-     * Sets the name.
-     * 
-     * @param name
-     *            The name to set
-     */
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    /**
-     * Sets the state.
-     * 
-     * @param state
-     *            The state to set
-     */
-    public void setState(DegreeCurricularPlanState state) {
-        this.state = state;
+        return degreeCurricularPlan.getState();
     }
 
     public Integer getDegreeDuration() {
-        return degreeDuration;
+        return degreeCurricularPlan.getDegreeDuration();
     }
 
     public Integer getMinimalYearForOptionalCourses() {
-        return minimalYearForOptionalCourses;
-    }
-
-    public void setDegreeDuration(Integer integer) {
-        degreeDuration = integer;
-    }
-
-    public void setMinimalYearForOptionalCourses(Integer integer) {
-        minimalYearForOptionalCourses = integer;
+        return degreeCurricularPlan.getMinimalYearForOptionalCourses();
     }
 
     public MarkType getMarkType() {
-        return markType;
-    }
-
-    public void setMarkType(MarkType type) {
-        markType = type;
+        return degreeCurricularPlan.getMarkType();
     }
 
     /**
      * @return
      */
     public Integer getNumerusClausus() {
-        return numerusClausus;
-    }
-
-    /**
-     * @param integer
-     */
-    public void setNumerusClausus(Integer integer) {
-        numerusClausus = integer;
+        return degreeCurricularPlan.getNumerusClausus();
     }
 
     // alphabetical order
@@ -262,53 +118,37 @@ public class InfoDegreeCurricularPlan extends InfoObject implements Comparable {
     /**
      * @return
      */
-    public List getCurricularCourses() {
-        return curricularCourses;
-    }
-
-    public void setCurricularCourses(List list) {
-        curricularCourses = list;
+    public List<InfoCurricularCourse> getCurricularCourses() {
+    	final List<InfoCurricularCourse> infoCurricularCourses = new ArrayList<InfoCurricularCourse>();
+    	for (final CurricularCourse curricularCourse : degreeCurricularPlan.getCurricularCoursesSet()) {
+    		infoCurricularCourses.add(InfoCurricularCourse.newInfoFromDomain(curricularCourse));
+    	}
+        return infoCurricularCourses;
     }
 
     public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
+    	return showEnVersion ? getDescriptionEn() : degreeCurricularPlan.getDescription();
     }
 
     public String getDescriptionEn() {
-        return descriptionEn;
+        return degreeCurricularPlan.getDescriptionEn();
     }
 
-    public void setDescriptionEn(String descriptionEn) {
-        this.descriptionEn = descriptionEn;
+    /**
+     * @return InfoDegree
+     */
+    public InfoDegree getInfoDegree() {
+    	final InfoDegree infoDegree = InfoDegree.newInfoFromDomain(degreeCurricularPlan.getDegree());
+    	if (showEnVersion) { 
+    		infoDegree.prepareEnglishPresentation(Locale.ENGLISH);
+    	}
+        return infoDegree;
     }
+
 
     public void prepareEnglishPresentation(Locale locale) {
         if (locale.getLanguage().equals(Locale.ENGLISH.getLanguage())) {
-            this.description = this.descriptionEn;
-            this.infoDegree.prepareEnglishPresentation(locale);
-        }
-    }
-
-    public void copyFromDomain(DegreeCurricularPlan plan) {
-        super.copyFromDomain(plan);
-        if (plan != null) {
-            setName(plan.getName());
-            setState(plan.getState());
-            setInitialDate(plan.getInitialDate());
-            setEndDate(plan.getEndDate());
-            setMarkType(plan.getMarkType());
-            setDescription(plan.getDescription());
-            setDescriptionEn(plan.getDescriptionEn());
-            setNeededCredits(plan.getNeededCredits());
-            setDegreeDuration(plan.getDegreeDuration());
-            setMinimalYearForOptionalCourses(plan.getMinimalYearForOptionalCourses());
-            setAnotation(plan.getAnotation());
-            setGradeScale(plan.getGradeScale());
-           
+        	showEnVersion = true;
         }
     }
 
@@ -317,50 +157,23 @@ public class InfoDegreeCurricularPlan extends InfoObject implements Comparable {
      * @return
      */
     public static InfoDegreeCurricularPlan newInfoFromDomain(DegreeCurricularPlan plan) {
-        InfoDegreeCurricularPlan infoDegreeCurricularPlan = null;
-        if (plan != null) {
-            infoDegreeCurricularPlan = new InfoDegreeCurricularPlan();
-            infoDegreeCurricularPlan.copyFromDomain(plan);
-        }
-        return infoDegreeCurricularPlan;
-    }
-
-    public void copyToDomain(InfoDegreeCurricularPlan infoDegreeCurricularPlan,
-            DegreeCurricularPlan degreeCurricularPlan) {
-        super.copyToDomain(infoDegreeCurricularPlan, degreeCurricularPlan);
-        degreeCurricularPlan.setName(infoDegreeCurricularPlan.getName());
-        degreeCurricularPlan.setState(infoDegreeCurricularPlan.getState());
-        degreeCurricularPlan.setInitialDate(infoDegreeCurricularPlan.getInitialDate());
-        degreeCurricularPlan.setEndDate(infoDegreeCurricularPlan.getEndDate());
-        degreeCurricularPlan.setMarkType(infoDegreeCurricularPlan.getMarkType());
-        degreeCurricularPlan.setNeededCredits(infoDegreeCurricularPlan.getNeededCredits());
-        degreeCurricularPlan.setNumerusClausus(infoDegreeCurricularPlan.getNumerusClausus());
-        degreeCurricularPlan.setAnotation(infoDegreeCurricularPlan.getAnotation());
-        degreeCurricularPlan.setGradeScale(infoDegreeCurricularPlan.getGradeScale());
+    	return plan == null ? null : new InfoDegreeCurricularPlan(plan);
     }
 
     public String getAnotation() {
-        return anotation;
+        return degreeCurricularPlan.getAnotation();
     }
 
-    public void setAnotation(String anotation) {
-        this.anotation = anotation;
-    }
-
-    public List getInfoExecutionDegrees() {
-        return infoExecutionDegrees;
-    }
-
-    public void setInfoExecutionDegrees(List infoExecutionDegrees) {
-        this.infoExecutionDegrees = infoExecutionDegrees;
+    public List<InfoExecutionDegree> getInfoExecutionDegrees() {
+    	final List<InfoExecutionDegree> infoExeutionDegrees = new ArrayList<InfoExecutionDegree>();
+    	for (final ExecutionDegree executionDegree : degreeCurricularPlan.getExecutionDegreesSet()) {
+    		infoExeutionDegrees.add(InfoExecutionDegree.newInfoFromDomain(executionDegree));
+    	}
+        return infoExeutionDegrees;
     }
 
 	public GradeScale getGradeScale() {
-		return this.gradeScale;
-	}
-
-	public void setGradeScale(GradeScale gradeScale) {
-		this.gradeScale = gradeScale;
+		return degreeCurricularPlan.getGradeScale();
 	}
 
 }

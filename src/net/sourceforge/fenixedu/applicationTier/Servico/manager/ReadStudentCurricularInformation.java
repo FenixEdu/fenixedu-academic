@@ -11,7 +11,6 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse;
-import net.sourceforge.fenixedu.dataTransferObject.InfoDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
 import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolment;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
@@ -20,12 +19,10 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlan;
 import net.sourceforge.fenixedu.dataTransferObject.equivalence.InfoEnrollmentGrade;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
-import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.EnrolmentEvaluation;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
-import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
@@ -84,17 +81,14 @@ public class ReadStudentCurricularInformation extends Service {
             final StudentCurricularPlan studentCurricularPlan) {
         final DegreeCurricularPlan degreeCurricularPlan = studentCurricularPlan
                 .getDegreeCurricularPlan();
-        final Degree degree = degreeCurricularPlan.getDegree();
         final List enrollments = studentCurricularPlan.getEnrolments();
 
         final InfoStudentCurricularPlan infoStudentCurricularPlan = InfoStudentCurricularPlan
                 .newInfoFromDomain(studentCurricularPlan);
         final InfoDegreeCurricularPlan infoDegreeCurricularPlan = InfoDegreeCurricularPlan
                 .newInfoFromDomain(degreeCurricularPlan);
-        final InfoDegree infoDegree = InfoDegree.newInfoFromDomain(degree);
         final List infoEnrollments = constructEnrollmentsList(enrollments);
 
-        infoDegreeCurricularPlan.setInfoDegree(infoDegree);
         infoStudentCurricularPlan.setInfoDegreeCurricularPlan(infoDegreeCurricularPlan);
         infoStudentCurricularPlan.setInfoEnrolments(infoEnrollments);
 
@@ -106,26 +100,22 @@ public class ReadStudentCurricularInformation extends Service {
             public Object transform(Object arg0) {
                 final Enrolment enrollment = (Enrolment) arg0;
                 final ExecutionPeriod executionPeriod = enrollment.getExecutionPeriod();
-                final ExecutionYear executionYear = executionPeriod.getExecutionYear();
                 final CurricularCourse curricularCourse = enrollment.getCurricularCourse();
                 final DegreeCurricularPlan degreeCurricularPlan = curricularCourse
                         .getDegreeCurricularPlan();
-                final Degree degree = degreeCurricularPlan.getDegree();
                 final List enrollmentEvaluations = enrollment.getEvaluations();
 
                 final InfoEnrollmentGrade infoEnrollmentGrade = new InfoEnrollmentGrade();
                 final InfoEnrolment infoEnrolment = new InfoEnrolment();
                 final InfoExecutionPeriod infoExecutionPeriod = InfoExecutionPeriod.newInfoFromDomain(executionPeriod);
                 final InfoCurricularCourse infoCurricularCourse = new InfoCurricularCourse();
-                final InfoDegreeCurricularPlan infoDegreeCurricularPlan = new InfoDegreeCurricularPlan();
-                final InfoDegree infoDegree = new InfoDegree(degree);
+                final InfoDegreeCurricularPlan infoDegreeCurricularPlan = new InfoDegreeCurricularPlan(degreeCurricularPlan);
 
                 infoEnrollmentGrade.setInfoEnrollment(infoEnrolment);
                 infoEnrolment.setIdInternal(enrollment.getIdInternal());
                 infoEnrolment.setInfoExecutionPeriod(infoExecutionPeriod);
                 infoEnrolment.setInfoCurricularCourse(infoCurricularCourse);
                 infoCurricularCourse.setInfoDegreeCurricularPlan(infoDegreeCurricularPlan);
-                infoDegreeCurricularPlan.setInfoDegree(infoDegree);
                 infoCurricularCourse.setName(curricularCourse.getName());
                 infoCurricularCourse.setCode(curricularCourse.getCode());
 

@@ -7,7 +7,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlanWithDegree;
+import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
@@ -40,8 +40,7 @@ public class ReadActiveDegreeCurricularPlansByExecutionYear extends Service {
                         ExecutionDegree cursoExecucao = (ExecutionDegree) obj;
                         DegreeCurricularPlan degreeCurricularPlan = cursoExecucao
                                 .getDegreeCurricularPlan();
-                        return InfoDegreeCurricularPlanWithDegree
-                                .newInfoFromDomain(degreeCurricularPlan);
+                        return InfoDegreeCurricularPlan.newInfoFromDomain(degreeCurricularPlan);
                     }
                 });
 

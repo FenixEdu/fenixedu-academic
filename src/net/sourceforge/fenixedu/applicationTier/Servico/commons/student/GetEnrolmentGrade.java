@@ -9,6 +9,7 @@ import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.EnrolmentEvaluation;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -49,12 +50,23 @@ public class GetEnrolmentGrade {
         if (latestEvaluation.getEmployee() != null) {
             if (String.valueOf(latestEvaluation.getEmployee().getIdInternal()) != null
                     || String.valueOf(latestEvaluation.getEmployee().getIdInternal()).length() > 0) {
-
-                infolatestEvaluation.setInfoEmployee(InfoPerson.newInfoFromDomain(latestEvaluation.getEmployee().getPerson()));
+            	final Person person = latestEvaluation.getEmployee().getPerson();
+            	if (person != null) {
+            		infolatestEvaluation.setInfoEmployee(newInfoPersonFromDomain(person));
+            	}
             }
-            infolatestEvaluation.setInfoPersonResponsibleForGrade(InfoPerson
-                    .newInfoFromDomain(latestEvaluation.getPersonResponsibleForGrade()));
+            final Person person = latestEvaluation.getPersonResponsibleForGrade();
+            infolatestEvaluation.setInfoPersonResponsibleForGrade(newInfoPersonFromDomain(person));
         }
         return infolatestEvaluation;
     }
+
+    private InfoPerson newInfoPersonFromDomain(final Person person) {
+		final InfoPerson infoPerson = new InfoPerson();
+		infoPerson.setIdInternal(person.getIdInternal());
+		infoPerson.setUsername(person.getUsername());
+		infoPerson.setNome(person.getName());
+		return infoPerson;
+    }
+
 }

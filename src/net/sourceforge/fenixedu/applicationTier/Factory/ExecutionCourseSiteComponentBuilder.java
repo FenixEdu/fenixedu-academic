@@ -20,7 +20,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoBibliographicReference;
 import net.sourceforge.fenixedu.dataTransferObject.InfoClassWithInfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseScope;
-import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlanWithDegree;
+import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
 import net.sourceforge.fenixedu.dataTransferObject.InfoEvaluationMethod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourseWithExecutionPeriod;
@@ -818,7 +818,7 @@ public class ExecutionCourseSiteComponentBuilder {
 			infoCurricularCourse.setTheoreticalHours(curricularCourse.getTheoreticalHours());
 			infoCurricularCourse.setType(curricularCourse.getType());
 			infoCurricularCourse.setWeigth(curricularCourse.getWeigth());
-			infoCurricularCourse.setInfoDegreeCurricularPlan(InfoDegreeCurricularPlanWithDegree
+			infoCurricularCourse.setInfoDegreeCurricularPlan(InfoDegreeCurricularPlan
 					.newInfoFromDomain(curricularCourse.getDegreeCurricularPlan()));
 		}
 		return infoCurricularCourse;

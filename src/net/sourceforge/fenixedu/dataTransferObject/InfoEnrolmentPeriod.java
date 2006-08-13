@@ -17,7 +17,7 @@ public class InfoEnrolmentPeriod extends InfoObject implements Serializable {
         if (enrolmentPeriod != null) {
             setEndDate(enrolmentPeriod.getEndDate());
             setStartDate(enrolmentPeriod.getStartDate());
-            setInfoDegreeCurricularPlan(InfoDegreeCurricularPlanWithDegree.newInfoFromDomain(
+            setInfoDegreeCurricularPlan(InfoDegreeCurricularPlan.newInfoFromDomain(
                     enrolmentPeriod.getDegreeCurricularPlan()));
         }
     }

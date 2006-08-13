@@ -9,7 +9,7 @@ public class InfoStudentCurricularPlanWithInfoStudentAndDegree extends InfoStude
     public void copyFromDomain(StudentCurricularPlan studentCurricularPlan) {
         super.copyFromDomain(studentCurricularPlan);
         if (studentCurricularPlan != null) {
-            setInfoDegreeCurricularPlan(InfoDegreeCurricularPlanWithDegree
+            setInfoDegreeCurricularPlan(InfoDegreeCurricularPlan
                     .newInfoFromDomain(studentCurricularPlan.getDegreeCurricularPlan()));
             setInfoStudent(InfoStudentWithInfoPerson.newInfoFromDomain(studentCurricularPlan.getStudent()));
         }

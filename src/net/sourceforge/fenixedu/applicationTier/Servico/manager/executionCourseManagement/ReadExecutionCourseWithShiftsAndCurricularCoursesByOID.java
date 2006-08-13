@@ -10,7 +10,6 @@ import java.util.Iterator;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse;
-import net.sourceforge.fenixedu.dataTransferObject.InfoDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
@@ -47,9 +46,6 @@ public class ReadExecutionCourseWithShiftsAndCurricularCoursesByOID extends Serv
                         .newInfoFromDomain(curricularCourse);
                 infoCurricularCourse.setInfoDegreeCurricularPlan(InfoDegreeCurricularPlan
                         .newInfoFromDomain(curricularCourse.getDegreeCurricularPlan()));
-                infoCurricularCourse.getInfoDegreeCurricularPlan().setInfoDegree(
-                        InfoDegree.newInfoFromDomain(curricularCourse.getDegreeCurricularPlan()
-                                .getDegree()));
 
                 infoExecutionCourse.getAssociatedInfoCurricularCourses().add(infoCurricularCourse);
             }

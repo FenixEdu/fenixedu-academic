@@ -16,7 +16,7 @@ public class InfoStudentCurricularPlanWithInfoStudentAndInfoBranchAndSecondaryBr
     public void copyFromDomain(StudentCurricularPlan studentCurricularPlan) {
         super.copyFromDomain(studentCurricularPlan);
         if (studentCurricularPlan != null) {
-            setInfoDegreeCurricularPlan(InfoDegreeCurricularPlanWithDegree
+            setInfoDegreeCurricularPlan(InfoDegreeCurricularPlan
                     .newInfoFromDomain(studentCurricularPlan.getDegreeCurricularPlan()));
 
         }

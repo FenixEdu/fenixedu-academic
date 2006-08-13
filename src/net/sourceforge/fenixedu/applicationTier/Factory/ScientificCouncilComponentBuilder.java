@@ -15,7 +15,6 @@ import net.sourceforge.fenixedu.dataTransferObject.ISiteComponent;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
-import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlanWithDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteBasicCurricularCourses;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteCurricularCourses;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteDegreeCurricularPlans;
@@ -158,7 +157,7 @@ public class ScientificCouncilComponentBuilder {
 		List<InfoDegreeCurricularPlan> infoDegreeCurricularPlans = new ArrayList<InfoDegreeCurricularPlan>();
 		while (iter.hasNext()) {
 			DegreeCurricularPlan degreeCurricularPlan = (DegreeCurricularPlan) iter.next();
-			InfoDegreeCurricularPlan infoDegreeCurricularPlan = InfoDegreeCurricularPlanWithDegree
+			InfoDegreeCurricularPlan infoDegreeCurricularPlan = InfoDegreeCurricularPlan
 					.newInfoFromDomain(degreeCurricularPlan);
 			infoDegreeCurricularPlans.add(infoDegreeCurricularPlan);
 		}

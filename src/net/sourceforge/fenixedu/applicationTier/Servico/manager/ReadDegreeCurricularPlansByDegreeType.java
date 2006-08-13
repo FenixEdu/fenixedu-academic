@@ -9,7 +9,6 @@ import java.util.Iterator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
-import net.sourceforge.fenixedu.dataTransferObject.InfoDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
@@ -46,10 +45,7 @@ public class ReadDegreeCurricularPlansByDegreeType extends Service {
 
     protected InfoDegreeCurricularPlan constructInfoDegreeCurricularPlan(
             final DegreeCurricularPlan degreeCurricularPlan, final Degree degree) {
-        final InfoDegreeCurricularPlan infoDegreeCurricularPlan = InfoDegreeCurricularPlan
-                .newInfoFromDomain(degreeCurricularPlan);
-        final InfoDegree infoDegree = InfoDegree.newInfoFromDomain(degree);
-        infoDegreeCurricularPlan.setInfoDegree(infoDegree);
-        return infoDegreeCurricularPlan;
+        return InfoDegreeCurricularPlan.newInfoFromDomain(degreeCurricularPlan);
     }
+
 }

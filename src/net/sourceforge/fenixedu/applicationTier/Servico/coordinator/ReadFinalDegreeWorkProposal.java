@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoBranch;
-import net.sourceforge.fenixedu.dataTransferObject.InfoDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDepartment;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
@@ -18,7 +17,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
 import net.sourceforge.fenixedu.dataTransferObject.finalDegreeWork.InfoProposal;
 import net.sourceforge.fenixedu.domain.Branch;
-import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
@@ -132,11 +130,7 @@ public class ReadFinalDegreeWorkProposal extends Service {
                 if (executionDegree.getDegreeCurricularPlan() != null
                         && executionDegree.getDegreeCurricularPlan().getDegree() != null) {
                 	final DegreeCurricularPlan degreeCurricularPlan = executionDegree.getDegreeCurricularPlan();
-                	final Degree degree = degreeCurricularPlan.getDegree();
-                	infoProposal.getExecutionDegree().setInfoDegreeCurricularPlan(
-                            new InfoDegreeCurricularPlan());
-                    infoProposal.getExecutionDegree().getInfoDegreeCurricularPlan().setInfoDegree(
-                            new InfoDegree(degree));
+                	infoProposal.getExecutionDegree().setInfoDegreeCurricularPlan(new InfoDegreeCurricularPlan(degreeCurricularPlan));
                 }
             }
         }

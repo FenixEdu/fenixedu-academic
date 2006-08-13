@@ -9,11 +9,9 @@ import java.util.Set;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.InfoClass;
-import net.sourceforge.fenixedu.dataTransferObject.InfoDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
-import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
@@ -43,8 +41,6 @@ public class ReadClassesByExecutionCourse extends Service {
             if (infoExecutionDegrees.containsKey(executionDegreeKey)) {
                 infoExecutionDegree = (InfoExecutionDegree) infoExecutionDegrees.get(executionDegreeKey);
             } else {
-                // final InfoExecutionDegree infoExecutionDegree =
-                // InfoExecutionDegree.newInfoFromDomain(executionDegree);
                 infoExecutionDegree = new InfoExecutionDegree();
                 infoExecutionDegrees.put(executionDegreeKey, infoExecutionDegree);
 
@@ -52,14 +48,8 @@ public class ReadClassesByExecutionCourse extends Service {
 
                 final DegreeCurricularPlan degreeCurricularPlan = executionDegree
                         .getDegreeCurricularPlan();
-                // final InfoDegreeCurricularPlan infoDegreeCurricularPlan =
-                // InfoDegreeCurricularPlan.newInfoFromDomain(degreeCurricularPlan);
-                final InfoDegreeCurricularPlan infoDegreeCurricularPlan = new InfoDegreeCurricularPlan();
+                final InfoDegreeCurricularPlan infoDegreeCurricularPlan = new InfoDegreeCurricularPlan(degreeCurricularPlan);
                 infoExecutionDegree.setInfoDegreeCurricularPlan(infoDegreeCurricularPlan);
-
-                final Degree degree = degreeCurricularPlan.getDegree();
-                final InfoDegree infoDegree = InfoDegree.newInfoFromDomain(degree);
-                infoDegreeCurricularPlan.setInfoDegree(infoDegree);
             }
             infoClass.setInfoExecutionDegree(infoExecutionDegree);
 

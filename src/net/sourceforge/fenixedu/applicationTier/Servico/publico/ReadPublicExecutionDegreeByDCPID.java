@@ -5,11 +5,9 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.dataTransferObject.InfoDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
-import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
@@ -53,10 +51,6 @@ public class ReadPublicExecutionDegreeByDCPID extends Service {
         DegreeCurricularPlan degreeCurricularPlan = executionDegree.getDegreeCurricularPlan();
         InfoDegreeCurricularPlan infoDegreeCurricularPlan = InfoDegreeCurricularPlan.newInfoFromDomain(degreeCurricularPlan);
         infoExecutionDegree.setInfoDegreeCurricularPlan(infoDegreeCurricularPlan);
-
-        Degree degree = degreeCurricularPlan.getDegree();
-        InfoDegree infoDegree = InfoDegree.newInfoFromDomain(degree);
-        infoDegreeCurricularPlan.setInfoDegree(infoDegree);
 
         return infoExecutionDegree;
     }

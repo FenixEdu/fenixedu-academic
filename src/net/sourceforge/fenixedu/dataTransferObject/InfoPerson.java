@@ -931,11 +931,6 @@ public class InfoPerson extends InfoObject {
                         infoStudentCurricularPlan = InfoStudentCurricularPlan
                                 .newInfoFromDomain(studentCurricularPlan);
 
-                        infoDegree = InfoDegree.newInfoFromDomain(studentCurricularPlan
-                                .getDegreeCurricularPlan().getDegree());
-
-                        infoStudentCurricularPlan.getInfoDegreeCurricularPlan()
-                                .setInfoDegree(infoDegree);
                         infoStudent.setInfoStudentCurricularPlan(infoStudentCurricularPlan);
 
                         infoStudentList.add(infoStudent.getInfoStudentCurricularPlan());

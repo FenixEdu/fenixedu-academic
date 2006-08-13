@@ -10,7 +10,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
-import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlanWithDegree;
+import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -35,7 +35,7 @@ public class ReadDegreeCurricularPlans extends Service {
 
 		for (final Iterator iter = curricularPlans.iterator(); iter.hasNext();) {
 			final DegreeCurricularPlan curricularPlan = (DegreeCurricularPlan) iter.next();
-			infoCurricularPlans.add(InfoDegreeCurricularPlanWithDegree
+			infoCurricularPlans.add(InfoDegreeCurricularPlan
 					.newInfoFromDomain(curricularPlan));
 		}
 		return infoCurricularPlans;

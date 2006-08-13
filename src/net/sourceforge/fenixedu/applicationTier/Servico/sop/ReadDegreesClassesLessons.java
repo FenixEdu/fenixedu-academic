@@ -17,7 +17,6 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.InfoClass;
-import net.sourceforge.fenixedu.dataTransferObject.InfoDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
@@ -25,7 +24,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoLesson;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
 import net.sourceforge.fenixedu.dataTransferObject.InfoViewClassSchedule;
-import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
@@ -111,10 +109,6 @@ public class ReadDegreesClassesLessons extends Service {
 			final InfoDegreeCurricularPlan infoDegreeCurricularPlan = InfoDegreeCurricularPlan
 					.newInfoFromDomain(degreeCurricularPlan);
 			infoExecutionDegree.setInfoDegreeCurricularPlan(infoDegreeCurricularPlan);
-
-			final Degree degree = degreeCurricularPlan.getDegree();
-			final InfoDegree infoDegree = InfoDegree.newInfoFromDomain(degree);
-			infoDegreeCurricularPlan.setInfoDegree(infoDegree);
 
 			infoClass.setInfoExecutionPeriod(infoExecutionPeriod);
 

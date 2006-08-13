@@ -16,7 +16,9 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
+import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlanEditor;
 import net.sourceforge.fenixedu.domain.Degree;
+import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.GradeScale;
 import net.sourceforge.fenixedu.domain.degree.degreeCurricularPlan.DegreeCurricularPlanState;
 import net.sourceforge.fenixedu.persistenceTier.Conversores.Calendar2DateFieldConversion;
@@ -136,7 +138,8 @@ public class EditDegreeCurricularPlanDispatchAction extends FenixDispatchAction 
         Integer degreeId = new Integer(request.getParameter("degreeId"));
         final Degree degree = rootDomainObject.readDegreeByOID(degreeId);
 
-        InfoDegreeCurricularPlan newInfoDegreeCP = new InfoDegreeCurricularPlan();
+        InfoDegreeCurricularPlanEditor newInfoDegreeCP = new InfoDegreeCurricularPlanEditor();
+        newInfoDegreeCP.setIdInternal(oldDegreeCPId);
         InfoDegree infoDegree = new InfoDegree(degree);
 
         String name = (String) dynaForm.get("name");

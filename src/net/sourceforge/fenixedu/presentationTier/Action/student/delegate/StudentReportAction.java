@@ -9,13 +9,12 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse;
-import net.sourceforge.fenixedu.dataTransferObject.InfoDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
 import net.sourceforge.fenixedu.dataTransferObject.InfoUniversity;
 import net.sourceforge.fenixedu.dataTransferObject.gesdis.InfoSiteCourseHistoric;
 import net.sourceforge.fenixedu.dataTransferObject.student.InfoSiteStudentCourseReport;
 import net.sourceforge.fenixedu.dataTransferObject.student.InfoStudentCourseReport;
-import net.sourceforge.fenixedu.domain.Degree;
+import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
@@ -79,18 +78,13 @@ public class StudentReportAction extends DispatchAction {
             BeanUtils.copyProperties(infoStudentCourseReport, dynaForm);
             Integer curricularCourseId = (Integer) dynaForm.get("curricularCourseId");
             Integer degreeCurricularPlanId = (Integer) dynaForm.get("degreeCurricularPlanId");
+            final DegreeCurricularPlan degreeCurricularPlan = RootDomainObject.getInstance().readDegreeCurricularPlanByOID(degreeCurricularPlanId);
             Integer universityId = (Integer) dynaForm.get("universityId");
-            Integer degreeId = (Integer) dynaForm.get("degreeId");
-            final Degree degree = RootDomainObject.getInstance().readDegreeByOID(degreeId);
-
-            InfoDegree infoDegree = new InfoDegree(degree);
 
             InfoUniversity infoUniversity = new InfoUniversity();
             infoUniversity.setIdInternal(universityId);
 
-            InfoDegreeCurricularPlan infoDegreeCurricularPlan = new InfoDegreeCurricularPlan();
-            infoDegreeCurricularPlan.setIdInternal(degreeCurricularPlanId);
-            infoDegreeCurricularPlan.setInfoDegree(infoDegree);
+            InfoDegreeCurricularPlan infoDegreeCurricularPlan = new InfoDegreeCurricularPlan(degreeCurricularPlan);
 
             InfoCurricularCourse infoCurricularCourse = new InfoCurricularCourse();
             infoCurricularCourse.setIdInternal(curricularCourseId);

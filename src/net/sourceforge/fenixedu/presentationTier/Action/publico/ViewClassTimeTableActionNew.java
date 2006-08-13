@@ -83,8 +83,7 @@ public class ViewClassTimeTableActionNew extends FenixContextAction {
 //        } catch (FenixServiceException e1) {
 //            throw new FenixActionException(e1);
 //        }
-        InfoDegreeCurricularPlan infoDegreeCurricularPlan = new InfoDegreeCurricularPlan();
-        infoDegreeCurricularPlan = infoExecutionDegree.getInfoDegreeCurricularPlan();
+        InfoDegreeCurricularPlan infoDegreeCurricularPlan = infoExecutionDegree.getInfoDegreeCurricularPlan();
         infoDegreeCurricularPlan.prepareEnglishPresentation(getLocale(request));
  
         infoExecutionDegree.setInfoDegreeCurricularPlan(infoDegreeCurricularPlan);

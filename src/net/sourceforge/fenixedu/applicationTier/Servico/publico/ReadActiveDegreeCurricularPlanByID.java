@@ -131,16 +131,11 @@ public class ReadActiveDegreeCurricularPlanByID extends ReadDegreeCurricularPlan
     public InfoDegreeCurricularPlan run(Integer degreeCurricularPlanId, Integer executionYear, String arg)
             throws FenixServiceException, ExcepcaoPersistencia {
         final DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanId);
-
-        InfoDegreeCurricularPlan infoDegreeCurricularPlan = new InfoDegreeCurricularPlan();
-        if (degreeCurricularPlan != null) {
-            infoDegreeCurricularPlan = InfoDegreeCurricularPlan.newInfoFromDomain(degreeCurricularPlan);
-        }
         if (degreeCurricularPlan == null) {
-            throw new FenixServiceException("nullDegree");
+        	throw new FenixServiceException("nullDegree");
+        } else {
+        	return InfoDegreeCurricularPlan.newInfoFromDomain(degreeCurricularPlan);
         }
-
-        return infoDegreeCurricularPlan;
     }
 
 }

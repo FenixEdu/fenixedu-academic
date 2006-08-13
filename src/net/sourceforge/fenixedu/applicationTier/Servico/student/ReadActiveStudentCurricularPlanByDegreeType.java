@@ -31,9 +31,7 @@ public class ReadActiveStudentCurricularPlanByDegreeType extends Service {
             if (studentCurricularPlan != null) {
             	final InfoStudentCurricularPlan infoStudentCurricularPlan = new InfoStudentCurricularPlan();
                 if (studentCurricularPlan.getDegreeCurricularPlan() != null) {
-                    InfoDegreeCurricularPlan infoDegreeCurricularPlan = new InfoDegreeCurricularPlan();
-                    infoDegreeCurricularPlan.setName(studentCurricularPlan.getDegreeCurricularPlan()
-                            .getName());
+                    InfoDegreeCurricularPlan infoDegreeCurricularPlan = new InfoDegreeCurricularPlan(studentCurricularPlan.getDegreeCurricularPlan());
                     infoStudentCurricularPlan.setInfoDegreeCurricularPlan(infoDegreeCurricularPlan);
                     infoStudentCurricularPlan.getInfoDegreeCurricularPlan().setIdInternal(
                             studentCurricularPlan.getDegreeCurricularPlan().getIdInternal());
