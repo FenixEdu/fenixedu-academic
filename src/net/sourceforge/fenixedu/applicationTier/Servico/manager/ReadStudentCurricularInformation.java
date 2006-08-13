@@ -118,7 +118,7 @@ public class ReadStudentCurricularInformation extends Service {
                 final InfoExecutionPeriod infoExecutionPeriod = InfoExecutionPeriod.newInfoFromDomain(executionPeriod);
                 final InfoCurricularCourse infoCurricularCourse = new InfoCurricularCourse();
                 final InfoDegreeCurricularPlan infoDegreeCurricularPlan = new InfoDegreeCurricularPlan();
-                final InfoDegree infoDegree = new InfoDegree();
+                final InfoDegree infoDegree = new InfoDegree(degree);
 
                 infoEnrollmentGrade.setInfoEnrollment(infoEnrolment);
                 infoEnrolment.setIdInternal(enrollment.getIdInternal());
@@ -126,7 +126,6 @@ public class ReadStudentCurricularInformation extends Service {
                 infoEnrolment.setInfoCurricularCourse(infoCurricularCourse);
                 infoCurricularCourse.setInfoDegreeCurricularPlan(infoDegreeCurricularPlan);
                 infoDegreeCurricularPlan.setInfoDegree(infoDegree);
-                infoDegree.setSigla(degree.getSigla());
                 infoCurricularCourse.setName(curricularCourse.getName());
                 infoCurricularCourse.setCode(curricularCourse.getCode());
 

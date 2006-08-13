@@ -13,7 +13,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
-import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeWithInfoDegreeCurricularPlansAndInfoDegreeInfos;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
@@ -49,7 +48,7 @@ public class ReadMasterDegrees extends Service {
             infoExecutionDegree.setInfoDegreeCurricularPlan(infoDegreeCurricularPlan);
 
             final Degree degree = degreeCurricularPlan.getDegree();
-            final InfoDegree infoDegree = InfoDegreeWithInfoDegreeCurricularPlansAndInfoDegreeInfos.newInfoFromDomain(degree);
+            final InfoDegree infoDegree = InfoDegree.newInfoFromDomain(degree);
             infoDegreeCurricularPlan.setInfoDegree(infoDegree);
 
             degrees.add(infoExecutionDegree);

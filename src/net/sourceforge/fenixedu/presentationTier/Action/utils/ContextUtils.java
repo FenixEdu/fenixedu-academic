@@ -20,6 +20,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.InfoClass;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularYear;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegree;
+import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
@@ -739,17 +740,14 @@ public class ContextUtils {
      * @param infoExecutionDegree
      * @return int
      */
-    private static boolean duplicateInfoDegree(List executionDegreeList,
-            InfoExecutionDegree infoExecutionDegree) {
-        InfoDegree infoDegree = infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree();
-        Iterator iterator = executionDegreeList.iterator();
-
-        while (iterator.hasNext()) {
-            InfoExecutionDegree infoExecutionDegree2 = (InfoExecutionDegree) iterator.next();
-            if (infoDegree.equals(infoExecutionDegree2.getInfoDegreeCurricularPlan().getInfoDegree())
-                    && !(infoExecutionDegree.equals(infoExecutionDegree2)))
-                return true;
-
+    private static boolean duplicateInfoDegree(List<InfoExecutionDegree> executionDegreeList, InfoExecutionDegree infoExecutionDegree) {
+        final InfoDegree infoDegree = infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree();
+        for (final InfoExecutionDegree otherInfoExecutionDegree : executionDegreeList) {
+        	final InfoDegreeCurricularPlan infoDegreeCurricularPlan = otherInfoExecutionDegree.getInfoDegreeCurricularPlan();
+        	final InfoDegree otherInfoDegree = infoDegreeCurricularPlan.getInfoDegree();
+        	if (infoDegree.equals(otherInfoDegree) && !infoExecutionDegree.equals(otherInfoExecutionDegree)) {
+        		return true;
+        	}
         }
         return false;
     }

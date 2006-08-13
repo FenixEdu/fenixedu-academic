@@ -15,6 +15,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.GradeScale;
 import net.sourceforge.fenixedu.domain.degree.degreeCurricularPlan.DegreeCurricularPlanState;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
@@ -50,6 +51,7 @@ public class InsertDegreeCurricularPlanDispatchAction extends FenixDispatchActio
         IUserView userView = SessionUtils.getUserView(request);
 
         Integer degreeId = new Integer(request.getParameter("degreeId"));
+        final Degree degree = rootDomainObject.readDegreeByOID(degreeId);
 
         DynaActionForm dynaForm = (DynaValidatorForm) form;
 
@@ -115,8 +117,7 @@ public class InsertDegreeCurricularPlanDispatchAction extends FenixDispatchActio
         infoDegreeCurricularPlan.setMinimalYearForOptionalCourses(minimalYearForOptionalCourses);
         infoDegreeCurricularPlan.setAnotation(anotationString);
         infoDegreeCurricularPlan.setGradeScale(gradeScale);
-        InfoDegree infoDegree = new InfoDegree();
-        infoDegree.setIdInternal(degreeId);
+        InfoDegree infoDegree = new InfoDegree(degree);
         infoDegreeCurricularPlan.setInfoDegree(infoDegree);
 
         Object args[] = { infoDegreeCurricularPlan };

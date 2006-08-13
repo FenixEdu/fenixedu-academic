@@ -18,6 +18,8 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
 import net.sourceforge.fenixedu.dataTransferObject.finalDegreeWork.InfoProposal;
 import net.sourceforge.fenixedu.domain.Branch;
+import net.sourceforge.fenixedu.domain.Degree;
+import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal;
@@ -129,14 +131,12 @@ public class ReadFinalDegreeWorkProposal extends Service {
 
                 if (executionDegree.getDegreeCurricularPlan() != null
                         && executionDegree.getDegreeCurricularPlan().getDegree() != null) {
-                    infoProposal.getExecutionDegree().setInfoDegreeCurricularPlan(
+                	final DegreeCurricularPlan degreeCurricularPlan = executionDegree.getDegreeCurricularPlan();
+                	final Degree degree = degreeCurricularPlan.getDegree();
+                	infoProposal.getExecutionDegree().setInfoDegreeCurricularPlan(
                             new InfoDegreeCurricularPlan());
                     infoProposal.getExecutionDegree().getInfoDegreeCurricularPlan().setInfoDegree(
-                            new InfoDegree());
-                    infoProposal.getExecutionDegree().getInfoDegreeCurricularPlan().getInfoDegree()
-                            .setNome(
-                                    executionDegree.getDegreeCurricularPlan().getDegree()
-                                            .getNome());
+                            new InfoDegree(degree));
                 }
             }
         }

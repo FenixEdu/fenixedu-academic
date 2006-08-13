@@ -7,7 +7,7 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
-import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeWithInfoDegreeCurricularPlansAndInfoDegreeInfos;
+import net.sourceforge.fenixedu.dataTransferObject.InfoDegree;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -27,8 +27,7 @@ public class ReadAllMasterDegrees extends Service {
 		List degrees = new ArrayList();
 		Iterator iterator = result.iterator();
 		while (iterator.hasNext())
-			degrees.add(InfoDegreeWithInfoDegreeCurricularPlansAndInfoDegreeInfos
-					.newInfoFromDomain((Degree) iterator.next()));
+			degrees.add(InfoDegree.newInfoFromDomain((Degree) iterator.next()));
 		return degrees;
 
 	}

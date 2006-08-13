@@ -86,11 +86,7 @@ public class EditDegreeDispatchAction extends FenixDispatchAction {
         	gradeScale = GradeScale.valueOf(gradeTypeString);
         }
         
-        InfoDegree newInfoDegree = new InfoDegree(code, name, nameEn, degreeType);
-        newInfoDegree.setIdInternal(oldDegreeId);
-        newInfoDegree.setGradeScale(gradeScale);
-
-        Object args[] = { newInfoDegree };
+        Object args[] = { oldDegreeId, code, name, nameEn, degreeType, gradeScale };
 
         try {
             ServiceUtils.executeService(userView, "EditDegreeInOldDegreeStructure", args);

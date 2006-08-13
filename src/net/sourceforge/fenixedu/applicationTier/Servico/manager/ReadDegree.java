@@ -4,7 +4,6 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegree;
-import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeWithInfoDegreeCurricularPlansAndInfoDegreeInfos;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
@@ -19,12 +18,13 @@ public class ReadDegree extends Service {
      * @throws ExcepcaoPersistencia 
      */
     public InfoDegree run(Integer idInternal) throws FenixServiceException, ExcepcaoPersistencia {
-		Degree degree = rootDomainObject.readDegreeByOID(idInternal);
+		final Degree degree = rootDomainObject.readDegreeByOID(idInternal);
 
 		if (degree == null) {
             throw new NonExistingServiceException();
         }
 
-        return InfoDegreeWithInfoDegreeCurricularPlansAndInfoDegreeInfos.newInfoFromDomain(degree);
+        return InfoDegree.newInfoFromDomain(degree);
     }
+
 }

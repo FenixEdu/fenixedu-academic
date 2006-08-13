@@ -15,6 +15,8 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoUniversity;
 import net.sourceforge.fenixedu.dataTransferObject.gesdis.InfoSiteCourseHistoric;
 import net.sourceforge.fenixedu.dataTransferObject.student.InfoSiteStudentCourseReport;
 import net.sourceforge.fenixedu.dataTransferObject.student.InfoStudentCourseReport;
+import net.sourceforge.fenixedu.domain.Degree;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
@@ -79,9 +81,9 @@ public class StudentReportAction extends DispatchAction {
             Integer degreeCurricularPlanId = (Integer) dynaForm.get("degreeCurricularPlanId");
             Integer universityId = (Integer) dynaForm.get("universityId");
             Integer degreeId = (Integer) dynaForm.get("degreeId");
+            final Degree degree = RootDomainObject.getInstance().readDegreeByOID(degreeId);
 
-            InfoDegree infoDegree = new InfoDegree();
-            infoDegree.setIdInternal(degreeId);
+            InfoDegree infoDegree = new InfoDegree(degree);
 
             InfoUniversity infoUniversity = new InfoUniversity();
             infoUniversity.setIdInternal(universityId);

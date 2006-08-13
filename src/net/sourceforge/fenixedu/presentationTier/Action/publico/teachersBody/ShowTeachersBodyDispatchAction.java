@@ -84,18 +84,6 @@ public class ShowTeachersBodyDispatchAction extends FenixDispatchAction {
                 }
                 
                 Collections.sort(executionDegrees, new ComparatorByNameForInfoExecutionDegree());
-                Iterator iter = executionDegrees.iterator();
-                while (iter.hasNext()) {
-                    InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) iter.next();
-                    if (duplicateInfoDegree(executionDegrees, infoExecutionDegree)) {
-                        infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().setNome(
-                                infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree()
-                                        .getNome()
-                                        + "-"
-                                        + infoExecutionDegree.getInfoDegreeCurricularPlan().getName());
-                    }
-                }
-
             }
 
             Iterator iter = executionYears.iterator();
