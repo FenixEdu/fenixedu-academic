@@ -1736,6 +1736,7 @@ class net.sourceforge.fenixedu.domain.File extends net.sourceforge.fenixedu.doma
 	
 	class net.sourceforge.fenixedu.domain.space.BlueprintFile extends net.sourceforge.fenixedu.domain.File {
 		Integer keyBlueprint;
+		ByteArray content;
 	}
 	
 	class net.sourceforge.fenixedu.domain.research.result.ResultDocumentFile extends net.sourceforge.fenixedu.domain.File {

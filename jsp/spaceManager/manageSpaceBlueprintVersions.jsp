@@ -42,8 +42,8 @@
 		<br/>
 		<br/>
 		
-		<bean:define id="directDownloadUrlFormat" name="selectedSpaceBlueprint" property="blueprintFile.directDownloadUrlFormat"/>
-		<html:img align="middle" src="<%= directDownloadUrlFormat.toString() %>" altKey="clip_image002" bundle="IMAGE_RESOURCES" />			
+		<bean:define id="url"><%= request.getContextPath() %>/SpaceManager/manageBlueprints.do?method=view&blueprintId=<bean:write name="selectedSpaceBlueprintId"/></bean:define>
+		<html:img align="middle" src="<%= url %>" altKey="clip_image002" bundle="IMAGE_RESOURCES" />
 		<br/><br/>
 		
 		<bean:define id="editLink">

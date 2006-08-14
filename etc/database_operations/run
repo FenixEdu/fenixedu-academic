@@ -28,3 +28,4 @@ function executeWithTempFile() {
 }
 
 execute "ReCreate Functionality tables" CreateFunctionalitiesTables.sql
+execute "Alter table file" AlterTableFile.sql

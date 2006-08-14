@@ -1,5 +1,10 @@
 package net.sourceforge.fenixedu.presentationTier.Action.spaceManager;
 
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -8,6 +13,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.spaceManager.CreateBlueprintSubmissionBean;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.space.Blueprint;
+import net.sourceforge.fenixedu.domain.space.BlueprintFile;
 import net.sourceforge.fenixedu.domain.space.SpaceInformation;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
@@ -23,6 +29,7 @@ import org.apache.struts.action.ActionMessage;
 import org.apache.struts.action.ActionMessages;
 
 import pt.utl.ist.fenix.tools.file.FileManagerException;
+import pt.utl.ist.fenix.tools.image.DWGProcessor;
 
 public class ManageSpaceBlueprintsDA extends FenixDispatchAction {
 
@@ -176,5 +183,24 @@ public class ManageSpaceBlueprintsDA extends FenixDispatchAction {
         ActionMessages actionMessages = new ActionMessages();
         actionMessages.add(errorKey, new ActionMessage(errorKey, args));
         saveMessages(request, actionMessages);
+    }
+
+    public ActionForward view(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws IOException {
+        final String blueprintIdString = request.getParameter("blueprintId");
+        final Integer blueprintId = Integer.valueOf(blueprintIdString);
+        final Blueprint blueprint = rootDomainObject.readBlueprintByOID(blueprintId);
+        final BlueprintFile blueprintFile = blueprint.getBlueprintFile();
+        // If dspace worked properly we could do this...
+        //final byte[] blueprintBytes = FileManagerFactory.getFileManager().retrieveFile(blueprintFile.getExternalStorageIdentification());
+        // Science it doesn't, we'll do...
+        final byte[] blueprintBytes = blueprintFile.getContent().getBytes();
+        final InputStream inputStream = new ByteArrayInputStream(blueprintBytes);
+
+        response.setContentType("text/plain");
+        response.setHeader("Content-disposition", "attachment; filename=blueprint.jpeg");
+        final ServletOutputStream writer = response.getOutputStream();
+        DWGProcessor.generateJPEGImage(inputStream, writer, 1000);
+        return null;
     }
 }
