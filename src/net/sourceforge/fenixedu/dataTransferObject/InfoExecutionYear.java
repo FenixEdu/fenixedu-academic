@@ -69,4 +69,15 @@ public class InfoExecutionYear extends InfoObject {
         final ExecutionYear nextExecutionYear = executionYear.getNextExecutionYear();
         return nextExecutionYear == null ? null : InfoExecutionYear.newInfoFromDomain(nextExecutionYear);
     }
+
+    @Override
+    public Integer getIdInternal() {
+        return executionYear.getIdInternal();
+    }
+
+    @Override
+    public void setIdInternal(Integer integer) {
+        throw new Error("Method should not be called!");
+    }
+
 }

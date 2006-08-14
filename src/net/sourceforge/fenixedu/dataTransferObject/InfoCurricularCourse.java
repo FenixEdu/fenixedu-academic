@@ -52,8 +52,6 @@ public class InfoCurricularCourse extends InfoObject implements Comparable, ISit
 
     private String chosen;
 
-    private InfoScientificArea infoScientificArea;
-
     private Integer maximumValueForAcumulatedEnrollments;
 
     private Integer minimumValueForAcumulatedEnrollments;
@@ -446,21 +444,6 @@ public class InfoCurricularCourse extends InfoObject implements Comparable, ISit
      */
     public void setEnrollmentWeigth(Integer enrollmentWeigth) {
         this.enrollmentWeigth = enrollmentWeigth;
-    }
-
-    /**
-     * @return Returns the infoScientificArea.
-     */
-    public InfoScientificArea getInfoScientificArea() {
-        return infoScientificArea;
-    }
-
-    /**
-     * @param infoScientificArea
-     *            The infoScientificArea to set.
-     */
-    public void setInfoScientificArea(InfoScientificArea infoScientificArea) {
-        this.infoScientificArea = infoScientificArea;
     }
 
     /**

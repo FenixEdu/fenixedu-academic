@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.dataTransferObject;
 
+import net.sourceforge.fenixedu.domain.University;
+
 /**
  * @author dcs-rjao
  * 
@@ -8,46 +10,36 @@ package net.sourceforge.fenixedu.dataTransferObject;
 
 public class InfoUniversity extends InfoObject {
 
-    private String code;
+	private final University university;
 
-    private String name;
-
-    public InfoUniversity() {
+    public InfoUniversity(final University university) {
+    	this.university = university;
     }
 
     public boolean equals(Object obj) {
-        boolean resultado = false;
-
-        if (obj instanceof InfoUniversity) {
-            InfoUniversity universityCode = (InfoUniversity) obj;
-
-            resultado = (this.getCode().equals(universityCode.getCode()))
-                    && (this.getName().equals(universityCode.getName()));
-        }
-        return resultado;
+    	return obj instanceof InfoUniversity && university == ((InfoUniversity) obj).university;
     }
 
     public String toString() {
-        String result = "[" + this.getClass().getName() + "; ";
-        result += "code = " + this.getCode() + "; ";
-        result += "name = " + this.getName() + "; ";
-        return result;
+    	return university.toString();
     }
 
     public String getCode() {
-        return code;
-    }
-
-    public void setCode(String string) {
-        code = string;
+        return university.getCode();
     }
 
     public String getName() {
-        return name;
+        return university.getName();
     }
 
-    public void setName(String string) {
-        name = string;
+    @Override
+    public Integer getIdInternal() {
+        return university.getIdInternal();
+    }
+
+    @Override
+    public void setIdInternal(Integer integer) {
+        throw new Error("Method should not be called!");
     }
 
 }
