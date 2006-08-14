@@ -15,13 +15,13 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  */
 public class EditSite extends Service {
 
-    public Boolean run(InfoSite infoSiteOld, InfoSite infoSiteNew) throws FenixServiceException,
+    public Boolean run(InfoSite infoSiteOld, final String alternativeSite, final String mail,
+            final String initialStatement, final String introduction) throws FenixServiceException,
             ExcepcaoPersistencia {
     	final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID( infoSiteOld.getInfoExecutionCourse().getIdInternal());
         final Site site = executionCourse.getSite();
 
-        site.edit(infoSiteNew.getInitialStatement(), infoSiteNew.getIntroduction(), infoSiteNew
-                .getMail(), infoSiteNew.getAlternativeSite());
+        site.edit(initialStatement, introduction, mail, alternativeSite);
 
         return true;
     }

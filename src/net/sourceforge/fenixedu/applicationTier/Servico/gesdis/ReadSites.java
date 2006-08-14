@@ -5,8 +5,8 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSite;
-import net.sourceforge.fenixedu.dataTransferObject.InfoSiteWithInfoExecutionCourse;
 import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
@@ -16,7 +16,9 @@ public class ReadSites extends Service {
 		List<InfoSite> result = new ArrayList<InfoSite>();
         
 		for (Site site : rootDomainObject.getSites()) {
-            result.add(InfoSiteWithInfoExecutionCourse.newInfoFromDomain(site));    
+            final InfoSite infoSite = InfoSite.newInfoFromDomain(site);
+            infoSite.setInfoExecutionCourse(InfoExecutionCourse.newInfoFromDomain(site.getExecutionCourse()));
+            result.add(infoSite);    
         }
 		
 		return result;

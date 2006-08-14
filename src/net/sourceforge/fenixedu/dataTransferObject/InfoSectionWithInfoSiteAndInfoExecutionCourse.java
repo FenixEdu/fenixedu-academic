@@ -12,15 +12,12 @@ import net.sourceforge.fenixedu.domain.Section;
  */
 public class InfoSectionWithInfoSiteAndInfoExecutionCourse extends InfoSection {
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see net.sourceforge.fenixedu.dataTransferObject.InfoSection#copyFromDomain(Dominio.Section)
-     */
     public void copyFromDomain(Section section) {
         super.copyFromDomain(section);
         if (section != null) {
-            setInfoSite(InfoSiteWithInfoExecutionCourse.newInfoFromDomain(section.getSite()));
+            final InfoSite infoSite = InfoSite.newInfoFromDomain(section.getSite());
+            infoSite.setInfoExecutionCourse(InfoExecutionCourse.newInfoFromDomain(section.getSite().getExecutionCourse()));
+            setInfoSite(infoSite);
         }
     }
 

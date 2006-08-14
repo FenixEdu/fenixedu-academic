@@ -709,15 +709,8 @@ public class ExecutionCourseSiteComponentBuilder {
 	 * @return
 	 */
 	private InfoSite copyISite2InfoSite(Site site) {
-		InfoSite infoSite = null;
+		InfoSite infoSite = InfoSite.newInfoFromDomain(site);
 		if (site != null) {
-			infoSite = new InfoSite();
-			infoSite.setIdInternal(site.getIdInternal());
-			infoSite.setAlternativeSite(site.getAlternativeSite());
-			infoSite.setInitialStatement(site.getInitialStatement());
-			infoSite.setIntroduction(site.getIntroduction());
-			infoSite.setMail(site.getMail());
-			infoSite.setStyle(site.getStyle());
 			infoSite.setInfoExecutionCourse(InfoExecutionCourseWithExecutionPeriod
 					.newInfoFromDomain(site.getExecutionCourse()));
 		}

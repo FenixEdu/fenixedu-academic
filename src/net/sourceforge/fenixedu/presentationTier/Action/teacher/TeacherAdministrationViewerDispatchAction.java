@@ -64,6 +64,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoSiteStudentsAndGroups;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteTeachers;
 import net.sourceforge.fenixedu.dataTransferObject.SiteView;
 import net.sourceforge.fenixedu.dataTransferObject.TeacherAdministrationSiteView;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.FileItem;
 import net.sourceforge.fenixedu.domain.FileItemPermittedGroupType;
 import net.sourceforge.fenixedu.domain.ShiftType;
@@ -120,19 +121,16 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
     public ActionForward prepareCustomizationOptions(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws FenixActionException,
             FenixFilterException {
-        ISiteComponent customizationOptionsComponent = new InfoSite();
+        final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(getObjectCode(request));
+        final InfoSite infoSite = InfoSite.newInfoFromDomain(executionCourse.getSite());
+        final ISiteComponent customizationOptionsComponent = infoSite;
         readSiteView(request, customizationOptionsComponent, null, null, null);
-        TeacherAdministrationSiteView siteView = (TeacherAdministrationSiteView) request
-                .getAttribute("siteView");
         DynaValidatorForm alternativeSiteForm = (DynaValidatorForm) form;
-        alternativeSiteForm
-                .set("siteAddress", ((InfoSite) siteView.getComponent()).getAlternativeSite());
-        alternativeSiteForm.set("mail", ((InfoSite) siteView.getComponent()).getMail());
-        alternativeSiteForm.set("dynamicMailDistribution", ((InfoSite) siteView.getComponent())
-                .getDynamicMailDistribution());
-        alternativeSiteForm.set("initialStatement", ((InfoSite) siteView.getComponent())
-                .getInitialStatement());
-        alternativeSiteForm.set("introduction", ((InfoSite) siteView.getComponent()).getIntroduction());
+        alternativeSiteForm.set("siteAddress", infoSite.getAlternativeSite());
+        alternativeSiteForm.set("mail", infoSite.getMail());
+        alternativeSiteForm.set("dynamicMailDistribution", infoSite.getDynamicMailDistribution());
+        alternativeSiteForm.set("initialStatement", infoSite.getInitialStatement());
+        alternativeSiteForm.set("introduction", infoSite.getIntroduction());
         return mapping.findForward("editAlternativeSite");
     }
 
@@ -160,14 +158,8 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         String initialStatement = (String) alternativeSiteForm.get("initialStatement");
         String introduction = (String) alternativeSiteForm.get("introduction");
         Boolean dynamicMailDistribution = (Boolean) alternativeSiteForm.get("dynamicMailDistribution");
-        InfoSite infoSiteNew = new InfoSite();
-        infoSiteNew.setAlternativeSite(alternativeSite);
-        infoSiteNew.setMail(mail);
-        infoSiteNew.setDynamicMailDistribution(dynamicMailDistribution);
-        infoSiteNew.setInitialStatement(initialStatement);
-        infoSiteNew.setIntroduction(introduction);
         IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
-        Object args[] = { objectCode, infoSiteNew };
+        Object args[] = { objectCode, alternativeSite, mail, dynamicMailDistribution, initialStatement, introduction };
 
         ActionErrors errors = new ActionErrors();
         try {

@@ -13,62 +13,19 @@ import net.sourceforge.fenixedu.domain.Site;
 
 public class InfoSite extends InfoObject implements ISiteComponent {
 
+    private final Site site;
+
     private InfoExecutionCourse infoExecutionCourse;
 
-    private String alternativeSite;
-
-    private String mail;
-
-    private String initialStatement;
-
-    private String introduction;
-
-    private String style;
-    
-    private Boolean dynamicMailDistribution;
+    public InfoSite(final Site site) {
+        this.site = site;
+    }
 
     /**
      * @return the dynamicMailDistribution
      */
     public Boolean getDynamicMailDistribution() {
-        return this.dynamicMailDistribution;
-    }
-
-    /**
-     * @param dynamicMailDistribution the dynamicMailDistribution to set
-     */
-    public void setDynamicMailDistribution(Boolean dynamicMailDistribution) {
-        this.dynamicMailDistribution = dynamicMailDistribution;
-    }
-
-    /**
-     * Construtor
-     */
-
-    public InfoSite() {
-    }
-
-    public InfoSite(Integer idInternal) {
-        setIdInternal(idInternal);
-    }
-
-    /**
-     * Construtor
-     */
-
-    public InfoSite(InfoExecutionCourse infoExecutionCourse) {
-        setInfoExecutionCourse(infoExecutionCourse);
-    }
-
-    /**
-     * Construtor
-     */
-
-    public InfoSite(InfoExecutionCourse infoExecutionCourse, String initialStatement, String introduction) {
-        setInfoExecutionCourse(infoExecutionCourse);
-        setInitialStatement(initialStatement);
-        setIntroduction(introduction);
-
+        return site.getDynamicMailDistribution();
     }
 
     /**
@@ -88,167 +45,59 @@ public class InfoSite extends InfoObject implements ISiteComponent {
         this.infoExecutionCourse = infoExecutionCourse;
     }
 
-    /**
-     * @return List
-     */
-    //	public List getInfoAnnouncements() {
-    //		return infoAnnouncements;
-    //	}
-    /**
-     * Sets the infoAnnouncements.
-     * 
-     * @param infoAnnouncements
-     *            The infoAnnouncements to set
-     */
-    //	public void setInfoAnnouncements(List infoAnnouncements) {
-    //		this.infoAnnouncements = infoAnnouncements;
-    //	}
-    /**
-     * @return List of InfoSections
-     */
-
-    //	public List getInfoSections() {
-    //			return infoSections;
-    //	}
-    /**
-     * Sets the infoSections.
-     * 
-     * @param infoSections
-     *            The infoSections to set
-     */
-    //	public void setInfoSections(List infoSections) {
-    //		this.infoSections = infoSections;
-    //	}
     public boolean equals(Object obj) {
-        boolean resultado = false;
-        if (obj != null && obj instanceof InfoSite) {
-            resultado = getInfoExecutionCourse().equals(((InfoSite) obj).getInfoExecutionCourse());
-        }
-        return resultado;
+        return obj instanceof InfoSite && site == ((InfoSite) obj).site;
     }
 
     /**
      * @see java.lang.Object#toString()
      */
     public String toString() {
-        String result = "[INFOSITE";
-        result += ", infoExecutionCourse=" + getInfoExecutionCourse();
-        result += ", initialStatement=" + getInitialStatement();
-        result += ", introduction=" + getIntroduction();
-        result += ", mail =" + getMail();
-        result += ", alternativeSite=" + getAlternativeSite();
-        result += ", style=" + getStyle();
-        result += "]";
-        return result;
+        return site.toString();
     }
 
     /**
      * @return String
      */
     public String getAlternativeSite() {
-        return alternativeSite;
-    }
-
-    /**
-     * Sets the alternativeSite.
-     * 
-     * @param alternativeSite
-     *            The alternativeSite to set
-     */
-    public void setAlternativeSite(String alternativeSite) {
-        this.alternativeSite = alternativeSite;
+        return site.getAlternativeSite();
     }
 
     /**
      * @return String
      */
     public String getMail() {
-        return mail;
-    }
-
-    /**
-     * Sets the mail.
-     * 
-     * @param mail
-     *            The mail to set
-     */
-    public void setMail(String mail) {
-        this.mail = mail;
+        return site.getMail();
     }
 
     /**
      * @return String
      */
     public String getInitialStatement() {
-        return initialStatement;
+        return site.getInitialStatement();
     }
 
     /**
      * @return String
      */
     public String getIntroduction() {
-        return introduction;
-    }
-
-    /**
-     * Sets the initialStatement.
-     * 
-     * @param initialStatement
-     *            The initialStatement to set
-     */
-    public void setInitialStatement(String initialStatement) {
-        this.initialStatement = initialStatement;
-    }
-
-    /**
-     * Sets the introduction.
-     * 
-     * @param introduction
-     *            The introduction to set
-     */
-    public void setIntroduction(String introduction) {
-        this.introduction = introduction;
+        return site.getIntroduction();
     }
 
     /**
      * @return String
      */
     public String getStyle() {
-        return style;
-    }
-
-    /**
-     * Sets the style.
-     * 
-     * @param style
-     *            The style to set
-     */
-    public void setStyle(String style) {
-        this.style = style;
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see net.sourceforge.fenixedu.dataTransferObject.InfoObject#copyFromDomain(Dominio.DomainObject)
-     */
-    public void copyFromDomain(Site site) {
-        super.copyFromDomain(site);
-        if (site != null) {
-            setAlternativeSite(site.getAlternativeSite());
-            setMail(site.getMail());
-            setInitialStatement(site.getInitialStatement());
-            setIntroduction(site.getIntroduction());
-            setStyle(site.getStyle());
-        }
+        return site.getStyle();
     }
 
     public static InfoSite newInfoFromDomain(Site site) {
-        InfoSite infoSite = null;
-        if (site != null) {
-            infoSite = new InfoSite();
-            infoSite.copyFromDomain(site);
-        }
-        return infoSite;
+        return site == null ? null : new InfoSite(site);
     }
+
+    @Override
+    public Integer getIdInternal() {
+        return site.getIdInternal();
+    }
+
 }

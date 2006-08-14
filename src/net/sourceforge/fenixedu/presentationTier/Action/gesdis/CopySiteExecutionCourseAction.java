@@ -25,6 +25,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoSiteSection;
 import net.sourceforge.fenixedu.dataTransferObject.SiteView;
 import net.sourceforge.fenixedu.dataTransferObject.TeacherAdministrationSiteView;
 import net.sourceforge.fenixedu.dataTransferObject.comparators.ComparatorByNameForInfoExecutionDegree;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
@@ -89,8 +90,7 @@ public class CopySiteExecutionCourseAction extends FenixDispatchAction {
 
             request.setAttribute(SessionConstants.LIST_EXECUTION_PERIODS, executionPeriodLabels);
 
-            ISiteComponent component = new InfoSite();
-            readSiteView(request, component, null, null, null);
+            readSiteView(request, null, null, null);
         }
         return mapping.findForward("chooseExecutionPeriod");
     }
@@ -151,8 +151,7 @@ public class CopySiteExecutionCourseAction extends FenixDispatchAction {
         buildExecutionDegreeLabelValueBean(executionDegreeList, courses);
         request.setAttribute(SessionConstants.DEGREES, courses);
 
-        ISiteComponent component = new InfoSite();
-        readSiteView(request, component, null, null, null);
+        readSiteView(request, null, null, null);
 
         return mapping.findForward("chooseExecDegreeAndCurYear");
     }
@@ -242,8 +241,7 @@ public class CopySiteExecutionCourseAction extends FenixDispatchAction {
         Collections.sort(infoExecutionCourses, new BeanComparator("nome"));
         request.setAttribute(SessionConstants.EXECUTION_COURSE_LIST_KEY, infoExecutionCourses);
 
-        ISiteComponent component = new InfoSite();
-        readSiteView(request, component, null, null, null);
+        readSiteView(request, null, null, null);
 
         return mapping.findForward("viewExecutionCourses");
     }
@@ -286,7 +284,7 @@ public class CopySiteExecutionCourseAction extends FenixDispatchAction {
         copySiteForm.set("objectCode", request.getParameter("objectCode")); // executionCourseIDTo
         copySiteForm.set("executionCourseID", new Integer(request.getParameter("executionCourseId"))); // executionCourseIDFrom
 
-        readSiteView(request, new InfoSite(), null, null, null);
+        readSiteView(request, null, null, null);
 
         return mapping.findForward("chooseFeaturesToCopy");
     }
@@ -320,7 +318,7 @@ public class CopySiteExecutionCourseAction extends FenixDispatchAction {
         return mapping.findForward("manageExecutionCourses");
     }
 
-    private SiteView readSiteView(HttpServletRequest request, ISiteComponent firstPageComponent,
+    private SiteView readSiteView(HttpServletRequest request,
             Integer infoExecutionCourseCode, Object obj1, Object obj2) throws FenixActionException,
             FenixFilterException {
 
@@ -334,8 +332,11 @@ public class CopySiteExecutionCourseAction extends FenixDispatchAction {
             infoExecutionCourseCode = objectCode;
         }
 
+        final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(infoExecutionCourseCode);
+        final InfoSite infoSite = InfoSite.newInfoFromDomain(executionCourse.getSite());
+
         ISiteComponent commonComponent = new InfoSiteCommon();
-        Object[] args = { infoExecutionCourseCode, commonComponent, firstPageComponent, objectCode,
+        Object[] args = { infoExecutionCourseCode, commonComponent, infoSite, objectCode,
                 obj1, obj2 };
 
         try {

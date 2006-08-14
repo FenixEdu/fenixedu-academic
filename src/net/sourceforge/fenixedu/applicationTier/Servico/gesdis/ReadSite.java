@@ -9,7 +9,6 @@ package net.sourceforge.fenixedu.applicationTier.Servico.gesdis;
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSite;
-import net.sourceforge.fenixedu.dataTransferObject.InfoSiteWithInfoExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -20,7 +19,9 @@ public class ReadSite extends Service {
     	final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID( infoExecutionCourse.getIdInternal());
         final Site site = executionCourse.getSite();
         if (site != null) {
-            return InfoSiteWithInfoExecutionCourse.newInfoFromDomain(site);
+            final InfoSite infoSite = InfoSite.newInfoFromDomain(site);
+            infoSite.setInfoExecutionCourse(InfoExecutionCourse.newInfoFromDomain(executionCourse));
+            return infoSite;
         } else {
             return null;
         }

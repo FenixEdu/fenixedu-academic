@@ -54,26 +54,19 @@ public class AlternativeSiteManagementAction extends FenixDispatchAction {
         session.removeAttribute(SessionConstants.INFO_SECTION);
         InfoSite infoSite = (InfoSite) session.getAttribute(SessionConstants.INFO_SITE);
 
-        InfoSite infoSiteNew = new InfoSite();
-
-        infoSiteNew.setInfoExecutionCourse(infoSite.getInfoExecutionCourse());
         String alternativeSite = (String) alternativeSiteForm.get("siteAddress");
         String mail = (String) alternativeSiteForm.get("mail");
         String initialStatement = (String) alternativeSiteForm.get("initialStatement");
         String introduction = (String) alternativeSiteForm.get("introduction");
-        infoSiteNew.setAlternativeSite(alternativeSite);
-        infoSiteNew.setMail(mail);
-        infoSiteNew.setInitialStatement(initialStatement);
-        infoSiteNew.setIntroduction(introduction);
 
         IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
-        Object args[] = { infoSite, infoSiteNew };
+        Object args[] = { infoSite, alternativeSite, mail, initialStatement, introduction };
         try {
             ServiceManagerServiceFactory.executeService(userView, "EditSite", args);
         } catch (FenixServiceException e) {
             throw new FenixActionException(e);
         }
-        session.setAttribute(SessionConstants.INFO_SITE, infoSiteNew);
+        session.setAttribute(SessionConstants.INFO_SITE, InfoSite.newInfoFromDomain(rootDomainObject.readSiteByOID(infoSite.getIdInternal())));
         session.setAttribute("alternativeSiteForm", alternativeSiteForm);
 
         return mapping.findForward("viewSite");

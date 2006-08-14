@@ -246,17 +246,8 @@ public class TeacherAdministrationSiteComponentBuilder {
 	 * @return
 	 */
 	private ISiteComponent getInfoSiteCustomizationOptions(InfoSite component, Site site) {
-		component.setAlternativeSite(site.getAlternativeSite());
-		component.setMail(site.getMail());
-		component.setInitialStatement(site.getInitialStatement());
-		component.setIntroduction(site.getIntroduction());
-		component.setIdInternal(site.getIdInternal());
-		component.setDynamicMailDistribution(site.getDynamicMailDistribution());
-
 		component.setInfoExecutionCourse(InfoExecutionCourse
 				.newInfoFromDomain(site.getExecutionCourse()));
-		component.setStyle(site.getStyle());
-
 		return component;
 	}
 
