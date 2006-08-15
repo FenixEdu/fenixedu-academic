@@ -20,7 +20,7 @@ import net.sourceforge.fenixedu.domain.CurricularCourseScope;
  * Window - Preferences - Java - Code Style - Code Templates
  */
 public class InfoCurricularCourseWithInfoDegreeAndScopes extends
-        InfoCurricularCourseWithInfoDegree {
+        InfoCurricularCourse {
 
     public InfoCurricularCourseWithInfoDegreeAndScopes(CurricularCourse curricularCourse) {
 		super(curricularCourse);

@@ -24,8 +24,6 @@ public class InfoCurricularCourse extends InfoObject implements Comparable, ISit
 
 	private boolean showEnVersion = false;
 
-    private InfoDegreeCurricularPlan infoDegreeCurricularPlan;
-
     private List<InfoCurricularCourseScope> infoScopes;
 
     private List infoAssociatedExecutionCourses;
@@ -82,45 +80,22 @@ public class InfoCurricularCourse extends InfoObject implements Comparable, ISit
         return curricularCourse.getTheoreticalHours();
     }
 
-    /**
-     * Returns the infoDegreeCurricularPlan.
-     * 
-     * @return InfoDegreeCurricularPlan
-     */
     public InfoDegreeCurricularPlan getInfoDegreeCurricularPlan() {
-        return infoDegreeCurricularPlan;
+    	final InfoDegreeCurricularPlan infoDegreeCurricularPlan = InfoDegreeCurricularPlan.newInfoFromDomain(curricularCourse.getDegreeCurricularPlan());
+    	if (showEnVersion) {
+    		infoDegreeCurricularPlan.prepareEnglishPresentation(Locale.ENGLISH);
+    	}
+    	return infoDegreeCurricularPlan;
     }
 
-    /**
-     * Sets the infoDegreeCurricularPlan.
-     * 
-     * @param infoDegreeCurricularPlan
-     *            The infoDegreeCurricularPlan to set
-     */
-    public void setInfoDegreeCurricularPlan(InfoDegreeCurricularPlan infoDegreeCurricularPlan) {
-        this.infoDegreeCurricularPlan = infoDegreeCurricularPlan;
-    }
-
-    /**
-     * @return List
-     */
     public List getInfoScopes() {
         return infoScopes;
     }
 
-    /**
-     * Sets the infoScopes.
-     * 
-     * @param infoScopes
-     *            The infoScopes to set
-     */
     public void setInfoScopes(List<InfoCurricularCourseScope> infoScopes) {
         this.infoScopes = infoScopes;
     }
 
-    /**
-     * @return CurricularCourseType
-     */
     public CurricularCourseType getType() {
         return curricularCourse.getType();
     }
@@ -236,14 +211,6 @@ public class InfoCurricularCourse extends InfoObject implements Comparable, ISit
     	return curricularCourse.getAcronym();
     }
     
-    public void copyFromDomain(CurricularCourse curricularCourse) {
-        super.copyFromDomain(curricularCourse);
-        if (curricularCourse != null) {
-            setInfoDegreeCurricularPlan(InfoDegreeCurricularPlan.newInfoFromDomain(curricularCourse
-                    .getDegreeCurricularPlan()));
-        }
-    }
-
     public static InfoCurricularCourse newInfoFromDomain(CurricularCourse curricularCourse) {
         InfoCurricularCourse infoCurricularCourse = null;
         if (curricularCourse != null) {

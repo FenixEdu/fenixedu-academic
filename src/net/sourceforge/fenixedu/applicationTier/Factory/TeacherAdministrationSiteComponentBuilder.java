@@ -18,7 +18,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoAnnouncement;
 import net.sourceforge.fenixedu.dataTransferObject.InfoBibliographicReference;
 import net.sourceforge.fenixedu.dataTransferObject.InfoClass;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse;
-import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseWithInfoDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurriculum;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurriculumWithInfoCurricularCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurriculumWithInfoCurricularCourseAndInfoDegree;
@@ -222,7 +221,7 @@ public class TeacherAdministrationSiteComponentBuilder {
 		final List<InfoCurricularCourse> infoCurricularCourses = new ArrayList<InfoCurricularCourse>(
 				curricularCourses.size());
 		for (final CurricularCourse curricularCourse : curricularCourses) {
-			infoCurricularCourses.add(InfoCurricularCourseWithInfoDegree
+			infoCurricularCourses.add(InfoCurricularCourse
 					.newInfoFromDomain(curricularCourse));
 		}
 		component.setAssociatedDegrees(infoCurricularCourses);
@@ -775,7 +774,7 @@ public class TeacherAdministrationSiteComponentBuilder {
 		List<InfoCurricularCourse> infoCurricularCourses = new ArrayList<InfoCurricularCourse>();
 		while (iter.hasNext()) {
 			CurricularCourse curricularCourse = (CurricularCourse) iter.next();
-			InfoCurricularCourse infoCurricularCourse = InfoCurricularCourseWithInfoDegree
+			InfoCurricularCourse infoCurricularCourse = InfoCurricularCourse
 					.newInfoFromDomain(curricularCourse);
 			infoCurricularCourses.add(infoCurricularCourse);
 		}

@@ -14,7 +14,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoBibliographicReference;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseScope;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseScopeWithBranchAndSemesterAndYear;
-import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseWithInfoDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurriculum;
 import net.sourceforge.fenixedu.dataTransferObject.InfoEvaluationMethod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
@@ -284,7 +283,7 @@ public class ReadCoursesInformation extends Service {
         while (iter.hasNext()) {
             CurricularCourse curricularCourse = (CurricularCourse) iter.next();
 
-            InfoCurricularCourse infoCurricularCourse = InfoCurricularCourseWithInfoDegree
+            InfoCurricularCourse infoCurricularCourse = InfoCurricularCourse
                     .newInfoFromDomain(curricularCourse);
             List infoScopes = getInfoScopes(curricularCourse.getScopesSet());
             infoCurricularCourse.setInfoScopes(infoScopes);
@@ -325,7 +324,7 @@ public class ReadCoursesInformation extends Service {
                     executionYear.getBeginDate(), executionYear.getEndDate());
             List infoScopes = getInfoScopes(curricularCourseScopes);
 
-            InfoCurricularCourse infoCurricularCourse = InfoCurricularCourseWithInfoDegree
+            InfoCurricularCourse infoCurricularCourse = InfoCurricularCourse
                     .newInfoFromDomain(curricularCourse);
             infoCurricularCourse.setInfoScopes(infoScopes);
             infoCurricularCourses.add(infoCurricularCourse);

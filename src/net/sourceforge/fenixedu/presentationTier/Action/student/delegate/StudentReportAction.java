@@ -9,13 +9,11 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse;
-import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
 import net.sourceforge.fenixedu.dataTransferObject.InfoUniversity;
 import net.sourceforge.fenixedu.dataTransferObject.gesdis.InfoSiteCourseHistoric;
 import net.sourceforge.fenixedu.dataTransferObject.student.InfoSiteStudentCourseReport;
 import net.sourceforge.fenixedu.dataTransferObject.student.InfoStudentCourseReport;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
-import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.University;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
@@ -79,20 +77,15 @@ public class StudentReportAction extends DispatchAction {
             InfoStudentCourseReport infoStudentCourseReport = new InfoStudentCourseReport();
             BeanUtils.copyProperties(infoStudentCourseReport, dynaForm);
             Integer curricularCourseId = (Integer) dynaForm.get("curricularCourseId");
-            Integer degreeCurricularPlanId = (Integer) dynaForm.get("degreeCurricularPlanId");
-            final DegreeCurricularPlan degreeCurricularPlan = RootDomainObject.getInstance().readDegreeCurricularPlanByOID(degreeCurricularPlanId);
             Integer universityId = (Integer) dynaForm.get("universityId");
             final University university = RootDomainObject.getInstance().readUniversityByOID(universityId);
 
             InfoUniversity infoUniversity = new InfoUniversity(university);
 
-            InfoDegreeCurricularPlan infoDegreeCurricularPlan = new InfoDegreeCurricularPlan(degreeCurricularPlan);
-
             final CurricularCourse curricularCourse = (CurricularCourse) RootDomainObject.getInstance().
     				readDegreeModuleByOID(curricularCourseId);
             InfoCurricularCourse infoCurricularCourse = new InfoCurricularCourse(curricularCourse);
             infoCurricularCourse.setInfoUniversity(infoUniversity);
-            infoCurricularCourse.setInfoDegreeCurricularPlan(infoDegreeCurricularPlan);
 
             infoStudentCourseReport.setInfoCurricularCourse(infoCurricularCourse);
 

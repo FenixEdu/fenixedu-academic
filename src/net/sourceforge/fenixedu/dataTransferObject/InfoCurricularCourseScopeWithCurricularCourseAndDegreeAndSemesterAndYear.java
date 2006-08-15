@@ -21,7 +21,7 @@ public class InfoCurricularCourseScopeWithCurricularCourseAndDegreeAndSemesterAn
     public void copyFromDomain(CurricularCourseScope curricularCourseScope) {
         super.copyFromDomain(curricularCourseScope);
         if (curricularCourseScope != null) {
-            setInfoCurricularCourse(InfoCurricularCourseWithInfoDegree
+            setInfoCurricularCourse(InfoCurricularCourse
                     .newInfoFromDomain(curricularCourseScope.getCurricularCourse()));
         }
     }

@@ -9,7 +9,6 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.student.GetEnrolmentGrade;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse;
-import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseWithInfoDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolment;
 import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolmentEvaluation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolmentWithInfoStudentPlanAndInfoDegreePlanAndInfoStudent;
@@ -42,7 +41,7 @@ public class ReadCurriculumHistoricReport extends Service {
 
         infoCurriculumHistoricReport.setSemester(semester);
 
-        InfoCurricularCourse infoCurricularCourse = InfoCurricularCourseWithInfoDegree
+        InfoCurricularCourse infoCurricularCourse = InfoCurricularCourse
                 .newInfoFromDomain(curricularCourse);
         infoCurriculumHistoricReport.setInfoCurricularCourse(infoCurricularCourse);
 

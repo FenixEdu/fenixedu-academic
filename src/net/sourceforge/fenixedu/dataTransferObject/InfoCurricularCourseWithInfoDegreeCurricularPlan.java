@@ -18,10 +18,6 @@ public class InfoCurricularCourseWithInfoDegreeCurricularPlan extends InfoCurric
 
 	public void copyFromDomain(CurricularCourse curricularCourse) {
         super.copyFromDomain(curricularCourse);
-        if (curricularCourse != null) {
-            setInfoDegreeCurricularPlan(InfoDegreeCurricularPlan.newInfoFromDomain(curricularCourse
-                    .getDegreeCurricularPlan()));
-        }
     }
 
     public static InfoCurricularCourse newInfoFromDomain(CurricularCourse curricularCourse) {

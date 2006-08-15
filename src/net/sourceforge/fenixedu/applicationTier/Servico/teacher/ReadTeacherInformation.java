@@ -9,7 +9,7 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.constants.publication.PublicationConstants;
-import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseWithInfoDegree;
+import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourseWithExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
@@ -197,7 +197,7 @@ public class ReadTeacherInformation extends Service {
                             public Object transform(Object o) {
                                 CurricularCourse curricularCourse = (CurricularCourse) o;
 
-                                return InfoCurricularCourseWithInfoDegree
+                                return InfoCurricularCourse
                                         .newInfoFromDomain(curricularCourse);
                             }
                         });
@@ -249,7 +249,7 @@ public class ReadTeacherInformation extends Service {
                             public Object transform(Object o) {
                                 CurricularCourse curricularCourse = (CurricularCourse) o;
 
-                                return InfoCurricularCourseWithInfoDegree
+                                return InfoCurricularCourse
                                         .newInfoFromDomain(curricularCourse);
                             }
                         });

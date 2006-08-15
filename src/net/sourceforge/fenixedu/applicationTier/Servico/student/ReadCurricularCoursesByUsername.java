@@ -11,7 +11,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
-import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseWithInfoDegree;
+import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.student.Registration;
@@ -42,7 +42,7 @@ public class ReadCurricularCoursesByUsername extends Service {
 					.getCurricularCourses().iterator(); curricularCoursesIterator.hasNext();) {
 				CurricularCourse curricularCourse = (CurricularCourse) curricularCoursesIterator
 						.next();
-				curricularCourses.add(InfoCurricularCourseWithInfoDegree
+				curricularCourses.add(InfoCurricularCourse
 						.newInfoFromDomain(curricularCourse));
 			}
 		}

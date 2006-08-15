@@ -8,7 +8,6 @@ package net.sourceforge.fenixedu.dataTransferObject.Seminaries;
 import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse;
-import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseWithInfoDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentWithInfoPerson;
@@ -114,7 +113,7 @@ public class InfoCandidacy extends InfoObject {
         super.copyFromDomain(candidacy);
         if (candidacy != null) {
             setApproved(candidacy.getApproved());
-            setCurricularCourse(InfoCurricularCourseWithInfoDegree.newInfoFromDomain(candidacy
+            setCurricularCourse(InfoCurricularCourse.newInfoFromDomain(candidacy
                     .getCurricularCourse()));
             setInfoModality(InfoModality.newInfoFromDomain(candidacy.getModality()));
             setMotivation(candidacy.getMotivation());

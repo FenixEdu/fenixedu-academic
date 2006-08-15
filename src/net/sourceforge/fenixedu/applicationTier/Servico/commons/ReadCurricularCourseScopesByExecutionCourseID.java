@@ -8,7 +8,6 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseScopeWithBranchAndSemesterAndYear;
-import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseWithInfoDegree;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.CurricularCourseScope;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
@@ -33,7 +32,7 @@ public class ReadCurricularCourseScopesByExecutionCourseID extends Service {
             final Set<CurricularCourseScope> curricularCourseScopes = curricularCourse.findCurricularCourseScopesIntersectingPeriod(
                     executionPeriod.getBeginDate(), executionPeriod.getEndDate());
 
-            final InfoCurricularCourse infoCurricularCourse = InfoCurricularCourseWithInfoDegree.newInfoFromDomain(
+            final InfoCurricularCourse infoCurricularCourse = InfoCurricularCourse.newInfoFromDomain(
                     curricularCourse);
             infoCurricularCourse.setInfoScopes(new ArrayList());
 

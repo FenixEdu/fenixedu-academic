@@ -8,7 +8,6 @@ package net.sourceforge.fenixedu.applicationTier.Servico.scientificCouncil;
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse;
-import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseWithInfoDegree;
 import net.sourceforge.fenixedu.dataTransferObject.SiteView;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -24,7 +23,7 @@ public class ReadCurricularCourseByOIdService extends Service {
 	public SiteView run(Integer curricularCourseId) throws FenixServiceException, ExcepcaoPersistencia {
 		CurricularCourse curricularCourse = (CurricularCourse) rootDomainObject.readDegreeModuleByOID(curricularCourseId);
 
-		InfoCurricularCourse infoCurricularCourse = InfoCurricularCourseWithInfoDegree
+		InfoCurricularCourse infoCurricularCourse = InfoCurricularCourse
 				.newInfoFromDomain(curricularCourse);
 
 		SiteView siteView = new SiteView(infoCurricularCourse);

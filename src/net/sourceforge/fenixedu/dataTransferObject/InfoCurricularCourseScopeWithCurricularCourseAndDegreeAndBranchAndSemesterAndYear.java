@@ -8,7 +8,7 @@ public class InfoCurricularCourseScopeWithCurricularCourseAndDegreeAndBranchAndS
     public void copyFromDomain(CurricularCourseScope curricularCourseScope) {
         super.copyFromDomain(curricularCourseScope);
         if (curricularCourseScope != null) {
-            setInfoCurricularCourse(InfoCurricularCourseWithInfoDegree.newInfoFromDomain(curricularCourseScope
+            setInfoCurricularCourse(InfoCurricularCourse.newInfoFromDomain(curricularCourseScope
                     .getCurricularCourse()));
         }
     }

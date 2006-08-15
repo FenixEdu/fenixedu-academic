@@ -20,7 +20,7 @@ public class InfoCurriculumWithInfoCurricularCourseAndInfoDegree extends InfoCur
     public void copyFromDomain(Curriculum curriculum) {
         super.copyFromDomain(curriculum);
         if (curriculum != null) {
-            setInfoCurricularCourse(InfoCurricularCourseWithInfoDegree.newInfoFromDomain(curriculum
+            setInfoCurricularCourse(InfoCurricularCourse.newInfoFromDomain(curriculum
                     .getCurricularCourse()));
         }
     }

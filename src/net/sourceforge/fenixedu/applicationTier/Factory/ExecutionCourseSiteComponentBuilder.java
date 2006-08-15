@@ -20,7 +20,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoBibliographicReference;
 import net.sourceforge.fenixedu.dataTransferObject.InfoClassWithInfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseScope;
-import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
 import net.sourceforge.fenixedu.dataTransferObject.InfoEvaluationMethod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourseWithExecutionPeriod;
@@ -784,18 +783,8 @@ public class ExecutionCourseSiteComponentBuilder {
 		return infoCurricularCourseScope;
 	}
 
-	/**
-	 * @param curricularCourse
-	 * @return
-	 */
 	private InfoCurricularCourse copyFromDomain(CurricularCourse curricularCourse) {
-		InfoCurricularCourse infoCurricularCourse = null;
-		if (curricularCourse != null) {
-			infoCurricularCourse = new InfoCurricularCourse(curricularCourse);
-			infoCurricularCourse.setInfoDegreeCurricularPlan(InfoDegreeCurricularPlan
-					.newInfoFromDomain(curricularCourse.getDegreeCurricularPlan()));
-		}
-		return infoCurricularCourse;
+		return InfoCurricularCourse.newInfoFromDomain(curricularCourse);
 	}
 
 }

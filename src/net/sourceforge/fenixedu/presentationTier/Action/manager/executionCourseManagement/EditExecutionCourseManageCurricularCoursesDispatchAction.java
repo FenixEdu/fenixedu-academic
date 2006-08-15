@@ -12,7 +12,6 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse;
-import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseWithInfoDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.comparators.ComparatorByNameForInfoExecutionDegree;
@@ -172,7 +171,7 @@ public class EditExecutionCourseManageCurricularCoursesDispatchAction extends Fe
         		final CurricularCourse curricularCourse = (CurricularCourse) degreeModule;
         		if (!executionCourse.getAssociatedCurricularCoursesSet().contains(curricularCourse)) { 
         			if (curricularCourse.hasScopeInGivenSemesterAndCurricularYearInDCP(null, degreeCurricularPlan, executionPeriod)) {
-        				infoCurricularCourses.add(InfoCurricularCourseWithInfoDegree.newInfoFromDomain(curricularCourse));
+        				infoCurricularCourses.add(InfoCurricularCourse.newInfoFromDomain(curricularCourse));
         			}
         		}
         	}

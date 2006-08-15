@@ -13,7 +13,6 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse;
-import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseWithInfoDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoProfessorship;
 import net.sourceforge.fenixedu.dataTransferObject.InfoProfessorshipWithAll;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.professorship.DetailedProfessorship;
@@ -164,7 +163,7 @@ public class ReadProfessorshipsAndResponsibilitiesByDepartment extends Service {
 
                                 CurricularCourse curricularCourse = (CurricularCourse) input;
 
-                                InfoCurricularCourse infoCurricularCourse = InfoCurricularCourseWithInfoDegree
+                                InfoCurricularCourse infoCurricularCourse = InfoCurricularCourse
                                         .newInfoFromDomain(curricularCourse);
                                 return infoCurricularCourse;
                             }

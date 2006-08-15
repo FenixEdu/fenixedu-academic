@@ -20,13 +20,11 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoBibliographicReference;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseScope;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseScopeWithBranchAndSemesterAndYear;
-import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseWithInfoDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurriculum;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDepartment;
 import net.sourceforge.fenixedu.dataTransferObject.InfoEvaluationMethod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourseWithExecutionPeriod;
-import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoLesson;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteCommon;
@@ -188,7 +186,7 @@ public class ReadCourseInformation extends Service {
             InfoSiteEvaluationInformation infoSiteEvaluationInformation = new InfoSiteEvaluationInformation();
             infoSiteEvaluationInformation.setInfoSiteEvaluationStatistics(infoSiteEvaluationStatistics);
 
-            InfoCurricularCourse infoCurricularCourse = InfoCurricularCourseWithInfoDegree
+            InfoCurricularCourse infoCurricularCourse = InfoCurricularCourse
                     .newInfoFromDomain(curricularCourse);
             infoSiteEvaluationInformation.setInfoCurricularCourse(infoCurricularCourse);
             infoSiteEvaluationInformation.setInfoSiteEvaluationHistory(getInfoSiteEvaluationsHistory(
@@ -392,7 +390,7 @@ public class ReadCourseInformation extends Service {
         while (iter.hasNext()) {
             CurricularCourse curricularCourse = (CurricularCourse) iter.next();
 
-            InfoCurricularCourse infoCurricularCourse = InfoCurricularCourseWithInfoDegree
+            InfoCurricularCourse infoCurricularCourse = InfoCurricularCourse
                     .newInfoFromDomain(curricularCourse);
             List infoScopes = getInfoScopes(curricularCourse.getScopes());
             infoCurricularCourse.setInfoScopes(infoScopes);
@@ -441,7 +439,7 @@ public class ReadCourseInformation extends Service {
 
             List curricularCourseScopes = curricularCourse.getScopes();
             List infoScopes = getInfoScopes(curricularCourseScopes);
-            InfoCurricularCourse infoCurricularCourse = InfoCurricularCourseWithInfoDegree
+            InfoCurricularCourse infoCurricularCourse = InfoCurricularCourse
                     .newInfoFromDomain(curricularCourse);
             infoCurricularCourse.setInfoScopes(infoScopes);
             infoCurricularCourses.add(infoCurricularCourse);

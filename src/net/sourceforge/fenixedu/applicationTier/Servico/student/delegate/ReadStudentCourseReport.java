@@ -13,7 +13,6 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseScopeWithCurricularCourseAndDegreeAndBranchAndSemesterAndYear;
-import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseWithInfoDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.gesdis.InfoSiteEvaluationStatistics;
 import net.sourceforge.fenixedu.dataTransferObject.student.InfoSiteStudentCourseReport;
@@ -57,7 +56,7 @@ public class ReadStudentCourseReport extends Service {
 		InfoStudentCourseReport infoStudentCourseReport = null;
 		if (studentCourseReport == null) {
 			infoStudentCourseReport = new InfoStudentCourseReport();
-			InfoCurricularCourse infoCurricularCourse = InfoCurricularCourseWithInfoDegree
+			InfoCurricularCourse infoCurricularCourse = InfoCurricularCourse
 					.newInfoFromDomain(curricularCourse);
 			infoCurricularCourse.setInfoScopes(infoScopes);
 			infoStudentCourseReport.setInfoCurricularCourse(infoCurricularCourse);

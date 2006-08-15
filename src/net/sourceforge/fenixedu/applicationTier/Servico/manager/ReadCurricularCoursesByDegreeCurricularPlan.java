@@ -9,7 +9,6 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse;
-import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseWithInfoDegree;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -26,7 +25,7 @@ public class ReadCurricularCoursesByDegreeCurricularPlan extends Service {
         final List<CurricularCourse> curricularCourses = degreeCurricularPlan.getCurricularCourses();
         final List<InfoCurricularCourse> infoCurricularCourses = new ArrayList<InfoCurricularCourse>(curricularCourses.size());
         for (final CurricularCourse curricularCourse : curricularCourses) {
-            infoCurricularCourses.add(InfoCurricularCourseWithInfoDegree.newInfoFromDomain(curricularCourse));
+            infoCurricularCourses.add(InfoCurricularCourse.newInfoFromDomain(curricularCourse));
         }
         return infoCurricularCourses;
     }

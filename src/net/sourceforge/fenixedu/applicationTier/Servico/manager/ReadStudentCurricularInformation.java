@@ -101,21 +101,17 @@ public class ReadStudentCurricularInformation extends Service {
                 final Enrolment enrollment = (Enrolment) arg0;
                 final ExecutionPeriod executionPeriod = enrollment.getExecutionPeriod();
                 final CurricularCourse curricularCourse = enrollment.getCurricularCourse();
-                final DegreeCurricularPlan degreeCurricularPlan = curricularCourse
-                        .getDegreeCurricularPlan();
                 final List enrollmentEvaluations = enrollment.getEvaluations();
 
                 final InfoEnrollmentGrade infoEnrollmentGrade = new InfoEnrollmentGrade();
                 final InfoEnrolment infoEnrolment = new InfoEnrolment();
                 final InfoExecutionPeriod infoExecutionPeriod = InfoExecutionPeriod.newInfoFromDomain(executionPeriod);
                 final InfoCurricularCourse infoCurricularCourse = new InfoCurricularCourse(curricularCourse);
-                final InfoDegreeCurricularPlan infoDegreeCurricularPlan = new InfoDegreeCurricularPlan(degreeCurricularPlan);
 
                 infoEnrollmentGrade.setInfoEnrollment(infoEnrolment);
                 infoEnrolment.setIdInternal(enrollment.getIdInternal());
                 infoEnrolment.setInfoExecutionPeriod(infoExecutionPeriod);
                 infoEnrolment.setInfoCurricularCourse(infoCurricularCourse);
-                infoCurricularCourse.setInfoDegreeCurricularPlan(infoDegreeCurricularPlan);
 				
                 if (!enrollmentEvaluations.isEmpty()) {
                 	final EnrolmentEvaluation enrolmentEvaluation = (EnrolmentEvaluation) Collections.max(enrollmentEvaluations);

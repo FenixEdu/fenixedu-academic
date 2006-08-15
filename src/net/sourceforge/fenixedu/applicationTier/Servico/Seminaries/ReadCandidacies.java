@@ -13,7 +13,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
-import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseWithInfoDegree;
+import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentWithInfoPerson;
 import net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoCandidacyDetails;
 import net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoCaseStudyChoice;
@@ -126,7 +126,7 @@ public class ReadCandidacies extends Service {
 			List enrollments = studentCurricularPlan.getEnrolments();
 
 			InfoCandidacyDetails candidacyDTO = new InfoCandidacyDetails();
-			candidacyDTO.setCurricularCourse(InfoCurricularCourseWithInfoDegree
+			candidacyDTO.setCurricularCourse(InfoCurricularCourse
 					.newInfoFromDomain(candidacy.getCurricularCourse()));
 			candidacyDTO.setIdInternal(candidacy.getIdInternal());
 			candidacyDTO.setInfoClassification(getInfoClassification(enrollments));

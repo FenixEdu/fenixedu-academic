@@ -7,7 +7,7 @@ public class InfoEnrolmentWithExecutionPeriodAndYearAndEvaluationTypeAndCurricul
 
     public void copyFromDomain(Enrolment enrolment) {
         super.copyFromDomain(enrolment);
-        setInfoCurricularCourse(InfoCurricularCourseWithInfoDegree.newInfoFromDomain(enrolment.getCurricularCourse()));
+        setInfoCurricularCourse(InfoCurricularCourse.newInfoFromDomain(enrolment.getCurricularCourse()));
     }
 
     public static InfoEnrolment newInfoFromDomain(Enrolment enrolment) {
