@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.dataTransferObject.InfoAdvisory;
+import net.sourceforge.fenixedu.dataTransferObject.InfoAdvisoryEditor;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
@@ -48,7 +49,7 @@ public class ManageAdvisoriesDA extends FenixDispatchAction {
 
         DynaValidatorForm advisoryForm = (DynaValidatorForm) form;
                        
-        InfoAdvisory infoAdvisory = new InfoAdvisory();
+        InfoAdvisoryEditor infoAdvisory = new InfoAdvisoryEditor();
         infoAdvisory.setSender((String) advisoryForm.get("sender"));
         infoAdvisory.setSubject((String) advisoryForm.get("subject"));
         infoAdvisory.setMessage((String) advisoryForm.get("message"));

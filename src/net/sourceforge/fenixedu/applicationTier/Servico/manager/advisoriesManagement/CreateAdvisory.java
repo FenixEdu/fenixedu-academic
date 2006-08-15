@@ -9,7 +9,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
-import net.sourceforge.fenixedu.dataTransferObject.InfoAdvisory;
+import net.sourceforge.fenixedu.dataTransferObject.InfoAdvisoryEditor;
 import net.sourceforge.fenixedu.domain.Advisory;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Role;
@@ -33,7 +33,7 @@ public class CreateAdvisory extends Service {
         return false;
     }
 
-    public Boolean run(InfoAdvisory infoAdvisory, AdvisoryRecipients advisoryRecipients)
+    public Boolean run(InfoAdvisoryEditor infoAdvisory, AdvisoryRecipients advisoryRecipients)
             throws ExcepcaoPersistencia {
         final Advisory advisory = new Advisory();
         advisory.setCreated(infoAdvisory.getCreated());
