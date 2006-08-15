@@ -11,6 +11,7 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -28,6 +29,11 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoLesson;
 import net.sourceforge.fenixedu.dataTransferObject.InfoRoom;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
 import net.sourceforge.fenixedu.dataTransferObject.comparators.ComparatorByNameForInfoExecutionDegree;
+import net.sourceforge.fenixedu.domain.Degree;
+import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.ExecutionDegree;
+import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
@@ -40,6 +46,8 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.struts.util.LabelValueBean;
+
+import pt.utl.ist.fenix.tools.util.StringAppender;
 
 /**
  * @author Luis Cruz & Sara Ribeiro
@@ -503,102 +511,73 @@ public class ContextUtils {
     }
 
     public static void prepareChangeExecutionDegreeAndCurricularYear(HttpServletRequest request) {
-        IUserView userView = SessionUtils.getUserView(request);
         ResourceBundle bundle = ResourceBundle.getBundle("resources.EnumerationResources");
 
-        InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request
-                .getAttribute(SessionConstants.EXECUTION_PERIOD);
+        InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request.getAttribute(SessionConstants.EXECUTION_PERIOD);
 
         /* Obtain a list of curricular years */
         List labelListOfCurricularYears = getLabelListOfCurricularYears();
         request.setAttribute(SessionConstants.LABELLIST_CURRICULAR_YEARS, labelListOfCurricularYears);
 
         /* Obtain a list of degrees for the specified execution year */
-        Object argsLerLicenciaturas[] = { infoExecutionPeriod.getInfoExecutionYear() };
-        List executionDegreeList = null;
-        try {
-            executionDegreeList = (List) ServiceUtils.executeService(userView,
-                    "ReadExecutionDegreesByExecutionYear", argsLerLicenciaturas);
+        final ExecutionYear executionYear = infoExecutionPeriod.getExecutionPeriod().getExecutionYear();
+        final Set<ExecutionDegree> executionDegrees = executionYear.getExecutionDegreesSet();
 
-        } catch (FenixServiceException e) {
+        final List<LabelValueBean> labelListOfExecutionDegrees = new ArrayList<LabelValueBean>();
+        final List<InfoExecutionDegree> infoExecutionDegrees = new ArrayList<InfoExecutionDegree>();
+        for (final ExecutionDegree executionDegree : executionDegrees) {
+        	infoExecutionDegrees.add(InfoExecutionDegree.newInfoFromDomain(executionDegree));
 
-            e.printStackTrace();
-        } catch (FenixFilterException e) {
-            e.printStackTrace();
+        	final DegreeCurricularPlan degreeCurricularPlan = executionDegree.getDegreeCurricularPlan();
+        	final Degree degree = degreeCurricularPlan.getDegree();
+        	final String degreeTypeString = bundle.getString(degree.getTipoCurso().toString());
+        	final StringBuilder name = new StringBuilder();
+        	name.append(degreeTypeString);
+        	name.append(" em ");
+        	name.append(degree.getName());
+        	if (duplicateDegreeInList(degree, executionYear)) {
+        		name.append(" - ");
+        		name.append(degreeCurricularPlan.getName());
+        	}
+        	final LabelValueBean labelValueBean = new LabelValueBean(name.toString(), executionDegree.getIdInternal().toString());
+        	labelListOfExecutionDegrees.add(labelValueBean);
         }
-        /* Sort the list of degrees */
-        if (executionDegreeList != null && executionDegreeList.size() > 0) {
-            Collections.sort(executionDegreeList, new ComparatorByNameForInfoExecutionDegree());
-            request.setAttribute("executionDegrees", executionDegreeList);
+        Collections.sort(labelListOfExecutionDegrees);
+        request.setAttribute("licenciaturas", labelListOfExecutionDegrees);
+        Collections.sort(infoExecutionDegrees, InfoExecutionDegree.COMPARATOR_BY_DEGREE_TYPE_AND_NAME);
+        request.setAttribute("executionDegrees", infoExecutionDegrees);
 
-            /* Generate a label list for the above list of degrees */
-            //List labelListOfExecutionDegrees =
-            // getLabelListOfExecutionDegrees(executionDegreeList);
-            Iterator iterator = executionDegreeList.iterator();
-            List labelListOfExecutionDegrees = new ArrayList();
-            while (iterator.hasNext()) {
-                InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) iterator.next();
-                String name = infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree()
-                        .getNome();
-
-                name = bundle.getString(infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getTipoCurso()
-                        .toString())
-                        + " em " + name;
-
-                name += duplicateInfoDegree(executionDegreeList, infoExecutionDegree) ? "-"
-                        + infoExecutionDegree.getInfoDegreeCurricularPlan().getName() : "";
-
-                labelListOfExecutionDegrees.add(new LabelValueBean(name, infoExecutionDegree
-                        .getIdInternal().toString()));
-            }
-            request.setAttribute("licenciaturas", labelListOfExecutionDegrees);
+        final List<ExecutionPeriod> executionPeriods = ExecutionPeriod.readNotClosedExecutionPeriods();
+        Collections.sort(executionPeriods);
+        final List<InfoExecutionPeriod> infoExecutionPeriods = new ArrayList<InfoExecutionPeriod>();
+        final List<LabelValueBean> executionPeriodLabelValueBeans = new ArrayList<LabelValueBean>();
+        for (final ExecutionPeriod executionPeriod : executionPeriods) {
+        	infoExecutionPeriods.add(InfoExecutionPeriod.newInfoFromDomain(executionPeriod));
+        	final String name = StringAppender.append(executionPeriod.getName(), " - ", executionPeriod.getExecutionYear().getYear());
+        	final LabelValueBean labelValueBean = new LabelValueBean(name, executionPeriod.getIdInternal().toString());
+        	executionPeriodLabelValueBeans.add(labelValueBean);
         }
-
-        ///////////////////////////////////////////////////////////////////////
-        // TODO : place the following code in a seperate function and call it
-        //        here and anywhere else the execution period may be selected.
-
-        //HttpSession session = request.getSession(false);
-
-        //IUserView userView = (IUserView)
-        // request.getSession(false).getAttribute("UserView");
-
-        InfoExecutionPeriod selectedExecutionPeriod = (InfoExecutionPeriod) request
-                .getAttribute(SessionConstants.EXECUTION_PERIOD);
-
-        Object argsReadExecutionPeriods[] = {};
-        List executionPeriods;
-        try {
-            executionPeriods = (ArrayList) ServiceManagerServiceFactory.executeService(userView,
-                    "ReadNotClosedExecutionPeriods", argsReadExecutionPeriods);
-
-            selectedExecutionPeriod.getInfoExecutionYear().getYear();
-            selectedExecutionPeriod.getSemester();
-            ComparatorChain chainComparator = new ComparatorChain();
-            chainComparator.addComparator(new BeanComparator("infoExecutionYear.year"));
-            chainComparator.addComparator(new BeanComparator("semester"));
-            Collections.sort(executionPeriods, chainComparator);
-
-            List executionPeriodsLabelValueList = new ArrayList();
-            for (int i = 0; i < executionPeriods.size(); i++) {
-                InfoExecutionPeriod infoExecutionPeriod2 = (InfoExecutionPeriod) executionPeriods.get(i);
-                executionPeriodsLabelValueList.add(new LabelValueBean(infoExecutionPeriod2.getName()
-                        + " - " + infoExecutionPeriod2.getInfoExecutionYear().getYear(), ""
-                        + infoExecutionPeriod2.getIdInternal()));
-            }
-
-            request.setAttribute(SessionConstants.LIST_INFOEXECUTIONPERIOD, executionPeriods);
-
-            request.setAttribute(SessionConstants.LABELLIST_EXECUTIONPERIOD,
-                    executionPeriodsLabelValueList);
-        } catch (FenixServiceException e1) {
-        } catch (FenixFilterException e) {
-            e.printStackTrace();
-        }
-
+        request.setAttribute(SessionConstants.LIST_INFOEXECUTIONPERIOD, infoExecutionPeriods);
+        request.setAttribute(SessionConstants.LABELLIST_EXECUTIONPERIOD, executionPeriodLabelValueBeans);
     }
 
-    // -------------------------------------------------------------------------------
+    private static boolean duplicateDegreeInList(final Degree degree, final ExecutionYear executionYear) {
+    	boolean foundOne = false;
+    	for (final DegreeCurricularPlan degreeCurricularPlan : degree.getDegreeCurricularPlansSet()) {
+    		for (final ExecutionDegree executionDegree : degreeCurricularPlan.getExecutionDegreesSet()) {
+    			if (executionYear == executionDegree.getExecutionYear()) {
+    				if (foundOne) {
+    					return true;
+    				} else {
+    					foundOne = true;
+    				}
+    			}
+    		}
+    	}
+    	return false;
+	}
+
+	// -------------------------------------------------------------------------------
     // Read from request utils
     // -------------------------------------------------------------------------------
     private static String readRequestValue(HttpServletRequest request, String name) {

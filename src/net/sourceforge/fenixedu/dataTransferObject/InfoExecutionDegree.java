@@ -1,18 +1,27 @@
 package net.sourceforge.fenixedu.dataTransferObject;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.Coordinator;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 
+import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
+import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.struts.util.LabelValueBean;
 import org.apache.struts.util.MessageResources;
 
 public class InfoExecutionDegree extends InfoObject {
+
+	public static final Comparator<InfoExecutionDegree> COMPARATOR_BY_DEGREE_TYPE_AND_NAME = new ComparatorChain();
+	static {
+		((ComparatorChain) COMPARATOR_BY_DEGREE_TYPE_AND_NAME).addComparator(new BeanComparator("executionDegree.degreeCurricularPlan.degree.tipoCurso"));
+		((ComparatorChain) COMPARATOR_BY_DEGREE_TYPE_AND_NAME).addComparator(new BeanComparator("executionDegree.degreeCurricularPlan.degree.nome"));
+	}
 
 	private final ExecutionDegree executionDegree;
 
@@ -156,6 +165,10 @@ public class InfoExecutionDegree extends InfoObject {
 
 	public void setGetNextExecutionYear(boolean getNextExecutionYear) {
 		this.getNextExecutionYear = getNextExecutionYear;
+	}
+
+	public ExecutionDegree getExecutionDegree() {
+		return executionDegree;
 	}
 
 }

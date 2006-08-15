@@ -131,4 +131,8 @@ public class InfoExecutionPeriod extends InfoObject {
         throw new Error("Method should not be called!");
     }
 
+	public ExecutionPeriod getExecutionPeriod() {
+		return executionPeriod;
+	}
+
 }
