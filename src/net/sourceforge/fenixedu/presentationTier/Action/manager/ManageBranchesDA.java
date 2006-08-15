@@ -17,6 +17,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServi
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoBranch;
+import net.sourceforge.fenixedu.dataTransferObject.InfoBranchEditor;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
@@ -184,7 +185,7 @@ public class ManageBranchesDA extends FenixDispatchAction {
         // in case there are no errors
         InfoDegreeCurricularPlan infoDegreeCurricularPlan = new InfoDegreeCurricularPlan(degreeCurricularPlan);
 
-        InfoBranch infoBranch = new InfoBranch();
+        InfoBranchEditor infoBranch = new InfoBranchEditor();
         infoBranch.setCode(code);
         infoBranch.setName(name);
         infoBranch.setNameEn(nameEn);
@@ -257,7 +258,7 @@ public class ManageBranchesDA extends FenixDispatchAction {
         }
 
         // in case there are no errors
-        InfoBranch infoBranch = new InfoBranch();
+        InfoBranchEditor infoBranch = new InfoBranchEditor();
         infoBranch.setCode(code);
         infoBranch.setName(name);
         infoBranch.setNameEn(nameEn);

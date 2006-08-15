@@ -152,8 +152,7 @@ public class EditCurricularCourseScopeDA extends FenixDispatchAction {
 
         Integer branchId = new Integer(branchIdString);
 
-        InfoBranch infoBranch = new InfoBranch();
-        infoBranch.setIdInternal(branchId);
+        InfoBranch infoBranch = new InfoBranch(rootDomainObject.readBranchByOID(branchId));
         newInfoCurricularCourseScope.setInfoBranch(infoBranch);
         newInfoCurricularCourseScope.setIdInternal(oldCurricularCourseScopeId);
 

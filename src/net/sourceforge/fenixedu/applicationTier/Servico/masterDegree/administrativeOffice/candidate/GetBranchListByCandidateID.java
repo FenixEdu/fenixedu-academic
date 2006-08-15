@@ -6,6 +6,7 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoBranch;
+import net.sourceforge.fenixedu.dataTransferObject.InfoBranchEditor;
 import net.sourceforge.fenixedu.domain.Branch;
 import net.sourceforge.fenixedu.domain.MasterDegreeCandidate;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -18,7 +19,7 @@ public class GetBranchListByCandidateID extends Service {
         MasterDegreeCandidate masterDegreeCandidate = rootDomainObject.readMasterDegreeCandidateByOID(candidateID);
 		List<Branch> branches = masterDegreeCandidate.getExecutionDegree().getDegreeCurricularPlan().getAreas();
 		if (branches == null) {
-			InfoBranch infoBranch = new InfoBranch();
+			InfoBranchEditor infoBranch = new InfoBranchEditor();
 			infoBranch.setName("Tronco Comum");
 			result.add(infoBranch);
 			return result;
@@ -26,10 +27,6 @@ public class GetBranchListByCandidateID extends Service {
 
 		for (Branch branch : branches) {
 			InfoBranch infoBranch = InfoBranch.newInfoFromDomain(branch);
-			if ((infoBranch.getName() == null) || (infoBranch.getName().length() == 0)) {
-				// FIXME: Common branch
-				infoBranch.setName("Tronco Comum");
-			}
 			result.add(infoBranch);
 		}
 

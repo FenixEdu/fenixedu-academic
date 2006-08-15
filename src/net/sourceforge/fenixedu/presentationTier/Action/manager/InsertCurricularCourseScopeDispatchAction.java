@@ -117,8 +117,7 @@ public class InsertCurricularCourseScopeDispatchAction extends FenixDispatchActi
 
         InfoCurricularCourseScope infoCurricularCourseScope = new InfoCurricularCourseScope();
 
-        InfoBranch infoBranch = new InfoBranch();
-        infoBranch.setIdInternal(new Integer((String) dynaForm.get("branchId")));
+        InfoBranch infoBranch = new InfoBranch(rootDomainObject.readBranchByOID(new Integer((String) dynaForm.get("branchId"))));
         infoCurricularCourseScope.setInfoBranch(infoBranch);
 
         final CurricularCourse curricularCourse = (CurricularCourse) rootDomainObject.

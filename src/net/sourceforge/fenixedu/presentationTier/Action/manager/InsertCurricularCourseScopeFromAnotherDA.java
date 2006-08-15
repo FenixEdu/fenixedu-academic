@@ -150,8 +150,7 @@ public class InsertCurricularCourseScopeFromAnotherDA extends FenixDispatchActio
         newInfoCurricularCourseScope.setInfoCurricularSemester(infoCurricularSemester);
 
         Integer branchId = new Integer(branchIdString);
-        InfoBranch infoBranch = new InfoBranch();
-        infoBranch.setIdInternal(branchId);
+        InfoBranch infoBranch = new InfoBranch(rootDomainObject.readBranchByOID(branchId));
         newInfoCurricularCourseScope.setInfoBranch(infoBranch);
         final CurricularCourse curricularCourse = (CurricularCourse) rootDomainObject.
 				readDegreeModuleByOID(Integer.valueOf(request.getParameter("curricularCourseId")));

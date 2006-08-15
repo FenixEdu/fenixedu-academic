@@ -699,8 +699,7 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
             for (int i = 0; i < branchList.length; i++) {
                 String brachOIDString = branchList[i];
                 if (brachOIDString != null && StringUtils.isNumeric(brachOIDString)) {
-                    InfoBranch infoBranch = new InfoBranch();
-                    infoBranch.setIdInternal(new Integer(brachOIDString));
+                    InfoBranch infoBranch = new InfoBranch(rootDomainObject.readBranchByOID(new Integer(brachOIDString)));
                     infoFinalWorkProposal.getBranches().add(infoBranch);
                 }
             }

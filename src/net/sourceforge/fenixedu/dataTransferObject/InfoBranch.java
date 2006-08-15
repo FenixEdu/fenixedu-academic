@@ -15,60 +15,23 @@ import net.sourceforge.fenixedu.domain.branch.BranchType;
 
 public class InfoBranch extends InfoObject {
 
-    private String name;
+	private final Branch branch;
 
-    private String nameEn;
-    
-    private String code;
+	private boolean showEnVersion = false;
 
-    private Integer specializationCredits;
-
-    private Integer secondaryCredits;
-
-    private InfoDegreeCurricularPlan infoDegreeCurricularPlan;
-
-    private BranchType branchType;
-
-    private String acronym;
-
-    public InfoBranch() {
-        setName(null);
-        setNameEn(null);
-        setCode(null);
-        setInfoDegreeCurricularPlan(null);
-
-    }
-
-    public InfoBranch(String name, String code) {
-        this();
-        setName(name);
-        setNameEn(nameEn);
-        setCode(code);
+    public InfoBranch(final Branch branch) {
+    	this.branch = branch;
     }
 
     public String toString() {
-        String result = "[" + this.getClass().getName() + ": ";
-        result += "name = " + this.name + "; ";
-        result += "code = " + this.code + "; ";
-        result += "idInternal = " + this.getIdInternal() + "]";
-        result += "nameEn = " + this.nameEn + "; ";
-        return result;
+    	return branch.toString();
     }
 
-    /**
-     * @author Fernanda Quitério
-     */
     public Boolean representsCommonBranch() {
-        if (this.name != null && this.name.equals("") && this.code != null && this.code.equals("")) {
-            return Boolean.TRUE;
-        }
-        return Boolean.FALSE;
+    	return Boolean.valueOf(getName() != null && getName().equals("") && getCode() != null && getCode().equals(""));
     }
 
     /**
-     * @author Fernanda Quitério
-     */
-    /*
      * returns an empty string if there is no branch or branch initials in case
      * it exists
      */
@@ -78,7 +41,7 @@ public class InfoBranch extends InfoObject {
         }
         StringBuilder prettyCode = new StringBuilder();
         String namePart = null;
-        StringTokenizer stringTokenizer = new StringTokenizer(this.name, " ");
+        StringTokenizer stringTokenizer = new StringTokenizer(getName(), " ");
         while (stringTokenizer.hasMoreTokens()) {
             namePart = stringTokenizer.nextToken();
             if (!namePart.equalsIgnoreCase("RAMO") && namePart.length() > 2) {
@@ -88,144 +51,57 @@ public class InfoBranch extends InfoObject {
         return prettyCode.toString();
     }
 
-    /**
-     * @return String
-     */
     public String getCode() {
-        return code;
+        return branch.getCode();
     }
 
-    /**
-     * @return String
-     */
     public String getName() {
-        return name;
-    }
-
-    /**
-     * Sets the code.
-     * 
-     * @param code
-     *            The code to set
-     */
-    public void setCode(String code) {
-        this.code = code;
-    }
-
-    /**
-     * Sets the name.
-     * 
-     * @param name
-     *            The name to set
-     */
-    public void setName(String name) {
-        this.name = name;
+    	return showEnVersion && branch.getNameEn() != null && branch.getNameEn().length() > 0 ?
+    			branch.getNameEn() : branch.getName();
     }
 
     public InfoDegreeCurricularPlan getInfoDegreeCurricularPlan() {
-        return infoDegreeCurricularPlan;
+    	return InfoDegreeCurricularPlan.newInfoFromDomain(branch.getDegreeCurricularPlan());
     }
 
-    public void setInfoDegreeCurricularPlan(InfoDegreeCurricularPlan plan) {
-        infoDegreeCurricularPlan = plan;
-    }
-
-    /**
-     * @author Nuno Correia
-     * @author Ricardo Rodrigues
-     *  
-     */
     public String getAcronym() {
-        return acronym;
+        return branch.getAcronym();
     }
 
-    public void setAcronym(String acronym) {
-        this.acronym = acronym;
-    }
-
-    /**
-     * @return Returns the secondaryCredits.
-     */
     public Integer getSecondaryCredits() {
-        return secondaryCredits;
+        return branch.getSecondaryCredits();
     }
 
-    /**
-     * @param secondaryCredits
-     *            The secondaryCredits to set.
-     */
-    public void setSecondaryCredits(Integer secondaryCredits) {
-        this.secondaryCredits = secondaryCredits;
-    }
-
-    /**
-     * @return Returns the specializationCredits.
-     */
     public Integer getSpecializationCredits() {
-        return specializationCredits;
+        return branch.getSpecializationCredits();
     }
 
-    /**
-     * @param specializationCredits
-     *            The specializationCredits to set.
-     */
-    public void setSpecializationCredits(Integer specializationCredits) {
-        this.specializationCredits = specializationCredits;
-    }
-
-    /**
-     * @return Returns the branchType.
-     */
     public BranchType getBranchType() {
-        return branchType;
-    }
-
-    /**
-     * @param branchType
-     *            The branchType to set.
-     */
-    public void setBranchType(BranchType branchType) {
-        this.branchType = branchType;
-    }
-
-    public void copyFromDomain(Branch branch) {
-        super.copyFromDomain(branch);
-        if (branch != null) {
-            setAcronym(branch.getAcronym());
-            setBranchType(branch.getBranchType());
-            setCode(branch.getCode());
-            setName(branch.getName());
-            setNameEn(branch.getNameEn());
-
-            setSecondaryCredits(branch.getSecondaryCredits());
-            setSpecializationCredits(branch.getSpecializationCredits());
-        }
+        return branch.getBranchType();
     }
 
     public static InfoBranch newInfoFromDomain(Branch branch) {
-        InfoBranch infoBranch = null;
-        if (branch != null) {
-            infoBranch = new InfoBranch();
-            infoBranch.copyFromDomain(branch);
-        }
-        return infoBranch;
+    	return branch == null ? null : new InfoBranch(branch);
     }
 
     public String getNameEn() {
-        return nameEn;
+        return branch.getNameEn();
     }
-    
 
-    public void setNameEn(String nameEn) {
-        this.nameEn = nameEn;
-    }
-    
     public void prepareEnglishPresentation(Locale locale) {
-        if (locale.getLanguage().equals(Locale.ENGLISH.getLanguage())) { 
-            if (!(this.nameEn==null)&&!(this.nameEn.length()==0)&&!(this.nameEn=="")){
-                this.name = this.nameEn;
-            }
+        if (locale.getLanguage().equals(Locale.ENGLISH.getLanguage())) {
+        	showEnVersion = true;
         }
     }
-    
+
+	@Override
+	public Integer getIdInternal() {
+		return branch.getIdInternal();
+	}
+
+    @Override
+    public void setIdInternal(Integer integer) {
+        throw new Error("Method should not be called!");
+    }
+
 }

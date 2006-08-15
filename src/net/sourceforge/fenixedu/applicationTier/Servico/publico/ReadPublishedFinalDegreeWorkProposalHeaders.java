@@ -64,9 +64,7 @@ public class ReadPublishedFinalDegreeWorkProposalHeaders extends Service {
                             Branch branch = proposal.getBranches().get(j);
 
                             if (branch != null) {
-                                InfoBranch infoBranch = new InfoBranch();
-                                infoBranch.setIdInternal(branch.getIdInternal());
-                                infoBranch.setName(branch.getName());
+                                InfoBranch infoBranch = new InfoBranch(branch);
                                 finalDegreeWorkProposalHeader.getBranches().add(infoBranch);
                             }
                         }
