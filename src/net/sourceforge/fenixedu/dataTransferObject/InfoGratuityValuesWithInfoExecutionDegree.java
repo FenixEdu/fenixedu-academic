@@ -20,7 +20,7 @@ public class InfoGratuityValuesWithInfoExecutionDegree extends InfoGratuityValue
     public void copyFromDomain(GratuityValues gratuityValues) {
         super.copyFromDomain(gratuityValues);
         if (gratuityValues != null) {
-            setInfoExecutionDegree(InfoExecutionDegreeWithInfoExecutionYearAndDegreeCurricularPlan
+            setInfoExecutionDegree(InfoExecutionDegree
                     .newInfoFromDomain(gratuityValues.getExecutionDegree()));
         }
     }

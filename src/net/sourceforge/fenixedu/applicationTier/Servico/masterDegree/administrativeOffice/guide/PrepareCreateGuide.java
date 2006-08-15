@@ -13,7 +13,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoContributor;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
-import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegreeWithInfoExecutionYearAndDegreeCurricularPlan;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGuide;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGuideEntry;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGuideWithPersonAndExecutionDegreeAndContributor;
@@ -85,7 +84,7 @@ public class PrepareCreateGuide extends Service {
             infoGuide.setCreationDate(calendar.getTime());
             infoGuide.setVersion(new Integer(1));
             infoGuide
-                    .setInfoExecutionDegree(InfoExecutionDegreeWithInfoExecutionYearAndDegreeCurricularPlan
+                    .setInfoExecutionDegree(InfoExecutionDegree
                             .newInfoFromDomain(executionDegree));
 
             InfoGuideEntry infoGuideEntry = new InfoGuideEntry();
@@ -139,7 +138,7 @@ public class PrepareCreateGuide extends Service {
             infoGuide.setVersion(new Integer(1));
 
             infoGuide
-                    .setInfoExecutionDegree(InfoExecutionDegreeWithInfoExecutionYearAndDegreeCurricularPlan
+                    .setInfoExecutionDegree(InfoExecutionDegree
                             .newInfoFromDomain(executionDegree));
 
             infoGuide.setInfoGuideEntries(new ArrayList());

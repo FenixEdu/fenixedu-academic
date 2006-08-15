@@ -13,7 +13,7 @@ public class InfoCandidateEnrolmentWithCurricularCourseAndMasterDegreeCandidateA
         super.copyFromDomain(candidateEnrolment);
         if (candidateEnrolment != null) {
             ExecutionDegree executionDegree = candidateEnrolment.getMasterDegreeCandidate().getExecutionDegree();
-            getInfoMasterDegreeCandidate().setInfoExecutionDegree(InfoExecutionDegreeWithInfoExecutionYearAndDegreeCurricularPlan.newInfoFromDomain(executionDegree));
+            getInfoMasterDegreeCandidate().setInfoExecutionDegree(InfoExecutionDegree.newInfoFromDomain(executionDegree));
         }
     }
 

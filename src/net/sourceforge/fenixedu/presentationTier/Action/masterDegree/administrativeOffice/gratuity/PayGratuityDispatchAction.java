@@ -252,8 +252,6 @@ public class PayGratuityDispatchAction extends FenixDispatchAction {
                     infoExecutionDegree = (InfoExecutionDegree) it.next();
                     if (infoExecutionDegree.getInfoExecutionYear().getIdInternal().equals(
                             insuranceExecutionYearId)) {
-                        infoExecutionDegree.setInfoDegreeCurricularPlan(infoStudentCurricularPlan
-                                .getInfoDegreeCurricularPlan());
                         found = true;
                         break;
                     }

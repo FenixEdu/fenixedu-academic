@@ -14,10 +14,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.CurricularYearAndSemesterAndInfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
-import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
-import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegreeWithInfoDegreeCurricularPlanAndExecutionYear;
-import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.comparators.ComparatorByNameForInfoExecutionDegree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
@@ -316,7 +313,7 @@ public class ChooseContextDispatchActionNew extends FenixDateAndTimeDispatchActi
         }
         
         if (executionDegree != null) {
-            InfoExecutionDegree infoExecutionDegree = InfoExecutionDegreeWithInfoDegreeCurricularPlanAndExecutionYear.newInfoFromDomain(executionDegree);
+            InfoExecutionDegree infoExecutionDegree = InfoExecutionDegree.newInfoFromDomain(executionDegree);
             request.setAttribute(SessionConstants.EXECUTION_DEGREE, infoExecutionDegree);
             request.setAttribute("executionDegreeID", infoExecutionDegree.getIdInternal().toString());
             RequestUtils.setExecutionDegreeToRequest(request, infoExecutionDegree);

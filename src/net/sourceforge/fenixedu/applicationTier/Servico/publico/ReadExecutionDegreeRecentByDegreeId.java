@@ -8,7 +8,6 @@ import java.util.Collections;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
-import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
@@ -35,12 +34,6 @@ public class ReadExecutionDegreeRecentByDegreeId extends Service {
         chain.addComparator(new BeanComparator("executionYear.year"));
         ExecutionDegree executionDegree = (ExecutionDegree) Collections.max(listExecutionDegrees, chain);
         
-        InfoExecutionDegree infoExecutionDegree = InfoExecutionDegree.newInfoFromDomain(executionDegree);
-        
-        InfoDegreeCurricularPlan infoDegreeCurricularPlan = InfoDegreeCurricularPlan.newInfoFromDomain(executionDegree.getDegreeCurricularPlan());
-        infoExecutionDegree.setInfoDegreeCurricularPlan(infoDegreeCurricularPlan);
-        
-        
-        return infoExecutionDegree;
+        return InfoExecutionDegree.newInfoFromDomain(executionDegree);
     }
 }

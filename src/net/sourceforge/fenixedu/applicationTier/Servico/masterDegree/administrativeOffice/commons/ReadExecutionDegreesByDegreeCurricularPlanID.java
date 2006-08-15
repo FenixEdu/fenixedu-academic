@@ -9,7 +9,6 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
-import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegreeWithInfoExecutionYear;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -29,7 +28,7 @@ public class ReadExecutionDegreesByDegreeCurricularPlanID extends Service {
         List<InfoExecutionDegree> result = new ArrayList<InfoExecutionDegree>();
 
         for (final ExecutionDegree executionDegree : degreeCurricularPlan.getExecutionDegrees()) {
-            result.add(InfoExecutionDegreeWithInfoExecutionYear.newInfoFromDomain(executionDegree));
+            result.add(InfoExecutionDegree.newInfoFromDomain(executionDegree));
         }
 
         return result;

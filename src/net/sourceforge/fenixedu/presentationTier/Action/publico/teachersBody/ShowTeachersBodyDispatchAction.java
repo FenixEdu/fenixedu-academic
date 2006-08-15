@@ -15,7 +15,6 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegree;
-import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDepartment;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
@@ -167,10 +166,6 @@ public class ShowTeachersBodyDispatchAction extends FenixDispatchAction {
             
             Object[] oid = { executionDegreeId };
             InfoExecutionDegree degree = (InfoExecutionDegree) ServiceUtils.executeService(null, "ReadExecutionDegreeByOID", oid);
-            
-            InfoDegreeCurricularPlan infoDegreeCurricularPlan = degree.getInfoDegreeCurricularPlan();
-            infoDegreeCurricularPlan.prepareEnglishPresentation(getLocale(request));
-            degree.setInfoDegreeCurricularPlan(infoDegreeCurricularPlan);
             
             request.setAttribute("searchType", "Consulta Por Curso");
             request.setAttribute("searchTarget", degree.getInfoDegreeCurricularPlan().getInfoDegree().getTipoCurso() + " em " + 

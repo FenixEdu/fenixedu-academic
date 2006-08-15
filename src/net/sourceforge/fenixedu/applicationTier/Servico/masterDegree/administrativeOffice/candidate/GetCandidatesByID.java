@@ -13,7 +13,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCandidateSituation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
-import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegreeWithInfoExecutionYearAndDegreeCurricularPlan;
 import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeCandidate;
 import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeCandidateWithInfoPerson;
 import net.sourceforge.fenixedu.domain.CandidateSituation;
@@ -40,7 +39,7 @@ public class GetCandidatesByID extends Service {
 				.newInfoFromDomain(masterDegreeCandidate);
 
 		final ExecutionDegree executionDegree = masterDegreeCandidate.getExecutionDegree();
-		final InfoExecutionDegree infoExecutionDegree = InfoExecutionDegreeWithInfoExecutionYearAndDegreeCurricularPlan
+		final InfoExecutionDegree infoExecutionDegree = InfoExecutionDegree
 				.newInfoFromDomain(executionDegree);
 		infoMasterDegreeCandidate.setInfoExecutionDegree(infoExecutionDegree);
 

@@ -19,7 +19,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorized
 import net.sourceforge.fenixedu.dataTransferObject.InfoCandidateEnrolment;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
-import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegreeWithInfoExecutionYearAndDegreeCurricularPlan;
 import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeCandidate;
 import net.sourceforge.fenixedu.dataTransferObject.comparators.ComparatorByNameForInfoExecutionDegree;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
@@ -70,7 +69,7 @@ public class MakeCandidateStudyPlanDispatchAction extends DispatchAction {
 
         InfoExecutionDegree infoExecutionDegree = null;
         try {
-            infoExecutionDegree = (InfoExecutionDegreeWithInfoExecutionYearAndDegreeCurricularPlan) ServiceUtils
+            infoExecutionDegree = (InfoExecutionDegree) ServiceUtils
                     .executeService(userView, "ReadExecutionDegreeByDegreeCurricularPlanID", args);
         } catch (NonExistingServiceException e) {
             errors.add("nonExisting", new ActionError(

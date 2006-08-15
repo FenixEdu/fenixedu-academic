@@ -85,10 +85,8 @@ public class ViewClassTimeTableActionNew extends FenixContextAction {
 //        }
         InfoDegreeCurricularPlan infoDegreeCurricularPlan = infoExecutionDegree.getInfoDegreeCurricularPlan();
         infoDegreeCurricularPlan.prepareEnglishPresentation(getLocale(request));
- 
-        infoExecutionDegree.setInfoDegreeCurricularPlan(infoDegreeCurricularPlan);
-        request.setAttribute(SessionConstants.INFO_DEGREE_CURRICULAR_PLAN, infoExecutionDegree
-                .getInfoDegreeCurricularPlan());
+
+        request.setAttribute(SessionConstants.INFO_DEGREE_CURRICULAR_PLAN, infoDegreeCurricularPlan);
 
         InfoSiteTimetable component = new InfoSiteTimetable();
 

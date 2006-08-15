@@ -6,9 +6,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
-import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -34,11 +32,6 @@ public class ReadExecutionDegreesByExecutionPeriodId extends Service {
         while (iterator.hasNext()) {
             final ExecutionDegree executionDegree = (ExecutionDegree) iterator.next();
             final InfoExecutionDegree infoExecutionDegree = InfoExecutionDegree.newInfoFromDomain(executionDegree);
-
-            final DegreeCurricularPlan degreeCurricularPlan = executionDegree.getDegreeCurricularPlan();
-            final InfoDegreeCurricularPlan infoDegreeCurricularPlan = InfoDegreeCurricularPlan.newInfoFromDomain(degreeCurricularPlan);
-            infoExecutionDegree.setInfoDegreeCurricularPlan(infoDegreeCurricularPlan);
-
             infoExecutionDegreeList.add(infoExecutionDegree);
         }
 

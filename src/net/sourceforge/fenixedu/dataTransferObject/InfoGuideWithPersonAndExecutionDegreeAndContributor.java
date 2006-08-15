@@ -28,7 +28,7 @@ public class InfoGuideWithPersonAndExecutionDegreeAndContributor extends InfoGui
         super.copyFromDomain(guide);
         if (guide != null) {
             setInfoPerson(InfoPerson.newInfoFromDomain(guide.getPerson()));
-            setInfoExecutionDegree(InfoExecutionDegreeWithInfoExecutionYearAndDegreeCurricularPlan
+            setInfoExecutionDegree(InfoExecutionDegree
                     .newInfoFromDomain(guide.getExecutionDegree()));
             setInfoContributor(InfoContributor.newInfoFromDomain(guide.getContributorParty()));
             setInfoGuideSituation(InfoGuideSituation.newInfoFromDomain(guide.getActiveSituation()));

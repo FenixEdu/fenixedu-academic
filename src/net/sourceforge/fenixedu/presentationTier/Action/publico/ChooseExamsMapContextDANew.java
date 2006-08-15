@@ -18,10 +18,7 @@ import javax.servlet.http.HttpSession;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
-import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
-import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegreeWithInfoDegreeCurricularPlanAndExecutionYear;
-import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
@@ -181,7 +178,7 @@ public class ChooseExamsMapContextDANew extends FenixContextDispatchAction {
             }
             
             if (executionDegree != null) {
-                InfoExecutionDegree infoExecutionDegree = InfoExecutionDegreeWithInfoDegreeCurricularPlanAndExecutionYear.newInfoFromDomain(executionDegree);
+                InfoExecutionDegree infoExecutionDegree = InfoExecutionDegree.newInfoFromDomain(executionDegree);
                 request.setAttribute(SessionConstants.EXECUTION_DEGREE, infoExecutionDegree);
                 request.setAttribute("executionDegreeID", infoExecutionDegree.getIdInternal().toString());
                 RequestUtils.setExecutionDegreeToRequest(request, infoExecutionDegree);

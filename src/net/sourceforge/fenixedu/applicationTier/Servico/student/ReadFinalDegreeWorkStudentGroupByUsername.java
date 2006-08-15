@@ -36,8 +36,7 @@ public class ReadFinalDegreeWorkStudentGroupByUsername extends Service {
         if (group != null) {
             infoGroup = new InfoGroup();
             infoGroup.setIdInternal(group.getIdInternal());
-            infoGroup.setExecutionDegree(new InfoExecutionDegree());
-            infoGroup.getExecutionDegree().setIdInternal(group.getExecutionDegree().getIdInternal());
+            infoGroup.setExecutionDegree(new InfoExecutionDegree(group.getExecutionDegree()));
             if (group.getGroupStudents() != null) {
                 infoGroup.setGroupStudents(new ArrayList());
 

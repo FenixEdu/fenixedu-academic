@@ -8,7 +8,6 @@ package net.sourceforge.fenixedu.applicationTier.Servico.publico;
  */
 
 import net.sourceforge.fenixedu.applicationTier.Service;
-import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
@@ -28,12 +27,7 @@ public class ReadExecutionDegreesByExecutionYearAndDegreeInitials extends Servic
     }
 
 	public static InfoExecutionDegree getInfoExecutionDegree(final ExecutionDegree executionDegree) {
-		final InfoExecutionDegree infoExecutionDegree = InfoExecutionDegree.newInfoFromDomain(executionDegree);
-		if (executionDegree != null) {
-			final InfoDegreeCurricularPlan infoDegreeCurricularPlan = InfoDegreeCurricularPlan.newInfoFromDomain(executionDegree.getDegreeCurricularPlan());
-			infoExecutionDegree.setInfoDegreeCurricularPlan(infoDegreeCurricularPlan);
-		}
-		return infoExecutionDegree;
+		return InfoExecutionDegree.newInfoFromDomain(executionDegree);
 	}
 
 }

@@ -8,15 +8,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
-import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
-import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.collections.Transformer;
 
 /**
  * @author jpvl
@@ -26,37 +21,14 @@ public class ReadExecutionDegreesByExecutionYearAndDegreeType extends Service {
     public List run(String executionYear, DegreeType degreeType)
             throws ExcepcaoPersistencia {
 
-        List infoExecutionDegreeList = null;
+    	final List<ExecutionDegree> executionDegrees = degreeType == null ?
+            ExecutionDegree.getAllByExecutionYear(executionYear)
+            : ExecutionDegree.getAllByExecutionYearAndDegreeType(executionYear, degreeType);
 
-        List executionDegrees = null;
-
-        if (degreeType == null) {
-            executionDegrees = ExecutionDegree.getAllByExecutionYear(executionYear);
-        } else {
-            executionDegrees = ExecutionDegree.getAllByExecutionYearAndDegreeType(executionYear,
-                    degreeType);
+        final List infoExecutionDegreeList = new ArrayList<InfoExecutionDegree>();
+        for (final ExecutionDegree executionDegree : executionDegrees) {
+        	infoExecutionDegreeList.add(InfoExecutionDegree.newInfoFromDomain(executionDegree));
         }
-
-        infoExecutionDegreeList = (ArrayList) CollectionUtils.collect(executionDegrees,
-                new Transformer() {
-
-                    public Object transform(Object input) {
-                        ExecutionDegree executionDegree = (ExecutionDegree) input;
-                        InfoExecutionDegree infoExecutionDegree = InfoExecutionDegree
-                                .newInfoFromDomain(executionDegree);
-
-                        InfoExecutionYear infoExecutionYear = InfoExecutionYear
-                                .newInfoFromDomain(executionDegree.getExecutionYear());
-                        infoExecutionDegree.setInfoExecutionYear(infoExecutionYear);
-
-                        InfoDegreeCurricularPlan infoDegreeCurricularPlan = InfoDegreeCurricularPlan
-                                .newInfoFromDomain(executionDegree.getDegreeCurricularPlan());
-                        infoExecutionDegree.setInfoDegreeCurricularPlan(infoDegreeCurricularPlan);
-
-                        return infoExecutionDegree;
-                    }
-                });
-
         return infoExecutionDegreeList;
     }
 }

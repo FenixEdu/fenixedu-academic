@@ -35,7 +35,7 @@ public class InfoClass extends InfoObject {
     }
 
     public InfoExecutionDegree getInfoExecutionDegree() {
-        return InfoExecutionDegreeWithInfoExecutionYearAndDegreeCurricularPlan.newInfoFromDomain(schoolClass.getExecutionDegree());
+        return InfoExecutionDegree.newInfoFromDomain(schoolClass.getExecutionDegree());
     }
 
     public InfoExecutionPeriod getInfoExecutionPeriod() {

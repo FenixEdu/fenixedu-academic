@@ -348,7 +348,7 @@ public class InfoMasterDegreeCandidate extends InfoObject {
             setCoursesToAssist(masterDegreeCandidate.getCoursesToAssist());
             setSubstituteOrder(masterDegreeCandidate.getSubstituteOrder());
             setInfoCandidateSituation(InfoCandidateSituation.newInfoFromDomain(masterDegreeCandidate.getActiveCandidateSituation()));
-            setInfoExecutionDegree(InfoExecutionDegreeWithInfoExecutionYearAndDegreeCurricularPlan.newInfoFromDomain(masterDegreeCandidate.getExecutionDegree()));
+            setInfoExecutionDegree(InfoExecutionDegree.newInfoFromDomain(masterDegreeCandidate.getExecutionDegree()));
             if (masterDegreeCandidate.getGuider() != null)
                 setInfoGuider(new InfoTeacher(masterDegreeCandidate.getGuider().getTeacherNumber(),
                         InfoPerson.newInfoFromDomain(masterDegreeCandidate.getGuider().getPerson())));

@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
-import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
@@ -55,20 +54,13 @@ public class ReadExecutionDegreesByExecutionYearAndType extends Service {
         for (int i = 0; i < executionDegrees.size(); i++) {
             final ExecutionDegree executionDegree = (ExecutionDegree) executionDegrees.get(i);
             final InfoExecutionDegree infoExecutionDegree = getInfoExecutionDegree(executionDegree);
-
-            infoExecutionDegree.setInfoDegreeCurricularPlan(InfoDegreeCurricularPlan
-                    .newInfoFromDomain(executionDegree.getDegreeCurricularPlan()));
             infoExecutionDegrees.add(infoExecutionDegree);
         }
         return infoExecutionDegrees;
     }
 
     private InfoExecutionDegree getInfoExecutionDegree(final ExecutionDegree executionDegree) {
-            final InfoExecutionDegree infoExecutionDegree = InfoExecutionDegree
-                    .newInfoFromDomain(executionDegree);
-            infoExecutionDegree.setInfoDegreeCurricularPlan(InfoDegreeCurricularPlan
-                    .newInfoFromDomain(executionDegree.getDegreeCurricularPlan()));
-            return infoExecutionDegree;
+            return InfoExecutionDegree.newInfoFromDomain(executionDegree);
     }
 
 }

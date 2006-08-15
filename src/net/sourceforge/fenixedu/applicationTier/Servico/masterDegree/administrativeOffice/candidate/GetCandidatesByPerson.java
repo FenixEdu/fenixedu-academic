@@ -6,7 +6,7 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCandidateSituation;
-import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegreeWithInfoExecutionYearAndDegreeCurricularPlan;
+import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeCandidate;
 import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeCandidateWithInfoPerson;
 import net.sourceforge.fenixedu.domain.CandidateSituation;
@@ -30,7 +30,7 @@ public class GetCandidatesByPerson extends Service {
             final InfoMasterDegreeCandidate infoMasterDegreeCandidate = InfoMasterDegreeCandidateWithInfoPerson
                     .newInfoFromDomain(masterDegreeCandidate);
             infoMasterDegreeCandidate
-                    .setInfoExecutionDegree(InfoExecutionDegreeWithInfoExecutionYearAndDegreeCurricularPlan
+                    .setInfoExecutionDegree(InfoExecutionDegree
                             .newInfoFromDomain(masterDegreeCandidate.getExecutionDegree()));
 
             final List<InfoCandidateSituation> infoCandidateSituations = new ArrayList<InfoCandidateSituation>();

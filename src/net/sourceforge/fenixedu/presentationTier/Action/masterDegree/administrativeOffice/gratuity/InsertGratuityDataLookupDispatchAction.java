@@ -18,6 +18,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGratuityValues;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPaymentPhase;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
@@ -195,8 +196,7 @@ public class InsertGratuityDataLookupDispatchAction extends LookupDispatchAction
         String degree = (String) actionForm.get("degree");
         Integer degreeId = Integer.valueOf(StringUtils.substringAfter(degree, "#"));
 
-        InfoExecutionDegree infoExecutionDegree = new InfoExecutionDegree();
-        infoExecutionDegree.setIdInternal(degreeId);
+        InfoExecutionDegree infoExecutionDegree = new InfoExecutionDegree(RootDomainObject.getInstance().readExecutionDegreeByOID(degreeId));
 
         InfoGratuityValues infoGratuityValues = new InfoGratuityValues();
 

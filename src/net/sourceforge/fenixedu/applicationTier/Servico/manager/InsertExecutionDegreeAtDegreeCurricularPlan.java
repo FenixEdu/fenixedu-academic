@@ -8,6 +8,7 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
+import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegreeEditor;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPeriod;
 import net.sourceforge.fenixedu.domain.Campus;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
@@ -18,7 +19,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class InsertExecutionDegreeAtDegreeCurricularPlan extends Service {
 
-	public void run(InfoExecutionDegree infoExecutionDegree) throws FenixServiceException, ExcepcaoPersistencia {
+	public void run(InfoExecutionDegreeEditor infoExecutionDegree) throws FenixServiceException, ExcepcaoPersistencia {
 		final Campus campus = rootDomainObject.readCampusByOID(infoExecutionDegree.getInfoCampus().getIdInternal());
 		if (campus == null) {
 			throw new NonExistingServiceException("message.nonExistingCampus", null);
@@ -38,7 +39,7 @@ public class InsertExecutionDegreeAtDegreeCurricularPlan extends Service {
 		setPeriods(executionDegree, infoExecutionDegree);
 	}
 
-	private void setPeriods(ExecutionDegree executionDegree, InfoExecutionDegree infoExecutionDegree) {
+	private void setPeriods(ExecutionDegree executionDegree, InfoExecutionDegreeEditor infoExecutionDegree) {
 		InfoPeriod infoPeriodExamsFirstSemester = infoExecutionDegree.getInfoPeriodExamsFirstSemester();
 		setCompositePeriod(executionDegree, infoPeriodExamsFirstSemester, 11);
 

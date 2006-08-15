@@ -11,7 +11,6 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterExce
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
-import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixContextDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.RequestUtils;
@@ -178,15 +177,10 @@ public class PrepareConsultCurricularPlanDispatchAction extends FenixContextDisp
                 .get(0));
 
         // ----------------------------------------------------------
-        InfoExecutionDegree infoExecutionDegree = new InfoExecutionDegree();
         Object arg[] = { degreeCurricularPlanId, executionYear };
 
-        try {
-            infoExecutionDegree = (InfoExecutionDegree) ServiceUtils.executeService(null,
+        InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) ServiceUtils.executeService(null,
                     "ReadPublicExecutionDegreeByDCPID", arg);
-        } catch (FenixServiceException e) {
-            throw new FenixActionException(e);
-        }
 
         // request.setAttribute("windowLocation",FenixCacheFilter.getPageURL(request));
         RequestUtils.setExecutionDegreeToRequest(request, infoExecutionDegree);

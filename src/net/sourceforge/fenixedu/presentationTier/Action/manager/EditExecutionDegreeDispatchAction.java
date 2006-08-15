@@ -18,6 +18,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingSe
 import net.sourceforge.fenixedu.dataTransferObject.InfoCampus;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
+import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegreeEditor;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPeriod;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
@@ -162,7 +163,7 @@ public class EditExecutionDegreeDispatchAction extends FenixDispatchAction {
         String campusIdString = (String) dynaForm.get("campusId");
         String tempExamMapString = (String) dynaForm.get("tempExamMap");
 
-        InfoExecutionDegree infoExecutionDegree = new InfoExecutionDegree();
+        InfoExecutionDegreeEditor infoExecutionDegree = new InfoExecutionDegreeEditor();
 
         InfoExecutionYear infoExecutionYear = new InfoExecutionYear(rootDomainObject.readExecutionYearByOID(Integer.valueOf(executionYearString)));
         infoExecutionDegree.setInfoExecutionYear(infoExecutionYear);
@@ -401,7 +402,7 @@ public class EditExecutionDegreeDispatchAction extends FenixDispatchAction {
                 }
             }
         }
-        InfoExecutionDegree infoExecutionDegree = new InfoExecutionDegree();
+        InfoExecutionDegreeEditor infoExecutionDegree = new InfoExecutionDegreeEditor();
         Integer executionDegreeId = new Integer(request.getParameter("executionDegreeId"));
         infoExecutionDegree.setIdInternal(executionDegreeId);
 

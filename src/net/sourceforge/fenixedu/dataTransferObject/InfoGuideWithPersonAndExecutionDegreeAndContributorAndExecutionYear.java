@@ -4,7 +4,6 @@
  */
 package net.sourceforge.fenixedu.dataTransferObject;
 
-import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Guide;
 
 /**
@@ -15,11 +14,6 @@ public class InfoGuideWithPersonAndExecutionDegreeAndContributorAndExecutionYear
 
     public void copyFromDomain(Guide guide) {
         super.copyFromDomain(guide);
-        if (guide != null) {
-            ExecutionYear executionYear = guide.getExecutionDegree().getExecutionYear();
-            InfoExecutionYear infoExecutionYear = InfoExecutionYear.newInfoFromDomain(executionYear);
-            getInfoExecutionDegree().setInfoExecutionYear(infoExecutionYear);
-        }
     }
 
     public static InfoGuide newInfoFromDomain(Guide guide) {

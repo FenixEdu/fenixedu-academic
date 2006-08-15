@@ -9,7 +9,6 @@ import java.util.Calendar;
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
-import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegreeWithInfoExecutionYearAndDegreeCurricularPlan;
 import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeCandidate;
 import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeCandidateWithInfoPerson;
 import net.sourceforge.fenixedu.domain.CandidateSituation;
@@ -78,7 +77,7 @@ public class CreateMasterDegreeCandidate extends Service {
         // Return the new Candidate
         InfoMasterDegreeCandidate infoMasterDegreeCandidate = InfoMasterDegreeCandidateWithInfoPerson
                 .newInfoFromDomain(masterDegreeCandidate);
-        InfoExecutionDegree infoExecutionDegree = InfoExecutionDegreeWithInfoExecutionYearAndDegreeCurricularPlan
+        InfoExecutionDegree infoExecutionDegree = InfoExecutionDegree
                 .newInfoFromDomain(masterDegreeCandidate.getExecutionDegree());
         infoMasterDegreeCandidate.setInfoExecutionDegree(infoExecutionDegree);
         return infoMasterDegreeCandidate;

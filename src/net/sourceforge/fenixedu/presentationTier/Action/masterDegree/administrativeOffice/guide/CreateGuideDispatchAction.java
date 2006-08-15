@@ -25,6 +25,7 @@ import net.sourceforge.fenixedu.dataTransferObject.accounting.CreateReceiptBean;
 import net.sourceforge.fenixedu.domain.DocumentType;
 import net.sourceforge.fenixedu.domain.GraduationType;
 import net.sourceforge.fenixedu.domain.GuideState;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.masterDegree.GuideRequester;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException;
@@ -126,15 +127,7 @@ public class CreateGuideDispatchAction extends DispatchAction {
             Integer number = new Integer(numberString);
             String requesterType = (String) createGuideForm.get("requester");
 
-            InfoExecutionDegree infoExecutionDegree = new InfoExecutionDegree();
-            try {
-                Object args[] = { executionDegreeID };
-                infoExecutionDegree = (InfoExecutionDegree) ServiceManagerServiceFactory.executeService(
-                        userView, "ReadExecutionDegreeByOID", args);
-            } catch (FenixServiceException e) {
-                e.printStackTrace();
-                throw new FenixActionException(e);
-            }
+            InfoExecutionDegree infoExecutionDegree = InfoExecutionDegree.newInfoFromDomain(RootDomainObject.getInstance().readExecutionDegreeByOID(executionDegreeID));
 
             List types = new ArrayList();
             // types.add(DocumentType.INSURANCE_TYPE);

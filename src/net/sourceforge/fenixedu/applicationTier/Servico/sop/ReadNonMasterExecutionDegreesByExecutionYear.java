@@ -11,7 +11,6 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
-import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegreeWithInfoDegreeCurricularPlan;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
@@ -36,7 +35,7 @@ public class ReadNonMasterExecutionDegreesByExecutionYear extends Service {
         
         final List<InfoExecutionDegree> infoExecutionDegreeList = new ArrayList<InfoExecutionDegree>();
         for (final ExecutionDegree executionDegree : executionDegrees) {
-            infoExecutionDegreeList.add(InfoExecutionDegreeWithInfoDegreeCurricularPlan.newInfoFromDomain(executionDegree));
+            infoExecutionDegreeList.add(InfoExecutionDegree.newInfoFromDomain(executionDegree));
         }
 
         return infoExecutionDegreeList;

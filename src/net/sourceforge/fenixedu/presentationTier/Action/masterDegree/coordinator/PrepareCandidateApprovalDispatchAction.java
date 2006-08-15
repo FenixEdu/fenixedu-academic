@@ -6,7 +6,6 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
-import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegreeWithInfoExecutionYearAndDegreeCurricularPlan;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
@@ -33,7 +32,7 @@ public class PrepareCandidateApprovalDispatchAction extends DispatchAction {
         Object args[] = { degreeCurricularPlanID, new Integer(1) };
 
         try {
-            infoExecutionDegree = (InfoExecutionDegreeWithInfoExecutionYearAndDegreeCurricularPlan) ServiceUtils
+            infoExecutionDegree = (InfoExecutionDegree) ServiceUtils
                     .executeService(userView, "ReadExecutionDegreeByDegreeCurricularPlanID", args);
         } catch (FenixServiceException e) {
             e.printStackTrace();

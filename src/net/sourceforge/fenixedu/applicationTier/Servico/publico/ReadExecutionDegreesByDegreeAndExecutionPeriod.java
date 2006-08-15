@@ -6,10 +6,7 @@ import java.util.ListIterator;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
-import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegreeWithCoordinators;
-import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
@@ -60,15 +57,8 @@ public class ReadExecutionDegreesByDegreeAndExecutionPeriod extends Service {
 		while (listIterator.hasNext()) {
 			ExecutionDegree executionDegree = (ExecutionDegree) listIterator.next();
 
-			InfoExecutionDegree infoExecutionDegree = InfoExecutionDegreeWithCoordinators
+			InfoExecutionDegree infoExecutionDegree = InfoExecutionDegree
 					.newInfoFromDomain(executionDegree);
-			InfoExecutionYear infoExecutionYear = InfoExecutionYear.newInfoFromDomain(executionDegree
-					.getExecutionYear());
-			infoExecutionDegree.setInfoExecutionYear(infoExecutionYear);
-
-			InfoDegreeCurricularPlan infoDegreeCurricularPlan = InfoDegreeCurricularPlan
-					.newInfoFromDomain(executionDegree.getDegreeCurricularPlan());
-			infoExecutionDegree.setInfoDegreeCurricularPlan(infoDegreeCurricularPlan);
 
 			result.add(infoExecutionDegree);
 		}

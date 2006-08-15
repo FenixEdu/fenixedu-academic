@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import net.sourceforge.fenixedu.domain.Coordinator;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -13,108 +14,57 @@ import org.apache.struts.util.MessageResources;
 
 public class InfoExecutionDegree extends InfoObject {
 
-    private InfoExecutionYear infoExecutionYear;
-
-    private InfoDegreeCurricularPlan infoDegreeCurricularPlan;
-
-    private List coordinatorsList;
-
-    private Boolean temporaryExamMap;
-
-    private InfoCampus infoCampus;
-
-    private InfoPeriod infoPeriodLessonsFirstSemester;
-
-    private InfoPeriod infoPeriodExamsFirstSemester;
-
-    private InfoPeriod infoPeriodLessonsSecondSemester;
-
-    private InfoPeriod infoPeriodExamsSecondSemester;
+	private final ExecutionDegree executionDegree;
 
     private String qualifiedName;
 
-    public boolean bolonha;
-    
-    public InfoExecutionDegree() {
-    }
+    private boolean getNextExecutionYear = false;
 
-    public InfoExecutionDegree(InfoDegreeCurricularPlan infoDegreeCurricularPlan, InfoExecutionYear infoExecutionYear) {
-        setInfoDegreeCurricularPlan(infoDegreeCurricularPlan);
-        setInfoExecutionYear(infoExecutionYear);
+    public InfoExecutionDegree(final ExecutionDegree executionDegree) {
+    	this.executionDegree = executionDegree;
     }
 
     public InfoExecutionYear getInfoExecutionYear() {
-        return infoExecutionYear;
-    }
-
-    public void setInfoExecutionYear(InfoExecutionYear infoExecutionYear) {
-        this.infoExecutionYear = infoExecutionYear;
+        return InfoExecutionYear.newInfoFromDomain(getNextExecutionYear ?
+        		executionDegree.getExecutionYear().getNextExecutionYear() : executionDegree.getExecutionYear());
     }
 
     public InfoDegreeCurricularPlan getInfoDegreeCurricularPlan() {
-        return infoDegreeCurricularPlan;
-    }
-
-    public void setInfoDegreeCurricularPlan(InfoDegreeCurricularPlan infoDegreeCurricularPlan) {
-        this.infoDegreeCurricularPlan = infoDegreeCurricularPlan;
+        return InfoDegreeCurricularPlan.newInfoFromDomain(executionDegree.getDegreeCurricularPlan());
     }
 
     public Boolean getTemporaryExamMap() {
-        return temporaryExamMap;
-    }
-
-    public void setTemporaryExamMap(Boolean temporary) {
-        temporaryExamMap = temporary;
+        return executionDegree.getTemporaryExamMap();
     }
 
     public InfoCampus getInfoCampus() {
-        return infoCampus;
+        return InfoCampus.newInfoFromDomain(executionDegree.getCampus());
     }
 
-    public void setInfoCampus(InfoCampus infoCampus) {
-        this.infoCampus = infoCampus;
-    }
-
-    public List getCoordinatorsList() {
-        return coordinatorsList;
-    }
-
-    public void setCoordinatorsList(List coordinatorsList) {
-        this.coordinatorsList = coordinatorsList;
+    public List<InfoCoordinator> getCoordinatorsList() {
+    	final List<InfoCoordinator> infoCoordinators = new ArrayList<InfoCoordinator>();
+    	for (final Coordinator coordinator : executionDegree.getCoordinatorsListSet()) {
+    		infoCoordinators.add(InfoCoordinatorWithInfoPerson.newInfoFromDomain(coordinator));
+    	}
+        return infoCoordinators;
     }
 
     public InfoPeriod getInfoPeriodExamsFirstSemester() {
-        return infoPeriodExamsFirstSemester;
-    }
-
-    public void setInfoPeriodExamsFirstSemester(InfoPeriod infoPeriodExamsFirstSemester) {
-        this.infoPeriodExamsFirstSemester = infoPeriodExamsFirstSemester;
+        return InfoPeriod.newInfoFromDomain(executionDegree.getPeriodExamsFirstSemester());
     }
 
     public InfoPeriod getInfoPeriodExamsSecondSemester() {
-        return infoPeriodExamsSecondSemester;
-    }
-
-    public void setInfoPeriodExamsSecondSemester(InfoPeriod infoPeriodExamsSecondSemester) {
-        this.infoPeriodExamsSecondSemester = infoPeriodExamsSecondSemester;
+        return InfoPeriod.newInfoFromDomain(executionDegree.getPeriodExamsSecondSemester());
     }
 
     public InfoPeriod getInfoPeriodLessonsFirstSemester() {
-        return infoPeriodLessonsFirstSemester;
-    }
-
-    public void setInfoPeriodLessonsFirstSemester(InfoPeriod infoPeriodLessonsFirstSemester) {
-        this.infoPeriodLessonsFirstSemester = infoPeriodLessonsFirstSemester;
+        return InfoPeriod.newInfoFromDomain(executionDegree.getPeriodLessonsFirstSemester());
     }
 
     public InfoPeriod getInfoPeriodLessonsSecondSemester() {
-        return infoPeriodLessonsSecondSemester;
+        return InfoPeriod.newInfoFromDomain(executionDegree.getPeriodLessonsSecondSemester());
     }
 
-    public void setInfoPeriodLessonsSecondSemester(InfoPeriod infoPeriodLessonsSecondSemester) {
-        this.infoPeriodLessonsSecondSemester = infoPeriodLessonsSecondSemester;
-    }
-    
     public String getQualifiedName() {
         return qualifiedName;
     }
@@ -124,34 +74,15 @@ public class InfoExecutionDegree extends InfoObject {
     }
 
     public boolean isBolonha() {
-        return bolonha;
-    }
-
-    public void setBolonha(boolean bolonha) {
-        this.bolonha = bolonha;
+        return executionDegree.isBolonha();
     }
 
     public boolean equals(Object obj) {
-        boolean result = false;
-        if (obj instanceof InfoExecutionDegree) {
-            InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) obj;
-            result = getIdInternal().equals(infoExecutionDegree.getIdInternal());
-        }
-        return result;
+    	return obj != null && executionDegree == ((InfoExecutionDegree) obj).executionDegree;
     }
 
     public String toString() {
-        String result = "[INFOEXECUTIONDEGREE";
-        result += ", infoExecutionYear=" + infoExecutionYear;
-        result += ", infoDegreeCurricularPlan=" + infoDegreeCurricularPlan;
-        if (coordinatorsList != null) {
-            result += ", coordinatorsList=" + coordinatorsList.size();
-        } else {
-            result += ", coordinatorsList is NULL";
-        }
-        result += ", infoCampus= " + infoCampus;
-        result += "]";
-        return result;
+    	return executionDegree.toString();
     }
 
     public static List buildLabelValueBeansForList(List executionDegrees,
@@ -210,20 +141,21 @@ public class InfoExecutionDegree extends InfoObject {
     }
 
     public static InfoExecutionDegree newInfoFromDomain(ExecutionDegree executionDegree) {
-        InfoExecutionDegree infoExecutionDegree = null;
-        if (executionDegree != null) {
-            infoExecutionDegree = new InfoExecutionDegree();
-            infoExecutionDegree.copyFromDomain(executionDegree);
-        }
-        return infoExecutionDegree;
+    	return executionDegree == null ? null : new InfoExecutionDegree(executionDegree);
     }
 
-    public void copyFromDomain(ExecutionDegree executionDegree) {
-        super.copyFromDomain(executionDegree);
-        if (executionDegree != null) {
-            setBolonha(executionDegree.isBolonha());
-            setTemporaryExamMap(executionDegree.getTemporaryExamMap());
-        }
+	@Override
+	public Integer getIdInternal() {
+		return executionDegree.getIdInternal();
+	}
+
+    @Override
+    public void setIdInternal(Integer integer) {
+        throw new Error("Method should not be called!");
     }
+
+	public void setGetNextExecutionYear(boolean getNextExecutionYear) {
+		this.getNextExecutionYear = getNextExecutionYear;
+	}
 
 }

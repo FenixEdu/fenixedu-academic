@@ -12,7 +12,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoClass;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
-import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegreeWithInfoDegreeCurricularPlanAndExecutionYear;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
@@ -94,7 +93,7 @@ public class ViewClassesActionNew extends FenixContextAction {
         ExecutionDegree executionDegree = degreeCurricularPlan.getExecutionDegreeByYear(executionPeriod.getExecutionYear());
         if (executionDegree != null) {
             // infoExecutionDegree
-            InfoExecutionDegree infoExecutionDegree = InfoExecutionDegreeWithInfoDegreeCurricularPlanAndExecutionYear.newInfoFromDomain(executionDegree);
+            InfoExecutionDegree infoExecutionDegree = InfoExecutionDegree.newInfoFromDomain(executionDegree);
             RequestUtils.setExecutionDegreeToRequest(request, infoExecutionDegree);
 
             // SessionConstants.INFO_DEGREE_CURRICULAR_PLAN

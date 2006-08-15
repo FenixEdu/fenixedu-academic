@@ -9,15 +9,12 @@ import java.util.ArrayList;
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoBranch;
-import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDepartment;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
-import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
 import net.sourceforge.fenixedu.dataTransferObject.finalDegreeWork.InfoProposal;
 import net.sourceforge.fenixedu.domain.Branch;
-import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal;
@@ -116,20 +113,9 @@ public class ReadFinalDegreeWorkProposal extends Service {
 
             if (!proposal.getScheduleing().getExecutionDegreesSet().isEmpty()) {
             	final ExecutionDegree executionDegree = proposal.getScheduleing().getExecutionDegrees().iterator().next();
-                infoProposal.setExecutionDegree(new InfoExecutionDegree());
+                infoProposal.setExecutionDegree(new InfoExecutionDegree(executionDegree));
                 infoProposal.getExecutionDegree().setIdInternal(
                         proposal.getScheduleing().getExecutionDegrees().iterator().next().getIdInternal());
-
-                if (executionDegree.getExecutionYear() != null) {
-                    infoProposal.getExecutionDegree().setInfoExecutionYear(
-                            InfoExecutionYear.newInfoFromDomain(executionDegree.getExecutionYear()));
-                }
-
-                if (executionDegree.getDegreeCurricularPlan() != null
-                        && executionDegree.getDegreeCurricularPlan().getDegree() != null) {
-                	final DegreeCurricularPlan degreeCurricularPlan = executionDegree.getDegreeCurricularPlan();
-                	infoProposal.getExecutionDegree().setInfoDegreeCurricularPlan(new InfoDegreeCurricularPlan(degreeCurricularPlan));
-                }
             }
         }
 

@@ -8,12 +8,10 @@ import java.util.Set;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCandidateSituation;
-import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeCandidate;
 import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeCandidateWithInfoPerson;
 import net.sourceforge.fenixedu.domain.CandidateSituation;
-import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.MasterDegreeCandidate;
@@ -59,10 +57,6 @@ public class ReadCandidateList extends Service {
             executionDegree = masterDegreeCandidate.getExecutionDegree();
             final InfoExecutionDegree infoExecutionDegree = InfoExecutionDegree.newInfoFromDomain(executionDegree);
             infoMasterDegreeCandidate.setInfoExecutionDegree(infoExecutionDegree);
-
-            final DegreeCurricularPlan degreeCurricularPlan = executionDegree.getDegreeCurricularPlan();
-            final InfoDegreeCurricularPlan infoDegreeCurricularPlan = InfoDegreeCurricularPlan.newInfoFromDomain(degreeCurricularPlan);
-            infoExecutionDegree.setInfoDegreeCurricularPlan(infoDegreeCurricularPlan);
 
             candidateList.add(infoMasterDegreeCandidate);
         }

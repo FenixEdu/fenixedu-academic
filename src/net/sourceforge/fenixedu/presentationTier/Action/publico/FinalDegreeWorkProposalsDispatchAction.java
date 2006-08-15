@@ -132,9 +132,7 @@ public class FinalDegreeWorkProposalsDispatchAction extends FenixContextDispatch
             Object[] args = { new Integer(finalDegreeWorkProposalOID) };
             InfoProposal infoProposal = (InfoProposal) ServiceUtils.executeService(null,
                     "ReadFinalDegreeWorkProposal", args);
-            infoProposal.getExecutionDegree().setInfoExecutionYear(
-                    (InfoExecutionYear) (new INFO_EXECUTION_YEAR_INCREMENTER()).transform(infoProposal
-                            .getExecutionDegree().getInfoExecutionYear()));
+            infoProposal.getExecutionDegree().setGetNextExecutionYear(true);
             request.setAttribute("finalDegreeWorkProposal", infoProposal);
         }
         return mapping.findForward("show-final-degree-work-proposal");

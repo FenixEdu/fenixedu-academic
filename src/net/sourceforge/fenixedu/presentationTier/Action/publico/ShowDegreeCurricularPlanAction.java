@@ -50,7 +50,7 @@ public class ShowDegreeCurricularPlanAction extends FenixContextDispatchAction {
     private ActionForward showOldDegreeCurricularPlan(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, Integer degreeCurricularPlanId) throws FenixFilterException, FenixActionException {
         final ActionErrors errors = new ActionErrors();
         
-        InfoExecutionDegree infoExecutionDegreeForPeriod = new InfoExecutionDegree();
+        InfoExecutionDegree infoExecutionDegreeForPeriod = null;
         InfoExecutionDegree infoExecutionDegree1 = null;
         try {
             final Object argsLerLicenciaturas[] = { degreeCurricularPlanId };
@@ -106,9 +106,7 @@ public class ShowDegreeCurricularPlanAction extends FenixContextDispatchAction {
 
         InfoExecutionDegree infoExecutionDegree = RequestUtils.getExecutionDegreeFromRequest(request, selectedExecutionPeriod.getInfoExecutionYear());
         if (infoExecutionDegree == null) {
-            infoExecutionDegree = new InfoExecutionDegree();
             final Object arg[] = { degreeCurricularPlanId, selectedExecutionPeriod.getInfoExecutionYear().getIdInternal() };
-
             try {
                 infoExecutionDegree = (InfoExecutionDegree) ServiceUtils.executeService(null, "ReadPublicExecutionDegreeByDCPID", arg);
             } catch (FenixServiceException e) {
@@ -124,8 +122,6 @@ public class ShowDegreeCurricularPlanAction extends FenixContextDispatchAction {
         request.setAttribute("infoDegreeCurricularPlan", infoDegreeCurricularPlan);
         infoDegreeCurricularPlan.prepareEnglishPresentation(getLocale(request));
         
-        infoExecutionDegree1.setInfoDegreeCurricularPlan(infoDegreeCurricularPlan);
-
         List<InfoCurricularCourseScope> activeCurricularCourseScopes = null;
         if (curricularYear != 0) {
             final Object[] args = { infoExecutionDegree, selectedExecutionPeriod, curricularYear, getLocale(request) };

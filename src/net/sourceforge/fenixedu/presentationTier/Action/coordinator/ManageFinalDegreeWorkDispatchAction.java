@@ -691,8 +691,7 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
             infoFinalWorkProposal.setCompanyAdress(companyAdress);
             infoFinalWorkProposal.setCompanyName(companyName);
         }
-        infoFinalWorkProposal.setExecutionDegree(new InfoExecutionDegree());
-        infoFinalWorkProposal.getExecutionDegree().setIdInternal(new Integer(degree));
+        infoFinalWorkProposal.setExecutionDegree(new InfoExecutionDegree(rootDomainObject.readExecutionDegreeByOID(Integer.valueOf(degree))));
 
         if (branchList != null && branchList.length > 0) {
             infoFinalWorkProposal.setBranches(new ArrayList());

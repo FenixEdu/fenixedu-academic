@@ -8,7 +8,6 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
-import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegreeWithInfoExecutionYearAndDegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -45,7 +44,7 @@ public class ReadExecutionDegreeByDegreeCurricularPlanID extends Service {
         for (Iterator iter = executionDegrees.iterator(); iter.hasNext();) {
             ExecutionDegree executionDegree = (ExecutionDegree) iter.next();
 
-            InfoExecutionDegree infoExecutionDegree = InfoExecutionDegreeWithInfoExecutionYearAndDegreeCurricularPlan
+            InfoExecutionDegree infoExecutionDegree = InfoExecutionDegree
                     .newInfoFromDomain(executionDegree);
             infoExecutionDegreeList.add(infoExecutionDegree);
         }
@@ -74,7 +73,7 @@ public class ReadExecutionDegreeByDegreeCurricularPlanID extends Service {
                         degreeCurricularPlanID);
 
         if (executionYear.equals("")) {
-            return InfoExecutionDegreeWithInfoExecutionYearAndDegreeCurricularPlan
+            return InfoExecutionDegree
                     .newInfoFromDomain(degreeCurricularPlan.getExecutionDegrees()
                             .get(0));
         }
@@ -91,8 +90,7 @@ public class ReadExecutionDegreeByDegreeCurricularPlanID extends Service {
             }
         });
 
-        return InfoExecutionDegreeWithInfoExecutionYearAndDegreeCurricularPlan
-                .newInfoFromDomain(executionDegree);
+        return InfoExecutionDegree.newInfoFromDomain(executionDegree);
     }
 
 }
