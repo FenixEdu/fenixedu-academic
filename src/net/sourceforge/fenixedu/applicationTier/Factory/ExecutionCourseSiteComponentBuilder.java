@@ -17,7 +17,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.teacher.ReadSummaries;
 import net.sourceforge.fenixedu.dataTransferObject.ISiteComponent;
 import net.sourceforge.fenixedu.dataTransferObject.InfoAnnouncement;
 import net.sourceforge.fenixedu.dataTransferObject.InfoBibliographicReference;
-import net.sourceforge.fenixedu.dataTransferObject.InfoClassWithInfoExecutionDegree;
+import net.sourceforge.fenixedu.dataTransferObject.InfoClass;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseScope;
 import net.sourceforge.fenixedu.dataTransferObject.InfoEvaluationMethod;
@@ -377,7 +377,7 @@ public class ExecutionCourseSiteComponentBuilder {
 			}
 
 			for (final SchoolClass schoolClass : classesShifts) {
-				infoClasses.add(InfoClassWithInfoExecutionDegree.newInfoFromDomain(schoolClass));
+				infoClasses.add(InfoClass.newInfoFromDomain(schoolClass));
 			}
 
 			InfoShift infoShift = InfoShiftWithInfoExecutionCourseAndCollections

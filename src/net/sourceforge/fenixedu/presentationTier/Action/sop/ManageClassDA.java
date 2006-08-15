@@ -79,17 +79,12 @@ public class ManageClassDA extends FenixClassAndExecutionDegreeAndCurricularYear
 
         InfoClass infoClassOld = (InfoClass) request.getAttribute(SessionConstants.CLASS_VIEW);
 
-        InfoClass infoClassNew = new InfoClass();
-        infoClassNew.setNome(className);
-        infoClassNew.setAnoCurricular(infoClassOld.getAnoCurricular());
-        infoClassNew.setIdInternal(infoClassOld.getIdInternal());
-        infoClassNew.setInfoExecutionDegree(infoClassOld.getInfoExecutionDegree());
-        infoClassNew.setInfoExecutionPeriod(infoClassOld.getInfoExecutionPeriod());
+        Object argsCriarTurma[] = { infoClassOld.getIdInternal(), className, infoClassOld.getAnoCurricular(),
+        		infoClassOld.getInfoExecutionDegree(), infoClassOld.getInfoExecutionPeriod() };
 
-        Object argsCriarTurma[] = { infoClassOld, infoClassNew };
-
+        InfoClass infoClassNew = null;
         try {
-            ServiceUtils.executeService(userView, "EditarTurma", argsCriarTurma);
+            infoClassNew = (InfoClass) ServiceUtils.executeService(userView, "EditarTurma", argsCriarTurma);
         } catch (ExistingServiceException e) {
             throw new ExistingActionException("A SchoolClass", e);
         }

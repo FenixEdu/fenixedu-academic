@@ -12,116 +12,48 @@ import net.sourceforge.fenixedu.domain.SchoolClass;
  */
 public class InfoClass extends InfoObject {
 
-    protected String _name;
+	private final SchoolClass schoolClass;
 
-    protected Integer _anoCurricular;
-
-    private InfoExecutionDegree infoExecutionDegree;
-
-    private InfoExecutionPeriod infoExecutionPeriod;
-
-    public InfoClass() {
-    }
-
-    public InfoClass(String name, Integer anoCurricular, InfoExecutionDegree infoExecutionDegree,
-            InfoExecutionPeriod infoExecutionPeriod) {
-        setNome(name);
-        setAnoCurricular(anoCurricular);
-        setInfoExecutionDegree(infoExecutionDegree);
-        setInfoExecutionPeriod(infoExecutionPeriod);
+    public InfoClass(final SchoolClass schoolClass) {
+    	this.schoolClass = schoolClass;
     }
 
     public String getNome() {
-        return _name;
-    }
-
-    public void setNome(String nome) {
-        _name = nome;
+        return schoolClass.getNome();
     }
 
     public Integer getAnoCurricular() {
-        return _anoCurricular;
-    }
-
-    public void setAnoCurricular(Integer anoCurricular) {
-        _anoCurricular = anoCurricular;
+        return schoolClass.getAnoCurricular();
     }
 
     public boolean equals(Object obj) {
-        boolean resultado = false;
-        if (obj instanceof InfoClass) {
-            InfoClass infoTurma = (InfoClass) obj;
-            resultado = getIdInternal().equals(infoTurma.getIdInternal())
-                || (getInfoExecutionPeriod() != null
-                    && getInfoExecutionDegree() != null
-                    && getNome().equals(infoTurma.getNome())
-                    && getInfoExecutionPeriod().equals(infoTurma.getInfoExecutionPeriod())
-                    && getInfoExecutionDegree().equals(infoTurma.getInfoExecutionDegree()));
-        }
-        return resultado;
+    	return obj != null && schoolClass == ((InfoClass) obj).schoolClass;
     }
 
     public String toString() {
-        String result = "[INFOTURMA";
-        result += ", nome=" + _name;
-        result += ", infoExecutionPeriod=" + infoExecutionPeriod;
-        result += ", infoExecutionDegree=" + infoExecutionDegree;
-        result += "]";
-        return result;
+    	return schoolClass.toString();
     }
 
-    /**
-     * Returns the infoExecutionDegree.
-     * 
-     * @return InfoExecutionDegree
-     */
     public InfoExecutionDegree getInfoExecutionDegree() {
-        return infoExecutionDegree;
+        return InfoExecutionDegreeWithInfoExecutionYearAndDegreeCurricularPlan.newInfoFromDomain(schoolClass.getExecutionDegree());
     }
 
-    /**
-     * Sets the infoExecutionDegree.
-     * 
-     * @param infoExecutionDegree
-     *            The infoExecutionDegree to set
-     */
-    public void setInfoExecutionDegree(InfoExecutionDegree infoExecutionDegree) {
-        this.infoExecutionDegree = infoExecutionDegree;
-    }
-
-    /**
-     * Returns the infoExecutionPeriod.
-     * 
-     * @return InfoExecutionPeriod
-     */
     public InfoExecutionPeriod getInfoExecutionPeriod() {
-        return infoExecutionPeriod;
+        return InfoExecutionPeriod.newInfoFromDomain(schoolClass.getExecutionPeriod());
     }
 
-    /**
-     * Sets the infoExecutionPeriod.
-     * 
-     * @param infoExecutionPeriod
-     *            The infoExecutionPeriod to set
-     */
-    public void setInfoExecutionPeriod(InfoExecutionPeriod infoExecutionPeriod) {
-        this.infoExecutionPeriod = infoExecutionPeriod;
+    public static InfoClass newInfoFromDomain(final SchoolClass schoolClass) {
+    	return schoolClass == null ? null : new InfoClass(schoolClass);
     }
 
-    public void copyFromDomain(SchoolClass turma) {
-        super.copyFromDomain(turma);
-        if (turma != null) {
-            setNome(turma.getNome());
-            setAnoCurricular(turma.getAnoCurricular());
-        }
+	@Override
+	public Integer getIdInternal() {
+		return schoolClass.getIdInternal();
+	}
+
+    @Override
+    public void setIdInternal(Integer integer) {
+        throw new Error("Method should not be called!");
     }
 
-    public static InfoClass newInfoFromDomain(SchoolClass turma) {
-        InfoClass infoClass = null;
-        if (turma != null) {
-            infoClass = new InfoClass();
-            infoClass.copyFromDomain(turma);
-        }
-        return infoClass;
-    }
 }

@@ -17,14 +17,12 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.InfoClass;
-import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoLesson;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
 import net.sourceforge.fenixedu.dataTransferObject.InfoViewClassSchedule;
-import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
@@ -100,18 +98,6 @@ public class ReadDegreesClassesLessons extends Service {
 			}
 
 			InfoClass infoClass = InfoClass.newInfoFromDomain(turma);
-			final ExecutionDegree executionDegree = turma.getExecutionDegree();
-			final InfoExecutionDegree infoExecutionDegree = InfoExecutionDegree
-					.newInfoFromDomain(executionDegree);
-			infoClass.setInfoExecutionDegree(infoExecutionDegree);
-
-			final DegreeCurricularPlan degreeCurricularPlan = executionDegree.getDegreeCurricularPlan();
-			final InfoDegreeCurricularPlan infoDegreeCurricularPlan = InfoDegreeCurricularPlan
-					.newInfoFromDomain(degreeCurricularPlan);
-			infoExecutionDegree.setInfoDegreeCurricularPlan(infoDegreeCurricularPlan);
-
-			infoClass.setInfoExecutionPeriod(infoExecutionPeriod);
-
 			infoViewClassSchedule.setInfoClass(infoClass);
 			infoViewClassSchedule.setClassLessons(infoLessonList);
 			infoViewClassScheduleList.add(infoViewClassSchedule);

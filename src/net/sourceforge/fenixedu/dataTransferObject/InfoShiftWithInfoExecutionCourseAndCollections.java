@@ -66,7 +66,7 @@ public class InfoShiftWithInfoExecutionCourseAndCollections extends InfoShiftWit
 
                 public Object transform(Object arg0) {
 
-                    return InfoClassWithInfoExecutionDegree.newInfoFromDomain((SchoolClass) arg0);
+                    return InfoClass.newInfoFromDomain((SchoolClass) arg0);
                 }
 
             });

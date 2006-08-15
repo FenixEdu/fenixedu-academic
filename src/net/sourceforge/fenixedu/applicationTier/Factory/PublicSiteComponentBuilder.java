@@ -152,12 +152,7 @@ public class PublicSiteComponentBuilder {
     private InfoClass copyClass2InfoClass(SchoolClass taux) {
         InfoClass infoClass = null;
         if (taux != null) {
-            infoClass = new InfoClass();
-            infoClass.setIdInternal(taux.getIdInternal());
-            infoClass.setNome(taux.getNome());
-            infoClass.setAnoCurricular(taux.getAnoCurricular());
-            infoClass.setInfoExecutionPeriod(copyIExecutionPeriod2InfoExecutionPeriod(taux
-                    .getExecutionPeriod()));
+            infoClass = new InfoClass(taux);
         }
         return infoClass;
     }

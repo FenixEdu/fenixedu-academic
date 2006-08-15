@@ -12,8 +12,6 @@ import java.util.Set;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.InfoClass;
-import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
-import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
@@ -58,18 +56,6 @@ public class ReadAvailableClassesForShift extends Service {
         final List<InfoClass> infoClasses = new ArrayList<InfoClass>(availableSchoolClasses.size());
         for (final SchoolClass schoolClass : availableSchoolClasses) {
             final InfoClass infoClass = InfoClass.newInfoFromDomain(schoolClass);
-
-            final ExecutionDegree executionDegree = schoolClass.getExecutionDegree();
-            final InfoExecutionDegree infoExecutionDegree = InfoExecutionDegree
-                    .newInfoFromDomain(executionDegree);
-            infoClass.setInfoExecutionDegree(infoExecutionDegree);
-
-            final DegreeCurricularPlan degreeCurricularPlan = executionDegree
-                    .getDegreeCurricularPlan();
-            final InfoDegreeCurricularPlan infoDegreeCurricularPlan = InfoDegreeCurricularPlan
-                    .newInfoFromDomain(degreeCurricularPlan);
-            infoExecutionDegree.setInfoDegreeCurricularPlan(infoDegreeCurricularPlan);
-
             infoClasses.add(infoClass);
         }
 

@@ -37,7 +37,6 @@ public class LerTurmas extends Service {
         final List infoClassesList = new ArrayList();
         for (final SchoolClass schoolClass : classes) {
             InfoClass infoClass = InfoClass.newInfoFromDomain(schoolClass);
-            infoClass.setInfoExecutionPeriod(infoExecutionPeriod);
             infoClassesList.add(infoClass);
         }
 

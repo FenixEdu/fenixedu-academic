@@ -79,16 +79,10 @@ public class ManageClassesDA extends FenixExecutionDegreeAndCurricularYearContex
         InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request
                 .getAttribute(SessionConstants.EXECUTION_PERIOD);
 
-        InfoClass infoClass = new InfoClass();
-        infoClass.setNome(className);
-        infoClass.setAnoCurricular(curricularYear);
-        infoClass.setInfoExecutionDegree(infoExecutionDegree);
-        infoClass.setInfoExecutionPeriod(infoExecutionPeriod);
-
-        Object argsCriarTurma[] = { infoClass };
+        Object argsCriarTurma[] = { className, curricularYear, infoExecutionDegree, infoExecutionPeriod };
 
         try {
-            infoClass = (InfoClass) ServiceUtils.executeService(userView, "CriarTurma", argsCriarTurma);
+            ServiceUtils.executeService(userView, "CriarTurma", argsCriarTurma);
         } catch (ExistingServiceException e) {
             throw new ExistingActionException("A SchoolClass", e);
         }

@@ -79,29 +79,25 @@ public class ReadStudentEnrollmentsAndClass extends Service {
      */
     private InfoClass getClass(List studentShifts, String degreeName) {
 
-        List classesName = new ArrayList();
-        InfoClass infoClass = new InfoClass();
+        List<SchoolClass> classesName = new ArrayList<SchoolClass>();
         for (int iter = 0; iter < studentShifts.size(); iter++) {
             Shift shift = (Shift) studentShifts.get(0);
             List classes = shift.getAssociatedClasses();
             if (classes.size() == 1) {
                 SchoolClass klass = (SchoolClass) classes.get(0);
-                infoClass.setNome(klass.getNome());
-                return infoClass;
+                return InfoClass.newInfoFromDomain(klass);
             }
 
             for (int j = 0; j < classes.size(); j++) {
                 SchoolClass klass = (SchoolClass) classes.get(j);
                 if (degreeName.equals(klass.getExecutionDegree().getDegreeCurricularPlan().getDegree()
                         .getNome())) {
-                    classesName.add(klass.getNome());
+                    classesName.add(klass);
                 }
             }
 
         }
-        String className = getMaxOcurrenceElement(classesName);
-        infoClass.setNome(className);
-        return infoClass;
+        return InfoClass.newInfoFromDomain(getMaxOcurrenceElement(classesName));
     }
 
     /**
@@ -122,12 +118,12 @@ public class ReadStudentEnrollmentsAndClass extends Service {
         return filteredStudentShifts;
     }
 
-    private String getMaxOcurrenceElement(List classes) {
+    private SchoolClass getMaxOcurrenceElement(List<SchoolClass> classes) {
 
         int maxNumberOfOcurrencies = 0;
-        String resultElement = null;
+        SchoolClass resultElement = null;
         for (int iter = 0; iter < classes.size(); iter++) {
-            String element = (String) classes.get(iter);
+            SchoolClass element = (SchoolClass) classes.get(iter);
             int numberOfOcurrencis = CollectionUtils.cardinality(element, classes);
             if (numberOfOcurrencis > maxNumberOfOcurrencies)
                 resultElement = element;

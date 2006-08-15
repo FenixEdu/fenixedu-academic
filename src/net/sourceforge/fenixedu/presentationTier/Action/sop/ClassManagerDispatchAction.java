@@ -22,13 +22,14 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoClass;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularYear;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionDegree;
+import net.sourceforge.fenixedu.domain.SchoolClass;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.base.FenixClassAndExecutionDegreeAndCurricularYearContextDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
 
-import org.apache.commons.beanutils.BeanUtils;
 import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
@@ -80,13 +81,9 @@ public class ClassManagerDispatchAction extends
                 //				CurricularYearAndSemesterAndInfoExecutionDegree context =
                 //					SessionUtils.getContext(request);
 
-                InfoClass infoClass = new InfoClass();
-                infoClass.setNome(className);
-                infoClass.setAnoCurricular(curricularYear);
-                infoClass.setInfoExecutionDegree(infoExecutionDegree);
-                infoClass.setInfoExecutionPeriod(infoExecutionPeriod);
+                InfoClass infoClass = null;
 
-                Object argsCriarTurma[] = { infoClass };
+                Object argsCriarTurma[] = { className, curricularYear, infoExecutionDegree, infoExecutionPeriod };
 
                 try {
                     infoClass = (InfoClass) ServiceUtils.executeService(userView, "CriarTurma",
@@ -132,20 +129,20 @@ public class ClassManagerDispatchAction extends
                 return mapping.getInputForward();
 
             }
-            InfoClass newClassView = (InfoClass) BeanUtils.cloneBean(oldClassView);
+            InfoClass newClassView = null;
 
-            newClassView.setNome(className);
+            Object argsCriarTurma[] = { oldClassView.getIdInternal(), className, oldClassView.getAnoCurricular(),
+            		oldClassView.getInfoExecutionDegree(), oldClassView.getInfoExecutionPeriod() };
 
             Object[] argsEditarTurma = { oldClassView, newClassView };
             try {
 
-                ServiceUtils.executeService(userView, "EditarTurma", argsEditarTurma);
+                newClassView = (InfoClass) ServiceUtils.executeService(userView, "EditarTurma", argsEditarTurma);
             } catch (ExistingServiceException ex) {
                 throw new ExistingActionException("A SchoolClass", ex);
             } catch (NotAuthorizedException e) {
                 throw e;
             } catch (FenixServiceException e) {
-                oldClassView.setNome(newClassView.getNome());
                 ActionErrors actionErrors = new ActionErrors();
                 actionErrors.add("existingClass", new ActionError("errors.existClass", className));
                 saveErrors(request, actionErrors);
@@ -242,17 +239,20 @@ public class ClassManagerDispatchAction extends
         InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) request
                 .getAttribute(SessionConstants.EXECUTION_DEGREE);
 
-        InfoClass infoClass = new InfoClass();
 
-        infoClass.setInfoExecutionDegree(infoExecutionDegree);
-        infoClass.setInfoExecutionPeriod(infoExecutionPeriod);
-        infoClass.setNome(className);
+        InfoClass infoClass = null;
+        final ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(infoExecutionDegree.getIdInternal());
+        for (final SchoolClass schoolClass : executionDegree.getSchoolClassesSet()) {
+        	if (schoolClass.getExecutionPeriod().getIdInternal().equals(infoExecutionPeriod.getIdInternal())
+        			&& schoolClass.getNome().equals(className)) {
+        		infoClass = InfoClass.newInfoFromDomain(schoolClass);
+        		break;
+        	}
+        }
 
         Object argsApagarTurma[] = { infoClass };
 
-        /** InfoLesson List */
-        List lessonList = (ArrayList) ServiceUtils.executeService(userView, "LerAulasDeTurma",
-                argsApagarTurma);
+        List lessonList = (ArrayList) ServiceUtils.executeService(userView, "LerAulasDeTurma", argsApagarTurma);
 
         request.setAttribute(SessionConstants.LESSON_LIST_ATT, lessonList);
 
