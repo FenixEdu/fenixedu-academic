@@ -252,9 +252,4 @@ public class InfoCurricularCourse extends InfoObject implements Comparable, ISit
         return curricularCourse.getIdInternal();
     }
 
-    @Override
-    public void setIdInternal(Integer integer) {
-        throw new Error("Method should not be called!");
-    }
-
 }
