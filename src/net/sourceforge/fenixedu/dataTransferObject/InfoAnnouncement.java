@@ -12,90 +12,38 @@ import net.sourceforge.fenixedu.domain.Announcement;
 
 public class InfoAnnouncement extends InfoObject implements Comparable, ISiteComponent {
 
-    private String title;
+	private final Announcement announcement;
 
-    private Date creationDate;
-
-    private Date lastModifiedDate;
-
-    private String information;
-
-    private InfoSite infoSite;
-
-    public InfoAnnouncement() {
-    }
-
-    public InfoAnnouncement(String title, Date creationDate, Date lastModifiedDate,
-            String information, InfoSite infoSite) {
-        this.title = title;
-        this.creationDate = creationDate;
-        this.lastModifiedDate = lastModifiedDate;
-        this.information = information;
-        this.infoSite = infoSite;
+    public InfoAnnouncement(final Announcement announcement) {
+    	this.announcement = announcement;
     }
 
     public boolean equals(Object obj) {
-
-        boolean resultado = false;
-        if (obj != null && obj instanceof InfoAnnouncement) {
-            resultado = getTitle().equals(((InfoAnnouncement) obj).getTitle())
-                    && getCreationDate().equals(((InfoAnnouncement) obj).getCreationDate())
-                    && getLastModifiedDate().equals(((InfoAnnouncement) obj).getLastModifiedDate())
-                    && getInformation().equals(((InfoAnnouncement) obj).getInformation())
-                    && getInfoSite().equals(((InfoAnnouncement) obj).getInfoSite());
-        }
-        return resultado;
+    	return obj != null && announcement == ((InfoAnnouncement) obj).announcement;
     }
 
     public String toString() {
-        String result = "[INFOANNOUNCEMENT";
-        result += ", title=" + getTitle();
-        result += ", information=" + getInformation();
-        result += ", creationDate=" + getCreationDate();
-        result += ", lastModifiedDate=" + getLastModifiedDate();
-        result += ", infoSite=" + getInfoSite();
-        result += "]";
-        return result;
+    	return announcement.toString();
     }
 
     public Date getCreationDate() {
-        return creationDate;
+        return announcement.getCreationDate();
     }
 
     public String getInformation() {
-        return information;
+        return announcement.getInformation();
     }
 
     public InfoSite getInfoSite() {
-        return infoSite;
+        return InfoSite.newInfoFromDomain(announcement.getSite());
     }
 
     public Date getLastModifiedDate() {
-        return lastModifiedDate;
+        return announcement.getLastModifiedDate();
     }
 
     public String getTitle() {
-        return title;
-    }
-
-    public void setCreationDate(Date creationDate) {
-        this.creationDate = creationDate;
-    }
-
-    public void setInformation(String information) {
-        this.information = information;
-    }
-
-    public void setInfoSite(InfoSite infoSite) {
-        this.infoSite = infoSite;
-    }
-
-    public void setLastModifiedDate(Date lastModifiedDate) {
-        this.lastModifiedDate = lastModifiedDate;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
+        return announcement.getTitle();
     }
 
     public int compareTo(Object arg0) {
@@ -110,20 +58,16 @@ public class InfoAnnouncement extends InfoObject implements Comparable, ISiteCom
     }
 
     public String getCreationDateFormatted() {
-        String result = this.creationDate.toString();
-
+        String result = getCreationDate().toString();
         return result.substring(0, result.indexOf("."));
-
     }
 
     public String getLastModifiedDateFormatted() {
-        String result = this.lastModifiedDate.toString();
-
+        String result = getLastModifiedDate().toString();
         return result.substring(0, result.indexOf("."));
     }
 
     private Date getYoungerDate() {
-
         if (getLastModifiedDate() != null && getLastModifiedDate().after(getCreationDate())) {
             return getLastModifiedDate();
         }
@@ -131,23 +75,18 @@ public class InfoAnnouncement extends InfoObject implements Comparable, ISiteCom
 
     }
 
-    public void copyFromDomain(Announcement announcement) {
-        super.copyFromDomain(announcement);
-        if (announcement != null) {
-            setCreationDate(announcement.getCreationDate());
-            setInformation(announcement.getInformation());
-            setLastModifiedDate(announcement.getLastModifiedDate());
-            setTitle(announcement.getTitle());
-        }
+    public static InfoAnnouncement newInfoFromDomain(Announcement announcement) {
+    	return announcement == null ? null : new InfoAnnouncement(announcement);
     }
 
-    public static InfoAnnouncement newInfoFromDomain(Announcement announcement) {
-        InfoAnnouncement infoAnnouncement = null;
-        if (announcement != null) {
-            infoAnnouncement = new InfoAnnouncement();
-            infoAnnouncement.copyFromDomain(announcement);
-        }
-        return infoAnnouncement;
+	@Override
+	public Integer getIdInternal() {
+		return announcement.getIdInternal();
+	}
+
+    @Override
+    public void setIdInternal(Integer integer) {
+        throw new Error("Method should not be called!");
     }
 
 }

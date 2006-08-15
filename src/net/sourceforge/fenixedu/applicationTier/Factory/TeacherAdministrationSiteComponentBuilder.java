@@ -271,15 +271,7 @@ public class TeacherAdministrationSiteComponentBuilder {
 	private ISiteComponent getInfoAnnouncement(InfoAnnouncement component, Site site,
 			Integer announcementCode) throws FenixServiceException, ExcepcaoPersistencia {
 		Announcement iAnnouncement = RootDomainObject.getInstance().readAnnouncementByOID(announcementCode);
-		InfoAnnouncement infoAnnouncement = InfoAnnouncement.newInfoFromDomain(iAnnouncement);
-
-		component.setCreationDate(infoAnnouncement.getCreationDate());
-		component.setIdInternal(infoAnnouncement.getIdInternal());
-		component.setInformation(infoAnnouncement.getInformation());
-		component.setInfoSite(infoAnnouncement.getInfoSite());
-		component.setLastModifiedDate(infoAnnouncement.getLastModifiedDate());
-		component.setTitle(infoAnnouncement.getTitle());
-		return component;
+		return InfoAnnouncement.newInfoFromDomain(iAnnouncement);
 	}
 
 	/**

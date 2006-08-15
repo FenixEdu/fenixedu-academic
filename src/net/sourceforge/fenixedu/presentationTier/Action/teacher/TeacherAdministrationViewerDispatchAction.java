@@ -245,7 +245,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
             FenixFilterException {
         // retrieve announcement
         Integer announcementCode = getAnnouncementCode(request);
-        ISiteComponent announcementComponent = new InfoAnnouncement();
+        ISiteComponent announcementComponent = new InfoAnnouncement(rootDomainObject.readAnnouncementByOID(announcementCode));
         SiteView siteView = readSiteView(request, announcementComponent, null, announcementCode, null);
 
         String information = ((InfoAnnouncement) siteView.getComponent()).getInformation();

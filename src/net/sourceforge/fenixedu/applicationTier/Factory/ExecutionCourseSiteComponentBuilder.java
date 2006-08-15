@@ -721,16 +721,7 @@ public class ExecutionCourseSiteComponentBuilder {
 	 * @return
 	 */
 	private InfoAnnouncement copyFromDomain(Announcement announcement) {
-		InfoAnnouncement infoAnnouncement = null;
-		if (announcement != null) {
-			infoAnnouncement = new InfoAnnouncement();
-			infoAnnouncement.setIdInternal(announcement.getIdInternal());
-			infoAnnouncement.setCreationDate(announcement.getCreationDate());
-			infoAnnouncement.setInformation(announcement.getInformation());
-			infoAnnouncement.setLastModifiedDate(announcement.getLastModifiedDate());
-			infoAnnouncement.setTitle(announcement.getTitle());
-		}
-		return infoAnnouncement;
+		return InfoAnnouncement.newInfoFromDomain(announcement);
 	}
 
 	/**
