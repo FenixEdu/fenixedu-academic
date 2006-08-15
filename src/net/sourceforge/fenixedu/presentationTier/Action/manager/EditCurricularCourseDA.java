@@ -12,6 +12,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServi
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse;
+import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseEditor;
 import net.sourceforge.fenixedu.domain.GradeScale;
 import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseType;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
@@ -106,7 +107,7 @@ public class EditCurricularCourseDA extends FenixDispatchAction {
 
         Integer oldCurricularCourseId = new Integer(request.getParameter("curricularCourseId"));
 
-        InfoCurricularCourse newInfoCurricularCourse = new InfoCurricularCourse();
+        InfoCurricularCourseEditor newInfoCurricularCourse = new InfoCurricularCourseEditor();
 
         String name = (String) dynaForm.get("name");
         String nameEn = (String) dynaForm.get("nameEn");

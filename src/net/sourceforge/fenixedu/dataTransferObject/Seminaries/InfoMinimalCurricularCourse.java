@@ -10,8 +10,12 @@ import net.sourceforge.fenixedu.domain.CurricularCourse;
 public class InfoMinimalCurricularCourse extends InfoCurricularCourse{
 
     String name;
-    
-    public void copyFromDomain(CurricularCourse curricularCourse) {
+
+    public InfoMinimalCurricularCourse(CurricularCourse curricularCourse) {
+		super(curricularCourse);
+	}
+
+	public void copyFromDomain(CurricularCourse curricularCourse) {
         if (curricularCourse != null) {
             setName(curricularCourse.getName());            
         }
@@ -20,7 +24,7 @@ public class InfoMinimalCurricularCourse extends InfoCurricularCourse{
     public static InfoMinimalCurricularCourse newInfoFromDomain(CurricularCourse curricularCourse) {
         InfoMinimalCurricularCourse infoCurricularCourse = null;
         if (curricularCourse != null) {
-            infoCurricularCourse = new InfoMinimalCurricularCourse();
+            infoCurricularCourse = new InfoMinimalCurricularCourse(curricularCourse);
             infoCurricularCourse.copyFromDomain(curricularCourse);
         }
         return infoCurricularCourse;

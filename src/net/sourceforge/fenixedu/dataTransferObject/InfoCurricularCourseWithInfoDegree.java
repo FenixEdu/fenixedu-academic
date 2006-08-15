@@ -11,7 +11,11 @@ import net.sourceforge.fenixedu.domain.CurricularCourse;
  */
 public class InfoCurricularCourseWithInfoDegree extends InfoCurricularCourse {
 
-    public void copyFromDomain(CurricularCourse curricularCourse) {
+    public InfoCurricularCourseWithInfoDegree(CurricularCourse curricularCourse) {
+		super(curricularCourse);
+	}
+
+	public void copyFromDomain(CurricularCourse curricularCourse) {
         super.copyFromDomain(curricularCourse);
         if (curricularCourse != null) {
             setInfoDegreeCurricularPlan(InfoDegreeCurricularPlan
@@ -22,7 +26,7 @@ public class InfoCurricularCourseWithInfoDegree extends InfoCurricularCourse {
     public static InfoCurricularCourse newInfoFromDomain(CurricularCourse curricularCourse) {
         InfoCurricularCourseWithInfoDegree infoCurricularCourse = null;
         if (curricularCourse != null) {
-            infoCurricularCourse = new InfoCurricularCourseWithInfoDegree();
+            infoCurricularCourse = new InfoCurricularCourseWithInfoDegree(curricularCourse);
             infoCurricularCourse.copyFromDomain(curricularCourse);
         }
 

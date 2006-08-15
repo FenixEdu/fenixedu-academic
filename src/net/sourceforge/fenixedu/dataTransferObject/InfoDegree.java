@@ -89,4 +89,9 @@ public class InfoDegree extends InfoObject implements Comparable {
 		return degree.getIdInternal();
 	}
 
+    @Override
+    public void setIdInternal(Integer integer) {
+        throw new Error("Method should not be called!");
+    }
+
 }

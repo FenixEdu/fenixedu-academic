@@ -21,6 +21,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseScope;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularSemester;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
+import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
@@ -152,8 +153,9 @@ public class InsertCurricularCourseScopeFromAnotherDA extends FenixDispatchActio
         InfoBranch infoBranch = new InfoBranch();
         infoBranch.setIdInternal(branchId);
         newInfoCurricularCourseScope.setInfoBranch(infoBranch);
-        InfoCurricularCourse infoCurricularCourse = new InfoCurricularCourse();
-        infoCurricularCourse.setIdInternal(new Integer(request.getParameter("curricularCourseId")));
+        final CurricularCourse curricularCourse = (CurricularCourse) rootDomainObject.
+				readDegreeModuleByOID(Integer.valueOf(request.getParameter("curricularCourseId")));
+        InfoCurricularCourse infoCurricularCourse = new InfoCurricularCourse(curricularCourse);
         newInfoCurricularCourseScope.setInfoCurricularCourse(infoCurricularCourse);
 
         if (beginDateString.compareTo("") != 0) {

@@ -6,6 +6,7 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse;
+import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseEditor;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
@@ -16,7 +17,7 @@ import org.apache.commons.collections.Predicate;
 
 public class InsertCurricularCourseAtDegreeCurricularPlan extends Service {
 
-    public void run(InfoCurricularCourse infoCurricularCourse) throws FenixServiceException, ExcepcaoPersistencia {
+    public void run(InfoCurricularCourseEditor infoCurricularCourse) throws FenixServiceException, ExcepcaoPersistencia {
 
         Integer degreeCurricularPlanId = infoCurricularCourse.getInfoDegreeCurricularPlan().getIdInternal();
         DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanId);

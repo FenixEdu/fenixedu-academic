@@ -8,7 +8,7 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
-import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse;
+import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseEditor;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
@@ -23,7 +23,7 @@ public class EditCurricularCourse extends Service {
     public EditCurricularCourse() {
     }
 
-    public void run(InfoCurricularCourse newInfoCurricularCourse) throws FenixServiceException, ExcepcaoPersistencia {
+    public void run(InfoCurricularCourseEditor newInfoCurricularCourse) throws FenixServiceException, ExcepcaoPersistencia {
         CurricularCourse oldCurricularCourse = null;
         String newName = null;
         String newNameEn = null;

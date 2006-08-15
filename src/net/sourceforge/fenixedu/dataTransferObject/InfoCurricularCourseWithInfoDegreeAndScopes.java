@@ -20,18 +20,20 @@ import net.sourceforge.fenixedu.domain.CurricularCourseScope;
  * Window - Preferences - Java - Code Style - Code Templates
  */
 public class InfoCurricularCourseWithInfoDegreeAndScopes extends
-        InfoCurricularCourseWithInfoDegree
-{
-    public void copyFromDomain(CurricularCourse curricularCourse) {
+        InfoCurricularCourseWithInfoDegree {
+
+    public InfoCurricularCourseWithInfoDegreeAndScopes(CurricularCourse curricularCourse) {
+		super(curricularCourse);
+	}
+
+	public void copyFromDomain(CurricularCourse curricularCourse) {
         super.copyFromDomain(curricularCourse);
-        if (curricularCourse != null)
-        {
+        if (curricularCourse != null) {
             List infoScopes = new ArrayList();
             List scopes = curricularCourse.getScopes();
             Iterator scopesIterator = scopes.iterator();
             
-            while (scopesIterator.hasNext())
-            {
+            while (scopesIterator.hasNext()) {
                 CurricularCourseScope scope = (CurricularCourseScope)scopesIterator.next();
                 infoScopes.add(InfoCurricularCourseScopeWithSemesterAndYear.newInfoFromDomain(scope));
             }
@@ -42,10 +44,9 @@ public class InfoCurricularCourseWithInfoDegreeAndScopes extends
     public static InfoCurricularCourse newInfoFromDomain(CurricularCourse curricularCourse) {
         InfoCurricularCourseWithInfoDegreeAndScopes infoCurricularCourse = null;
         if (curricularCourse != null) {
-            infoCurricularCourse = new InfoCurricularCourseWithInfoDegreeAndScopes();
+            infoCurricularCourse = new InfoCurricularCourseWithInfoDegreeAndScopes(curricularCourse);
             infoCurricularCourse.copyFromDomain(curricularCourse);
         }
-
         return infoCurricularCourse;
     }
 

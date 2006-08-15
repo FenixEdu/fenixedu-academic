@@ -791,26 +791,7 @@ public class ExecutionCourseSiteComponentBuilder {
 	private InfoCurricularCourse copyFromDomain(CurricularCourse curricularCourse) {
 		InfoCurricularCourse infoCurricularCourse = null;
 		if (curricularCourse != null) {
-			infoCurricularCourse = new InfoCurricularCourse();
-			infoCurricularCourse.setIdInternal(curricularCourse.getIdInternal());
-			infoCurricularCourse.setBasic(curricularCourse.getBasic());
-			infoCurricularCourse.setCode(curricularCourse.getCode());
-			infoCurricularCourse.setCredits(curricularCourse.getCredits());
-			infoCurricularCourse.setEctsCredits(curricularCourse.getEctsCredits());
-			infoCurricularCourse.setEnrollmentWeigth(curricularCourse.getEnrollmentWeigth());
-			infoCurricularCourse.setLabHours(curricularCourse.getLabHours());
-			infoCurricularCourse.setMandatory(curricularCourse.getMandatory());
-			infoCurricularCourse.setMandatoryEnrollment(curricularCourse.getMandatoryEnrollment());
-			infoCurricularCourse.setMaximumValueForAcumulatedEnrollments(curricularCourse
-					.getMaximumValueForAcumulatedEnrollments());
-			infoCurricularCourse.setMinimumValueForAcumulatedEnrollments(curricularCourse
-					.getMinimumValueForAcumulatedEnrollments());
-			infoCurricularCourse.setName(curricularCourse.getName());
-			infoCurricularCourse.setPraticalHours(curricularCourse.getPraticalHours());
-			infoCurricularCourse.setTheoPratHours(curricularCourse.getTheoPratHours());
-			infoCurricularCourse.setTheoreticalHours(curricularCourse.getTheoreticalHours());
-			infoCurricularCourse.setType(curricularCourse.getType());
-			infoCurricularCourse.setWeigth(curricularCourse.getWeigth());
+			infoCurricularCourse = new InfoCurricularCourse(curricularCourse);
 			infoCurricularCourse.setInfoDegreeCurricularPlan(InfoDegreeCurricularPlan
 					.newInfoFromDomain(curricularCourse.getDegreeCurricularPlan()));
 		}

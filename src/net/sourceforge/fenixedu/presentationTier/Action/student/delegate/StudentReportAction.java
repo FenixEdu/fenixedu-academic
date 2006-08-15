@@ -14,6 +14,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoUniversity;
 import net.sourceforge.fenixedu.dataTransferObject.gesdis.InfoSiteCourseHistoric;
 import net.sourceforge.fenixedu.dataTransferObject.student.InfoSiteStudentCourseReport;
 import net.sourceforge.fenixedu.dataTransferObject.student.InfoStudentCourseReport;
+import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.University;
@@ -87,8 +88,9 @@ public class StudentReportAction extends DispatchAction {
 
             InfoDegreeCurricularPlan infoDegreeCurricularPlan = new InfoDegreeCurricularPlan(degreeCurricularPlan);
 
-            InfoCurricularCourse infoCurricularCourse = new InfoCurricularCourse();
-            infoCurricularCourse.setIdInternal(curricularCourseId);
+            final CurricularCourse curricularCourse = (CurricularCourse) RootDomainObject.getInstance().
+    				readDegreeModuleByOID(curricularCourseId);
+            InfoCurricularCourse infoCurricularCourse = new InfoCurricularCourse(curricularCourse);
             infoCurricularCourse.setInfoUniversity(infoUniversity);
             infoCurricularCourse.setInfoDegreeCurricularPlan(infoDegreeCurricularPlan);
 

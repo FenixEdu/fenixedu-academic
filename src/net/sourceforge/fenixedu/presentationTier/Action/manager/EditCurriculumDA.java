@@ -12,6 +12,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurriculum;
+import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException;
@@ -81,8 +82,9 @@ public class EditCurriculumDA extends FenixDispatchAction {
         DynaActionForm editForm = (DynaActionForm) form;
 
         InfoCurriculum infoCurriculum = new InfoCurriculum();
-        InfoCurricularCourse infoCurricularCourse = new InfoCurricularCourse();
-        infoCurricularCourse.setIdInternal(new Integer(request.getParameter("curricularCourseId")));
+        final CurricularCourse curricularCourse = (CurricularCourse) rootDomainObject.
+        		readDegreeModuleByOID(Integer.valueOf(request.getParameter("curricularCourseId")));
+        InfoCurricularCourse infoCurricularCourse = new InfoCurricularCourse(curricularCourse);
         infoCurriculum.setInfoCurricularCourse(infoCurricularCourse);
         infoCurriculum.setGeneralObjectives((String) editForm.get("generalObjectives"));
         infoCurriculum.setOperacionalObjectives((String) editForm.get("operacionalObjectives"));

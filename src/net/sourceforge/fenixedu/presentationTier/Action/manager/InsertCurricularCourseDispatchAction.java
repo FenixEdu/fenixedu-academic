@@ -11,7 +11,7 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterExce
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
-import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse;
+import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseEditor;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.GradeScale;
@@ -56,7 +56,7 @@ public class InsertCurricularCourseDispatchAction extends FenixDispatchAction {
         
         InfoDegreeCurricularPlan infoDegreeCurricularPlan = new InfoDegreeCurricularPlan(degreeCurricularPlan);
 
-        InfoCurricularCourse infoCurricularCourse = new InfoCurricularCourse();
+        InfoCurricularCourseEditor infoCurricularCourse = new InfoCurricularCourseEditor();
         infoCurricularCourse.setBasic(new Boolean(basic));
         infoCurricularCourse.setCode((String) dynaForm.get("code"));
         infoCurricularCourse.setInfoDegreeCurricularPlan(infoDegreeCurricularPlan);
