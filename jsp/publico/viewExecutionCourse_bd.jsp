@@ -44,11 +44,27 @@
 					<bean:define id="curricularCourseId" name="curricularCourse" property="idInternal" />
 					<bean:define id="degreeID" name="curricularCourse" property="infoDegreeCurricularPlan.infoDegree.idInternal" />
 					<bean:define id="degreeCurricularPlanID" name="curricularCourse" property="infoDegreeCurricularPlan.idInternal" />
-		
+					<bean:define id="executionYearID" name="component" property="executionCourse.infoExecutionPeriod.infoExecutionYear.idInternal"/>
+
 					<li>
-						<html:link page="<%= "/showCourseSite.do?method=showCurricularCourseSite&amp;curricularCourseID=" +  pageContext.findAttribute("curricularCourseId") + "&amp;executionPeriodOID=" + request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID) + "&amp;degreeID=" +  pageContext.getAttribute("degreeID") %>">
-							<bean:write name="curricularCourse" property="infoDegreeCurricularPlan.name"/>
-						</html:link>
+						<logic:notEqual name="curricularCourse" property="isBolonha" value="true">
+							<html:link page="<%= "/showCourseSite.do?method=showCurricularCourseSite&amp;curricularCourseID=" +  pageContext.findAttribute("curricularCourseId") + "&amp;executionPeriodOID=" + request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID) + "&amp;degreeID=" +  pageContext.getAttribute("degreeID") %>">
+								<bean:write name="curricularCourse" property="infoDegreeCurricularPlan.name"/>
+							</html:link>
+						</logic:notEqual>
+						<logic:equal name="curricularCourse" property="isBolonha" value="true">
+							<html:link page="<%= "/degreeSite/viewCurricularCourse.faces?"
+							        + "&amp;curricularCourseID=" +  pageContext.findAttribute("curricularCourseId")
+							        + "&amp;executionYearID=" + pageContext.findAttribute("executionYearID")
+							        + "&amp;organizeBy=" +  pageContext.getAttribute("groups")
+							        + "&amp;showRules=" +  pageContext.getAttribute("false")
+							        + "&amp;hideCourses=" +  pageContext.getAttribute("false")
+							        + "&amp;action=" +  pageContext.getAttribute("null")
+							        + "&amp;degreeCurricularPlanID=" +  pageContext.getAttribute("degreeCurricularPlanID")
+							        + "&amp;degreeID=" +  pageContext.getAttribute("degreeID") %>">
+								<bean:write name="curricularCourse" property="infoDegreeCurricularPlan.name"/>
+							</html:link>
+						</logic:equal>
 					</li>
 				</logic:iterate>
 		</ul>

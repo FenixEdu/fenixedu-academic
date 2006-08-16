@@ -252,4 +252,8 @@ public class InfoCurricularCourse extends InfoObject implements Comparable, ISit
         return curricularCourse.getIdInternal();
     }
 
+    public boolean getIsBolonha() {
+        return curricularCourse.isBolonha();
+    }
+
 }

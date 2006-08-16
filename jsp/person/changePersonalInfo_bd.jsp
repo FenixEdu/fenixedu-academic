@@ -277,7 +277,7 @@
 
    	</table>
 <br /><br />
-<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.Alterar" property="Alterar" styleClass="inputbutton">Alterar</html:submit>
-<html:reset bundle="HTMLALT_RESOURCES" altKey="reset.Reset" property="Reset" styleClass="inputbutton">Rep�r</html:reset>
+<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.Alterar" property="Alterar" styleClass="inputbutton"><bean:message key="label.change"/></html:submit>
+<html:reset bundle="HTMLALT_RESOURCES" altKey="reset.Reset" property="Reset" styleClass="inputbutton"><bean:message key="label.clear"/></html:reset>
       </html:form>  
   </body>
