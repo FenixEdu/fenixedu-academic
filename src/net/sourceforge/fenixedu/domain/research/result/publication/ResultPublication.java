@@ -1,5 +1,11 @@
 package net.sourceforge.fenixedu.domain.research.result.publication;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import net.sourceforge.fenixedu.domain.research.result.ResultParticipation;
+import net.sourceforge.fenixedu.domain.research.result.ResultParticipation.ResultParticipationRole;
+
 
 public class ResultPublication extends ResultPublication_Base {
     
@@ -14,25 +20,29 @@ public class ResultPublication extends ResultPublication_Base {
         super.delete();
     }
     
-    public String getResultPublicationTypeString()
+    public Boolean hasResultPublicationRole()
     {
-        String className = this.getClass().getName();
-        Integer lastPoint = className.lastIndexOf(".");
-        String type = className.substring(lastPoint+1);
-        
-        if (this instanceof BookPart) {
-            //add bookPart type
-            type = type + "." +((BookPart)this).getBookPartType().toString();
-        }
-        
-        return type;
-    }
-    
-    public Boolean haveResultPublicationRole()
-    {
-        if((this instanceof Book) || (this instanceof BookPart))
+        if((this instanceof Book) || (this instanceof BookPart) || (this instanceof Inproceedings))
             return true;
         return false;
+    }
+    
+    public List<ResultParticipation> getAuthors() {
+    	ArrayList<ResultParticipation> authors = new ArrayList<ResultParticipation>();
+    	for (ResultParticipation participation : this.getResultParticipations()) {
+			if(participation.getResultParticipationRole().equals(ResultParticipationRole.Author))
+				authors.add(participation);
+		}
+    	return authors;
+    }
+    
+    public List<ResultParticipation> getEditors() {
+    	ArrayList<ResultParticipation> editors = new ArrayList<ResultParticipation>();
+    	for (ResultParticipation participation : this.getResultParticipations()) {
+			if(participation.getResultParticipationRole().equals(ResultParticipationRole.Editor))
+				editors.add(participation);
+		}
+    	return  editors;
     }
 
     public enum ScopeType {
