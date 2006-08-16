@@ -58,9 +58,7 @@ public class PersonSpaceOccupation extends PersonSpaceOccupation_Base {
     
     public void delete() {
         removePerson();
-        removeSpace();
-        removeRootDomainObject();
-        deleteDomainObject();
+        super.delete();
     }
     
     private void checkPersonSpaceOccupationInterval(final YearMonthDay begin, final YearMonthDay end) {

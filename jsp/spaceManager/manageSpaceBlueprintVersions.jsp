@@ -51,14 +51,14 @@
 		</bean:define>
 		<html:link page="<%= editLink %>">
 			<bean:message key="link.edit.space.information" bundle="SPACE_RESOURCES"/>
-		</html:link>&nbsp;	
+		</html:link>,&nbsp;	
 		
 		<bean:define id="deleteLink">
 			/manageBlueprints.do?method=deleteBlueprintVersion&page=0&spaceInformationID=<bean:write name="selectedSpaceInformation" property="idInternal"/>&spaceBlueprintID=<bean:write name="selectedSpaceBlueprint" property="idInternal"/> 
 		</bean:define>
 		<html:link page="<%= deleteLink %>">
 			<bean:message key="link.delete.space.information" bundle="SPACE_RESOURCES"/>
-		</html:link>&nbsp;											
+		</html:link>,&nbsp;											
 				
 	</logic:notEmpty>
 	
@@ -72,7 +72,7 @@
 	<html:link page="/manageBlueprints.do?method=prepareCreateBlueprintVersion&page=0" paramId="spaceInformationID" paramName="selectedSpaceInformation" paramProperty="idInternal">
 		<bean:message key="link.edit.space.create.new.version" bundle="SPACE_RESOURCES"/>
 	</html:link>
-	&nbsp;									
+	,&nbsp;									
 	<html:link page="/manageSpaces.do?method=manageSpace&page=0" paramId="spaceInformationID" paramName="selectedSpaceInformationId">
 		<bean:message key="link.return" bundle="SPACE_RESOURCES"/>
 	</html:link>	

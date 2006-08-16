@@ -9,4 +9,10 @@ public class SpaceOccupation extends SpaceOccupation_Base {
         setOjbConcreteClass(this.getClass().getName());
         setRootDomainObject(RootDomainObject.getInstance());
     }       
+    
+    public void delete() {
+        removeSpace();
+        removeRootDomainObject();
+        deleteDomainObject();
+    }
 }

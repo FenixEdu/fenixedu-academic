@@ -314,17 +314,14 @@
     <slot name="accountabilityType" layout="menu-select">
         <property name="choiceType" value="net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityType"/>
         <property name="eachLayout" value="values-dash"/>
-        <!-- <property name="eachSchema" value="websiteType.list"/>  -->
     </slot>
     <slot name="allowedChildPartyType" layout="menu-select">
         <property name="choiceType" value="net.sourceforge.fenixedu.domain.organizationalStructure.PartyType"/>
         <property name="eachLayout" value="values-dash"/>
-        <!-- <property name="eachSchema" value="websiteType.list"/>  -->
     </slot>
     <slot name="allowedParentPartyType" layout="menu-select">
         <property name="choiceType" value="net.sourceforge.fenixedu.domain.organizationalStructure.PartyType"/>
-        <property name="eachLayout" value="values-dash"/>
-        <!-- <property name="eachSchema" value="websiteType.list"/>  -->
+        <property name="eachLayout" value="label"/>
     </slot>
   </schema>
   

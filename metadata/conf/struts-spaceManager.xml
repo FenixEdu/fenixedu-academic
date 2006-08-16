@@ -82,7 +82,8 @@
         		type="net.sourceforge.fenixedu.presentationTier.Action.spaceManager.ManageMaterialSpaceOccupationsDA"
         		parameter="method">                		
        		<forward name="showMaterialSpaceOccupations" path="show-material-space-occupations"/>        		        	              		
-       		<forward name="insertMaterialOccupation" path="insert-material-occupation"/>        		        	              		       		
+       		<forward name="chooseMaterialType" path="insert-material-occupation"/>   
+      		<forward name="insertMaterialOccupation" path="insert-material-occupation"/>   
         </action>
 
         <action path="/showCreateSpaceForm"

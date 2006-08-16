@@ -5,20 +5,12 @@
 package net.sourceforge.fenixedu.domain.organizationalStructure;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
-import javax.servlet.http.HttpServletRequest;
-
 import net.sourceforge.fenixedu._development.PropertiesManager;
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.domain.DomainObject;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
-import org.apache.commons.beanutils.BeanComparator;
 import org.joda.time.YearMonthDay;
 
 public class UnitUtils {
@@ -103,65 +95,5 @@ public class UnitUtils {
 
     public static Unit readInstitutionUnit() {
         return readUnitWithoutParentstByName(IST_UNIT_NAME);
-    }
-
-    public static String getInstitutionTree(HttpServletRequest request, DomainObject domainObject, String paramName, String path)
-            throws FenixFilterException, FenixServiceException, ExcepcaoPersistencia {
-
-        StringBuilder buffer = new StringBuilder();
-        Unit instituionUnit = UnitUtils.readInstitutionUnit();
-        YearMonthDay currentDate = new YearMonthDay();
-
-        buffer.append("<ul class='padding1 nobullet'>");
-        getSubUnitsList(instituionUnit, buffer, currentDate, request, domainObject, paramName, path);
-        buffer.append("</ul>");
-
-        return buffer.toString();
-    }
-
-    private static void getSubUnitsList(Unit parentUnit, StringBuilder buffer, YearMonthDay currentDate,
-            HttpServletRequest request, DomainObject domainObject, String paramName, String path) {
-
-        buffer.append("<li>");
-
-        List<Unit> subUnits = getUnitSubUnits(parentUnit, currentDate);
-        if (!subUnits.isEmpty()) {
-            putImage(parentUnit, buffer, request);
-        }
-
-        buffer.append("<a href=\"").append(request.getContextPath()).append(path).append("&unitID=")
-                .append(parentUnit.getIdInternal()).append("&").append(paramName).append("=").append(
-                        domainObject.getIdInternal()).append("\">").append(parentUnit.getName())
-                .append("</a>").append("</li>");
-
-        if (!subUnits.isEmpty()) {
-            buffer.append("<ul class='mvert0 nobullet' id=\"").append("aa").append(
-                    parentUnit.getIdInternal()).append("\" ").append("style='display:none'>\r\n");
-
-            Collections.sort(subUnits, new BeanComparator("name"));
-        }
-
-        for (Unit subUnit : subUnits) {
-            getSubUnitsList(subUnit, buffer, currentDate, request, domainObject, paramName, path);
-        }
-
-        if (!subUnits.isEmpty()) {
-            buffer.append("</ul>");
-        }
-    }
-
-    private static List<Unit> getUnitSubUnits(Unit parentUnit, YearMonthDay currentDate) {
-        List<AccountabilityTypeEnum> accountabilityEnums = new ArrayList<AccountabilityTypeEnum>();
-        accountabilityEnums.add(AccountabilityTypeEnum.ORGANIZATIONAL_STRUCTURE);
-        accountabilityEnums.add(AccountabilityTypeEnum.ACADEMIC_STRUCTURE);
-        return new ArrayList(parentUnit.getActiveSubUnits(currentDate, accountabilityEnums));
-    }
-
-    private static void putImage(Unit parentUnit, StringBuilder buffer, HttpServletRequest request) {
-        buffer.append("<img ").append("src='").append(request.getContextPath()).append(
-                "/images/toggle_plus10.gif' id=\"").append(parentUnit.getIdInternal()).append("\" ")
-                .append("indexed='true' onClick=\"").append("check(document.getElementById('").append(
-                        "aa").append(parentUnit.getIdInternal()).append("'),document.getElementById('")
-                .append(parentUnit.getIdInternal()).append("'));return false;").append("\"> ");
-    }
+    }  
 }

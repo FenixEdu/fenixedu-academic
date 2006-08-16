@@ -64,6 +64,11 @@ public class ExtensionSpaceOccupation extends ExtensionSpaceOccupation_Base {
         return ((end == null || !this.getBegin().isAfter(end))
                 && (this.getEnd() == null || !this.getEnd().isBefore(begin)));
     }
+    
+    public void delete() {
+        removeExtension();
+        super.delete();
+    }
 
     @Override
     public Material getMaterial() {        

@@ -23,7 +23,7 @@
 		<br/>
 	</logic:messagesPresent>
 
-	<p><html:link page="/manageMaterialSpaceOccupations.do?method=prepareInsertMaterialOccupation&page=0" paramId="spaceInformationID" paramName="selectedSpaceInformation" paramProperty="idInternal">
+	<p><html:link page="/manageMaterialSpaceOccupations.do?method=prepareChooseMaterialType&page=0" paramId="spaceInformationID" paramName="selectedSpaceInformation" paramProperty="idInternal">
 		<bean:message bundle="SPACE_RESOURCES" key="link.insert.material.occupations"/>
 	</html:link></p>	
 	

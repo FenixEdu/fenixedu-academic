@@ -163,6 +163,7 @@ public abstract class Space extends Space_Base {
         for ( ; !getContainedSpaces().isEmpty(); getContainedSpaces().get(0).delete());
         for ( ; !getPersonSpaceOccupations().isEmpty(); getPersonSpaceOccupations().get(0).delete());
         for ( ; !getBlueprints().isEmpty(); getBlueprints().get(0).delete());
+        for ( ; !getMaterialSpaceOccupations().isEmpty(); getMaterialSpaceOccupations().get(0).delete());
         for (final SpaceInformation spaceInformation : getSpaceInformations()) {
             spaceInformation.deleteMaintainingReferenceToSpace();
         }                    

@@ -2542,15 +2542,15 @@ class net.sourceforge.fenixedu.domain.space.SpaceOccupation extends net.sourcefo
 		Integer keyPerson;
 	}
 
-	class net.sourceforge.fenixedu.domain.space.RoomOccupation extends net.sourceforge.fenixedu.domain.DomainObject {
-		Integer keyRoom;
-		Integer keyPeriod;
-	    DiaSemana dayOfWeek;
-		HourMinuteSecond startTimeDateHourMinuteSecond;
-		HourMinuteSecond endTimeDateHourMinuteSecond;
-	    Integer keyWrittenEvaluation;
-	    Integer keyLesson;
-	}
+class net.sourceforge.fenixedu.domain.space.RoomOccupation extends net.sourceforge.fenixedu.domain.DomainObject {
+	Integer keyRoom;
+	Integer keyPeriod;
+    DiaSemana dayOfWeek;
+	HourMinuteSecond startTimeDateHourMinuteSecond;
+	HourMinuteSecond endTimeDateHourMinuteSecond;
+    Integer keyWrittenEvaluation;
+    Integer keyLesson;
+}
 
 class net.sourceforge.fenixedu.domain.space.SpaceResponsibility extends net.sourceforge.fenixedu.domain.DomainObject {
 	YearMonthDay begin;

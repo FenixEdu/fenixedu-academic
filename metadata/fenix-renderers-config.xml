@@ -50,6 +50,12 @@ Documentation:
     <!--@ The default presentation for every object. -->
     <renderer type="java.lang.Class" layout="label" class="net.sourceforge.fenixedu.renderers.ClassAsLabelRenderer"/>
 
+	<!--@ The default presentation for every object. -->
+    <renderer type="java.lang.Class" layout="label-to-space-management" class="net.sourceforge.fenixedu.renderers.ClassAsLabelRenderer">
+    	<property name="labelFormat" value="label.${simpleName}"/>
+    	<property name="bundle" value="SPACE_RESOURCES"/>
+    </renderer>
+
     <!--@ The default presentation for every object. -->
     <renderer type="java.lang.Object" class="net.sourceforge.fenixedu.renderers.StandardObjectRenderer">
     		<property name="labelTerminator" value=":"/>
@@ -353,6 +359,9 @@ Documentation:
 
     <!--@ The layout username-as-person allows you to insert a person given a username -->
     <renderer mode="input" type="net.sourceforge.fenixedu.domain.Person" layout="username-as-person" class="net.sourceforge.fenixedu.presentationTier.renderers.PersonUsernameStringInputRenderer"/>
+
+	<!--@ The layout extensionNumber-as-extension allows you to insert a Extension given a Extension Number -->
+    <renderer mode="input" type="net.sourceforge.fenixedu.domain.material.Extension" layout="extensionNumber-as-extension" class="net.sourceforge.fenixedu.presentationTier.renderers.ExtensionNumberStringInputRenderer"/>
 
 	<renderer mode="input" type="java.util.List" layout="tabular-option" class="net.sourceforge.fenixedu.renderers.TabularOptionInputRenderer"/>
 </renderers-config>
