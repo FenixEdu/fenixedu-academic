@@ -8,6 +8,7 @@ import java.util.List;
 import net.sourceforge.fenixedu.accessControl.AccessControl;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.research.event.Event;
 import net.sourceforge.fenixedu.domain.research.result.ResultEventAssociation.ResultEventAssociationRole;
@@ -46,6 +47,8 @@ public class Result extends Result_Base {
     }
     
     public void setParticipation(Person participator, ResultParticipationRole participatorRole){
+        if((participator == null) || (participatorRole == null))
+            throw new DomainException("error.publication.neededResultParticipationRole");
         new ResultParticipation(this, participator, participatorRole, participator);
     }
 
@@ -112,6 +115,7 @@ public class Result extends Result_Base {
         for (;this.hasAnyResultParticipations(); this.getResultParticipations().get(0).delete());
         for (;this.hasAnyResultEventAssociations(); this.getResultEventAssociations().get(0).delete());
         for (;this.hasAnyResultUnitAssociations(); this.getResultUnitAssociations().get(0).delete());
+        removeCountry();
         removeRootDomainObject();
         deleteDomainObject();
     }

@@ -130,7 +130,7 @@ public class ResultParticipationManagementAction extends ResultsManagementAction
         //Defining schemas with roles
         if(result instanceof ResultPublication)
         {
-            if(((ResultPublication)result).haveResultPublicationRole()) {
+            if(((ResultPublication)result).hasResultPublicationRole()) {
                 resultParticipationsSchema = "result.participationsWithRole";
                 if (!bean.isBeanExternal()) {
                     createResultParticipationSchema = "resultParticipation.creationWithRole";

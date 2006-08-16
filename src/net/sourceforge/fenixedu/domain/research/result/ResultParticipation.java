@@ -93,7 +93,7 @@ public class ResultParticipation extends ResultParticipation_Base {
      * Verify if role is required for the participation
      */
     private boolean isValidRoleForResult(Result result, ResultParticipationRole role) {
-        if((result instanceof ResultPublication) && ((ResultPublication)result).haveResultPublicationRole()) {
+        if((result instanceof ResultPublication) && ((ResultPublication)result).hasResultPublicationRole()) {
             return true;
         }
         return false;
