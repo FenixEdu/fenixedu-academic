@@ -26,3 +26,6 @@ function executeWithTempFile() {
 	rm tmp.sql
 	echo
 }
+
+execute "ReCreate Functionality tables" CreateFunctionalitiesTables.sql
+execute "Alter table file" AlterTableFile.sql
