@@ -22,9 +22,11 @@ public class Inproceedings extends Inproceedings_Base {
     //constructor with required fields
     public Inproceedings(Person participator, ResultParticipationRole participatorRole, String title, String bookTitle, Integer year, Event event) {
         super();
-        if((participator == null) || (participatorRole == null) || (title == null) || (title.length() == 0) || (bookTitle == null)
+        if((participator == null) || (title == null) || (title.length() == 0) || (bookTitle == null)
         		|| (bookTitle.length() == 0) || (year == null) || (event == null))
             throw new DomainException("error.publication.missingRequiredFields");
+        if(participatorRole == null)
+            throw new DomainException("error.publication.neededResultParticipationRole");
         
         setParticipation(participator, participatorRole);
         setTitle(title);

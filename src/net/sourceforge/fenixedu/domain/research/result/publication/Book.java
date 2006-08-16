@@ -25,8 +25,10 @@ public class Book extends Book_Base {
     //constructor with required fields
     public Book(Person participator, ResultParticipationRole participatorRole, String title, Unit publisher, Integer year) {
         super();
-        if((participator == null) || (participatorRole == null) || (title == null) || (title.length() == 0) || (publisher == null) || (year == null))
+        if((participator == null) || (title == null) || (title.length() == 0) || (publisher == null) || (year == null))
             throw new DomainException("error.publication.missingRequiredFields");
+        if(participatorRole == null)
+            throw new DomainException("error.publication.neededResultParticipationRole");
         
         setParticipation(participator, participatorRole);
         setTitle(title);
@@ -44,21 +46,4 @@ public class Book extends Book_Base {
         setYear(year);
     }
     
-    public List<ResultParticipation> getAuthors() {
-    	ArrayList<ResultParticipation> authors = new ArrayList<ResultParticipation>();
-    	for (ResultParticipation participation : this.getResultParticipations()) {
-			if(participation.getResultParticipationRole().equals(ResultParticipationRole.Author))
-				authors.add(participation);
-		}
-    	return authors;
-    }
-    
-    public List<ResultParticipation> getEditors() {
-    	ArrayList<ResultParticipation> editors = new ArrayList<ResultParticipation>();
-    	for (ResultParticipation participation : this.getResultParticipations()) {
-			if(participation.getResultParticipationRole().equals(ResultParticipationRole.Editor))
-				editors.add(participation);
-		}
-    	return  editors;
-    }
 }

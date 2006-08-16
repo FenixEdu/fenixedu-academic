@@ -29,13 +29,15 @@ public class BookPart extends BookPart_Base {
         //expected Inbook Type
         if(!bookPartType.equals(BookPartType.Inbook))
             throw new DomainException("error.publication.bookPart.wrongBookPartType");
-        if((participator == null) || (participatorRole == null) || (bookPartType == null) || (title == null) || (title.length() == 0) || (publisher == null) || (year == null))
+        if((participator == null) || (bookPartType == null) || (title == null) || (title.length() == 0) || (publisher == null) || (year == null))
             throw new DomainException("error.publication.missingRequiredFields");
         if((chapter == null) || (chapter.length() == 0))
         {
             if((firstPage == null) || (firstPage <= 0) || (lastPage == null) || (lastPage <= 0))
                 throw new DomainException("error.publication.bookPart.needChapterOrPages ");
         }
+        if(participatorRole == null)
+            throw new DomainException("error.publication.neededResultParticipationRole");
         
         setParticipation(participator, participatorRole);
         setBookPartType(bookPartType);
@@ -53,9 +55,11 @@ public class BookPart extends BookPart_Base {
         //expected Incollection Type
         if(!bookPartType.equals(BookPartType.Incollection))
             throw new DomainException("error.wrongBookPartType");
-        if((participator == null) || (participatorRole == null) || (bookPartType == null) || (title == null) || (title.length() == 0) 
+        if((participator == null) || (bookPartType == null) || (title == null) || (title.length() == 0) 
         		|| (bookTitle == null) || (bookTitle.length() == 0) || (publisher == null) || (year == null))
             throw new DomainException("error.missingRequiredFields");
+        if(participatorRole == null)
+            throw new DomainException("error.publication.neededResultParticipationRole");
         
         setParticipation(participator, participatorRole);
         setBookPartType(bookPartType);
