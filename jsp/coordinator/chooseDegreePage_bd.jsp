@@ -5,7 +5,7 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ page import="java.util.List" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
-<%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlanWithDegree"%>
+<%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan"%>
 
 <span class="error"><!-- Error messages go here --><html:errors /></span>
 
@@ -28,7 +28,7 @@
 
 		<tr>
 		   <td class="listClasses">
-				<bean:message bundle="ENUMERATION_RESOURCES" key="<%=((InfoDegreeCurricularPlanWithDegree) infoDegreeCurricularPlan).getInfoDegree().getTipoCurso().toString()%>" />
+				<bean:message bundle="ENUMERATION_RESOURCES" key="<%=((InfoDegreeCurricularPlan) infoDegreeCurricularPlan).getInfoDegree().getTipoCurso().toString()%>" />
 				<bean:message bundle="GLOBAL_RESOURCES" key="in"/>
 				<bean:write name="infoDegreeCurricularPlan" property="infoDegree.nome" />
 		   </td>
