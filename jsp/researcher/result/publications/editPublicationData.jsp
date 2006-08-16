@@ -7,7 +7,7 @@
 <%@ taglib uri="/WEB-INF/enum.tld" prefix="e" %>
 
 <logic:present role="RESEARCHER">		
-	<bean:define id="publicationBean" name="publicationBean" type="net.sourceforge.fenixedu.dataTransferObject.research.result.publication.ResultPublicationCreationBean"/>
+	<bean:define id="publicationBean" name="publicationBean" type="net.sourceforge.fenixedu.dataTransferObject.research.result.publication.ResultPublicationBean"/>
 	
 	<h2><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.result.publication.publicationsManagement"/></h2>
 	<h3><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.result.publication.editPublication"/>
@@ -25,7 +25,7 @@
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.publicationId" name="publicationsForm" property="publicationId" value="<%=publicationBean.getIdInternal().toString()%>"/>
 
 		<!-- Present publication fields -->
-		<fr:edit nested="true" id="editPublication" name="publicationBean" type="net.sourceforge.fenixedu.dataTransferObject.research.result.publication.ResultPublicationCreationBean"
+		<fr:edit nested="true" id="editPublication" name="publicationBean" type="net.sourceforge.fenixedu.dataTransferObject.research.result.publication.ResultPublicationBean"
 				schema="<%=publicationBean.getActiveSchema() %>">
 	 	    <fr:layout name="tabular">
 	    	    <fr:property name="classes" value="style1"/>
@@ -38,7 +38,7 @@
 		<!-- Create event in case of inproceedings or proceedings -->
 		<logic:equal name="publicationBean" property="createEvent" value="true">
 		<br/><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.result.publication.createEvent"/>
-			<fr:edit nested="true" id="createEvent" name="publicationBean" type="net.sourceforge.fenixedu.dataTransferObject.research.result.publication.ResultPublicationCreationBean"
+			<fr:edit nested="true" id="createEvent" name="publicationBean" type="net.sourceforge.fenixedu.dataTransferObject.research.result.publication.ResultPublicationBean"
 					schema="result.publication.create.Event">
 		 	    <fr:layout name="tabular">
 		    	    <fr:property name="classes" value="style1"/>
