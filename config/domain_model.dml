@@ -3380,6 +3380,7 @@ class net.sourceforge.fenixedu.domain.research.result.Result extends net.sourcef
 	String title;
 	String note;
 	String url;
+	Integer keyCountry;
     String ojbConcreteClass;
     Integer keyResultDocumentFile;
 
@@ -3401,7 +3402,6 @@ class net.sourceforge.fenixedu.domain.research.result.Result extends net.sourcef
 			String edition;
 			Integer isbn;
 			Integer numberPages;
-			//Integer keyCountry;
 			String language;
 			ScopeType scope;
 	}
@@ -3424,7 +3424,6 @@ class net.sourceforge.fenixedu.domain.research.result.Result extends net.sourcef
 			Integer lastPage;
 			Integer issn;
 			String language;
-			//Integer keyCountry;
 			ScopeType scope;
 		}
 		class net.sourceforge.fenixedu.domain.research.result.publication.ConferenceArticles extends net.sourceforge.fenixedu.domain.research.result.publication.ResultPublication {
@@ -3468,7 +3467,6 @@ class net.sourceforge.fenixedu.domain.research.result.Result extends net.sourcef
 			Integer numberPages;
 			String language;
 			String address;
-			//Integer keyCountry;
 		}
 		class net.sourceforge.fenixedu.domain.research.result.publication.Unpublished extends net.sourceforge.fenixedu.domain.research.result.publication.ResultPublication {
 			//no more attributes
@@ -3480,7 +3478,6 @@ class net.sourceforge.fenixedu.domain.research.result.Result extends net.sourcef
 		ResultPatentStatus patentStatus;
 		Partial registrationDate;
 		Partial approvalDate;
-		Integer keyCountry;
 		String local;
 	}
 
@@ -6623,9 +6620,9 @@ relation ResultEventAssociationEvent {
 	}
 }
 
-relation PatentCountry {
+relation ResultCountry {
 	net.sourceforge.fenixedu.domain.Country playsRole country;
-	net.sourceforge.fenixedu.domain.research.result.patent.ResultPatent playsRole patents{
+	net.sourceforge.fenixedu.domain.research.result.Result playsRole results{
 		multiplicity *;
 	}
 }
