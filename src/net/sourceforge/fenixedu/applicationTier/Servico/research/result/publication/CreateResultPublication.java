@@ -1,254 +1,294 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.research.result.publication;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.ResultPublicationCreationBean;
-import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
+import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.*;
 import net.sourceforge.fenixedu.domain.research.event.Event;
 import net.sourceforge.fenixedu.domain.research.result.publication.*;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
+import net.sourceforge.fenixedu.domain.research.result.publication.BookPart.BookPartType;
 
-public class CreateResultPublication extends Service {
+public class CreateResultPublication extends ResultPublicationService {
 
-    public ResultPublication run(ResultPublicationCreationBean publicationBean) throws ExcepcaoPersistencia, FenixServiceException {
-        if(publicationBean == null)
-            throw new FenixServiceException();
-        
-        ResultPublication resultPublication = null;
-        switch (publicationBean.getPublicationType()) {
-        case Book: {
-            Unit publisher = publicationBean.getPublisher();
-            if (publisher == null)
-                publisher = Unit.createNewExternalInstitution(publicationBean.getPublisherName());
-            // create Book with required fields;
-            Book book = new Book(publicationBean.getPerson(), publicationBean.getResultParticipationRole(), publicationBean.getTitle(), publisher, publicationBean.getYear());
-            // fill optional fields
-            book.setVolume(publicationBean.getVolume());
-            book.setSeries(publicationBean.getSeries());
-            book.setAddress(publicationBean.getAddress());
-            book.setEdition(publicationBean.getEdition());
-            book.setIsbn(publicationBean.getIsbn());
-            book.setNumberPages(publicationBean.getNumberPages());
-            book.setLanguage(publicationBean.getLanguage());
-            book.setScope(publicationBean.getScope());
-            book.setNote(publicationBean.getNote());
-            resultPublication = book;
-        }break;
-        case BookPart: {
-            Unit publisher = publicationBean.getPublisher();
-            if (publisher == null)
-                publisher = Unit.createNewExternalInstitution(publicationBean.getPublisherName());
-            // create BookPart with required fields;
-            BookPart bookPart = null;
-            switch(publicationBean.getBookPartType())
-            {
-                case Inbook:
-                {
-                    bookPart = new BookPart(publicationBean.getPerson(), publicationBean.getResultParticipationRole(), publicationBean.getBookPartType(), publicationBean.getTitle(),
-                            publicationBean.getChapter(), publicationBean.getFirstPage(), publicationBean.getLastPage(), publisher, publicationBean.getYear());
-                    bookPart.setVolume(publicationBean.getVolume());
-                    bookPart.setSeries(publicationBean.getSeries());
-                    bookPart.setEdition(publicationBean.getEdition());
-                    
-                }
-                break;
-                case Incollection:
-                {
-                    bookPart = new BookPart(publicationBean.getPerson(), publicationBean.getResultParticipationRole(), publicationBean.getBookPartType(), publicationBean.getTitle(),
-                            publicationBean.getBookTitle(), publisher, publicationBean.getYear());
-                    bookPart.setFirstPage(publicationBean.getFirstPage());
-                    bookPart.setLastPage(publicationBean.getLastPage());
-                    
-                    Unit organization = publicationBean.getOrganization();
-                    if (organization == null)
-                    {
-                        if((publicationBean.getOrganizationName() != null) && (publicationBean.getOrganizationName().length() != 0))
-                            organization = Unit.createNewExternalInstitution(publicationBean.getOrganizationName());
-                    }
-                    bookPart.setOrganization(organization);
-                }
-                break;
-            }
-            bookPart.setAddress(publicationBean.getAddress());
-            bookPart.setNote(publicationBean.getNote());
-            resultPublication = bookPart;
-        }break;
-        case Article: {
-            // create Article with required fields;
-            Article article = new Article(publicationBean.getPerson(), publicationBean.getTitle(), publicationBean.getJournal(), publicationBean.getYear());
-            // fill optional fields
-            article.setVolume(publicationBean.getVolume());
-            article.setNumber(publicationBean.getNumber());
-            article.setFirstPage(publicationBean.getFirstPage());
-            article.setLastPage(publicationBean.getLastPage());
-            article.setNote(publicationBean.getNote());
-            article.setIssn(publicationBean.getIssn());
-            article.setLanguage(publicationBean.getLanguage());
-            article.setScope(publicationBean.getScope());
-            
-            Unit publisher = publicationBean.getPublisher();
-            if (publisher == null)
-            {
-                if((publicationBean.getPublisherName() != null) && (publicationBean.getPublisherName().length() != 0))
-                    publisher = Unit.createNewExternalInstitution(publicationBean.getPublisherName());
-            }
-            article.setPublisher(publisher);
-            resultPublication = article;
-        }break;
-        case Inproceedings: {
-        	Event event = publicationBean.getEvent();
-        	if(event == null)
-        	{
-        		event = new Event(publicationBean.getEventEndDate(), publicationBean.getEventStartDate(), publicationBean.getEventLocal(),
-        				publicationBean.getEventFee(), publicationBean.getEventType(), publicationBean.getEventName());
-        	}
-        	//create Inproceedings with required fields;
-            Inproceedings inproceedings = new Inproceedings(publicationBean.getPerson(), publicationBean.getResultParticipationRole(), publicationBean.getTitle(), publicationBean.getBookTitle(), publicationBean.getYear(), event);
-            //fill optional fields
-            Unit publisher = publicationBean.getPublisher();
-            if (publisher == null)
-            {
-                if((publicationBean.getPublisherName() != null) && (publicationBean.getPublisherName().length() != 0))
-                    publisher = Unit.createNewExternalInstitution(publicationBean.getPublisherName());
-            }
-            inproceedings.setPublisher(publisher);
-            inproceedings.setAddress(publicationBean.getAddress());
-            
-            Unit organization = publicationBean.getOrganization();
-            if (organization == null)
-            {
-                if((publicationBean.getOrganizationName() != null) && (publicationBean.getOrganizationName().length() != 0))
-                    organization = Unit.createNewExternalInstitution(publicationBean.getOrganizationName());
-            }
-            inproceedings.setOrganization(organization);
-            
-            inproceedings.setFirstPage(publicationBean.getFirstPage());
-            inproceedings.setLastPage(publicationBean.getLastPage());
-            inproceedings.setNote(publicationBean.getNote());
-            inproceedings.setLanguage(publicationBean.getLanguage());
-            resultPublication = inproceedings;
-        }break;
-        case Proceedings: {
-        	Event event = publicationBean.getEvent();
-        	if(event == null)
-        	{
-        		event = new Event(publicationBean.getEventEndDate(), publicationBean.getEventStartDate(), publicationBean.getEventLocal(),
-        				publicationBean.getEventFee(), publicationBean.getEventType(), publicationBean.getEventName());
-        	}
-            // create Proceedings with required fields;
-            Proceedings proceedings = new Proceedings(publicationBean.getPerson(), publicationBean.getTitle(), publicationBean.getYear(), event);
-            // fill optional fields
-            Unit publisher = publicationBean.getPublisher();
-            if (publisher == null)
-            {
-                if((publicationBean.getPublisherName() != null) && (publicationBean.getPublisherName().length() != 0))
-                    publisher = Unit.createNewExternalInstitution(publicationBean.getPublisherName());
-            }
-            proceedings.setPublisher(publisher);
-            proceedings.setAddress(publicationBean.getAddress());
-            
-            Unit organization = publicationBean.getOrganization();
-            if (organization == null)
-            {
-                if((publicationBean.getOrganizationName() != null) && (publicationBean.getOrganizationName().length() != 0))
-                    organization = Unit.createNewExternalInstitution(publicationBean.getOrganizationName());
-            }
-            proceedings.setOrganization(organization);
+    public Book run(BookBean bookBean) {
+        if (bookBean == null)
+            throw new NullPointerException();
 
-            proceedings.setNote(publicationBean.getNote());
-            resultPublication = proceedings;
-        }break;
-        case Thesis: {
-            Unit school = publicationBean.getOrganization();
-            if (school == null)
-                school = Unit.createNewExternalInstitution(publicationBean.getOrganizationName());
-            // create Thesis with required fields;
-            Thesis thesis = new Thesis(publicationBean.getPerson(), publicationBean.getThesisType(), publicationBean.getTitle(), school, publicationBean.getYear());
-            // fill optional fields
-            thesis.setAddress(publicationBean.getAddress());
-            thesis.setNote(publicationBean.getNote());
-            thesis.setNumberPages(publicationBean.getNumberPages());
-            thesis.setLanguage(publicationBean.getLanguage());
-            resultPublication = thesis;
-        }break;
-        case Manual: {
-            // create Manual with required fields;
-            Manual manual = new Manual(publicationBean.getPerson(), publicationBean.getTitle());
-            // fill optional fields
-            Unit organization = publicationBean.getOrganization();
-            if (organization == null)
-            {
-                if((publicationBean.getOrganizationName() != null) && (publicationBean.getOrganizationName().length() != 0))
-                    organization = Unit.createNewExternalInstitution(publicationBean.getOrganizationName());
-            }
-            manual.setOrganization(organization);
-            manual.setYear(publicationBean.getYear());
-            manual.setAddress(publicationBean.getAddress());
-            manual.setNote(publicationBean.getNote());
-            manual.setEdition(publicationBean.getEdition());
-            manual.setNote(publicationBean.getNote());
-            resultPublication = manual;
-        }break;
-        case TechnicalReport: {
-            Unit institution = publicationBean.getOrganization();
-            if (institution == null)
-                institution = Unit.createNewExternalInstitution(publicationBean.getOrganizationName());
-            // create TechnicalReport with required fields;
-            TechnicalReport technicalReport = new TechnicalReport(publicationBean.getPerson(), publicationBean.getTitle(), institution, publicationBean.getYear());
-            // fill optional fields
-            technicalReport.setTechnicalReportType(publicationBean.getTechnicalReportType());
-            technicalReport.setNumber(publicationBean.getNumber());
-            technicalReport.setAddress(publicationBean.getAddress());
-            technicalReport.setNote(publicationBean.getNote());
-            technicalReport.setNumberPages(publicationBean.getNumberPages());
-            technicalReport.setLanguage(publicationBean.getLanguage());
-            resultPublication = technicalReport;
-        }break;
-        case Booklet: {
-            // create Booklet with required fields;
-            Booklet booklet = new Booklet(publicationBean.getPerson(), publicationBean.getTitle());
-            // fill optional fields
-            booklet.setHowPublished(publicationBean.getHowPublished());
-            booklet.setYear(publicationBean.getYear());
-            booklet.setAddress(publicationBean.getAddress());
-            booklet.setNote(publicationBean.getNote());
-            resultPublication = booklet;
-        }break;
-        case Misc: {
-            // create Misc with required fields;
-            Misc misc = new Misc(publicationBean.getPerson(), publicationBean.getTitle());
-            // fill optional fields
-            Unit publisher = publicationBean.getPublisher();
-            if (publisher == null)
-            {
-                if((publicationBean.getPublisherName() != null) && (publicationBean.getPublisherName().length() != 0))
-                    publisher = Unit.createNewExternalInstitution(publicationBean.getPublisherName());
-            }
-            misc.setPublisher(publisher);
-            misc.setYear(publicationBean.getYear());
-            misc.setHowPublished(publicationBean.getHowPublished());
-            misc.setNote(publicationBean.getNote());
-            misc.setAddress(publicationBean.getAddress());
-            misc.setNote(publicationBean.getNote());
-            misc.setOtherPublicationType(publicationBean.getOtherPublicationType());
-            misc.setNumberPages(publicationBean.getNumberPages());
-            misc.setLanguage(publicationBean.getLanguage());
-            resultPublication = misc;
-        }break;
-        case Unpublished: {
-            // create Unpublished with required fields;
-            Unpublished unpublished = new Unpublished(publicationBean.getPerson(), publicationBean.getTitle(), publicationBean.getNote());
-            // fill optional fields
-            unpublished.setYear(publicationBean.getYear());
-            resultPublication = unpublished;
-        }break;
+        // create Book with required fields;
+        Book book = new Book(bookBean.getPerson(), bookBean.getResultParticipationRole(), bookBean
+                .getTitle(), getPublisher(bookBean), bookBean.getYear());
+
+        // fill optional fields
+        book.setVolume(bookBean.getVolume());
+        book.setSeries(bookBean.getSeries());
+        book.setAddress(bookBean.getAddress());
+        book.setEdition(bookBean.getEdition());
+        book.setIsbn(bookBean.getIsbn());
+        book.setNumberPages(bookBean.getNumberPages());
+        book.setLanguage(bookBean.getLanguage());
+        book.setCountry(bookBean.getCountry());
+        book.setScope(bookBean.getScope());
+        book.setNote(bookBean.getNote());
+        book.setMonth(bookBean.getMonth());
+        book.setUrl(bookBean.getUrl());
+        book.setModificationDateAndAuthor();
+
+        return book;
+    }
+
+    public BookPart run(BookPartBean bookPartBean) {
+        if (bookPartBean == null)
+            throw new NullPointerException();
+
+        BookPart bookPart = null;
+        if (bookPartBean.getBookPartType().equals(BookPartType.Inbook))
+            bookPart = createInbook(bookPartBean);
+        else
+            bookPart = createIncollection(bookPartBean);
+
+        return bookPart;
+    }
+
+    private BookPart createIncollection(BookPartBean bookPartBean) {
+        // create Incollection with required fields;
+        BookPart bookPart = new BookPart(bookPartBean.getPerson(), bookPartBean
+                .getResultParticipationRole(), bookPartBean.getBookPartType(), bookPartBean.getTitle(),
+                bookPartBean.getBookTitle(), getPublisher(bookPartBean), bookPartBean.getYear());
+
+        // fill optional fields
+        bookPart.setFirstPage(bookPartBean.getFirstPage());
+        bookPart.setLastPage(bookPartBean.getLastPage());
+        bookPart.setOrganization(getOrganization(bookPartBean));
+        setBookPartCommonFields(bookPart, bookPartBean);
+        return bookPart;
+    }
+
+    private BookPart createInbook(BookPartBean bookPartBean) {
+        // create Inbook with required fields;
+        BookPart bookPart = new BookPart(bookPartBean.getPerson(), bookPartBean
+                .getResultParticipationRole(), bookPartBean.getBookPartType(), bookPartBean.getTitle(),
+                bookPartBean.getChapter(), bookPartBean.getFirstPage(), bookPartBean.getLastPage(),
+                getPublisher(bookPartBean), bookPartBean.getYear());
+
+        // fill optional fields
+        bookPart.setVolume(bookPartBean.getVolume());
+        bookPart.setSeries(bookPartBean.getSeries());
+        bookPart.setEdition(bookPartBean.getEdition());
+        setBookPartCommonFields(bookPart, bookPartBean);
+        return bookPart;
+    }
+
+    private void setBookPartCommonFields(BookPart bookPart, BookPartBean bookPartBean) {
+        bookPart.setCountry(bookPartBean.getCountry());
+        bookPart.setAddress(bookPartBean.getAddress());
+        bookPart.setNote(bookPartBean.getNote());
+        bookPart.setMonth(bookPartBean.getMonth());
+        bookPart.setUrl(bookPartBean.getUrl());
+        bookPart.setModificationDateAndAuthor();
+    }
+
+    public Article run(ArticleBean articleBean) {
+        if (articleBean == null)
+            throw new NullPointerException();
+
+        // create Article with required fields;
+        Article article = new Article(articleBean.getPerson(), articleBean.getTitle(), articleBean
+                .getJournal(), articleBean.getYear());
+
+        // fill optional fields
+        article.setPublisher(getPublisher(articleBean));
+        article.setVolume(articleBean.getVolume());
+        article.setNumber(articleBean.getNumber());
+        article.setFirstPage(articleBean.getFirstPage());
+        article.setLastPage(articleBean.getLastPage());
+        article.setNote(articleBean.getNote());
+        article.setIssn(articleBean.getIssn());
+        article.setLanguage(articleBean.getLanguage());
+        article.setCountry(articleBean.getCountry());
+        article.setScope(articleBean.getScope());
+        article.setMonth(articleBean.getMonth());
+        article.setUrl(articleBean.getUrl());
+        article.setModificationDateAndAuthor();
+
+        return article;
+    }
+
+    public Inproceedings run(InproceedingsBean inproceedingsBean) {
+        if (inproceedingsBean == null)
+            throw new NullPointerException();
+
+        Event event = inproceedingsBean.getEvent();
+        if (event == null) {
+            event = new Event(inproceedingsBean.getEventEndDate(),
+                    inproceedingsBean.getEventStartDate(), inproceedingsBean.getEventLocal(),
+                    inproceedingsBean.getEventFee(), inproceedingsBean.getEventType(), inproceedingsBean
+                            .getEventName());
+        }
+        // create Inproceedings with required fields;
+        Inproceedings inproceedings = new Inproceedings(inproceedingsBean.getPerson(), inproceedingsBean
+                .getResultParticipationRole(), inproceedingsBean.getTitle(), inproceedingsBean
+                .getBookTitle(), inproceedingsBean.getYear(), event);
+
+        // fill optional fields
+        inproceedings.setPublisher(getPublisher(inproceedingsBean));
+        inproceedings.setOrganization(getOrganization(inproceedingsBean));
+        inproceedings.setAddress(inproceedingsBean.getAddress());
+        inproceedings.setFirstPage(inproceedingsBean.getFirstPage());
+        inproceedings.setLastPage(inproceedingsBean.getLastPage());
+        inproceedings.setNote(inproceedingsBean.getNote());
+        inproceedings.setLanguage(inproceedingsBean.getLanguage());
+        inproceedings.setMonth(inproceedingsBean.getMonth());
+        inproceedings.setUrl(inproceedingsBean.getUrl());
+        inproceedings.setModificationDateAndAuthor();
+
+        return inproceedings;
+    }
+
+    public Proceedings run(ProceedingsBean proceedingsBean) {
+        if (proceedingsBean == null)
+            throw new NullPointerException();
+
+        Event event = proceedingsBean.getEvent();
+        if (event == null) {
+            event = new Event(proceedingsBean.getEventEndDate(), proceedingsBean.getEventStartDate(),
+                    proceedingsBean.getEventLocal(), proceedingsBean.getEventFee(), proceedingsBean
+                            .getEventType(), proceedingsBean.getEventName());
         }
 
-        //common fields
-        resultPublication.setMonth(publicationBean.getMonth());
-        resultPublication.setUrl(publicationBean.getUrl());
-        resultPublication.setModificationDateAndAuthor();
-        
-        return resultPublication;
+        // create Proceedings with required fields;
+        Proceedings proceedings = new Proceedings(proceedingsBean.getPerson(), proceedingsBean
+                .getTitle(), proceedingsBean.getYear(), event);
+
+        // fill optional fields
+        proceedings.setPublisher(getPublisher(proceedingsBean));
+        proceedings.setOrganization(getOrganization(proceedingsBean));
+        proceedings.setAddress(proceedingsBean.getAddress());
+        proceedings.setNote(proceedingsBean.getNote());
+        proceedings.setMonth(proceedingsBean.getMonth());
+        proceedings.setUrl(proceedingsBean.getUrl());
+        proceedings.setModificationDateAndAuthor();
+
+        return proceedings;
+    }
+
+    public Thesis run(ThesisBean thesisBean) {
+        if (thesisBean == null)
+            throw new NullPointerException();
+
+        // create Thesis with required fields;
+        Thesis thesis = new Thesis(thesisBean.getPerson(), thesisBean.getThesisType(), thesisBean
+                .getTitle(), getOrganization(thesisBean), thesisBean.getYear());
+
+        // fill optional fields
+        thesis.setAddress(thesisBean.getAddress());
+        thesis.setNote(thesisBean.getNote());
+        thesis.setNumberPages(thesisBean.getNumberPages());
+        thesis.setLanguage(thesisBean.getLanguage());
+        thesis.setMonth(thesisBean.getMonth());
+        thesis.setUrl(thesisBean.getUrl());
+        thesis.setModificationDateAndAuthor();
+
+        return thesis;
+    }
+
+    public Manual run(ManualBean manualBean) {
+        if (manualBean == null)
+            throw new NullPointerException();
+
+        // create Manual with required fields;
+        Manual manual = new Manual(manualBean.getPerson(), manualBean.getTitle());
+
+        // fill optional fields
+        manual.setOrganization(getOrganization(manualBean));
+        manual.setYear(manualBean.getYear());
+        manual.setAddress(manualBean.getAddress());
+        manual.setNote(manualBean.getNote());
+        manual.setEdition(manualBean.getEdition());
+        manual.setNote(manualBean.getNote());
+        manual.setMonth(manualBean.getMonth());
+        manual.setUrl(manualBean.getUrl());
+        manual.setModificationDateAndAuthor();
+
+        return manual;
+    }
+
+    public TechnicalReport run(TechnicalReportBean technicalReportBean) {
+        if (technicalReportBean == null)
+            throw new NullPointerException();
+
+        // create TechnicalReport with required fields;
+        TechnicalReport technicalReport = new TechnicalReport(technicalReportBean.getPerson(),
+                technicalReportBean.getTitle(), getOrganization(technicalReportBean),
+                technicalReportBean.getYear());
+
+        // fill optional fields
+        technicalReport.setTechnicalReportType(technicalReportBean.getTechnicalReportType());
+        technicalReport.setNumber(technicalReportBean.getNumber());
+        technicalReport.setAddress(technicalReportBean.getAddress());
+        technicalReport.setNote(technicalReportBean.getNote());
+        technicalReport.setNumberPages(technicalReportBean.getNumberPages());
+        technicalReport.setLanguage(technicalReportBean.getLanguage());
+        technicalReport.setMonth(technicalReportBean.getMonth());
+        technicalReport.setUrl(technicalReportBean.getUrl());
+        technicalReport.setModificationDateAndAuthor();
+
+        return technicalReport;
+    }
+
+    public Booklet run(BookletBean bookletBean) {
+        if (bookletBean == null)
+            throw new NullPointerException();
+
+        // create Booklet with required fields;
+        Booklet booklet = new Booklet(bookletBean.getPerson(), bookletBean.getTitle());
+
+        // fill optional fields
+        booklet.setHowPublished(bookletBean.getHowPublished());
+        booklet.setYear(bookletBean.getYear());
+        booklet.setMonth(bookletBean.getMonth());
+        booklet.setAddress(bookletBean.getAddress());
+        booklet.setNote(bookletBean.getNote());
+        booklet.setUrl(bookletBean.getUrl());
+        booklet.setModificationDateAndAuthor();
+
+        return booklet;
+    }
+
+    public Misc run(MiscBean miscBean) {
+        if (miscBean == null)
+            throw new NullPointerException();
+
+        // create Misc with required fields;
+        Misc misc = new Misc(miscBean.getPerson(), miscBean.getTitle());
+
+        // fill optional fields
+        misc.setPublisher(getPublisher(miscBean));
+        misc.setYear(miscBean.getYear());
+        misc.setHowPublished(miscBean.getHowPublished());
+        misc.setNote(miscBean.getNote());
+        misc.setAddress(miscBean.getAddress());
+        misc.setNote(miscBean.getNote());
+        misc.setOtherPublicationType(miscBean.getOtherPublicationType());
+        misc.setNumberPages(miscBean.getNumberPages());
+        misc.setLanguage(miscBean.getLanguage());
+        misc.setCountry(miscBean.getCountry());
+        misc.setMonth(miscBean.getMonth());
+        misc.setUrl(miscBean.getUrl());
+        misc.setModificationDateAndAuthor();
+
+        return misc;
+    }
+
+    public Unpublished run(UnpublishedBean unpublishedBean) {
+        if (unpublishedBean == null)
+            throw new NullPointerException();
+
+        // create Unpublished with required fields;
+        Unpublished unpublished = new Unpublished(unpublishedBean.getPerson(), unpublishedBean
+                .getTitle(), unpublishedBean.getNote());
+        // fill optional fields
+        unpublished.setYear(unpublishedBean.getYear());
+        unpublished.setMonth(unpublishedBean.getMonth());
+        unpublished.setUrl(unpublishedBean.getUrl());
+        unpublished.setModificationDateAndAuthor();
+
+        return unpublished;
     }
 }
