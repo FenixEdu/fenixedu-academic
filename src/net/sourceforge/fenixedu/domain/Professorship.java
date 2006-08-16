@@ -1,6 +1,8 @@
 package net.sourceforge.fenixedu.domain;
 
+import java.text.Collator;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -14,10 +16,14 @@ import net.sourceforge.fenixedu.domain.credits.event.ICreditsEventOriginator;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.teacher.DegreeTeachingService;
 
+import org.apache.commons.beanutils.BeanComparator;
+
 /**
  * @author Jo�o Mota
  */
 public class Professorship extends Professorship_Base implements ICreditsEventOriginator {
+
+    public static final Comparator<Professorship> COMPARATOR_BY_PERSON_NAME = new BeanComparator("teacher.person.name", Collator.getInstance());
 
     public Professorship() {
         super();

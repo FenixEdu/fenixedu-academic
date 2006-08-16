@@ -16,6 +16,7 @@ import java.util.TreeSet;
 import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseType;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.executionCourse.SummariesSearchBean;
 import net.sourceforge.fenixedu.domain.gesdis.CourseReport;
 import net.sourceforge.fenixedu.domain.messaging.ExecutionCourseForum;
 import net.sourceforge.fenixedu.domain.onlineTests.Metadata;
@@ -1086,4 +1087,15 @@ public class ExecutionCourse extends ExecutionCourse_Base {
     public boolean isLecturedIn(final ExecutionYear executionYear) {
         return getExecutionPeriod().getExecutionYear() == executionYear;
     }
+
+    public SortedSet<Professorship> getProfessorshipsSortedAlphabetically() {
+        final SortedSet<Professorship> professorhips = new TreeSet<Professorship>(Professorship.COMPARATOR_BY_PERSON_NAME);
+        professorhips.addAll(getProfessorshipsSet());
+        return professorhips;
+    }
+
+    public SummariesSearchBean getSummariesSearchBean() {
+        return new SummariesSearchBean(this);
+    }
+
 }

@@ -48,27 +48,8 @@
 							</div>
 						</td>
 						<td width="100%" colspan="3" id="main">
-							<h1>
-								<bean:write name="executionCourse" property="nome"/>
-							</h1>
-							<logic:iterate id="curricularCourse" name="executionCourse" property="curricularCoursesSortedByDegreeAndCurricularCourseName" length="1">
-								<bean:define id="url" type="java.lang.String">/showCourseSite.do?method=showCurricularCourseSite&curricularCourseID=<bean:write name="curricularCourse" property="idInternal"/>&executionPeriodOID=<bean:write name="executionCourse" property="executionPeriod.idInternal"/>&degreeID=<bean:write name="curricularCourse" property="degreeCurricularPlan.degree.idInternal"/></bean:define>
-								<html:link action="<%= url %>">
-									<bean:write name="curricularCourse" property="degreeCurricularPlan.degree.sigla"/>
-								</html:link>
-							</logic:iterate>
-							<logic:iterate id="curricularCourse" name="executionCourse" property="curricularCoursesSortedByDegreeAndCurricularCourseName" offset="1">
-								,
-								<bean:define id="url" type="java.lang.String">/showCourseSite.do?method=showCurricularCourseSite&curricularCourseID=<bean:write name="curricularCourse" property="idInternal"/>&executionPeriodOID=<bean:write name="executionCourse" property="executionPeriod.idInternal"/>&degreeID=<bean:write name="curricularCourse" property="degreeCurricularPlan.degree.idInternal"/></bean:define>
-								<html:link action="<%= url %>">
-									<bean:write name="curricularCourse" property="degreeCurricularPlan.degree.sigla"/>
-								</html:link>
-							</logic:iterate>
-							<h2 class="greytxt">
-								<bean:write name="executionCourse" property="executionPeriod.semester" />
-								<bean:message bundle="PUBLIC_DEGREE_INFORMATION" locale="pt_PT" key="public.degree.information.label.ordinal.semester.abbr" />
-								<bean:write name="executionCourse" property="executionPeriod.executionYear.year" />
-							</h2>
+							<tiles:insert attribute="body_header" ignore="true"/>
+							<hr/><br/>
 							<tiles:insert attribute="body" ignore="true"/>
 						</td>
 					</tr>

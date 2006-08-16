@@ -12,12 +12,25 @@ import org.apache.struts.action.ActionMapping;
 
 public class ExecutionCourseDA extends FenixDispatchAction {
 
+    @Override
+    public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
+        final String executionCourseIDString = request.getParameter("executionCourseID");
+        final Integer executionCourseID = Integer.valueOf(executionCourseIDString);
+        final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseID);
+        request.setAttribute("executionCourse", executionCourse);
+        return super.execute(mapping, actionForm, request, response);
+    }
+
     public ActionForward firstPage(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
-    	final String executionCourseIDString = request.getParameter("executionCourseID");
-    	final Integer executionCourseID = Integer.valueOf(executionCourseIDString);
-    	final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseID);
-    	request.setAttribute("executionCourse", executionCourse);
         return mapping.findForward("execution-course-first-page");
+    }
+
+    public ActionForward announcements(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
+        return mapping.findForward("execution-course-announcements");
+    }
+
+    public ActionForward summaries(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
+        return mapping.findForward("execution-course-summaries");
     }
 
 }

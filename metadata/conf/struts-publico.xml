@@ -329,6 +329,8 @@
 	<action path="/executionCourse" parameter="method"
 			type="net.sourceforge.fenixedu.presentationTier.Action.publico.ExecutionCourseDA">
 		<forward name="execution-course-first-page" path="execution-course-first-page"/> 
+		<forward name="execution-course-announcements" path="execution-course-announcements"/> 
+		<forward name="execution-course-summaries" path="execution-course-summaries"/> 
    	</action>
 
 
