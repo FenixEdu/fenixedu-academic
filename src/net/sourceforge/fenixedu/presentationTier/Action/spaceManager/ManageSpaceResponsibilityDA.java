@@ -50,7 +50,7 @@ public class ManageSpaceResponsibilityDA extends FenixDispatchAction {
             FenixServiceException, ExcepcaoPersistencia {
         SpaceInformation spaceInformation = getSpaceInformationFromParameter(request);
         setSpaceInformation(request, spaceInformation);
-        readAndSetUnitsTree(request, spaceInformation);
+        readAndSetInitialUnit(request, spaceInformation);
     }
 
     public ActionForward prepareEditSpaceResponsibility(ActionMapping mapping, ActionForm form,
@@ -81,12 +81,9 @@ public class ManageSpaceResponsibilityDA extends FenixDispatchAction {
         saveMessages(request, actionMessages);
     }
 
-    private void readAndSetUnitsTree(HttpServletRequest request, SpaceInformation spaceInformation)
-            throws FenixFilterException, FenixServiceException, ExcepcaoPersistencia {
-        String path = "/SpaceManager/manageSpaceResponsibility.do?method=manageResponsabilityInterval";
-        String unitsTree = UnitUtils.getInstitutionTree(request, spaceInformation, "spaceInformationID",
-                path);
-        request.setAttribute("unitsList", unitsTree);
+    private void readAndSetInitialUnit(HttpServletRequest request, SpaceInformation spaceInformation)
+            throws FenixFilterException, FenixServiceException, ExcepcaoPersistencia {       
+        request.setAttribute("initialUnit", UnitUtils.readInstitutionUnit());
     }
 
     private void setSpaceInformation(HttpServletRequest request, final SpaceInformation spaceInformation) {

@@ -4,6 +4,7 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
+<%@ taglib uri="/WEB-INF/units.tld" prefix="un" %>
 
 <h2><bean:message key="label.space.responsibility.management" bundle="SPACE_RESOURCES"/></h2>
 
@@ -69,7 +70,11 @@
 	</fr:view>
 		
 	<h3><bean:message key="label.choose.unit" bundle="SPACE_RESOURCES"/>:</h3>
-	<bean:write name="unitsList" filter="false"/>	
+	
+	<bean:define id="path">
+		/SpaceManager/manageSpaceResponsibility.do?method=manageResponsabilityInterval&spaceInformationID=<bean:write name="selectedSpaceInformationId"/>
+	</bean:define>	
+	<un:tree initialUnit="initialUnit" unitParamName="unitID" path="<%= path %>" state="true"/>
 	
 	<h3><bean:message key="label.other.responsible.units" bundle="SPACE_RESOURCES"/>:</h3>
 	<bean:size id="inactiveSize" name="selectedSpaceInformation" property="space.inactiveSpaceResponsibility"/>

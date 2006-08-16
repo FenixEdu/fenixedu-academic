@@ -85,41 +85,37 @@ public class Unit extends Unit_Base {
         return (unit.getType() != null && unit.getType().equals(PartyTypeEnum.DEPARTMENT) && unit
                 .getDepartment() != null);
     }
-
+  
     public List<Unit> getInactiveSubUnits(YearMonthDay currentDate) {
-        List<Unit> allInactiveSubUnits = new ArrayList<Unit>();
-        for (Unit subUnit : this.getSubUnits()) {
-            if (!subUnit.isActive(currentDate)) {
-                allInactiveSubUnits.add(subUnit);
-            }
-        }
-        return allInactiveSubUnits;
-    }
-
-    public List<Unit> getInactiveSubUnits(YearMonthDay currentDate, AccountabilityTypeEnum accountabilityTypeEnum) {
-        List<Unit> allInactiveSubUnits = new ArrayList<Unit>();
-        for (Unit subUnit : this.getSubUnits(accountabilityTypeEnum)) {
-            if (!subUnit.isActive(currentDate)) {
-                allInactiveSubUnits.add(subUnit);
-            }
-        }
-        return allInactiveSubUnits;
+        return getSubUnitsByState(currentDate, false);
     }
     
     public List<Unit> getActiveSubUnits(YearMonthDay currentDate) {
+        return getSubUnitsByState(currentDate, true);
+    }
+
+    private List<Unit> getSubUnitsByState(YearMonthDay currentDate, boolean state) {
         List<Unit> allActiveSubUnits = new ArrayList<Unit>();
         for (Unit subUnit : this.getSubUnits()) {
-            if (subUnit.isActive(currentDate)) {
+            if (subUnit.isActive(currentDate) == state) {
                 allActiveSubUnits.add(subUnit);
             }
         }
         return allActiveSubUnits;
     }
+
+    public List<Unit> getInactiveSubUnits(YearMonthDay currentDate, AccountabilityTypeEnum accountabilityTypeEnum) {
+        return getSubUnitsByState(currentDate, accountabilityTypeEnum, false);
+    }
     
     public List<Unit> getActiveSubUnits(YearMonthDay currentDate, AccountabilityTypeEnum accountabilityTypeEnum) {
+        return getSubUnitsByState(currentDate, accountabilityTypeEnum, true);
+    }
+
+    private List<Unit> getSubUnitsByState(YearMonthDay currentDate, AccountabilityTypeEnum accountabilityTypeEnum, boolean state) {
         List<Unit> allActiveSubUnits = new ArrayList<Unit>();
         for (Unit subUnit : this.getSubUnits(accountabilityTypeEnum)) {
-            if (subUnit.isActive(currentDate)) {
+            if (subUnit.isActive(currentDate) == state) {
                 allActiveSubUnits.add(subUnit);
             }
         }
@@ -127,15 +123,24 @@ public class Unit extends Unit_Base {
     }  
 
     public List<Unit> getActiveSubUnits(YearMonthDay currentDate, List<AccountabilityTypeEnum> accountabilityTypeEnums) {
+        return getSubUnitsByState(currentDate, accountabilityTypeEnums, true);
+    }
+    
+    public List<Unit> getInactiveSubUnits(YearMonthDay currentDate, List<AccountabilityTypeEnum> accountabilityTypeEnums) {
+        return getSubUnitsByState(currentDate, accountabilityTypeEnums, false);
+    }
+    
+    private List<Unit> getSubUnitsByState(YearMonthDay currentDate, List<AccountabilityTypeEnum> accountabilityTypeEnums, boolean state) {
         List<Unit> allActiveSubUnits = new ArrayList<Unit>();
         for (Unit subUnit : this.getSubUnits(accountabilityTypeEnums)) {
-            if (subUnit.isActive(currentDate)) {
+            if (subUnit.isActive(currentDate) == state) {
                 allActiveSubUnits.add(subUnit);
             }
         }
         return allActiveSubUnits;
     }
     
+        
     public List<Unit> getAllInactiveSubUnits(YearMonthDay currentDate) {
         Set<Unit> allInactiveSubUnits = new HashSet<Unit>();
         List<Unit> inactiveSubUnits = getInactiveSubUnits(currentDate);
