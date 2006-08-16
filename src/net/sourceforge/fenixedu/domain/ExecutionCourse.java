@@ -1098,4 +1098,12 @@ public class ExecutionCourse extends ExecutionCourse_Base {
         return new SummariesSearchBean(this);
     }
 
+    public Set<Lesson> getLessons() {
+    	final Set<Lesson> lessons = new HashSet<Lesson>();
+    	for (final Shift shift : getAssociatedShiftsSet()) {
+    		lessons.addAll(shift.getAssociatedLessonsSet());
+    	}
+    	return lessons;
+    }
+
 }

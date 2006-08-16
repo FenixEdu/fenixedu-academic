@@ -177,6 +177,30 @@
 	<definition name="execution-course-summaries" extends="definition.public.executionCourse">
 		<put name="body" value="/publico/executionCourse/summaries.jsp"/>
 	</definition>
+	<definition name="execution-course-evaluation-method" extends="definition.public.executionCourse">
+		<put name="body" value="/publico/executionCourse/evaluationMethod.jsp"/>
+	</definition>
+	<definition name="execution-course-bibliographic-reference" extends="definition.public.executionCourse">
+		<put name="body" value="/publico/executionCourse/bibliographicReference.jsp"/>
+	</definition>
+	<definition name="execution-course-schedule" extends="definition.public.executionCourse">
+		<put name="body" value="/publico/executionCourse/schedule.jsp"/>
+	</definition>
+	<definition name="execution-course-shifts" extends="definition.public.executionCourse">
+		<put name="body" value="/publico/executionCourse/shifts.jsp"/>
+	</definition>
+	<definition name="execution-course-evaluations" extends="definition.public.executionCourse">
+		<put name="body" value="/publico/executionCourse/evaluations.jsp"/>
+	</definition>
+	<definition name="execution-course-groupings" extends="definition.public.executionCourse">
+		<put name="body" value="/publico/executionCourse/groupings.jsp"/>
+	</definition>
+	<definition name="execution-course-section" extends="definition.public.executionCourse">
+		<put name="body" value="/publico/executionCourse/section.jsp"/>
+	</definition>
+	<definition name="execution-course-rss" extends="definition.public.executionCourse">
+		<put name="body" value="/publico/executionCourse/rss.jsp"/>
+	</definition>
 
 	<definition name="chooseRoom" page="/layout/publicGesDisLayout_2col.jsp">
 		<put name="title" value="Instituto Superior Técnico" />

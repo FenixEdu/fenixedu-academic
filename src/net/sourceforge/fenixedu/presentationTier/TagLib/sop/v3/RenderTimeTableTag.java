@@ -107,6 +107,7 @@ public final class RenderTimeTableTag extends TagSupport {
         try {
             infoLessonList = (ArrayList) pageContext.findAttribute(name);
         } catch (ClassCastException e) {
+        	e.printStackTrace();
             infoLessonList = null;
         }
         if (infoLessonList == null)

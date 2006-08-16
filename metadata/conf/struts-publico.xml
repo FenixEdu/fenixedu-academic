@@ -328,11 +328,18 @@
 
 	<action path="/executionCourse" parameter="method"
 			type="net.sourceforge.fenixedu.presentationTier.Action.publico.ExecutionCourseDA">
-		<forward name="execution-course-first-page" path="execution-course-first-page"/> 
-		<forward name="execution-course-announcements" path="execution-course-announcements"/> 
-		<forward name="execution-course-summaries" path="execution-course-summaries"/> 
+		<forward name="execution-course-first-page" path="execution-course-first-page"/>
+		<forward name="execution-course-announcements" path="execution-course-announcements"/>
+		<forward name="execution-course-summaries" path="execution-course-summaries"/>
+		<forward name="execution-course-evaluation-method" path="execution-course-evaluation-method"/>
+		<forward name="execution-course-bibliographic-reference" path="execution-course-bibliographic-reference"/>
+		<forward name="execution-course-schedule" path="execution-course-schedule"/>
+		<forward name="execution-course-shifts" path="execution-course-shifts"/>
+		<forward name="execution-course-evaluations" path="execution-course-evaluations"/>
+		<forward name="execution-course-groupings" path="execution-course-groupings"/>
+		<forward name="execution-course-section" path="execution-course-section"/>
+		<forward name="execution-course-rss" path="execution-course-rss"/>
    	</action>
-
 
 	  <!-- SALAS -->
       <action path="/prepareConsultRooms"

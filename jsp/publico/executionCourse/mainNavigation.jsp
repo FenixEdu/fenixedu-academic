@@ -23,4 +23,52 @@
 			<bean:message  key="link.summaries"/>
 		</html:link>
 	</li>
+	<li>
+		<html:link page="/executionCourse.do?method=evaluationMethod"
+				paramId="executionCourseID" paramName="executionCourse" paramProperty="idInternal">
+			<bean:message  key="link.evaluationMethod"/>
+		</html:link>
+	</li>
+	<li>
+		<html:link page="/executionCourse.do?method=bibliographicReference"
+				paramId="executionCourseID" paramName="executionCourse" paramProperty="idInternal">
+			<bean:message  key="link.bibliography"/>
+		</html:link>
+	</li>
+	<li>
+		<html:link page="/executionCourse.do?method=schedule"
+				paramId="executionCourseID" paramName="executionCourse" paramProperty="idInternal">
+			<bean:message  key="label.schedule"/>
+		</html:link>
+	</li>
+	<li>
+		<html:link page="/executionCourse.do?method=shifts"
+				paramId="executionCourseID" paramName="executionCourse" paramProperty="idInternal">
+			<bean:message  key="link.shifts"/>
+		</html:link>
+	</li>
+	<li>
+		<html:link page="/executionCourse.do?method=evaluations"
+				paramId="executionCourseID" paramName="executionCourse" paramProperty="idInternal">
+			<bean:message  key="link.evaluations"/>
+		</html:link>
+	</li>
+	<li>
+		<html:link page="/executionCourse.do?method=groupings"
+				paramId="executionCourseID" paramName="executionCourse" paramProperty="idInternal">
+			<bean:message  key="link.groupings"/>
+		</html:link>
+	</li>
+	<li>
+		<html:link page="/executionCourse.do?method=section"
+				paramId="executionCourseID" paramName="executionCourse" paramProperty="idInternal">
+			<bean:message  key="link.section"/>
+		</html:link>
+	</li>
+	<li>
+		<html:link page="/executionCourse.do?method=rss"
+				paramId="executionCourseID" paramName="executionCourse" paramProperty="idInternal">
+			<bean:message  key="link.rss"/>
+		</html:link>
+	</li>
 </ul>
