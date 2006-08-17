@@ -369,7 +369,7 @@ public class MarkSheet extends MarkSheet_Base {
             changeRectifiedEnrolmentEvaluationToPreviowsState();
         }
         
-        for (; !getEnrolmentEvaluations().isEmpty(); getEnrolmentEvaluations().get(0).delete());
+        for (; !getEnrolmentEvaluations().isEmpty(); getEnrolmentEvaluations().get(0).removeFromMarkSheet());
         
         removeRootDomainObject();
         deleteDomainObject();
