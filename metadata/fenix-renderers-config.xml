@@ -372,7 +372,7 @@ Documentation:
     <renderer mode="input" type="net.sourceforge.fenixedu.domain.Person" layout="username-as-person" class="net.sourceforge.fenixedu.presentationTier.renderers.PersonUsernameStringInputRenderer"/>
 
 	<!--@ The layout extensionNumber-as-extension allows you to insert a Extension given a Extension Number -->
-    <renderer mode="input" type="net.sourceforge.fenixedu.domain.material.Extension" layout="extensionNumber-as-extension" class="net.sourceforge.fenixedu.presentationTier.renderers.ExtensionNumberStringInputRenderer"/>
+    <renderer mode="input" type="net.sourceforge.fenixedu.domain.material.Material" layout="extensionNumber-as-extension" class="net.sourceforge.fenixedu.presentationTier.renderers.ExtensionNumberStringInputRenderer"/>
 
 	<renderer mode="input" type="java.util.List" layout="tabular-option" class="net.sourceforge.fenixedu.renderers.TabularOptionInputRenderer"/>	
 </renderers-config>

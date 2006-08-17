@@ -83,7 +83,8 @@
         		parameter="method">                		
        		<forward name="showMaterialSpaceOccupations" path="show-material-space-occupations"/>        		        	              		
        		<forward name="chooseMaterialType" path="insert-material-occupation"/>   
-      		<forward name="insertMaterialOccupation" path="insert-material-occupation"/>   
+      		<forward name="insertMaterialOccupation" path="insert-material-occupation"/>
+      		<forward name="prepareEditMaterialSpaceOccupation" path="prepare-edit-material-space-occupation"/>      		   
         </action>
 
         <action path="/showCreateSpaceForm"

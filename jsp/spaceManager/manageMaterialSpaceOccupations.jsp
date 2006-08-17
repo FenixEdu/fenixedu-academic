@@ -39,13 +39,13 @@
    			<fr:property name="rowClasses" value="listClasses"/>	
    			<fr:property name="columnClasses" value="listClasses"/>
    			   			
-   			<fr:property name="link(edit)" value="<%="/managePersonSpaceOccupations.do?method=prepareEditSpacePersonOccupation&spaceInformationID=" + selectedSpaceInformationId %>"/>
+   			<fr:property name="link(edit)" value="<%="/manageMaterialSpaceOccupations.do?method=prepareEditMaterialSpaceOccupation&spaceInformationID=" + selectedSpaceInformationId %>"/>
             <fr:property name="param(edit)" value="idInternal/materialOccupationID"/>
 	        <fr:property name="key(edit)" value="link.edit"/>
             <fr:property name="bundle(edit)" value="SPACE_RESOURCES"/>
             <fr:property name="order(edit)" value="0"/>
             
-            <fr:property name="link(delete)" value="<%="/managePersonSpaceOccupations.do?method=deleteSpacePersonOccupation&spaceInformationID=" + selectedSpaceInformationId %>"/>
+            <fr:property name="link(delete)" value="<%="/manageMaterialSpaceOccupations.do?method=deleteMaterialSpaceOccupation&page=0&spaceInformationID=" + selectedSpaceInformationId %>"/>
             <fr:property name="param(delete)" value="idInternal/materialOccupationID"/>
 	        <fr:property name="key(delete)" value="link.delete"/>
             <fr:property name="bundle(delete)" value="SPACE_RESOURCES"/>
@@ -66,13 +66,13 @@
    			<fr:property name="rowClasses" value="listClasses"/>	
    			<fr:property name="columnClasses" value="listClasses"/>
    			   			
-   			<fr:property name="link(edit)" value="<%="/managePersonSpaceOccupations.do?method=prepareEditSpacePersonOccupation&spaceInformationID=" + selectedSpaceInformationId %>"/>
+   			<fr:property name="link(edit)" value="<%="/manageMaterialSpaceOccupations.do?method=prepareEditMaterialSpaceOccupation&spaceInformationID=" + selectedSpaceInformationId %>"/>
             <fr:property name="param(edit)" value="idInternal/materialOccupationID"/>
 	        <fr:property name="key(edit)" value="link.edit"/>
             <fr:property name="bundle(edit)" value="SPACE_RESOURCES"/>
             <fr:property name="order(edit)" value="0"/>
             
-            <fr:property name="link(delete)" value="<%="/managePersonSpaceOccupations.do?method=deleteSpacePersonOccupation&spaceInformationID=" + selectedSpaceInformationId %>"/>
+            <fr:property name="link(delete)" value="<%="/manageMaterialSpaceOccupations.do?method=deleteMaterialSpaceOccupation&page=0&spaceInformationID=" + selectedSpaceInformationId %>"/>
             <fr:property name="param(delete)" value="idInternal/materialOccupationID"/>
 	        <fr:property name="key(delete)" value="link.delete"/>
             <fr:property name="bundle(delete)" value="SPACE_RESOURCES"/>

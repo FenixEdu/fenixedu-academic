@@ -45,5 +45,9 @@
     </definition>       
     <definition name="insert-material-occupation" extends="spaceManager.masterPage">
         <put name="body" value="/spaceManager/insertNewMaterialOccupation.jsp"></put>
-    </definition>           
+    </definition> 
+        <definition name="prepare-edit-material-space-occupation" extends="spaceManager.masterPage">
+        <put name="body" value="/spaceManager/editMaterialSpaceOccupation.jsp"></put>
+    </definition> 
+              
 </tiles-definitions>

@@ -5,6 +5,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.space.ExtensionSpaceOccupation;
 
 import org.joda.time.YearMonthDay;
 
@@ -18,7 +19,22 @@ public class Extension extends Extension_Base {
         setAcquisition(acquisition);
         setCease(cease);        
     }
+    
+    @Override
+    public String getMaterialSpaceOccupationSlotName() {
+       return "extension";
+    }   
 
+    @Override
+    public Class getMaterialSpaceOccupationSubClass() {        
+        return ExtensionSpaceOccupation.class;
+    }
+    
+    @Override
+    public String getPresentationDetails() {
+        return getNumber().toString();
+    }  
+    
     private void checkParameters(Integer number, YearMonthDay acquisition, YearMonthDay cease) {
         if(number == null) {
             throw new DomainException("error.extension.no.number");

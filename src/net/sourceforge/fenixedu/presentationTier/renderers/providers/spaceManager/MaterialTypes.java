@@ -11,7 +11,7 @@ public class MaterialTypes implements DataProvider {
 
     public Object provide(Object source, Object currentValue) {        
         Set<Class> materialTypes = new HashSet<Class>();        
-        materialTypes.add(Extension.class);
+        materialTypes.add(Extension.class);        
         return materialTypes;
     }
 
