@@ -1,7 +1,7 @@
 package net.sourceforge.fenixedu.domain;
 
 import java.lang.ref.SoftReference;
-import java.util.HashMap;
+import java.util.Hashtable;
 import java.util.Map;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -27,11 +27,15 @@ public class Login extends Login_Base {
         this.setBeginDateDateTime(new DateTime());
     }
 
+    public boolean isLogin() {
+        return true;
+    }
+
     /**
      * This map is a temporary solution until DML provides indexed relations.
      * 
      */
-    private static final Map<String, SoftReference<Login>> loginMap = new HashMap<String, SoftReference<Login>>();
+    private static final Map<String, SoftReference<Login>> loginMap = new Hashtable<String, SoftReference<Login>>();
 
     public static Login readLoginByUsername(String username) {
         // Temporary solution until DML provides indexed relations.
@@ -49,10 +53,13 @@ public class Login extends Login_Base {
         // *** end of hack
 
         for (final Identification identification : RootDomainObject.getInstance().getIdentifications()) {
-            if (identification instanceof Login) {
+            if (identification.isLogin()) {
                 final Login login = (Login) identification;
+                final String loginUsername = login.getUsername().toLowerCase();
                 // Temporary solution until DML provides indexed relations.
-                loginMap.put(login.getUsername().toLowerCase(), new SoftReference<Login>(login));
+                if (!loginMap.containsKey(loginUsername)) {
+                    loginMap.put(loginUsername, new SoftReference<Login>(login));
+                }
                 // *** end of hack
                 if (login.getUsername().equalsIgnoreCase(username)) {
                     return login;

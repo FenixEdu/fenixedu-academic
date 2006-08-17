@@ -30,4 +30,9 @@ public abstract class Identification extends Identification_Base {
         removeRootDomainObject();
         deleteDomainObject();
     }
+
+    public boolean isLogin() {
+        return false;
+    }
+
 }

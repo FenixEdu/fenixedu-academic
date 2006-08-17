@@ -4,8 +4,8 @@ import java.lang.ref.SoftReference;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -447,7 +447,7 @@ public class Degree extends Degree_Base {
     // read static methods
     // -------------------------------------------------------------
 
-    private static final Map<String, SoftReference<Degree>> degrees = new HashMap<String, SoftReference<Degree>>();
+    private static final Map<String, SoftReference<Degree>> degrees = new Hashtable<String, SoftReference<Degree>>();
 
     private static void loadCache() {
         synchronized (degrees) {
