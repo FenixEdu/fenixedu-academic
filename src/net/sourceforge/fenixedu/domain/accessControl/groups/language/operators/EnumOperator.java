@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.domain.accessControl.groups.language.operators;
 
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.Argument;
+import net.sourceforge.fenixedu.domain.accessControl.groups.language.GroupContextProvider;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.OperatorArgument;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.exceptions.InvalidEnumSpecified;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.exceptions.WrongNumberOfArgumentsException;
@@ -70,7 +71,8 @@ public class EnumOperator extends OperatorArgument {
      */
     protected ParameterOperator getParameterOperator() {
         if (this.parameter == null) {
-            this.parameter = new ParameterOperator(this, getArguments().get(PARAMETER));
+            this.parameter = new ParameterOperator((GroupContextProvider) this, getArguments().get(PARAMETER));
+            this.parameter.setRequired(true);
         }
 
         return this.parameter;

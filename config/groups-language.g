@@ -301,7 +301,6 @@ group returns [Group group]
 			DynamicGroup dynaGroup = new DynamicGroup(this.provider, name);
 			
 			for (Argument argument : arguments) {
-				argument.setContextProvider(dynaGroup);
 				dynaGroup.addArgument(argument);
 			}
 			
@@ -356,7 +355,6 @@ composedArgument returns [DynamicArgument argument]
 	: #(DOLLAR argument=originPart (nested=propertyPart { properties.add(nested); })*) {
 		
 		for (NestedProperty property : properties) {
-			property.setContextProvider(argument);
 			argument.addProperty(property);
 		}
 	}
@@ -385,7 +383,6 @@ genericOperator returns [MethodProperty property]
 		property = new MethodProperty(#n.getText());
 		
 		for (Argument argument : arguments) {
-			argument.setContextProvider(property);
 			property.addArgument(argument);
 		}
 	}
@@ -424,7 +421,12 @@ enumOperator returns [EnumOperator operator]
 	Argument b;
 }
 	: #(E_OP a=argument b=argument) {
-		operator = new EnumOperator(a, b);
+		if (b == null) {
+			operator = new EnumOperator(a, b);
+		}
+		else {
+			operator = new EnumOperator(a);
+		}
 	}
 	;
 

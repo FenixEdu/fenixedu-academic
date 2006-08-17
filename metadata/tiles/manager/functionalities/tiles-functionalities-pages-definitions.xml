@@ -4,10 +4,14 @@
 <!-- Tiles definitions -->
 <tiles-definitions>
 
+    <definition name="functionalities.error.notAvailable" extends="functionalities.master">
+        <put name="body" value="/manager/functionalities/errors/notAvailable.jsp"/>
+    </definition>
+    
     <definition name="functionalities.toplevel.view" extends="functionalities.master">
         <put name="body" value="/manager/functionalities/view-toplevel.jsp"/>
     </definition>
-            
+    
     <definition name="functionalities.module.view" extends="functionalities.master">
         <put name="body" value="/manager/functionalities/view-module.jsp"/>
     </definition>
@@ -50,6 +54,18 @@
 
     <definition name="functionalities.functionality.manage" extends="functionalities.master">
         <put name="body" value="/manager/functionalities/manage-functionality.jsp"/>
+    </definition>
+
+    <definition name="functionalities.functionality.delete.confirm" extends="functionalities.master">
+        <put name="body" value="/manager/functionalities/confirm-delete.jsp"/>
+    </definition>
+
+    <definition name="functionalities.filter.index" extends="functionalities.master">
+        <put name="body" value="/manager/functionalities/filter/index.jsp"/>
+    </definition>
+
+    <definition name="functionalities.filter.results" extends="functionalities.master">
+        <put name="body" value="/manager/functionalities/filter/index.jsp"/>
     </definition>
 
 </tiles-definitions>

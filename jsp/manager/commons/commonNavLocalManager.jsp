@@ -226,6 +226,11 @@
         <bean:message bundle="FUNCTIONALITY_RESOURCES" key="link.functionalities" />
     </html:link>
 </li>
+<li> 
+    <html:link module="/manager/functionalities" page="/filter/index.do">
+        <bean:message bundle="FUNCTIONALITY_RESOURCES" key="link.filter.test" />
+    </html:link>
+</li>
 
 <li class="navheader"><bean:message bundle="MANAGER_RESOURCES" key="title.frameworks"/></li>
 <li>

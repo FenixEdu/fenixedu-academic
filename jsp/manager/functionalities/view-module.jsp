@@ -34,9 +34,15 @@
     <bean:message key="link.module.edit" bundle="FUNCTIONALITY_RESOURCES"/>
 </html:link>
 
-<html:link page="/functionality/delete.do" paramId="module" paramName="module" paramProperty="idInternal">
+<html:link page="/functionality/confirm.do" paramId="functionality" paramName="module" paramProperty="idInternal">
     <bean:message key="link.module.delete" bundle="FUNCTIONALITY_RESOURCES"/>
 </html:link>
+
+<!-- ======================
+          availability
+     ======================  -->
+
+<fr:view name="module" layout="tabular" schema="functionalities.functionality.availability"/>
 
 <html:link page="/functionality/manage.do" paramId="functionality" paramName="module" paramProperty="idInternal">
     <bean:message key="link.module.manage" bundle="FUNCTIONALITY_RESOURCES"/>
@@ -55,7 +61,7 @@
 
 <% String tree = "moduleTree" + thisModule; %>
 
-<fr:view name="functionalities" layout="tree">
+<fr:view name="functionalities" layout="functionalities-tree">
     <fr:layout>
         <fr:property name="treeId" value="<%= tree %>"/>
         <fr:property name="fieldId" value="tree-structure"/> <!-- reference to the hidden field above -->
@@ -65,11 +71,6 @@
         <fr:property name="schemaFor(Module)" value="functionalities.module.tree"/>
         <fr:property name="schemaFor(Functionality)" value="functionalities.functionality.tree"/>
         
-        <fr:property name="imageFor(Module)" value="/javaScript/drag-drop-folder-tree/images/folder.gif"/>
-        <fr:property name="imageFor(Functionality)" value="/javaScript/drag-drop-folder-tree/images/sheet.gif"/>
-
-        <fr:property name="childrenFor(Module)" value="orderedFunctionalities"/>
-
         <fr:property name="hiddenLinks">
             <html:link page="<%= "/functionality/up.do?module=" + thisModule + "&functionality=${idInternal}" %>">
                 <bean:message key="link.functionality.up" bundle="FUNCTIONALITY_RESOURCES"/>

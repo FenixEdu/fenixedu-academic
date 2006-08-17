@@ -13,7 +13,7 @@
 
 <% String tree = "topLevelTree"; %>
 
-<fr:view name="functionalities" layout="tree">
+<fr:view name="functionalities" layout="functionalities-tree">
     <fr:layout>
         <fr:property name="treeId" value="<%= tree %>"/>
         <fr:property name="fieldId" value="tree-structure"/> <!-- reference to the hidden field above -->
@@ -23,11 +23,6 @@
         <fr:property name="schemaFor(Module)" value="functionalities.module.tree"/>
         <fr:property name="schemaFor(Functionality)" value="functionalities.functionality.tree"/>
         
-        <fr:property name="imageFor(Module)" value="/javaScript/drag-drop-folder-tree/images/folder.gif"/>
-        <fr:property name="imageFor(Functionality)" value="/javaScript/drag-drop-folder-tree/images/sheet.gif"/>
-
-        <fr:property name="childrenFor(Module)" value="orderedFunctionalities"/>
-
         <fr:property name="hiddenLinks">
             <html:link page="/functionality/up.do?functionality=${idInternal}">
                 <bean:message key="link.functionality.up" bundle="FUNCTIONALITY_RESOURCES"/>

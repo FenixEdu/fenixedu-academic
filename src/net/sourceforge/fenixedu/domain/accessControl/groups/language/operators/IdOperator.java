@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.domain.accessControl.groups.language.operators;
 import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.Argument;
+import net.sourceforge.fenixedu.domain.accessControl.groups.language.GroupContextProvider;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.OperatorArgument;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.exceptions.WrongNumberOfArgumentsException;
 
@@ -56,7 +57,7 @@ public class IdOperator extends OperatorArgument {
      */
     protected NumberOperator getNumberOperator() {
         if (this.number == null) {
-            this.number = new NumberOperator(this, getArguments().get(PARAMETER));
+            this.number = new NumberOperator((GroupContextProvider) this, getArguments().get(PARAMETER));
         }
 
         return this.number;
@@ -67,7 +68,7 @@ public class IdOperator extends OperatorArgument {
      */
     protected ClassOperator getClassOperator() {
         if (this.type == null) {
-            this.type = new ClassOperator(this, getArguments().get(TYPE));
+            this.type = new ClassOperator((GroupContextProvider) this, getArguments().get(TYPE));
         }
 
         return this.type;

@@ -14,11 +14,15 @@
     <!-- ========== Action Mapping Definitions =============================== -->
     
     <action-mappings>
+
+        <action path="/error/*"     forward="functionalities.error.{1}"/>
     
         <action path="/toplevel/view"     forward="/private/module.do?method=viewTopLevel"/>
         <action path="/toplevel/organize" forward="/private/module.do?method=organize"/>
         <action path="/module/*"          forward="/private/module.do?method={1}"/>
         <action path="/functionality/*"   forward="/private/functionality.do?method={1}"/>
+
+        <action path="/filter/*"   forward="/private/filter.do?method={1}"/>
 
         <action path="/private/module" 
                 type="net.sourceforge.fenixedu.presentationTier.Action.manager.functionalities.ModuleManagementAction" 
@@ -41,6 +45,14 @@
             <forward name="create"          path="functionalities.functionality.create"/>
             <forward name="create.toplevel" path="functionalities.functionality.create.toplevel"/>
             <forward name="manage"          path="functionalities.functionality.manage"/>
+            <forward name="confirm"         path="functionalities.functionality.delete.confirm"/>
+        </action>
+
+        <action path="/private/filter"
+                type="net.sourceforge.fenixedu.presentationTier.Action.manager.functionalities.TestFilterAction"
+                parameter="method">
+            <forward name="index"   path="functionalities.filter.index"/>
+            <forward name="results" path="functionalities.filter.results"/>
         </action>
 
     </action-mappings>

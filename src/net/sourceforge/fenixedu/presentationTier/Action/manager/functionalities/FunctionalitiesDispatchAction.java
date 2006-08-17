@@ -88,6 +88,16 @@ public class FunctionalitiesDispatchAction extends FenixDispatchAction {
         request.setAttribute("crumbs", crumbs);
     }
 
+    public ActionForward confirm(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
+        Functionality functionality = getFunctionality(request);
+    
+        if (functionality == null) {
+            return viewTopLevel(mapping, actionForm, request, response);
+        }
+        
+        return forwardTo(mapping.findForward("confirm"), request, functionality);
+    }
+
     public ActionForward delete(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
         Functionality functionality = getFunctionality(request);
     
@@ -95,9 +105,20 @@ public class FunctionalitiesDispatchAction extends FenixDispatchAction {
             return viewTopLevel(mapping, actionForm, request, response);
         }
         
-        Functionality.deleteFunctionality(functionality);
-        
-        return viewModule(functionality.getModule(), mapping, actionForm, request, response);
+        if (request.getParameter("confirm") != null) {
+            Module parent = functionality.getModule();
+            Functionality.deleteFunctionality(functionality);
+            
+            return viewModule(parent, mapping, actionForm, request, response);
+        }
+        else {
+            if (functionality instanceof Module) {
+                return viewModule((Module) functionality, mapping, actionForm, request, response);    
+            }
+            else {
+                return forwardTo(mapping.findForward("view"), request, functionality);
+            }
+        }
     }
 
     protected Module getModule(HttpServletRequest request) {

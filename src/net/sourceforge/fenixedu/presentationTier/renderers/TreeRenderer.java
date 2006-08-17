@@ -762,57 +762,58 @@ public class TreeRenderer extends OutputRenderer {
                 return getLinksClasses();
             }
         }
-
-        private String getChildrenFor(Object object) {
-            return getValueFor(object, TreeRenderer.this.childrenMap, getChildren());
-        }
         
-        private String getClassFor(Object object) {
-            return getValueFor(object, TreeRenderer.this.classesMap, getItemClass());
-        }
+    }
+    
+    protected String getChildrenFor(Object object) {
+        return getValueFor(object, TreeRenderer.this.childrenMap, getChildren());
+    }
+    
+    protected String getClassFor(Object object) {
+        return getValueFor(object, TreeRenderer.this.classesMap, getItemClass());
+    }
+    
+    protected String getStyleFor(Object object) {
+        return getValueFor(object, TreeRenderer.this.styleMap, null);
+    }
+    
+    protected String getLinksFor(Object object) {
+        return getValueFor(object, TreeRenderer.this.linksMap, getLinks());
+    }
+    
+    protected String getHiddenLinksFor(Object object) {
+        return getValueFor(object, TreeRenderer.this.hiddenLinksMap, getHiddenLinks());
+    }
+
+    protected String getImageFor(Object object) {
+        return getValueFor(object, TreeRenderer.this.imagesMap, getImage());
+    }
+
+    protected String getSchemaFor(Object object) {
+        return getValueFor(object, TreeRenderer.this.schemasMap, getEachSchema());
+    }
+
+    protected String getLayoutFor(Object object) {
+        return getValueFor(object, TreeRenderer.this.layoutsMap, getEachLayout());
+    }
+
+    protected String getValueFor(Object object, Map<String, String> map, String defaultValue) {
+        String value = null;
+        String key = null;
         
-        private String getStyleFor(Object object) {
-            return getValueFor(object, TreeRenderer.this.styleMap, null);
-        }
-        
-        private String getLinksFor(Object object) {
-            return getValueFor(object, TreeRenderer.this.linksMap, getLinks());
-        }
-        
-        private String getHiddenLinksFor(Object object) {
-            return getValueFor(object, TreeRenderer.this.hiddenLinksMap, getHiddenLinks());
-        }
-
-        private String getImageFor(Object object) {
-            return getValueFor(object, TreeRenderer.this.imagesMap, getImage());
-        }
-
-        private String getSchemaFor(Object object) {
-            return getValueFor(object, TreeRenderer.this.schemasMap, getEachSchema());
-        }
-
-        private String getLayoutFor(Object object) {
-            return getValueFor(object, TreeRenderer.this.layoutsMap, getEachLayout());
-        }
-
-        private String getValueFor(Object object, Map<String, String> map, String defaultValue) {
-            String value = null;
-            String key = null;
-            
-            for (String type : map.keySet()) {
-                if (object.getClass().getName().contains(type)) {
-                    if (key == null || key.length() < type.length()) {
-                        key = type;
-                        value = map.get(key);
-                    }
+        for (String type : map.keySet()) {
+            if (object.getClass().getName().contains(type)) {
+                if (key == null || key.length() < type.length()) {
+                    key = type;
+                    value = map.get(key);
                 }
             }
-            
-            if (value == null) {
-                value = defaultValue;
-            }
-            
-            return value;
         }
+        
+        if (value == null) {
+            value = defaultValue;
+        }
+        
+        return value;
     }
 }

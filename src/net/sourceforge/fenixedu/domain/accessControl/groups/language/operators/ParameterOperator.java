@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.domain.accessControl.groups.language.operators;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.Argument;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.GroupContextProvider;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.OperatorArgument;
+import net.sourceforge.fenixedu.domain.accessControl.groups.language.exceptions.GroupDynamicExpressionException;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.exceptions.WrongNumberOfArgumentsException;
 
 /**
@@ -20,17 +21,36 @@ public class ParameterOperator extends OperatorArgument {
     private static final long serialVersionUID = 1L;
 
     public static final int NAME = 0;
+
+    private boolean required;
     
     public ParameterOperator(Argument name) {
         super();
         
         addArgument(name);
+        setRequired(false);
     }
 
     ParameterOperator(GroupContextProvider provider, Argument argument) {
         this(argument);
         
         setContextProvider(provider);
+    }
+
+    /**
+     * @return the required state for the parameter argument
+     */
+    public boolean isRequired() {
+        return this.required;
+    }
+
+    /**
+     * Indicates if the parameter is required. When the parameter is required and 
+     * this argument is evaluated, if the parameter is not available in the current
+     * context an error is reported.
+     */
+    public void setRequired(boolean required) {
+        this.required = required;
     }
 
     @Override
@@ -44,7 +64,14 @@ public class ParameterOperator extends OperatorArgument {
 
     @Override
     protected String execute() {
-        return getContext().getParameter(getParameterName());
+        String value = getContext().getParameter(getParameterName());
+        
+        if (value == null || isRequired()) {
+            throw new GroupDynamicExpressionException("accessControl.group.expression.operator.parameter.required", getParameterName());
+        }
+        else {
+            return value;
+        }
     }
 
     protected String getParameterName() {

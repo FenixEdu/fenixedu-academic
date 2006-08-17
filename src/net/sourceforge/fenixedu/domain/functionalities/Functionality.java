@@ -8,6 +8,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.accessControl.AccessControl;
 import net.sourceforge.fenixedu.applicationTier.Servico.manager.functionalities.MoveFunctionality.Movement;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.exceptions.FieldIsRequiredException;
@@ -66,11 +67,10 @@ public abstract class Functionality extends Functionality_Base {
      * @see #setName()
      * @see #setPath()
      */
-    public Functionality(MultiLanguageString name, String path) {
+    public Functionality(MultiLanguageString name) {
         this();
 
         setName(name);
-        setPath(path);
     }
 
     /**
@@ -89,13 +89,15 @@ public abstract class Functionality extends Functionality_Base {
         super.setName(name);
     }
 
-    @Override
-    public void setPath(String path) {
-        if (path == null) {
-            throw new FieldIsRequiredException("path", "functionalities.functionality.required.path");
-        }
+    /**
+     * @return the {@link #getPath() current path} but ensuring that starts but
+     *         does not end with "/"
+     */
+    protected String getNormalizedPath() {
+        String path = getPath();
 
-        super.setPath(path);
+        int end = path.endsWith("/") ? path.length() - 1 : path.length();
+        return (path.startsWith("/") ? "" : "/") + path.substring(0, end);
     }
 
     /**
@@ -124,10 +126,10 @@ public abstract class Functionality extends Functionality_Base {
     }
 
     /**
-     * The method folows the hierarchy of the functionalities to determine the
-     * final public path through wich the functionality is available. This takes
-     * in account the module structure and if functionalities are relative or
-     * not, that is, if the path is relative the the parent structure or not.
+     * The method follows the hierarchy of the functionalities to determine the
+     * final public path through which the functionality is available. This
+     * takes in account the module structure and if functionalities are relative
+     * or not, that is, if the path is relative the the parent structure or not.
      * 
      * @return the path that should be publicly used to access the functionality
      * 
@@ -136,13 +138,36 @@ public abstract class Functionality extends Functionality_Base {
      */
     public String getPublicPath() {
         if (!isRelative()) {
-            return getPath();
+            return getNormalizedPath();
         } else {
             if (!hasModule()) {
-                return getPath();
+                return getNormalizedPath();
             } else {
-                return getModule().getPublicPath() + getPath();
+                return getModule().getPublicPrefix() + getNormalizedPath();
             }
+        }
+    }
+
+    /**
+     * The match path is the portion of the functionality
+     * {@link #getPublicPath() public path} used to match agains the requested
+     * path.
+     * 
+     * @return the path that should be used to match this functionality agains
+     *         the requested path or <code>null</code> if it does not have one
+     */
+    public String getMatchPath() {
+        if (getPath() == null || getPath().trim().length() == 0) {
+            return null;
+        }
+
+        String path = getPublicPath();
+
+        int queryStartIndex = path.lastIndexOf('?');
+        if (queryStartIndex != -1) {
+            return path.substring(0, queryStartIndex);
+        } else {
+            return path;
         }
     }
 
@@ -293,8 +318,30 @@ public abstract class Functionality extends Functionality_Base {
         if (getAvailabilityPolicy() != null && getAvailabilityPolicy() != availabilityPolicy) {
             getAvailabilityPolicy().delete();
         }
-        
+
         super.setAvailabilityPolicy(availabilityPolicy);
+    }
+
+    /**
+     * @see #isEnabled()
+     */
+    @Override
+    @Deprecated
+    public boolean getEnabled() {
+        return super.getEnabled();
+    }
+
+    /**
+     * Indicates if a functionality is generally available for use. A disabled
+     * functionality is never available despite what the current availability
+     * policy is. When a functionality is enabled then it is availability is
+     * defined by the current availability policy.
+     * 
+     * @return <code>true</code> if this functionality is available for
+     *         general use
+     */
+    public boolean isEnabled() {
+        return super.getEnabled();
     }
 
     /**
@@ -425,6 +472,102 @@ public abstract class Functionality extends Functionality_Base {
         if (closest != null) {
             moveToModule(closest);
         }
+    }
+
+    /**
+     * Checks is this functionality is available for the given person and
+     * context, that is, if the person may start the usecase pointed by this
+     * functionality.
+     * 
+     * <p>
+     * A functionality is available when:
+     * <ul>
+     * <li>it is {@link #isEnabled() enabled};</li>
+     * <li>all the parameters defined for the functionality are available in
+     * the context;</li>
+     * <li>all the parent modules are available;</li>
+     * <li>the defined availability policy allows the given person to access
+     * the functionality;</li>
+     * </ul>
+     * 
+     * @param context
+     *            the current functionality context
+     * @param person
+     *            the person accessing the functionality or <code>null</code>
+     *            if it's a public requester
+     * 
+     * @return <code>true</code> if the functionality is available for the
+     *         given person
+     */
+    public boolean isAvailable(FunctionalityContext context, Person person) {
+        if (context == null) {
+            return true;
+        }
+
+        if (!isEnabled()) {
+            return false;
+        }
+
+        if (!hasRequiredParameters(context)) {
+            return false;
+        }
+
+        if (getModule() != null && !getModule().isAvailable(context, person)) {
+            return false;
+        }
+
+        if (getAvailabilityPolicy() == null) {
+            return true;
+        }
+
+        return getAvailabilityPolicy().isAvailable(context, person);
+    }
+
+    /**
+     * Checks is this functionality is visible for the given person and context.
+     * This method may be used to decide if a certain functionality is displayed
+     * in the interface or not.
+     * 
+     * @param context
+     *            the current context
+     * @param person
+     *            the accessing the functionality or <code>null</code> if it's
+     *            the public requester
+     * 
+     * @return <code>true</code> if the functionality should be displayed to
+     *         the user
+     */
+    public boolean isVisible(FunctionalityContext context, Person person) {
+        return isAvailable(context, person);
+    }
+
+    /**
+     * Checks if all the parameters required by the
+     * {@link #getFunctionality() functionality} are present in the given
+     * context. A parameter is present in the context if the current request
+     * contains a <code>null</code> for that parameter.
+     * 
+     * <p>
+     * If the functionality {@link Functionality#isParameterized()} is not
+     * parameterized then, by definition, the context has all the required
+     * parameters.
+     * 
+     * @param context
+     *            the context used to check for parameter existance
+     * @return <code>true</code> if the functionality is not parameterized or
+     *         if the current request, available from the given context,
+     *         contains all the required parameters
+     */
+    protected boolean hasRequiredParameters(FunctionalityContext context) {
+        if (isParameterized()) {
+            for (String parameter : getParameterList()) {
+                if (context.getRequest().getParameter(parameter) == null) {
+                    return false;
+                }
+            }
+        }
+
+        return true;
     }
 
     /**
@@ -615,8 +758,10 @@ public abstract class Functionality extends Functionality_Base {
      *            the group expression used to the create the new group
      *            availability
      */
-    public static void setGroupAvailability(Functionality functionality, String expression) throws Exception {
+    public static void setGroupAvailability(Functionality functionality, String expression)
+            throws Exception {
         ServiceUtils.executeService(AccessControl.getUserView(), "CreateGroupAvailability",
                 functionality, expression);
     }
+
 }

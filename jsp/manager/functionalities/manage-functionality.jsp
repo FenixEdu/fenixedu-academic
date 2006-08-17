@@ -16,8 +16,9 @@
         <fr:view name="crumb" property="name"/>
     </html:link> &gt;
 </logic:iterate>
-
-<fr:view name="functionality" property="name"/>
+<html:link page="/functionality/view.do" paramId="functionality" paramName="functionality" paramProperty="idInternal">
+    <fr:view name="functionality" property="name"/>
+</html:link>
 
 <!-- ======================
          information
@@ -64,6 +65,14 @@
                 </fr:view>
             </logic:present>
         </div>
+    </div>
+</logic:messagesPresent>
+
+<logic:messagesPresent property="expression" message="true">
+    <div>
+        <html:messages id="confirmationMessage" property="expression" message="true" bundle="FUNCTIONALITY_RESOURCES">
+            <bean:write name="confirmationMessage"/>
+        </html:messages>
     </div>
 </logic:messagesPresent>
 

@@ -164,6 +164,26 @@
             <param-value>true</param-value> 
         </init-param>
     </filter>
+    <filter>
+        <filter-name>FunctionalityAccessFilter</filter-name>
+        <description>
+            This filter is used to check a requested path agains the model of functionalities. 
+            The request proceeds normally if the path is not mapped in the model or if the targeted 
+            functionality does not have an availability policy defined.
+        </description>
+        <filter-class>net.sourceforge.fenixedu.presentationTier.servlets.filters.functionalities.CheckAvailabilityFilter</filter-class>
+        <init-param>
+            <!-- the value of this param MUST be the same as the prefix for the url-pattern below 
+                 but without the trailing /
+              -->
+            <param-name>testing.prefix</param-name>
+            <param-value>/manager/functionalities/test</param-value>
+        </init-param>
+        <init-param>
+            <param-name>error.page</param-name>
+            <param-value>/manager/functionalities/error/notAvailable.do</param-value>
+        </init-param>
+    </filter>
     	
 	<!-- Filter Mapping -->
     <filter-mapping>
@@ -252,6 +272,10 @@
 	    <url-pattern>/login.do</url-pattern>
     </filter-mapping>
     
+    <filter-mapping>
+        <filter-name>FunctionalityAccessFilter</filter-name>
+        <url-pattern>/manager/functionalities/test/*</url-pattern>
+    </filter-mapping>
 
     <!-- Listeners -->
 	<listener>

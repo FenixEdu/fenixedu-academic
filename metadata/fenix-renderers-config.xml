@@ -183,6 +183,14 @@ Documentation:
     <!--@ The tree layout allows a collection to be presented as a tree, that is, were you specify how an hierarchy is
           formed and a structure made by lists inside lists is created. -->
     <renderer type="java.util.Collection" layout="tree" class="net.sourceforge.fenixedu.presentationTier.renderers.TreeRenderer" />
+    <renderer type="java.util.Collection" layout="functionalities-tree" class="net.sourceforge.fenixedu.presentationTier.renderers.FunctionalitiesTreeRenderer">
+        <property name="moduleEnabledImage" value="/images/functionalities/folder.gif"/>
+        <property name="moduleDisabledImage" value="/images/functionalities/folder-disabled.gif"/>
+        <property name="functionalityEnabledImage" value="/images/functionalities/sheet.gif"/>
+        <property name="functionalityDisabledImage" value="/images/functionalities/sheet-disabled.gif"/>
+        <property name="enabledClass" value="fEnabled"/>
+        <property name="disabledClass" value="fDisabled"/>
+    </renderer>
 
     <!--@ The default layout for a list really creates an html list were each object is presented in a list item. -->
     <renderer type="java.util.List" class="net.sourceforge.fenixedu.renderers.ListRenderer"/>
@@ -195,6 +203,10 @@ Documentation:
     		<property name="bundleName(default)" value="APPLICATION_RESOURCES"/>
     </renderer>
     
+    <renderer type="net.sourceforge.fenixedu.domain.functionalities.GroupAvailability" layout="textual" class="net.sourceforge.fenixedu.renderers.FormatRenderer">
+        <property name="format" value="${expression}"/>
+    </renderer>
+
     <!-- input -->
 
     <!--@ The default layout for editing objects.  -->  

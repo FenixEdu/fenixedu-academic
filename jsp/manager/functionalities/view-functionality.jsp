@@ -34,9 +34,15 @@
     <bean:message key="link.functionality.edit" bundle="FUNCTIONALITY_RESOURCES"/>
 </html:link>
 
-<html:link page="/functionality/delete.do" paramId="functionality" paramName="functionality" paramProperty="idInternal">
+<html:link page="/functionality/confirm.do" paramId="functionality" paramName="functionality" paramProperty="idInternal">
     <bean:message key="link.functionality.delete" bundle="FUNCTIONALITY_RESOURCES"/>
 </html:link>
+
+<!-- ======================
+          availability
+     ======================  -->
+
+<fr:view name="functionality" layout="tabular" schema="functionalities.functionality.availability"/>
 
 <html:link page="/functionality/manage.do" paramId="functionality" paramName="functionality" paramProperty="idInternal">
     <bean:message key="link.functionality.manage" bundle="FUNCTIONALITY_RESOURCES"/>

@@ -3687,6 +3687,8 @@ class net.sourceforge.fenixedu.domain.functionalities.Functionality extends net.
 	
 	class net.sourceforge.fenixedu.domain.functionalities.Module extends net.sourceforge.fenixedu.domain.functionalities.Functionality {
 		Integer keyParent;
+		
+		String prefix;
 	}
 
 class net.sourceforge.fenixedu.domain.functionalities.AvailabilityPolicy extends net.sourceforge.fenixedu.domain.DomainObject {

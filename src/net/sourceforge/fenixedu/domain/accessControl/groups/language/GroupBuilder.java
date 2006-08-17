@@ -5,7 +5,7 @@ import net.sourceforge.fenixedu.domain.accessControl.Group;
 /**
  * Interface that must be implemented for any builder that needs to participate
  * in a group expression. The builder must indicate the number of arguments it
- * supports to facilite on error detection and report.
+ * expects to improve error detection and report during the expression parsing.
  * 
  * @author cfgi
  */

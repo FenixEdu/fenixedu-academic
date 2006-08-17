@@ -6,7 +6,6 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.applicationTier.Servico.manager.functionalities.MoveFunctionality;
 import net.sourceforge.fenixedu.applicationTier.Servico.manager.functionalities.MoveFunctionality.Movement;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.exceptions.GroupExpressionException;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.functionalities.Functionality;
 import net.sourceforge.fenixedu.domain.functionalities.GroupAvailability;
 import net.sourceforge.fenixedu.domain.functionalities.Module;
@@ -157,6 +156,7 @@ public class FunctionalityManagementAction extends FunctionalitiesDispatchAction
             Functionality.setGroupAvailability(functionality, bean.getExpression());
             RenderUtils.invalidateViewState();
 
+            addMessage(request, "expression", "functionalities.expression.success");
             return manage(mapping, actionForm, request, response);
         } catch (GroupExpressionException e) {
             createParserReport(request, e, bean);
@@ -179,6 +179,12 @@ public class FunctionalityManagementAction extends FunctionalitiesDispatchAction
         saveMessages(request, messages);
     }
 
+    private void addMessage(HttpServletRequest request, String name, String key) {
+        ActionMessages messages = getMessages(request);
+        messages.add(name, new ActionMessage(key));
+        saveMessages(request, messages);
+    }
+    
     private void createParserReport(HttpServletRequest request, GroupExpressionException e, ExpressionBean bean) {
         createMessage(request, "error", e);
         

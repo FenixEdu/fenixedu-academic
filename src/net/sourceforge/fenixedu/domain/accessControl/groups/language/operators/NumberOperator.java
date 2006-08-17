@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.domain.accessControl.groups.language.operators;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.Argument;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.GroupContextProvider;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.OperatorArgument;
+import net.sourceforge.fenixedu.domain.accessControl.groups.language.exceptions.GroupDynamicExpressionException;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.exceptions.NumberTypeNotSupported;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.exceptions.WrongNumberOfArgumentsException;
 
@@ -74,8 +75,7 @@ public class NumberOperator extends OperatorArgument {
     @Override
     protected Number execute() {
         ParameterOperator parameter = getParameterOperator();
-
-        return convertNumber(String.valueOf(parameter.getValue()));
+        return convertNumber(parameter.getValue().toString());
     }
 
     /**
@@ -83,7 +83,8 @@ public class NumberOperator extends OperatorArgument {
      */
     protected ParameterOperator getParameterOperator() {
         if (this.parameter == null) {
-            this.parameter = new ParameterOperator(this, getArguments().get(PARAMETER));
+            this.parameter = new ParameterOperator((GroupContextProvider) this, getArguments().get(PARAMETER));
+            this.parameter.setRequired(true);
         }
 
         return this.parameter;
@@ -98,25 +99,33 @@ public class NumberOperator extends OperatorArgument {
      * @return the the value as a number of the asked type
      */
     protected Number convertNumber(String value) {
+        if (value == null || value.length() == 0) {
+            return null;
+        }
+        
         SupportedType type = getGivenType();
 
         if (type == null) {
             type = SupportedType._int;
         }
 
-        switch (type) {
-        case _short:
-            return new Short(value);
-        case _int:
-            return new Integer(value);
-        case _long:
-            return new Byte(value);
-        case _float:
-            return new Float(value);
-        case _double:
-            return new Double(value);
-        default:
-            throw new RuntimeException();
+        try {
+            switch (type) {
+            case _short:
+                return new Short(value);
+            case _int:
+                return new Integer(value);
+            case _long:
+                return new Byte(value);
+            case _float:
+                return new Float(value);
+            case _double:
+                return new Double(value);
+            default:
+                throw new RuntimeException();
+            }
+        } catch (NumberFormatException e) {
+            throw new GroupDynamicExpressionException("accessControl.group.expression.operator.number.invalid", value);
         }
     }
 
@@ -131,7 +140,7 @@ public class NumberOperator extends OperatorArgument {
         String type = String.valueOf(getArguments().get(TYPE).getValue());
         
         try {
-            return SupportedType.valueOf(type);
+            return SupportedType.valueOf("_" + type);
         } catch (IllegalArgumentException e) {
             throw new NumberTypeNotSupported(type);
         }
