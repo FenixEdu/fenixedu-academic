@@ -1428,3 +1428,7 @@
 		<property name="columns" value="60"/>
 	</slot>
 </schema>
+<schema name="result.publication.Unstructured" type="net.sourceforge.fenixedu.domain.research.result.publication.Unstructured" bundle="RESEARCHER_RESOURCES">
+	<slot name="title"/>
+ 	<slot name="year"/>	
+</schema>

@@ -17,6 +17,7 @@
   <extent-class class-ref="net.sourceforge.fenixedu.domain.research.result.publication.Booklet" />
   <extent-class class-ref="net.sourceforge.fenixedu.domain.research.result.publication.Misc" />
   <extent-class class-ref="net.sourceforge.fenixedu.domain.research.result.publication.Unpublished" />
+  <extent-class class-ref="net.sourceforge.fenixedu.domain.research.result.publication.Unstructured" />
 </class-descriptor>
 
 <class-descriptor class="net.sourceforge.fenixedu.domain.research.result.publication.ConferenceArticles" table="RESULT">
@@ -35,6 +36,7 @@
 <class-descriptor class="net.sourceforge.fenixedu.domain.research.result.publication.Booklet" table="RESULT"/>
 <class-descriptor class="net.sourceforge.fenixedu.domain.research.result.publication.Misc" table="RESULT"/>
 <class-descriptor class="net.sourceforge.fenixedu.domain.research.result.publication.Unpublished" table="RESULT"/>
+<class-descriptor class="net.sourceforge.fenixedu.domain.research.result.publication.Unstructured" table="RESULT"/>
 
 <class-descriptor class="net.sourceforge.fenixedu.domain.research.result.ResultParticipation" table="RESULT_PARTICIPATION"/>
 <class-descriptor class="net.sourceforge.fenixedu.domain.research.result.ResultEventAssociation" table="RESULT_EVENT_ASSOCIATION"/>

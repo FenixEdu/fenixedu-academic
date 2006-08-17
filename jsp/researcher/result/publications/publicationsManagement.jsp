@@ -224,6 +224,17 @@
 		</logic:iterate>
 	</logic:notEmpty>
 
+	<logic:notEmpty name="unstructureds">
+		<h3 id='unstructureds' class='cd_heading'/> <span> <bean:message bundle="RESEARCHER_RESOURCES" key="researcher.result.publication.unstructureds"/> </span> </h3>
+		<logic:iterate id="unstructured" name="unstructureds">
+			<bean:define id="unstructuredId" name="unstructured" property="idInternal"/>
+			<fr:view name="unstructured" layout="tabular" schema="result.publication.Unstructured"/>
+			<html:link page="<%="/publications/publicationsManagement.do?method=prepareViewEditPublication&publicationId="+ unstructuredId%>"><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.result.publication.convertUnstructured" /></html:link>&nbsp;&nbsp;&nbsp;
+			<html:link page="<%="/publications/publicationsManagement.do?method=prepareDeletePublication&publicationId="+ unstructuredId%>"><bean:message bundle="RESEARCHER_RESOURCES" key="link.remove" /></html:link>
+			<br /><br />
+		</logic:iterate>
+	</logic:notEmpty>
+
 	<br />	<br />
 	<html:link page="/publications/publicationsManagement.do?method=prepareCreatePublication"><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.result.publication.publicationsManagement.insertPublication" /></html:link>
 </logic:present>

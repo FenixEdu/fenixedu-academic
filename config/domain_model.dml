@@ -3469,7 +3469,8 @@ class net.sourceforge.fenixedu.domain.research.result.Result extends net.sourcef
 			String address;
 		}
 		class net.sourceforge.fenixedu.domain.research.result.publication.Unpublished extends net.sourceforge.fenixedu.domain.research.result.publication.ResultPublication {
-			//no more attributes
+		}
+		class net.sourceforge.fenixedu.domain.research.result.publication.Unstructured extends net.sourceforge.fenixedu.domain.research.result.publication.ResultPublication {
 		}
 
 	class net.sourceforge.fenixedu.domain.research.result.patent.ResultPatent extends net.sourceforge.fenixedu.domain.research.result.Result {
