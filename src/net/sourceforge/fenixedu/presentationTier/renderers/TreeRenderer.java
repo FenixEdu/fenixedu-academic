@@ -722,11 +722,11 @@ public class TreeRenderer extends OutputRenderer {
 
                     if (hiddenLinksForItem != null) {
                         HtmlContainer hiddenContainer = new HtmlInlineContainer();
-                        hiddenContainer.addChild(new HtmlText(RenderUtils.getFormattedProperties(hiddenLinksForItem, object)));
+                        hiddenContainer.addChild(new HtmlText(RenderUtils.getFormattedProperties(hiddenLinksForItem, object), false));
                         linksContainer.addChild(hiddenContainer);
                     }
                     
-                    linksContainer.addChild(new HtmlText(RenderUtils.getFormattedProperties(linksForItem, object)));
+                    linksContainer.addChild(new HtmlText(RenderUtils.getFormattedProperties(linksForItem, object), false));
                     item.addChild(linksContainer);
                 }
                 
