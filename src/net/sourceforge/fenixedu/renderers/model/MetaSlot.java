@@ -202,7 +202,12 @@ public class MetaSlot extends MetaObject {
      * @return this slot's type
      */
     public Class getType() {
-        return RendererPropertyUtils.getPropertyType(getMetaObject().getType(), getName());
+        if (getObject() != null) {
+            return getObject().getClass();
+        }
+        else {
+            return RendererPropertyUtils.getPropertyType(getMetaObject().getType(), getName());
+        }
     }
 
     /**
