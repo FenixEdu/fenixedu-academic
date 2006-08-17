@@ -4,6 +4,7 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.research.result.ResultParticipation.ResultParticipationRole;
+import net.sourceforge.fenixedu.util.Month;
 
 /**
  * A report published by a school or other institution, usually numbered within a series.
@@ -39,5 +40,18 @@ public class TechnicalReport extends TechnicalReport_Base {
         setTitle(title);
         setOrganization(institution);
         setYear(year);
+    }
+    
+    public void setNonRequiredAttributes(String technicalReportType, String number, String address,
+            String note, Integer numberPages, String language, Month month, String url) {
+
+        this.setTechnicalReportType(technicalReportType);
+        this.setNumber(number);
+        this.setAddress(address);
+        this.setNote(note);
+        this.setNumberPages(numberPages);
+        this.setLanguage(language);
+        this.setMonth(month);
+        this.setUrl(url);
     }
 }

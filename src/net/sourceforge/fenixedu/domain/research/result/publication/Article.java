@@ -1,8 +1,11 @@
 package net.sourceforge.fenixedu.domain.research.result.publication;
 
+import net.sourceforge.fenixedu.domain.Country;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.research.result.ResultParticipation.ResultParticipationRole;
+import net.sourceforge.fenixedu.util.Month;
 
 /**
  *  An article from a journal or magazine.
@@ -39,5 +42,21 @@ public class Article extends Article_Base {
         setTitle(title);
         setJournal(journal);
         setYear(year);
+    }
+    
+    public void setNonRequiredAttributes(Unit publisher, String volume, String number, Integer firstPage, Integer lastPage,
+            String note, Integer issn, String language, Country country, ScopeType scope, Month month, String url) {
+        this.setPublisher(publisher);
+        this.setVolume(volume);
+        this.setNumber(number);
+        this.setFirstPage(firstPage);
+        this.setLastPage(lastPage);
+        this.setNote(note);
+        this.setIssn(issn);
+        this.setLanguage(language);
+        this.setCountry(country);
+        this.setScope(scope);
+        this.setMonth(month);
+        this.setUrl(url);
     }
 }

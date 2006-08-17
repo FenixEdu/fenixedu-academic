@@ -2,8 +2,10 @@ package net.sourceforge.fenixedu.domain.research.result.publication;
 
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.research.event.Event;
 import net.sourceforge.fenixedu.domain.research.result.ResultParticipation.ResultParticipationRole;
+import net.sourceforge.fenixedu.util.Month;
 
 /**
  * (conference: The same as Inproceedings.)
@@ -44,5 +46,19 @@ public class Inproceedings extends Inproceedings_Base {
         setBookTitle(bookTitle);
         setYear(year);
         setEvent(event);
+    }
+    
+    public void setNonRequiredAttributes(Unit publisher, Unit organization, String address,
+            Integer firstPage, Integer lastPage, String note, String language, Month month, String url) {
+
+        this.setPublisher(publisher);
+        this.setOrganization(organization);
+        this.setAddress(address);
+        this.setFirstPage(firstPage);
+        this.setLastPage(lastPage);
+        this.setNote(note);
+        this.setLanguage(language);
+        this.setMonth(month);
+        this.setUrl(url);
     }
 }

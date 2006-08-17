@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.domain.research.result.publication;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.research.result.ResultParticipation.ResultParticipationRole;
+import net.sourceforge.fenixedu.util.Month;
 
 /**
  * A document with an author and title, but not formally published.
@@ -36,4 +37,10 @@ public class Unpublished extends Unpublished_Base {
         setNote(note);
     }
     
+    public void setNonRequiredAttributes(Integer year, Month month, String url) {
+
+        this.setYear(year);
+        this.setMonth(month);
+        this.setUrl(url);
+    }
 }

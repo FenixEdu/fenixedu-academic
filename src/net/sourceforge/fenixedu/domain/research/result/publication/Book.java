@@ -1,13 +1,11 @@
 package net.sourceforge.fenixedu.domain.research.result.publication;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import net.sourceforge.fenixedu.domain.Country;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
-import net.sourceforge.fenixedu.domain.research.result.ResultParticipation;
 import net.sourceforge.fenixedu.domain.research.result.ResultParticipation.ResultParticipationRole;
+import net.sourceforge.fenixedu.util.Month;
 
 /**
  * A book with an explicit publisher.
@@ -46,4 +44,21 @@ public class Book extends Book_Base {
         setYear(year);
     }
     
+    public void setNonRequiredAttributes(String volume, String series, String address, String edition,
+            Integer isbn, Integer numberPages, String language, Country country, ScopeType scope,
+            String note, Month month, String url) {
+
+        this.setVolume(volume);
+        this.setSeries(series);
+        this.setAddress(address);
+        this.setEdition(edition);
+        this.setIsbn(isbn);
+        this.setNumberPages(numberPages);
+        this.setLanguage(language);
+        this.setCountry(country);
+        this.setScope(scope);
+        this.setNote(note);
+        this.setMonth(month);
+        this.setUrl(url);
+    }
 }

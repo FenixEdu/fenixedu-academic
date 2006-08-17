@@ -2,7 +2,9 @@ package net.sourceforge.fenixedu.domain.research.result.publication;
 
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.research.result.ResultParticipation.ResultParticipationRole;
+import net.sourceforge.fenixedu.util.Month;
 
 /**
  * Technical documentation.
@@ -32,5 +34,17 @@ public class Manual extends Manual_Base {
             throw new DomainException("error.publication.missingRequiredFields");
         
         setTitle(title);
+    }
+    
+    public void setNonRequiredAttributes(Unit organization, Integer year, String address, String note,
+            String edition, Month month, String url) {
+
+        this.setOrganization(organization);
+        this.setYear(year);
+        this.setAddress(address);
+        this.setNote(note);
+        this.setEdition(edition);
+        this.setMonth(month);
+        this.setUrl(url);
     }
 }

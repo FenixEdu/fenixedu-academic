@@ -1,8 +1,11 @@
 package net.sourceforge.fenixedu.domain.research.result.publication;
 
+import net.sourceforge.fenixedu.domain.Country;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.research.result.ResultParticipation.ResultParticipationRole;
+import net.sourceforge.fenixedu.util.Month;
 
 /**
  * Use this type when nothing else fits.
@@ -34,5 +37,22 @@ public class Misc extends Misc_Base {
             throw new DomainException("error.publication.missingRequiredFields");
         
         setTitle(title);
+    }
+    
+    public void setNonRequiredAttributes(Unit publisher, Integer year, String howPublished, String note,
+            String address, String otherPublicationType, Integer numberPages, String language,
+            Country country, Month month, String url) {
+
+        this.setPublisher(publisher);
+        this.setYear(year);
+        this.setHowPublished(howPublished);
+        this.setNote(note);
+        this.setAddress(address);
+        this.setOtherPublicationType(otherPublicationType);
+        this.setNumberPages(numberPages);
+        this.setLanguage(language);
+        this.setCountry(country);
+        this.setMonth(month);
+        this.setUrl(url);
     }
 }

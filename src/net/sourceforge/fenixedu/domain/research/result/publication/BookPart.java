@@ -1,9 +1,11 @@
 package net.sourceforge.fenixedu.domain.research.result.publication;
 
+import net.sourceforge.fenixedu.domain.Country;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.research.result.ResultParticipation.ResultParticipationRole;
+import net.sourceforge.fenixedu.util.Month;
 
 
 /**
@@ -122,6 +124,30 @@ public class BookPart extends BookPart_Base {
         setBookTitle(bookTitle);
         setPublisher(publisher);
         setYear(year);
+    }
+    
+    public void setInbookNonRequiredAttributes(String volume, String series, String edition,
+            Country country, String address, String note, Month month, String url) {
+        this.setVolume(volume);
+        this.setSeries(series);
+        this.setEdition(edition);
+        this.setCountry(country);
+        this.setAddress(address);
+        this.setNote(note);
+        this.setMonth(month);
+        this.setUrl(url);
+    }
+
+    public void setIncollectionNonRequiredAttributes(Integer firstPage, Integer lastPage,
+            Unit organization, Country country, String address, String note, Month month, String url) {
+        this.setFirstPage(firstPage);
+        this.setLastPage(lastPage);
+        this.setOrganization(organization);
+        this.setCountry(country);
+        this.setAddress(address);
+        this.setNote(note);
+        this.setMonth(month);
+        this.setUrl(url);
     }
 
     public enum BookPartType {

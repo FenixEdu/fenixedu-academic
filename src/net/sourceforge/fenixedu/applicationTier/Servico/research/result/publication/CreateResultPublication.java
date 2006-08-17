@@ -16,19 +16,10 @@ public class CreateResultPublication extends ResultPublicationService {
                 .getTitle(), getPublisher(bookBean), bookBean.getYear());
 
         // fill optional fields
-        book.setVolume(bookBean.getVolume());
-        book.setSeries(bookBean.getSeries());
-        book.setAddress(bookBean.getAddress());
-        book.setEdition(bookBean.getEdition());
-        book.setIsbn(bookBean.getIsbn());
-        book.setNumberPages(bookBean.getNumberPages());
-        book.setLanguage(bookBean.getLanguage());
-        book.setCountry(bookBean.getCountry());
-        book.setScope(bookBean.getScope());
-        book.setNote(bookBean.getNote());
-        book.setMonth(bookBean.getMonth());
-        book.setUrl(bookBean.getUrl());
-        book.setModificationDateAndAuthor();
+        book.setNonRequiredAttributes(bookBean.getVolume(), bookBean.getSeries(), bookBean.getAddress(),
+                bookBean.getEdition(), bookBean.getIsbn(), bookBean.getNumberPages(), bookBean
+                        .getLanguage(), bookBean.getCountry(), bookBean.getScope(), bookBean.getNote(),
+                bookBean.getMonth(), bookBean.getUrl());
 
         return book;
     }
@@ -53,10 +44,9 @@ public class CreateResultPublication extends ResultPublicationService {
                 bookPartBean.getBookTitle(), getPublisher(bookPartBean), bookPartBean.getYear());
 
         // fill optional fields
-        bookPart.setFirstPage(bookPartBean.getFirstPage());
-        bookPart.setLastPage(bookPartBean.getLastPage());
-        bookPart.setOrganization(getOrganization(bookPartBean));
-        setBookPartCommonFields(bookPart, bookPartBean);
+        bookPart.setIncollectionNonRequiredAttributes(bookPartBean.getFirstPage(), bookPartBean
+                .getLastPage(), getOrganization(bookPartBean), bookPartBean.getCountry(), bookPartBean
+                .getAddress(), bookPartBean.getNote(), bookPartBean.getMonth(), bookPartBean.getUrl());
         return bookPart;
     }
 
@@ -68,20 +58,10 @@ public class CreateResultPublication extends ResultPublicationService {
                 getPublisher(bookPartBean), bookPartBean.getYear());
 
         // fill optional fields
-        bookPart.setVolume(bookPartBean.getVolume());
-        bookPart.setSeries(bookPartBean.getSeries());
-        bookPart.setEdition(bookPartBean.getEdition());
-        setBookPartCommonFields(bookPart, bookPartBean);
+        bookPart.setInbookNonRequiredAttributes(bookPartBean.getVolume(), bookPartBean.getSeries(),
+                bookPartBean.getEdition(), bookPartBean.getCountry(), bookPartBean.getAddress(),
+                bookPartBean.getNote(), bookPartBean.getMonth(), bookPartBean.getUrl());
         return bookPart;
-    }
-
-    private void setBookPartCommonFields(BookPart bookPart, BookPartBean bookPartBean) {
-        bookPart.setCountry(bookPartBean.getCountry());
-        bookPart.setAddress(bookPartBean.getAddress());
-        bookPart.setNote(bookPartBean.getNote());
-        bookPart.setMonth(bookPartBean.getMonth());
-        bookPart.setUrl(bookPartBean.getUrl());
-        bookPart.setModificationDateAndAuthor();
     }
 
     public Article run(ArticleBean articleBean) {
@@ -93,19 +73,10 @@ public class CreateResultPublication extends ResultPublicationService {
                 .getJournal(), articleBean.getYear());
 
         // fill optional fields
-        article.setPublisher(getPublisher(articleBean));
-        article.setVolume(articleBean.getVolume());
-        article.setNumber(articleBean.getNumber());
-        article.setFirstPage(articleBean.getFirstPage());
-        article.setLastPage(articleBean.getLastPage());
-        article.setNote(articleBean.getNote());
-        article.setIssn(articleBean.getIssn());
-        article.setLanguage(articleBean.getLanguage());
-        article.setCountry(articleBean.getCountry());
-        article.setScope(articleBean.getScope());
-        article.setMonth(articleBean.getMonth());
-        article.setUrl(articleBean.getUrl());
-        article.setModificationDateAndAuthor();
+        article.setNonRequiredAttributes(getPublisher(articleBean), articleBean.getVolume(), articleBean
+                .getNumber(), articleBean.getFirstPage(), articleBean.getLastPage(), articleBean
+                .getNote(), articleBean.getIssn(), articleBean.getLanguage(), articleBean.getCountry(),
+                articleBean.getScope(), articleBean.getMonth(), articleBean.getUrl());
 
         return article;
     }
@@ -127,16 +98,11 @@ public class CreateResultPublication extends ResultPublicationService {
                 .getBookTitle(), inproceedingsBean.getYear(), event);
 
         // fill optional fields
-        inproceedings.setPublisher(getPublisher(inproceedingsBean));
-        inproceedings.setOrganization(getOrganization(inproceedingsBean));
-        inproceedings.setAddress(inproceedingsBean.getAddress());
-        inproceedings.setFirstPage(inproceedingsBean.getFirstPage());
-        inproceedings.setLastPage(inproceedingsBean.getLastPage());
-        inproceedings.setNote(inproceedingsBean.getNote());
-        inproceedings.setLanguage(inproceedingsBean.getLanguage());
-        inproceedings.setMonth(inproceedingsBean.getMonth());
-        inproceedings.setUrl(inproceedingsBean.getUrl());
-        inproceedings.setModificationDateAndAuthor();
+        inproceedings.setNonRequiredAttributes(getPublisher(inproceedingsBean),
+                getOrganization(inproceedingsBean), inproceedingsBean.getAddress(), inproceedingsBean
+                        .getFirstPage(), inproceedingsBean.getLastPage(), inproceedingsBean.getNote(),
+                inproceedingsBean.getLanguage(), inproceedingsBean.getMonth(), inproceedingsBean
+                        .getUrl());
 
         return inproceedings;
     }
@@ -157,13 +123,9 @@ public class CreateResultPublication extends ResultPublicationService {
                 .getTitle(), proceedingsBean.getYear(), event);
 
         // fill optional fields
-        proceedings.setPublisher(getPublisher(proceedingsBean));
-        proceedings.setOrganization(getOrganization(proceedingsBean));
-        proceedings.setAddress(proceedingsBean.getAddress());
-        proceedings.setNote(proceedingsBean.getNote());
-        proceedings.setMonth(proceedingsBean.getMonth());
-        proceedings.setUrl(proceedingsBean.getUrl());
-        proceedings.setModificationDateAndAuthor();
+        proceedings.setNonRequiredAttributes(getPublisher(proceedingsBean),
+                getOrganization(proceedingsBean), proceedingsBean.getAddress(), proceedingsBean
+                        .getNote(), proceedingsBean.getMonth(), proceedingsBean.getUrl());
 
         return proceedings;
     }
@@ -177,13 +139,8 @@ public class CreateResultPublication extends ResultPublicationService {
                 .getTitle(), getOrganization(thesisBean), thesisBean.getYear());
 
         // fill optional fields
-        thesis.setAddress(thesisBean.getAddress());
-        thesis.setNote(thesisBean.getNote());
-        thesis.setNumberPages(thesisBean.getNumberPages());
-        thesis.setLanguage(thesisBean.getLanguage());
-        thesis.setMonth(thesisBean.getMonth());
-        thesis.setUrl(thesisBean.getUrl());
-        thesis.setModificationDateAndAuthor();
+        thesis.setNonRequiredAttributes(thesisBean.getAddress(), thesisBean.getNote(), thesisBean
+                .getNumberPages(), thesisBean.getLanguage(), thesisBean.getMonth(), thesisBean.getUrl());
 
         return thesis;
     }
@@ -196,15 +153,9 @@ public class CreateResultPublication extends ResultPublicationService {
         Manual manual = new Manual(manualBean.getPerson(), manualBean.getTitle());
 
         // fill optional fields
-        manual.setOrganization(getOrganization(manualBean));
-        manual.setYear(manualBean.getYear());
-        manual.setAddress(manualBean.getAddress());
-        manual.setNote(manualBean.getNote());
-        manual.setEdition(manualBean.getEdition());
-        manual.setNote(manualBean.getNote());
-        manual.setMonth(manualBean.getMonth());
-        manual.setUrl(manualBean.getUrl());
-        manual.setModificationDateAndAuthor();
+        manual.setNonRequiredAttributes(getOrganization(manualBean), manualBean.getYear(), manualBean
+                .getAddress(), manualBean.getNote(), manualBean.getEdition(), manualBean.getMonth(),
+                manualBean.getUrl());
 
         return manual;
     }
@@ -219,15 +170,10 @@ public class CreateResultPublication extends ResultPublicationService {
                 technicalReportBean.getYear());
 
         // fill optional fields
-        technicalReport.setTechnicalReportType(technicalReportBean.getTechnicalReportType());
-        technicalReport.setNumber(technicalReportBean.getNumber());
-        technicalReport.setAddress(technicalReportBean.getAddress());
-        technicalReport.setNote(technicalReportBean.getNote());
-        technicalReport.setNumberPages(technicalReportBean.getNumberPages());
-        technicalReport.setLanguage(technicalReportBean.getLanguage());
-        technicalReport.setMonth(technicalReportBean.getMonth());
-        technicalReport.setUrl(technicalReportBean.getUrl());
-        technicalReport.setModificationDateAndAuthor();
+        technicalReport.setNonRequiredAttributes(technicalReportBean.getTechnicalReportType(),
+                technicalReportBean.getNumber(), technicalReportBean.getAddress(), technicalReportBean
+                        .getNote(), technicalReportBean.getNumberPages(), technicalReportBean
+                        .getLanguage(), technicalReportBean.getMonth(), technicalReportBean.getUrl());
 
         return technicalReport;
     }
@@ -240,13 +186,9 @@ public class CreateResultPublication extends ResultPublicationService {
         Booklet booklet = new Booklet(bookletBean.getPerson(), bookletBean.getTitle());
 
         // fill optional fields
-        booklet.setHowPublished(bookletBean.getHowPublished());
-        booklet.setYear(bookletBean.getYear());
-        booklet.setMonth(bookletBean.getMonth());
-        booklet.setAddress(bookletBean.getAddress());
-        booklet.setNote(bookletBean.getNote());
-        booklet.setUrl(bookletBean.getUrl());
-        booklet.setModificationDateAndAuthor();
+        booklet.setNonRequiredAttributes(bookletBean.getHowPublished(), bookletBean.getYear(),
+                bookletBean.getMonth(), bookletBean.getAddress(), bookletBean.getNote(), bookletBean
+                        .getUrl());
 
         return booklet;
     }
@@ -259,19 +201,10 @@ public class CreateResultPublication extends ResultPublicationService {
         Misc misc = new Misc(miscBean.getPerson(), miscBean.getTitle());
 
         // fill optional fields
-        misc.setPublisher(getPublisher(miscBean));
-        misc.setYear(miscBean.getYear());
-        misc.setHowPublished(miscBean.getHowPublished());
-        misc.setNote(miscBean.getNote());
-        misc.setAddress(miscBean.getAddress());
-        misc.setNote(miscBean.getNote());
-        misc.setOtherPublicationType(miscBean.getOtherPublicationType());
-        misc.setNumberPages(miscBean.getNumberPages());
-        misc.setLanguage(miscBean.getLanguage());
-        misc.setCountry(miscBean.getCountry());
-        misc.setMonth(miscBean.getMonth());
-        misc.setUrl(miscBean.getUrl());
-        misc.setModificationDateAndAuthor();
+        misc.setNonRequiredAttributes(getPublisher(miscBean), miscBean.getYear(), miscBean
+                .getHowPublished(), miscBean.getNote(), miscBean.getAddress(), miscBean
+                .getOtherPublicationType(), miscBean.getNumberPages(), miscBean.getLanguage(), miscBean
+                .getCountry(), miscBean.getMonth(), miscBean.getUrl());
 
         return misc;
     }
@@ -283,11 +216,10 @@ public class CreateResultPublication extends ResultPublicationService {
         // create Unpublished with required fields;
         Unpublished unpublished = new Unpublished(unpublishedBean.getPerson(), unpublishedBean
                 .getTitle(), unpublishedBean.getNote());
+
         // fill optional fields
-        unpublished.setYear(unpublishedBean.getYear());
-        unpublished.setMonth(unpublishedBean.getMonth());
-        unpublished.setUrl(unpublishedBean.getUrl());
-        unpublished.setModificationDateAndAuthor();
+        unpublished.setNonRequiredAttributes(unpublishedBean.getYear(), unpublishedBean.getMonth(),
+                unpublishedBean.getUrl());
 
         return unpublished;
     }

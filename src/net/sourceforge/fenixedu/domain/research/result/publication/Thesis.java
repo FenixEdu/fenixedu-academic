@@ -4,6 +4,7 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.research.result.ResultParticipation.ResultParticipationRole;
+import net.sourceforge.fenixedu.util.Month;
 
 /**
  * mastersthesis
@@ -46,6 +47,17 @@ public class Thesis extends Thesis_Base {
         setThesisType(thesisType);
         setOrganization(school);
         setYear(year);
+    }
+    
+    public void setNonRequiredAttributes(String address, String note, Integer numberPages,
+            String language, Month month, String url) {
+
+        this.setAddress(address);
+        this.setNote(note);
+        this.setNumberPages(numberPages);
+        this.setLanguage(language);
+        this.setMonth(month);
+        this.setUrl(url);
     }
     
     public enum ThesisType {

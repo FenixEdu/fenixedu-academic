@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.domain.research.result.publication;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.research.result.ResultParticipation.ResultParticipationRole;
+import net.sourceforge.fenixedu.util.Month;
 
 /**
  * A work that is printed and bound, but without a named publisher or sponsoring institution.
@@ -32,5 +33,16 @@ public class Booklet extends Booklet_Base {
             throw new DomainException("error.publication.missingRequiredFields");
         
         setTitle(title);
+    }
+    
+    public void setNonRequiredAttributes(String howPublished, Integer year, Month month, String address,
+            String note, String url) {
+
+        this.setHowPublished(howPublished);
+        this.setYear(year);
+        this.setMonth(month);
+        this.setAddress(address);
+        this.setNote(note);
+        this.setUrl(url);
     }
 }
