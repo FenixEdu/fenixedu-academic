@@ -310,6 +310,19 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base implements Com
         removeRootDomainObject();
         super.deleteDomainObject();
     }
+    
+    public void removeFromMarkSheet() {
+	if (!getCanBeDeleted()) {
+            throw new DomainException("error.enrolmentEvaluation.cannot.be.deleted");
+        }
+	
+	setCheckSum(null);
+	setExamDateYearMonthDay(null);
+	setGradeAvailableDateYearMonthDay(null);
+	
+        removePersonResponsibleForGrade();
+        removeMarkSheet();
+    }
 
     public void insertStudentFinalEvaluationForMasterDegree(String grade, Person responsibleFor,
             Date examDate) throws DomainException {
