@@ -192,8 +192,20 @@
 	<definition name="execution-course-evaluations" extends="definition.public.executionCourse">
 		<put name="body" value="/publico/executionCourse/evaluations.jsp"/>
 	</definition>
+	<definition name="execution-course-marks" extends="definition.public.executionCourse">
+		<put name="body" value="/publico/executionCourse/marks.jsp"/>
+	</definition>
 	<definition name="execution-course-groupings" extends="definition.public.executionCourse">
 		<put name="body" value="/publico/executionCourse/groupings.jsp"/>
+	</definition>
+	<definition name="execution-course-grouping" extends="definition.public.executionCourse">
+		<put name="body" value="/publico/executionCourse/grouping.jsp"/>
+	</definition>
+	<definition name="execution-course-student-group" extends="definition.public.executionCourse">
+		<put name="body" value="/publico/executionCourse/studentGroup.jsp"/>
+	</definition>
+	<definition name="execution-course-student-groups-by-shift" extends="definition.public.executionCourse">
+		<put name="body" value="/publico/executionCourse/studentGroupsByShift.jsp"/>
 	</definition>
 	<definition name="execution-course-section" extends="definition.public.executionCourse">
 		<put name="body" value="/publico/executionCourse/section.jsp"/>

@@ -1106,4 +1106,14 @@ public class ExecutionCourse extends ExecutionCourse_Base {
     	return lessons;
     }
 
+    public SortedSet<WrittenEvaluation> getWrittenEvaluations() {
+        final SortedSet<WrittenEvaluation> writtenEvaluations = new TreeSet<WrittenEvaluation>(WrittenEvaluation.COMPARATOR_BY_BEGIN_DATE);
+        for (final Evaluation evaluation : getAssociatedEvaluationsSet()) {
+            if (evaluation instanceof WrittenEvaluation) {
+                writtenEvaluations.add((WrittenEvaluation) evaluation);
+            }
+        }
+        return writtenEvaluations;
+    }
+
 }

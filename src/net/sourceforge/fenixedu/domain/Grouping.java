@@ -8,6 +8,10 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
+import java.util.SortedSet;
+import java.util.TreeMap;
+import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.Registration;
@@ -339,4 +343,25 @@ public class Grouping extends Grouping_Base {
         return null;
     }
 
+    public Map<Shift, SortedSet<StudentGroup>> getStudentGroupsIndexedByShift() {
+        final Map<Shift, SortedSet<StudentGroup>> map = new TreeMap<Shift, SortedSet<StudentGroup>>(Shift.SHIFT_COMPARATOR_BY_TYPE_AND_ORDERED_LESSONS);
+        for (final StudentGroup studentGroup : getStudentGroupsSet()) {
+            final Shift shift = studentGroup.getShift();
+            final SortedSet<StudentGroup> studentGroups;
+            if (map.containsKey(shift)) {
+                studentGroups = map.get(shift);
+            } else {
+                studentGroups = new TreeSet<StudentGroup>(StudentGroup.COMPARATOR_BY_GROUP_NUMBER);
+                map.put(shift, studentGroups);
+            }
+            studentGroups.add(studentGroup);
+        }
+        return map;
+    }
+
+    public SortedSet<StudentGroup> getStudentGroupsOrderedByGroupNumber() {
+        final SortedSet<StudentGroup> studentGroups = new TreeSet<StudentGroup>(StudentGroup.COMPARATOR_BY_GROUP_NUMBER);
+        studentGroups.addAll(getStudentGroupsSet());
+        return studentGroups;
+    }
 }

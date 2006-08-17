@@ -4,7 +4,10 @@
  */
 package net.sourceforge.fenixedu.domain;
 
+import java.util.Comparator;
 import java.util.List;
+
+import org.apache.commons.beanutils.BeanComparator;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import dml.runtime.RelationAdapter;
@@ -13,6 +16,8 @@ import dml.runtime.RelationAdapter;
  * @author asnr and scpo
  */
 public class StudentGroup extends StudentGroup_Base {
+
+    public static final Comparator<StudentGroup> COMPARATOR_BY_GROUP_NUMBER = new BeanComparator("groupNumber");
 
     static {
         StudentGroupAttend.addListener(new StudentGroupAttendListener());

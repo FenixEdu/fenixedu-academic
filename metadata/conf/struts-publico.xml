@@ -336,7 +336,11 @@
 		<forward name="execution-course-schedule" path="execution-course-schedule"/>
 		<forward name="execution-course-shifts" path="execution-course-shifts"/>
 		<forward name="execution-course-evaluations" path="execution-course-evaluations"/>
+		<forward name="execution-course-marks" path="execution-course-marks"/>
 		<forward name="execution-course-groupings" path="execution-course-groupings"/>
+		<forward name="execution-course-grouping" path="execution-course-grouping"/>
+		<forward name="execution-course-student-group" path="execution-course-student-group"/>
+		<forward name="execution-course-student-groups-by-shift" path="execution-course-student-groups-by-shift"/>
 		<forward name="execution-course-section" path="execution-course-section"/>
 		<forward name="execution-course-rss" path="execution-course-rss"/>
    	</action>
