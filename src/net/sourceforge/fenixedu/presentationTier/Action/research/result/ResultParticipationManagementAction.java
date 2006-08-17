@@ -2,12 +2,8 @@ package net.sourceforge.fenixedu.presentationTier.Action.research.result;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.research.result.ChangeResultParticipationsOrder;
 import net.sourceforge.fenixedu.applicationTier.Servico.research.result.ChangeResultParticipationsOrder.OrderChange;
 import net.sourceforge.fenixedu.dataTransferObject.research.result.ResultParticipationCreationBean;
@@ -16,7 +12,6 @@ import net.sourceforge.fenixedu.domain.research.result.Result;
 import net.sourceforge.fenixedu.domain.research.result.ResultParticipation;
 import net.sourceforge.fenixedu.domain.research.result.publication.ResultPublication;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
-
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -26,16 +21,19 @@ public class ResultParticipationManagementAction extends ResultsManagementAction
     public ActionForward prepareEditParticipation(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) {
         final Result result = readResultFromRequest(request);
-        if(result==null){ return backToResultList(mapping, form, request, response); }
-                
-        ResultParticipationCreationBean bean = (ResultParticipationCreationBean)request.getAttribute("bean");
+        if (result == null) {
+            return backToResultList(mapping, form, request, response);
+        }
+
+        ResultParticipationCreationBean bean = (ResultParticipationCreationBean) request
+                .getAttribute("bean");
         if (bean == null) {
             bean = new ResultParticipationCreationBean(result);
             request.setAttribute("bean", bean);
         }
-        
-        checkNeededSchemas(request, result, bean);	//Define schemas to use
-        checkNeededWarnings(request, result);		//Action Warning Messages
+
+        checkNeededSchemas(request, result, bean); // Define schemas to use
+        checkNeededWarnings(request, result); // Action Warning Messages
         request.setAttribute("result", result);
 
         return mapping.findForward("editParticipation");
