@@ -102,16 +102,12 @@ table td.cornerright { }
 /* largura da coluna th*/
 table.th14 th { width: 14em; }
 
-.tstyle1a, .tstyle1b, .tstyle1c, .tstyle2, .tstyle3, .tstyle4, .tstyle5 {
+.tstyle1a, .tstyle1b, .tstyle1c, .tstyle2, .tstyle3, .tstyle4, .tstyle5, .tstyle6, .tstyle7 {
 border-collapse: collapse;
 margin: 1em 0;
 }
 
-.tstyle6 {
-border-collapse: collapse;
-margin: 1em 0;
-width: 100%;
-}
+.tstyle6 { width: 100%; }
 
 .tstyle1a { }
 .tstyle1b { }
@@ -126,20 +122,15 @@ text-align: center;
 /*font-weight: normal;*/
 }
 
-.tstyle6 th {
-padding: 0.5em;
-/*text-align: center;*/
-/*font-weight: normal;*/
-width: 35%;
-}
-
-.tstyle1a th { border: 1px solid #cccccc; }
+.tstyle1a th { border: 1px solid #ccc; }
 .tstyle1b th, .tstyle6 th { border: 1px solid #ccccc2;}
 .tstyle1c th { border: 1px solid #c8cacc; }
 .tstyle2 th { border: none; border-bottom: 1px solid #ccc; }
 .tstyle3 th { padding: 0.5em 1em; border: 1px solid #ccc; }
 .tstyle4 th { border: 1px solid #ccc; }
 .tstyle5 th { padding: 0.3em; border: 1px solid #fff; vertical-align: top; }
+.tstyle6 th { padding: 0.5em; /*text-align: center;*/ /*font-weight: normal;*/ width: 35%; }
+.tstyle7 th { padding: 0.5em; border: 1px solid #eee; }
 
 .tstyle1a th { background: #f8f8f8 url(../../pics/back_32gray.gif) left bottom repeat-x; }
 .tstyle1b th, .tstyle6 th { background: #fafaf6 url(../../pics/back_32yellow.gif) left bottom repeat-x;}
@@ -148,6 +139,7 @@ width: 35%;
 .tstyle2 th { background: #f5f5f5 /*url(../../pics/back_32gray.gif) left bottom repeat-x*/; }
 .tstyle4 th { background: #eee; }
 .tstyle5 th { background: #f5f5f5; }
+.tstyle7 th { background: #eee; }
 
 .tstyle1a td, .tstyle1b td, .tstyle1c td, .tstyle2 td, .tstyle3 td, .tstyle4 td  { padding: 0.5em; } /*padding em "em" dá problemas de rendering no firefox, faz arredondamentos diferentes */
 
@@ -159,6 +151,7 @@ width: 35%;
 .tstyle4 td { border: 1px solid #ccc; background-color: #fafafa; }
 .tstyle5 td { padding: 0.3em; border: 1px solid #fff; background: #f5f5f5; }
 .tstyle6 td { border: 1px solid #ccccc2; width: 65%;}
+.tstyle7 td { padding: 0.5em; border: 1px solid #eee; background: #eee; }
 
 .tpadding01 th, .tpadding01 td { padding: 0.5em 0.1em; }
 
@@ -315,17 +308,16 @@ border: none;
 /*background-color: #f5f5f5;*/
 }
 
-label {
-display: block;
-padding-right: 0.5em;
-}
-
 small {
 display: block;
 margin-left: 10em;
 color: #d55;
 }
 
+.lfloat label, .lfloat2 label, lfloat3 label {
+display: block;
+padding-right: 0.5em;
+}
 .lfloat label { float: left; text-align: right; width: 10em; }
 .lfloat2 label { float: left; text-align: right; width: 12em; }
 .lfloat3 label { float: left; text-align: right; width: 15em; }
@@ -365,6 +357,7 @@ margin-left: 10.5em;
 .attention2 { background-color: #ffa; color: #d60;}
 .fright { float: right;}
 
+.pbottom05 { padding-bottom: 0.5em;}
 .pbottom1 { padding-bottom: 1em;}
 .pbottom2 { padding-bottom: 2em;}
 .pbottom3 { padding-bottom: 3em;}
@@ -428,6 +421,7 @@ margin: 0;
 
 .width100 { width: 100%; }
 .width8em { width: 8em; } /*used in forums*/
+.width10em { width: 10em; }
 
 .toprint { display: none;}
 .lowlight1 { color: #999; }
@@ -521,5 +515,15 @@ display: none;
 display: inline;
 }
 .dblock {
+display: block;
+}
+
+.switchInline {
+display: none;
+}
+.switchBlock {
+display: none;
+}
+.switchNone {
 display: block;
 }
