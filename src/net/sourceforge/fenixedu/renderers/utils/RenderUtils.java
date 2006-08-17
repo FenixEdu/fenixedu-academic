@@ -241,7 +241,7 @@ public class RenderUtils {
                 String property = parts[0];
                 
                 if (parts.length > 1) {
-                    builder.append(parts[1]);
+                    builder.append("%" + parts[1]);
                 }
                 else {
                     builder.append("%s");
