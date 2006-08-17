@@ -880,5 +880,11 @@
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Filtro.degreeAdministrativeOffice.CreateRectificationMarkSheetAuthorizationFilter</implementationClass>
         <description/>
         <isTransactional>true</isTransactional>
+    </filter>
+     <filter>
+        <name>SpaceManagerAuthorization</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Filtro.spaceManager.SpaceManagerAuthorizationFilter</implementationClass>
+        <description/>
+        <isTransactional>false</isTransactional>
     </filter>                
 </filterDefinitions>
