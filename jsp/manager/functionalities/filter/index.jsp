@@ -20,5 +20,6 @@
         <fr:layout>
             <fr:property name="sortBy" value="functionality.publicPath"/>
         </fr:layout>
+        <fr:destination name="testFilter" path="/test${functionality.publicPath}"/>
     </fr:view>
 </logic:present>

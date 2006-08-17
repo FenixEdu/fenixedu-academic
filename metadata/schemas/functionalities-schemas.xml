@@ -155,6 +155,9 @@
         bundle="FUNCTIONALITY_RESOURCES">
         <slot name="accessible"/>
         <slot name="functionality.name" key="label.name"/>
-        <slot name="functionality.publicPath" key="label.publicPath"/>
+        <slot name="functionality.publicPath" key="label.publicPath" layout="link">
+            <property name="useParent" value="true"/>
+            <property name="destination" value="testFilter"/>
+        </slot>
         <slot name="functionality.parameters" key="label.parameters.required"/>
 </schema>
