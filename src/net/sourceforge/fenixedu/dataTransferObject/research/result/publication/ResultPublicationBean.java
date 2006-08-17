@@ -1,6 +1,8 @@
 package net.sourceforge.fenixedu.dataTransferObject.research.result.publication;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+
 import net.sourceforge.fenixedu.domain.Country;
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Person;
@@ -15,6 +17,7 @@ public class ResultPublicationBean implements Serializable{
     private String activeSchema;
     private String participationSchema;
     
+    private ArrayList<PublicationParticipatorBean> participators = new ArrayList<PublicationParticipatorBean>();
     
     private DomainReference<Person> person;
     private ResultParticipationRole resultParticipationRole = ResultParticipationRole.Author;
@@ -177,5 +180,11 @@ public class ResultPublicationBean implements Serializable{
     }
     public void setCreateEvent(Boolean createEvent) {
         this.createEvent = createEvent;
+    }
+    public ArrayList<PublicationParticipatorBean> getParticipators() {
+        return participators;
+    }
+    public void setParticipators(ArrayList<PublicationParticipatorBean> participators) {
+        this.participators = participators;
     }
 }
