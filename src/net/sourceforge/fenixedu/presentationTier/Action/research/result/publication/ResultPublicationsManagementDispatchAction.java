@@ -39,31 +39,33 @@ public class ResultPublicationsManagementDispatchAction extends FenixDispatchAct
         List<ResultPublication> booklets = new ArrayList<ResultPublication>();
         List<ResultPublication> miscs = new ArrayList<ResultPublication>();
         List<ResultPublication> unpublisheds = new ArrayList<ResultPublication>();
+        List<ResultPublication> unstructureds = new ArrayList<ResultPublication>();
 
         for (ResultPublication resultPublication : userView.getPerson().getResultPublications()) {
-            if (resultPublication instanceof Book) {
+            if (resultPublication instanceof Book)
                 books.add(resultPublication);
-            } else if (resultPublication instanceof BookPart) {
+            else if (resultPublication instanceof BookPart)
                 bookParts.add(resultPublication);
-            } else if (resultPublication instanceof Article) {
+            else if (resultPublication instanceof Article)
                 articles.add(resultPublication);
-            } else if (resultPublication instanceof Inproceedings) {
+            else if (resultPublication instanceof Inproceedings)
                 inproceedings.add(resultPublication);
-            } else if (resultPublication instanceof Proceedings) {
+            else if (resultPublication instanceof Proceedings)
                 proceedings.add(resultPublication);
-            } else if (resultPublication instanceof Thesis) {
+            else if (resultPublication instanceof Thesis)
                 theses.add(resultPublication);
-            } else if (resultPublication instanceof Manual) {
+            else if (resultPublication instanceof Manual)
                 manuals.add(resultPublication);
-            } else if (resultPublication instanceof TechnicalReport) {
+            else if (resultPublication instanceof TechnicalReport)
                 technicalReports.add(resultPublication);
-            } else if (resultPublication instanceof Booklet) {
+            else if (resultPublication instanceof Booklet)
                 booklets.add(resultPublication);
-            } else if (resultPublication instanceof Misc) {
+            else if (resultPublication instanceof Misc)
                 miscs.add(resultPublication);
-            } else if (resultPublication instanceof Unpublished) {
+            else if (resultPublication instanceof Unpublished)
                 unpublisheds.add(resultPublication);
-            }
+            else if (resultPublication instanceof Unstructured)
+                unstructureds.add(resultPublication);
         }
 
         // comparator by year in descendent order
@@ -103,6 +105,7 @@ public class ResultPublicationsManagementDispatchAction extends FenixDispatchAct
         request.setAttribute("booklets", booklets);
         request.setAttribute("miscs", miscs);
         request.setAttribute("unpublisheds", unpublisheds);
+        request.setAttribute("unstructureds", unstructureds);
         return mapping.findForward("ListPublications");
     }
 
@@ -224,6 +227,7 @@ public class ResultPublicationsManagementDispatchAction extends FenixDispatchAct
 
         publicationBean.setPerson(getUserView(request).getPerson());
         request.setAttribute("publicationBean", publicationBean);
+        
         return mapping.findForward("PreparedToCreate");
     }
 
@@ -253,7 +257,7 @@ public class ResultPublicationsManagementDispatchAction extends FenixDispatchAct
     }
 
     public ActionForward createResultPublication(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws Exception {
+            HttpServletRequest request, HttpServletResponse response) {
 
         ResultPublication publication = null;
         ResultPublicationBean publicationBean = (ResultPublicationBean) RenderUtils.getViewState()
@@ -310,29 +314,28 @@ public class ResultPublicationsManagementDispatchAction extends FenixDispatchAct
             ResultPublication publication = (ResultPublication) rootDomainObject.readResultByOID(Integer
                     .valueOf(publicationId));
 
-            if(publication instanceof Book)
-                publicationBean = new BookBean((Book)publication);
-            else if(publication instanceof BookPart)
-                publicationBean = new BookPartBean((BookPart)publication);
-            else if(publication instanceof Article)
-                publicationBean = new ArticleBean((Article)publication);
-            else if(publication instanceof Inproceedings)
-                publicationBean = new InproceedingsBean((Inproceedings)publication);
-            else if(publication instanceof Proceedings)
-                publicationBean = new ProceedingsBean((Proceedings)publication);
-            else if(publication instanceof Thesis)
-                publicationBean = new ThesisBean((Thesis)publication);
-            else if(publication instanceof Manual)
-                publicationBean = new ManualBean((Manual)publication);
-            else if(publication instanceof TechnicalReport)
-                publicationBean = new TechnicalReportBean((TechnicalReport)publication);
-            else if(publication instanceof Booklet)
-                publicationBean = new BookletBean((Booklet)publication);
-            else if(publication instanceof Misc)
-                publicationBean = new MiscBean((Misc)publication);
-            else if(publication instanceof Unpublished)
-                publicationBean = new UnpublishedBean((Unpublished)publication);
-            
+            if (publication instanceof Book)
+                publicationBean = new BookBean((Book) publication);
+            else if (publication instanceof BookPart)
+                publicationBean = new BookPartBean((BookPart) publication);
+            else if (publication instanceof Article)
+                publicationBean = new ArticleBean((Article) publication);
+            else if (publication instanceof Inproceedings)
+                publicationBean = new InproceedingsBean((Inproceedings) publication);
+            else if (publication instanceof Proceedings)
+                publicationBean = new ProceedingsBean((Proceedings) publication);
+            else if (publication instanceof Thesis)
+                publicationBean = new ThesisBean((Thesis) publication);
+            else if (publication instanceof Manual)
+                publicationBean = new ManualBean((Manual) publication);
+            else if (publication instanceof TechnicalReport)
+                publicationBean = new TechnicalReportBean((TechnicalReport) publication);
+            else if (publication instanceof Booklet)
+                publicationBean = new BookletBean((Booklet) publication);
+            else if (publication instanceof Misc)
+                publicationBean = new MiscBean((Misc) publication);
+            else if (publication instanceof Unpublished)
+                publicationBean = new UnpublishedBean((Unpublished) publication);
 
             if (publicationBean instanceof BookPartBean)
                 publicationBean.setActiveSchema("result.publication.create.BookPart."
@@ -351,7 +354,7 @@ public class ResultPublicationsManagementDispatchAction extends FenixDispatchAct
     }
 
     public ActionForward editPublicationData(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws Exception {
+            HttpServletRequest request, HttpServletResponse response) {
 
         ResultPublicationBean publicationBean = (ResultPublicationBean) RenderUtils.getViewState()
                 .getMetaObject().getObject();
@@ -387,7 +390,7 @@ public class ResultPublicationsManagementDispatchAction extends FenixDispatchAct
         String publicationId = (String) request.getParameter("publicationId");
         ResultPublication publication = (ResultPublication) rootDomainObject.readResultByOID(Integer
                 .valueOf(publicationId));
-        
+
         request.setAttribute("publication", publication);
         request.setAttribute("resultPublicationType", getPublicationTypeString(publication));
 
@@ -410,18 +413,16 @@ public class ResultPublicationsManagementDispatchAction extends FenixDispatchAct
 
         return mapping.findForward("PublicationDeleted");
     }
-    
-    private String getPublicationTypeString(ResultPublication publication)
-    {
+
+    private String getPublicationTypeString(ResultPublication publication) {
         String className = publication.getClass().getName();
         Integer lastPoint = className.lastIndexOf(".");
-        String type = className.substring(lastPoint+1);
-        
+        String type = className.substring(lastPoint + 1);
+
         if (type.equals("BookPart")) {
             //add bookPart type
-            type = type + "." +((BookPart)publication).getBookPartType().toString();
+            type = type + "." + ((BookPart) publication).getBookPartType().toString();
         }
-        
         return type;
     }
 }
