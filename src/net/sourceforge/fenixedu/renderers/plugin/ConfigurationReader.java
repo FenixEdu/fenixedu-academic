@@ -89,6 +89,15 @@ public class ConfigurationReader {
                 String schemaBundle       = schemaElement.getAttributeValue("bundle");
                 String constructor        = schemaElement.getAttributeValue("constructor");
 
+                try {
+                    RenderKit.getInstance().findSchema(schemaName);
+                    logger.error("schema '" + schemaName + "' was already defined");
+                    continue;
+                }
+                catch (NoSuchSchemaException e) {
+                    // ok
+                }
+                
                 Class type;
                 try {
                     type = getClassForType(typeName, true);
