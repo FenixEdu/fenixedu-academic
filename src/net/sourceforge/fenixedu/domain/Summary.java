@@ -6,9 +6,13 @@
 package net.sourceforge.fenixedu.domain;
 
 import java.util.Calendar;
+import java.util.Comparator;
 import java.util.Date;
 
 import net.sourceforge.fenixedu.domain.space.OldRoom;
+
+import org.apache.commons.beanutils.BeanComparator;
+import org.apache.commons.collections.comparators.ComparatorChain;
 
 /**
  * @author Jo�o Mota
@@ -18,6 +22,13 @@ import net.sourceforge.fenixedu.domain.space.OldRoom;
  * 
  */
 public class Summary extends Summary_Base {
+
+	public static final Comparator<Summary> COMPARATOR_BY_DATE_AND_HOUR = new ComparatorChain();
+	static {
+		((ComparatorChain) COMPARATOR_BY_DATE_AND_HOUR).addComparator(new BeanComparator("summaryDateYearMonthDay"), true);
+		((ComparatorChain) COMPARATOR_BY_DATE_AND_HOUR).addComparator(new BeanComparator("summaryHourHourMinuteSecond"), true);
+		((ComparatorChain) COMPARATOR_BY_DATE_AND_HOUR).addComparator(new BeanComparator("idInternal"));
+	}
 
     public Summary() {
 		super();

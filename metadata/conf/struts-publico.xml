@@ -191,6 +191,15 @@
    		<form-property name="fileName" type="java.lang.String"/>
 	</form-bean>
 
+	<form-bean name="summariesSearchForm"
+			type="org.apache.struts.validator.DynaValidatorForm"
+			dynamic="true">
+   		<form-property name="executionCourseID" type="java.lang.String"/>
+   		<form-property name="shiftType" type="java.lang.String"/>
+   		<form-property name="shiftID" type="java.lang.String"/>
+   		<form-property name="professorshipID" type="java.lang.String"/>
+	</form-bean>
+
   </form-beans>     
   
     
@@ -343,6 +352,14 @@
 		<forward name="execution-course-student-groups-by-shift" path="execution-course-student-groups-by-shift"/>
 		<forward name="execution-course-section" path="execution-course-section"/>
 		<forward name="execution-course-rss" path="execution-course-rss"/>
+   	</action>
+
+	<action path="/searchSummaries" parameter="method"
+			name="summariesSearchForm"
+			scope="request"
+			validate="false"
+			type="net.sourceforge.fenixedu.presentationTier.Action.publico.ExecutionCourseDA">
+		<forward name="execution-course-summaries" path="execution-course-summaries"/>
    	</action>
 
 	  <!-- SALAS -->
@@ -760,7 +777,7 @@
      </action-mappings>     
     
     <!-- ========== Controller Configuration ================================ -->
-	  <!--<controller processorClass="net.sourceforge.fenixedu.presentationTier.processor.FenixRequestProcessor" />-->
+	<controller processorClass="net.sourceforge.fenixedu.presentationTier.processor.FenixRequestProcessorWithTiles" />
     
     <!-- ========== Message Resources Definitions ============================ -->
 	<message-resources parameter="resources.GlobalResources" key="GLOBAL_RESOURCES" null="false"/>

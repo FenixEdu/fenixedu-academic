@@ -1116,4 +1116,10 @@ public class ExecutionCourse extends ExecutionCourse_Base {
         return writtenEvaluations;
     }
 
+    public SortedSet<Shift> getShiftsOrderedByLessons() {
+        final SortedSet<Shift> shifts = new TreeSet<Shift>(Shift.SHIFT_COMPARATOR_BY_TYPE_AND_ORDERED_LESSONS);
+        shifts.addAll(getAssociatedShiftsSet());
+        return shifts;
+    }
+
 }

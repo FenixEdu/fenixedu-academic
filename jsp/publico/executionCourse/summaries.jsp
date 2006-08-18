@@ -10,10 +10,73 @@
 	<bean:message key="label.summaries"/>
 </h2>
 
-<bean:define id="summariesSearchBean" name="executionCourse" property="summariesSearchBean"/>
-<!-- Place Renderer Here ... -->
+<bean:define id="executionCourseID" name="executionCourse" property="idInternal"/>
+<html:form action="/searchSummaries?executionCourseID=<%= executionCourseID %>">
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="summaries"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.objectCode" property="executionCourseID" value="<%= executionCourseID.toString() %>"/>
 
-<bean:define id="summaries" name="executionCourse" property="associatedSummaries"/>
+	<table class="tab_simple" cellspacing="2" cellpadding="0">
+		<tr>
+			<td><bean:message key="label.summary.lesson" />:</td>
+			<td>
+				<html:select bundle="HTMLALT_RESOURCES" altKey="select.bySummaryType" property="shiftType" onchange="this.form.submit();">
+					<html:option value="" key="label.showBy.all"/>
+				</html:select>
+				<html:submit styleId="javascriptButtonID" styleClass="altJavaScriptSubmitButton" bundle="HTMLALT_RESOURCES" altKey="submit.submit">
+					<bean:message key="button.submit"/>
+				</html:submit>
+			</td>
+		</tr>
+		<tr>
+			<td><bean:message key="label.shift" />:</td>
+			<td>
+				<html:select bundle="HTMLALT_RESOURCES" altKey="select.byShift" property="shiftID" onchange="this.form.submit();">
+					<html:option value="" key="label.showBy.all"/>
+					<logic:iterate id="shift" name="executionCourse" property="shiftsOrderedByLessons">
+						<bean:define id="shiftID" name="shift" property="idInternal"/>
+						<html:option value="<%= shiftID.toString() %>">
+							<logic:iterate id="lesson" name="shift" property="lessonsOrderedByWeekDayAndStartTime" length="1">
+								<bean:write name="lesson" property="diaSemana"/>
+								(<dt:format pattern="HH:mm"><bean:write name="lesson" property="inicio.time.time"/></dt:format>
+								-<dt:format pattern="HH:mm"><bean:write name="lesson" property="fim.time.time"/></dt:format>)
+								<bean:write name="lesson" property="roomOccupation.room.nome"/>
+							</logic:iterate>
+							<logic:iterate id="lesson" name="shift" property="lessonsOrderedByWeekDayAndStartTime" offset="1">
+								,
+								(<dt:format pattern="HH:mm"><bean:write name="lesson" property="inicio.time.time"/></dt:format>
+								-<dt:format pattern="HH:mm"><bean:write name="lesson" property="fim.time.time"/></dt:format>)
+								<bean:write name="lesson" property="roomOccupation.room.nome"/>
+							</logic:iterate>
+						</html:option>
+					</logic:iterate>
+				</html:select>		
+				<html:submit styleId="javascriptButtonID2" styleClass="altJavaScriptSubmitButton" bundle="HTMLALT_RESOURCES" altKey="submit.submit">
+					<bean:message key="button.submit"/>
+				</html:submit>
+			</td>
+		</tr>
+		<tr>
+			<td><bean:message key="label.teacher" />:</td>
+			<td>
+				<html:select bundle="HTMLALT_RESOURCES" altKey="select.byTeacher" property="professorshipID" onchange="this.form.submit();">
+					<html:option value="0" key="label.showBy.all" />
+					<logic:iterate id="professorship" name="executionCourse" property="professorshipsSortedAlphabetically">
+						<bean:define id="professorshipID" name="professorship" property="idInternal"/>
+						<html:option value="<%= professorshipID.toString() %>">
+							<bean:write name="professorship" property="teacher.person.name"/>
+						</html:option>
+					</logic:iterate>
+					<html:option  value="-1" key="label.others" />
+				</html:select>			
+				<html:submit styleId="javascriptButtonID3" styleClass="altJavaScriptSubmitButton" bundle="HTMLALT_RESOURCES" altKey="submit.submit">
+					<bean:message key="button.submit"/>
+				</html:submit>
+			</td>
+		</tr>
+	</table>	
+</html:form>
+
+<bean:define id="summaries" name="summariesSearchBean" property="summaries"/>
 <logic:empty name="summaries">
 	<h3>
 		<bean:message key="message.summaries.not.available" />

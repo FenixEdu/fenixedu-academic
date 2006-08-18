@@ -12,13 +12,17 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExportGrouping;
 import net.sourceforge.fenixedu.domain.Grouping;
 import net.sourceforge.fenixedu.domain.Lesson;
+import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Shift;
+import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.domain.StudentGroup;
+import net.sourceforge.fenixedu.domain.executionCourse.SummariesSearchBean;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.apache.struts.action.DynaActionForm;
 
 public class ExecutionCourseDA extends FenixDispatchAction {
 
@@ -44,6 +48,26 @@ public class ExecutionCourseDA extends FenixDispatchAction {
     }
 
     public ActionForward summaries(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
+    	final ExecutionCourse executionCourse = getExecutionCourse(request);
+    	final DynaActionForm dynaActionForm = (DynaActionForm) form;
+    	final SummariesSearchBean summariesSearchBean = executionCourse.getSummariesSearchBean();
+    	request.setAttribute("summariesSearchBean", summariesSearchBean);
+    	if (dynaActionForm != null) {
+    		final String shiftType = (String) dynaActionForm.get("shiftType");
+    		if (shiftType != null && shiftType.length() > 0) {
+    			summariesSearchBean.setShiftType(ShiftType.valueOf(shiftType));
+    		}
+    		final String shiftID = (String) dynaActionForm.get("shiftID");
+    		if (shiftID != null && shiftID.length() > 0) {
+    			summariesSearchBean.setShift(rootDomainObject.readShiftByOID(Integer.valueOf(shiftID)));
+    		}
+    		final String professorshipID = (String) dynaActionForm.get("professorshipID");
+    		if (professorshipID != null && professorshipID.equals("-1")) {
+    			summariesSearchBean.setShowOtherProfessors(Boolean.TRUE);
+    		} else if (professorshipID != null && !professorshipID.equals("0")) {
+    			summariesSearchBean.setProfessorship(rootDomainObject.readProfessorshipByOID(Integer.valueOf(professorshipID)));
+    		}
+    	}
         return mapping.findForward("execution-course-summaries");
     }
 

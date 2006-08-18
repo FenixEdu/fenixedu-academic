@@ -46,17 +46,25 @@ public class SummariesSearchBean implements Serializable {
     public void setShiftType(ShiftType shiftType) {
         this.shiftType = shiftType;
     }
+	public Boolean getShowOtherProfessors() {
+		return showOtherProfessors;
+	}
+	public void setShowOtherProfessors(final Boolean showOtherProfessors) {
+		this.showOtherProfessors = showOtherProfessors;
+	}
 
     public SortedSet<Summary> search() {
-        final SortedSet<Summary> summaries = new TreeSet<Summary>();
+        final SortedSet<Summary> summaries = new TreeSet<Summary>(Summary.COMPARATOR_BY_DATE_AND_HOUR);
         for (final Summary summary : getExecutionCourse().getAssociatedSummariesSet()) {
             final Shift shift = summary.getShift();
             if (getShift() == null || getShift() == shift) {
                 if (getShiftType() == null || getShiftType() == shift.getTipo()) {
-                    final Professorship professorship = summary.getProfessorship();
-                    if ((getProfessorship() == null && professorship != null) || getProfessorship() == professorship) {
-                        summaries.add(summary);
-                    } else if (showOtherProfessors != null && showOtherProfessors.booleanValue()) {
+                	final Professorship professorship = summary.getProfessorship();
+                	if (getProfessorship() == null && showOtherProfessors == null) {
+                		summaries.add(summary);
+                	} else if (professorship == null && showOtherProfessors != null && showOtherProfessors.booleanValue()) {
+                		summaries.add(summary);
+                	} else if (showOtherProfessors == null && ((getProfessorship() == null && professorship != null) || getProfessorship() == professorship)) {
                         summaries.add(summary);
                     }
                 }
@@ -67,6 +75,14 @@ public class SummariesSearchBean implements Serializable {
 
     public SortedSet<Summary> getSummaries() {
         return search();
+    }
+
+    public SortedSet<ShiftType> getShiftTypes() {
+    	final SortedSet<ShiftType> shiftTypes = new TreeSet<ShiftType>();
+    	for (final Shift shift : getExecutionCourse().getAssociatedShiftsSet()) {
+    		shiftTypes.add(shift.getTipo());
+    	}
+    	return shiftTypes;
     }
 
 }

@@ -10,6 +10,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Set;
+import java.util.SortedSet;
 import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -134,5 +135,15 @@ public class Site extends Site_Base {
             }
         }
         return result;
+    }
+
+    public SortedSet<Section> getOrderedTopLevelSections() {
+    	final SortedSet<Section> sections = new TreeSet<Section>(Section.COMPARATOR_BY_ORDER);
+    	for (final Section section : getAssociatedSectionsSet()) {
+    		if (section.getSuperiorSection() == null) {
+    			sections.add(section);
+    		}
+    	}
+    	return sections;
     }
 }

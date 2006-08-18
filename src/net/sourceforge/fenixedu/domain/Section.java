@@ -5,15 +5,22 @@
 package net.sourceforge.fenixedu.domain;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+
+import org.apache.commons.beanutils.BeanComparator;
 
 /**
  * @author Ivo Brand�o
  */
 public class Section extends Section_Base {
+
+	public static final Comparator<Section> COMPARATOR_BY_ORDER = new BeanComparator("sectionOrder");
 
     public Section() {
 		super();
@@ -156,6 +163,12 @@ public class Section extends Section_Base {
                 throw new DomainException("section.cannotDeleteWhileHasItemsWithFiles");
             }
         }
+    }
+
+    public SortedSet<Section> getOrderedSubSections() {
+    	final SortedSet<Section> sections = new TreeSet<Section>(Section.COMPARATOR_BY_ORDER);
+    	sections.addAll(getAssociatedSectionsSet());
+    	return sections;
     }
 
 }
