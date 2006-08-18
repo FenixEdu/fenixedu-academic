@@ -30,7 +30,9 @@
 					<h4>
 						<bean:message key="label.generalObjectives"/>
 					</h4>
-					<bean:write name="competenceCourse" property="objectives" filter="false"/>
+					<logic:present name="competenceCourse" property="objectives">
+						<bean:write name="competenceCourse" property="objectives" filter="false"/>
+					</logic:present>
 					<logic:present name="competenceCourse" property="generalObjectivesEn">
 						<br/>
 						<h4>
@@ -41,7 +43,9 @@
 					<h4>
 						<bean:message key="label.operacionalObjectives"/>
 					</h4>
-					<bean:write name="competenceCourse" property="operacionalObjectives" filter="false"/>
+					<logic:present name="competenceCourse" property="operacionalObjectives">
+						<bean:write name="competenceCourse" property="operacionalObjectives" filter="false"/>
+					</logic:present>
 					<logic:present name="competenceCourse" property="operacionalObjectivesEn">
 						<br/>
 						<h4>
