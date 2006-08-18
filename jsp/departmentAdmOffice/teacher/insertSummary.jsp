@@ -152,9 +152,9 @@
 					<td><html:text bundle="HTMLALT_RESOURCES" altKey="text.dateEmpty" property="dateEmpty" size="10" maxlength="10"
 							onchange="this.form.summaryDateInputOption.value='null';this.form.summaryDateInput.value=this.form.dateEmpty.value;this.form.method.value='prepareInsertSummary';this.form.page.value=0;this.form.submit();"/>
 				</logic:notPresent>
-				<html:submit styleId="javascriptButtonID3" styleClass="altJavaScriptSubmitButton" bundle="HTMLALT_RESOURCES" altKey="submit.submit">
+				<%--<html:submit styleId="javascriptButtonID3" styleClass="altJavaScriptSubmitButton" bundle="HTMLALT_RESOURCES" altKey="submit.submit">
 					<bean:message key="button.submit"/>
-				</html:submit>
+				</html:submit>--%>
 				<bean:message key="message.dateFormat"/></td>
 			</tr>							
 		</logic:equal>
