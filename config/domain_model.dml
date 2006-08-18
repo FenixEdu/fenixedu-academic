@@ -3671,9 +3671,9 @@ class net.sourceforge.fenixedu.domain.functionalities.Functionality extends net.
 	MultiLanguageString name;
 	MultiLanguageString title;
 	MultiLanguageString description;
-	boolean enabled;
+	Boolean enabled;
 	String path;
-	boolean relative;
+	Boolean relative;
 	String parameters;
 	
 	Integer orderInModule; /* used to allows ordering of functionalities in modules, see relation ModuleAggregatesFunctionalities */

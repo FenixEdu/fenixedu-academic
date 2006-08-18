@@ -105,7 +105,7 @@ public abstract class Functionality extends Functionality_Base {
      */
     @Override
     @Deprecated
-    public boolean getRelative() {
+    public Boolean getRelative() {
         return super.getRelative();
     }
 
@@ -121,7 +121,7 @@ public abstract class Functionality extends Functionality_Base {
      * @see #getPath()
      * @see #getPublicPath()
      */
-    public boolean isRelative() {
+    public Boolean isRelative() {
         return super.getRelative();
     }
 
@@ -327,7 +327,7 @@ public abstract class Functionality extends Functionality_Base {
      */
     @Override
     @Deprecated
-    public boolean getEnabled() {
+    public Boolean getEnabled() {
         return super.getEnabled();
     }
 
@@ -340,7 +340,7 @@ public abstract class Functionality extends Functionality_Base {
      * @return <code>true</code> if this functionality is available for
      *         general use
      */
-    public boolean isEnabled() {
+    public Boolean isEnabled() {
         return super.getEnabled();
     }
 
