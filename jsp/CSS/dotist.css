@@ -804,3 +804,7 @@ ul.autoCompleteItems  {
   } 
  
 ul.autoCompleteItems li.selected { background-color:  #cef; }
+
+.altJavaScriptSubmitButton { display:block; }
+
+.showHideDetailsButton { display:none; }

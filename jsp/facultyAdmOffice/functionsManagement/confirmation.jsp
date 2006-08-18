@@ -32,7 +32,7 @@
 		<h:outputText value="#{facultyAdmOfficeFunctionsManagementBackingBean.person.nome}"/>		
 	</h:panelGrid>	
 	
-	<h:outputText value="<br/><br/><br/>" escape="false" />
+	<h:outputText value="<br/>" escape="false" />
 	
 	<h:panelGrid columns="2">		
 		<h:outputText value="<b>#{bundle['label.new.function']}</b>" escape="false"/>	

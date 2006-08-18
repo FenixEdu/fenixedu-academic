@@ -55,28 +55,39 @@
 		<h:outputText value="<br/><p>#{bundle['message.duration.definition']}</p>" escape="false" rendered="#{functionsManagementBackingBean.numberOfFunctions > 0}"/>		
 		<h:outputText value="<p>#{bundle['message.duration']}</p>" escape="false" rendered="#{functionsManagementBackingBean.numberOfFunctions > 0}"/>		
 						
-		<h:panelGrid rendered="#{functionsManagementBackingBean.numberOfFunctions > 0}"
-			columns="3" styleClass="infoop">										
-			<h:outputText value="<b>#{bundle['label.begin']}</b>" escape="false"/>																
-			<fc:selectOneMenu disabled="#{functionsManagementBackingBean.disabledVar == 1}" onchange="this.form.submit();" value="#{functionsManagementBackingBean.executionPeriod}">
-				<f:selectItems value="#{functionsManagementBackingBean.executionPeriods}"/>
-			</fc:selectOneMenu>
-			<h:outputText value="<input value='#{htmlAltBundle['submit.sumbit']}' id='javascriptButtonID' class='altJavaScriptSubmitButton' alt='#{htmlAltBundle['submit.sumbit']}' type='submit'/>" escape="false"/>
-			<h:outputText value=""/>
-			
-			<h:outputText value="<b>#{bundle['label.duration']}</b>" escape="false"/>
-			<h:selectOneRadio onchange="this.form.submit();" disabled="#{functionsManagementBackingBean.disabledVar == 1}" 
-							  value="#{functionsManagementBackingBean.duration}">
-				<f:selectItems value="#{functionsManagementBackingBean.durationList}" />
-			</h:selectOneRadio>
-			<h:outputText value="<input value='#{htmlAltBundle['submit.sumbit']}' id='javascriptButtonID2' class='altJavaScriptSubmitButton' alt='#{htmlAltBundle['submit.sumbit']}' type='submit'>" escape="false"/>
-			<h:panelGroup style="padding-left: 28px;">
-				<fc:commandLink action="" value="#{bundle['link.functions.management.edit']}" rendered="#{functionsManagementBackingBean.disabledVar == 1}"> 
-					<f:param id="disabledVar1" name="disabledVar" value="0"/>
-				</fc:commandLink> 
-				<h:outputText value="<span style=\"color: #777;\">#{bundle['link.functions.management.edit']}</span>" escape="false" rendered="#{functionsManagementBackingBean.disabledVar == 0}"/>
-			</h:panelGroup>	
-		</h:panelGrid>				
+		<h:panelGroup rendered="#{functionsManagementBackingBean.numberOfFunctions > 0}">
+			<h:outputText value="<table class='infoop mbottom2'>" escape="false"/>
+				<h:outputText value="<tr>" escape="false"/>
+					<h:outputText value="<td><b>#{bundle['label.begin']}</b></td>" escape="false"/>
+					<h:outputText value="<td>" escape="false"/>
+						<fc:selectOneMenu disabled="#{functionsManagementBackingBean.disabledVar == 1}" onchange="this.form.submit();" value="#{functionsManagementBackingBean.executionPeriod}">
+							<f:selectItems value="#{functionsManagementBackingBean.executionPeriods}"/>
+						</fc:selectOneMenu>
+						<h:outputText value="<input value='#{htmlAltBundle['submit.sumbit']}' id='javascriptButtonID' class='altJavaScriptSubmitButton' alt='#{htmlAltBundle['submit.sumbit']}' type='submit'/>" escape="false"/>
+					<h:outputText value="</td>" escape="false"/>
+				<h:outputText value="</tr>" escape="false"/>
+	
+				<h:outputText value="<tr>" escape="false"/>
+					<h:outputText value="<td><b>#{bundle['label.duration']}</b></td>" escape="false"/>
+					<h:outputText value="<td>" escape="false"/>
+						<h:selectOneRadio onchange="this.form.submit();" disabled="#{functionsManagementBackingBean.disabledVar == 1}" 
+										  value="#{functionsManagementBackingBean.duration}">
+							<f:selectItems value="#{functionsManagementBackingBean.durationList}" />
+						</h:selectOneRadio>
+						<h:outputText value="<input value='#{htmlAltBundle['submit.sumbit']}' id='javascriptButtonID2' class='altJavaScriptSubmitButton' alt='#{htmlAltBundle['submit.sumbit']}' type='submit'>" escape="false"/>
+					<h:outputText value="</td>" escape="false"/>
+				<h:outputText value="</tr>" escape="false"/>
+
+				<h:outputText value="<tr>" escape="false"/>
+					<h:outputText value="<td>" escape="false"/>
+						<fc:commandLink action="" value="#{bundle['link.functions.management.edit']}" rendered="#{functionsManagementBackingBean.disabledVar == 1}"> 
+							<f:param id="disabledVar1" name="disabledVar" value="0"/>
+						</fc:commandLink>
+						<h:outputText value="<span style=\"color: #777;\">#{bundle['link.functions.management.edit']}</span>" escape="false" rendered="#{functionsManagementBackingBean.disabledVar == 0}"/>
+					<h:outputText value="</td>" escape="false"/>
+					<h:outputText value="<td></td>" escape="false"/>
+				<h:outputText value="</tr>" escape="false"/>
+		</h:panelGroup>			
 								
 		<h:outputText value="<br/>" escape="false" rendered="#{functionsManagementBackingBean.numberOfFunctions > 0}"/>		
 		
@@ -110,7 +121,7 @@
 			</h:panelGroup>
 		</h:panelGrid>									
 		
-		<h:outputText value="<br/><br/>" escape="false" />	
+		<h:outputText value="<br/>" escape="false" />	
 
 		<h:panelGrid columns="3" rendered="#{functionsManagementBackingBean.numberOfFunctions > 0}">							
 			<h:panelGroup>
@@ -125,7 +136,7 @@
 		<h:panelGrid columns="1">
 			<h:outputText value="<br/><br/>#{bundle['error.noFunction.in.unit']}" styleClass="error" 
 				escape="false" rendered="#{functionsManagementBackingBean.numberOfFunctions <= 0}"/>					
-			<h:outputText value="<br/><br/><br/>" escape="false" />
+			<h:outputText value="<br/><br/><br/>" escape="false" rendered="#{functionsManagementBackingBean.numberOfFunctions <= 0}"/>
 			<h:commandButton action="alterUnit" immediate="true" value="#{bundle['button.choose.new.person']}" styleClass="inputbutton"
 				rendered="#{functionsManagementBackingBean.numberOfFunctions <= 0}"/>						
 		</h:panelGrid>
