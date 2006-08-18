@@ -54,6 +54,7 @@
 		<fr:layout name="tabular">      			
    			<fr:property name="rowClasses" value="listClasses"/>	
    			<fr:property name="columnClasses" value="listClasses"/>
+   			<fr:property name="headerClasses" value="listClasses-header"/>
    			   			
    			<fr:property name="link(edit)" value="<%="/manageSpaceResponsibility.do?method=prepareEditSpaceResponsibility&spaceInformationID=" + selectedSpaceInformationId %>"/>
             <fr:property name="param(edit)" value="idInternal/spaceResponsibilityID"/>
@@ -87,6 +88,7 @@
 		<fr:layout name="tabular">      			
    			<fr:property name="rowClasses" value="listClasses"/>	
    			<fr:property name="columnClasses" value="listClasses"/>
+   			<fr:property name="headerClasses" value="listClasses-header"/>
    			   			
    			<fr:property name="link(edit)" value="<%="/manageSpaceResponsibility.do?method=prepareEditSpaceResponsibility&spaceInformationID=" + selectedSpaceInformationId %>"/>
             <fr:property name="param(edit)" value="idInternal/spaceResponsibilityID"/>

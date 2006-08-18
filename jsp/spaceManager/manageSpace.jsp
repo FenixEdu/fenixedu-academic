@@ -176,21 +176,39 @@
 	<br/>
 	
 	<p><b><bean:message bundle="SPACE_RESOURCES" key="label.active.responsible.units"/></b></p>
-	<fr:view schema="ViewSpaceResponsibleUnits" name="selectedSpaceInformation" property="space.activeSpaceResponsibility" />
+	<fr:view schema="ViewSpaceResponsibleUnits" name="selectedSpaceInformation" property="space.activeSpaceResponsibility">
+		<fr:layout name="tabular">      			
+   			<fr:property name="rowClasses" value="listClasses"/>	
+   			<fr:property name="columnClasses" value="listClasses"/>
+   			<fr:property name="headerClasses" value="listClasses-header"/>	
+   		</fr:layout>	
+	</fr:view>
 	<p><html:link page="/manageSpaceResponsibility.do?method=showSpaceResponsibility&page=0" paramId="spaceInformationID" paramName="selectedSpaceInformation" paramProperty="idInternal">
 		<bean:message bundle="SPACE_RESOURCES" key="link.manage.space.responsibility"/>
 	</html:link></p>		
 	
 	<br/>	
 	<p><b><bean:message bundle="SPACE_RESOURCES" key="label.active.occupations"/></b></p>
-	<fr:view schema="PersonSpaceOccupationsWithUsername" name="selectedSpaceInformation" property="space.activePersonSpaceOccupations" />	
+	<fr:view schema="PersonSpaceOccupationsWithUsername" name="selectedSpaceInformation" property="space.activePersonSpaceOccupations">
+		<fr:layout name="tabular">      			
+   			<fr:property name="rowClasses" value="listClasses"/>	
+   			<fr:property name="columnClasses" value="listClasses"/>
+   			<fr:property name="headerClasses" value="listClasses-header"/>
+   		</fr:layout>	
+	</fr:view>	
 	<p><html:link page="/managePersonSpaceOccupations.do?method=showSpaceOccupations&page=0" paramId="spaceInformationID" paramName="selectedSpaceInformation" paramProperty="idInternal">
 		<bean:message bundle="SPACE_RESOURCES" key="link.manage.occupations"/>
 	</html:link></p>
 
 	<br/>	
 	<p><b><bean:message bundle="SPACE_RESOURCES" key="label.active.material.occupations"/></b></p>
-	<fr:view schema="ViewSpaceMaterial" name="selectedSpaceInformation" property="space.activeSpaceMaterial" />	
+	<fr:view schema="ViewSpaceMaterial" name="selectedSpaceInformation" property="space.activeSpaceMaterial">
+		<fr:layout name="tabular">      			
+   			<fr:property name="rowClasses" value="listClasses"/>	
+   			<fr:property name="columnClasses" value="listClasses"/>
+   			<fr:property name="headerClasses" value="listClasses-header"/>   			
+   		</fr:layout>	
+	</fr:view>			
 	<p><html:link page="/manageMaterialSpaceOccupations.do?method=showMaterialSpaceOccupations&page=0" paramId="spaceInformationID" paramName="selectedSpaceInformation" paramProperty="idInternal">
 		<bean:message bundle="SPACE_RESOURCES" key="link.manage.material.occupations"/>
 	</html:link></p>

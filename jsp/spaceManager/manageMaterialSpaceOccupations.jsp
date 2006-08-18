@@ -38,7 +38,8 @@
 		<fr:layout name="tabular">      			
    			<fr:property name="rowClasses" value="listClasses"/>	
    			<fr:property name="columnClasses" value="listClasses"/>
-   			   			
+   			<fr:property name="headerClasses" value="listClasses-header"/>   			
+
    			<fr:property name="link(edit)" value="<%="/manageMaterialSpaceOccupations.do?method=prepareEditMaterialSpaceOccupation&spaceInformationID=" + selectedSpaceInformationId %>"/>
             <fr:property name="param(edit)" value="idInternal/materialOccupationID"/>
 	        <fr:property name="key(edit)" value="link.edit"/>
@@ -65,6 +66,7 @@
 		<fr:layout name="tabular">      			
    			<fr:property name="rowClasses" value="listClasses"/>	
    			<fr:property name="columnClasses" value="listClasses"/>
+   			<fr:property name="headerClasses" value="listClasses-header"/>  
    			   			
    			<fr:property name="link(edit)" value="<%="/manageMaterialSpaceOccupations.do?method=prepareEditMaterialSpaceOccupation&spaceInformationID=" + selectedSpaceInformationId %>"/>
             <fr:property name="param(edit)" value="idInternal/materialOccupationID"/>

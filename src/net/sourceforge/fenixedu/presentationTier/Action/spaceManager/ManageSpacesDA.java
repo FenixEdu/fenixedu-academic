@@ -52,7 +52,7 @@ public class ManageSpacesDA extends FenixDispatchAction {
         	return null;
         }
     }
-
+    
     protected ActionForward manageSpace(final ActionMapping mapping, final HttpServletRequest request, final SpaceInformation spaceInformation) {
         final Space space = spaceInformation.getSpace();
         request.setAttribute("selectedSpace", space);
@@ -68,7 +68,7 @@ public class ManageSpacesDA extends FenixDispatchAction {
         final Integer spaceInformationID = spaceInformationIDString != null ? Integer.valueOf(spaceInformationIDString) : null;
         return rootDomainObject.readSpaceInformationByOID(spaceInformationID);
 	}
-
+    
     public ActionForward manageSpace(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
     	final SpaceInformation spaceInformation = getSpaceInformationFromParameter(request);
     	return manageSpace(mapping, request, spaceInformation);

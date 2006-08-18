@@ -35,6 +35,7 @@
 		<fr:layout name="tabular">      			
    			<fr:property name="rowClasses" value="listClasses"/>	
    			<fr:property name="columnClasses" value="listClasses"/>
+   			<fr:property name="headerClasses" value="listClasses-header"/>
    			   			
    			<fr:property name="link(edit)" value="<%="/managePersonSpaceOccupations.do?method=prepareEditSpacePersonOccupation&spaceInformationID=" + selectedSpaceInformationId %>"/>
             <fr:property name="param(edit)" value="idInternal/spaceOccupationID"/>
@@ -79,7 +80,8 @@
 		<fr:layout name="tabular">      			
    			<fr:property name="rowClasses" value="listClasses"/>	
    			<fr:property name="columnClasses" value="listClasses"/>
-   			   			
+   			<fr:property name="headerClasses" value="listClasses-header"/>
+   			   			   			
    			<fr:property name="link(edit)" value="<%="/managePersonSpaceOccupations.do?method=prepareEditSpacePersonOccupation&spaceInformationID=" + selectedSpaceInformationId %>"/>
             <fr:property name="param(edit)" value="idInternal/spaceOccupationID"/>
 	        <fr:property name="key(edit)" value="link.edit"/>

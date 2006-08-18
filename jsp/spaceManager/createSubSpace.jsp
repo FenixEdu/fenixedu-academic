@@ -31,12 +31,17 @@
 </html:form>
 <br/>
 
+<bean:define id="cancelPath">
+	/manageSpaces.do?method=manageSpace&spaceInformationID=<bean:write name="selectedSpaceInformation" property="idInternal"/>
+</bean:define>	
+
 <logic:equal name="spaceContextForm" property="classname" value="net.sourceforge.fenixedu.domain.space.Building">
     <H3><bean:message key="label.space.details" bundle="SPACE_RESOURCES"/></H3>
 	<fr:create type="net.sourceforge.fenixedu.domain.space.Building$BuildingFactoryCreator"
 			schema="BuildingFactoryCreator"
 			action="/manageSpaces.do?method=executeFactoryMethod">
 		<fr:hidden slot="surroundingSpace" name="selectedSpace"/>
+		<fr:destination name="cancel" path="<%= cancelPath %>"/>
 	</fr:create>
 </logic:equal>
 <logic:equal name="spaceContextForm" property="classname" value="net.sourceforge.fenixedu.domain.space.Floor">
@@ -45,6 +50,7 @@
 			schema="FloorFactoryCreator"
 			action="/manageSpaces.do?method=executeFactoryMethod">
 		<fr:hidden slot="surroundingSpace" name="selectedSpace"/>
+		<fr:destination name="cancel" path="<%= cancelPath %>"/>		
 	</fr:create>
 </logic:equal>
 <logic:equal name="spaceContextForm" property="classname" value="net.sourceforge.fenixedu.domain.space.Room">
@@ -53,5 +59,6 @@
 			schema="RoomFactoryCreator"
 			action="/manageSpaces.do?method=executeFactoryMethod">
 		<fr:hidden slot="surroundingSpace" name="selectedSpace"/>
+		<fr:destination name="cancel" path="<%= cancelPath %>"/>		
 	</fr:create>
 </logic:equal>
