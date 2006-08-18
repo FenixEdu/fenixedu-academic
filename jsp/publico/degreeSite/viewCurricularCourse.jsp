@@ -95,13 +95,10 @@
 		<h:outputText value="<strong>#{publicDegreeInfoBundle['public.degree.information.label.courses']}</strong></td></tr>" escape="false"/>
 		<fc:dataRepeater value="#{CurricularCourseManagement.curricularCourse.associatedExecutionCourses}" var="executionCourse">
 			<h:outputText value="<tr><td class='box_cell'>" escape="false"/>
-			<h:outputLink value="../viewSiteExecutionCourse.do" >
+			<h:outputLink value="../executionCourse.do" >
 				<h:outputText value="#{executionCourse.nome} (#{executionCourse.executionPeriod.executionYear.year} - #{executionCourse.executionPeriod.name})"/>
 				<f:param name="method" value="firstPage"/>
-				<f:param name="objectCode" value="#{executionCourse.idInternal}"/>
-				<f:param name="degreeID" value="#{CurricularCourseManagement.degreeCurricularPlan.degree.idInternal}"/>
-				<f:param name="degreeCurricularPlanID" value="#{CurricularCourseManagement.degreeCurricularPlanID}"/>
-				<f:param name="executionPeriodOID" value="#{CurricularCourseManagement.executionPeriodOID}"/>
+				<f:param name="executionCourseID" value="#{executionCourse.idInternal}"/>
 			</h:outputLink>
 			<h:outputText value="</td></tr>" escape="false"/>
 		</fc:dataRepeater>

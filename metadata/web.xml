@@ -81,7 +81,7 @@
 		</init-param>
 		<init-param>
 			<param-name>forwardExecutionCourse</param-name>
-			<param-value>/publico/viewSiteExecutionCourse.do?method=firstPage&amp;objectCode=</param-value>
+			<param-value>/publico/executionCourse.do?method=firstPage&amp;executionCourseID=</param-value>
 		</init-param>
 		<init-param>
 			<param-name>notFoundURI</param-name>

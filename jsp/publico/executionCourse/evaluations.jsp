@@ -78,7 +78,7 @@
 			<tr>
 				<td>
 					<bean:message key="label.exam"/>: <bean:write name="evaluation" property="season"/>
-					<logic:notEmpty name="siteView" property="executionCourse.comment">
+					<logic:notEmpty name="executionCourse" property="comment">
 						*
 					</logic:notEmpty>
 				</td>

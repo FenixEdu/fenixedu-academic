@@ -57,7 +57,7 @@
 		 	<fc:fenixCalendar 
 			 		begin="#{publicEvaluations.beginDate}" 
 			 		end="#{publicEvaluations.endDate}"
-			 		editLinkPage="#{publicEvaluations.applicationContext}/publico/viewSite.do"
+			 		editLinkPage="#{publicEvaluations.applicationContext}/publico/executionCourse.do"
 			 		editLinkParameters="#{publicEvaluations.calendarLinks}"/>
 
 		</h:panelGroup>

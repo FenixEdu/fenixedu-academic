@@ -87,7 +87,7 @@
 						<tr>
 							<td class="box_cell">
 								<bean:define id="executionCourseID" name="infoExecutionCourse" property="idInternal" />
-								<html:link page="<%= "/viewSiteExecutionCourse.do?method=firstPage&amp;objectCode=" + pageContext.findAttribute("executionCourseID").toString() + "&amp;degreeID=" + request.getAttribute("degreeID") + "&amp;degreeCurricularPlanID=" + request.getAttribute("degreeCurricularPlanID") + "&amp;executionPeriodOID=" + request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID)  %>"  >
+								<html:link page="<%= "/executionCourse.do?method=firstPage&amp;executionCourseID=" + pageContext.findAttribute("executionCourseID").toString() %>">
 									<bean:write name="infoExecutionCourse" property="nome" />&nbsp;(<bean:write name="infoExecutionCourse" property="infoExecutionPeriod.infoExecutionYear.year"/>&nbsp;-&nbsp;<bean:write name="infoExecutionCourse" property="infoExecutionPeriod.name"/>)
 								</html:link>
 							</td>

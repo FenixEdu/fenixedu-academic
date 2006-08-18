@@ -30,12 +30,10 @@ public abstract class GenerateExecutionCourseRSS extends RSSAction{
 		final String appContext = PropertiesManager.getProperty("app.context");
         final String context = (appContext != null && appContext.length() > 0) ? "/" + appContext : "";
         final String commonLocalUrl = StringAppender.append(context,
-        		"/publico/viewSite.do?method=",
+        		"/publico/executionCourse.do?method=",
         		getMethodName(),
-        		"&objectCode=",
+        		"&amp;executionCourseID=",
         		executionCourse.getSite().getIdInternal().toString(),
-        		"&executionPeriodOID=",
-        		executionCourse.getExecutionPeriod().getIdInternal().toString(),
         		"#");
 
     	for (final DomainObject domainObject : ((Collection<DomainObject>) getObjects(executionCourse))) {

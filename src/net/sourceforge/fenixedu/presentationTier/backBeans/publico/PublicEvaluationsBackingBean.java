@@ -25,7 +25,6 @@ import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Project;
-import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.domain.WrittenTest;
 import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean;
@@ -254,12 +253,9 @@ public class PublicEvaluationsBackingBean extends FenixBackingBean {
     }
 
     private Map<String, String> constructLinkParameters(final ExecutionCourse executionCourse) {
-        final Site site = executionCourse.getSite();
-
         final Map<String, String> linkParameters = new HashMap<String, String>();
         linkParameters.put("method", "evaluations");
-        linkParameters.put("objectCode", (site != null) ? site.getIdInternal().toString() : null);
-        linkParameters.put("executionPeriodOID", executionCourse.getExecutionPeriod().getIdInternal().toString());
+        linkParameters.put("executionCourseID", executionCourse.getIdInternal().toString());
         return linkParameters;
     }
 

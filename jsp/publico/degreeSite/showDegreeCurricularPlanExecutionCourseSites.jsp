@@ -99,7 +99,7 @@
 					<logic:notEmpty name="executionCourseView">
 						<bean:define id="executionCourseOID" name="executionCourseView" property="executionCourseOID"/>
 						
-						<html:link page="<%= "/viewSiteExecutionCourse.do?method=firstPage&amp;objectCode="
+						<html:link page="<%= "/executionCourse.do?method=firstPage&amp;executionCourseID="
 											 + pageContext.findAttribute("executionCourseOID").toString()
 										%>" >
 							<bean:write name="executionCourseView" property="executionCourseName"/>
@@ -126,7 +126,7 @@
 				<td class="<%= rowColor %>" width="50%">
 					<logic:notEmpty name="executionCourseView">
 						<bean:define id="executionCourseOID" name="executionCourseView" property="executionCourseOID"/>
-						<html:link page="<%= "/viewSiteExecutionCourse.do?method=firstPage&amp;objectCode="
+						<html:link page="<%= "/executionCourse.do?method=firstPage&amp;executionCourseID="
 											 + pageContext.findAttribute("executionCourseOID").toString()
 										%>" >
 							<bean:write name="executionCourseView" property="executionCourseName"/>
@@ -151,7 +151,7 @@
 				<td class="<%= rowColor %>" colspan="2">
 					<logic:notEmpty name="executionCourseView">
 						<bean:define id="executionCourseOID" name="executionCourseView" property="executionCourseOID"/>
-						<html:link page="<%= "/viewSiteExecutionCourse.do?method=firstPage&amp;objectCode="
+						<html:link page="<%= "/executionCourse.do?method=firstPage&amp;executionCourseID="
 											 + pageContext.findAttribute("executionCourseOID").toString()
 										%>" >
 							<bean:write name="executionCourseView" property="executionCourseName"/>
@@ -191,7 +191,7 @@
 				<td class="<%= rowColor %>" width="50%">
 					<logic:notEmpty name="executionCourseView">
 						<bean:define id="executionCourseOID" name="executionCourseView" property="executionCourseOID"/>
-						<html:link page="<%= "/viewSiteExecutionCourse.do?method=firstPage&amp;objectCode="
+						<html:link page="<%= "/executionCourse.do?method=firstPage&amp;executionCourseID="
 											 + pageContext.findAttribute("executionCourseOID").toString()
 										%>" >
 							<bean:write name="executionCourseView" property="executionCourseName"/>
@@ -217,7 +217,7 @@
 				<td class="<%= rowColor %>" width="50%">
 					<logic:notEmpty name="executionCourseView">
 						<bean:define id="executionCourseOID" name="executionCourseView" property="executionCourseOID"/>
-						<html:link page="<%= "/viewSiteExecutionCourse.do?method=firstPage&amp;objectCode="
+						<html:link page="<%= "/executionCourse.do?method=firstPage&amp;executionCourseID="
 											 + pageContext.findAttribute("executionCourseOID").toString()
 										%>" >
 							<bean:write name="executionCourseView" property="executionCourseName"/>
@@ -242,7 +242,7 @@
 				<td class="<%= rowColor %>" colspan="2">
 					<logic:notEmpty name="executionCourseView">
 						<bean:define id="executionCourseOID" name="executionCourseView" property="executionCourseOID"/>
-						<html:link page="<%= "/viewSiteExecutionCourse.do?method=firstPage&amp;objectCode="
+						<html:link page="<%= "/executionCourse.do?method=firstPage&amp;executionCourseID="
 											 + pageContext.findAttribute("executionCourseOID").toString()
 										%>" >
 							<bean:write name="executionCourseView" property="executionCourseName"/>
