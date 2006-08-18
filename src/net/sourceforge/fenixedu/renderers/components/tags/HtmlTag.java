@@ -15,6 +15,7 @@ import javax.servlet.jsp.PageContext;
 public class HtmlTag {
 
     protected static String DEFAULT_INDENT = "  ";
+    protected static String NO_INDENT      = "no";
     
     private String name;
     private String text;
@@ -68,10 +69,6 @@ public class HtmlTag {
 
     public void setIndented(boolean idented) {
         this.indented = idented;
-        
-        for (HtmlTag tag : getChildren()) {
-            tag.setIndented(this.indented);
-        }
     }
 
     public void copyAttributes(HtmlTag tag) {
@@ -113,7 +110,6 @@ public class HtmlTag {
     }
     
     public void addChild(HtmlTag tag) {
-        tag.setIndented(isIndented());
         this.children.add(tag);
     }
 
@@ -130,6 +126,10 @@ public class HtmlTag {
     }
     
     public void writeTag(Writer writer, String indent) throws IOException {
+        if (indent.equals(NO_INDENT)) {
+            setIndented(false);
+        }
+        
         if (isVisible()) {
             writeOpenTag(writer, indent);
             writeBody(writer, indent);
@@ -148,13 +148,15 @@ public class HtmlTag {
                 writer.write('\n');
             }
             else {
-                child.writeTag(writer, "");
+                child.writeTag(writer, NO_INDENT);
             }
         }
     }
 
     protected void writeOpenTag(Writer writer, String indent) throws IOException {
-        writer.write(indent);
+        if (isIndented()) {
+            writer.write(indent);
+        }
         
         if (name != null) {
             writer.write('<');
