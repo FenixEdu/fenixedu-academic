@@ -44,6 +44,18 @@
 </logic:equal>
 
 <!-- ======================
+        availabilities from parents
+     ======================  -->
+
+<logic:present name="contextAvailabilities">
+    <fr:view name="contextAvailabilities" schema="functionalities.availability.manage.context">
+        <fr:layout name="tabular">
+        </fr:layout>
+        <fr:destination name="viewModule" path="/module/view.do?module=${module.idInternal}"/>
+    </fr:view>
+</logic:present>
+
+<!-- ======================
         expression
      ======================  -->
 

@@ -105,22 +105,17 @@ public class StringRenderer extends OutputRenderer {
                 String string = String.valueOf(object);
                 
                 if (! isLink() || string == null) {
-                    if (isNewlineAware()) {
-                        return new HtmlText(replaceNewlines(string), false);
-                    }
-                    else {
-                        return new HtmlText(string, isEscaped());
-                    }
+                    return new HtmlText(string, isEscaped(), isNewlineAware());
                 }
                 else {
                     HtmlLink link = new HtmlLink();
                     link.setContextRelative(false);
                     
                     if (getLinkText() == null) {
-                        link.setText(string);
+                        link.setText(HtmlText.escape(string));
                     }
                     else {
-                        link.setText(getLinkText());
+                        link.setText(HtmlText.escape(getLinkText()));
                     }
                     
                     // heuristic to distinguish between email and other urls
@@ -135,23 +130,6 @@ public class StringRenderer extends OutputRenderer {
                 }
             }
 
-            private String replaceNewlines(String string) {
-                StringBuilder result = new StringBuilder();
-                
-                String[] lines = string.split("\\r\\n|\\n|\\r", -1);
-                for (int i = 0; i < lines.length; i++) {
-                    String line = lines[i];
-
-                    if (i > 0) {
-                        result.append("<br/>");
-                    }
-                    
-                    result.append(HtmlText.escape(line));
-                }
-                
-                return result.toString();
-            }
-            
         };
     }
 }

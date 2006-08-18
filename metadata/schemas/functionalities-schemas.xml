@@ -7,7 +7,7 @@
     <slot name="path" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
         <property name="size" value="40"/>
     </slot>
-    <slot name="relative"/>
+    <slot name="relative" default="true"/>
     <slot name="parameters">
         <property name="size" value="40"/>
     </slot>
@@ -32,7 +32,7 @@
     <slot name="path">
         <property name="size" value="40"/>
     </slot>
-    <slot name="relative"/>
+    <slot name="relative" default="true"/>
     <slot name="parameters">
         <property name="size" value="40"/>
     </slot>
@@ -65,9 +65,15 @@
     <slot name="name"/>
     <slot name="path"/>
     <slot name="publicPath"/>
-    <slot name="parameters"/>
-    <slot name="title"/>
-    <slot name="description"/>
+    <slot name="parameters" layout="null-as-label">
+        <property name="label" value="--"/>
+    </slot>
+    <slot name="title" layout="null-as-label">
+        <property name="label" value="--"/>
+    </slot>
+    <slot name="description" layout="null-as-label">
+        <property name="label" value="--"/>
+    </slot>
 </schema>
 
 <schema name="functionalities.functionality.availability" 
@@ -75,7 +81,17 @@
         bundle="FUNCTIONALITY_RESOURCES">
     <slot name="enabled"/>
     <!-- NOTE: only works for GroupAvailability -->
-    <slot name="availabilityPolicy" layout="textual"/>
+    <slot name="availabilityPolicy" layout="null-as-label">
+        <property name="label" value="--"/>
+        <property name="subLayout" value="values"/>
+        <property name="subSchema" value="functionalities.availability.expression"/>
+    </slot>
+</schema>
+
+<schema name="functionalities.availability.expression" 
+        type="net.sourceforge.fenixedu.domain.functionalities.GroupAvailability"
+        bundle="FUNCTIONALITY_RESOURCES">
+    <slot name="expression" layout="code-block"/>
 </schema>
 
 <schema name="functionalities.module.view.simple" 
@@ -131,33 +147,45 @@
 
 <schema name="functionalities.filter.select.bean" type="net.sourceforge.fenixedu.presentationTier.Action.manager.functionalities.TestFilterBean"
         bundle="FUNCTIONALITY_RESOURCES">
-        <slot name="person" layout="autoComplete">
-        		<property name="size" value="70"/>
-            <property name="rawSlotName" value="personName"/>
-        		<property name="labelField" value="name"/>
-        		<property name="indicatorShown" value="true"/>
-        		<property name="serviceName" value="SearchObjects"/>
-        		<property name="serviceArgs" value="slot=name"/>
-        		<property name="minChars" value="3"/>
-        </slot>
-        <slot name="personId">
-             <validator class="net.sourceforge.fenixedu.renderers.validators.NumberValidator">
-                <property name="required" value="false"/>
-             </validator>
-         </slot>
-        <slot name="parameters">
-            <property name="size" value="40"/>
-        </slot>
+    <slot name="person" layout="autoComplete">
+    		<property name="size" value="70"/>
+        <property name="rawSlotName" value="personName"/>
+    		<property name="labelField" value="name"/>
+    		<property name="indicatorShown" value="true"/>
+    		<property name="serviceName" value="SearchObjects"/>
+    		<property name="serviceArgs" value="slot=name"/>
+    		<property name="minChars" value="3"/>
+    </slot>
+    <slot name="personId">
+         <validator class="net.sourceforge.fenixedu.renderers.validators.NumberValidator">
+            <property name="required" value="false"/>
+         </validator>
+     </slot>
+    <slot name="parameters">
+        <property name="size" value="40"/>
+    </slot>
 </schema>
 
 
 <schema name="functionalities.filter.result.bean" type="net.sourceforge.fenixedu.presentationTier.Action.manager.functionalities.TestFilterResultBean"
         bundle="FUNCTIONALITY_RESOURCES">
-        <slot name="accessible"/>
-        <slot name="functionality.name" key="label.name"/>
-        <slot name="functionality.publicPath" key="label.publicPath" layout="link">
-            <property name="useParent" value="true"/>
-            <property name="destination" value="testFilter"/>
-        </slot>
-        <slot name="functionality.parameters" key="label.parameters.required"/>
+    <slot name="accessible"/>
+    <slot name="functionality.name" key="label.name" layout="link">
+        <property name="useParent" value="true"/>
+        <property name="destination" value="viewModule"/>
+    </slot>
+    <slot name="functionality.publicPath" key="label.publicPath" layout="link">
+        <property name="useParent" value="true"/>
+        <property name="destination" value="testFilter"/>
+    </slot>
+    <slot name="functionality.parameters" key="label.parameters.required"/>
+</schema>
+
+<schema name="functionalities.availability.manage.context" type="net.sourceforge.fenixedu.presentationTier.Action.manager.functionalities.AvailabilityBean"
+        bundle="FUNCTIONALITY_RESOURCES">
+    <slot name="expression" layout="code-block"/>
+    <slot name="module.name" layout="link">
+        <property name="useParent" value="true"/>
+        <property name="destination" value="viewModule"/>
+    </slot>
 </schema>

@@ -236,11 +236,22 @@ public class ObjectLinkRenderer extends OutputRenderer {
                 
                 if (getDestination() != null) {
                     ViewDestination destination = getContext().getViewState().getDestination(getDestination());
-                    link.setModule(destination.getModule());
-                    url = destination.getPath();
+                    
+                    if (destination != null) {
+                        link.setModule(destination.getModule());
+                        url = destination.getPath();
+                    }
+                    else {
+                        url = "#";
+                    }
                 }
                 else {
-                    url = getLinkFormat();
+                    if (getLinkFormat() != null) {
+                        url = getLinkFormat();    
+                    }
+                    else {
+                        url = "#";
+                    }
                 }
                 
                 link.setUrl(RenderUtils.getFormattedProperties(url, usedObject));

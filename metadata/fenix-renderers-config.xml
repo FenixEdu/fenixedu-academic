@@ -104,6 +104,8 @@ Documentation:
         <property name="escaped" value="false"/>
     </renderer>
     
+    <renderer type="java.lang.String" layout="code-block" class="net.sourceforge.fenixedu.renderers.CodeRenderer"/>
+
     <renderer type="java.lang.String" layout="person-short-name" class="net.sourceforge.fenixedu.presentationTier.renderers.PersonNameRenderer">
         <property name="firstLastOnly" value="true"/>
     </renderer>

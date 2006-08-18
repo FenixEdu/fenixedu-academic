@@ -1,5 +1,8 @@
 package net.sourceforge.fenixedu.presentationTier.Action.manager.functionalities;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -26,7 +29,12 @@ public class FunctionalityManagementAction extends FunctionalitiesDispatchAction
         if (functionality == null) {
             return viewTopLevel(mapping, actionForm, request, response);
         } else {
-            return forwardTo(mapping.findForward("view"), request, functionality);
+            if (functionality instanceof Module) {
+                return viewModule((Module) functionality, mapping, actionForm, request, response);
+            }
+            else {
+                return forwardTo(mapping.findForward("view"), request, functionality);
+            }
         }
 
     }
@@ -129,8 +137,25 @@ public class FunctionalityManagementAction extends FunctionalitiesDispatchAction
         else {
             request.setAttribute("bean", new ExpressionBean());
         }
-        
+
+        setupAvailabilityStack(functionality, request);
         return forwardTo(mapping.findForward("manage"), request, functionality);
+    }
+
+    private void setupAvailabilityStack(Functionality functionality, HttpServletRequest request) {
+        List<AvailabilityBean> availabilities = new ArrayList<AvailabilityBean>();
+        
+        for (Module module = functionality.getModule(); module != null; module = module.getParent()) {
+            GroupAvailability availability = (GroupAvailability) module.getAvailabilityPolicy();
+            
+            if (availability != null) {
+                availabilities.add(0, new AvailabilityBean(module));
+            }
+        }
+        
+        if (! availabilities.isEmpty()) {
+            request.setAttribute("contextAvailabilities", availabilities);
+        }
     }
 
     public ActionForward parse(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -163,6 +188,8 @@ public class FunctionalityManagementAction extends FunctionalitiesDispatchAction
         }
         
         request.setAttribute("bean", bean);
+        setupAvailabilityStack(functionality, request);
+        
         return forwardTo(mapping.findForward("manage"), request, functionality);
     }
 

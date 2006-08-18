@@ -8,10 +8,18 @@ public class HtmlText extends HtmlComponent {
 
     private String text;
     private boolean escaped;
-
+    private boolean newLineAware;
+    
     public HtmlText(String text, boolean escaped) {
         this.text = text;
         this.escaped = escaped;
+        this.newLineAware = true;
+    }
+
+    public HtmlText(String text, boolean escaped, boolean newLineAware) {
+        this.text = text;
+        this.escaped = escaped;
+        this.newLineAware = newLineAware;
     }
 
     public HtmlText(String text) {
@@ -49,15 +57,31 @@ public class HtmlText extends HtmlComponent {
         	    tag.setName(null);
         	}
         
-        	if (this.escaped) {
-        	    tag.setText(escape(this.text));
-        	} else {
-        	    tag.setText(this.text);
-        	}
+        String finalText = this.escaped ? escape(this.text) : this.text;
+        finalText = this.newLineAware ? replaceNewlines(finalText) : finalText;
+        
+        tag.setText(finalText);
         
         	return tag;
     }
 
+    private String replaceNewlines(String string) {
+        StringBuilder result = new StringBuilder();
+        
+        String[] lines = string.split("\\r\\n|\\n|\\r", -1);
+        for (int i = 0; i < lines.length; i++) {
+            String line = lines[i];
+
+            if (i > 0) {
+                result.append("<br/>");
+            }
+            
+            result.append(line);
+        }
+        
+        return result.toString();
+    }
+    
     public static String escape(String text) {
         	if (text == null) {
         	    return null;

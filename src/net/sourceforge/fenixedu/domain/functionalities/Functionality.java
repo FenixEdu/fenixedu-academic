@@ -89,12 +89,36 @@ public abstract class Functionality extends Functionality_Base {
         super.setName(name);
     }
 
+    @Override
+    public void setDescription(MultiLanguageString description) {
+        if (description == null || description.isEmpty()) {
+            super.setDescription(null);
+        }
+        else {
+            super.setDescription(description);
+        }
+    }
+
+    @Override
+    public void setTitle(MultiLanguageString title) {
+        if (title == null || title.isEmpty()) {
+            super.setTitle(null);
+        }
+        else {
+            super.setTitle(title);
+        }
+    }
+
     /**
      * @return the {@link #getPath() current path} but ensuring that starts but
      *         does not end with "/"
      */
     protected String getNormalizedPath() {
         String path = getPath();
+
+        if (path == null) {
+            return null;
+        }
 
         int end = path.endsWith("/") ? path.length() - 1 : path.length();
         return (path.startsWith("/") ? "" : "/") + path.substring(0, end);
@@ -132,11 +156,16 @@ public abstract class Functionality extends Functionality_Base {
      * or not, that is, if the path is relative the the parent structure or not.
      * 
      * @return the path that should be publicly used to access the functionality
+     *         or <code>null</code> if there is no path defined
      * 
      * @see #getModule()
      * @see #isRelative()
      */
     public String getPublicPath() {
+        if (getPath() == null || getPath().trim().length() == 0) {
+            return null;
+        }
+
         if (!isRelative()) {
             return getNormalizedPath();
         } else {
@@ -157,11 +186,11 @@ public abstract class Functionality extends Functionality_Base {
      *         the requested path or <code>null</code> if it does not have one
      */
     public String getMatchPath() {
-        if (getPath() == null || getPath().trim().length() == 0) {
+        String path = getPublicPath();
+
+        if (path == null) {
             return null;
         }
-
-        String path = getPublicPath();
 
         int queryStartIndex = path.lastIndexOf('?');
         if (queryStartIndex != -1) {
@@ -237,7 +266,7 @@ public abstract class Functionality extends Functionality_Base {
 
     @Override
     public void setParameters(String parameters) {
-        if (parameters == null) {
+        if (parameters == null || parameters.trim().length() == 0) {
             super.setParameters(null);
         } else {
             StringBuilder normalized = new StringBuilder();
