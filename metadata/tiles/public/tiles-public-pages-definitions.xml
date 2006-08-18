@@ -177,6 +177,12 @@
 	<definition name="execution-course-summaries" extends="definition.public.executionCourse">
 		<put name="body" value="/publico/executionCourse/summaries.jsp"/>
 	</definition>
+	<definition name="execution-course-objectives" extends="definition.public.executionCourse">
+		<put name="body" value="/publico/executionCourse/objectives.jsp"/>
+	</definition>
+	<definition name="execution-course-program" extends="definition.public.executionCourse">
+		<put name="body" value="/publico/executionCourse/program.jsp"/>
+	</definition>
 	<definition name="execution-course-evaluation-method" extends="definition.public.executionCourse">
 		<put name="body" value="/publico/executionCourse/evaluationMethod.jsp"/>
 	</definition>

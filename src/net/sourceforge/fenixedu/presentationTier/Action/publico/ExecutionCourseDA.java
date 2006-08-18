@@ -2,7 +2,9 @@ package net.sourceforge.fenixedu.presentationTier.Action.publico;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -12,7 +14,7 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExportGrouping;
 import net.sourceforge.fenixedu.domain.Grouping;
 import net.sourceforge.fenixedu.domain.Lesson;
-import net.sourceforge.fenixedu.domain.Professorship;
+import net.sourceforge.fenixedu.domain.Section;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.domain.StudentGroup;
@@ -69,6 +71,14 @@ public class ExecutionCourseDA extends FenixDispatchAction {
     		}
     	}
         return mapping.findForward("execution-course-summaries");
+    }
+
+    public ActionForward objectives(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
+        return mapping.findForward("execution-course-objectives");
+    }
+
+    public ActionForward program(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
+        return mapping.findForward("execution-course-program");
     }
 
     public ActionForward evaluationMethod(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
@@ -132,11 +142,23 @@ public class ExecutionCourseDA extends FenixDispatchAction {
     }
 
     public ActionForward section(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
+        final Section section = getSection(request);
+        request.setAttribute("section", section);
+        final Set<Section> selectedSections = new HashSet<Section>();
+        for (Section currentSection = section ; currentSection != null; currentSection = currentSection.getSuperiorSection()) {
+            selectedSections.add(currentSection);
+        }
+        request.setAttribute("selectedSections", selectedSections);
         return mapping.findForward("execution-course-section");
     }
 
     public ActionForward rss(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
         return mapping.findForward("execution-course-rss");
+    }
+
+    protected Section getSection(final HttpServletRequest request) {
+        final Integer sectionID = Integer.valueOf(request.getParameter("sectionID"));
+        return rootDomainObject.readSectionByOID(sectionID);
     }
 
     protected StudentGroup getStudentGroup(final HttpServletRequest request) {

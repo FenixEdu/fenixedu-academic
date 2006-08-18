@@ -26,6 +26,18 @@
 		</html:link>
 	</li>
 	<li>
+		<html:link page="/executionCourse.do?method=objectives"
+				paramId="executionCourseID" paramName="executionCourse" paramProperty="idInternal">
+			<bean:message  key="link.objectives"/>
+		</html:link>
+	</li>
+	<li>
+		<html:link page="/executionCourse.do?method=program"
+				paramId="executionCourseID" paramName="executionCourse" paramProperty="idInternal">
+			<bean:message  key="link.program"/>
+		</html:link>
+	</li>
+	<li>
 		<html:link page="/executionCourse.do?method=evaluationMethod"
 				paramId="executionCourseID" paramName="executionCourse" paramProperty="idInternal">
 			<bean:message  key="link.evaluationMethod"/>
@@ -61,36 +73,9 @@
 			<bean:message  key="link.groupings"/>
 		</html:link>
 	</li>
-	<li>
-		<html:link page="/executionCourse.do?method=section"
-				paramId="executionCourseID" paramName="executionCourse" paramProperty="idInternal">
-			<bean:message  key="link.section"/>
-		</html:link>
-	</li>
 	<logic:notEmpty name="executionCourse" property="site.associatedSections">
-		<logic:iterate id="section" name="executionCourse" property="site.orderedTopLevelSections">
-			<li>
-				<html:link page="/executionCourse.do?method=section"
-						paramId="executionCourseID" paramName="executionCourse" paramProperty="idInternal">
-					<bean:write name="section" property="name"/>
-				</html:link>
-			</li>
-			<bean:define id="subSections" name="section" property="orderedSubSections"/>
-			<logic:notEmpty name="subSections">
-				<li>
-					<dl>
-						<logic:iterate id="subSection" name="subSections">
-							<dd style="padding: 0pt 0pt 0pt 20px;">
-								<html:link page="/executionCourse.do?method=section"
-										paramId="executionCourseID" paramName="executionCourse" paramProperty="idInternal">
-									<bean:write name="subSection" property="name"/>
-								</html:link>
-							</dd>
-						</logic:iterate>
-					</dl>
-				</li>
-			</logic:notEmpty>
-		</logic:iterate>
+		<bean:define id="sections" toScope="request" name="executionCourse" property="site.orderedTopLevelSections"/>
+		<jsp:include page="sections.jsp"/>
 	</logic:notEmpty>
 	<li>
 		<bean:define id="imageURL" type="java.lang.String">
@@ -121,8 +106,8 @@
 </logic:equal>
 
 <logic:notEqual name="executionCourse" property="site.dynamicMailDistribution" value="true">
-	<logic:notEmpty name="component" property="mail" >	
-		<bean:define id="siteMail" name="component" property="mail" />
+	<logic:notEmpty name="executionCourse" property="site.mail" >	
+		<bean:define id="siteMail" name="executionCourse" property="site.mail" />
 		<div class="email"><p>
 		<html:link href="<%= "mailto:" + pageContext.findAttribute("siteMail") %>" titleKey="send.email.singleMail.title" bundle="PUBLIC_DEGREE_INFORMATION">
 			<bean:message key="send.email.dynamicMailDistribution.link" bundle="PUBLIC_DEGREE_INFORMATION"/>

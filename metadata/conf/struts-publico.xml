@@ -340,6 +340,8 @@
 		<forward name="execution-course-first-page" path="execution-course-first-page"/>
 		<forward name="execution-course-announcements" path="execution-course-announcements"/>
 		<forward name="execution-course-summaries" path="execution-course-summaries"/>
+		<forward name="execution-course-objectives" path="execution-course-objectives"/>
+		<forward name="execution-course-program" path="execution-course-program"/>
 		<forward name="execution-course-evaluation-method" path="execution-course-evaluation-method"/>
 		<forward name="execution-course-bibliographic-reference" path="execution-course-bibliographic-reference"/>
 		<forward name="execution-course-schedule" path="execution-course-schedule"/>

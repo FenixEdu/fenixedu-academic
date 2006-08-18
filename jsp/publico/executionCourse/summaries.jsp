@@ -11,7 +11,7 @@
 </h2>
 
 <bean:define id="executionCourseID" name="executionCourse" property="idInternal"/>
-<html:form action="/searchSummaries?executionCourseID=<%= executionCourseID %>">
+<html:form action="/searchSummaries">
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="summaries"/>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.objectCode" property="executionCourseID" value="<%= executionCourseID.toString() %>"/>
 
@@ -21,6 +21,9 @@
 			<td>
 				<html:select bundle="HTMLALT_RESOURCES" altKey="select.bySummaryType" property="shiftType" onchange="this.form.submit();">
 					<html:option value="" key="label.showBy.all"/>
+					<logic:iterate id="shiftType" name="summariesSearchBean" property="shiftTypes">
+						<html:option value="<%= shiftType.toString() %>" key="<%= shiftType.toString() %>" bundle="ENUMERATION_RESOURCES"/>
+					</logic:iterate>
 				</html:select>
 				<html:submit styleId="javascriptButtonID" styleClass="altJavaScriptSubmitButton" bundle="HTMLALT_RESOURCES" altKey="submit.submit">
 					<bean:message key="button.submit"/>
