@@ -15,6 +15,7 @@ import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseType;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
+import net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseInformation;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.executionCourse.SummariesSearchBean;
 import net.sourceforge.fenixedu.domain.gesdis.CourseReport;
@@ -969,6 +970,20 @@ public class ExecutionCourse extends ExecutionCourse_Base {
             }
         }
         return competenceCourses;
+    }
+
+    public Set<CompetenceCourseInformation> getCompetenceCoursesInformations() {
+        final Set<CompetenceCourseInformation> competenceCourseInformations = new HashSet<CompetenceCourseInformation>();
+        for (final CurricularCourse curricularCourse : getAssociatedCurricularCoursesSet()) {
+            final CompetenceCourse competenceCourse = curricularCourse.getCompetenceCourse();
+            if (competenceCourse != null) {
+                final CompetenceCourseInformation competenceCourseInformation = competenceCourse.findCompetenceCourseInformationForExecutionPeriod(getExecutionPeriod());
+                if (competenceCourseInformation != null) {
+                    competenceCourseInformations.add(competenceCourseInformation);
+                }
+            }
+        }
+        return competenceCourseInformations;
     }
 
     public List<CurricularCourse> getCurricularCoursesWithDegreeType() {

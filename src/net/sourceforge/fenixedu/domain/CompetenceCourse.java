@@ -658,4 +658,21 @@ public class CompetenceCourse extends CompetenceCourse_Base {
 		return false;
 	}
 
+    public CompetenceCourseInformation findCompetenceCourseInformationForExecutionPeriod(final ExecutionPeriod executionPeriod) {
+        final YearMonthDay endOfExecutionPeriod = executionPeriod.getEndDateYearMonthDay();
+        CompetenceCourseInformation minCompetenceCourseInformation = null;
+        for (final CompetenceCourseInformation competenceCourseInformation : getCompetenceCourseInformationsSet()) {
+            if (competenceCourseInformation.getEndDateYearMonthDay() == null
+                    || !competenceCourseInformation.getEndDateYearMonthDay().isBefore(endOfExecutionPeriod)) {
+                if (minCompetenceCourseInformation == null || minCompetenceCourseInformation.getEndDateYearMonthDay() == null) {
+                    minCompetenceCourseInformation = competenceCourseInformation;
+                } else if (competenceCourseInformation.getEndDateYearMonthDay() != null
+                        && competenceCourseInformation.getEndDateYearMonthDay().isBefore(minCompetenceCourseInformation.getEndDateYearMonthDay())) {
+                    minCompetenceCourseInformation = competenceCourseInformation;
+                }
+            }
+        }
+        return minCompetenceCourseInformation;
+    }
+
 }
