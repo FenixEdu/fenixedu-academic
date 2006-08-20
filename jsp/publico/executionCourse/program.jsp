@@ -12,37 +12,39 @@
 	<bean:define id="executionPeriod" type="net.sourceforge.fenixedu.domain.ExecutionPeriod"
 			name="executionCourse" property="executionPeriod"/>
 
+<logic:iterate id="entry" name="executionCourse" property="curricularCoursesIndexedByCompetenceCourse">
+	<bean:define id="competenceCourse" name="entry" property="key"/>
+	<logic:equal name="competenceCourse" property="curricularStage.name" value="APPROVED">
+		<h3>
+			<bean:write name="competenceCourse" property="name"/>
+			<br/>
+			<logic:iterate id="curricularCourse" name="entry" property="value" indexId="i">
+				<logic:notEqual name="i" value="0"><br/></logic:notEqual>
+				<bean:define id="degree" name="curricularCourse" property="degreeCurricularPlan.degree"/>
+				<bean:message bundle="ENUMERATION_RESOURCES" name="degree" property="degreeType.name"/>
+				<bean:message key="label.in"/>
+				<bean:write name="degree" property="nome"/>
+			</logic:iterate>
+		</h3>
+		<blockquote>
+			<h4>
+				<bean:message key="title.program"/>
+			</h4>
+			<bean:write name="competenceCourse" property="program" filter="false"/>
+			<logic:present name="competenceCourse" property="programEn">
+				<br/>
+				<h4>
+					<bean:message key="title.program.eng"/>
+				</h4>
+				<bean:write name="competenceCourse" property="programEn" filter="false"/>
+			</logic:present>
+		</blockquote>
+	</logic:equal>
+</logic:iterate>
+
 	<logic:iterate id="curricularCourse" type="net.sourceforge.fenixedu.domain.CurricularCourse"
 			name="executionCourse" property="curricularCoursesSortedByDegreeAndCurricularCourseName">
 		<bean:define id="degree" name="curricularCourse" property="degreeCurricularPlan.degree"/>
-
-		<logic:equal name="curricularCourse" property="isBolonha" value="true">
-			<bean:define id="competenceCourse" name="curricularCourse" property="competenceCourse"/>
-			<logic:equal name="competenceCourse" property="curricularStage.name" value="APPROVED">
-				<bean:define id="competenceCourse" name="curricularCourse" property="competenceCourse"/>
-				<h3>
-					<bean:message bundle="ENUMERATION_RESOURCES" name="degree" property="degreeType.name"/>
-					<bean:message key="label.in"/>
-					<bean:write name="degree" property="nome"/>
-					<br/>
-					<bean:write name="competenceCourse" property="name"/>
-				</h3>
-				<blockquote>
-					<h4>
-						<bean:message key="title.program"/>
-					</h4>
-					<bean:write name="competenceCourse" property="program" filter="false"/>
-					<logic:present name="competenceCourse" property="programEn">
-						<br/>
-						<h4>
-							<bean:message key="title.program.eng"/>
-						</h4>
-						<bean:write name="competenceCourse" property="programEn" filter="false"/>
-					</logic:present>
-				</blockquote>
-			</logic:equal>
-		</logic:equal>
-
 		<logic:notEqual name="curricularCourse" property="isBolonha" value="true">
 			<% net.sourceforge.fenixedu.domain.Curriculum curriculum = curricularCourse.findLatestCurriculumModifiedBefore(executionPeriod.getExecutionYear().getEndDate()); %>
 			<% net.sourceforge.fenixedu.domain.Curriculum lastCurriculum = curricularCourse.findLatestCurriculum(); %>
@@ -50,11 +52,11 @@
 			<% request.setAttribute("lastCurriculum", lastCurriculum); %>
 
 				<h3>
+					<bean:write name="curricularCourse" property="name"/>
+					<br/>
 					<bean:message bundle="ENUMERATION_RESOURCES" name="degree" property="degreeType.name"/>
 					<bean:message key="label.in"/>
 					<bean:write name="degree" property="nome"/>
-					<br/>
-					<bean:write name="curricularCourse" property="name"/>
 				</h3>
 				<blockquote>
 					<logic:present name="curriculum">

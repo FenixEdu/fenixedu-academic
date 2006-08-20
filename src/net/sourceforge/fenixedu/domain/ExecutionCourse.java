@@ -6,9 +6,11 @@ import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
@@ -1135,6 +1137,24 @@ public class ExecutionCourse extends ExecutionCourse_Base {
         final SortedSet<Shift> shifts = new TreeSet<Shift>(Shift.SHIFT_COMPARATOR_BY_TYPE_AND_ORDERED_LESSONS);
         shifts.addAll(getAssociatedShiftsSet());
         return shifts;
+    }
+
+    public Map<CompetenceCourse, Set<CurricularCourse>> getCurricularCoursesIndexedByCompetenceCourse() {
+    	final Map<CompetenceCourse, Set<CurricularCourse>> curricularCourseMap = new HashMap<CompetenceCourse, Set<CurricularCourse>>();
+    	for (final CurricularCourse curricularCourse : getAssociatedCurricularCoursesSet()) {
+    		if (curricularCourse.isBolonha()) {
+    			final CompetenceCourse competenceCourse = curricularCourse.getCompetenceCourse();
+    			final Set<CurricularCourse> curricularCourses;
+    			if (curricularCourseMap.containsKey(competenceCourse)) {
+    				curricularCourses = curricularCourseMap.get(competenceCourse);
+    			} else {
+    				curricularCourses = new TreeSet<CurricularCourse>(CurricularCourse.CURRICULAR_COURSE_COMPARATOR_BY_DEGREE_AND_NAME);
+    				curricularCourseMap.put(competenceCourse, curricularCourses);
+    			}
+    			curricularCourses.add(curricularCourse);
+    		}
+    	}
+    	return curricularCourseMap;
     }
 
 }

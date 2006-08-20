@@ -19,9 +19,9 @@ import org.apache.commons.collections.comparators.ComparatorChain;
 
 public class Shift extends Shift_Base {
 
-    public static final Comparator SHIFT_COMPARATOR_BY_NAME = new BeanComparator("nome", Collator.getInstance());
+    public static final Comparator<Shift> SHIFT_COMPARATOR_BY_NAME = new BeanComparator("nome", Collator.getInstance());
 
-    public static final Comparator SHIFT_COMPARATOR_BY_TYPE_AND_ORDERED_LESSONS = new ComparatorChain();
+    public static final Comparator<Shift> SHIFT_COMPARATOR_BY_TYPE_AND_ORDERED_LESSONS = new ComparatorChain();
     static {
         ((ComparatorChain) SHIFT_COMPARATOR_BY_TYPE_AND_ORDERED_LESSONS).addComparator(new BeanComparator("tipo"));
         ((ComparatorChain) SHIFT_COMPARATOR_BY_TYPE_AND_ORDERED_LESSONS).addComparator(new BeanComparator("lessonsStringComparator"));
