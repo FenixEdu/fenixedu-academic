@@ -16,170 +16,68 @@ import net.sourceforge.fenixedu.util.StudentState;
 
 public class InfoStudent extends InfoObject {
 
-    protected Integer number;
+	private final Registration registration;
 
-    protected StudentState state = new StudentState(1);
-
-    private InfoPerson infoPerson;
-
-    protected DegreeType degreeType;
-
-    private InfoStudentKind infoStudentKind;
-
-    private Boolean payedTuition;
-    
-    private Boolean flunked;
-    
-    private Boolean requestedChangeDegree;
-    
-    private Boolean interruptedStudies;
-    
-    private InfoStudentCurricularPlan infoStudentCurricularPlan;
-
-
-    public InfoStudent() {
-    }
-
-    public InfoStudent(Integer numero, StudentState estado, InfoPerson pessoa, DegreeType degreeType) {
-        setNumber(numero);
-        setState(estado);
-        setInfoPerson(pessoa);
-        setDegreeType(degreeType);
+    public InfoStudent(final Registration registration) {
+    	this.registration = registration;
     }
 
     public InfoPerson getInfoPerson() {
-        return infoPerson;
-    }
-
-    public void setInfoPerson(InfoPerson pessoa) {
-        infoPerson = pessoa;
+        return InfoPerson.newInfoFromDomain(registration.getPerson());
     }
 
     public Integer getNumber() {
-        return number;
-    }
-
-    public void setNumber(Integer numero) {
-        number = numero;
+        return registration.getNumber();
     }
 
     public StudentState getState() {
-        return state;
-    }
-
-    public void setState(StudentState estado) {
-        state = estado;
+        return registration.getState();
     }
 
     public DegreeType getDegreeType() {
-        return degreeType;
-    }
-
-    public void setDegreeType(DegreeType degreeType) {
-        this.degreeType = degreeType;
+        return registration.getDegreeType();
     }
 
     public InfoStudentKind getInfoStudentKind() {
-        return infoStudentKind;
+        return InfoStudentKind.newInfoFromDomain(registration.getStudentKind());
     }
 
-    public void setInfoStudentKind(InfoStudentKind info) {
-        infoStudentKind = info;
-    }
-
-    /**
-     * @return Returns the payedTuition.
-     */
     public Boolean getPayedTuition() {
-        return payedTuition;
+        return registration.getPayedTuition();
     }
 
-    /**
-     * @param payedTuition
-     *            The payedTuition to set.
-     */
-    public void setPayedTuition(Boolean payedTuition) {
-        this.payedTuition = payedTuition;
-    }
-
-    // FIXME: The type of degree should be tested also
     public boolean equals(Object obj) {
-        boolean resultado = false;
-        if (obj instanceof InfoStudent) {
-            InfoStudent infoAluno = (InfoStudent) obj;
-            resultado = getNumber().equals(infoAluno.getNumber());
-        }
-        return resultado;
+    	return obj instanceof InfoStudent && registration == ((InfoStudent) obj).registration;
     }
 
     public String toString() {
-        String result = "[InfoStudent";
-        result += ", numero=" + number;
-        result += ", degreeType=" + degreeType;
-        result += ", estado=" + state;
-        if (infoPerson != null)
-            result += ", pessoa" + infoPerson.toString();
-        result += "]";
-        return result;
+    	return registration.toString();
     }
 
-    public void copyFromDomain(Registration student) {
-        super.copyFromDomain(student);
-
-        if (student != null) {
-            setNumber(student.getNumber());
-            setDegreeType(student.getDegreeType());
-            setState(student.getState());
-            setPayedTuition(student.getPayedTuition());
-            setInfoPerson(InfoPerson.newInfoFromDomain(student.getPerson()));
-            setFlunked(student.getFlunked());
-            setRequestedChangeDegree(student.getRequestedChangeDegree());
-            setInterruptedStudies(student.getInterruptedStudies());
-        }
-    }
-
-    public static InfoStudent newInfoFromDomain(Registration student) {
-        InfoStudent infoStudent = null;
-        if (student != null) {
-            infoStudent = new InfoStudent();
-            infoStudent.copyFromDomain(student);
-        }
-        return infoStudent;
+    public static InfoStudent newInfoFromDomain(Registration registration) {
+    	return registration == null ? null : new InfoStudent(registration);
     }
 
 	public Boolean getFlunked() {
-		return flunked;
-	}
-
-	public void setFlunked(Boolean flunked) {
-		this.flunked = flunked;
+		return registration.getFlunked();
 	}
 
 	public Boolean getRequestedChangeDegree() {
-		return requestedChangeDegree;
-	}
-
-	public void setRequestedChangeDegree(Boolean requestedChangeDegree) {
-		this.requestedChangeDegree = requestedChangeDegree;
+		return registration.getRequestedChangeDegree();
 	}
 
 	public Boolean getInterruptedStudies() {
-		return interruptedStudies;
+		return registration.getInterruptedStudies();
 	}
 
-	public void setInterruptedStudies(Boolean interruptedStudies) {
-		this.interruptedStudies = interruptedStudies;
+	@Override
+	public Integer getIdInternal() {
+		return registration.getIdInternal();
 	}
 
+    @Override
+    public void setIdInternal(Integer integer) {
+        throw new Error("Method should not be called!");
+    }
 
-	public InfoStudentCurricularPlan getInfoStudentCurricularPlan() {
-		return infoStudentCurricularPlan;
-	}
-
-	public void setInfoStudentCurricularPlan(
-			InfoStudentCurricularPlan infoStudentCurricularPlan) {
-		this.infoStudentCurricularPlan = infoStudentCurricularPlan;
-	}
-
-	
 }

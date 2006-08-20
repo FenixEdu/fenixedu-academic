@@ -8,7 +8,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.student;
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
-import net.sourceforge.fenixedu.dataTransferObject.InfoStudentWithInfoPerson;
+import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
@@ -26,7 +26,7 @@ public class ReadStudentById extends Service {
 
 		Registration student = rootDomainObject.readRegistrationByOID(id);
 		if (student != null) {
-			infoStudent = InfoStudentWithInfoPerson.newInfoFromDomain(student);
+			infoStudent = InfoStudent.newInfoFromDomain(student);
 		}
 
 		return infoStudent;

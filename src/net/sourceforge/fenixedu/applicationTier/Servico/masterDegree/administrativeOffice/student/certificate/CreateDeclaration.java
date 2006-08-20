@@ -6,7 +6,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
-import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlanWithInfoStudentWithPersonAndDegree;
+import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization;
@@ -39,7 +39,7 @@ public class CreateDeclaration extends Service {
 
             if (studentCurricularPlan != null || studentCurricularPlan.getIdInternal() != null) {
                 infoStudentCurricularPlanList
-                        .add(InfoStudentCurricularPlanWithInfoStudentWithPersonAndDegree
+                        .add(InfoStudentCurricularPlan
                                 .newInfoFromDomain(studentCurricularPlan));
             }
 
@@ -70,7 +70,7 @@ public class CreateDeclaration extends Service {
 
         	if (studentCurricularPlan != null || studentCurricularPlan.getIdInternal() != null) {
         		infoStudentCurricularPlanList
-        		.add(InfoStudentCurricularPlanWithInfoStudentWithPersonAndDegree
+        		.add(InfoStudentCurricularPlan
         				.newInfoFromDomain(studentCurricularPlan));
         	}
 
@@ -111,7 +111,7 @@ public class CreateDeclaration extends Service {
 
         	if (studentCurricularPlan != null || studentCurricularPlan.getIdInternal() != null) {
         		infoStudentCurricularPlanList
-        		.add(InfoStudentCurricularPlanWithInfoStudentWithPersonAndDegree
+        		.add(InfoStudentCurricularPlan
         				.newInfoFromDomain(studentCurricularPlan));
         	}
 

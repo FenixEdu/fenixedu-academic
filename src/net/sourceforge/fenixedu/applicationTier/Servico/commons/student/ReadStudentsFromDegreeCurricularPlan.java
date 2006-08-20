@@ -12,7 +12,7 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
-import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlanWithInfoStudentWithPersonAndDegree;
+import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
@@ -38,7 +38,7 @@ public class ReadStudentsFromDegreeCurricularPlan extends Service {
         return (List) CollectionUtils.collect(students, new Transformer() {
             public Object transform(Object arg0) {
                 StudentCurricularPlan studentCurricularPlan = (StudentCurricularPlan) arg0;
-                return InfoStudentCurricularPlanWithInfoStudentWithPersonAndDegree
+                return InfoStudentCurricularPlan
                         .newInfoFromDomain(studentCurricularPlan);
             }
 

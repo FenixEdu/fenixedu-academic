@@ -11,7 +11,7 @@ import java.util.Set;
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
-import net.sourceforge.fenixedu.dataTransferObject.InfoStudentWithInfoPerson;
+import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
 import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.onlineTests.DistributedTest;
@@ -31,7 +31,7 @@ public class ReadStudentsWithoutDistributedTest extends Service {
         final Set<Registration> students = distributedTest.findStudents();
         for (Attends attend : attendList) {
             if (!students.contains(attend.getAluno()))
-                infoStudentList.add(InfoStudentWithInfoPerson.newInfoFromDomain(attend.getAluno()));
+                infoStudentList.add(InfoStudent.newInfoFromDomain(attend.getAluno()));
         }
         return infoStudentList;
     }

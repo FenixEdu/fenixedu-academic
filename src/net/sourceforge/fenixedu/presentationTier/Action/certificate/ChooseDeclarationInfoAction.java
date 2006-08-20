@@ -18,6 +18,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.masterDegree.DocumentReason;
+import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.StudentCurricularPlanState;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
@@ -75,10 +76,10 @@ public class ChooseDeclarationInfoAction extends DispatchAction {
             if (destination.length != 0)
                 session.setAttribute(SessionConstants.DOCUMENT_REASON_LIST, destination);
 
+            final Registration registration = Registration.readStudentByNumberAndDegreeType(requesterNumber, DegreeType.MASTER_DEGREE);
+
             // inputs
-            InfoStudent infoStudent = new InfoStudent();
-            infoStudent.setNumber(requesterNumber);
-            infoStudent.setDegreeType(DegreeType.MASTER_DEGREE);
+            InfoStudent infoStudent = new InfoStudent(registration);
             session.setAttribute(SessionConstants.DEGREE_TYPE, infoStudent.getDegreeType());
 
             // output

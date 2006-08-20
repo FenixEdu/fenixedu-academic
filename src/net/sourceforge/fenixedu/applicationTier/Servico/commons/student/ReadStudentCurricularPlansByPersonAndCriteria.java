@@ -17,7 +17,7 @@ import net.sourceforge.fenixedu.applicationTier.utils.EnrollmentPredicates;
 import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolment;
 import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolmentEvaluation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolmentWithCourseAndDegreeAndExecutionPeriodAndYear;
-import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlanWithInfoStudentWithPersonAndDegree;
+import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlan;
 import net.sourceforge.fenixedu.dataTransferObject.util.InfoStudentCurricularPlansWithSelectedEnrollments;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.Person;
@@ -137,7 +137,7 @@ public class ReadStudentCurricularPlansByPersonAndCriteria extends Service {
             }
 
             currPlanEnrol.addInfoStudentCurricularPlan(
-                    InfoStudentCurricularPlanWithInfoStudentWithPersonAndDegree
+                    InfoStudentCurricularPlan
                             .newInfoFromDomain(studentCurricularPlan), infoSelectedEnrollments);
         }
 

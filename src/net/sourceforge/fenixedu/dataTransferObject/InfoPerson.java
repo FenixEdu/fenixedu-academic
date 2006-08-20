@@ -915,8 +915,6 @@ public class InfoPerson extends InfoObject {
 
                 for (Registration student : person.getStudents()) {
 
-                    InfoStudent infoStudent = new InfoStudent();
-                    InfoStudentCurricularPlan infoStudentCurricularPlan = new InfoStudentCurricularPlan();
                     InfoDegree infoDegree = null;
                     for (StudentCurricularPlan studentCurricularPlan : student
                             .getStudentCurricularPlans()) {
@@ -928,12 +926,9 @@ public class InfoPerson extends InfoObject {
 
                             continue;
                         }
-                        infoStudentCurricularPlan = InfoStudentCurricularPlan
+                        InfoStudentCurricularPlan infoStudentCurricularPlan = InfoStudentCurricularPlan
                                 .newInfoFromDomain(studentCurricularPlan);
-
-                        infoStudent.setInfoStudentCurricularPlan(infoStudentCurricularPlan);
-
-                        infoStudentList.add(infoStudent.getInfoStudentCurricularPlan());
+                        infoStudentList.add(infoStudentCurricularPlan);
 
                     }
                     setInfoStudentCurricularPlanList(infoStudentList);

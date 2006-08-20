@@ -10,7 +10,7 @@ import java.util.List;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
-import net.sourceforge.fenixedu.dataTransferObject.InfoStudentWithInfoPerson;
+import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
 import net.sourceforge.fenixedu.domain.Seminaries.SeminaryCandidacy;
 
 /**
@@ -118,7 +118,7 @@ public class InfoCandidacy extends InfoObject {
             setInfoModality(InfoModality.newInfoFromDomain(candidacy.getModality()));
             setMotivation(candidacy.getMotivation());
             setInfoSeminary(InfoSeminaryWithEquivalencies.newInfoFromDomain(candidacy.getSeminary()));
-            setInfoStudent(InfoStudentWithInfoPerson.newInfoFromDomain(candidacy.getStudent()));
+            setInfoStudent(InfoStudent.newInfoFromDomain(candidacy.getStudent()));
             setTheme(InfoTheme.newInfoFromDomain(candidacy.getTheme()));
         }
     }

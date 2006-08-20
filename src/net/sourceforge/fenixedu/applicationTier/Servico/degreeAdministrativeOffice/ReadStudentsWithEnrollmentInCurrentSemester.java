@@ -9,7 +9,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
-import net.sourceforge.fenixedu.dataTransferObject.InfoStudentWithInfoPerson;
+import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
@@ -38,7 +38,7 @@ public class ReadStudentsWithEnrollmentInCurrentSemester extends Service {
             // TODO se ele está inscrito no semestre actual é porque já pagou as
             // propinas...
             if (student.getPayedTuition().booleanValue() && studentHasEnrollments(student)) {
-                InfoStudent infoStudentWithInfoPerson = InfoStudentWithInfoPerson
+                InfoStudent infoStudentWithInfoPerson = InfoStudent
                         .newInfoFromDomain(student);
                 infoStudentList.add(infoStudentWithInfoPerson);
                 degreeNames.add(student.getActiveStudentCurricularPlan().getDegreeCurricularPlan()

@@ -10,14 +10,12 @@ import java.util.Set;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
 import net.sourceforge.fenixedu.dataTransferObject.finalDegreeWork.FinalDegreeWorkProposalHeader;
 import net.sourceforge.fenixedu.dataTransferObject.finalDegreeWork.InfoGroup;
 import net.sourceforge.fenixedu.dataTransferObject.finalDegreeWork.InfoGroupProposal;
 import net.sourceforge.fenixedu.dataTransferObject.finalDegreeWork.InfoGroupStudent;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
-import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Group;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.GroupProposal;
@@ -108,19 +106,7 @@ public class ReadFinalDegreeWorkProposalHeadersByTeacher extends Service {
 
 												Registration student = groupStudent.getStudent();
 												if (student != null) {
-													InfoStudent infoStudent = new InfoStudent();
-													infoStudent.setIdInternal(student.getIdInternal());
-													infoStudent.setNumber(student.getNumber());
-													Person person = student.getPerson();
-													if (person != null) {
-														InfoPerson infoPerson = new InfoPerson();
-														infoPerson.setIdInternal(person.getIdInternal());
-														infoPerson.setUsername(person.getUsername());
-														infoPerson.setNome(person.getNome());
-														infoPerson.setEmail(person.getEmail());
-														infoPerson.setTelefone(person.getTelefone());
-														infoStudent.setInfoPerson(infoPerson);
-													}
+													InfoStudent infoStudent = new InfoStudent(student);
 													infoGroupStudent.setStudent(infoStudent);
 												}
 												infoGroup.getGroupStudents().add(infoGroupStudent);

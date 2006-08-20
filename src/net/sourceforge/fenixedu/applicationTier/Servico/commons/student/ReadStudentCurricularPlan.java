@@ -12,7 +12,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoInexistente;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlan;
-import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlanWithInfoStudentWithPersonAndDegree;
+import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
@@ -35,7 +35,7 @@ public class ReadStudentCurricularPlan extends Service {
             throw new NonExistingServiceException();
         }
 
-        return InfoStudentCurricularPlanWithInfoStudentWithPersonAndDegree
+        return InfoStudentCurricularPlan
                 .newInfoFromDomain(studentCurricularPlan);
     }
 }

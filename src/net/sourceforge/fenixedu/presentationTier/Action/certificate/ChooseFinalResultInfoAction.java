@@ -24,6 +24,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
+import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.StudentCurricularPlanState;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
@@ -79,10 +80,10 @@ public class ChooseFinalResultInfoAction extends DispatchAction {
             Integer requesterNumber = new Integer((String) chooseDeclaration.get("requesterNumber"));
             String graduationType = (String) chooseDeclaration.get("graduationType");
 
+            final Registration registration = Registration.readStudentByNumberAndDegreeType(requesterNumber, DegreeType.MASTER_DEGREE);
+
             // inputs
-            InfoStudent infoStudent = new InfoStudent();
-            infoStudent.setNumber(requesterNumber);
-            infoStudent.setDegreeType(DegreeType.MASTER_DEGREE);
+            InfoStudent infoStudent = new InfoStudent(registration);
             session.setAttribute(SessionConstants.DEGREE_TYPE, infoStudent.getDegreeType());
 
             // output

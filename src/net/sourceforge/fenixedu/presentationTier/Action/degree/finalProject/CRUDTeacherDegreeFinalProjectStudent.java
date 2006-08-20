@@ -19,6 +19,8 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
 import net.sourceforge.fenixedu.dataTransferObject.degree.finalProject.InfoTeacherDegreeFinalProjectStudent;
 import net.sourceforge.fenixedu.dataTransferObject.degree.finalProject.TeacherDegreeFinalProjectStudentsDTO;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
+import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.presentationTier.Action.framework.CRUDActionByOID;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
@@ -67,8 +69,9 @@ public class CRUDTeacherDegreeFinalProjectStudent extends CRUDActionByOID {
 
         infoTeacherDegreeFinalProjectStudent.setInfoExecutionPeriod(InfoExecutionPeriod.newInfoFromDomain(RootDomainObject.getInstance().readExecutionPeriodByOID(executionPeriodId)));
 
-        InfoStudent infoStudent = new InfoStudent();
-        infoStudent.setNumber(studentNumber);
+        final Registration registration = Registration.readStudentByNumberAndDegreeType(studentNumber, DegreeType.DEGREE);
+
+        InfoStudent infoStudent = new InfoStudent(registration);
 
         infoTeacherDegreeFinalProjectStudent.setInfoStudent(infoStudent);
         infoTeacherDegreeFinalProjectStudent.setInfoTeacher(new InfoTeacher(teacherId));

@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.dataTransferObject;
 
+import net.sourceforge.fenixedu.domain.StudentKind;
 import net.sourceforge.fenixedu.domain.student.StudentType;
 
 /**
@@ -10,68 +11,48 @@ import net.sourceforge.fenixedu.domain.student.StudentType;
 
 public class InfoStudentKind extends InfoObject {
 
-    private StudentType studentType;
+	private final StudentKind studentKind;
 
-    private Integer minCoursesToEnrol;
+    public InfoStudentKind(final StudentKind studentKind) {
+    	this.studentKind = studentKind;
+    }
 
-    private Integer maxCoursesToEnrol;
-
-    private Integer maxNACToEnrol;
-
-    public InfoStudentKind() {
-        setStudentType(null);
-        setMinCoursesToEnrol(null);
-        setMaxCoursesToEnrol(null);
-        setMaxNACToEnrol(null);
+    public static InfoStudentKind newInfoFromDomain(final StudentKind studentKind) {
+    	return studentKind == null ? null : new InfoStudentKind(studentKind);
     }
 
     public boolean equals(Object obj) {
-        boolean resultado = false;
-        if (obj instanceof InfoStudentKind) {
-            InfoStudentKind studentType = (InfoStudentKind) obj;
-            resultado = (this.getStudentType().equals(studentType.getStudentType()));
-        }
-        return resultado;
+    	return obj instanceof InfoStudentKind && studentKind == ((InfoStudentKind) obj).studentKind;
     }
 
     public String toString() {
-        String result = "[" + this.getClass().getName() + "; ";
-        result += "studentType = " + this.studentType + "; ";
-        result += "minCoursesToEnrol = " + this.minCoursesToEnrol + "; ";
-        result += "maxNACToEnrol = " + this.maxNACToEnrol + "; ";
-        result += "maxCoursesToEnrol = " + this.maxCoursesToEnrol + "]\n";
-        return result;
+    	return studentKind.toString();
     }
 
     public StudentType getStudentType() {
-        return studentType;
-    }
-
-    public void setStudentType(StudentType studentType) {
-        this.studentType = studentType;
+        return studentKind.getStudentType();
     }
 
     public Integer getMaxCoursesToEnrol() {
-        return maxCoursesToEnrol;
+        return studentKind.getMaxCoursesToEnrol();
     }
 
     public Integer getMaxNACToEnrol() {
-        return maxNACToEnrol;
+        return studentKind.getMaxNACToEnrol();
     }
 
     public Integer getMinCoursesToEnrol() {
-        return minCoursesToEnrol;
+        return studentKind.getMinCoursesToEnrol();
     }
 
-    public void setMaxCoursesToEnrol(Integer maxCoursesToEnrol) {
-        this.maxCoursesToEnrol = maxCoursesToEnrol;
+	@Override
+	public Integer getIdInternal() {
+		return studentKind.getIdInternal();
+	}
+
+    @Override
+    public void setIdInternal(Integer integer) {
+        throw new Error("Method should not be called!");
     }
 
-    public void setMaxNACToEnrol(Integer maxNACToEnrol) {
-        this.maxNACToEnrol = maxNACToEnrol;
-    }
-
-    public void setMinCoursesToEnrol(Integer minCoursesToEnrol) {
-        this.minCoursesToEnrol = minCoursesToEnrol;
-    }
 }

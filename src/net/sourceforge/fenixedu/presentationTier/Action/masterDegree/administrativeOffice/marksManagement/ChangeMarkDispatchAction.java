@@ -18,9 +18,10 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorized
 import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolment;
 import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolmentEvaluation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteEnrolmentEvaluation;
-import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlan;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
+import net.sourceforge.fenixedu.domain.EnrolmentEvaluation;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationType;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
@@ -353,11 +354,9 @@ public class ChangeMarkDispatchAction extends DispatchAction {
 
         infoTeacher.setTeacherNumber(teacherNumber);
 
-        InfoStudent infoStudent = new InfoStudent();
-        infoStudent.setNumber(studentNumber);
+        final EnrolmentEvaluation enrolmentEvaluation = (EnrolmentEvaluation) RootDomainObject.getInstance().readEnrolmentEvaluationByOID(enrolmentEvaluationCode);
 
-        InfoStudentCurricularPlan infoStudentCurricularPlan = new InfoStudentCurricularPlan();
-        infoStudentCurricularPlan.setInfoStudent(infoStudent);
+        InfoStudentCurricularPlan infoStudentCurricularPlan = new InfoStudentCurricularPlan(enrolmentEvaluation.getEnrolment().getStudentCurricularPlan());
 
         InfoEnrolment infoEnrolment = new InfoEnrolment();
         infoEnrolment.setInfoStudentCurricularPlan(infoStudentCurricularPlan);

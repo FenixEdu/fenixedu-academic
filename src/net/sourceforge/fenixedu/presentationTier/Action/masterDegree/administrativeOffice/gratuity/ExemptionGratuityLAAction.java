@@ -14,6 +14,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoGratuitySituation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGratuityValues;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.gratuity.ExemptionGratuityType;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
@@ -125,8 +126,8 @@ public class ExemptionGratuityLAAction extends LookupDispatchAction {
         }
 
         // Registration Curricular Plan
-        InfoStudentCurricularPlan infoStudentCurricularPlan = new InfoStudentCurricularPlan();
-        infoStudentCurricularPlan.setIdInternal(Integer.valueOf(studentCurricularPlanID));
+        InfoStudentCurricularPlan infoStudentCurricularPlan = new InfoStudentCurricularPlan(
+        		RootDomainObject.getInstance().readStudentCurricularPlanByOID(Integer.valueOf(studentCurricularPlanID)));
         infoGratuitySituation.setInfoStudentCurricularPlan(infoStudentCurricularPlan);
 
         // Gratuity Values

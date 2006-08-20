@@ -14,7 +14,7 @@ public class InfoFrequentaWithAll extends InfoFrequenta {
     public void copyFromDomain(Attends frequenta) {
         super.copyFromDomain(frequenta);
         if (frequenta != null) {
-            setAluno(InfoStudentWithInfoPerson.newInfoFromDomain(frequenta.getAluno()));
+            setAluno(InfoStudent.newInfoFromDomain(frequenta.getAluno()));
             setDisciplinaExecucao(InfoExecutionCourse.newInfoFromDomain(frequenta
                     .getDisciplinaExecucao()));
             setInfoEnrolment(InfoEnrolment.newInfoFromDomain(frequenta.getEnrolment()));

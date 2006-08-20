@@ -20,7 +20,7 @@ public class InfoWrittenEvaluationEnrolmentWithInfoStudentAndInfoRoom extends In
     public void copyFromDomain(WrittenEvaluationEnrolment writtenEvaluationEnrolment) {
         super.copyFromDomain(writtenEvaluationEnrolment);
         if (writtenEvaluationEnrolment != null) {
-            setInfoStudent(InfoStudentWithInfoPerson.newInfoFromDomain(writtenEvaluationEnrolment.getStudent()));
+            setInfoStudent(InfoStudent.newInfoFromDomain(writtenEvaluationEnrolment.getStudent()));
             setInfoRoom(InfoRoom.newInfoFromDomain(writtenEvaluationEnrolment.getRoom()));
         }
     }

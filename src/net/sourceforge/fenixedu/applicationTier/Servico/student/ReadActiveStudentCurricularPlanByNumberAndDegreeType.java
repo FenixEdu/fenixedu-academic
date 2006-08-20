@@ -2,7 +2,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.student;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlan;
-import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlanWithInfoStudentAndInfoBranchAndSecondaryBranchAndInfoDegreeCurricularPlanAndDegree;
+import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.student.Registration;
@@ -30,7 +30,7 @@ public class ReadActiveStudentCurricularPlanByNumberAndDegreeType extends Servic
         }
         StudentCurricularPlan studentCurricularPlan = student.getActiveOrConcludedStudentCurricularPlan();
         if (studentCurricularPlan != null) {
-            return InfoStudentCurricularPlanWithInfoStudentAndInfoBranchAndSecondaryBranchAndInfoDegreeCurricularPlanAndDegree
+            return InfoStudentCurricularPlan
                     .newInfoFromDomain(studentCurricularPlan);
         }
         return null;

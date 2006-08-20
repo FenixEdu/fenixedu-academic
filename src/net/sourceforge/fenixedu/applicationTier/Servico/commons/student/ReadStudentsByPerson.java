@@ -6,7 +6,7 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
-import net.sourceforge.fenixedu.dataTransferObject.InfoStudentWithInfoPerson;
+import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -18,7 +18,7 @@ public class ReadStudentsByPerson extends Service {
         
         Person person = (Person) rootDomainObject.readPartyByOID(infoPerson.getIdInternal());
         for (final Registration student : person.getStudents()) {
-            result.add(InfoStudentWithInfoPerson.newInfoFromDomain(student));
+            result.add(InfoStudent.newInfoFromDomain(student));
         }
         
         return result;

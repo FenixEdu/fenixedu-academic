@@ -14,7 +14,7 @@ public class InfoEnrolmentWithInfoStudentPlanAndInfoDegreePlan extends InfoEnrol
     public void copyFromDomain(Enrolment enrolment) {
         super.copyFromDomain(enrolment);
         if (enrolment != null) {
-            setInfoStudentCurricularPlan(InfoStudentCurricularPlanWithInfoDegreeCurricularPlan
+            setInfoStudentCurricularPlan(InfoStudentCurricularPlan
                     .newInfoFromDomain(enrolment.getStudentCurricularPlan()));
         }
     }

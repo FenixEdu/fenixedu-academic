@@ -15,7 +15,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServi
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.ISiteComponent;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGrouping;
-import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteStudentsWithoutGroup;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
 import net.sourceforge.fenixedu.domain.Attends;
@@ -102,11 +101,6 @@ public class ReadStudentsWithoutGroup extends Service {
 	}
 
 	protected InfoStudent getInfoStudentFromStudent(Registration userStudent) {
-		final InfoStudent infoStudent = InfoStudent
-				.newInfoFromDomain(userStudent);
-		final InfoPerson infoPerson = InfoPerson.newInfoFromDomain(userStudent
-				.getPerson());
-		infoStudent.setInfoPerson(infoPerson);
-		return infoStudent;
+		return InfoStudent.newInfoFromDomain(userStudent);
 	}
 }

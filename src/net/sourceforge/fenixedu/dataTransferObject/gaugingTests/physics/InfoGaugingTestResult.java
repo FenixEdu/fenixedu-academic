@@ -6,7 +6,7 @@ package net.sourceforge.fenixedu.dataTransferObject.gaugingTests.physics;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
-import net.sourceforge.fenixedu.dataTransferObject.InfoStudentWithInfoPerson;
+import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
 import net.sourceforge.fenixedu.domain.gaugingTests.physics.GaugingTestResult;
 
 /**
@@ -594,7 +594,7 @@ public class InfoGaugingTestResult extends InfoObject {
     }
 
     public static InfoGaugingTestResult newInfoFromDomain(GaugingTestResult gaugingTestsResult) {
-        InfoStudent infoStudent = InfoStudentWithInfoPerson.newInfoFromDomain(gaugingTestsResult.getStudent());
+        InfoStudent infoStudent = InfoStudent.newInfoFromDomain(gaugingTestsResult.getStudent());
         InfoGaugingTestResult infoGaugingTestResult = new InfoGaugingTestResult();
         infoGaugingTestResult.setCf(gaugingTestsResult.getCf());
         infoGaugingTestResult.setCorrect(gaugingTestsResult.getCorrect());

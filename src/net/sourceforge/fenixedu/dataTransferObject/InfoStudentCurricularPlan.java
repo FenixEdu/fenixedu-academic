@@ -7,11 +7,15 @@
 package net.sourceforge.fenixedu.dataTransferObject;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import net.sourceforge.fenixedu.domain.Employee;
+import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.degree.enrollment.NotNeedToEnrollInCurricularCourse;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.StudentCurricularPlanState;
 
@@ -21,357 +25,118 @@ import net.sourceforge.fenixedu.domain.studentCurricularPlan.StudentCurricularPl
  */
 public class InfoStudentCurricularPlan extends InfoObject implements Serializable, Comparable {
 
-    protected InfoStudent infoStudent;
+	private final StudentCurricularPlan studentCurricularPlan;
 
-    protected InfoBranch infoBranch;
-
-    protected InfoDegreeCurricularPlan infoDegreeCurricularPlan;
-
-    protected Date startDate;
-
-    protected StudentCurricularPlanState currentState;
-
-    protected Specialization specialization;
-
-    protected Double givenCredits;
-
-    protected Double classification;
-
-    protected Integer enrolledCourses;
-
-    protected Integer completedCourses;
-
-    protected Date when;
-
-    protected InfoPerson infoEmployee;
-
-    protected String observations;
-
-    protected List infoEnrolments;
-
-    protected InfoBranch infoSecundaryBranch;
-
-    /**
-     * @return
-     */
-    public Double getGivenCredits() {
-        return givenCredits;
-    }
-
-    /**
-     * @param givenCredits
-     */
-    public void setGivenCredits(Double givenCredits) {
-        this.givenCredits = givenCredits;
-    }
-
-    public InfoStudentCurricularPlan() {
-        setInfoDegreeCurricularPlan(null);
-        setInfoStudent(null);
-        setInfoBranch(null);
-        setStartDate(null);
-        setCurrentState(null);
-        setSpecialization(null);
-    }
-
-    public InfoStudentCurricularPlan(InfoStudent student, InfoDegreeCurricularPlan degreeCurricularPlan,
-            InfoBranch branch, Date startDate, StudentCurricularPlanState currentState,
-            Specialization specialization) {
-        this();
-        setInfoStudent(student);
-        setInfoDegreeCurricularPlan(degreeCurricularPlan);
-        setInfoBranch(branch);
-        setStartDate(startDate);
-        setCurrentState(currentState);
-        setSpecialization(specialization);
-
+	public InfoStudentCurricularPlan(final StudentCurricularPlan studentCurricularPlan) {
+		this.studentCurricularPlan = studentCurricularPlan;
     }
 
     public boolean equals(Object obj) {
-        boolean resultado = false;
-        if (obj instanceof InfoStudentCurricularPlan) {
-            InfoStudentCurricularPlan infoStudentCurricularPlan = (InfoStudentCurricularPlan) obj;
-            resultado = this.getInfoStudent().equals(infoStudentCurricularPlan.getInfoStudent())
-                    && this.getInfoDegreeCurricularPlan().equals(
-                            infoStudentCurricularPlan.getInfoDegreeCurricularPlan())
-                    && this.getCurrentState().equals(infoStudentCurricularPlan.getCurrentState());
-        }
-        return resultado;
+    	return obj instanceof InfoStudentCurricularPlan && studentCurricularPlan == ((InfoStudentCurricularPlan) obj).studentCurricularPlan;
     }
 
     public String toString() {
-        String result = "[" + this.getClass().getName() + "; ";
-        result += "student = " + this.infoStudent + "; ";
-        result += "degreeCurricularPlan = " + this.infoDegreeCurricularPlan + "; ";
-        result += "startDate = " + this.startDate + "; ";
-        result += "specialization = " + this.specialization + "; ";
-        result += "currentState = " + this.currentState + "]\n";
-        return result;
+    	return studentCurricularPlan.toString();
     }
 
-    /**
-     * @return StudentCurricularPlanState
-     */
     public StudentCurricularPlanState getCurrentState() {
-        return currentState;
+        return studentCurricularPlan.getCurrentState();
     }
 
-    /**
-     * @return InfoBranch
-     */
     public InfoBranch getInfoBranch() {
-        return infoBranch;
+        return InfoBranch.newInfoFromDomain(studentCurricularPlan.getBranch());
     }
 
-    /**
-     * @return InfoDegreeCurricularPlan
-     */
     public InfoDegreeCurricularPlan getInfoDegreeCurricularPlan() {
-        return infoDegreeCurricularPlan;
+        return InfoDegreeCurricularPlan.newInfoFromDomain(studentCurricularPlan.getDegreeCurricularPlan());
     }
 
-    /**
-     * @return InfoStudent
-     */
     public InfoStudent getInfoStudent() {
-        return infoStudent;
+        return InfoStudent.newInfoFromDomain(studentCurricularPlan.getStudent());
     }
 
-    /**
-     * @return Date
-     */
     public Date getStartDate() {
-        return startDate;
+        return studentCurricularPlan.getStartDate();
     }
 
-    /**
-     * @return Date
-     */
     public String getStartDateFormatted() {
         Calendar calendar = Calendar.getInstance();
-        calendar.setTime(startDate);
+        calendar.setTime(getStartDate());
         String result = calendar.get(Calendar.DAY_OF_MONTH) + "/" + (calendar.get(Calendar.MONTH) + 1)
                 + "/" + calendar.get(Calendar.YEAR);
         return result;
     }
 
-    /**
-     * Sets the currentState.
-     * 
-     * @param currentState
-     *            The currentState to set
-     */
-    public void setCurrentState(StudentCurricularPlanState currentState) {
-        this.currentState = currentState;
-    }
-
-    /**
-     * Sets the infoBranch.
-     * 
-     * @param infoBranch
-     *            The infoBranch to set
-     */
-    public void setInfoBranch(InfoBranch infoBranch) {
-        this.infoBranch = infoBranch;
-    }
-
-    /**
-     * Sets the infoDegreeCurricularPlan.
-     * 
-     * @param infoDegreeCurricularPlan
-     *            The infoDegreeCurricularPlan to set
-     */
-    public void setInfoDegreeCurricularPlan(InfoDegreeCurricularPlan infoDegreeCurricularPlan) {
-        this.infoDegreeCurricularPlan = infoDegreeCurricularPlan;
-    }
-
-    /**
-     * Sets the infoStudent.
-     * 
-     * @param infoStudent
-     *            The infoStudent to set
-     */
-    public void setInfoStudent(InfoStudent infoStudent) {
-        this.infoStudent = infoStudent;
-    }
-
-    /**
-     * Sets the startDate.
-     * 
-     * @param startDate
-     *            The startDate to set
-     */
-    public void setStartDate(Date startDate) {
-        this.startDate = startDate;
-    }
-
-    /**
-     * @return
-     */
     public Specialization getSpecialization() {
-        return specialization;
+        return studentCurricularPlan.getSpecialization();
     }
 
-    /**
-     * @param specialization
-     */
-    public void setSpecialization(Specialization specialization) {
-        this.specialization = specialization;
-    }
-
-    /**
-     * @return
-     */
     public Double getClassification() {
-        return classification;
+        return studentCurricularPlan.getClassification();
     }
 
-    /**
-     * @return
-     */
     public Integer getEnrolledCourses() {
-        return enrolledCourses;
+        return studentCurricularPlan.getEnrolledCourses();
     }
 
-    /**
-     * @param double1
-     */
-    public void setClassification(Double double1) {
-        classification = double1;
-    }
-
-    /**
-     * @param integer
-     */
-    public void setEnrolledCourses(Integer integer) {
-        enrolledCourses = integer;
-    }
-
-    /**
-     * @return
-     */
     public Integer getCompletedCourses() {
-        return completedCourses;
-    }
-
-    /**
-     * @param integer
-     */
-    public void setCompletedCourses(Integer integer) {
-        completedCourses = integer;
+        return studentCurricularPlan.getCompletedCourses();
     }
 
     public List getInfoEnrolments() {
+    	final List<InfoEnrolment> infoEnrolments = new ArrayList<InfoEnrolment>();
+    	for (final Enrolment enrolment : studentCurricularPlan.getEnrolmentsSet()) {
+    		infoEnrolments.add(InfoEnrolment.newInfoFromDomain(enrolment));
+    	}
         return infoEnrolments;
     }
 
-    public void setInfoEnrolments(List infoEnrolments) {
-        this.infoEnrolments = infoEnrolments;
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see java.lang.Comparable#compareTo(java.lang.Object)
-     */
     public int compareTo(Object arg0) {
         InfoStudentCurricularPlan obj0 = (InfoStudentCurricularPlan) arg0;
         return obj0.getCurrentState().compareTo(this.getCurrentState());
     }
 
-    /**
-     * @return
-     */
     public InfoPerson getInfoEmployee() {
-        return infoEmployee;
+    	final Employee employee = studentCurricularPlan.getEmployee();
+    	return employee == null ? null : InfoPerson.newInfoFromDomain(employee.getPerson());
     }
 
-    /**
-     * @param infoEmployee
-     */
-    public void setInfoEmployee(InfoPerson infoEmployee) {
-        this.infoEmployee = infoEmployee;
-    }
-
-    /**
-     * @return
-     */
     public Date getWhen() {
-        return when;
+        return studentCurricularPlan.getWhen();
     }
 
-    /**
-     * @param when
-     */
-    public void setWhen(Date when) {
-        this.when = when;
-    }
-
-    /**
-     * @return
-     */
     public String getObservations() {
-        return observations;
+        return studentCurricularPlan.getObservations();
     }
 
-    /**
-     * @param observations
-     */
-    public void setObservations(String observations) {
-        this.observations = observations;
-    }
-
-    /**
-     * @return Returns the infoSecundaryBranch.
-     */
     public InfoBranch getInfoSecundaryBranch() {
-        return infoSecundaryBranch;
+        return InfoBranch.newInfoFromDomain(studentCurricularPlan.getSecundaryBranch());
     }
 
-    /**
-     * @param infoSecundaryBranch
-     *            The infoSecundaryBranch to set.
-     */
-    public void setInfoSecundaryBranch(InfoBranch infoSecundaryBranch) {
-        this.infoSecundaryBranch = infoSecundaryBranch;
+    public static InfoStudentCurricularPlan newInfoFromDomain(final StudentCurricularPlan studentCurricularPlan) {
+    	return studentCurricularPlan == null ? null : new InfoStudentCurricularPlan(studentCurricularPlan);
     }
 
-    public void copyFromDomain(StudentCurricularPlan studentCurricularPlan) {
-        super.copyFromDomain(studentCurricularPlan);
-        if (studentCurricularPlan != null) {
-            setSpecialization(studentCurricularPlan.getSpecialization());
-            setStartDate(studentCurricularPlan.getStartDate());
-            setCurrentState(studentCurricularPlan.getCurrentState());
-            setObservations(studentCurricularPlan.getObservations());
-            setClassification(studentCurricularPlan.getClassification());
-            setGivenCredits(studentCurricularPlan.getGivenCredits());
-            setCompletedCourses(studentCurricularPlan.getCompletedCourses());
-            setEnrolledCourses(studentCurricularPlan.getEnrolledCourses());
-            setInfoDegreeCurricularPlan(InfoDegreeCurricularPlan.newInfoFromDomain(studentCurricularPlan.getDegreeCurricularPlan()));
-
-        
-        }
+    public Double getGivenCredits() {
+    	return studentCurricularPlan.getGivenCredits();
     }
 
-    public static InfoStudentCurricularPlan newInfoFromDomain(
-            StudentCurricularPlan studentCurricularPlan) {
-        InfoStudentCurricularPlan infoStudentCurricularPlan = null;
-        if (studentCurricularPlan != null) {
-            infoStudentCurricularPlan = new InfoStudentCurricularPlan();
-            infoStudentCurricularPlan.copyFromDomain(studentCurricularPlan);
-        }
-        return infoStudentCurricularPlan;
+    public List<InfoNotNeedToEnrollInCurricularCourse> getInfoNotNeedToEnrollCurricularCourses() {
+    	final List<InfoNotNeedToEnrollInCurricularCourse> infoNotNeedToEnrollInCurricularCourses = new ArrayList<InfoNotNeedToEnrollInCurricularCourse>();
+    	for (final NotNeedToEnrollInCurricularCourse notNeedToEnrollInCurricularCourse : studentCurricularPlan.getNotNeedToEnrollCurricularCoursesSet()) {
+    		infoNotNeedToEnrollInCurricularCourses.add(InfoNotNeedToEnrollInCurricularCourse.newInfoFromDomain(notNeedToEnrollInCurricularCourse));
+    	}
+    	return infoNotNeedToEnrollInCurricularCourses;
     }
 
-    public void copyToDomain(InfoStudentCurricularPlan infoStudentCurricularPlan,
-            StudentCurricularPlan studentCurricularPlan) {
-        super.copyToDomain(infoStudentCurricularPlan, studentCurricularPlan);
+	@Override
+	public Integer getIdInternal() {
+		return studentCurricularPlan.getIdInternal();
+	}
 
-        studentCurricularPlan.setClassification(infoStudentCurricularPlan.getClassification());
-        studentCurricularPlan.setCompletedCourses(infoStudentCurricularPlan.getCompletedCourses());
-        studentCurricularPlan.setGivenCredits(infoStudentCurricularPlan.getGivenCredits());
-        studentCurricularPlan.setSpecialization(infoStudentCurricularPlan.getSpecialization());
-        studentCurricularPlan.setStartDate(infoStudentCurricularPlan.getStartDate());
-        studentCurricularPlan.setCurrentState(infoStudentCurricularPlan.currentState);
+    @Override
+    public void setIdInternal(Integer integer) {
+        throw new Error("Method should not be called!");
     }
+
 }

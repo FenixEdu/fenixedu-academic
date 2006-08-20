@@ -16,7 +16,7 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoNotNeedToEnrollInCurricularCourse;
-import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlanWithEquivalencesAndInfoDegreeCurricularPlan;
+import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
@@ -71,7 +71,7 @@ public class ManageNotNeedToEnrollDispathAction extends DispatchAction {
 
         Object args[] = { studentNumber, DegreeType.DEGREE };
 
-        InfoStudentCurricularPlanWithEquivalencesAndInfoDegreeCurricularPlan infoSCP = readStudentCurricularPlan(userView, args);
+        InfoStudentCurricularPlan infoSCP = readStudentCurricularPlan(userView, args);
         Collections.sort(infoSCP.getInfoNotNeedToEnrollCurricularCourses(), enrolmentCurricularCourseComparator);
         Collections.sort(infoSCP.getInfoDegreeCurricularPlan().getCurricularCourses(), curricularCourseComparator);
 
@@ -88,10 +88,10 @@ public class ManageNotNeedToEnrollDispathAction extends DispatchAction {
      * @throws FenixServiceException
      * @throws FenixFilterException
      */
-    private InfoStudentCurricularPlanWithEquivalencesAndInfoDegreeCurricularPlan readStudentCurricularPlan(
+    private InfoStudentCurricularPlan readStudentCurricularPlan(
             IUserView userView, Object[] args) throws FenixServiceException, FenixFilterException {
-        InfoStudentCurricularPlanWithEquivalencesAndInfoDegreeCurricularPlan infoSCP = 
-            (InfoStudentCurricularPlanWithEquivalencesAndInfoDegreeCurricularPlan) ServiceManagerServiceFactory
+        InfoStudentCurricularPlan infoSCP = 
+            (InfoStudentCurricularPlan) ServiceManagerServiceFactory
                 .executeService(userView, "ReadActiveStudentCurricularPlanByNumberAndType", args);
 
         final List infoCurricularCourses = infoSCP.getInfoDegreeCurricularPlan().getCurricularCourses();
@@ -141,7 +141,7 @@ public class ManageNotNeedToEnrollDispathAction extends DispatchAction {
         Integer studentNumber = new Integer((String) request.getParameter("studentNumber"));
        
         Object[] args1 = { studentNumber, DegreeType.DEGREE };
-        InfoStudentCurricularPlanWithEquivalencesAndInfoDegreeCurricularPlan infoSCP = readStudentCurricularPlan(
+        InfoStudentCurricularPlan infoSCP = readStudentCurricularPlan(
                 userView, args1);
 
         request.setAttribute("infoStudentCurricularPlan", infoSCP);

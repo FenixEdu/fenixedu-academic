@@ -31,7 +31,6 @@ public class InsertStudentsFinalEvaluation extends Service {
 
 		for (InfoEnrolmentEvaluation infoEnrolmentEvaluation : evaluations) {
 			final Registration student = rootDomainObject.readRegistrationByOID(infoEnrolmentEvaluation.getInfoEnrolment().getInfoStudentCurricularPlan().getInfoStudent().getIdInternal());
-			infoEnrolmentEvaluation.getInfoEnrolment().getInfoStudentCurricularPlan().getInfoStudent().setNumber(student.getNumber());
 
 			final EnrolmentEvaluation enrolmentEvaluationFromDb = findEnrolmentEvaluationByIDForStudent(student, infoEnrolmentEvaluation.getIdInternal());
 			try {

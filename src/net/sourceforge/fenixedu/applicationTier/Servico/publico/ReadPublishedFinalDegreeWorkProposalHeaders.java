@@ -10,7 +10,6 @@ import java.util.Set;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.InfoBranch;
-import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
 import net.sourceforge.fenixedu.dataTransferObject.finalDegreeWork.FinalDegreeWorkProposalHeader;
 import net.sourceforge.fenixedu.dataTransferObject.finalDegreeWork.InfoGroup;
@@ -78,11 +77,7 @@ public class ReadPublishedFinalDegreeWorkProposalHeaders extends Service {
                             GroupStudent groupStudent = proposal
                                     .getGroupAttributedByTeacher().getGroupStudents().get(j);
                             InfoGroupStudent infoGroupStudent = new InfoGroupStudent();
-                            InfoStudent infoStudent = new InfoStudent();
-                            InfoPerson infoPerson = new InfoPerson();
-                            infoPerson.setUsername(groupStudent.getStudent().getPerson().getUsername());
-                            infoStudent.setInfoPerson(infoPerson);
-                            infoStudent.setNumber(groupStudent.getStudent().getNumber());
+                            InfoStudent infoStudent = new InfoStudent(groupStudent.getStudent());
                             infoGroupStudent.setStudent(infoStudent);
                             infoGroup.getGroupStudents().add(infoGroupStudent);
                         }
@@ -96,11 +91,7 @@ public class ReadPublishedFinalDegreeWorkProposalHeaders extends Service {
                             GroupStudent groupStudent = proposal.getGroupAttributed()
                                     .getGroupStudents().get(j);
                             InfoGroupStudent infoGroupStudent = new InfoGroupStudent();
-                            InfoStudent infoStudent = new InfoStudent();
-                            InfoPerson infoPerson = new InfoPerson();
-                            infoPerson.setUsername(groupStudent.getStudent().getPerson().getUsername());
-                            infoStudent.setInfoPerson(infoPerson);
-                            infoStudent.setNumber(groupStudent.getStudent().getNumber());
+                            InfoStudent infoStudent = new InfoStudent(groupStudent.getStudent());
                             infoGroupStudent.setStudent(infoStudent);
                             infoGroup.getGroupStudents().add(infoGroupStudent);
                         }

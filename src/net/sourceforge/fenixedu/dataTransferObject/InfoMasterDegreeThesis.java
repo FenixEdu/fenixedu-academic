@@ -55,7 +55,7 @@ public class InfoMasterDegreeThesis extends InfoObject {
     public void copyFromDomain(MasterDegreeThesis masterDegreeThesis) {
         super.copyFromDomain(masterDegreeThesis);
         if (masterDegreeThesis != null) {
-            setInfoStudentCurricularPlan(InfoStudentCurricularPlanWithInfoStudentAndDegree
+            setInfoStudentCurricularPlan(InfoStudentCurricularPlan
                     .newInfoFromDomain(masterDegreeThesis.getStudentCurricularPlan()));
         }
     }

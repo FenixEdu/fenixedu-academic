@@ -14,7 +14,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse;
-import net.sourceforge.fenixedu.dataTransferObject.InfoStudentWithInfoPerson;
+import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
 import net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoCandidacyDetails;
 import net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoCaseStudyChoice;
 import net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoClassification;
@@ -134,7 +134,7 @@ public class ReadCandidacies extends Service {
 			candidacyDTO.setMotivation(candidacy.getMotivation());
 			candidacyDTO.setSeminary(InfoSeminaryWithEquivalencies.newInfoFromDomain(candidacy
 					.getSeminary()));
-			candidacyDTO.setStudent(InfoStudentWithInfoPerson.newInfoFromDomain(student));
+			candidacyDTO.setStudent(InfoStudent.newInfoFromDomain(student));
 			candidacyDTO.setTheme(InfoTheme.newInfoFromDomain(candidacy.getTheme()));
 			List<InfoCaseStudyChoice> infos = new ArrayList<InfoCaseStudyChoice>();
 			for (Iterator iter = candidacy.getCaseStudyChoices().iterator(); iter.hasNext();) {

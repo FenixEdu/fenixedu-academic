@@ -13,7 +13,7 @@ public class InfoFrequentaWithInfoStudentAndPerson extends InfoFrequenta {
     public void copyFromDomain(Attends frequenta) {
         super.copyFromDomain(frequenta);
         if (frequenta != null) {
-            setAluno(InfoStudentWithInfoPerson.newInfoFromDomain(frequenta.getAluno()));
+            setAluno(InfoStudent.newInfoFromDomain(frequenta.getAluno()));
         }
     }
 

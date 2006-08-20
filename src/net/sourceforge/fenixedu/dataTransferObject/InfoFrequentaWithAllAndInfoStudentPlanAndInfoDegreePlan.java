@@ -14,7 +14,7 @@ public class InfoFrequentaWithAllAndInfoStudentPlanAndInfoDegreePlan extends Inf
     public void copyFromDomain(Attends frequenta) {
         super.copyFromDomain(frequenta);
         if (frequenta != null) {
-            setAluno(InfoStudentWithInfoPerson.newInfoFromDomain(frequenta.getAluno()));
+            setAluno(InfoStudent.newInfoFromDomain(frequenta.getAluno()));
             setDisciplinaExecucao(InfoExecutionCourse.newInfoFromDomain(frequenta
                     .getDisciplinaExecucao()));
             setInfoEnrolment(InfoEnrolmentWithInfoStudentPlanAndInfoDegreePlan

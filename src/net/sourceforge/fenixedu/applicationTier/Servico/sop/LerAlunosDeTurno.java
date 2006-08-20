@@ -16,7 +16,6 @@ import java.util.Iterator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
-import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
 import net.sourceforge.fenixedu.dataTransferObject.ShiftKey;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
@@ -35,13 +34,7 @@ public class LerAlunosDeTurno extends Service {
         List infoAlunos = new ArrayList(alunos.size());
         for (final Iterator iterator = alunos.iterator(); iterator.hasNext();) {
             Registration elem = (Registration) iterator.next();
-            InfoPerson infoPessoa = new InfoPerson();
-            infoPessoa.setNome(elem.getPerson().getNome());
-            infoPessoa.setUsername(elem.getPerson().getUsername());
-            infoPessoa.setPassword(elem.getPerson().getPassword());
-            infoPessoa.setEmail(elem.getPerson().getEmail());
-            infoAlunos.add(new InfoStudent(elem.getNumber(), elem.getState(), infoPessoa, elem
-                    .getDegreeType()));
+            infoAlunos.add(new InfoStudent(elem));
         }
 
         return infoAlunos;

@@ -79,11 +79,7 @@ public class ChangeDegreeDA extends FenixDispatchAction {
 
             request.setAttribute("activeInfoStudentCurricularPlan", activeInfoStudentCurricularPlan);
 
-            final Object[] argsReadEnrolments = { activeInfoStudentCurricularPlan.getIdInternal() };
-            final List<InfoEnrolment> infoEnrolments = (List<InfoEnrolment>) ServiceUtils
-                    .executeService(userView, "ReadEnrolmentsByStudentCurricularPlan",
-                            argsReadEnrolments);
-            activeInfoStudentCurricularPlan.setInfoEnrolments(infoEnrolments);
+            final List<InfoEnrolment> infoEnrolments = activeInfoStudentCurricularPlan.getInfoEnrolments();
             Collections.sort(infoEnrolments, ENROLEMENT_COMPARATOR);
 
             final List<String> enrolementsToTransferList = new ArrayList<String>();

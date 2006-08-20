@@ -12,7 +12,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteCommon;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteStudents;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
-import net.sourceforge.fenixedu.dataTransferObject.InfoStudentWithInfoPerson;
+import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
 import net.sourceforge.fenixedu.dataTransferObject.TeacherAdministrationSiteView;
 import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
@@ -66,7 +66,7 @@ public class ReadStudentsByCurricularCourse extends Service {
                 Enrolment enrolment = (Enrolment) input;
                 Registration student = enrolment.getStudentCurricularPlan().getStudent();
 
-                InfoStudent infoStudent = InfoStudentWithInfoPerson.newInfoFromDomain(student);
+                InfoStudent infoStudent = InfoStudent.newInfoFromDomain(student);
                 return infoStudent;
             }
         });
@@ -78,7 +78,7 @@ public class ReadStudentsByCurricularCourse extends Service {
         final List<InfoStudent> infoStudentList = new ArrayList<InfoStudent>();
         for (final Attends attends : attendList) {
             final Registration student = attends.getAluno();
-            infoStudentList.add(InfoStudentWithInfoPerson.newInfoFromDomain(student));
+            infoStudentList.add(InfoStudent.newInfoFromDomain(student));
         }
         return infoStudentList;
     }

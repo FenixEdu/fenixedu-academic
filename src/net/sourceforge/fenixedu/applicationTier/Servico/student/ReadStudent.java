@@ -12,8 +12,6 @@ package net.sourceforge.fenixedu.applicationTier.Servico.student;
  * @author tfc130
  */
 import net.sourceforge.fenixedu.applicationTier.Service;
-import net.sourceforge.fenixedu.dataTransferObject.InfoCountry;
-import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.student.Registration;
@@ -35,18 +33,7 @@ public class ReadStudent extends Service {
         Registration student = Registration.readStudentByNumberAndDegreeType(number, DegreeType.DEGREE);
 
         if (student != null) {
-            InfoPerson infoPerson = new InfoPerson();
-            infoPerson.setNome(student.getPerson().getNome());
-            infoPerson.setUsername(student.getPerson().getUsername());
-            infoPerson.setPassword(student.getPerson().getPassword());
-            infoPerson.setDistritoNaturalidade(student.getPerson().getDistritoNaturalidade());
-            infoPerson.setInfoPais(InfoCountry.newInfoFromDomain(student.getPerson().getPais()));
-            infoPerson.setNomePai(student.getPerson().getNomePai());
-            infoPerson.setNomeMae(student.getPerson().getNomeMae());
-            infoPerson.setIdInternal(student.getPerson().getIdInternal());
-
-            infoStudent = new InfoStudent(student.getNumber(), student.getState(), infoPerson, student
-                    .getDegreeType());
+            infoStudent = new InfoStudent(student);
             infoStudent.setIdInternal(student.getIdInternal());
         }
 

@@ -14,7 +14,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolmentWithCourseAndDegreeAndExecutionPeriodAndYear;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
-import net.sourceforge.fenixedu.dataTransferObject.InfoStudentWithInfoPerson;
+import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
 import net.sourceforge.fenixedu.dataTransferObject.enrollment.InfoImprovmentEnrolmentContext;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.CurricularCourseScope;
@@ -209,7 +209,7 @@ public class ReadImprovmentsToEnroll extends Service {
             ExecutionPeriod actualExecPeriod, List res,
             List alreadyImprovedEnrolmentsInCurrentExecutionPeriod) {
         InfoImprovmentEnrolmentContext improvmentEnrolmentContext = new InfoImprovmentEnrolmentContext();
-        improvmentEnrolmentContext.setInfoStudent(InfoStudentWithInfoPerson.newInfoFromDomain(student));
+        improvmentEnrolmentContext.setInfoStudent(InfoStudent.newInfoFromDomain(student));
         improvmentEnrolmentContext.setInfoExecutionPeriod(InfoExecutionPeriod
                 .newInfoFromDomain(actualExecPeriod));
 

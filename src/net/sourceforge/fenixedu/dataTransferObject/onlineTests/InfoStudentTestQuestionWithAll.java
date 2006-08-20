@@ -3,7 +3,7 @@
  */
 package net.sourceforge.fenixedu.dataTransferObject.onlineTests;
 
-import net.sourceforge.fenixedu.dataTransferObject.InfoStudentWithInfoPerson;
+import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
 import net.sourceforge.fenixedu.domain.onlineTests.StudentTestQuestion;
 
 /**
@@ -14,7 +14,7 @@ public class InfoStudentTestQuestionWithAll extends InfoStudentTestQuestionWithI
     public void copyFromDomain(StudentTestQuestion studentTestQuestion) {
         super.copyFromDomain(studentTestQuestion);
         if (studentTestQuestion != null) {
-            setStudent(InfoStudentWithInfoPerson.newInfoFromDomain(studentTestQuestion.getStudent()));
+            setStudent(InfoStudent.newInfoFromDomain(studentTestQuestion.getStudent()));
         }
     }
 

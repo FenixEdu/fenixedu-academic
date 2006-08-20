@@ -17,8 +17,9 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingSe
 import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolment;
 import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolmentEvaluation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteEnrolmentEvaluation;
-import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.Enrolment;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException;
@@ -178,11 +179,10 @@ public class SubmitMarksAction extends DispatchAction {
 
             //enrolment evaluation with only student code and mark and
             // enrolment code
-            InfoStudent infoStudent = new InfoStudent();
-            infoStudent.setIdInternal(studentCode);
 
-            InfoStudentCurricularPlan infoStudentCurricularPlan = new InfoStudentCurricularPlan();
-            infoStudentCurricularPlan.setInfoStudent(infoStudent);
+            final Enrolment enrolment = (Enrolment) RootDomainObject.getInstance().readCurriculumModuleByOID(enrolmentCode);
+
+            InfoStudentCurricularPlan infoStudentCurricularPlan = new InfoStudentCurricularPlan(enrolment.getStudentCurricularPlan());
 
             InfoEnrolment infoEnrolment = new InfoEnrolment();
             infoEnrolment.setIdInternal(enrolmentCode);

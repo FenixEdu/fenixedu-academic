@@ -6,7 +6,6 @@ package net.sourceforge.fenixedu.applicationTier.Servico.student;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Service;
-import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
@@ -29,13 +28,7 @@ public class ReadActiveStudentCurricularPlanByDegreeType extends Service {
         if(student != null) {
         	final StudentCurricularPlan studentCurricularPlan = student.getActiveOrConcludedStudentCurricularPlan();
             if (studentCurricularPlan != null) {
-            	final InfoStudentCurricularPlan infoStudentCurricularPlan = new InfoStudentCurricularPlan();
-                if (studentCurricularPlan.getDegreeCurricularPlan() != null) {
-                    InfoDegreeCurricularPlan infoDegreeCurricularPlan = new InfoDegreeCurricularPlan(studentCurricularPlan.getDegreeCurricularPlan());
-                    infoStudentCurricularPlan.setInfoDegreeCurricularPlan(infoDegreeCurricularPlan);
-                    infoStudentCurricularPlan.getInfoDegreeCurricularPlan().setIdInternal(
-                            studentCurricularPlan.getDegreeCurricularPlan().getIdInternal());
-                }
+            	final InfoStudentCurricularPlan infoStudentCurricularPlan = new InfoStudentCurricularPlan(studentCurricularPlan);
                 return infoStudentCurricularPlan;
             }
         }
