@@ -16,170 +16,70 @@ import net.sourceforge.fenixedu.domain.CurricularCourseScope;
  */
 public class InfoCurricularCourseScope extends InfoObject {
 
-    private InfoCurricularCourse infoCurricularCourse;
+	private final CurricularCourseScope curricularCourseScope;
 
-    private InfoCurricularSemester infoCurricularSemester;
+	private boolean showEnVersion = false;
 
-    private InfoBranch infoBranch;
-
-    private Calendar beginDate;
-
-    private Calendar endDate;
-    
-    private String anotation;
-
-    public InfoCurricularCourseScope() {
+    public InfoCurricularCourseScope(final CurricularCourseScope curricularCourseScope) {
+    	this.curricularCourseScope = curricularCourseScope;
     }
 
     public boolean equals(Object obj) {
-        boolean resultado = false;
-        if (obj instanceof InfoCurricularCourseScope) {
-            InfoCurricularCourseScope infoCurricularCourseScope = (InfoCurricularCourseScope) obj;
-            resultado = (((getInfoBranch() == null && infoCurricularCourseScope.getInfoBranch() == null) || (getInfoBranch() != null
-                    && infoCurricularCourseScope.getInfoBranch() != null && getInfoBranch().equals(
-                    infoCurricularCourseScope.getInfoBranch())))
-                    && ((getInfoCurricularCourse() == null && infoCurricularCourseScope
-                            .getInfoCurricularCourse() == null) || (getInfoCurricularCourse() != null
-                            && infoCurricularCourseScope.getInfoCurricularCourse() != null && getInfoCurricularCourse()
-                            .equals(infoCurricularCourseScope.getInfoCurricularCourse())))
-                    && ((getInfoCurricularSemester() == null && infoCurricularCourseScope
-                            .getInfoCurricularSemester() == null) || (getInfoCurricularSemester() != null
-                            && infoCurricularCourseScope.getInfoCurricularSemester() != null && getInfoCurricularSemester()
-                            .equals(infoCurricularCourseScope.getInfoCurricularSemester()))) && ((getEndDate() == null && infoCurricularCourseScope
-                    .getEndDate() == null) || (getEndDate() != null
-                    && infoCurricularCourseScope.getEndDate() != null && getEndDate().equals(
-                    infoCurricularCourseScope.getEndDate()))));
-        }
-        return resultado;
+    	return obj instanceof InfoCurricularCourseScope && curricularCourseScope == ((InfoCurricularCourseScope) obj).curricularCourseScope;
     }
 
     public String toString() {
-        String result = "[" + this.getClass().getName() + "; ";
-        result += "CurricularCourse = " + this.infoCurricularCourse + "; ";
-        result += "CurricularSemester = " + this.infoCurricularSemester + "; ";
-        result += "Branch = " + this.infoBranch + "; ";
-        result += "EndDate = " + this.endDate + "]\n";
-        result += "Anotation = " + this.anotation + "]\n";
-
-
-        return result;
+    	return curricularCourseScope.toString();
     }
 
     public Boolean isActive() {
-        Boolean result = Boolean.FALSE;
-        if (this.endDate == null) {
-            result = Boolean.TRUE;
-        }
-        return result;
+    	return curricularCourseScope.isActive();
     }
 
-    /**
-     * @return Returns the beginDate.
-     */
     public Calendar getBeginDate() {
-        return beginDate;
+        return curricularCourseScope.getBeginDate();
     }
 
-    /**
-     * @param beginDate
-     *            The beginDate to set.
-     */
-    public void setBeginDate(Calendar beginDate) {
-        this.beginDate = beginDate;
-    }
-
-    /**
-     * @return Returns the endDate.
-     */
     public Calendar getEndDate() {
-        return endDate;
+        return curricularCourseScope.getEndDate();
     }
 
-    /**
-     * @param endDate
-     *            The endDate to set.
-     */
-    public void setEndDate(Calendar endDate) {
-        this.endDate = endDate;
-    }
-
-    /**
-     * @return Returns the infoBranch.
-     */
     public InfoBranch getInfoBranch() {
-        return infoBranch;
+    	final InfoBranch infoBranch = InfoBranch.newInfoFromDomain(curricularCourseScope.getBranch());
+    	if (showEnVersion) {
+    		infoBranch.prepareEnglishPresentation(Locale.ENGLISH);
+    	}
+    	return infoBranch;
     }
 
-    /**
-     * @param infoBranch
-     *            The infoBranch to set.
-     */
-    public void setInfoBranch(InfoBranch infoBranch) {
-        this.infoBranch = infoBranch;
-    }
-
-    /**
-     * @return Returns the infoCurricularCourse.
-     */
     public InfoCurricularCourse getInfoCurricularCourse() {
-        return infoCurricularCourse;
+        return InfoCurricularCourse.newInfoFromDomain(curricularCourseScope.getCurricularCourse());
     }
 
-    /**
-     * @param infoCurricularCourse
-     *            The infoCurricularCourse to set.
-     */
-    public void setInfoCurricularCourse(InfoCurricularCourse infoCurricularCourse) {
-        this.infoCurricularCourse = infoCurricularCourse;
-    }
-
-    /**
-     * @return Returns the infoCurricularSemester.
-     */
     public InfoCurricularSemester getInfoCurricularSemester() {
-        return infoCurricularSemester;
+        return InfoCurricularSemester.newInfoFromDomain(curricularCourseScope.getCurricularSemester());
     }
 
-    /**
-     * @param infoCurricularSemester
-     *            The infoCurricularSemester to set.
-     */
-    public void setInfoCurricularSemester(InfoCurricularSemester infoCurricularSemester) {
-        this.infoCurricularSemester = infoCurricularSemester;
-    }
-
-    public void copyFromDomain(CurricularCourseScope curricularCourseScope) {
-        super.copyFromDomain(curricularCourseScope);
-        if (curricularCourseScope != null) {
-            setBeginDate(curricularCourseScope.getBeginDate());
-            setEndDate(curricularCourseScope.getEndDate());
-            setAnotation(curricularCourseScope.getAnotation());
-        }
-    }
-
-    public static InfoCurricularCourseScope newInfoFromDomain(
-            CurricularCourseScope curricularCourseScope) {
-        InfoCurricularCourseScope infoCurricularCourseScope = null;
-        if (curricularCourseScope != null) {
-            infoCurricularCourseScope = new InfoCurricularCourseScope();
-            infoCurricularCourseScope.copyFromDomain(curricularCourseScope);
-        }
-        return infoCurricularCourseScope;
+    public static InfoCurricularCourseScope newInfoFromDomain(final CurricularCourseScope curricularCourseScope) {
+    	return curricularCourseScope == null ? null : new InfoCurricularCourseScope(curricularCourseScope);
     }
 
     public String getAnotation() {
-        return anotation;
-    }
-    
-
-    public void setAnotation(String anotation) {
-        this.anotation = anotation;
+        return curricularCourseScope.getAnotation();
     }
 
     public void prepareEnglishPresentation(Locale locale) {
-        if (locale.getLanguage().equals(Locale.ENGLISH.getLanguage())) {        
-            this.infoBranch.prepareEnglishPresentation(locale);
-        }
+    	showEnVersion = locale.getLanguage().equals(Locale.ENGLISH.getLanguage());        
     }
-    
+
+	@Override
+	public Integer getIdInternal() {
+		return curricularCourseScope.getIdInternal();
+	}
+
+    @Override
+    public void setIdInternal(Integer integer) {
+        throw new Error("Method should not be called!");
+    }
+
 }

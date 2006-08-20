@@ -18,7 +18,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoBranch;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse;
-import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseScope;
+import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseScopeEditor;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularSemester;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
@@ -115,7 +115,7 @@ public class InsertCurricularCourseScopeDispatchAction extends FenixDispatchActi
 
         DynaActionForm dynaForm = (DynaValidatorForm) form;
 
-        InfoCurricularCourseScope infoCurricularCourseScope = new InfoCurricularCourseScope();
+        InfoCurricularCourseScopeEditor infoCurricularCourseScope = new InfoCurricularCourseScopeEditor();
 
         InfoBranch infoBranch = new InfoBranch(rootDomainObject.readBranchByOID(new Integer((String) dynaForm.get("branchId"))));
         infoCurricularCourseScope.setInfoBranch(infoBranch);
@@ -125,8 +125,7 @@ public class InsertCurricularCourseScopeDispatchAction extends FenixDispatchActi
         InfoCurricularCourse infoCurricularCourse = new InfoCurricularCourse(curricularCourse);
         infoCurricularCourseScope.setInfoCurricularCourse(infoCurricularCourse);
 
-        InfoCurricularSemester infoCurricularSemester = new InfoCurricularSemester();
-        infoCurricularSemester.setIdInternal(new Integer((String) dynaForm.get("curricularSemesterId")));
+        InfoCurricularSemester infoCurricularSemester = new InfoCurricularSemester(rootDomainObject.readCurricularSemesterByOID(new Integer((String) dynaForm.get("curricularSemesterId"))));
         infoCurricularCourseScope.setInfoCurricularSemester(infoCurricularSemester);
 
         String beginDateString = (String) dynaForm.get("beginDate");

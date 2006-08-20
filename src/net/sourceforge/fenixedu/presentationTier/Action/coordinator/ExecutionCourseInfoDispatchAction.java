@@ -150,15 +150,13 @@ public class ExecutionCourseInfoDispatchAction extends DispatchAction {
                 && !searchExecutionCourse.get("curricularYearOID").equals("")
                 && !searchExecutionCourse.get("curricularYearOID").equals("null")) {
             curricularYearOID = new Integer((String) searchExecutionCourse.get("curricularYearOID"));
-            infoCurricularYear = new InfoCurricularYear();
-            infoCurricularYear.setIdInternal(curricularYearOID);
+            infoCurricularYear = new InfoCurricularYear(RootDomainObject.getInstance().readCurricularYearByOID(curricularYearOID));
             request.setAttribute("curricularYearOID", curricularYearOID);
         } else {
             if ((request.getParameter("curricularYearOID") != null)
                     && (request.getParameter("curricularYearOID").length() != 0)
                     && (!searchExecutionCourse.get("curricularYearOID").equals("null"))) {
-                infoCurricularYear = new InfoCurricularYear();
-                infoCurricularYear.setIdInternal(new Integer(request.getParameter("curricularYearOID")));
+            	infoCurricularYear = new InfoCurricularYear(RootDomainObject.getInstance().readCurricularYearByOID(new Integer(request.getParameter("curricularYearOID"))));
             }
         }
 

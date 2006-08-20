@@ -1,7 +1,9 @@
 package net.sourceforge.fenixedu.dataTransferObject;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import net.sourceforge.fenixedu.domain.CurricularCourseScope;
 import net.sourceforge.fenixedu.domain.CurricularSemester;
 
 /**
@@ -12,125 +14,48 @@ import net.sourceforge.fenixedu.domain.CurricularSemester;
 
 public class InfoCurricularSemester extends InfoObject {
 
-    private Integer semester;
+	private final CurricularSemester curricularSemester;
 
-    private InfoCurricularYear infoCurricularYear;
-
-    //	private List associatedInfoCurricularCourses;
-    private List infoScopes;
-
-    public InfoCurricularSemester() {
-        setSemester(null);
-        //		setAssociatedInfoCurricularCourses(null);
-        setInfoScopes(null);
-        setInfoCurricularYear(null);
-    }
-
-    public InfoCurricularSemester(Integer semester, InfoCurricularYear curricularYear) {
-        this();
-        setSemester(semester);
-        setInfoCurricularYear(curricularYear);
+    public InfoCurricularSemester(final CurricularSemester curricularSemester) {
+    	this.curricularSemester = curricularSemester;
     }
 
     public boolean equals(Object obj) {
-        boolean resultado = false;
-        if (obj instanceof InfoCurricularSemester) {
-            InfoCurricularSemester infoCurricularSemester = (InfoCurricularSemester) obj;
-            resultado = (this.getSemester().equals(infoCurricularSemester.getSemester()) && (this
-                    .getInfoCurricularYear().equals(infoCurricularSemester.getInfoCurricularYear())));
-        }
-        return resultado;
+    	return obj instanceof InfoCurricularSemester && curricularSemester == ((InfoCurricularSemester) obj).curricularSemester;
     }
 
     public String toString() {
-        String result = "[" + this.getClass().getName() + ": ";
-        result += "semester = " + this.getSemester() + "; ";
-        result += "infoCurricularYear = " + this.getInfoCurricularYear() + "; ";
-        result += "idInternal = " + this.getIdInternal() + "]";
-        return result;
+    	return curricularSemester.toString();
     }
 
-    //	/**
-    //	 * @return List
-    //	 */
-    //	public List getAssociatedInfoCurricularCourses() {
-    //		return associatedInfoCurricularCourses;
-    //	}
-
-    /**
-     * @return ICurricularYear
-     */
     public InfoCurricularYear getInfoCurricularYear() {
-        return infoCurricularYear;
+    	return InfoCurricularYear.newInfoFromDomain(curricularSemester.getCurricularYear());
     }
 
-    /**
-     * @return Integer
-     */
     public Integer getSemester() {
-        return semester;
+    	return curricularSemester.getSemester();
     }
 
-    //	/**
-    //	 * Sets the associatedInfoCurricularCourses.
-    //	 * @param associatedInfoCurricularCourses The
-    // associatedInfoCurricularCourses to set
-    //	 */
-    //	public void setAssociatedInfoCurricularCourses(List
-    // associatedCurricularCourses) {
-    //		this.associatedInfoCurricularCourses = associatedCurricularCourses;
-    //	}
-
-    /**
-     * Sets the infoCurricularYear.
-     * 
-     * @param infoCurricularYear
-     *            The infoCurricularYear to set
-     */
-    public void setInfoCurricularYear(InfoCurricularYear curricularYear) {
-        this.infoCurricularYear = curricularYear;
-    }
-
-    /**
-     * Sets the semester.
-     * 
-     * @param semester
-     *            The semester to set
-     */
-    public void setSemester(Integer semester) {
-        this.semester = semester;
-    }
-
-    /**
-     * @return List
-     */
     public List getInfoScopes() {
-        return infoScopes;
+    	final List<InfoCurricularCourseScope> scopes = new ArrayList<InfoCurricularCourseScope>();
+    	for (final CurricularCourseScope scope : curricularSemester.getScopesSet()) {
+    		scopes.add(InfoCurricularCourseScope.newInfoFromDomain(scope));
+    	}
+        return scopes;
     }
 
-    /**
-     * Sets the infoScopes.
-     * 
-     * @param infoScopes
-     *            The infoScopes to set
-     */
-    public void setInfoScopes(List infoScopes) {
-        this.infoScopes = infoScopes;
+    public static InfoCurricularSemester newInfoFromDomain(final CurricularSemester curricularSemester) {
+    	return curricularSemester == null ? null : new InfoCurricularSemester(curricularSemester);
     }
 
-    public void copyFromDomain(CurricularSemester curricularSemester) {
-        super.copyFromDomain(curricularSemester);
-        if (curricularSemester != null) {
-            setSemester(curricularSemester.getSemester());
-        }
+	@Override
+	public Integer getIdInternal() {
+		return curricularSemester.getIdInternal();
+	}
+
+    @Override
+    public void setIdInternal(Integer integer) {
+        throw new Error("Method should not be called!");
     }
 
-    public static InfoCurricularSemester newInfoFromDomain(CurricularSemester curricularSemester) {
-        InfoCurricularSemester infoCurricularSemester = null;
-        if (curricularSemester != null) {
-            infoCurricularSemester = new InfoCurricularSemester();
-            infoCurricularSemester.copyFromDomain(curricularSemester);
-        }
-        return infoCurricularSemester;
-    }
 }

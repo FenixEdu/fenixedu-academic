@@ -35,7 +35,7 @@ public class InfoCurricularCourseWithInfoDegreeAndScopes extends
             
             while (scopesIterator.hasNext()) {
                 CurricularCourseScope scope = (CurricularCourseScope)scopesIterator.next();
-                infoScopes.add(InfoCurricularCourseScopeWithSemesterAndYear.newInfoFromDomain(scope));
+                infoScopes.add(InfoCurricularCourseScope.newInfoFromDomain(scope));
             }
             setInfoScopes(infoScopes);           
         }

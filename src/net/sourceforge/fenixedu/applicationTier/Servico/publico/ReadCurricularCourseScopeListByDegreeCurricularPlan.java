@@ -7,7 +7,7 @@ import java.util.ListIterator;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseScopeWithCurricularCourseAndDegreeAndBranchAndSemesterAndYear;
+import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseScope;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.CurricularCourseScope;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
@@ -41,7 +41,7 @@ public class ReadCurricularCourseScopeListByDegreeCurricularPlan extends Service
                 iteratorScopes = curricularCourseScopes.listIterator();
                 while (iteratorScopes.hasNext()) {
                     allCurricularCourseScope
-                            .add(InfoCurricularCourseScopeWithCurricularCourseAndDegreeAndBranchAndSemesterAndYear
+                            .add(InfoCurricularCourseScope
                                     .newInfoFromDomain((CurricularCourseScope) iteratorScopes.next()));
                 }
             }

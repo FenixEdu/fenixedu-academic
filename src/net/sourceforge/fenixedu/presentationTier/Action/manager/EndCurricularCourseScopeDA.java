@@ -14,6 +14,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseScope;
+import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseScopeEditor;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.InvalidArgumentsActionException;
@@ -70,7 +71,7 @@ public class EndCurricularCourseScopeDA extends FenixDispatchAction {
 
         Integer oldCurricularCourseScopeId = new Integer(request.getParameter("curricularCourseScopeId"));
 
-        InfoCurricularCourseScope newInfoCurricularCourseScope = new InfoCurricularCourseScope();
+        InfoCurricularCourseScopeEditor newInfoCurricularCourseScope = new InfoCurricularCourseScopeEditor();
         newInfoCurricularCourseScope.setIdInternal(oldCurricularCourseScopeId);
 
         String beginDateString = (String) dynaForm.get("beginDate");

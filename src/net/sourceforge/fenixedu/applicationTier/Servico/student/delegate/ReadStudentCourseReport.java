@@ -12,7 +12,7 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse;
-import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseScopeWithCurricularCourseAndDegreeAndBranchAndSemesterAndYear;
+import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseScope;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.gesdis.InfoSiteEvaluationStatistics;
 import net.sourceforge.fenixedu.dataTransferObject.student.InfoSiteStudentCourseReport;
@@ -47,7 +47,7 @@ public class ReadStudentCourseReport extends Service {
 
 					public Object transform(Object arg0) {
 						CurricularCourseScope curricularCourseScope = (CurricularCourseScope) arg0;
-						return InfoCurricularCourseScopeWithCurricularCourseAndDegreeAndBranchAndSemesterAndYear
+						return InfoCurricularCourseScope
 								.newInfoFromDomain(curricularCourseScope);
 					}
 

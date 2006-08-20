@@ -18,6 +18,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoBranch;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseScope;
+import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseScopeEditor;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularSemester;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
@@ -137,7 +138,7 @@ public class EditCurricularCourseScopeDA extends FenixDispatchAction {
 
         Integer oldCurricularCourseScopeId = new Integer(request.getParameter("curricularCourseScopeId"));
 
-        InfoCurricularCourseScope newInfoCurricularCourseScope = new InfoCurricularCourseScope();
+        InfoCurricularCourseScopeEditor newInfoCurricularCourseScope = new InfoCurricularCourseScopeEditor();
 
         String curricularSemesterIdString = (String) dynaForm.get("curricularSemesterId");
         String branchIdString = (String) dynaForm.get("branchId");
@@ -146,8 +147,7 @@ public class EditCurricularCourseScopeDA extends FenixDispatchAction {
 
         Integer curricularSemesterId = new Integer(curricularSemesterIdString);
 
-        InfoCurricularSemester infoCurricularSemester = new InfoCurricularSemester();
-        infoCurricularSemester.setIdInternal(curricularSemesterId);
+        InfoCurricularSemester infoCurricularSemester = InfoCurricularSemester.newInfoFromDomain(rootDomainObject.readCurricularSemesterByOID(curricularSemesterId));
         newInfoCurricularCourseScope.setInfoCurricularSemester(infoCurricularSemester);
 
         Integer branchId = new Integer(branchIdString);

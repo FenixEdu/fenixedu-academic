@@ -33,7 +33,7 @@ public class InfoExamWithRoomOccupationsAndScopesWithCurricularCoursesWithDegree
                 new Transformer() {
 
                     public Object transform(Object arg0) {
-                        return InfoCurricularCourseScopeWithCurricularCourseAndDegreeAndSemesterAndYear
+                        return InfoCurricularCourseScope
                                 .newInfoFromDomain((CurricularCourseScope) arg0);
                     }
                 });

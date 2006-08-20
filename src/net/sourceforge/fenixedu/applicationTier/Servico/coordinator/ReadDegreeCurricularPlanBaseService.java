@@ -7,7 +7,7 @@ import java.util.Set;
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseScope;
-import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseScopeWithCurricularCourseAndDegreeAndBranchAndSemesterAndYear;
+import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseScope;
 import net.sourceforge.fenixedu.domain.CurricularCourseScope;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
@@ -44,7 +44,7 @@ abstract public class ReadDegreeCurricularPlanBaseService extends Service {
                     public Object transform(Object input) {
                         CurricularCourseScope curricularCourseScope = (CurricularCourseScope) input;
 
-                        return InfoCurricularCourseScopeWithCurricularCourseAndDegreeAndBranchAndSemesterAndYear
+                        return InfoCurricularCourseScope
                                 .newInfoFromDomain(curricularCourseScope);
                     }
                 }, infoActiveScopes);
@@ -68,7 +68,7 @@ abstract public class ReadDegreeCurricularPlanBaseService extends Service {
                 CollectionUtils.collect(allActiveScopes, new Transformer() {
                     public Object transform(Object input) {
                         CurricularCourseScope curricularCourseScope = (CurricularCourseScope) input;
-                        return InfoCurricularCourseScopeWithCurricularCourseAndDegreeAndBranchAndSemesterAndYear
+                        return InfoCurricularCourseScope
                                 .newInfoFromDomain(curricularCourseScope);
                     }
 
@@ -95,7 +95,7 @@ abstract public class ReadDegreeCurricularPlanBaseService extends Service {
             infoActiveScopes = new ArrayList<InfoCurricularCourseScope>();
             for (final CurricularCourseScope curricularCourseScope : curricularCourseScopes) {
                 if (curricularCourseScope.getCurricularSemester().getCurricularYear().getYear().equals(curricularYear)) {
-                    infoActiveScopes.add(InfoCurricularCourseScopeWithCurricularCourseAndDegreeAndBranchAndSemesterAndYear.
+                    infoActiveScopes.add(InfoCurricularCourseScope.
                             newInfoFromDomain(curricularCourseScope));
                 }
             }

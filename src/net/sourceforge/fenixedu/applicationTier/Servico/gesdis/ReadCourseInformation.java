@@ -19,7 +19,6 @@ import net.sourceforge.fenixedu.dataTransferObject.ISiteComponent;
 import net.sourceforge.fenixedu.dataTransferObject.InfoBibliographicReference;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseScope;
-import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseScopeWithBranchAndSemesterAndYear;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurriculum;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDepartment;
 import net.sourceforge.fenixedu.dataTransferObject.InfoEvaluationMethod;
@@ -453,7 +452,7 @@ public class ReadCourseInformation extends Service {
         while (iter.hasNext()) {
             CurricularCourseScope curricularCourseScope = (CurricularCourseScope) iter.next();
 
-            InfoCurricularCourseScope infoCurricularCourseScope = InfoCurricularCourseScopeWithBranchAndSemesterAndYear
+            InfoCurricularCourseScope infoCurricularCourseScope = InfoCurricularCourseScope
                     .newInfoFromDomain(curricularCourseScope);
             infoScopes.add(infoCurricularCourseScope);
         }

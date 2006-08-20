@@ -7,7 +7,7 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
-import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseScope;
+import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseScopeEditor;
 import net.sourceforge.fenixedu.domain.Branch;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.CurricularCourseScope;
@@ -19,7 +19,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  */
 public class InsertCurricularCourseScopeAtCurricularCourse extends Service {
 
-    public void run(InfoCurricularCourseScope infoCurricularCourseScope) throws FenixServiceException, ExcepcaoPersistencia {
+    public void run(InfoCurricularCourseScopeEditor infoCurricularCourseScope) throws FenixServiceException, ExcepcaoPersistencia {
         Branch branch = null;
         CurricularSemester curricularSemester = null;
         try {

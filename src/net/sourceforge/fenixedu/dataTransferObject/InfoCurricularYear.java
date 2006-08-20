@@ -10,62 +10,36 @@ import net.sourceforge.fenixedu.domain.CurricularYear;
 
 public class InfoCurricularYear extends InfoObject {
 
-    private Integer year;
+	private final CurricularYear curricularYear;
 
-    public InfoCurricularYear() {
-        setYear(null);
-    }
-
-    public InfoCurricularYear(Integer year) {
-        setYear(year);
+    public InfoCurricularYear(final CurricularYear curricularYear) {
+        this.curricularYear = curricularYear;
     }
 
     public boolean equals(Object obj) {
-        boolean resultado = false;
-        if (obj instanceof InfoCurricularYear) {
-            InfoCurricularYear curricularYear = (InfoCurricularYear) obj;
-            resultado = (this.getYear().equals(curricularYear.getYear()));
-        }
-        return resultado;
+    	return obj instanceof InfoCurricularYear && curricularYear == ((InfoCurricularYear) obj).curricularYear;
     }
 
     public String toString() {
-        String result = "[" + this.getClass().getName() + ": ";
-        result += "year = " + this.year + "]";
-        return result;
+    	return curricularYear.toString();
     }
 
-    /**
-     * @return Integer
-     */
     public Integer getYear() {
-        return year;
+    	return curricularYear.getYear();
     }
 
-    /**
-     * Sets the year.
-     * 
-     * @param year
-     *            The year to set
-     */
-    public void setYear(Integer year) {
-        this.year = year;
+    public static InfoCurricularYear newInfoFromDomain(final CurricularYear curricularYear) {
+    	return curricularYear == null ? null : new InfoCurricularYear(curricularYear);
     }
 
-    public void copyFromDomain(CurricularYear curricularYear) {
-        super.copyFromDomain(curricularYear);
-        if (curricularYear != null) {
-            setYear(curricularYear.getYear());
-        }
-    }
+	@Override
+	public Integer getIdInternal() {
+		return curricularYear.getIdInternal();
+	}
 
-    public static InfoCurricularYear newInfoFromDomain(CurricularYear curricularYear) {
-        InfoCurricularYear infoCurricularYear = null;
-        if (curricularYear != null) {
-            infoCurricularYear = new InfoCurricularYear();
-            infoCurricularYear.copyFromDomain(curricularYear);
-        }
-        return infoCurricularYear;
+    @Override
+    public void setIdInternal(Integer integer) {
+        throw new Error("Method should not be called!");
     }
 
 }

@@ -765,10 +765,7 @@ public class ExecutionCourseSiteComponentBuilder {
 	private InfoCurricularCourseScope copyFromDomain(CurricularCourseScope curricularCourseScope) {
 		InfoCurricularCourseScope infoCurricularCourseScope = null;
 		if (curricularCourseScope != null) {
-			infoCurricularCourseScope = new InfoCurricularCourseScope();
-			infoCurricularCourseScope.setIdInternal(curricularCourseScope.getIdInternal());
-			infoCurricularCourseScope.setBeginDate(curricularCourseScope.getBeginDate());
-			infoCurricularCourseScope.setEndDate(curricularCourseScope.getEndDate());
+			infoCurricularCourseScope = new InfoCurricularCourseScope(curricularCourseScope);
 
 		}
 		return infoCurricularCourseScope;

@@ -40,9 +40,6 @@ public class CurricularCourseScopesForPrintDTO extends DataTranferObject {
 
     private void addScope(final InfoCurricularCourseScope scope,
             CurricularSemesterForPrintDTO selectedSemester) {
-        if (scope.getAnotation() == null) {
-            scope.setAnotation("");
-        }
         selectedSemester.getScopes().add(scope);
         sortScopes(selectedSemester.getScopes());
     }

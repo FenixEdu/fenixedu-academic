@@ -99,7 +99,6 @@ public class ReadActiveDegreeCurricularPlanByID extends ReadDegreeCurricularPlan
                 InfoCurricularCourse scopeCurricularCourse = scope.getInfoCurricularCourse();
                 InfoBranch infoBranch = scope.getInfoBranch();
                 infoBranch.prepareEnglishPresentation(locale);
-                scope.setInfoBranch(infoBranch);
                 scopeCurricularCourse.prepareEnglishPresentation(locale);
                 if (year == null) {
                     year = scopeYear;

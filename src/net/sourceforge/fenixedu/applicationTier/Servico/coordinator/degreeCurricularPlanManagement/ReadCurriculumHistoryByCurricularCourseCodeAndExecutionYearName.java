@@ -8,7 +8,7 @@ import java.util.Set;
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
-import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseScopeWithCurricularCourseAndBranchAndSemesterAndYear;
+import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseScope;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurriculum;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurriculumWithInfoCurricularCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
@@ -97,7 +97,7 @@ public class ReadCurriculumHistoryByCurricularCourseCodeAndExecutionYearName ext
             public Object transform(Object arg0) {
                 CurricularCourseScope curricularCourseScope = (CurricularCourseScope) arg0;
 
-                return InfoCurricularCourseScopeWithCurricularCourseAndBranchAndSemesterAndYear
+                return InfoCurricularCourseScope
                         .newInfoFromDomain(curricularCourseScope);
             }
         }, scopes);

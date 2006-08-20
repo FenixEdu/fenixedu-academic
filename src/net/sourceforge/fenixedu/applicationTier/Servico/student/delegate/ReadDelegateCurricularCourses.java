@@ -9,7 +9,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.framework.SearchService;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse;
-import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseScopeWithCurricularCourseAndDegreeAndBranchAndSemesterAndYear;
+import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseScope;
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.CurricularCourseScope;
@@ -38,7 +38,7 @@ public class ReadDelegateCurricularCourses extends SearchService {
                 new Transformer() {
                     public Object transform(Object arg0) {
                         CurricularCourseScope curricularCourseScope = (CurricularCourseScope) arg0;
-                        return InfoCurricularCourseScopeWithCurricularCourseAndDegreeAndBranchAndSemesterAndYear
+                        return InfoCurricularCourseScope
                                 .newInfoFromDomain(curricularCourseScope);
                     }
 
