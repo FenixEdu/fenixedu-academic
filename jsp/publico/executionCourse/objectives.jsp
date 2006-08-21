@@ -32,26 +32,13 @@
 			<logic:present name="competenceCourse" property="objectives">
 				<bean:write name="competenceCourse" property="objectives" filter="false"/>
 			</logic:present>
-			<logic:present name="competenceCourse" property="generalObjectivesEn">
+			<logic:notEmpty name="competenceCourse" property="objectivesEn">
 				<br/>
 				<h4>
 					<bean:message key="label.generalObjectives.eng"/>
 				</h4>
-				<bean:write name="competenceCourse" property="generalObjectivesEn" filter="false"/>
-			</logic:present>
-			<h4>
-				<bean:message key="label.operacionalObjectives"/>
-			</h4>
-			<logic:present name="competenceCourse" property="operacionalObjectives">
-				<bean:write name="competenceCourse" property="operacionalObjectives" filter="false"/>
-			</logic:present>
-			<logic:present name="competenceCourse" property="operacionalObjectivesEn">
-				<br/>
-				<h4>
-					<bean:message key="label.operacionalObjectives.eng"/>
-				</h4>
-				<bean:write name="competenceCourse" property="operacionalObjectivesEn" filter="false"/>
-			</logic:present>
+				<bean:write name="competenceCourse" property="objectivesEn" filter="false"/>
+			</logic:notEmpty>
 		</blockquote>
 	</logic:equal>
 </logic:iterate>
@@ -78,24 +65,26 @@
 							<bean:message key="label.generalObjectives"/>
 						</h4>
 						<bean:write name="curriculum" property="generalObjectives" filter="false"/>
-						<logic:present name="curriculum" property="generalObjectivesEn">
+						<logic:notEmpty name="curriculum" property="generalObjectivesEn">
 							<br/>
 							<h4>
 								<bean:message key="label.generalObjectives.eng"/>
 							</h4>
 							<bean:write name="curriculum" property="generalObjectivesEn" filter="false"/>
-						</logic:present>
-						<h4>
-							<bean:message key="label.operacionalObjectives"/>
-						</h4>
-						<bean:write name="curriculum" property="operacionalObjectives" filter="false"/>
-						<logic:present name="curriculum" property="operacionalObjectivesEn">
+						</logic:notEmpty>
+						<logic:notEmpty name="curriculum" property="operacionalObjectives">
+							<h4>
+								<bean:message key="label.operacionalObjectives"/>
+							</h4>
+							<bean:write name="curriculum" property="operacionalObjectives" filter="false"/>
+						</logic:notEmpty>
+						<logic:notEmpty name="curriculum" property="operacionalObjectivesEn">
 							<br/>
 							<h4>
 								<bean:message key="label.operacionalObjectives.eng"/>
 							</h4>
 							<bean:write name="curriculum" property="operacionalObjectivesEn" filter="false"/>
-						</logic:present>
+						</logic:notEmpty>
 					</logic:present>
 					<logic:notPresent name="curriculum">
 						<bean:message key="message.objectives.not.defined"/>

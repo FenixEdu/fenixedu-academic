@@ -18,6 +18,7 @@ import java.util.TreeSet;
 import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseType;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseInformation;
+import net.sourceforge.fenixedu.domain.degreeStructure.BibliographicReferences.BibliographicReferenceType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.executionCourse.SummariesSearchBean;
 import net.sourceforge.fenixedu.domain.gesdis.CourseReport;
@@ -1155,6 +1156,31 @@ public class ExecutionCourse extends ExecutionCourse_Base {
     		}
     	}
     	return curricularCourseMap;
+    }
+
+    public boolean getHasAnySecondaryBibliographicReference() {
+    	for (final BibliographicReference bibliographicReference : getAssociatedBibliographicReferencesSet()) {
+    		if (bibliographicReference.getOptional().booleanValue()) {
+    			return true;
+    		}
+    	}
+        for (final CurricularCourse curricularCourse : getAssociatedCurricularCoursesSet()) {
+            final CompetenceCourse competenceCourse = curricularCourse.getCompetenceCourse();
+            if (competenceCourse != null) {
+                final CompetenceCourseInformation competenceCourseInformation = competenceCourse.findCompetenceCourseInformationForExecutionPeriod(getExecutionPeriod());
+                if (competenceCourseInformation != null) {
+                	final net.sourceforge.fenixedu.domain.degreeStructure.BibliographicReferences bibliographicReferences = competenceCourseInformation.getBibliographicReferences();
+                	if (bibliographicReferences != null) {
+                		for (final net.sourceforge.fenixedu.domain.degreeStructure.BibliographicReferences.BibliographicReference bibliographicReference : bibliographicReferences.getBibliographicReferencesList()) {
+                			if (bibliographicReference.getType() == BibliographicReferenceType.SECONDARY) {
+                				return true;
+                			}
+                		}
+                	}
+                }
+            }
+        }
+        return false;
     }
 
 }

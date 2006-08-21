@@ -5,18 +5,19 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="dt" %>
 
-<bean:define id="site" name="executionCourse" property="site"/>
 
+<h2>
+	<bean:message key="label.announcements"/>
+</h2>
+
+<bean:define id="site" name="executionCourse" property="site"/>
 <bean:define id="announcements" name="site" property="sortedAnnouncements"/>
 <logic:empty name="announcements">
-	<h2>
+	<h3>
 		<bean:message key="message.announcements.not.available" />
-	</h2>
+	</h3>
 </logic:empty>
 <logic:notEmpty name="announcements">
-	<h2>
-		<bean:message key="label.announcements"/>
-	</h2>
 	<logic:iterate id="announcement" name="announcements" >	
 		<bean:define id="announcementId" name ="announcement" property="idInternal" />
 		<div class="info-lst" id="<%= "a" + announcementId %>">
