@@ -104,14 +104,14 @@ public class PrepareCreateGuide extends Service {
 
         if (requesterType.equals(GuideRequester.STUDENT.name())) {
 
-            Registration student = null;
-            student = Registration.readStudentByNumberAndDegreeType(number, DegreeType.MASTER_DEGREE);
-            if (student == null)
+            Registration registration = null;
+            registration = Registration.readStudentByNumberAndDegreeType(number, DegreeType.MASTER_DEGREE);
+            if (registration == null)
                 throw new NonExistingServiceException("O Aluno", null);
 
             final Integer degreeCurricularPlanID = executionDegree.getDegreeCurricularPlan()
                     .getIdInternal();
-            List studentCurricularPlanList = (List) CollectionUtils.select(student
+            List studentCurricularPlanList = (List) CollectionUtils.select(registration
                     .getStudentCurricularPlans(), new Predicate() {
 
                 public boolean evaluate(Object arg0) {
@@ -127,11 +127,11 @@ public class PrepareCreateGuide extends Service {
             }
 
             // Check if the Candidate Exists
-            if (student == null)
+            if (registration == null)
                 throw new NonExistingServiceException("O Aluno", null);
 
             infoGuide.setInfoContributor(InfoContributor.newInfoFromDomain(contributorParty));
-            infoGuide.setInfoPerson(InfoPerson.newInfoFromDomain(student.getPerson()));
+            infoGuide.setInfoPerson(InfoPerson.newInfoFromDomain(registration.getPerson()));
             infoGuide.setYear(year);
 
             infoGuide.setCreationDate(calendar.getTime());

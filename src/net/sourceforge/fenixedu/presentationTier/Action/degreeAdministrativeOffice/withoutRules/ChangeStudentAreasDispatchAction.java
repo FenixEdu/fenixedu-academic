@@ -34,11 +34,11 @@ public class ChangeStudentAreasDispatchAction extends FenixDispatchAction {
 		final Integer studentNumber = Integer.valueOf(form.getString("studentNumber"));
 
 		try {
-			final Registration student = Registration.readStudentByNumberAndDegreeType(studentNumber,
+			final Registration registration = Registration.readStudentByNumberAndDegreeType(studentNumber,
 					DegreeType.DEGREE);
 			final StudentCurricularPlan studentCurricularPlan = (StudentCurricularPlan) ServiceManagerServiceFactory
 					.executeService(getUserView(request), "ReadStudentCurricularPlanForEnrollments",
-							new Object[] { null, student });
+							new Object[] { null, registration });
 
 			prepareStudentAreasInformation(request, form, studentCurricularPlan);
 
@@ -73,14 +73,14 @@ public class ChangeStudentAreasDispatchAction extends FenixDispatchAction {
 		final Integer specializationAreaID = (Integer) form.get("specializationAreaID");
 		final Integer secondaryAreaID = (Integer) form.get("secondaryAreaID");
 
-		final Registration student = Registration.readStudentByNumberAndDegreeType(studentNumber, degreeType);
+		final Registration registration = Registration.readStudentByNumberAndDegreeType(studentNumber, degreeType);
 		try {
 			ServiceManagerServiceFactory.executeService(getUserView(request),
-					"WriteStudentAreasWithoutRestrictions", new Object[] { student, degreeType,
+					"WriteStudentAreasWithoutRestrictions", new Object[] { registration, degreeType,
 							specializationAreaID, secondaryAreaID });
 		} catch (Exception e) {
 			setAcurateErrorMessage(request, e, studentNumber, "showAndChooseStudentAreas");
-			prepareStudentAreasInformation(request, form, student
+			prepareStudentAreasInformation(request, form, registration
 					.getActiveOrConcludedStudentCurricularPlan());
 			return mapping.findForward("showAndChooseStudentAreas");
 		}

@@ -50,13 +50,13 @@ public class ChangeStudentTestQuestionMark extends Service {
                 
         List<StudentTestQuestion> studentsTestQuestionList = new ArrayList<StudentTestQuestion>();
         if (studentsType.getType().intValue() == TestQuestionStudentsChangesType.THIS_STUDENT) {
-        	final Registration student = rootDomainObject.readRegistrationByOID(studentId);
-        	studentsTestQuestionList.add(StudentTestQuestion.findStudentTestQuestion(question, student, distributedTest));
+        	final Registration registration = rootDomainObject.readRegistrationByOID(studentId);
+        	studentsTestQuestionList.add(StudentTestQuestion.findStudentTestQuestion(question, registration, distributedTest));
         } else if (studentsType.getType().intValue() == TestQuestionStudentsChangesType.STUDENTS_FROM_TEST_VARIATION) {
             studentsTestQuestionList.addAll(StudentTestQuestion.findStudentTestQuestions(question, distributedTest));
         } else if (studentsType.getType().intValue() == TestQuestionStudentsChangesType.STUDENTS_FROM_TEST) {
-        	final Registration student = rootDomainObject.readRegistrationByOID(studentId);
-        	final StudentTestQuestion studentTestQuestion = StudentTestQuestion.findStudentTestQuestion(question, student, distributedTest);
+        	final Registration registration = rootDomainObject.readRegistrationByOID(studentId);
+        	final StudentTestQuestion studentTestQuestion = StudentTestQuestion.findStudentTestQuestion(question, registration, distributedTest);
             studentsTestQuestionList.addAll(distributedTest.findStudentTestQuestionsByTestQuestionOrder(studentTestQuestion.getTestQuestionOrder()));
         } else if (studentsType.getType().intValue() == TestQuestionStudentsChangesType.ALL_STUDENTS) {
             studentsTestQuestionList.addAll(question.getStudentTestsQuestionsSet());

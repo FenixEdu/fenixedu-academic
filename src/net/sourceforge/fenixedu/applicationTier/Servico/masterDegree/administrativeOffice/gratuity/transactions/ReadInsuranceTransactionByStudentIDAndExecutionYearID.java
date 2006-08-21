@@ -31,13 +31,13 @@ public class ReadInsuranceTransactionByStudentIDAndExecutionYearID extends Servi
 
         ExecutionYear executionYear = rootDomainObject.readExecutionYearByOID(executionYearId);
 
-        Registration student = rootDomainObject.readRegistrationByOID(studentId);
+        Registration registration = rootDomainObject.readRegistrationByOID(studentId);
 
-        if ((executionYear == null) || (student == null)) {
+        if ((executionYear == null) || (registration == null)) {
             return null;
         }
 
-        List insuranceTransactionList = student
+        List insuranceTransactionList = registration
                 .readAllNonReimbursedInsuranceTransactionsByExecutionYear(executionYear);
 
         if (insuranceTransactionList.size() > 1) {

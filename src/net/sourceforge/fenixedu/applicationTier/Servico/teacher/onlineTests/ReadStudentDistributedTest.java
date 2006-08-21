@@ -25,15 +25,15 @@ public class ReadStudentDistributedTest extends Service {
             ExcepcaoPersistencia {
         path = path.replace('\\', '/');
         List<InfoStudentTestQuestion> infoStudentTestQuestionList = new ArrayList<InfoStudentTestQuestion>();
-        Registration student = rootDomainObject.readRegistrationByOID(studentId);
-        if (student == null)
+        Registration registration = rootDomainObject.readRegistrationByOID(studentId);
+        if (registration == null)
             throw new FenixServiceException();
         
         DistributedTest distributedTest = rootDomainObject.readDistributedTestByOID(distributedTestId);
         if (distributedTest == null)
             throw new FenixServiceException();
         
-        Set<StudentTestQuestion> studentTestQuestionList = StudentTestQuestion.findStudentTestQuestions(student, distributedTest);
+        Set<StudentTestQuestion> studentTestQuestionList = StudentTestQuestion.findStudentTestQuestions(registration, distributedTest);
         for (StudentTestQuestion studentTestQuestion : studentTestQuestionList) {
             InfoStudentTestQuestion infoStudentTestQuestion;
             ParseQuestion parse = new ParseQuestion();

@@ -83,8 +83,8 @@ public class ImprovmentEnrolmentDispacthAction extends FenixDispatchAction{
         Integer studentNumber = (Integer) actionForm.get("studentNumber");
         Integer executionPeriodID = Integer.valueOf(actionForm.getString("executionPeriod"));
         
-        Registration student = Registration.readStudentByNumberAndDegreeType(studentNumber, DegreeType.DEGREE);
-        if (student == null) {
+        Registration registration = Registration.readStudentByNumberAndDegreeType(studentNumber, DegreeType.DEGREE);
+        if (registration == null) {
         	errors.add("noStudent", new ActionError("error.student.notExist", studentNumber.toString()));
             saveErrors(request, errors);
             return prepareEnrollmentChooseStudent(mapping, form, request, response);
@@ -92,7 +92,7 @@ public class ImprovmentEnrolmentDispacthAction extends FenixDispatchAction{
         
         ExecutionPeriod executionPeriod = rootDomainObject.readExecutionPeriodByOID(executionPeriodID);
         
-        return readEnrolments(student, executionPeriod, mapping, form, request, response);
+        return readEnrolments(registration, executionPeriod, mapping, form, request, response);
         
     }
     
@@ -128,12 +128,12 @@ public class ImprovmentEnrolmentDispacthAction extends FenixDispatchAction{
         }
         
         Integer studentID = (Integer) actionForm.get("studentID");
-        Registration student = rootDomainObject.readRegistrationByOID(studentID);
+        Registration registration = rootDomainObject.readRegistrationByOID(studentID);
 
         Integer executionPeriodID = Integer.valueOf(actionForm.getString("executionPeriod"));
         ExecutionPeriod executionPeriod = rootDomainObject.readExecutionPeriodByOID(executionPeriodID);
         
-        Object[] args = { student, executionPeriod, userView.getUtilizador(), CollectionUtils.toList(enrolments)};
+        Object[] args = { registration, executionPeriod, userView.getUtilizador(), CollectionUtils.toList(enrolments)};
         
         try {
             ServiceUtils.executeService(userView, "ImprovmentEnrollService", args);
@@ -145,7 +145,7 @@ public class ImprovmentEnrolmentDispacthAction extends FenixDispatchAction{
             throw new FenixActionException(fse);
         }
         
-        return readEnrolments(student, executionPeriod, mapping, form, request, response);
+        return readEnrolments(registration, executionPeriod, mapping, form, request, response);
     }
     
     public ActionForward improvmentUnenrollStudent(ActionMapping mapping, ActionForm form,
@@ -160,12 +160,12 @@ public class ImprovmentEnrolmentDispacthAction extends FenixDispatchAction{
         }
         
         Integer studentID = (Integer) actionForm.get("studentID");
-        Registration student = rootDomainObject.readRegistrationByOID(studentID);
+        Registration registration = rootDomainObject.readRegistrationByOID(studentID);
 
         Integer executionPeriodID = Integer.valueOf(actionForm.getString("executionPeriod"));
         ExecutionPeriod executionPeriod = rootDomainObject.readExecutionPeriodByOID(executionPeriodID);
 
-        Object[] args = { student, CollectionUtils.toList(enrolments)};
+        Object[] args = { registration, CollectionUtils.toList(enrolments)};
         
         try {
             ServiceUtils.executeService(userView, "ImprovmentUnEnrollService", args);
@@ -177,7 +177,7 @@ public class ImprovmentEnrolmentDispacthAction extends FenixDispatchAction{
             throw new FenixActionException(fse);
         }
         
-        return readEnrolments(student, executionPeriod, mapping, form, request, response);
+        return readEnrolments(registration, executionPeriod, mapping, form, request, response);
     }
     
     private void sortExecutionPeriods(List executionPeriods, DynaActionForm form) {

@@ -22,12 +22,12 @@ public class CreateDeclaration extends Service {
 
         List infoStudentCurricularPlanList = new ArrayList();
 
-        Registration student = Registration.readStudentByNumberAndDegreeType(infoStudent.getNumber(), infoStudent.getDegreeType());
-        if(student == null) {
+        Registration registration = Registration.readStudentByNumberAndDegreeType(infoStudent.getNumber(), infoStudent.getDegreeType());
+        if(registration == null) {
         	return null;
         }
         
-        List<StudentCurricularPlan> studentCurricularPlanList = student.getStudentCurricularPlansBySpecialization(specialization);
+        List<StudentCurricularPlan> studentCurricularPlanList = registration.getStudentCurricularPlansBySpecialization(specialization);
 
 
         if (studentCurricularPlanList == null || studentCurricularPlanList.isEmpty()) {
@@ -55,11 +55,11 @@ public class CreateDeclaration extends Service {
 
         List infoStudentCurricularPlanList = new ArrayList();
 
-        Registration student = Registration.readStudentByNumberAndDegreeType(infoStudent.getNumber(), infoStudent.getDegreeType());
-        if(student == null) {
+        Registration registration = Registration.readStudentByNumberAndDegreeType(infoStudent.getNumber(), infoStudent.getDegreeType());
+        if(registration == null) {
         	return null;
         }
-        List studentCurricularPlanList = student.getStudentCurricularPlansBySpecializationAndState(specialization, state);   	
+        List studentCurricularPlanList = registration.getStudentCurricularPlansBySpecializationAndState(specialization, state);   	
 
         if (studentCurricularPlanList == null || studentCurricularPlanList.isEmpty()) {
         	return null;
@@ -87,13 +87,13 @@ public class CreateDeclaration extends Service {
         List studentCurricularPlanList = new ArrayList();
         List infoStudentCurricularPlanList = new ArrayList();
 
-        Registration student = Registration.readStudentByNumberAndDegreeType(infoStudent.getNumber(), infoStudent.getDegreeType());
-        if(student == null) {
+        Registration registration = Registration.readStudentByNumberAndDegreeType(infoStudent.getNumber(), infoStudent.getDegreeType());
+        if(registration == null) {
         	return null;
         }
         for (Iterator iter = states.iterator(); iter.hasNext();) {
         	StudentCurricularPlanState state = (StudentCurricularPlanState) iter.next();
-        	List<StudentCurricularPlan> studentCurricularPlanListTmp = student.getStudentCurricularPlansBySpecializationAndState(specialization, state);
+        	List<StudentCurricularPlan> studentCurricularPlanListTmp = registration.getStudentCurricularPlansBySpecializationAndState(specialization, state);
         	for (Iterator iterator = studentCurricularPlanListTmp.iterator(); iterator.hasNext();) {
         		StudentCurricularPlan studentCurricularPlan = (StudentCurricularPlan) iterator.next();
 

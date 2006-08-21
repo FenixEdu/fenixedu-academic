@@ -71,10 +71,10 @@ public class ReadStudentCurricularPlansByPersonAndCriteria extends Service {
             // para cada Registration que esta Person �
             // juntar todos os SCP
             while (studentsIterator.hasNext()) {
-                Registration student = (Registration) studentsIterator.next();
+                Registration registration = (Registration) studentsIterator.next();
 
                 // seleccionar todos os planos do aluno
-                studentCPsTemp = student.getStudentCurricularPlans();
+                studentCPsTemp = registration.getStudentCurricularPlans();
 
                 studentCurricularPlans.addAll(studentCPsTemp);
             }

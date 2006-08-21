@@ -171,7 +171,7 @@ public class Enrolment extends Enrolment_Base {
     public void delete() {
     	createEnrolmentLog(EnrolmentAction.UNENROL);
     	//TODO: falta ver se � dos antigos enrolments ou dos novos
-        final Registration student = getStudentCurricularPlan().getStudent();
+        final Registration registration = getStudentCurricularPlan().getStudent();
 
         removeExecutionPeriod();
         removeStudentCurricularPlan();
@@ -186,7 +186,7 @@ public class Enrolment extends Enrolment_Base {
             if (!attends.hasAnyAssociatedMarks() && !attends.hasAnyStudentGroups()) {
                 boolean hasShiftEnrolment = false;
                 for (Shift shift : attends.getDisciplinaExecucao().getAssociatedShifts()) {
-                    if (shift.hasStudents(student)) {
+                    if (shift.hasStudents(registration)) {
                         hasShiftEnrolment = true;
                         break;
                     }
@@ -479,7 +479,7 @@ public class Enrolment extends Enrolment_Base {
 
             improvmentEnrolmentEvaluation.delete();
 
-            final Registration student = getStudentCurricularPlan().getStudent();
+            final Registration registration = getStudentCurricularPlan().getStudent();
             List<ExecutionCourse> executionCourses = getCurricularCourse()
                     .getAssociatedExecutionCourses();
 
@@ -500,7 +500,7 @@ public class Enrolment extends Enrolment_Base {
 
                     public boolean evaluate(Object arg0) {
                         Attends frequenta = (Attends) arg0;
-                        if (frequenta.getAluno().equals(student))
+                        if (frequenta.getAluno().equals(registration))
                             return true;
                         return false;
                     }

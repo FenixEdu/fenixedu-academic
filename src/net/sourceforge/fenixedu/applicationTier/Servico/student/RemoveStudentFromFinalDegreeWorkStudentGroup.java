@@ -24,12 +24,12 @@ public class RemoveStudentFromFinalDegreeWorkStudentGroup extends Service {
 
     public boolean run(String username, Integer groupOID, Integer studentToRemoveID) throws FenixServiceException {
         Group group = rootDomainObject.readGroupByOID(groupOID);
-        Registration student = Registration.readByUsername(username);
+        Registration registration = Registration.readByUsername(username);
         
         if (group == null 
-                || student == null 
+                || registration == null 
                 || group.getGroupStudents() == null
-                || student.getIdInternal().equals(studentToRemoveID)) {
+                || registration.getIdInternal().equals(studentToRemoveID)) {
             return false;
         }
         

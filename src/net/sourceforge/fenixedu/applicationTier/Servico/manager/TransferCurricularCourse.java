@@ -57,7 +57,7 @@ public class TransferCurricularCourse extends Service {
             throws ExcepcaoPersistencia {
         for (Attends attend : sourceExecutionCourse.getAttends()) {
             Enrolment enrollment = attend.getEnrolment();
-            final Registration student = attend.getAluno();
+            final Registration registration = attend.getAluno();
             if (enrollment != null) {
                 CurricularCourse associatedCurricularCourse = attend.getEnrolment()
                         .getCurricularCourse();
@@ -66,7 +66,7 @@ public class TransferCurricularCourse extends Service {
                             .getAttends(), new Predicate() {
                         public boolean evaluate(Object arg0) {
                             Attends attendFromDestination = (Attends) arg0;
-                            return (attendFromDestination.getAluno() == student);
+                            return (attendFromDestination.getAluno() == registration);
                         }
                     });
                     if (existingAttend != null) {
@@ -76,7 +76,7 @@ public class TransferCurricularCourse extends Service {
                         attend.setDisciplinaExecucao(destinationExecutionCourse);
                     }
 
-                    transferedStudents.add(student.getIdInternal());
+                    transferedStudents.add(registration.getIdInternal());
                 }
             }
         }
@@ -94,8 +94,8 @@ public class TransferCurricularCourse extends Service {
         for (Shift shift : shifts) {
             Iterator<Registration> iter = shift.getStudentsIterator();
             while (iter.hasNext()) {
-                Registration student = iter.next();
-                Attends attend = sourceExecutionCourse.getAttendsByStudent(student);
+                Registration registration = iter.next();
+                Attends attend = sourceExecutionCourse.getAttendsByStudent(registration);
                 
                 if (attend.getEnrolment() != null && attend.getEnrolment().getCurricularCourse() == curricularCourse) {
                     iter.remove();

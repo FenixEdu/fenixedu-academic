@@ -16,8 +16,8 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class ReadDislocatedStudentByStudentID extends Service {
 
     public InfoDislocatedStudent run(Integer studentID) throws ExcepcaoPersistencia {
-        Registration student = rootDomainObject.readRegistrationByOID(studentID);
-        return InfoDislocatedStudent.newInfoFromDomain(student.getDislocatedStudent());
+        Registration registration = rootDomainObject.readRegistrationByOID(studentID);
+        return InfoDislocatedStudent.newInfoFromDomain(registration.getDislocatedStudent());
     }
 
 }

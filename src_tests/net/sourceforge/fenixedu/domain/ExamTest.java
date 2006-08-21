@@ -198,11 +198,11 @@ public class ExamTest extends DomainTestBase {
         WrittenEvaluationEnrolment writtenEvaluationEnrolment = new WrittenEvaluationEnrolment();
         writtenEvaluationEnrolment.setIdInternal(1);
 
-        Registration student = new Registration();
-        student.setIdInternal(1);
+        Registration registration = new Registration();
+        registration.setIdInternal(1);
 
         writtenEvaluationEnrolment.setWrittenEvaluation(exam);
-        writtenEvaluationEnrolment.setStudent(student);
+        writtenEvaluationEnrolment.setStudent(registration);
         writtenEvaluationEnrolment.setRoom(room1);
 
         // Domain entities used by Create and Edit

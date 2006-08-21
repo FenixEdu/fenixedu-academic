@@ -50,8 +50,8 @@ public class FinalDegreeWorkOrientatorForCandidacy extends AccessControlFilter {
 	            for (final GroupProposal groupProposal : proposal.getGroupProposals()) {
 	                final Group group = groupProposal.getFinalDegreeDegreeWorkGroup();
 	                for (final GroupStudent groupStudent : group.getGroupStudents()) {
-	                    final Registration student = groupStudent.getStudent();
-	                    for (final StudentCurricularPlan studentCurricularPlan : student
+	                    final Registration registration = groupStudent.getStudent();
+	                    for (final StudentCurricularPlan studentCurricularPlan : registration
 	                            .getStudentCurricularPlans()) {
 	                        if (studentCurricularPlan.getIdInternal().equals(studentCurricularPlanId)) {
 	                            return;

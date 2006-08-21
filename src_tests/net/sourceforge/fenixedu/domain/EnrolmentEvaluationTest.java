@@ -164,7 +164,7 @@ public class EnrolmentEvaluationTest extends DomainTestBase {
 		ExecutionCourse notCurrentExecutionCourse = new ExecutionCourse();
 		
 		StudentCurricularPlan studentCurricularPlan = new StudentCurricularPlan();
-		Registration student = new Registration();
+		Registration registration = new Registration();
 		
 		enrolment.setCurricularCourse(curricularCourse);
 		enrolment.setStudentCurricularPlan(studentCurricularPlan);
@@ -172,9 +172,9 @@ public class EnrolmentEvaluationTest extends DomainTestBase {
 		enrolment.addAttends(attendsNotToDelete);
 		curricularCourse.addAssociatedExecutionCourses(currentExecutionCourse);
 		curricularCourse.addAssociatedExecutionCourses(notCurrentExecutionCourse);
-		studentCurricularPlan.setStudent(student);
-		attendsToDelete.setAluno(student);
-		attendsNotToDelete.setAluno(student);
+		studentCurricularPlan.setStudent(registration);
+		attendsToDelete.setAluno(registration);
+		attendsNotToDelete.setAluno(registration);
 		attendsToDelete.setDisciplinaExecucao(currentExecutionCourse);
 		attendsNotToDelete.setDisciplinaExecucao(notCurrentExecutionCourse);
 		currentExecutionCourse.setExecutionPeriod(currentExecutionPeriod);

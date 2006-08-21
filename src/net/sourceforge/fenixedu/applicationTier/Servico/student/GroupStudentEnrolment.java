@@ -47,13 +47,13 @@ public class GroupStudentEnrolment extends Service {
         if (studentGroup == null) {
             throw new InvalidArgumentsServiceException();
         }
-        final Registration student = Registration.readByUsername(username);
-        if (student == null) {
+        final Registration registration = Registration.readByUsername(username);
+        if (registration == null) {
             throw new InvalidArgumentsServiceException();
         }
 
         final Grouping grouping = studentGroup.getGrouping();
-        final Attends studentAttend = grouping.getStudentAttend(student);
+        final Attends studentAttend = grouping.getStudentAttend(registration);
         if (studentAttend == null) {
             throw new NotAuthorizedException();
         }
@@ -76,7 +76,7 @@ public class GroupStudentEnrolment extends Service {
         
         studentGroup.addAttends(studentAttend);      
 
-        informStudents(studentGroup, student, grouping);
+        informStudents(studentGroup, registration, grouping);
 
         return Boolean.TRUE;
     }

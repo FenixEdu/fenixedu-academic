@@ -74,8 +74,8 @@ public class EnrollmentLEECWithoutRulesAuthorizationFilter extends Authorization
         if (arguments != null && arguments[0] != null) {
             Integer studentNumber = ((InfoStudent) arguments[0]).getNumber();
             if (studentNumber != null) {
-                Registration student = Registration.readStudentByNumberAndDegreeType(studentNumber, DEGREE_TYPE);
-                if (student != null) {
+                Registration registration = Registration.readStudentByNumberAndDegreeType(studentNumber, DEGREE_TYPE);
+                if (registration != null) {
                     isNonMaster = true; // non master student
                 }
             }
@@ -91,10 +91,10 @@ public class EnrollmentLEECWithoutRulesAuthorizationFilter extends Authorization
         if (arguments != null && arguments[0] != null) {
             Integer studentNumber = ((InfoStudent) arguments[0]).getNumber();
             if (studentNumber != null) {
-                Registration student = Registration.readStudentByNumberAndDegreeType(studentNumber, DEGREE_TYPE);
+                Registration registration = Registration.readStudentByNumberAndDegreeType(studentNumber, DEGREE_TYPE);
                 StudentCurricularPlan studentCurricularPlan = null;
-                if(student != null) {
-                	studentCurricularPlan = student.getActiveStudentCurricularPlan();
+                if(registration != null) {
+                	studentCurricularPlan = registration.getActiveStudentCurricularPlan();
                 }
                 if (studentCurricularPlan != null
                         && studentCurricularPlan.getDegreeCurricularPlan() != null

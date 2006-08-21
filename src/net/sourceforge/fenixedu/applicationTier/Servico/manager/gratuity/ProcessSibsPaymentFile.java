@@ -91,7 +91,7 @@ public class ProcessSibsPaymentFile extends Service {
 
             // DegreeType should be changed in future to support Degree Registration
             // gratuity
-            Registration student = Registration.readStudentByNumberAndDegreeType(sibsPaymentFileEntry
+            Registration registration = Registration.readStudentByNumberAndDegreeType(sibsPaymentFileEntry
                     .getStudentNumber(), DegreeType.MASTER_DEGREE);
 
             int year = sibsPaymentFileEntry.getYear().intValue();
@@ -108,14 +108,14 @@ public class ProcessSibsPaymentFile extends Service {
 
             Person responsiblePerson = Person.readPersonByUsername(userView.getUtilizador());
 
-            PersonAccount personAccount = student.getPerson().getAssociatedPersonAccount();
+            PersonAccount personAccount = registration.getPerson().getAssociatedPersonAccount();
             if (personAccount == null) {
-                personAccount = new PersonAccount(student.getPerson());
+                personAccount = new PersonAccount(registration.getPerson());
             }
 
             if (sibsPaymentFileEntry.getPaymentType().equals(SibsPaymentType.INSURANCE)) {
                 InsuranceValue insuranceValue = executionYear.getInsuranceValue();
-                List insuranceTransactionList = student
+                List insuranceTransactionList = registration
                         .readAllNonReimbursedInsuranceTransactionsByExecutionYear(executionYear);
 
                 if (insuranceTransactionList.size() > 0) {
@@ -133,7 +133,7 @@ public class ProcessSibsPaymentFile extends Service {
                         new InsuranceTransaction(sibsPaymentFileEntry.getPayedValue(),
                                 new Timestamp(new Date().getTime()), null, PaymentType.SIBS,
                                 TransactionType.INSURANCE_PAYMENT, new Boolean(false),
-                                responsiblePerson, personAccount, null, executionYear, student);
+                                responsiblePerson, personAccount, null, executionYear, registration);
                     }
                 }
                 continue;
@@ -143,7 +143,7 @@ public class ProcessSibsPaymentFile extends Service {
 
             // DegreeType should be changed in future to meet Degree gratuity
             // requirements
-            List<StudentCurricularPlan> studentCurricularPlanList = student.getStudentCurricularPlans();
+            List<StudentCurricularPlan> studentCurricularPlanList = registration.getStudentCurricularPlans();
 
             List<ExecutionDegree> executionDegrees = new ArrayList<ExecutionDegree>();
             List<StudentCurricularPlan> studentCurricularPlans = new ArrayList<StudentCurricularPlan>();

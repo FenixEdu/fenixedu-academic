@@ -410,8 +410,8 @@ public class CurricularCoursesEnrollmentDispatchAction extends TransactionalDisp
 
 		readAndSetDegreeCurricularPlanID(request, form);
 
-		final Registration student = getStudent(userView, form);
-		setStudentCurrentSemesterEnrolments(request, userView, student);
+		final Registration registration = getStudent(userView, form);
+		setStudentCurrentSemesterEnrolments(request, userView, registration);
 
 		if (!getActionMessages(request).isEmpty()) {
 			return prepareEnrollmentChooseCurricularCourses(mapping, actionform, request, response);

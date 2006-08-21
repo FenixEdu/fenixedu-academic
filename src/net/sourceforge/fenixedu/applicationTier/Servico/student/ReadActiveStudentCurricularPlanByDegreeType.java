@@ -23,10 +23,10 @@ public class ReadActiveStudentCurricularPlanByDegreeType extends Service {
             throws ExcepcaoPersistencia {
 
     	final Person person = userView.getPerson();
-    	final Registration student = person.getStudentByType(degreeType);
+    	final Registration registration = person.getStudentByType(degreeType);
 
-        if(student != null) {
-        	final StudentCurricularPlan studentCurricularPlan = student.getActiveOrConcludedStudentCurricularPlan();
+        if(registration != null) {
+        	final StudentCurricularPlan studentCurricularPlan = registration.getActiveOrConcludedStudentCurricularPlan();
             if (studentCurricularPlan != null) {
             	final InfoStudentCurricularPlan infoStudentCurricularPlan = new InfoStudentCurricularPlan(studentCurricularPlan);
                 return infoStudentCurricularPlan;

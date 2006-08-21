@@ -50,11 +50,11 @@ public class UnEnrollStudentInGroup extends Service {
             throw new InvalidSituationServiceException();
         }
 
-        Registration student = Registration.readByUsername(userName);
+        Registration registration = Registration.readByUsername(userName);
 
         Grouping groupProperties = studentGroup.getGrouping();
 
-        Attends attend = groupProperties.getStudentAttend(student);
+        Attends attend = groupProperties.getStudentAttend(registration);
 
         if (attend == null) {
             throw new NotAuthorizedException();
@@ -91,7 +91,7 @@ public class UnEnrollStudentInGroup extends Service {
                 new ArrayList(),
                 new ArrayList(), 
                 messages.getMessage("message.body.grouping.change.unenrolment", 
-                student.getNumber().toString(), studentGroup.getGroupNumber().toString()));
+                registration.getNumber().toString(), studentGroup.getGroupNumber().toString()));
 
         return Boolean.TRUE;
     }

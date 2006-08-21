@@ -25,11 +25,11 @@ public class ReadAttendsByStudentIdAndExecutionPeriodId extends Service {
             Boolean onlyEnrolledCourses, Boolean onlyAttendsWithTeachers) throws ExcepcaoPersistencia {
 
         ExecutionPeriod executionPeriod = rootDomainObject.readExecutionPeriodByOID(executionPeriodId);
-        Registration student = rootDomainObject.readRegistrationByOID(studentId);
+        Registration registration = rootDomainObject.readRegistrationByOID(studentId);
         
         List<Attends> attendsList = new ArrayList();
-        if(student != null){
-            attendsList = student.readAttendsByExecutionPeriod(executionPeriod);
+        if(registration != null){
+            attendsList = registration.readAttendsByExecutionPeriod(executionPeriod);
         }
         
         final List<InfoAttendsWithProfessorshipTeachersAndNonAffiliatedTeachers> infoAttendsList =

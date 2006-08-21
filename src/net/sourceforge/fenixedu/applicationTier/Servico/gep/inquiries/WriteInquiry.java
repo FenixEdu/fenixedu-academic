@@ -65,7 +65,7 @@ public class WriteInquiry extends Service {
 		ExecutionDegree executionDegreeCourse = rootDomainObject.readExecutionDegreeByOID(iic.getExecutionDegreeCourse().getIdInternal());
         ExecutionDegree executionDegreeStudent = rootDomainObject.readExecutionDegreeByOID(ii.getExecutionDegreeStudent().getIdInternal());
 		ExecutionPeriod executionPeriod = rootDomainObject.readExecutionPeriodByOID(ii.getExecutionPeriod().getIdInternal());
-        Registration student = rootDomainObject.readRegistrationByOID(infoStudent.getIdInternal());
+        Registration registration = rootDomainObject.readRegistrationByOID(infoStudent.getIdInternal());
 
 		SchoolClass schoolClass = null;
         if (iic.getStudentSchoolClass() != null) {
@@ -73,7 +73,7 @@ public class WriteInquiry extends Service {
         }
 
 		return new InquiriesCourse(executionCourse, executionDegreeCourse, executionDegreeStudent, executionPeriod, schoolClass, iic,
-                student.getEntryGradeClassification(), student.getApprovationRatioClassification(), student.getArithmeticMeanClassification());
+                registration.getEntryGradeClassification(), registration.getApprovationRatioClassification(), registration.getArithmeticMeanClassification());
     }
 
     private void writeInquiriesTeacher(final InfoInquiriesTeacher iit, final InquiriesCourse inquiriesCourse) throws ExcepcaoPersistencia {
@@ -97,8 +97,8 @@ public class WriteInquiry extends Service {
     }
 
     private InquiriesRegistry writeInquiriesRegistry(final InquiriesCourse inquiriesCourse, final InfoStudent infoStudent) throws ExcepcaoPersistencia {
-        Registration student = rootDomainObject.readRegistrationByOID(infoStudent.getIdInternal());
-        return new InquiriesRegistry(inquiriesCourse.getExecutionCourse(), inquiriesCourse.getExecutionPeriod(), student);
+        Registration registration = rootDomainObject.readRegistrationByOID(infoStudent.getIdInternal());
+        return new InquiriesRegistry(inquiriesCourse.getExecutionCourse(), inquiriesCourse.getExecutionPeriod(), registration);
     }
     
 }

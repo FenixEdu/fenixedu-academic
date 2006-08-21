@@ -81,11 +81,11 @@ public class ShiftStudentEnrollmentManagerLookupDispatchAction extends Transacti
 		}
 
 		final IUserView userView = getUserView(request);
-		final Registration student = getStudent(userView);
+		final Registration registration = getStudent(userView);
 
 		try {
 			ServiceManagerServiceFactory.executeService(userView, "DeleteStudentAttendingCourse",
-					new Object[] { student, executionCourseId });
+					new Object[] { registration, executionCourseId });
 
 		} catch (DomainException e) {
 			addActionMessage(request, e.getMessage());
@@ -107,12 +107,12 @@ public class ShiftStudentEnrollmentManagerLookupDispatchAction extends Transacti
 		final Integer classIdSelected = readClassSelected(request);
 
 		final IUserView userView = getUserView(request);
-		final Registration student = getStudent(userView);
-		request.setAttribute("studentId", student.getIdInternal());
+		final Registration registration = getStudent(userView);
+		request.setAttribute("studentId", registration.getIdInternal());
 
 		final ExecutionCourse executionCourse = getExecutionCourse(request);
 		final List<SchoolClass> schoolClassesToEnrol = readStudentSchoolClassesToEnrolUsingExecutionCourse(
-				request, student, executionCourse);
+				request, registration, executionCourse);
 		request.setAttribute("schoolClassesToEnrol", schoolClassesToEnrol);
 
 		if (schoolClassesToEnrol.isEmpty()) {
@@ -122,13 +122,13 @@ public class ShiftStudentEnrollmentManagerLookupDispatchAction extends Transacti
 		final SchoolClass schoolClass = setSelectedSchoolClass(request, classIdSelected, schoolClassesToEnrol);
 
 		final List infoClasslessons = (List) ServiceManagerServiceFactory.executeService(userView,
-				"ReadClassTimeTableByStudent", new Object[] { student, schoolClass, executionCourse });
+				"ReadClassTimeTableByStudent", new Object[] { registration, schoolClass, executionCourse });
 
 		request.setAttribute("infoClasslessons", infoClasslessons);
 		request.setAttribute("infoClasslessonsEndTime", Integer.valueOf(getEndTime(infoClasslessons)));
 
 		final List infoLessons = (List) ServiceManagerServiceFactory.executeService(userView,
-				"ReadStudentTimeTable", new Object[] { student });
+				"ReadStudentTimeTable", new Object[] { registration });
 
 		request.setAttribute("infoLessons", infoLessons);
 		request.setAttribute("infoLessonsEndTime", Integer.valueOf(getEndTime(infoLessons)));

@@ -179,9 +179,9 @@ public class ReadStudentsWithAttendsByExecutionCourse extends Service {
 					Attends attendance = (Attends) attendsIterator.next();
 
 					// if an attendance is related to a Shift
-					Registration student = attendance.getAluno();
+					Registration registration = attendance.getAluno();
 
-					if (turno.getStudents().contains(student)) {
+					if (turno.getStudents().contains(registration)) {
 						collectedAttends.add(attendance);
 					}
 				}

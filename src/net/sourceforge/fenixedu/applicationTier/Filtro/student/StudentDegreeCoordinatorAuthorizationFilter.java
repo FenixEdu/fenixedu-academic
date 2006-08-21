@@ -63,9 +63,9 @@ public class StudentDegreeCoordinatorAuthorizationFilter extends AccessControlFi
 
         // for each of the Person's Registration roles
         for (Iterator studentsIterator = students.iterator(); studentsIterator.hasNext();) {
-            Registration student = (Registration) studentsIterator.next();
+            Registration registration = (Registration) studentsIterator.next();
 
-            Group group = student.findFinalDegreeWorkGroupForCurrentExecutionYear();
+            Group group = registration.findFinalDegreeWorkGroupForCurrentExecutionYear();
 
             if (group != null) {
                 ExecutionDegree executionDegree = group.getExecutionDegree();
@@ -109,7 +109,7 @@ public class StudentDegreeCoordinatorAuthorizationFilter extends AccessControlFi
             }
             /*-----*/
 
-            List studentCurricularPlans = student.getStudentCurricularPlans();
+            List studentCurricularPlans = registration.getStudentCurricularPlans();
 
             for (Iterator scpIterator = studentCurricularPlans.iterator(); scpIterator.hasNext();) {
                 StudentCurricularPlan studentCurricularPlan = (StudentCurricularPlan) scpIterator.next();

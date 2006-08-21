@@ -66,9 +66,9 @@ public class ReadDomainStudentsByExecutionCourseAndDegreeTypeAndShiftAttendAndEn
 			Attends attends = (Attends) arg0;
 			if (shiftIds == null) return true;
 			else {
-				Registration student = attends.getAluno();
+				Registration registration = attends.getAluno();
 				for (Integer shiftId : shiftIds) {
-					for (Shift shift : student.getShifts()) {
+					for (Shift shift : registration.getShifts()) {
 						if (shift.getIdInternal().equals(shiftId)) {
 							return true;
 						}

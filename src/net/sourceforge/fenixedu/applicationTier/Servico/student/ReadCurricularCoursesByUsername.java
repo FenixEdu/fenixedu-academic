@@ -31,11 +31,11 @@ public class ReadCurricularCoursesByUsername extends Service {
 	public List run(String username) throws BDException, ExcepcaoPersistencia, NonExistingServiceException {
 		List curricularCourses = new LinkedList();
 
-    	Registration student = Registration.readByUsername(username);
-    	if(student == null) {
+    	Registration registration = Registration.readByUsername(username);
+    	if(registration == null) {
     		throw new NonExistingServiceException();
     	}
-		List<StudentCurricularPlan> curricularPlans = student.getStudentCurricularPlans();
+		List<StudentCurricularPlan> curricularPlans = registration.getStudentCurricularPlans();
 		for (Iterator iterator = curricularPlans.iterator(); iterator.hasNext();) {
 			StudentCurricularPlan studentCurricularPlan = (StudentCurricularPlan) iterator.next();
 			for (Iterator curricularCoursesIterator = studentCurricularPlan.getDegreeCurricularPlan()

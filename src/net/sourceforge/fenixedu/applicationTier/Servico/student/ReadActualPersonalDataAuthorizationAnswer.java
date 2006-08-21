@@ -17,10 +17,10 @@ import net.sourceforge.fenixedu.util.StudentPersonalDataAuthorizationChoice;
 public class ReadActualPersonalDataAuthorizationAnswer extends Service {
 
     public StudentPersonalDataAuthorizationChoice run(Integer studentID) throws ExcepcaoPersistencia {
-        final Registration student = rootDomainObject.readRegistrationByOID(studentID);
+        final Registration registration = rootDomainObject.readRegistrationByOID(studentID);
 
         for (final StudentPersonalDataAuthorization studentPersonalDataAuthorization :
-                student.getStudentPersonalDataAuthorizations()) {
+                registration.getStudentPersonalDataAuthorizations()) {
             if (studentPersonalDataAuthorization.getExecutionYear().getState().equals(PeriodState.CURRENT)) {
                 return studentPersonalDataAuthorization.getAnswer();
             }

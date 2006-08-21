@@ -64,8 +64,8 @@ public class MasterDegreeEnrollmentWithoutRulesAuthorizationFilter extends
         if (arguments != null && arguments[0] != null) {
             Integer studentNumber = ((InfoStudent) arguments[0]).getNumber();
             if (studentNumber != null) {
-                Registration student = Registration.readStudentByNumberAndDegreeType(studentNumber, DEGREE_TYPE);
-                if (student != null) {
+                Registration registration = Registration.readStudentByNumberAndDegreeType(studentNumber, DEGREE_TYPE);
+                if (registration != null) {
                     isFromMasterDegree = true;
                 }
             }

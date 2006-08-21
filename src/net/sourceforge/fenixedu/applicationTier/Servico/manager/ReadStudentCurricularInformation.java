@@ -27,15 +27,15 @@ public class ReadStudentCurricularInformation extends Service {
 
         InfoStudent infoStudent = null;
 
-        Registration student = Registration.readStudentByNumberAndDegreeType(studentNumber, degreeType);
-        if(student != null) {
-        	final List<StudentCurricularPlan> studentCurricularPlans = student.getStudentCurricularPlans(); 
+        Registration registration = Registration.readStudentByNumberAndDegreeType(studentNumber, degreeType);
+        if(registration != null) {
+        	final List<StudentCurricularPlan> studentCurricularPlans = registration.getStudentCurricularPlans(); 
 	        for (final Iterator iterator = studentCurricularPlans.iterator(); iterator.hasNext();) {
 	            final StudentCurricularPlan studentCurricularPlan = (StudentCurricularPlan) iterator
 	                    .next();
 	
 	            if (infoStudent == null) {
-	                infoStudent = constructInfoStudent(student);
+	                infoStudent = constructInfoStudent(registration);
 	            }
 	
 	            final InfoStudentCurricularPlan infoStudentCurricularPlan = constructInfoStudentCurricularPlan(studentCurricularPlan);

@@ -25,11 +25,11 @@ public class ReadStudentCurricularPlansByNumberAndDegreeType extends Service {
 
     public List run(Integer studentNumber, DegreeType degreeType) throws ExcepcaoInexistente,
             FenixServiceException, ExcepcaoPersistencia {
-    	Registration student = Registration.readStudentByNumberAndDegreeType(studentNumber, degreeType);
-    	if(student == null) {
+    	Registration registration = Registration.readStudentByNumberAndDegreeType(studentNumber, degreeType);
+    	if(registration == null) {
     		throw new NonExistingServiceException();
     	}
-    	List<StudentCurricularPlan> studentCurricularPlans = student.getStudentCurricularPlans(); 
+    	List<StudentCurricularPlan> studentCurricularPlans = registration.getStudentCurricularPlans(); 
 
         if ((studentCurricularPlans == null) || (studentCurricularPlans.size() == 0)) {
             throw new NonExistingServiceException();

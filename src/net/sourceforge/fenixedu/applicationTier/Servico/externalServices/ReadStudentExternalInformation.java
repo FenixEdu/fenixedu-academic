@@ -55,15 +55,15 @@ public class ReadStudentExternalInformation extends Service
 		for (Iterator iter = students.iterator(); iter.hasNext();)
 		{
 			InfoStudentExternalInformation info = new InfoStudentExternalInformation();
-			Registration student = (Registration) iter.next();
-			if (student.getActiveStudentCurricularPlan() != null)
+			Registration registration = (Registration) iter.next();
+			if (registration.getActiveStudentCurricularPlan() != null)
 			{
 
 				info.setPerson(this.buildExternalPersonInfo(person));
-				info.setDegree(this.buildExternalDegreeCurricularPlanInfo(student));
-				info.setCourses(this.buildExternalEnrollmentsInfo(student));
-				info.setAvailableRemainingCourses(this.buildAvailableRemainingCourses(student));
-				info.setNumber(student.getNumber().toString());
+				info.setDegree(this.buildExternalDegreeCurricularPlanInfo(registration));
+				info.setCourses(this.buildExternalEnrollmentsInfo(registration));
+				info.setAvailableRemainingCourses(this.buildAvailableRemainingCourses(registration));
+				info.setNumber(registration.getNumber().toString());
 
 				result.add(info);
 			}

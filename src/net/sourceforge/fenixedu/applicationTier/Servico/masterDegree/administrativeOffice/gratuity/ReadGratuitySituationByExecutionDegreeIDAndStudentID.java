@@ -22,13 +22,13 @@ public class ReadGratuitySituationByExecutionDegreeIDAndStudentID extends Servic
         InfoGratuitySituation infoGratuitySituation = null;
 
         ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(executionDegreeID);
-        Registration student = rootDomainObject.readRegistrationByOID(studentID);
+        Registration registration = rootDomainObject.readRegistrationByOID(studentID);
 
-        if ((executionDegree == null) || (student == null)) {
+        if ((executionDegree == null) || (registration == null)) {
             return null;
         }
 
-        GratuitySituation gratuitySituation = student
+        GratuitySituation gratuitySituation = registration
                 .readGratuitySituationByExecutionDegree(executionDegree);
 
         infoGratuitySituation = InfoGratuitySituation.newInfoFromDomain(gratuitySituation);

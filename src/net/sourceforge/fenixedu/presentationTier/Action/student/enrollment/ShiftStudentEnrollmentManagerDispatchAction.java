@@ -57,15 +57,15 @@ public class ShiftStudentEnrollmentManagerDispatchAction extends TransactionalDi
 		}
 
 		final IUserView userView = getUserView(request);
-		final Registration student = getStudent(userView);
+		final Registration registration = getStudent(userView);
 		final ExecutionPeriod executionPeriod = ExecutionPeriod.readActualExecutionPeriod();
-		request.setAttribute("student", student);
+		request.setAttribute("student", registration);
 
 		if (readAndSetSelectCoursesParameter(request) == null) {
-			return prepareShiftEnrolmentInformation(mapping, request, userView, student, executionPeriod);
+			return prepareShiftEnrolmentInformation(mapping, request, userView, registration, executionPeriod);
 
 		} else {
-			return prepareSelectCoursesInformation(mapping, actionForm, request, student,
+			return prepareSelectCoursesInformation(mapping, actionForm, request, registration,
 					executionPeriod);
 		}
 	}

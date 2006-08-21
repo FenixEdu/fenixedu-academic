@@ -161,9 +161,9 @@ public class DistributedTest extends DistributedTest_Base {
 
     public SortedSet<StudentTestQuestion> findStudentTestQuestionsOfFirstStudentOrderedByTestQuestionOrder() {
         final SortedSet<StudentTestQuestion> studentTestQuestions = new TreeSet<StudentTestQuestion>(StudentTestQuestion.COMPARATOR_BY_TEST_QUESTION_ORDER);
-        final Registration student = getDistributedTestQuestionsSet() != null ? getDistributedTestQuestionsSet().iterator().next().getStudent() : null;
+        final Registration registration = getDistributedTestQuestionsSet() != null ? getDistributedTestQuestionsSet().iterator().next().getStudent() : null;
         for (final StudentTestQuestion studentTestQuestion : getDistributedTestQuestionsSet()) {
-            if (student == studentTestQuestion.getStudent()) {
+            if (registration == studentTestQuestion.getStudent()) {
                 studentTestQuestions.add(studentTestQuestion);
             }
         }

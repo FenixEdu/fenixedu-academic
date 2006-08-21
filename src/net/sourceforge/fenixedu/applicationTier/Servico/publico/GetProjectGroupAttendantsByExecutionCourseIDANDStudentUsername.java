@@ -28,11 +28,11 @@ public class GetProjectGroupAttendantsByExecutionCourseIDANDStudentUsername exte
     public StudentGroupAttendacyInformation run(Integer executionCourseID, String username)
             throws BDException, ExcepcaoPersistencia {
         
-        Registration student = Registration.readByUsername(username);
+        Registration registration = Registration.readByUsername(username);
 
         ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseID);
 
-        Attends attendacy = student.readAttendByExecutionCourse(executionCourse);
+        Attends attendacy = registration.readAttendByExecutionCourse(executionCourse);
         if (attendacy == null)
             return null; // the student is not enrolled on this course
 

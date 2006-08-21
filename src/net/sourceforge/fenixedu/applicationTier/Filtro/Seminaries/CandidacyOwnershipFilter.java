@@ -32,11 +32,11 @@ public class CandidacyOwnershipFilter extends Filtro {
     public void execute(ServiceRequest request, ServiceResponse response) throws Exception {
         Integer candidacyID = (Integer) getServiceCallArguments(request)[0];
 
-        Registration student = Registration.readByUsername(getRemoteUser(request).getUtilizador());
+        Registration registration = Registration.readByUsername(getRemoteUser(request).getUtilizador());
         SeminaryCandidacy candidacy = rootDomainObject.readSeminaryCandidacyByOID(candidacyID);
         //
         if ((candidacy != null)
-                && (candidacy.getStudent().getIdInternal().intValue() != student.getIdInternal()
+                && (candidacy.getStudent().getIdInternal().intValue() != registration.getIdInternal()
                         .intValue()))
             throw new NotAuthorizedException();
 

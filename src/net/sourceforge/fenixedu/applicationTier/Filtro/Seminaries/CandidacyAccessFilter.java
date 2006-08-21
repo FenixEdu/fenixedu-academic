@@ -62,12 +62,12 @@ public class CandidacyAccessFilter extends Filtro {
         boolean result = true;
         Integer candidacyID = (Integer) arguments[0];
 
-        Registration student = Registration.readByUsername(id.getUtilizador());
-        if (student != null) {
+        Registration registration = Registration.readByUsername(id.getUtilizador());
+        if (registration != null) {
             SeminaryCandidacy candidacy = rootDomainObject.readSeminaryCandidacyByOID(candidacyID);
             //
             if ((candidacy != null)
-                    && (candidacy.getStudent().getIdInternal().intValue() != student.getIdInternal()
+                    && (candidacy.getStudent().getIdInternal().intValue() != registration.getIdInternal()
                             .intValue()))
                 result = false;
         } else {

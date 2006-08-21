@@ -24,11 +24,11 @@ public class ReadActiveStudentCurricularPlanByNumberAndDegreeType extends Servic
 
     public InfoStudentCurricularPlan run(Integer studentNumber, DegreeType degreeType)
             throws ExcepcaoPersistencia {
-        Registration student = Registration.readStudentByNumberAndDegreeType(studentNumber, degreeType);
-        if(student == null) {
+        Registration registration = Registration.readStudentByNumberAndDegreeType(studentNumber, degreeType);
+        if(registration == null) {
         	return null;
         }
-        StudentCurricularPlan studentCurricularPlan = student.getActiveOrConcludedStudentCurricularPlan();
+        StudentCurricularPlan studentCurricularPlan = registration.getActiveOrConcludedStudentCurricularPlan();
         if (studentCurricularPlan != null) {
             return InfoStudentCurricularPlan
                     .newInfoFromDomain(studentCurricularPlan);

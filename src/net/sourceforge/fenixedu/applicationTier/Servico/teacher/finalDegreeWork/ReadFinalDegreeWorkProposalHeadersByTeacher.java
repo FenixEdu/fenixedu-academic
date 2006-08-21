@@ -104,9 +104,9 @@ public class ReadFinalDegreeWorkProposalHeadersByTeacher extends Service {
 												infoGroupStudent
 														.setFinalDegreeDegreeWorkGroup(infoGroup);
 
-												Registration student = groupStudent.getStudent();
-												if (student != null) {
-													InfoStudent infoStudent = new InfoStudent(student);
+												Registration registration = groupStudent.getStudent();
+												if (registration != null) {
+													InfoStudent infoStudent = new InfoStudent(registration);
 													infoGroupStudent.setStudent(infoStudent);
 												}
 												infoGroup.getGroupStudents().add(infoGroupStudent);

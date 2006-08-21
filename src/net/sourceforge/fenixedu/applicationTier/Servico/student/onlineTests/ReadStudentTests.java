@@ -27,9 +27,9 @@ public class ReadStudentTests extends Service {
 
     public Object run(String userName, Integer executionCourseId) throws ExcepcaoPersistencia {
         InfoSiteStudentDistributedTests infoSite = new InfoSiteStudentDistributedTests();
-        Registration student = Registration.readByUsername(userName);
+        Registration registration = Registration.readByUsername(userName);
         ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseId);
-        Set<DistributedTest> distributedTestList = student.getDistributedTestsByExecutionCourse(executionCourse);
+        Set<DistributedTest> distributedTestList = registration.getDistributedTestsByExecutionCourse(executionCourse);
         List<InfoDistributedTest> testToDoList = new ArrayList<InfoDistributedTest>();
         List<InfoDistributedTest> doneTestsList = new ArrayList<InfoDistributedTest>();
         for (DistributedTest distributedTest : distributedTestList) {

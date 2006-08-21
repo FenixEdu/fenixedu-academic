@@ -10,7 +10,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class WriteDislocatedStudentAnswer extends Service {
 
     public void run(Integer studentID, Integer countryID, Integer dislocatedCountryID, Integer districtID) throws ExcepcaoPersistencia{
-        Registration student = rootDomainObject.readRegistrationByOID(studentID);
+        Registration registration = rootDomainObject.readRegistrationByOID(studentID);
         Country country = rootDomainObject.readCountryByOID(countryID);
         Country dislocatedCountry = null;
         if(dislocatedCountryID != null){
@@ -19,7 +19,7 @@ public class WriteDislocatedStudentAnswer extends Service {
         District district = rootDomainObject.readDistrictByOID(districtID);
         
         DislocatedStudent dislocatedStudent = new DislocatedStudent();
-        dislocatedStudent.setStudent(student);
+        dislocatedStudent.setStudent(registration);
         dislocatedStudent.setCountry(country);
         dislocatedStudent.setDislocatedCountry(dislocatedCountry);
         dislocatedStudent.setDistrict(district);

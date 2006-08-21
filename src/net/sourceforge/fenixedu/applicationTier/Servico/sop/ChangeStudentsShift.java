@@ -32,16 +32,16 @@ public class ChangeStudentsShift extends Service {
         final List<Registration> oldStudents = oldShift.getStudents();
         final List<Registration> newStudents = newShift.getStudents();
         while (!oldStudents.isEmpty()) {
-            final Registration student = oldStudents.get(0);
-            if (!newStudents.contains(student)) {
-                newStudents.add(student);
+            final Registration registration = oldStudents.get(0);
+            if (!newStudents.contains(registration)) {
+                newStudents.add(registration);
 
-                Person person = student.getPerson();
+                Person person = registration.getPerson();
                 if (person.getEmail() != null && person.getEmail().length() > 0) {
                     toMails.add(person.getEmail());
                 }
             } else {
-                oldStudents.remove(student);
+                oldStudents.remove(registration);
             }
         }
 

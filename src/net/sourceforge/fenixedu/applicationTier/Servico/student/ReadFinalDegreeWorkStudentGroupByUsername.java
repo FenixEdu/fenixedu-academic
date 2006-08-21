@@ -30,8 +30,8 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class ReadFinalDegreeWorkStudentGroupByUsername extends Service {
 
     public InfoGroup run(final Person personUser) throws ExcepcaoPersistencia {
-	final Registration student = personUser.getStudentByType(DegreeType.DEGREE);
-        Group group = student.findFinalDegreeWorkGroupForCurrentExecutionYear();
+	final Registration registration = personUser.getStudentByType(DegreeType.DEGREE);
+        Group group = registration.findFinalDegreeWorkGroupForCurrentExecutionYear();
         InfoGroup infoGroup = null;
         if (group != null) {
             infoGroup = new InfoGroup();

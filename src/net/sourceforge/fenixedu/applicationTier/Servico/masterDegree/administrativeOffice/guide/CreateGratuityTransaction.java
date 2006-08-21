@@ -31,8 +31,8 @@ public class CreateGratuityTransaction extends Service {
         GuideEntry guideEntry = rootDomainObject.readGuideEntryByOID(guideEntryID);
 
         Guide guide = guideEntry.getGuide();
-        Registration student = guide.getPerson().readStudentByDegreeType(DegreeType.MASTER_DEGREE);
-        GratuitySituation gratuitySituation = student.readGratuitySituationByExecutionDegree(guide
+        Registration registration = guide.getPerson().readStudentByDegreeType(DegreeType.MASTER_DEGREE);
+        GratuitySituation gratuitySituation = registration.readGratuitySituationByExecutionDegree(guide
                 .getExecutionDegree());
         PersonAccount personAccount = guide.getPerson().getAssociatedPersonAccount();
 

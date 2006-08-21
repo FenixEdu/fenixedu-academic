@@ -1258,17 +1258,17 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
 			if (proposal.getGroupAttributed() != null) {
 				int i = 0;
 				for (final GroupStudent groupStudent : proposal.getGroupAttributed().getGroupStudentsSet()) {
-					final Registration student = groupStudent.getStudent();
-					row.setCell(student.getNumber().toString());
-					row.setCell(student.getPerson().getName());
+					final Registration registration = groupStudent.getStudent();
+					row.setCell(registration.getNumber().toString());
+					row.setCell(registration.getPerson().getName());
 					maxNumberStudentsPerGroup = Math.max(maxNumberStudentsPerGroup, ++i);
 				}
 			} else if (proposal.getGroupAttributedByTeacher() != null) {
 				int i = 0;
 				for (final GroupStudent groupStudent : proposal.getGroupAttributedByTeacher().getGroupStudentsSet()) {
-					final Registration student = groupStudent.getStudent();
-					row.setCell(student.getNumber().toString());
-					row.setCell(student.getPerson().getName());
+					final Registration registration = groupStudent.getStudent();
+					row.setCell(registration.getNumber().toString());
+					row.setCell(registration.getPerson().getName());
 					maxNumberStudentsPerGroup = Math.max(maxNumberStudentsPerGroup, ++i);
 				}				
 			}
@@ -1338,14 +1338,14 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
 			for (final Group group : otherExecutionDegree.getAssociatedFinalDegreeWorkGroupsSet()) {
 				if (!group.getGroupProposalsSet().isEmpty()) {
 					for (final GroupStudent groupStudent : group.getGroupStudentsSet()) {
-						final Registration student = groupStudent.getStudent();
-						final StudentCurricularPlan studentCurricularPlan = student.getActiveOrConcludedStudentCurricularPlan();
+						final Registration registration = groupStudent.getStudent();
+						final StudentCurricularPlan studentCurricularPlan = registration.getActiveOrConcludedStudentCurricularPlan();
 						if (studentCurricularPlan.getDegreeCurricularPlan() == degreeCurricularPlan) {
 							final Row row = spreadsheet.addRow();
-							row.setCell(student.getNumber().toString());
+							row.setCell(registration.getNumber().toString());
 							for (final CurricularCourse curricularCourse : curricularCourses) {
 								if (studentCurricularPlan.isCurricularCourseApproved(curricularCourse)) {
-									final String grade = findGradeForCurricularCourse(student, curricularCourse);
+									final String grade = findGradeForCurricularCourse(registration, curricularCourse);
 									if (grade != null) {
 										row.setCell(grade);
 									} else {

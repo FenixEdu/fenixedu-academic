@@ -29,8 +29,8 @@ public class EnrollmentLEECAuthorizationFilter extends EnrollmentAuthorizationFi
 
     protected String hasPrevilege(IUserView userView, Object[] arguments) {
         if (userView.hasRoleType(RoleType.STUDENT)) {
-            Registration student = readStudent(userView);
-            if (student == null) {
+            Registration registration = readStudent(userView);
+            if (registration == null) {
                 return "noAuthorization";
             }
 
@@ -38,7 +38,7 @@ public class EnrollmentLEECAuthorizationFilter extends EnrollmentAuthorizationFi
                 return new String("error.student.degreeCurricularPlan.LEEC");
             }
 
-            final Tutor tutor = student.getAssociatedTutor();
+            final Tutor tutor = registration.getAssociatedTutor();
             if (tutor != null) {
                 return new String("error.enrollment.student.withTutor+"
                         + tutor.getTeacher().getTeacherNumber().toString() + "+"

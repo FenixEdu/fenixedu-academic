@@ -73,9 +73,9 @@ public class InsertDistributedTest extends Service {
             questionList.addAll(testQuestion.getQuestion().getMetadata().getVisibleQuestions());
 
             for (InfoStudent infoStudent : infoStudentList) {
-                Registration student = rootDomainObject.readRegistrationByOID(infoStudent.getIdInternal());
+                Registration registration = rootDomainObject.readRegistrationByOID(infoStudent.getIdInternal());
                 StudentTestQuestion studentTestQuestion = new StudentTestQuestion();
-                studentTestQuestion.setStudent(student);
+                studentTestQuestion.setStudent(registration);
                 studentTestQuestion.setDistributedTest(distributedTest);
                 studentTestQuestion.setTestQuestionOrder(testQuestion.getTestQuestionOrder());
                 studentTestQuestion.setTestQuestionValue(testQuestion.getTestQuestionValue());

@@ -42,26 +42,26 @@ public class InsertTutorShipWithOneStudent extends InsertTutorShip {
             }
 
             // student
-            Registration student = Registration.readStudentByNumberAndDegreeType(studentNumber, DegreeType.DEGREE);
-            if (student == null) {
+            Registration registration = Registration.readStudentByNumberAndDegreeType(studentNumber, DegreeType.DEGREE);
+            if (registration == null) {
                 throw new NonExistingServiceException("error.tutor.unExistStudent");
             }
 
-            if (verifyStudentAlreadyTutor(student, teacher).booleanValue()) {
+            if (verifyStudentAlreadyTutor(registration, teacher).booleanValue()) {
                 // student already with tutor...
                 throw new FenixServiceException("error.tutor.studentAlreadyWithTutor");
             }
 
-            if (!verifyStudentOfThisDegree(student, DegreeType.DEGREE, degreeCode).booleanValue()) {
+            if (!verifyStudentOfThisDegree(registration, DegreeType.DEGREE, degreeCode).booleanValue()) {
                 // student doesn't belong to this degree
                 throw new FenixServiceException("error.tutor.studentNoDegree");
             }
 
-            Tutor tutor = student.getAssociatedTutor();
+            Tutor tutor = registration.getAssociatedTutor();
             if (tutor == null) {
                 tutor = new Tutor();
                 tutor.setTeacher(teacher);
-                tutor.setStudent(student);
+                tutor.setStudent(registration);
             }
 
             result = Boolean.TRUE;

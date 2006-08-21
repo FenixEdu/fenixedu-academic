@@ -37,14 +37,14 @@ public class SelectCandidaciesService extends Service {
 
 		List<CandidacyDTO> infoCandidacies = new ArrayList<CandidacyDTO>();
 		for (SeminaryCandidacy candidacy : getCandidacies(seminaryID, seminaries)) {
-			Registration student = candidacy.getStudent();
-			StudentCurricularPlan studentCurricularPlan = getStudentCurricularPlan(student);
+			Registration registration = candidacy.getStudent();
+			StudentCurricularPlan studentCurricularPlan = getStudentCurricularPlan(registration);
 
 			CandidacyDTO candidacyDTO = new CandidacyDTO();
-			candidacyDTO.setNumber(student.getNumber());
-			candidacyDTO.setName(student.getPerson().getNome());
-			candidacyDTO.setUsername(student.getPerson().getUsername());
-			candidacyDTO.setEmail(student.getPerson().getNome());
+			candidacyDTO.setNumber(registration.getNumber());
+			candidacyDTO.setName(registration.getPerson().getNome());
+			candidacyDTO.setUsername(registration.getPerson().getUsername());
+			candidacyDTO.setEmail(registration.getPerson().getNome());
 			candidacyDTO.setInfoClassification(getInfoClassification(studentCurricularPlan.getEnrolments()));
 			candidacyDTO.setCandidacyId(candidacy.getIdInternal());
 			if (candidacy.getApproved() != null) {

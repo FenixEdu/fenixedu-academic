@@ -34,14 +34,14 @@ public class ReadStudentsWithEnrollmentInCurrentSemester extends Service {
         List studentsList = Registration.readAllStudentsBetweenNumbers(fromNumber, toNumber);
 
         for (int iter = 0; iter < studentsList.size(); iter++) {
-            Registration student = (Registration) studentsList.get(iter);
+            Registration registration = (Registration) studentsList.get(iter);
             // TODO se ele está inscrito no semestre actual é porque já pagou as
             // propinas...
-            if (student.getPayedTuition().booleanValue() && studentHasEnrollments(student)) {
+            if (registration.getPayedTuition().booleanValue() && studentHasEnrollments(registration)) {
                 InfoStudent infoStudentWithInfoPerson = InfoStudent
-                        .newInfoFromDomain(student);
+                        .newInfoFromDomain(registration);
                 infoStudentList.add(infoStudentWithInfoPerson);
-                degreeNames.add(student.getActiveStudentCurricularPlan().getDegreeCurricularPlan()
+                degreeNames.add(registration.getActiveStudentCurricularPlan().getDegreeCurricularPlan()
                         .getDegree().getNome());
             }
         }

@@ -48,11 +48,11 @@ public class AddStudentsToDistributedTest extends Service {
             questionList.addAll(studentTestQuestionExample.getQuestion().getMetadata().getVisibleQuestions());
 
             for (int j = 0; j < infoStudentList.size(); j++) {
-                Registration student = rootDomainObject.readRegistrationByOID(
+                Registration registration = rootDomainObject.readRegistrationByOID(
                         ((InfoStudent) infoStudentList.get(j)).getIdInternal());
-                if (StudentTestQuestion.findStudentTestQuestions(student, distributedTest).isEmpty()) {
+                if (StudentTestQuestion.findStudentTestQuestions(registration, distributedTest).isEmpty()) {
                     StudentTestQuestion studentTestQuestion = new StudentTestQuestion();
-                    studentTestQuestion.setStudent(student);
+                    studentTestQuestion.setStudent(registration);
                     studentTestQuestion.setDistributedTest(distributedTest);
                     studentTestQuestion.setTestQuestionOrder(studentTestQuestionExample.getTestQuestionOrder());
                     studentTestQuestion.setTestQuestionValue(studentTestQuestionExample.getTestQuestionValue());

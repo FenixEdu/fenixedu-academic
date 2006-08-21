@@ -98,7 +98,7 @@ public class ChangeGuideSituation extends Service {
 
                 Person employeePerson = Person.readPersonByUsername(userView.getUtilizador());
                 Person studentPerson = guide.getPerson();
-                Registration student = studentPerson.readStudentByDegreeType(DegreeType.MASTER_DEGREE);
+                Registration registration = studentPerson.readStudentByDegreeType(DegreeType.MASTER_DEGREE);
                 ExecutionDegree executionDegree = guide.getExecutionDegree();
 
                 // Iterate Guide Entries to create Transactions
@@ -107,7 +107,7 @@ public class ChangeGuideSituation extends Service {
                     // Write Gratuity Transaction
                     if (guideEntry.getDocumentType().equals(DocumentType.GRATUITY)) {
 
-                        GratuitySituation gratuitySituation = student
+                        GratuitySituation gratuitySituation = registration
                                 .readGratuitySituationByExecutionDegree(executionDegree);
 
                         Double value = new Double(guideEntry.getPrice().doubleValue()
@@ -130,7 +130,7 @@ public class ChangeGuideSituation extends Service {
                     // Write Insurance Transaction
                     if (guideEntry.getDocumentType().equals(DocumentType.INSURANCE)) {
 
-                        List insuranceTransactionList = student
+                        List insuranceTransactionList = registration
                                 .readAllNonReimbursedInsuranceTransactionsByExecutionYear(executionDegree
                                         .getExecutionYear());
 
@@ -143,7 +143,7 @@ public class ChangeGuideSituation extends Service {
                                 Calendar.getInstance().getTimeInMillis()), guideEntry.getDescription(),
                                 guide.getPaymentType(), TransactionType.INSURANCE_PAYMENT,
                                 Boolean.FALSE, guide.getPerson(), personAccount, guideEntry,
-                                executionDegree.getExecutionYear(), student);
+                                executionDegree.getExecutionYear(), registration);
 
                     }
                 }

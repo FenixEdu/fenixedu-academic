@@ -28,10 +28,10 @@ public class GetCandidaciesByStudentIDAndSeminaryID extends Service {
     public List run(Integer studentID, Integer seminaryID) throws BDException, ExcepcaoPersistencia {
         List candidaciesInfo = new LinkedList();
 
-        Registration student = rootDomainObject.readRegistrationByOID(studentID);
+        Registration registration = rootDomainObject.readRegistrationByOID(studentID);
         Seminary seminary = rootDomainObject.readSeminaryByOID(seminaryID);
 
-        List<SeminaryCandidacy> candidacies = SeminaryCandidacy.getByStudentAndSeminary(student, seminary);
+        List<SeminaryCandidacy> candidacies = SeminaryCandidacy.getByStudentAndSeminary(registration, seminary);
 
         for (SeminaryCandidacy candidacy : candidacies) {
             InfoCandidacy infoCandidacy = InfoCandidacy.newInfoFromDomain(candidacy);

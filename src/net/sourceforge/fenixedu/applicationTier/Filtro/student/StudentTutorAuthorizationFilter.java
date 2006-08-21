@@ -49,12 +49,12 @@ public class StudentTutorAuthorizationFilter extends AccessControlFilter {
         final Person person = id.getPerson();
         final Teacher teacher = person == null ? null : person.getTeacher();
 
-        Registration student = Registration.readByUsername(username);
-        if (student == null) {
+        Registration registration = Registration.readByUsername(username);
+        if (registration == null) {
             return "noAuthorization";
         }
 
-        List allStudents = student.getPerson().getStudents();
+        List allStudents = registration.getPerson().getStudents();
         if (allStudents == null || allStudents.isEmpty()) {
             return "noAuthorization";
         }
@@ -64,7 +64,7 @@ public class StudentTutorAuthorizationFilter extends AccessControlFilter {
         }
 
         if (!verifyStudentTutor(teacher, allStudents)) {
-            return "error.enrollment.notStudentTutor+" + student.getNumber().toString();
+            return "error.enrollment.notStudentTutor+" + registration.getNumber().toString();
         }
         return null;
     }

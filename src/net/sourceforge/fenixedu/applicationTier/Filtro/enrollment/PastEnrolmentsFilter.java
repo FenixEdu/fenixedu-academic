@@ -17,18 +17,18 @@ public class PastEnrolmentsFilter extends Filtro {
     public void execute(ServiceRequest request, ServiceResponse response) throws Exception {
         Object[] args = request.getServiceParameters().parametersArray();
 
-        Registration student = null;
+        Registration registration = null;
         if (args[1] != null) {
             Integer studentCurricularPlanID = (Integer) args[1];
             StudentCurricularPlan studentCurricularPlan = rootDomainObject
                     .readStudentCurricularPlanByOID(studentCurricularPlanID);
-            student = studentCurricularPlan.getStudent();
+            registration = studentCurricularPlan.getStudent();
         } else if (args.length > 2 && args[2] != null) {
             Integer studentNumber = (Integer) args[2];
-            student = Registration.readByUsername("L" + studentNumber);
+            registration = Registration.readByUsername("L" + studentNumber);
         }
 
-        if (student == null) {
+        if (registration == null) {
             throw new NotAuthorizedFilterException("noAuthorization");
         }
 
@@ -37,7 +37,7 @@ public class PastEnrolmentsFilter extends Filtro {
         ExecutionPeriod beforePreviousExecutionPeriod = previousExecutionPeriod
                 .getPreviousExecutionPeriod();
 
-        for (StudentCurricularPlan scp : student.getStudentCurricularPlans()) {
+        for (StudentCurricularPlan scp : registration.getStudentCurricularPlans()) {
             for (Enrolment enrolment : scp.getEnrolments()) {
                 if (enrolment.getExecutionPeriod().equals(previousExecutionPeriod)
                         || enrolment.getExecutionPeriod().equals(beforePreviousExecutionPeriod)) {

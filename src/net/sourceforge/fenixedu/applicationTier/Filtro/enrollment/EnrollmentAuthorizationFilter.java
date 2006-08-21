@@ -80,14 +80,14 @@ public class EnrollmentAuthorizationFilter extends AuthorizationByManyRolesFilte
 		    return "noAuthorization";
 		}
 
-		final Registration student = readStudent(arguments);
-		if (student == null) {
+		final Registration registration = readStudent(arguments);
+		if (registration == null) {
 		    return "noAuthorization";
 		}
 
-		if (! student.hasAssociatedTutor()) {
+		if (! registration.hasAssociatedTutor()) {
 		    return new String("error.enrollment.notStudentTutor+"
-		            + student.getNumber().toString());
+		            + registration.getNumber().toString());
 		}
 		
 		return null;
@@ -108,38 +108,38 @@ public class EnrollmentAuthorizationFilter extends AuthorizationByManyRolesFilte
 
 	private String checkStudentInformation(IUserView userView) {
 		
-		final Registration student = readStudent(userView);
-		if (student == null) {
+		final Registration registration = readStudent(userView);
+		if (registration == null) {
 		    return "noAuthorization";
 		}
-		if (student.getPayedTuition() == null || student.getPayedTuition().equals(Boolean.FALSE)) {
-		    if(student.getInterruptedStudies().equals(Boolean.FALSE)) {
+		if (registration.getPayedTuition() == null || registration.getPayedTuition().equals(Boolean.FALSE)) {
+		    if(registration.getInterruptedStudies().equals(Boolean.FALSE)) {
 		    	return "error.message.tuitionNotPayed";
 		    }
 		}
-		if (student.getFlunked() == null || student.getFlunked().equals(Boolean.TRUE)) {
+		if (registration.getFlunked() == null || registration.getFlunked().equals(Boolean.TRUE)) {
 		    return "error.message.flunked";
 		}
-		if (student.getRequestedChangeDegree() == null || student.getRequestedChangeDegree().equals(Boolean.TRUE)) {
+		if (registration.getRequestedChangeDegree() == null || registration.getRequestedChangeDegree().equals(Boolean.TRUE)) {
 		    return "error.message.requested.change.degree";
 		}
 		
-		if (student.hasAssociatedTutor()) {
+		if (registration.hasAssociatedTutor()) {
 		    return new String("error.enrollment.student.withTutor+"
-		            + student.getAssociatedTutor().getTeacher().getTeacherNumber().toString() + "+"
-		            + student.getAssociatedTutor().getTeacher().getPerson().getNome());
+		            + registration.getAssociatedTutor().getTeacher().getTeacherNumber().toString() + "+"
+		            + registration.getAssociatedTutor().getTeacher().getPerson().getNome());
 		}
 
 		// check if the student is in the list of secretary enrolments
 		// students
-		final SecretaryEnrolmentStudent secretaryEnrolmentStudent = student.getSecretaryEnrolmentStudents().isEmpty() ?
-		        null : student.getSecretaryEnrolmentStudents().iterator().next();
+		final SecretaryEnrolmentStudent secretaryEnrolmentStudent = registration.getSecretaryEnrolmentStudents().isEmpty() ?
+		        null : registration.getSecretaryEnrolmentStudents().iterator().next();
 		if (secretaryEnrolmentStudent != null) {
 		    return "error.message.secretaryEnrolmentStudent";
 		}
 
 		// check if the student is from old Leic Curricular Plan
-		List studentCurricularPlans = (List) CollectionUtils.select(student.getStudentCurricularPlans(), new Predicate(){
+		List studentCurricularPlans = (List) CollectionUtils.select(registration.getStudentCurricularPlans(), new Predicate(){
 		    public boolean evaluate(Object arg0) {
 		        StudentCurricularPlan scp = (StudentCurricularPlan) arg0;
 		        return scp.getCurrentState().equals(StudentCurricularPlanState.ACTIVE);

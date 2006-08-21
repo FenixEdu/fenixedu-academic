@@ -39,12 +39,12 @@ public class ManagePreEnrollmentInquiriesDispatchAction extends FenixDispatchAct
 			HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
 			FenixServiceException {
 
-		final Registration student = getStudent(request);
+		final Registration registration = getStudent(request);
 
 		final DynaActionForm studentDataInquiryForm = (DynaActionForm) form;
-		studentDataInquiryForm.set("studentID", student.getIdInternal());
+		studentDataInquiryForm.set("studentID", registration.getIdInternal());
 
-		if (student.hasDislocatedStudent()) {
+		if (registration.hasDislocatedStudent()) {
 			return mapping.findForward("proceedToPersonalDataInquiry");
 		}
 		
@@ -92,7 +92,7 @@ public class ManagePreEnrollmentInquiriesDispatchAction extends FenixDispatchAct
 			HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
 			FenixServiceException {
 
-		final Registration student = getStudent(request);
+		final Registration registration = getStudent(request);
 
 		final DynaActionForm studentDataInquiryForm = (DynaActionForm) form;
 		final Integer countryID = (Integer) studentDataInquiryForm.get("countryID");
@@ -104,7 +104,7 @@ public class ManagePreEnrollmentInquiriesDispatchAction extends FenixDispatchAct
 			districtID = (Integer) studentDataInquiryForm.get("districtID");
 		}
 
-		final Object[] args = { student.getIdInternal(), countryID, dislocatedCountryID, districtID };
+		final Object[] args = { registration.getIdInternal(), countryID, dislocatedCountryID, districtID };
 		ServiceManagerServiceFactory.executeService(getUserView(request), "WriteDislocatedStudentAnswer", args);
 
 		return mapping.findForward("proceedToPersonalDataInquiry");
@@ -113,9 +113,9 @@ public class ManagePreEnrollmentInquiriesDispatchAction extends FenixDispatchAct
 	public ActionForward preparePersonalDataInquiry(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response) {
 
-		final Registration student = getStudent(request);
+		final Registration registration = getStudent(request);
 
-		if (student.getActualPersonalDataAuthorizationAnswer() != null) {
+		if (registration.getActualPersonalDataAuthorizationAnswer() != null) {
 			return mapping.findForward("proceedToEnrollment");
 		}
 
@@ -126,7 +126,7 @@ public class ManagePreEnrollmentInquiriesDispatchAction extends FenixDispatchAct
 			HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
 			FenixServiceException {
 
-		final Registration student = getStudent(request);
+		final Registration registration = getStudent(request);
 
 		final DynaActionForm form = (DynaActionForm) actionForm;
 		final String answer = form.getString("authorizationAnswer");
@@ -136,7 +136,7 @@ public class ManagePreEnrollmentInquiriesDispatchAction extends FenixDispatchAct
 			return mapping.getInputForward();
 		}
 		ServiceManagerServiceFactory.executeService(getUserView(request),
-				"WriteStudentPersonalDataAuthorizationAnswer", new Object[] { student.getIdInternal(),
+				"WriteStudentPersonalDataAuthorizationAnswer", new Object[] { registration.getIdInternal(),
 						answer });
 
 		return mapping.findForward("proceedToEnrollment");

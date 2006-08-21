@@ -29,10 +29,10 @@ public class ChangeDegree extends Service {
         final Person personEmployee = Person.readPersonByUsername(employeeUsername);
         final Employee employee = personEmployee.getEmployee();
 
-        final Registration student = Registration.readStudentByNumberAndDegreeType(studentNumber, DegreeType.DEGREE);
+        final Registration registration = Registration.readStudentByNumberAndDegreeType(studentNumber, DegreeType.DEGREE);
         StudentCurricularPlan currentActiveStudentCurricularPlan = null;
-        if(student != null) {
-        	currentActiveStudentCurricularPlan = student.getActiveStudentCurricularPlan();
+        if(registration != null) {
+        	currentActiveStudentCurricularPlan = registration.getActiveStudentCurricularPlan();
         }
 
         currentActiveStudentCurricularPlan.setCurrentState(StudentCurricularPlanState.INCOMPLETE);

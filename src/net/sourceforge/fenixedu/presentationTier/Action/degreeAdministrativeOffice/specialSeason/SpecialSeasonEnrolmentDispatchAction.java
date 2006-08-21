@@ -76,15 +76,15 @@ public class SpecialSeasonEnrolmentDispatchAction extends FenixDispatchAction {
             HttpServletRequest request, HttpServletResponse response) {
     	SpecialSeasonEnrolmentBean specialSeasonEnrolmentBean = (SpecialSeasonEnrolmentBean) RenderUtils.getViewState().getMetaObject().getObject();
 
-    	Registration student = Registration.readStudentByNumberAndDegreeType(specialSeasonEnrolmentBean.getStudentNumber(), DegreeType.DEGREE);
+    	Registration registration = Registration.readStudentByNumberAndDegreeType(specialSeasonEnrolmentBean.getStudentNumber(), DegreeType.DEGREE);
     	
-    	if(student == null) {
+    	if(registration == null) {
     		addActionMessage(request, "error.student.notExist", specialSeasonEnrolmentBean.getStudentNumber().toString());
     		request.setAttribute("bean", specialSeasonEnrolmentBean);
     		return mapping.findForward("prepareChooseStudent");
     	}
     	
-    	specialSeasonEnrolmentBean.setStudent(student);
+    	specialSeasonEnrolmentBean.setStudent(registration);
     		
     	return specialSeasonEnrolments(specialSeasonEnrolmentBean, mapping, form, request, response);
     }

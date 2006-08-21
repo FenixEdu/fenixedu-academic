@@ -30,12 +30,12 @@ public class ReadInfoRegistrationDeclaration extends Service {
     public InfoRegistrationDeclaration run(Integer studentNumber, DegreeType degreeType)
             throws FenixServiceException, ExcepcaoPersistencia {
 
-        Registration student = Registration.readStudentByNumberAndDegreeType(studentNumber, degreeType);
-        if (student == null) {
+        Registration registration = Registration.readStudentByNumberAndDegreeType(studentNumber, degreeType);
+        if (registration == null) {
             throw new NonExistingStudentServiceException();
         }
 
-        StudentCurricularPlan scp = student.getActiveStudentCurricularPlan();
+        StudentCurricularPlan scp = registration.getActiveStudentCurricularPlan();
         if (scp == null) {
             throw new NonExistingActiveSCPServiceException();
         }
@@ -61,7 +61,7 @@ public class ReadInfoRegistrationDeclaration extends Service {
         }
 
         String degreeName = scp.getDegreeCurricularPlan().getDegree().getNome();
-        InfoPerson infoPerson = InfoPerson.newInfoFromDomain(student.getPerson());
+        InfoPerson infoPerson = InfoPerson.newInfoFromDomain(registration.getPerson());
         InfoExecutionYear infoExecutionYear = InfoExecutionYear.newInfoFromDomain(executionYear);
 
         return new InfoRegistrationDeclaration(degreeName, infoExecutionYear, infoPerson);

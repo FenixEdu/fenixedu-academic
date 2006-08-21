@@ -17,12 +17,12 @@ public class readGaugingTestsResults extends Service {
        
         Person person = Person.readPersonByUsername(userView.getUtilizador());
 
-        Registration student = person.readStudentByDegreeType(DegreeType.DEGREE);
-        if (student == null) {
+        Registration registration = person.readStudentByDegreeType(DegreeType.DEGREE);
+        if (registration == null) {
             return null;
         }
         
-        GaugingTestResult gaugingTestsResult = student.getAssociatedGaugingTestResult();
+        GaugingTestResult gaugingTestsResult = registration.getAssociatedGaugingTestResult();
 		if (gaugingTestsResult != null) {
 			return InfoGaugingTestResult.newInfoFromDomain(gaugingTestsResult);
 		}

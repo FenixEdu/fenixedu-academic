@@ -49,9 +49,9 @@ public class EnrolmentImprovmentAuthorization extends AuthorizationByManyRolesFi
         if (arguments != null && arguments[0] != null) {
             Integer studentNumber = (Integer) arguments[0];
             if (studentNumber != null) {
-                Registration student = Registration.readStudentByNumberAndDegreeType(studentNumber,
+                Registration registration = Registration.readStudentByNumberAndDegreeType(studentNumber,
                         degreeType);
-                if (student != null) {
+                if (registration != null) {
                     isRightType = true; // right student curricular plan
                 }
             }

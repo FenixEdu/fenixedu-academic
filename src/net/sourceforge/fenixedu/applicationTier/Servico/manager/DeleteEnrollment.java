@@ -16,8 +16,8 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 public class DeleteEnrollment extends Service {
 
     public void run(final Integer studentNumber, final DegreeType degreeType, final Integer enrollmentId) {
-        final Registration student = Registration.readStudentByNumberAndDegreeType(studentNumber, degreeType);
-        final Enrolment enrollment = student.findEnrolmentByEnrolmentID(enrollmentId);
+        final Registration registration = Registration.readStudentByNumberAndDegreeType(studentNumber, degreeType);
+        final Enrolment enrollment = registration.findEnrolmentByEnrolmentID(enrollmentId);
         enrollment.delete();
     }
 

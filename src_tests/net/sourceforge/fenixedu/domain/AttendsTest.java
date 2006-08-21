@@ -18,7 +18,7 @@ public class AttendsTest extends DomainTestBase {
 		attendNotToDelete3 = new Attends();
 		attendNotToDelete4 = new Attends();
 		
-		Registration student = new Registration();
+		Registration registration = new Registration();
 		Enrolment enrolment = new Enrolment();
 		ExecutionCourse executionCourse = new ExecutionCourse();		
 		
@@ -34,30 +34,30 @@ public class AttendsTest extends DomainTestBase {
         StudentGroup studentGroup3 = new StudentGroup();
         studentGroup3.setGrouping(grouping);
 
-		attendToDelete.setAluno(student);
+		attendToDelete.setAluno(registration);
 		attendToDelete.setEnrolment(enrolment);
 		attendToDelete.setDisciplinaExecucao(executionCourse);
 		
-		attendNotToDelete1.setAluno(student);
+		attendNotToDelete1.setAluno(registration);
 		attendNotToDelete1.setEnrolment(enrolment);
 		attendNotToDelete1.setDisciplinaExecucao(executionCourse);
 		attendNotToDelete1.addStudentGroups(studentGroup1);
         attendNotToDelete1.addGroupings(grouping);
 		attendNotToDelete1.addAssociatedMarks(mark1);
 		
-		attendNotToDelete2.setAluno(student);
+		attendNotToDelete2.setAluno(registration);
 		attendNotToDelete2.setEnrolment(enrolment);
 		attendNotToDelete2.setDisciplinaExecucao(executionCourse);
         attendNotToDelete2.addStudentGroups(studentGroup2);
         attendNotToDelete2.addGroupings(grouping);
 		
-		attendNotToDelete3.setAluno(student);
+		attendNotToDelete3.setAluno(registration);
 		attendNotToDelete3.setEnrolment(enrolment);
 		attendNotToDelete3.setDisciplinaExecucao(executionCourse);
         attendNotToDelete3.addStudentGroups(studentGroup3);
         attendNotToDelete3.addGroupings(grouping);
 		
-		attendNotToDelete4.setAluno(student);
+		attendNotToDelete4.setAluno(registration);
 		attendNotToDelete4.setEnrolment(enrolment);
 		attendNotToDelete4.setDisciplinaExecucao(executionCourse);
 		attendNotToDelete4.addAssociatedMarks(mark2);

@@ -24,9 +24,9 @@ public class ReadStudentById extends Service {
 	public Object run(Integer id) throws FenixServiceException, ExcepcaoPersistencia {
 		InfoStudent infoStudent = null;
 
-		Registration student = rootDomainObject.readRegistrationByOID(id);
-		if (student != null) {
-			infoStudent = InfoStudent.newInfoFromDomain(student);
+		Registration registration = rootDomainObject.readRegistrationByOID(id);
+		if (registration != null) {
+			infoStudent = InfoStudent.newInfoFromDomain(registration);
 		}
 
 		return infoStudent;

@@ -39,10 +39,10 @@ public class ReadExamsByStudent extends Service {
         List infoExamsToEnroll = new ArrayList();
         List infoWrittenEvaluationEnrolmentList = new ArrayList();
 
-        Registration student = Registration.readByUsername(username);
+        Registration registration = Registration.readByUsername(username);
 
-        if (student != null) {
-            List examsStudentRooms = student.getWrittenEvaluationEnrolments();
+        if (registration != null) {
+            List examsStudentRooms = registration.getWrittenEvaluationEnrolments();
             Iterator iter = examsStudentRooms.iterator();
             List<Exam> examsEnrolled = new ArrayList<Exam>();
 
@@ -74,7 +74,7 @@ public class ReadExamsByStudent extends Service {
                 examsEnrolled.add((Exam) writtenEvaluationEnrolment.getWrittenEvaluation());
             }
 
-            List attends = student.getAssociatedAttends();
+            List attends = registration.getAssociatedAttends();
 
             Iterator examsToEnrollIterator = attends.iterator();
             while (examsToEnrollIterator.hasNext()) {

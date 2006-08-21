@@ -32,12 +32,12 @@ public class AddStudentToFinalDegreeWorkStudentGroup extends Service {
     public boolean run(Integer groupOID, String username) throws ExcepcaoPersistencia,
             FenixServiceException {
         Group group = rootDomainObject.readGroupByOID(groupOID);
-        Registration student = Registration.readByUsername(username);
+        Registration registration = Registration.readByUsername(username);
         if (group == null
-                || student == null
+                || registration == null
                 || group.getGroupStudents() == null
                 || CollectionUtils.find(group.getGroupStudents(),
-                        new PREDICATE_FIND_GROUP_STUDENT_BY_STUDENT(student)) != null) {
+                        new PREDICATE_FIND_GROUP_STUDENT_BY_STUDENT(registration)) != null) {
             return false;
         }
         Scheduleing scheduleing = group.getExecutionDegree().getScheduling();
@@ -55,7 +55,7 @@ public class AddStudentToFinalDegreeWorkStudentGroup extends Service {
         	final Integer minimumCompletedCurricularYear = scheduleing.getMinimumCompletedCurricularYear();
         	final Integer minimumNumberOfCompletedCourses = scheduleing.getMinimumNumberOfCompletedCourses();
 
-        	final StudentCurricularPlan studentCurricularPlan = student.getActiveStudentCurricularPlan();
+        	final StudentCurricularPlan studentCurricularPlan = registration.getActiveStudentCurricularPlan();
         	final DegreeCurricularPlan degreeCurricularPlan = studentCurricularPlan.getDegreeCurricularPlan();
         	final Collection<CurricularCourseScope> degreesActiveCurricularCourseScopes = degreeCurricularPlan.getActiveCurricularCourseScopes();
         	final StringBuilder notCompletedCurricularCourses = new StringBuilder();
@@ -109,7 +109,7 @@ public class AddStudentToFinalDegreeWorkStudentGroup extends Service {
         }
 
         GroupStudent groupStudent = new GroupStudent();
-        groupStudent.setStudent(student);
+        groupStudent.setStudent(registration);
         groupStudent.setFinalDegreeDegreeWorkGroup(group);
         return true;
     }
@@ -193,16 +193,16 @@ public class AddStudentToFinalDegreeWorkStudentGroup extends Service {
     }
 
     private class PREDICATE_FIND_GROUP_STUDENT_BY_STUDENT implements Predicate {
-        Registration student = null;
+        Registration registration = null;
 
         public boolean evaluate(Object arg0) {
             GroupStudent groupStudent = (GroupStudent) arg0;
-            return student.getIdInternal().equals(groupStudent.getStudent().getIdInternal());
+            return registration.getIdInternal().equals(groupStudent.getStudent().getIdInternal());
         }
 
         public PREDICATE_FIND_GROUP_STUDENT_BY_STUDENT(Registration student) {
             super();
-            this.student = student;
+            this.registration = student;
         }
     }
 

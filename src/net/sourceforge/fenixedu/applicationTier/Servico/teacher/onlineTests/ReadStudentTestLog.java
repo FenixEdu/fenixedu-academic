@@ -25,16 +25,16 @@ public class ReadStudentTestLog extends Service {
 	public List run(Integer executionCourseId, Integer distributedTestId, Integer studentId)
 			throws FenixServiceException, ExcepcaoPersistencia {
 		List<InfoStudentTestLog> infoStudentTestLogList = new ArrayList<InfoStudentTestLog>();
-		Registration student = rootDomainObject.readRegistrationByOID(
+		Registration registration = rootDomainObject.readRegistrationByOID(
 				studentId);
-		if (student == null) {
+		if (registration == null) {
 			throw new FenixServiceException();
 		}
 		DistributedTest distributedTest = rootDomainObject.readDistributedTestByOID(distributedTestId);
 		if (distributedTest == null) {
 			throw new FenixServiceException();
 		}
-		List<StudentTestLog> studentTestLogList = distributedTest.getStudentTestLogs(student);
+		List<StudentTestLog> studentTestLogList = distributedTest.getStudentTestLogs(registration);
 
 		for (StudentTestLog studentTestLog : studentTestLogList) {
 			InfoStudentTestLog infoStudentTestLog = InfoStudentTestLogWithStudentAndDistributedTest

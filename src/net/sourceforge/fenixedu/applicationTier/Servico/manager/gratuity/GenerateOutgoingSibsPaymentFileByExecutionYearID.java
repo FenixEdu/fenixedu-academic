@@ -81,13 +81,13 @@ public class GenerateOutgoingSibsPaymentFileByExecutionYearID extends Service {
                     }
                 }
 
-                Registration student = studentCurricularPlan.getStudent();
+                Registration registration = studentCurricularPlan.getStudent();
 
-                if (studentsWithInsuranceChecked.contains(student.getIdInternal()) == false) {
+                if (studentsWithInsuranceChecked.contains(registration.getIdInternal()) == false) {
 
-                    studentsWithInsuranceChecked.add(student.getIdInternal());
+                    studentsWithInsuranceChecked.add(registration.getIdInternal());
 
-                    List insuranceTransactionList = student
+                    List insuranceTransactionList = registration
                             .readAllNonReimbursedInsuranceTransactionsByExecutionYear(executionYear);
 
                     if (insuranceTransactionList.size() == 0) {
@@ -97,7 +97,7 @@ public class GenerateOutgoingSibsPaymentFileByExecutionYearID extends Service {
                         addLine(outgoingSibsPaymentFile,
                                 SibsOutgoingPaymentFileConstants.LINE_REGISTER_TYPE,
                                 SibsOutgoingPaymentFileConstants.LINE_PROCESSING_CODE, shortYear,
-                                student.getNumber(), SibsPaymentCodeFactory
+                                registration.getNumber(), SibsPaymentCodeFactory
                                         .getCode(SibsPaymentType.INSURANCE)
                                         + "", insurancePaymentStartDate, insurancePaymentEndDate,
                                 insuranceValue.getAnnualValue(), insuranceValue.getAnnualValue());
@@ -119,7 +119,7 @@ public class GenerateOutgoingSibsPaymentFileByExecutionYearID extends Service {
                         totalLines += addGratuityLines(outgoingSibsPaymentFile, gratuitySituation,
                                 shortYear, paymentEndDate);
                     } else {
-                        System.out.println("Registration " + student.getNumber()
+                        System.out.println("Registration " + registration.getNumber()
                                 + " does not have a gratuity situation for year "
                                 + executionDegree.getExecutionYear().getYear() + " Degree "
                                 + executionDegree.getDegreeCurricularPlan().getName());

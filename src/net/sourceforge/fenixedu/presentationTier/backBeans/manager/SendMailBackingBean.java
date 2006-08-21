@@ -88,14 +88,14 @@ public class SendMailBackingBean extends FenixBackingBean {
         if (degreeStudents.booleanValue() || masterDegreeStudents.booleanValue()) {
         	final Role role = Role.getRoleByRoleType(RoleType.STUDENT);
             for (final Person person : role.getAssociatedPersons()) {
-                Registration student = null;
+                Registration registration = null;
                 if (degreeStudents.booleanValue()) {
-                    student = person.getStudentByType(DegreeType.DEGREE);
+                    registration = person.getStudentByType(DegreeType.DEGREE);
                 }
-                if (student == null && masterDegreeStudents.booleanValue()) {
-                    student = person.getStudentByType(DegreeType.MASTER_DEGREE);
+                if (registration == null && masterDegreeStudents.booleanValue()) {
+                    registration = person.getStudentByType(DegreeType.MASTER_DEGREE);
                 }
-                if (student != null && person.getEmail() != null && person.getEmail().length() > 0) {
+                if (registration != null && person.getEmail() != null && person.getEmail().length() > 0) {
                     emails.add(person.getEmail());
                 }
             }

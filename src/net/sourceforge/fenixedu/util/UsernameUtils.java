@@ -113,30 +113,30 @@ public class UsernameUtils extends FenixUtil {
                 throw new DomainException("error.person.addingInvalidRole", RoleType.EMPLOYEE.getName());
             }
         } else if (roleType.equals(RoleType.FIRST_TIME_STUDENT)) {
-            Registration student = person.getStudentByType(DegreeType.DEGREE);
-            return "L" + student.getNumber();
+            Registration registration = person.getStudentByType(DegreeType.DEGREE);
+            return "L" + registration.getNumber();
         } else if (roleType.equals(RoleType.STUDENT)) {
-            Registration student = person.getStudentByType(DegreeType.MASTER_DEGREE);            
-            if (student != null) {
-                StudentType studentType = student.getStudentKind().getStudentType();
+            Registration registration = person.getStudentByType(DegreeType.MASTER_DEGREE);            
+            if (registration != null) {
+                StudentType studentType = registration.getStudentKind().getStudentType();
                 if (studentType.equals(StudentType.NORMAL)) {
-                    return "M" + student.getNumber();
+                    return "M" + registration.getNumber();
                 } else if (studentType.equals(StudentType.FOREIGN_STUDENT)) {
-                    return "I" + student.getNumber(); // International students
+                    return "I" + registration.getNumber(); // International students
                 } else if (studentType.equals(StudentType.EXTERNAL_STUDENT)) {
-                    return "A" + student.getNumber(); // Academy students
+                    return "A" + registration.getNumber(); // Academy students
                 }
             }
 
-            student = person.getStudentByType(DegreeType.DEGREE);
-            if (student != null) {
-                StudentType studentType = student.getStudentKind().getStudentType();
+            registration = person.getStudentByType(DegreeType.DEGREE);
+            if (registration != null) {
+                StudentType studentType = registration.getStudentKind().getStudentType();
                 if (studentType.equals(StudentType.NORMAL)) {
-                    return "L" + student.getNumber();
+                    return "L" + registration.getNumber();
                 } else if (studentType.equals(StudentType.FOREIGN_STUDENT)) {
-                    return "I" + student.getNumber();
+                    return "I" + registration.getNumber();
                 } else if (studentType.equals(StudentType.EXTERNAL_STUDENT)) {
-                    return "A" + student.getNumber();
+                    return "A" + registration.getNumber();
                 }
             }
 
@@ -150,9 +150,9 @@ public class UsernameUtils extends FenixUtil {
                 || roleType.equals(RoleType.INSTITUCIONAL_PROJECTS_MANAGER)) {
             return "G" + person.getIdInternal();
         } else if (roleType.equals(RoleType.ALUMNI)) {
-            Registration student = person.getStudentByType(DegreeType.DEGREE);
-            if (student != null) {
-                return "L" + student.getNumber();
+            Registration registration = person.getStudentByType(DegreeType.DEGREE);
+            if (registration != null) {
+                return "L" + registration.getNumber();
             }
             throw new DomainException("error.person.addingInvalidRole", RoleType.ALUMNI.getName());
         } else if (roleType.equals(RoleType.MASTER_DEGREE_CANDIDATE) || roleType.equals(RoleType.CANDIDATE)) {

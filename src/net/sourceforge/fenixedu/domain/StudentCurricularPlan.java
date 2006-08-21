@@ -1077,10 +1077,10 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 
 	private boolean canSetStateToActive() {
 
-		final Registration student = getStudent();
+		final Registration registration = getStudent();
 		final DegreeCurricularPlan degreeCurricularPlan = getDegreeCurricularPlan();
 
-		for (StudentCurricularPlan otherStudentCurricularPlan : student.getStudentCurricularPlans()) {
+		for (StudentCurricularPlan otherStudentCurricularPlan : registration.getStudentCurricularPlans()) {
 			final DegreeCurricularPlan associatedDegreeCurricularPlan = otherStudentCurricularPlan
 					.getDegreeCurricularPlan();
 
@@ -1100,10 +1100,10 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 
 	private void inactivateTheActiveStudentCurricularPlan() {
 
-		final Registration student = getStudent();
+		final Registration registration = getStudent();
 		final DegreeCurricularPlan degreeCurricularPlan = getDegreeCurricularPlan();
 
-		for (StudentCurricularPlan otherStudentCurricularPlan : student.getStudentCurricularPlans()) {
+		for (StudentCurricularPlan otherStudentCurricularPlan : registration.getStudentCurricularPlans()) {
 			final DegreeCurricularPlan associatedDegreeCurricularPlan = otherStudentCurricularPlan
 					.getDegreeCurricularPlan();
 

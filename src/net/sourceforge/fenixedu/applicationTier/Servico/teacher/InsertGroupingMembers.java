@@ -40,9 +40,9 @@ public class InsertGroupingMembers extends Service {
         Iterator iterator = studentCodes.iterator();
 
         while (iterator.hasNext()) {
-            Registration student = rootDomainObject.readRegistrationByOID((Integer) iterator
+            Registration registration = rootDomainObject.readRegistrationByOID((Integer) iterator
                     .next());
-            students.add(student);
+            students.add(registration);
         }
 
         Iterator iterAttends = groupProperties.getAttends().iterator();
@@ -55,8 +55,8 @@ public class InsertGroupingMembers extends Service {
 
             while (iteratorStudents.hasNext()) {
 
-                Registration student = (Registration) iteratorStudents.next();
-                if (student.equals(existingAttendStudent)) {
+                Registration registration = (Registration) iteratorStudents.next();
+                if (registration.equals(existingAttendStudent)) {
                     throw new InvalidSituationServiceException();
                 }
             }
@@ -66,14 +66,14 @@ public class InsertGroupingMembers extends Service {
 
         while (iterStudents1.hasNext()) {
             Attends attend = null;
-            Registration student = (Registration) iterStudents1.next();
+            Registration registration = (Registration) iterStudents1.next();
 
             List listaExecutionCourses = new ArrayList();
             listaExecutionCourses.addAll(groupProperties.getExecutionCourses());
             Iterator iterExecutionCourse = listaExecutionCourses.iterator();
             while (iterExecutionCourse.hasNext() && attend == null) {
                 ExecutionCourse executionCourse = (ExecutionCourse) iterExecutionCourse.next();
-                attend = student.readAttendByExecutionCourse(executionCourse);
+                attend = registration.readAttendByExecutionCourse(executionCourse);
             }
             groupProperties.addAttends(attend);
         }

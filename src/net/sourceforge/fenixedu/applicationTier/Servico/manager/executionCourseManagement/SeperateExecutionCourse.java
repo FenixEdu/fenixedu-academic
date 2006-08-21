@@ -91,9 +91,9 @@ public class SeperateExecutionCourse extends Service {
     private void fixStudentShiftEnrolements(final ExecutionCourse executionCourse) {
         for (final Shift shift : executionCourse.getAssociatedShifts()) {
             for (int i = 0; i < shift.getStudents().size(); i++) {
-                final Registration student = shift.getStudents().get(i);
-                if (!student.attends(executionCourse)) {
-                    shift.removeStudents(student);
+                final Registration registration = shift.getStudents().get(i);
+                if (!registration.attends(executionCourse)) {
+                    shift.removeStudents(registration);
                 }
             }
         }

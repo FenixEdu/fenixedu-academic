@@ -54,8 +54,8 @@ public class ReadEnroledExecutionCourses extends Service {
     public List run(String username) throws ExcepcaoPersistencia {
         List allInfoExecutionCourses = new ArrayList();
 
-        Registration student = Registration.readByUsername(username);
-        List allAttend = student.getAssociatedAttends();
+        Registration registration = Registration.readByUsername(username);
+        List allAttend = registration.getAssociatedAttends();
 
         Iterator iter = allAttend.iterator();
         allInfoExecutionCourses = new ArrayList();
@@ -65,7 +65,7 @@ public class ReadEnroledExecutionCourses extends Service {
             if (executionCourse.getExecutionPeriod().getState().equals(PeriodState.CURRENT)) {
                 List allGroupProperties = executionCourse.getGroupings();
                 boolean result = checkPeriodEnrollment(allGroupProperties);
-                if (result && checkStudentInAttendsSet(allGroupProperties, student)) {
+                if (result && checkStudentInAttendsSet(allGroupProperties, registration)) {
                     final InfoExecutionCourse infoExecutionCourse = InfoExecutionCourse
                             .newInfoFromDomain(executionCourse);
                     final List<InfoGrouping> infoGroupings = new ArrayList<InfoGrouping>();

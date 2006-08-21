@@ -59,7 +59,7 @@ public class EditGroupShift extends Service {
             throw new InvalidStudentNumberServiceException();
         }
 
-        final Registration student = Registration.readByUsername(username);
+        final Registration registration = Registration.readByUsername(username);
 
         IGroupEnrolmentStrategyFactory enrolmentGroupPolicyStrategyFactory = GroupEnrolmentStrategyFactory
                 .getInstance();
@@ -70,7 +70,7 @@ public class EditGroupShift extends Service {
             throw new NotAuthorizedException();
         }
 
-        if (!checkStudentInStudentGroup(student, studentGroup)) {
+        if (!checkStudentInStudentGroup(registration, studentGroup)) {
             throw new InvalidSituationServiceException();
         }
 
@@ -80,7 +80,7 @@ public class EditGroupShift extends Service {
         }
         studentGroup.setShift(shift);
 
-        informStudents(studentGroup, student, grouping);
+        informStudents(studentGroup, registration, grouping);
 
         return true;
     }

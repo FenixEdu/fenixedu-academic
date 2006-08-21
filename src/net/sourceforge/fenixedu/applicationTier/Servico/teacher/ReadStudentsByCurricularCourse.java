@@ -64,9 +64,9 @@ public class ReadStudentsByCurricularCourse extends Service {
         infoStudentList = (List) CollectionUtils.collect(enrolments, new Transformer() {
             public Object transform(Object input) {
                 Enrolment enrolment = (Enrolment) input;
-                Registration student = enrolment.getStudentCurricularPlan().getStudent();
+                Registration registration = enrolment.getStudentCurricularPlan().getStudent();
 
-                InfoStudent infoStudent = InfoStudent.newInfoFromDomain(student);
+                InfoStudent infoStudent = InfoStudent.newInfoFromDomain(registration);
                 return infoStudent;
             }
         });
@@ -77,8 +77,8 @@ public class ReadStudentsByCurricularCourse extends Service {
         final List<Attends> attendList = site.getExecutionCourse().getAttends();
         final List<InfoStudent> infoStudentList = new ArrayList<InfoStudent>();
         for (final Attends attends : attendList) {
-            final Registration student = attends.getAluno();
-            infoStudentList.add(InfoStudent.newInfoFromDomain(student));
+            final Registration registration = attends.getAluno();
+            infoStudentList.add(InfoStudent.newInfoFromDomain(registration));
         }
         return infoStudentList;
     }

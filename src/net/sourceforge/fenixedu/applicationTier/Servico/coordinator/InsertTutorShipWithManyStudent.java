@@ -46,31 +46,31 @@ public class InsertTutorShipWithManyStudent extends InsertTutorShip {
             // students in the range [studentNumberFirst, studentNumberSecond]
             for (int i = studentNumberFirst.intValue(); i <= studentNumberSecond.intValue(); i++) {
                 Integer studentNumber = new Integer(i);
-                Registration student = Registration.readStudentByNumberAndDegreeType(studentNumber,
+                Registration registration = Registration.readStudentByNumberAndDegreeType(studentNumber,
                         DegreeType.DEGREE);
-                if (student == null) {
+                if (registration == null) {
                     // student doesn't exists...
                     studentsErrors.add(studentNumber);
                     continue;
                 }
 
-                if (verifyStudentAlreadyTutor(student, teacher).booleanValue()) {
+                if (verifyStudentAlreadyTutor(registration, teacher).booleanValue()) {
                     // student already with tutor...
                     studentsErrors.add(studentNumber);
                     continue;
                 }
 
-                if (!verifyStudentOfThisDegree(student, DegreeType.DEGREE, degreeCode).booleanValue()) {
+                if (!verifyStudentOfThisDegree(registration, DegreeType.DEGREE, degreeCode).booleanValue()) {
                     // student doesn't belong to this degree
                     studentsErrors.add(studentNumber);
                     continue;
                 }
 
-                Tutor tutor = student.getAssociatedTutor();
+                Tutor tutor = registration.getAssociatedTutor();
                 if (tutor == null) {
                     tutor = new Tutor();
                     tutor.setTeacher(teacher);
-                    tutor.setStudent(student);
+                    tutor.setStudent(registration);
                 }
             }
         } catch (Exception e) {

@@ -22,9 +22,9 @@ public class ReadSeniorInfoByUsername extends Service {
 
 	public InfoSenior run(IUserView userView) throws FenixServiceException, ExcepcaoPersistencia {
 		Person person = Person.readPersonByUsername(userView.getUtilizador());
-		Registration student = person.getStudentByType(DegreeType.DEGREE);
+		Registration registration = person.getStudentByType(DegreeType.DEGREE);
 
-		Senior senior = student.getSenior();
+		Senior senior = registration.getSenior();
 
 		InfoSenior readInfoSenior = null;
 		if (senior == null)

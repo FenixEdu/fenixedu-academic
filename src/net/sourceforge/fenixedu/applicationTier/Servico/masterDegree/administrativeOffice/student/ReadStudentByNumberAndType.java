@@ -32,10 +32,10 @@ public class ReadStudentByNumberAndType extends Service {
         // saber como é feita de facto a distinção
         // dos aluno, referente ao tipo, a partir da página de login.
         // ////////////////////////////////////////////////////////////////////////////////////////////////////////
-        Registration student = Registration.readStudentByNumberAndDegreeType(number, degreeType);
+        Registration registration = Registration.readStudentByNumberAndDegreeType(number, degreeType);
 
-        if (student != null) {
-            infoStudent = InfoStudent.newInfoFromDomain(student);
+        if (registration != null) {
+            infoStudent = InfoStudent.newInfoFromDomain(registration);
         }
 
         return infoStudent;

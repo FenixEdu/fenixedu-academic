@@ -52,7 +52,7 @@ public class CheckCandidacyConditionsForFinalDegreeWork extends Service {
             throw new OutOfCandidacyPeriodException(start + " - " + end);
         }
 
-        Registration student = findStudent(userView.getPerson());
+        Registration registration = findStudent(userView.getPerson());
 
         if (scheduleing.getMinimumNumberOfCompletedCourses() == null) {
             throw new NumberOfNecessaryCompletedCoursesNotSpecifiedException();
@@ -61,7 +61,7 @@ public class CheckCandidacyConditionsForFinalDegreeWork extends Service {
     	final Integer minimumCompletedCurricularYear = scheduleing.getMinimumCompletedCurricularYear();
     	final Integer minimumNumberOfCompletedCourses = scheduleing.getMinimumNumberOfCompletedCourses();
 
-    	final StudentCurricularPlan studentCurricularPlan = student.getActiveStudentCurricularPlan();
+    	final StudentCurricularPlan studentCurricularPlan = registration.getActiveStudentCurricularPlan();
     	final DegreeCurricularPlan degreeCurricularPlan = studentCurricularPlan.getDegreeCurricularPlan();
     	final Collection<CurricularCourseScope> degreesActiveCurricularCourseScopes = degreeCurricularPlan.getActiveCurricularCourseScopes();
     	final StringBuilder notCompletedCurricularCourses = new StringBuilder();
@@ -118,8 +118,8 @@ public class CheckCandidacyConditionsForFinalDegreeWork extends Service {
 
     private Registration findStudent(final Person person) {
     	if (person != null) {
-    		final Registration student = person.getStudentByType(DegreeType.DEGREE);
-    		return student == null ? person.getStudentByType(DegreeType.MASTER_DEGREE) : student;
+    		final Registration registration = person.getStudentByType(DegreeType.DEGREE);
+    		return registration == null ? person.getStudentByType(DegreeType.MASTER_DEGREE) : registration;
     	}
     	return null;
 	}

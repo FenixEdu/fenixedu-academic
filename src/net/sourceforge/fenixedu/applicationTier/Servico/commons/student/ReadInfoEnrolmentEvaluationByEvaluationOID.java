@@ -21,8 +21,8 @@ public class ReadInfoEnrolmentEvaluationByEvaluationOID extends Service {
 
     public InfoEnrolmentEvaluation run(IUserView userView, Integer studentNumber, DegreeType degreeType, Integer enrolmentOID)
             throws ExcepcaoInexistente, FenixServiceException, ExcepcaoPersistencia {
-    	final Registration student = Registration.readStudentByNumberAndDegreeType(studentNumber, degreeType);
-    	final Enrolment enrolment = student.findEnrolmentByEnrolmentID(enrolmentOID); 
+    	final Registration registration = Registration.readStudentByNumberAndDegreeType(studentNumber, degreeType);
+    	final Enrolment enrolment = registration.findEnrolmentByEnrolmentID(enrolmentOID); 
     	
         return (new GetEnrolmentGrade()).run(enrolment);
     }

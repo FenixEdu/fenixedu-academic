@@ -389,11 +389,11 @@ public class WrittenEvaluation extends WrittenEvaluation_Base {
         for (final OldRoom room : selectedRooms) {
             for (int numberOfStudentsInserted = 0; numberOfStudentsInserted < room.getCapacidadeExame()
                     && !studentsToDistribute.isEmpty(); numberOfStudentsInserted++) {
-                final Registration student = getRandomStudentFromList(studentsToDistribute);
+                final Registration registration = getRandomStudentFromList(studentsToDistribute);
                 final WrittenEvaluationEnrolment writtenEvaluationEnrolment = this
-                        .getWrittenEvaluationEnrolmentFor(student);
+                        .getWrittenEvaluationEnrolmentFor(registration);
                 if (writtenEvaluationEnrolment == null) {
-                    new WrittenEvaluationEnrolment(this, student, room);
+                    new WrittenEvaluationEnrolment(this, registration, room);
                 } else {
                     writtenEvaluationEnrolment.setRoom(room);
                 }

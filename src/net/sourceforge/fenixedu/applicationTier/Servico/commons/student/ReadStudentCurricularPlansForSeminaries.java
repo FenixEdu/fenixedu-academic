@@ -25,10 +25,10 @@ public class ReadStudentCurricularPlansForSeminaries extends Service {
 
     public List run(IUserView userView) throws ExcepcaoInexistente, FenixServiceException,
             ExcepcaoPersistencia {
-    	Registration student = Registration.readByUsername(userView.getUtilizador());
+    	Registration registration = Registration.readByUsername(userView.getUtilizador());
     	List<StudentCurricularPlan> studentCurricularPlans = null;
-    	if(student != null) {
-    		studentCurricularPlans = student.getStudentCurricularPlans();
+    	if(registration != null) {
+    		studentCurricularPlans = registration.getStudentCurricularPlans();
     	}
 
         if ((studentCurricularPlans == null) || (studentCurricularPlans.size() == 0)) {

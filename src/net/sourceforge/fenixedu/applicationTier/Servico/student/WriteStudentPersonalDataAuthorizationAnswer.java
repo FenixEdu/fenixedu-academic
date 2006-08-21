@@ -18,8 +18,8 @@ import net.sourceforge.fenixedu.util.StudentPersonalDataAuthorizationChoice;
 public class WriteStudentPersonalDataAuthorizationAnswer extends Service {
 
 	public void run(Integer studentID, String answer) throws ExcepcaoPersistencia {
-		final Registration student = rootDomainObject.readRegistrationByOID(studentID);
-		new StudentPersonalDataAuthorization(student, ExecutionYear.readCurrentExecutionYear(),
+		final Registration registration = rootDomainObject.readRegistrationByOID(studentID);
+		new StudentPersonalDataAuthorization(registration, ExecutionYear.readCurrentExecutionYear(),
 				StudentPersonalDataAuthorizationChoice.valueOf(answer));
 	}
 }

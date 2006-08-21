@@ -56,14 +56,14 @@ public class ReadImprovmentsToEnroll extends Service {
                 .getPreviousExecutionPeriod();
 
         // Read Registration
-        Registration student = Registration.readStudentByNumberAndDegreeType(studentNumber, DegreeType.DEGREE);
+        Registration registration = Registration.readStudentByNumberAndDegreeType(studentNumber, DegreeType.DEGREE);
 
-        if (student == null) {
+        if (registration == null) {
             throw new InvalidArgumentsServiceException("error.student.notExist");
         }
 
         // Read Aproved Enrolments by Execution OccupationPeriod
-        List studentCurricularPlans = student.getStudentCurricularPlans();
+        List studentCurricularPlans = registration.getStudentCurricularPlans();
 
         Iterator<StudentCurricularPlan> iterator = studentCurricularPlans.iterator();
         while (iterator.hasNext()) {
@@ -120,7 +120,7 @@ public class ReadImprovmentsToEnroll extends Service {
 
         res = (List) CollectionUtils.union(beforeBeforePreviousExecPeriodAprovedEnrol, res);
 
-        return buildResult(student, actualExecPeriod, res,
+        return buildResult(registration, actualExecPeriod, res,
                 alreadyImprovedEnrolmentsInCurrentExecutionPeriod);
     }
 

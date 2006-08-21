@@ -26,17 +26,17 @@ public class SchoolRegistration extends Service {
             final InfoResidenceCandidacy infoResidenceCandidacy) throws ExcepcaoPersistencia {
 
         final String username = userView.getUtilizador();
-        final Registration student = Registration.readByUsername(username);
+        final Registration registration = Registration.readByUsername(username);
 
-        final Person person = student.getPerson();
+        final Person person = registration.getPerson();
 
         if (isStudentRegistered(person)) {
             return Boolean.FALSE;
         }
 
         updatePersonalInfo(infoPerson, person);
-        writeResidenceCandidacy(student, infoResidenceCandidacy);
-        updateStudentInfo(student);
+        writeResidenceCandidacy(registration, infoResidenceCandidacy);
+        updateStudentInfo(registration);
 
         return Boolean.TRUE;
     }

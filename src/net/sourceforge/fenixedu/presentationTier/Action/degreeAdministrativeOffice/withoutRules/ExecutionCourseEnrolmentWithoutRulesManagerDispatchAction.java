@@ -227,12 +227,12 @@ public class ExecutionCourseEnrolmentWithoutRulesManagerDispatchAction extends F
 		List<ExecutionDegree> result = null;
 		try {
 			
-			final Registration student = getStudent(form);
-			studentCurricularPlan = student.getActiveOrConcludedStudentCurricularPlan();
+			final Registration registration = getStudent(form);
+			studentCurricularPlan = registration.getActiveOrConcludedStudentCurricularPlan();
 			
 			result = (List<ExecutionDegree>) ServiceManagerServiceFactory.executeService(
 					getUserView(request), "PrepareDegreesListByStudentNumber", new Object[] {
-							student, getDegreeType(form), executionPeriod });
+							registration, getDegreeType(form), executionPeriod });
 
 		} catch (NotAuthorizedFilterException e) {
 			e.printStackTrace();
@@ -327,19 +327,19 @@ public class ExecutionCourseEnrolmentWithoutRulesManagerDispatchAction extends F
 		try {
 
 			final Integer userType = (Integer) form.get("userType");
-			final Registration student = getStudent(form);
-			studentCurricularPlan = student.getActiveOrConcludedStudentCurricularPlan();
+			final Registration registration = getStudent(form);
+			studentCurricularPlan = registration.getActiveOrConcludedStudentCurricularPlan();
 
 			if (userType.equals(0)) {
 				curricularCourses2Enroll = (List<CurricularCourse2Enroll>) ServiceManagerServiceFactory
 						.executeService(getUserView(request), "ReadCurricularCoursesToEnroll",
-								new Object[] { student, getDegreeType(form), executionPeriod,
+								new Object[] { registration, getDegreeType(form), executionPeriod,
 										executionDegreeID, curricularYearsList, curricularSemesters });
 
 			} else {
 				curricularCourses2Enroll = (List<CurricularCourse2Enroll>) ServiceManagerServiceFactory
 						.executeService(getUserView(request), "ReadCurricularCoursesToEnrollSuperUser",
-								new Object[] { student, getDegreeType(form), executionPeriod,
+								new Object[] { registration, getDegreeType(form), executionPeriod,
 										executionDegreeID, curricularYearsList, curricularSemesters });
 			}
 

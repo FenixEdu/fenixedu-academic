@@ -33,10 +33,10 @@ import org.apache.commons.collections.Predicate;
 public class ReadStudentEnrollmentsAndClass extends Service {
 
     public List run(IUserView userView) throws ExcepcaoPersistencia {
-        Registration student = userView.getPerson().getStudentByType(DegreeType.DEGREE);
+        Registration registration = userView.getPerson().getStudentByType(DegreeType.DEGREE);
         StudentCurricularPlan scp = null;
-        if(student != null) {
-        	scp = student.getActiveStudentCurricularPlan();
+        if(registration != null) {
+        	scp = registration.getActiveStudentCurricularPlan();
         }
 
         List studentEnrollments = scp.getEnrolments();

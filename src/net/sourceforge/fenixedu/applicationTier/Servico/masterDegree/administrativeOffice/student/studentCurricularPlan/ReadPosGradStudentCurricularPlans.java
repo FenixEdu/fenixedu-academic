@@ -20,14 +20,14 @@ public class ReadPosGradStudentCurricularPlans extends Service {
 	public List<InfoStudentCurricularPlan> run(Integer studentId) throws FenixServiceException, ExcepcaoPersistencia {
 		List<InfoStudentCurricularPlan> result = new ArrayList<InfoStudentCurricularPlan>();
 
-		Registration student = rootDomainObject.readRegistrationByOID(studentId);
-		if (student == null) {
+		Registration registration = rootDomainObject.readRegistrationByOID(studentId);
+		if (registration == null) {
 			throw new InvalidArgumentsServiceException("invalidStudentId");
 		}
         
-		if (student.getDegreeType().equals(DegreeType.MASTER_DEGREE)) {
+		if (registration.getDegreeType().equals(DegreeType.MASTER_DEGREE)) {
 			List<StudentCurricularPlan> resultTemp = new ArrayList<StudentCurricularPlan>();
-			resultTemp.addAll(student.getStudentCurricularPlans());
+			resultTemp.addAll(registration.getStudentCurricularPlans());
 
 			Iterator iterator = resultTemp.iterator();
 			while (iterator.hasNext()) {

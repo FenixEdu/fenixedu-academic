@@ -30,11 +30,11 @@ public class ReadStudent extends Service {
         // saber como é feita de facto a distinção
         // dos aluno, referente ao tipo, a partir da página de login.
         // ////////////////////////////////////////////////////////////////////////////////////////////////////////
-        Registration student = Registration.readStudentByNumberAndDegreeType(number, DegreeType.DEGREE);
+        Registration registration = Registration.readStudentByNumberAndDegreeType(number, DegreeType.DEGREE);
 
-        if (student != null) {
-            infoStudent = new InfoStudent(student);
-            infoStudent.setIdInternal(student.getIdInternal());
+        if (registration != null) {
+            infoStudent = new InfoStudent(registration);
+            infoStudent.setIdInternal(registration.getIdInternal());
         }
 
         return infoStudent;

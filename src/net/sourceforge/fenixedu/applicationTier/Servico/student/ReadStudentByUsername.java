@@ -12,8 +12,8 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class ReadStudentByUsername extends Service {
 
     public Object run(String username) throws ExcepcaoPersistencia {
-        final Registration student = Registration.readByUsername(username);
-        return student == null ? null : InfoStudent.newInfoFromDomain(student);
+        final Registration registration = Registration.readByUsername(username);
+        return registration == null ? null : InfoStudent.newInfoFromDomain(registration);
     }
 
 }

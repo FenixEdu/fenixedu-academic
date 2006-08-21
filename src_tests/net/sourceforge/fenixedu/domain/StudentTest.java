@@ -38,17 +38,17 @@ public class StudentTest extends DomainTestBase {
 		
 		setUpForNewStudentCase();
 		
-		Registration student = new Registration(person, studentNumber, studentKind, studentState, 
+		Registration registration = new Registration(person, studentNumber, studentKind, studentState, 
 				payedTuition, enrolmentForbidden, entryPhase, degreeType);
 		
-		assertEquals("Failed to assign Person", student.getPerson(),person);
-		assertEquals("Failed to assign studentNumber", student.getNumber(),studentNumber);
-		assertEquals("Failed to assign studentKind", student.getStudentKind(),studentKind);
-		assertEquals("Failed to assign state", student.getState(),studentState);
-		assertEquals("Failed to assign payedTuition", student.getPayedTuition(),payedTuition);
-		assertEquals("Failed to assign enrollmentForbidden", student.getEnrollmentForbidden(),enrolmentForbidden);
-		assertEquals("Failed to assign entryPhase", student.getEntryPhase(),entryPhase);
-		assertEquals("Failed to assign degreeType", student.getDegreeType(),degreeType);
+		assertEquals("Failed to assign Person", registration.getPerson(),person);
+		assertEquals("Failed to assign studentNumber", registration.getNumber(),studentNumber);
+		assertEquals("Failed to assign studentKind", registration.getStudentKind(),studentKind);
+		assertEquals("Failed to assign state", registration.getState(),studentState);
+		assertEquals("Failed to assign payedTuition", registration.getPayedTuition(),payedTuition);
+		assertEquals("Failed to assign enrollmentForbidden", registration.getEnrollmentForbidden(),enrolmentForbidden);
+		assertEquals("Failed to assign entryPhase", registration.getEntryPhase(),entryPhase);
+		assertEquals("Failed to assign degreeType", registration.getDegreeType(),degreeType);
 	}
 
 

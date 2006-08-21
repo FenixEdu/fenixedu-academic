@@ -33,10 +33,10 @@ public class CreateInsuranceTransaction extends Service {
         GuideEntry guideEntry = rootDomainObject.readGuideEntryByOID(guideEntryID);
         Guide guide = guideEntry.getGuide();
 
-        Registration student = guide.getPerson().readStudentByDegreeType(DegreeType.MASTER_DEGREE);
+        Registration registration = guide.getPerson().readStudentByDegreeType(DegreeType.MASTER_DEGREE);
         Person responsible = Person.readPersonByUsername(userView.getUtilizador());
 
-        List insuranceTransactionList = student
+        List insuranceTransactionList = registration
                 .readAllNonReimbursedInsuranceTransactionsByExecutionYear(guide.getExecutionDegree()
                         .getExecutionYear());
 
@@ -54,7 +54,7 @@ public class CreateInsuranceTransaction extends Service {
         new InsuranceTransaction(guideEntry.getPrice(), new Timestamp(Calendar
                 .getInstance().getTimeInMillis()), guideEntry.getDescription(), guide.getPaymentType(),
                 TransactionType.INSURANCE_PAYMENT, Boolean.FALSE, responsible, personAccount,
-                guideEntry, guide.getExecutionDegree().getExecutionYear(), student);
+                guideEntry, guide.getExecutionDegree().getExecutionYear(), registration);
     }
 
 }

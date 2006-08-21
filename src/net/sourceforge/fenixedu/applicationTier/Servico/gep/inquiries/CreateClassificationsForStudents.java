@@ -99,12 +99,12 @@ public class CreateClassificationsForStudents extends Service {
 
         for (StudentCurricularPlan studentCurricularPlan : studentCurricularPlans) {
             if (studentCurricularPlan.getCurrentState() == StudentCurricularPlanState.ACTIVE) {
-                Registration student = studentCurricularPlan.getStudent();
-                if (student.getRegistrationYear() == currentExecutionYear) {
-                    firstYearStudents.add(student);
+                Registration registration = studentCurricularPlan.getStudent();
+                if (registration.getRegistrationYear() == currentExecutionYear) {
+                    firstYearStudents.add(registration);
                 } else {
-                    student.calculateApprovationRatioAndArithmeticMeanIfActive(true);
-                    otherYearsStudents.add(student);
+                    registration.calculateApprovationRatioAndArithmeticMeanIfActive(true);
+                    otherYearsStudents.add(registration);
                 }
             }
         }
@@ -165,9 +165,9 @@ public class CreateClassificationsForStudents extends Service {
             }
             
             int limitIndex = studentsIter.previousIndex() + 1;
-            for (Registration student = studentsIter.previous(); (Double) fieldGetter.transform(student) > groundLimitValue; student = studentsIter
+            for (Registration registration = studentsIter.previous(); (Double) fieldGetter.transform(registration) > groundLimitValue; registration = studentsIter
                     .previous()) {
-                fieldSetter.execute(new GenericPair<Registration, Character>(student, classification));
+                fieldSetter.execute(new GenericPair<Registration, Character>(registration, classification));
             }
             studentsIter.next();
             groundLimitIndex = studentsIter.nextIndex();
@@ -201,9 +201,9 @@ public class CreateClassificationsForStudents extends Service {
         for (Character classification : keys) {
             for (ListIterator<Registration> studentIter = studentsClassifications.get(classification)
                     .listIterator(studentsClassifications.get(classification).size()); studentIter.hasPrevious();) {
-                Registration student = (Registration) studentIter.previous();
-                fmt.format("%d\t%s\t%f\t%c\n", student.getNumber(), student.getPerson().getNome(),
-                        transformer.transform(student), classification);
+                Registration registration = (Registration) studentIter.previous();
+                fmt.format("%d\t%s\t%f\t%c\n", registration.getNumber(), registration.getPerson().getNome(),
+                        transformer.transform(registration), classification);
             }
         }
 

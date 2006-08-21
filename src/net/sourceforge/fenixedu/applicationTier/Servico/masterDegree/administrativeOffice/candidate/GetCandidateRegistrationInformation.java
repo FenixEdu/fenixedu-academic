@@ -28,12 +28,12 @@ public class GetCandidateRegistrationInformation extends Service {
 
         MasterDegreeCandidate masterDegreeCandidate = rootDomainObject.readMasterDegreeCandidateByOID(candidateID);
 
-        Registration student = masterDegreeCandidate.getPerson().readStudentByDegreeType(
+        Registration registration = masterDegreeCandidate.getPerson().readStudentByDegreeType(
                 DegreeType.MASTER_DEGREE);
 
         StudentCurricularPlan studentCurricularPlan = null;
-        if(student != null) {
-        	studentCurricularPlan = student.getActiveStudentCurricularPlan();
+        if(registration != null) {
+        	studentCurricularPlan = registration.getActiveStudentCurricularPlan();
         }
 
         infoCandidateRegistration = new InfoCandidateRegistration();

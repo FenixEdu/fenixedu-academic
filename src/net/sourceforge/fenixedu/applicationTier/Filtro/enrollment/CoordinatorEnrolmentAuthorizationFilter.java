@@ -61,10 +61,10 @@ public class CoordinatorEnrolmentAuthorizationFilter extends AuthorizationByMany
             studentCurricularPlan = rootDomainObject
                     .readStudentCurricularPlanByOID((Integer) arguments[1]);
         } else {
-            Registration student = Registration.readStudentByNumberAndDegreeType((Integer) arguments[2],
+            Registration registration = Registration.readStudentByNumberAndDegreeType((Integer) arguments[2],
                     DegreeType.DEGREE);
-            if (student != null) {
-                studentCurricularPlan = student.getActiveOrConcludedStudentCurricularPlan();
+            if (registration != null) {
+                studentCurricularPlan = registration.getActiveOrConcludedStudentCurricularPlan();
             }
         }
         return studentCurricularPlan;

@@ -62,9 +62,9 @@ public class StudentCurriculumAuthorizationFilter extends Filtro {
             return "noAuthorization";
         }
 
-        Registration student = studentCurricularPlan.getStudent();
+        Registration registration = studentCurricularPlan.getStudent();
 
-        Group group = student.findFinalDegreeWorkGroupForCurrentExecutionYear();
+        Group group = registration.findFinalDegreeWorkGroupForCurrentExecutionYear();
         if (group != null) {
             ExecutionDegree executionDegree = group.getExecutionDegree();
             for (int i = 0; i < executionDegree.getCoordinatorsList().size(); i++) {

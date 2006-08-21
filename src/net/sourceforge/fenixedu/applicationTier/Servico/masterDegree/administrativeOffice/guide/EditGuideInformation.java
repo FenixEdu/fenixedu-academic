@@ -165,13 +165,13 @@ public class EditGuideInformation extends Service {
                     guideEntry.setGuide(newGuideVersion);
 
                     Person studentPerson = guide.getPerson();
-                    Registration student = Registration.readByUsername(studentPerson.getUsername());
+                    Registration registration = Registration.readByUsername(studentPerson.getUsername());
                     ExecutionDegree executionDegree = guide.getExecutionDegree();
 
                     // Write Gratuity Transaction
                     if (guideEntry.getDocumentType().equals(DocumentType.GRATUITY)) {
                         executionDegree = guide.getExecutionDegree();
-                        gratuitySituation = student
+                        gratuitySituation = registration
                                 .readGratuitySituationByExecutionDegree(executionDegree);
 
                         paymentTransaction = new GratuityTransaction(
@@ -194,7 +194,7 @@ public class EditGuideInformation extends Service {
                                 .getPrice(), new Timestamp(Calendar.getInstance().getTimeInMillis()),
                                 guideEntry.getDescription(), infoGuide.getPaymentType(),
                                 TransactionType.INSURANCE_PAYMENT, Boolean.FALSE, guide.getPerson(),
-                                personAccount, guideEntry, executionDegree.getExecutionYear(), student);
+                                personAccount, guideEntry, executionDegree.getExecutionYear(), registration);
                     }
                 }
 

@@ -28,8 +28,8 @@ public class CreateStudentGroup extends Service {
         List studentList = new ArrayList();
         for (final String studantUserName : studentUserNames) {
             Attends attend = grouping.getStudentAttend(studantUserName);
-            Registration student = attend.getAluno();
-            studentList.add(student);
+            Registration registration = attend.getAluno();
+            studentList.add(registration);
         }
         return studentList;
     }

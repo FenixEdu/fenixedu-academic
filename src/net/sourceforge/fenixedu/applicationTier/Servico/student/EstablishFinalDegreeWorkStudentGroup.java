@@ -22,15 +22,15 @@ public class EstablishFinalDegreeWorkStudentGroup extends Service {
 
     public boolean run(Person person, Integer executionDegreeOID) throws ExcepcaoPersistencia,
             FenixServiceException {
-    	Registration student = person.getStudentByType(DegreeType.DEGREE);
-    	if (student == null) {
+    	Registration registration = person.getStudentByType(DegreeType.DEGREE);
+    	if (registration == null) {
             throw new FenixServiceException("Error reading student to place in final degree work group.");
     	}
-        Group group = student.findFinalDegreeWorkGroupForCurrentExecutionYear();
+        Group group = registration.findFinalDegreeWorkGroupForCurrentExecutionYear();
         if (group == null) {
             group = new Group();
                 GroupStudent groupStudent = new GroupStudent();
-                groupStudent.setStudent(student);
+                groupStudent.setStudent(registration);
                 groupStudent.setFinalDegreeDegreeWorkGroup(group);
         } else {
             if (!group.getGroupProposals().isEmpty()) {

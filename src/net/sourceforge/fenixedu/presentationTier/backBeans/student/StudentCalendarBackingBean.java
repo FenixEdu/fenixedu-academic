@@ -61,10 +61,10 @@ public class StudentCalendarBackingBean extends FenixBackingBean {
 
 	public Collection<ExecutionPeriod> getExecutionPeriods() throws FenixFilterException, FenixServiceException {
 		if (executionPeriods == null) {
-	        final Registration student = getStudent();
+	        final Registration registration = getStudent();
 
 	        executionPeriods = new TreeSet<ExecutionPeriod>(executionPeriodComparator);
-	        for (final Attends attends : student.getAssociatedAttends()) {
+	        for (final Attends attends : registration.getAssociatedAttends()) {
 	        	executionPeriods.add(attends.getDisciplinaExecucao().getExecutionPeriod());
 	        }
 		}
@@ -75,10 +75,10 @@ public class StudentCalendarBackingBean extends FenixBackingBean {
 		final ExecutionPeriod executionPeriod = getExecutionPeriod();
 
 		if (executionCourses == null || (!executionCourses.isEmpty() && executionPeriod != executionCourses.iterator().next().getExecutionPeriod())) {
-	        final Registration student = getStudent();
+	        final Registration registration = getStudent();
 
 	        executionCourses = new TreeSet<ExecutionCourse>(executionCourseComparator);
-	        for (final Attends attends : student.getAssociatedAttends()) {
+	        for (final Attends attends : registration.getAssociatedAttends()) {
 	        	final ExecutionCourse executionCourse = attends.getDisciplinaExecucao();
 	        	if (executionCourse.getExecutionPeriod() == executionPeriod) {
 	        		executionCourses.add(executionCourse);
@@ -210,9 +210,9 @@ public class StudentCalendarBackingBean extends FenixBackingBean {
         List<CalendarLink> calendarLinks = new ArrayList<CalendarLink>();
 
         final ExecutionPeriod executionPeriod = getExecutionPeriod();
-        final Registration student = getStudent();
+        final Registration registration = getStudent();
 
-        for (final Attends attends : student.getAssociatedAttends()) {
+        for (final Attends attends : registration.getAssociatedAttends()) {
         	final ExecutionCourse executionCourse = attends.getDisciplinaExecucao();
         	if (executionCourse.getExecutionPeriod() == executionPeriod
                     && (getExecutionCourseID() == null || getExecutionCourseID().equals(executionCourse.getIdInternal()))) {

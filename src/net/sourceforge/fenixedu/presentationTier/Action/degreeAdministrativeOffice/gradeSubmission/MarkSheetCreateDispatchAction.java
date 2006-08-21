@@ -184,14 +184,14 @@ public class MarkSheetCreateDispatchAction extends MarkSheetDispatchAction {
     	MarkSheetRectifyBean rectifyBean = (MarkSheetRectifyBean) RenderUtils.getViewState().getMetaObject().getObject();
     	
     	Integer studentNumber = rectifyBean.getStudentNumber();
-    	Registration student = Registration.readStudentByNumberAndDegreeType(studentNumber, DegreeType.DEGREE);
-    	if(student == null) {
+    	Registration registration = Registration.readStudentByNumberAndDegreeType(studentNumber, DegreeType.DEGREE);
+    	if(registration == null) {
     		ActionMessages actionMessages = new ActionMessages();
     		addMessage(request, actionMessages, "error.no.student", studentNumber.toString());
     		return prepareRectifyMarkSheet(mapping, actionForm, request, response);
     	}
     	MarkSheet markSheet = rectifyBean.getMarkSheet();
-    	EnrolmentEvaluation enrolmentEvaluation = markSheet.getEnrolmentEvaluationByStudent(student);
+    	EnrolmentEvaluation enrolmentEvaluation = markSheet.getEnrolmentEvaluationByStudent(registration);
     	
     	if(enrolmentEvaluation == null) {
     		ActionMessages actionMessages = new ActionMessages();

@@ -60,13 +60,13 @@ public class EquivalenceAuthorizationFilter extends Filtro {
         Integer studentNumber = (Integer) serviceArgs[0];
         DegreeType degreeType = (DegreeType) serviceArgs[1];
 
-        Registration student = getStudent(studentNumber, degreeType);
-        if (student == null) {
+        Registration registration = getStudent(studentNumber, degreeType);
+        if (registration == null) {
             return "errors.enrollment.equivalence.no.student.with.that.number.and.degreeType";
         }
 
         if (degreeType.equals(DegreeType.DEGREE)) {
-            if (!isThisStudentsDegreeTheOne(student)) {
+            if (!isThisStudentsDegreeTheOne(registration)) {
                 return "errors.enrollment.equivalence.data.not.authorized";
             }
         }
@@ -74,7 +74,7 @@ public class EquivalenceAuthorizationFilter extends Filtro {
         if ((userView.hasRoleType(RoleType.DEGREE_ADMINISTRATIVE_OFFICE) || userView
                 .hasRoleType(RoleType.DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER))
                 && userView.hasRoleType(RoleType.MASTER_DEGREE_ADMINISTRATIVE_OFFICE)) {
-            if (!degreeType.equals(student.getDegreeType())) {
+            if (!degreeType.equals(registration.getDegreeType())) {
                 return "errors.enrollment.equivalence.data.not.authorized";
             }
         } else if (userView.hasRoleType(RoleType.DEGREE_ADMINISTRATIVE_OFFICE)
@@ -87,7 +87,7 @@ public class EquivalenceAuthorizationFilter extends Filtro {
                 return "errors.enrollment.equivalence.data.not.authorized";
             }
         } else if (userView.hasRoleType(RoleType.COORDINATOR)) {
-            if (!isThisACoordinatorOfThisStudentsDegree(userView, student)) {
+            if (!isThisACoordinatorOfThisStudentsDegree(userView, registration)) {
                 return "errors.enrollment.equivalence.data.not.authorized";
             }
         }

@@ -17,13 +17,13 @@ public class ReadStudentByNumberAndAllDegreeTypes extends Service {
     public Object run(Integer number) throws ExcepcaoPersistencia {
         InfoStudent infoStudent = null;
 
-        Registration student = Registration.readStudentByNumberAndDegreeType(number, DegreeType.DEGREE);
+        Registration registration = Registration.readStudentByNumberAndDegreeType(number, DegreeType.DEGREE);
 
-        if (student == null) {
-            student = Registration.readStudentByNumberAndDegreeType(number, DegreeType.MASTER_DEGREE);
+        if (registration == null) {
+            registration = Registration.readStudentByNumberAndDegreeType(number, DegreeType.MASTER_DEGREE);
         }
-        if (student != null) {
-            infoStudent = InfoStudent.newInfoFromDomain(student);
+        if (registration != null) {
+            infoStudent = InfoStudent.newInfoFromDomain(registration);
         }
 
         return infoStudent;

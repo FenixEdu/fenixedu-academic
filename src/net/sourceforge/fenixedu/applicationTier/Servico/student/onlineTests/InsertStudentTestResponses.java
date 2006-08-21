@@ -61,10 +61,10 @@ public class InsertStudentTestResponses extends Service {
 
         InfoSiteStudentTestFeedback infoSiteStudentTestFeedback = new InfoSiteStudentTestFeedback();
         this.path = path.replace('\\', '/');
-        Registration student = Registration.readByUsername(userName);
-        if (student == null)
+        Registration registration = Registration.readByUsername(userName);
+        if (registration == null)
             throw new FenixServiceException();
-        if (student.getNumber().compareTo(studentNumber) != 0)
+        if (registration.getNumber().compareTo(studentNumber) != 0)
             throw new NotAuthorizedStudentToDoTestException();
 
         final DistributedTest distributedTest = rootDomainObject
@@ -79,7 +79,7 @@ public class InsertStudentTestResponses extends Service {
         List<String> errors = new ArrayList<String>();
 
         if (compareDates(distributedTest.getEndDate(), distributedTest.getEndHour())) {
-        	Set<StudentTestQuestion> studentTestQuestionList = StudentTestQuestion.findStudentTestQuestions(student, distributedTest);
+        	Set<StudentTestQuestion> studentTestQuestionList = StudentTestQuestion.findStudentTestQuestions(registration, distributedTest);
             if (studentTestQuestionList.size() == 0)
                 throw new FenixServiceException();
             ParseQuestion parse = new ParseQuestion();
@@ -171,7 +171,7 @@ public class InsertStudentTestResponses extends Service {
             }
             if (distributedTest.getTestType().equals(new TestType(TestType.EVALUATION))) {
                 OnlineTest onlineTest = distributedTest.getOnlineTest();
-                Attends attend = student.readAttendByExecutionCourse(((ExecutionCourse) distributedTest
+                Attends attend = registration.readAttendByExecutionCourse(((ExecutionCourse) distributedTest
                         .getTestScope().getDomainObject()));
                 Mark mark = onlineTest.getMarkByAttend(attend);
 
@@ -185,13 +185,13 @@ public class InsertStudentTestResponses extends Service {
                 decimalFormatSymbols.setDecimalSeparator('.');
                 df.setDecimalFormatSymbols(decimalFormatSymbols);
                 String grade = df.format(Math.max(0, totalMark));
-                System.out.println("GRADE ----------------------> " + student.getNumber() + " " + grade);
+                System.out.println("GRADE ----------------------> " + registration.getNumber() + " " + grade);
                 mark.setMark(grade);
             }
 
             StudentTestLog studentTestLog = new StudentTestLog();
             studentTestLog.setDistributedTest(distributedTest);
-            studentTestLog.setStudent(student);
+            studentTestLog.setStudent(registration);
             studentTestLog.setDate(Calendar.getInstance().getTime());
             studentTestLog.setEvent(event);
         } else

@@ -38,8 +38,8 @@ public class ReadStudentsByStudentGroupID extends Service {
         while(iter.hasNext()) {
             Attends attend = (Attends) iter.next();
             Integer studentID = attend.getAluno().getIdInternal();
-            Registration student = rootDomainObject.readRegistrationByOID(studentID);
-            infoStudents.add(InfoStudent.newInfoFromDomain(student));
+            Registration registration = rootDomainObject.readRegistrationByOID(studentID);
+            infoStudents.add(InfoStudent.newInfoFromDomain(registration));
         }
         return infoStudents;
     }

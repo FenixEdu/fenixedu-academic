@@ -84,10 +84,10 @@ public class DocumentRequestsManagementDispatchAction extends FenixDispatchActio
 		String isUrgentString = form.getString("isUrgent");
 		Boolean isUrgent = StringUtils.isEmpty(isUrgentString) ? null : Boolean.valueOf(isUrgentString);
 
-		Registration student = getStudent(form.getString("studentNumber"));
+		Registration registration = getStudent(form.getString("studentNumber"));
 
 		request.setAttribute("documentRequestsResult", getAdministrativeOffice().searchDocumentsBy(
-				documentRequestType, requestSituationType, isUrgent, student));
+				documentRequestType, requestSituationType, isUrgent, registration));
 
 		request.setAttribute("url", buildUrlFrom(form));
 

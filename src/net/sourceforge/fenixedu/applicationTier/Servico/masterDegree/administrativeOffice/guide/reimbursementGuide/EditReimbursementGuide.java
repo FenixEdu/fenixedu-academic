@@ -124,10 +124,10 @@ public class EditReimbursementGuide extends Service {
                             personAccount, reimbursementGuideEntry);
 
                     Person studentPerson = reimbursementGuide.getGuide().getPerson();
-                    Registration student = studentPerson.readStudentByDegreeType(DegreeType.MASTER_DEGREE);
+                    Registration registration = studentPerson.readStudentByDegreeType(DegreeType.MASTER_DEGREE);
                     ExecutionDegree executionDegree = reimbursementGuide.getGuide().getExecutionDegree();
 
-                    GratuitySituation gratuitySituation = student
+                    GratuitySituation gratuitySituation = registration
                             .readGratuitySituationByExecutionDegree(executionDegree);
 
                     if (gratuitySituation == null) {

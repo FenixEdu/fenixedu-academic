@@ -49,9 +49,9 @@ public class InsertStudentsInGrouping extends Service {
             String number = (String) iterator.next();
             if (number.equals("Todos os Alunos")) {
             } else {
-                Registration student = rootDomainObject.readRegistrationByOID(
+                Registration registration = rootDomainObject.readRegistrationByOID(
                         new Integer(number));
-                students.add(student);
+                students.add(registration);
             }
         }
 
@@ -67,8 +67,8 @@ public class InsertStudentsInGrouping extends Service {
 
             while (iteratorStudents.hasNext()) {
 
-                Registration student = (Registration) iteratorStudents.next();
-                if (student.equals(existingAttendStudent)) {
+                Registration registration = (Registration) iteratorStudents.next();
+                if (registration.equals(existingAttendStudent)) {
                     throw new InvalidSituationServiceException();
                 }
             }
@@ -80,7 +80,7 @@ public class InsertStudentsInGrouping extends Service {
 
         while (iterStudents1.hasNext()) {
             Attends attend = null;
-            Registration student = (Registration) iterStudents1.next();
+            Registration registration = (Registration) iterStudents1.next();
 
             List listaExecutionCourses = new ArrayList();
             listaExecutionCourses.addAll(groupProperties.getExecutionCourses());
@@ -88,7 +88,7 @@ public class InsertStudentsInGrouping extends Service {
             while (iterExecutionCourse.hasNext() && attend == null) {
 
                 ExecutionCourse executionCourse = (ExecutionCourse) iterExecutionCourse.next();
-                attend = student.readAttendByExecutionCourse(executionCourse);
+                attend = registration.readAttendByExecutionCourse(executionCourse);
             }
             groupProperties.addAttends(attend);
         }

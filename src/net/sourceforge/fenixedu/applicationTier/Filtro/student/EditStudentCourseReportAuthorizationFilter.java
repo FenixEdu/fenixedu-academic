@@ -46,11 +46,11 @@ public class EditStudentCourseReportAuthorizationFilter extends DomainObjectAuth
     protected boolean verifyCondition(IUserView id, Integer objectId) {
         try {
 
-            Registration student = Registration.readByUsername(id.getUtilizador());
+            Registration registration = Registration.readByUsername(id.getUtilizador());
 
             Delegate delegate = null;
-            if (!student.getDelegate().isEmpty()) {
-                delegate = student.getDelegate().get(0);
+            if (!registration.getDelegate().isEmpty()) {
+                delegate = registration.getDelegate().get(0);
             }
 
             StudentCourseReport studentCourseReport = rootDomainObject

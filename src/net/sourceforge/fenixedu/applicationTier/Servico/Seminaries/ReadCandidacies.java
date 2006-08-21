@@ -121,8 +121,8 @@ public class ReadCandidacies extends Service {
         List infoCandidacies = new LinkedList();
         
         for (SeminaryCandidacy candidacy : filteredCandidacies) {
-			Registration student = candidacy.getStudent();
-			StudentCurricularPlan studentCurricularPlan = student.getActiveStudentCurricularPlan();
+			Registration registration = candidacy.getStudent();
+			StudentCurricularPlan studentCurricularPlan = registration.getActiveStudentCurricularPlan();
 			List enrollments = studentCurricularPlan.getEnrolments();
 
 			InfoCandidacyDetails candidacyDTO = new InfoCandidacyDetails();
@@ -134,7 +134,7 @@ public class ReadCandidacies extends Service {
 			candidacyDTO.setMotivation(candidacy.getMotivation());
 			candidacyDTO.setSeminary(InfoSeminaryWithEquivalencies.newInfoFromDomain(candidacy
 					.getSeminary()));
-			candidacyDTO.setStudent(InfoStudent.newInfoFromDomain(student));
+			candidacyDTO.setStudent(InfoStudent.newInfoFromDomain(registration));
 			candidacyDTO.setTheme(InfoTheme.newInfoFromDomain(candidacy.getTheme()));
 			List<InfoCaseStudyChoice> infos = new ArrayList<InfoCaseStudyChoice>();
 			for (Iterator iter = candidacy.getCaseStudyChoices().iterator(); iter.hasNext();) {

@@ -21,9 +21,9 @@ public class EditTeacherDegreeFinalProjectStudentByOID extends Service {
             InfoTeacherDegreeFinalProjectStudent infoTeacherDegreeFinalProjectStudent)
             throws ExcepcaoPersistencia, FenixServiceException {
 
-        final Registration student = Registration.readStudentByNumberAndDegreeType(
+        final Registration registration = Registration.readStudentByNumberAndDegreeType(
                 infoTeacherDegreeFinalProjectStudent.getInfoStudent().getNumber(), DegreeType.DEGREE);
-        if (student == null) {
+        if (registration == null) {
             throw new FenixServiceException("message.student-not-found");
         }
 
@@ -38,14 +38,14 @@ public class EditTeacherDegreeFinalProjectStudentByOID extends Service {
             throw new FenixServiceException("message.teacher-not-found");
         }
 
-        checkStudentFinalDegreeProjectPercentage(student, teacher, executionPeriod,
+        checkStudentFinalDegreeProjectPercentage(registration, teacher, executionPeriod,
                 infoTeacherDegreeFinalProjectStudent.getPercentage());
 
         TeacherDegreeFinalProjectStudent teacherDegreeFinalProjectStudent = getTeacherDegreeFinalProjectStudentFor(
-                teacher, student, executionPeriod);
+                teacher, registration, executionPeriod);
         if (teacherDegreeFinalProjectStudent == null) {
             teacherDegreeFinalProjectStudent = new TeacherDegreeFinalProjectStudent(
-                    executionPeriod, teacher, student);
+                    executionPeriod, teacher, registration);
         }
         teacherDegreeFinalProjectStudent.setPercentage(infoTeacherDegreeFinalProjectStudent
                 .getPercentage());

@@ -16,8 +16,8 @@ public class InsertStudentDistributedTestAdvisory extends Service {
 
     public void run(final Integer executionCourseId, final Integer advisoryId, final Integer studentId) throws ExcepcaoPersistencia {
         Advisory advisory = rootDomainObject.readAdvisoryByOID(advisoryId);
-        Registration student = rootDomainObject.readRegistrationByOID(studentId);
-        advisory.addPeople(student.getPerson());
+        Registration registration = rootDomainObject.readRegistrationByOID(studentId);
+        advisory.addPeople(registration.getPerson());
     }
 
 }

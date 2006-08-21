@@ -12,10 +12,10 @@ public class ReadStudentByNumber extends Service {
     public Object run(Integer number, DegreeType degreeType) throws ExcepcaoPersistencia {
 
         InfoStudent infoStudent = null;
-        Registration student = Registration.readStudentByNumberAndDegreeType(number, degreeType);
+        Registration registration = Registration.readStudentByNumberAndDegreeType(number, degreeType);
 
-        if (student != null) {
-            infoStudent = InfoStudent.newInfoFromDomain(student);
+        if (registration != null) {
+            infoStudent = InfoStudent.newInfoFromDomain(registration);
         }
 
         return infoStudent;

@@ -20,11 +20,11 @@ public class StudentIsUserFilter extends Filtro {
     public void execute(final ServiceRequest serviceRequest, final ServiceResponse serviceResponse)
             throws FilterException, Exception {
         final Integer studentId = (Integer) serviceRequest.getServiceParameters().getParameter(0);
-        final Registration student = rootDomainObject.readRegistrationByOID(studentId);
+        final Registration registration = rootDomainObject.readRegistrationByOID(studentId);
 
         final IUserView userView = getRemoteUser(serviceRequest);
 
-        if (student == null || userView == null || userView.getPerson() != student.getPerson()) {
+        if (registration == null || userView == null || userView.getPerson() != registration.getPerson()) {
             throw new NotAuthorizedFilterException();
         }
 

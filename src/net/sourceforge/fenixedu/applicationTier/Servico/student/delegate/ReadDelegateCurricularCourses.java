@@ -52,11 +52,11 @@ public class ReadDelegateCurricularCourses extends SearchService {
     protected List doSearch(HashMap searchParameters) throws ExcepcaoPersistencia {
 
         final String user = (String) searchParameters.get("user");
-        final Registration student = Registration.readByUsername(user);
+        final Registration registration = Registration.readByUsername(user);
 
         Delegate delegate = null;
-        if (!student.getDelegate().isEmpty()) {
-            delegate = student.getDelegate().get(0);
+        if (!registration.getDelegate().isEmpty()) {
+            delegate = registration.getDelegate().get(0);
         }
 
         // if he's a degree delegate then he can read all curricular courses

@@ -12,16 +12,16 @@ public class UnEnrollStudentInWrittenEvaluation extends Service {
     public void run(String username, Integer writtenEvaluationOID) throws FenixServiceException,
             ExcepcaoPersistencia {
 
-        final Registration student = Registration.readByUsername(username);
+        final Registration registration = Registration.readByUsername(username);
 
         final WrittenEvaluation writtenEvaluation = (WrittenEvaluation) rootDomainObject
                 .readEvaluationByOID(writtenEvaluationOID);
 
-        if (writtenEvaluation == null || student == null) {
+        if (writtenEvaluation == null || registration == null) {
             throw new InvalidArgumentsServiceException();
         }
 
-        writtenEvaluation.unEnrolStudent(student);
+        writtenEvaluation.unEnrolStudent(registration);
     }
 
 }

@@ -43,8 +43,8 @@ public class DeleteGroupingMembersByExecutionCourseID extends Service {
         List executionCourseStudentNumbers = new ArrayList();
         final List<Attends> attends = executionCourse.getAttends();
         for (final Attends attend : attends) {
-            final Registration student = attend.getAluno();
-            executionCourseStudentNumbers.add(student.getNumber());
+            final Registration registration = attend.getAluno();
+            executionCourseStudentNumbers.add(registration.getNumber());
         }
 
         List attendsElements = new ArrayList();

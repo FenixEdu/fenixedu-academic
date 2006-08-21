@@ -62,12 +62,12 @@ public class ReadStudentMarksByCurricularCourse extends Service {
 
 		
 		List<StudentCurricularPlan> studentCurricularPlans = null;
-		Registration student = Registration.readStudentByNumberAndDegreeType(studentNumber, DegreeType.MASTER_DEGREE);
-		if(student == null) {
+		Registration registration = Registration.readStudentByNumberAndDegreeType(studentNumber, DegreeType.MASTER_DEGREE);
+		if(registration == null) {
 			throw new ExistingServiceException();
 		} 
 		
-		studentCurricularPlans = student.getStudentCurricularPlans();
+		studentCurricularPlans = registration.getStudentCurricularPlans();
 
 		StudentCurricularPlan studentCurricularPlan = (StudentCurricularPlan) CollectionUtils.find(
 				studentCurricularPlans, new Predicate() {

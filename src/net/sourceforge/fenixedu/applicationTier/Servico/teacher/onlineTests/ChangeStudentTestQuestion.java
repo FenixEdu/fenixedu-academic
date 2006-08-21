@@ -91,15 +91,15 @@ public class ChangeStudentTestQuestion extends Service {
                     currentDistributedTest, path.replace('\\', '/'))));
 
             if (studentsType.getType().intValue() == TestQuestionStudentsChangesType.THIS_STUDENT) {
-                Registration student = rootDomainObject.readRegistrationByOID(studentId);
-                if (student == null)
+                Registration registration = rootDomainObject.readRegistrationByOID(studentId);
+                if (registration == null)
                     throw new InvalidArgumentsServiceException();
-            	studentsTestQuestionList.add(StudentTestQuestion.findStudentTestQuestion(oldQuestion, student, currentDistributedTest));
+            	studentsTestQuestionList.add(StudentTestQuestion.findStudentTestQuestion(oldQuestion, registration, currentDistributedTest));
             } else if (studentsType.getType().intValue() == TestQuestionStudentsChangesType.STUDENTS_FROM_TEST) {
-                Registration student = rootDomainObject.readRegistrationByOID(studentId);
-                if (student == null)
+                Registration registration = rootDomainObject.readRegistrationByOID(studentId);
+                if (registration == null)
                     throw new InvalidArgumentsServiceException();
-                Integer order = StudentTestQuestion.findStudentTestQuestion(oldQuestion, student, currentDistributedTest).getTestQuestionOrder();
+                Integer order = StudentTestQuestion.findStudentTestQuestion(oldQuestion, registration, currentDistributedTest).getTestQuestionOrder();
                 studentsTestQuestionList = currentDistributedTest.findStudentTestQuestionsByTestQuestionOrder(order);
             } else
                 studentsTestQuestionList = StudentTestQuestion.findStudentTestQuestions(oldQuestion, currentDistributedTest);

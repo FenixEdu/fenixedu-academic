@@ -32,15 +32,15 @@ public class ReadStudentTest extends Service {
         List<InfoStudentTestQuestion> infoStudentTestQuestionList = new ArrayList<InfoStudentTestQuestion>();
         path = path.replace('\\', '/');
         
-        Registration student = Registration.readByUsername(userName);
-        if (student == null)
+        Registration registration = Registration.readByUsername(userName);
+        if (registration == null)
             throw new FenixServiceException();
         DistributedTest distributedTest = rootDomainObject.readDistributedTestByOID(distributedTestId);
         if (distributedTest == null) {
             throw new InvalidArgumentsServiceException();
         }
 
-        Set<StudentTestQuestion> studentTestQuestionList = StudentTestQuestion.findStudentTestQuestions(student, distributedTest);
+        Set<StudentTestQuestion> studentTestQuestionList = StudentTestQuestion.findStudentTestQuestions(registration, distributedTest);
         if (studentTestQuestionList.size() == 0)
             throw new InvalidArgumentsServiceException();
 
@@ -63,7 +63,7 @@ public class ReadStudentTest extends Service {
         if (log.booleanValue()) {
             StudentTestLog studentTestLog = new StudentTestLog();
             studentTestLog.setDistributedTest(distributedTest);
-            studentTestLog.setStudent(student);
+            studentTestLog.setStudent(registration);
             studentTestLog.setDate(Calendar.getInstance().getTime());
             studentTestLog.setEvent(new String("Ler Ficha de Trabalho"));
         }

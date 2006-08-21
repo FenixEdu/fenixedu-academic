@@ -29,8 +29,8 @@ public class ClassEnrollmentAuthorizationFilter extends Filtro {
 
     public void execute(ServiceRequest request, ServiceResponse response) throws FilterException, Exception {
 
-        final Registration student = getRemoteUser(request).getPerson().getStudentByUsername();
-        final StudentCurricularPlan studentCurricularPlan = student.getActiveStudentCurricularPlan(); 
+        final Registration registration = getRemoteUser(request).getPerson().getStudentByUsername();
+        final StudentCurricularPlan studentCurricularPlan = registration.getActiveStudentCurricularPlan(); 
         
         if (studentCurricularPlan != null) {
         	EnrolmentPeriodInClasses enrolmentPeriodInClasses = studentCurricularPlan.getDegreeCurricularPlan().getCurrentClassesEnrollmentPeriod();

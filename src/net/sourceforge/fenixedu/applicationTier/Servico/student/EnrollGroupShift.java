@@ -47,7 +47,7 @@ public class EnrollGroupShift extends Service {
             throw new InvalidStudentNumberServiceException();
         }
 
-        Registration student = Registration.readByUsername(username);
+        Registration registration = Registration.readByUsername(username);
 
         IGroupEnrolmentStrategyFactory enrolmentGroupPolicyStrategyFactory = GroupEnrolmentStrategyFactory
                 .getInstance();
@@ -58,7 +58,7 @@ public class EnrollGroupShift extends Service {
             throw new NotAuthorizedException();
         }
 
-        if (!checkStudentInStudentGroup(student, studentGroup)) {
+        if (!checkStudentInStudentGroup(registration, studentGroup)) {
             throw new InvalidSituationServiceException();
         }
 

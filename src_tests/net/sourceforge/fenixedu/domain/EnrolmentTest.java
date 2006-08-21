@@ -126,7 +126,7 @@ public class EnrolmentTest extends DomainTestBase {
 		executionCourseToUnEnrollImprovement = new ExecutionCourse();
 		
 		StudentCurricularPlan scp = new StudentCurricularPlan();
-		Registration student = new Registration();
+		Registration registration = new Registration();
 		Registration otherStudent = new Registration();
 		CurricularCourse cc = new CurricularCourse();
 		ExecutionCourse ec1 = new ExecutionCourse();
@@ -136,8 +136,8 @@ public class EnrolmentTest extends DomainTestBase {
 		enrolmentToUnEnrollImprovement.addEvaluations(improvementEnrolmentEvaluation);
 		enrolmentToUnEnrollImprovement.addEvaluations(nonImprovementEnrolmentEvaluation);
 		
-		scp.setStudent(student);
-		attendsToDelete.setAluno(student);
+		scp.setStudent(registration);
+		attendsToDelete.setAluno(registration);
 		attendsToDelete.setDisciplinaExecucao(executionCourseToUnEnrollImprovement);
 		otherAttends.setAluno(otherStudent);
 		otherAttends.setDisciplinaExecucao(executionCourseToUnEnrollImprovement);

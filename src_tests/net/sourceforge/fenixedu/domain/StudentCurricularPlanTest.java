@@ -40,11 +40,11 @@ public class StudentCurricularPlanTest extends DomainTestBase {
 	protected void setUp() throws Exception {
 		super.setUp();
 		
-		Registration student = new Registration();
+		Registration registration = new Registration();
 		DegreeCurricularPlan degreeCurricularPlan = new DegreeCurricularPlan();
 		
-		setUpChangeState(student, degreeCurricularPlan);
-		setUpCreate(student, degreeCurricularPlan);
+		setUpChangeState(registration, degreeCurricularPlan);
+		setUpCreate(registration, degreeCurricularPlan);
 	}
 
 	private void setUpSetStudentAreasWithoutRestrictions() {

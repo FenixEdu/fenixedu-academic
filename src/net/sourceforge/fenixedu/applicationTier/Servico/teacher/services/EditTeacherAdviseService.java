@@ -34,14 +34,14 @@ public class EditTeacherAdviseService extends Service {
         ExecutionPeriod executionPeriod = rootDomainObject.readExecutionPeriodByOID(executionPeriodID);
 
         List<Registration> students = rootDomainObject.getStudents();
-        Registration student = (Registration) CollectionUtils.find(students, new Predicate() {
+        Registration registration = (Registration) CollectionUtils.find(students, new Predicate() {
             public boolean evaluate(Object arg0) {
                 Registration tempStudent = (Registration) arg0;
                 return tempStudent.getNumber().equals(studentNumber);
             }
         });
 
-        if (student == null) {
+        if (registration == null) {
             throw new FenixServiceException("errors.invalid.student-number");
         }
 
@@ -49,10 +49,10 @@ public class EditTeacherAdviseService extends Service {
         if (teacherService == null) {
             teacherService = new TeacherService(teacher, executionPeriod);
         }
-        List<Advise> advises = student.getAdvisesByTeacher(teacher);
+        List<Advise> advises = registration.getAdvisesByTeacher(teacher);
         Advise advise = null;
         if (advises == null || advises.isEmpty()) {
-            advise = new Advise(teacher, student, adviseType, executionPeriod, executionPeriod);
+            advise = new Advise(teacher, registration, adviseType, executionPeriod, executionPeriod);
         } else {
             advise = advises.iterator().next();
         }

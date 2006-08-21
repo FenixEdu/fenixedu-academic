@@ -27,8 +27,8 @@ public class ReadStudentsByNameIDnumberIDtypeAndStudentNumber extends Service {
         return (List) CollectionUtils.collect(masterDegreeStudents, new Transformer() {
 
             public Object transform(Object arg0) {
-                Registration student = (Registration) arg0;
-                return InfoStudent.newInfoFromDomain(student);
+                Registration registration = (Registration) arg0;
+                return InfoStudent.newInfoFromDomain(registration);
             }
 
         });

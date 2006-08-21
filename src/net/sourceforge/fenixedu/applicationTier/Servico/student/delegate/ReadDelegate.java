@@ -22,11 +22,11 @@ public class ReadDelegate extends Service {
     public InfoDelegate run(HashMap hashMap) throws ExcepcaoPersistencia {
 
         final String user = (String) hashMap.get("user");
-        final Registration student = Registration.readByUsername(user);
+        final Registration registration = Registration.readByUsername(user);
 
         Delegate delegate = null;
-        if (!student.getDelegate().isEmpty()) {
-            delegate = student.getDelegate().get(0);
+        if (!registration.getDelegate().isEmpty()) {
+            delegate = registration.getDelegate().get(0);
         }
 
         return InfoDelegate.newInfoFromDomain(delegate);

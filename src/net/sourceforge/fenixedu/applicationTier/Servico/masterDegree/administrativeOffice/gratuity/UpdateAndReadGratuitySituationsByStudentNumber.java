@@ -22,8 +22,8 @@ public class UpdateAndReadGratuitySituationsByStudentNumber extends Service {
 
     public List<InfoGratuitySituation> run(Integer studentNumber) throws ExcepcaoPersistencia {
         
-        Registration student = Registration.readStudentByNumberAndDegreeType(studentNumber, DegreeType.MASTER_DEGREE);
-        List<StudentCurricularPlan> studentCurricularPlansList = student.getStudentCurricularPlans();
+        Registration registration = Registration.readStudentByNumberAndDegreeType(studentNumber, DegreeType.MASTER_DEGREE);
+        List<StudentCurricularPlan> studentCurricularPlansList = registration.getStudentCurricularPlans();
 
         List<InfoGratuitySituation> infoGratuitySituationsList = new ArrayList<InfoGratuitySituation>();
 

@@ -29,15 +29,15 @@ public class ReadStudentTestQuestionImage extends Service {
     public String run(String userName, Integer distributedTestId, Integer questionId, Integer imageId,
             String feedbackId, String path) throws FenixServiceException, ExcepcaoPersistencia {
         path = path.replace('\\', '/');
-        Registration student = Registration.readByUsername(userName);
-        if (student == null)
+        Registration registration = Registration.readByUsername(userName);
+        if (registration == null)
             throw new FenixServiceException();
 
         DistributedTest distributedTest = rootDomainObject.readDistributedTestByOID(distributedTestId);
         if (distributedTest == null)
             throw new FenixServiceException();
 
-        Set<StudentTestQuestion> studentTestQuestionList = StudentTestQuestion.findStudentTestQuestions(student, distributedTest);
+        Set<StudentTestQuestion> studentTestQuestionList = StudentTestQuestion.findStudentTestQuestions(registration, distributedTest);
         
 
         for (StudentTestQuestion studentTestQuestion : studentTestQuestionList) {
