@@ -94,11 +94,11 @@ public class EndCurricularCourseScopeDA extends FenixDispatchAction {
             ServiceUtils.executeService(userView, "EndCurricularCourseScope", args);
         } catch (NonExistingServiceException ex) {
             throw new NonExistingActionException(ex.getMessage(), mapping
-                    .findForward("readCurricularCourse"));
+                    .findForward("readCurricularCourse"), ex);
         } catch (InvalidArgumentsServiceException ex) {
-            throw new InvalidArgumentsActionException("error.manager.wrongDates");
+            throw new InvalidArgumentsActionException("error.manager.wrongDates", ex);
         } catch (FenixServiceException fenixServiceException) {
-            throw new FenixActionException(fenixServiceException.getMessage());
+            throw new FenixActionException(fenixServiceException.getMessage(), fenixServiceException);
         }
 
         return mapping.findForward("readCurricularCourse");
