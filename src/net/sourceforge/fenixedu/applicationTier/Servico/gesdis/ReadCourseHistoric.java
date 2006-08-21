@@ -8,7 +8,6 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse;
-import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseWithInfoDegreeCurricularPlan;
 import net.sourceforge.fenixedu.dataTransferObject.gesdis.InfoCourseHistoric;
 import net.sourceforge.fenixedu.dataTransferObject.gesdis.InfoCourseHistoricWithInfoCurricularCourse;
 import net.sourceforge.fenixedu.dataTransferObject.gesdis.InfoSiteCourseHistoric;
@@ -44,7 +43,7 @@ public class ReadCourseHistoric extends Service {
 	private InfoSiteCourseHistoric getInfoSiteCourseHistoric(final ExecutionYear executionYear, CurricularCourse curricularCourse, Integer semester) throws ExcepcaoPersistencia {
 		InfoSiteCourseHistoric infoSiteCourseHistoric = new InfoSiteCourseHistoric();
 
-		InfoCurricularCourse infoCurricularCourse = InfoCurricularCourseWithInfoDegreeCurricularPlan.newInfoFromDomain(curricularCourse);
+		InfoCurricularCourse infoCurricularCourse = InfoCurricularCourse.newInfoFromDomain(curricularCourse);
 		infoSiteCourseHistoric.setInfoCurricularCourse(infoCurricularCourse);
 
 		final List<CourseHistoric> courseHistorics = curricularCourse.getAssociatedCourseHistorics();

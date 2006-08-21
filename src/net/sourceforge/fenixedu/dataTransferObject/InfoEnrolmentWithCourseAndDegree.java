@@ -13,7 +13,7 @@ public class InfoEnrolmentWithCourseAndDegree extends InfoEnrolment {
     public void copyFromDomain(Enrolment enrolment) {
         super.copyFromDomain(enrolment);
         if (enrolment != null) {
-            setInfoCurricularCourse(InfoCurricularCourseWithInfoDegreeAndScopes.newInfoFromDomain(enrolment
+            setInfoCurricularCourse(InfoCurricularCourse.newInfoFromDomain(enrolment
                     .getCurricularCourse()));//with degree
 
         }

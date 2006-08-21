@@ -15,7 +15,7 @@ public class InfoCompetenceCourseWithCurricularCourses extends
         	List<InfoCurricularCourse> infoCurricularCourses = new ArrayList<InfoCurricularCourse>();
         	for (CurricularCourse course : competenceCourse.getAssociatedCurricularCourses()) {
 				if (!course.isBolonha()) {
-                    infoCurricularCourses.add(InfoCurricularCourseWithInfoDegreeCurricularPlan.newInfoFromDomain(course));                    
+                    infoCurricularCourses.add(InfoCurricularCourse.newInfoFromDomain(course));                    
                 }
 			}
             setAssociatedCurricularCourses(infoCurricularCourses);

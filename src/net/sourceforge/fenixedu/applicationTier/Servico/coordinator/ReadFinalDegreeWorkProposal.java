@@ -114,8 +114,6 @@ public class ReadFinalDegreeWorkProposal extends Service {
             if (!proposal.getScheduleing().getExecutionDegreesSet().isEmpty()) {
             	final ExecutionDegree executionDegree = proposal.getScheduleing().getExecutionDegrees().iterator().next();
                 infoProposal.setExecutionDegree(new InfoExecutionDegree(executionDegree));
-                infoProposal.getExecutionDegree().setIdInternal(
-                        proposal.getScheduleing().getExecutionDegrees().iterator().next().getIdInternal());
             }
         }
 

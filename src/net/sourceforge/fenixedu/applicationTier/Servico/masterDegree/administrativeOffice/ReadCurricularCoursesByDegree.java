@@ -7,7 +7,7 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse;
-import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseWithInfoDegreeAndScopes;
+import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
@@ -37,7 +37,7 @@ public class ReadCurricularCoursesByDegree extends Service {
         List<InfoCurricularCourse> infoCurricularCourses = new ArrayList<InfoCurricularCourse>();
         for (CurricularCourse curricularCourse : executionDegree.getDegreeCurricularPlan()
                 .getCurricularCourses()) {
-            infoCurricularCourses.add(InfoCurricularCourseWithInfoDegreeAndScopes
+            infoCurricularCourses.add(InfoCurricularCourse
                     .newInfoFromDomain(curricularCourse));
         }
 
@@ -51,7 +51,7 @@ public class ReadCurricularCoursesByDegree extends Service {
 
         List<InfoCurricularCourse> infoCurricularCourses = new ArrayList<InfoCurricularCourse>();
         for (CurricularCourse curricularCourse : degreeCurricularPlan.getCurricularCourses()) {
-            infoCurricularCourses.add(InfoCurricularCourseWithInfoDegreeAndScopes
+            infoCurricularCourses.add(InfoCurricularCourse
                     .newInfoFromDomain(curricularCourse));
         }
 

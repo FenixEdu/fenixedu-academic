@@ -11,7 +11,7 @@ public class InfoCurricularCourseEquivalence extends InfoObject {
     public void copyFromDomain(final CurricularCourseEquivalence curricularCourseEquivalence) {
         super.copyFromDomain(curricularCourseEquivalence);
         if (curricularCourseEquivalence != null) {
-        	setInfoOldCurricularCourse(InfoCurricularCourseWithInfoDegreeCurricularPlan.newInfoFromDomain(curricularCourseEquivalence.getOldCurricularCourses().get(0)));
+        	setInfoOldCurricularCourse(InfoCurricularCourse.newInfoFromDomain(curricularCourseEquivalence.getOldCurricularCourses().get(0)));
         	setInfoEquivalentCurricularCourse(InfoCurricularCourse.newInfoFromDomain(curricularCourseEquivalence.getEquivalentCurricularCourse()));
         }
     }

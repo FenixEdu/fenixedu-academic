@@ -7,7 +7,7 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseScope;
-import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseWithInfoDegreeAndScopes;
+import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
@@ -36,7 +36,7 @@ public class ReadExecutionCourseWithAssociatedCurricularCourses extends Service 
         infoExecutionCourse.setAssociatedInfoCurricularCourses(infoCurricularCourses);
 
         for (final CurricularCourse curricularCourse : executionCourse.getAssociatedCurricularCourses()) {
-            InfoCurricularCourse infoCurricularCourse = InfoCurricularCourseWithInfoDegreeAndScopes
+            InfoCurricularCourse infoCurricularCourse = InfoCurricularCourse
                     .newInfoFromDomain(curricularCourse);
 
             CollectionUtils.filter(infoCurricularCourse.getInfoScopes(), new Predicate() {

@@ -242,10 +242,7 @@ public class Person extends Person_Base {
 
     private Login getLoginIdentification() {
         User personUser = getUser();
-        if (personUser != null) {
-            return personUser.readUserLoginIdentification();
-        }
-        return null;
+        return personUser == null ? null : personUser.readUserLoginIdentification();
     }
 
     public String getUsername() {
