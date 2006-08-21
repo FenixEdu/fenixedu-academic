@@ -56,7 +56,9 @@ public class GetEnrolmentGrade {
             	}
             }
             final Person person = latestEvaluation.getPersonResponsibleForGrade();
-            infolatestEvaluation.setInfoPersonResponsibleForGrade(newInfoPersonFromDomain(person));
+            if (person != null) {
+                infolatestEvaluation.setInfoPersonResponsibleForGrade(newInfoPersonFromDomain(person));
+            }
         }
         return infolatestEvaluation;
     }
