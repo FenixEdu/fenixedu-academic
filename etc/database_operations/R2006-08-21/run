@@ -27,3 +27,5 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "ReReCreate Functionalities Tables" CreateFunctionalitiesTables.sql
+execute "Alter table file" AlterTableFile.sql
