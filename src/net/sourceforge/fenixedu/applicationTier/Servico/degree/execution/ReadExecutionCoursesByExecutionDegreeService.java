@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.degree.execution;
 
 import java.util.List;
+import java.util.Set;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -35,7 +36,7 @@ public class ReadExecutionCoursesByExecutionDegreeService extends Service {
             throw new NonExistingExecutionDegree();
         }
 
-        List<ExecutionCourse> executionCourseList =  executionDegree.getDegreeCurricularPlan().getExecutionCoursesByExecutionPeriod(executionPeriod);
+        Set<ExecutionCourse> executionCourseList =  executionDegree.getDegreeCurricularPlan().getExecutionCoursesByExecutionPeriod(executionPeriod);
 
         List infoExecutionCourseList = (List) CollectionUtils.collect(executionCourseList, new Transformer() {
 

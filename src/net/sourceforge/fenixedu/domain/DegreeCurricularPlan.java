@@ -399,16 +399,31 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
         return result;
     }
 
-    public List<ExecutionCourse> getExecutionCoursesByExecutionPeriod(ExecutionPeriod executionPeriod) {
-        final List<ExecutionCourse> result = new ArrayList<ExecutionCourse>();
-        for (final CurricularCourse curricularCourse : this.getCurricularCourses()) {
+    public Set<ExecutionCourse> getExecutionCoursesByExecutionPeriod(ExecutionPeriod executionPeriod) {
+        final Set<ExecutionCourse> result = new HashSet<ExecutionCourse>();
+        for (final CurricularCourse curricularCourse : super.getCurricularCourses()) {
             for (final ExecutionCourse executionCourse : curricularCourse.getAssociatedExecutionCourses()) {
                 if (executionCourse.getExecutionPeriod() == executionPeriod) {
                     result.add(executionCourse);
                 }
             }
         }
+        addExecutionCoursesForExecutionPeriod(result, executionPeriod, getRoot().getChildContextsSet());
         return result;
+    }
+
+    public void addExecutionCoursesForExecutionPeriod(final Set<ExecutionCourse> executionCourses,
+            final ExecutionPeriod executionPeriod, final Set<Context> contexts) {
+        for (final Context context : contexts) {
+            final DegreeModule degreeModule = context.getChildDegreeModule();
+            if (degreeModule instanceof CurricularCourse) {
+                final CurricularCourse curricularCourse = (CurricularCourse) degreeModule;
+                executionCourses.addAll(curricularCourse.getExecutionCoursesByExecutionPeriod(executionPeriod));
+            } else if (degreeModule instanceof CourseGroup) {
+                final CourseGroup courseGroup = (CourseGroup) degreeModule;
+                addExecutionCoursesForExecutionPeriod(executionCourses, executionPeriod, courseGroup.getChildContextsSet());
+            }
+        }
     }
 
     public List<ExecutionCourse> getExecutionCoursesByExecutionPeriodAndSemesterAndYear(
