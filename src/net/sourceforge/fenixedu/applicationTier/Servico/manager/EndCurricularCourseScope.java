@@ -4,7 +4,7 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
-import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseScope;
+import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseScopeEditor;
 import net.sourceforge.fenixedu.domain.CurricularCourseScope;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
@@ -14,7 +14,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  */
 public class EndCurricularCourseScope extends Service {
 
-    public void run(InfoCurricularCourseScope newInfoCurricularCourseScope) throws ExcepcaoPersistencia,
+    public void run(InfoCurricularCourseScopeEditor newInfoCurricularCourseScope) throws ExcepcaoPersistencia,
             FenixServiceException {
 
         if (!newInfoCurricularCourseScope.getEndDate()
