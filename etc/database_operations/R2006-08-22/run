@@ -26,3 +26,5 @@ function executeWithTempFile() {
 	rm tmp.sql
 	echo
 }
+
+execute "Create LessonPlanning Table" createLessonPlanningTable.sql
