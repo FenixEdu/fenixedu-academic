@@ -97,10 +97,10 @@ public class SelectCandidaciesService extends Service {
 		return infoClassification;
 	}
 
-	private StudentCurricularPlan getStudentCurricularPlan(Registration student) {
+	private StudentCurricularPlan getStudentCurricularPlan(Registration registration) {
 		long startDate = Long.MAX_VALUE;
 		StudentCurricularPlan selectedSCP = null;
-		for (StudentCurricularPlan studentCurricularPlan : student.getStudentCurricularPlans()) {
+		for (StudentCurricularPlan studentCurricularPlan : registration.getStudentCurricularPlans()) {
 			if (studentCurricularPlan.getStartDate().getTime() < startDate) {
 				startDate = studentCurricularPlan.getStartDate().getTime();
 				selectedSCP = studentCurricularPlan;

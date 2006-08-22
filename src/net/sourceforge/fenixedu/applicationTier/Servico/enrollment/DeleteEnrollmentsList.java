@@ -11,12 +11,12 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 public class DeleteEnrollmentsList extends Service {
 
 	// degreeType used by filter
-    public void run(final Registration student, final DegreeType degreeType, final List<Integer> enrolmentIDList) throws FenixServiceException {
+    public void run(final Registration registration, final DegreeType degreeType, final List<Integer> enrolmentIDList) throws FenixServiceException {
     	
-        if (student != null && enrolmentIDList != null) {
+        if (registration != null && enrolmentIDList != null) {
             for (final Integer enrolmentID : enrolmentIDList) {
             	
-                final Enrolment enrolment = student.findEnrolmentByEnrolmentID(enrolmentID);
+                final Enrolment enrolment = registration.findEnrolmentByEnrolmentID(enrolmentID);
                 if (enrolment != null) {
                     enrolment.unEnroll();
                 }                

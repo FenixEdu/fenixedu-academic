@@ -43,8 +43,8 @@ public class SpecialSeasonEnrolmentBean implements Serializable{
 	public Registration getStudent() {
 		return (this.student != null ) ? student.getObject() : null;
 	}
-	public void setStudent(Registration student) {
-		this.student = new DomainReference<Registration>(student);
+	public void setStudent(Registration registration) {
+		this.student = new DomainReference<Registration>(registration);
 	}
 	public Integer getStudentNumber() {
 		return studentNumber;

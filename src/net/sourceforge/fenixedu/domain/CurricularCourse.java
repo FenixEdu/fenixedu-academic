@@ -801,7 +801,7 @@ public class CurricularCourse extends CurricularCourse_Base {
         return result;
     }
 
-    private List<Enrolment> getActiveEnrollments(ExecutionPeriod executionPeriod, Registration student) {
+    private List<Enrolment> getActiveEnrollments(ExecutionPeriod executionPeriod, Registration registration) {
         List<Enrolment> results = new ArrayList<Enrolment>();
         for (final CurriculumModule curriculumModule : getCurriculumModules()) {
             Enrolment enrollment = (Enrolment) curriculumModule;
@@ -809,8 +809,8 @@ public class CurricularCourse extends CurricularCourse_Base {
             filters &= !enrollment.getEnrollmentState().equals(EnrollmentState.ANNULED);
             filters &= executionPeriod == null
                     || enrollment.getExecutionPeriod().equals(executionPeriod);
-            filters &= student == null
-                    || enrollment.getStudentCurricularPlan().getStudent().equals(student);
+            filters &= registration == null
+                    || enrollment.getStudentCurricularPlan().getStudent().equals(registration);
 
             if (filters) {
                 results.add(enrollment);
@@ -851,10 +851,10 @@ public class CurricularCourse extends CurricularCourse_Base {
         return result;
     }
 
-    public Enrolment getEnrolmentByStudentAndYear(Registration student, String year) {
+    public Enrolment getEnrolmentByStudentAndYear(Registration registration, String year) {
         for (final CurriculumModule curriculumModule : getCurriculumModules()) {
             final Enrolment enrolment = (Enrolment) curriculumModule;
-            if (enrolment.getStudentCurricularPlan().getStudent().equals(student)
+            if (enrolment.getStudentCurricularPlan().getStudent().equals(registration)
                     && enrolment.getExecutionPeriod().getExecutionYear().getYear().equals(year)) {
                 return enrolment;
             }
@@ -862,8 +862,8 @@ public class CurricularCourse extends CurricularCourse_Base {
         return null;
     }
 
-    public List<Enrolment> getActiveEnrollments(Registration student) {
-        return getActiveEnrollments(null, student);
+    public List<Enrolment> getActiveEnrollments(Registration registration) {
+        return getActiveEnrollments(null, registration);
     }
 
     public List<Enrolment> getActiveEnrollments() {

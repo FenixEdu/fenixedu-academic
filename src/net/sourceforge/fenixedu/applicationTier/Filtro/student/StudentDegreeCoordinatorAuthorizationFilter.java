@@ -57,9 +57,9 @@ public class StudentDegreeCoordinatorAuthorizationFilter extends AccessControlFi
     private String authorizedCoordinator(IUserView id, Object[] arguments) {
         String username = (String) arguments[0];
 
-        Registration student1 = Registration.readByUsername(username);
+        Registration registration1 = Registration.readByUsername(username);
 
-        List students = student1.getPerson().getStudents();
+        List students = registration1.getPerson().getStudents();
 
         // for each of the Person's Registration roles
         for (Iterator studentsIterator = students.iterator(); studentsIterator.hasNext();) {

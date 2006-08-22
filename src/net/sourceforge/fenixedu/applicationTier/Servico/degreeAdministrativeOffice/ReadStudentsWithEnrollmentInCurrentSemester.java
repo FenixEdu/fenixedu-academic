@@ -51,11 +51,11 @@ public class ReadStudentsWithEnrollmentInCurrentSemester extends Service {
         return allStudentsData;
     }
 
-    private boolean studentHasEnrollments(Registration student) throws ExcepcaoPersistencia {
+    private boolean studentHasEnrollments(Registration registration) throws ExcepcaoPersistencia {
 
         ExecutionPeriod executionPeriod = ExecutionPeriod.readActualExecutionPeriod();
 
-        List<Enrolment> enrollments = student.getActiveStudentCurricularPlan()
+        List<Enrolment> enrollments = registration.getActiveStudentCurricularPlan()
                 .getEnrolmentsByExecutionPeriod(executionPeriod);
 
         for (int iter = 0; iter < enrollments.size(); iter++) {

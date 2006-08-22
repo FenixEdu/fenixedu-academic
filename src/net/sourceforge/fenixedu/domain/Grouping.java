@@ -122,9 +122,9 @@ public class Grouping extends Grouping_Base {
         return this.getAttends().size();
     }
 
-    public Attends getStudentAttend(Registration student) {
+    public Attends getStudentAttend(Registration registration) {
         for (final Attends attend : this.getAttends()) {
-            if (attend.getAluno() == student) {
+            if (attend.getAluno() == registration) {
                 return attend;
             }
         }
@@ -266,15 +266,15 @@ public class Grouping extends Grouping_Base {
         else
             newStudentGroup = new StudentGroup(groupNumber, this);
 
-        for (Registration student : students) {
-            Attends attend = getStudentAttend(student);
+        for (Registration registration : students) {
+            Attends attend = getStudentAttend(registration);
             newStudentGroup.addAttends(attend);
         }
     }
 
     private void checkForStudentsInStudentGroupsAndGrouping(List<Registration> students) {
-        for (Registration student : students) {
-            Attends attend = getStudentAttend(student);
+        for (Registration registration : students) {
+            Attends attend = getStudentAttend(registration);
             for (final StudentGroup studentGroup : this.getStudentGroups()) {
                 if (studentGroup.getAttends().contains(attend))
                     throw new DomainException(this.getClass().getName(),

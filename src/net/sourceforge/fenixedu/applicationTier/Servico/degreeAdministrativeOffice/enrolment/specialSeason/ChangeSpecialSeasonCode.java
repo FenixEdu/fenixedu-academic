@@ -8,12 +8,12 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 
 public class ChangeSpecialSeasonCode extends Service {
 	
-	public void run(Registration student, ExecutionYear executionYear, SpecialSeasonCode specialSeasonCode) throws FenixServiceException {
+	public void run(Registration registration, ExecutionYear executionYear, SpecialSeasonCode specialSeasonCode) throws FenixServiceException {
 		if(executionYear == null) {
 			throw new FenixServiceException("executionYear.invalid.argument");
 		}
 
-		student.setSpecialSeasonCode(executionYear, specialSeasonCode);
+		registration.setSpecialSeasonCode(executionYear, specialSeasonCode);
 	}
 
 }

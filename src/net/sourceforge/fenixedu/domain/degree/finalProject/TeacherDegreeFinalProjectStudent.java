@@ -14,11 +14,11 @@ public class TeacherDegreeFinalProjectStudent extends TeacherDegreeFinalProjectS
     }
 
     public TeacherDegreeFinalProjectStudent(ExecutionPeriod executionPeriod, Teacher teacher,
-            Registration student) {
+            Registration registration) {
     	this();
         setExecutionPeriod(executionPeriod);
         setTeacher(teacher);
-        setStudent(student);
+        setStudent(registration);
     }
 
     public boolean belongsToExecutionPeriod(ExecutionPeriod executionPeriod) {

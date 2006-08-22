@@ -17,12 +17,12 @@ import net.sourceforge.fenixedu.util.EnrolmentAction;
  */
 public class EnrolmentLog extends EnrolmentLog_Base {
 
-    public EnrolmentLog(EnrolmentAction action, Registration student, CurricularCourse curricularCourse, ExecutionPeriod executionPeriod, String who) {
+    public EnrolmentLog(EnrolmentAction action, Registration registration, CurricularCourse curricularCourse, ExecutionPeriod executionPeriod, String who) {
     	super();
     	setRootDomainObject(RootDomainObject.getInstance());
         this.setDate(new Date());
         this.setAction(action);
-        this.setStudent(student);        
+        this.setStudent(registration);        
         this.setCurricularCourse(curricularCourse);
         this.setExecutionPeriod(executionPeriod);
         this.setWho(who);

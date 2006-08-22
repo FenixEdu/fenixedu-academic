@@ -38,8 +38,8 @@ public class StudentTestQuestion extends StudentTestQuestion_Base {
         super.deleteDomainObject();
     }
 
-	public static Set<StudentTestQuestion> findStudentTestQuestions(final Registration student, final DistributedTest distributedTest) {
-		return findStudentTestQuestions(student.getStudentTestsQuestionsSet(), distributedTest);
+	public static Set<StudentTestQuestion> findStudentTestQuestions(final Registration registration, final DistributedTest distributedTest) {
+		return findStudentTestQuestions(registration.getStudentTestsQuestionsSet(), distributedTest);
 	}
 
 	public static Set<StudentTestQuestion> findStudentTestQuestions(final Question question, final DistributedTest distributedTest) {
@@ -56,9 +56,9 @@ public class StudentTestQuestion extends StudentTestQuestion_Base {
 		return studentTestQuestions;
 	}
 
-	public static StudentTestQuestion findStudentTestQuestion(final Question question, final Registration student, final DistributedTest distributedTest) {
+	public static StudentTestQuestion findStudentTestQuestion(final Question question, final Registration registration, final DistributedTest distributedTest) {
 		for (final StudentTestQuestion studentTestQuestion : question.getStudentTestsQuestionsSet()) {
-			if (distributedTest == studentTestQuestion.getDistributedTest() && student == studentTestQuestion.getStudent()) {
+			if (distributedTest == studentTestQuestion.getDistributedTest() && registration == studentTestQuestion.getStudent()) {
 				return studentTestQuestion;
 			}
 		}

@@ -9,9 +9,9 @@ public class YearStudentSpecialSeasonCode extends YearStudentSpecialSeasonCode_B
 		setRootDomainObject(RootDomainObject.getInstance());
 	}
     
-    public  YearStudentSpecialSeasonCode(Registration student, ExecutionYear executionYear, SpecialSeasonCode specialSeasonCode) {
+    public  YearStudentSpecialSeasonCode(Registration registration, ExecutionYear executionYear, SpecialSeasonCode specialSeasonCode) {
         this();
-        setStudent(student);
+        setStudent(registration);
         setExecutionYear(executionYear);
         setSpecialSeasonCode(specialSeasonCode);
     }

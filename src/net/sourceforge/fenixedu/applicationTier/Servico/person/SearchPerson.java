@@ -201,12 +201,12 @@ public class SearchPerson extends Service {
             return degreeType == null || verifyDegreeType(degree, person.getStudentByType(degreeType));
         }
 
-        private boolean verifyDegreeType(final Degree degree, final Registration studentByType) {
-            return studentByType != null && (degree == null || verifyDegree(degree, studentByType));
+        private boolean verifyDegreeType(final Degree degree, final Registration registrationByType) {
+            return registrationByType != null && (degree == null || verifyDegree(degree, registrationByType));
         }
 
-        private boolean verifyDegree(final Degree degree, final Registration studentByType) {
-            final StudentCurricularPlan studentCurricularPlan = studentByType
+        private boolean verifyDegree(final Degree degree, final Registration registrationByType) {
+            final StudentCurricularPlan studentCurricularPlan = registrationByType
                     .getActiveStudentCurricularPlan();
             return (studentCurricularPlan != null && degree == studentCurricularPlan
                     .getDegreeCurricularPlan().getDegree());

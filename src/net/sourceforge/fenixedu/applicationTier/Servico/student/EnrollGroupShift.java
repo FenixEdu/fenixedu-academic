@@ -70,11 +70,11 @@ public class EnrollGroupShift extends Service {
         return true;
     }
 
-    private boolean checkStudentInStudentGroup(Registration student, StudentGroup studentGroup)
+    private boolean checkStudentInStudentGroup(Registration registration, StudentGroup studentGroup)
             throws FenixServiceException {
 
         for (final Attends attend : studentGroup.getAttends()) {
-            if (attend.getAluno() == student) {
+            if (attend.getAluno() == registration) {
                 return true;
             }
         }

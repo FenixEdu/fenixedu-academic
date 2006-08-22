@@ -344,23 +344,23 @@ public class WrittenEvaluation extends WrittenEvaluation_Base {
         return date.getTime();
     }
 
-    public void enrolStudent(Registration student) {
-        for (WrittenEvaluationEnrolment writtenEvaluationEnrolment : student
+    public void enrolStudent(Registration registration) {
+        for (WrittenEvaluationEnrolment writtenEvaluationEnrolment : registration
                 .getWrittenEvaluationEnrolments()) {
             if (writtenEvaluationEnrolment.getWrittenEvaluation() == this) {
                 throw new DomainException("error.alreadyEnrolledError");
             }
         }
-        new WrittenEvaluationEnrolment(this, student);
+        new WrittenEvaluationEnrolment(this, registration);
     }
 
-    public void unEnrolStudent(Registration student) {
+    public void unEnrolStudent(Registration registration) {
         if (!this.validUnEnrollment()) {
             throw new DomainException("error.notAuthorizedUnEnrollment");
         }
 
         WrittenEvaluationEnrolment writtenEvaluationEnrolmentToDelete = this
-                .getWrittenEvaluationEnrolmentFor(student);
+                .getWrittenEvaluationEnrolmentFor(registration);
         if (writtenEvaluationEnrolmentToDelete == null) {
             throw new DomainException("error.studentNotEnroled");
         }
@@ -448,8 +448,8 @@ public class WrittenEvaluation extends WrittenEvaluation_Base {
         return (Registration) studentsToDistribute.remove(pos % studentsToDistribute.size());
     }
 
-    public WrittenEvaluationEnrolment getWrittenEvaluationEnrolmentFor(final Registration student) {
-        for (final WrittenEvaluationEnrolment writtenEvaluationEnrolment : student
+    public WrittenEvaluationEnrolment getWrittenEvaluationEnrolmentFor(final Registration registration) {
+        for (final WrittenEvaluationEnrolment writtenEvaluationEnrolment : registration
                 .getWrittenEvaluationEnrolments()) {
             if (writtenEvaluationEnrolment.getWrittenEvaluation() == this) {
                 return writtenEvaluationEnrolment;

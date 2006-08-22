@@ -107,15 +107,15 @@ public class StudentCalendarBackingBean extends FenixBackingBean {
 	public Registration getStudent() {
 		if (student == null) {
 			final List<Registration> students = getUserView().getPerson().getStudents();
-            for (final Registration student : students) {
-                if (student.getDegreeType() == DegreeType.MASTER_DEGREE) {
-                    this.student = student;
+            for (final Registration registration : students) {
+                if (registration.getDegreeType() == DegreeType.MASTER_DEGREE) {
+                    this.student = registration;
                     return this.student;
                 }
             }
-			for (final Registration student : students) {
-				if (student.getDegreeType() == DegreeType.DEGREE) {
-					this.student = student;
+			for (final Registration registration : students) {
+				if (registration.getDegreeType() == DegreeType.DEGREE) {
+					this.student = registration;
 					return this.student;
 				}
 			}

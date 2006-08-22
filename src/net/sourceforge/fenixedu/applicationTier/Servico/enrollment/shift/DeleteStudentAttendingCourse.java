@@ -7,11 +7,11 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 
 public class DeleteStudentAttendingCourse extends Service {
 
-    public void run(Registration student, Integer executionCourseID) throws FenixServiceException {
-    	if (student == null) {
+    public void run(Registration registration, Integer executionCourseID) throws FenixServiceException {
+    	if (registration == null) {
             throw new FenixServiceException("error.exception.noStudents");
         }
-    	student.removeAttendFor(readExecutionCourse(executionCourseID));
+    	registration.removeAttendFor(readExecutionCourse(executionCourseID));
     }
 
     private ExecutionCourse readExecutionCourse(final Integer executionCourseID) throws FenixServiceException {

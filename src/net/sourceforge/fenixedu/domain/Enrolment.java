@@ -386,7 +386,7 @@ public class Enrolment extends Enrolment_Base {
         }
     }
 
-    private void createAttend(Registration student, CurricularCourse curricularCourse,
+    private void createAttend(Registration registration, CurricularCourse curricularCourse,
             ExecutionPeriod executionPeriod) {
 
         List executionCourses = curricularCourse.getExecutionCoursesByExecutionPeriod(executionPeriod);
@@ -406,19 +406,19 @@ public class Enrolment extends Enrolment_Base {
         }
 
         if (executionCourse != null) {
-            Attends attend = executionCourse.getAttendsByStudent(student);
+            Attends attend = executionCourse.getAttendsByStudent(registration);
 
             if (attend != null) {
                 addAttends(attend);
             } else {
-                Attends attendToWrite = new Attends(student, executionCourse);
+                Attends attendToWrite = new Attends(registration, executionCourse);
                 addAttends(attendToWrite);
             }
         }
     }
 
     public void createEnrolmentEvaluationForImprovement(Employee employee,
-            ExecutionPeriod currentExecutionPeriod, Registration student) {
+            ExecutionPeriod currentExecutionPeriod, Registration registration) {
 
         EnrolmentEvaluation enrolmentEvaluation = new EnrolmentEvaluation();
 
@@ -428,11 +428,11 @@ public class Enrolment extends Enrolment_Base {
         enrolmentEvaluation.setEnrolmentEvaluationState(EnrolmentEvaluationState.TEMPORARY_OBJ);
         enrolmentEvaluation.setEnrolmentEvaluationType(EnrolmentEvaluationType.IMPROVEMENT);
 
-        createAttendForImprovment(currentExecutionPeriod, student);
+        createAttendForImprovment(currentExecutionPeriod, registration);
     }
 
     private void createAttendForImprovment(final ExecutionPeriod currentExecutionPeriod,
-            final Registration student) {
+            final Registration registration) {
 
         List executionCourses = getCurricularCourse().getAssociatedExecutionCourses();
         ExecutionCourse currentExecutionCourse = (ExecutionCourse) CollectionUtils.find(
@@ -453,7 +453,7 @@ public class Enrolment extends Enrolment_Base {
 
                 public boolean evaluate(Object arg0) {
                     Attends frequenta = (Attends) arg0;
-                    if (frequenta.getAluno().equals(student))
+                    if (frequenta.getAluno().equals(registration))
                         return true;
                     return false;
                 }
@@ -463,7 +463,7 @@ public class Enrolment extends Enrolment_Base {
             if (attend != null) {
                 attend.setEnrolment(this);
             } else {
-                attend = new Attends(student, currentExecutionCourse);
+                attend = new Attends(registration, currentExecutionCourse);
                 attend.setEnrolment(this);
             }
         }
@@ -601,8 +601,8 @@ public class Enrolment extends Enrolment_Base {
     	setDegreeModule(curricularCourse);
     }
     
-    protected void createEnrolmentLog(Registration student, EnrolmentAction action) {
-    	new EnrolmentLog(action, student, this.getCurricularCourse(), this.getExecutionPeriod(), getCurrentUser());
+    protected void createEnrolmentLog(Registration registration, EnrolmentAction action) {
+    	new EnrolmentLog(action, registration, this.getCurricularCourse(), this.getExecutionPeriod(), getCurrentUser());
     }
     
     protected void createEnrolmentLog(EnrolmentAction action) {

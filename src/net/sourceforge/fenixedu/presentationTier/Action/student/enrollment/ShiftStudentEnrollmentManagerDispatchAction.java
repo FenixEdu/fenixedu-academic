@@ -71,7 +71,7 @@ public class ShiftStudentEnrollmentManagerDispatchAction extends TransactionalDi
 	}
 
 	private ActionForward prepareSelectCoursesInformation(ActionMapping mapping, ActionForm actionForm,
-			HttpServletRequest request, final Registration student, final ExecutionPeriod executionPeriod) {
+			HttpServletRequest request, final Registration registration, final ExecutionPeriod executionPeriod) {
 
 		final DynaActionForm form = (DynaActionForm) actionForm;
 		
@@ -82,7 +82,7 @@ public class ShiftStudentEnrollmentManagerDispatchAction extends TransactionalDi
 			return mapping.getInputForward();
 		}
 
-		final ExecutionDegree selectedExecutionDegree = getSelectedExecutionDegree(form, student,
+		final ExecutionDegree selectedExecutionDegree = getSelectedExecutionDegree(form, registration,
 				executionPeriod, executionDegrees);
 		if (selectedExecutionDegree == null) {
 			addActionMessage(request, "errors.impossible.operation");
@@ -97,7 +97,7 @@ public class ShiftStudentEnrollmentManagerDispatchAction extends TransactionalDi
 				.buildLabelValueBeansForExecutionDegree(executionDegrees, getResources(request,
 				"ENUMERATION_RESOURCES"), request));
 
-		request.setAttribute("attendingExecutionCourses", student
+		request.setAttribute("attendingExecutionCourses", registration
 				.getAttendingExecutionCoursesFor(executionPeriod));
 		request.setAttribute("executionCoursesFromExecutionDegree", selectedExecutionDegree
 				.getDegreeCurricularPlan().getExecutionCoursesByExecutionPeriod(executionPeriod));
@@ -110,15 +110,15 @@ public class ShiftStudentEnrollmentManagerDispatchAction extends TransactionalDi
 	}
 
 	private ActionForward prepareShiftEnrolmentInformation(ActionMapping mapping,
-			HttpServletRequest request, final IUserView userView, final Registration student,
+			HttpServletRequest request, final IUserView userView, final Registration registration,
 			final ExecutionPeriod executionPeriod) throws FenixFilterException {
 
 		try {
 
 			final List<ShiftToEnrol> shiftsToEnrol = (List<ShiftToEnrol>) ServiceManagerServiceFactory
-					.executeService(userView, "ReadShiftsToEnroll", new Object[] { student });
+					.executeService(userView, "ReadShiftsToEnroll", new Object[] { registration });
 
-			request.setAttribute("numberOfExecutionCoursesHavingNotEnroledShifts", student
+			request.setAttribute("numberOfExecutionCoursesHavingNotEnroledShifts", registration
 					.getNumberOfExecutionCoursesHavingNotEnroledShiftsFor(executionPeriod));
 			
 			request.setAttribute("shiftsToEnrolFromEnroledExecutionCourses",
@@ -126,7 +126,7 @@ public class ShiftStudentEnrollmentManagerDispatchAction extends TransactionalDi
 			request.setAttribute("shiftsToEnrolFromUnenroledExecutionCourses",
 					getShiftsToEnrolByEnroledState(shiftsToEnrol, false));
 			
-			final List<Shift> studentShifts = student.getShiftsFor(executionPeriod);
+			final List<Shift> studentShifts = registration.getShiftsFor(executionPeriod);
 			request.setAttribute("studentShifts", studentShifts);
 			sortStudentShifts(studentShifts);
 			
@@ -156,7 +156,7 @@ public class ShiftStudentEnrollmentManagerDispatchAction extends TransactionalDi
 		return result;
 	}
 
-	private ExecutionDegree getSelectedExecutionDegree(final DynaActionForm form, final Registration student,
+	private ExecutionDegree getSelectedExecutionDegree(final DynaActionForm form, final Registration registration,
 			final ExecutionPeriod executionPeriod, final List<ExecutionDegree> executionDegrees) {
 
 		final Integer executionDegreeIdChosen = (Integer) form.get("degree");
@@ -166,13 +166,13 @@ public class ShiftStudentEnrollmentManagerDispatchAction extends TransactionalDi
 				&& executionDegreeChosen.getExecutionYear() == executionPeriod.getExecutionYear()) {
 			return executionDegreeChosen;
 		} else {
-			return searchForExecutionDegreeInStudent(student, executionPeriod);
+			return searchForExecutionDegreeInStudent(registration, executionPeriod);
 		}
 	}
 
-	private ExecutionDegree searchForExecutionDegreeInStudent(final Registration student,
+	private ExecutionDegree searchForExecutionDegreeInStudent(final Registration registration,
 			final ExecutionPeriod executionPeriod) {
-		final StudentCurricularPlan studentCurricularPlan = student.getActiveStudentCurricularPlan();
+		final StudentCurricularPlan studentCurricularPlan = registration.getActiveStudentCurricularPlan();
 		if (studentCurricularPlan == null) {
 			return null;
 		}

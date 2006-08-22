@@ -75,7 +75,7 @@ public class UnEnrollGroupShift extends Service {
         return true;
     }
 
-    private boolean checkStudentInStudentGroup(Registration student, StudentGroup studentGroup)
+    private boolean checkStudentInStudentGroup(Registration registration, StudentGroup studentGroup)
             throws ExcepcaoPersistencia {
         boolean found = false;
 
@@ -84,7 +84,7 @@ public class UnEnrollGroupShift extends Service {
         Iterator iterStudentGroupAttends = studentGroupAttends.iterator();
         while (iterStudentGroupAttends.hasNext() && !found) {
             attend = ((Attends) iterStudentGroupAttends.next());
-            if (attend.getAluno().equals(student)) {
+            if (attend.getAluno().equals(registration)) {
                 found = true;
             }
         }

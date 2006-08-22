@@ -12,14 +12,14 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 
 public class ReadStudentTimeTable extends Service {
 
-    public List<InfoLesson> run(Registration student) throws FenixServiceException {
+    public List<InfoLesson> run(Registration registration) throws FenixServiceException {
 
-        if (student == null) {
+        if (registration == null) {
         	throw new FenixServiceException("error.service.readStudentTimeTable.noStudent");
         }
         
         final List<InfoLesson> result = new ArrayList<InfoLesson>();
-        for (final Shift shift : student.getShiftsForCurrentExecutionPeriod()) {
+        for (final Shift shift : registration.getShiftsForCurrentExecutionPeriod()) {
         	for (final Lesson lesson : shift.getAssociatedLessonsSet()) {
         		result.add(InfoLesson.newInfoFromDomain(lesson));
         }

@@ -69,7 +69,7 @@ public class AdministrativeOffice extends AdministrativeOffice_Base {
     }
     
     public List<DocumentRequest> searchDocumentsBy(DocumentRequestType documentRequestType,
-            AcademicServiceRequestSituationType requestSituationType, Boolean isUrgent, Registration student) {
+            AcademicServiceRequestSituationType requestSituationType, Boolean isUrgent, Registration registration) {
 
         final List<DocumentRequest> result = new ArrayList<DocumentRequest>();
 
@@ -97,7 +97,7 @@ public class AdministrativeOffice extends AdministrativeOffice_Base {
                     continue;
                 }
 
-                if (student != null && documentRequest.getStudent() != student) {
+                if (registration != null && documentRequest.getStudent() != registration) {
                     continue;
                 }
 

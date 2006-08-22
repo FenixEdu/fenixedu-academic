@@ -13,29 +13,29 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 
 public class ReadShiftsToEnroll extends Service {
 
-	public List run(Registration student) throws FenixServiceException {
+	public List run(Registration registration) throws FenixServiceException {
 
-		checkStudentRestrictionsForShiftsEnrolments(student);
+		checkStudentRestrictionsForShiftsEnrolments(registration);
 
 		final List<ShiftToEnrol> result = new ArrayList<ShiftToEnrol>();
-		for (final Attends attends : student.readAttendsInCurrentExecutionPeriod()) {
+		for (final Attends attends : registration.readAttendsInCurrentExecutionPeriod()) {
 			result.add(buildShiftToEnrol(attends));
 		}
 		return result;
 	}
 
-	private void checkStudentRestrictionsForShiftsEnrolments(Registration student)
+	private void checkStudentRestrictionsForShiftsEnrolments(Registration registration)
 			throws FenixServiceException {
-		if (student == null) {
+		if (registration == null) {
 			throw new FenixServiceException("errors.impossible.operation");
 		}
 
-		if (student.getPayedTuition() == null || student.getPayedTuition().equals(Boolean.FALSE)) {
-			if (student.getInterruptedStudies().equals(Boolean.FALSE))
+		if (registration.getPayedTuition() == null || registration.getPayedTuition().equals(Boolean.FALSE)) {
+			if (registration.getInterruptedStudies().equals(Boolean.FALSE))
 				throw new FenixServiceException("error.exception.notAuthorized.student.warningTuition");
 		}
 
-		if (student.getFlunked() == null || student.getFlunked().equals(Boolean.TRUE)) {
+		if (registration.getFlunked() == null || registration.getFlunked().equals(Boolean.TRUE)) {
 			throw new FenixServiceException("error.exception.notAuthorized.student.warningTuition");
 		}
 	}

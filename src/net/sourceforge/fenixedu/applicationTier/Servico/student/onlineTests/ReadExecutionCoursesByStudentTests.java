@@ -19,13 +19,13 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  */
 public class ReadExecutionCoursesByStudentTests extends Service {
 
-    public Object run(final Registration student) throws ExcepcaoPersistencia {
-        final List<Attends> attends = student.getAssociatedAttends();
+    public Object run(final Registration registration) throws ExcepcaoPersistencia {
+        final List<Attends> attends = registration.getAssociatedAttends();
 
         final List<InfoExecutionCourse> infoExecutionCourses = new ArrayList<InfoExecutionCourse>();
         for (Attends attend : attends) {
             final ExecutionCourse executionCourse = attend.getDisciplinaExecucao();
-            if (student.countDistributedTestsByExecutionCourse(executionCourse) != 0) {
+            if (registration.countDistributedTestsByExecutionCourse(executionCourse) != 0) {
                 infoExecutionCourses.add(InfoExecutionCourse.newInfoFromDomain(executionCourse));
             }
         }

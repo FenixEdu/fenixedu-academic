@@ -19,11 +19,11 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 public class WriteEnrollment extends Service {
 
 	// some of these arguments may be null. they are only needed for filter
-	public Integer run(Integer executionDegreeId, Registration student,
+	public Integer run(Integer executionDegreeId, Registration registration,
 			Integer curricularCourseID, Integer executionPeriodID,
 			CurricularCourseEnrollmentType enrollmentType, Integer enrollmentClass, IUserView userView) {
 		
-		final StudentCurricularPlan studentCurricularPlan = student.getActiveStudentCurricularPlan();
+		final StudentCurricularPlan studentCurricularPlan = registration.getActiveStudentCurricularPlan();
 		
 		final CurricularCourse curricularCourse = (CurricularCourse) rootDomainObject
 				.readDegreeModuleByOID(curricularCourseID);

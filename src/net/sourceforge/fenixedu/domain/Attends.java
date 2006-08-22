@@ -39,9 +39,9 @@ public class Attends extends Attends_Base {
             final ExecutionCourse executionCourse1 = attends1.getDisciplinaExecucao();
             final ExecutionCourse executionCourse2 = attends2.getDisciplinaExecucao();
             if (executionCourse1 == executionCourse2) {
-                final Registration student1 = attends1.getAluno();
-                final Registration student2 = attends2.getAluno();
-                return student1.getNumber().compareTo(student2.getNumber());
+                final Registration registration1 = attends1.getAluno();
+                final Registration registration2 = attends2.getAluno();
+                return registration1.getNumber().compareTo(registration2.getNumber());
             } else {
                 final ExecutionPeriod executionPeriod1 = executionCourse1.getExecutionPeriod();
                 final ExecutionPeriod executionPeriod2 = executionCourse2.getExecutionPeriod();
@@ -61,9 +61,9 @@ public class Attends extends Attends_Base {
         setRootDomainObject(RootDomainObject.getInstance());
     }
 
-    public Attends(Registration student, ExecutionCourse executionCourse) {
+    public Attends(Registration registration, ExecutionCourse executionCourse) {
         this();
-        setAluno(student);
+        setAluno(registration);
         setDisciplinaExecucao(executionCourse);
     }
 

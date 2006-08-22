@@ -16,15 +16,15 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class ImprovmentUnEnrollService extends Service {
 
-    public void run(Registration student, List<Integer> enrolmentsIds)
+    public void run(Registration registration, List<Integer> enrolmentsIds)
 			throws FenixServiceException, ExcepcaoPersistencia, DomainException {
 
-        if (student == null) {
+        if (registration == null) {
             throw new InvalidArgumentsServiceException();
         }
     	
     	for (final Integer enrolmentId : enrolmentsIds) {
-            final Enrolment enrolment = student.findEnrolmentByEnrolmentID(enrolmentId);
+            final Enrolment enrolment = registration.findEnrolmentByEnrolmentID(enrolmentId);
             if (enrolment == null) {
                 throw new InvalidArgumentsServiceException();
             }

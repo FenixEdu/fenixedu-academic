@@ -85,7 +85,7 @@ public class EditGroupShift extends Service {
         return true;
     }
 
-    private boolean checkStudentInStudentGroup(Registration student, StudentGroup studentGroup)
+    private boolean checkStudentInStudentGroup(Registration registration, StudentGroup studentGroup)
             throws FenixServiceException {
         boolean found = false;
         List studentGroupAttends = studentGroup.getAttends();
@@ -93,14 +93,14 @@ public class EditGroupShift extends Service {
         Iterator iterStudentGroupAttends = studentGroupAttends.iterator();
         while (iterStudentGroupAttends.hasNext() && !found) {
             attend = ((Attends) iterStudentGroupAttends.next());
-            if (attend.getAluno().equals(student)) {
+            if (attend.getAluno().equals(registration)) {
                 found = true;
             }
         }
         return found;
     }
 
-    private void informStudents(final StudentGroup studentGroup, final Registration student,
+    private void informStudents(final StudentGroup studentGroup, final Registration registration,
             final Grouping grouping) {
         final List<String> emails = new ArrayList<String>();
         for (final Attends attends : studentGroup.getAttends()) {
@@ -116,7 +116,7 @@ public class EditGroupShift extends Service {
         }
         EmailSender.send("Fenix System", messages.getMessage("suporte.mail"), emails, null, null,
                 messages.getMessage("message.subject.grouping.change"), messages.getMessage(
-                        "message.body.grouping.change.shift", student.getNumber().toString(),
+                        "message.body.grouping.change.shift", registration.getNumber().toString(),
                         studentGroup.getGroupNumber().toString()));
     }
 

@@ -165,9 +165,9 @@ public class Shift extends Shift_Base {
         return stringBuilder.toString();
     }
     
-    public boolean reserveForStudent(final Registration student) {
+    public boolean reserveForStudent(final Registration registration) {
         if (getLotacao().intValue() > getStudentsCount()) {
-            addStudents(student);
+            addStudents(registration);
             return true;
         } else {
             return false;

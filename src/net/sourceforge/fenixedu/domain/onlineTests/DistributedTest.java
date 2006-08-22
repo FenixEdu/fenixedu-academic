@@ -119,10 +119,10 @@ public class DistributedTest extends DistributedTest_Base {
         setEndHourDate(date);
     }
     
-    public List<StudentTestLog> getStudentTestLogs(final Registration student){
+    public List<StudentTestLog> getStudentTestLogs(final Registration registration){
     	List<StudentTestLog> result = new ArrayList<StudentTestLog>();
     	for (final StudentTestLog studentTestLog : this.getStudentsLogs()) {
-			if(studentTestLog.getStudent().equals(student)) {
+			if(studentTestLog.getStudent().equals(registration)) {
 				result.add(studentTestLog);
 			}
 		}
@@ -178,10 +178,10 @@ public class DistributedTest extends DistributedTest_Base {
         return Double.valueOf(result);
     }
 
-    public Double calculateTestFinalMarkForStudent(final Registration student) {
+    public Double calculateTestFinalMarkForStudent(final Registration registration) {
         double result = 0;
         for (final StudentTestQuestion studentTestQuestion : getDistributedTestQuestionsSet()) {
-            if (student == studentTestQuestion.getStudent()) {
+            if (registration == studentTestQuestion.getStudent()) {
                 result += studentTestQuestion.getTestQuestionMark().doubleValue();
             }
         }

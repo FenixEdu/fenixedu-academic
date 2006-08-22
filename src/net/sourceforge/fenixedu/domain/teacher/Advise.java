@@ -18,16 +18,16 @@ public class Advise extends Advise_Base {
                 .addListener(new AdviseTeacherAdviseServiceListener());
     }
 
-    public Advise(Teacher teacher, Registration student, AdviseType adviseType, ExecutionPeriod startPeriod,
+    public Advise(Teacher teacher, Registration registration, AdviseType adviseType, ExecutionPeriod startPeriod,
             ExecutionPeriod endPeriod) {
         super();
         setRootDomainObject(RootDomainObject.getInstance());
-        if (teacher == null || student == null || adviseType == null || startPeriod == null
+        if (teacher == null || registration == null || adviseType == null || startPeriod == null
                 || endPeriod == null) {
             throw new DomainException("arguments can't be null");
         }
         setTeacher(teacher);
-        setStudent(student);
+        setStudent(registration);
         setAdviseType(adviseType);
         setStartExecutionPeriod(startPeriod);
         setEndExecutionPeriod(endPeriod);

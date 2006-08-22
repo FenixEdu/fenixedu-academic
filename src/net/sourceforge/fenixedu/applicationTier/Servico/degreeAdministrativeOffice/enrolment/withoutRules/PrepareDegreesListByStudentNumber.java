@@ -12,7 +12,7 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 public class PrepareDegreesListByStudentNumber extends Service {
 
 	// student and degreeType used by filter
-	public List<ExecutionDegree> run(final Registration student, final DegreeType degreeType,
+	public List<ExecutionDegree> run(final Registration registration, final DegreeType degreeType,
 			final ExecutionPeriod executionPeriod) throws FenixServiceException {
 
 		final List<ExecutionDegree> executionDegrees = (degreeType == null) ? ExecutionDegree

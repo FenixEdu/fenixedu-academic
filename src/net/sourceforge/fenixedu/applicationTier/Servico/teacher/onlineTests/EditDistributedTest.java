@@ -92,14 +92,14 @@ public class EditDistributedTest extends Service {
             OnlineTest onlineTest = new OnlineTest();
             onlineTest.setDistributedTest(distributedTest);
             onlineTest.addAssociatedExecutionCourses(executionCourse);
-            final Set<Registration> students = distributedTest.findStudents();
-            for (Registration student : students) {
-            	Set<StudentTestQuestion> studentTestQuestionList = StudentTestQuestion.findStudentTestQuestions(student, distributedTest);
+            final Set<Registration> registrations = distributedTest.findStudents();
+            for (Registration registration : registrations) {
+            	Set<StudentTestQuestion> studentTestQuestionList = StudentTestQuestion.findStudentTestQuestions(registration, distributedTest);
                 double studentMark = 0;
                 for (StudentTestQuestion studentTestQuestion : studentTestQuestionList) {
                     studentMark += studentTestQuestion.getTestQuestionMark().doubleValue();
                 }
-                Attends attend = student.readAttendByExecutionCourse(executionCourse);
+                Attends attend = registration.readAttendByExecutionCourse(executionCourse);
                 if (attend != null) {
                     Mark mark = new Mark();
                     mark.setAttend(attend);

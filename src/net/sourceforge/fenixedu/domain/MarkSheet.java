@@ -403,9 +403,9 @@ public class MarkSheet extends MarkSheet_Base {
         return enrolmentEvaluations; 
     }
     
-    public EnrolmentEvaluation getEnrolmentEvaluationByStudent(Registration student) {
+    public EnrolmentEvaluation getEnrolmentEvaluationByStudent(Registration registration) {
         for (EnrolmentEvaluation enrolmentEvaluation : this.getEnrolmentEvaluationsSet()) {
-            if(enrolmentEvaluation.getEnrolment().getStudentCurricularPlan().getStudent().equals(student)) {
+            if(enrolmentEvaluation.getEnrolment().getStudentCurricularPlan().getStudent().equals(registration)) {
                 return enrolmentEvaluation;
             }
         }

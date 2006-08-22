@@ -96,11 +96,11 @@ public class ImprovmentEnrolmentDispacthAction extends FenixDispatchAction{
         
     }
     
-    public ActionForward readEnrolments(Registration student, ExecutionPeriod executionPeriod, ActionMapping mapping, ActionForm form,
+    public ActionForward readEnrolments(Registration registration, ExecutionPeriod executionPeriod, ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response)  {
     	
-        List<Enrolment> enrolmentsToImprov = student.getEnrolmentsToImprov(executionPeriod);
-        List<Enrolment> enroledImprovements = student.getEnroledImprovements();
+        List<Enrolment> enrolmentsToImprov = registration.getEnrolmentsToImprov(executionPeriod);
+        List<Enrolment> enroledImprovements = registration.getEnroledImprovements();
         
         ComparatorChain comparatorChain = new ComparatorChain();
         comparatorChain.addComparator(new BeanComparator("executionPeriod"));
@@ -108,7 +108,7 @@ public class ImprovmentEnrolmentDispacthAction extends FenixDispatchAction{
         Collections.sort(enrolmentsToImprov, comparatorChain);
         Collections.sort(enroledImprovements, comparatorChain);
         
-        request.setAttribute("student", student);
+        request.setAttribute("student", registration);
         request.setAttribute("executionPeriod", executionPeriod);
         request.setAttribute("enrolmentsToImprov", enrolmentsToImprov);
         request.setAttribute("enroledImprovements", enroledImprovements);

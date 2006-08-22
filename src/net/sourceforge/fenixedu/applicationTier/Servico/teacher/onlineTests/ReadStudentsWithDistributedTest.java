@@ -29,8 +29,8 @@ public class ReadStudentsWithDistributedTest extends Service {
 			throw new FenixServiceException();
 
         final Set<Registration> students = distributedTest.findStudents();
-		for (Registration student : students) {
-            result.add(InfoStudent.newInfoFromDomain(student));    
+		for (Registration registration : students) {
+            result.add(InfoStudent.newInfoFromDomain(registration));    
         }
 		
 		return result;

@@ -41,15 +41,15 @@ public class SeminaryCandidacy extends SeminaryCandidacy_Base {
         deleteDomainObject();
     }
 
-    public static List<SeminaryCandidacy> getByStudentAndSeminary(Registration student, Seminary seminary) {
+    public static List<SeminaryCandidacy> getByStudentAndSeminary(Registration registration, Seminary seminary) {
         List<SeminaryCandidacy> candidacies = new ArrayList<SeminaryCandidacy>();
         
         for (SeminaryCandidacy candidacy : RootDomainObject.getInstance().getCandidacys()) {
-            if (! candidacy.getStudent().equals(student)) {
+            if (! candidacy.getStudent().equals(registration)) {
                 continue;
             }
             
-            if (! candidacy.getSeminary().equals(student)) {
+            if (! candidacy.getSeminary().equals(registration)) {
                 continue;
             }
             

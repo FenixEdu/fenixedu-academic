@@ -11,16 +11,16 @@ public class WrittenEvaluationEnrolment extends WrittenEvaluationEnrolment_Base 
     	setRootDomainObject(RootDomainObject.getInstance());
     }
 
-    public WrittenEvaluationEnrolment(WrittenEvaluation writtenEvaluation, Registration student) {
+    public WrittenEvaluationEnrolment(WrittenEvaluation writtenEvaluation, Registration registration) {
     	this();
         this.setWrittenEvaluation(writtenEvaluation);
-        this.setStudent(student);
+        this.setStudent(registration);
     }
 
-    public WrittenEvaluationEnrolment(WrittenEvaluation writtenEvaluation, Registration student, OldRoom room) {
+    public WrittenEvaluationEnrolment(WrittenEvaluation writtenEvaluation, Registration registration, OldRoom room) {
     	this();
         this.setWrittenEvaluation(writtenEvaluation);
-        this.setStudent(student);
+        this.setStudent(registration);
         this.setRoom(room);
     }
 

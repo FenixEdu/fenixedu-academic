@@ -143,10 +143,10 @@ public class CreateClassificationsForStudents extends Service {
         Collections.sort(students, new BeanComparator(field));
         
         List<Registration> weakStudents = new ArrayList<Registration>();
-        for (Registration student : students) {
-            if(((Double) fieldGetter.transform(student)) == 0.0){
-                weakStudents.add(student);
-                fieldSetter.execute(new GenericPair<Registration, Character>(student, 'F'));
+        for (Registration registration : students) {
+            if(((Double) fieldGetter.transform(registration)) == 0.0){
+                weakStudents.add(registration);
+                fieldSetter.execute(new GenericPair<Registration, Character>(registration, 'F'));
             }
         }
         studentsClassifications.put('F', weakStudents);

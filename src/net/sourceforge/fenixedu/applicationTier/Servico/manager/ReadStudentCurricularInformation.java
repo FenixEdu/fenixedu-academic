@@ -46,8 +46,8 @@ public class ReadStudentCurricularInformation extends Service {
         return infoStudentCurricularPlans;
     }
 
-    protected InfoStudent constructInfoStudent(final Registration student) {
-        return InfoStudent.newInfoFromDomain(student);
+    protected InfoStudent constructInfoStudent(final Registration registration) {
+        return InfoStudent.newInfoFromDomain(registration);
     }
 
     protected InfoStudentCurricularPlan constructInfoStudentCurricularPlan(

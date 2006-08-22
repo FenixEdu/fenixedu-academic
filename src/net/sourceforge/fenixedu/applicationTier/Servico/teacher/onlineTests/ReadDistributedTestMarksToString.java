@@ -129,11 +129,11 @@ public class ReadDistributedTestMarksToString extends Service {
                 result.append("%\t");
         }
 
-        for (Registration student : studentList) {
+        for (Registration registration : studentList) {
             result.append("\n");
-            result.append(student.getNumber());
+            result.append(registration.getNumber());
             result.append("\t");
-            result.append(student.getPerson().getNome());
+            result.append(registration.getPerson().getNome());
             result.append("\t");
 
             for (int i = 0; i < distributedTestCodes.length; i++) {
@@ -143,7 +143,7 @@ public class ReadDistributedTestMarksToString extends Service {
                 DecimalFormat percentageFormat = new DecimalFormat("#%");
 
                 final DistributedTest distributedTest = rootDomainObject.readDistributedTestByOID(Integer.valueOf(distributedTestCodes[i]));
-                finalMark = distributedTest.calculateTestFinalMarkForStudent(student);
+                finalMark = distributedTest.calculateTestFinalMarkForStudent(registration);
 
                 if (finalMark == null) {
                     result.append("NA\t");
@@ -177,9 +177,9 @@ public class ReadDistributedTestMarksToString extends Service {
         List<Registration> sortedStudents = new ArrayList<Registration>();
         sortedStudents.addAll(list1);
 
-        for (Registration student : list2) {
-            if (!sortedStudents.contains(student))
-                sortedStudents.add(student);
+        for (Registration registration : list2) {
+            if (!sortedStudents.contains(registration))
+                sortedStudents.add(registration);
         }
 
         Collections.sort(sortedStudents, new BeanComparator("number"));

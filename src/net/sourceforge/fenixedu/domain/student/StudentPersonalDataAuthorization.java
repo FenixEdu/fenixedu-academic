@@ -11,11 +11,11 @@ public class StudentPersonalDataAuthorization extends StudentPersonalDataAuthori
         setRootDomainObject(RootDomainObject.getInstance());
     }
     
-    public StudentPersonalDataAuthorization(Registration student, ExecutionYear executionYear, 
+    public StudentPersonalDataAuthorization(Registration registration, ExecutionYear executionYear, 
             StudentPersonalDataAuthorizationChoice studentPersonalDataAuthorizationChoice) {
         this();
         
-        setStudent(student);
+        setStudent(registration);
         setExecutionYear(executionYear);
         setAnswer(studentPersonalDataAuthorizationChoice);
     }

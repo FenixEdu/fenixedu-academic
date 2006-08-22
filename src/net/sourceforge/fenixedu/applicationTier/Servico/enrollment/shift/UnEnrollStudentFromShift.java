@@ -7,14 +7,14 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 
 public class UnEnrollStudentFromShift extends Service {
 
-	public void run(final Registration student, final Integer shiftId)
+	public void run(final Registration registration, final Integer shiftId)
 			throws StudentNotFoundServiceException, ShiftNotFoundServiceException,
 			ShiftEnrolmentNotFoundServiceException, FenixServiceException {
 
-		if (student == null) {
+		if (registration == null) {
 			throw new StudentNotFoundServiceException();
 		}
-		if (student.getPayedTuition() == null || student.getPayedTuition().equals(Boolean.FALSE)) {
+		if (registration.getPayedTuition() == null || registration.getPayedTuition().equals(Boolean.FALSE)) {
 			throw new FenixServiceException("error.exception.notAuthorized.student.warningTuition");
 		}
 
@@ -23,7 +23,7 @@ public class UnEnrollStudentFromShift extends Service {
 			throw new ShiftNotFoundServiceException();
 		}
 		
-		shift.removeStudents(student);
+		shift.removeStudents(registration);
 	}
 
 	public class StudentNotFoundServiceException extends FenixServiceException {

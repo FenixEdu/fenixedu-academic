@@ -128,10 +128,10 @@ public class InsertEvaluationMarks extends Service {
         return siteView;
     }
 
-    private boolean isValidMark(Evaluation evaluation, String mark, Registration student) {
+    private boolean isValidMark(Evaluation evaluation, String mark, Registration registration) {
         StudentCurricularPlan studentCurricularPlan = null;
-        if(student != null) {
-        	studentCurricularPlan = student.getActiveStudentCurricularPlan();
+        if(registration != null) {
+        	studentCurricularPlan = registration.getActiveStudentCurricularPlan();
         }
 
         DegreeCurricularPlan degreeCurricularPlan = studentCurricularPlan.getDegreeCurricularPlan();

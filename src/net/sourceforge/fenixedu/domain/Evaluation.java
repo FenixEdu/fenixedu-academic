@@ -13,10 +13,10 @@ public abstract class Evaluation extends Evaluation_Base {
 		setRootDomainObject(RootDomainObject.getInstance());
 	}
 
-	public List<ExecutionCourse> getAttendingExecutionCoursesFor(final Registration student) {
+	public List<ExecutionCourse> getAttendingExecutionCoursesFor(final Registration registration) {
         final List<ExecutionCourse> result = new ArrayList<ExecutionCourse>();
         for (final ExecutionCourse executionCourse : this.getAssociatedExecutionCourses()) {
-            if (student.attends(executionCourse)) {
+            if (registration.attends(executionCourse)) {
                 result.add(executionCourse);
             }
         }

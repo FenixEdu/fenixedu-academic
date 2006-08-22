@@ -29,24 +29,24 @@ import org.apache.struts.action.DynaActionForm;
 
 public class DocumentRequestDispatchAction extends FenixDispatchAction {
 
-    private static Registration student;
+    private static Registration registration;
     
     public ActionForward prepare(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) {
-        student = SessionUtils.getUserView(request).getPerson().getStudentByUsername();
+        registration = SessionUtils.getUserView(request).getPerson().getStudentByUsername();
 
-        if (!student.getPayedTuition()) {
+        if (!registration.getPayedTuition()) {
             addActionMessage(request, "error.message.tuitionNotPayed");
         } else {
-            if (!student.hasAnyStudentCurricularPlans()) {
+            if (!registration.hasAnyStudentCurricularPlans()) {
                 addActionMessage(request, "error.student.curricularPlan.nonExistent");
             } else {
-                request.setAttribute("student", student);
+                request.setAttribute("student", registration);
 
-                if (student.getStudentCurricularPlansCount() > 1) {
-                    request.setAttribute("studentCurricularPlans", student.getStudentCurricularPlans());
+                if (registration.getStudentCurricularPlansCount() > 1) {
+                    request.setAttribute("studentCurricularPlans", registration.getStudentCurricularPlans());
                 }
 
-                getAndSetExecutionYears(request, student.getActiveStudentCurricularPlan());
+                getAndSetExecutionYears(request, registration.getActiveStudentCurricularPlan());
             }
         }
 
@@ -69,18 +69,18 @@ public class DocumentRequestDispatchAction extends FenixDispatchAction {
     }
 
     private void getAndSetStudent(HttpServletRequest request) {
-        student = SessionUtils.getUserView(request).getPerson().getStudentByUsername();
-        request.setAttribute("student", student);
+        registration = SessionUtils.getUserView(request).getPerson().getStudentByUsername();
+        request.setAttribute("student", registration);
     }
 
     private StudentCurricularPlan getAndSetStudentCurricularPlans(HttpServletRequest request, final DynaActionForm dynaActionForm) {
         final StudentCurricularPlan studentCurricularPlan;
-        if (student.getStudentCurricularPlansCount() > 1) {
-            request.setAttribute("studentCurricularPlans", student.getStudentCurricularPlans());
+        if (registration.getStudentCurricularPlansCount() > 1) {
+            request.setAttribute("studentCurricularPlans", registration.getStudentCurricularPlans());
 
             studentCurricularPlan = rootDomainObject.readStudentCurricularPlanByOID((Integer) dynaActionForm.get("scpId"));
         } else {
-            studentCurricularPlan = student.getActiveStudentCurricularPlan();
+            studentCurricularPlan = registration.getActiveStudentCurricularPlan();
         }
         return studentCurricularPlan;
     }
@@ -229,7 +229,7 @@ public class DocumentRequestDispatchAction extends FenixDispatchAction {
 
     public ActionForward viewDocumentRequests(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) {
         getAndSetStudent(request);
-        request.setAttribute("documentRequests", student.getDocumentRequests());
+        request.setAttribute("documentRequests", registration.getDocumentRequests());
 
         return mapping.findForward("viewDocumentRequests");
     }

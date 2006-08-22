@@ -24,10 +24,10 @@ import org.apache.commons.collections.Predicate;
 public class DeleteEnrolment extends Service {
 
     // some of these arguments may be null. they are only needed for filter
-    public void run(Integer executionDegreeId, Registration student, Integer enrolmentID)
+    public void run(Integer executionDegreeId, Registration registration, Integer enrolmentID)
             throws FenixServiceException, DomainException, ExcepcaoPersistencia {
 
-        final StudentCurricularPlan studentCurricularPlan = student.getActiveStudentCurricularPlan();
+        final StudentCurricularPlan studentCurricularPlan = registration.getActiveStudentCurricularPlan();
         final Enrolment enrollment1 = studentCurricularPlan.findEnrolmentByEnrolmentID(enrolmentID);
 
         List<Enrolment> enrollments2Delete = new ArrayList<Enrolment>();

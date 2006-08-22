@@ -52,10 +52,10 @@ public class EditTeacherDegreeFinalProjectStudentByOID extends Service {
 
     }
 
-    private void checkStudentFinalDegreeProjectPercentage(final Registration student, final Teacher teacher,
+    private void checkStudentFinalDegreeProjectPercentage(final Registration registration, final Teacher teacher,
             final ExecutionPeriod executionPeriod, Double percentage) throws StudentPercentageExceed {
 
-        for (final TeacherDegreeFinalProjectStudent teacherDegreeFinalProjectStudent : student
+        for (final TeacherDegreeFinalProjectStudent teacherDegreeFinalProjectStudent : registration
                 .getTeacherDegreeFinalProjectStudent()) {
             if (teacherDegreeFinalProjectStudent.getExecutionPeriod() == executionPeriod
                     && teacherDegreeFinalProjectStudent.getTeacher() != teacher) {
@@ -64,8 +64,8 @@ public class EditTeacherDegreeFinalProjectStudentByOID extends Service {
         }
         if (percentage > 100) {
             final List<InfoTeacherDegreeFinalProjectStudent> infoTeacherDegreeFinalProjectStudentList = new ArrayList<InfoTeacherDegreeFinalProjectStudent>(
-                    student.getTeacherDegreeFinalProjectStudentCount());
-            for (final TeacherDegreeFinalProjectStudent teacherDegreeFinalProjectStudent : student
+                    registration.getTeacherDegreeFinalProjectStudentCount());
+            for (final TeacherDegreeFinalProjectStudent teacherDegreeFinalProjectStudent : registration
                     .getTeacherDegreeFinalProjectStudent()) {
                 if (teacherDegreeFinalProjectStudent.getExecutionPeriod() == executionPeriod) {
                     infoTeacherDegreeFinalProjectStudentList
@@ -78,8 +78,8 @@ public class EditTeacherDegreeFinalProjectStudentByOID extends Service {
     }
 
     private TeacherDegreeFinalProjectStudent getTeacherDegreeFinalProjectStudentFor(
-            final Teacher teacher, final Registration student, final ExecutionPeriod executionPeriod) {
-        for (final TeacherDegreeFinalProjectStudent teacherDegreeFinalProjectStudent : student
+            final Teacher teacher, final Registration registration, final ExecutionPeriod executionPeriod) {
+        for (final TeacherDegreeFinalProjectStudent teacherDegreeFinalProjectStudent : registration
                 .getTeacherDegreeFinalProjectStudent()) {
             if (teacherDegreeFinalProjectStudent.getExecutionPeriod() == executionPeriod
                     && teacherDegreeFinalProjectStudent.getTeacher() == teacher) {

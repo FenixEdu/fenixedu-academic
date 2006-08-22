@@ -199,17 +199,17 @@ public class ReadImprovmentsToEnroll extends Service {
     }
 
     /**
-     * @param student
+     * @param registration
      * @param actualExecPeriod
      * @param res
      * @param alreadyImprovedEnrolmentsInCurrentExecutionPeriod
      * @return
      */
-    private InfoImprovmentEnrolmentContext buildResult(Registration student,
+    private InfoImprovmentEnrolmentContext buildResult(Registration registration,
             ExecutionPeriod actualExecPeriod, List res,
             List alreadyImprovedEnrolmentsInCurrentExecutionPeriod) {
         InfoImprovmentEnrolmentContext improvmentEnrolmentContext = new InfoImprovmentEnrolmentContext();
-        improvmentEnrolmentContext.setInfoStudent(InfoStudent.newInfoFromDomain(student));
+        improvmentEnrolmentContext.setInfoStudent(InfoStudent.newInfoFromDomain(registration));
         improvmentEnrolmentContext.setInfoExecutionPeriod(InfoExecutionPeriod
                 .newInfoFromDomain(actualExecPeriod));
 

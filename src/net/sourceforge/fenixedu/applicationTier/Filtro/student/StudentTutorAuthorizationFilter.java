@@ -70,9 +70,9 @@ public class StudentTutorAuthorizationFilter extends AccessControlFilter {
     }
 
     private boolean verifyStudentTutor(Teacher teacher, List<Registration> students) {
-        for (Registration student : students) {
-            if (student.getAssociatedTutor() != null
-                    && student.getAssociatedTutor().getTeacher() == teacher) {
+        for (Registration registration : students) {
+            if (registration.getAssociatedTutor() != null
+                    && registration.getAssociatedTutor().getTeacher() == teacher) {
                 return true;
             }
         }

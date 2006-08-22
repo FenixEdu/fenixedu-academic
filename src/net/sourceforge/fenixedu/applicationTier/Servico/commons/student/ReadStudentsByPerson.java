@@ -17,8 +17,8 @@ public class ReadStudentsByPerson extends Service {
         final List<InfoStudent> result = new ArrayList<InfoStudent>();
         
         Person person = (Person) rootDomainObject.readPartyByOID(infoPerson.getIdInternal());
-        for (final Registration student : person.getStudents()) {
-            result.add(InfoStudent.newInfoFromDomain(student));
+        for (final Registration registration : person.getStudents()) {
+            result.add(InfoStudent.newInfoFromDomain(registration));
         }
         
         return result;

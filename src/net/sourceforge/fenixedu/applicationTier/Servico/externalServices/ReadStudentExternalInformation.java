@@ -72,11 +72,11 @@ public class ReadStudentExternalInformation extends Service
 		return result;
 	}
 
-	private Collection buildAvailableRemainingCourses(final Registration student) {
-		final Collection<CurricularCourse> allCourses = student.getActiveStudentCurricularPlan().getDegreeCurricularPlan().getCurricularCourses();
+	private Collection buildAvailableRemainingCourses(final Registration registration) {
+		final Collection<CurricularCourse> allCourses = registration.getActiveStudentCurricularPlan().getDegreeCurricularPlan().getCurricularCourses();
         final Collection<InfoExternalCurricularCourseInfo> availableInfos = new ArrayList<InfoExternalCurricularCourseInfo>();
         for (final CurricularCourse curricularCourse : allCourses) {
-            if (hasActiveScope(curricularCourse) && studentIsNotApprovedInCurricularCourse(student, curricularCourse)) {
+            if (hasActiveScope(curricularCourse) && studentIsNotApprovedInCurricularCourse(registration, curricularCourse)) {
                 final InfoExternalCurricularCourseInfo infoExternalCurricularCourseInfo = InfoExternalCurricularCourseInfo.newFromDomain(curricularCourse);
                 availableInfos.add(infoExternalCurricularCourseInfo);
             }
@@ -84,8 +84,8 @@ public class ReadStudentExternalInformation extends Service
 		return availableInfos;
 	}
 
-	private boolean studentIsNotApprovedInCurricularCourse(final Registration student, final CurricularCourse curricularCourse) {
-        for (final StudentCurricularPlan studentCurricularPlan : student.getStudentCurricularPlansSet()) {
+	private boolean studentIsNotApprovedInCurricularCourse(final Registration registration, final CurricularCourse curricularCourse) {
+        for (final StudentCurricularPlan studentCurricularPlan : registration.getStudentCurricularPlansSet()) {
             if (studentCurricularPlan.isCurricularCourseApproved(curricularCourse)) {
                 return true;
             }
@@ -103,16 +103,16 @@ public class ReadStudentExternalInformation extends Service
     }
 
     /**
-	 * @param student
+	 * @param registration
 	 * @return
 	 * @throws FenixServiceException
 	 * @throws ExcepcaoPersistencia
 	 */
-	private Collection buildExternalEnrollmentsInfo(Registration student) throws FenixServiceException,
+	private Collection buildExternalEnrollmentsInfo(Registration registration) throws FenixServiceException,
 			ExcepcaoPersistencia
 	{
 		Collection enrollments = new ArrayList();
-		Collection curricularPlans = student.getStudentCurricularPlans();
+		Collection curricularPlans = registration.getStudentCurricularPlans();
 		for (Iterator iter = curricularPlans.iterator(); iter.hasNext();)
 		{
 			StudentCurricularPlan curricularPlan = (StudentCurricularPlan) iter.next();
@@ -138,10 +138,10 @@ public class ReadStudentExternalInformation extends Service
 						}
 					}
 
-					if (!student.getActiveStudentCurricularPlan().getDegreeCurricularPlan().getDegree().getDegreeCurricularPlans().contains(enrollment.getCurricularCourse().getDegreeCurricularPlan()))
+					if (!registration.getActiveStudentCurricularPlan().getDegreeCurricularPlan().getDegree().getDegreeCurricularPlans().contains(enrollment.getCurricularCourse().getDegreeCurricularPlan()))
 					{
 						curricularCourse = null;
-						DegreeCurricularPlan studentDegreeCurricularPlan = student.getActiveStudentCurricularPlan().getDegreeCurricularPlan();
+						DegreeCurricularPlan studentDegreeCurricularPlan = registration.getActiveStudentCurricularPlan().getDegreeCurricularPlan();
 						List<CurricularCourse> curricularCourses = enrollment.getCurricularCourse().getCompetenceCourse().getAssociatedCurricularCourses();
 						for (CurricularCourse course : curricularCourses)
 						{
@@ -181,19 +181,19 @@ public class ReadStudentExternalInformation extends Service
 	}
 
 	/**
-	 * @param student
+	 * @param registration
 	 * @return
 	 */
-	private InfoExternalDegreeCurricularPlanInfo buildExternalDegreeCurricularPlanInfo(Registration student)
+	private InfoExternalDegreeCurricularPlanInfo buildExternalDegreeCurricularPlanInfo(Registration registration)
 	{
 		InfoExternalDegreeCurricularPlanInfo info = new InfoExternalDegreeCurricularPlanInfo();
-		DegreeCurricularPlan degreeCurricularPlan = student.getActiveStudentCurricularPlan().getDegreeCurricularPlan();
+		DegreeCurricularPlan degreeCurricularPlan = registration.getActiveStudentCurricularPlan().getDegreeCurricularPlan();
 
 		info.setName(degreeCurricularPlan.getName());
 		info.setCode(degreeCurricularPlan.getDegree().getIdInternal().toString());
-		info.setBranch(this.buildExternalDegreeBranchInfo(student));
+		info.setBranch(this.buildExternalDegreeBranchInfo(registration));
 
-		Collection courses = student.getActiveStudentCurricularPlan().getDegreeCurricularPlan().getCurricularCourses();
+		Collection courses = registration.getActiveStudentCurricularPlan().getDegreeCurricularPlan().getCurricularCourses();
 		for (Iterator iter = courses.iterator(); iter.hasNext();)
 		{
 			CurricularCourse curricularCourse = (CurricularCourse) iter.next();
@@ -220,16 +220,16 @@ public class ReadStudentExternalInformation extends Service
 	}
 
 	/**
-	 * @param student
+	 * @param registration
 	 * @return
 	 */
-	private InfoExternalDegreeBranchInfo buildExternalDegreeBranchInfo(Registration student)
+	private InfoExternalDegreeBranchInfo buildExternalDegreeBranchInfo(Registration registration)
 	{
 		InfoExternalDegreeBranchInfo info = new InfoExternalDegreeBranchInfo();
-		if (student.getActiveStudentCurricularPlan().getBranch() != null)
+		if (registration.getActiveStudentCurricularPlan().getBranch() != null)
 		{
-			info.setName(student.getActiveStudentCurricularPlan().getBranch().getName());
-			info.setCode(student.getActiveStudentCurricularPlan().getBranch().getCode());
+			info.setName(registration.getActiveStudentCurricularPlan().getBranch().getName());
+			info.setCode(registration.getActiveStudentCurricularPlan().getBranch().getCode());
 		}
 
 		return info;

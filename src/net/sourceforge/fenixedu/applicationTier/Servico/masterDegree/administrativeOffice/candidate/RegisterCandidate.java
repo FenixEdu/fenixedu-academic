@@ -163,41 +163,41 @@ public class RegisterCandidate extends Service {
         }
     }
 
-    private StudentCurricularPlan createNewStudentCurricularPlan(Registration student, Integer branchID,
+    private StudentCurricularPlan createNewStudentCurricularPlan(Registration registration, Integer branchID,
             MasterDegreeCandidate masterDegreeCandidate) throws ExcepcaoPersistencia {
         Branch branch = rootDomainObject.readBranchByOID(branchID);
         DegreeCurricularPlan degreecurricularPlan = masterDegreeCandidate.getExecutionDegree()
                 .getDegreeCurricularPlan();
         Date startDate = Calendar.getInstance().getTime();
 
-        StudentCurricularPlan studentCurricularPlan = new StudentCurricularPlan(student,
+        StudentCurricularPlan studentCurricularPlan = new StudentCurricularPlan(registration,
                 degreecurricularPlan, branch, startDate, StudentCurricularPlanState.ACTIVE,
                 masterDegreeCandidate.getGivenCredits(), masterDegreeCandidate.getSpecialization());
         return studentCurricularPlan;
     }
 
     private Registration createNewRegistration(Integer studentNumber, Person person) throws ExcepcaoPersistencia {
-        Registration student;
+        Registration registration;
         if (studentNumber == null) {
             studentNumber = Registration.generateStudentNumber(DegreeType.MASTER_DEGREE);
         }
 
         StudentKind studentKind = StudentKind.readByStudentType(StudentType.NORMAL);
         StudentState state = new StudentState(StudentState.INSCRITO);
-        student = new Registration(person, studentNumber, studentKind, state, false, false,
+        registration = new Registration(person, studentNumber, studentKind, state, false, false,
                 EntryPhase.FIRST_PHASE_OBJ, DegreeType.MASTER_DEGREE);
-        student.setInterruptedStudies(false);
+        registration.setInterruptedStudies(false);
 
         person.addPersonRoles(Role.getRoleByRoleType(RoleType.STUDENT));
-        return student;
+        return registration;
     }
 
     private void checkDuplicateStudentCurricularPlan(MasterDegreeCandidate masterDegreeCandidate,
-            Registration student) throws ExistingServiceException {
+            Registration registration) throws ExistingServiceException {
         List<StudentCurricularPlan> studentCurricularPlans = masterDegreeCandidate.getExecutionDegree()
                 .getDegreeCurricularPlan().getStudentCurricularPlans();
         for (StudentCurricularPlan scp : studentCurricularPlans) {
-            if (scp.getStudent().equals(student)
+            if (scp.getStudent().equals(registration)
                     && scp.getCurrentState().equals(StudentCurricularPlanState.ACTIVE)) {
                 throw new ExistingServiceException();
             }

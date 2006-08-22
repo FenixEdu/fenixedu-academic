@@ -11,14 +11,14 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 public class WriteStudentAreasWithoutRestrictions extends Service {
 
 	// student and degreeType used by filter
-	public void run(Registration student, DegreeType degreeType, Integer specializationAreaID,
+	public void run(Registration registration, DegreeType degreeType, Integer specializationAreaID,
 			Integer secundaryAreaID) throws FenixServiceException {
 
-		if (student == null) {
+		if (registration == null) {
 			throw new NonExistingServiceException("error.invalid.student");
 		}
 
-		final StudentCurricularPlan studentCurricularPlan = student.getActiveOrConcludedStudentCurricularPlan();
+		final StudentCurricularPlan studentCurricularPlan = registration.getActiveOrConcludedStudentCurricularPlan();
 		if (studentCurricularPlan == null) {
 			throw new NonExistingServiceException("error.no.studentCurricularPlan");
 		}

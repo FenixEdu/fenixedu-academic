@@ -37,16 +37,16 @@ public class ReadCurricularCoursesToEnroll extends Service {
 		return result;
 	}
 
-	public List<CurricularCourse2Enroll> run(final Registration student, final DegreeType degreeType,
+	public List<CurricularCourse2Enroll> run(final Registration registration, final DegreeType degreeType,
 			final ExecutionPeriod executionPeriod, final Integer executionDegreeID,
 			final List<Integer> curricularYearsList, final List<Integer> curricularSemestersList)
 			throws FenixServiceException {
 
-		if (student == null) {
+		if (registration == null) {
 			throw new FenixServiceException("error.student.curriculum.noCurricularPlans");
 		}
 
-		final StudentCurricularPlan studentCurricularPlan = student.getActiveOrConcludedStudentCurricularPlan();
+		final StudentCurricularPlan studentCurricularPlan = registration.getActiveOrConcludedStudentCurricularPlan();
 		if (studentCurricularPlan == null) {
 			throw new FenixServiceException("error.student.curriculum.noCurricularPlans");
 		}

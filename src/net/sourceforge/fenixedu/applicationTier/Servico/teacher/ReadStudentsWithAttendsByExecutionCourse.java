@@ -201,9 +201,9 @@ public class ReadStudentsWithAttendsByExecutionCourse extends Service {
 
 		while (it.hasNext()) {
 			Attends iFrequenta = (Attends) it.next();
-			Registration studentToAdd = iFrequenta.getAluno();
-			if (!alreadyAddedStudents.contains(studentToAdd)) {
-				alreadyAddedStudents.add(studentToAdd);
+			Registration registrationToAdd = iFrequenta.getAluno();
+			if (!alreadyAddedStudents.contains(registrationToAdd)) {
+				alreadyAddedStudents.add(registrationToAdd);
 				InfoCompositionOfAttendAndDegreeCurricularPlanAndShiftsAndStudentGroups infoComposition = new InfoCompositionOfAttendAndDegreeCurricularPlanAndShiftsAndStudentGroups();
 
 				InfoFrequenta infoFrequenta = InfoAttendsWithInfoStudentAndPersonAndInfoEnrollment.newInfoFromDomain(iFrequenta);
@@ -351,8 +351,8 @@ public class ReadStudentsWithAttendsByExecutionCourse extends Service {
 
 			boolean studentInShift = false;
 			List<Registration> students = shift.getStudents();
-			for (Registration student : students) {
-				if (student == attend.getAluno()) {
+			for (Registration registration : students) {
+				if (registration == attend.getAluno()) {
 					studentInShift = true;
 					break;
 				}

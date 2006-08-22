@@ -12,10 +12,10 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 public class ReadStudentCurricularPlanWithRulesForEnrollments extends ReadStudentCurricularPlanForEnrollments {
 
 	@Override
-	public StudentCurricularPlan run(Integer executionDegreeId, Registration student) throws FenixServiceException {
+	public StudentCurricularPlan run(Integer executionDegreeId, Registration registration) throws FenixServiceException {
 
 		final ExecutionPeriod actualExecutionPeriod = ExecutionPeriod.readActualExecutionPeriod();
-		final StudentCurricularPlan studentCurricularPlan = findStudentCurricularPlan(student);
+		final StudentCurricularPlan studentCurricularPlan = findStudentCurricularPlan(registration);
 
 		if (studentCurricularPlan.hasSpecialSeasonFor(actualExecutionPeriod)) {
 			return studentCurricularPlan;

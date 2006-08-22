@@ -61,8 +61,8 @@ public class ReadStudentsByIdArray extends Service {
             }
             Shift shift = rootDomainObject.readShiftByOID(new Integer(shifts[i]));
             List<Registration> studentList = shift.getStudents();
-            for (Registration student : studentList) {
-                InfoStudent infoStudent = InfoStudent.newInfoFromDomain(student);
+            for (Registration registration : studentList) {
+                InfoStudent infoStudent = InfoStudent.newInfoFromDomain(registration);
                 if (!infoStudentList.contains(infoStudent))
                     infoStudentList.add(infoStudent);
             }

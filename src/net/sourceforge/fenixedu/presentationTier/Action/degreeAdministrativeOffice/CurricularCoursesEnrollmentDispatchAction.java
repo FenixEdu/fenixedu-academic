@@ -421,12 +421,12 @@ public class CurricularCoursesEnrollmentDispatchAction extends TransactionalDisp
 	}
 
 	private void setStudentCurrentSemesterEnrolments(HttpServletRequest request,
-			final IUserView userView, final Registration student) throws FenixFilterException,
+			final IUserView userView, final Registration registration) throws FenixFilterException,
 			FenixActionException {
 
 		try {
 			StudentCurricularPlan studentCurricularPlan = null;
-			final Object[] args = { readAndSetExecutionDegree(request), student };
+			final Object[] args = { readAndSetExecutionDegree(request), registration };
 			if (checkIfUserHasAdministrativeRoles(userView) || checkIfUserHasTeacherRole(userView)) {
 
 				studentCurricularPlan = (StudentCurricularPlan) ServiceManagerServiceFactory
@@ -464,7 +464,7 @@ public class CurricularCoursesEnrollmentDispatchAction extends TransactionalDisp
 
 		} catch (ExistingServiceException e) {
 			if (e.getMessage().equals("student")) {
-				addActionMessage(request, "error.no.student.in.database", student.getNumber().toString());
+				addActionMessage(request, "error.no.student.in.database", registration.getNumber().toString());
 
 			} else if (e.getMessage().equals("studentCurricularPlan")) {
 				addActionMessage(request, "error.student.curricularPlan.nonExistent");

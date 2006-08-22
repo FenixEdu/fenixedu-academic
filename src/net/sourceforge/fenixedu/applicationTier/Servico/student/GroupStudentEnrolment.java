@@ -81,7 +81,7 @@ public class GroupStudentEnrolment extends Service {
         return Boolean.TRUE;
     }
 
-    private void informStudents(final StudentGroup studentGroup, final Registration student, final Grouping grouping) {
+    private void informStudents(final StudentGroup studentGroup, final Registration registration, final Grouping grouping) {
         final List<String> emails = new ArrayList<String>();
         for (final Attends attends : studentGroup.getAttends()) {
             emails.add(attends.getAluno().getPerson().getEmail());
@@ -96,7 +96,7 @@ public class GroupStudentEnrolment extends Service {
         }
         EMail.send(mailServer(), "Fenix System", messages.getMessage("suporte.mail"),
                 messages.getMessage("message.subject.grouping.change"), emails, new ArrayList(), new ArrayList(),
-                messages.getMessage("message.body.grouping.change.enrolment", student.getNumber().toString(),
+                messages.getMessage("message.body.grouping.change.enrolment", registration.getNumber().toString(),
                         studentGroup.getGroupNumber().toString()));
     }
 

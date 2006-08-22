@@ -113,8 +113,8 @@ public class WeeklyWorkLoadDA extends FenixDispatchAction {
             final Collection<Attends> attends = new ArrayList<Attends>();
             request.setAttribute("attends", attends);
 
-            for (final Registration student : getUserView(request).getPerson().getStudents()) {
-                for (final Attends attend : student.getOrderedAttends()) {
+            for (final Registration registration : getUserView(request).getPerson().getStudents()) {
+                for (final Attends attend : registration.getOrderedAttends()) {
                     if (attend.getEnrolment() != null) {
                         final ExecutionCourse executionCourse = attend.getDisciplinaExecucao();
                         if (executionCourse.getExecutionPeriod() == selectedExecutionPeriod) {
@@ -136,8 +136,8 @@ public class WeeklyWorkLoadDA extends FenixDispatchAction {
     }
 
     private Attends findFirstAttends(final HttpServletRequest request, final ExecutionPeriod selectedExecutionPeriod) throws FenixFilterException, FenixServiceException {
-        for (final Registration student : getUserView(request).getPerson().getStudents()) {
-            for (final Attends attend : student.getOrderedAttends()) {
+        for (final Registration registration : getUserView(request).getPerson().getStudents()) {
+            for (final Attends attend : registration.getOrderedAttends()) {
                 final ExecutionCourse executionCourse = attend.getDisciplinaExecucao();
                 if (executionCourse.getExecutionPeriod() == selectedExecutionPeriod
                         && attend.getEnrolment() != null) {

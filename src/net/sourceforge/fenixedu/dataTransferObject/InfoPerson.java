@@ -913,10 +913,10 @@ public class InfoPerson extends InfoObject {
 
                 List<InfoStudentCurricularPlan> infoStudentList = new ArrayList<InfoStudentCurricularPlan>();
 
-                for (Registration student : person.getStudents()) {
+                for (Registration registration : person.getStudents()) {
 
                     InfoDegree infoDegree = null;
-                    for (StudentCurricularPlan studentCurricularPlan : student
+                    for (StudentCurricularPlan studentCurricularPlan : registration
                             .getStudentCurricularPlans()) {
 
                         if ((!studentCurricularPlan.getCurrentState().equals(

@@ -46,9 +46,9 @@ public class ReadFinalDegreeWorkStudentGroupByUsername extends Service {
                         InfoGroupStudent infoGroupStudent = new InfoGroupStudent();
                         infoGroupStudent.setIdInternal(groupStudent.getIdInternal());
 
-                        Registration student1 = groupStudent.getStudent();
-                        if (student1 != null) {
-                            InfoStudent infoStudent = new InfoStudent(student1);
+                        Registration registration1 = groupStudent.getStudent();
+                        if (registration1 != null) {
+                            InfoStudent infoStudent = new InfoStudent(registration1);
                             infoGroupStudent.setStudent(infoStudent);
                         }
 

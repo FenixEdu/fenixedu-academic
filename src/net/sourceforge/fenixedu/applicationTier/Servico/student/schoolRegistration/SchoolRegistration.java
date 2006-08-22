@@ -78,25 +78,25 @@ public class SchoolRegistration extends Service {
         return null;
     }
 
-    private void writeResidenceCandidacy(final Registration student,
+    private void writeResidenceCandidacy(final Registration registration,
             final InfoResidenceCandidacy infoResidenceCandidacy) throws ExcepcaoPersistencia {
 
         if (infoResidenceCandidacy != null) {
             final ResidenceCandidacies residenceCandidacy = new ResidenceCandidacies();
 
-            residenceCandidacy.setStudent(student);
+            residenceCandidacy.setStudent(registration);
             residenceCandidacy.setCreationDate(new Date());
             residenceCandidacy.setCandidate(infoResidenceCandidacy.getCandidate());
             residenceCandidacy.setObservations(infoResidenceCandidacy.getObservations());
         }
     }
 
-    private void updateStudentInfo(final Registration student) throws ExcepcaoPersistencia {
+    private void updateStudentInfo(final Registration registration) throws ExcepcaoPersistencia {
 
         final ExecutionYear executionYear = ExecutionYear.readCurrentExecutionYear();
-        student.setRegistrationYear(executionYear);
+        registration.setRegistrationYear(executionYear);
 
-        final StudentCurricularPlan scp = student.getActiveStudentCurricularPlan();
+        final StudentCurricularPlan scp = registration.getActiveStudentCurricularPlan();
         final Date actualDate = Calendar.getInstance().getTime();
         // update the dates, since this objects were already created and only
         // now the student is a registrated student in the campus

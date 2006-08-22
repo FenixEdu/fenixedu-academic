@@ -255,7 +255,7 @@ public class SubmitMarks extends Service {
 			this.teacherMail = StringUtils.rightPad(teacherMail, 39, ' ');
 		}
 		
-		private void addLine(Registration student, String season, FinalMark mark, ExecutionYear executionYear) {
+		private void addLine(Registration registration, String season, FinalMark mark, ExecutionYear executionYear) {
 			StringBuilder builder = new StringBuilder();
 			builder.append(getDegreeCode());
 			builder.append(getCurricularYear());
@@ -264,7 +264,7 @@ public class SubmitMarks extends Service {
 			builder.append(getCurricularCourseCode());
 			builder.append(mark.getMark());
 			builder.append(dateFormat.format(mark.getSubmitDate()));
-			builder.append(getStudentNumber(student.getNumber()));
+			builder.append(getStudentNumber(registration.getNumber()));
 			builder.append(getTeacherNumber());
 			builder.append(dateFormat.format(mark.getWhenSubmited()));
 			builder.append(getEnrolmentYear(executionYear));

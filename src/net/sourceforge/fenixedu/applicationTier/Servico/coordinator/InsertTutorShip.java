@@ -11,17 +11,17 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class InsertTutorShip extends Service {
 
-    public Boolean verifyStudentOfThisDegree(Registration student, DegreeType degreeType, String degreeCode)
+    public Boolean verifyStudentOfThisDegree(Registration registration, DegreeType degreeType, String degreeCode)
             throws FenixServiceException, ExcepcaoPersistencia {
-        StudentCurricularPlan studentCurricularPlan = student.getActiveStudentCurricularPlan();
+        StudentCurricularPlan studentCurricularPlan = registration.getActiveStudentCurricularPlan();
 
         return studentCurricularPlan.getDegreeCurricularPlan().getDegree().getSigla().equals(degreeCode);
     }
 
-    public Boolean verifyStudentAlreadyTutor(Registration student, Teacher teacher)
+    public Boolean verifyStudentAlreadyTutor(Registration registration, Teacher teacher)
             throws FenixServiceException, ExcepcaoPersistencia {
 
-        Tutor tutor = student.getAssociatedTutor();
+        Tutor tutor = registration.getAssociatedTutor();
 
         if (tutor != null && !(tutor.getTeacher() == teacher)) {
             return true;

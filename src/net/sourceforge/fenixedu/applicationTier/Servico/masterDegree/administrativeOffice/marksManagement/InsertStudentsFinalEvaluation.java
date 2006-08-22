@@ -45,8 +45,8 @@ public class InsertStudentsFinalEvaluation extends Service {
 		return infoEvaluationsWithError;
 	}
 
-	private EnrolmentEvaluation findEnrolmentEvaluationByIDForStudent(final Registration student, final Integer idInternal) {
-		for (final StudentCurricularPlan studentCurricularPlan : student.getStudentCurricularPlansSet()) {
+	private EnrolmentEvaluation findEnrolmentEvaluationByIDForStudent(final Registration registration, final Integer idInternal) {
+		for (final StudentCurricularPlan studentCurricularPlan : registration.getStudentCurricularPlansSet()) {
 			for (final Enrolment enrolment : studentCurricularPlan.getEnrolmentsSet()) {
 				for (final EnrolmentEvaluation enrolmentEvaluation : enrolment.getEvaluationsSet()) {
 					if (enrolmentEvaluation.getIdInternal().equals(idInternal)) {

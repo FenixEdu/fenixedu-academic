@@ -38,13 +38,13 @@ public class ReadEnroledExecutionCourses extends Service {
         return false;
     }
 
-    private boolean checkStudentInAttendsSet(List allGroupProperties, Registration student) {
+    private boolean checkStudentInAttendsSet(List allGroupProperties, Registration registration) {
         boolean result = false;
 
         Iterator iter = allGroupProperties.iterator();
         while (iter.hasNext()) {
             Grouping groupProperties = (Grouping) iter.next();
-            if (groupProperties.getStudentAttend(student) != null)
+            if (groupProperties.getStudentAttend(registration) != null)
                 return true;
         }
 

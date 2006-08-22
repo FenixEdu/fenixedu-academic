@@ -8,15 +8,15 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 
 public class ReadStudentCurricularPlanForEnrollments extends Service {
 
-    public StudentCurricularPlan run(Integer executionDegreeId, Registration student) throws FenixServiceException {
-    	return findStudentCurricularPlan(student);
+    public StudentCurricularPlan run(Integer executionDegreeId, Registration registration) throws FenixServiceException {
+    	return findStudentCurricularPlan(registration);
     }
 
-	protected StudentCurricularPlan findStudentCurricularPlan(final Registration student) throws ExistingServiceException {
-		if (student == null) {
+	protected StudentCurricularPlan findStudentCurricularPlan(final Registration registration) throws ExistingServiceException {
+		if (registration == null) {
 			throw new ExistingServiceException("student");
 		}
-		final StudentCurricularPlan studentCurricularPlan = student.getActiveStudentCurricularPlan();
+		final StudentCurricularPlan studentCurricularPlan = registration.getActiveStudentCurricularPlan();
 		if (studentCurricularPlan == null) {
 			throw new ExistingServiceException("studentCurricularPlan");
 		}

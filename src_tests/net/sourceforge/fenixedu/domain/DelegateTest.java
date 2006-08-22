@@ -14,8 +14,8 @@ public class DelegateTest extends DomainTestBase {
 		ExecutionYear executionYear = new ExecutionYear();
 		executionYear.addDelegate(delegateToDelete);
 		
-		Registration student  = new Registration();
-		student.addDelegate(delegateToDelete);
+		Registration registration  = new Registration();
+		registration.addDelegate(delegateToDelete);
 		
 		Degree degree = new Degree();
 		degree.addDelegate(delegateToDelete);

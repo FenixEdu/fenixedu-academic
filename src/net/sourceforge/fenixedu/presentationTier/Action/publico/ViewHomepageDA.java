@@ -162,12 +162,12 @@ public class ViewHomepageDA extends FenixDispatchAction {
     public ActionForward listStudents(ActionMapping mapping, ActionForm actionForm,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
     	final SortedMap<Degree, SortedSet<Homepage>> homepages = new TreeMap<Degree, SortedSet<Homepage>>(Degree.DEGREE_COMPARATOR_BY_NAME_AND_DEGREE_TYPE);
-    	for (final Registration student : rootDomainObject.getStudentsSet()) {
-    		final StudentCurricularPlan studentCurricularPlan = student.getActiveStudentCurricularPlan();
+    	for (final Registration registration : rootDomainObject.getStudentsSet()) {
+    		final StudentCurricularPlan studentCurricularPlan = registration.getActiveStudentCurricularPlan();
     		if (studentCurricularPlan != null) {
     			final DegreeCurricularPlan degreeCurricularPlan = studentCurricularPlan.getDegreeCurricularPlan();
     			final Degree degree = degreeCurricularPlan.getDegree();
-    			final Person person = student.getPerson();
+    			final Person person = registration.getPerson();
     			final SortedSet<Homepage> degreeHomepages;
 				if (homepages.containsKey(degree)) {
 					degreeHomepages = homepages.get(degree);
@@ -194,11 +194,11 @@ public class ViewHomepageDA extends FenixDispatchAction {
     public ActionForward listAlumni(ActionMapping mapping, ActionForm actionForm,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
     	final SortedMap<Degree, SortedSet<Homepage>> homepages = new TreeMap<Degree, SortedSet<Homepage>>(Degree.DEGREE_COMPARATOR_BY_NAME_AND_DEGREE_TYPE);
-    	for (final Registration student : rootDomainObject.getStudentsSet()) {
-    		for (final StudentCurricularPlan studentCurricularPlan : student.getStudentCurricularPlansSet()) {
+    	for (final Registration registration : rootDomainObject.getStudentsSet()) {
+    		for (final StudentCurricularPlan studentCurricularPlan : registration.getStudentCurricularPlansSet()) {
    				final DegreeCurricularPlan degreeCurricularPlan = studentCurricularPlan.getDegreeCurricularPlan();
    				final Degree degree = degreeCurricularPlan.getDegree();
-   				final Person person = student.getPerson();
+   				final Person person = registration.getPerson();
    				if (person != null) {
    					final SortedSet<Homepage> degreeHomepages;
    					if (homepages.containsKey(degree)) {

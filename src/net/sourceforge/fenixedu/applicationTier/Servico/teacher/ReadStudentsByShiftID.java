@@ -15,8 +15,8 @@ public class ReadStudentsByShiftID extends Service {
         final List infoStudents = new LinkedList();
         final Shift shift = rootDomainObject.readShiftByOID(shiftID);
         final List<Registration> students = shift.getStudents();
-        for (final Registration student : students) {
-            infoStudents.add(InfoStudent.newInfoFromDomain(student));
+        for (final Registration registration : students) {
+            infoStudents.add(InfoStudent.newInfoFromDomain(registration));
         }
 
         return infoStudents;

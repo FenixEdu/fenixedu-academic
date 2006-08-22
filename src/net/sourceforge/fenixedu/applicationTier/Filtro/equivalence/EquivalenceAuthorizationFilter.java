@@ -97,10 +97,10 @@ public class EquivalenceAuthorizationFilter extends Filtro {
 
     /**
      * @param userView
-     * @param student
+     * @param registration
      * @return true/false
      */
-    private boolean isThisACoordinatorOfThisStudentsDegree(IUserView userView, Registration student) {
+    private boolean isThisACoordinatorOfThisStudentsDegree(IUserView userView, Registration registration) {
         List executionDegreesOfThisCoordinator = getExecutionDegreesOfThisCoordinator(userView);
 
         List degreeCurricularPlansOfThisCoordinator = (List) CollectionUtils.collect(
@@ -111,7 +111,7 @@ public class EquivalenceAuthorizationFilter extends Filtro {
                     }
                 });
 
-        StudentCurricularPlan studentCurricularPlan = student.getActiveStudentCurricularPlan();
+        StudentCurricularPlan studentCurricularPlan = registration.getActiveStudentCurricularPlan();
 
         return degreeCurricularPlansOfThisCoordinator.contains(studentCurricularPlan
                 .getDegreeCurricularPlan());
@@ -139,12 +139,12 @@ public class EquivalenceAuthorizationFilter extends Filtro {
     }
 
     /**
-     * @param student
+     * @param registration
      * @return true/false
      * @throws ExcepcaoPersistencia
      */
-    private boolean isThisStudentsDegreeTheOne(Registration student) {
-        StudentCurricularPlan studentCurricularPlan = student.getActiveStudentCurricularPlan();
+    private boolean isThisStudentsDegreeTheOne(Registration registration) {
+        StudentCurricularPlan studentCurricularPlan = registration.getActiveStudentCurricularPlan();
         return studentCurricularPlan.getDegreeCurricularPlan().getDegree().getSigla().equals(
                 DEGREE_ACRONYM);
     }

@@ -14,10 +14,10 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 
 public class ReadClassTimeTableByStudent extends Service {
 
-	public List<InfoLesson> run(final Registration student, final SchoolClass schoolClass,
+	public List<InfoLesson> run(final Registration registration, final SchoolClass schoolClass,
 			final ExecutionCourse executionCourse) throws FenixServiceException {
 
-		if (student == null) {
+		if (registration == null) {
 			throw new FenixServiceException("error.readClassTimeTableByStudent.noStudent");
 		}
 
@@ -25,7 +25,7 @@ public class ReadClassTimeTableByStudent extends Service {
 			throw new FenixServiceException("error.readClassTimeTableByStudent.noSchoolClass");
 		}
 
-		final List<ExecutionCourse> attendingExecutionCourses = student
+		final List<ExecutionCourse> attendingExecutionCourses = registration
 				.getAttendingExecutionCoursesForCurrentExecutionPeriod();
 
 		final List<Shift> shifts = new ArrayList<Shift>();

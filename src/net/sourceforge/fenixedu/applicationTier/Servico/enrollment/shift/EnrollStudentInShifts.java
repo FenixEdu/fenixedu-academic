@@ -10,15 +10,15 @@ public class EnrollStudentInShifts extends Service {
 
     public class StudentNotFoundServiceException extends FenixServiceException {}
 
-    public ShiftEnrollmentErrorReport run(final Registration student, final Integer shiftId) throws FenixServiceException {
+    public ShiftEnrollmentErrorReport run(final Registration registration, final Integer shiftId) throws FenixServiceException {
     	
         final ShiftEnrollmentErrorReport errorReport = new ShiftEnrollmentErrorReport();
 
-        if (student == null) {
+        if (registration == null) {
             throw new StudentNotFoundServiceException();
         }
 
-        if (student.getPayedTuition() == null || student.getPayedTuition().equals(Boolean.FALSE)) {
+        if (registration.getPayedTuition() == null || registration.getPayedTuition().equals(Boolean.FALSE)) {
             throw new FenixServiceException("error.exception.notAuthorized.student.warningTuition");
         }
 
@@ -27,13 +27,13 @@ public class EnrollStudentInShifts extends Service {
             errorReport.getUnExistingShifts().add(shiftId);
         }             
 
-        final Shift shiftFromStudent = findShiftOfSameTypeForSameExecutionCourse(student, selectedShift);
+        final Shift shiftFromStudent = findShiftOfSameTypeForSameExecutionCourse(registration, selectedShift);
         
         if (selectedShift != shiftFromStudent) {
             //Registration is not yet enroled, so let's reserve the shift...
-            if (selectedShift.reserveForStudent(student)) {
+            if (selectedShift.reserveForStudent(registration)) {
                 if (shiftFromStudent != null) {
-                    shiftFromStudent.removeStudents(student);
+                    shiftFromStudent.removeStudents(registration);
                 }
             } else {
                 errorReport.getUnAvailableShifts().add(selectedShift);
@@ -43,8 +43,8 @@ public class EnrollStudentInShifts extends Service {
         return errorReport;
     }
 
-    private Shift findShiftOfSameTypeForSameExecutionCourse(final Registration student, final Shift shift) {
-		for (final Shift shiftFromStudent : student.getShifts()) {
+    private Shift findShiftOfSameTypeForSameExecutionCourse(final Registration registration, final Shift shift) {
+		for (final Shift shiftFromStudent : registration.getShifts()) {
 			if (shiftFromStudent.getTipo() == shift.getTipo()
 					&& shiftFromStudent.getDisciplinaExecucao() == shift.getDisciplinaExecucao()) {
 				return shiftFromStudent;

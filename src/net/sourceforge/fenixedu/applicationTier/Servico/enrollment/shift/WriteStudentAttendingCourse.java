@@ -7,12 +7,12 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 
 public class WriteStudentAttendingCourse extends Service {
 
-	public void run(Registration student, Integer executionCourseId) throws FenixServiceException {
+	public void run(Registration registration, Integer executionCourseId) throws FenixServiceException {
 
-		if (student == null) {
+		if (registration == null) {
 			throw new FenixServiceException("error.invalid.student");
 		}
-		student.addAttendsTo(readExecutionCourse(executionCourseId));
+		registration.addAttendsTo(readExecutionCourse(executionCourseId));
 	}
 
 	private ExecutionCourse readExecutionCourse(Integer executionCourseId) throws FenixServiceException {

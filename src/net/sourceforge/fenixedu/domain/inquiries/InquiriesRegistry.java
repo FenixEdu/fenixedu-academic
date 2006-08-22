@@ -23,14 +23,14 @@ public class InquiriesRegistry extends InquiriesRegistry_Base {
 		setRootDomainObject(RootDomainObject.getInstance());
 	}
 	
-	public InquiriesRegistry(ExecutionCourse executionCourse, ExecutionPeriod executionPeriod, Registration student) {
+	public InquiriesRegistry(ExecutionCourse executionCourse, ExecutionPeriod executionPeriod, Registration registration) {
 		this();
-		if((executionCourse == null) || (executionPeriod == null) || (student == null)) {
+		if((executionCourse == null) || (executionPeriod == null) || (registration == null)) {
 			throw new NullArgumentException("The executionCourse, executionPeriod and student should not be null!");
 		}
 		this.setExecutionCourse(executionCourse);
 		this.setExecutionPeriod(executionPeriod);
-		this.setStudent(student);
+		this.setStudent(registration);
 		
 	}
     

@@ -156,15 +156,15 @@ public class ShiftStudentEnrollmentManagerLookupDispatchAction extends Transacti
 	}
 
 	private List<SchoolClass> readStudentSchoolClassesToEnrolUsingExecutionCourse(
-			HttpServletRequest request, final Registration student, final ExecutionCourse executionCourse) {
+			HttpServletRequest request, final Registration registration, final ExecutionCourse executionCourse) {
 		
 		final List<SchoolClass> schoolClassesToEnrol = new ArrayList<SchoolClass>();
 		if (executionCourse != null) {
 			request.setAttribute("executionCourse", executionCourse);
-			schoolClassesToEnrol.addAll(student.getSchoolClassesToEnrolBy(executionCourse));
+			schoolClassesToEnrol.addAll(registration.getSchoolClassesToEnrolBy(executionCourse));
 
 		} else {
-			schoolClassesToEnrol.addAll(student.getSchoolClassesToEnrol());
+			schoolClassesToEnrol.addAll(registration.getSchoolClassesToEnrol());
 		}
 		
 		Collections.sort(schoolClassesToEnrol, new BeanComparator("nome"));

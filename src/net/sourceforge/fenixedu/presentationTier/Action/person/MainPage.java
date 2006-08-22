@@ -61,8 +61,8 @@ public final class MainPage extends FenixAction {
     }
 
     private void addStudentNotifications(final Person person, final List<Advisory> advisories) throws FenixActionException {
-        for (final Registration student : person.getStudents()) {
-            for (final Attends attends : student.getAssociatedAttends()) {
+        for (final Registration registration : person.getStudents()) {
+            for (final Attends attends : registration.getAssociatedAttends()) {
                 if (attends.getEnrolment() != null) {
                     final ExecutionPeriod executionPeriod = attends.getDisciplinaExecucao().getExecutionPeriod();
                     if (executionPeriod.getState().equals(PeriodState.CURRENT) && attends.hasEnrolment()) {

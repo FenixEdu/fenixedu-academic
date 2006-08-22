@@ -17,10 +17,10 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  */
 public class ImprovmentEnrollService extends Service {
 
-    public void run(Registration student, ExecutionPeriod executionPeriod, String employeeUserName, List<Integer> enrolmentsIds)
+    public void run(Registration registration, ExecutionPeriod executionPeriod, String employeeUserName, List<Integer> enrolmentsIds)
             throws FenixServiceException, ExcepcaoPersistencia {
 
-        if (student == null || executionPeriod == null) {
+        if (registration == null || executionPeriod == null) {
             throw new InvalidArgumentsServiceException();
         }
 
@@ -36,12 +36,12 @@ public class ImprovmentEnrollService extends Service {
         }
 
         for (final Integer enrolmentID : enrolmentsIds) {
-            final Enrolment enrollment = student.findEnrolmentByEnrolmentID(enrolmentID);
+            final Enrolment enrollment = registration.findEnrolmentByEnrolmentID(enrolmentID);
             if (enrollment == null) {
                 throw new InvalidArgumentsServiceException();
             }
 
-            enrollment.createEnrolmentEvaluationForImprovement(employee, executionPeriod, student);
+            enrollment.createEnrolmentEvaluationForImprovement(employee, executionPeriod, registration);
         }
     }
 

@@ -11,10 +11,10 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 
 public class ReadEnrollmentsWithStateEnrolledByStudent extends Service {
 
-	public StudentCurricularPlan run(Registration student, DegreeType degreeType,
+	public StudentCurricularPlan run(Registration registration, DegreeType degreeType,
 			ExecutionPeriod executionPeriod) throws FenixServiceException {
 
-		final StudentCurricularPlan studentCurricularPlan = (student == null) ? null : student
+		final StudentCurricularPlan studentCurricularPlan = (registration == null) ? null : registration
 				.getActiveOrConcludedStudentCurricularPlan();
 		if (studentCurricularPlan == null) {
 			throw new FenixServiceException("error.student.curriculum.noCurricularPlans");

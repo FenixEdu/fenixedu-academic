@@ -445,9 +445,9 @@ public class Registration extends Registration_Base {
 	}
 
 	public static Registration readStudentByNumberAndDegreeType(Integer number, DegreeType degreeType) {
-		for (Registration student : RootDomainObject.getInstance().getStudents()) {
-			if (student.getNumber().equals(number) && student.getDegreeType().equals(degreeType)) {
-				return student;
+		for (Registration registration : RootDomainObject.getInstance().getStudents()) {
+			if (registration.getNumber().equals(number) && registration.getDegreeType().equals(degreeType)) {
+				return registration;
 			}
 		}
 		return null;
@@ -460,16 +460,16 @@ public class Registration extends Registration_Base {
 		final String studentNameToMatch = (studentName == null) ? null : studentName.replaceAll("%",
 				".*").toLowerCase();
 
-		for (Registration student : RootDomainObject.getInstance().getStudents()) {
-			Person person = student.getPerson();
-			if (student.getDegreeType().equals(DegreeType.MASTER_DEGREE)
+		for (Registration registration : RootDomainObject.getInstance().getStudents()) {
+			Person person = registration.getPerson();
+			if (registration.getDegreeType().equals(DegreeType.MASTER_DEGREE)
 					&& ((studentNameToMatch != null && person.getName().toLowerCase().matches(
 							studentNameToMatch)) || studentNameToMatch == null)
 					&& ((docIdNumber != null && person.getDocumentIdNumber().equals(docIdNumber)) || docIdNumber == null)
 					&& ((idType != null && person.getIdDocumentType().equals(idType)) || idType == null)
-					&& ((studentNumber != null && student.getNumber().equals(studentNumber)) || studentNumber == null)) {
+					&& ((studentNumber != null && registration.getNumber().equals(studentNumber)) || studentNumber == null)) {
 
-				students.add(student);
+				students.add(registration);
 			}
 		}
 		return students;
@@ -481,10 +481,10 @@ public class Registration extends Registration_Base {
 
 		int studentNumberInt;
 		List<Registration> students = new ArrayList();
-		for (Registration student : RootDomainObject.getInstance().getStudents()) {
-			studentNumberInt = student.getNumber().intValue();
+		for (Registration registration : RootDomainObject.getInstance().getStudents()) {
+			studentNumberInt = registration.getNumber().intValue();
 			if (studentNumberInt >= fromNumberInt && studentNumberInt <= toNumberInt) {
-				students.add(student);
+				students.add(registration);
 			}
 		}
 		return students;
@@ -492,9 +492,9 @@ public class Registration extends Registration_Base {
 
 	public static List<Registration> readStudentsByDegreeType(DegreeType degreeType) {
 		List<Registration> students = new ArrayList();
-		for (Registration student : RootDomainObject.getInstance().getStudents()) {
-			if (student.getDegreeType().equals(degreeType)) {
-				students.add(student);
+		for (Registration registration : RootDomainObject.getInstance().getStudents()) {
+			if (registration.getDegreeType().equals(degreeType)) {
+				students.add(registration);
 			}
 		}
 		return students;

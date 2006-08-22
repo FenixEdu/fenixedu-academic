@@ -1035,18 +1035,18 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	// END: Only for enrollment purposes (PROTECTED)
 	// -------------------------------------------------------------
 
-	public StudentCurricularPlan(Registration student, DegreeCurricularPlan degreeCurricularPlan,
+	public StudentCurricularPlan(Registration registration, DegreeCurricularPlan degreeCurricularPlan,
 			Branch branch, Date startDate, StudentCurricularPlanState currentState, Double givenCredits,
 			Specialization specialization) {
 
-		this(student, degreeCurricularPlan, currentState, startDate);
+		this(registration, degreeCurricularPlan, currentState, startDate);
 
 		setBranch(branch);
 		setGivenCredits(givenCredits);
 		setSpecialization(specialization);
 	}
 
-	public StudentCurricularPlan(Registration student, DegreeCurricularPlan degreeCurricularPlan,
+	public StudentCurricularPlan(Registration registration, DegreeCurricularPlan degreeCurricularPlan,
 			StudentCurricularPlanState studentCurricularPlanState, Date startDate) {
 
 		this.setRootDomainObject(RootDomainObject.getInstance());
@@ -1055,7 +1055,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 		setCurrentState(studentCurricularPlanState);
 		setDegreeCurricularPlan(degreeCurricularPlan);
 		setStartDate(startDate);
-		setStudent(student);
+		setStudent(registration);
 		setWhen(new Date());
 
 		if (!canSetStateToActive()

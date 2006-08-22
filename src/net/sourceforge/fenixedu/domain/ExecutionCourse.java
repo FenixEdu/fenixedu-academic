@@ -255,9 +255,9 @@ public class ExecutionCourse extends ExecutionCourse_Base {
         return res;
     }
 
-    public Attends getAttendsByStudent(final Registration student) {
+    public Attends getAttendsByStudent(final Registration registration) {
         for (final Attends attends : getAttendsSet()) {
-            if (attends.getAluno() == student) {
+            if (attends.getAluno() == registration) {
                 return attends;
             }
         }

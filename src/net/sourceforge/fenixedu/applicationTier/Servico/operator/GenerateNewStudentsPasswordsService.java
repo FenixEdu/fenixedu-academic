@@ -30,9 +30,9 @@ public class GenerateNewStudentsPasswordsService extends Service {
         List studentsList = Registration.readAllStudentsBetweenNumbers(fromNumber, toNumber);
         Set<Registration> studentsUniqueList = new HashSet(studentsList);
 
-        for (Registration student : studentsUniqueList) {
+        for (Registration registration : studentsUniqueList) {
 
-            Person person = student.getPerson();
+            Person person = registration.getPerson();
             boolean isFirstTimeStudent = person.hasRole(RoleType.FIRST_TIME_STUDENT);
 
             if (isFirstTimeStudent) {

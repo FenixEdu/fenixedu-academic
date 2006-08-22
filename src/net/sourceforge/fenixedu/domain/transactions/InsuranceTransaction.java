@@ -30,14 +30,14 @@ public class InsuranceTransaction extends InsuranceTransaction_Base {
 	 * @param personAccount
 	 * @param guideEntry
 	 * @param executionYear
-	 * @param student
+	 * @param registration
 	 */
 	public InsuranceTransaction(Double value, Timestamp transactionDate,
 			String remarks, PaymentType paymentType,
 			TransactionType transactionType, Boolean wasInternalBalance,
 			Person responsiblePerson, PersonAccount personAccount,
 			GuideEntry guideEntry, ExecutionYear executionYear,
-			Registration student) {
+			Registration registration) {
         setOjbConcreteClass(getClass().getName());
 		setValue(value);
 		setTransactionDate(transactionDate);
@@ -49,6 +49,6 @@ public class InsuranceTransaction extends InsuranceTransaction_Base {
 		setPersonAccount(personAccount);
 		setExecutionYear(executionYear);
         setGuideEntry(guideEntry);
-		setStudent(student);
+		setStudent(registration);
 	}
 }

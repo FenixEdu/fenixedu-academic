@@ -200,9 +200,9 @@ public class AddStudentToFinalDegreeWorkStudentGroup extends Service {
             return registration.getIdInternal().equals(groupStudent.getStudent().getIdInternal());
         }
 
-        public PREDICATE_FIND_GROUP_STUDENT_BY_STUDENT(Registration student) {
+        public PREDICATE_FIND_GROUP_STUDENT_BY_STUDENT(Registration registration) {
             super();
-            this.registration = student;
+            this.registration = registration;
         }
     }
 

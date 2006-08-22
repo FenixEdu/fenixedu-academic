@@ -367,18 +367,18 @@ public class Person extends Person_Base {
     }
 
     public Registration getStudentByType(DegreeType degreeType) {
-        for (Registration student : this.getStudents()) {
-            if (student.getDegreeType().equals(degreeType)) {
-                return student;
+        for (Registration registration : this.getStudents()) {
+            if (registration.getDegreeType().equals(degreeType)) {
+                return registration;
             }
         }
         return null;
     }
 
     public Registration getStudentByUsername() {
-        for (final Registration student : this.getStudents()) {
-            if (getUsername().contains(student.getNumber().toString())) {
-                return student;
+        for (final Registration registration : this.getStudents()) {
+            if (getUsername().contains(registration.getNumber().toString())) {
+                return registration;
             }
         }
         return null;
@@ -941,9 +941,9 @@ public class Person extends Person_Base {
     }
 
     public Registration readStudentByDegreeType(DegreeType degreeType) {
-        for (final Registration student : this.getStudents()) {
-            if (student.getDegreeType().equals(degreeType)) {
-                return student;
+        for (final Registration registration : this.getStudents()) {
+            if (registration.getDegreeType().equals(degreeType)) {
+                return registration;
             }
         }
         return null;
@@ -1302,8 +1302,8 @@ public class Person extends Person_Base {
     public SortedSet<StudentCurricularPlan> getActiveStudentCurricularPlansSortedByDegreeTypeAndDegreeName() {
         final SortedSet<StudentCurricularPlan> studentCurricularPlans = new TreeSet<StudentCurricularPlan>(
                 StudentCurricularPlan.STUDENT_CURRICULAR_PLAN_COMPARATOR_BY_DEGREE_TYPE_AND_DEGREE_NAME);
-        for (final Registration student : getStudentsSet()) {
-            final StudentCurricularPlan studentCurricularPlan = student.getActiveStudentCurricularPlan();
+        for (final Registration registration : getStudentsSet()) {
+            final StudentCurricularPlan studentCurricularPlan = registration.getActiveStudentCurricularPlan();
             if (studentCurricularPlan != null) {
                 studentCurricularPlans.add(studentCurricularPlan);
             }
@@ -1314,8 +1314,8 @@ public class Person extends Person_Base {
     public SortedSet<StudentCurricularPlan> getCompletedStudentCurricularPlansSortedByDegreeTypeAndDegreeName() {
         final SortedSet<StudentCurricularPlan> studentCurricularPlans = new TreeSet<StudentCurricularPlan>(
                 StudentCurricularPlan.STUDENT_CURRICULAR_PLAN_COMPARATOR_BY_DEGREE_TYPE_AND_DEGREE_NAME);
-        for (final Registration student : getStudentsSet()) {
-            for (final StudentCurricularPlan studentCurricularPlan : student
+        for (final Registration registration : getStudentsSet()) {
+            for (final StudentCurricularPlan studentCurricularPlan : registration
                     .getStudentCurricularPlansSet()) {
                 if (studentCurricularPlan.getCurrentState() == StudentCurricularPlanState.CONCLUDED) {
                     studentCurricularPlans.add(studentCurricularPlan);
@@ -1341,8 +1341,8 @@ public class Person extends Person_Base {
 
     public Set<Attends> getCurrentAttends() {
         final Set<Attends> attends = new HashSet<Attends>();
-        for (final Registration student : getStudentsSet()) {
-            for (final Attends attend : student.getAssociatedAttendsSet()) {
+        for (final Registration registration : getStudentsSet()) {
+            for (final Attends attend : registration.getAssociatedAttendsSet()) {
                 final ExecutionCourse executionCourse = attend.getDisciplinaExecucao();
                 final ExecutionPeriod executionPeriod = executionCourse.getExecutionPeriod();
                 if (executionPeriod.getState().equals(PeriodState.CURRENT)) {
@@ -1411,8 +1411,8 @@ public class Person extends Person_Base {
     }
 
     private boolean hasStudentWithNumber(final Integer institutionalNumber) {
-        for (final Registration student : getStudents()) {
-            if (student.getNumber().equals(institutionalNumber)) {
+        for (final Registration registration : getStudents()) {
+            if (registration.getNumber().equals(institutionalNumber)) {
                 return true;
             }
         }
