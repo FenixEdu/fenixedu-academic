@@ -8,7 +8,7 @@ public class InfoStudentGroupWithAttendsAndGroupingAndShift extends InfoStudentG
         super.copyFromDomain(studentGroup);
 
         if(studentGroup != null) {
-            setInfoShift(InfoShiftWithInfoLessons.newInfoFromDomain(studentGroup.getShift()));
+            setInfoShift(InfoShift.newInfoFromDomain(studentGroup.getShift()));
         }
     }
     

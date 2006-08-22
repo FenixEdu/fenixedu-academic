@@ -11,7 +11,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.ExecutionCourseSiteView;
 import net.sourceforge.fenixedu.dataTransferObject.ISiteComponent;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
-import net.sourceforge.fenixedu.dataTransferObject.InfoLesson;
 import net.sourceforge.fenixedu.dataTransferObject.InfoProfessorship;
 import net.sourceforge.fenixedu.dataTransferObject.InfoRoom;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
@@ -19,7 +18,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoSiteCommon;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteSummaries;
 import net.sourceforge.fenixedu.dataTransferObject.SiteView;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.Lesson;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.Site;
@@ -54,13 +52,6 @@ public class PrepareInsertSummary extends Service {
         for (final Shift shift : shifts) {
             final InfoShift infoShift = InfoShift.newInfoFromDomain(shift);
             infoShifts.add(infoShift);
-
-            final List<Lesson> lessons = shift.getAssociatedLessons();
-            final List<InfoLesson> infoLessons = new ArrayList<InfoLesson>(lessons.size());
-            infoShift.setInfoLessons(infoLessons);
-            for (final Lesson lesson : lessons) {
-                infoLessons.add(InfoLesson.newInfoFromDomain(lesson));
-            }
         }
 
         final Collection<OldRoom> rooms = OldRoom.getOldRooms();

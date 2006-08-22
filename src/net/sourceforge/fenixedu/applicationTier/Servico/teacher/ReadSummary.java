@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 
@@ -18,7 +17,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.ExecutionCourseSiteView;
 import net.sourceforge.fenixedu.dataTransferObject.ISiteComponent;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
-import net.sourceforge.fenixedu.dataTransferObject.InfoLesson;
 import net.sourceforge.fenixedu.dataTransferObject.InfoProfessorship;
 import net.sourceforge.fenixedu.dataTransferObject.InfoRoom;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
@@ -70,11 +68,6 @@ public class ReadSummary extends Service {
                 public Object transform(Object arg0) {
                     final Shift turno = (Shift) arg0;
                     final InfoShift infoShift = InfoShift.newInfoFromDomain(turno);
-                    infoShift.setInfoLessons(new ArrayList(turno.getAssociatedLessons().size()));
-                    for (final Iterator<Lesson> iterator = turno.getAssociatedLessons().iterator(); iterator.hasNext();) {
-                        final InfoLesson infoLesson = InfoLesson.newInfoFromDomain(iterator.next());
-                        infoShift.getInfoLessons().add(infoLesson);
-                    }
                     return infoShift;
                 }
             });

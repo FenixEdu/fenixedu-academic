@@ -13,14 +13,14 @@ package net.sourceforge.fenixedu.applicationTier.Servico.sop;
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
-import net.sourceforge.fenixedu.dataTransferObject.InfoShiftWithInfoExecutionCourse;
+import net.sourceforge.fenixedu.dataTransferObject.InfoShiftEditor;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class CriarTurno extends Service {
 
-    public InfoShift run(InfoShift infoTurno) throws FenixServiceException, ExcepcaoPersistencia {
+    public InfoShift run(InfoShiftEditor infoTurno) throws FenixServiceException, ExcepcaoPersistencia {
     	final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(infoTurno.getInfoDisciplinaExecucao().getIdInternal());
 
         Integer availabilityFinal = new Integer(new Double(Math.ceil(1.10 * infoTurno.getLotacao()
@@ -28,7 +28,7 @@ public class CriarTurno extends Service {
 
     	final Shift newShift = new Shift(executionCourse, infoTurno.getTipo(), infoTurno.getLotacao(), availabilityFinal);
 
-        return InfoShiftWithInfoExecutionCourse.newInfoFromDomain(newShift);
+        return InfoShift.newInfoFromDomain(newShift);
     }
 
 }

@@ -12,11 +12,9 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
-import net.sourceforge.fenixedu.dataTransferObject.InfoLesson;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.Lesson;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
@@ -50,10 +48,6 @@ public class ReadExecutionCourseWithShiftsAndCurricularCoursesByOID extends Serv
             infoExecutionCourse.setAssociatedInfoShifts(new ArrayList(executionCourse.getAssociatedShiftsCount()));
             for (final Shift shift : executionCourse.getAssociatedShiftsSet()) {
             	final InfoShift infoShift = InfoShift.newInfoFromDomain(shift);
-                infoShift.setInfoLessons(new ArrayList(shift.getAssociatedLessonsCount()));
-                for (final Lesson lesson : shift.getAssociatedLessons()) {
-                	infoShift.getInfoLessons().add(InfoLesson.newInfoFromDomain(lesson));
-                }
                 infoExecutionCourse.getAssociatedInfoShifts().add(infoShift);
             }
         }

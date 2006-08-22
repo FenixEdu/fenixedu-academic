@@ -16,7 +16,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.student.ReadShiftsAndGro
 import net.sourceforge.fenixedu.dataTransferObject.ISiteComponent;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGrouping;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGroupingWithExportGrouping;
-import net.sourceforge.fenixedu.dataTransferObject.InfoShiftWithInfoLessons;
+import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteProjects;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteShiftsAndGroups;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteStudentAndGroup;
@@ -143,7 +143,7 @@ public class GroupSiteComponentBuilder {
 		component.setInfoSiteStudentsAndGroupsList(infoSiteStudentsAndGroups);
 
 		if (shift != null) {
-			component.setInfoShift(InfoShiftWithInfoLessons.newInfoFromDomain(shift));
+			component.setInfoShift(InfoShift.newInfoFromDomain(shift));
 		}
 
 		return component;

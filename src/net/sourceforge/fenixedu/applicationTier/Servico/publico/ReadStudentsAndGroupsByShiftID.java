@@ -13,7 +13,7 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGrouping;
-import net.sourceforge.fenixedu.dataTransferObject.InfoShiftWithInfoLessons;
+import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteStudentAndGroup;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteStudentInformation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteStudentsAndGroups;
@@ -45,7 +45,7 @@ public class ReadStudentsAndGroupsByShiftID extends Service {
             throw new ExistingServiceException();
         }
 
-        infoSiteStudentsAndGroups.setInfoShift(InfoShiftWithInfoLessons.newInfoFromDomain(shift));
+        infoSiteStudentsAndGroups.setInfoShift(InfoShift.newInfoFromDomain(shift));
         List infoSiteStudentsAndGroupsList = new ArrayList();
         List studentGroups = getStudentGroupsByShiftAndGroupProperties(groupProperties, shift);
         Iterator iterStudentGroups = studentGroups.iterator();

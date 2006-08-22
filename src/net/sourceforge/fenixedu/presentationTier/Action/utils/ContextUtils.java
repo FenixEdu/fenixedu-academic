@@ -5,9 +5,7 @@
 package net.sourceforge.fenixedu.presentationTier.Action.utils;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -41,10 +39,8 @@ import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstan
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
 import net.sourceforge.fenixedu.util.TipoSala;
 
-import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
-import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.struts.util.LabelValueBean;
 
 import pt.utl.ist.fenix.tools.util.StringAppender;
@@ -319,57 +315,6 @@ public class ContextUtils {
             }
 
             if (infoShift != null) {
-                /* Sort the list of lesson */
-                ComparatorChain chainComparator = new ComparatorChain();
-                chainComparator.addComparator(new BeanComparator("diaSemana.diaSemana"));
-                chainComparator.addComparator(new Comparator() {
-
-                    public int compare(Object o1, Object o2) {
-                        Calendar ctime1 = ((InfoLesson) o1).getInicio();
-                        Calendar ctime2 = ((InfoLesson) o2).getInicio();
-
-                        Integer time1 = new Integer(ctime1.get(Calendar.HOUR_OF_DAY) * 60
-                                + ctime1.get(Calendar.MINUTE));
-
-                        Integer time2 = new Integer(ctime2.get(Calendar.HOUR_OF_DAY) * 60
-                                + ctime2.get(Calendar.MINUTE));
-
-                        return time1.compareTo(time2);
-                    }
-                });
-                chainComparator.addComparator(new Comparator() {
-
-                    public int compare(Object o1, Object o2) {
-                        Calendar ctime1 = ((InfoLesson) o1).getFim();
-                        Calendar ctime2 = ((InfoLesson) o2).getFim();
-
-                        Integer time1 = new Integer(ctime1.get(Calendar.HOUR_OF_DAY) * 60
-                                + ctime1.get(Calendar.MINUTE));
-
-                        Integer time2 = new Integer(ctime2.get(Calendar.HOUR_OF_DAY) * 60
-                                + ctime2.get(Calendar.MINUTE));
-
-                        return time1.compareTo(time2);
-                    }
-                });
-                if (infoShift.getInfoLessons() == null) {
-                    infoShift.setInfoLessons(new ArrayList());
-                }
-                if (infoShift.getInfoClasses() == null) {
-                    infoShift.setInfoClasses(new ArrayList());
-                }
-
-                chainComparator.addComparator(new BeanComparator("infoSala.nome"));
-                Collections.sort(infoShift.getInfoLessons(), chainComparator);
-
-                if (infoShift.getInfoLessons().isEmpty()) {
-                    infoShift.setInfoLessons(null);
-                }
-
-                if (infoShift.getInfoClasses().isEmpty()) {
-                    infoShift.setInfoClasses(null);
-                }
-
                 // Place it in request
                 request.setAttribute(SessionConstants.SHIFT, infoShift);
             }

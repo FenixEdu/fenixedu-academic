@@ -18,14 +18,12 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoAttendsSummary;
 import net.sourceforge.fenixedu.dataTransferObject.InfoAttendsWithInfoStudentAndPersonAndInfoEnrollment;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCompositionOfAttendAndDegreeCurricularPlanAndShiftsAndStudentGroups;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
-import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourseWithExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoForReadStudentsWithAttendsByExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoFrequenta;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGrouping;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
-import net.sourceforge.fenixedu.dataTransferObject.InfoShiftWithInfoExecutionCourseAndInfoLessons;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteCommon;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentGroup;
 import net.sourceforge.fenixedu.dataTransferObject.TeacherAdministrationSiteView;
@@ -389,7 +387,7 @@ public class ReadStudentsWithAttendsByExecutionCourse extends Service {
 
 		for (Iterator shIterator = shifts.iterator(); shIterator.hasNext();) {
 			Shift sh = (Shift) shIterator.next();
-			result.add(InfoShiftWithInfoExecutionCourseAndInfoLessons.newInfoFromDomain(sh));
+			result.add(InfoShift.newInfoFromDomain(sh));
 		}
 
 		return result;

@@ -16,7 +16,6 @@ import net.sourceforge.fenixedu.applicationTier.strategy.groupEnrolment.strategy
 import net.sourceforge.fenixedu.dataTransferObject.ISiteComponent;
 import net.sourceforge.fenixedu.dataTransferObject.InfoAnnouncement;
 import net.sourceforge.fenixedu.dataTransferObject.InfoBibliographicReference;
-import net.sourceforge.fenixedu.dataTransferObject.InfoClass;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurriculum;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurriculumWithInfoCurricularCourse;
@@ -31,12 +30,11 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoGrouping;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGroupingWithAttends;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGroupingWithExportGrouping;
 import net.sourceforge.fenixedu.dataTransferObject.InfoItem;
-import net.sourceforge.fenixedu.dataTransferObject.InfoLesson;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSection;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSectionWithAll;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSectionWithInfoSiteAndInfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
-import net.sourceforge.fenixedu.dataTransferObject.InfoShiftWithInfoLessons;
+import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSite;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteAnnouncement;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteBibliography;
@@ -70,7 +68,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoSiteTeachers;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentGroup;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentGroupWithAttendsAndGroupingAndShift;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
-import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
 import net.sourceforge.fenixedu.domain.Announcement;
 import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.BibliographicReference;
@@ -84,10 +81,8 @@ import net.sourceforge.fenixedu.domain.ExportGrouping;
 import net.sourceforge.fenixedu.domain.FinalEvaluation;
 import net.sourceforge.fenixedu.domain.Grouping;
 import net.sourceforge.fenixedu.domain.Item;
-import net.sourceforge.fenixedu.domain.Lesson;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
-import net.sourceforge.fenixedu.domain.SchoolClass;
 import net.sourceforge.fenixedu.domain.Section;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.Site;
@@ -1032,7 +1027,7 @@ public class TeacherAdministrationSiteComponentBuilder {
 
 		List<InfoSiteGroupsByShift> infoSiteGroupsByShiftList = new ArrayList<InfoSiteGroupsByShift>();
 		InfoSiteShift infoSiteShift = new InfoSiteShift();
-		infoSiteShift.setInfoShift(InfoShiftWithInfoLessons.newInfoFromDomain(shift));
+		infoSiteShift.setInfoShift(InfoShift.newInfoFromDomain(shift));
 
 		List allStudentGroups = grouping.readAllStudentGroupsBy(shift);
 
@@ -1210,24 +1205,7 @@ public class TeacherAdministrationSiteComponentBuilder {
 					Shift shift = (Shift) shifts.get(i);
 					if (strategy.checkShiftType(groupProperties, shift)) {
 						executionCourse = shift.getDisciplinaExecucao();
-						InfoShift infoShift = new InfoShift(shift.getNome(), shift.getTipo(), shift
-								.getLotacao(), InfoExecutionCourse.newInfoFromDomain(executionCourse));
-
-						List lessons = shift.getAssociatedLessons();
-						List<InfoLesson> infoLessons = new ArrayList<InfoLesson>();
-						List<SchoolClass> classesShifts = shift.getAssociatedClasses();
-						List<InfoClass> infoClasses = new ArrayList<InfoClass>();
-
-						for (int j = 0; j < lessons.size(); j++)
-							infoLessons.add(InfoLesson.newInfoFromDomain((Lesson) lessons.get(j)));
-
-						infoShift.setInfoLessons(infoLessons);
-
-						for (int j = 0; j < classesShifts.size(); j++)
-							infoClasses.add(InfoClass.newInfoFromDomain(classesShifts.get(j)));
-						infoShift.setInfoClasses(infoClasses);
-						infoShift.setIdInternal(shift.getIdInternal());
-
+						InfoShift infoShift = new InfoShift(shift);
 						infoShifts.add(infoShift);
 					}
 				}

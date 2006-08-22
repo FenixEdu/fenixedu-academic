@@ -15,6 +15,8 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSite;
 import net.sourceforge.fenixedu.dataTransferObject.ShiftKey;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixContextAction;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.RequestUtils;
@@ -41,7 +43,14 @@ public class ViewShiftTimeTableAction extends FenixContextAction {
 
         if (shiftName == null)
             return mapping.getInputForward();
-        InfoExecutionCourse infoExecutionCourse = RequestUtils.getExecutionCourseFromRequest(request);
+        final InfoExecutionCourse infoExecutionCourse = RequestUtils.getExecutionCourseFromRequest(request);
+        final ExecutionCourse executionCourse = infoExecutionCourse.getExecutionCourse();
+        Shift shift = null;
+        for (final Shift shift2 : executionCourse.getAssociatedShiftsSet()) {
+        	if (shift2.getNome().equals(shiftName)) {
+        		shift = shift2;
+        	}
+        }
 
         Object[] args = { new ShiftKey(shiftName, infoExecutionCourse) };
         List lessons = (List) ServiceUtils.executeService(null, "LerAulasDeTurno", args);
@@ -55,9 +64,7 @@ public class ViewShiftTimeTableAction extends FenixContextAction {
             request.setAttribute("publico.infoCurricularCourses", infoCurricularCourses);
         }
 
-        InfoShift shiftView = new InfoShift();
-        shiftView.setNome(shiftName);
-        request.setAttribute("shift", shiftView);
+        request.setAttribute("shift", InfoShift.newInfoFromDomain(shift));
         request.setAttribute("lessonList", lessons);
         InfoSite site = RequestUtils.getSiteFromRequest(request);
         RequestUtils.setExecutionCourseToRequest(request, infoExecutionCourse);

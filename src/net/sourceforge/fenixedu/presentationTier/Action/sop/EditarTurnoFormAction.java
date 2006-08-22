@@ -7,6 +7,7 @@ import javax.servlet.http.HttpSession;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
+import net.sourceforge.fenixedu.dataTransferObject.InfoShiftEditor;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
@@ -47,11 +48,13 @@ public class EditarTurnoFormAction extends
             InfoShift infoTurnoAntigo = (InfoShift) ServiceManagerServiceFactory.executeService(
                     userView, "ReadShiftByOID", args);
 
-            InfoShift infoTurnoNovo = new InfoShift((String) editarTurnoForm.get("nome"),
-                    infoTurnoAntigo.getTipo(), (Integer) editarTurnoForm.get("lotacao"), infoTurnoAntigo
-                            .getInfoDisciplinaExecucao());
+            final InfoShiftEditor infoShiftEditor = new InfoShiftEditor();
+            infoShiftEditor.setNome((String) editarTurnoForm.get("nome"));
+            infoShiftEditor.setTipo(infoTurnoAntigo.getTipo());
+            infoShiftEditor.setLotacao((Integer) editarTurnoForm.get("lotacao"));
+            infoShiftEditor.setInfoDisciplinaExecucao(infoTurnoAntigo.getInfoDisciplinaExecucao());
 
-            Object argsEditarTurno[] = { infoTurnoAntigo, infoTurnoNovo };
+            Object argsEditarTurno[] = { infoTurnoAntigo, infoShiftEditor };
 
             ActionErrors actionErrors = null;
             try {

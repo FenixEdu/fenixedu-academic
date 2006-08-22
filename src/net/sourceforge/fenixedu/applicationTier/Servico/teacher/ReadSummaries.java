@@ -12,7 +12,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.ExecutionCourseSiteView;
 import net.sourceforge.fenixedu.dataTransferObject.ISiteComponent;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
-import net.sourceforge.fenixedu.dataTransferObject.InfoLesson;
 import net.sourceforge.fenixedu.dataTransferObject.InfoProfessorship;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteCommon;
@@ -58,10 +57,6 @@ public class ReadSummaries extends Service {
                 public Object transform(Object arg0) {
                     final Shift turno = (Shift) arg0;
                     final InfoShift infoShift = InfoShift.newInfoFromDomain(turno);
-                    infoShift.setInfoLessons(new ArrayList<InfoLesson>(turno.getAssociatedLessons().size()));
-                    for (final Iterator<Lesson> iterator = turno.getAssociatedLessons().iterator(); iterator.hasNext();) {
-                        infoShift.getInfoLessons().add(InfoLesson.newInfoFromDomain(iterator.next()));
-                    }
                     return infoShift;
                 }
             });

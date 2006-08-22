@@ -14,10 +14,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.InfoClass;
-import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
-import net.sourceforge.fenixedu.dataTransferObject.InfoLesson;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
-import net.sourceforge.fenixedu.domain.Lesson;
 import net.sourceforge.fenixedu.domain.SchoolClass;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -37,15 +34,6 @@ public class ReadShiftsByClass extends Service {
             public Object transform(Object arg0) {
                 Shift shift = (Shift) arg0;
                 InfoShift infoShift = InfoShift.newInfoFromDomain(shift);
-                infoShift.setInfoLessons((List) CollectionUtils.collect(shift.getAssociatedLessons(),
-                        new Transformer() {
-                            public Object transform(Object arg0) {
-                                return InfoLesson.newInfoFromDomain((Lesson) arg0);
-                            }
-                        }));
-                InfoExecutionCourse infoExecutionCourse = InfoExecutionCourse.newInfoFromDomain(shift
-                        .getDisciplinaExecucao());
-                infoShift.setInfoDisciplinaExecucao(infoExecutionCourse);
                 return infoShift;
             }
         });

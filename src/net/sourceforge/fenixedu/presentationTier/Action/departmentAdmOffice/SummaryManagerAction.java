@@ -391,8 +391,7 @@ public class SummaryManagerAction extends FenixDispatchAction {
         InfoSummary infoSummary = new InfoSummary();
 
         if (request.getParameter("shift") != null && request.getParameter("shift").length() > 0) {
-            InfoShift infoShift = new InfoShift();
-            infoShift.setIdInternal(new Integer(request.getParameter("shift")));
+            InfoShift infoShift = new InfoShift(rootDomainObject.readShiftByOID(new Integer(request.getParameter("shift"))));
             infoSummary.setInfoShift(infoShift);
         }
 

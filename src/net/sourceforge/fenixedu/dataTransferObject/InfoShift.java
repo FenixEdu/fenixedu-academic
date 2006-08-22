@@ -9,120 +9,59 @@ package net.sourceforge.fenixedu.dataTransferObject;
 /**
  * @author tfc130
  */
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.sourceforge.fenixedu.domain.Lesson;
+import net.sourceforge.fenixedu.domain.SchoolClass;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.ShiftType;
+import net.sourceforge.fenixedu.util.DateFormatUtil;
+import net.sourceforge.fenixedu.util.NumberUtils;
 
 public class InfoShift extends InfoObject {
 
-    protected String _nome;
+	private final Shift shift;
 
-    protected ShiftType _tipo;
-
-    protected Integer _lotacao;
-
-    protected Integer ocupation;
-
-    protected Double percentage;
-
-    protected Integer availabilityFinal;
-
-    protected InfoExecutionCourse _infoDisciplinaExecucao;
-
-    protected List<InfoLesson> infoLessons;
-
-    protected List infoClasses;
-
-    public InfoShift() {
-    }
-
-    public InfoShift(String nome, ShiftType tipo, Integer lotacao,
-            InfoExecutionCourse infoDisciplinaExecucao) {
-        setNome(nome);
-        setTipo(tipo);
-        setLotacao(lotacao);
-        setInfoDisciplinaExecucao(infoDisciplinaExecucao);
-        setInfoClasses(new ArrayList());
-        setInfoLessons(new ArrayList<InfoLesson>());
-    }
-
-    public InfoShift(Integer shiftIdInternal) {
-        setIdInternal(shiftIdInternal);
+	public InfoShift(final Shift shift) {
+		this.shift = shift;
     }
 
     public Integer getSize() {
-        if (infoClasses == null)
-            return new Integer(0);
-        return new Integer(infoClasses.size());
+    	return Integer.valueOf(shift.getAssociatedClasses().size());
     }
 
     public String getNome() {
-        return _nome;
-    }
-
-    public void setNome(String nome) {
-        _nome = nome;
+        return shift.getNome();
     }
 
     public InfoExecutionCourse getInfoDisciplinaExecucao() {
-        return _infoDisciplinaExecucao;
-    }
-
-    public void setInfoDisciplinaExecucao(InfoExecutionCourse infoDisciplinaExecucao) {
-        _infoDisciplinaExecucao = infoDisciplinaExecucao;
+        return InfoExecutionCourse.newInfoFromDomain(shift.getDisciplinaExecucao());
     }
 
     public ShiftType getTipo() {
-        return _tipo;
-    }
-
-    public void setTipo(ShiftType tipo) {
-        _tipo = tipo;
+        return shift.getTipo();
     }
 
     public Integer getLotacao() {
-        return _lotacao;
-    }
-
-    public void setLotacao(Integer lotacao) {
-        _lotacao = lotacao;
+        return shift.getLotacao();
     }
 
     public Integer getOcupation() {
-        return this.ocupation;
+        return shift.getStudentsCount();
     }
 
     public Double getPercentage() {
-        return this.percentage;
+    	return NumberUtils.formatNumber(Double.valueOf(getOcupation().floatValue() * 100 / getLotacao().floatValue()), 1);
     }
 
     public boolean equals(Object obj) {
-        boolean resultado = false;
-        if (obj instanceof InfoShift) {
-            InfoShift infoTurno = (InfoShift) obj;
-            resultado = (getNome().equals(infoTurno.getNome()))
-                    && (getInfoDisciplinaExecucao().equals(infoTurno.getInfoDisciplinaExecucao()));
-        }
-        return resultado;
+    	return obj != null && shift == ((InfoShift) obj).shift;
     }
 
     public String toString() {
-        String result = "[INFO_TURNO";
-        result += ", nome=" + _nome;
-        result += ", tipo=" + _tipo;
-        result += ", lotacao=" + _lotacao;
-        result += ", infoDisciplinaExecucao=" + _infoDisciplinaExecucao;
-        result += ", infoLessons=" + infoLessons;
-        result += "]";
-        return result;
-
+    	return shift.toString();
     }
-
-    private static final DateFormat hourFormat = new SimpleDateFormat("HH:mm");
 
     public String getLessons() {
         final StringBuilder stringBuilder = new StringBuilder();
@@ -134,9 +73,9 @@ public class InfoShift extends InfoObject {
                 index = index + 1;
                 stringBuilder.append(infoLesson.getDiaSemana().toString());          
                 stringBuilder.append(" (");
-                stringBuilder.append(hourFormat.format(infoLesson.getInicio().getTime()));
+                stringBuilder.append(DateFormatUtil.format("HH:mm", infoLesson.getInicio().getTime()));
                 stringBuilder.append("-");
-                stringBuilder.append(hourFormat.format(infoLesson.getFim().getTime()));
+                stringBuilder.append(DateFormatUtil.format("HH:mm", infoLesson.getFim().getTime()));
                 stringBuilder.append(") ");
                 if(infoLesson.getInfoSala() != null) {
                     stringBuilder.append(infoLesson.getInfoSala().getNome().toString());
@@ -155,52 +94,37 @@ public class InfoShift extends InfoObject {
     }
 
     public Integer getAvailabilityFinal() {
-        return availabilityFinal;
-    }
-
-    public void setAvailabilityFinal(Integer integer) {
-        availabilityFinal = integer;
+        return shift.getAvailabilityFinal();
     }
 
     public List<InfoLesson> getInfoLessons() {
+    	final List<InfoLesson> infoLessons = new ArrayList<InfoLesson>();
+    	for (final Lesson lesson : shift.getAssociatedLessonsSet()) {
+    		infoLessons.add(InfoLesson.newInfoFromDomain(lesson));
+    	}
         return infoLessons;
     }
 
-    public void setInfoLessons(List<InfoLesson> list) {
-        infoLessons = list;
-    }
-
     public List getInfoClasses() {
+    	final List<InfoClass> infoClasses = new ArrayList<InfoClass>();
+    	for (final SchoolClass schoolClass : shift.getAssociatedClassesSet()) {
+    		infoClasses.add(InfoClass.newInfoFromDomain(schoolClass));
+    	}
         return infoClasses;
     }
 
-    public void setInfoClasses(List list) {
-        infoClasses = list;
+	@Override
+	public Integer getIdInternal() {
+		return shift.getIdInternal();
+	}
+
+    @Override
+    public void setIdInternal(Integer integer) {
+        throw new Error("Method should not be called!");
     }
 
-    public void setOcupation(Integer ocupation) {
-        this.ocupation = ocupation;
-    }
+	public static InfoShift newInfoFromDomain(final Shift shift) {
+		return shift == null ? null : new InfoShift(shift);
+	}
 
-    public void setPercentage(Double percentage) {
-        this.percentage = percentage;
-    }
-
-    public void copyFromDomain(Shift shift) {
-        super.copyFromDomain(shift);
-        if (shift != null) {
-            setNome(shift.getNome());
-            setTipo(shift.getTipo());
-            setLotacao(shift.getLotacao());           
-        }
-    }
-
-    public static InfoShift newInfoFromDomain(Shift shift) {
-        InfoShift infoShift = null;
-        if (shift != null) {
-            infoShift = new InfoShift();
-            infoShift.copyFromDomain(shift);
-        }
-        return infoShift;
-    }
 }

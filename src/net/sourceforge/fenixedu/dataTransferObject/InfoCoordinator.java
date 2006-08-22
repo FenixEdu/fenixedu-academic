@@ -36,4 +36,14 @@ public class InfoCoordinator extends InfoObject {
     	return coordinator == null ? null : new InfoCoordinator(coordinator);
     }
 
+	@Override
+	public Integer getIdInternal() {
+		return coordinator.getIdInternal();
+	}
+
+    @Override
+    public void setIdInternal(Integer integer) {
+        throw new Error("Method should not be called!");
+    }
+
 }

@@ -83,7 +83,7 @@ public class InfoLesson extends InfoShowOccupation implements ISmsDTO, Comparabl
     }
 
     public InfoShift getInfoShift() {
-        return (infoShift == null) ? infoShift = InfoShiftWithInfoExecutionCourse.newInfoFromDomain(lesson.getShift()) : infoShift;
+        return (infoShift == null) ? infoShift = InfoShift.newInfoFromDomain(lesson.getShift()) : infoShift;
     }
 
     public InfoRoomOccupation getInfoRoomOccupation() {

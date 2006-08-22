@@ -13,7 +13,7 @@ import net.sourceforge.fenixedu.applicationTier.strategy.groupEnrolment.strategy
 import net.sourceforge.fenixedu.applicationTier.strategy.groupEnrolment.strategys.IGroupEnrolmentStrategyFactory;
 import net.sourceforge.fenixedu.dataTransferObject.ISiteComponent;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGrouping;
-import net.sourceforge.fenixedu.dataTransferObject.InfoShiftWithInfoLessons;
+import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteGroupsByShift;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteShift;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteShiftsAndGroups;
@@ -83,7 +83,7 @@ public class ReadShiftsAndGroups extends Service {
 
         final InfoSiteShift infoSiteShift = new InfoSiteShift();
         infoSiteGroupsByShift.setInfoSiteShift(infoSiteShift);
-        infoSiteShift.setInfoShift(InfoShiftWithInfoLessons.newInfoFromDomain(shift));
+        infoSiteShift.setInfoShift(InfoShift.newInfoFromDomain(shift));
         Collections.sort(infoSiteShift.getInfoShift().getInfoLessons());
         final List<StudentGroup> studentGroups = grouping.readAllStudentGroupsBy(shift);
         infoSiteShift.setNrOfGroups(calculateVacancies(grouping.getGroupMaximumNumber(), studentGroups.size()));

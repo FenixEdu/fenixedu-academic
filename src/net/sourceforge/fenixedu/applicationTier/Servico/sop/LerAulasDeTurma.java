@@ -5,12 +5,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.InfoClass;
-import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
-import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoLesson;
-import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
-import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.Lesson;
 import net.sourceforge.fenixedu.domain.SchoolClass;
 import net.sourceforge.fenixedu.domain.Shift;
@@ -25,25 +20,8 @@ public class LerAulasDeTurma extends Service {
 
         List<InfoLesson> infoLessonList = new ArrayList<InfoLesson>();
         for (Shift shift : shiftList) {
-            final InfoShift infoShift = InfoShift.newInfoFromDomain(shift);
-
-            final ExecutionCourse executionCourse = shift.getDisciplinaExecucao();
-            final InfoExecutionCourse infoExecutionCourse = InfoExecutionCourse
-                    .newInfoFromDomain(executionCourse);
-            infoShift.setInfoDisciplinaExecucao(infoExecutionCourse);
-
-            final ExecutionPeriod executionPeriod = executionCourse.getExecutionPeriod();
-            final InfoExecutionPeriod infoExecutionPeriod2 = InfoExecutionPeriod
-                    .newInfoFromDomain(executionPeriod);
-            infoExecutionCourse.setInfoExecutionPeriod(infoExecutionPeriod2);
-
-            final List<Lesson> lessons = shift.getAssociatedLessons();
-
-            final List<InfoLesson> infoLessons = new ArrayList<InfoLesson>(lessons.size());
-            infoShift.setInfoLessons(infoLessons);
-            for (Lesson lesson : lessons) {
+            for (Lesson lesson : shift.getAssociatedLessonsSet()) {
                 final InfoLesson infoLesson = InfoLesson.newInfoFromDomain(lesson);
-                infoLessons.add(infoLesson);
                 infoLessonList.add(infoLesson);
             }
         }

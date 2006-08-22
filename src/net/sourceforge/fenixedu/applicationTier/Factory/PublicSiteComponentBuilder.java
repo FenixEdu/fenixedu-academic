@@ -96,13 +96,6 @@ public class PublicSiteComponentBuilder {
 
         for (final Iterator classIterator = shiftList.iterator(); classIterator.hasNext();) {
             Shift shift = (Shift) classIterator.next();
-
-            InfoShift infoShift = copyIShift2InfoShift(shift);
-            InfoExecutionCourse infoExecutionCourse = copyIExecutionCourse2InfoExecutionCourse(shift
-                    .getDisciplinaExecucao());
-            infoExecutionCourse.setInfoExecutionPeriod(infoExecutionPeriod);
-            infoShift.setInfoDisciplinaExecucao(infoExecutionCourse);
-
             List lessonList = shift.getAssociatedLessons();
             Iterator lessonIterator = lessonList.iterator();
             while (lessonIterator.hasNext()) {
@@ -138,9 +131,7 @@ public class PublicSiteComponentBuilder {
     private InfoShift copyIShift2InfoShift(Shift shift) {
         InfoShift infoShift = null;
         if (shift != null) {
-            infoShift = new InfoShift();
-            infoShift.setIdInternal(shift.getIdInternal());
-            infoShift.setNome(shift.getNome());
+            infoShift = new InfoShift(shift);
         }
         return infoShift;
     }

@@ -17,6 +17,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServi
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
+import net.sourceforge.fenixedu.dataTransferObject.InfoShiftEditor;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Lesson;
 import net.sourceforge.fenixedu.domain.Shift;
@@ -25,7 +26,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class EditarTurno extends Service {
 
-    public Object run(InfoShift infoShiftOld, InfoShift infoShiftNew) throws FenixServiceException,
+    public Object run(InfoShift infoShiftOld, InfoShiftEditor infoShiftNew) throws FenixServiceException,
 	    ExcepcaoPersistencia {
 
 	newShiftIsValid(infoShiftOld, infoShiftNew.getTipo(), infoShiftNew.getInfoDisciplinaExecucao(),

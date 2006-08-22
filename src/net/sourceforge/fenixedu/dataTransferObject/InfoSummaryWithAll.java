@@ -17,7 +17,7 @@ public class InfoSummaryWithAll extends InfoSummary {
         if (summary != null) {
             setInfoExecutionCourse(InfoExecutionCourseWithExecutionPeriod.newInfoFromDomain(summary
                     .getExecutionCourse()));
-            setInfoShift(InfoShiftWithInfoExecutionCourseAndCollections.newInfoFromDomain(summary
+            setInfoShift(InfoShift.newInfoFromDomain(summary
                     .getShift()));
             setInfoProfessorship(InfoProfessorship.newInfoFromDomain(summary.getProfessorship()));
             setInfoTeacher(InfoTeacher.newInfoFromDomain(summary.getTeacher()));

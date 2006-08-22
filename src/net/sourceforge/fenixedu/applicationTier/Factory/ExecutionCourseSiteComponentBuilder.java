@@ -29,7 +29,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoProfessorship;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSection;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShiftWithAssociatedInfoClassesAndInfoLessons;
-import net.sourceforge.fenixedu.dataTransferObject.InfoShiftWithInfoExecutionCourseAndCollections;
+import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSite;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteAnnouncement;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteAssociatedCurricularCourses;
@@ -141,7 +141,7 @@ public class ExecutionCourseSiteComponentBuilder {
 
 				public Object transform(Object arg0) {
 					Shift turno = (Shift) arg0;
-					return InfoShiftWithInfoExecutionCourseAndCollections.newInfoFromDomain(turno);
+					return InfoShift.newInfoFromDomain(turno);
 				}
 			});
 		}
@@ -372,7 +372,7 @@ public class ExecutionCourseSiteComponentBuilder {
 				infoClasses.add(InfoClass.newInfoFromDomain(schoolClass));
 			}
 
-			InfoShift infoShift = InfoShiftWithInfoExecutionCourseAndCollections
+			InfoShift infoShift = InfoShift
 					.newInfoFromDomain(shift);
 
 			InfoShiftWithAssociatedInfoClassesAndInfoLessons shiftWithAssociatedClassesAndLessons = new InfoShiftWithAssociatedInfoClassesAndInfoLessons(

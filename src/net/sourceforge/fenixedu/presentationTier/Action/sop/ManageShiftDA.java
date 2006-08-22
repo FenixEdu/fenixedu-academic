@@ -16,6 +16,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.sop.EditarTurno.InvalidN
 import net.sourceforge.fenixedu.dataTransferObject.InfoClass;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
+import net.sourceforge.fenixedu.dataTransferObject.InfoShiftEditor;
 import net.sourceforge.fenixedu.dataTransferObject.ShiftKey;
 import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException;
@@ -71,7 +72,7 @@ public class ManageShiftDA extends
 
         InfoShift infoShiftOld = (InfoShift) request.getAttribute(SessionConstants.SHIFT);
 
-        InfoShift infoShiftNew = new InfoShift();
+        InfoShiftEditor infoShiftNew = new InfoShiftEditor();
         infoShiftNew.setIdInternal(infoShiftOld.getIdInternal());
         infoShiftNew.setAvailabilityFinal(infoShiftOld.getAvailabilityFinal());
         InfoExecutionCourse infoExecutionCourseNew = RequestUtils.getExecutionCourseBySigla(request,
@@ -85,8 +86,7 @@ public class ManageShiftDA extends
 
         Object argsCriarTurno[] = { infoShiftOld, infoShiftNew };
         try {
-            infoShiftNew = (InfoShift) ServiceUtils.executeService(userView, "EditarTurno",
-                    argsCriarTurno);
+            ServiceUtils.executeService(userView, "EditarTurno", argsCriarTurno);
         } catch (ExistingServiceException ex) {
             throw new ExistingActionException("O Shift", ex);
         } catch (InvalidFinalAvailabilityException e0) {

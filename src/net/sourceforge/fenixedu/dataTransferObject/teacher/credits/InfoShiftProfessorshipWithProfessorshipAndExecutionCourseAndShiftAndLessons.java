@@ -5,7 +5,7 @@
 package net.sourceforge.fenixedu.dataTransferObject.teacher.credits;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoProfessorship;
-import net.sourceforge.fenixedu.dataTransferObject.InfoShiftWithInfoLessons;
+import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.ShiftProfessorship;
@@ -23,7 +23,7 @@ public class InfoShiftProfessorshipWithProfessorshipAndExecutionCourseAndShiftAn
             setInfoProfessorship(InfoProfessorship.newInfoFromDomain(professorship));
 
             final Shift shift = shifProfessorship.getShift();
-            setInfoShift(InfoShiftWithInfoLessons.newInfoFromDomain(shift));
+            setInfoShift(InfoShift.newInfoFromDomain(shift));
         }
     }
 

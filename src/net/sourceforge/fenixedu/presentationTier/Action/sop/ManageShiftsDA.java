@@ -15,6 +15,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
+import net.sourceforge.fenixedu.dataTransferObject.InfoShiftEditor;
 import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.base.FenixExecutionDegreeAndCurricularYearContextDispatchAction;
@@ -89,7 +90,7 @@ public class ManageShiftsDA extends FenixExecutionDegreeAndCurricularYearContext
 
         DynaActionForm createShiftForm = (DynaActionForm) form;
 
-        InfoShift infoShift = new InfoShift();
+        InfoShiftEditor infoShift = new InfoShiftEditor();
         infoShift.setAvailabilityFinal(new Integer(0));
         InfoExecutionCourse infoExecutionCourse = RequestUtils.getExecutionCourseBySigla(request,
                 (String) createShiftForm.get("courseInitials"));
@@ -100,15 +101,12 @@ public class ManageShiftsDA extends FenixExecutionDegreeAndCurricularYearContext
         infoShift.setTipo(ShiftType.valueOf((String) createShiftForm.get("tipoAula")));
         Object argsCriarTurno[] = { infoShift };
         try {
-            infoShift = (InfoShift) ServiceUtils.executeService(userView, "CriarTurno", argsCriarTurno);
-            infoShift.setInfoLessons(null);
-            infoShift.setInfoClasses(null);
+            final InfoShift newInfoShift = (InfoShift) ServiceUtils.executeService(userView, "CriarTurno", argsCriarTurno);
+            request.setAttribute(SessionConstants.SHIFT, newInfoShift);
         } catch (ExistingServiceException ex) {
             throw new ExistingActionException("O Shift", ex);
         }
         request.setAttribute(SessionConstants.EXECUTION_COURSE, infoExecutionCourse);
-
-        request.setAttribute(SessionConstants.SHIFT, infoShift);
 
         return mapping.findForward("EditShift");
     }

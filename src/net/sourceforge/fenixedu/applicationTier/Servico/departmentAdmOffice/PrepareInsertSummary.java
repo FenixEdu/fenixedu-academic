@@ -6,7 +6,6 @@ package net.sourceforge.fenixedu.applicationTier.Servico.departmentAdmOffice;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
@@ -15,7 +14,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.ExecutionCourseSiteView;
 import net.sourceforge.fenixedu.dataTransferObject.ISiteComponent;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
-import net.sourceforge.fenixedu.dataTransferObject.InfoLesson;
 import net.sourceforge.fenixedu.dataTransferObject.InfoProfessorship;
 import net.sourceforge.fenixedu.dataTransferObject.InfoRoom;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
@@ -23,7 +21,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoSiteCommon;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteSummaries;
 import net.sourceforge.fenixedu.dataTransferObject.SiteView;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.Lesson;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.Site;
@@ -59,11 +56,6 @@ public class PrepareInsertSummary extends Service {
 	    public Object transform(Object arg0) {
 		final Shift turno = (Shift) arg0;
 		final InfoShift infoShift = InfoShift.newInfoFromDomain(turno);
-		infoShift.setInfoLessons(new ArrayList(turno.getAssociatedLessons().size()));
-		for (final Iterator<Lesson> iterator = turno.getAssociatedLessons().iterator(); iterator
-			.hasNext();) {
-		    infoShift.getInfoLessons().add(InfoLesson.newInfoFromDomain(iterator.next()));
-		}
 		return infoShift;
 	    }
 	});

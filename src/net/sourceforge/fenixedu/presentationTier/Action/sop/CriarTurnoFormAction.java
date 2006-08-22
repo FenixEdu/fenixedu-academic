@@ -7,7 +7,7 @@ import javax.servlet.http.HttpSession;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
-import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
+import net.sourceforge.fenixedu.dataTransferObject.InfoShiftEditor;
 import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.base.FenixExecutionDegreeAndCurricularYearContextAction;
@@ -35,9 +35,12 @@ public class CriarTurnoFormAction extends FenixExecutionDegreeAndCurricularYearC
             InfoExecutionCourse courseView = RequestUtils.getExecutionCourseBySigla(request,
                     (String) criarTurnoForm.get("courseInitials"));
 
-            Object argsCriarTurno[] = { new InfoShift((String) criarTurnoForm.get("nome"), ShiftType.valueOf(
-                    (String) criarTurnoForm.get("tipoAula")), (Integer) criarTurnoForm.get("lotacao"),
-                    courseView) };
+            final InfoShiftEditor infoShiftEditor = new InfoShiftEditor();
+            infoShiftEditor.setNome((String) criarTurnoForm.get("nome"));
+            infoShiftEditor.setTipo(ShiftType.valueOf((String) criarTurnoForm.get("tipoAula")));
+            infoShiftEditor.setLotacao((Integer) criarTurnoForm.get("lotacao"));
+            infoShiftEditor.setInfoDisciplinaExecucao(courseView);
+            Object argsCriarTurno[] = { infoShiftEditor };
             try {
                 ServiceUtils.executeService(userView, "CriarTurno", argsCriarTurno);
             } catch (ExistingServiceException ex) {
