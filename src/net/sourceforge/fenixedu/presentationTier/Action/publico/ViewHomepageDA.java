@@ -162,7 +162,7 @@ public class ViewHomepageDA extends FenixDispatchAction {
     public ActionForward listStudents(ActionMapping mapping, ActionForm actionForm,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
     	final SortedMap<Degree, SortedSet<Homepage>> homepages = new TreeMap<Degree, SortedSet<Homepage>>(Degree.DEGREE_COMPARATOR_BY_NAME_AND_DEGREE_TYPE);
-    	for (final Registration registration : rootDomainObject.getStudentsSet()) {
+    	for (final Registration registration : rootDomainObject.getRegistrationsSet()) {
     		final StudentCurricularPlan studentCurricularPlan = registration.getActiveStudentCurricularPlan();
     		if (studentCurricularPlan != null) {
     			final DegreeCurricularPlan degreeCurricularPlan = studentCurricularPlan.getDegreeCurricularPlan();
@@ -194,7 +194,7 @@ public class ViewHomepageDA extends FenixDispatchAction {
     public ActionForward listAlumni(ActionMapping mapping, ActionForm actionForm,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
     	final SortedMap<Degree, SortedSet<Homepage>> homepages = new TreeMap<Degree, SortedSet<Homepage>>(Degree.DEGREE_COMPARATOR_BY_NAME_AND_DEGREE_TYPE);
-    	for (final Registration registration : rootDomainObject.getStudentsSet()) {
+    	for (final Registration registration : rootDomainObject.getRegistrationsSet()) {
     		for (final StudentCurricularPlan studentCurricularPlan : registration.getStudentCurricularPlansSet()) {
    				final DegreeCurricularPlan degreeCurricularPlan = studentCurricularPlan.getDegreeCurricularPlan();
    				final Degree degree = degreeCurricularPlan.getDegree();

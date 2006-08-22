@@ -5,12 +5,14 @@ import java.util.Collection;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 
 public class Student extends Student_Base {
 
     public Student(Person person, Integer number) {
         super();
+        setRootDomainObject(RootDomainObject.getInstance());
         setPerson(person);
         setNumber(number);
     }

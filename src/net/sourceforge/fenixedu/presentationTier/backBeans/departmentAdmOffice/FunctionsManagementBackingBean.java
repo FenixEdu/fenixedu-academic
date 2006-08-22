@@ -349,7 +349,7 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
             }
         } else if (personTypeAux.equals(RoleType.STUDENT)) {
             List<Registration> allStudents = new ArrayList<Registration>();
-            allStudents.addAll(rootDomainObject.getStudents());
+            allStudents.addAll(rootDomainObject.getRegistrations());
             for (Registration registration : allStudents) {
                 if (registration.getNumber().equals(personNumber)) {
                     allPersons.add(registration.getPerson());

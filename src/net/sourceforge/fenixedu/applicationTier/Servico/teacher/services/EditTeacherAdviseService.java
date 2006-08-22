@@ -33,7 +33,7 @@ public class EditTeacherAdviseService extends Service {
         Teacher teacher = rootDomainObject.readTeacherByOID(teacherID);
         ExecutionPeriod executionPeriod = rootDomainObject.readExecutionPeriodByOID(executionPeriodID);
 
-        List<Registration> students = rootDomainObject.getStudents();
+        List<Registration> students = rootDomainObject.getRegistrations();
         Registration registration = (Registration) CollectionUtils.find(students, new Predicate() {
             public boolean evaluate(Object arg0) {
                 Registration tempStudent = (Registration) arg0;

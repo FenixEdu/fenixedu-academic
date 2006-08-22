@@ -6303,6 +6303,13 @@ relation RegistrationStudent {
     net.sourceforge.fenixedu.domain.student.Student playsRole student;
 }
 
+relation RootDomainObjectStudent {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.student.Student playsRole students {
+		multiplicity *;
+	}
+}
+
 relation StudentCurricularPlanStudent {
     net.sourceforge.fenixedu.domain.StudentCurricularPlan playsRole studentCurricularPlans {
         multiplicity *;
@@ -8076,9 +8083,9 @@ relation RootDomainObjectSchedule {
 	}
 }
 
-relation RootDomainObjectStudent {
+relation RootDomainObjectRegistration {
 	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
-	net.sourceforge.fenixedu.domain.student.Registration playsRole students {
+	net.sourceforge.fenixedu.domain.student.Registration playsRole registrations {
 		multiplicity *;
 	}
 }
