@@ -7,8 +7,10 @@
 package net.sourceforge.fenixedu.dataTransferObject;
 
 import java.io.Serializable;
+import java.text.Collator;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -18,6 +20,9 @@ import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.enrollment.NotNeedToEnrollInCurricularCourse;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.StudentCurricularPlanState;
+
+import org.apache.commons.beanutils.BeanComparator;
+import org.apache.commons.collections.comparators.ComparatorChain;
 
 /**
  * 
@@ -88,6 +93,16 @@ public class InfoStudentCurricularPlan extends InfoObject implements Serializabl
     	for (final Enrolment enrolment : studentCurricularPlan.getEnrolmentsSet()) {
     		infoEnrolments.add(InfoEnrolment.newInfoFromDomain(enrolment));
     	}
+        return infoEnrolments;
+    }
+
+    public List getInfoEnrolmentsSorted() {
+        final List<InfoEnrolment> infoEnrolments = getInfoEnrolments();
+        ComparatorChain comparatorChain = new ComparatorChain();
+        comparatorChain.addComparator(new BeanComparator("infoExecutionPeriod.infoExecutionYear.year"));
+        comparatorChain.addComparator(new BeanComparator("infoExecutionPeriod.semester"));
+        comparatorChain.addComparator(new BeanComparator("infoCurricularCourse.name", Collator.getInstance()));
+        Collections.sort(infoEnrolments, comparatorChain);
         return infoEnrolments;
     }
 

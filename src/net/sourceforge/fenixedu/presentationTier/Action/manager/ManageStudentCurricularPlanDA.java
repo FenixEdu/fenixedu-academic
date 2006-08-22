@@ -4,11 +4,9 @@
  */
 package net.sourceforge.fenixedu.presentationTier.Action.manager;
 
-import java.text.Collator;
 import java.text.SimpleDateFormat;
 import java.util.Collections;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -17,7 +15,6 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.StudentCurricularPlanState;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
@@ -207,24 +204,7 @@ public class ManageStudentCurricularPlanDA extends FenixDispatchAction {
         final Object[] args = new Object[] { studentNumber, degreeType };
         final List infoStudentCurricularPlans = (List) ServiceUtils.executeService(userView,
                 "ReadStudentCurricularInformation", args);
-        sortInformation(infoStudentCurricularPlans);
         request.setAttribute("infoStudentCurricularPlans", infoStudentCurricularPlans);
-    }
-
-    protected void sortInformation(final List infoStudentCurricularPlans) {
-        for (final Iterator iterator = infoStudentCurricularPlans.iterator(); iterator.hasNext();) {
-            final InfoStudentCurricularPlan infoStudentCurricularPlan = (InfoStudentCurricularPlan) iterator
-                    .next();
-            final List infoEnrollmentGrades = infoStudentCurricularPlan.getInfoEnrolments();
-            ComparatorChain comparatorChain = new ComparatorChain();
-            comparatorChain.addComparator(new BeanComparator(
-                    "infoEnrollment.infoExecutionPeriod.infoExecutionYear.year"));
-            comparatorChain.addComparator(new BeanComparator(
-                    "infoEnrollment.infoExecutionPeriod.semester"));
-            comparatorChain.addComparator(new BeanComparator("infoEnrollment.infoCurricularCourse.name",
-                    Collator.getInstance()));
-            Collections.sort(infoEnrollmentGrades, comparatorChain);
-        }
     }
 
     protected void putDegreeTypeLabelListInRequest(final HttpServletRequest request) {
