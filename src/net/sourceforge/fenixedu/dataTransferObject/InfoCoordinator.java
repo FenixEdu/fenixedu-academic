@@ -14,67 +14,26 @@ import net.sourceforge.fenixedu.domain.Coordinator;
  */
 public class InfoCoordinator extends InfoObject {
 
-    private InfoTeacher infoTeacher;
+	private final Coordinator coordinator;
 
-    private InfoExecutionDegree infoExecutionDegree;
+	public InfoCoordinator(final Coordinator coordinator) {
+		this.coordinator = coordinator;
+	}
 
-    private Boolean responsible;
-
-    /**
-     * @return
-     */
     public InfoExecutionDegree getInfoExecutionDegree() {
-        return infoExecutionDegree;
+    	return InfoExecutionDegree.newInfoFromDomain(coordinator.getExecutionDegree());
     }
 
-    /**
-     * @param infoExecutionDegree
-     */
-    public void setInfoExecutionDegree(InfoExecutionDegree infoExecutionDegree) {
-        this.infoExecutionDegree = infoExecutionDegree;
-    }
-
-    /**
-     * @return
-     */
     public InfoTeacher getInfoTeacher() {
-        return infoTeacher;
+        return InfoTeacher.newInfoFromDomain(coordinator.getTeacher());
     }
 
-    /**
-     * @param infoTeacher
-     */
-    public void setInfoTeacher(InfoTeacher infoTeacher) {
-        this.infoTeacher = infoTeacher;
-    }
-
-    /**
-     * @return
-     */
     public Boolean getResponsible() {
-        return responsible;
+        return coordinator.getResponsible();
     }
 
-    /**
-     * @param responsible
-     */
-    public void setResponsible(Boolean responsible) {
-        this.responsible = responsible;
+    public static InfoCoordinator newInfoFromDomain(final Coordinator coordinator) {
+    	return coordinator == null ? null : new InfoCoordinator(coordinator);
     }
 
-    public void copyFromDomain(Coordinator coordinator) {
-        super.copyFromDomain(coordinator);
-        if (coordinator != null) {
-            setResponsible(coordinator.getResponsible());
-        }
-    }
-
-    public static InfoCoordinator newInfoFromDomain(Coordinator coordinator) {
-        InfoCoordinator infoCoordinator = null;
-        if (coordinator != null) {
-            infoCoordinator = new InfoCoordinator();
-            infoCoordinator.copyFromDomain(coordinator);
-        }
-        return infoCoordinator;
-    }
 }

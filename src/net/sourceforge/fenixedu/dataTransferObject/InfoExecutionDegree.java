@@ -53,7 +53,7 @@ public class InfoExecutionDegree extends InfoObject {
     public List<InfoCoordinator> getCoordinatorsList() {
     	final List<InfoCoordinator> infoCoordinators = new ArrayList<InfoCoordinator>();
     	for (final Coordinator coordinator : executionDegree.getCoordinatorsListSet()) {
-    		infoCoordinators.add(InfoCoordinatorWithInfoPerson.newInfoFromDomain(coordinator));
+    		infoCoordinators.add(InfoCoordinator.newInfoFromDomain(coordinator));
     	}
         return infoCoordinators;
     }

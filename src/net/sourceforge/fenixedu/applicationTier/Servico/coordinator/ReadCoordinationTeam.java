@@ -11,7 +11,7 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCoordinator;
-import net.sourceforge.fenixedu.dataTransferObject.InfoCoordinatorWithInfoPerson;
+import net.sourceforge.fenixedu.dataTransferObject.InfoCoordinator;
 import net.sourceforge.fenixedu.domain.Coordinator;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -33,7 +33,7 @@ public class ReadCoordinationTeam extends Service {
         List infoCoordinators = new ArrayList();
         while (iterator.hasNext()) {
             Coordinator coordinator = (Coordinator) iterator.next();
-            InfoCoordinator infoCoordinator = InfoCoordinatorWithInfoPerson
+            InfoCoordinator infoCoordinator = InfoCoordinator
                     .newInfoFromDomain(coordinator);
             infoCoordinators.add(infoCoordinator);
         }
