@@ -980,7 +980,7 @@
             <forward name="viewCurriculum" path="/viewSite.jsp"/>
         </action>
         <action path="/index" type="net.sourceforge.fenixedu.presentationTier.Action.teacher.IndexTeacherAction">
-            <forward name="success" path="df.page.teacher-index"/>
+            <forward name="success" path="/showProfessorships.do?method=list"/>
         </action>
 
         <action path="/showProfessorships"
@@ -1000,6 +1000,8 @@
 			<forward name="objectives" path="manage-execution-course-objectives"/>
 			<forward name="evaluationMethod" path="manage-execution-course-evaluationMethod"/>
 			<forward name="bibliographicReference" path="manage-execution-course-bibliographicReference"/>
+			<forward name="lessonPlannings" path="manage-execution-course-lessonPlannings"/>
+			<forward name="create-lessonPlanning" path="manage-execution-course-lessonPlanning-create"/>
         </action>
         <action path="/createProgram"
         		parameter="method"
@@ -1363,7 +1365,8 @@
             <forward name="success" path="/markList.jsp" />
             <forward name="viewExams" path="/viewEvaluation.do?method=viewEvaluation"/>
         </action>
-        <!-- End Marks List -->
+        <!-- End Marks List -->        
+        <!-- End LessonPlanning -->
         <action name="showSummaryForm" path="/showSummaries" 
             input="/teacherAdministrationViewer.do?method=instructions" parameter="method" 
             scope="request" 

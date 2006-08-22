@@ -1,0 +1,14 @@
+CREATE TABLE `LESSON_PLANNING` (
+  `ID_INTERNAL` int(11) unsigned NOT NULL auto_increment,
+  `KEY_EXECUTION_COURSE` int(11) unsigned default '0',
+  `ORDER_OF_PLANNING` int(11) unsigned default '0',
+  `TITLE` text,
+  `PLANNING` text,
+  `LESSON_TYPE` varchar(50) NOT NULL,
+  `KEY_ROOT_DOMAIN_OBJECT` int(11) NOT NULL default '1',
+  PRIMARY KEY  (`ID_INTERNAL`),
+  KEY `KEY_EXECUTION_COURSE` (`KEY_EXECUTION_COURSE`),
+  KEY `KEY_ROOT_DOMAIN_OBJECT` (`KEY_ROOT_DOMAIN_OBJECT`)
+) ENGINE=InnoDB;
+
+alter table SPACE_OCCUPATION change column `KEY_ROOT_DOMAIN_OBJECT` `KEY_ROOT_DOMAIN_OBJECT` int(11) NOT NULL default '1';

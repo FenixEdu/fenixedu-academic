@@ -20,6 +20,12 @@
 		</html:link>
 	</li>
 	<li>
+		<html:link page="/executionCourse.do?method=lessonPlannings"
+				paramId="executionCourseID" paramName="executionCourse" paramProperty="idInternal">
+			<bean:message  key="link.lessonPlannings"/>
+		</html:link>
+	</li>
+	<li>
 		<html:link page="/executionCourse.do?method=summaries"
 				paramId="executionCourseID" paramName="executionCourse" paramProperty="idInternal">
 			<bean:message  key="link.summaries"/>
@@ -48,7 +54,7 @@
 				paramId="executionCourseID" paramName="executionCourse" paramProperty="idInternal">
 			<bean:message  key="link.bibliography"/>
 		</html:link>
-	</li>
+	</li>	
 	<li>
 		<html:link page="/executionCourse.do?method=schedule"
 				paramId="executionCourseID" paramName="executionCourse" paramProperty="idInternal">

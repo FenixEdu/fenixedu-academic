@@ -10325,4 +10325,31 @@
 			<chain name="EnrollmentWithoutRulesAuthorization" />
 		</filterChains>
 	</service>
+	<service>
+        <name>CreateLessonPlanning</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.CreateLessonPlanning</implementationClass>
+        <description />
+        <isTransactional>true</isTransactional>
+        <filterChains>
+            <chain name="ExecutionCourseLecturingTeacherAuthorization" />
+        </filterChains>
+    </service>
+    <service>
+        <name>DeleteLessonPlanning</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.DeleteLessonPlanning</implementationClass>
+        <description />
+        <isTransactional>true</isTransactional>
+        <filterChains>
+            <chain name="ExecutionCourseLecturingTeacherAuthorization" />
+        </filterChains>
+    </service>
+      <service>
+        <name>MoveLessonPlanning</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.MoveLessonPlanning</implementationClass>
+        <description />
+        <isTransactional>true</isTransactional>
+        <filterChains>
+            <chain name="ExecutionCourseLecturingTeacherAuthorization" />
+        </filterChains>
+    </service>
 </serviceDefinitions>

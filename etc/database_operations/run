@@ -27,3 +27,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Create LessonPlanning Table" createLessonPlanningTable.sql

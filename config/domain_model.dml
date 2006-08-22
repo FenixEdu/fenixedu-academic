@@ -1874,6 +1874,14 @@ class net.sourceforge.fenixedu.domain.Lesson extends net.sourceforge.fenixedu.do
 	Integer frequency;
 }
 
+class net.sourceforge.fenixedu.domain.LessonPlanning extends net.sourceforge.fenixedu.domain.DomainObject {
+	Integer orderOfPlanning;
+	String title;
+	String planning;
+	ShiftType lessonType;
+	Integer keyExecutionCourse;
+}
+
 class net.sourceforge.fenixedu.domain.Locality extends net.sourceforge.fenixedu.domain.DomainObject {
 	String name;
 }
@@ -9580,6 +9588,20 @@ relation YearStudentSpecialSeasonCodeExecutionYear {
 relation YearStudentSpecialSeasonCodeSpecialSeasonCode {
 	net.sourceforge.fenixedu.domain.SpecialSeasonCode playsRole specialSeasonCode;
 	net.sourceforge.fenixedu.domain.YearStudentSpecialSeasonCode playsRole yearStudentSpecialSeasonCodes {
+		multiplicity *;
+	}
+}
+
+relation LessonPlanningExecutionCourse {
+	net.sourceforge.fenixedu.domain.ExecutionCourse playsRole executionCourse;
+	net.sourceforge.fenixedu.domain.LessonPlanning playsRole lessonPlannings {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectLessonPlanning {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.LessonPlanning playsRole lessonPlannings {
 		multiplicity *;
 	}
 }

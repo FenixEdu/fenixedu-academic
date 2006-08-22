@@ -17,7 +17,8 @@
 	<!ENTITY prices SYSTEM "prices-schemas.xml">
 	<!ENTITY serviceRequests SYSTEM "serviceRequests-schemas.xml">
     <!ENTITY functionalities SYSTEM "functionalities-schemas.xml">
-    <!ENTITY degreeAdminOffice SYSTEM "degreeAdministrativeOffice-schemas.xml">    
+    <!ENTITY degreeAdminOffice SYSTEM "degreeAdministrativeOffice-schemas.xml"> 
+    <!ENTITY executionCourse SYSTEM "executionCourse-schemas.xml"> 
 ]>
 
 <schemas>
@@ -757,4 +758,6 @@
 	&serviceRequests;
     &functionalities;
     &degreeAdminOffice;
+    &executionCourse;
+    
 </schemas>

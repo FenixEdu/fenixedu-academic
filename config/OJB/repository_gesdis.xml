@@ -334,7 +334,12 @@
 	
 </class-descriptor>
 
-
+<!-- ******************************************************************************************************************************* -->
+<!-- Definitions for net.sourceforge.fenixedu.domain.LessonPlanning -->
+<!-- ******************************************************************************************************************************* -->
+<class-descriptor class="net.sourceforge.fenixedu.domain.LessonPlanning"
+                  table="LESSON_PLANNING">                         	               							
+</class-descriptor>
 
 
 <!-- Mapping of User defined classes ends here -->

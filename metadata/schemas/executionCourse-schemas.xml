@@ -1,0 +1,28 @@
+<schema name="CreateLessonPlanning" type="net.sourceforge.fenixedu.dataTransferObject.gesdis.CreateLessonPlanningBean" bundle="DEFAULT">	
+	<slot name="lessonType" key="label.lessonPlanning.lessonType" layout="menu-select" 
+		validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionCourseShiftTypesProviderWithBean"/>		
+		<property name="eachLayout" value=""/>
+	</slot>				
+	<slot name="title" key="label.lessonPlanning.title" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+	<slot name="planning" key="label.lessonPlanning.planning" layout="rich-text" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+   		<property name="safe" value="true" />
+   		<property name="columns" value="70"/>
+   		<property name="rows" value="15"/>
+   		<property name="config" value="intermediate-fun" />
+   	</slot>	
+</schema>
+<schema name="EditLessonPlanning" type="net.sourceforge.fenixedu.domain.LessonPlanning" bundle="DEFAULT">	
+	<slot name="lessonType" key="label.lessonPlanning.lessonType" layout="menu-select" 
+		validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionCourseShiftTypesProvider"/>				
+		<property name="eachLayout" value=""/>
+	</slot>				
+	<slot name="title" key="label.lessonPlanning.title" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>	
+	<slot name="planning" key="label.lessonPlanning.planning" layout="rich-text" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+   		<property name="safe" value="true" />
+   		<property name="columns" value="70"/>
+   		<property name="rows" value="15"/>
+   		<property name="config" value="intermediate-fun" />
+   	</slot>	
+</schema>

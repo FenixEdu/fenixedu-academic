@@ -1157,7 +1157,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
     	}
     	return curricularCourseMap;
     }
-
+    
     public boolean getHasAnySecondaryBibliographicReference() {
     	for (final BibliographicReference bibliographicReference : getAssociatedBibliographicReferencesSet()) {
     		if (bibliographicReference.getOptional().booleanValue()) {
@@ -1182,5 +1182,32 @@ public class ExecutionCourse extends ExecutionCourse_Base {
         }
         return false;
     }
-
+    
+    public List<LessonPlanning> getLessonPlanningsOrderedByOrder(ShiftType lessonType){
+        final List<LessonPlanning> lessonPlannings = new ArrayList<LessonPlanning>();
+        for (LessonPlanning planning : getLessonPlanningsSet()) {
+            if(planning.getLessonType().equals(lessonType)) {
+                lessonPlannings.add(planning);
+            }
+        }
+        Collections.sort(lessonPlannings, LessonPlanning.COMPARATOR_BY_ORDER);
+        return lessonPlannings;
+    }
+     
+    public LessonPlanning getLessonPlanning(ShiftType lessonType, Integer order){        
+        for (LessonPlanning planning : getLessonPlanningsSet()) {
+            if(planning.getLessonType().equals(lessonType) && planning.getOrderOfPlanning().equals(order)) {
+                return planning;              
+            }
+        }        
+        return null;
+    }
+    
+    public Set<ShiftType> getShiftTypes(){
+        Set<ShiftType> shiftTypes = new TreeSet<ShiftType>();
+        for (Shift shift : getAssociatedShiftsSet()) {
+            shiftTypes.add(shift.getTipo());
+        }
+        return shiftTypes;
+    }
 }

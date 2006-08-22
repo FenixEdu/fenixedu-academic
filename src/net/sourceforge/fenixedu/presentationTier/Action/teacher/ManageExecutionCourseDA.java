@@ -1,5 +1,9 @@
 package net.sourceforge.fenixedu.presentationTier.Action.teacher;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
@@ -11,18 +15,24 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFi
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurriculum;
 import net.sourceforge.fenixedu.dataTransferObject.InfoEvaluationMethod;
+import net.sourceforge.fenixedu.dataTransferObject.gesdis.CreateLessonPlanningBean;
 import net.sourceforge.fenixedu.domain.BibliographicReference;
 import net.sourceforge.fenixedu.domain.CompetenceCourse;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Curriculum;
 import net.sourceforge.fenixedu.domain.EvaluationMethod;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.LessonPlanning;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Professorship;
+import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.domain.Teacher;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
+import net.sourceforge.fenixedu.renderers.components.state.IViewState;
+import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -344,8 +354,8 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
 
     public ActionForward deleteBibliographicReference(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
+        
         final String bibliographicReferenceIDString = request.getParameter("bibliographicReferenceID");
-
         final IUserView userView = getUserView(request);
         final Object args[] = { Integer.valueOf(bibliographicReferenceIDString) };
         ServiceManagerServiceFactory.executeService(userView, "DeleteBibliographicReference", args);
@@ -353,6 +363,99 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
         return mapping.findForward("bibliographicReference");
     }
 
+    public ActionForward lessonPlannings(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) {
+        
+        final ExecutionCourse executionCourse = (ExecutionCourse) request.getAttribute("executionCourse");            
+        Map<ShiftType, List<LessonPlanning>> lessonPlanningsMap = new HashMap<ShiftType, List<LessonPlanning>>();      
+        for (ShiftType shiftType : executionCourse.getShiftTypes()) {            
+            List<LessonPlanning> lessonPlanningsOrderedByOrder = executionCourse.getLessonPlanningsOrderedByOrder(shiftType);
+            if(!lessonPlanningsOrderedByOrder.isEmpty()) {
+                lessonPlanningsMap.put(shiftType, lessonPlanningsOrderedByOrder);            
+            }
+        }       
+        request.setAttribute("lessonPlanningsMap", lessonPlanningsMap);
+        return mapping.findForward("lessonPlannings");
+    }
+    
+    public ActionForward moveUpLessonPlanning(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+        
+        Integer lessonPlanningID = Integer.valueOf(request.getParameter("lessonPlanningID"));        
+        LessonPlanning lessonPlanning = rootDomainObject.readLessonPlanningByOID(lessonPlanningID);
+        final Object args[] = { lessonPlanning.getExecutionCourse().getIdInternal(), lessonPlanning, 
+                (lessonPlanning.getOrderOfPlanning() - 1) };        
+        try {
+            ServiceManagerServiceFactory.executeService(getUserView(request), "MoveLessonPlanning", args);    
+        } catch (DomainException e) {            
+            addActionMessage(request, e.getKey(), e.getArgs());
+        }   
+        return lessonPlannings(mapping, form, request, response);
+    }
+    
+    public ActionForward moveDownLessonPlanning(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+        
+        Integer lessonPlanningID = Integer.valueOf(request.getParameter("lessonPlanningID"));        
+        LessonPlanning lessonPlanning = rootDomainObject.readLessonPlanningByOID(lessonPlanningID);
+        final Object args[] = { lessonPlanning.getExecutionCourse().getIdInternal(), lessonPlanning, 
+                (lessonPlanning.getOrderOfPlanning() + 1)};        
+        try {
+            ServiceManagerServiceFactory.executeService(getUserView(request), "MoveLessonPlanning", args);    
+        } catch (DomainException e) {            
+            addActionMessage(request, e.getKey(), e.getArgs());
+        }   
+        return lessonPlannings(mapping, form, request, response);
+    }
+    
+    public ActionForward prepareCreateLessonPlanning(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) {
+        
+        final ExecutionCourse executionCourse = (ExecutionCourse) request.getAttribute("executionCourse");
+        request.setAttribute("lessonPlanningBean", new CreateLessonPlanningBean(executionCourse));        
+        return mapping.findForward("create-lessonPlanning");
+    }
+    
+    public ActionForward prepareEditLessonPlanning(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) {
+        
+        Integer lessonPlanningID = Integer.valueOf(request.getParameter("lessonPlanningID"));
+        LessonPlanning lessonPlanning = rootDomainObject.readLessonPlanningByOID(lessonPlanningID);
+        request.setAttribute("lessonPlanning", lessonPlanning);
+        return mapping.findForward("create-lessonPlanning");
+    }
+            
+    public ActionForward createLessonPlanning(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+               
+        IViewState viewState = RenderUtils.getViewState("lessonPlanningBeanID");       
+        final CreateLessonPlanningBean lessonPlanningBean = (CreateLessonPlanningBean) viewState.getMetaObject().getObject();
+        final Object args[] = { lessonPlanningBean.getExecutionCourse().getIdInternal(), lessonPlanningBean.getTitle(), 
+                lessonPlanningBean.getPlanning(), lessonPlanningBean.getLessonType(), lessonPlanningBean.getExecutionCourse()};
+        
+        try {
+            ServiceManagerServiceFactory.executeService(getUserView(request), "CreateLessonPlanning", args);    
+        } catch (DomainException e) {            
+            addActionMessage(request, e.getKey(), e.getArgs());
+        }        
+        return lessonPlannings(mapping, form, request, response);
+    }
+    
+    public ActionForward deleteLessonPlanning(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+                       
+        Integer lessonPlanningID = Integer.valueOf(request.getParameter("lessonPlanningID"));
+        LessonPlanning lessonPlanning = rootDomainObject.readLessonPlanningByOID(lessonPlanningID);
+        final Object args[] = { lessonPlanning.getExecutionCourse().getIdInternal(), lessonPlanning};
+        
+        try {
+            ServiceManagerServiceFactory.executeService(getUserView(request), "DeleteLessonPlanning", args);    
+        } catch (DomainException e) {            
+            addActionMessage(request, e.getKey(), e.getArgs());
+        }               
+        return lessonPlannings(mapping, form, request, response);
+    }
+   
     private Object getEvaluationMethod(final ExecutionCourse executionCourse) {
         final EvaluationMethod evaluationMethod = executionCourse.getEvaluationMethod();
         if (evaluationMethod != null && evaluationMethod.getEvaluationElements() != null) {

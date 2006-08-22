@@ -2,8 +2,10 @@ package net.sourceforge.fenixedu.presentationTier.Action.publico;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
@@ -14,6 +16,7 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExportGrouping;
 import net.sourceforge.fenixedu.domain.Grouping;
 import net.sourceforge.fenixedu.domain.Lesson;
+import net.sourceforge.fenixedu.domain.LessonPlanning;
 import net.sourceforge.fenixedu.domain.Section;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.ShiftType;
@@ -87,6 +90,19 @@ public class ExecutionCourseDA extends FenixDispatchAction {
 
     public ActionForward bibliographicReference(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
         return mapping.findForward("execution-course-bibliographic-reference");
+    }
+    
+    public ActionForward lessonPlannings(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {        
+        final ExecutionCourse executionCourse = getExecutionCourse(request);                              
+        Map<ShiftType, List<LessonPlanning>> lessonPlanningsMap = new HashMap<ShiftType, List<LessonPlanning>>();      
+        for (ShiftType shiftType : executionCourse.getShiftTypes()) {            
+            List<LessonPlanning> lessonPlanningsOrderedByOrder = executionCourse.getLessonPlanningsOrderedByOrder(shiftType);
+            if(!lessonPlanningsOrderedByOrder.isEmpty()) {
+                lessonPlanningsMap.put(shiftType, lessonPlanningsOrderedByOrder);            
+            }
+        }         
+        request.setAttribute("lessonPlanningsMap", lessonPlanningsMap);        
+        return mapping.findForward("execution-course-lesson-plannings");
     }
 
     public ActionForward schedule(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
