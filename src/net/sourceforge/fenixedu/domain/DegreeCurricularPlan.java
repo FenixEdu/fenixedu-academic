@@ -408,7 +408,9 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
                 }
             }
         }
-        addExecutionCoursesForExecutionPeriod(result, executionPeriod, getRoot().getChildContextsSet());
+        if (getRoot() != null) {
+            addExecutionCoursesForExecutionPeriod(result, executionPeriod, getRoot().getChildContextsSet());
+        }
         return result;
     }
 
