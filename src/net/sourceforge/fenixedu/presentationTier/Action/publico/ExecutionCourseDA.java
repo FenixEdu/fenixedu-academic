@@ -7,6 +7,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.TreeMap;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -94,7 +95,7 @@ public class ExecutionCourseDA extends FenixDispatchAction {
     
     public ActionForward lessonPlannings(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {        
         final ExecutionCourse executionCourse = getExecutionCourse(request);                              
-        Map<ShiftType, List<LessonPlanning>> lessonPlanningsMap = new HashMap<ShiftType, List<LessonPlanning>>();      
+        Map<ShiftType, List<LessonPlanning>> lessonPlanningsMap = new TreeMap<ShiftType, List<LessonPlanning>>();      
         for (ShiftType shiftType : executionCourse.getShiftTypes()) {            
             List<LessonPlanning> lessonPlanningsOrderedByOrder = executionCourse.getLessonPlanningsOrderedByOrder(shiftType);
             if(!lessonPlanningsOrderedByOrder.isEmpty()) {
