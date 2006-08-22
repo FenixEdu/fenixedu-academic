@@ -110,10 +110,8 @@ public class CreateExecutionDegreesForExecutionYear extends FenixBackingBean {
         final List<SelectItem> result = new ArrayList<SelectItem>();
         result.add(new SelectItem("dropDown.Default", enumerationBundle.getString("dropDown.Default")));
         for (final DegreeType bolonhaDegreeType : DegreeType.values()) {
-            if (bolonhaDegreeType.isBolonhaType()) {
-                result.add(new SelectItem(bolonhaDegreeType.name(), enumerationBundle
-                        .getString(bolonhaDegreeType.name())));
-            }
+            result.add(new SelectItem(bolonhaDegreeType.name(), enumerationBundle
+                    .getString(bolonhaDegreeType.name())));
         }
 
         return result;

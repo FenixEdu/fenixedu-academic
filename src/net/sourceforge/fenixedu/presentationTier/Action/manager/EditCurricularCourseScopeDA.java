@@ -116,11 +116,11 @@ public class EditCurricularCourseScopeDA extends FenixDispatchAction {
                     .findForward("readCurricularCourse"));
 
         List executionPeriodsLabels = new ArrayList();
-        String labelExecutionPeriod, valueExecutionPeriod;
+        String labelExecutionPeriod = Data.format2DayMonthYear(oldInfoCurricularCourseScope.getBeginDate().getTime(), "/");
+        executionPeriodsLabels.add(new LabelValueBean(labelExecutionPeriod, labelExecutionPeriod));
         for (final InfoExecutionPeriod infoExecutionPeriod : infoExecutionPeriods) {
-            valueExecutionPeriod = Data.format2DayMonthYear(infoExecutionPeriod.getBeginDate(), "/");
             labelExecutionPeriod = Data.format2DayMonthYear(infoExecutionPeriod.getBeginDate(), "/");
-            executionPeriodsLabels.add(new LabelValueBean(labelExecutionPeriod, valueExecutionPeriod));
+            executionPeriodsLabels.add(new LabelValueBean(labelExecutionPeriod, labelExecutionPeriod));
         }
 
         request.setAttribute("executionPeriodsLabels", executionPeriodsLabels);

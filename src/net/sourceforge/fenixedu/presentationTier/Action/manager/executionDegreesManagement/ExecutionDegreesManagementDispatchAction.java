@@ -279,10 +279,8 @@ public class ExecutionDegreesManagementDispatchAction extends FenixDispatchActio
 
         final List<LabelValueBean> degreeTypes = new ArrayList<LabelValueBean>();
         for (final DegreeType bolonhaDegreeType : DegreeType.values()) {
-            if (bolonhaDegreeType.isBolonhaType()) {
-                degreeTypes.add(new LabelValueBean(enumerationResources.getString(bolonhaDegreeType
-                        .name()), bolonhaDegreeType.name()));
-            }
+            degreeTypes.add(new LabelValueBean(enumerationResources.getString(bolonhaDegreeType
+                    .name()), bolonhaDegreeType.name()));
         }
         degreeTypes.add(0, new LabelValueBean(enumerationResources.getString("dropDown.Default"), ""));
         request.setAttribute("degreeTypes", degreeTypes);
