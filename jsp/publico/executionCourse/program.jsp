@@ -31,13 +31,13 @@
 				<bean:message key="title.program"/>
 			</h4>
 			<bean:write name="competenceCourse" property="program" filter="false"/>
-			<logic:present name="competenceCourse" property="programEn">
+			<logic:notEmpty name="competenceCourse" property="programEn">
 				<br/>
 				<h4>
 					<bean:message key="title.program.eng"/>
 				</h4>
 				<bean:write name="competenceCourse" property="programEn" filter="false"/>
-			</logic:present>
+			</logic:notEmpty>
 		</blockquote>
 	</logic:equal>
 </logic:iterate>
@@ -64,13 +64,13 @@
 							<bean:message key="title.program"/>
 						</h4>
 						<bean:write name="curriculum" property="program" filter="false"/>
-						<logic:present name="curriculum" property="programEn">
+						<logic:notEmpty name="curriculum" property="programEn">
 							<br/>
 							<h4>
 								<bean:message key="title.program.eng"/>
 							</h4>
 							<bean:write name="curriculum" property="programEn" filter="false"/>
-						</logic:present>
+						</logic:notEmpty>
 					</logic:present>
 					<logic:notPresent name="curriculum">
 						<bean:message key="message.program.not.defined"/>
