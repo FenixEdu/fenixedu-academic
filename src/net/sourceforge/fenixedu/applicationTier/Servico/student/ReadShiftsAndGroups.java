@@ -46,7 +46,7 @@ public class ReadShiftsAndGroups extends Service {
         return run(grouping);
     }
 
-    public static InfoSiteShiftsAndGroups run(Grouping grouping) throws ExcepcaoPersistencia, FenixServiceException {
+    public static InfoSiteShiftsAndGroups run(Grouping grouping) throws FenixServiceException {
         final InfoSiteShiftsAndGroups infoSiteShiftsAndGroups = new InfoSiteShiftsAndGroups();
 
         final List<InfoSiteGroupsByShift> infoSiteGroupsByShiftList = new ArrayList<InfoSiteGroupsByShift>();

@@ -9,7 +9,6 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoProfessorship;
-import net.sourceforge.fenixedu.dataTransferObject.InfoProfessorshipWithAll;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.ShiftProfessorship;
 import net.sourceforge.fenixedu.domain.Summary;
@@ -80,12 +79,10 @@ public class DissociateProfessorShipsAndResponsibleFor extends Service {
                     professorship.delete();
                 } else {
                     if (supportLessons.size() > 0) {
-                        professorshipsWithSupportLessons.add(InfoProfessorshipWithAll
-                                .newInfoFromDomain(professorship));
+                        professorshipsWithSupportLessons.add(InfoProfessorship.newInfoFromDomain(professorship));
                     }
                     if (shiftProfessorships.size() > 0) {
-                        professorshipsWithShifts.add(InfoProfessorshipWithAll
-                                .newInfoFromDomain(professorship));
+                        professorshipsWithShifts.add(InfoProfessorship.newInfoFromDomain(professorship));
                     }
                 }
             }

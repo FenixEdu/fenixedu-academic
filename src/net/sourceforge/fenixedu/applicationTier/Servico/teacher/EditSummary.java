@@ -38,7 +38,7 @@ public class EditSummary extends Service {
         final Summary summary = rootDomainObject.readSummaryByOID(infoSummary
                 .getIdInternal());
 
-        final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseId);
+        final ExecutionCourse executionCourse = summary.getExecutionCourse();
 
         final Shift shift = SummaryUtils.getShift(summary, infoSummary);
         final OldRoom room = SummaryUtils.getRoom(summary, shift, infoSummary);

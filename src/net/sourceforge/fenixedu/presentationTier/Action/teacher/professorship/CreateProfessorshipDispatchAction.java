@@ -13,10 +13,8 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
-import net.sourceforge.fenixedu.dataTransferObject.InfoProfessorship;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
@@ -44,20 +42,12 @@ public class CreateProfessorshipDispatchAction extends DispatchAction {
             HttpServletRequest request, HttpServletResponse response) throws Exception {
         
         final DynaActionForm teacherExecutionCourseForm = (DynaActionForm) form;
+        
+        final Integer executionCourseId = Integer.valueOf((String) teacherExecutionCourseForm.get("executionCourseId"));
         final Integer teacherNumber = Integer.valueOf((String) teacherExecutionCourseForm.get("teacherNumber"));
         final Boolean responsibleFor = (Boolean) teacherExecutionCourseForm.get("responsibleFor");
-        final Integer executionCourseId = Integer.valueOf((String) teacherExecutionCourseForm.get("executionCourseId"));
         
-        final InfoExecutionCourse infoExecutionCourse = new InfoExecutionCourse(executionCourseId);
-        final InfoTeacher infoTeacher = new InfoTeacher();
-        infoTeacher.setTeacherNumber(teacherNumber);
-        
-        final InfoProfessorship infoProfessorship = new InfoProfessorship();
-        infoProfessorship.setInfoExecutionCourse(infoExecutionCourse);
-        infoProfessorship.setInfoTeacher(infoTeacher);
-        infoProfessorship.setResponsibleFor(responsibleFor);
-        
-        final Object arguments[] = { infoProfessorship };
+        final Object arguments[] = { executionCourseId, teacherNumber, responsibleFor, 0.0 };
         executeService("InsertProfessorshipByDepartment", request, arguments);
         
         return mapping.findForward("final-step");

@@ -1383,7 +1383,7 @@
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains>
-			<chain name="DepartmentInsertProfessorshipAuthorizationChain" />
+			<chain name="DepartmentInsertProfessorshipAuthorization" />
 		</filterChains>
 	</service>
 	<service>

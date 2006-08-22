@@ -13,7 +13,7 @@ import net.sourceforge.fenixedu.dataTransferObject.ExecutionCourseSiteView;
 import net.sourceforge.fenixedu.dataTransferObject.ISiteComponent;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoLesson;
-import net.sourceforge.fenixedu.dataTransferObject.InfoProfessorshipWithAll;
+import net.sourceforge.fenixedu.dataTransferObject.InfoProfessorship;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteCommon;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteSummaries;
@@ -75,7 +75,7 @@ public class ReadSummaries extends Service {
 
                 public Object transform(Object arg0) {
                     Professorship professorship = (Professorship) arg0;
-                    return InfoProfessorshipWithAll.newInfoFromDomain(professorship);
+                    return InfoProfessorship.newInfoFromDomain(professorship);
                 }
             });
         }

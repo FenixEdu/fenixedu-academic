@@ -120,8 +120,7 @@ public class TeacherAdministrationSiteComponentBuilder {
 	}
 
 	public ISiteComponent getComponent(ISiteComponent component, Site site,
-			ISiteComponent commonComponent, Object obj1, Object obj2) throws FenixServiceException,
-			ExcepcaoPersistencia {
+			ISiteComponent commonComponent, Object obj1, Object obj2) throws FenixServiceException {
 
 		if (component instanceof InfoSiteCommon) {
 			return getInfoSiteCommon((InfoSiteCommon) component, site);
@@ -198,7 +197,7 @@ public class TeacherAdministrationSiteComponentBuilder {
 	 * @throws ExcepcaoPersistencia
 	 */
 	private ISiteComponent getInfoSiteCommon(InfoSiteCommon component, Site site)
-			throws FenixServiceException, ExcepcaoPersistencia {
+			throws FenixServiceException {
 
 		final List<Section> allSections = site.getAssociatedSections();
 		final List<InfoSection> infoSectionsList = new ArrayList<InfoSection>(allSections.size());
@@ -269,7 +268,7 @@ public class TeacherAdministrationSiteComponentBuilder {
 	 * @throws ExcepcaoPersistencia
 	 */
 	private ISiteComponent getInfoAnnouncement(InfoAnnouncement component, Site site,
-			Integer announcementCode) throws FenixServiceException, ExcepcaoPersistencia {
+			Integer announcementCode) throws FenixServiceException {
 		Announcement iAnnouncement = RootDomainObject.getInstance().readAnnouncementByOID(announcementCode);
 		return InfoAnnouncement.newInfoFromDomain(iAnnouncement);
 	}
@@ -281,7 +280,7 @@ public class TeacherAdministrationSiteComponentBuilder {
 	 * @throws ExcepcaoPersistencia
 	 */
 	private ISiteComponent getInfoSiteObjectives(InfoSiteObjectives component, Site site)
-			throws FenixServiceException, ExcepcaoPersistencia {
+			throws FenixServiceException {
 
 		ExecutionCourse executionCourse = site.getExecutionCourse();
 		List curricularCourses = executionCourse.getAssociatedCurricularCourses();
@@ -311,7 +310,7 @@ public class TeacherAdministrationSiteComponentBuilder {
 	 * @throws ExcepcaoPersistencia
 	 */
 	private ISiteComponent getInfoSitePrograms(InfoSitePrograms component, Site site)
-			throws FenixServiceException, ExcepcaoPersistencia {
+			throws FenixServiceException {
 		ExecutionCourse executionCourse = site.getExecutionCourse();
 		List curricularCourses = executionCourse.getAssociatedCurricularCourses();
 		Iterator iter = curricularCourses.iterator();
@@ -340,7 +339,7 @@ public class TeacherAdministrationSiteComponentBuilder {
 	 * @throws ExcepcaoPersistencia
 	 */
 	private ISiteComponent getInfoEvaluationMethods(InfoSiteEvaluationMethods component, Site site)
-			throws FenixServiceException, ExcepcaoPersistencia {
+			throws FenixServiceException {
 		ExecutionCourse executionCourse = site.getExecutionCourse();
 		List curricularCourses = executionCourse.getAssociatedCurricularCourses();
 		Iterator iter = curricularCourses.iterator();
@@ -361,7 +360,7 @@ public class TeacherAdministrationSiteComponentBuilder {
 	}
 
 	private ISiteComponent getInfoEvaluationMethod(InfoEvaluationMethod component, Site site)
-			throws FenixServiceException, ExcepcaoPersistencia {
+			throws FenixServiceException {
 
 		final EvaluationMethod evaluationMethod = site.getExecutionCourse().getEvaluationMethod();
 		if (evaluationMethod != null) {
@@ -378,7 +377,7 @@ public class TeacherAdministrationSiteComponentBuilder {
 	 * @throws ExcepcaoPersistencia
 	 */
 	private ISiteComponent getInfoCurriculum(InfoCurriculum component, Site site,
-			Integer curricularCourseCode) throws FenixServiceException, ExcepcaoPersistencia {
+			Integer curricularCourseCode) throws FenixServiceException {
 		CurricularCourse curricularCourse = (CurricularCourse) RootDomainObject.getInstance().readDegreeModuleByOID(curricularCourseCode);
 
         Curriculum curriculum = curricularCourse.findLatestCurriculum();
@@ -400,7 +399,7 @@ public class TeacherAdministrationSiteComponentBuilder {
 	 * @throws ExcepcaoPersistencia
 	 */
 	private ISiteComponent getInfoSiteBibliography(InfoSiteBibliography component, Site site)
-			throws FenixServiceException, ExcepcaoPersistencia {
+			throws FenixServiceException {
 		ExecutionCourse executionCourse = site.getExecutionCourse();
 
 		List references = executionCourse.getAssociatedBibliographicReferences();
@@ -429,8 +428,7 @@ public class TeacherAdministrationSiteComponentBuilder {
 	 * @throws ExcepcaoPersistencia
 	 */
 	private ISiteComponent getInfoBibliographicReference(InfoBibliographicReference component,
-			Site site, Integer bibliographicReferenceCode) throws FenixServiceException,
-			ExcepcaoPersistencia {
+			Site site, Integer bibliographicReferenceCode) throws FenixServiceException {
 		BibliographicReference iBibliographicReference = RootDomainObject.getInstance().readBibliographicReferenceByOID(bibliographicReferenceCode);
 
         InfoBibliographicReference infoBibliographicReference = InfoBibliographicReference
@@ -453,7 +451,7 @@ public class TeacherAdministrationSiteComponentBuilder {
 	 * @throws ExcepcaoPersistencia
 	 */
 	private ISiteComponent getInfoSiteTeachers(InfoSiteTeachers component, Site site, String username)
-			throws FenixServiceException, ExcepcaoPersistencia {
+			throws FenixServiceException {
 
         ExecutionCourse executionCourse = site.getExecutionCourse();
 		List teachers = executionCourse.getProfessorships();
@@ -569,8 +567,7 @@ public class TeacherAdministrationSiteComponentBuilder {
 	}
 
 	private ISiteComponent getInfoSiteEvaluationExecutionCourses(
-			InfoSiteEvaluationExecutionCourses component, Site site, Integer evaluationID)
-			throws ExcepcaoPersistencia {
+			InfoSiteEvaluationExecutionCourses component, Site site, Integer evaluationID) {
 
 		final Evaluation evaluation = RootDomainObject.getInstance().readEvaluationByOID(evaluationID);
 
@@ -602,7 +599,7 @@ public class TeacherAdministrationSiteComponentBuilder {
 	}
 
 	private ISiteComponent getInfoEvaluation(InfoEvaluation component, Site site, Integer evaluationCode)
-			throws FenixServiceException, ExcepcaoPersistencia {
+			throws FenixServiceException {
 		Evaluation evaluation = (Evaluation) RootDomainObject.getInstance().readEvaluationByOID(evaluationCode);
 
 		InfoEvaluation infoEvaluation = InfoEvaluation.newInfoFromDomain(evaluation);
@@ -636,7 +633,7 @@ public class TeacherAdministrationSiteComponentBuilder {
 	 * @throws ExcepcaoPersistencia
 	 */
 	private ISiteComponent getInfoSiteRootSections(InfoSiteRootSections component, Site site)
-			throws FenixServiceException, ExcepcaoPersistencia {
+			throws FenixServiceException {
 
 		List allSections = site.getAssociatedSections();
 
@@ -658,7 +655,7 @@ public class TeacherAdministrationSiteComponentBuilder {
 	}
 
 	private ISiteComponent getInfoSiteSection(InfoSiteSection component, Site site, Integer sectionCode)
-			throws FenixServiceException, ExcepcaoPersistencia {
+			throws FenixServiceException {
 
         final Section section = RootDomainObject.getInstance().readSectionByOID(sectionCode);
 
@@ -676,7 +673,7 @@ public class TeacherAdministrationSiteComponentBuilder {
 	}
 
 	private ISiteComponent getInfoSiteRegularSections(InfoSiteRegularSections component, Site site,
-			Integer sectionCode) throws FenixServiceException, ExcepcaoPersistencia {
+			Integer sectionCode) throws FenixServiceException {
 		Section iSuperiorSection = RootDomainObject.getInstance().readSectionByOID(sectionCode);
 		List allSections = site.getAssociatedSections();
 
@@ -699,7 +696,7 @@ public class TeacherAdministrationSiteComponentBuilder {
 	}
 
 	private ISiteComponent getInfoSiteSections(InfoSiteSections component, Site site,
-			Integer sectionCode) throws FenixServiceException, ExcepcaoPersistencia {
+			Integer sectionCode) throws FenixServiceException {
 		Section iSection = RootDomainObject.getInstance().readSectionByOID(sectionCode);
 
 		InfoSection infoSection = InfoSection.newInfoFromDomain(iSection);
@@ -735,7 +732,7 @@ public class TeacherAdministrationSiteComponentBuilder {
 	}
 
 	private ISiteComponent getInfoSiteItems(InfoSiteItems component, Site site, Integer itemCode)
-			throws FenixServiceException, ExcepcaoPersistencia {
+			throws FenixServiceException {
 
 		final Item iItem = RootDomainObject.getInstance().readItemByOID(itemCode);
         final Section iSection = iItem.getSection();
@@ -781,7 +778,7 @@ public class TeacherAdministrationSiteComponentBuilder {
 	 */
 
 	private ISiteComponent getInfoSiteProjects(InfoSiteProjects component, Site site)
-			throws FenixServiceException, ExcepcaoPersistencia {
+			throws FenixServiceException {
 
 		List infoGroupPropertiesList = readExecutionCourseProjects(site.getExecutionCourse()
 				.getIdInternal());
@@ -790,7 +787,7 @@ public class TeacherAdministrationSiteComponentBuilder {
 	}
 
 	private List readExecutionCourseProjects(Integer executionCourseCode) throws ExcepcaoInexistente,
-			FenixServiceException, ExcepcaoPersistencia {
+			FenixServiceException {
 
 		List<InfoGrouping> projects = null;
 		Grouping groupProperties;
@@ -833,7 +830,7 @@ public class TeacherAdministrationSiteComponentBuilder {
 	 */
 
 	private ISiteComponent getInfoSiteNewProjectProposals(InfoSiteNewProjectProposals component,
-			Site site) throws FenixServiceException, ExcepcaoPersistencia {
+			Site site) throws FenixServiceException {
 
 		List infoGroupPropertiesList = readExecutionCourseNewProjectProposals(site.getExecutionCourse()
 				.getIdInternal());
@@ -842,7 +839,7 @@ public class TeacherAdministrationSiteComponentBuilder {
 	}
 
 	private List readExecutionCourseNewProjectProposals(Integer executionCourseCode)
-			throws ExcepcaoInexistente, FenixServiceException, ExcepcaoPersistencia {
+			throws ExcepcaoInexistente, FenixServiceException {
 
 		List<InfoGrouping> projects = null;
 		Grouping groupProperties;
@@ -884,8 +881,7 @@ public class TeacherAdministrationSiteComponentBuilder {
 	 */
 
 	private ISiteComponent getInfoSiteSentedProjectProposalsWaiting(
-			InfoSiteSentedProjectProposalsWaiting component, Site site) throws FenixServiceException,
-			ExcepcaoPersistencia {
+			InfoSiteSentedProjectProposalsWaiting component, Site site) throws FenixServiceException {
 
 		List infoGroupPropertiesList = readExecutionCourseSentedProjectProposalsWaiting(site
 				.getExecutionCourse().getIdInternal());
@@ -894,7 +890,7 @@ public class TeacherAdministrationSiteComponentBuilder {
 	}
 
 	private List readExecutionCourseSentedProjectProposalsWaiting(Integer executionCourseCode)
-			throws ExcepcaoInexistente, FenixServiceException, ExcepcaoPersistencia {
+			throws ExcepcaoInexistente, FenixServiceException {
 
 		List<InfoGrouping> projects = null;
 
@@ -944,7 +940,7 @@ public class TeacherAdministrationSiteComponentBuilder {
 	 */
 
 	private ISiteComponent getInfoSiteShiftsAndGroups(InfoSiteShiftsAndGroups component,
-			Integer groupPropertiesCode) throws FenixServiceException, ExcepcaoPersistencia {
+			Integer groupPropertiesCode) throws FenixServiceException {
 
 		Grouping groupProperties = RootDomainObject.getInstance().readGroupingByOID(groupPropertiesCode);
 
@@ -983,7 +979,7 @@ public class TeacherAdministrationSiteComponentBuilder {
 	}
 
 	private ISiteComponent getInfoSiteStudentGroup(InfoSiteStudentGroup component, Integer studentGroupID)
-			throws FenixServiceException, ExcepcaoPersistencia {
+			throws FenixServiceException {
 
 		final StudentGroup studentGroup = RootDomainObject.getInstance().readStudentGroupByOID(studentGroupID);
 		if (studentGroup == null) {
@@ -1011,8 +1007,7 @@ public class TeacherAdministrationSiteComponentBuilder {
 	}
 
 	private ISiteComponent getInfoSiteStudentGroupAndStudents(InfoSiteStudentGroupAndStudents component,
-			Integer groupPropertiesCode, Integer shiftCode) throws FenixServiceException,
-			ExcepcaoPersistencia {
+			Integer groupPropertiesCode, Integer shiftCode) throws FenixServiceException {
 		List infoSiteStudentsAndShiftByStudentGroupList = readStudentGroupAndStudents(
 				groupPropertiesCode, shiftCode);
 		component
@@ -1025,7 +1020,7 @@ public class TeacherAdministrationSiteComponentBuilder {
 	}
 
 	private InfoSiteShiftsAndGroups readShiftAndGroups(Integer groupPropertiesCode, Integer shiftCode)
-			throws ExcepcaoInexistente, FenixServiceException, ExcepcaoPersistencia {
+			throws ExcepcaoInexistente, FenixServiceException {
 
 		InfoSiteShiftsAndGroups infoSiteShiftsAndGroups = new InfoSiteShiftsAndGroups();
 
@@ -1072,7 +1067,7 @@ public class TeacherAdministrationSiteComponentBuilder {
 	}
 
 	private List readStudentGroupAndStudents(Integer groupPropertiesCode, Integer shiftCode)
-			throws ExcepcaoInexistente, FenixServiceException, ExcepcaoPersistencia {
+			throws ExcepcaoInexistente, FenixServiceException {
 
 		List<InfoSiteStudentsAndShiftByStudentGroup> infoSiteStudentsAndShiftByStudentGroupList = new ArrayList<InfoSiteStudentsAndShiftByStudentGroup>();
 
@@ -1151,7 +1146,7 @@ public class TeacherAdministrationSiteComponentBuilder {
 	 */
 
 	private ISiteComponent getInfoSiteGroupProperties(InfoSiteGrouping component,
-			Integer groupPropertiesCode) throws FenixServiceException, ExcepcaoPersistencia {
+			Integer groupPropertiesCode) throws FenixServiceException {
 
 		InfoGrouping infoGrouping = readGroupProperties(groupPropertiesCode);
 		component.setInfoGrouping(infoGrouping);
@@ -1159,7 +1154,7 @@ public class TeacherAdministrationSiteComponentBuilder {
 	}
 
 	private InfoGrouping readGroupProperties(Integer groupPropertiesCode) throws ExcepcaoInexistente,
-			FenixServiceException, ExcepcaoPersistencia {
+			FenixServiceException {
 		Grouping groupProperties = RootDomainObject.getInstance().readGroupingByOID(groupPropertiesCode);
 		return InfoGroupingWithAttends.newInfoFromDomain(groupProperties);
 	}
@@ -1171,7 +1166,7 @@ public class TeacherAdministrationSiteComponentBuilder {
 	 * @throws ExcepcaoPersistencia
 	 */
 	private ISiteComponent getInfoSiteShifts(InfoSiteShifts component, Integer groupPropertiesCode,
-			Integer studentGroupCode) throws FenixServiceException, ExcepcaoPersistencia {
+			Integer studentGroupCode) throws FenixServiceException {
 		List<InfoShift> infoShifts = new ArrayList<InfoShift>();
 		ExecutionCourse executionCourse = null;
 

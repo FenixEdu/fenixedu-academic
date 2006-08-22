@@ -30,6 +30,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoSiteSummary;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSummary;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
 import net.sourceforge.fenixedu.dataTransferObject.SiteView;
+import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
@@ -451,9 +452,8 @@ public class SummaryManagerAction extends FenixDispatchAction {
             {
                 infoSummary.setTeacherName(request.getParameter("teacherName"));
             } else { // teacher belong to course
-                InfoProfessorship infoProfessorship = new InfoProfessorship();
-                infoProfessorship.setIdInternal(teacherId);
-                infoSummary.setInfoProfessorship(infoProfessorship);
+        	final Professorship professorship = rootDomainObject.readProfessorshipByOID(teacherId);
+                infoSummary.setInfoProfessorship(InfoProfessorship.newInfoFromDomain(professorship));
             }
         }
 

@@ -10,7 +10,7 @@ import net.sourceforge.fenixedu.domain.University;
 
 public class InfoUniversity extends InfoObject {
 
-	private final University university;
+    private final University university;
 
     public InfoUniversity(final University university) {
     	this.university = university;

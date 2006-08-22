@@ -25,7 +25,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourseWithExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoItem;
 import net.sourceforge.fenixedu.dataTransferObject.InfoLesson;
-import net.sourceforge.fenixedu.dataTransferObject.InfoProfessorshipWithAll;
+import net.sourceforge.fenixedu.dataTransferObject.InfoProfessorship;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSection;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShiftWithAssociatedInfoClassesAndInfoLessons;
@@ -147,19 +147,11 @@ public class ExecutionCourseSiteComponentBuilder {
 		}
 
 		// execution courses's professorships for display to filter summary
-		List professorships = executionCourse.getProfessorships();
-		List infoProfessorships = new ArrayList();
-		if (professorships != null && professorships.size() > 0) {
-			infoProfessorships = (List) CollectionUtils.collect(professorships, new Transformer() {
-
-				public Object transform(Object arg0) {
-					Professorship professorship = (Professorship) arg0;
-					return InfoProfessorshipWithAll.newInfoFromDomain(professorship);
-				}
-
-			});
+		final List<InfoProfessorship> infoProfessorships = new ArrayList<InfoProfessorship>(executionCourse.getProfessorshipsCount());
+		for (final Professorship professorship : executionCourse.getProfessorshipsSet()) {
+		    infoProfessorships.add(InfoProfessorship.newInfoFromDomain(professorship));
 		}
-
+		
 		List summaries = null;
 		if (component.getShiftType() != null) {
             summaries = executionCourse.readSummariesByShiftType(component.getShiftType());

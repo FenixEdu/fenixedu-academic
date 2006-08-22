@@ -1,7 +1,3 @@
-/*
- * Created on Nov 23, 2003 by jpvl
- *  
- */
 package net.sourceforge.fenixedu.presentationTier.Action.teacher.professorship;
 
 import java.util.Calendar;
@@ -15,6 +11,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
 import net.sourceforge.fenixedu.dataTransferObject.InfoProfessorship;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.professorship.InfoSupportLesson;
+import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.presentationTier.Action.framework.CRUDActionByOID;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
@@ -25,15 +22,8 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 
-/**
- * @author jpvl
- */
 public class CRUDSupportLessonAction extends CRUDActionByOID {
 
-    /**
-     * @param string
-     * @return
-     */
     private DiaSemana getWeekDay(String weekday) {
         int weekDayInt = 0;
         try {
@@ -48,10 +38,6 @@ public class CRUDSupportLessonAction extends CRUDActionByOID {
         return new DiaSemana(weekDayInt);
     }
 
-    /**
-     * @param semana
-     * @return
-     */
     private String getWeekDayString(DiaSemana weekday) {
         switch (weekday.getDiaSemana().intValue()) {
         case DiaSemana.DOMINGO:
@@ -74,13 +60,6 @@ public class CRUDSupportLessonAction extends CRUDActionByOID {
 
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see presentationTier.Action.framework.CRUDActionByOID#populateFormFromInfoObject(org.apache.struts.action.ActionMapping,
-     *      net.sourceforge.fenixedu.dataTransferObject.InfoObject, org.apache.struts.action.ActionForm,
-     *      javax.servlet.http.HttpServletRequest)
-     */
     protected void populateFormFromInfoObject(ActionMapping mapping, InfoObject infoObject,
             ActionForm form, HttpServletRequest request) {
         InfoSupportLesson infoSupportLesson = (InfoSupportLesson) infoObject;
@@ -109,19 +88,14 @@ public class CRUDSupportLessonAction extends CRUDActionByOID {
         supportLessonForm.set("place", infoSupportLesson.getPlace());
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see presentationTier.Action.framework.CRUDActionByOID#populateInfoObjectFromForm(org.apache.struts.action.ActionForm,
-     *      presentationTier.mapping.framework.CRUDMapping)
-     */
     protected InfoObject populateInfoObjectFromForm(ActionForm form, CRUDMapping mapping) {
         DynaActionForm supportLessonForm = (DynaActionForm) form;
         InfoSupportLesson infoSupportLesson = new InfoSupportLesson();
 
         infoSupportLesson.setIdInternal((Integer) supportLessonForm.get("idInternal"));
-        InfoProfessorship infoProfessorship = new InfoProfessorship((Integer) supportLessonForm
-                .get("infoProfessorshipId"));
+        final Professorship professorship = rootDomainObject
+		.readProfessorshipByOID((Integer) supportLessonForm.get("infoProfessorshipId"));
+        InfoProfessorship infoProfessorship = InfoProfessorship.newInfoFromDomain(professorship);
 
         infoSupportLesson.setInfoProfessorship(infoProfessorship);
 
@@ -143,13 +117,6 @@ public class CRUDSupportLessonAction extends CRUDActionByOID {
         return infoSupportLesson;
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see presentationTier.Action.framework.CRUDActionByOID#prepareFormConstants(org.apache.struts.action.ActionMapping,
-     *      org.apache.struts.action.ActionForm,
-     *      javax.servlet.http.HttpServletRequest)
-     */
     protected void prepareFormConstants(ActionMapping mapping, ActionForm form,
             HttpServletRequest request) throws FenixServiceException, FenixFilterException {
         IUserView userView = SessionUtils.getUserView(request);

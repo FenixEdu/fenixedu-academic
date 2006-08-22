@@ -10,7 +10,6 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoProfessorship;
-import net.sourceforge.fenixedu.dataTransferObject.InfoProfessorshipWithInfoExecutionCourseAndInfoExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.professorship.DetailedProfessorship;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
@@ -34,8 +33,7 @@ public class ReadDetailedTeacherProfessorshipsAbstractService extends Service {
 
         public Object transform(Object input) {
             Professorship professorship = (Professorship) input;
-            InfoProfessorship infoProfessorShip = InfoProfessorshipWithInfoExecutionCourseAndInfoExecutionPeriod
-                    .newInfoFromDomain(professorship);
+            InfoProfessorship infoProfessorShip = InfoProfessorship.newInfoFromDomain(professorship);
 
             final DetailedProfessorship detailedProfessorship = new DetailedProfessorship();
 

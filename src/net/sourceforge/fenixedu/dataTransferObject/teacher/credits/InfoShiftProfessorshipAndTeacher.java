@@ -4,7 +4,7 @@
  */
 package net.sourceforge.fenixedu.dataTransferObject.teacher.credits;
 
-import net.sourceforge.fenixedu.dataTransferObject.InfoProfessorshipWithAll;
+import net.sourceforge.fenixedu.dataTransferObject.InfoProfessorship;
 import net.sourceforge.fenixedu.domain.ShiftProfessorship;
 
 /**
@@ -15,7 +15,7 @@ public class InfoShiftProfessorshipAndTeacher extends InfoShiftProfessorship {
     public void copyFromDomain(ShiftProfessorship shifProfessorship) {
         super.copyFromDomain(shifProfessorship);
         if (shifProfessorship != null) {
-            setInfoProfessorship(InfoProfessorshipWithAll.newInfoFromDomain(shifProfessorship.getProfessorship()));
+            setInfoProfessorship(InfoProfessorship.newInfoFromDomain(shifProfessorship.getProfessorship()));
         }
     }
     

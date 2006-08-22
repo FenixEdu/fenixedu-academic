@@ -19,7 +19,7 @@ import net.sourceforge.fenixedu.dataTransferObject.ExecutionCourseSiteView;
 import net.sourceforge.fenixedu.dataTransferObject.ISiteComponent;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoLesson;
-import net.sourceforge.fenixedu.dataTransferObject.InfoProfessorshipWithAll;
+import net.sourceforge.fenixedu.dataTransferObject.InfoProfessorship;
 import net.sourceforge.fenixedu.dataTransferObject.InfoRoom;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteCommon;
@@ -80,16 +80,14 @@ public class ReadSummary extends Service {
             });
         }
 
-        List infoProfessorships = new ArrayList();
-
         // We present only the responsible teacher (by gedl)
-
         // teacher logged
+        List infoProfessorships = new ArrayList(1);
         Teacher teacher = Teacher.readTeacherByUsername(userLogged);
         if (teacher != null) {
             Professorship professorship = teacher.getProfessorshipByExecutionCourse(executionCourse);
             if (professorship != null) {
-                infoProfessorships.add(InfoProfessorshipWithAll.newInfoFromDomain(professorship));
+                infoProfessorships.add(InfoProfessorship.newInfoFromDomain(professorship));
             }
         }
 
@@ -99,7 +97,7 @@ public class ReadSummary extends Service {
             final InfoRoom infoRoom = new InfoRoom();
             infoRooms.add(infoRoom);
             infoRoom.setIdInternal(room.getIdInternal());
-            infoRoom.setNome(room.getNome());
+            infoRoom.setNome(room.getName());
         }
         Collections.sort(infoRooms, new BeanComparator("nome"));
 

@@ -18,7 +18,7 @@ import net.sourceforge.fenixedu.dataTransferObject.ExecutionCourseSiteView;
 import net.sourceforge.fenixedu.dataTransferObject.ISiteComponent;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoLesson;
-import net.sourceforge.fenixedu.dataTransferObject.InfoProfessorshipWithAll;
+import net.sourceforge.fenixedu.dataTransferObject.InfoProfessorship;
 import net.sourceforge.fenixedu.dataTransferObject.InfoRoom;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteCommon;
@@ -40,7 +40,7 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 
 /**
- * @author Manuel Pinto e Joï¿½o Figueiredo
+ * @author Manuel Pinto e João Figueiredo
  */
 public class ReadSummary extends Service {
 
@@ -81,7 +81,7 @@ public class ReadSummary extends Service {
         if (teacher != null) {
             Professorship professorship = teacher.getProfessorshipByExecutionCourse(executionCourse);
             if (professorship != null) {
-                infoProfessorships.add(InfoProfessorshipWithAll.newInfoFromDomain(professorship));
+                infoProfessorships.add(InfoProfessorship.newInfoFromDomain(professorship));
             }
         }
 

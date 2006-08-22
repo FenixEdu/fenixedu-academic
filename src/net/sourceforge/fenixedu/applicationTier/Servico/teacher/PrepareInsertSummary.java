@@ -13,7 +13,6 @@ import net.sourceforge.fenixedu.dataTransferObject.ISiteComponent;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoLesson;
 import net.sourceforge.fenixedu.dataTransferObject.InfoProfessorship;
-import net.sourceforge.fenixedu.dataTransferObject.InfoProfessorshipWithAll;
 import net.sourceforge.fenixedu.dataTransferObject.InfoRoom;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteCommon;
@@ -77,12 +76,11 @@ public class PrepareInsertSummary extends Service {
 
         Collections.sort(infoRooms, new BeanComparator("nome"));
 
-        final List<Professorship> professorships = executionCourse.getProfessorships();
-        final List<InfoProfessorship> infoProfessorships = new ArrayList<InfoProfessorship>(1);
         Integer professorshipSelect = null;
-        for (final Professorship professorship : professorships) {
+        final List<InfoProfessorship> infoProfessorships = new ArrayList<InfoProfessorship>(1);
+        for (final Professorship professorship : executionCourse.getProfessorships()) {
             if (professorship.getTeacher().getPerson().getUsername().equalsIgnoreCase(userLogged)) {
-                infoProfessorships.add(InfoProfessorshipWithAll.newInfoFromDomain(professorship));
+                infoProfessorships.add(InfoProfessorship.newInfoFromDomain(professorship));
                 professorshipSelect = professorship.getIdInternal();
                 break;
             }

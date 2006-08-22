@@ -10,7 +10,6 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoProfessorship;
-import net.sourceforge.fenixedu.dataTransferObject.InfoProfessorshipWithAll;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.professorship.DetailedProfessorship;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Department;
@@ -154,8 +153,7 @@ public class ReadProfessorshipsAndResponsibilitiesByDepartmentAndExecutionPeriod
 
                         Professorship professorship = (Professorship) input;
 
-                        InfoProfessorship infoProfessorShip = InfoProfessorshipWithAll
-                                .newInfoFromDomain(professorship);
+                        InfoProfessorship infoProfessorShip = InfoProfessorship.newInfoFromDomain(professorship);
 
                         List executionCourseCurricularCoursesList = getInfoCurricularCourses(professorship
                                 .getExecutionCourse());

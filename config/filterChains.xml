@@ -620,8 +620,8 @@
         <filterClass>net.sourceforge.fenixedu.applicationTier.Filtro.AuthorizationByRoleFilter</filterClass>
     </filterChain>
     <filterChain>
-        <name>DepartmentInsertProfessorshipAuthorizationChain</name>
-        <expression>CreditsServiceWithInfoProfessorshipArgumentAuthorizationFilter</expression>
+        <name>DepartmentInsertProfessorshipAuthorization</name>
+        <expression>DepartmentInsertProfessorshipAuthorizationFilter</expression>
         <description/>
         <invocationTiming>1</invocationTiming>
         <filterClass>net.sourceforge.fenixedu.applicationTier.Filtro.AccessControlFilter</filterClass>

@@ -565,9 +565,9 @@
         <isTransactional>false</isTransactional>
     </filter>
     <filter>
-        <name>CreditsServiceWithInfoProfessorshipArgumentAuthorizationFilter</name>
+        <name>DepartmentInsertProfessorshipAuthorizationFilter</name>
         <implementationClass> 
-            net.sourceforge.fenixedu.applicationTier.Filtro.credits.CreditsServiceWithInfoProfessorshipArgumentAuthorization</implementationClass>
+            net.sourceforge.fenixedu.applicationTier.Filtro.credits.DepartmentInsertProfessorshipAuthorization</implementationClass>
         <description/>
         <isTransactional>false</isTransactional>
     </filter>

@@ -6,18 +6,13 @@ package net.sourceforge.fenixedu.presentationTier.Action.manager;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
-import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
-import net.sourceforge.fenixedu.dataTransferObject.InfoProfessorship;
-import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -36,31 +31,20 @@ public class InsertProfessorShipByNumberDA extends FenixDispatchAction {
         return mapping.findForward("insertProfessorShip");
     }
 
-    public ActionForward insert(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+    public ActionForward insert(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws FenixActionException, FenixFilterException {
 
-        IUserView userView = SessionUtils.getUserView(request);
-        Integer executionCourseId = new Integer(request.getParameter("executionCourseId"));
-
-        DynaActionForm dynaForm = (DynaValidatorForm) form;
-        String number = (String) dynaForm.get("number");
-
-        InfoTeacher infoTeacher = new InfoTeacher();
-        infoTeacher.setTeacherNumber(new Integer(number));
-        InfoExecutionCourse infoExecutionCourse = new InfoExecutionCourse(executionCourseId);
-        InfoProfessorship infoProfessorShip = new InfoProfessorship();
-        infoProfessorShip.setInfoExecutionCourse(infoExecutionCourse);
-        infoProfessorShip.setInfoTeacher(infoTeacher);
-        infoProfessorShip.setResponsibleFor(Boolean.FALSE);
-
-        Object args[] = { infoProfessorShip };
-
+        final DynaActionForm form = (DynaValidatorForm) actionForm;
+        
+        final Integer teacherNumber = Integer.valueOf(form.getString("number"));
+        final Integer executionCourseId = Integer.valueOf(request.getParameter("executionCourseId"));
+        
         try {
-            ServiceUtils.executeService(userView, "InsertProfessorShip", args);
+            final Object args[] = { executionCourseId, teacherNumber, Boolean.FALSE, 0.0 };
+            ServiceUtils.executeService(getUserView(request), "InsertProfessorShip", args);
 
         } catch (NonExistingServiceException ex) {
-            throw new NonExistingActionException(ex.getMessage(), mapping
-                    .findForward("insertProfessorShip"));
+            throw new NonExistingActionException(ex.getMessage(), mapping.findForward("insertProfessorShip"));
         } catch (FenixServiceException e) {
             throw new FenixActionException(e.getMessage());
         }
