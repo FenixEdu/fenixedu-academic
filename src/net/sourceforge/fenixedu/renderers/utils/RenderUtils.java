@@ -89,20 +89,24 @@ public class RenderUtils {
     public static String getResourceString(String key) {
         return getResourceString(null, key);
     }
-    
-    public static String getEnumString(Enum enumerate) {
+        
+    public static String getEnumString(Enum enumerate, String bundle) {
         String description = null;
         
+        if(bundle == null) {
+            bundle = "ENUMERATION_RESOURCES";
+        }
+        
         String fullPrefix = enumerate.getClass().getName();
-        description = RenderUtils.getResourceString("ENUMERATION_RESOURCES", fullPrefix + "." + enumerate.name());
+        description = RenderUtils.getResourceString(bundle, fullPrefix + "." + enumerate.name());
         
         if (description == null) {
             String simplePrefix = enumerate.getClass().getSimpleName();
-            description = RenderUtils.getResourceString("ENUMERATION_RESOURCES", simplePrefix + "." + enumerate.name());
+            description = RenderUtils.getResourceString(bundle, simplePrefix + "." + enumerate.name());
         }
 
         if (description == null) {
-            description = RenderUtils.getResourceString("ENUMERATION_RESOURCES", enumerate.toString());
+            description = RenderUtils.getResourceString(bundle, enumerate.toString());
         }
         
         if (description == null) {

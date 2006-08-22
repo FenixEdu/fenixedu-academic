@@ -94,7 +94,7 @@ public class EnumInputRenderer extends InputRenderer {
                 Object[] constants = type.getEnumConstants();
                 for (Object object : constants) {
                     Enum oneEnum = (Enum) object;
-                    String description = RenderUtils.getEnumString(oneEnum);
+                    String description = RenderUtils.getEnumString(oneEnum, getBundle());
                     
                     HtmlMenuOption option = menu.createOption(description);
                     option.setValue(oneEnum.toString());

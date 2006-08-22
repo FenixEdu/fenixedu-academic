@@ -4,7 +4,9 @@
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionCourseShiftTypesProviderWithBean"/>		
 		<property name="eachLayout" value=""/>
 	</slot>				
-	<slot name="title" key="label.lessonPlanning.title" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+	<slot name="title" key="label.lessonPlanning.title" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		<property name="size" value="50"/>
+	</slot>
 	<slot name="planning" key="label.lessonPlanning.planning" layout="rich-text" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
    		<property name="safe" value="true" />
    		<property name="columns" value="70"/>
@@ -16,9 +18,11 @@
 	<slot name="lessonType" key="label.lessonPlanning.lessonType" layout="menu-select" 
 		validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionCourseShiftTypesProvider"/>				
-		<property name="eachLayout" value=""/>
+		<property name="eachLayout" value=""/>		
 	</slot>				
-	<slot name="title" key="label.lessonPlanning.title" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>	
+	<slot name="title" key="label.lessonPlanning.title" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		<property name="size" value="50"/>
+	</slot>	
 	<slot name="planning" key="label.lessonPlanning.planning" layout="rich-text" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
    		<property name="safe" value="true" />
    		<property name="columns" value="70"/>

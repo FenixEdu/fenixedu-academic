@@ -6,7 +6,8 @@ import net.sourceforge.fenixedu.domain.LessonPlanning;
 public class DeleteLessonPlanning extends Service {
 
     public void run(Integer executionCourseID, LessonPlanning lessonPlanning) {
-        lessonPlanning.delete();
-    }
-    
+        if(lessonPlanning != null) {
+            lessonPlanning.delete();
+        }
+    }    
 }

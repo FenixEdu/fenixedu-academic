@@ -31,7 +31,7 @@
 		
 	<logic:iterate id="lessonPlannings" name="lessonPlanningsMap">		
 		<logic:notEmpty name="lessonPlannings" property="value">
-			<H3><bean:message key="label.lesson.type"/> <bean:message name="lessonPlannings" property="key.name" bundle="ENUMERATION_RESOURCES"/></H3>
+			<H3><bean:message key="label.lessons"/> <bean:message name="lessonPlannings" property="key.name" bundle="APPLICATION_RESOURCES"/></H3>
 		</logic:notEmpty>
 		<logic:iterate id="lessonPlanning" name="lessonPlannings" property="value" indexId="index">
 			<i><bean:message key="label.lessonPlanning.order"/></i>&nbsp;<i><bean:write name="lessonPlanning" property="orderOfPlanning"/></i><br/>

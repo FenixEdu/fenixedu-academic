@@ -1204,7 +1204,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
     }
     
     public Set<ShiftType> getShiftTypes(){
-        Set<ShiftType> shiftTypes = new HashSet<ShiftType>();
+        Set<ShiftType> shiftTypes = new TreeSet<ShiftType>();
         for (Shift shift : getAssociatedShiftsSet()) {
             shiftTypes.add(shift.getTipo());
         }

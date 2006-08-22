@@ -281,7 +281,7 @@ Documentation:
 
     <!--@ The default input layout for an enumeration presents an html menu with all the values of the enumeration
           as options. The option labels are fetched from the resources using the enum name as key.  -->
-    <renderer mode="input" type="java.lang.Enum" class="net.sourceforge.fenixedu.renderers.EnumInputRenderer"/>
+    <renderer mode="input" type="java.lang.Enum" class="net.sourceforge.fenixedu.renderers.EnumInputRenderer"/>      
     <renderer mode="input" type="java.lang.Enum" layout="radio" class="net.sourceforge.fenixedu.renderers.EnumRadioInputRenderer">
     	<property name="style" value="list-style:none"/>
     </renderer>

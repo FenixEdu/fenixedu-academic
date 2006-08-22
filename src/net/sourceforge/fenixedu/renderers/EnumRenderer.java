@@ -16,6 +16,16 @@ import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
  * @author cfgi
  */
 public class EnumRenderer extends OutputRenderer {
+    
+    private String bundle;
+
+    public String getBundle() {
+        return bundle;
+    }
+
+    public void setBundle(String bundle) {
+        this.bundle = bundle;
+    }
 
     @Override
     protected Layout getLayout(Object object, Class type) {
@@ -29,8 +39,8 @@ public class EnumRenderer extends OutputRenderer {
                     return new HtmlText();
                 }
                 
-                String description = RenderUtils.getEnumString(enumerate);
-                
+                String description = RenderUtils.getEnumString(enumerate, getBundle());
+                                
                 return new HtmlText(description);
             }
             
