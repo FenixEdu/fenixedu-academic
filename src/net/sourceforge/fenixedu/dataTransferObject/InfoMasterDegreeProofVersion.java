@@ -174,7 +174,7 @@ public class InfoMasterDegreeProofVersion extends InfoObject {
         return (List) CollectionUtils.collect(teachers, new Transformer() {
             public Object transform(Object arg0) {
                 Teacher teacher = (Teacher) arg0;
-                return InfoTeacherWithPerson.newInfoFromDomain(teacher);
+                return InfoTeacher.newInfoFromDomain(teacher);
             }
         });
     }

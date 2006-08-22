@@ -18,7 +18,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolmentEvaluationWithRe
 import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolmentWithStudentPlanAndCourseAndExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteEnrolmentEvaluation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
-import net.sourceforge.fenixedu.dataTransferObject.InfoTeacherWithPerson;
+import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.EnrolmentEvaluation;
@@ -45,7 +45,6 @@ public class ReadStudentsAndMarksByCurricularCourse extends Service {
 			throws FenixServiceException, ExcepcaoPersistencia {
 
 		List infoEnrolmentEvaluations = new ArrayList();
-		InfoTeacher infoTeacher = new InfoTeacher();
 		Date lastEvaluationDate = null;
 
 		CurricularCourse curricularCourse = (CurricularCourse) rootDomainObject.readDegreeModuleByOID(curricularCourseCode);
@@ -69,6 +68,8 @@ public class ReadStudentsAndMarksByCurricularCourse extends Service {
 
 			}
 		}
+
+		InfoTeacher infoTeacher = null;
 
 		if (enrolmentEvaluations != null && enrolmentEvaluations.size() > 0) {
 			// in case we have evaluations they can be submitted only if
@@ -111,7 +112,7 @@ public class ReadStudentsAndMarksByCurricularCourse extends Service {
 				Person person = ((EnrolmentEvaluation) enrolmentEvaluationsWithResponsiblePerson
 						.get(0)).getPersonResponsibleForGrade();
 				Teacher teacher = Teacher.readTeacherByUsername(person.getUsername());
-				infoTeacher = InfoTeacherWithPerson.newInfoFromDomain(teacher);
+				infoTeacher = InfoTeacher.newInfoFromDomain(teacher);
 			}
 
 			// transform evaluations in databeans

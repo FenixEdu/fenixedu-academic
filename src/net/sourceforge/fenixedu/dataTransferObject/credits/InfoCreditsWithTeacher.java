@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.dataTransferObject.credits;
 
-import net.sourceforge.fenixedu.dataTransferObject.InfoTeacherWithPerson;
+import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
 
 /**
  * @author Tânia Pousão
@@ -15,12 +15,12 @@ public class InfoCreditsWithTeacher extends InfoCreditsWrapper {
         super(infoCredits);
     }
 
-    private InfoTeacherWithPerson infoTeacher;
+    private InfoTeacher infoTeacher;
 
     /**
      * @return Returns the infoTeacher.
      */
-    public InfoTeacherWithPerson getInfoTeacher() {
+    public InfoTeacher getInfoTeacher() {
         return infoTeacher;
     }
 
@@ -28,7 +28,7 @@ public class InfoCreditsWithTeacher extends InfoCreditsWrapper {
      * @param infoTeacher
      *            The infoTeacher to set.
      */
-    public void setInfoTeacher(InfoTeacherWithPerson infoTeacher) {
+    public void setInfoTeacher(InfoTeacher infoTeacher) {
         this.infoTeacher = infoTeacher;
     }
 }

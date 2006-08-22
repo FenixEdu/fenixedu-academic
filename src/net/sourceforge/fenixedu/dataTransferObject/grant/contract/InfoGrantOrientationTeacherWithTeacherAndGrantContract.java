@@ -4,7 +4,7 @@
  */
 package net.sourceforge.fenixedu.dataTransferObject.grant.contract;
 
-import net.sourceforge.fenixedu.dataTransferObject.InfoTeacherWithPerson;
+import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantOrientationTeacher;
 
 /**
@@ -19,7 +19,7 @@ public class InfoGrantOrientationTeacherWithTeacherAndGrantContract extends Info
 
             setGrantContractInfo(InfoGrantContractWithGrantOwnerAndGrantType
                     .newInfoFromDomain(grantOrientationTeacher.getGrantContract()));
-            setOrientationTeacherInfo(InfoTeacherWithPerson.newInfoFromDomain(grantOrientationTeacher
+            setOrientationTeacherInfo(InfoTeacher.newInfoFromDomain(grantOrientationTeacher
                     .getOrientationTeacher()));
         }
     }

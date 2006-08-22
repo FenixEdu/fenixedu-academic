@@ -70,7 +70,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoSiteTeachers;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentGroup;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentGroupWithAttendsAndGroupingAndShift;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
-import net.sourceforge.fenixedu.dataTransferObject.InfoTeacherWithPerson;
+import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
 import net.sourceforge.fenixedu.domain.Announcement;
 import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.BibliographicReference;
@@ -463,7 +463,7 @@ public class TeacherAdministrationSiteComponentBuilder {
 				Professorship professorship = (Professorship) iter.next();
 				Teacher teacher = professorship.getTeacher();
 
-				InfoTeacher infoTeacher = InfoTeacherWithPerson.newInfoFromDomain(teacher);
+				InfoTeacher infoTeacher = InfoTeacher.newInfoFromDomain(teacher);
 				infoTeachers.add(infoTeacher);
 			}
 

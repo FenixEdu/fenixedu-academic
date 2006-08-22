@@ -32,6 +32,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
 import net.sourceforge.fenixedu.dataTransferObject.SiteView;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.ShiftType;
+import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
@@ -488,8 +489,7 @@ public class SummaryManagerAction extends TeacherAdministrationViewerDispatchAct
             Integer teacherId = new Integer(request.getParameter("teacher"));
             if (teacherId.equals(new Integer(0))) // school's teacher
             {
-                InfoTeacher infoTeacher = new InfoTeacher();
-                infoTeacher.setTeacherNumber(new Integer(request.getParameter("teacherNumber")));
+                InfoTeacher infoTeacher = new InfoTeacher(Teacher.readByNumber(new Integer(request.getParameter("teacherNumber"))));
                 infoSummary.setInfoTeacher(infoTeacher);
             } else if (teacherId.equals(new Integer(-1))) // external teacher
             {

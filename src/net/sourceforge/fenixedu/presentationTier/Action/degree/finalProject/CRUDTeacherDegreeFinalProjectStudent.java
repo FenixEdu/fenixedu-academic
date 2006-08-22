@@ -74,7 +74,7 @@ public class CRUDTeacherDegreeFinalProjectStudent extends CRUDActionByOID {
         InfoStudent infoStudent = new InfoStudent(registration);
 
         infoTeacherDegreeFinalProjectStudent.setInfoStudent(infoStudent);
-        infoTeacherDegreeFinalProjectStudent.setInfoTeacher(new InfoTeacher(teacherId));
+        infoTeacherDegreeFinalProjectStudent.setInfoTeacher(new InfoTeacher(rootDomainObject.readTeacherByOID(teacherId)));
         infoTeacherDegreeFinalProjectStudent.setPercentage(percentage);
 
         return infoTeacherDegreeFinalProjectStudent;
@@ -88,7 +88,7 @@ public class CRUDTeacherDegreeFinalProjectStudent extends CRUDActionByOID {
         if (infoTeacher == null) {
             DynaActionForm teacherDegreeFinalProjectStudentForm = (DynaActionForm) form;
             Integer teacherId = (Integer) teacherDegreeFinalProjectStudentForm.get("teacherId");
-            infoTeacher = new InfoTeacher(teacherId);
+            infoTeacher = new InfoTeacher(rootDomainObject.readTeacherByOID(teacherId));
         }
 
         DynaActionForm dynaForm = (DynaActionForm) form;

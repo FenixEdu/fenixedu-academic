@@ -18,7 +18,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolmentWithStudentPlanA
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteEnrolmentEvaluation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
-import net.sourceforge.fenixedu.dataTransferObject.InfoTeacherWithPerson;
+import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.EnrolmentEvaluation;
@@ -41,7 +41,7 @@ public class ReadStudentsFinalEvaluationForConfirmation extends Service {
 			throws FenixServiceException, ExcepcaoPersistencia {
 
 		List infoEnrolmentEvaluations = new ArrayList();
-		InfoTeacher infoTeacher = new InfoTeacher();
+		InfoTeacher infoTeacher = null;
 	
 		CurricularCourse curricularCourse = (CurricularCourse) rootDomainObject.readDegreeModuleByOID(curricularCourseCode);
 
@@ -86,7 +86,7 @@ public class ReadStudentsFinalEvaluationForConfirmation extends Service {
 			Person person = ((EnrolmentEvaluation) temporaryEnrolmentEvaluations.get(0))
 					.getPersonResponsibleForGrade();
 			Teacher teacher = Teacher.readTeacherByUsername(person.getUsername());
-			infoTeacher = InfoTeacherWithPerson.newInfoFromDomain(teacher);
+			infoTeacher = InfoTeacher.newInfoFromDomain(teacher);
 
 			// transform evaluations in databeans
 			ListIterator iter = temporaryEnrolmentEvaluations.listIterator();

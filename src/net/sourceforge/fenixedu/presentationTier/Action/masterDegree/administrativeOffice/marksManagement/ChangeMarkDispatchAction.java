@@ -22,6 +22,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlan;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
 import net.sourceforge.fenixedu.domain.EnrolmentEvaluation;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationType;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
@@ -309,7 +310,6 @@ public class ChangeMarkDispatchAction extends DispatchAction {
         Integer year = null;
 
         InfoEnrolmentEvaluation infoEnrolmentEvaluation = new InfoEnrolmentEvaluation();
-        InfoTeacher infoTeacher = new InfoTeacher();
 
         if ((examDay == null) || (examMonth == null) || (examYear == null) || (examDay.length() == 0)
                 || (examMonth.length() == 0) || (examYear.length() == 0)) {
@@ -352,7 +352,7 @@ public class ChangeMarkDispatchAction extends DispatchAction {
         examDate.set(year.intValue(), month.intValue(), day.intValue());
         infoEnrolmentEvaluation.setGradeAvailableDate(examDate.getTime());
 
-        infoTeacher.setTeacherNumber(teacherNumber);
+        final InfoTeacher infoTeacher = InfoTeacher.newInfoFromDomain(Teacher.readByNumber(teacherNumber));
 
         final EnrolmentEvaluation enrolmentEvaluation = (EnrolmentEvaluation) RootDomainObject.getInstance().readEnrolmentEvaluationByOID(enrolmentEvaluationCode);
 

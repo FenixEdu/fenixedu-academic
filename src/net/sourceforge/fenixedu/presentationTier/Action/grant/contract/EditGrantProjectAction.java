@@ -14,6 +14,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
 import net.sourceforge.fenixedu.dataTransferObject.grant.contract.InfoGrantCostCenter;
 import net.sourceforge.fenixedu.dataTransferObject.grant.contract.InfoGrantPaymentEntity;
 import net.sourceforge.fenixedu.dataTransferObject.grant.contract.InfoGrantProject;
+import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
@@ -144,9 +145,8 @@ public class EditGrantProjectAction extends FenixDispatchAction {
         infoGrantProject.setOjbConcreteClass(InfoGrantPaymentEntity.getGrantProjectOjbConcreteClass());
 
         // Copy the teacher Number
-        InfoTeacher infoTeacher = new InfoTeacher();
-        infoTeacher.setTeacherNumber(new Integer((String) editGrantProjectForm
-                .get("responsibleTeacherNumber")));
+        InfoTeacher infoTeacher = new InfoTeacher(Teacher.readByNumber(new Integer((String) editGrantProjectForm
+                .get("responsibleTeacherNumber"))));
         infoGrantProject.setInfoResponsibleTeacher(infoTeacher);
 
         // Copy the cost center Number

@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoCategory;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
@@ -883,11 +882,7 @@ public class InfoPerson extends InfoObject {
                 setInfoExternalPerson(infoExternalPerson);
             }
             if (person.getTeacher() != null) {
-                InfoTeacher infoTeacher = new InfoTeacher();
-                infoTeacher.setIdInternal(person.getTeacher().getIdInternal());
-                infoTeacher.setTeacherNumber(person.getTeacher().getTeacherNumber());
-                infoTeacher.setInfoCategory(InfoCategory.newInfoFromDomain(person.getTeacher()
-                        .getCategory()));
+                InfoTeacher infoTeacher = InfoTeacher.newInfoFromDomain(person.getTeacher());
                 setInfoTeacher(infoTeacher);
             }
             if (person.getEmployee() != null) {

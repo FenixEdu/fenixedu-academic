@@ -12,7 +12,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolmentWithStudentPlanA
 import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteEnrolmentEvaluation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
-import net.sourceforge.fenixedu.dataTransferObject.InfoTeacherWithPerson;
+import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
 import net.sourceforge.fenixedu.domain.EnrolmentEvaluation;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Teacher;
@@ -30,7 +30,6 @@ public class ReadStudentEnrolmentEvaluation extends Service {
         EnrolmentEvaluation enrolmentEvaluation = null;
         InfoEnrolmentEvaluation infoEnrolmentEvaluation = new InfoEnrolmentEvaluation();
         InfoEnrolment infoEnrolment = new InfoEnrolment();
-        InfoTeacher infoTeacher = new InfoTeacher();
         List<InfoEnrolmentEvaluation> infoEnrolmentEvaluations = new ArrayList<InfoEnrolmentEvaluation>();
 
         enrolmentEvaluation = rootDomainObject.readEnrolmentEvaluationByOID(studentEvaluationCode);
@@ -40,7 +39,7 @@ public class ReadStudentEnrolmentEvaluation extends Service {
 
         Person person = enrolmentEvaluation.getPersonResponsibleForGrade();
         Teacher teacher = Teacher.readTeacherByUsername(person.getUsername());
-        infoTeacher = InfoTeacherWithPerson.newInfoFromDomain(teacher);
+        final InfoTeacher infoTeacher = InfoTeacher.newInfoFromDomain(teacher);
 
         infoEnrolmentEvaluation = InfoEnrolmentEvaluationWithResponsibleForGrade
                 .newInfoFromDomain(enrolmentEvaluation);

@@ -14,7 +14,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolmentWithStudentPlanA
 import net.sourceforge.fenixedu.dataTransferObject.InfoPersonWithInfoCountry;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteEnrolmentEvaluation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
-import net.sourceforge.fenixedu.dataTransferObject.InfoTeacherWithPerson;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.EnrolmentEvaluation;
@@ -128,7 +127,7 @@ public class ReadStudentMarksByCurricularCourse extends Service {
 						.getPersonResponsibleForGrade();
                 if(person != null){
                     Teacher teacher = Teacher.readTeacherByUsername(person.getUsername());
-                    infoTeacher = InfoTeacherWithPerson.newInfoFromDomain(teacher);
+                    infoTeacher = InfoTeacher.newInfoFromDomain(teacher);
                 }				
 			}
 

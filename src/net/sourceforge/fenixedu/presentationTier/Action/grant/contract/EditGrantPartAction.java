@@ -17,6 +17,7 @@ import net.sourceforge.fenixedu.dataTransferObject.grant.contract.InfoGrantPart;
 import net.sourceforge.fenixedu.dataTransferObject.grant.contract.InfoGrantPaymentEntity;
 import net.sourceforge.fenixedu.dataTransferObject.grant.contract.InfoGrantProject;
 import net.sourceforge.fenixedu.dataTransferObject.grant.contract.InfoGrantSubsidy;
+import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantCostCenter;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantProject;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
@@ -234,9 +235,8 @@ public class EditGrantPartAction extends FenixDispatchAction {
         //Otherwise, the part responsible teacher will be the payment entity
         // responsible teacher
         if (verifyStringParameterInForm(editGrantPartForm, "responsibleTeacherNumber")) {
-            InfoTeacher infoTeacher = new InfoTeacher();
-            infoTeacher.setTeacherNumber(new Integer((String) editGrantPartForm
-                    .get("responsibleTeacherNumber")));
+            InfoTeacher infoTeacher = new InfoTeacher(Teacher.readByNumber(new Integer((String) editGrantPartForm
+                    .get("responsibleTeacherNumber"))));
             infoGrantPart.setInfoResponsibleTeacher(infoTeacher);
         }
 

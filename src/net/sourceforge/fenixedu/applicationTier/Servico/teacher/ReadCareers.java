@@ -6,7 +6,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
-import net.sourceforge.fenixedu.dataTransferObject.InfoTeacherWithPersonAndCategory;
+import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
 import net.sourceforge.fenixedu.dataTransferObject.SiteView;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoCareer;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoSiteCareers;
@@ -28,7 +28,7 @@ public class ReadCareers extends Service {
         bodyComponent.setInfoCareers(getInfoCareers(teacher, careerType));
         bodyComponent.setCareerType(careerType);
 
-        final InfoTeacher infoTeacher = InfoTeacherWithPersonAndCategory.newInfoFromDomain(teacher);
+        final InfoTeacher infoTeacher = InfoTeacher.newInfoFromDomain(teacher);
         bodyComponent.setInfoTeacher(infoTeacher);
 
         SiteView siteView = new SiteView(bodyComponent);

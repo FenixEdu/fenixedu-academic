@@ -350,8 +350,7 @@ public class InfoMasterDegreeCandidate extends InfoObject {
             setInfoCandidateSituation(InfoCandidateSituation.newInfoFromDomain(masterDegreeCandidate.getActiveCandidateSituation()));
             setInfoExecutionDegree(InfoExecutionDegree.newInfoFromDomain(masterDegreeCandidate.getExecutionDegree()));
             if (masterDegreeCandidate.getGuider() != null)
-                setInfoGuider(new InfoTeacher(masterDegreeCandidate.getGuider().getTeacherNumber(),
-                        InfoPerson.newInfoFromDomain(masterDegreeCandidate.getGuider().getPerson())));
+                setInfoGuider(InfoTeacher.newInfoFromDomain(masterDegreeCandidate.getGuider()));
             setHasGuider(masterDegreeCandidate.getHasGuider());
         }
     }

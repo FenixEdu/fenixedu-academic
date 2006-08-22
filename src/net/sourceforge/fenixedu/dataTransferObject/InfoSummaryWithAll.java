@@ -20,7 +20,7 @@ public class InfoSummaryWithAll extends InfoSummary {
             setInfoShift(InfoShiftWithInfoExecutionCourseAndCollections.newInfoFromDomain(summary
                     .getShift()));
             setInfoProfessorship(InfoProfessorship.newInfoFromDomain(summary.getProfessorship()));
-            setInfoTeacher(InfoTeacherWithPerson.newInfoFromDomain(summary.getTeacher()));
+            setInfoTeacher(InfoTeacher.newInfoFromDomain(summary.getTeacher()));
             setInfoRoom(InfoRoom.newInfoFromDomain(summary.getRoom()));
         }
     }

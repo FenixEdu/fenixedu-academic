@@ -14,7 +14,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourseWithExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
-import net.sourceforge.fenixedu.dataTransferObject.InfoTeacherWithPersonAndCategory;
+import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
 import net.sourceforge.fenixedu.dataTransferObject.SiteView;
 import net.sourceforge.fenixedu.dataTransferObject.person.InfoQualification;
 import net.sourceforge.fenixedu.dataTransferObject.publication.InfoPublication;
@@ -89,7 +89,7 @@ public class ReadTeacherInformation extends Service {
             executionYear = ExecutionYear.readExecutionYearByName(argExecutionYear);
         }
 
-        InfoTeacher infoTeacher = InfoTeacherWithPersonAndCategory.newInfoFromDomain(teacher);
+        InfoTeacher infoTeacher = InfoTeacher.newInfoFromDomain(teacher);
         infoSiteTeacherInformation.setInfoTeacher(infoTeacher);
         infoSiteTeacherInformation.setInfoQualifications(getInfoQualifications(teacher));
         infoSiteTeacherInformation.setInfoProfessionalCareers(getInfoCareers(teacher,

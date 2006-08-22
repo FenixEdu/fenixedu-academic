@@ -3,7 +3,7 @@
  */
 package net.sourceforge.fenixedu.dataTransferObject.grant.contract;
 
-import net.sourceforge.fenixedu.dataTransferObject.InfoTeacherWithPerson;
+import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantProject;
 
 /**
@@ -16,7 +16,7 @@ public class InfoGrantProjectWithTeacherAndCostCenter extends InfoGrantProject {
         if (grantProject != null) {
             super.copyFromDomain(grantProject);
             if (grantProject.getResponsibleTeacher() != null) {
-                setInfoResponsibleTeacher(InfoTeacherWithPerson.newInfoFromDomain(grantProject
+                setInfoResponsibleTeacher(InfoTeacher.newInfoFromDomain(grantProject
                         .getResponsibleTeacher()));
             }
             if (grantProject.getOjbConcreteClass().equals(GrantProject.class.getName())) {

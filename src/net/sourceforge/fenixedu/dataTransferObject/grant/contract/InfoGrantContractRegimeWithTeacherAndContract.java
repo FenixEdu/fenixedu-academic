@@ -3,7 +3,7 @@
  */
 package net.sourceforge.fenixedu.dataTransferObject.grant.contract;
 
-import net.sourceforge.fenixedu.dataTransferObject.InfoTeacherWithPerson;
+import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantContractRegime;
 
 /**
@@ -16,7 +16,7 @@ public class InfoGrantContractRegimeWithTeacherAndContract extends InfoGrantCont
         super.copyFromDomain(grantContractRegime);
         if (grantContractRegime != null) {
         	
-            setInfoTeacher(InfoTeacherWithPerson.newInfoFromDomain(grantContractRegime.getTeacher()));
+            setInfoTeacher(InfoTeacher.newInfoFromDomain(grantContractRegime.getTeacher()));
             if (grantContractRegime.getGrantContract().getGrantCostCenter()!=null)
                 setGrantCostCenterInfo(InfoGrantCostCenter.newInfoFromDomain(grantContractRegime.getGrantContract().getGrantCostCenter()));
            

@@ -665,11 +665,9 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
         final DegreeType dt = (degreeType != null && degreeType.length() > 0) ? DegreeType.valueOf(degreeType) : null;
         infoFinalWorkProposal.setDegreeType(dt);
 
-        infoFinalWorkProposal.setOrientator(new InfoTeacher());
-        infoFinalWorkProposal.getOrientator().setIdInternal(new Integer(orientatorOID));
+        infoFinalWorkProposal.setOrientator(new InfoTeacher(rootDomainObject.readTeacherByOID(Integer.valueOf(orientatorOID))));
         if (coorientatorOID != null && !coorientatorOID.equals("")) {
-            infoFinalWorkProposal.setCoorientator(new InfoTeacher());
-            infoFinalWorkProposal.getCoorientator().setIdInternal(new Integer(coorientatorOID));
+            infoFinalWorkProposal.setCoorientator(new InfoTeacher(rootDomainObject.readTeacherByOID(Integer.valueOf(coorientatorOID))));
         } else {
             if (coorientatorCreditsPercentage.intValue() != 0) {
                 ActionErrors actionErrors = new ActionErrors();

@@ -20,7 +20,7 @@ public class InfoCoordinatorWithInfoPerson extends InfoCoordinator {
     public void copyFromDomain(Coordinator coordinator) {
         super.copyFromDomain(coordinator);
         if (coordinator != null) {
-            setInfoTeacher(InfoTeacherWithPerson.newInfoFromDomain(coordinator.getTeacher()));
+            setInfoTeacher(InfoTeacher.newInfoFromDomain(coordinator.getTeacher()));
         }
     }
 

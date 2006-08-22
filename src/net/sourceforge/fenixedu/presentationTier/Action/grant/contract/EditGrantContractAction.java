@@ -20,6 +20,7 @@ import net.sourceforge.fenixedu.dataTransferObject.grant.contract.InfoGrantCostC
 import net.sourceforge.fenixedu.dataTransferObject.grant.contract.InfoGrantOrientationTeacher;
 import net.sourceforge.fenixedu.dataTransferObject.grant.contract.InfoGrantType;
 import net.sourceforge.fenixedu.dataTransferObject.grant.owner.InfoGrantOwner;
+import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
@@ -231,7 +232,6 @@ public class EditGrantContractAction extends FenixDispatchAction {
             throws Exception {
         InfoGrantContract infoGrantContract = new InfoGrantContract();
         InfoGrantOrientationTeacher orientationTeacher = new InfoGrantOrientationTeacher();
-        InfoTeacher infoTeacher = new InfoTeacher();
         InfoGrantOwner infoGrantOwner = new InfoGrantOwner();
         InfoGrantType infoGrantType = new InfoGrantType();
         InfoGrantCostCenter infoGrantCostCenter = new InfoGrantCostCenter();
@@ -275,8 +275,7 @@ public class EditGrantContractAction extends FenixDispatchAction {
             orientationTeacher.setEndDate(sdf.parse((String) editGrantContractForm
                     .get("dateEndContract")));
         }
-        infoTeacher.setTeacherNumber(new Integer((String) editGrantContractForm
-                .get("grantContractOrientationTeacherNumber")));
+        InfoTeacher infoTeacher = InfoTeacher.newInfoFromDomain(Teacher.readByNumber(new Integer((String) editGrantContractForm.get("grantContractOrientationTeacherNumber"))));
         orientationTeacher.setOrientationTeacherInfo(infoTeacher);
 //        orientationTeacher.setIdInternal((Integer) editGrantContractForm
 //                .get("grantContractOrientationTeacherId"));
@@ -293,7 +292,6 @@ public class EditGrantContractAction extends FenixDispatchAction {
         InfoGrantContractRegime infoGrantContractRegime = new InfoGrantContractRegime();
         InfoGrantCostCenter infoGrantCostCenter = new InfoGrantCostCenter();
         InfoGrantOrientationTeacher orientationTeacher = new InfoGrantOrientationTeacher();
-        InfoTeacher infoTeacher = new InfoTeacher();
 
         if (verifyStringParameterInForm(editGrantContractForm, "grantContractRegimeId"))
             infoGrantContractRegime.setIdInternal((Integer) editGrantContractForm
@@ -325,9 +323,7 @@ public class EditGrantContractAction extends FenixDispatchAction {
         infoGrantContractRegime.setGrantCostCenterInfo(infoGrantCostCenter);
         
         
-        
-        infoTeacher.setTeacherNumber(new Integer((String) editGrantContractForm
-                .get("grantContractOrientationTeacherNumber")));
+        InfoTeacher infoTeacher = InfoTeacher.newInfoFromDomain(Teacher.readByNumber(new Integer((String) editGrantContractForm.get("grantContractOrientationTeacherNumber"))));
         orientationTeacher.setOrientationTeacherInfo(infoTeacher);
         orientationTeacher.setIdInternal((Integer) editGrantContractForm
                 .get("grantContractOrientationTeacherId"));

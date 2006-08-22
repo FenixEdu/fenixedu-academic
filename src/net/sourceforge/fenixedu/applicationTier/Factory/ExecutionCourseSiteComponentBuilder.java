@@ -45,7 +45,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoSiteTimetable;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSummary;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSummaryWithAll;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
-import net.sourceforge.fenixedu.dataTransferObject.InfoTeacherWithPerson;
+import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
 import net.sourceforge.fenixedu.domain.Announcement;
 import net.sourceforge.fenixedu.domain.BibliographicReference;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
@@ -536,7 +536,7 @@ public class ExecutionCourseSiteComponentBuilder {
 			while (iter.hasNext()) {
 				Professorship professorship = (Professorship) iter.next();
 				Teacher teacher = professorship.getTeacher();
-				InfoTeacher infoTeacher = InfoTeacherWithPerson.newInfoFromDomain(teacher);
+				InfoTeacher infoTeacher = InfoTeacher.newInfoFromDomain(teacher);
 				lecturingInfoTeachersList.add(infoTeacher);
 			}
 		}
@@ -553,7 +553,7 @@ public class ExecutionCourseSiteComponentBuilder {
 			while (iter.hasNext()) {
 				Professorship professorship = (Professorship) iter.next();
 				Teacher teacher = professorship.getTeacher();
-				InfoTeacher infoTeacher = InfoTeacherWithPerson.newInfoFromDomain(teacher);
+				InfoTeacher infoTeacher = InfoTeacher.newInfoFromDomain(teacher);
 				responsibleInfoTeachersList.add(infoTeacher);
 			}
 

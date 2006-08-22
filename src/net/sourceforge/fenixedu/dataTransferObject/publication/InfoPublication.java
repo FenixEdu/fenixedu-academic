@@ -115,8 +115,7 @@ public class InfoPublication extends PublicationDTO {
             List infoTeachersList = new ArrayList();        
             while (it2.hasNext()){
                 Teacher teacher = (Teacher) it2.next();
-                InfoTeacher infoTeacher = new InfoTeacher();
-                infoTeacher.copyFromDomain(teacher);
+                InfoTeacher infoTeacher = new InfoTeacher(teacher);
                 infoTeachersList.add(infoTeacher);
             }
             setInfoPublicationTeachers(infoTeachersList);

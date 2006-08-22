@@ -11,7 +11,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.InfoBranch;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDepartment;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
-import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
 import net.sourceforge.fenixedu.dataTransferObject.finalDegreeWork.InfoProposal;
 import net.sourceforge.fenixedu.domain.Branch;
@@ -39,16 +38,8 @@ public class ReadFinalDegreeWorkProposal extends Service {
             infoProposal.setProposalNumber(proposal.getProposalNumber());
 
             if (proposal.getOrientator() != null) {
-                infoProposal.setOrientator(new InfoTeacher());
-                infoProposal.getOrientator().setIdInternal(proposal.getOrientator().getIdInternal());
-                infoProposal.getOrientator().setTeacherNumber(
-                        proposal.getOrientator().getTeacherNumber());
+                infoProposal.setOrientator(new InfoTeacher(proposal.getOrientator()));
                 if (proposal.getOrientator().getPerson() != null) {
-                    infoProposal.getOrientator().setInfoPerson(new InfoPerson());
-                    infoProposal.getOrientator().getInfoPerson().setIdInternal(
-                            proposal.getOrientator().getPerson().getIdInternal());
-                    infoProposal.getOrientator().getInfoPerson().setNome(
-                            proposal.getOrientator().getPerson().getNome());
                     Department department = proposal.getOrientator().getCurrentWorkingDepartment();
                     if (department != null) {
                         infoProposal.setOrientatorsDepartment(new InfoDepartment());
@@ -60,16 +51,8 @@ public class ReadFinalDegreeWorkProposal extends Service {
             }
 
             if (proposal.getCoorientator() != null) {
-                infoProposal.setCoorientator(new InfoTeacher());
-                infoProposal.getCoorientator().setIdInternal(proposal.getCoorientator().getIdInternal());
-                infoProposal.getCoorientator().setTeacherNumber(
-                        proposal.getCoorientator().getTeacherNumber());
+                infoProposal.setCoorientator(new InfoTeacher(proposal.getCoorientator()));
                 if (proposal.getCoorientator().getPerson() != null) {
-                    infoProposal.getCoorientator().setInfoPerson(new InfoPerson());
-                    infoProposal.getCoorientator().getInfoPerson().setIdInternal(
-                            proposal.getCoorientator().getPerson().getIdInternal());
-                    infoProposal.getCoorientator().getInfoPerson().setNome(
-                            proposal.getCoorientator().getPerson().getNome());
                     Department department = proposal.getCoorientator().getCurrentWorkingDepartment();
                     if (department != null) {
                         infoProposal.setCoorientatorsDepartment(new InfoDepartment());

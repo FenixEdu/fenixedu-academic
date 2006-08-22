@@ -6,7 +6,6 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -18,15 +17,7 @@ public class ReadAllTeachersNumberAndName extends Service {
 
         final Collection<Teacher> teachers = rootDomainObject.getTeachers();
         for (final Teacher teacher : teachers) {
-            InfoTeacher infoTeacher = new InfoTeacher();
-            InfoPerson infoPerson = new InfoPerson();
-
-            infoTeacher.setTeacherNumber(teacher.getTeacherNumber());
-            infoTeacher.setInfoPerson(infoPerson);
-            if (teacher.getPerson() != null){
-				infoPerson.setNome(teacher.getPerson().getNome());
-            }
-
+            InfoTeacher infoTeacher = new InfoTeacher(teacher);
             result.add(infoTeacher);
         }
 

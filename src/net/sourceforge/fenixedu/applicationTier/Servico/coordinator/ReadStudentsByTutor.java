@@ -9,7 +9,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.dataTransferObject.InfoTeacherWithPerson;
+import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTutor;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTutorWithInfoStudent;
 import net.sourceforge.fenixedu.domain.Department;
@@ -50,7 +50,7 @@ public class ReadStudentsByTutor extends Service {
         }
 
         List teacherAndStudentsList = new ArrayList();
-        teacherAndStudentsList.add(InfoTeacherWithPerson.newInfoFromDomain(teacherDB));
+        teacherAndStudentsList.add(InfoTeacher.newInfoFromDomain(teacherDB));
 
         List<Tutor> tutorStudents = Tutor.getAllTutorsByTeacherNumber(tutorNumber);
         if (tutorStudents == null || tutorStudents.isEmpty()) {

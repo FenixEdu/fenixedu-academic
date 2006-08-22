@@ -5,7 +5,7 @@
 package net.sourceforge.fenixedu.dataTransferObject.degree.finalProject;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
-import net.sourceforge.fenixedu.dataTransferObject.InfoTeacherWithPerson;
+import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
 import net.sourceforge.fenixedu.domain.degree.finalProject.TeacherDegreeFinalProjectStudent;
 
 /**
@@ -17,7 +17,7 @@ public class InfoTeacherDegreeFinalProjectStudentWithStudentAndPerson extends In
         super.copyFromDomain(teacherDegreeFinalProjectStudent);
         if (teacherDegreeFinalProjectStudent != null) {
             setInfoStudent(InfoStudent.newInfoFromDomain(teacherDegreeFinalProjectStudent.getStudent()));
-            setInfoTeacher(InfoTeacherWithPerson.newInfoFromDomain(teacherDegreeFinalProjectStudent.getTeacher()));
+            setInfoTeacher(InfoTeacher.newInfoFromDomain(teacherDegreeFinalProjectStudent.getTeacher()));
         }
     }
 

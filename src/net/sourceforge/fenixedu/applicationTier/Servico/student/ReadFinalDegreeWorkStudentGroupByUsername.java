@@ -7,7 +7,6 @@ import java.util.ArrayList;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
-import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
 import net.sourceforge.fenixedu.dataTransferObject.finalDegreeWork.InfoGroup;
@@ -82,24 +81,12 @@ public class ReadFinalDegreeWorkStudentGroupByUsername extends Service {
                             infoProposal.setTitle(proposal.getTitle());
                             Teacher orientator = proposal.getOrientator();
                             if (orientator != null) {
-                                InfoTeacher infoTeacher = new InfoTeacher();
-                                Person person = orientator.getPerson();
-                                if (person != null) {
-                                    InfoPerson infoPerson = new InfoPerson();
-                                    infoPerson.setNome(person.getNome());
-                                    infoTeacher.setInfoPerson(infoPerson);
-                                }
+                                InfoTeacher infoTeacher = new InfoTeacher(orientator);
                                 infoProposal.setOrientator(infoTeacher);
                             }
                             Teacher coOrientator = proposal.getCoorientator();
                             if (coOrientator != null) {
-                                InfoTeacher infoTeacher = new InfoTeacher();
-                                Person person = coOrientator.getPerson();
-                                if (person != null) {
-                                    InfoPerson infoPerson = new InfoPerson();
-                                    infoPerson.setNome(person.getNome());
-                                    infoTeacher.setInfoPerson(infoPerson);
-                                }
+                                InfoTeacher infoTeacher = new InfoTeacher(coOrientator);
                                 infoProposal.setCoorientator(infoTeacher);
                             }
                             infoProposal.setCompanionName(proposal.getCompanionName());

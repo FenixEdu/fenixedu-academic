@@ -22,6 +22,7 @@ import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoPublicationsNumbe
 import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoServiceProviderRegime;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoSiteTeacherInformation;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoWeeklyOcupation;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
 import net.sourceforge.fenixedu.util.OrientationType;
@@ -84,8 +85,7 @@ public class TeacherInformationAction extends DispatchAction {
         ProviderRegimeType providerRegimeType = ProviderRegimeType.getEnum((String) dynaForm
                 .get("serviceProviderRegimeTypeName"));
 
-        InfoTeacher infoTeacher = new InfoTeacher();
-        infoTeacher.setIdInternal(teacherId);
+        InfoTeacher infoTeacher = new InfoTeacher(RootDomainObject.getInstance().readTeacherByOID(teacherId));
 
         InfoServiceProviderRegime infoServiceProviderRegime = new InfoServiceProviderRegime();
         infoServiceProviderRegime.setIdInternal(serviceProviderRegimeId);
@@ -118,8 +118,7 @@ public class TeacherInformationAction extends DispatchAction {
         Integer phdStudentsNumber = value.equals("") ? null : new Integer(value);
         String phdDescription = (String) dynaForm.get("phdDescription");
 
-        InfoTeacher infoTeacher = new InfoTeacher();
-        infoTeacher.setIdInternal(teacherId);
+        InfoTeacher infoTeacher = new InfoTeacher(RootDomainObject.getInstance().readTeacherByOID(teacherId));
 
         InfoOrientation degreeOrientation = new InfoOrientation();
         degreeOrientation.setIdInternal(degreeOrientationId);
@@ -183,8 +182,7 @@ public class TeacherInformationAction extends DispatchAction {
         Integer articlesChaptersInternational = new Integer((String) dynaForm
                 .get("articlesChaptersInternational"));
 
-        InfoTeacher infoTeacher = new InfoTeacher();
-        infoTeacher.setIdInternal(teacherId);
+        InfoTeacher infoTeacher = new InfoTeacher(RootDomainObject.getInstance().readTeacherByOID(teacherId));
 
         InfoPublicationsNumber comunicationPublicationsNumber = new InfoPublicationsNumber();
         comunicationPublicationsNumber.setIdInternal(comunicationPublicationsNumberId);
@@ -246,8 +244,7 @@ public class TeacherInformationAction extends DispatchAction {
         Integer support = new Integer((String) dynaForm.get("support"));
         Integer lecture = new Integer((String) dynaForm.get("lecture"));
 
-        InfoTeacher infoTeacher = new InfoTeacher();
-        infoTeacher.setIdInternal(teacherId);
+        InfoTeacher infoTeacher = new InfoTeacher(RootDomainObject.getInstance().readTeacherByOID(teacherId));
 
         InfoWeeklyOcupation infoWeeklyOcupation = new InfoWeeklyOcupation();
         infoWeeklyOcupation.setIdInternal(weeklyOcupationId);

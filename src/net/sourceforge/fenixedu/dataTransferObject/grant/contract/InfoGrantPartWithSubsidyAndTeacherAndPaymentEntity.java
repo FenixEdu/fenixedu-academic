@@ -4,7 +4,7 @@
  */
 package net.sourceforge.fenixedu.dataTransferObject.grant.contract;
 
-import net.sourceforge.fenixedu.dataTransferObject.InfoTeacherWithPerson;
+import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantPart;
 
 /**
@@ -17,7 +17,7 @@ public class InfoGrantPartWithSubsidyAndTeacherAndPaymentEntity extends InfoGran
         if (grantPart != null) {
             setInfoGrantPaymentEntity(InfoGrantPaymentEntity.newInfoFromDomain(grantPart
                     .getGrantPaymentEntity()));
-            setInfoResponsibleTeacher(InfoTeacherWithPerson.newInfoFromDomain(grantPart
+            setInfoResponsibleTeacher(InfoTeacher.newInfoFromDomain(grantPart
                     .getResponsibleTeacher()));
             setInfoGrantSubsidy(InfoGrantSubsidyWithContract.newInfoFromDomain(grantPart
                     .getGrantSubsidy()));

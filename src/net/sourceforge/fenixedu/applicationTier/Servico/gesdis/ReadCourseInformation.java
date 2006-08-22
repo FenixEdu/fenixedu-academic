@@ -27,7 +27,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourseWithExecut
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoLesson;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteCommon;
-import net.sourceforge.fenixedu.dataTransferObject.InfoTeacherWithPersonAndCategory;
+import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
 import net.sourceforge.fenixedu.dataTransferObject.TeacherAdministrationSiteView;
 import net.sourceforge.fenixedu.dataTransferObject.gesdis.InfoCourseReport;
 import net.sourceforge.fenixedu.dataTransferObject.gesdis.InfoSiteCourseInformation;
@@ -376,7 +376,7 @@ public class ReadCourseInformation extends Service {
             Professorship professorship = (Professorship) iter.next();
             Teacher teacher = professorship.getTeacher();
 
-            infoLecturingTeachers.add(InfoTeacherWithPersonAndCategory.newInfoFromDomain(teacher));
+            infoLecturingTeachers.add(InfoTeacher.newInfoFromDomain(teacher));
         }
         return infoLecturingTeachers;
     }
@@ -420,7 +420,7 @@ public class ReadCourseInformation extends Service {
             Professorship repersistentSupportonsibleFor = (Professorship) iter.next();
             Teacher teacher = repersistentSupportonsibleFor.getTeacher();
 
-            infoRepersistentSupportonsibleTeachers.add(InfoTeacherWithPersonAndCategory.newInfoFromDomain(teacher));
+            infoRepersistentSupportonsibleTeachers.add(InfoTeacher.newInfoFromDomain(teacher));
         }
         return infoRepersistentSupportonsibleTeachers;
     }

@@ -7,7 +7,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.grant.GrantOr
 import net.sourceforge.fenixedu.applicationTier.Servico.framework.EditDomainObjectService;
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
-import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
 import net.sourceforge.fenixedu.dataTransferObject.grant.contract.InfoGrantContractRegime;
 import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.Person;
@@ -96,7 +95,7 @@ public class EditGrantContractRegime extends EditDomainObjectService {
             GrantOrientationTeacher grantOrientationTeacher = grantContract
                     .readActualGrantOrientationTeacher();
             if (grantOrientationTeacher != null) {
-                InfoTeacher infoTeacher = new InfoTeacher();
+                
                 // If grantOrientationTeacher is filled in
                 // grantContractRegime
                 final Teacher teacher;
@@ -106,19 +105,9 @@ public class EditGrantContractRegime extends EditDomainObjectService {
                         // Update grant orientation teacher of contract
 
                         teacher = grantOrientationTeacher.getOrientationTeacher();
-                        infoTeacher.setTeacherNumber(teacher.getTeacherNumber());
-                        InfoPerson infoPerson = new InfoPerson();
-                        infoPerson = getInfoPerson(teacher.getPerson());
-                        infoTeacher.setInfoPerson(infoPerson);
                     } else {
                         teacher = Teacher.readByNumber(infoGrantContractRegime.getInfoTeacher()
                                 .getTeacherNumber());
-                        infoTeacher.setTeacherNumber(teacher.getTeacherNumber());
-
-                        InfoPerson infoPerson = new InfoPerson();
-                        Person person = teacher.getPerson();
-                        infoPerson = getInfoPerson(person);
-                        infoTeacher.setInfoPerson(infoPerson);
                     }
 
                     grantOrientationTeacher.setOrientationTeacher(teacher);

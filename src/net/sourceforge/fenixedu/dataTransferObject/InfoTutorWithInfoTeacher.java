@@ -10,7 +10,7 @@ public class InfoTutorWithInfoTeacher extends InfoTutor {
     public void copyFromDomain(Tutor tutor) {
         super.copyFromDomain(tutor);
         if (tutor != null) {
-            setInfoTeacher(InfoTeacherWithPerson.newInfoFromDomain(tutor.getTeacher()));
+            setInfoTeacher(InfoTeacher.newInfoFromDomain(tutor.getTeacher()));
         }
     }
 

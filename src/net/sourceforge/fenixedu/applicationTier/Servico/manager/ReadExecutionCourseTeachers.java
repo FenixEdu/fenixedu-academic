@@ -9,7 +9,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.dataTransferObject.InfoTeacherWithPersonAndCategory;
+import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Teacher;
@@ -40,7 +40,7 @@ public class ReadExecutionCourseTeachers extends Service {
 
 		while (iter.hasNext()) {
 			teacher = ((Professorship) iter.next()).getTeacher();
-			infoTeachers.add(InfoTeacherWithPersonAndCategory.newInfoFromDomain(teacher));
+			infoTeachers.add(InfoTeacher.newInfoFromDomain(teacher));
 		}
 
 		return infoTeachers;
