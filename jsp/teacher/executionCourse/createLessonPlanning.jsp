@@ -19,7 +19,10 @@
 		</bean:define>	
 		<fr:edit id="lessonPlanningBeanID" name="lessonPlanningBean" action="<%= createLessonPlanningPath %>" type="net.sourceforge.fenixedu.dataTransferObject.gesdis.CreateLessonPlanningBean" 
 			schema="CreateLessonPlanning">	
-			<fr:destination name="cancel" path="<%= showLessonPlannings %>"/>	
+			<fr:destination name="cancel" path="<%= showLessonPlannings %>"/>
+				<fr:layout name="tabular">
+	    		    <fr:property name="classes" value="thtop thlight thright mbottom1"/>
+			    </fr:layout>
 		</fr:edit>
 	</logic:notEmpty>
 
@@ -28,6 +31,9 @@
 		<fr:edit name="lessonPlanning" action="<%= showLessonPlannings %>" type="net.sourceforge.fenixedu.domain.LessonPlanning" 
 			schema="EditLessonPlanning">
 			<fr:destination name="cancel" path="<%= showLessonPlannings %>"/>		
+				<fr:layout name="tabular">
+	    		    <fr:property name="classes" value="thtop thlight thright mbottom1"/>
+			    </fr:layout>
 		</fr:edit>
 	</logic:empty>
 

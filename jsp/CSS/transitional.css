@@ -369,6 +369,7 @@ margin-left: 10.5em;
 .mtop2 { margin-top: 2em;}
 .mtop3 { margin-top: 3em;}
 .mbottom0 { margin-bottom: 0;}
+.mbottom025 { margin-bottom: 0.25em;}
 .mbottom05 { margin-bottom: 0.5em;}
 .mbottom1 { margin-bottom: 1em;}
 .mbottom2 { margin-bottom: 2em;}
@@ -430,6 +431,11 @@ margin: 0;
 .bgcolor3 { background-color: #fafaf6; }
 .bgcolor4 { background-color: #f8f8f8; }
 
+.underline1 {
+border-bottom: 2px solid #fb5; /*old*/
+border-bottom: 2px solid #ec8;
+padding-bottom: 0.1em;
+}
 
 /* Multi Language */
 .multi-language-line {

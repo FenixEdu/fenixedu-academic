@@ -18,36 +18,8 @@
 				<bean:message key="link.home"/>
 			</html:link>
 		</li>
-	</ul>
-	<br/>
 	
-	<b><bean:message key="label.executionCourseManagement.menu.reports"/></b>
-	<ul>
-		<li>
-			<html:link page="/showSummaries.do?method=showSummaries&amp;page=0" paramId="objectCode" paramName="executionCourse" paramProperty="idInternal">
-				<bean:message key="link.summaries"/>
-			</html:link>
-		</li>
-		<li>
-			<html:link page="/viewCourseInformation.do" paramId="executionCourseId" paramName="executionCourse" paramProperty="idInternal">
-				<bean:message key="link.courseInformationManagement"/>
-			</html:link>
-		</li>
-		<li>
-			<html:link page="/teachingReport.do?method=prepareEdit&amp;page=0" paramId="executionCourseId" paramName="executionCourse" paramProperty="idInternal">
-				<bean:message key="link.teachingReportManagement"/>
-			</html:link>
-		</li>
-		<li>
-			<html:link page="/weeklyWorkLoad.do?method=prepare" paramId="executionCourseID" paramName="executionCourse" paramProperty="idInternal">
-				<bean:message key="link.weekly.work.load"/>
-			</html:link>
-		</li>
-	</ul>
-	<br/>
-	
-	<b><bean:message key="label.executionCourseManagement.menu.communication"/></b>
-	<ul>
+	<li class="navheader"><bean:message key="label.executionCourseManagement.menu.communication"/></li>
 		<li>
 			<html:link page="/announcementManagementAction.do?method=showAnnouncements" paramId="objectCode" paramName="executionCourse" paramProperty="idInternal">
 				<bean:message key="link.announcements"/>
@@ -63,11 +35,13 @@
 				<bean:message key="link.sectionsManagement"/>
 			</html:link>
 		</li>
-	</ul>
-	<br/>
 	
-	<b><bean:message key="label.executionCourseManagement.menu.management"/></b>
-	<ul>
+	<li class="navheader"><bean:message key="label.executionCourseManagement.menu.management"/></li>
+		<li>
+			<html:link page="/showSummaries.do?method=showSummaries&amp;page=0" paramId="objectCode" paramName="executionCourse" paramProperty="idInternal">
+				<bean:message key="link.summaries"/>
+			</html:link>
+		</li>
 		<li>
 			<html:link page="/teachersManagerDA.do?method=viewTeachersByProfessorship" paramId="objectCode" paramName="executionCourse" paramProperty="idInternal">
 				<bean:message key="link.teachers"/>
@@ -98,11 +72,8 @@
 				<bean:message key="link.groupsManagement"/>
 			</html:link>
 		</li>	
-	</ul>
-	<br/>
 	
-	<b><bean:message key="label.executionCourseManagement.menu.curricularInfo"/></b>
-	<ul>
+	<li class="navheader"><bean:message key="label.executionCourseManagement.menu.curricularInfo"/></li>
 		<li>
 			<html:link page="/manageExecutionCourse.do?method=objectives" paramId="executionCourseID" paramName="executionCourse" paramProperty="idInternal">
 				<bean:message key="link.objectives"/>
@@ -123,11 +94,25 @@
 				<bean:message key="link.bibliography"/>
 			</html:link>
 		</li>	
-	</ul>
-	<br/>
-	
-	<b><bean:message key="label.executionCourseManagement.menu.page"/></b>
-	<ul>
+		
+	<li class="navheader"><bean:message key="label.executionCourseManagement.menu.reports"/></li>
+		<li>
+			<html:link page="/viewCourseInformation.do" paramId="executionCourseId" paramName="executionCourse" paramProperty="idInternal">
+				<bean:message key="link.courseInformationManagement"/>
+			</html:link>
+		</li>
+		<li>
+			<html:link page="/teachingReport.do?method=prepareEdit&amp;page=0" paramId="executionCourseId" paramName="executionCourse" paramProperty="idInternal">
+				<bean:message key="link.teachingReportManagement"/>
+			</html:link>
+		</li>
+		<li>
+			<html:link page="/weeklyWorkLoad.do?method=prepare" paramId="executionCourseID" paramName="executionCourse" paramProperty="idInternal">
+				<bean:message key="link.weekly.work.load"/>
+			</html:link>
+		</li>
+		
+	<li class="navheader"><bean:message key="label.executionCourseManagement.menu.page"/></li>
 		<li>
 			<html:link page="/alternativeSite.do?method=prepareCustomizationOptions" paramId="objectCode" paramName="executionCourse" paramProperty="idInternal">
 				<bean:message key="link.personalizationOptions"/>
