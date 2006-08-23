@@ -1029,8 +1029,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
     }
 
     public static DegreeCurricularPlan readByNameAndDegreeSigla(String name, String degreeSigla) {
-        for (DegreeCurricularPlan degreeCurricularPlan : RootDomainObject.getInstance()
-                .getDegreeCurricularPlans()) {
+        for (final DegreeCurricularPlan degreeCurricularPlan : RootDomainObject.getInstance().getDegreeCurricularPlans()) {
             if (degreeCurricularPlan.getName().equalsIgnoreCase(name)
                     && degreeCurricularPlan.getDegree().getSigla().equalsIgnoreCase(degreeSigla)) {
                 return degreeCurricularPlan;

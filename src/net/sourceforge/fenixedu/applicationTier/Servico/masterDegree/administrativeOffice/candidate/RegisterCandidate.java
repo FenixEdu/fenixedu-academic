@@ -2,7 +2,6 @@ package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administra
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
@@ -43,6 +42,8 @@ import net.sourceforge.fenixedu.util.EntryPhase;
 import net.sourceforge.fenixedu.util.SituationName;
 import net.sourceforge.fenixedu.util.State;
 import net.sourceforge.fenixedu.util.StudentState;
+
+import org.joda.time.YearMonthDay;
 
 public class RegisterCandidate extends Service {
 
@@ -168,10 +169,9 @@ public class RegisterCandidate extends Service {
         Branch branch = rootDomainObject.readBranchByOID(branchID);
         DegreeCurricularPlan degreecurricularPlan = masterDegreeCandidate.getExecutionDegree()
                 .getDegreeCurricularPlan();
-        Date startDate = Calendar.getInstance().getTime();
 
         StudentCurricularPlan studentCurricularPlan = new StudentCurricularPlan(registration,
-                degreecurricularPlan, branch, startDate, StudentCurricularPlanState.ACTIVE,
+                degreecurricularPlan, branch, new YearMonthDay(), StudentCurricularPlanState.ACTIVE,
                 masterDegreeCandidate.getGivenCredits(), masterDegreeCandidate.getSpecialization());
         return studentCurricularPlan;
     }

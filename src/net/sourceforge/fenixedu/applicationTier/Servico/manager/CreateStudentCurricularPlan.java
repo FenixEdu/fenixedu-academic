@@ -12,6 +12,8 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.StudentCurricularPlanState;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
+import org.joda.time.YearMonthDay;
+
 public class CreateStudentCurricularPlan extends Service {
 
     public void run(final Integer studentNumber, final DegreeType degreeType,
@@ -30,6 +32,6 @@ public class CreateStudentCurricularPlan extends Service {
         }
 
         new StudentCurricularPlan(registration, degreeCurricularPlan,
-                studentCurricularPlanState, startDate);
+                studentCurricularPlanState, YearMonthDay.fromDateFields(startDate));
     }
 }
