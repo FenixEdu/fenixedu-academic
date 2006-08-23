@@ -148,7 +148,8 @@
             <form-property name="page" type="java.lang.Integer" initial="0"/>
             <form-property name="byShift" type="java.lang.String"/>
             <form-property name="bySummaryType" type="java.lang.String"/>  
-            <form-property name="anotherDateVisible" type="java.lang.String"/>            
+            <form-property name="anotherDateVisible" type="java.lang.String"/> 
+            <form-property name="lessonPlanning" type="java.lang.String"/> 
         </form-bean>	
 
 		<!-- FINAL DEGREE WORK  -->

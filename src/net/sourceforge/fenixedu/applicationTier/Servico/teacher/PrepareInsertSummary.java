@@ -28,13 +28,14 @@ import org.apache.commons.beanutils.BeanComparator;
 
 public class PrepareInsertSummary extends Service {
 
-    public SiteView run(Integer executionCourseId, String userLogged) throws FenixServiceException,
+    public SiteView run(Integer executionCourseID, String userLogged) throws FenixServiceException,
             ExcepcaoPersistencia {
-        final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseId);
+       
+        ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseID);
         if (executionCourse == null) {
             throw new FenixServiceException("no.executionCourse");
         }
-
+        
         final Site site = executionCourse.getSite();
         if (site == null) {
             throw new FenixServiceException("no.site");

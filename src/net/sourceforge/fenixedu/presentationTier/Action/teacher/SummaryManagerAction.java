@@ -10,6 +10,8 @@ import java.util.GregorianCalendar;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.Set;
+import java.util.TreeSet;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -30,24 +32,30 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoSiteSummary;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSummary;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
 import net.sourceforge.fenixedu.dataTransferObject.SiteView;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.LessonPlanning;
 import net.sourceforge.fenixedu.domain.Professorship;
+import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
+import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 import net.sourceforge.fenixedu.util.DateFormatUtil;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
+import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
+import org.apache.struts.util.LabelValueBean;
 
 /**
  * @author Tânia Pousão
@@ -165,6 +173,7 @@ public class SummaryManagerAction extends TeacherAdministrationViewerDispatchAct
     public ActionForward prepareInsertSummary(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws FenixServiceException,
             FenixFilterException {
+        
         HttpSession session = request.getSession(false);
         IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 
@@ -227,6 +236,8 @@ public class SummaryManagerAction extends TeacherAdministrationViewerDispatchAct
             return showSummaries(mapping, form, request, response);
         }
 
+        DynaActionForm actionForm = (DynaActionForm) form;
+        
         try {
             final InfoSiteSummaries infoSiteSummaries = (InfoSiteSummaries) ((ExecutionCourseSiteView) siteView)
                     .getComponent();
@@ -234,15 +245,13 @@ public class SummaryManagerAction extends TeacherAdministrationViewerDispatchAct
                 Collections.sort(infoShift.getInfoLessons());
             }
             Collections.sort(infoSiteSummaries.getInfoShifts(), new BeanComparator("lessons"));
-            choosenShift(request, infoSiteSummaries.getInfoShifts());
+            choosenShift(request, infoSiteSummaries.getInfoShifts(), actionForm);
             choosenLesson(request, (InfoSummary) request.getAttribute("summaryToInsert"));
             preSelectTeacherLogged(request, form, (InfoSiteSummaries) siteView.getComponent());
         } catch (Exception e) {
             e.printStackTrace();
             return showSummaries(mapping, form, request, response);
-        }
-
-        DynaActionForm actionForm = (DynaActionForm) form;
+        }      
 
         if (actionForm.get("summaryDateInputOption").equals("on"))
             request.setAttribute("checked", "");
@@ -250,12 +259,33 @@ public class SummaryManagerAction extends TeacherAdministrationViewerDispatchAct
         htmlEditorConfigurations(request, actionForm);
         request.setAttribute("siteView", siteView);
 
+        //--- Planning                
+        setLessonPlannings(request, objectCode, actionForm);
+        fillSummaryWithPlanning(request, actionForm);
+        
         return mapping.findForward("insertSummary");
     }
 
-    /**
-     * @param request
-     */
+    private void fillSummaryWithPlanning(HttpServletRequest request, DynaActionForm dynaActionForm) {
+        String lessonPlanningID = dynaActionForm.getString("lessonPlanning");
+        if(!StringUtils.isEmpty(lessonPlanningID)) {
+            LessonPlanning lessonPlanning = rootDomainObject.readLessonPlanningByOID(Integer.valueOf(lessonPlanningID));
+            dynaActionForm.set("summaryText", lessonPlanning.getPlanning());
+            dynaActionForm.set("title", lessonPlanning.getTitle());
+        }
+    }
+
+    private void setLessonPlannings(HttpServletRequest request, Integer objectCode, DynaActionForm actionForm) {                       
+        Integer shiftID = Integer.valueOf(actionForm.getString("shift"));                      
+        Shift shift = rootDomainObject.readShiftByOID(shiftID);        
+        ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(objectCode);
+        Set<LabelValueBean> lessonPlannings = new TreeSet<LabelValueBean>(new BeanComparator("label"));
+        if(shift != null) {
+            getLabelValueBeansOfLessonPlannings(executionCourse, shift.getTipo(), lessonPlannings);                     
+        }
+        request.setAttribute("lessonPlannings", lessonPlannings);
+    }
+    
     protected void processAnotherDate(HttpServletRequest request, ActionForm form) {
         DynaActionForm actionForm = (DynaActionForm) form;
         String summaryDateInputOption = request.getParameter("summaryDateInputOption");
@@ -274,7 +304,7 @@ public class SummaryManagerAction extends TeacherAdministrationViewerDispatchAct
             actionForm.set("summaryDateInput", "");
     }
 
-    private void choosenShift(HttpServletRequest request, List infoShifts) {
+    private void choosenShift(HttpServletRequest request, List infoShifts, DynaActionForm actionForm) {
         if (request.getParameter("shift") != null && request.getParameter("shift").length() > 0) {
             if (infoShifts != null && infoShifts.size() > 0) {
                 ListIterator iterator = infoShifts.listIterator();
@@ -292,8 +322,8 @@ public class SummaryManagerAction extends TeacherAdministrationViewerDispatchAct
         if (infoShifts != null && infoShifts.size() > 0) {
             InfoSummary infoSummaryToInsert = new InfoSummary();
             infoSummaryToInsert.setInfoShift((InfoShift) infoShifts.get(0));
-            request.setAttribute("summaryToInsert", infoSummaryToInsert);
-            request.setAttribute("shift", ((InfoShift) infoShifts.get(0)).getIdInternal());
+            request.setAttribute("summaryToInsert", infoSummaryToInsert);            
+            actionForm.set("shift", ((InfoShift) infoShifts.get(0)).getIdInternal().toString());
         }
     }
 
@@ -315,12 +345,6 @@ public class SummaryManagerAction extends TeacherAdministrationViewerDispatchAct
         }
     }
 
-    /**
-     * @param request
-     * @param infoSummary
-     * @param lessonSelected
-     * @throws FenixServiceException
-     */
     protected void findNextSummaryDate(HttpServletRequest request, InfoSummary infoSummary,
             Integer lessonSelected) throws FenixServiceException, FenixFilterException {
         List lessons = infoSummary.getInfoShift().getInfoLessons();
@@ -521,6 +545,7 @@ public class SummaryManagerAction extends TeacherAdministrationViewerDispatchAct
 
         Object[] args = { executionCourseId, summaryId, userView.getUtilizador() };
         SiteView siteView = null;
+        ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseId);  
         try {
             siteView = (SiteView) ServiceUtils.executeService(userView, "ReadSummary", args);
 
@@ -531,19 +556,8 @@ public class SummaryManagerAction extends TeacherAdministrationViewerDispatchAct
                     summaryForm.set("summaryText", summaryText);
             } else
                 summaryForm.set("summaryText", request.getAttribute("summaryTextFlag"));
-
-            boolean loggedIsResponsible = false;
-            List responsibleTeachers = null;
-            Object argsReadResponsibleTeachers[] = { executionCourseId };
-            responsibleTeachers = (List) ServiceManagerServiceFactory.executeService(userView,
-                    "ReadTeachersByExecutionCourseResponsibility", argsReadResponsibleTeachers);
-            for (Iterator iter = responsibleTeachers.iterator(); iter.hasNext();) {
-                InfoTeacher infoTeacher = (InfoTeacher) iter.next();
-                if (infoTeacher.getInfoPerson().getUsername().equals(userView.getUtilizador()))
-                    loggedIsResponsible = true;
-                break;
-            }
-
+                        
+            boolean loggedIsResponsible = (userView.getPerson().getTeacher().responsibleFor(executionCourse) != null);
             request.setAttribute("loggedIsResponsible", new Boolean(loggedIsResponsible));
 
             if (!loggedIsResponsible) {
@@ -604,7 +618,37 @@ public class SummaryManagerAction extends TeacherAdministrationViewerDispatchAct
         htmlEditorConfigurations(request, summaryForm);
         request.setAttribute("siteView", siteView);
 
+        //--- Planning                
+        setLessonPlannings(request, executionCourse, siteView);
+        fillSummaryWithPlanning(request, siteView, summaryForm);
+        
         return mapping.findForward("editSummary");
+    }
+    
+    private void setLessonPlannings(HttpServletRequest request, ExecutionCourse executionCourse, SiteView siteView) {                                      
+        InfoShift shift = ((InfoSiteSummary) siteView.getComponent()).getInfoSummary().getInfoShift();        
+        Set<LabelValueBean> lessonPlannings = new TreeSet<LabelValueBean>(new BeanComparator("label"));
+        if(shift != null) {
+            getLabelValueBeansOfLessonPlannings(executionCourse, shift.getTipo(), lessonPlannings);                      
+        }
+        request.setAttribute("lessonPlannings", lessonPlannings);
+    }
+
+    private void getLabelValueBeansOfLessonPlannings(ExecutionCourse executionCourse, ShiftType shiftType, Set<LabelValueBean> lessonPlannings) {        
+        String shiftTypeLabel = RenderUtils.getEnumString(shiftType, null);                     
+        for (LessonPlanning planning : executionCourse.getLessonPlanningsOrderedByOrder(shiftType)) {
+            String label = "Aula " + planning.getOrderOfPlanning() + " (" + shiftTypeLabel + ")";
+            lessonPlannings.add(new LabelValueBean(label, planning.getIdInternal().toString()));
+        }
+    }
+    
+    private void fillSummaryWithPlanning(HttpServletRequest request, SiteView siteView, DynaActionForm summaryForm) {
+        String lessonPlanningID = summaryForm.getString("lessonPlanning");
+        if(!StringUtils.isEmpty(lessonPlanningID)) {
+            LessonPlanning lessonPlanning = rootDomainObject.readLessonPlanningByOID(Integer.valueOf(lessonPlanningID));
+            summaryForm.set("summaryText", lessonPlanning.getPlanning());
+            ((InfoSiteSummary) siteView.getComponent()).getInfoSummary().setTitle(lessonPlanning.getTitle());
+        }
     }
 
     private void shiftChanged(HttpServletRequest request, SiteView siteView) {

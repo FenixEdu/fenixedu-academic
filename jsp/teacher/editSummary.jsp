@@ -73,7 +73,7 @@
 	</tr>
 </table>
 <br/>
-<br/>
+
 <!-- Lessons -->
 <table width="100%">
 	<tr>
@@ -156,11 +156,38 @@
 		<td><html:text bundle="HTMLALT_RESOURCES" altKey="text.studentsNumber" name="infoSummary" property="studentsNumber" size="4"/></td>
 	</tr>
 </table>
-<br/>
-<br/>	
 
+<!-- Planning -->
+<table width="100%">
+	<tr>
+		<td class="infoop"><bean:message key="help.summary.choose.lessonPlanning" /></td>
+	</tr>
+</table>
+<br/>
+<table width="100%">
+	<tr>		
+		<td><bean:message key="label.lessonPlanning"/></td>
+		<td>
+			<logic:present name="verEditor">
+				<html:select property="lessonPlanning" onchange="this.form.method.value='prepareEditSummary';this.form.page.value=0;this.form.summaryText.value=update();this.form.submit();">
+					<html:option key="label.summary.select" value="" />
+					<html:options collection="lessonPlannings" property="value" labelProperty="label"/>
+				</html:select><bean:message key="label.optional"/>
+			</logic:present>
+			<logic:notPresent name="verEditor">
+				<html:select property="lessonPlanning" onchange="this.form.method.value='prepareEditSummary';this.form.page.value=0;this.form.submit();">
+					<html:option key="label.summary.select" value="" />
+					<html:options collection="lessonPlannings" property="value" labelProperty="label"/>
+				</html:select><bean:message key="label.optional"/>
+			</logic:notPresent>
+		 </td>		
+	</tr>
+</table>
+<br/>
+
+<!-- Teachers -->
 <logic:equal name="loggedIsResponsible" value="true">
-	<!-- Teachers -->
+	<br/>	
 	<table width="100%">
 		<tr>
 			<td class="infoop"><bean:message key="help.summary.chooseTeacher" /></td>
@@ -195,7 +222,8 @@
 	<input alt="input.teacher" type="hidden" name="teacher" value="<%=loggedTeacherProfessorship%>" />
 </logic:equal>
 <br/>
-<br/>		
+
+<!-- Summary -->
 <table border="0">
 	<tr>
 		<td colspan='2'><strong><bean:message key="label.title"/></strong></td>
@@ -254,7 +282,6 @@
 	</tr>
 </table>
 
-<br/>
 <br/>
 <logic:present name="verEditor">
 	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton" onclick="this.form.summaryText.value=update()"><bean:message key="button.save"/>                    		         	
