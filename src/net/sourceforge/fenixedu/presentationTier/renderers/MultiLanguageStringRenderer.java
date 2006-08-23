@@ -121,9 +121,9 @@ public class MultiLanguageStringRenderer extends StringRenderer {
         container.addChild(component);
         
         if (isLanguageShown()) {
-            container.addChild(new HtmlText(" (<strong>"));
+            container.addChild(new HtmlText(" (<strong>", false));
             container.addChild(languageComponent);
-            container.addChild(new HtmlText("</strong>)"));
+            container.addChild(new HtmlText("</strong>)", false));
         }
         
         return container;
