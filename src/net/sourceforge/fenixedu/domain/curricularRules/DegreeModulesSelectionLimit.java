@@ -15,8 +15,8 @@ public class DegreeModulesSelectionLimit extends DegreeModulesSelectionLimit_Bas
     private DegreeModulesSelectionLimit(Integer minimum, Integer maximum) {
         super();
         checkLimits(minimum, maximum);
-        setMinimum(minimum);
-        setMaximum(maximum);
+        setMinimumLimit(minimum);
+        setMaximumLimit(maximum);
         setCurricularRuleType(CurricularRuleType.DEGREE_MODULES_SELECTION_LIMIT);
     }
 
@@ -41,8 +41,8 @@ public class DegreeModulesSelectionLimit extends DegreeModulesSelectionLimit_Bas
     protected void edit(CourseGroup contextCourseGroup, Integer minimumLimit, Integer maximumLimit) {
         checkLimits(minimumLimit, maximumLimit);
         setContextCourseGroup(contextCourseGroup);
-        setMinimum(minimumLimit);
-        setMaximum(maximumLimit);
+        setMinimumLimit(minimumLimit);
+        setMaximumLimit(maximumLimit);
     }
     
     private void checkLimits(Integer minimum, Integer maximum) throws DomainException {
@@ -60,12 +60,12 @@ public class DegreeModulesSelectionLimit extends DegreeModulesSelectionLimit_Bas
 
         labelList.add(new GenericPair<Object, Boolean>("label.modulesSelection", true));
         labelList.add(new GenericPair<Object, Boolean>(": ", false));
-        if (getMinimum().intValue() == getMaximum().intValue()) {
+        if (getMinimumLimit().intValue() == getMaximumLimit().intValue()) {
             labelList.add(new GenericPair<Object, Boolean>("label.choose", true));
             labelList.add(new GenericPair<Object, Boolean>(" ", false));
-            labelList.add(new GenericPair<Object, Boolean>(getMinimum(), false));
+            labelList.add(new GenericPair<Object, Boolean>(getMinimumLimit(), false));
             labelList.add(new GenericPair<Object, Boolean>(" ", false));
-            if (getMinimum().intValue() == 1) {
+            if (getMinimumLimit().intValue() == 1) {
                 labelList.add(new GenericPair<Object, Boolean>("label.module", true));
             } else {
                 labelList.add(new GenericPair<Object, Boolean>("label.modules", true));
@@ -73,11 +73,11 @@ public class DegreeModulesSelectionLimit extends DegreeModulesSelectionLimit_Bas
         } else {
             labelList.add(new GenericPair<Object, Boolean>("label.chooseFrom", true));
             labelList.add(new GenericPair<Object, Boolean>(" ", false));
-            labelList.add(new GenericPair<Object, Boolean>(getMinimum(), false));
+            labelList.add(new GenericPair<Object, Boolean>(getMinimumLimit(), false));
             labelList.add(new GenericPair<Object, Boolean>(" ", false));
             labelList.add(new GenericPair<Object, Boolean>("label.to", true));
             labelList.add(new GenericPair<Object, Boolean>(" ", false));
-            labelList.add(new GenericPair<Object, Boolean>(getMaximum(), false));
+            labelList.add(new GenericPair<Object, Boolean>(getMaximumLimit(), false));
             labelList.add(new GenericPair<Object, Boolean>(" ", false));
             labelList.add(new GenericPair<Object, Boolean>("label.modules", true));
         }

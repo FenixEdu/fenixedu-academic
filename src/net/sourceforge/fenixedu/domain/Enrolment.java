@@ -113,8 +113,8 @@ public class Enrolment extends Enrolment_Base {
         setCurricularCourse(curricularCourse);
         setCurriculumGroup(curriculumGroup);
         setEnrolmentEvaluationType(EnrolmentEvaluationType.NORMAL);
-        setCreationDate(new Date());
-        setCondition(enrolmentCondition);
+        setCreationDateDateTime(new DateTime());
+        setEnrolmentCondition(enrolmentCondition);
         setCreatedBy(createdBy);
 
         createAttend(studentCurricularPlan.getStudent(), curricularCourse, executionPeriod);
