@@ -5,6 +5,7 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="dt" %>
 
+<jsp:include page="/i18n.jsp"/>
 <h1>
 	<bean:write name="executionCourse" property="nome"/>
 </h1>

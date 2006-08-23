@@ -156,19 +156,3 @@
 		</logic:equal>
 	</logic:iterate>
 </table>
-
-<logic:iterate id="evaluation" name="evaluations">
-	<bean:define id="evaluationOID" name="evaluation" property="idInternal"/>
-	<logic:equal name="evaluation" property="class.name" value="net.sourceforge.fenixedu.domain.FinalEvaluation">
-		<table class="tab_complex" width="70%" cellspacing="1" cellpadding="2">
-			<tr>
-				<th><bean:message key="label.evaluationType"/></th>
-			</tr>
-			<tr>
-				<td>
-					<bean:message key="label.final.evaluation"/>
-				</td>
-			</tr>
-		</table>
-	</logic:equal>
-</logic:iterate>

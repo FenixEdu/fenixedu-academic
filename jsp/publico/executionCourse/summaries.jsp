@@ -17,7 +17,7 @@
 
 	<table class="tab_simple" cellspacing="2" cellpadding="0">
 		<tr>
-			<td><bean:message key="label.summary.lesson" />:</td>
+			<td><bean:message key="label.summary.shift.type" />:</td>
 			<td>
 				<html:select bundle="HTMLALT_RESOURCES" altKey="select.bySummaryType" property="shiftType" onchange="this.form.submit();">
 					<html:option value="" key="label.showBy.all"/>
@@ -118,7 +118,7 @@
 								<bean:message key="label.extra.lesson" />
 				       		</logic:equal>
 				       	</logic:notEmpty>
-						<bean:write name="summary" property="shift.tipo.fullNameTipoAula" />	
+				       	<bean:message name="summary" property="shift.tipo.name" bundle="ENUMERATION_RESOURCES"/>
 					</span>       	
 				</h3>
 			</logic:present>

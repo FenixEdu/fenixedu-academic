@@ -87,12 +87,20 @@
 		<bean:message key="label.lecturingTeachers"/>
 	</h2>
 	<logic:iterate id="professorship" name="professorships">
-		<p style="margin-top: 6px; margin-bottom: 6px;">
-			<bean:define id="professorship" name="professorship" toScope="request"/>
-			<jsp:include page="professorshipName.jsp"/>
-			<logic:equal name="professorship" property="responsibleFor" value="true">
+		<logic:equal name="professorship" property="responsibleFor" value="true">
+			<p style="margin-top: 6px; margin-bottom: 6px;">
+				<bean:define id="professorship" name="professorship" toScope="request"/>
+				<jsp:include page="professorshipName.jsp"/>
 				<bean:message key="label.responsible"/>
-			</logic:equal>
-		</p>
+			</p>
+		</logic:equal>
+	</logic:iterate>
+	<logic:iterate id="professorship" name="professorships">
+		<logic:notEqual name="professorship" property="responsibleFor" value="true">
+			<p style="margin-top: 6px; margin-bottom: 6px;">
+				<bean:define id="professorship" name="professorship" toScope="request"/>
+				<jsp:include page="professorshipName.jsp"/>
+			</p>
+		</logic:notEqual>
 	</logic:iterate>
 </logic:notEmpty>

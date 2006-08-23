@@ -14,12 +14,11 @@
 <h2><bean:message key="message.rss.4"/></h2>
 
 <p><bean:message key="message.rss.5"/></p>
-<p><bean:message key="message.rss.6"/></p>
 
 <br />
 <h2><bean:message key="message.rss.7"/></h2>
 	
-<p>Copie os URL's para o leitor RSS.</p>	
+<p><bean:message key="message.rss.copy.feeds"/></p>	
 
 <% final String appContext = net.sourceforge.fenixedu._development.PropertiesManager.getProperty("app.context"); %>
 <% final String context = (appContext != null && appContext.length() > 0) ? "/" + appContext : ""; %>
