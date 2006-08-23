@@ -6,7 +6,7 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 public abstract class CurriculumLine extends CurriculumLine_Base {
     
-    public  CurriculumLine() {
+    public CurriculumLine() {
         super();
         setRootDomainObject(RootDomainObject.getInstance());
     }
@@ -17,9 +17,8 @@ public abstract class CurriculumLine extends CurriculumLine_Base {
     
     protected void validateDegreeModuleLink(CurriculumGroup curriculumGroup, CurricularCourse curricularCourse) {
     	if(!curriculumGroup.getDegreeModule().validate(curricularCourse)) {
-    		throw new DomainException("invalid curriculum group");
+    	    throw new DomainException("error.studentCurriculum.curriculumLine.invalid.curriculum.group");
     	}
     }
- 
     
 }
