@@ -46,9 +46,9 @@ public class WorkSchedule extends WorkSchedule_Base {
         TimeOfDay lastClockingDate = timeline.getLastWorkTimePoint().getTime();
         if (wsType.definedMeal()) {
             mealInterval = timeline.calculateMealBreakInterval(wsType.getMeal().getMealBreak());
-            if (mealInterval != null) {                
+            if (mealInterval != null) {
                 Duration lunchDiscount = wsType.checkMealDurationAccordingToRules(mealInterval
-                        .getDuration(),justificationInMealBreak(timeLeaves));
+                        .getDuration(), justificationInMealBreak(timeLeaves));
                 if (lunchDiscount != null) {
                     firstWorkPeriod = timeline.calculateWorkPeriodDuration(new TimePoint(mealInterval
                             .getStartTime(), false, null), null, new TimePoint(getWorkScheduleType()
@@ -69,11 +69,18 @@ public class WorkSchedule extends WorkSchedule_Base {
                             lunchDiscount = Duration.ZERO;
                         }
                     }
-                    workDaySheet.setBalanceTime(subtractDurationsWithoutSeconds(
-                            firstWorkPeriod.plus(lastWorkPeriod).minus(lunchDiscount),
-                            getWorkScheduleType().getNormalWorkPeriod().getWorkPeriodDuration())
-                            .toPeriod());
+                    Duration balanceTime = subtractDurationsWithoutSeconds(firstWorkPeriod.plus(
+                            lastWorkPeriod).minus(lunchDiscount), getWorkScheduleType()
+                            .getNormalWorkPeriod().getWorkPeriodDuration());
+                    workDaySheet.setBalanceTime(balanceTime.toPeriod());
                     workDaySheet.setUnjustifiedTime(wsType.calculateFixedPeriodDuration(timeline));
+                    
+                    /////////////////////to remove in 2007
+                    if (lunchDiscount != Duration.ZERO) {
+                        workDaySheet.setBalanceTime(subtractDurationsWithoutSeconds(balanceTime,
+                                workDaySheet.getUnjustifiedTime()).toPeriod());
+                    }
+                    ////////////////////
                 } else {
                     workDaySheet.setBalanceTime(Duration.ZERO.minus(
                             wsType.getNormalWorkPeriod().getWorkPeriodDuration()).toPeriod());

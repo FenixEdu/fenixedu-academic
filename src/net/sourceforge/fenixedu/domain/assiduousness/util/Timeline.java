@@ -625,22 +625,33 @@ public class Timeline {
             Iterator<AttributeType> attributesIt, YearMonthDay day) {
         List<TimePoint> pointList = new ArrayList<TimePoint>();
 
-        for (Leave leave : leaveList) {
-            if (leave.getJustificationMotive().getJustificationType() != JustificationType.BALANCE) {
-                pointList.addAll(leave.toTimePoints((AttributeType) attributesIt.next()));
-            }
-        }
-
         Iterator<AssiduousnessRecord> clockingIt = clockingList.iterator();
+        DateTime lastClock = null;
         while (clockingIt.hasNext()) {
             final AssiduousnessRecord clockIn = clockingIt.next();
+            for (Leave leave : leaveList) {
+                if (leave.getJustificationMotive().getJustificationType() != JustificationType.BALANCE
+                        && (lastClock == null || leave.getDate().isAfter(lastClock) || leave.getDate()
+                                .isEqual(lastClock)) && leave.getDate().isBefore(clockIn.getDate())) {
+                    pointList.addAll(leave.toTimePoints((AttributeType) attributesIt.next()));
+                }
+            }
             final AttributeType attribute = attributesIt.next();
             final TimePoint timePointIn = constructTimePoint(clockIn, day, attribute);
             pointList.add(timePointIn);
+            lastClock = timePointIn.getTime().toDateTime(clockIn.getDate());
             if (clockingIt.hasNext()) {
                 final AssiduousnessRecord clockOut = clockingIt.next();
                 final TimePoint timePointOut = constructTimePoint(clockOut, day, attribute);
                 pointList.add(timePointOut);
+                lastClock = timePointOut.getTime().toDateTime(clockOut.getDate());
+            }
+        }
+        for (Leave leave : leaveList) {
+            if (leave.getJustificationMotive().getJustificationType() != JustificationType.BALANCE
+                    && (lastClock == null || leave.getDate().isAfter(lastClock) || leave.getDate()
+                            .isEqual(lastClock))) {
+                pointList.addAll(leave.toTimePoints((AttributeType) attributesIt.next()));
             }
         }
         plotList(pointList);

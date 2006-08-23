@@ -33,7 +33,7 @@
 	<field name="employee.person.name" class="java.lang.String"/>
 	<field name="workDaySheetList" class="java.util.ArrayList"/>
 	<field name="unit.name" class="java.lang.String"/>
-	<field name="unit.costCenterCode" class="java.lang.Integer"/>
+	<field name="unitCode" class="java.lang.String"/>
 	<field name="totalBalanceString" class="java.lang.String"/>
 	<field name="unjustifiedBalanceString" class="java.lang.String"/>
 
@@ -124,7 +124,7 @@
 					<textElement>
 						<font fontName="Verdana" size="10"/>
 					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA[" C.C. "+($F{unit.costCenterCode}).toString()]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.String"><![CDATA[" C.C. "+($F{unitCode})]]></textFieldExpression>
 				</textField>
 				<staticText>
 					<reportElement

@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.assiduousness;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -15,6 +16,8 @@ import net.sourceforge.fenixedu.domain.assiduousness.Leave;
 import net.sourceforge.fenixedu.domain.assiduousness.Schedule;
 import net.sourceforge.fenixedu.domain.assiduousness.WorkSchedule;
 import net.sourceforge.fenixedu.domain.assiduousness.WorkScheduleType;
+import net.sourceforge.fenixedu.domain.assiduousness.util.JustificationGroup;
+import net.sourceforge.fenixedu.domain.assiduousness.util.JustificationType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 
 import org.joda.time.DateMidnight;
@@ -125,25 +128,23 @@ public class ReadAssiduousnessWorkSheet extends Service {
                 workDaySheet.setUnjustifiedTime(Duration.ZERO);
                 workSheet.add(workDaySheet);
             } else {
+                final StringBuilder notes = new StringBuilder();
                 final boolean isDayHoliday = assiduousness.isHoliday(thisDay);
                 final WorkSchedule workSchedule = workScheduleMap.get(thisDay);
                 workDaySheet.setWorkSchedule(workSchedule);
+                List<AssiduousnessRecord> clockingsList = clockingsMap.get(thisDay);
+                if (clockingsList == null) {
+                    clockingsList = new ArrayList<AssiduousnessRecord>();
+                }
+                Collections.sort(clockingsList, AssiduousnessRecord.COMPARATORY_BY_DATE);
+                workDaySheet.setAssiduousnessRecords(clockingsList);
+                List<Leave> leavesList = leavesMap.get(thisDay);
+                if (leavesList == null) {
+                    leavesList = new ArrayList<Leave>();
+                }
+                Collections.sort(leavesList, Leave.COMPARATORY_BY_DATE);
+                workDaySheet.setLeaves(leavesList);
                 if (workSchedule != null && !isDayHoliday) {
-
-                    List<AssiduousnessRecord> clockingsList = clockingsMap.get(thisDay);
-                    if (clockingsList == null) {
-                        clockingsList = new ArrayList<AssiduousnessRecord>();
-                    }
-                    Collections.sort(clockingsList, AssiduousnessRecord.COMPARATORY_BY_DATE);
-                    workDaySheet.setAssiduousnessRecords(clockingsList);
-                    List<Leave> leavesList = leavesMap.get(thisDay);
-                    if (leavesList == null) {
-                        leavesList = new ArrayList<Leave>();
-                    }
-                    Collections.sort(leavesList, Leave.COMPARATORY_BY_DATE);
-                    workDaySheet.setLeaves(leavesList);
-
-                    final StringBuilder notes = new StringBuilder();
                     for (final Leave leave : leavesList) {
                         if (notes.length() != 0) {
                             notes.append(" / ");
@@ -151,6 +152,7 @@ public class ReadAssiduousnessWorkSheet extends Service {
                         notes.append(leave.getJustificationMotive().getAcronym());
                     }
                     workDaySheet.setNotes(notes.toString());
+
                     if (!thisDay.equals(today)) {
                         workDaySheet = assiduousness.calculateDailyBalance(workDaySheet, thisDay,
                                 isDayHoliday);
@@ -161,13 +163,6 @@ public class ReadAssiduousnessWorkSheet extends Service {
                     workDaySheet.setWorkScheduleAcronym(workSchedule.getWorkScheduleType().getAcronym());
                     workSheet.add(workDaySheet);
                 } else {
-                    List<AssiduousnessRecord> clockingsList = clockingsMap.get(thisDay);
-                    if (clockingsList == null) {
-                        clockingsList = new ArrayList<AssiduousnessRecord>();
-                    }
-                    Collections.sort(clockingsList, AssiduousnessRecord.COMPARATORY_BY_DATE);
-                    workDaySheet.setAssiduousnessRecords(clockingsList);
-                    workDaySheet.setLeaves(new ArrayList<Leave>());
                     if (!thisDay.equals(today)) {
                         workDaySheet = assiduousness.calculateDailyBalance(workDaySheet, thisDay,
                                 isDayHoliday);
@@ -176,7 +171,17 @@ public class ReadAssiduousnessWorkSheet extends Service {
                         totalWeeklyRestBalance = totalWeeklyRestBalance.plus(workDaySheet
                                 .getWeeklyRest());
                     }
-                    workDaySheet.setNotes("");
+                    for (final Leave leave : leavesList) {
+                        if (leave.getJustificationMotive().getJustificationType() == JustificationType.OCCURRENCE
+                                && leave.getJustificationMotive().getJustificationGroup() != JustificationGroup.CURRENT_YEAR_HOLIDAYS
+                                && leave.getJustificationMotive().getJustificationGroup() != JustificationGroup.LAST_YEAR_HOLIDAYS) {
+                            if (notes.length() != 0) {
+                                notes.append(" / ");
+                            }
+                            notes.append(leave.getJustificationMotive().getAcronym());
+                        }
+                    }
+                    workDaySheet.setNotes(notes.toString());
                     if (isDayHoliday) {
                         ResourceBundle bundle = ResourceBundle
                                 .getBundle("resources.AssiduousnessResources");
@@ -197,7 +202,7 @@ public class ReadAssiduousnessWorkSheet extends Service {
         }
         employeeWorkSheet.setUnit(unit);
         if (unit != null) {
-            employeeWorkSheet.setUnitCode(unit.getCostCenterCode().toString());
+            employeeWorkSheet.setUnitCode((new DecimalFormat("0000")).format(unit.getCostCenterCode()));
         } else {
             employeeWorkSheet.setUnitCode("");
         }
