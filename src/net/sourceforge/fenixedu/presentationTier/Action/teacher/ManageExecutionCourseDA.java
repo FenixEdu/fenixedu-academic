@@ -1,7 +1,5 @@
 package net.sourceforge.fenixedu.presentationTier.Action.teacher;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -447,13 +445,14 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
                        
         Integer lessonPlanningID = Integer.valueOf(request.getParameter("lessonPlanningID"));
         LessonPlanning lessonPlanning = rootDomainObject.readLessonPlanningByOID(lessonPlanningID);
-        final Object args[] = { lessonPlanning.getExecutionCourse().getIdInternal(), lessonPlanning};
-        
-        try {
-            ServiceManagerServiceFactory.executeService(getUserView(request), "DeleteLessonPlanning", args);    
-        } catch (DomainException e) {            
-            addActionMessage(request, e.getKey(), e.getArgs());
-        }               
+        if(lessonPlanning != null) {
+            final Object args[] = { lessonPlanning.getExecutionCourse().getIdInternal(), lessonPlanning};            
+            try {
+                ServiceManagerServiceFactory.executeService(getUserView(request), "DeleteLessonPlanning", args);    
+            } catch (DomainException e) {            
+                addActionMessage(request, e.getKey(), e.getArgs());
+            }               
+        }
         return lessonPlannings(mapping, form, request, response);
     }
    
