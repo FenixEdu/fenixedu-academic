@@ -24,10 +24,8 @@ public class RoomTimeTableLessonContentRenderer implements LessonSlotContentRend
             InfoLesson lesson = (InfoLesson) showOccupation;
 
             InfoExecutionCourse infoExecutionCourse = lesson.getInfoShift().getInfoDisciplinaExecucao();
-            strBuffer.append("<a href='viewSite.do?method=firstPage&amp;objectCode=");
+            strBuffer.append("<a href='executionCourse.do?method=firstPage&amp;executionCourseID=");
             strBuffer.append(infoExecutionCourse.getIdInternal());
-            strBuffer.append("&amp;executionPeriodOID=");
-            strBuffer.append(infoExecutionCourse.getInfoExecutionPeriod().getIdInternal());
             strBuffer.append("'>").append(lesson.getInfoShift().getInfoDisciplinaExecucao().getSigla())
                     .append("</a>");
             strBuffer.append("&nbsp;(").append(lesson.getTipo().getSiglaTipoAula()).append(")");

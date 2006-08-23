@@ -116,22 +116,9 @@ public class ExamsMapContentRenderer implements ExamsMapSlotContentRenderer {
                     }
 
                 } else if (typeUser.equals("public")) {
-                    strBuffer.append("<a href='viewSite.do?method=firstPage&amp;objectCode="
+                    strBuffer.append("<a href='executionCourse.do?method=firstPage&amp;executionCourseID="
                             + infoExecutionCourse.getIdInternal()
-                            + "&amp;executionPeriodOID="
-                            + infoExecutionCourse.getInfoExecutionPeriod().getIdInternal()
-                            + "&amp;degreeID="
-                            + examsMap.getInfoExecutionDegree().getInfoDegreeCurricularPlan()
-                                    .getInfoDegree().getIdInternal()
-                            + "&amp;"
-                            + SessionConstants.EXECUTION_COURSE_OID
-                            + "="
-                            + infoExecutionCourse.getIdInternal()
-                            + "&amp;executionDegreeID="
-                            + examsMap.getInfoExecutionDegree().getIdInternal()
-                            + "&amp;degreeCurricularPlanID="
-                            + examsMap.getInfoExecutionDegree().getInfoDegreeCurricularPlan()
-                                    .getIdInternal() + "'>");
+                            + "'>");
                     strBuffer.append(courseInitials);
                 }
                 strBuffer.append("</a>");

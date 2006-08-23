@@ -145,7 +145,7 @@ public class ExamsMapRenderer implements IExamsMapRenderer {
                 boolean showCreateExamLink = infoExecutionCourse.getAssociatedInfoExams().size() < 2;
 
                 if (user.equals("public")) {
-                    strBuffer.append("<a href='viewSite.do?method=firstPage&amp;objectCode="
+                    strBuffer.append("<a href='executionCourse.do?method=firstPage&amp;executionCourseID="
                             + infoExecutionCourse.getIdInternal() + "'>");
                 } else if (showCreateExamLink && user.equals("sop")) {
                     strBuffer.append("<a href='viewExamsMap.do?method=create&amp;indexExecutionCourse="

@@ -24,9 +24,8 @@ public class ClassTimeTableLessonContentRenderer implements LessonSlotContentRen
             InfoLesson lesson = (InfoLesson) showOccupation;
 
             InfoExecutionCourse infoExecutionCourse = lesson.getInfoShift().getInfoDisciplinaExecucao();
-            strBuffer.append("<a href='viewSite.do?method=firstPage&amp;objectCode=");
-            strBuffer.append(infoExecutionCourse.getIdInternal()).append("&amp;executionPeriodOID=")
-                    .append(infoExecutionCourse.getInfoExecutionPeriod().getIdInternal());
+            strBuffer.append("<a href='executionCourse.do?method=firstPage&amp;executionCourseID=");
+            strBuffer.append(infoExecutionCourse.getIdInternal());
             
             InfoExecutionCourse ec = lesson.getInfoShift().getInfoDisciplinaExecucao();
             strBuffer.append("'>").append("<abbr title='").append(ec.getNome()).append("'>").append(ec.getSigla()).append("</abbr>")
