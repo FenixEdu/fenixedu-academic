@@ -16,6 +16,10 @@
 </logic:empty>
 <logic:notEmpty name="executionCourse" property="evaluationMethod">
 	<p>
-		<fr:view name="executionCourse" property="evaluationMethod.evaluationElements"/>
+		<fr:view name="executionCourse" property="evaluationMethod.evaluationElements">
+			<fr:layout name="html">
+				<fr:property name="escaped" value="false" />
+			</fr:layout>
+		</fr:view>
 	</p>
 </logic:notEmpty>

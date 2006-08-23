@@ -24,14 +24,18 @@
 				<bean:define id="degree" name="curricularCourse" property="degreeCurricularPlan.degree"/>
 				<bean:message bundle="ENUMERATION_RESOURCES" name="degree" property="degreeType.name"/>
 				<bean:message key="label.in"/>
-				<fr:view name="degree" property="nameI18N"/>
+				<fr:view name="degree" property="nameI18N">
+					<fr:layout name="html">
+						<fr:property name="escaped" value="false" />
+					</fr:layout>
+				</fr:view>
 			</logic:iterate>
 		</h3>
 		<blockquote>
 			<h4>
 				<bean:message key="title.program"/>
 			</h4>
-			<fr:view name="competenceCourse" property="programI18N"/>
+			<fr:view name="competenceCourse" property="programI18N" layout="html"/>
 		</blockquote>
 	</logic:equal>
 </logic:iterate>
@@ -57,7 +61,11 @@
 						<h4>
 							<bean:message key="title.program"/>
 						</h4>
-						<fr:view name="curriculum" property="programI18N"/>
+						<fr:view name="curriculum" property="programI18N">
+							<fr:layout name="html">
+								<fr:property name="escaped" value="false" />
+							</fr:layout>
+						</fr:view>
 					</logic:present>
 					<logic:notPresent name="curriculum">
 						<bean:message key="message.program.not.defined"/>

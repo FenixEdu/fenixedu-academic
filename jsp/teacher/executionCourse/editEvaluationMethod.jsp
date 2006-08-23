@@ -23,6 +23,19 @@
 
 <logic:present name="executionCourse">
 	<blockquote>
+		<h4>
+			<bean:message key="title.evaluationMethod"/>
+		</h4>
+		<bean:define id="url" type="java.lang.String">/manageExecutionCourse.do?method=evaluationMethod&executionCourseID=<bean:write name="executionCourse" property="idInternal"/></bean:define>
+		<fr:edit name="executionCourse" property="evaluationMethod"
+				schema="net.sourceforge.fenixedu.domain.EvaluationMethod"
+				action="<%= url %>">
+			<fr:layout name="list"/>
+		</fr:edit>
+	</blockquote>
+
+<%--
+	<blockquote>
 		<html:form action="/editEvaluationMethod">
 			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="editEvaluationMethod"/>
 			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
@@ -48,4 +61,5 @@
 			</html:reset>
 		</html:form>
 	</blockquote>
+--%>
 </logic:present>

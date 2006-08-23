@@ -30,3 +30,11 @@
    		<property name="config" value="intermediate-fun" />
    	</slot>	
 </schema>
+<schema name="net.sourceforge.fenixedu.domain.EvaluationMethod" type="net.sourceforge.fenixedu.domain.EvaluationMethod" bundle="DEFAULT">
+	<slot name="evaluationElements" layout="rich-text" key="no.title.evaluationElements">
+   		<property name="safe" value="true" />
+   		<property name="columns" value="70"/>
+   		<property name="rows" value="15"/>
+   		<property name="config" value="intermediate-fun" />		
+	</slot>
+</schema>

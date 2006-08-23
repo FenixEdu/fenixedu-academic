@@ -31,7 +31,11 @@
 				<bean:message key="label.generalObjectives"/>
 			</h4>
 			<logic:present name="competenceCourse" property="objectives">
-				<fr:view name="competenceCourse" property="objectivesI18N"/>
+				<fr:view name="competenceCourse" property="objectivesI18N">
+					<fr:layout name="html">
+						<fr:property name="escaped" value="false" />
+					</fr:layout>
+				</fr:view>
 			</logic:present>
 		</blockquote>
 	</logic:equal>
@@ -58,12 +62,20 @@
 						<h4>
 							<bean:message key="label.generalObjectives"/>
 						</h4>
-						<fr:view name="curriculum" property="generalObjectivesI18N"/>
+						<fr:view name="curriculum" property="generalObjectivesI18N">
+							<fr:layout name="html">
+								<fr:property name="escaped" value="false" />
+							</fr:layout>
+						</fr:view>
 						<logic:notEmpty name="curriculum" property="operacionalObjectives">
 							<h4>
 								<bean:message key="label.operacionalObjectives"/>
 							</h4>
-							<fr:view name="curriculum" property="operacionalObjectivesI18N"/>
+							<fr:view name="curriculum" property="operacionalObjectivesI18N">
+								<fr:layout name="html">
+									<fr:property name="escaped" value="false" />
+								</fr:layout>
+							</fr:view>
 						</logic:notEmpty>
 					</logic:present>
 					<logic:notPresent name="curriculum">
