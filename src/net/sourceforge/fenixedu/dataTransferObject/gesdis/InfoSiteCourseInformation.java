@@ -14,6 +14,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoBibliographicReference;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurriculum;
 import net.sourceforge.fenixedu.dataTransferObject.InfoEvaluationMethod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
+import net.sourceforge.fenixedu.domain.Language;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
@@ -334,7 +335,7 @@ public class InfoSiteCourseInformation extends DataTranferObject implements ISit
             }
         }
         if (this.infoEvaluationMethod.getEvaluationElements() != null
-                && this.infoEvaluationMethod.getEvaluationElements().length() > MIN_LENGTH)
+                && this.infoEvaluationMethod.getEvaluationElements().getContent(Language.pt).length() > MIN_LENGTH)
             numberOfFieldsFilled++;
 
         iter = this.infoCurriculums.iterator();
@@ -373,8 +374,8 @@ public class InfoSiteCourseInformation extends DataTranferObject implements ISit
                 break;
             }
         }
-        if (this.infoEvaluationMethod.getEvaluationElementsEn() != null
-                && this.infoEvaluationMethod.getEvaluationElementsEn().length() > MIN_LENGTH)
+        if (this.infoEvaluationMethod.getEvaluationElements().getContent(Language.en) != null
+                && this.infoEvaluationMethod.getEvaluationElements().getContent(Language.en).length() > MIN_LENGTH)
             numberOfFieldsFilled++;
 
         iter = this.infoCurriculums.iterator();
