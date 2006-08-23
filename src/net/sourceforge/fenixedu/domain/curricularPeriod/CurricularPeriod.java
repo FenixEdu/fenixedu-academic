@@ -33,7 +33,7 @@ public class CurricularPeriod extends CurricularPeriod_Base implements Comparabl
     public CurricularPeriod(CurricularPeriodType curricularPeriodType, Integer order,
             CurricularPeriod parent) {
         this(curricularPeriodType);
-        setOrder(order);
+        setChildOrder(order);
         setParent(parent);
 
     }
@@ -48,7 +48,7 @@ public class CurricularPeriod extends CurricularPeriod_Base implements Comparabl
     public CurricularPeriod getChildByOrder(Integer order) {
 
         for (CurricularPeriod curricularPeriod : getChilds()) {
-            if (curricularPeriod.getOrder().equals(order)) {
+            if (curricularPeriod.getChildOrder().equals(order)) {
                 return curricularPeriod;
             }
         }
@@ -59,7 +59,7 @@ public class CurricularPeriod extends CurricularPeriod_Base implements Comparabl
     private CurricularPeriod findChild(CurricularPeriodType periodType, Integer order) {
 
         for (CurricularPeriod curricularPeriod : getChilds()) {
-            if (curricularPeriod.getOrder().equals(order)
+            if (curricularPeriod.getChildOrder().equals(order)
                     && curricularPeriod.getPeriodType() == periodType) {
                 return curricularPeriod;
             }
@@ -113,7 +113,7 @@ public class CurricularPeriod extends CurricularPeriod_Base implements Comparabl
         Integer resultOrder = null;
 
         if (this.getPeriodType() == curricularPeriodType) {
-            resultOrder = this.getOrder();
+            resultOrder = this.getChildOrder();
         } else if (this.getParent() != null
                 && this.getParent().getPeriodType().getWeight() > this.getPeriodType().getWeight()) {
             resultOrder = ((CurricularPeriod) this.getParent()).getOrderByType(curricularPeriodType);
@@ -164,7 +164,7 @@ public class CurricularPeriod extends CurricularPeriod_Base implements Comparabl
 
     private Float getWeight() {
         float periodTypeWeight = (this.getPeriodType() == null) ? 0 : this.getPeriodType().getWeight();
-        float periodOrder = (this.getOrder() == null) ? 0 : this.getOrder();
+        float periodOrder = (this.getChildOrder() == null) ? 0 : this.getChildOrder();
         return periodTypeWeight * periodOrder;
     }
 
@@ -201,9 +201,9 @@ public class CurricularPeriod extends CurricularPeriod_Base implements Comparabl
             }
 
             // re-order childs
-            Integer order = child.getOrder();
+            Integer order = child.getChildOrder();
             if (order == null) {
-                child.setOrder(parent.getChildsCount() + 1);
+                child.setChildOrder(parent.getChildsCount() + 1);
             } else {
                 if (parent.getChildByOrder(order) != null) {
                     throw new DomainException("error.childAlreadyExists");
@@ -214,7 +214,7 @@ public class CurricularPeriod extends CurricularPeriod_Base implements Comparabl
 
     public Integer getParentOrder() {
         if (this.getParent() != null) {
-            return this.getParent().getOrder();
+            return this.getParent().getChildOrder();
         }
 
         return null;
@@ -226,7 +226,7 @@ public class CurricularPeriod extends CurricularPeriod_Base implements Comparabl
         for (Iterator<CurricularPeriod> iterator = brothers.iterator(); iterator.hasNext();) {
             CurricularPeriod brother = iterator.next();
 
-            if (brother.getOrder().equals(this.getOrder()) && iterator.hasNext()) {
+            if (brother.getChildOrder().equals(this.getChildOrder()) && iterator.hasNext()) {
                 return iterator.next();
             }
         }
@@ -234,7 +234,7 @@ public class CurricularPeriod extends CurricularPeriod_Base implements Comparabl
     }
 
     public CurricularPeriod contains(CurricularPeriodType periodType, Integer order) {
-        if (this.getPeriodType().equals(periodType) && this.getOrder().equals(order)) {
+        if (this.getPeriodType().equals(periodType) && this.getChildOrder().equals(order)) {
             return this;
         }
         for (CurricularPeriod curricularPeriod : getChilds()) {
