@@ -209,17 +209,6 @@
 	<slot name="role" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
 </schema>
 
-<schema name="event.edit-defaults" bundle="RESEARCHER_RESOURCES" type="net.sourceforge.fenixedu.domain.research.event.Event">
-	<slot name="name" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredMultiLanguageStringValidator">
-		<property name="size" value="75"/>
-	</slot>
-	<slot name="eventType"/>
-	<slot name="eventLocation"/>
-	<slot name="startDate" layout="year-month" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
-	<slot name="endDate" layout="year-month"/> 
-	<slot name="fee"/> 
-</schema>
-
 <schema name="eventParticipants.edit-role" bundle="RESEARCHER_RESOURCES" type="net.sourceforge.fenixedu.domain.research.event.EventParticipation">
 	<slot name="party.name" read-only="true"/>
 	<slot name="role"/>
