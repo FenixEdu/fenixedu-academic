@@ -79,6 +79,11 @@
 			</html:link>
 		</li>
 		<li>
+			<html:link page="/manageExecutionCourse.do?method=lessonPlannings&amp;page=0" paramId="executionCourseID" paramName="executionCourse" paramProperty="idInternal">
+				<bean:message key="link.lessonPlannings"/>
+			</html:link>
+		</li>	
+		<li>
 			<html:link page="/evaluationManagement.do?method=evaluationIndex" paramId="executionCourseID" paramName="executionCourse" paramProperty="idInternal">
 				<bean:message key="link.evaluation"/>
 			</html:link>
@@ -92,12 +97,7 @@
 			<html:link page="/viewExecutionCourseProjects.do?method=prepareViewExecutionCourseProjects" paramId="objectCode" paramName="executionCourse" paramProperty="idInternal">
 				<bean:message key="link.groupsManagement"/>
 			</html:link>
-		</li>
-		<li>
-			<html:link page="/manageExecutionCourse.do?method=lessonPlannings&amp;page=0" paramId="executionCourseID" paramName="executionCourse" paramProperty="idInternal">
-				<bean:message key="link.lessonPlannings"/>
-			</html:link>
-		</li>		
+		</li>	
 	</ul>
 	<br/>
 	

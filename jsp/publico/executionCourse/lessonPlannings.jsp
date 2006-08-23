@@ -18,7 +18,7 @@
 		</logic:notEmpty>
 		<br/>
 		<logic:iterate id="lessonPlanning" name="lessonPlannings" property="value" indexId="index">
-			<i><bean:message key="label.lessonPlanning.order"/></i>&nbsp;<i><bean:write name="lessonPlanning" property="orderOfPlanning"/></i><br/>
+			<i><bean:message key="label.lesson"/></i>&nbsp;<i><bean:write name="lessonPlanning" property="orderOfPlanning"/></i><br/>
 			<b><bean:write name="lessonPlanning" property="title"/></b><br/>
 			<bean:write name="lessonPlanning" property="planning" filter="false"/><br/>													
 			<br/>
