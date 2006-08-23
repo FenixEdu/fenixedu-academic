@@ -67,6 +67,7 @@ import net.sourceforge.fenixedu.dataTransferObject.TeacherAdministrationSiteView
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.FileItem;
 import net.sourceforge.fenixedu.domain.FileItemPermittedGroupType;
+import net.sourceforge.fenixedu.domain.Language;
 import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
@@ -80,6 +81,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
 import net.sourceforge.fenixedu.presentationTier.mapping.SiteManagementActionMapping;
 import net.sourceforge.fenixedu.util.EnrolmentGroupPolicyType;
+import net.sourceforge.fenixedu.util.MultiLanguageString;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
@@ -549,9 +551,9 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         if (siteView.getComponent() != null) {
             DynaActionForm evaluationForm = (DynaActionForm) form;
             evaluationForm.set("evaluationElements", ((InfoEvaluationMethod) siteView.getComponent())
-                    .getEvaluationElements());
+                    .getEvaluationElements().getContent(Language.pt));
             evaluationForm.set("evaluationElementsEn", ((InfoEvaluationMethod) siteView.getComponent())
-                    .getEvaluationElementsEn());
+                    .getEvaluationElements().getContent(Language.en));
         }
 
         return mapping.findForward("editEvaluationMethod");
@@ -569,9 +571,14 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 
         InfoEvaluationMethod infoEvaluationMethod = new InfoEvaluationMethod();
         infoEvaluationMethod.setIdInternal(evaluationMethodCode);
-        infoEvaluationMethod.setEvaluationElements((String) evaluationForm.get("evaluationElements"));
-        infoEvaluationMethod
-                .setEvaluationElementsEn((String) evaluationForm.get("evaluationElementsEn"));
+        final MultiLanguageString multiLanguageString = new MultiLanguageString();
+        if ((String) evaluationForm.get("evaluationElements") != null && ((String) evaluationForm.get("evaluationElements")).length() > 0) {
+            multiLanguageString.setContent(Language.pt, (String) evaluationForm.get("evaluationElements"));
+        }
+        if ((String) evaluationForm.get("evaluationElementsEn") != null && ((String) evaluationForm.get("evaluationElementsEn")).length() > 0) {
+            multiLanguageString.setContent(Language.en, (String) evaluationForm.get("evaluationElementsEn"));
+        }
+        infoEvaluationMethod.setEvaluationElements(multiLanguageString);
 
         Object args[] = { objectCode, evaluationMethodCode, infoEvaluationMethod };
 

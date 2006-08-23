@@ -4,6 +4,7 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="dt" %>
+<%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 
 <h2>
 	<bean:message key="link.objectives"/>
@@ -15,14 +16,14 @@
 	<bean:define id="competenceCourse" name="entry" property="key"/>
 	<logic:equal name="competenceCourse" property="curricularStage.name" value="APPROVED">
 		<h3>
-			<bean:write name="competenceCourse" property="name"/>
+			<fr:view name="competenceCourse" property="nameI18N"/>
 			<br/>
 			<logic:iterate id="curricularCourse" name="entry" property="value" indexId="i">
 				<logic:notEqual name="i" value="0"><br/></logic:notEqual>
 				<bean:define id="degree" name="curricularCourse" property="degreeCurricularPlan.degree"/>
 				<bean:message bundle="ENUMERATION_RESOURCES" name="degree" property="degreeType.name"/>
 				<bean:message key="label.in"/>
-				<bean:write name="degree" property="nome"/>
+				<fr:view name="degree" property="nameI18N"/>
 			</logic:iterate>
 		</h3>
 		<blockquote>
@@ -30,15 +31,8 @@
 				<bean:message key="label.generalObjectives"/>
 			</h4>
 			<logic:present name="competenceCourse" property="objectives">
-				<bean:write name="competenceCourse" property="objectives" filter="false"/>
+				<fr:view name="competenceCourse" property="objectivesI18N"/>
 			</logic:present>
-			<logic:notEmpty name="competenceCourse" property="objectivesEn">
-				<br/>
-				<h4>
-					<bean:message key="label.generalObjectives.eng"/>
-				</h4>
-				<bean:write name="competenceCourse" property="objectivesEn" filter="false"/>
-			</logic:notEmpty>
 		</blockquote>
 	</logic:equal>
 </logic:iterate>
@@ -53,37 +47,23 @@
 			<% request.setAttribute("lastCurriculum", lastCurriculum); %>
 
 				<h3>
-					<bean:write name="curricularCourse" property="name"/>
+					<fr:view name="curricularCourse" property="nameI18N"/>
 					<br/>
 					<bean:message bundle="ENUMERATION_RESOURCES" name="degree" property="degreeType.name"/>
 					<bean:message key="label.in"/>
-					<bean:write name="degree" property="nome"/>
+					<fr:view name="degree" property="nameI18N"/>
 				</h3>
 				<blockquote>
 					<logic:present name="curriculum">
 						<h4>
 							<bean:message key="label.generalObjectives"/>
 						</h4>
-						<bean:write name="curriculum" property="generalObjectives" filter="false"/>
-						<logic:notEmpty name="curriculum" property="generalObjectivesEn">
-							<br/>
-							<h4>
-								<bean:message key="label.generalObjectives.eng"/>
-							</h4>
-							<bean:write name="curriculum" property="generalObjectivesEn" filter="false"/>
-						</logic:notEmpty>
+						<fr:view name="curriculum" property="generalObjectivesI18N"/>
 						<logic:notEmpty name="curriculum" property="operacionalObjectives">
 							<h4>
 								<bean:message key="label.operacionalObjectives"/>
 							</h4>
-							<bean:write name="curriculum" property="operacionalObjectives" filter="false"/>
-						</logic:notEmpty>
-						<logic:notEmpty name="curriculum" property="operacionalObjectivesEn">
-							<br/>
-							<h4>
-								<bean:message key="label.operacionalObjectives.eng"/>
-							</h4>
-							<bean:write name="curriculum" property="operacionalObjectivesEn" filter="false"/>
+							<fr:view name="curriculum" property="operacionalObjectivesI18N"/>
 						</logic:notEmpty>
 					</logic:present>
 					<logic:notPresent name="curriculum">

@@ -114,11 +114,9 @@ public class ExecutionCourseUtils {
             final EvaluationMethod evaluationMethodFrom = executionCourseFrom.getEvaluationMethod();
             final EvaluationMethod evaluationMethodTo = executionCourseTo.getEvaluationMethod();
             if (evaluationMethodTo == null) {
-                executionCourseTo.createEvaluationMethod(evaluationMethodFrom.getEvaluationElements(),
-                        evaluationMethodFrom.getEvaluationElementsEn());
+                executionCourseTo.createEvaluationMethod(evaluationMethodFrom.getEvaluationElements());
             } else {
-                evaluationMethodTo.edit(evaluationMethodFrom.getEvaluationElements(),
-                        evaluationMethodFrom.getEvaluationElementsEn());
+                evaluationMethodTo.edit(evaluationMethodFrom.getEvaluationElements());
             }
         }
     }

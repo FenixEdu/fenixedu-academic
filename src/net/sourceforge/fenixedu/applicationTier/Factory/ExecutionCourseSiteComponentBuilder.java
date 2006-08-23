@@ -29,7 +29,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoProfessorship;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSection;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShiftWithAssociatedInfoClassesAndInfoLessons;
-import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSite;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteAnnouncement;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteAssociatedCurricularCourses;
@@ -44,7 +43,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoSiteSummaries;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteTimetable;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSummary;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSummaryWithAll;
-import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
 import net.sourceforge.fenixedu.domain.Announcement;
 import net.sourceforge.fenixedu.domain.BibliographicReference;
@@ -726,7 +724,6 @@ public class ExecutionCourseSiteComponentBuilder {
 			infoEvaluationMethod = new InfoEvaluationMethod();
 			infoEvaluationMethod.setIdInternal(evaluationMethod.getIdInternal());
 			infoEvaluationMethod.setEvaluationElements(evaluationMethod.getEvaluationElements());
-			infoEvaluationMethod.setEvaluationElementsEn(evaluationMethod.getEvaluationElementsEn());
 		}
 		return infoEvaluationMethod;
 	}

@@ -7,6 +7,8 @@ package net.sourceforge.fenixedu.domain;
 
 import java.util.Calendar;
 
+import net.sourceforge.fenixedu.util.MultiLanguageString;
+
 /**
  * 
  * @author EP 15 - fjgc
@@ -48,4 +50,38 @@ public class Curriculum extends Curriculum_Base {
         
         deleteDomainObject();
     }
+
+    public MultiLanguageString getGeneralObjectivesI18N() {
+        final MultiLanguageString multiLanguageString = new MultiLanguageString();
+        if (getGeneralObjectives() != null && getGeneralObjectives().length() > 0) {
+            multiLanguageString.setContent(Language.pt, getGeneralObjectives());
+        }
+        if (getGeneralObjectivesEn() != null && getGeneralObjectivesEn().length() > 0) {
+            multiLanguageString.setContent(Language.en, getGeneralObjectivesEn());
+        }
+        return multiLanguageString;
+    }
+
+    public MultiLanguageString getOperacionalObjectivesI18N() {
+        final MultiLanguageString multiLanguageString = new MultiLanguageString();
+        if (getOperacionalObjectives() != null && getOperacionalObjectives().length() > 0) {
+            multiLanguageString.setContent(Language.pt, getOperacionalObjectives());
+        }
+        if (getOperacionalObjectivesEn() != null && getOperacionalObjectivesEn().length() > 0) {
+            multiLanguageString.setContent(Language.en, getOperacionalObjectivesEn());
+        }
+        return multiLanguageString;
+    }
+
+    public MultiLanguageString getProgramI18N() {
+        final MultiLanguageString multiLanguageString = new MultiLanguageString();
+        if (getProgram() != null && getProgram().length() > 0) {
+            multiLanguageString.setContent(Language.pt, getProgram());
+        }
+        if (getProgramEn() != null && getProgramEn().length() > 0) {
+            multiLanguageString.setContent(Language.en, getProgramEn());
+        }
+        return multiLanguageString;
+    }
+    
 }

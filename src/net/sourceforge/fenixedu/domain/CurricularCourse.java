@@ -31,6 +31,7 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
 import net.sourceforge.fenixedu.util.DateFormatUtil;
 import net.sourceforge.fenixedu.util.EnrolmentEvaluationState;
+import net.sourceforge.fenixedu.util.MultiLanguageString;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.CollectionUtils;
@@ -1265,5 +1266,16 @@ public class CurricularCourse extends CurricularCourse_Base {
     public List<DegreeModuleScope> getDegreeModuleScopes(){
         return DegreeModuleScope.getDegreeModuleScopes(this);
     }
-      
+
+    public MultiLanguageString getNameI18N() {
+        final MultiLanguageString multiLanguageString = new MultiLanguageString();
+        if (getName() != null && getName().length() > 0) {
+            multiLanguageString.setContent(Language.pt, getName());
+        }
+        if (getNameEn() != null && getNameEn().length() > 0) {
+            multiLanguageString.setContent(Language.en, getNameEn());
+        }
+        return multiLanguageString;
+    }
+
 }

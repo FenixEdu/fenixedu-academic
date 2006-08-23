@@ -27,7 +27,9 @@
 	<blockquote>
 		<logic:present name="executionCourse" property="evaluationMethod">
 			<logic:present name="executionCourse" property="evaluationMethod.evaluationElements">
-				<bean:write name="executionCourse" property="evaluationMethod.evaluationElements" filter="false"/>
+				<bean:define id="evaluationElements" type="net.sourceforge.fenixedu.util.MultiLanguageString"
+						name="executionCourse" property="evaluationMethod.evaluationElements"/>
+				<%= evaluationElements.getContent(net.sourceforge.fenixedu.domain.Language.pt) %>
 			</logic:present>
 			<logic:notPresent name="executionCourse" property="evaluationMethod.evaluationElements">
 				<logic:iterate id="competenceCourse" name="executionCourse" property="competenceCourses" length="1">
@@ -49,8 +51,10 @@
 	</h3>
 	<blockquote>
 		<logic:present name="executionCourse" property="evaluationMethod">
-			<logic:present name="executionCourse" property="evaluationMethod.evaluationElementsEn">
-				<bean:write name="executionCourse" property="evaluationMethod.evaluationElementsEn" filter="false"/>
+			<logic:present name="executionCourse" property="evaluationMethod.evaluationElements">
+				<bean:define id="evaluationElements" type="net.sourceforge.fenixedu.util.MultiLanguageString"
+						name="executionCourse" property="evaluationMethod.evaluationElements"/>
+				<%= evaluationElements.getContent(net.sourceforge.fenixedu.domain.Language.en) %>
 			</logic:present>
 			<logic:notPresent name="executionCourse" property="evaluationMethod.evaluationElementsEn">
 				<logic:iterate id="competenceCourse" name="executionCourse" property="competenceCourses" length="1">

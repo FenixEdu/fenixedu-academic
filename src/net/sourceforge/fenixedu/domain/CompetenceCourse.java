@@ -26,6 +26,7 @@ import net.sourceforge.fenixedu.domain.degreeStructure.BibliographicReferences.B
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PartyTypeEnum;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
+import net.sourceforge.fenixedu.util.MultiLanguageString;
 import net.sourceforge.fenixedu.util.UniqueAcronymCreator;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -675,4 +676,37 @@ public class CompetenceCourse extends CompetenceCourse_Base {
         return minCompetenceCourseInformation;
     }
 
+    public MultiLanguageString getNameI18N() {
+        final MultiLanguageString multiLanguageString = new MultiLanguageString();
+        if (getName() != null && getName().length() > 0) {
+            multiLanguageString.setContent(Language.pt, getName());
+        }
+        if (getNameEn() != null && getNameEn().length() > 0) {
+            multiLanguageString.setContent(Language.en, getNameEn());
+        }
+        return multiLanguageString;
+    }
+
+    public MultiLanguageString getObjectivesI18N() {
+        final MultiLanguageString multiLanguageString = new MultiLanguageString();
+        if (getObjectives() != null && getObjectives().length() > 0) {
+            multiLanguageString.setContent(Language.pt, getObjectives());
+        }
+        if (getObjectivesEn() != null && getObjectivesEn().length() > 0) {
+            multiLanguageString.setContent(Language.en, getObjectivesEn());
+        }
+        return multiLanguageString;
+    }
+
+    public MultiLanguageString getProgramI18N() {
+        final MultiLanguageString multiLanguageString = new MultiLanguageString();
+        if (getProgram() != null && getProgram().length() > 0) {
+            multiLanguageString.setContent(Language.pt, getProgram());
+        }
+        if (getProgramEn() != null && getProgramEn().length() > 0) {
+            multiLanguageString.setContent(Language.en, getProgramEn());
+        }
+        return multiLanguageString;
+    }
+    
 }

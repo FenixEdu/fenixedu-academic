@@ -1249,8 +1249,7 @@ class net.sourceforge.fenixedu.domain.Evaluation extends net.sourceforge.fenixed
 
 
 class net.sourceforge.fenixedu.domain.EvaluationMethod extends net.sourceforge.fenixedu.domain.DomainObject {
-	String evaluationElements;
-	String evaluationElementsEn;
+	MultiLanguageString evaluationElements;
 	Integer keyExecutionCourse;
 }
 

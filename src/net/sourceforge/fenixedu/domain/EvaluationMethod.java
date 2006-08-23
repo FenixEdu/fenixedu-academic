@@ -5,6 +5,8 @@
  */
 package net.sourceforge.fenixedu.domain;
 
+import net.sourceforge.fenixedu.util.MultiLanguageString;
+
 /**
  * @author Jo�o Mota
  * 
@@ -17,12 +19,11 @@ public class EvaluationMethod extends EvaluationMethod_Base {
 		setRootDomainObject(RootDomainObject.getInstance());
 	}
 
-	public void edit(String evaluationElements, String evaluationElementsEng) {
-        if (evaluationElements == null || evaluationElementsEng == null)
+	public void edit(MultiLanguageString evaluationElements) {
+        if (evaluationElements == null)
             throw new NullPointerException();
         
         setEvaluationElements(evaluationElements);
-        setEvaluationElementsEn(evaluationElementsEng);
     }
     
     public void delete() {

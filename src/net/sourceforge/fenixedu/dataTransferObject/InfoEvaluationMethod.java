@@ -6,6 +6,7 @@
 package net.sourceforge.fenixedu.dataTransferObject;
 
 import net.sourceforge.fenixedu.domain.EvaluationMethod;
+import net.sourceforge.fenixedu.util.MultiLanguageString;
 
 /**
  * @author João Mota
@@ -16,9 +17,7 @@ public class InfoEvaluationMethod extends InfoObject implements ISiteComponent {
 
     private InfoExecutionCourse infoExecutionCourse;
 
-    private String evaluationElements;
-
-    private String evaluationElementsEn;
+    private MultiLanguageString evaluationElements;
 
     public InfoEvaluationMethod() {
     }
@@ -27,17 +26,12 @@ public class InfoEvaluationMethod extends InfoObject implements ISiteComponent {
         setInfoExecutionCourse(infoExecutionCourse);
     }
 
-    public InfoEvaluationMethod(InfoExecutionCourse infoExecutionCourse, String evaluationElements,
-            String evaluationElementsEn) {
+    public InfoEvaluationMethod(InfoExecutionCourse infoExecutionCourse, MultiLanguageString evaluationElements) {
         setInfoExecutionCourse(infoExecutionCourse);
         setEvaluationElements(evaluationElements);
-        setEvaluationElementsEn(evaluationElementsEn);
     }
 
-    /**
-     * @return
-     */
-    public String getEvaluationElements() {
+    public MultiLanguageString getEvaluationElements() {
         return evaluationElements;
     }
 
@@ -48,10 +42,7 @@ public class InfoEvaluationMethod extends InfoObject implements ISiteComponent {
         return infoExecutionCourse;
     }
 
-    /**
-     * @param string
-     */
-    public void setEvaluationElements(String string) {
+    public void setEvaluationElements(MultiLanguageString string) {
         evaluationElements = string;
     }
 
@@ -66,7 +57,6 @@ public class InfoEvaluationMethod extends InfoObject implements ISiteComponent {
         String result = "[EvaluationMethod";
 
         result += ", evaluationElements =" + getEvaluationElements();
-        result += ", evaluationElementsEn =" + getEvaluationElementsEn();
         result += ", executionCourse =" + getInfoExecutionCourse();
         result += "]";
         return result;
@@ -81,25 +71,10 @@ public class InfoEvaluationMethod extends InfoObject implements ISiteComponent {
         return result;
     }
 
-    /**
-     * @return
-     */
-    public String getEvaluationElementsEn() {
-        return evaluationElementsEn;
-    }
-
-    /**
-     * @param string
-     */
-    public void setEvaluationElementsEn(String string) {
-        evaluationElementsEn = string;
-    }
-
     public void copyFromDomain(EvaluationMethod evaluationMethod) {
         super.copyFromDomain(evaluationMethod);
         if (evaluationMethod != null) {
             setEvaluationElements(evaluationMethod.getEvaluationElements());
-            setEvaluationElementsEn(evaluationMethod.getEvaluationElementsEn());
         }
     }
 

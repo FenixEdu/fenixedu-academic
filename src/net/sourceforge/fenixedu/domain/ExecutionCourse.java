@@ -29,6 +29,7 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.WeeklyWorkLoad;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
 import net.sourceforge.fenixedu.util.DateFormatUtil;
+import net.sourceforge.fenixedu.util.MultiLanguageString;
 import net.sourceforge.fenixedu.util.ProposalState;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -150,14 +151,12 @@ public class ExecutionCourse extends ExecutionCourse_Base {
         site.setExecutionCourse(this);
     }
 
-    public void createEvaluationMethod(final String evaluationElements,
-            final String evaluationElementsEng) {
-        if (evaluationElements == null || evaluationElementsEng == null)
+    public void createEvaluationMethod(final MultiLanguageString evaluationElements) {
+        if (evaluationElements == null)
             throw new NullPointerException();
 
         final EvaluationMethod evaluationMethod = new EvaluationMethod();
         evaluationMethod.setEvaluationElements(evaluationElements);
-        evaluationMethod.setEvaluationElementsEn(evaluationElementsEng);
         evaluationMethod.setExecutionCourse(this);
     }
 

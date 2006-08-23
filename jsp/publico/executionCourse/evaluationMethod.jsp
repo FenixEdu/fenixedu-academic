@@ -4,6 +4,7 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="dt" %>
+<%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 
 <h2>
 	<bean:message key="title.evaluationMethod"/>
@@ -15,14 +16,6 @@
 </logic:empty>
 <logic:notEmpty name="executionCourse" property="evaluationMethod">
 	<p>
-		<bean:write name="executionCourse" property="evaluationMethod.evaluationElements"/>
+		<fr:view name="executionCourse" property="evaluationMethod.evaluationElements"/>
 	</p>
-	<logic:notEmpty name="executionCourse" property="evaluationMethod.evaluationElementsEn">
-		<h2>
-			<bean:message key="title.evaluationMethod.eng"/>
-		</h2>
-		<p>
-			<bean:write name="executionCourse" property="evaluationMethod.evaluationElementsEn"/>
-		</p>
-	</logic:notEmpty>	
 </logic:notEmpty>

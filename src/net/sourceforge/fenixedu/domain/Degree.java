@@ -23,6 +23,7 @@ import net.sourceforge.fenixedu.domain.inquiries.OldInquiriesTeachersRes;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.Delegate;
 import net.sourceforge.fenixedu.util.MarkType;
+import net.sourceforge.fenixedu.util.MultiLanguageString;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
@@ -673,5 +674,16 @@ public class Degree extends Degree_Base {
     public DegreeType getBolonhaDegreeType(){
         return this.getTipoCurso();
     }
-    
+
+    public MultiLanguageString getNameI18N() {
+        final MultiLanguageString multiLanguageString = new MultiLanguageString();
+        if (getName() != null && getName().length() > 0) {
+            multiLanguageString.setContent(Language.pt, getName());
+        }
+        if (getNameEn() != null && getNameEn().length() > 0) {
+            multiLanguageString.setContent(Language.en, getNameEn());
+        }
+        return multiLanguageString;
+    }
+
 }

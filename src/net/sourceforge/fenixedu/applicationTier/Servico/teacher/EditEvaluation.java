@@ -17,11 +17,9 @@ public class EditEvaluation extends Service {
         final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID( infoExecutionCourseCode);
 
         if (executionCourse.getEvaluationMethod() == null) { // Create a new one
-            executionCourse.createEvaluationMethod(infoEvaluationMethod.getEvaluationElements(),
-                    infoEvaluationMethod.getEvaluationElementsEn());
+            executionCourse.createEvaluationMethod(infoEvaluationMethod.getEvaluationElements());
         } else { // Edit existent
-            executionCourse.getEvaluationMethod().edit(infoEvaluationMethod.getEvaluationElements(),
-                    infoEvaluationMethod.getEvaluationElementsEn());
+            executionCourse.getEvaluationMethod().edit(infoEvaluationMethod.getEvaluationElements());
         }
         return true;
     }

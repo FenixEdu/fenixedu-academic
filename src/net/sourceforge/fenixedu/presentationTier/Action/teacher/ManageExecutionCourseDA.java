@@ -2,7 +2,6 @@ package net.sourceforge.fenixedu.presentationTier.Action.teacher;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.TreeMap;
 
 import javax.servlet.http.HttpServletRequest;
@@ -16,11 +15,11 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoCurriculum;
 import net.sourceforge.fenixedu.dataTransferObject.InfoEvaluationMethod;
 import net.sourceforge.fenixedu.dataTransferObject.gesdis.CreateLessonPlanningBean;
 import net.sourceforge.fenixedu.domain.BibliographicReference;
-import net.sourceforge.fenixedu.domain.CompetenceCourse;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Curriculum;
 import net.sourceforge.fenixedu.domain.EvaluationMethod;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.Language;
 import net.sourceforge.fenixedu.domain.LessonPlanning;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Professorship;
@@ -32,6 +31,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.renderers.components.state.IViewState;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
+import net.sourceforge.fenixedu.util.MultiLanguageString;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -259,8 +259,8 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
         final ExecutionCourse executionCourse = (ExecutionCourse) request.getAttribute("executionCourse");
         if (executionCourse != null) {
             final DynaActionForm dynaActionForm = (DynaActionForm) form;
-            dynaActionForm.set("evaluationMethod", getEvaluationMethod(executionCourse));
-            dynaActionForm.set("evaluationMethodEn", getEvaluationMethodEn(executionCourse));
+            dynaActionForm.set("evaluationMethod", executionCourse.getEvaluationMethod().getEvaluationElements().getContent(Language.pt));
+            dynaActionForm.set("evaluationMethodEn", executionCourse.getEvaluationMethod().getEvaluationElements().getContent(Language.en));
         }
 
         return mapping.findForward("edit-evaluationMethod");
@@ -271,11 +271,13 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
         final DynaActionForm dynaActionForm = (DynaActionForm) form;
         final String evaluationMethod = request.getParameter("evaluationMethod");
         final String evaluationMethodEn = dynaActionForm.getString("evaluationMethodEn");
+        final MultiLanguageString multiLanguageString = new MultiLanguageString();
+        multiLanguageString.setContent(Language.pt, evaluationMethod);
+        multiLanguageString.setContent(Language.en, evaluationMethodEn);
 
         final ExecutionCourse executionCourse = (ExecutionCourse) request.getAttribute("executionCourse");
         final InfoEvaluationMethod infoEvaluationMethod = new InfoEvaluationMethod();
-        infoEvaluationMethod.setEvaluationElements(evaluationMethod);
-        infoEvaluationMethod.setEvaluationElementsEn(evaluationMethodEn);
+        infoEvaluationMethod.setEvaluationElements(multiLanguageString);
         final IUserView userView = getUserView(request);
 
         final Object args[] = { executionCourse.getIdInternal(), null, infoEvaluationMethod };
@@ -460,20 +462,8 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
         final EvaluationMethod evaluationMethod = executionCourse.getEvaluationMethod();
         if (evaluationMethod != null && evaluationMethod.getEvaluationElements() != null) {
             return evaluationMethod.getEvaluationElements();
-        } else {
-            final Set<CompetenceCourse> competenceCourses = executionCourse.getCompetenceCourses();
-            return competenceCourses.isEmpty() ? null : competenceCourses.iterator().next().getEvaluationMethod();
         }
-    }
-
-    private Object getEvaluationMethodEn(ExecutionCourse executionCourse) {
-        final EvaluationMethod evaluationMethod = executionCourse.getEvaluationMethod();
-        if (evaluationMethod != null && evaluationMethod.getEvaluationElementsEn() != null) {
-            return evaluationMethod.getEvaluationElementsEn();
-        } else {
-            final Set<CompetenceCourse> competenceCourses = executionCourse.getCompetenceCourses();
-            return competenceCourses.isEmpty() ? null : competenceCourses.iterator().next().getEvaluationMethodEn();
-        }
+        return null;
     }
 
     public static void getExecutionCourseFromParameterAndSetItInRequest(final HttpServletRequest request) {
