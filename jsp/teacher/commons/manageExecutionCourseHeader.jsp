@@ -6,18 +6,19 @@
 
 <logic:present name="executionCourse">
 
-	<h2>
-		<bean:message key="message.course.editing"/>
-		&nbsp;
+	<em>
+		<%--<bean:message key="message.course.editing"/>--%>
 		<bean:write name="executionCourse" property="nome"/>
-	</h2>
 
-	(&nbsp;
-	<logic:iterate id="degree" name="executionCourse" property="degreesSortedByDegreeName">
-			<em><bean:write name="degree" property="sigla"/>&nbsp;</em>
-	</logic:iterate>
-	)
-       
+		(&nbsp; 
+		<logic:iterate id="degree" name="executionCourse" property="degreesSortedByDegreeName">
+			<bean:write name="degree" property="sigla"/>&nbsp;
+		</logic:iterate>
+		)
+    </em>
+
+<%--
 	<hr style='color:#ccc'/>
+--%>
 
 </logic:present>

@@ -5,6 +5,8 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 
+<h2><bean:message key="link.evaluationMethod" /></h2>
+
 <p>
 	<span class="error"><!-- Error messages go here -->
 		<html:errors/>

@@ -4,6 +4,9 @@
 <html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
+
+<h2><bean:message key="title.teachers"/></h2>
+
 <table width="100%">
 	<tr>
 		<td class="infoop">
@@ -13,15 +16,20 @@
 	</tr>
 </table>
 <span class="error"><!-- Error messages go here --><html:errors /></span>	
-<h2><bean:message key="title.teachers"/></h2>
+
 <logic:present name="siteView">
 <bean:define id="infoSiteTeachers" name="siteView" property="component"/>
 <bean:define id="teachersList" name="infoSiteTeachers" property="infoTeachers"/>
 <bean:define id="isResponsible" name="infoSiteTeachers" property="isResponsible"/>
 
 <logic:equal name="isResponsible" value="true">
-	<html:link page="<%= "/teacherManagerDA.do?method=prepareAssociateTeacher&amp;objectCode=" + pageContext.findAttribute("objectCode") %>"><bean:message key="link.addTeacher"/></html:link>
+<ul>
+	<li>
+		<html:link page="<%= "/teacherManagerDA.do?method=prepareAssociateTeacher&amp;objectCode=" + pageContext.findAttribute("objectCode") %>"><bean:message key="link.addTeacher"/></html:link>
+	</li>
+</ul>
 </logic:equal>
+
 <table>
 	<tr>
 		<th width="150" class="listClasses-header"><bean:message key="label.teacherNumber" /></th>

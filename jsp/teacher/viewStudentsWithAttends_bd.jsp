@@ -60,6 +60,7 @@ function cleanSelect(checkboxes) {
 <bean:define id="executionCourse"	type="InfoExecutionCourse" name="studentsComponent" property="infoExecutionCourse"/>
 <bean:define id="attendsSummary"	type="InfoAttendsSummary" name="studentsComponent" property="infoAttendsSummary"/>
 
+<h2>Alunos de <bean:write name="commonComponent" property="executionCourse.nome" /></h2>
 
     <span class="error"><!-- Error messages go here --><html:errors /></span>
 	<bean:size id="studentsListSize" name="studentsComponent" property="infoAttends"/>
@@ -72,9 +73,6 @@ function cleanSelect(checkboxes) {
 	</tr>
 	<tr><td>&nbsp;</td></tr>
 </table>
-<h2>
-	<bean:write name="commonComponent" property="executionCourse.nome" />
-</h2>
 
 
 <html:form action="/studentsByCurricularCourse.do" method="post">

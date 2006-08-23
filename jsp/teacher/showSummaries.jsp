@@ -5,8 +5,9 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/enum.tld" prefix="e" %>
 
+<h2><bean:message key="link.summaries" /></h2>
+
 <span class="error"><!-- Error messages go here --><html:errors /></span>
-<br />
 
 <logic:present name="siteView"> 
 <bean:define id="component" name="siteView" property="commonComponent"/>
