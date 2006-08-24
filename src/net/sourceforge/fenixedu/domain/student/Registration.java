@@ -73,9 +73,8 @@ public class Registration extends Registration_Base {
     public final static Comparator<Registration> NUMBER_COMPARATOR = new BeanComparator("number");
 
     public Registration() {
-	super();
-	setRootDomainObject(RootDomainObject.getInstance());
-	this.setSpecialSeason(Boolean.FALSE);
+    	super();
+    	setRootDomainObject(RootDomainObject.getInstance());
     }
 
     public Registration(Person person, Integer studentNumber, StudentKind studentKind,

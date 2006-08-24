@@ -27,4 +27,5 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Remove Special Season From Registration" removeSpecialSeasonColumnFromRegistration.sql
 execute "Alter LessonPlanning Text to MultiLanguageString" alterLessonPlanningTextToMultiLanguageString.sql

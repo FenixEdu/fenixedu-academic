@@ -2684,7 +2684,6 @@ class net.sourceforge.fenixedu.domain.student.Registration extends net.sourcefor
 	String contigent;
 	Integer keyPerson;
 	Boolean payedTuition;
-	Boolean specialSeason;
 	Integer keyRegistrationYear;
 	Integer number;
 	DegreeType degreeType;
