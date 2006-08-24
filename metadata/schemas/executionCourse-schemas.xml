@@ -48,6 +48,96 @@
    		<property name="config" value="intermediate" />		
 	</slot>
 </schema>
+<schema name="net.sourceforge.fenixedu.domain.CurricularCourse.CurriculumFactoryInsertCurriculum"
+		type="net.sourceforge.fenixedu.domain.CurricularCourse$CurriculumFactoryInsertCurriculum">
+	<slot name="program" layout="rich-text">
+   		<property name="safe" value="true" />
+   		<property name="columns" value="70"/>
+   		<property name="rows" value="15"/>
+   		<property name="config" value="intermediate" />		
+	</slot>
+	<slot name="programEn" layout="rich-text">
+   		<property name="safe" value="true" />
+   		<property name="columns" value="70"/>
+   		<property name="rows" value="15"/>
+   		<property name="config" value="intermediate" />		
+	</slot>
+	<slot name="generalObjectives" layout="rich-text">
+   		<property name="safe" value="true" />
+   		<property name="columns" value="70"/>
+   		<property name="rows" value="15"/>
+   		<property name="config" value="intermediate" />		
+	</slot>
+	<slot name="generalObjectivesEn" layout="rich-text">
+   		<property name="safe" value="true" />
+   		<property name="columns" value="70"/>
+   		<property name="rows" value="15"/>
+   		<property name="config" value="intermediate" />		
+	</slot>
+	<slot name="operacionalObjectives" layout="rich-text">
+   		<property name="safe" value="true" />
+   		<property name="columns" value="70"/>
+   		<property name="rows" value="15"/>
+   		<property name="config" value="intermediate" />		
+	</slot>
+	<slot name="operacionalObjectivesEn" layout="rich-text">
+   		<property name="safe" value="true" />
+   		<property name="columns" value="70"/>
+   		<property name="rows" value="15"/>
+   		<property name="config" value="intermediate" />		
+	</slot>
+</schema>
+<schema name="net.sourceforge.fenixedu.domain.CurricularCourse.CurriculumFactoryInsertCurriculumObjectives"
+		type="net.sourceforge.fenixedu.domain.CurricularCourse$CurriculumFactoryInsertCurriculum"
+		refines="net.sourceforge.fenixedu.domain.CurricularCourse.CurriculumFactoryInsertCurriculum">
+	<remove name="program"/>
+	<remove name="programEn"/>
+</schema>
+<schema name="net.sourceforge.fenixedu.domain.Curriculum"
+		type="net.sourceforge.fenixedu.domain.Curriculum">
+	<slot name="program" layout="rich-text">
+   		<property name="safe" value="true" />
+   		<property name="columns" value="70"/>
+   		<property name="rows" value="15"/>
+   		<property name="config" value="intermediate" />		
+	</slot>
+	<slot name="programEn" layout="rich-text">
+   		<property name="safe" value="true" />
+   		<property name="columns" value="70"/>
+   		<property name="rows" value="15"/>
+   		<property name="config" value="intermediate" />		
+	</slot>
+	<slot name="generalObjectives" layout="rich-text">
+   		<property name="safe" value="true" />
+   		<property name="columns" value="70"/>
+   		<property name="rows" value="15"/>
+   		<property name="config" value="intermediate" />		
+	</slot>
+	<slot name="generalObjectivesEn" layout="rich-text">
+   		<property name="safe" value="true" />
+   		<property name="columns" value="70"/>
+   		<property name="rows" value="15"/>
+   		<property name="config" value="intermediate" />		
+	</slot>
+	<slot name="operacionalObjectives" layout="rich-text">
+   		<property name="safe" value="true" />
+   		<property name="columns" value="70"/>
+   		<property name="rows" value="15"/>
+   		<property name="config" value="intermediate" />		
+	</slot>
+	<slot name="operacionalObjectivesEn" layout="rich-text">
+   		<property name="safe" value="true" />
+   		<property name="columns" value="70"/>
+   		<property name="rows" value="15"/>
+   		<property name="config" value="intermediate" />		
+	</slot>
+</schema>
+<schema name="net.sourceforge.fenixedu.domain.Curriculum.Objectives"
+		type="net.sourceforge.fenixedu.domain.Curriculum"
+		refines="net.sourceforge.fenixedu.domain.Curriculum">
+	<remove name="program"/>
+	<remove name="programEn"/>
+</schema>
 <schema name="ListExecutionCourseShifts" type="net.sourceforge.fenixedu.dataTransferObject.teacher.ExecutionCourseShiftsBean" bundle="DEFAULT">	
 	<slot name="shift" key="label.summary.shift" layout="menu-select-postback" 
 		validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
@@ -57,4 +147,3 @@
 		<property name="format" value="{name}" />
 	</slot>	
 </schema>
-

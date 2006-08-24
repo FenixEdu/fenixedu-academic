@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.domain;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
@@ -29,6 +30,7 @@ import net.sourceforge.fenixedu.domain.precedences.Restriction;
 import net.sourceforge.fenixedu.domain.precedences.RestrictionHasEverBeenOrIsCurrentlyEnrolledInCurricularCourse;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
+import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
 import net.sourceforge.fenixedu.util.DateFormatUtil;
 import net.sourceforge.fenixedu.util.EnrolmentEvaluationState;
 import net.sourceforge.fenixedu.util.MultiLanguageString;
@@ -516,6 +518,90 @@ public class CurricularCourse extends CurricularCourse_Base {
             stringBuffer.append(tipoCurso.toString());
         }
         return StringUtils.lowerCase(stringBuffer.toString());
+    }
+
+    public static class CurriculumFactory implements Serializable {
+        private DomainReference<CurricularCourse> curricularCourseDomainReference;
+        private String program;
+        private String programEn;
+        private String generalObjectives;
+        private String generalObjectivesEn;
+        private String operacionalObjectives;
+        private String operacionalObjectivesEn;
+
+        public CurriculumFactory(final CurricularCourse curricularCourse) {
+            setCurricularCourse(curricularCourse);
+        }
+
+        public String getGeneralObjectives() {
+            return generalObjectives;
+        }
+        public void setGeneralObjectives(String generalObjectives) {
+            this.generalObjectives = generalObjectives;
+        }
+        public String getGeneralObjectivesEn() {
+            return generalObjectivesEn;
+        }
+        public void setGeneralObjectivesEn(String generalObjectivesEn) {
+            this.generalObjectivesEn = generalObjectivesEn;
+        }
+        public String getOperacionalObjectives() {
+            return operacionalObjectives;
+        }
+        public void setOperacionalObjectives(String operacionalObjectives) {
+            this.operacionalObjectives = operacionalObjectives;
+        }
+        public String getOperacionalObjectivesEn() {
+            return operacionalObjectivesEn;
+        }
+        public void setOperacionalObjectivesEn(String operacionalObjectivesEn) {
+            this.operacionalObjectivesEn = operacionalObjectivesEn;
+        }
+        public String getProgram() {
+            return program;
+        }
+        public void setProgram(String program) {
+            this.program = program;
+        }
+        public String getProgramEn() {
+            return programEn;
+        }
+        public void setProgramEn(String programEn) {
+            this.programEn = programEn;
+        }
+        public CurricularCourse getCurricularCourse() {
+            return curricularCourseDomainReference == null ? null : curricularCourseDomainReference.getObject();
+        }
+        public void setCurricularCourse(final CurricularCourse curricularCourse) {
+            curricularCourseDomainReference = new DomainReference<CurricularCourse>(curricularCourse);
+        }
+    }
+
+    public static class CurriculumFactoryInsertCurriculum extends CurriculumFactory implements FactoryExecutor {
+        public CurriculumFactoryInsertCurriculum(CurricularCourse curricularCourse) {
+            super(curricularCourse);
+        }
+
+        public Curriculum execute() {
+            final CurricularCourse curricularCourse = getCurricularCourse();
+            return curricularCourse == null ? null
+                    : curricularCourse.insertCurriculum(getProgram(), getProgramEn(),
+                            getOperacionalObjectives(), getOperacionalObjectivesEn(),
+                            getGeneralObjectives(), getGeneralObjectivesEn());
+        }
+    }
+
+    public CurriculumFactoryInsertCurriculum getCurriculumFactoryInsertCurriculum() {
+        return new CurriculumFactoryInsertCurriculum(this);
+    }
+
+    public Curriculum editCurriculum(String generalObjectives, String operacionalObjectives, String program,
+            String generalObjectivesEn, String operacionalObjectivesEn, String programEn,
+            String language, Person person) {
+        if (person == null) {
+            throw new DomainException("no.person.defined");
+        }
+        return null;
     }
 
     public Curriculum insertCurriculum(String program, String programEn, String operacionalObjectives,

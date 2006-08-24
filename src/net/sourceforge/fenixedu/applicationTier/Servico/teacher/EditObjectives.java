@@ -67,9 +67,7 @@ public class EditObjectives extends Service {
            
         } else {
           
-            Curriculum newCurriculum;
-
-            newCurriculum = curricularCourse.insertCurriculum(curriculum.getProgram(), curriculum
+            Curriculum newCurriculum = curricularCourse.insertCurriculum(curriculum.getProgram(), curriculum
                     .getProgramEn(), infoCurriculumNew.getOperacionalObjectives(), infoCurriculumNew
                     .getOperacionalObjectivesEn(), infoCurriculumNew.getGeneralObjectives(),
                     infoCurriculumNew.getGeneralObjectivesEn());

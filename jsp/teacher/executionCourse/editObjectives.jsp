@@ -35,6 +35,15 @@
 		<bean:write name="curricularCourse" property="name"/>
 	</h3>
 	<blockquote>
+		<bean:define id="url" type="java.lang.String">/editObjectives.do?method=editObjectives&amp;executionCourseID=<bean:write name="executionCourse" property="idInternal"/></bean:define>
+		<fr:edit name="curricularCourse" property="curriculumFactoryInsertCurriculum"
+				schema="net.sourceforge.fenixedu.domain.Curriculum.Objectives"
+				action="<%= url %>"
+				>
+			<fr:layout name="flow">
+			</fr:layout>
+		</fr:edit>
+
 		<html:form action="/editObjectives">
 			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="editObjectives"/>
 			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
