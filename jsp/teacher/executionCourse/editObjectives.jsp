@@ -36,48 +36,12 @@
 	</h3>
 	<blockquote>
 		<bean:define id="url" type="java.lang.String">/editObjectives.do?method=editObjectives&amp;executionCourseID=<bean:write name="executionCourse" property="idInternal"/></bean:define>
-		<fr:edit name="curricularCourse" property="curriculumFactoryInsertCurriculum"
+		<fr:edit name="curricularCourse" property="curriculumFactoryEditCurriculum"
 				schema="net.sourceforge.fenixedu.domain.Curriculum.Objectives"
 				action="<%= url %>"
 				>
 			<fr:layout name="flow">
 			</fr:layout>
 		</fr:edit>
-
-		<html:form action="/editObjectives">
-			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="editObjectives"/>
-			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
-			<bean:define id="curriculumID" type="java.lang.Integer" name="curriculum" property="idInternal"/>
-			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.curriculumID" property="curriculumID" value="<%= curriculumID.toString() %>"/>
-			<bean:define id="executionCourseID" type="java.lang.Integer" name="executionCourse" property="idInternal"/>
-			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.executionCourseID" property="executionCourseID" value="<%= executionCourseID.toString() %>"/>
-			<h4>
-				<bean:message key="label.generalObjectives"/>
-			</h4>
-			<html:textarea bundle="HTMLALT_RESOURCES" altKey="textarea.generalObjectives"  property="generalObjectives" cols="50" rows="8"/>
-			<br/>
-			<h4>
-				<bean:message key="label.generalObjectives.eng"/>
-			</h4>
-			<html:textarea bundle="HTMLALT_RESOURCES" altKey="textarea.generalObjectivesEn"  property="generalObjectivesEn" cols="50" rows="8"/>
-			<h4>
-				<bean:message key="label.operacionalObjectives"/>
-			</h4>
-			<html:textarea bundle="HTMLALT_RESOURCES" altKey="textarea.operacionalObjectives"  property="operacionalObjectives" cols="50" rows="8"/>
-			<br/>
-			<h4>
-				<bean:message key="label.operacionalObjectives.eng"/>
-			</h4>
-			<html:textarea bundle="HTMLALT_RESOURCES" altKey="textarea.operacionalObjectivesEn"  property="operacionalObjectivesEn" cols="50" rows="8"/>
-
-			<br/>
-			<br/>
-			<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton">
-				<bean:message key="button.save"/>
-			</html:submit>
-			<html:reset bundle="HTMLALT_RESOURCES" altKey="reset.reset"  styleClass="inputbutton">
-				<bean:message key="label.clear"/>
-			</html:reset>
-		</html:form>
 	</blockquote>
 </logic:present>

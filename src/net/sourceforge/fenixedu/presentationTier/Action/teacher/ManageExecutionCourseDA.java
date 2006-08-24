@@ -9,9 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.dataTransferObject.InfoCurriculum;
 import net.sourceforge.fenixedu.dataTransferObject.InfoEvaluationMethod;
 import net.sourceforge.fenixedu.dataTransferObject.gesdis.CreateLessonPlanningBean;
 import net.sourceforge.fenixedu.domain.BibliographicReference;
@@ -74,28 +72,8 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
     }
 
     public ActionForward createProgram(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-    		throws FenixActionException {
-        final DynaActionForm dynaActionForm = (DynaActionForm) form;
-        final String curricularCourseIDString = request.getParameter("curricularCourseID");
-        final String program = dynaActionForm.getString("program");
-        final String programEn = dynaActionForm.getString("programEn");
-
-        final ExecutionCourse executionCourse = (ExecutionCourse) request.getAttribute("executionCourse");
-        final CurricularCourse curricularCourse = findCurricularCourse(executionCourse, Integer.valueOf(curricularCourseIDString));
-
-        final IUserView userView = getUserView(request);
-
-        final Object args[] = { executionCourse.getIdInternal(), curricularCourse, program, programEn };
-        try {
-            ServiceManagerServiceFactory.executeService(userView, "CreateProgram", args);
-        } catch (NotAuthorizedFilterException e) {
-            ActionMessages messages = new ActionMessages();
-            messages.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage("error.teacherNotResponsibleOrNotCoordinator"));
-            saveErrors(request, messages);
-        } catch (Exception e) {
-            throw new FenixActionException();
-        }
-
+    		throws FenixActionException, FenixFilterException, FenixServiceException {
+    	executeFactoryMethod(request);
         return mapping.findForward("program");
     }
 
@@ -125,30 +103,8 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
     }
 
     public ActionForward editProgram(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-    		throws FenixActionException {
-        final DynaActionForm dynaActionForm = (DynaActionForm) form;
-        final String curriculumIDString = request.getParameter("curriculumID");
-        final String program = dynaActionForm.getString("program");
-        final String programEn = dynaActionForm.getString("programEn");
-
-        final ExecutionCourse executionCourse = (ExecutionCourse) request.getAttribute("executionCourse");
-        final Curriculum curriculum = findCurriculum(executionCourse, Integer.valueOf(curriculumIDString));
-        final InfoCurriculum infoCurriculum = new InfoCurriculum();
-        infoCurriculum.setProgram(program);
-        infoCurriculum.setProgramEn(programEn);
-        final IUserView userView = getUserView(request);
-
-        final Object args[] = { executionCourse.getIdInternal(), curriculum.getCurricularCourse().getIdInternal(), infoCurriculum, userView.getUtilizador() };
-        try {
-            ServiceManagerServiceFactory.executeService(userView, "EditProgram", args);
-        } catch (NotAuthorizedFilterException e) {
-            ActionMessages messages = new ActionMessages();
-            messages.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage("error.teacherNotResponsibleOrNotCoordinator"));
-            saveErrors(request, messages);
-        } catch (Exception e) {
-            throw new FenixActionException(e);
-        }
-
+    		throws FenixActionException, FenixFilterException, FenixServiceException {
+    	executeFactoryMethod(request);
         return mapping.findForward("program");
     }
 
@@ -198,33 +154,7 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
 
     public ActionForward editObjectives(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
     		throws Exception {
-        final DynaActionForm dynaActionForm = (DynaActionForm) form;
-        final String curriculumIDString = request.getParameter("curriculumID");
-        final String generalObjectives = dynaActionForm.getString("generalObjectives");
-        final String generalObjectivesEn = dynaActionForm.getString("generalObjectivesEn");
-        final String operacionalObjectives = dynaActionForm.getString("operacionalObjectives");
-        final String operacionalObjectivesEn = dynaActionForm.getString("operacionalObjectivesEn");
-
-        final ExecutionCourse executionCourse = (ExecutionCourse) request.getAttribute("executionCourse");
-        final Curriculum curriculum = findCurriculum(executionCourse, Integer.valueOf(curriculumIDString));
-        final InfoCurriculum infoCurriculum = new InfoCurriculum();
-        infoCurriculum.setGeneralObjectives(generalObjectives);
-        infoCurriculum.setGeneralObjectivesEn(generalObjectivesEn);
-        infoCurriculum.setOperacionalObjectives(operacionalObjectives);
-        infoCurriculum.setOperacionalObjectivesEn(operacionalObjectivesEn);
-        final IUserView userView = getUserView(request);
-
-        final Object args[] = { executionCourse.getIdInternal(), curriculum.getCurricularCourse().getIdInternal(), infoCurriculum, userView.getUtilizador() };
-        try {
-        	ServiceManagerServiceFactory.executeService(userView, "EditObjectives", args);
-        } catch (NotAuthorizedFilterException e) {
-        	ActionMessages messages = new ActionMessages();
-        	messages.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage("error.teacherNotResponsibleOrNotCoordinator"));
-        	saveErrors(request, messages);
-        } catch (Exception e) {
-        	throw new FenixActionException(e);
-        }
-
+    	executeFactoryMethod(request);
         return mapping.findForward("objectives");
     }
 

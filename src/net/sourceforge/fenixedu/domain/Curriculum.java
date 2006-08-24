@@ -5,9 +5,11 @@
  */
 package net.sourceforge.fenixedu.domain;
 
-import java.util.Calendar;
-
+import net.sourceforge.fenixedu.accessControl.AccessControl;
+import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.util.MultiLanguageString;
+
+import org.joda.time.DateTime;
 
 /**
  * 
@@ -19,28 +21,23 @@ public class Curriculum extends Curriculum_Base {
     public Curriculum() {
 		super();
 		setRootDomainObject(RootDomainObject.getInstance());
+    	final IUserView userView = AccessControl.getUserView();
+        this.setPersonWhoAltered(userView.getPerson());
 	}
 
     public void edit(String generalObjectives, String operacionalObjectives, String program,
-            String generalObjectivesEn, String operacionalObjectivesEn, String programEn,
-            String language, Person person) {
+            String generalObjectivesEn, String operacionalObjectivesEn, String programEn) {
 
-        if (language == null) {
+    	this.setGeneralObjectives(generalObjectives);
+    	this.setOperacionalObjectives(operacionalObjectives);
+    	this.setProgram(program);
+    	this.setGeneralObjectivesEn(generalObjectivesEn);
+    	this.setOperacionalObjectivesEn(operacionalObjectivesEn);
+    	this.setProgramEn(programEn);
 
-            this.setGeneralObjectives(generalObjectives);
-            this.setOperacionalObjectives(operacionalObjectives);
-            this.setProgram(program);
-
-        } else {
-
-            this.setGeneralObjectivesEn(generalObjectivesEn);
-            this.setOperacionalObjectivesEn(operacionalObjectivesEn);
-            this.setProgramEn(programEn);
-        }
-
-        this.setPersonWhoAltered(person);
-        Calendar today = Calendar.getInstance();
-        this.setLastModificationDate(today.getTime());
+    	final IUserView userView = AccessControl.getUserView();
+        this.setPersonWhoAltered(userView.getPerson());
+        this.setLastModificationDateDateTime(new DateTime());
     }
 
     public void delete() {

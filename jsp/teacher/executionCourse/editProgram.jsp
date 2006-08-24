@@ -35,31 +35,13 @@
 		<bean:write name="curricularCourse" property="name"/>
 	</h3>
 	<blockquote>
-		<html:form action="/editProgram">
-			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="editProgram"/>
-			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
-			<bean:define id="curriculumID" type="java.lang.Integer" name="curriculum" property="idInternal"/>
-			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.curriculumID" property="curriculumID" value="<%= curriculumID.toString() %>"/>
-			<bean:define id="executionCourseID" type="java.lang.Integer" name="executionCourse" property="idInternal"/>
-			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.executionCourseID" property="executionCourseID" value="<%= executionCourseID.toString() %>"/>
-			<h4>
-				<bean:message key="title.program"/>
-			</h4>
-			<html:textarea bundle="HTMLALT_RESOURCES" altKey="textarea.program"  property="program" cols="50" rows="8"/>
-			<br/>
-			<h4>
-				<bean:message key="title.program.eng"/>
-			</h4>
-			<html:textarea bundle="HTMLALT_RESOURCES" altKey="textarea.programEn"  property="programEn" cols="50" rows="8"/>
-
-			<br/>
-			<br/>
-			<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton">
-				<bean:message key="button.save"/>
-			</html:submit>
-			<html:reset bundle="HTMLALT_RESOURCES" altKey="reset.reset"  styleClass="inputbutton">
-				<bean:message key="label.clear"/>
-			</html:reset>
-		</html:form>
+		<bean:define id="url" type="java.lang.String">/editProgram.do?method=editProgram&amp;executionCourseID=<bean:write name="executionCourse" property="idInternal"/></bean:define>
+		<fr:edit name="curricularCourse" property="curriculumFactoryEditCurriculum"
+				schema="net.sourceforge.fenixedu.domain.Curriculum.Program"
+				action="<%= url %>"
+				>
+			<fr:layout name="flow">
+			</fr:layout>
+		</fr:edit>
 	</blockquote>
 </logic:present>
