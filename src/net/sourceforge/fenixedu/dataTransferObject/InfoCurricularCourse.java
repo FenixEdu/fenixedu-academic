@@ -20,9 +20,9 @@ import net.sourceforge.fenixedu.util.CurricularCourseExecutionScope;
  */
 public class InfoCurricularCourse extends InfoObject implements Comparable, ISiteComponent {
 
-	private final CurricularCourse curricularCourse;
+    private final CurricularCourse curricularCourse;
 
-	private boolean showEnVersion = false;
+    private boolean showEnVersion = false;
 
     private List<InfoCurricularCourseScope> infoScopes;
 
