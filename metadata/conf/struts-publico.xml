@@ -409,7 +409,7 @@
               path="/viewRoom"
               scope="request"
               validate="true"
-              type="net.sourceforge.fenixedu.presentationTier.Action.publico.SiteViewerDispatchAction">
+              type="net.sourceforge.fenixedu.presentationTier.Action.publico.RoomSiteViewerDispatchAction">
         <forward name="roomViewer" path="viewRoom"/>
       </action>
 
@@ -419,7 +419,7 @@
 	              path="/viewRoomNew"
 	              scope="request"
 	              validate="true"
-	              type="net.sourceforge.fenixedu.presentationTier.Action.publico.SiteViewerDispatchAction">
+	              type="net.sourceforge.fenixedu.presentationTier.Action.publico.RoomSiteViewerDispatchAction">
 	        <forward name="roomViewer" path="/siteViewerRoomNew.do?method=roomViewer"/>
       </action>
       <action path="/prepareViewRoomOcupation"
@@ -580,7 +580,7 @@
 				scope="request"
               	validate="false"
 				parameter="method"
-				type="net.sourceforge.fenixedu.presentationTier.Action.publico.SiteViewerDispatchAction">
+				type="net.sourceforge.fenixedu.presentationTier.Action.publico.RoomSiteViewerDispatchAction">
 			<forward name="roomViewer" path="viewRoom"/>
 			<forward name="executionCourseViewer" path="viewExecutionCourse"/>
 		</action>
