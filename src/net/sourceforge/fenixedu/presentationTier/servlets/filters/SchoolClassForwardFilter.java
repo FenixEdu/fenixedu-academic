@@ -88,9 +88,6 @@ public class SchoolClassForwardFilter implements Filter {
 	        if(tokens.length == 2){
 	            /* fenix/curso/horarios */
 	        	String degreeCode = tokens[tokens.length - 2];
-	            if (degreeCode.indexOf("-pB") < 0) {
-	            	degreeCode += "-pB";
-	            }
 	        	Integer degreeId;
                 try {
                     degreeId = getDegreeId(degreeCode);

@@ -104,9 +104,6 @@ public class ExecutionCourseForwardFilter implements Filter {
 
         else {
             String degreeCode = tokens[0];
-            if (degreeCode.indexOf("-pB") < 0) {
-            	degreeCode += "-pB";
-            }
             Integer degreeId;
             try {
                 degreeId = getDegreeId(degreeCode);

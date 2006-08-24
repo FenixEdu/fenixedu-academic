@@ -82,9 +82,6 @@ public class ExamsForwardFilter implements Filter{
 	        
 	        if(tokens.length == 2){
 	        	String degreeCode = tokens[tokens.length - 2];
-	            if (degreeCode.indexOf("-pB") < 0) {
-	            	degreeCode += "-pB";
-	            }
 	        	Integer degreeId;
                 try {
                     degreeId = getDegreeId(degreeCode);
