@@ -31,8 +31,14 @@
    	</slot>	
 </schema>
 <schema name="ViewLessonPlanning" type="net.sourceforge.fenixedu.domain.LessonPlanning" bundle="DEFAULT">	
-	<slot name="title" key="label.lessonPlanning.title"/>
-	<slot name="planning" key="label.lessonPlanning.planning"/>
+	<slot name="title" key="label.lessonPlanning.title">
+		<property name="escaped" value="false"/>
+		<property name="newlineAware" value="false"/>
+	</slot>
+	<slot name="planning" key="label.lessonPlanning.planning">
+		 <property name="escaped" value="false"/>
+		 <property name="newlineAware" value="false"/>
+	</slot>
 </schema>
 <schema name="net.sourceforge.fenixedu.domain.EvaluationMethod" type="net.sourceforge.fenixedu.domain.EvaluationMethod" bundle="DEFAULT">
 	<slot name="evaluationElements" layout="rich-text" key="no.title.evaluationElements">
