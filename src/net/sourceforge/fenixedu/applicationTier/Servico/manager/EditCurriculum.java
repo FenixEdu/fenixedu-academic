@@ -52,7 +52,7 @@ public class EditCurriculum extends Service {
             curriculum.edit(infoCurriculum.getGeneralObjectives(), infoCurriculum
                     .getOperacionalObjectives(), infoCurriculum.getProgram(), infoCurriculum
                     .getGeneralObjectivesEn(), infoCurriculum.getOperacionalObjectivesEn(),
-                    infoCurriculum.getProgramEn(), language, person);
+                    infoCurriculum.getProgramEn());
 
         } else {
             Curriculum newCurriculum = new Curriculum();
@@ -61,7 +61,7 @@ public class EditCurriculum extends Service {
             newCurriculum.edit(infoCurriculum.getGeneralObjectives(), infoCurriculum
                     .getOperacionalObjectives(), infoCurriculum.getProgram(), infoCurriculum
                     .getGeneralObjectivesEn(), infoCurriculum.getOperacionalObjectivesEn(),
-                    infoCurriculum.getProgramEn(), language, person);
+                    infoCurriculum.getProgramEn());
 
         }
     }

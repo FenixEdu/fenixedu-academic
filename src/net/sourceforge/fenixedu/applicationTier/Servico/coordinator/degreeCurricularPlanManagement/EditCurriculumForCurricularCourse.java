@@ -63,7 +63,7 @@ public class EditCurriculumForCurricularCourse extends Service {
             oldCurriculum.edit(newInfoCurriculum.getGeneralObjectives(), newInfoCurriculum
                     .getOperacionalObjectives(), newInfoCurriculum.getProgram(), newInfoCurriculum
                     .getGeneralObjectivesEn(), newInfoCurriculum.getOperacionalObjectivesEn(),
-                    newInfoCurriculum.getProgramEn(), language, person);
+                    newInfoCurriculum.getProgramEn());
 
         } else {
             Curriculum newCurriculum = new Curriculum();
@@ -72,7 +72,7 @@ public class EditCurriculumForCurricularCourse extends Service {
             newCurriculum.edit(newInfoCurriculum.getGeneralObjectives(), newInfoCurriculum
                     .getOperacionalObjectives(), newInfoCurriculum.getProgram(), newInfoCurriculum
                     .getGeneralObjectivesEn(), newInfoCurriculum.getOperacionalObjectivesEn(),
-                    newInfoCurriculum.getProgramEn(), language, person);
+                    newInfoCurriculum.getProgramEn());
 
         }
         result = Boolean.TRUE;

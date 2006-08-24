@@ -57,13 +57,11 @@ public class EditProgram extends Service {
 
             curriculum.edit(curriculum.getGeneralObjectives(), curriculum.getOperacionalObjectives(),
                     infoCurriculumNew.getProgram(), curriculum.getGeneralObjectivesEn(), curriculum
-                            .getOperacionalObjectivesEn(), infoCurriculumNew.getProgramEn(), null,
-                    person);
+                            .getOperacionalObjectivesEn(), infoCurriculumNew.getProgramEn());
 
             curriculum.edit(curriculum.getGeneralObjectives(), curriculum.getOperacionalObjectives(),
                     infoCurriculumNew.getProgram(), curriculum.getGeneralObjectivesEn(), curriculum
-                            .getOperacionalObjectivesEn(), infoCurriculumNew.getProgramEn(), "Eng",
-                    person);
+                            .getOperacionalObjectivesEn(), infoCurriculumNew.getProgramEn());
 
         } else {
 
