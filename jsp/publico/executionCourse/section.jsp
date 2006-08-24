@@ -7,7 +7,7 @@
 <h2><bean:write name="section" property="name" /></h2>
 
 <logic:notEmpty name="section" property="associatedItems">
-	<logic:iterate id="item" name="section" property="associatedItems">
+	<logic:iterate id="item" name="section" property="orderedItems">
 		<logic:equal name="item" property="urgent" value="true">
 			<font color="red">
 		</logic:equal>

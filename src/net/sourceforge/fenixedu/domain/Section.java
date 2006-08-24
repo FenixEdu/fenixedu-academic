@@ -171,4 +171,10 @@ public class Section extends Section_Base {
     	return sections;
     }
 
+    public SortedSet<Item> getOrderedItems() {
+        final SortedSet<Item> items = new TreeSet<Item>(Item.COMPARATOR_BY_ORDER);
+        items.addAll(getAssociatedItemsSet());
+        return items;
+    }
+
 }

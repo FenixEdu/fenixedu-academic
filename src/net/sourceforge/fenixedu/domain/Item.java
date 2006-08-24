@@ -1,6 +1,9 @@
 package net.sourceforge.fenixedu.domain;
 
+import java.util.Comparator;
 import java.util.List;
+
+import org.apache.commons.beanutils.BeanComparator;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
@@ -10,6 +13,8 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
  */
 
 public class Item extends Item_Base {
+
+    public static final Comparator<Item> COMPARATOR_BY_ORDER = new BeanComparator("itemOrder");
 
     public Item() {
 		super();
