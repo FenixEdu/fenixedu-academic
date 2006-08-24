@@ -45,6 +45,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstan
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 import net.sourceforge.fenixedu.util.DateFormatUtil;
+import net.sourceforge.fenixedu.util.LanguageUtils;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.CollectionUtils;
@@ -267,8 +268,8 @@ public class SummaryManagerAction extends FenixDispatchAction {
         String lessonPlanningID = dynaActionForm.getString("lessonPlanning");
         if(!StringUtils.isEmpty(lessonPlanningID)) {
             LessonPlanning lessonPlanning = rootDomainObject.readLessonPlanningByOID(Integer.valueOf(lessonPlanningID));
-            dynaActionForm.set("summaryText", lessonPlanning.getPlanning());
-            dynaActionForm.set("title", lessonPlanning.getTitle());
+            dynaActionForm.set("summaryText", lessonPlanning.getPlanning().getContent(LanguageUtils.getLanguage().pt));
+            dynaActionForm.set("title", lessonPlanning.getTitle().getContent(LanguageUtils.getLanguage().pt));
         }
     }
 
@@ -627,8 +628,8 @@ public class SummaryManagerAction extends FenixDispatchAction {
         String lessonPlanningID = summaryForm.getString("lessonPlanning");
         if(!StringUtils.isEmpty(lessonPlanningID)) {
             LessonPlanning lessonPlanning = rootDomainObject.readLessonPlanningByOID(Integer.valueOf(lessonPlanningID));
-            summaryForm.set("summaryText", lessonPlanning.getPlanning());
-            ((InfoSiteSummary) siteView.getComponent()).getInfoSummary().setTitle(lessonPlanning.getTitle());
+            summaryForm.set("summaryText", lessonPlanning.getPlanning().getContent(LanguageUtils.getLanguage().pt));
+            ((InfoSiteSummary) siteView.getComponent()).getInfoSummary().setTitle(lessonPlanning.getTitle().getContent(LanguageUtils.getLanguage().pt));
         }
     }
 

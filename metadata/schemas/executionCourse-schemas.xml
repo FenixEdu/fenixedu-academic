@@ -11,7 +11,7 @@
    		<property name="safe" value="true" />
    		<property name="columns" value="70"/>
    		<property name="rows" value="15"/>
-   		<property name="config" value="intermediate-fun" />
+   		<property name="config" value="intermediate" />
    	</slot>	
 </schema>
 <schema name="EditLessonPlanning" type="net.sourceforge.fenixedu.domain.LessonPlanning" bundle="DEFAULT">	
@@ -27,14 +27,28 @@
    		<property name="safe" value="true" />
    		<property name="columns" value="70"/>
    		<property name="rows" value="15"/>
-   		<property name="config" value="intermediate-fun" />
+   		<property name="config" value="intermediate" />
    	</slot>	
+</schema>
+<schema name="ViewLessonPlanning" type="net.sourceforge.fenixedu.domain.LessonPlanning" bundle="DEFAULT">	
+	<slot name="title" key="label.lessonPlanning.title"/>
+	<slot name="planning" key="label.lessonPlanning.planning"/>
 </schema>
 <schema name="net.sourceforge.fenixedu.domain.EvaluationMethod" type="net.sourceforge.fenixedu.domain.EvaluationMethod" bundle="DEFAULT">
 	<slot name="evaluationElements" layout="rich-text" key="no.title.evaluationElements">
    		<property name="safe" value="true" />
    		<property name="columns" value="70"/>
    		<property name="rows" value="15"/>
-   		<property name="config" value="intermediate-fun" />		
+   		<property name="config" value="intermediate" />		
 	</slot>
 </schema>
+<schema name="ListExecutionCourseShifts" type="net.sourceforge.fenixedu.dataTransferObject.teacher.ExecutionCourseShiftsBean" bundle="DEFAULT">	
+	<slot name="shift" key="label.summary.shift" layout="menu-select-postback" 
+		validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionCourseShiftsProvider"/>		
+		<property name="eachLayout" value=""/>
+		<property name="destination" value="postBack"/>
+		<property name="format" value="{name}" />
+	</slot>	
+</schema>
+

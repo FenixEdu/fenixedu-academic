@@ -5,14 +5,15 @@ import java.io.Serializable;
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ShiftType;
+import net.sourceforge.fenixedu.util.MultiLanguageString;
 
 public class CreateLessonPlanningBean implements Serializable {
 
     private DomainReference<ExecutionCourse> executionCourseReference;
     
-    private String title;
+    private MultiLanguageString title;
     
-    private String planning;
+    private MultiLanguageString planning;
     
     private ShiftType lessonType;
 
@@ -36,19 +37,19 @@ public class CreateLessonPlanningBean implements Serializable {
         this.lessonType = lessonType;
     }
 
-    public String getPlanning() {
+    public MultiLanguageString getPlanning() {
         return planning;
     }
 
-    public void setPlanning(String planning) {
+    public void setPlanning(MultiLanguageString planning) {
         this.planning = planning;
     }
 
-    public String getTitle() {
+    public MultiLanguageString getTitle() {
         return title;
     }
 
-    public void setTitle(String title) {
+    public void setTitle(MultiLanguageString title) {
         this.title = title;
     }     
 }

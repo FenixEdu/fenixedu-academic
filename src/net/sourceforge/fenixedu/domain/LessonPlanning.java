@@ -4,6 +4,7 @@ import java.util.Comparator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.util.MultiLanguageString;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.lang.StringUtils;
@@ -17,7 +18,7 @@ public class LessonPlanning extends LessonPlanning_Base {
         setRootDomainObject(RootDomainObject.getInstance());
     }
     
-    public LessonPlanning(String title, String planning, ShiftType lessonType, ExecutionCourse executionCourse) {
+    public LessonPlanning(MultiLanguageString title, MultiLanguageString planning, ShiftType lessonType, ExecutionCourse executionCourse) {
         this();
         checkParameters(title, planning, lessonType, executionCourse);
         setLastOrder(executionCourse, lessonType);
@@ -59,11 +60,11 @@ public class LessonPlanning extends LessonPlanning_Base {
         setOrderOfPlanning(order);
     }
     
-    private void checkParameters(String title, String planning, ShiftType lessonType, ExecutionCourse executionCourse) {
-        if(StringUtils.isEmpty(title)) {
+    private void checkParameters(MultiLanguageString title, MultiLanguageString planning, ShiftType lessonType, ExecutionCourse executionCourse) {
+        if(StringUtils.isEmpty(title.getContent())) {
             throw new DomainException("error.LessonPlanning.no.title");
         }
-        if(StringUtils.isEmpty(planning)) {
+        if(StringUtils.isEmpty(planning.getContent())) {
             throw new DomainException("error.LessonPlanning.no.planning");
         }
         if(lessonType == null) {

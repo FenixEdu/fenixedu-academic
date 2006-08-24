@@ -19,8 +19,16 @@
 		<br/>
 		<logic:iterate id="lessonPlanning" name="lessonPlannings" property="value" indexId="index">
 			<i><bean:message key="label.lesson"/></i>&nbsp;<i><bean:write name="lessonPlanning" property="orderOfPlanning"/></i><br/>
-			<b><bean:write name="lessonPlanning" property="title"/></b><br/>
-			<bean:write name="lessonPlanning" property="planning" filter="false"/><br/>													
+			
+			<fr:view name="lessonPlanning" schema="ViewLessonPlanning">
+				<fr:layout name="flow">
+					<fr:property name="labelTerminator" value=""/>
+					<fr:property name="labelExcluded" value="true"/>
+					<fr:property name="eachClasses" value="bold," />
+					<fr:property name="eachInline" value="false" />
+				</fr:layout>
+			</fr:view>	
+									
 			<br/>
 		</logic:iterate>				
 	</logic:iterate>

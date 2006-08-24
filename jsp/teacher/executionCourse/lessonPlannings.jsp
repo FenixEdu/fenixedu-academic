@@ -38,9 +38,17 @@
 		</logic:notEmpty>
 		<logic:iterate id="lessonPlanning" name="lessonPlannings" property="value" indexId="index">
 		<div>
-			<p class="mtop2 mbottom0"><em><bean:message key="label.lessonPlanning"/></em> <em><bean:write name="lessonPlanning" property="orderOfPlanning"/></em></p>
-			<p class="mtop0 mbottom025"><b><bean:write name="lessonPlanning" property="title"/></b></p>
-			<div class="mvert0"><bean:write name="lessonPlanning" property="planning" filter="false"/></div>							
+			<p class="mtop2 mbottom0"><em><bean:message key="label.lessonPlanning"/></em> <em><bean:write name="lessonPlanning" property="orderOfPlanning"/></em></p>		
+
+			<fr:view name="lessonPlanning" schema="ViewLessonPlanning">
+				<fr:layout name="flow">
+					<fr:property name="labelTerminator" value=""/>
+					<fr:property name="labelExcluded" value="true"/>
+					<fr:property name="eachClasses" value="bold," />
+					<fr:property name="eachInline" value="false" />
+				</fr:layout>
+			</fr:view>
+			
 			<p class="mtop05">
 				<html:link page="<%= edit %>" paramId="lessonPlanningID" paramName="lessonPlanning" paramProperty="idInternal">
 					<bean:message key="link.edit"/>

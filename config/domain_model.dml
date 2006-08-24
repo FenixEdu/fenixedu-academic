@@ -1875,8 +1875,8 @@ class net.sourceforge.fenixedu.domain.Lesson extends net.sourceforge.fenixedu.do
 
 class net.sourceforge.fenixedu.domain.LessonPlanning extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer orderOfPlanning;
-	String title;
-	String planning;
+	MultiLanguageString title;
+	MultiLanguageString planning;
 	ShiftType lessonType;
 	Integer keyExecutionCourse;
 }
