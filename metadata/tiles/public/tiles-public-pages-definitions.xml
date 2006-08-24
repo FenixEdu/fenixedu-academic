@@ -222,6 +222,9 @@
 	<definition name="execution-course-lesson-plannings" extends="definition.public.executionCourse">
 		<put name="body" value="/publico/executionCourse/lessonPlannings.jsp"/>
 	</definition>	
+	<definition name="moved-permanently" extends="definition.public.executionCourse">
+		<put name="body" value="/publico/executionCourse/movedPermanently.jsp"/>
+	</definition>	
 
 	<definition name="chooseRoom" page="/layout/publicGesDisLayout_2col.jsp">
 		<put name="title" value="Instituto Superior Técnico" />

@@ -17,8 +17,9 @@
 <logic:notEmpty name="executionCourse" property="evaluationMethod">
 	<p>
 		<fr:view name="executionCourse" property="evaluationMethod.evaluationElements">
-			<fr:layout name="html">
+			<fr:layout>
 				<fr:property name="escaped" value="false" />
+				<fr:property name="newlineAware" value="false" />
 			</fr:layout>
 		</fr:view>
 	</p>

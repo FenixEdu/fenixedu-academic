@@ -32,8 +32,9 @@
 			</h4>
 			<logic:present name="competenceCourse" property="objectives">
 				<fr:view name="competenceCourse" property="objectivesI18N">
-					<fr:layout name="html">
+					<fr:layout>
 						<fr:property name="escaped" value="false" />
+						<fr:property name="newlineAware" value="false" />
 					</fr:layout>
 				</fr:view>
 			</logic:present>
@@ -74,6 +75,7 @@
 							<fr:view name="curriculum" property="operacionalObjectivesI18N">
 								<fr:layout name="html">
 									<fr:property name="escaped" value="false" />
+									<fr:property name="newlineAware" value="false" />
 								</fr:layout>
 							</fr:view>
 						</logic:notEmpty>

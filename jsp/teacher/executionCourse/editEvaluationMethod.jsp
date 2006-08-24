@@ -30,7 +30,10 @@
 		<fr:edit name="executionCourse" property="evaluationMethod"
 				schema="net.sourceforge.fenixedu.domain.EvaluationMethod"
 				action="<%= url %>">
-			<fr:layout name="list"/>
+			<fr:layout name="flow">
+				<property name="labelExcluded" value="true" />
+				<property name="labelTerminator" value="" />
+			</fr:layout>
 		</fr:edit>
 	</blockquote>
 

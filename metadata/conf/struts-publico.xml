@@ -462,6 +462,7 @@
 		validate="true"
         type="net.sourceforge.fenixedu.presentationTier.Action.publico.SiteViewerDispatchAction">
      <forward name="sucess" path="executionCourseSite"/>   
+     <forward name="moved-permanently" path="moved-permanently"/>
    	</action>
    	
    	<action 

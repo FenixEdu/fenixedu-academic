@@ -25,8 +25,9 @@
 				<bean:message bundle="ENUMERATION_RESOURCES" name="degree" property="degreeType.name"/>
 				<bean:message key="label.in"/>
 				<fr:view name="degree" property="nameI18N">
-					<fr:layout name="html">
+					<fr:layout>
 						<fr:property name="escaped" value="false" />
+						<fr:property name="newlineAware" value="false" />
 					</fr:layout>
 				</fr:view>
 			</logic:iterate>
@@ -62,8 +63,9 @@
 							<bean:message key="title.program"/>
 						</h4>
 						<fr:view name="curriculum" property="programI18N">
-							<fr:layout name="html">
+							<fr:layout>
 								<fr:property name="escaped" value="false" />
+								<fr:property name="newlineAware" value="false" />
 							</fr:layout>
 						</fr:view>
 					</logic:present>
