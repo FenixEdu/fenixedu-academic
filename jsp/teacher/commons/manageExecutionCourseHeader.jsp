@@ -10,6 +10,12 @@
 		<%--<bean:message key="message.course.editing"/>--%>
 		<bean:write name="executionCourse" property="nome"/>
 
+		-
+
+		<bean:write name="executionCourse" property="executionPeriod.semester" />
+		<bean:message bundle="PUBLIC_DEGREE_INFORMATION" locale="pt_PT" key="public.degree.information.label.ordinal.semester.abbr" />
+		<bean:write name="executionCourse" property="executionPeriod.executionYear.year" />
+
 		(&nbsp; 
 		<logic:iterate id="degree" name="executionCourse" property="degreesSortedByDegreeName">
 			<bean:write name="degree" property="sigla"/>&nbsp;

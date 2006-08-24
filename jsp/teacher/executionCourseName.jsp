@@ -6,10 +6,17 @@
 
 <logic:present name="siteView" >
 <bean:define id="component" name="siteView" property="commonComponent" />
+<bean:define id="executionCourse" name="component" property="executionCourse.executionCourse"/>
 
 	<em>
 		<%-- <bean:message key="message.course.editing" /> --%>
-		<bean:write name="component" property="executionCourse.nome"/>
+		<bean:write name="executionCourse" property="nome"/>
+
+		-
+
+		<bean:write name="executionCourse" property="executionPeriod.semester" />
+		<bean:message bundle="PUBLIC_DEGREE_INFORMATION" locale="pt_PT" key="public.degree.information.label.ordinal.semester.abbr" />
+		<bean:write name="executionCourse" property="executionPeriod.executionYear.year" />
 
 		(&nbsp;
 		<logic:present name="component" property="associatedDegrees">    
