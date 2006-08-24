@@ -56,17 +56,6 @@
 						</h4>
 						<bean:write name="competenceCourse" property="generalObjectivesEn" filter="false"/>
 					</logic:present>
-					<h4>
-						<bean:message key="label.operacionalObjectives"/>
-					</h4>
-					<bean:write name="competenceCourse" property="operacionalObjectives" filter="false"/>
-					<logic:present name="competenceCourse" property="operacionalObjectivesEn">
-						<br/>
-						<h4>
-							<bean:message key="label.operacionalObjectives.eng"/>
-						</h4>
-						<bean:write name="competenceCourse" property="operacionalObjectivesEn" filter="false"/>
-					</logic:present>
 				</blockquote>
 			</logic:equal>
 		</logic:equal>

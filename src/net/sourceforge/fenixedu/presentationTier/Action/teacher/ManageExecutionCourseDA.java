@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.presentationTier.Action.teacher;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.TreeMap;
 
 import javax.servlet.http.HttpServletRequest;
@@ -10,9 +11,9 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.dataTransferObject.InfoEvaluationMethod;
 import net.sourceforge.fenixedu.dataTransferObject.gesdis.CreateLessonPlanningBean;
 import net.sourceforge.fenixedu.domain.BibliographicReference;
+import net.sourceforge.fenixedu.domain.CompetenceCourse;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Curriculum;
 import net.sourceforge.fenixedu.domain.EvaluationMethod;
@@ -166,12 +167,27 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
     public ActionForward prepareEditEvaluationMethod(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
     		throws Exception {
         final ExecutionCourse executionCourse = (ExecutionCourse) request.getAttribute("executionCourse");
-        if (executionCourse != null) {
-            final DynaActionForm dynaActionForm = (DynaActionForm) form;
-            dynaActionForm.set("evaluationMethod", executionCourse.getEvaluationMethod().getEvaluationElements().getContent(Language.pt));
-            dynaActionForm.set("evaluationMethodEn", executionCourse.getEvaluationMethod().getEvaluationElements().getContent(Language.en));
+        EvaluationMethod evaluationMethod = executionCourse.getEvaluationMethod();
+        if (evaluationMethod == null) {
+        	final MultiLanguageString evaluationMethodMls = new MultiLanguageString();
+        	final Set<CompetenceCourse> competenceCourses = executionCourse.getCompetenceCourses();
+        	if (!competenceCourses.isEmpty()) {
+        		final CompetenceCourse competenceCourse = competenceCourses.iterator().next();
+        		final String pt = competenceCourse.getEvaluationMethod();
+        		final String en = competenceCourse.getEvaluationMethodEn();
+        		evaluationMethodMls.setContent(Language.pt, pt == null ? "" : pt);
+        		evaluationMethodMls.setContent(Language.en, en == null ? "" : en);
+        	}
+            final Object args[] = { executionCourse, new MultiLanguageString() };
+            executeService(request, "EditEvaluation", args);
+            evaluationMethod = executionCourse.getEvaluationMethod();
         }
-
+        final MultiLanguageString multiLanguageString = evaluationMethod.getEvaluationElements();
+        if (multiLanguageString != null) {
+        	final DynaActionForm dynaActionForm = (DynaActionForm) form;
+        	dynaActionForm.set("evaluationMethod", multiLanguageString.getContent(Language.pt));
+        	dynaActionForm.set("evaluationMethodEn", multiLanguageString.getContent(Language.en));
+        }
         return mapping.findForward("edit-evaluationMethod");
     }
 
@@ -185,12 +201,9 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
         multiLanguageString.setContent(Language.en, evaluationMethodEn);
 
         final ExecutionCourse executionCourse = (ExecutionCourse) request.getAttribute("executionCourse");
-        final InfoEvaluationMethod infoEvaluationMethod = new InfoEvaluationMethod();
-        infoEvaluationMethod.setEvaluationElements(multiLanguageString);
-        final IUserView userView = getUserView(request);
 
-        final Object args[] = { executionCourse.getIdInternal(), null, infoEvaluationMethod };
-        ServiceManagerServiceFactory.executeService(userView, "EditEvaluation", args);
+        final Object args[] = { executionCourse, multiLanguageString };
+        executeService(request, "EditEvaluation", args);
 
         return mapping.findForward("evaluationMethod");
     }

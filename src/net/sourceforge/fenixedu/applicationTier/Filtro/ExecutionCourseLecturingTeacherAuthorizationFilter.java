@@ -10,7 +10,6 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFi
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Professorship;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import pt.utl.ist.berserk.ServiceRequest;
@@ -46,26 +45,16 @@ public class ExecutionCourseLecturingTeacherAuthorizationFilter extends Authoriz
     }
 
     private boolean lecturesExecutionCourse(IUserView id, Object[] arguments) {
-        Integer executionCourseID;
-        if (arguments == null) {
-            return false;
-        } else if (arguments[0] instanceof InfoExecutionCourse) {
-            executionCourseID = ((InfoExecutionCourse) arguments[0]).getIdInternal();
-        } else if (arguments[0] instanceof Integer) {
-            executionCourseID = (Integer) arguments[0];
-        } else {
-            return false;
-        }
+    	final ExecutionCourse executionCourse = getExecutionCourse(arguments[0]);
+    	if (executionCourse == null) {
+    		return false;
+    	}
+
         if (id.getPerson() == null) {
             return false;
         }
         final Teacher teacher = id.getPerson().getTeacher();
         if (teacher == null) {
-            return false;
-        }
-        final ExecutionCourse executionCourse = RootDomainObject.getInstance().readExecutionCourseByOID(
-                executionCourseID);
-        if (executionCourse == null) {
             return false;
         }
 
@@ -76,4 +65,21 @@ public class ExecutionCourseLecturingTeacherAuthorizationFilter extends Authoriz
         }
         return false;
     }
+
+    private ExecutionCourse getExecutionCourse(Object argument) {
+        if (argument == null) {
+            return null;
+        } else if (argument instanceof ExecutionCourse) {
+        	return (ExecutionCourse) argument;
+        } else if (argument instanceof InfoExecutionCourse) {
+        	final InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse) argument;
+        	return rootDomainObject.readExecutionCourseByOID(infoExecutionCourse.getIdInternal());
+        } else if (argument instanceof Integer) {
+        	final Integer executionCourseID = (Integer) argument;
+        	return rootDomainObject.readExecutionCourseByOID(executionCourseID);
+        } else {
+            return null;
+        }
+    }
+
 }
