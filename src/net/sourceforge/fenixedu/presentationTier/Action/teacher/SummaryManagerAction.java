@@ -635,7 +635,7 @@ public class SummaryManagerAction extends TeacherAdministrationViewerDispatchAct
     }
 
     private void getLabelValueBeansOfLessonPlannings(ExecutionCourse executionCourse, ShiftType shiftType, Set<LabelValueBean> lessonPlannings) {        
-        String shiftTypeLabel = RenderUtils.getEnumString(ShiftType.class, null);                     
+        String shiftTypeLabel = RenderUtils.getEnumString(shiftType, null);                     
         for (LessonPlanning planning : executionCourse.getLessonPlanningsOrderedByOrder(shiftType)) {
             String label = "Aula " + planning.getOrderOfPlanning() + " (" + shiftTypeLabel + ")";
             lessonPlannings.add(new LabelValueBean(label, planning.getIdInternal().toString()));
