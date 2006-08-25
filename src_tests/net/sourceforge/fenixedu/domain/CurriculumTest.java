@@ -45,7 +45,7 @@ public class CurriculumTest extends DomainTestBase {
 
     public void testEdit() {
         
-        curriculum.edit("generalObjectives2", "operacionalObjectives2", "program2", "", "", "", null, person);
+        curriculum.edit("generalObjectives2", "operacionalObjectives2", "program2", "", "", "");
         
         testGeneralObjectives("generalObjectives2", "generalObjectivesEn");            
         testOperacionalObjectives("operacionalObjectives2", "operacionalObjectivesEn");      
@@ -53,7 +53,7 @@ public class CurriculumTest extends DomainTestBase {
         
         assertEquals("Person Name Unexpected", person.getNome(), curriculum.getPersonWhoAltered().getNome());
         
-        curriculum.edit("", "", "", "generalObjectivesEn2", "operacionalObjectivesEn2", "programEn2", "Eng", person2);
+        curriculum.edit("", "", "", "generalObjectivesEn2", "operacionalObjectivesEn2", "programEn2");
                       
         testGeneralObjectives("generalObjectives2", "generalObjectivesEn2");
         testOperacionalObjectives("operacionalObjectives2", "operacionalObjectivesEn2");

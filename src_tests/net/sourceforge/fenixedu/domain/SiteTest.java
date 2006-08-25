@@ -7,6 +7,8 @@ package net.sourceforge.fenixedu.domain;
 import java.util.Calendar;
 import java.util.Date;
 
+import net.sourceforge.fenixedu.util.MultiLanguageString;
+
 public class SiteTest extends DomainTestBase {
 
     private Site site;
@@ -29,7 +31,7 @@ public class SiteTest extends DomainTestBase {
 
         parentSection = new Section();
         parentSection.setIdInternal(0);
-        parentSection.setName("ParentSection");
+        parentSection.setName(new MultiLanguageString(Language.pt, "ParentSection"));
         parentSection.setSite(site);
         parentSection.setSuperiorSection(null);
         parentSection.setSectionOrder(0);

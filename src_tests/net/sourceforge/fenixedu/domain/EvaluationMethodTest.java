@@ -4,6 +4,8 @@
  */
 package net.sourceforge.fenixedu.domain;
 
+import net.sourceforge.fenixedu.util.MultiLanguageString;
+
 public class EvaluationMethodTest extends DomainTestBase {
 
     private ExecutionCourse executionCourse;
@@ -18,14 +20,13 @@ public class EvaluationMethodTest extends DomainTestBase {
 
         evaluationMethod = new EvaluationMethod();
         evaluationMethod.setIdInternal(0);
-        evaluationMethod.setEvaluationElements("evaluationElements");
-        evaluationMethod.setEvaluationElementsEn("evaluationElementsEng");
+        evaluationMethod.setEvaluationElements(new MultiLanguageString(Language.pt, "evaluationElements"));
         evaluationMethod.setExecutionCourse(executionCourse);
     }
 
     public void testEdit() {
         try {
-            evaluationMethod.edit("newEvaluationElements", null);
+            evaluationMethod.edit(new MultiLanguageString(Language.pt, "newEvaluationElements"));
             fail("Expected NullPointerException!");
         } catch (NullPointerException e) {
             checkIfEvaluationMethodAttributesAreCorrect("evaluationElements", "evaluationElementsEng",
@@ -33,14 +34,14 @@ public class EvaluationMethodTest extends DomainTestBase {
         }
 
         try {
-            evaluationMethod.edit(null, "newEvaluationElementsEng");
+            evaluationMethod.edit(new MultiLanguageString(Language.pt, "newEvaluationElementsEng"));
             fail("Expected NullPointerException!");
         } catch (NullPointerException e) {
             checkIfEvaluationMethodAttributesAreCorrect("evaluationElements", "evaluationElementsEng",
                     this.executionCourse);
         }
 
-        evaluationMethod.edit("newEvaluationElements", "newEvaluationElementsEng");
+        evaluationMethod.edit(new MultiLanguageString(Language.pt, "newEvaluationElements"));
         checkIfEvaluationMethodAttributesAreCorrect("newEvaluationElements", "newEvaluationElementsEng",
                 this.executionCourse);
     }
@@ -62,7 +63,7 @@ public class EvaluationMethodTest extends DomainTestBase {
         assertEquals("Different EvaluationElements in EvaluationMethod!", evaluationElements,
                 evaluationMethod.getEvaluationElements());
         assertEquals("Different EvaluationElementsEng in EvaluationMethod!", evaluationElementsEng,
-                evaluationMethod.getEvaluationElementsEn());
+                evaluationMethod.getEvaluationElements().getContent(Language.en));
         assertTrue("Different ExecutionCourse in EvaluationMethod!", evaluationMethod
                 .getExecutionCourse().equals(executionCourse));
     }

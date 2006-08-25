@@ -5,6 +5,7 @@
 package net.sourceforge.fenixedu.domain;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.util.MultiLanguageString;
 
 public class SectionTest extends DomainTestBase {
 
@@ -21,14 +22,14 @@ public class SectionTest extends DomainTestBase {
         //Secção Superior
         section = new Section();
         section.setIdInternal(0);
-        section.setName("SectionName");
+        section.setName(new MultiLanguageString(Language.pt, "SectionName"));
         section.setSectionOrder(0);
         section.setSite(site);        
 
         //Secção Inferior de Secção       
         section2 = new Section();
         section2.setIdInternal(1);
-        section2.setName("SectionName2");        
+        section2.setName(new MultiLanguageString(Language.pt, "SectionName2"));        
         section2.setSectionOrder(0);
         section2.setSite(site);
         section2.setSuperiorSection(section);
@@ -36,7 +37,7 @@ public class SectionTest extends DomainTestBase {
         //Secção Inferior de Secção
         section3 = new Section();
         section3.setIdInternal(2);
-        section3.setName("SectionName3");
+        section3.setName(new MultiLanguageString(Language.pt, "SectionName3"));
         section3.setSectionOrder(1);
         section3.setSite(site);
         section3.setSuperiorSection(section);
@@ -44,7 +45,7 @@ public class SectionTest extends DomainTestBase {
         //Secção Inferior de Secção
         section4 = new Section();
         section4.setIdInternal(3);
-        section4.setName("SectionName4");
+        section4.setName(new MultiLanguageString(Language.pt, "SectionName4"));
         section4.setSectionOrder(2);
         section4.setSite(site);
         section4.setSuperiorSection(section);
@@ -52,30 +53,30 @@ public class SectionTest extends DomainTestBase {
         //Secção Superior
         section5 = new Section();
         section5.setIdInternal(4);
-        section5.setName("SectionName5");
+        section5.setName(new MultiLanguageString(Language.pt, "SectionName5"));
         section5.setSectionOrder(1);
         section5.setSite(site);  
         
         //Secção Superior
         section6 = new Section();
         section6.setIdInternal(5);
-        section6.setName("SectionName6");
+        section6.setName(new MultiLanguageString(Language.pt, "SectionName6"));
         section6.setSectionOrder(2);
         section6.setSite(site);  
                
         //Items associated to section3
         item = new Item();
         item.setIdInternal(0);
-        item.setName("ItemName");
-        item.setInformation("ItemInformation");
+        item.setName(new MultiLanguageString(Language.pt, "ItemName"));
+        item.setInformation(new MultiLanguageString(Language.pt, "ItemInformation"));
         item.setUrgent(true);
         item.setItemOrder(0);
         item.setSection(section3);
         
         item2 = new Item();
         item2.setIdInternal(1);
-        item2.setName("ItemName2");
-        item2.setInformation("ItemInformation2");
+        item2.setName(new MultiLanguageString(Language.pt, "ItemName2"));
+        item2.setInformation(new MultiLanguageString(Language.pt, "ItemInformation2"));
         item2.setUrgent(false);
         item2.setItemOrder(1);
         item2.setSection(section3);             
@@ -146,7 +147,7 @@ public class SectionTest extends DomainTestBase {
     
     public void testEdit(){
         try{
-            section.edit(null, null);
+            section.edit((MultiLanguageString) null, Integer.valueOf(0));
             fail("Expected NullPointerException");
         }
         catch(NullPointerException e){

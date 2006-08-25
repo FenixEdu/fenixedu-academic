@@ -4,6 +4,8 @@
  */
 package net.sourceforge.fenixedu.domain;
 
+import net.sourceforge.fenixedu.util.MultiLanguageString;
+
 
 public class ItemTest extends DomainTestBase {
 
@@ -19,29 +21,29 @@ public class ItemTest extends DomainTestBase {
 
         section = new Section();
         section.setIdInternal(0);
-        section.setName("Section");
+        section.setName(new MultiLanguageString(Language.pt, "Section"));
         section.setSite(site);
         
         item = new Item();
         item.setIdInternal(0);
-        item.setName("ItemName");
-        item.setInformation("ItemInformation");
+        item.setName(new MultiLanguageString(Language.pt, "ItemName"));
+        item.setInformation(new MultiLanguageString(Language.pt, "ItemInformation"));
         item.setUrgent(true);
         item.setSection(section);
         item.setItemOrder(0);      
         
         item2 = new Item();
         item2.setIdInternal(1);
-        item2.setName("ItemName2");
-        item2.setInformation("ItemInformation2");
+        item2.setName(new MultiLanguageString(Language.pt, "ItemName2"));
+        item2.setInformation(new MultiLanguageString(Language.pt, "ItemInformation2"));
         item2.setUrgent(false);
         item2.setSection(section);
         item2.setItemOrder(1);        
 
         item3 = new Item();
         item3.setIdInternal(2);
-        item3.setName("ItemName3");
-        item3.setInformation("ItemInformation3");
+        item3.setName(new MultiLanguageString(Language.pt, "ItemName3"));
+        item3.setInformation(new MultiLanguageString(Language.pt, "ItemInformation3"));
         item3.setUrgent(true);
         item3.setSection(section);
         item3.setItemOrder(2);
@@ -82,7 +84,7 @@ public class ItemTest extends DomainTestBase {
     public void testEdit() {
           
         try{
-            item2.edit(null, null, null, null);
+            item2.edit((MultiLanguageString) null, null, null, null);
             fail("Expected NullPointerException");
         }
         catch(NullPointerException e){

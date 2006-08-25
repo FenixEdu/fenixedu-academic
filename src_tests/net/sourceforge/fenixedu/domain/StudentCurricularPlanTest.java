@@ -10,6 +10,8 @@ import net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.StudentCurricularPlanState;
 import net.sourceforge.fenixedu.util.DateFormatUtil;
 
+import org.joda.time.YearMonthDay;
+
 public class StudentCurricularPlanTest extends DomainTestBase {
 
 	private StudentCurricularPlan newStudentCurricularPlan;
@@ -118,8 +120,7 @@ public class StudentCurricularPlanTest extends DomainTestBase {
 
 
 	private void setUpCreate(Registration student, DegreeCurricularPlan degreeCurricularPlan) throws ParseException {
-		newStudentCurricularPlan = new StudentCurricularPlan(student, degreeCurricularPlan,
-												StudentCurricularPlanState.ACTIVE, new Date());
+		newStudentCurricularPlan = new StudentCurricularPlan(student, degreeCurricularPlan, StudentCurricularPlanState.ACTIVE, new YearMonthDay());
 		
 		
 		studentForNewStudentCurricularPlan = new Registration();
@@ -166,7 +167,7 @@ public class StudentCurricularPlanTest extends DomainTestBase {
 		
 		StudentCurricularPlan scp = new StudentCurricularPlan(studentForNewStudentCurricularPlan,
 				degreeCurricularPlanForNewStudentCurricularPlan, branchForNewStudentCurricularPlan,
-				startDateForNewStudentCurricularPlan, stateForNewStudentCurricularPlan, 
+				new YearMonthDay(startDateForNewStudentCurricularPlan), stateForNewStudentCurricularPlan, 
 				givenCreditsForNewStudentCurricularPlan, specializationForNewStudentCurricularPlan) ;
 		
 		assertEquals("Failed to assign Registration", scp.getStudent(),studentForNewStudentCurricularPlan);

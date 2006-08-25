@@ -12,6 +12,7 @@ import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.space.OldRoom;
 import net.sourceforge.fenixedu.domain.student.Registration;
+import net.sourceforge.fenixedu.util.MultiLanguageString;
 
 public class ExecutionCourseTest extends DomainTestBase {
 
@@ -188,7 +189,7 @@ public class ExecutionCourseTest extends DomainTestBase {
                 .getEvaluationMethod());
 
         try {
-            executionCourse.createEvaluationMethod(null, null);
+            executionCourse.createEvaluationMethod(null);
             fail("Expected NullPointerException!");
         } catch (NullPointerException e) {
             assertNull("Expected Null Evaluation Method in ExecutionCourse!", executionCourse
@@ -196,7 +197,7 @@ public class ExecutionCourseTest extends DomainTestBase {
         }
 
         try {
-            executionCourse.createEvaluationMethod(null, "evaluationElementsEng");
+            executionCourse.createEvaluationMethod(new MultiLanguageString(Language.en, "evaluationElementsEng"));
             fail("Expected NullPointerException!");
         } catch (NullPointerException e) {
             assertNull("Expected Null Evaluation Method in ExecutionCourse!", executionCourse
@@ -204,20 +205,23 @@ public class ExecutionCourseTest extends DomainTestBase {
         }
 
         try {
-            executionCourse.createEvaluationMethod("evaluationElements", null);
+            executionCourse.createEvaluationMethod(new MultiLanguageString(Language.pt, "evaluationElements"));
             fail("Expected NullPointerException!");
         } catch (NullPointerException e) {
             assertNull("Expected Null Evaluation Method in ExecutionCourse!", executionCourse
                     .getEvaluationMethod());
         }
 
-        executionCourse.createEvaluationMethod("evaluationElements", "evaluationElementsEng");
+        final MultiLanguageString multiLanguageString = new MultiLanguageString();
+        multiLanguageString.setContent(Language.pt, "evaluationElements");
+        multiLanguageString.setContent(Language.en, "evaluationElementsEng");
+        executionCourse.createEvaluationMethod(multiLanguageString);
         assertNotNull("Expected Not Null EvaluationMethod in ExecutionCourse!", executionCourse
                 .getEvaluationMethod());
         assertEquals("Different EvaluationElements in EvaluationMethod!", "evaluationElements",
-                executionCourse.getEvaluationMethod().getEvaluationElements());
+                executionCourse.getEvaluationMethod().getEvaluationElements().getContent(Language.pt));
         assertEquals("Different EvaluationElementsEng in EvaluationMethod!", "evaluationElementsEng",
-                executionCourse.getEvaluationMethod().getEvaluationElementsEn());
+                executionCourse.getEvaluationMethod().getEvaluationElements().getContent(Language.en));
         assertTrue("Different ExecutionCourse in EvaluationMethod!", executionCourse
                 .getEvaluationMethod().getExecutionCourse().equals(executionCourse));
 

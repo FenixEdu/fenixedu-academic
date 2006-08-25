@@ -5,7 +5,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.applicationTier.security.PasswordEncryptor;
-import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
+import net.sourceforge.fenixedu.dataTransferObject.InfoPersonEditor;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.grant.owner.GrantOwner;
@@ -17,9 +17,9 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 
 public class PersonTest extends DomainTestBase {
 
-	InfoPerson infoPerson1;
-	InfoPerson infoPerson2;
-	InfoPerson infoPerson3;
+	InfoPersonEditor infoPerson1;
+	InfoPersonEditor infoPerson2;
+	InfoPersonEditor infoPerson3;
 
 	Role personRole;
 	Role teacherRole;
@@ -119,7 +119,7 @@ public class PersonTest extends DomainTestBase {
 
         
         
-		infoPerson1 = new InfoPerson();
+		infoPerson1 = new InfoPersonEditor();
 		infoPerson1.setAvailableEmail(availableEmail);
 		infoPerson1.setAvailablePhoto(availablePhoto);
 		infoPerson1.setAvailableWebSite(availableWebSite);
@@ -153,7 +153,7 @@ public class PersonTest extends DomainTestBase {
 		infoPerson1.setTipoDocumentoIdentificacao(documentType);
 		infoPerson1.setWorkPhone(workPhone);
 
-		infoPerson2 = new InfoPerson();
+		infoPerson2 = new InfoPersonEditor();
 		infoPerson2.setAvailableEmail(!availableEmail);
 		infoPerson2.setAvailablePhoto(!availablePhoto);
 		infoPerson2.setAvailableWebSite(!availableWebSite);
@@ -188,7 +188,7 @@ public class PersonTest extends DomainTestBase {
 		infoPerson2.setTipoDocumentoIdentificacao(documentType);
 		infoPerson2.setWorkPhone(workPhone + 1);
 
-		infoPerson3 = new InfoPerson();
+		infoPerson3 = new InfoPersonEditor();
 		infoPerson3.setAvailableEmail(!availableEmail);
 		infoPerson3.setAvailablePhoto(!availablePhoto);        
 		infoPerson3.setAvailableWebSite(!availableWebSite);
