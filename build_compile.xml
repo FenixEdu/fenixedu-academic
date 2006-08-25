@@ -800,8 +800,10 @@ script.isAlive.check.slide=${script.isAlive.check.slide}
 	</target>
 
 	<target name="jsp-precompile" depends="compile">
+		
 		<mkdir dir="${build.home.jsp_gen_code}"/>
 		<mkdir dir="${build.home.jsp_gen_code.classes}"/>
+		
 		<taskdef classname="org.apache.jasper.JspC" name="jasper2" >
 			<classpath id="jspc.classpath">
 				<pathelement location="${jenv.JAVA_HOME}/../lib/tools.jar"/>
@@ -817,26 +819,13 @@ script.isAlive.check.slide=${script.isAlive.check.slide}
 			</classpath>
 		</taskdef>
 
-		<jasper2 
-	             validateXml="false" 
+		<jasper2 validateXml="false" 
 	             uriroot="${build.home}" 	            
 	        	 webXmlFragment="${build.home.webinf}/generated_web.xml"
 	             outputDir="${build.home.jsp_gen_code}" />
 
-		<!--<jspc srcdir="${build.home}" destdir="${build.home.jsp_gen_code}"
-				package="net.sourceforge.fenixedu.jsp" compiler="jasper2" verbose="0"  uriroot="${build.home}">
-			<classpath>
-				<fileset dir="${env.CATALINA_HOME}/common/lib">
-					<include name="*.jar"/>
-				</fileset>
-			</classpath>
-			<include name="**/*.jsp"/>
-			;${env.CATALINA_HOME}/server/lib
-			               extdirs="${lib};${build.home.webinf.classes};${env.CATALINA_HOME}/common/lib;"
-		</jspc>-->
-
 		<javac destdir="${build.home.webinf.classes}"
-
+			   failonerror="false"
                debug="${compile.debug}"
                optimize="${compile.optimize}"
                deprecation="${compile.deprecation}"
