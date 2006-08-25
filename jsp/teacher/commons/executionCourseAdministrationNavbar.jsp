@@ -7,7 +7,7 @@
 <logic:notPresent name="executionCourse">
 	<logic:present name="siteView">
 		<bean:define id="component" name="siteView" property="commonComponent"/>
-		<bean:define id="executionCourse" name="component" property="executionCourse"/>
+		<bean:define id="executionCourse" name="component" property="executionCourse.executionCourse"/>
 	</logic:present>
 </logic:notPresent>
 
