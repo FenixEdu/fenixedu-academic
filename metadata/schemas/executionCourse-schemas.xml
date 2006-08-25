@@ -137,3 +137,50 @@
    		<property name="config" value="intermediate" />		
 	</slot>
 </schema>
+<schema name="net.sourceforge.fenixedu.domain.SectionCreator"
+		type="net.sourceforge.fenixedu.domain.Section"
+		bundle="DEFAULT"
+		constructor="site,name,sectionOrder,superiorSection"
+		>
+	<slot name="site" hidden="true"/>
+	<slot name="superiorSection" hidden="true"/>
+	<slot name="name"/>
+	<slot name="sectionOrder" key="label.sectionOrder.before"/>
+</schema>
+<schema name="net.sourceforge.fenixedu.domain.SectionEditor"
+		type="net.sourceforge.fenixedu.domain.Section"
+		bundle="DEFAULT"
+		>
+	<slot name="name"/>
+	<slot name="sectionOrder" key="label.sectionOrder.before"/>
+	<setter signature="edit(name,sectionOrder)"/>
+</schema>
+<schema name="net.sourceforge.fenixedu.domain.ItemCreator"
+		type="net.sourceforge.fenixedu.domain.Item"
+		bundle="DEFAULT"
+		constructor="section,name,information,urgent,itemOrder"
+		>
+	<slot name="section" hidden="true"/>
+	<slot name="name"/>
+	<slot name="itemOrder" key="label.itemOrder.before"/>
+	<slot name="urgent"/>
+	<slot name="information" layout="rich-text">
+   		<property name="safe" value="true" />
+   		<property name="columns" value="70"/>
+   		<property name="rows" value="15"/>
+	</slot>
+</schema>
+<schema name="net.sourceforge.fenixedu.domain.ItemEditor"
+		type="net.sourceforge.fenixedu.domain.Item"
+		bundle="DEFAULT"
+		>
+	<slot name="name"/>
+	<slot name="itemOrder" key="label.itemOrder.before"/>
+	<slot name="urgent"/>
+	<slot name="information" layout="rich-text">
+   		<property name="safe" value="true" />
+   		<property name="columns" value="70"/>
+   		<property name="rows" value="15"/>
+	</slot>
+	<setter signature="edit(name,information,urgent,itemOrder)"/>
+</schema>

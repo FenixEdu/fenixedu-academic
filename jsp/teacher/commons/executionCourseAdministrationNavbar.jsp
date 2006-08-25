@@ -35,7 +35,18 @@
 				<bean:message key="link.sectionsManagement"/>
 			</html:link>
 		</li>
-	
+
+		<li class="navheader"><bean:message key="label.executionCourseManagement.menu.sections"/></li>
+		<li>
+			<html:link page="/manageExecutionCourse.do?method=createSection" paramId="executionCourseID" paramName="executionCourse" paramProperty="idInternal">
+				<bean:message key="link.createSection"/>
+			</html:link>
+		</li>
+		<logic:notEmpty name="executionCourse" property="site.associatedSections">
+			<bean:define id="sections" toScope="request" name="executionCourse" property="site.orderedTopLevelSections"/>
+			<jsp:include page="/teacher/executionCourse/sections.jsp"/>
+		</logic:notEmpty>
+
 	<li class="navheader"><bean:message key="label.executionCourseManagement.menu.management"/></li>
 		<li>
 			<html:link page="/showSummaries.do?method=showSummaries&amp;page=0" paramId="objectCode" paramName="executionCourse" paramProperty="idInternal">

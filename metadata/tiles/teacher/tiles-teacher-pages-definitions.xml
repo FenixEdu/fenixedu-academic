@@ -563,6 +563,22 @@
 		<put name="body" value="/messaging/viewThread.jsp" />
 	</definition>
 
+	<definition name="manage-execution-course-createSection" extends="execution-course-administration">
+		<put name="body" value="/teacher/executionCourse/createSection.jsp" />
+	</definition>
+
+	<definition name="manage-execution-course-section" extends="execution-course-administration">
+		<put name="body" value="/teacher/executionCourse/section.jsp" />
+	</definition>
+
+	<definition name="manage-execution-course-editSection" extends="execution-course-administration">
+		<put name="body" value="/teacher/executionCourse/editSection.jsp" />
+	</definition>
+
+	<definition name="manage-execution-course-createItem" extends="execution-course-administration">
+		<put name="body" value="/teacher/executionCourse/createItem.jsp" />
+	</definition>
+
 	<!-- =================== MarkSheetManagement ============== -->
 	<definition name="show.evaluationIndex" extends="df.teacher.evaluation-management">
 		<put name="body" value="/teacher/evaluation/evaluationIndex.jsp" />
@@ -593,6 +609,5 @@
 	<definition name="view-project-submission-logs-by-group" extends="df.teacher.evaluation-management">
 		<put name="body" value="/teacher/evaluation/viewProjectSubmissionLogsByGroup.jsp" />
 	</definition>
-	
-	
+
 </tiles-definitions>

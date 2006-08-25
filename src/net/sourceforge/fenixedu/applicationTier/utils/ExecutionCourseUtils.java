@@ -12,6 +12,7 @@ import net.sourceforge.fenixedu.domain.BibliographicReference;
 import net.sourceforge.fenixedu.domain.EvaluationMethod;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Item;
+import net.sourceforge.fenixedu.domain.Language;
 import net.sourceforge.fenixedu.domain.Section;
 import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -25,7 +26,7 @@ public class ExecutionCourseUtils {
             while (associatedSections.hasNext()) {
                 Section sectionFrom = (Section) associatedSections.next();
                 if (sectionFrom.getSuperiorSection() == null) {
-                    Section sectionTo = siteTo.createSection(sectionFrom.getName(), null, sectionFrom
+                    Section sectionTo = siteTo.createSection(sectionFrom.getName().getContent(Language.pt), null, sectionFrom
                             .getSectionOrder());
                     copyItemsFrom(sectionFrom, sectionTo);
                     copySubSectionsAndItemsFrom(sectionFrom, sectionTo, siteTo);
@@ -41,7 +42,7 @@ public class ExecutionCourseUtils {
             while (associatedSections.hasNext()) {
                 Section subSectionFrom = (Section) associatedSections.next();
                 if (subSectionFrom.getSuperiorSection() != null) {
-                    Section subSectionTo = siteTo.createSection(subSectionFrom.getName(), sectionTo,
+                    Section subSectionTo = siteTo.createSection(subSectionFrom.getName().getContent(Language.pt), sectionTo,
                             subSectionFrom.getSectionOrder());
                     copyItemsFrom(subSectionFrom, subSectionTo);
                     copySubSectionsAndItemsFrom(subSectionFrom, subSectionTo, siteTo);
@@ -55,7 +56,7 @@ public class ExecutionCourseUtils {
             Iterator associatedItems = sectionFrom.getAssociatedItemsIterator();
             while (associatedItems.hasNext()) {
                 Item item = (Item) associatedItems.next();
-                sectionTo.insertItem(item.getName(), item.getInformation(), item.getUrgent(), item
+                sectionTo.insertItem(item.getName().getContent(Language.pt), item.getInformation().getContent(Language.pt), item.getUrgent(), item
                         .getItemOrder());
             }
         }

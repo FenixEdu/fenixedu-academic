@@ -1856,8 +1856,8 @@ class net.sourceforge.fenixedu.domain.Item extends net.sourceforge.fenixedu.doma
 	Integer keySection;
 	Boolean urgent;
 	Integer itemOrder;
-	String information;
-	String name;
+	MultiLanguageString information;
+	MultiLanguageString name;
 }
 
 class net.sourceforge.fenixedu.domain.Lesson extends net.sourceforge.fenixedu.domain.DomainObject {
@@ -2460,7 +2460,7 @@ class net.sourceforge.fenixedu.domain.Section extends net.sourceforge.fenixedu.d
 	Integer keySuperiorSection;
 	Integer sectionOrder;
 	Integer keySite;
-	String name;
+	MultiLanguageString name;
 	YearMonthDay lastModifiedDateYearMonthDay;
 }
 

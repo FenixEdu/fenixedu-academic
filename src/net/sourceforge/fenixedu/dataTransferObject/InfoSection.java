@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.dataTransferObject;
 
 import java.util.Date;
 
+import net.sourceforge.fenixedu.domain.Language;
 import net.sourceforge.fenixedu.domain.Section;
 
 /**
@@ -248,7 +249,7 @@ public class InfoSection extends InfoObject implements Comparable, ISiteComponen
     public void copyFromDomain(Section section) {
         super.copyFromDomain(section);
         if (section != null) {
-            setName(section.getName());
+            setName(section.getName().getContent(Language.pt));
             setSectionOrder(section.getSectionOrder());
             setLastModifiedDate(section.getLastModifiedDate());
             setSectionDepth(calculateDepth());

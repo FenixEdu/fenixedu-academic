@@ -12,8 +12,10 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.util.MultiLanguageString;
 
 import org.apache.commons.beanutils.BeanComparator;
+import org.joda.time.YearMonthDay;
 
 /**
  * @author Ivo Brand�o
@@ -22,9 +24,51 @@ public class Section extends Section_Base {
 
 	public static final Comparator<Section> COMPARATOR_BY_ORDER = new BeanComparator("sectionOrder");
 
-    public Section() {
+    protected Section() {
 		super();
 		setRootDomainObject(RootDomainObject.getInstance());
+    }
+
+    public Section(final Site site, final MultiLanguageString name, final Integer order, final Section superiorSection) {
+        this();
+        if (site == null) {
+            throw new NullPointerException();
+        }
+
+        setSite(site);
+        setSuperiorSection(superiorSection);
+        edit(name, order);
+    }
+
+    public void edit(final MultiLanguageString name, final Integer order) {
+        if (name == null || order == null) {
+            throw new NullPointerException();
+        }
+
+        setLastModifiedDateYearMonthDay(new YearMonthDay());
+        setName(name);
+        final int newOrder = order.intValue();
+        final int oldOrder = getSectionOrder() == null ? Integer.MAX_VALUE : getSectionOrder().intValue();
+        if (newOrder != oldOrder) {
+            final boolean moveUp = newOrder > oldOrder;
+            for (final Section otherSection : getSite().getAssociatedSectionsSet()) {
+                if (otherSection.getSuperiorSection() == getSuperiorSection()) {
+                    if (otherSection != this) {
+                        final int otherOrder = otherSection.getSectionOrder().intValue();
+                        if (moveUp) {
+                            if (otherOrder > oldOrder && otherOrder <= newOrder) {
+                                otherSection.setSectionOrder(Integer.valueOf(otherOrder - 1));
+                            }
+                        } else {
+                            if (otherOrder >= newOrder && otherOrder < oldOrder) {
+                                otherSection.setSectionOrder(Integer.valueOf(otherOrder + 1));
+                            }
+                        }
+                    }
+                }
+            }
+            setSectionOrder(order);
+        }
     }
 
     public void insertItem(String itemName, String itemInformation, Boolean itemUrgent,
@@ -40,8 +84,8 @@ public class Section extends Section_Base {
         }
 
         Item item = new Item();
-        item.setInformation(itemInformation);
-        item.setName(itemName);
+//        item.setInformation(itemInformation);
+//        item.setName(itemName);
         item.setUrgent(itemUrgent);
         Integer itemOrder = new Integer(organizeExistingItemsOrder(insertItemOrder.intValue()));
         item.setItemOrder(itemOrder);
@@ -75,7 +119,7 @@ public class Section extends Section_Base {
         newOrder = organizeSectionsOrder(newOrder, this.getSectionOrder(), this.getSuperiorSection(),
                 this.getSite());
 
-        this.setName(newSectionName);
+//        this.setName(newSectionName);
         this.setSectionOrder(newOrder);
     }
 

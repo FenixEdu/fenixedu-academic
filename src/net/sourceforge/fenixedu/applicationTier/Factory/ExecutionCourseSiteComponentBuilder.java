@@ -52,6 +52,7 @@ import net.sourceforge.fenixedu.domain.Evaluation;
 import net.sourceforge.fenixedu.domain.EvaluationMethod;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Item;
+import net.sourceforge.fenixedu.domain.Language;
 import net.sourceforge.fenixedu.domain.Lesson;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
@@ -685,7 +686,7 @@ public class ExecutionCourseSiteComponentBuilder {
 		if (section != null) {
 			infoSection = new InfoSection();
 			infoSection.setIdInternal(section.getIdInternal());
-			infoSection.setName(section.getName());
+			infoSection.setName(section.getName().getContent(Language.pt));
 			infoSection.setSectionOrder(section.getSectionOrder());
 			infoSection.setSuperiorInfoSection(copyISection2InfoSection(section.getSuperiorSection()));
 			infoSection.setInfoSite(copyISite2InfoSite(section.getSite()));

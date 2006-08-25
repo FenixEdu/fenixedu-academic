@@ -3,9 +3,10 @@ package net.sourceforge.fenixedu.domain;
 import java.util.Comparator;
 import java.util.List;
 
-import org.apache.commons.beanutils.BeanComparator;
-
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.util.MultiLanguageString;
+
+import org.apache.commons.beanutils.BeanComparator;
 
 /**
  * 
@@ -16,9 +17,52 @@ public class Item extends Item_Base {
 
     public static final Comparator<Item> COMPARATOR_BY_ORDER = new BeanComparator("itemOrder");
 
-    public Item() {
+    protected Item() {
 		super();
 		setRootDomainObject(RootDomainObject.getInstance());
+    }
+
+    public Item(final Section section, final MultiLanguageString name, final MultiLanguageString information,
+            final Boolean urgent, final Integer order) {
+        this();
+        if (section == null) {
+            throw new NullPointerException();
+        }
+
+        setSection(section);
+        edit(name, information, urgent, order);
+    }
+
+    public void edit(final MultiLanguageString name, final MultiLanguageString information, final Boolean urgent,
+            final Integer order) {
+        if (name == null || information == null || urgent == null || order == null) {
+            throw new NullPointerException();
+        }
+
+        setName(name);
+        setInformation(information);
+        setUrgent(urgent);
+
+        final int newOrder = order.intValue();
+        final int oldOrder = getItemOrder() == null ? Integer.MAX_VALUE : getItemOrder().intValue();
+        if (newOrder != oldOrder) {
+            final boolean moveUp = newOrder > oldOrder;
+            for (final Item otherItem : getSection().getAssociatedItemsSet()) {
+                if (otherItem != this) {
+                    final int otherOrder = otherItem.getItemOrder().intValue();
+                    if (moveUp) {
+                        if (otherOrder > oldOrder && otherOrder <= newOrder) {
+                            otherItem.setItemOrder(Integer.valueOf(otherOrder - 1));
+                        }
+                    } else {
+                        if (otherOrder >= newOrder && otherOrder < oldOrder) {
+                            otherItem.setItemOrder(Integer.valueOf(otherOrder + 1));
+                        }
+                    }
+                }
+            }
+            setItemOrder(order);
+        }
     }
 
     public void delete() {
@@ -56,9 +100,9 @@ public class Item extends Item_Base {
 
         newOrder = organizeItemsOrder(newOrder, this.getItemOrder(), this.getSection());
 
-        this.setInformation(newItemInformation);
+//        this.setInformation(newItemInformation);
         this.setItemOrder(newOrder);
-        this.setName(newItemName);
+//        this.setName(newItemName);
         this.setUrgent(newItemUrgent);
     }
 

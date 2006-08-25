@@ -46,7 +46,7 @@ public class Site extends Site_Base {
             throw new NullPointerException();
 
         final Section section = new Section();
-        section.setName(sectionName);
+//        section.setName(sectionName);
         section.setLastModifiedDate(Calendar.getInstance().getTime());
 
         Integer newSectionOrder = organizeExistingSectionsOrder(parentSection, sectionOrder);

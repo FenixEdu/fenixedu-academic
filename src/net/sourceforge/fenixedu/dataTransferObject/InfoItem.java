@@ -9,6 +9,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.domain.FileItem;
 import net.sourceforge.fenixedu.domain.Item;
+import net.sourceforge.fenixedu.domain.Language;
 
 import org.apache.commons.beanutils.BeanComparator;
 
@@ -171,9 +172,9 @@ public class InfoItem extends InfoObject implements Comparable {
     public void copyFromDomain(Item item) {
         super.copyFromDomain(item);
         if (item != null) {
-            setInformation(item.getInformation());
+            setInformation(item.getInformation().getContent(Language.pt));
             setItemOrder(item.getItemOrder());
-            setName(item.getName());
+            setName(item.getName().getContent(Language.pt));
             setUrgent(item.getUrgent());
 
             List<InfoFileItem> infoFileItems = new ArrayList<InfoFileItem>();

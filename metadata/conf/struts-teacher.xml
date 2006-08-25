@@ -1003,6 +1003,10 @@
 			<forward name="bibliographicReference" path="manage-execution-course-bibliographicReference"/>
 			<forward name="lessonPlannings" path="manage-execution-course-lessonPlannings"/>
 			<forward name="create-lessonPlanning" path="manage-execution-course-lessonPlanning-create"/>
+			<forward name="createSection" path="manage-execution-course-createSection"/>
+			<forward name="section" path="manage-execution-course-section"/>
+			<forward name="editSection" path="manage-execution-course-editSection"/>
+			<forward name="createItem" path="manage-execution-course-createItem"/>
         </action>
         <action path="/createProgram"
         		parameter="method"

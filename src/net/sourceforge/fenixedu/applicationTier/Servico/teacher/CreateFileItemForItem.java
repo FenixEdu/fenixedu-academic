@@ -9,6 +9,7 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.FileItem;
 import net.sourceforge.fenixedu.domain.FileItemPermittedGroupType;
 import net.sourceforge.fenixedu.domain.Item;
+import net.sourceforge.fenixedu.domain.Language;
 import net.sourceforge.fenixedu.domain.Section;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -51,16 +52,16 @@ public class CreateFileItemForItem extends FileItemService {
 
     private FilePath getFilePath(Item item) {
         final FilePath filePath = new FilePath();
-        filePath.addNode(new Node("I" + item.getIdInternal(), item.getName()));
+        filePath.addNode(new Node("I" + item.getIdInternal(), item.getName().getContent(Language.pt)));
 
         final Section section = item.getSection();
-        filePath.addNode(0, new Node("S" + section.getIdInternal(), section.getName()));
+        filePath.addNode(0, new Node("S" + section.getIdInternal(), section.getName().getContent(Language.pt)));
 
         if (section.getSuperiorSection() != null) {
             Section superiorSection = section.getSuperiorSection();
             while (superiorSection != null) {
                 filePath.addNode(0, new Node("S" + superiorSection.getIdInternal(), superiorSection
-                        .getName()));
+                        .getName().getContent(Language.pt)));
 
                 superiorSection = superiorSection.getSuperiorSection();
             }

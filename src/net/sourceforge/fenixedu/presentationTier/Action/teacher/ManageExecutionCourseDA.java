@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.presentationTier.Action.teacher;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -22,6 +23,7 @@ import net.sourceforge.fenixedu.domain.Language;
 import net.sourceforge.fenixedu.domain.LessonPlanning;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Professorship;
+import net.sourceforge.fenixedu.domain.Section;
 import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -50,6 +52,59 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
     public ActionForward instructions(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
         return mapping.findForward("instructions");
+    }
+
+    public ActionForward createItem(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
+        selectSection(request);
+        return mapping.findForward("createItem");
+    }
+
+    public ActionForward createSection(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
+        selectSection(request);
+        return mapping.findForward("createSection");
+    }
+
+    public ActionForward editSection(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
+        selectSection(request);
+        return mapping.findForward("editSection");
+    }
+
+    public ActionForward deleteSection(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
+        final Section section = selectSection(request);
+        final Object[] args = { request.getAttribute("executionCourse"), section };
+        executeService(request, "DeleteSection", args);
+        final Section superiorSection = section == null ? null : section.getSuperiorSection();
+        request.setAttribute("section", superiorSection);
+        return superiorSection == null ? mapping.findForward("instructions") : mapping.findForward("section");
+    }
+
+    public ActionForward section(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
+        selectSection(request);
+        return mapping.findForward("section");
+    }
+
+    private Section selectSection(HttpServletRequest request) {
+        final Section section = getSection(request);
+        request.setAttribute("section", section);
+        final Set<Section> selectedSections = new HashSet<Section>();
+        for (Section currentSection = section ; currentSection != null; currentSection = currentSection.getSuperiorSection()) {
+            selectedSections.add(currentSection);
+        }
+        request.setAttribute("selectedSections", selectedSections);
+        return section;
+    }
+
+    protected Section getSection(final HttpServletRequest request) {
+        final String parameter = request.getParameter("sectionID");
+        if (parameter == null) {
+            return null;
+        }
+        final Integer sectionID = Integer.valueOf(parameter);
+        return rootDomainObject.readSectionByOID(sectionID);
     }
 
     public ActionForward program(ActionMapping mapping, ActionForm form, HttpServletRequest request,
