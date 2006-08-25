@@ -12,6 +12,7 @@ import net.sourceforge.fenixedu.domain.ExternalPerson;
  *  
  */
 public class InfoExternalPerson extends InfoObject {
+    
     private InfoPerson infoPerson;
 
     private InfoInstitution infoInstitution;
@@ -72,4 +73,18 @@ public class InfoExternalPerson extends InfoObject {
         setInfoInstitution(InfoInstitution.newInfoFromDomain(externalPerson.getInstitutionUnit()));
         
     }
+    
+    /*
+     * Temporary solution to remove InfoPerson
+     */
+    private String name;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+    
 }

@@ -1,9 +1,7 @@
 <%@ page language="java" %><%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %><html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
-<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
 <%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoTeacher" %>
-<%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoPerson" %>
 
 <h2><bean:message key="title.teacher.finalWorkInformation"/></h2>
 <span class="error"><!-- Error messages go here -->
@@ -245,6 +243,5 @@
 	<b><bean:message key="label.teacher.finalWork.location"/>:</b>
 	<br/><html:text bundle="HTMLALT_RESOURCES" altKey="text.location" property="location" size="81"/><br/>
 
-
-	<br/><br/><html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton"><bean:message key="button.submit"/></html:submit></td>
+	<br/><br/><html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton"><bean:message key="button.submit"/></html:submit>
 </html:form>

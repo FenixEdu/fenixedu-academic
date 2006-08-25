@@ -6,19 +6,16 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class ReadPersonsByIDs extends Service {
 
-    public List<InfoPerson> run(List<Integer> personsInternalIds) throws ExcepcaoPersistencia {
-        List<InfoPerson> persons = new ArrayList<InfoPerson>();
-
-        for (Integer personId : personsInternalIds) {
-            Person person = (Person) rootDomainObject.readPartyByOID(personId);
-            persons.add(InfoPerson.newInfoFromDomain(person));
+    public List<InfoPerson> run(final List<Integer> personIds) {
+	
+        final List<InfoPerson> result= new ArrayList<InfoPerson>(personIds.size());
+        for (final Integer personId : personIds) {
+            result.add(InfoPerson.newInfoFromDomain((Person) rootDomainObject.readPartyByOID(personId)));
         }
-
-        return persons;
+        return result;
     }
 
 }

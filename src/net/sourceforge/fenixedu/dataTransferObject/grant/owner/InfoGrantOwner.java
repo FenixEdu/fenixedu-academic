@@ -9,6 +9,7 @@ import java.util.Date;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
+import net.sourceforge.fenixedu.dataTransferObject.InfoPersonEditor;
 import net.sourceforge.fenixedu.domain.grant.owner.GrantOwner;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
@@ -32,78 +33,39 @@ public class InfoGrantOwner extends InfoObject {
                 .getPersonInfo())) && (this.grantOwnerNumber.equals(((InfoGrantOwner) obj)
                 .getGrantOwnerNumber()))));
     }
-
-    /**
-     * @return InfoPerson
-     */
+    
     public InfoPerson getPersonInfo() {
         return personInfo;
     }
 
-    /**
-     * @return Integer
-     */
     public Integer getGrantOwnerNumber() {
         return grantOwnerNumber;
     }
 
-    /**
-     * @return Integer
-     */
     public Integer getCardCopyNumber() {
         return cardCopyNumber;
     }
 
-    /**
-     * @return Date
-     */
     public Date getDateSendCGD() {
         return dateSendCGD;
     }
-
-    /**
-     * Sets the personInfo.
-     * 
-     * @param infoPerson
-     *            The personInfo to set
-     */
+    
     public void setPersonInfo(InfoPerson infoPerson) {
         this.personInfo = infoPerson;
     }
 
-    /**
-     * Sets the grantOwnerNumber.
-     * 
-     * @param number
-     *            The grantOwnerNumber to set
-     */
     public void setGrantOwnerNumber(Integer number) {
         this.grantOwnerNumber = number;
     }
 
-    /**
-     * Sets the cardCopyNumber.
-     * 
-     * @param copyNumber
-     *            The cardCopyNumber to set
-     */
     public void setCardCopyNumber(Integer copyNumber) {
         this.cardCopyNumber = copyNumber;
     }
 
-    /**
-     * Sets the dateSendCGD.
-     * 
-     * @param dateSend
-     *            The dateSendCGD to set
-     */
     public void setDateSendCGD(Date dateSend) {
         this.dateSendCGD = dateSend;
     }
 
-    /**
-     * @param grantOwner
-     */
     public void copyFromDomain(GrantOwner grantOwner) {
         super.copyFromDomain(grantOwner);
         if (grantOwner != null) {
@@ -113,10 +75,6 @@ public class InfoGrantOwner extends InfoObject {
         }
     }
 
-    /**
-     * @param grantOwner
-     * @return
-     */
     public static InfoGrantOwner newInfoFromDomain(GrantOwner grantOwner) {
         InfoGrantOwner infoGrantOwner = null;
         if (grantOwner != null) {
@@ -133,6 +91,20 @@ public class InfoGrantOwner extends InfoObject {
         grantOwner.setCardCopyNumber(infoGrantOwner.getCardCopyNumber());
         grantOwner.setDateSendCGD(infoGrantOwner.getDateSendCGD());
         grantOwner.setNumber(infoGrantOwner.getGrantOwnerNumber());
+    }
+    
+    /*
+     * - Temporary solution to remove create InfoPerson wrapper
+     * - This attribute should be removed and placed in InfoGrantOwnerEditor 
+     */
+    private InfoPersonEditor infoPersonEditor;
+
+    public InfoPersonEditor getInfoPersonEditor() {
+        return infoPersonEditor;
+    }
+
+    public void setInfoPersonEditor(InfoPersonEditor infoPersonEditor) {
+        this.infoPersonEditor = infoPersonEditor;
     }
 
 }

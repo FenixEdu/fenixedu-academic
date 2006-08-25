@@ -1,13 +1,11 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.student.schoolRegistration;
 
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.security.PasswordEncryptor;
-import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
+import net.sourceforge.fenixedu.dataTransferObject.InfoPersonEditor;
 import net.sourceforge.fenixedu.dataTransferObject.student.schoolRegistration.InfoResidenceCandidacy;
 import net.sourceforge.fenixedu.domain.Country;
 import net.sourceforge.fenixedu.domain.Enrolment;
@@ -16,25 +14,27 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.domain.student.ResidenceCandidacies;
 import net.sourceforge.fenixedu.domain.student.Registration;
+import net.sourceforge.fenixedu.domain.student.ResidenceCandidacies;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
+
+import org.joda.time.DateTime;
+import org.joda.time.YearMonthDay;
 
 public class SchoolRegistration extends Service {
 
-    public Boolean run(final IUserView userView, final InfoPerson infoPerson,
+    public Boolean run(final IUserView userView, final InfoPersonEditor infoPersonEditor,
             final InfoResidenceCandidacy infoResidenceCandidacy) throws ExcepcaoPersistencia {
 
         final String username = userView.getUtilizador();
         final Registration registration = Registration.readByUsername(username);
-
         final Person person = registration.getPerson();
 
         if (isStudentRegistered(person)) {
             return Boolean.FALSE;
         }
 
-        updatePersonalInfo(infoPerson, person);
+        updatePersonalInfo(infoPersonEditor, person);
         writeResidenceCandidacy(registration, infoResidenceCandidacy);
         updateStudentInfo(registration);
 
@@ -45,12 +45,11 @@ public class SchoolRegistration extends Service {
         return !pessoa.hasRole(RoleType.FIRST_TIME_STUDENT);
     }
 
-    private void updatePersonalInfo(final InfoPerson infoPerson, final Person person)
-            throws ExcepcaoPersistencia {
+    private void updatePersonalInfo(final InfoPersonEditor infoPersonEditor, final Person person) {
 
         final Country country;
-        if (infoPerson.getInfoPais() != null && infoPerson.getInfoPais().getNationality() != null) {
-            country = Country.readCountryByNationality(infoPerson.getInfoPais().getNationality());
+        if (infoPersonEditor.getInfoPais() != null && infoPersonEditor.getInfoPais().getNationality() != null) {
+            country = Country.readCountryByNationality(infoPersonEditor.getInfoPais().getNationality());
         } else {
             // If the person country is undefined it is set to default
             // "PORTUGUESA NATURAL DO CONTINENTE"
@@ -59,8 +58,8 @@ public class SchoolRegistration extends Service {
             country = Country.readCountryByNationality("PORTUGUESA NATURAL DO CONTINENTE");
         }
 
-        person.edit(infoPerson, country);
-        person.setPassword(PasswordEncryptor.encryptPassword(infoPerson.getPassword()));
+        person.edit(infoPersonEditor, country);
+        person.setPassword(PasswordEncryptor.encryptPassword(infoPersonEditor.getPassword()));
 
         final Role studentRole = findRole(rootDomainObject.getRoles(), RoleType.STUDENT);
         final Role firstTimeStudentRole = findRole(person.getPersonRoles(), RoleType.FIRST_TIME_STUDENT);
@@ -83,9 +82,8 @@ public class SchoolRegistration extends Service {
 
         if (infoResidenceCandidacy != null) {
             final ResidenceCandidacies residenceCandidacy = new ResidenceCandidacies();
-
             residenceCandidacy.setStudent(registration);
-            residenceCandidacy.setCreationDate(new Date());
+            residenceCandidacy.setCreationDateDateTime(new DateTime());
             residenceCandidacy.setCandidate(infoResidenceCandidacy.getCandidate());
             residenceCandidacy.setObservations(infoResidenceCandidacy.getObservations());
         }
@@ -97,15 +95,15 @@ public class SchoolRegistration extends Service {
         registration.setRegistrationYear(executionYear);
 
         final StudentCurricularPlan scp = registration.getActiveStudentCurricularPlan();
-        final Date actualDate = Calendar.getInstance().getTime();
+        final DateTime actualDate = new DateTime(); 
         // update the dates, since this objects were already created and only
         // now the student is a registrated student in the campus
-        scp.setStartDate(actualDate);
-        scp.setWhen(actualDate);
+        scp.setStartDateYearMonthDay(new YearMonthDay());
+        scp.setWhenDateTime(actualDate);
 
         final List<Enrolment> enrollments = scp.getEnrolments();
         for (final Enrolment enrolment : enrollments) {
-            enrolment.setCreationDate(actualDate);
+            enrolment.setCreationDateDateTime(actualDate);
         }
     }
 

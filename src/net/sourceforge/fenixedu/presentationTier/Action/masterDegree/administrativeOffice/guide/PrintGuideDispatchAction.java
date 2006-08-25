@@ -33,14 +33,17 @@ public class PrintGuideDispatchAction extends DispatchAction {
 
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
+	
         HttpSession session = request.getSession(false);
+        
         if (session != null) {
+            
             IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
-            Boolean passwordPrint = (Boolean) session.getAttribute(SessionConstants.PRINT_PASSWORD);
             InfoGuide infoGuide = (InfoGuide) session.getAttribute(SessionConstants.GUIDE);
             String graduationType = (String) request.getAttribute("graduationType");
-            if (graduationType == null)
+            if (graduationType == null) {
                 graduationType = request.getParameter("graduationType");
+            }
             request.setAttribute("graduationType", graduationType);
 
             if (request.getParameter(SessionConstants.REQUESTER_NUMBER) != null) {
@@ -69,25 +72,9 @@ public class PrintGuideDispatchAction extends DispatchAction {
                 } catch (FenixServiceException e) {
                     throw new FenixActionException();
                 }
-                session
-                        .setAttribute(SessionConstants.MASTER_DEGREE_CANDIDATE,
-                                infoMasterDegreeCandidate);
-                if ((passwordPrint != null) && passwordPrint.booleanValue()) {
-                    infoMasterDegreeCandidate.getInfoPerson().setPassword(
-                            infoGuide.getInfoPerson().getPassword());
-                }
+                session.setAttribute(SessionConstants.MASTER_DEGREE_CANDIDATE, infoMasterDegreeCandidate);
             }
 
-            //			try {
-            //				Object args[] = {infoGuide.getInfoPerson().getUsername()};
-            //				InfoStudent infoStudent = (InfoStudent)
-            // ServiceManagerServiceFactory
-            //						.executeService(userView, "ReadStudentByUsername", args);
-            //				session.setAttribute(SessionConstants.REQUESTER_NUMBER,
-            //						infoStudent.getNumber());
-            //			} catch (FenixServiceException e) {
-            //				throw new FenixActionException();
-            //			}
             Locale locale = new Locale("pt", "PT");
             String formatedDate = "Lisboa, "
                     + DateFormat.getDateInstance(DateFormat.LONG, locale).format(

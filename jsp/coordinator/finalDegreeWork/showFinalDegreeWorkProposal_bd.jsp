@@ -2,9 +2,7 @@
 <html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
-<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
 <%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoTeacher" %>
-<%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoPerson" %>
 <bean:define id="degreeCurricularPlanID" name="degreeCurricularPlanID" scope="request" />
 <bean:define id="executionDegreeOID" name="executionDegreeOID" scope="request" />
 

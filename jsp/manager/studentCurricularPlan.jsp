@@ -1,4 +1,12 @@
-<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %><html:xhtml/><%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %><%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %><%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="dt" %><%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%><%@ taglib uri="/WEB-INF/enum.tld" prefix="e" %><h2><bean:message bundle="MANAGER_RESOURCES" key="link.manager.studentsManagement"/></h2><br /><p><span class="error"><!-- Error messages go here --><html:errors /></span></p><jsp:include page="studentCurricularPlanHeader.jsp"/>	<bean:define id="studentNumber" name="studentCurricularPlanForm" property="number"/>	<bean:define id="degreeType" name="studentCurricularPlanForm" property="degreeType"/>	<html:link module="/manager" page="<%= "/studentsManagement.do?method=prepareCreateStudentCurricularPlan&amp;page=0&amp;number="				+ pageContext.findAttribute("studentNumber").toString()				+ "&amp;degreeType="				+ pageContext.findAttribute("degreeType").toString()			%>">		<bean:message bundle="MANAGER_RESOURCES" key="link.create.student.curricular.plan"/>	</html:link>
+<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %><html:xhtml/><%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %><%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %><%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="dt" %><%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%><%@ taglib uri="/WEB-INF/enum.tld" prefix="e" %><h2><bean:message bundle="MANAGER_RESOURCES" key="link.manager.studentsManagement"/></h2><br /><p><span class="error"><!-- Error messages go here --><html:errors /></span></p>
+<logic:messagesPresent message="true">
+		<ul>
+			<html:messages id="messages" message="true">
+				<li><span class="error0"><bean:write name="messages" /></span></li>
+			</html:messages>
+		</ul>
+		<br />
+</logic:messagesPresent><jsp:include page="studentCurricularPlanHeader.jsp"/>	<bean:define id="studentNumber" name="studentCurricularPlanForm" property="number"/>	<bean:define id="degreeType" name="studentCurricularPlanForm" property="degreeType"/>	<html:link module="/manager" page="<%= "/studentsManagement.do?method=prepareCreateStudentCurricularPlan&amp;page=0&amp;number="				+ pageContext.findAttribute("studentNumber").toString()				+ "&amp;degreeType="				+ pageContext.findAttribute("degreeType").toString()			%>">		<bean:message bundle="MANAGER_RESOURCES" key="link.create.student.curricular.plan"/>	</html:link>
 	
 	<br/><br/>
 	<html:link page="/createClassificationsForStudents.do?method=prepare"><bean:message key="button.createClassifications" bundle="MANAGER_RESOURCES" /></html:link>

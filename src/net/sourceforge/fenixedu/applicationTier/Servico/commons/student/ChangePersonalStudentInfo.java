@@ -16,18 +16,17 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoInexistente;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
-import net.sourceforge.fenixedu.dataTransferObject.InfoPersonWithInfoCountry;
+import net.sourceforge.fenixedu.dataTransferObject.InfoPersonEditor;
 import net.sourceforge.fenixedu.domain.Country;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class ChangePersonalStudentInfo extends Service {
 
-    public InfoPerson run(InfoPerson newInfoPerson) throws ExcepcaoPersistencia, FenixServiceException  {
+    public InfoPerson run(InfoPersonEditor newInfoPerson) throws FenixServiceException  {
         
-        Person person = (Person) rootDomainObject.readPartyByOID(newInfoPerson.getIdInternal());
+        final Person person = (Person) rootDomainObject.readPartyByOID(newInfoPerson.getIdInternal());
         if (person == null) {
-            throw new ExcepcaoInexistente("Unknown Person !!");
+            throw new ExcepcaoInexistente("error.changePersonalStudentInfo.noPerson");
         }
 
         // Get new Country
@@ -51,6 +50,6 @@ public class ChangePersonalStudentInfo extends Service {
         // Change personal Information
         person.edit(newInfoPerson, country);
 
-        return InfoPersonWithInfoCountry.newInfoFromDomain(person);
+        return InfoPerson.newInfoFromDomain(person);
     }
 }

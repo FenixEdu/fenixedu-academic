@@ -480,10 +480,9 @@ public class Registration extends Registration_Base {
 	int fromNumberInt = fromNumber.intValue();
 	int toNumberInt = toNumber.intValue();
 
-	int studentNumberInt;
-	List<Registration> students = new ArrayList();
-	for (Registration registration : RootDomainObject.getInstance().getRegistrations()) {
-	    studentNumberInt = registration.getNumber().intValue();
+	final List<Registration> students = new ArrayList<Registration>();
+	for (final Registration registration : RootDomainObject.getInstance().getRegistrationsSet()) {
+	    int studentNumberInt = registration.getNumber().intValue();
 	    if (studentNumberInt >= fromNumberInt && studentNumberInt <= toNumberInt) {
 		students.add(registration);
 	    }
@@ -492,8 +491,8 @@ public class Registration extends Registration_Base {
     }
 
     public static List<Registration> readStudentsByDegreeType(DegreeType degreeType) {
-	List<Registration> students = new ArrayList();
-	for (Registration registration : RootDomainObject.getInstance().getRegistrations()) {
+	final List<Registration> students = new ArrayList();
+	for (final Registration registration : RootDomainObject.getInstance().getRegistrationsSet()) {
 	    if (registration.getDegreeType().equals(degreeType)) {
 		students.add(registration);
 	    }

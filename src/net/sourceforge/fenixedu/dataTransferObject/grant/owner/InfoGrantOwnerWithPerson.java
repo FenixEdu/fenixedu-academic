@@ -4,7 +4,7 @@
  */
 package net.sourceforge.fenixedu.dataTransferObject.grant.owner;
 
-import net.sourceforge.fenixedu.dataTransferObject.InfoPersonWithInfoCountry;
+import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
 import net.sourceforge.fenixedu.domain.grant.owner.GrantOwner;
 
 public class InfoGrantOwnerWithPerson extends InfoGrantOwner {
@@ -12,7 +12,7 @@ public class InfoGrantOwnerWithPerson extends InfoGrantOwner {
     public void copyFromDomain(GrantOwner grantOwner) {
         super.copyFromDomain(grantOwner);
         if (grantOwner != null) {
-            setPersonInfo(InfoPersonWithInfoCountry.newInfoFromDomain(grantOwner.getPerson()));
+            setPersonInfo(InfoPerson.newInfoFromDomain(grantOwner.getPerson()));
         }
     }
 

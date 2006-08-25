@@ -18,6 +18,7 @@ import javax.servlet.http.HttpSession;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
+import net.sourceforge.fenixedu.dataTransferObject.InfoPersonEditor;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
@@ -29,8 +30,10 @@ import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.actions.DispatchAction;
 
 public class ChangePersonalInfoDispatchAction extends DispatchAction {
+    
     public ActionForward change(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
+	
         HttpSession session = request.getSession(false);
 
         DynaActionForm changePersonalInformationForm = (DynaActionForm) form;
@@ -49,7 +52,7 @@ public class ChangePersonalInfoDispatchAction extends DispatchAction {
         session.removeAttribute(SessionConstants.CANDIDATE_SITUATION_LIST);
 
         // Create Dates
-        InfoPerson infoPerson = new InfoPerson();
+        InfoPersonEditor infoPerson = new InfoPersonEditor();
         infoPerson.setTelemovel((String) changePersonalInformationForm.get("mobilePhone"));
         infoPerson.setWorkPhone((String) changePersonalInformationForm.get("workPhone"));
         infoPerson.setEmail((String) changePersonalInformationForm.get("email"));

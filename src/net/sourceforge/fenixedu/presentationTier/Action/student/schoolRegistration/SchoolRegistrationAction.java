@@ -1,7 +1,3 @@
-/*
- * Created on Jul 21, 2004
- *
- */
 package net.sourceforge.fenixedu.presentationTier.Action.student.schoolRegistration;
 
 import java.util.ArrayList;
@@ -23,6 +19,7 @@ import net.sourceforge.fenixedu.applicationTier.security.PasswordEncryptor;
 import net.sourceforge.fenixedu.dataTransferObject.InfoClass;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCountry;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
+import net.sourceforge.fenixedu.dataTransferObject.InfoPersonEditor;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
 import net.sourceforge.fenixedu.dataTransferObject.student.schoolRegistration.InfoResidenceCandidacy;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
@@ -42,6 +39,7 @@ import net.sourceforge.fenixedu.util.Data;
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
+import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
@@ -50,17 +48,10 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.LabelValueBean;
 
-/**
- * @author Nuno Correia
- * @author Ricardo Rodrigues
- * 
- */
-
 public class SchoolRegistrationAction extends TransactionalDispatchAction {
 
     public ActionForward start(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-
         return mapping.findForward("changePassword");
     }
 
@@ -131,7 +122,7 @@ public class SchoolRegistrationAction extends TransactionalDispatchAction {
         DynaActionForm schoolRegistrationForm = (DynaActionForm) form;
 
         String answer = (String) schoolRegistrationForm.get("authorizationAnswer");
-        if (answer == null || answer.equals("")) {
+        if (StringUtils.isEmpty(answer)) {
             ActionErrors actionErrors = new ActionErrors();
             actionErrors.add("error", new ActionError("error.enrollment.inquiry.mandatory"));
             saveErrors(request, actionErrors);
@@ -273,7 +264,8 @@ public class SchoolRegistrationAction extends TransactionalDispatchAction {
                 + monthOfEmissionDateOfDocumentId + "-" + yearOfEmissionDateOfDocumentId, "-");
         Date ExpirationDateOfDocumentId = Data.convertStringDate(dayOfExpirationDateOfDocumentId + "-"
                 + monthOfExpirationDateOfDocumentId + "-" + yearOfExpirationDateOfDocumentId, "-");
-        InfoPerson infoPerson = new InfoPerson();
+        
+        InfoPersonEditor infoPerson = new InfoPersonEditor();
         InfoCountry infoCountry = new InfoCountry();
         infoCountry.setNationality(nacionality);
 

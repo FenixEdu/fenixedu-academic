@@ -11,41 +11,37 @@ import net.sourceforge.fenixedu.domain.ExternalPerson;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UnitUtils;
 import net.sourceforge.fenixedu.domain.person.Gender;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class InsertExternalPersons extends Service {
 
     public List<ExternalPerson> run(List<InfoExternalPerson> infoExternalPersons)
-            throws ExcepcaoPersistencia, FenixServiceException {
+	    throws FenixServiceException {
 
-        List<ExternalPerson> externalPersons = new ArrayList<ExternalPerson>();
+	final List<ExternalPerson> externalPersons = new ArrayList<ExternalPerson>();
 
-        List<Unit> institutions = Unit.readAllUnits();
+	List<Unit> institutions = Unit.readAllUnits();
 
-        for (InfoExternalPerson infoExternalPerson : infoExternalPersons) {
+	for (final InfoExternalPerson infoExternalPerson : infoExternalPersons) {
 
-            // retrieving existing work location
-            Unit currentInstitution = UnitUtils.readExternalInstitutionUnitByName(infoExternalPerson
-                    .getInfoInstitution().getName());
+	    // retrieving existing work location
+	    Unit currentInstitution = UnitUtils.readExternalInstitutionUnitByName(infoExternalPerson
+		    .getInfoInstitution().getName());
 
-            // creating a new one if it doesn't already exist
-            if (currentInstitution == null) {
-                InsertInstitution iwl = new InsertInstitution();
-                currentInstitution = iwl.run(infoExternalPerson.getInfoInstitution().getName());
-                institutions.add(currentInstitution);
-            }
+	    // creating a new one if it doesn't already exist
+	    if (currentInstitution == null) {
+		currentInstitution = new InsertInstitution().run(infoExternalPerson.getInfoInstitution().getName());
+		institutions.add(currentInstitution);
+	    }
 
-            String name = infoExternalPerson.getInfoPerson().getNome();
+	    // creating a new ExternalPerson
+	    ExternalPerson externalPerson = new ExternalPerson(infoExternalPerson.getName(),
+		    Gender.MALE, null, null, null, null, null, null, null, null, null, null, null,
+		    String.valueOf(System.currentTimeMillis()), currentInstitution);
 
-            // creating a new ExternalPerson
-            ExternalPerson externalPerson = new ExternalPerson(name, Gender.MALE, null, null, null,
-                    null, null, null, null, null, null, null, null, String.valueOf(System
-                            .currentTimeMillis()), currentInstitution);
+	    externalPersons.add(externalPerson);
+	}
 
-            externalPersons.add(externalPerson);
-        }
-
-        return externalPersons;
+	return externalPersons;
     }
 
 }

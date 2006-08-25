@@ -17,7 +17,7 @@
 	</ul>
 	<br/>
 
-	<bean:define name="cancelLink">
+	<bean:define id="cancelLink">
 		/manageSpaces.do?method=manageSpace&page=0&spaceInformationID=<bean:write name="space" property="spaceInformation.idInternal"/>
 	</bean:define>
 		

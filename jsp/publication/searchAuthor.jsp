@@ -1,8 +1,7 @@
 <%@ page language="java" %>
-<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
-<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%><html:xhtml/>
-<%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
+<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%><%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
+<html:xhtml/>
 
 <h2><bean:message key="title.publications.Management"/></h2>
 <logic:messagesPresent>
@@ -18,7 +17,7 @@
 		<bean:message key="message.publications.insertPublication" />/
 		<bean:message key="message.publications.insertAuthors" />
 </h3>
-
+<p>
 	<bean:message key="message.publication.InsertSearchAuthors" /><br/>
 	<bean:message key="message.publication.manageSearchAuthors" /><br/>
 	<bean:message key="message.publication.manageSearchAuthors4" /><br/>
@@ -26,7 +25,7 @@
 	<bean:message key="message.publication.manageSearchAuthors6" /><br/>
 	<bean:message key="message.publication.manageSearchAuthors7" /><br/>
 
-</P>
+</p>
 	<br />
 	
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.authorsId" property="authorsId"/>

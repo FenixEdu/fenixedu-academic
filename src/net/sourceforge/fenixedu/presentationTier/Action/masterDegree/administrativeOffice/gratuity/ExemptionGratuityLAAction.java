@@ -5,7 +5,6 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -17,7 +16,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.gratuity.ExemptionGratuityType;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
-import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
+import net.sourceforge.fenixedu.presentationTier.Action.base.FenixLookupDispatchAction;
 
 import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionErrors;
@@ -25,33 +24,25 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
-import org.apache.struts.actions.LookupDispatchAction;
 
 /**
  * @author Fernanda Quitério Created on 31/Aug/2004
  * 
  */
-public class ExemptionGratuityLAAction extends LookupDispatchAction {
+public class ExemptionGratuityLAAction extends FenixLookupDispatchAction {
 
     public ActionForward insertExemptionGratuity(ActionMapping mapping, ActionForm actionForm,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
-        ActionErrors errors = new ActionErrors();
-
-        HttpSession session = request.getSession();
-
-        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
-
-        DynaActionForm exemptionForm = (DynaActionForm) actionForm;
-        InfoGratuitySituation infoGratuitySituation = fillInfoGratuityValues(userView, request,
-                exemptionForm);
-
-        Object[] args = { infoGratuitySituation };
+	
+	final IUserView userView = getUserView(request);
+        InfoGratuitySituation infoGratuitySituation = fillInfoGratuityValues(userView, request, (DynaActionForm) actionForm);
         try {
             infoGratuitySituation = (InfoGratuitySituation) ServiceManagerServiceFactory.executeService(
-                    userView, "EditGratuitySituationById", args);
+        	    userView, "EditGratuitySituationById", new Object[] { infoGratuitySituation });
 
         } catch (FenixServiceException exception) {
             exception.printStackTrace();
+            ActionErrors errors = new ActionErrors();
             errors.add("insertExemptionGratuity", new ActionError(
                     "error.impossible.insertExemptionGratuity"));
             saveErrors(request, errors);
@@ -105,11 +96,6 @@ public class ExemptionGratuityLAAction extends LookupDispatchAction {
         return infoGratuitySituation;
     }
 
-    /**
-     * @param userView
-     * @param request
-     * @return
-     */
     private InfoGratuitySituation fillGratuitySituationFromRequest(IUserView userView,
             HttpServletRequest request) {
 
@@ -136,11 +122,9 @@ public class ExemptionGratuityLAAction extends LookupDispatchAction {
         infoGratuitySituation.setInfoGratuityValues(infoGratuityValues);
 
         // employee who made register
-        InfoPerson infoPerson = new InfoPerson();
-        infoPerson.setUsername(userView.getUtilizador());
 
         InfoEmployee infoEmployee = new InfoEmployee();
-        infoEmployee.setPerson(infoPerson);
+        infoEmployee.setPerson(InfoPerson.newInfoFromDomain(userView.getPerson()));
 
         infoGratuitySituation.setInfoEmployee(infoEmployee);
         return infoGratuitySituation;
@@ -148,17 +132,16 @@ public class ExemptionGratuityLAAction extends LookupDispatchAction {
 
     public ActionForward removeExemptionGratuity(ActionMapping mapping, ActionForm actionForm,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
+	
         ActionErrors errors = new ActionErrors();
-        HttpSession session = request.getSession();
-        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
-
+        final IUserView userView = getUserView(request); 
         InfoGratuitySituation infoGratuitySituation = fillGratuitySituationFromRequest(userView, request);
 
         // to remove an exemption is equivalent to put 0 in exemption percentage
         // this is necessary to recalculate remaining value from gratuity
         // situation
-        infoGratuitySituation.setExemptionPercentage(new Integer(0));
-        infoGratuitySituation.setExemptionValue(new Double(0));
+        infoGratuitySituation.setExemptionPercentage(Integer.valueOf(0));
+        infoGratuitySituation.setExemptionValue(Double.valueOf(0));
 
         Object[] args = { infoGratuitySituation };
         try {
@@ -173,12 +156,7 @@ public class ExemptionGratuityLAAction extends LookupDispatchAction {
             mapping.getInputForward();
         }
 
-        Boolean result = Boolean.FALSE;
-        if (infoGratuitySituation != null) {
-            result = Boolean.TRUE;
-        }
-
-        request.setAttribute("removeExemptionGratuity", result.toString());
+        request.setAttribute("removeExemptionGratuity", Boolean.valueOf(infoGratuitySituation != null).toString());
 
         return mapping.findForward("confirmationExemptionGratuity");
     }

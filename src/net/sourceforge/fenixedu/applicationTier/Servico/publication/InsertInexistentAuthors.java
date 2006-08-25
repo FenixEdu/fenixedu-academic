@@ -10,32 +10,29 @@ import net.sourceforge.fenixedu.applicationTier.Servico.commons.externalPerson.I
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExternalPerson;
 import net.sourceforge.fenixedu.dataTransferObject.InfoInstitution;
-import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
 import net.sourceforge.fenixedu.dataTransferObject.publication.InfoAuthor;
 import net.sourceforge.fenixedu.domain.ExternalPerson;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class InsertInexistentAuthors extends Service {
 
-    public List<Person> run(final List<InfoAuthor> infoAuthorsList) throws ExcepcaoPersistencia, FenixServiceException {
+    public List<Person> run(final List<InfoAuthor> infoAuthorsList) throws FenixServiceException {
         
         final List<Person> authorsList = new ArrayList<Person>(infoAuthorsList.size());
         
         List<Integer> externalPersonsIndexes = new ArrayList<Integer>();
 
-        List<InfoExternalPerson> infoExternalPersons = new ArrayList<InfoExternalPerson>();
         int index = 0;
-        for (InfoAuthor infoAuthor : infoAuthorsList) {
+        final List<InfoExternalPerson> infoExternalPersons = new ArrayList<InfoExternalPerson>();
+        for (final InfoAuthor infoAuthor : infoAuthorsList) {
             if (infoAuthor.getIdInternal() == null) {
                 InfoExternalPerson infoExternalPerson = new InfoExternalPerson();
-                InfoPerson infoPerson = new InfoPerson();
-//                infoPerson.setIdInternal(infoAuthor.getIdInternal());
-                infoPerson.setNome(infoAuthor.getAuthor());
+                infoExternalPerson.setName(infoAuthor.getAuthor());
+                
                 InfoInstitution infoInstitution = new InfoInstitution();
                 infoInstitution.setName(infoAuthor.getOrganization());
-                infoExternalPerson.setInfoPerson(infoPerson);
                 infoExternalPerson.setInfoInstitution(infoInstitution);
+                
                 infoExternalPersons.add(infoExternalPerson);
                 externalPersonsIndexes.add(index);
             }

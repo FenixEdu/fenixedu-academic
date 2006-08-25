@@ -1,15 +1,15 @@
 <%@ page language="java" %>
-<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
-<html:xhtml/>
-<%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
-<%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
-<%@ page import="org.apache.struts.Globals" %>
 <%@ page import="java.util.List" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
 <%@ page import="net.sourceforge.fenixedu.applicationTier.IUserView" %>
 <%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlan" %>
-<%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoStudent" %>
-<%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoPerson" %>
+
+<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
+<%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
+
+
+<html:xhtml/>
 
 <span class="error"><!-- Error messages go here --><html:errors /></span>
 <bean:define id="studentCPList" name="studentCPs" scope="request" />
@@ -28,10 +28,10 @@
 					<span class="emphasis-box">info</span>
 				</td>
 				<td class="infoop">
-					<strong>Nota: ï¿? normal a existï¿?ncia de dois planos curriculares para o mesmo curso.</strong><br/>
-					O plano curricular com a data mais antiga (ano da sua entrada no IST), contem o seu currï¿?culo tal e qual como o pode visionar no ponto habitual acedido atravï¿?s da pï¿?gina do IST.<br/>
-					O plano curricular com a data mais recente (este ano lectivo), contem o seu currï¿?culo como se o tivesse iniciado este ano, ou seja, apenas com as disciplinas em que se encontra inscrito a partir deste ano lectivo.<br/>
-					A razï¿?o desta separaï¿?ï¿?o ï¿? dar a hipï¿?tese de verificar a correcï¿?ï¿?o do seu currï¿?culo passado para, mais tarde (e depois de ter a certeza de que estï¿? tudo em ordem), juntar toda a informação num sï¿? plano curricular.
+					<strong>Nota: É normal a existência de dois planos curriculares para o mesmo curso.</strong><br/>
+					O plano curricular com a data mais antiga (ano da sua entrada no IST), contem o seu currículo tal e qual como o pode visionar no ponto habitual acedido através da página do IST.<br/>
+					O plano curricular com a data mais recente (este ano lectivo), contem o seu currículo como se o tivesse iniciado este ano, ou seja, apenas com as disciplinas em que se encontra inscrito a partir deste ano lectivo.<br/>
+					A razão desta separação é dar a hipótese de verificar a correcção do seu currículo passado para, mais tarde (e depois de ter a certeza de que está tudo em ordem), juntar toda a informação num só plano curricular.
 				</td>
 			</tr>
 		</table>

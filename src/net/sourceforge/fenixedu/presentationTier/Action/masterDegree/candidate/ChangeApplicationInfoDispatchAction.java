@@ -1,15 +1,3 @@
-/*
- * ChangeCandidateApplicationFormAction.java
- * 
- * 
- * Created on 14 de Dezembro de 2002, 12:31
- * 
- * 
- * Autores : - Nuno Nunes (nmsn@rnl.ist.utl.pt) - Joana Mota
- * (jccm@rnl.ist.utl.pt)
- *  
- */
-
 package net.sourceforge.fenixedu.presentationTier.Action.masterDegree.candidate;
 
 import java.util.ArrayList;
@@ -28,7 +16,9 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoCandidateSituation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCountry;
 import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeCandidate;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
+import net.sourceforge.fenixedu.dataTransferObject.InfoPersonEditor;
 import net.sourceforge.fenixedu.domain.person.Gender;
+import net.sourceforge.fenixedu.domain.person.GenderHelper;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 import net.sourceforge.fenixedu.domain.person.MaritalStatus;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
@@ -39,6 +29,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
 import net.sourceforge.fenixedu.util.Data;
 import net.sourceforge.fenixedu.util.SituationName;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.struts.Globals;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -66,7 +57,7 @@ public class ChangeApplicationInfoDispatchAction extends DispatchAction {
         
         InfoMasterDegreeCandidate masterDegreeCandidate = readMasterDegreeCandidate(userView, candidateID);
 
-        InfoPerson infoPerson = new InfoPerson();
+        InfoPersonEditor infoPerson = new InfoPersonEditor();
 
         // Create Dates
         infoPerson.setNascimento(buildDate(changeApplicationInfoForm, "birthDay", "birthMonth",
@@ -88,16 +79,18 @@ public class ChangeApplicationInfoDispatchAction extends DispatchAction {
         infoPerson.setNome((String) changeApplicationInfoForm.get("name"));
 
         String aux = (String) changeApplicationInfoForm.get("sex");
-        if ((aux == null) || (aux.length() == 0))
+        if (StringUtils.isEmpty(aux)) {
             infoPerson.setSexo(null);
-        else
+        } else {
             infoPerson.setSexo(Gender.valueOf(aux));
+        }
 
         aux = (String) changeApplicationInfoForm.get("maritalStatus");
-        if ((aux == null) || (aux.length() == 0))
+        if (StringUtils.isEmpty(aux)) {
             infoPerson.setMaritalStatus(null);
-        else
+        } else {
             infoPerson.setMaritalStatus(MaritalStatus.valueOf(aux));
+        }
 
         infoPerson.setInfoPais(nationality);
         infoPerson.setNomePai((String) changeApplicationInfoForm.get("fatherName"));
@@ -136,9 +129,8 @@ public class ChangeApplicationInfoDispatchAction extends DispatchAction {
             isNewPerson = true;
         }
 
-        Object args[] = { masterDegreeCandidate, infoPerson, userView, isNewPerson };
-
         try {
+            final Object args[] = { masterDegreeCandidate, infoPerson, userView, isNewPerson };
             masterDegreeCandidate = (InfoMasterDegreeCandidate) ServiceManagerServiceFactory
                     .executeService(userView, "ChangeApplicationInfo", args);
         } catch (FenixServiceException e) {
@@ -155,12 +147,9 @@ public class ChangeApplicationInfoDispatchAction extends DispatchAction {
         String monthString = (String) form.get(monthField);
         String yearString = (String) form.get(yearField);
 
-        if ((dayString == null) || (monthString == null) || (yearString == null)
-                || (dayString.length() == 0) || (monthString.length() == 0)
-                || (yearString.length() == 0)) {
+        if (StringUtils.isEmpty(dayString) || StringUtils.isEmpty(monthString) || StringUtils.isEmpty(yearString)) {
             return null;
         } else {
-
             Integer day = new Integer((String) form.get("birthDay"));
             Integer month = new Integer((String) form.get("birthMonth"));
             Integer year = new Integer((String) form.get("birthYear"));
@@ -215,7 +204,7 @@ public class ChangeApplicationInfoDispatchAction extends DispatchAction {
         }
 
         request.setAttribute(SessionConstants.NATIONALITY_LIST_KEY, nationalityList);
-        request.setAttribute(SessionConstants.SEX_LIST_KEY, Gender.getSexLabelValues((Locale) request
+        request.setAttribute(SessionConstants.SEX_LIST_KEY, GenderHelper.getSexLabelValues((Locale) request
                 .getAttribute(Globals.LOCALE_KEY)));
         request.setAttribute(SessionConstants.MONTH_DAYS_KEY, Data.getMonthDays());
         request.setAttribute(SessionConstants.MONTH_LIST_KEY, Data.getMonths());

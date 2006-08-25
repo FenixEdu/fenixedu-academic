@@ -178,11 +178,11 @@ public class InfoMasterDegreeCandidate extends InfoObject {
 
     /**
      * @return
-     */
+     */   
     public InfoPerson getInfoPerson() {
         return infoPerson;
     }
-
+ 
     /**
      * @return
      */

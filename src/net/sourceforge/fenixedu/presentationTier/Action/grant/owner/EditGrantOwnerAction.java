@@ -17,6 +17,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServi
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCountry;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
+import net.sourceforge.fenixedu.dataTransferObject.InfoPersonEditor;
 import net.sourceforge.fenixedu.dataTransferObject.grant.owner.InfoGrantOwner;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.Gender;
@@ -106,9 +107,6 @@ public class EditGrantOwnerAction extends FenixDispatchAction {
             request.setAttribute("idInternal", infoGrantOwner.getIdInternal().toString());
         }
 
-        /*List documentTypeList = TipoDocumentoIdentificacao.toIntegerArrayList();
-        request.setAttribute("documentTypeList", documentTypeList);*/
-
         List maritalStatusList = Arrays.asList(MaritalStatus.values());
         request.setAttribute("maritalStatusList", maritalStatusList);
 
@@ -128,9 +126,6 @@ public class EditGrantOwnerAction extends FenixDispatchAction {
         return mapping.findForward("edit-grant-owner-form");
     }
 
-    /*
-     * Editing a Grant Owner
-     */
     public ActionForward doEdit(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
         
@@ -141,7 +136,7 @@ public class EditGrantOwnerAction extends FenixDispatchAction {
         try {
             infoGrantOwner = populateInfoFromForm(editGrantOwnerForm);
 
-            if (infoGrantOwner.getPersonInfo().getTipoDocumentoIdentificacao() == null) {
+            if (infoGrantOwner.getInfoPersonEditor().getTipoDocumentoIdentificacao() == null) {
                 return setError(request, mapping, "errors.grant.owner.idtype", null, null);
             }
 
@@ -270,10 +265,10 @@ public class EditGrantOwnerAction extends FenixDispatchAction {
     /*
      * Populate infoGrantOwner from form
      */
-    private InfoGrantOwner populateInfoFromForm(DynaValidatorForm editGrantOwnerForm)
-            throws FenixServiceException {
+    private InfoGrantOwner populateInfoFromForm(DynaValidatorForm editGrantOwnerForm) throws FenixServiceException {
+	
         InfoGrantOwner infoGrantOwner = new InfoGrantOwner();
-        InfoPerson infoPerson = new InfoPerson();
+        InfoPersonEditor infoPerson = new InfoPersonEditor();
 
         //Format of date in the form
         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
@@ -356,12 +351,13 @@ public class EditGrantOwnerAction extends FenixDispatchAction {
         infoPerson.setMaritalStatus(estadoCivil);
 
         InfoCountry infoCountry = new InfoCountry();
-        if (((Integer) editGrantOwnerForm.get("country")).equals(new Integer(0)))
+        if (((Integer) editGrantOwnerForm.get("country")).equals(new Integer(0))) {
             infoCountry.setIdInternal(null);
-        else
+        } else {
             infoCountry.setIdInternal((Integer) editGrantOwnerForm.get("country"));
+        }
         infoPerson.setInfoPais(infoCountry);
-        infoGrantOwner.setPersonInfo(infoPerson);
+        infoGrantOwner.setInfoPersonEditor(infoPerson);
         return infoGrantOwner;
     }
 }

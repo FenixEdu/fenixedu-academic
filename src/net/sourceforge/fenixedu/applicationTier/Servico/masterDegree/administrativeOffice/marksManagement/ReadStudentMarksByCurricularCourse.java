@@ -11,7 +11,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolment;
 import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolmentEvaluation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolmentEvaluationWithResponsibleForGrade;
 import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolmentWithStudentPlanAndCourseAndExecutionPeriod;
-import net.sourceforge.fenixedu.dataTransferObject.InfoPersonWithInfoCountry;
+import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteEnrolmentEvaluation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
@@ -22,7 +22,6 @@ import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.student.Registration;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.util.EnrolmentEvaluationState;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -34,132 +33,119 @@ import org.apache.commons.collections.Predicate;
  */
 public class ReadStudentMarksByCurricularCourse extends Service {
 
-	public List run(Integer curricularCourseID, Integer studentNumber, String executionYear)
-			throws FenixServiceException, ExcepcaoPersistencia {
-		List enrolmentEvaluations = null;
-		InfoTeacher infoTeacher = null;
-		List<InfoSiteEnrolmentEvaluation> infoSiteEnrolmentEvaluations = new ArrayList<InfoSiteEnrolmentEvaluation>();
+    public List run(Integer curricularCourseID, Integer studentNumber, String executionYear)
+	    throws FenixServiceException {
 
-		CurricularCourse curricularCourse = (CurricularCourse) rootDomainObject.readDegreeModuleByOID(curricularCourseID);
+	List enrolmentEvaluations = null;
+	InfoTeacher infoTeacher = null;
+	List<InfoSiteEnrolmentEvaluation> infoSiteEnrolmentEvaluations = new ArrayList<InfoSiteEnrolmentEvaluation>();
 
-		final CurricularCourse curricularCourseTemp = curricularCourse;
+	CurricularCourse curricularCourse = (CurricularCourse) rootDomainObject
+		.readDegreeModuleByOID(curricularCourseID);
 
-		// StudentCurricularPlan studentCurricularPlan =
-		// persistentSupport.getIStudentCurricularPlanPersistente().readActiveStudentCurricularPlan(
-		// studentNumber,
-		// DegreeType.MESTRADO_OBJ);
-		//
-		// if (studentCurricularPlan == null)
-		// {
-		//
-		// throw new ExistingServiceException();
-		// }
+	final CurricularCourse curricularCourseTemp = curricularCourse;
 
-		// get student curricular Plan
-		// in case student has school part concluded his curricular plan is
-		// not in active state
+	// get student curricular Plan
+	// in case student has school part concluded his curricular plan is
+	// not in active state
 
-		
-		List<StudentCurricularPlan> studentCurricularPlans = null;
-		Registration registration = Registration.readStudentByNumberAndDegreeType(studentNumber, DegreeType.MASTER_DEGREE);
-		if(registration == null) {
-			throw new ExistingServiceException();
-		} 
-		
-		studentCurricularPlans = registration.getStudentCurricularPlans();
-
-		StudentCurricularPlan studentCurricularPlan = (StudentCurricularPlan) CollectionUtils.find(
-				studentCurricularPlans, new Predicate() {
-					public boolean evaluate(Object object) {
-						StudentCurricularPlan studentCurricularPlanElem = (StudentCurricularPlan) object;
-						if (studentCurricularPlanElem.getDegreeCurricularPlan().equals(
-								curricularCourseTemp.getDegreeCurricularPlan())) {
-							return true;
-						}
-						return false;
-					}
-				});
-		if (studentCurricularPlan == null) {
-
-			studentCurricularPlan = (StudentCurricularPlan) CollectionUtils.find(
-					studentCurricularPlans, new Predicate() {
-						public boolean evaluate(Object object) {
-							StudentCurricularPlan studentCurricularPlanElem = (StudentCurricularPlan) object;
-							if (studentCurricularPlanElem.getDegreeCurricularPlan().getDegree().equals(
-									curricularCourseTemp.getDegreeCurricularPlan().getDegree())) {
-								return true;
-							}
-							return false;
-						}
-					});
-
-			if (studentCurricularPlan == null) {
-				throw new ExistingServiceException();
-			}
-
-		}
-		// }
-		Enrolment enrolment = null;
-		if (executionYear != null) {
-			enrolment = curricularCourse.getEnrolmentByStudentAndYear(studentCurricularPlan.getStudent(), executionYear);
-
-		} else {
-			// TODO: Não se sabe se este comportamento está correcto!
-			List<Enrolment> enrollments = studentCurricularPlan.getEnrolments(curricularCourse); 
-
-			if (enrollments.isEmpty()) {
-				throw new ExistingServiceException();
-			}
-			enrolment = (Enrolment) enrollments.get(0);
-		}
-
-		if (enrolment != null) {
-			// ListIterator iter1 = enrolments.listIterator();
-			// while (iter1.hasNext()) {
-			// enrolment = (Enrolment) iter1.next();
-
-			EnrolmentEvaluationState enrolmentEvaluationState = EnrolmentEvaluationState.FINAL_OBJ;
-			enrolmentEvaluations = enrolment.getEnrolmentEvaluationsByEnrolmentEvaluationState(enrolmentEvaluationState);
-
-
-			if (enrolmentEvaluations != null && enrolmentEvaluations.size() > 0) {
-				Person person = ((EnrolmentEvaluation) enrolmentEvaluations.get(0))
-						.getPersonResponsibleForGrade();
-                if(person != null){
-                    Teacher teacher = Teacher.readTeacherByUsername(person.getUsername());
-                    infoTeacher = InfoTeacher.newInfoFromDomain(teacher);
-                }				
-			}
-
-			List<InfoEnrolmentEvaluation> infoEnrolmentEvaluations = new ArrayList<InfoEnrolmentEvaluation>();
-			if (enrolmentEvaluations != null && enrolmentEvaluations.size() > 0) {
-				ListIterator iter = enrolmentEvaluations.listIterator();
-				while (iter.hasNext()) {
-					EnrolmentEvaluation enrolmentEvaluation = (EnrolmentEvaluation) iter.next();
-					InfoEnrolmentEvaluation infoEnrolmentEvaluation = InfoEnrolmentEvaluationWithResponsibleForGrade
-							.newInfoFromDomain(enrolmentEvaluation);
-					InfoEnrolment infoEnrolment = InfoEnrolmentWithStudentPlanAndCourseAndExecutionPeriod
-							.newInfoFromDomain(enrolmentEvaluation.getEnrolment());
-					infoEnrolmentEvaluation.setInfoEnrolment(infoEnrolment);
-
-					if (enrolmentEvaluation != null) {
-						if (enrolmentEvaluation.getEmployee() != null) {
-							Person person2 = enrolmentEvaluation.getEmployee().getPerson();
-							infoEnrolmentEvaluation.setInfoEmployee(InfoPersonWithInfoCountry.newInfoFromDomain(person2));
-						}
-
-					}
-					infoEnrolmentEvaluations.add(infoEnrolmentEvaluation);
-				}
-
-			}
-			InfoSiteEnrolmentEvaluation infoSiteEnrolmentEvaluation = new InfoSiteEnrolmentEvaluation();
-			infoSiteEnrolmentEvaluation.setEnrolmentEvaluations(infoEnrolmentEvaluations);
-			infoSiteEnrolmentEvaluation.setInfoTeacher(infoTeacher);
-			infoSiteEnrolmentEvaluations.add(infoSiteEnrolmentEvaluation);
-
-		}
-
-		return infoSiteEnrolmentEvaluations;
+	List<StudentCurricularPlan> studentCurricularPlans = null;
+	Registration registration = Registration.readStudentByNumberAndDegreeType(studentNumber,
+		DegreeType.MASTER_DEGREE);
+	if (registration == null) {
+	    throw new ExistingServiceException();
 	}
+
+	studentCurricularPlans = registration.getStudentCurricularPlans();
+
+	StudentCurricularPlan studentCurricularPlan = (StudentCurricularPlan) CollectionUtils.find(
+		studentCurricularPlans, new Predicate() {
+		    public boolean evaluate(Object object) {
+			StudentCurricularPlan studentCurricularPlanElem = (StudentCurricularPlan) object;
+			if (studentCurricularPlanElem.getDegreeCurricularPlan().equals(
+				curricularCourseTemp.getDegreeCurricularPlan())) {
+			    return true;
+			}
+			return false;
+		    }
+		});
+	if (studentCurricularPlan == null) {
+
+	    studentCurricularPlan = (StudentCurricularPlan) CollectionUtils.find(studentCurricularPlans,
+		    new Predicate() {
+			public boolean evaluate(Object object) {
+			    StudentCurricularPlan studentCurricularPlanElem = (StudentCurricularPlan) object;
+			    if (studentCurricularPlanElem.getDegreeCurricularPlan().getDegree().equals(
+				    curricularCourseTemp.getDegreeCurricularPlan().getDegree())) {
+				return true;
+			    }
+			    return false;
+			}
+		    });
+
+	    if (studentCurricularPlan == null) {
+		throw new ExistingServiceException();
+	    }
+
+	}
+	// }
+	Enrolment enrolment = null;
+	if (executionYear != null) {
+	    enrolment = curricularCourse.getEnrolmentByStudentAndYear(
+		    studentCurricularPlan.getStudent(), executionYear);
+
+	} else {
+	    // TODO: Não se sabe se este comportamento está correcto!
+	    List<Enrolment> enrollments = studentCurricularPlan.getEnrolments(curricularCourse);
+
+	    if (enrollments.isEmpty()) {
+		throw new ExistingServiceException();
+	    }
+	    enrolment = (Enrolment) enrollments.get(0);
+	}
+
+	if (enrolment != null) {
+
+	    EnrolmentEvaluationState enrolmentEvaluationState = EnrolmentEvaluationState.FINAL_OBJ;
+	    enrolmentEvaluations = enrolment
+		    .getEnrolmentEvaluationsByEnrolmentEvaluationState(enrolmentEvaluationState);
+
+	    if (enrolmentEvaluations != null && enrolmentEvaluations.size() > 0) {
+		Person person = ((EnrolmentEvaluation) enrolmentEvaluations.get(0))
+			.getPersonResponsibleForGrade();
+		if (person != null) {
+		    Teacher teacher = Teacher.readTeacherByUsername(person.getUsername());
+		    infoTeacher = InfoTeacher.newInfoFromDomain(teacher);
+		}
+	    }
+
+	    List<InfoEnrolmentEvaluation> infoEnrolmentEvaluations = new ArrayList<InfoEnrolmentEvaluation>();
+	    if (enrolmentEvaluations != null && enrolmentEvaluations.size() > 0) {
+		ListIterator iter = enrolmentEvaluations.listIterator();
+		while (iter.hasNext()) {
+		    EnrolmentEvaluation enrolmentEvaluation = (EnrolmentEvaluation) iter.next();
+		    InfoEnrolmentEvaluation infoEnrolmentEvaluation = InfoEnrolmentEvaluationWithResponsibleForGrade
+			    .newInfoFromDomain(enrolmentEvaluation);
+		    InfoEnrolment infoEnrolment = InfoEnrolmentWithStudentPlanAndCourseAndExecutionPeriod
+			    .newInfoFromDomain(enrolmentEvaluation.getEnrolment());
+		    infoEnrolmentEvaluation.setInfoEnrolment(infoEnrolment);
+
+		    if (enrolmentEvaluation != null && enrolmentEvaluation.hasEmployee()) {
+			infoEnrolmentEvaluation.setInfoEmployee(InfoPerson
+				.newInfoFromDomain(enrolmentEvaluation.getEmployee().getPerson()));
+
+		    }
+		    infoEnrolmentEvaluations.add(infoEnrolmentEvaluation);
+		}
+
+	    }
+	    InfoSiteEnrolmentEvaluation infoSiteEnrolmentEvaluation = new InfoSiteEnrolmentEvaluation();
+	    infoSiteEnrolmentEvaluation.setEnrolmentEvaluations(infoEnrolmentEvaluations);
+	    infoSiteEnrolmentEvaluation.setInfoTeacher(infoTeacher);
+	    infoSiteEnrolmentEvaluations.add(infoSiteEnrolmentEvaluation);
+
+	}
+
+	return infoSiteEnrolmentEvaluations;
+    }
 }

@@ -1,9 +1,9 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
-<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
+<html:xhtml/>
 
 <logic:present name="item">
     <bean:define id="item" name="item" type="net.sourceforge.fenixedu.domain.cms.Content"/>
@@ -13,13 +13,13 @@
         <bean:write name="websiteType" property="name"/> 
     </html:link>
     <logic:present name="parents">
-    ï¿½
+    »
         <%
             String pathParam = "";
         %>
     
         <logic:iterate id="parent" indexId="index" name="parents">
-            <logic:greaterThan name="index" value="0">ï¿½</logic:greaterThan>
+            <logic:greaterThan name="index" value="0">»</logic:greaterThan>
             
             <bean:define id="parentId" name="parent" property="idInternal"/>
             <html:link page="<%= "/websiteTypeManagement.do?method=editChild&child=" + parentId + "&oid=" + websiteTypeId +"&path=" + pathParam %>">
@@ -31,7 +31,7 @@
             %>
         </logic:iterate>
         
-        <logic:notEmpty name="parents">ï¿½</logic:notEmpty>
+        <logic:notEmpty name="parents">»</logic:notEmpty>
         <bean:write name="item" property="name"/>
     
     </logic:present>

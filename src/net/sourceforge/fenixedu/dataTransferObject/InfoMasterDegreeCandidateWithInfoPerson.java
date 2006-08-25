@@ -15,7 +15,7 @@ public class InfoMasterDegreeCandidateWithInfoPerson extends InfoMasterDegreeCan
     public void copyFromDomain(MasterDegreeCandidate masterDegreeCandidate) {
         super.copyFromDomain(masterDegreeCandidate);
         if (masterDegreeCandidate != null) {
-            setInfoPerson(InfoPersonWithInfoCountry.newInfoFromDomain(masterDegreeCandidate.getPerson()));
+            setInfoPerson(InfoPerson.newInfoFromDomain(masterDegreeCandidate.getPerson()));
             setAverage(masterDegreeCandidate.getAverage());
             setCandidateNumber(masterDegreeCandidate.getCandidateNumber());
             setGivenCredits(masterDegreeCandidate.getGivenCredits());

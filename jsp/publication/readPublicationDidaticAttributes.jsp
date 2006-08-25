@@ -1,8 +1,7 @@
 <%@ page language="java" %>
-<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
-<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%><html:xhtml/>
-<%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
+<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%><%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
+<html:xhtml/>
 
 <bean:define id="component" name="siteView" property="component"/>
 <bean:define id="infoRequiredAttributeList" name="component" property="infoRequiredAttributes"/>
@@ -32,9 +31,9 @@
 		<logic:notPresent name="infoPublication">
 			<bean:message key="message.publications.managementInsert" />	
 		</logic:notPresent>
-</P>
+</p>
 
-<p></p>
+<p>
 	<bean:message key="message.publications.authorsInserteds"/>
 
 	<br />
@@ -1030,7 +1029,6 @@
 			</logic:equal>
 	
 		</logic:iterate>
-	</tr>
 </table>
 <bean:message key="message.publications.savePublication"/>
 <br/>

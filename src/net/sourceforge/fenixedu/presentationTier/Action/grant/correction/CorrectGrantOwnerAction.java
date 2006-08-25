@@ -1,7 +1,3 @@
-/*
- * Created on May 17, 2004
- */
-
 package net.sourceforge.fenixedu.presentationTier.Action.grant.correction;
 
 import java.util.List;
@@ -22,26 +18,17 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.validator.DynaValidatorForm;
 
-/**
- * @author Pica
- * @author Barbosa
- */
 public class CorrectGrantOwnerAction extends FenixDispatchAction {
 
     public ActionForward prepareForm(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
-        /*List documentTypeList = TipoDocumentoIdentificacao.toIntegerArrayList();
-        request.setAttribute("documentTypeList", documentTypeList);*/
+            HttpServletResponse response) {
+
         return mapping.findForward("correct-grant-owner");
     }
 
-    /*
-     * Associate a Grant Owner to another person (that isn't a Grant Owner)
-     */
     public ActionForward changeAssociatedPerson(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-        //Read the values from the Form
         Integer grantOwnerNumber = null;
         Integer documentIdNumber = null;
         IDDocumentType documentIdType = null;
@@ -52,14 +39,10 @@ public class CorrectGrantOwnerAction extends FenixDispatchAction {
             documentIdNumber = new Integer((String) correctGrantOwnerForm.get("documentIdNumber"));
             documentIdType = IDDocumentType.valueOf((String) correctGrantOwnerForm.get("documentIdType"));
 
-            /*if (documentIdType.equals(new Integer(0))) {
-                throw new Exception();
-            }*/
         } catch (Exception e) {
             return setError(request, mapping, "errors.grant.correction.fillAllFields", null, null);
         }
 
-        //Do the action
         try {
             IUserView userView = SessionUtils.getUserView(request);
 
@@ -112,22 +95,17 @@ public class CorrectGrantOwnerAction extends FenixDispatchAction {
                 InfoPerson infoPerson = newInfoGrantOwner.getPersonInfo();
                 String newUsernameNewPerson = "B";
                 newUsernameNewPerson += infoGrantOwner.getGrantOwnerNumber().toString();
-                infoPerson.setUsername(newUsernameNewPerson);
 
                 Object[] argsChangeUsername = { newUsernameNewPerson, infoPerson.getIdInternal() };
                 ServiceUtils.executeService(userView, "ChangePersonUsername", argsChangeUsername);
             }
 
-            //Associate the new person with the grant owner, and save the
-            // changes
             Object[] argsNewGrantOwner = { infoGrantOwner };
             ServiceUtils.executeService(userView, "EditGrantOwner", argsNewGrantOwner);
 
-            //Set of the request variables and return
-            //List documentTypeList = TipoDocumentoIdentificacao.toIntegerArrayList();
-            //request.setAttribute("documentTypeList", documentTypeList);
             request.setAttribute("correctionNumber1", "yes");
             return mapping.findForward("correct-grant-owner");
+            
         } catch (Exception e) {
             return setError(request, mapping, "errors.grant.unrecoverable", null, null);
         }

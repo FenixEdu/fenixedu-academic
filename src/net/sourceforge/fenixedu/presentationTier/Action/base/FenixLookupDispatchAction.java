@@ -6,7 +6,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.presentationTier.Action.ExcepcaoSessaoInexistente;
+import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -27,6 +29,10 @@ public abstract class FenixLookupDispatchAction extends LookupDispatchAction {
             throw new ExcepcaoSessaoInexistente();
 
         return result;
+    }
+    
+    protected static IUserView getUserView(HttpServletRequest request) {
+        return SessionUtils.getUserView(request);
     }
 
     /**

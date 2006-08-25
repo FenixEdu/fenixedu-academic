@@ -37,7 +37,7 @@ public class CalculateStateGrantOwnerByCriteria extends Service {
         } else if (infoStatGrantOwner.getJustInactiveContracts() != null) {
             activeContracts = !infoStatGrantOwner.getJustInactiveContracts();
         }
-        Integer numberOfGrantContractsByCriteria = grantType.countGrantContractsByActiveAndDate(
+        Integer numberOfGrantContractsByCriteria = (grantType == null) ? 0 : grantType.countGrantContractsByActiveAndDate(
                 activeContracts, infoStatGrantOwner.getDateBeginContract(),
                 infoStatGrantOwner.getDateEndContract());
 

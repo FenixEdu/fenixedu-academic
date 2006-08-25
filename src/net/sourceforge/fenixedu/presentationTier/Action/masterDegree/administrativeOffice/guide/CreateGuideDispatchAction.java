@@ -58,308 +58,307 @@ import org.apache.struts.actions.DispatchAction;
 public class CreateGuideDispatchAction extends DispatchAction {
 
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
+	    HttpServletResponse response) throws Exception {
 
-        HttpSession session = request.getSession(false);
+	HttpSession session = request.getSession(false);
 
-        DynaActionForm createGuideForm = (DynaActionForm) form;
+	DynaActionForm createGuideForm = (DynaActionForm) form;
 
-        if (session != null) {
-            IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+	if (session != null) {
+	    IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 
-            // Transport chosen Execution Degree
-            String executionDegreeIDParam = getFromRequest(SessionConstants.EXECUTION_DEGREE_OID,
-                    request);
-            Integer executionDegreeID = Integer.valueOf(executionDegreeIDParam);
-            createGuideForm.set("executionDegreeID", executionDegreeID);
-            request.setAttribute(SessionConstants.EXECUTION_DEGREE_OID, executionDegreeID);
+	    // Transport chosen Execution Degree
+	    String executionDegreeIDParam = getFromRequest(SessionConstants.EXECUTION_DEGREE_OID,
+		    request);
+	    Integer executionDegreeID = Integer.valueOf(executionDegreeIDParam);
+	    createGuideForm.set("executionDegreeID", executionDegreeID);
+	    request.setAttribute(SessionConstants.EXECUTION_DEGREE_OID, executionDegreeID);
 
-            InfoExecutionDegree infoExecutionDegree = null;
-            try {
-                Object[] readExecutionDegreeArgs = { executionDegreeID };
-                infoExecutionDegree = (InfoExecutionDegree) ServiceManagerServiceFactory.executeService(
-                        userView, "ReadExecutionDegreeByOID", readExecutionDegreeArgs);
-            } catch (FenixServiceException e) {
-                throw new FenixActionException(e);
+	    InfoExecutionDegree infoExecutionDegree = null;
+	    try {
+		Object[] readExecutionDegreeArgs = { executionDegreeID };
+		infoExecutionDegree = (InfoExecutionDegree) ServiceManagerServiceFactory.executeService(
+			userView, "ReadExecutionDegreeByOID", readExecutionDegreeArgs);
+	    } catch (FenixServiceException e) {
+		throw new FenixActionException(e);
 
-            }
-            if (infoExecutionDegree != null) {
-                request.setAttribute(SessionConstants.EXECUTION_DEGREE, infoExecutionDegree);
-            }
+	    }
+	    if (infoExecutionDegree != null) {
+		request.setAttribute(SessionConstants.EXECUTION_DEGREE, infoExecutionDegree);
+	    }
 
-            session.removeAttribute(SessionConstants.PRINT_PASSWORD);
-            session.removeAttribute(SessionConstants.PRINT_INFORMATION);
+	    session.removeAttribute(SessionConstants.PRINT_PASSWORD);
+	    session.removeAttribute(SessionConstants.PRINT_INFORMATION);
 
-            // Contributor
-            String unexistinngContributor = getFromRequest(SessionConstants.UNEXISTING_CONTRIBUTOR,
-                    request);
-            if (unexistinngContributor != null && unexistinngContributor.length() > 0) {
-                request.setAttribute(SessionConstants.UNEXISTING_CONTRIBUTOR, Boolean.TRUE.toString());
-            }
+	    // Contributor
+	    String unexistinngContributor = getFromRequest(SessionConstants.UNEXISTING_CONTRIBUTOR,
+		    request);
+	    if (unexistinngContributor != null && unexistinngContributor.length() > 0) {
+		request.setAttribute(SessionConstants.UNEXISTING_CONTRIBUTOR, Boolean.TRUE.toString());
+	    }
 
-            request.setAttribute("chooseContributorBean", new CreateReceiptBean());
+	    request.setAttribute("chooseContributorBean", new CreateReceiptBean());
 
-            return mapping.findForward("PrepareSuccess");
-        }
-        throw new Exception();
+	    return mapping.findForward("PrepareSuccess");
+	}
+	throw new Exception();
 
     }
 
     public ActionForward requesterChosen(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixActionException,
-            FenixFilterException {
+	    HttpServletRequest request, HttpServletResponse response) throws FenixActionException,
+	    FenixFilterException {
 
-        HttpSession session = request.getSession(false);
+	HttpSession session = request.getSession(false);
 
-        if (session != null) {
-            // session.removeAttribute(SessionConstants.CERTIFICATE_LIST);
+	if (session != null) {
+	    // session.removeAttribute(SessionConstants.CERTIFICATE_LIST);
 
-            IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+	    IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 
-            DynaActionForm createGuideForm = (DynaActionForm) form;
+	    DynaActionForm createGuideForm = (DynaActionForm) form;
 
-            // Get the Information
-            Integer executionDegreeID = (Integer) createGuideForm.get("executionDegreeID");
+	    // Get the Information
+	    Integer executionDegreeID = (Integer) createGuideForm.get("executionDegreeID");
 
-            // requester
-            String graduationType = (String) createGuideForm.get("graduationType");
-            String numberString = (String) createGuideForm.get("number");
-            Integer number = new Integer(numberString);
-            String requesterType = (String) createGuideForm.get("requester");
+	    // requester
+	    String graduationType = (String) createGuideForm.get("graduationType");
+	    String numberString = (String) createGuideForm.get("number");
+	    Integer number = new Integer(numberString);
+	    String requesterType = (String) createGuideForm.get("requester");
 
-            InfoExecutionDegree infoExecutionDegree = InfoExecutionDegree.newInfoFromDomain(RootDomainObject.getInstance().readExecutionDegreeByOID(executionDegreeID));
+	    InfoExecutionDegree infoExecutionDegree = InfoExecutionDegree
+		    .newInfoFromDomain(RootDomainObject.getInstance().readExecutionDegreeByOID(
+			    executionDegreeID));
 
-            List types = new ArrayList();
-            // types.add(DocumentType.INSURANCE_TYPE);
-            types.add(DocumentType.CERTIFICATE);
-            types.add(DocumentType.ENROLMENT);
-            types.add(DocumentType.EMOLUMENT);
-            types.add(DocumentType.FINE);
-            types.add(DocumentType.CERTIFICATE_OF_DEGREE);
-            types.add(DocumentType.ACADEMIC_PROOF_EMOLUMENT);
-            types.add(DocumentType.RANK_RECOGNITION_AND_EQUIVALENCE_PROCESS);
-            // types.add(DocumentType.GRATUITY_TYPE);
-            Object argsAux[] = { GraduationType.MASTER_DEGREE, types };
-            List studentGuideList = null;
-            try {
-                studentGuideList = (List) ServiceManagerServiceFactory.executeService(userView,
-                        "ReadCertificateList", argsAux);
+	    List types = new ArrayList();
+	    // types.add(DocumentType.INSURANCE_TYPE);
+	    types.add(DocumentType.CERTIFICATE);
+	    types.add(DocumentType.ENROLMENT);
+	    types.add(DocumentType.EMOLUMENT);
+	    types.add(DocumentType.FINE);
+	    types.add(DocumentType.CERTIFICATE_OF_DEGREE);
+	    types.add(DocumentType.ACADEMIC_PROOF_EMOLUMENT);
+	    types.add(DocumentType.RANK_RECOGNITION_AND_EQUIVALENCE_PROCESS);
+	    // types.add(DocumentType.GRATUITY_TYPE);
+	    Object argsAux[] = { GraduationType.MASTER_DEGREE, types };
+	    List studentGuideList = null;
+	    try {
+		studentGuideList = (List) ServiceManagerServiceFactory.executeService(userView,
+			"ReadCertificateList", argsAux);
 
-            } catch (NonExistingServiceException e) {
-                e.printStackTrace();
-                throw new NonExistingActionException("A lista de guias para estudantes", e);
-            } catch (FenixServiceException e) {
-                e.printStackTrace();
-                throw new FenixActionException(e);
-            }
-            session.setAttribute(SessionConstants.CERTIFICATE_LIST, studentGuideList);
+	    } catch (NonExistingServiceException e) {
+		e.printStackTrace();
+		throw new NonExistingActionException("A lista de guias para estudantes", e);
+		
+	    } catch (FenixServiceException e) {
+		e.printStackTrace();
+		throw new FenixActionException(e);
+	    }
+	    session.setAttribute(SessionConstants.CERTIFICATE_LIST, studentGuideList);
 
-            final CreateReceiptBean chooseContributorBean = (CreateReceiptBean) RenderUtils.getViewState(
-                    "chooseContributorBean").getMetaObject().getObject();
-            if(chooseContributorBean.getContributorParty() == null){
-                throw new ExistingActionException("error.masterDegree.administrativeOffice.nonExistingContributor");
-            }
+	    final CreateReceiptBean chooseContributorBean = (CreateReceiptBean) RenderUtils
+		    .getViewState("chooseContributorBean").getMetaObject().getObject();
+	    if (chooseContributorBean.getContributorParty() == null) {
+		throw new ExistingActionException(
+			"error.masterDegree.administrativeOffice.nonExistingContributor");
+	    }
 
-            InfoGuide infoGuide = null;
-            try {
-                Object args[] = { graduationType, infoExecutionDegree, number, requesterType, chooseContributorBean.getContributorParty() };
+	    InfoGuide infoGuide = null;
+	    try {
+		Object args[] = { graduationType, infoExecutionDegree, number, requesterType,
+			chooseContributorBean.getContributorParty() };
 
-                infoGuide = (InfoGuide) ServiceManagerServiceFactory.executeService(userView,
-                        "PrepareCreateGuide", args);
-            } catch (ExistingServiceException e) {
-                e.printStackTrace();
-                throw new ExistingActionException("O Contribuinte", e);
-            } catch (NoActiveStudentCurricularPlanServiceException e) {
-                e.printStackTrace();
-                throw new NoActiveStudentCurricularPlanActionException(e);
-            } catch (NonExistingContributorServiceException e) {
-                request.setAttribute(SessionConstants.UNEXISTING_CONTRIBUTOR, Boolean.TRUE.toString());
-                request.setAttribute(SessionConstants.EXECUTION_DEGREE_OID, executionDegreeID);
+		infoGuide = (InfoGuide) ServiceManagerServiceFactory.executeService(userView,
+			"PrepareCreateGuide", args);
+	    } catch (ExistingServiceException e) {
+		e.printStackTrace();
+		throw new ExistingActionException("O Contribuinte", e);
+	    } catch (NoActiveStudentCurricularPlanServiceException e) {
+		e.printStackTrace();
+		throw new NoActiveStudentCurricularPlanActionException(e);
+	    } catch (NonExistingContributorServiceException e) {
+		request.setAttribute(SessionConstants.UNEXISTING_CONTRIBUTOR, Boolean.TRUE.toString());
+		request.setAttribute(SessionConstants.EXECUTION_DEGREE_OID, executionDegreeID);
 
-                return mapping.getInputForward();
-            } catch (NonExistingServiceException e) {
-                e.printStackTrace();
-                ActionError actionError = new ActionError("error.nonExisting.requester");
-                ActionErrors actionErrors = new ActionErrors();
-                actionErrors.add("Unknown", actionError);
-                saveErrors(request, actionErrors);
-                return mapping.getInputForward();
-            } catch (FenixServiceException e) {
-                e.printStackTrace();
-                throw new FenixActionException(e);
-            }
-            session.setAttribute(SessionConstants.GUIDE, infoGuide);
+		return mapping.getInputForward();
+	    } catch (NonExistingServiceException e) {
+		e.printStackTrace();
+		ActionError actionError = new ActionError("error.nonExisting.requester");
+		ActionErrors actionErrors = new ActionErrors();
+		actionErrors.add("Unknown", actionError);
+		saveErrors(request, actionErrors);
+		return mapping.getInputForward();
+	    } catch (FenixServiceException e) {
+		e.printStackTrace();
+		throw new FenixActionException(e);
+	    }
+	    session.setAttribute(SessionConstants.GUIDE, infoGuide);
 
-            request.setAttribute(SessionConstants.REQUESTER_NUMBER, number);
-            request.setAttribute("graduationType", graduationType);
-            request.setAttribute(SessionConstants.REQUESTER_TYPE, requesterType);
+	    request.setAttribute(SessionConstants.REQUESTER_NUMBER, number);
+	    request.setAttribute("graduationType", graduationType);
+	    request.setAttribute(SessionConstants.REQUESTER_TYPE, requesterType);
 
-            if (requesterType.equals(GuideRequester.CANDIDATE.name())) {
-                session.removeAttribute(SessionConstants.REQUESTER_TYPE);
-                generateToken(request);
-                saveToken(request);
+	    if (requesterType.equals(GuideRequester.CANDIDATE.name())) {
+		session.removeAttribute(SessionConstants.REQUESTER_TYPE);
+		generateToken(request);
+		saveToken(request);
 
-                return mapping.findForward("CreateCandidateGuide");
-            }
+		return mapping.findForward("CreateCandidateGuide");
+	    }
 
-            if (requesterType.equals(GuideRequester.STUDENT.name())) {
+	    if (requesterType.equals(GuideRequester.STUDENT.name())) {
 
-                session.removeAttribute(SessionConstants.REQUESTER_TYPE);
-                return mapping.findForward("CreateStudentGuide");
-            }
+		session.removeAttribute(SessionConstants.REQUESTER_TYPE);
+		return mapping.findForward("CreateStudentGuide");
+	    }
 
-            throw new FenixActionException("Unknown requester type!");
-        }
-        throw new FenixActionException();
+	    throw new FenixActionException("Unknown requester type!");
+	}
+	throw new FenixActionException();
     }
 
     public ActionForward create(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
+	    HttpServletResponse response) throws Exception {
 
-        HttpSession session = request.getSession(false);
+	HttpSession session = request.getSession(false);
 
-        if (!isTokenValid(request)) {
-            return mapping.findForward("BackError");
-        }
-        generateToken(request);
-        saveToken(request);
+	if (!isTokenValid(request)) {
+	    return mapping.findForward("BackError");
+	}
+	generateToken(request);
+	saveToken(request);
 
-        DynaActionForm createGuideForm = (DynaActionForm) form;
-        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+	DynaActionForm createGuideForm = (DynaActionForm) form;
+	IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 
-        String password = null;
+	session.removeAttribute(SessionConstants.PRINT_PASSWORD);
+	session.removeAttribute(SessionConstants.PRINT_INFORMATION);
 
-        session.removeAttribute(SessionConstants.PRINT_PASSWORD);
-        session.removeAttribute(SessionConstants.PRINT_INFORMATION);
+	// Get the information
+	String othersRemarks = (String) createGuideForm.get("othersRemarks");
+	String othersPriceString = (String) createGuideForm.get("othersPrice");
+	String remarks = (String) createGuideForm.get("remarks");
+	String guideSituationString = (String) createGuideForm.get("guideSituation");
+	String paymentType = (String) createGuideForm.get("paymentType");
 
-        // Get the information
-        String othersRemarks = (String) createGuideForm.get("othersRemarks");
-        String othersPriceString = (String) createGuideForm.get("othersPrice");
-        String remarks = (String) createGuideForm.get("remarks");
-        String guideSituationString = (String) createGuideForm.get("guideSituation");
-        String paymentType = (String) createGuideForm.get("paymentType");
+	String graduationType = (String) request.getAttribute("graduationType");
+	if (graduationType == null)
+	    graduationType = request.getParameter("graduationType");
+	request.setAttribute("graduationType", graduationType);
 
-        String graduationType = (String) request.getAttribute("graduationType");
-        if (graduationType == null)
-            graduationType = request.getParameter("graduationType");
-        request.setAttribute("graduationType", graduationType);
+	Double othersPrice = null;
 
-        Double othersPrice = null;
+	try {
+	    if ((othersPriceString != null) && (othersPriceString.length() != 0)) {
+		othersPrice = new Double(othersPriceString);
+		if (othersPrice.floatValue() < 0) {
+		    throw new NumberFormatException();
+		}
+	    }
+	} catch (NumberFormatException e) {
+	    throw new InvalidInformationInFormActionException(new Throwable());
+	}
 
-        try {
-            if ((othersPriceString != null) && (othersPriceString.length() != 0)) {
-                othersPrice = new Double(othersPriceString);
-                if (othersPrice.floatValue() < 0) {
-                    throw new NumberFormatException();
-                }
-            }
-        } catch (NumberFormatException e) {
-            throw new InvalidInformationInFormActionException(new Throwable());
-        }
+	// session.setAttribute(SessionConstants.PRINT_PASSWORD, Boolean.FALSE);
 
-        // session.setAttribute(SessionConstants.PRINT_PASSWORD, Boolean.FALSE);
+	// Check if the Guide will have a "Payed" situation and if the payment
+	// type has been chosen
 
-        // Check if the Guide will have a "Payed" situation and if the payment
-        // type has been chosen
+	if ((guideSituationString.equals(GuideState.PAYED)) && (paymentType.equals(""))) {
+	    ActionError actionError = new ActionError("error.paymentTypeRequired");
+	    ActionErrors actionErrors = new ActionErrors();
+	    actionErrors.add("Unknown", actionError);
+	    saveErrors(request, actionErrors);
+	    return mapping.getInputForward();
+	}
 
-        if ((guideSituationString.equals(GuideState.PAYED)) && (paymentType.equals(""))) {
-            ActionError actionError = new ActionError("error.paymentTypeRequired");
-            ActionErrors actionErrors = new ActionErrors();
-            actionErrors.add("Unknown", actionError);
-            saveErrors(request, actionErrors);
-            return mapping.getInputForward();
-        }
+	GuideState situationOfGuide = GuideState.valueOf(guideSituationString);
+	InfoGuide infoGuide = (InfoGuide) session.getAttribute(SessionConstants.GUIDE);
 
-        GuideState situationOfGuide = GuideState.valueOf(guideSituationString);
-        InfoGuide infoGuide = (InfoGuide) session.getAttribute(SessionConstants.GUIDE);
+	InfoGuide newInfoGuide = null;
 
-        InfoGuide newInfoGuide = null;
+	try {
+	    Object args[] = { infoGuide, othersRemarks, othersPrice, remarks, situationOfGuide,
+		    paymentType };
+	    newInfoGuide = (InfoGuide) ServiceManagerServiceFactory.executeService(userView,
+		    "CreateGuide", args);
+	} catch (InvalidSituationServiceException e) {
+	    Object object = new Object();
+	    object = "Anulada";
+	    throw new InvalidSituationActionException(object);
+	} catch (NonExistingContributorServiceException e) {
+	    // session.setAttribute(SessionConstants.UNEXISTING_CONTRIBUTOR,
+	    // Boolean.TRUE);
+	    request.setAttribute(SessionConstants.UNEXISTING_CONTRIBUTOR, Boolean.TRUE.toString());
+	    return mapping.getInputForward();
+	}
 
-        try {
-            Object args[] = { infoGuide, othersRemarks, othersPrice, remarks, situationOfGuide,
-                    paymentType };
-            newInfoGuide = (InfoGuide) ServiceManagerServiceFactory.executeService(userView,
-                    "CreateGuide", args);
-        } catch (InvalidSituationServiceException e) {
-            Object object = new Object();
-            object = "Anulada";
-            throw new InvalidSituationActionException(object);
-        } catch (NonExistingContributorServiceException e) {
-            // session.setAttribute(SessionConstants.UNEXISTING_CONTRIBUTOR,
-            // Boolean.TRUE);
-            request.setAttribute(SessionConstants.UNEXISTING_CONTRIBUTOR, Boolean.TRUE.toString());
-            return mapping.getInputForward();
-        }
+	// Check if it's necessary to create a password for the candidate And to
+	// change his situation
+	String requesterType = (String) request.getAttribute(SessionConstants.REQUESTER_TYPE);
+	if (requesterType == null)
+	    requesterType = request.getParameter(SessionConstants.REQUESTER_TYPE);
+	if (requesterType == null)
+	    requesterType = (String) createGuideForm.get("requester");
 
-        // Check if it's necessary to create a password for the candidate And to
-        // change his situation
-        String requesterType = (String) request.getAttribute(SessionConstants.REQUESTER_TYPE);
-        if (requesterType == null)
-            requesterType = request.getParameter(SessionConstants.REQUESTER_TYPE);
-        if (requesterType == null)
-            requesterType = (String) createGuideForm.get("requester");
+	// We need to check if the Guide has been payed
+	if (requesterType.equals(GuideRequester.CANDIDATE.name())) {
 
-        // We need to check if the Guide has been payed
-        if (requesterType.equals(GuideRequester.CANDIDATE.name())) {
+	    if (situationOfGuide.equals(GuideState.PAYED)) {
 
-            if (situationOfGuide.equals(GuideState.PAYED)) {
+		// The Candidate will now have a new Situation
 
-                // The Candidate will now have a new Situation
+		try {
+		    Object args[] = { newInfoGuide.getInfoExecutionDegree().getIdInternal(),
+			    newInfoGuide.getInfoPerson().getIdInternal(),
+			    new SituationName(SituationName.PENDENTE_STRING) };
+		    ServiceManagerServiceFactory.executeService(userView, "CreateCandidateSituation",
+			    args);
+		} catch (FenixServiceException e) {
+		    throw new FenixActionException();
+		}
 
-                try {
-                    Object args[] = { newInfoGuide.getInfoExecutionDegree().getIdInternal(),
-                            newInfoGuide.getInfoPerson().getIdInternal(),
-                            new SituationName(SituationName.PENDENTE_STRING) };
-                    ServiceManagerServiceFactory.executeService(userView, "CreateCandidateSituation",
-                            args);
-                } catch (FenixServiceException e) {
-                    throw new FenixActionException();
-                }
+		if ((newInfoGuide.getInfoPerson().getPassword() == null)
+			|| (newInfoGuide.getInfoPerson().getPassword().length() == 0)) {
+		    // Generate and write the password
 
-                if ((newInfoGuide.getInfoPerson().getPassword() == null)
-                        || (newInfoGuide.getInfoPerson().getPassword().length() == 0)) {
-                    // Generate the password
-                    password = RandomStringGenerator.getRandomStringGenerator(8);
-                    newInfoGuide.getInfoPerson().setPassword(password);
+		    try {
+			Object args[] = { newInfoGuide.getInfoPerson().getIdInternal(),
+				RandomStringGenerator.getRandomStringGenerator(8) };
+			ServiceManagerServiceFactory.executeService(userView, "ChangePersonPassword",
+				args);
+		    } catch (FenixServiceException e) {
+			throw new FenixActionException();
+		    }
 
-                    // Write the Person
+		    // Put variable in Session to Inform that it's necessary to
+		    // print the password
+		    session.setAttribute(SessionConstants.PRINT_PASSWORD, Boolean.TRUE);
 
-                    try {
-                        Object args[] = { newInfoGuide.getInfoPerson().getIdInternal(), password };
-                        ServiceManagerServiceFactory.executeService(userView, "ChangePersonPassword",
-                                args);
-                    } catch (FenixServiceException e) {
-                        throw new FenixActionException();
-                    }
+		} else {
+		    session.setAttribute(SessionConstants.PRINT_INFORMATION, Boolean.TRUE);
+		}
+	    }
+	}
+	session.removeAttribute(SessionConstants.GUIDE);
+	session.setAttribute(SessionConstants.GUIDE, newInfoGuide);
 
-                    // Put variable in Session to Inform that it's necessary to
-                    // print the password
-
-                    session.setAttribute(SessionConstants.PRINT_PASSWORD, Boolean.TRUE);
-
-                } else {
-                    session.setAttribute(SessionConstants.PRINT_INFORMATION, Boolean.TRUE);
-                }
-            }
-        }
-        session.removeAttribute(SessionConstants.GUIDE);
-        session.setAttribute(SessionConstants.GUIDE, newInfoGuide);
-
-        if (request.getParameter(SessionConstants.REQUESTER_NUMBER) != null) {
-            Integer numberRequester = new Integer(request
-                    .getParameter(SessionConstants.REQUESTER_NUMBER));
-            request.setAttribute(SessionConstants.REQUESTER_NUMBER, numberRequester);
-        }
-        return mapping.findForward("CreateSuccess");
+	if (request.getParameter(SessionConstants.REQUESTER_NUMBER) != null) {
+	    Integer numberRequester = new Integer(request
+		    .getParameter(SessionConstants.REQUESTER_NUMBER));
+	    request.setAttribute(SessionConstants.REQUESTER_NUMBER, numberRequester);
+	}
+	return mapping.findForward("CreateSuccess");
 
     }
 
     private String getFromRequest(String parameter, HttpServletRequest request) {
 
-        String parameterString = request.getParameter(parameter);
-        if (parameterString == null) {
-            parameterString = (String) request.getAttribute(parameter);
-        }
-        return parameterString;
+	String parameterString = request.getParameter(parameter);
+	if (parameterString == null) {
+	    parameterString = (String) request.getAttribute(parameter);
+	}
+	return parameterString;
     }
 }

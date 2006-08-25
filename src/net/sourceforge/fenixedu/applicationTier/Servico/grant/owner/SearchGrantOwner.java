@@ -10,7 +10,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.dataTransferObject.InfoPersonWithInfoCountry;
+import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
 import net.sourceforge.fenixedu.dataTransferObject.grant.owner.InfoGrantOwner;
 import net.sourceforge.fenixedu.dataTransferObject.grant.owner.InfoGrantOwnerWithPerson;
 import net.sourceforge.fenixedu.domain.Person;
@@ -84,7 +84,7 @@ public class SearchGrantOwner extends Service {
                     infoGrantOwner = InfoGrantOwnerWithPerson.newInfoFromDomain(grantOwner);
                 else {
                     // The person is NOT a GrantOwner
-                    infoGrantOwner.setPersonInfo(InfoPersonWithInfoCountry.newInfoFromDomain(newPerson));
+                    infoGrantOwner.setPersonInfo(InfoPerson.newInfoFromDomain(newPerson));
                 }
                 infoGrantOwnerList.add(infoGrantOwner);
             }

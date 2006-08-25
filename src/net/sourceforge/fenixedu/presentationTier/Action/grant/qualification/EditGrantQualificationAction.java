@@ -15,6 +15,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.InfoCountry;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
 import net.sourceforge.fenixedu.dataTransferObject.person.InfoQualification;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
@@ -212,9 +213,8 @@ public class EditGrantQualificationAction extends FenixDispatchAction {
                     .get("equivalenceDate")));
 
         //Setting person
-        InfoPerson infoPerson = new InfoPerson();
-        infoPerson.setIdInternal((Integer) editGrantQualificationForm.get("idPerson"));
-        infoQualification.setInfoPerson(infoPerson);
+        final Person person = (Person) rootDomainObject.readPartyByOID((Integer) editGrantQualificationForm.get("idPerson"));
+        infoQualification.setInfoPerson(InfoPerson.newInfoFromDomain(person));
 
         //Setting country
         InfoCountry infoCountry = new InfoCountry();

@@ -21,6 +21,7 @@ import javax.servlet.http.HttpSession;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCountry;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
+import net.sourceforge.fenixedu.dataTransferObject.InfoPersonEditor;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.Gender;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
@@ -28,6 +29,7 @@ import net.sourceforge.fenixedu.domain.person.MaritalStatus;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -54,7 +56,7 @@ public class EditStudentInfoDispatchAction extends DispatchAction {
             Calendar idDocumentIssueDate = Calendar.getInstance();
             Calendar idDocumentExpirationDate = Calendar.getInstance();
 
-            InfoPerson infoPerson = new InfoPerson();
+            InfoPersonEditor infoPerson = new InfoPersonEditor();
             infoPerson.setIdInternal(personCode);
             String dayString = (String) changeApplicationInfoForm.get("birthDay");
             String monthString = (String) changeApplicationInfoForm.get("birthMonth");
@@ -64,9 +66,7 @@ public class EditStudentInfoDispatchAction extends DispatchAction {
             Integer month = null;
             Integer year = null;
 
-            if ((dayString == null) || (monthString == null) || (yearString == null)
-                    || (dayString.length() == 0) || (monthString.length() == 0)
-                    || (yearString.length() == 0)) {
+            if (StringUtils.isEmpty(dayString) || StringUtils.isEmpty(monthString) || StringUtils.isEmpty(yearString)) {
                 infoPerson.setNascimento(null);
             } else {
                 day = new Integer((String) changeApplicationInfoForm.get("birthDay"));
@@ -81,9 +81,7 @@ public class EditStudentInfoDispatchAction extends DispatchAction {
             monthString = (String) changeApplicationInfoForm.get("idIssueDateMonth");
             yearString = (String) changeApplicationInfoForm.get("idIssueDateYear");
 
-            if ((dayString == null) || (monthString == null) || (yearString == null)
-                    || (dayString.length() == 0) || (monthString.length() == 0)
-                    || (yearString.length() == 0)) {
+            if (StringUtils.isEmpty(dayString) || StringUtils.isEmpty(monthString) || StringUtils.isEmpty(yearString)) {
                 infoPerson.setDataEmissaoDocumentoIdentificacao(null);
             } else {
                 day = new Integer((String) changeApplicationInfoForm.get("idIssueDateDay"));
@@ -98,9 +96,7 @@ public class EditStudentInfoDispatchAction extends DispatchAction {
             monthString = (String) changeApplicationInfoForm.get("idExpirationDateMonth");
             yearString = (String) changeApplicationInfoForm.get("idExpirationDateYear");
 
-            if ((dayString == null) || (monthString == null) || (yearString == null)
-                    || (dayString.length() == 0) || (monthString.length() == 0)
-                    || (yearString.length() == 0)) {
+            if (StringUtils.isEmpty(dayString) || StringUtils.isEmpty(monthString) || StringUtils.isEmpty(yearString)) {
                 infoPerson.setDataValidadeDocumentoIdentificacao(null);
             } else {
                 day = new Integer((String) changeApplicationInfoForm.get("idExpirationDateDay"));
@@ -122,13 +118,14 @@ public class EditStudentInfoDispatchAction extends DispatchAction {
             infoPerson.setNome((String) changeApplicationInfoForm.get("name"));
 
             String aux = (String) changeApplicationInfoForm.get("sex");
-            if ((aux == null) || (aux.length() == 0))
+            if (StringUtils.isEmpty(aux)) {
                 infoPerson.setSexo(null);
-            else
+            } else {
                 infoPerson.setSexo(Gender.valueOf(aux));
+            }
 
             aux = (String) changeApplicationInfoForm.get("maritalStatus");
-            if ((aux == null) || (aux.length() == 0))
+            if (StringUtils.isEmpty(aux))
                 infoPerson.setMaritalStatus(null);
             else
                 infoPerson.setMaritalStatus(MaritalStatus.valueOf(aux));
@@ -157,11 +154,11 @@ public class EditStudentInfoDispatchAction extends DispatchAction {
             infoPerson.setLocalidadeCodigoPostal((String) changeApplicationInfoForm
                     .get("areaOfAreaCode"));
 
-            Object args[] = { infoPerson };
-            InfoPerson newInfoPerson = new InfoPerson();
+            
+            InfoPerson newInfoPerson = null;
             try {
                 newInfoPerson = (InfoPerson) ServiceManagerServiceFactory.executeService(userView,
-                        "ChangePersonalStudentInfo", args);
+                        "ChangePersonalStudentInfo", new Object[] { infoPerson });
             
             } catch (DomainException e) {
                 ActionMessages actionMessages = new ActionMessages();

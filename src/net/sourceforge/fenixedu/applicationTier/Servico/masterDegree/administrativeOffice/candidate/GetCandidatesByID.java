@@ -26,38 +26,39 @@ import net.sourceforge.fenixedu.util.State;
  */
 public class GetCandidatesByID extends Service {
 
-	public InfoMasterDegreeCandidate run(Integer candidateID) throws FenixServiceException, ExcepcaoPersistencia {
-		MasterDegreeCandidate masterDegreeCandidate = null;
+    public InfoMasterDegreeCandidate run(Integer candidateID) throws FenixServiceException,
+	    ExcepcaoPersistencia {
+	MasterDegreeCandidate masterDegreeCandidate = null;
 
-		if (candidateID == null) {
-			throw new NonExistingServiceException();
-		}
-
-		masterDegreeCandidate = rootDomainObject.readMasterDegreeCandidateByOID(candidateID);
-
-		InfoMasterDegreeCandidate infoMasterDegreeCandidate = InfoMasterDegreeCandidateWithInfoPerson
-				.newInfoFromDomain(masterDegreeCandidate);
-
-		final ExecutionDegree executionDegree = masterDegreeCandidate.getExecutionDegree();
-		final InfoExecutionDegree infoExecutionDegree = InfoExecutionDegree
-				.newInfoFromDomain(executionDegree);
-		infoMasterDegreeCandidate.setInfoExecutionDegree(infoExecutionDegree);
-
-		Iterator situationIterator = masterDegreeCandidate.getSituations().iterator();
-		List situations = new ArrayList();
-		while (situationIterator.hasNext()) {
-			InfoCandidateSituation infoCandidateSituation = InfoCandidateSituation
-					.newInfoFromDomain((CandidateSituation) situationIterator.next());
-			situations.add(infoCandidateSituation);
-
-			// Check if this is the Active Situation
-			if (infoCandidateSituation.getValidation().equals(new State(State.ACTIVE))) {
-
-				infoMasterDegreeCandidate.setInfoCandidateSituation(infoCandidateSituation);
-			}
-
-		}
-		infoMasterDegreeCandidate.setSituationList(situations);
-		return infoMasterDegreeCandidate;
+	if (candidateID == null) {
+	    throw new NonExistingServiceException();
 	}
+
+	masterDegreeCandidate = rootDomainObject.readMasterDegreeCandidateByOID(candidateID);
+
+	InfoMasterDegreeCandidate infoMasterDegreeCandidate = InfoMasterDegreeCandidateWithInfoPerson
+		.newInfoFromDomain(masterDegreeCandidate);
+
+	final ExecutionDegree executionDegree = masterDegreeCandidate.getExecutionDegree();
+	final InfoExecutionDegree infoExecutionDegree = InfoExecutionDegree
+		.newInfoFromDomain(executionDegree);
+	infoMasterDegreeCandidate.setInfoExecutionDegree(infoExecutionDegree);
+
+	Iterator situationIterator = masterDegreeCandidate.getSituations().iterator();
+	List situations = new ArrayList();
+	while (situationIterator.hasNext()) {
+	    InfoCandidateSituation infoCandidateSituation = InfoCandidateSituation
+		    .newInfoFromDomain((CandidateSituation) situationIterator.next());
+	    situations.add(infoCandidateSituation);
+
+	    // Check if this is the Active Situation
+	    if (infoCandidateSituation.getValidation().equals(new State(State.ACTIVE))) {
+
+		infoMasterDegreeCandidate.setInfoCandidateSituation(infoCandidateSituation);
+	    }
+
+	}
+	infoMasterDegreeCandidate.setSituationList(situations);
+	return infoMasterDegreeCandidate;
+    }
 }

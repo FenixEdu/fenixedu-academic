@@ -1,11 +1,7 @@
-/*
- * Created on 18/Nov/2003
- */
 package net.sourceforge.fenixedu.presentationTier.Action.publication;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -16,44 +12,27 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.constants.publication.PublicationConstants;
-import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
 import net.sourceforge.fenixedu.dataTransferObject.SiteView;
 import net.sourceforge.fenixedu.dataTransferObject.publication.InfoSiteAttributes;
-import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
 
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.collections.Transformer;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 
-/**
- * @author TJBF & PFON
- */
 public class ReadPublicationAttributesAction extends FenixAction {
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.apache.struts.action.Action#execute(org.apache.struts.action.ActionMapping,
-     *      org.apache.struts.action.ActionForm,
-     *      javax.servlet.http.HttpServletRequest,
-     *      javax.servlet.http.HttpServletResponse)
-     */
     public ActionForward execute(ActionMapping mapping, ActionForm actionForm,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
+	
         HttpSession session = request.getSession(false);
-
         DynaActionForm dynaForm = (DynaActionForm) actionForm;
 
         Integer publicationTypeId = (Integer) dynaForm.get("infoPublicationTypeId");
-
         String typePublication = (String) dynaForm.get("typePublication");
-
         Integer idTeacher = (Integer) dynaForm.get("teacherId");
 
         String[] list = (String[]) dynaForm.get("authorsIds");
@@ -68,15 +47,10 @@ public class ReadPublicationAttributesAction extends FenixAction {
             Object[] args = { publicationTypeId };
             
             List requiredAttributes = (List) ServiceUtils.executeService(userView, "ReadRequiredAttributes", args);
-
             List nonRequiredAttributes = (List) ServiceUtils.executeService(userView, "ReadNonRequiredAttributes", args);
-            
             List subTypeList = (List) ServiceUtils.executeService(userView, "ReadPublicationSubtypesByPublicationType", args);
-
             List formatList = (List) ServiceUtils.executeService(userView, "ReadAllPublicationFormats", args);
-
             List monthList = (List) ServiceUtils.executeService(userView, "ReadPublicationMonths", args);
-
             List scopeList = (List) ServiceUtils.executeService(userView, "ReadPublicationScopes", args);
 
             List infoAuthors = readInfoAuthors(authorsIds, userView);
@@ -113,27 +87,11 @@ public class ReadPublicationAttributesAction extends FenixAction {
         return actionForward;
     }
 
-    public List readInfoAuthors(List authorsIds, IUserView userView) throws FenixFilterException, FenixServiceException {
-
-        List newAuthorsIds = new ArrayList();
-        Iterator iteratorIds = authorsIds.iterator();
-
-        while (iteratorIds.hasNext()) {
-            String idString = (String) iteratorIds.next();
-            newAuthorsIds.add(new Integer(idString));
-        }
-
-        Object[] args = { newAuthorsIds };
-        List authors = (List) ServiceUtils.executeService(userView, "ReadPersonsByIDs", args);
-
-        List infoAuthors = (List) CollectionUtils.collect(authors, new Transformer() {
-            public Object transform(Object o) {
-                Person author = (Person) o;
-                InfoPerson infoPerson = new InfoPerson();
-                infoPerson.copyFromDomain(author);
-                return infoPerson;
-            }
-        });
-        return infoAuthors;
+    public List readInfoAuthors(List<String> authorsIds, IUserView userView) throws FenixFilterException, FenixServiceException {
+	final List<Integer> newAuthorsIds = new ArrayList<Integer>(authorsIds.size());
+	for (final String idString : authorsIds) {
+	    newAuthorsIds.add(Integer.valueOf(idString));
+	}
+        return (List) ServiceUtils.executeService(userView, "ReadPersonsByIDs", new Object[] { newAuthorsIds });
     }
 }

@@ -16,6 +16,7 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.StudentCurricularPlanState;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
@@ -38,18 +39,13 @@ public class ManageStudentCurricularPlanDA extends FenixDispatchAction {
     public ActionForward show(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
-        putDegreeTypeLabelListInRequest(request);
-
         final DynaActionForm dynaActionForm = (DynaActionForm) form;
         final String studentNumberString = (String) dynaActionForm.get("number");
         final String degreeTypeString = (String) dynaActionForm.get("degreeType");
 
         if (isPresent(studentNumberString) && isPresent(degreeTypeString)) {
-            //putStudentCurricularPlanStateLabelListInRequest(request);
-
-            final Integer studentNumber = new Integer(studentNumberString);
             final DegreeType degreeType = DegreeType.valueOf(degreeTypeString);
-            putStudentCurricularInformationInRequest(request, studentNumber, degreeType);
+            putStudentCurricularInformationInRequest(request, Integer.valueOf(studentNumberString), degreeType);
         }
 
         return mapping.findForward("show");
@@ -83,7 +79,15 @@ public class ManageStudentCurricularPlanDA extends FenixDispatchAction {
 
         final IUserView userView = SessionUtils.getUserView(request);
         final Object[] args = new Object[] { selectedStudentCurricularPlanId, studentCurricularPlanState };
-        ServiceUtils.executeService(userView, "ChangeStudentCurricularPlanState", args);
+        try {
+	    ServiceUtils.executeService(userView, "ChangeStudentCurricularPlanState", args);
+	} catch (FenixFilterException e) {
+	    e.printStackTrace();
+	} catch (FenixServiceException e) {
+	    addActionMessage(request, e.getMessage());
+	} catch (DomainException e) {
+	    addActionMessage(request, e.getMessage(), e.getArgs());
+	}
 
         return show(mapping, form, request, response);
     }
@@ -123,9 +127,6 @@ public class ManageStudentCurricularPlanDA extends FenixDispatchAction {
                     "ReadDegreeCurricularPlansByDegreeType", args);
 
             putDegreeCurricularPlansInRequest(request, infoDegreeCurricularPlans);
-
-            putDegreeTypeLabelListInRequest(request);
-            //putStudentCurricularPlanStateLabelListInRequest(request);
         }
 
         return mapping.findForward("createStudentCurricularPlan");
@@ -206,14 +207,6 @@ public class ManageStudentCurricularPlanDA extends FenixDispatchAction {
                 "ReadStudentCurricularInformation", args);
         request.setAttribute("infoStudentCurricularPlans", infoStudentCurricularPlans);
     }
-
-    protected void putDegreeTypeLabelListInRequest(final HttpServletRequest request) {
-        //request.setAttribute("degreeTypes", DegreeType.toLabelValueBeanList());
-    }
-
-    /*protected void putStudentCurricularPlanStateLabelListInRequest(final HttpServletRequest request) {
-        request.setAttribute("studentCurricularPlanStates", StudentCurricularPlanState.toArrayList());
-    }*/
 
     protected boolean isPresent(final String string) {
         return string != null && string.length() > 0;

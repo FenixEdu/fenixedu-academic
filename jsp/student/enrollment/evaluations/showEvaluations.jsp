@@ -19,17 +19,21 @@
 		<h:outputText value="<div class='evalcontainer'>" escape="false" />
 		<h:panelGrid columns="2" columnClasses="alignright,," styleClass="search">
 			<h:outputText value="#{bundle['label.student.enrollment.executionPeriod']}: " styleClass="boldFontClass" />
-			<fc:selectOneMenu value="#{displayEvaluationsToEnrol.executionPeriodID}" onchange="this.form.submit();" 
-			   valueChangeListener="#{displayEvaluationsToEnrol.changeExecutionPeriod}">
-				<f:selectItems value="#{displayEvaluationsToEnrol.executionPeriodsLabels}" />
-			</fc:selectOneMenu>
-			<h:outputText value="<input value='#{htmlAltBundle['submit.sumbit']}' id='javascriptButtonID' class='altJavaScriptSubmitButton' alt='#{htmlAltBundle['submit.sumbit']}' type='submit'/>" escape="false"/>
+			<h:panelGroup>			
+				<fc:selectOneMenu value="#{displayEvaluationsToEnrol.executionPeriodID}" onchange="this.form.submit();" 
+				   valueChangeListener="#{displayEvaluationsToEnrol.changeExecutionPeriod}">
+					<f:selectItems value="#{displayEvaluationsToEnrol.executionPeriodsLabels}" />
+				</fc:selectOneMenu>
+				<h:outputText value="<input value='#{htmlAltBundle['submit.sumbit']}' id='javascriptButtonID' class='altJavaScriptSubmitButton' alt='#{htmlAltBundle['submit.sumbit']}' type='submit'/>" escape="false"/>
+			</h:panelGroup>
 			<h:outputText value="#{bundle['link.evaluations.enrolment']}: " styleClass="boldFontClass" />
-			<fc:selectOneMenu value="#{displayEvaluationsToEnrol.evaluationType}" onchange="this.form.submit();"
-			   valueChangeListener="#{displayEvaluationsToEnrol.changeEvaluationType}">
-				<f:selectItems value="#{displayEvaluationsToEnrol.evaluationTypes}" />
-			</fc:selectOneMenu>
-			<h:outputText value="<input value='#{htmlAltBundle['submit.sumbit']}' id='javascriptButtonID2' class='altJavaScriptSubmitButton' alt='#{htmlAltBundle['submit.sumbit']}' type='submit'>" escape="false"/>
+			<h:panelGroup>
+				<fc:selectOneMenu value="#{displayEvaluationsToEnrol.evaluationType}" onchange="this.form.submit();"
+				   valueChangeListener="#{displayEvaluationsToEnrol.changeEvaluationType}">
+					<f:selectItems value="#{displayEvaluationsToEnrol.evaluationTypes}" />
+				</fc:selectOneMenu>
+				<h:outputText value="<input value='#{htmlAltBundle['submit.sumbit']}' id='javascriptButtonID2' class='altJavaScriptSubmitButton' alt='#{htmlAltBundle['submit.sumbit']}' type='submit'>" escape="false"/>
+			</h:panelGroup>
 		</h:panelGrid>
 		<h:outputText value="</div>" escape="false" />
 		<h:outputText value="<br/>" escape="false"/>		

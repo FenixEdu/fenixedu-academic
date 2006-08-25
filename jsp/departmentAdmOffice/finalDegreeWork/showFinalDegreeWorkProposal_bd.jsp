@@ -2,9 +2,7 @@
 <html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
-<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
 <%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoTeacher" %>
-<%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoPerson" %>
 <bean:define id="degreeCurricularPlanID" name="degreeCurricularPlanID" scope="request" />
 <bean:define id="executionDegreeOID" name="executionDegreeOID" scope="request" />
 
@@ -241,5 +239,5 @@
 					  collection="finalDegreeWorkProposalStatusList" />
 	</html:select><br/>
 
-	<br/><br/><html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton"><bean:message key="button.submit"/></html:submit></td>
+	<br/><br/><html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton"><bean:message key="button.submit"/></html:submit>
 </html:form>

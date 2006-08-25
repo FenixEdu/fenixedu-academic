@@ -16,6 +16,7 @@ import java.util.TreeSet;
 import net.sourceforge.fenixedu.applicationTier.security.PasswordEncryptor;
 import net.sourceforge.fenixedu.applicationTier.utils.GeneratePassword;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
+import net.sourceforge.fenixedu.dataTransferObject.InfoPersonEditor;
 import net.sourceforge.fenixedu.domain.accessControl.PersonGroup;
 import net.sourceforge.fenixedu.domain.accounting.Entry;
 import net.sourceforge.fenixedu.domain.accounting.Event;
@@ -82,7 +83,7 @@ public class Person extends Person_Base {
         this.setAvailablePhoto(Boolean.FALSE);
     }
 
-    public Person(InfoPerson personToCreate, Country country) {
+    public Person(InfoPersonEditor personToCreate, Country country) {
 
         super();
         if (personToCreate.getIdInternal() != null) {
@@ -188,7 +189,7 @@ public class Person extends Person_Base {
         setIsPassInKerberos(Boolean.FALSE);
     }
 
-    public void edit(InfoPerson personToEdit, Country country) {
+    public void edit(InfoPersonEditor personToEdit, Country country) {
         checkConditionsToCreateNewPerson(personToEdit.getNumeroDocumentoIdentificacao(), personToEdit
                 .getTipoDocumentoIdentificacao(), this);
 
@@ -198,17 +199,16 @@ public class Person extends Person_Base {
         }
     }
 
-    public void update(InfoPerson updatedPersonalData, Country country) {
+    public void update(InfoPersonEditor updatedPersonalData, Country country) {
         checkConditionsToCreateNewPerson(updatedPersonalData.getNumeroDocumentoIdentificacao(),
                 updatedPersonalData.getTipoDocumentoIdentificacao(), this);
         updateProperties(updatedPersonalData);
         if (country != null) {
             setPais(country);
         }
-        // setPais((Country) valueToUpdate(getPais(), country));
     }
 
-    public void editPersonalContactInformation(InfoPerson personToEdit) {
+    public void editPersonalContactInformation(InfoPersonEditor personToEdit) {
         setMobile(personToEdit.getTelemovel());
         setWorkPhone(personToEdit.getWorkPhone());
         setEmail(personToEdit.getEmail());
@@ -443,7 +443,7 @@ public class Person extends Person_Base {
      * PRIVATE METHODS *
      **************************************************************************/
 
-    private void setProperties(InfoPerson infoPerson) {
+    private void setProperties(InfoPersonEditor infoPerson) {
 
         setNome(infoPerson.getNome());
 
@@ -491,7 +491,7 @@ public class Person extends Person_Base {
         setWorkPhone(infoPerson.getWorkPhone());
     }
 
-    private void updateProperties(InfoPerson infoPerson) {
+    private void updateProperties(InfoPersonEditor infoPerson) {
 
         setNome(valueToUpdateIfNewNotNull(getNome(), infoPerson.getNome()));
         setDocumentIdNumber(valueToUpdateIfNewNotNull(getDocumentIdNumber(), infoPerson
@@ -536,23 +536,12 @@ public class Person extends Person_Base {
         setGender((Gender) valueToUpdateIfNewNotNull(getGender(), infoPerson.getSexo()));
         setPhone(valueToUpdate(getPhone(), infoPerson.getTelefone()));
         setMobile(valueToUpdate(getMobile(), infoPerson.getTelemovel()));
-        // setAvailableEmail((Boolean) valueToUpdate(getAvailableEmail(),
-        // infoPerson.getAvailableEmail()));
-        // setAvailablePhoto((Boolean) valueToUpdate(getAvailablePhoto(),
-        // infoPerson.getAvailablePhoto()));
-        // setAvailableWebSite((Boolean) valueToUpdate(getAvailableWebSite(),
-        // infoPerson
-        // .getAvailableWebSite()));
+
         if (!StringUtils.isNumeric(getWorkPhone())) {
             setWorkPhone(infoPerson.getWorkPhone());
         } else {
             setWorkPhone(valueToUpdate(getWorkPhone(), infoPerson.getWorkPhone()));
         }
-
-        // setPassword(valueToUpdate(getPassword(),
-        // PasswordEncryptor.encryptPassword(GeneratePassword
-        // .getInstance().generatePassword(this))));
-
     }
 
     private String valueToUpdate(String actualValue, String newValue) {
@@ -1493,6 +1482,10 @@ public class Person extends Person_Base {
         externalPerson.getPerson().setSocialSecurityNumber(contributorNumber);
         
         return externalPerson.getPerson();
+    }
+    
+    public Country getCountry() {
+	return super.getPais();
     }
 
 }
