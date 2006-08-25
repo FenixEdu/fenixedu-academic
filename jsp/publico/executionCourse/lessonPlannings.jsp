@@ -7,19 +7,19 @@
 <%@ taglib uri="/WEB-INF/enum.tld" prefix="e"%>
 
 <logic:present name="executionCourse">
-
-	<H2><bean:message key="link.lessonPlannings"/></H2>
+	<h2><bean:message key="link.lessonPlannings"/></h2>
 	<logic:empty name="lessonPlanningsMap">
-		<h3><bean:message key="label.lessonPlannings.not.available"/></h3>
+		<p><em><bean:message key="label.lessonPlannings.not.available"/></em></p>
 	</logic:empty>			
 	<logic:iterate id="lessonPlannings" name="lessonPlanningsMap">		
 		<logic:notEmpty name="lessonPlannings" property="value">
-			<H3><bean:message key="label.lessons"/> <bean:message name="lessonPlannings" property="key.name" bundle="DEFAULT"/></H3>
+			<h3 class="mtop2"><bean:message key="label.lessons"/> <bean:message name="lessonPlannings" property="key.name" bundle="DEFAULT"/></h3>
 		</logic:notEmpty>
-		<br/>
+
 		<logic:iterate id="lessonPlanning" name="lessonPlannings" property="value" indexId="index">
-			<i><bean:message key="label.lesson"/></i>&nbsp;<i><bean:write name="lessonPlanning" property="orderOfPlanning"/></i><br/>
+			<p class="mbottom0"><em><bean:message key="label.lesson"/> <bean:write name="lessonPlanning" property="orderOfPlanning"/></em></p>
 			
+			<div style="line-height: 1.5em;">
 			<fr:view name="lessonPlanning" schema="ViewLessonPlanning">
 				<fr:layout name="flow">
 					<fr:property name="labelTerminator" value=""/>
@@ -28,9 +28,11 @@
 					<fr:property name="eachInline" value="false" />
 				</fr:layout>
 			</fr:view>	
-									
-			<br/>
+			</div>
+
 		</logic:iterate>				
 	</logic:iterate>
 
 </logic:present>
+
+

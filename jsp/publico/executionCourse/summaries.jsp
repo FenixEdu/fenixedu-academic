@@ -6,16 +6,14 @@
 <%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="dt" %>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
 
-<h2>
-	<bean:message key="label.summaries"/>
-</h2>
+<h2><bean:message key="label.summaries"/></h2>
 
 <bean:define id="executionCourseID" name="executionCourse" property="idInternal"/>
 <html:form action="/searchSummaries">
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="summaries"/>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.objectCode" property="executionCourseID" value="<%= executionCourseID.toString() %>"/>
 
-	<table class="tab_simple" cellspacing="2" cellpadding="0">
+	<table cellspacing="2" cellpadding="0">
 		<tr>
 			<td><bean:message key="label.summary.shift.type" />:</td>
 			<td>
@@ -79,18 +77,26 @@
 	</table>	
 </html:form>
 
+
+
+
+
+
 <bean:define id="summaries" name="summariesSearchBean" property="summaries"/>
 <logic:empty name="summaries">
-	<h3>
-		<bean:message key="message.summaries.not.available" />
-	</h3>
+	<p>
+		<em><bean:message key="message.summaries.not.available" /></em>
+	</p>
 </logic:empty>
+
+
+
 <logic:notEmpty name="summaries">
 	<logic:iterate id="summary" name="summaries" >	
 		<bean:define id="summaryId" type="java.lang.Integer" name ="summary" property="idInternal" />
 		<div id="<%= "s" + summaryId %>">
 			<logic:present name="summary" property="shift">
-				<h3>
+				<p class="mtop2 mbottom0">
 					<dt:format pattern="dd/MM/yyyy">
 						<bean:write name="summary" property="summaryDate.time"/>
 					</dt:format>
@@ -104,7 +110,6 @@
 			       		</logic:notEmpty>
 			       	</logic:present>
 
-					<br/>
 
 					<span class="greytxt">
 						<logic:empty name="summary" property="isExtraLesson">
@@ -119,10 +124,11 @@
 				       		</logic:equal>
 				       	</logic:notEmpty>
 				       	<bean:message name="summary" property="shift.tipo.name" bundle="ENUMERATION_RESOURCES"/>
-					</span>       	
-				</h3>
+					</span>     	
+				</p>
 			</logic:present>
-		
+
+			<%--		
 			<logic:notPresent name="summary" property="infoShift">
 				<bean:message key="label.summary.lesson" />
 				&nbsp;
@@ -134,16 +140,19 @@
 					<bean:write name="summary" property="summaryHour.time"/>
 				</dt:format>
 			</logic:notPresent>
-		
+			--%>
+					
 			<logic:present name="summary" property="title">	
 				<logic:notEmpty name="summary" property="title">		
-					<p><strong><bean:write name="summary" property="title"/></strong></p>
+					<h3 class="mvert05"><bean:write name="summary" property="title"/></h3>
 				</logic:notEmpty>
 			</logic:present>
-		
-			<bean:write name="summary" property="summaryText" filter="false"/><br/>
-		
-			<div class="details">
+			
+			<p class="mvert0">
+				<bean:write name="summary" property="summaryText" filter="false"/>
+			</p>
+			
+			<div class="details mtop025">
 				<span class="updated-date">
 					<bean:message key="message.modifiedOn" />
 					<dt:format pattern="dd/MM/yyyy HH:mm">

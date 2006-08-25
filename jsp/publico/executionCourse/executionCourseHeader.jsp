@@ -6,14 +6,26 @@
 <%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="dt" %>
 
 <jsp:include page="/i18n.jsp"/>
-<h1>
+
+<h1 style="margin-top: 0; margin-bottom: 5px;">
 	<bean:write name="executionCourse" property="nome"/>
+	<span class="greytxt" style="font-size: 11px;">
+		(<bean:write name="executionCourse" property="executionPeriod.semester" />
+		<bean:message bundle="PUBLIC_DEGREE_INFORMATION" locale="pt_PT" key="public.degree.information.label.ordinal.semester.abbr" />
+		<bean:write name="executionCourse" property="executionPeriod.executionYear.year" />)
+	</span>
 </h1>
-<h2 class="greytxt">
+
+<!--
+<p class="greytxt" style="">
 	<bean:write name="executionCourse" property="executionPeriod.semester" />
 	<bean:message bundle="PUBLIC_DEGREE_INFORMATION" locale="pt_PT" key="public.degree.information.label.ordinal.semester.abbr" />
 	<bean:write name="executionCourse" property="executionPeriod.executionYear.year" />
-</h2>
+</p>
+-->
+
+<p style="margin-top: 0;">
+<span>
 <logic:iterate id="curricularCourse" name="executionCourse" property="curricularCoursesSortedByDegreeAndCurricularCourseName" indexId="i">
 	<logic:notEqual name="i" value="0">,</logic:notEqual>
 	<logic:equal name="curricularCourse" property="isBolonha" value="true">
@@ -29,5 +41,8 @@
 		</html:link>
 	</logic:notEqual>
 </logic:iterate>
+</span>
+</p>
+
 
 

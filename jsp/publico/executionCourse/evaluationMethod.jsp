@@ -10,17 +10,17 @@
 	<bean:message key="title.evaluationMethod"/>
 </h2>
 <logic:empty name="executionCourse" property="evaluationMethod">
-	<h3>
-		<bean:message key="message.evaluation.not.available"/>
-	</h3>
+	<p>
+		<em><bean:message key="message.evaluation.not.available"/></em>
+	</p>
 </logic:empty>
 <logic:notEmpty name="executionCourse" property="evaluationMethod">
-	<p>
+	<div class="mtop05" style="line-height: 1.5em;">
 		<fr:view name="executionCourse" property="evaluationMethod.evaluationElements">
 			<fr:layout>
 				<fr:property name="escaped" value="false" />
 				<fr:property name="newlineAware" value="false" />
 			</fr:layout>
 		</fr:view>
-	</p>
+	</div>
 </logic:notEmpty>

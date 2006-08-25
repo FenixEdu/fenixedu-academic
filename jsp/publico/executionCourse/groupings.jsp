@@ -7,7 +7,8 @@
 
 <bean:define id="groupings" name="executionCourse" property="groupings"/>
 <logic:empty name="groupings">
-	<h2><bean:message key="message.infoGroupPropertiesList.not.available" /></h2>
+	<h2><bean:message key="label.groupings"/></h2>
+	<p><em><bean:message key="message.infoGroupPropertiesList.not.available" /></em></p>
 </logic:empty>
 
 <logic:notEmpty name="groupings">

@@ -51,16 +51,15 @@
 			<% request.setAttribute("curriculum", curriculum); %>
 			<% request.setAttribute("lastCurriculum", lastCurriculum); %>
 
-				<h3>
-					<fr:view name="curricularCourse" property="nameI18N"/>
-					<br/>
+				<h3 class="mtop2">
+					<%-- <fr:view name="curricularCourse" property="nameI18N"/> --%>
 					<bean:message bundle="ENUMERATION_RESOURCES" name="degree" property="degreeType.name"/>
 					<bean:message key="label.in"/>
 					<fr:view name="degree" property="nameI18N"/>
 				</h3>
-				<blockquote>
+
 					<logic:present name="curriculum">
-						<h4>
+						<h4 class="mbottom05 greytxt">
 							<bean:message key="label.generalObjectives"/>
 						</h4>
 						<fr:view name="curriculum" property="generalObjectivesI18N">
@@ -69,23 +68,31 @@
 							</fr:layout>
 						</fr:view>
 						<logic:notEmpty name="curriculum" property="operacionalObjectives">
-							<h4>
+							<h4 class="mbottom05 greytxt">
 								<bean:message key="label.operacionalObjectives"/>
 							</h4>
+							<div class="mtop05" style="line-height: 1.5em;">
 							<fr:view name="curriculum" property="operacionalObjectivesI18N">
 								<fr:layout name="html">
 									<fr:property name="escaped" value="false" />
 									<fr:property name="newlineAware" value="false" />
 								</fr:layout>
 							</fr:view>
+							</div>
 						</logic:notEmpty>
 					</logic:present>
 					<logic:notPresent name="curriculum">
-						<bean:message key="message.objectives.not.defined"/>
+						<p><em><bean:message key="message.objectives.not.defined"/></em></p>
 					</logic:notPresent>
-				</blockquote>
-		</logic:notEqual>
 
-		<br/>
-		<br/>
+		</logic:notEqual>
 	</logic:iterate>
+
+<%--
+<h3 class="mtop2">Licenciatura (5 anos) em Engenharia Informática e de Computadores - Alameda</h3>
+<h4 class="mbottom05 greytxt">Objectivos Gerais</h4>
+<p class="mtop05">Vivamus bibendum massa vel pede. Mauris quis felis quis diam luctus consectetuer. Sed ullamcorper eleifend arcu. Nulla facilisi. Suspendisse tincidunt rhoncus ipsum. Etiam in dui. Mauris molestie arcu eget diam pretium laoreet. Phasellus hendrerit bibendum nisl. Mauris odio. Nulla facilisi. Proin rhoncus. Nulla convallis augue sit amet urna. Proin tempor, elit sit amet viverra blandit, elit mauris consectetuer neque, nec rhoncus lorem felis vitae dolor.</p>
+<h4 class="mbottom05 greytxt">Objectivos Operacionais</h4>
+<p class="mtop05">Vivamus bibendum massa vel pede. Mauris quis felis quis diam luctus consectetuer. Sed ullamcorper eleifend arcu. Nulla facilisi. Suspendisse tincidunt rhoncus ipsum. Etiam in dui. Mauris molestie arcu eget diam pretium laoreet. Phasellus hendrerit bibendum nisl. Mauris odio. Nulla facilisi. Proin rhoncus. Nulla convallis augue sit amet urna. Proin tempor, elit sit amet viverra blandit, elit mauris consectetuer neque, nec rhoncus lorem felis vitae dolor.</p>
+--%>
+	
