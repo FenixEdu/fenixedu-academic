@@ -17,8 +17,16 @@
 			</html:link>
 		</li>
 	</ul>
+	
+	<bean:define id="uri" toScope="page" type="java.lang.String">
+		/manageExecutionCourse.do?method=lessonPlannings&executionCourseID=<bean:write name="executionCourse" property="idInternal"/>
+	</bean:define>
+	
+	<fr:form action="<%= uri %>">
+		<fr:edit id="lessonPlanningAvailable" name="executionCourse" property="site" schema="lessonPlanningAvailable" nested="true" />
+		<html:submit><bean:message key="label.submit"/></html:submit>
+	</fr:form>
 
-		
 	<bean:define id="edit">
 		/manageExecutionCourse.do?method=prepareEditLessonPlanning&executionCourseID=<bean:write name="executionCourse" property="idInternal"/>&page=0
 	</bean:define>	

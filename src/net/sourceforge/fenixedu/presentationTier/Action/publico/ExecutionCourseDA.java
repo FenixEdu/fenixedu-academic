@@ -95,12 +95,14 @@ public class ExecutionCourseDA extends FenixDispatchAction {
     public ActionForward lessonPlannings(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {        
         final ExecutionCourse executionCourse = getExecutionCourse(request);                              
         Map<ShiftType, List<LessonPlanning>> lessonPlanningsMap = new TreeMap<ShiftType, List<LessonPlanning>>();      
-        for (ShiftType shiftType : executionCourse.getShiftTypes()) {            
-            List<LessonPlanning> lessonPlanningsOrderedByOrder = executionCourse.getLessonPlanningsOrderedByOrder(shiftType);
-            if(!lessonPlanningsOrderedByOrder.isEmpty()) {
-                lessonPlanningsMap.put(shiftType, lessonPlanningsOrderedByOrder);            
+        if (executionCourse.getSite().getLessonPlanningAvailable()) {
+            for (ShiftType shiftType : executionCourse.getShiftTypes()) {
+                List<LessonPlanning> lessonPlanningsOrderedByOrder = executionCourse.getLessonPlanningsOrderedByOrder(shiftType);
+                if (!lessonPlanningsOrderedByOrder.isEmpty()) {
+                    lessonPlanningsMap.put(shiftType, lessonPlanningsOrderedByOrder);
+                }
             }
-        }         
+        }
         request.setAttribute("lessonPlanningsMap", lessonPlanningsMap);        
         return mapping.findForward("execution-course-lesson-plannings");
     }

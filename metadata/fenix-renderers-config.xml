@@ -277,8 +277,11 @@ Documentation:
     <renderer mode="input" type="java.lang.Boolean" layout="menu" class="net.sourceforge.fenixedu.renderers.BooleanMenuInputRenderer"/>
     <!--@ This layout allows you to input a boolean value though a menu. The menu is filled with two options. 
           The labels are fetched from the resources with the keys <tt>TRUE</tt> and <tt>FALSE</tt>. -->
+    <renderer mode="input" type="java.lang.Boolean" layout="radio" class="net.sourceforge.fenixedu.renderers.BooleanRadioInputRenderer"/>
+    <!--@ This layout allows you to input a boolean value though a menu. The menu is filled with two options. 
+          The labels are fetched from the resources with the keys <tt>TRUE</tt> and <tt>FALSE</tt>. -->
     <renderer mode="input" type="boolean" layout="menu" class="net.sourceforge.fenixedu.renderers.BooleanMenuInputRenderer"/>
-
+    
     <!--@ The default input layout for an enumeration presents an html menu with all the values of the enumeration
           as options. The option labels are fetched from the resources using the enum name as key.  -->
     <renderer mode="input" type="java.lang.Enum" class="net.sourceforge.fenixedu.renderers.EnumInputRenderer"/>      

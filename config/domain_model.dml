@@ -2662,6 +2662,7 @@ class net.sourceforge.fenixedu.domain.Site extends net.sourceforge.fenixedu.doma
 	Integer keyExecutionCourse;
 	String introduction;
 	String alternativeSite;
+	Boolean lessonPlanningAvailable;
 }
 
 

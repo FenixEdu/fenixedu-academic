@@ -72,6 +72,10 @@ ul.list2 li { padding: 0.25em 0;}
 ul.list3 { }
 ul.list3 li { padding-left: 12px; background: url(../images/transitional/bullet08.gif) left no-repeat; }
 
+ul.liinline li {
+display: inline;
+padding: 0 0.25em;
+}
 
 /* ----------------------
  ---- Tables -----------

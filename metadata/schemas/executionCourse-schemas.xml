@@ -40,6 +40,11 @@
 		 <property name="newlineAware" value="false"/>
 	</slot>
 </schema>
+<schema name="lessonPlanningAvailable" type="net.sourceforge.fenixedu.domain.Site" bundle="DEFAULT">	
+	<slot name="lessonPlanningAvailable" key="label.executionCourse.lessonPlanningAvailable" layout="radio">
+		<property name="classes" value="list2 liinline" />
+	</slot>
+</schema>
 <schema name="net.sourceforge.fenixedu.domain.EvaluationMethod" type="net.sourceforge.fenixedu.domain.EvaluationMethod" bundle="DEFAULT">
 	<slot name="evaluationElements" layout="rich-text" key="no.title.evaluationElements">
    		<property name="safe" value="true" />

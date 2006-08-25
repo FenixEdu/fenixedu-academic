@@ -4,27 +4,57 @@
 <%@ taglib uri="/WEB-INF/enum.tld" prefix="e" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
 
-<script type="text/javascript" language="JavaScript">
-function check(e,v)
-{
-if (e.style.display == "none")
-  {
-  e.style.display = "";
-  v.value = "-";
-  }
-else
-  {e.style.display = "none";
-  v.value = "+";
+<script language="JavaScript">
+function getElementsByClass(searchClass,node,tag) {
+	var classElements = new Array();
+	if ( node == null )
+		node = document;
+	if ( tag == null )
+		tag = '*';
+	var els = node.getElementsByTagName(tag);
+	var elsLen = els.length;
+	var pattern = new RegExp("(^|\\s)"+searchClass+"(\\s|$)");
+	for (i = 0, j = 0; i < elsLen; i++) {
+		if ( pattern.test(els[i].className) ) {
+			classElements[j] = els[i];
+			j++;
+		}
+	}
+	return classElements;
 }
+
+function switchDisplay(){
+	var a = getElementsByClass("switchNone", null, null);
+	for (i = 0; i < a.length; i++) {
+		a[i].className = "dnone";	
+	}
+	
+	var a = getElementsByClass("switchInline", null, null);
+	for (i = 0; i < a.length; i++) {
+		a[i].className = "dinline";	
+	}
+}
+
+function check(e,v){
+	if (e.className == "dnone")
+  	{
+	  e.className = "dblock";
+	  v.value = "-";
+	}
+	else {
+	  e.className = "dnone";
+  	  v.value = "+";
+	}
 }
 </script>
 
 <h2><bean:message key="label.manager.findPerson"/></h2>
 <span class="error"><!-- Error messages go here --><html:errors /></span>
 
-<table class="search" width="80%">
+<table class="search">
 	<tr>
-		<td class="leftcolumn" width="15%"><bean:message key="label.type"/>:</td>
+		<td class="leftcolumn"><bean:message key="label.type"/>:</td>
+		
 		<td>			<html:form action="/preparePerson" >				<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="preparePerson" />				<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.countPage" property="countPage" value="1"/>				<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.departmentId" property="departmentId" name="findPersonForm"/>				<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.degreeId" property="degreeId" name="findPersonForm"/>				<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.viewPhoto" property="viewPhoto" name="findPersonForm"/>				<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.name" property="name" name="findPersonForm"/>				<e:labelValues id="values" enumeration="net.sourceforge.fenixedu.domain.person.RoleType" bundle="ENUMERATION_RESOURCES" includedFields="STUDENT,TEACHER,GRANT_OWNER,EMPLOYEE" />
 				<html:select bundle="HTMLALT_RESOURCES" altKey="select.roleType" property="roleType" onchange="this.form.submit()">
 					<html:option value=""/>
@@ -37,7 +67,7 @@ else
 	</tr>
 	<logic:present name="degreeType">
 		<tr>
-			<td class="leftcolumn" width="15%"><bean:message key="label.degree"/>:</td>
+			<td class="leftcolumn"><bean:message key="label.degree"/>:</td>
 			<td>
 				<html:form action="/preparePerson" >					<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="preparePerson" />					<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.countPage" property="countPage" value="1"/>					<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.departmentId" property="departmentId" name="findPersonForm"/>					<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.degreeId" property="degreeId" name="findPersonForm"/>					<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.viewPhoto" property="viewPhoto" name="findPersonForm"/>					<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.name" property="name" name="findPersonForm"/>					<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.roleType" property="roleType" name="findPersonForm"/>					<e:labelValues id="values" enumeration="net.sourceforge.fenixedu.domain.degree.DegreeType" bundle="ENUMERATION_RESOURCES"  />
 					<html:select bundle="HTMLALT_RESOURCES" altKey="select.degreeType" property="degreeType" onchange="this.form.submit()">
@@ -49,7 +79,7 @@ else
 					</html:submit>				</html:form>
 			</td>
 		</tr>
-	</logic:present></table>
+	</logic:present>
 <html:form action="/findPerson" >
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="findPerson" />
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.startIndex" property="startIndex" value="1" />
@@ -58,10 +88,10 @@ else
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.roleType" property="roleType" value="<%= roleType %>"/>
 	<bean:define id="degreeType" name="findPersonForm" property="degreeType" type="java.lang.String"/>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.degreeType" property="degreeType" value="<%= degreeType %>"/>
-	<table class="search" width="80%">
+
 		<logic:present name="departments">
 			<tr>
-				<td class="leftcolumn" width="15%">
+				<td class="leftcolumn">
 					<bean:message key="label.teacher.finalWork.department"/>:
 				</td>
 				<td>
@@ -77,7 +107,7 @@ else
 		</logic:present>
 		<logic:present name="nonMasterDegree">
 			<tr>
-				<td class="leftcolumn" width="15%">
+				<td class="leftcolumn">
 					<bean:message key="label.degree.name"/>:
 				</td>
 				<td>
@@ -92,14 +122,14 @@ else
 			</tr>
 		</logic:present>
 		<tr>
-			<td class="leftcolumn" width="15%"><bean:message key="label.nameWord" />:</td>
+			<td class="leftcolumn"><bean:message key="label.nameWord" />:</td>
 			<td>
 				<html:text bundle="HTMLALT_RESOURCES" altKey="text.name" name="findPersonForm" property="name" size="50"/>
 				<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.name" property="name" name="findPersonForm"/>
 			</td>		
 		</tr>
 		<tr>
-			<td class="leftcolumn" width="15%">
+			<td class="leftcolumn">
 				<bean:message key="label.viewPhoto" />:
 			</td>
 			<td>
@@ -107,7 +137,7 @@ else
 			</td>
 		</tr>
 		<tr>
-			<td width="15%"></td>
+			<td></td>
 			<td>				<logic:notPresent name="nonMasterDegree">					<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.degreeId" property="degreeId" value=""/>				</logic:notPresent>				<logic:notPresent name="departments">					<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.departmentId" property="departmentId" value=""/>				</logic:notPresent>
 				<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton">
 					<bean:message key="button.search"/>
@@ -164,7 +194,13 @@ else
 					</td>
 					<td width="30%" style="text-align: right;">
 						<bean:define id="aa" value="<%= "aa" + personIndex %>" />
-						<bean:define id="id" value="<%= "id" + personIndex %>" />						<input style="visibility: hidden;"								value="+"								id="<%= pageContext.findAttribute("id").toString()%>"								class="showHideDetailsButton"								alt="input.input"								type="button"								onClick="check(document.getElementById('<%= pageContext.findAttribute("aa").toString() %>'),document.getElementById('<%= pageContext.findAttribute("id").toString() %>'));return false;" />
+						<bean:define id="id" value="<%= "id" + (personIndex.intValue() + 40)  %>" />						<td width="30%" style="text-align: right;">
+							<bean:define id="aa" value="<%= "aa" + personIndex %>" />
+							<bean:define id="id" value="<%= "id" + (personIndex.intValue() + 40) %>" />
+							<span class="switchInline">
+								<input alt="input.input" type = button value="+"  id="<%= pageContext.findAttribute("id").toString()%>" indexed="true" onClick="check(document.getElementById('<%= pageContext.findAttribute("aa").toString() %>'),document.getElementById('<%= pageContext.findAttribute("id").toString() %>'));return false;" >													
+							</span>
+						</td>
 					</td>
 				</tr>
 			</table>
@@ -205,71 +241,75 @@ else
 					</logic:equal>	        
 				</tr>
 			</table>
-			<div class="showHideDetailsButton" id="<%= pageContext.findAttribute("aa").toString() %>">
-			<table class="ppdetails" >
-				<logic:present  name="personalInfo" property="infoEmployee" >
-					<logic:present name="personalInfo" property="infoEmployee.workingUnit" >
-						<bean:define id="infoUnit" name="personalInfo" property="infoEmployee.workingUnit"/>	    			
-						<tr>
-							<td class="ppleft2"><bean:message key="label.person.workPlace" /></td>
-							<bean:size id="numberOfElem" name="infoUnit" property="superiorUnitsNames"/>     			      	
-							<logic:iterate id="superiorUnit" name="infoUnit" property="superiorUnitsNames" indexId="elem">
-								<td class="ppright"><bean:write name="superiorUnit"/></td>
-								<logic:notEqual name="numberOfElem" value="<%= String.valueOf(elem.intValue()+1) %>">
-									<tr><td></td>
-								</logic:notEqual>
-							</logic:iterate>					
-						</tr>
+						<div id="<%= pageContext.findAttribute("aa").toString() %>" class="switchNone">
+				<table class="ppdetails" >
+					<logic:present  name="personalInfo" property="infoEmployee" >
+						<logic:present name="personalInfo" property="infoEmployee.workingUnit" >
+							<bean:define id="infoUnit" name="personalInfo" property="infoEmployee.workingUnit"/>	    			
+							<tr>
+								<td class="ppleft2"><bean:message key="label.person.workPlace" /></td>
+								<bean:size id="numberOfElem" name="infoUnit" property="superiorUnitsNames"/>     			      	
+								<logic:iterate id="superiorUnit" name="infoUnit" property="superiorUnitsNames" indexId="elem">
+									<td class="ppright"><bean:write name="superiorUnit"/></td>
+									<logic:notEqual name="numberOfElem" value="<%= String.valueOf(elem.intValue()+1) %>">
+										<tr><td></td>
+									</logic:notEqual>
+								</logic:iterate>					
+							</tr>
+						</logic:present>
+						<logic:present  name="personalInfo" property="infoEmployee.mailingUnit" >
+							<tr>
+								<td class="ppleft2"><bean:message key="label.person.mailingPlace" /></td>	     
+								<bean:define id="costCenterNumber" name="personalInfo" property="infoEmployee.mailingUnit.costCenterCode"/>
+								<bean:define id="unitName" name="personalInfo" property="infoEmployee.mailingUnit.name"/>
+								<td class="ppright"><bean:write name="costCenterNumber"/> - <bean:write name="unitName"/></td>
+							</tr>
+						</logic:present>
 					</logic:present>
-					<logic:present  name="personalInfo" property="infoEmployee.mailingUnit" >
-						<tr>
-							<td class="ppleft2"><bean:message key="label.person.mailingPlace" /></td>	     
-							<bean:define id="costCenterNumber" name="personalInfo" property="infoEmployee.mailingUnit.costCenterCode"/>
-							<bean:define id="unitName" name="personalInfo" property="infoEmployee.mailingUnit.name"/>
-							<td class="ppright"><bean:write name="costCenterNumber"/> - <bean:write name="unitName"/></td>
-						</tr>
+					<logic:present  name="personalInfo" property="infoTeacher" >
+						<logic:present  name="personalInfo" property="infoTeacher.infoCategory" >
+							<tr>
+								<td class="ppleft2"><bean:message key="label.teacher.category" />:</td>
+								<bean:define id="categoryCode" name="personalInfo" property="infoTeacher.infoCategory.code"/>
+								<bean:define id="categoryName" name="personalInfo" property="infoTeacher.infoCategory.longName"/>
+								<td class="ppright"><bean:write name="categoryCode"/> - <bean:write name="categoryName"/></td>
+							</tr>
+						</logic:present>
 					</logic:present>
-				</logic:present>
-				<logic:present  name="personalInfo" property="infoTeacher" >
-					<logic:present  name="personalInfo" property="infoTeacher.infoCategory" >
-						<tr>
-							<td class="ppleft2"><bean:message key="label.teacher.category" />:</td>
-							<bean:define id="categoryCode" name="personalInfo" property="infoTeacher.infoCategory.code"/>
-							<bean:define id="categoryName" name="personalInfo" property="infoTeacher.infoCategory.longName"/>
-							<td class="ppright"><bean:write name="categoryCode"/> - <bean:write name="categoryName"/></td>
-						</tr>
-					</logic:present>
-				</logic:present>
-				<logic:equal name="personalInfo" property="availableWebSite" value="true">        
-					<logic:present name="personalInfo" property="availableWebSite">
-						<tr>
-							<td class="ppleft2"><bean:message key="label.person.webSite" /></td>		            
-							<td class="ppright">	            	
-								<logic:present name="personalInfo" property="enderecoWeb">
-									<bean:define id="homepage" name="personalInfo" property="enderecoWeb" />
-									<html:link href="<%= pageContext.findAttribute("homepage").toString() %>"><bean:write name="personalInfo" property="enderecoWeb"/></html:link>
-								</logic:present>
+					<logic:equal name="personalInfo" property="availableWebSite" value="true">        
+						<logic:present name="personalInfo" property="availableWebSite">
+							<tr>
+								<td class="ppleft2"><bean:message key="label.person.webSite" /></td>		            
+								<td class="ppright">	            	
+									<logic:present name="personalInfo" property="enderecoWeb">
+										<bean:define id="homepage" name="personalInfo" property="enderecoWeb" />
+										<html:link href="<%= pageContext.findAttribute("homepage").toString() %>"><bean:write name="personalInfo" property="enderecoWeb"/></html:link>
+									</logic:present>
+								</td>
+							</tr>
+						</logic:present>
+					</logic:equal>
+					<logic:present  name="personalInfo" property="infoStudentCurricularPlanList" >
+						<tr>   
+							<td class="ppleft2" style="vertical-align: top;"><bean:message key="label.degree.name" />:</td>  
+							<td class="ppright">
+								<logic:iterate id="infoStudent" name="personalInfo" property="infoStudentCurricularPlanList">		
+									<bean:define id="degreeName" name="infoStudent" property="infoDegreeCurricularPlan.infoDegree.nome"/>
+									<logic:match name="infoStudent" property="infoDegreeCurricularPlan.infoDegree.tipoCurso" location="start" value="MASTER_DEGREE">
+										<bean:message key="link.master"/> <bean:write name="degreeName" /><br/>
+									</logic:match>
+									<logic:match name="infoStudent" property="infoDegreeCurricularPlan.infoDegree.tipoCurso" location="start" value="DEGREE"> 
+										<bean:message key="link.degree"/> <bean:write name="degreeName" /><br/>
+									</logic:match>
+								</logic:iterate>
 							</td>
 						</tr>
 					</logic:present>
-				</logic:equal>
-				<logic:present  name="personalInfo" property="infoStudentCurricularPlanList" >
-					<tr>   
-						<td class="ppleft2" style="vertical-align: top;"><bean:message key="label.degree.name" />:</td>  
-						<td class="ppright">
-							<logic:iterate id="infoStudent" name="personalInfo" property="infoStudentCurricularPlanList">		
-								<bean:define id="degreeName" name="infoStudent" property="infoDegreeCurricularPlan.infoDegree.nome"/>
-								<logic:match name="infoStudent" property="infoDegreeCurricularPlan.infoDegree.tipoCurso" location="start" value="MASTER_DEGREE">
-									<bean:message key="link.master"/> <bean:write name="degreeName" /><br/>
-								</logic:match>
-								<logic:match name="infoStudent" property="infoDegreeCurricularPlan.infoDegree.tipoCurso" location="start" value="DEGREE"> 
-									<bean:message key="link.degree"/> <bean:write name="degreeName" /><br/>
-								</logic:match>
-							</logic:iterate>
-						</td>
-					</tr>
-				</logic:present>
-			</table>			</div>
+				</table>			</div>
 		</div>
 	 </logic:iterate>
 </logic:present>
+
+<script>
+	switchDisplay();
+</script>
