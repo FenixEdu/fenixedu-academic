@@ -13,112 +13,30 @@ import net.sourceforge.fenixedu.domain.Country;
  */
 public class InfoCountry extends InfoObject {
 
-    private String name;
+    private final Country country;
 
-    private String code;
-
-    private String nationality;
-
-    public InfoCountry() {
-    }
-
-    public InfoCountry(String name, String code, String nationality) {
-        setName(name);
-        setCode(code);
-        setNationality(nationality);
+    public InfoCountry(final Country country) {
+	this.country = country;
     }
 
     public boolean equals(Object obj) {
-        boolean result = false;
-        if (obj instanceof InfoCountry) {
-            InfoCountry d = (InfoCountry) obj;
-            result = (getName().equals(d.getName())) && (getCode().equals(d.getCode()))
-                    && (getNationality().equals(d.getNationality()));
-        }
-        return result;
+	return obj != null && country == ((InfoCountry) obj).country;
     }
 
-    /**
-     * Returns the code.
-     * 
-     * @return String
-     */
     public String getCode() {
-        return code;
+        return country.getCode();
     }
 
-    /**
-     * Returns the name.
-     * 
-     * @return String
-     */
     public String getName() {
-        return name;
+        return country.getName();
     }
 
-    /**
-     * Sets the code.
-     * 
-     * @param code
-     *            The code to set
-     */
-    public void setCode(String code) {
-        this.code = code;
-    }
-
-    /**
-     * Sets the name.
-     * 
-     * @param name
-     *            The name to set
-     */
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    /**
-     * Returns the nationality.
-     * 
-     * @return String
-     */
     public String getNationality() {
-        return nationality;
+        return country.getNationality();
     }
 
-    /**
-     * Sets the nationality.
-     * 
-     * @param nationality
-     *            The nationality to set
-     */
-    public void setNationality(String nationality) {
-        this.nationality = nationality;
-    }
-
-    public void copyFromDomain(Country country) {
-        super.copyFromDomain(country);
-        if (country != null) {
-            setCode(country.getCode());
-            setName(country.getName());
-            setNationality(country.getNationality());
-        }
-    }
-
-    public static InfoCountry newInfoFromDomain(Country country) {
-        InfoCountry infoCountry = null;
-        if (country != null) {
-            infoCountry = new InfoCountry();
-            infoCountry.copyFromDomain(country);
-        }
-        return infoCountry;
-    }
-
-    public void copyToDomain(InfoCountry infoCountry, Country country) {
-        super.copyToDomain(infoCountry, country);
-
-        country.setCode(infoCountry.getCode());
-        country.setName(infoCountry.getName());
-        country.setNationality(infoCountry.getNationality());
+    public static InfoCountry newInfoFromDomain(final Country country) {
+	return country == null ? null : new InfoCountry(country);
     }
 
 }

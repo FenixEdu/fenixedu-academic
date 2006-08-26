@@ -3,8 +3,9 @@
  */
 package net.sourceforge.fenixedu.dataTransferObject.person;
 
-import net.sourceforge.fenixedu.dataTransferObject.InfoCountry;
+import net.sourceforge.fenixedu.dataTransferObject.InfoCountryEditor;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
+import net.sourceforge.fenixedu.domain.Country;
 import net.sourceforge.fenixedu.domain.Qualification;
 
 /**
@@ -16,7 +17,13 @@ public class InfoQualificationWithPersonAndCountry extends InfoQualification {
     public void copyFromDomain(Qualification qualification) {
         super.copyFromDomain(qualification);
         if (qualification != null) {
-            setInfoCountry(InfoCountry.newInfoFromDomain(qualification.getCountry()));
+            final Country country = qualification.getCountry();
+            final InfoCountryEditor infoCountryEditor = new InfoCountryEditor();
+            infoCountryEditor.setCode(country.getCode());
+            infoCountryEditor.setIdInternal(country.getIdInternal());
+            infoCountryEditor.setName(country.getName());
+            infoCountryEditor.setNationality(country.getNationality());
+            setInfoCountry(infoCountryEditor);
             setInfoPerson(InfoPerson.newInfoFromDomain(qualification.getPerson()));
         }
     }

@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.dataTransferObject.InfoCountry;
+import net.sourceforge.fenixedu.dataTransferObject.InfoCountryEditor;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPersonEditor;
 import net.sourceforge.fenixedu.dataTransferObject.grant.owner.InfoGrantOwner;
@@ -115,7 +115,7 @@ public class EditGrantOwnerAction extends FenixDispatchAction {
                     "ReadAllCountries", null);
 
             //Adding a select country line to the list (presentation reasons)             
-            InfoCountry selectCountry = new InfoCountry();
+            InfoCountryEditor selectCountry = new InfoCountryEditor();
             selectCountry.setIdInternal(null);
             selectCountry.setName("[Escolha um país]");
             countryList.add(0, selectCountry);
@@ -350,7 +350,7 @@ public class EditGrantOwnerAction extends FenixDispatchAction {
             estadoCivil = MaritalStatus.valueOf((String) editGrantOwnerForm.get("maritalStatus"));
         infoPerson.setMaritalStatus(estadoCivil);
 
-        InfoCountry infoCountry = new InfoCountry();
+        InfoCountryEditor infoCountry = new InfoCountryEditor();
         if (((Integer) editGrantOwnerForm.get("country")).equals(new Integer(0))) {
             infoCountry.setIdInternal(null);
         } else {

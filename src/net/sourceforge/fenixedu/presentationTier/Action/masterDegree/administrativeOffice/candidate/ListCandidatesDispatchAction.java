@@ -24,6 +24,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FileAlreadyEx
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FileNameTooLongServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCandidateSituation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCountry;
+import net.sourceforge.fenixedu.dataTransferObject.InfoCountryEditor;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeCandidate;
@@ -408,7 +409,7 @@ public class ListCandidatesDispatchAction extends FenixDispatchAction {
 			new Integer(((String) editCandidateForm.get("idExpirationDateDay"))).intValue());
 		infoPerson.setDataValidadeDocumentoIdentificacao(idDocumentExpirationDate.getTime());
 	    }
-	    InfoCountry nationality = new InfoCountry();
+	    InfoCountryEditor nationality = new InfoCountryEditor();
 	    nationality.setNationality((String) editCandidateForm.get("nationality"));
 
 	    infoPerson.setTipoDocumentoIdentificacao(IDDocumentType.valueOf((String) editCandidateForm

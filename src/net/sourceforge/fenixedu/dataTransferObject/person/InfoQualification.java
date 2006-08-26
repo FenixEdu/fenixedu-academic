@@ -7,7 +7,7 @@ package net.sourceforge.fenixedu.dataTransferObject.person;
 import java.util.Date;
 
 import net.sourceforge.fenixedu.dataTransferObject.ISiteComponent;
-import net.sourceforge.fenixedu.dataTransferObject.InfoCountry;
+import net.sourceforge.fenixedu.dataTransferObject.InfoCountryEditor;
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
 import net.sourceforge.fenixedu.domain.Qualification;
@@ -41,7 +41,7 @@ public class InfoQualification extends InfoObject implements ISiteComponent {
 
     private String equivalenceSchool;
 
-    private InfoCountry infoCountry;
+    private InfoCountryEditor infoCountry;
     
     private String year;
     
@@ -207,7 +207,7 @@ public class InfoQualification extends InfoObject implements ISiteComponent {
     /**
      * @return Returns the infoCountry.
      */
-    public InfoCountry getInfoCountry() {
+    public InfoCountryEditor getInfoCountry() {
         return infoCountry;
     }
 
@@ -215,7 +215,7 @@ public class InfoQualification extends InfoObject implements ISiteComponent {
      * @param infoCountry
      *            The infoCountry to set.
      */
-    public void setInfoCountry(InfoCountry infoCountry) {
+    public void setInfoCountry(InfoCountryEditor infoCountry) {
         this.infoCountry = infoCountry;
     }
 

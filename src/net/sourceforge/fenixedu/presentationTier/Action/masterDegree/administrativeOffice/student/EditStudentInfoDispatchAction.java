@@ -19,7 +19,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.dataTransferObject.InfoCountry;
+import net.sourceforge.fenixedu.dataTransferObject.InfoCountryEditor;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPersonEditor;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -107,7 +107,7 @@ public class EditStudentInfoDispatchAction extends DispatchAction {
                 infoPerson.setDataValidadeDocumentoIdentificacao(idDocumentExpirationDate.getTime());
             }
 
-            InfoCountry infoCountry = new InfoCountry();
+            InfoCountryEditor infoCountry = new InfoCountryEditor();
             infoCountry.setNationality((String) changeApplicationInfoForm.get("nationality"));
 
             infoPerson.setTipoDocumentoIdentificacao(IDDocumentType.valueOf((String) changeApplicationInfoForm.get("identificationDocumentType")));

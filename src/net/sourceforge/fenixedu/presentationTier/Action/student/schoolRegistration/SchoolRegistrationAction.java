@@ -18,6 +18,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidPasswo
 import net.sourceforge.fenixedu.applicationTier.security.PasswordEncryptor;
 import net.sourceforge.fenixedu.dataTransferObject.InfoClass;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCountry;
+import net.sourceforge.fenixedu.dataTransferObject.InfoCountryEditor;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPersonEditor;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
@@ -266,7 +267,7 @@ public class SchoolRegistrationAction extends TransactionalDispatchAction {
                 + monthOfExpirationDateOfDocumentId + "-" + yearOfExpirationDateOfDocumentId, "-");
         
         InfoPersonEditor infoPerson = new InfoPersonEditor();
-        InfoCountry infoCountry = new InfoCountry();
+        InfoCountryEditor infoCountry = new InfoCountryEditor();
         infoCountry.setNationality(nacionality);
 
         infoPerson.setIdInternal(idInternal);

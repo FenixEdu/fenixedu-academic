@@ -35,7 +35,8 @@ public abstract class FenixAction extends Action {
     }
 
     protected Person getLoggedPerson(HttpServletRequest request) {
-    	return getUserView(request).getPerson();
+	final IUserView userView = getUserView(request);
+    	return userView == null ? null : userView.getPerson();
     }
 
     @Override

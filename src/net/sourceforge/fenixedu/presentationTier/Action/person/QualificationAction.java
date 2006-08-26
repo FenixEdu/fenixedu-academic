@@ -9,7 +9,7 @@ import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;
 
-import net.sourceforge.fenixedu.dataTransferObject.InfoCountry;
+import net.sourceforge.fenixedu.dataTransferObject.InfoCountryEditor;
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
 import net.sourceforge.fenixedu.dataTransferObject.person.InfoQualification;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
@@ -71,7 +71,7 @@ public class QualificationAction extends CRUDActionByOID {
             }
             if (dynaForm.get("countryIdInternal") != null
                     && !dynaForm.get("countryIdInternal").equals("")) {
-                InfoCountry infoCountry = new InfoCountry();
+                InfoCountryEditor infoCountry = new InfoCountryEditor();
                 infoCountry.setIdInternal((Integer) dynaForm.get("countryIdInternal"));
                 infoQualification.setInfoCountry(infoCountry);
             }

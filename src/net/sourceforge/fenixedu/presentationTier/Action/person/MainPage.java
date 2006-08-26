@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.SortedSet;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -63,7 +64,7 @@ public final class MainPage extends FenixAction {
     private void addStudentNotifications(final Person person, final List<Advisory> advisories) throws FenixActionException {
         for (final Registration registration : person.getStudents()) {
             for (final Attends attends : registration.getAssociatedAttends()) {
-                if (attends.getEnrolment() != null) {
+                //if (attends.getEnrolment() != null) {
                     final ExecutionPeriod executionPeriod = attends.getDisciplinaExecucao().getExecutionPeriod();
                     if (executionPeriod.getState().equals(PeriodState.CURRENT) && attends.hasEnrolment()) {
                         final Interval responseWeek = attends.getResponseWeek();
@@ -79,7 +80,7 @@ public final class MainPage extends FenixAction {
                             }
                         }
                     }
-                }
+                //}
             }
         }
     }

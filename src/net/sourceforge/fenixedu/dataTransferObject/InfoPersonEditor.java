@@ -77,7 +77,7 @@ public class InfoPersonEditor extends InfoObject {
 
     private MaritalStatus maritalStatus;
 
-    private InfoCountry infoPais;
+    private InfoCountryEditor infoPais;
 
     private InfoEmployee infoEmployee;
 
@@ -101,7 +101,7 @@ public class InfoPersonEditor extends InfoObject {
 	    String codigoPostal, String localidadeCodigoPostal, String freguesiaMorada,
 	    String concelhoMorada, String distritoMorada, String telefone, String telemovel,
 	    String email, String enderecoWeb, String numContribuinte, String profissao, String username,
-	    String istUsername, String password, InfoCountry infoPais, String codigoFiscal) {
+	    String istUsername, String password, InfoCountryEditor infoPais, String codigoFiscal) {
 
 	setNumeroDocumentoIdentificacao(numeroDocumentoIdentificacao);
 	setTipoDocumentoIdentificacao(tipoDocumentoIdentificacao);
@@ -231,7 +231,7 @@ public class InfoPersonEditor extends InfoObject {
 	return freguesiaNaturalidade;
     }
 
-    public InfoCountry getInfoPais() {
+    public InfoCountryEditor getInfoPais() {
 	return infoPais;
     }
 
@@ -362,7 +362,7 @@ public class InfoPersonEditor extends InfoObject {
 	this.freguesiaNaturalidade = freguesiaNaturalidade;
     }
 
-    public void setInfoPais(InfoCountry infoPais) {
+    public void setInfoPais(InfoCountryEditor infoPais) {
 	this.infoPais = infoPais;
     }
 

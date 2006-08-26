@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCountry;
+import net.sourceforge.fenixedu.dataTransferObject.InfoCountryEditor;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
 import net.sourceforge.fenixedu.dataTransferObject.person.InfoQualification;
 import net.sourceforge.fenixedu.domain.Person;
@@ -85,7 +86,7 @@ public class EditGrantQualificationAction extends FenixDispatchAction {
                     "ReadAllCountries", null);
 
             //Adding a select country line to the list (presentation reasons)
-            InfoCountry selectCountry = new InfoCountry();
+            InfoCountryEditor selectCountry = new InfoCountryEditor();
             selectCountry.setIdInternal(null);
             selectCountry.setName("[Escolha um país]");
             countryList.add(0, selectCountry);
@@ -217,7 +218,7 @@ public class EditGrantQualificationAction extends FenixDispatchAction {
         infoQualification.setInfoPerson(InfoPerson.newInfoFromDomain(person));
 
         //Setting country
-        InfoCountry infoCountry = new InfoCountry();
+        InfoCountryEditor infoCountry = new InfoCountryEditor();
         if (((Integer) editGrantQualificationForm.get("country")).equals(new Integer(0))) {
             infoCountry.setIdInternal(null);
         } else {

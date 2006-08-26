@@ -14,6 +14,7 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterExce
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCandidateSituation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCountry;
+import net.sourceforge.fenixedu.dataTransferObject.InfoCountryEditor;
 import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeCandidate;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPersonEditor;
@@ -67,7 +68,7 @@ public class ChangeApplicationInfoDispatchAction extends DispatchAction {
         infoPerson.setDataValidadeDocumentoIdentificacao(buildDate(changeApplicationInfoForm,
                 "idExpirationDateDay", "idExpirationDateMonth", "idExpirationDateYear"));
 
-        InfoCountry nationality = new InfoCountry();
+        InfoCountryEditor nationality = new InfoCountryEditor();
         nationality.setNationality((String) changeApplicationInfoForm.get("nationality"));
 
         infoPerson.setTipoDocumentoIdentificacao(IDDocumentType

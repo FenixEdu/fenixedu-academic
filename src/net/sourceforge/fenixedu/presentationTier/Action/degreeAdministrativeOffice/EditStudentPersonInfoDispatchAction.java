@@ -14,6 +14,7 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCountry;
+import net.sourceforge.fenixedu.dataTransferObject.InfoCountryEditor;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPersonEditor;
 import net.sourceforge.fenixedu.domain.person.Gender;
@@ -185,7 +186,7 @@ public class EditStudentPersonInfoDispatchAction extends DispatchAction {
 		infoPerson.setDataValidadeDocumentoIdentificacao(idDocumentExpirationDate.getTime());
 	    }
 
-	    InfoCountry nationality = new InfoCountry();
+	    InfoCountryEditor nationality = new InfoCountryEditor();
 	    nationality.setNationality((String) changeApplicationInfoForm.get("nationality"));
 
 	    infoPerson.setTipoDocumentoIdentificacao(IDDocumentType
