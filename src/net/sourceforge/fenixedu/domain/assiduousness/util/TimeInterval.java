@@ -274,6 +274,11 @@ public class TimeInterval implements Serializable {
         }
         return false;
     }
+    
+    public Interval overlap(TimeInterval interval) {
+        DateTime now =new DateTime(); 
+        return toInterval(now).overlap(interval.toInterval(now));
+    }
 
     // // TODO reminder to turn to immutable
     // /**

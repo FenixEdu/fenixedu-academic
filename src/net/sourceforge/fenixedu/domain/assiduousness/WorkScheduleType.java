@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.domain.assiduousness;
 
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.assiduousness.util.AttributeType;
+import net.sourceforge.fenixedu.domain.assiduousness.util.TimeInterval;
 import net.sourceforge.fenixedu.domain.assiduousness.util.Timeline;
 
 import org.joda.time.DateTime;
@@ -53,12 +54,20 @@ public class WorkScheduleType extends WorkScheduleType_Base {
         return Duration.ZERO;
     }
 
-    public Duration checkMealDurationAccordingToRules(Duration lunchBreak, boolean justification) {
+    public Duration checkMealDurationAccordingToRules(TimeInterval lunchBreak, boolean justification) {
         if (definedMeal()) {
-            if (!justification && lunchBreak.isShorterThan(getMeal().getMinimumMealBreakInterval())) {
+            if (!justification
+                    && lunchBreak.getDuration().isShorterThan(getMeal().getMinimumMealBreakInterval())) {
                 return null;
             } else {
-                return ((Meal) getMeal()).calculateMealDiscount(lunchBreak);
+                // /////////remove in 2007
+                if (getFixedWorkPeriod() == null) {
+                    return getMeal().calculateMealDiscount(
+                            getMeal().getMealBreak().overlap(lunchBreak).toDuration());
+                }
+                // /////////////////////////
+                return getMeal().calculateMealDiscount(lunchBreak.getDuration());
+
             }
         }
         return Duration.ZERO;
@@ -117,10 +126,10 @@ public class WorkScheduleType extends WorkScheduleType_Base {
     }
 
     public Duration getMaximumContinuousWorkPeriod() {
-        //        if (getMeal() == null || getMeal().getMinimumMealBreakInterval().equals(Duration.ZERO)) {
-        //            return null;
-        //        }
-        //        return maximumContinuousWorkPeriod;
+        // if (getMeal() == null || getMeal().getMinimumMealBreakInterval().equals(Duration.ZERO)) {
+        // return null;
+        // }
+        // return maximumContinuousWorkPeriod;
         return null;
     }
 }

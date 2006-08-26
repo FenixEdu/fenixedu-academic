@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.domain.assiduousness;
 
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.EnumSet;
 import java.util.Iterator;
 import java.util.List;
 
@@ -90,11 +91,10 @@ public class Leave extends Leave_Base {
     // Converts a Leave interval to TimePoint
     public List<TimePoint> toTimePoints(AttributeType attribute) {
         List<TimePoint> timePointList = new ArrayList<TimePoint>();
-        Attributes attributes = new Attributes();
-        attributes.addAttribute(attribute);
-        attributes.addAttribute(AttributeType.JUSTIFICATION);
-        timePointList.add(new TimePoint(getDate().toTimeOfDay(), attributes));
-        timePointList.add(new TimePoint((getDate().plus(getDuration())).toTimeOfDay(), attributes));
+        EnumSet<AttributeType> attributesToAdd = EnumSet.of(attribute, AttributeType.JUSTIFICATION);
+        timePointList.add(new TimePoint(getDate().toTimeOfDay(), new Attributes(attributesToAdd)));
+        timePointList.add(new TimePoint((getDate().plus(getDuration())).toTimeOfDay(), new Attributes(
+                attributesToAdd)));
         return timePointList;
     }
 

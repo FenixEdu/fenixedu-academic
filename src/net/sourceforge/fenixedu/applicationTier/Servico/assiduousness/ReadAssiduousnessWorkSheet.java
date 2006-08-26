@@ -16,6 +16,7 @@ import net.sourceforge.fenixedu.domain.assiduousness.Leave;
 import net.sourceforge.fenixedu.domain.assiduousness.Schedule;
 import net.sourceforge.fenixedu.domain.assiduousness.WorkSchedule;
 import net.sourceforge.fenixedu.domain.assiduousness.WorkScheduleType;
+import net.sourceforge.fenixedu.domain.assiduousness.util.DayType;
 import net.sourceforge.fenixedu.domain.assiduousness.util.JustificationGroup;
 import net.sourceforge.fenixedu.domain.assiduousness.util.JustificationType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
@@ -67,9 +68,11 @@ public class ReadAssiduousnessWorkSheet extends Service {
         DateTime end = endDate.toDateTime(Assiduousness.defaultEndWorkDay);
         WorkSchedule endWorkSchedule = workScheduleMap.get(endDate);
         if (endWorkSchedule != null) {
-            end = endDate.toDateTime(endWorkSchedule.getWorkScheduleType().getWorkEndTime());
+            end = endDate.toDateTime(endWorkSchedule.getWorkScheduleType().getWorkTime()).plus(
+                    endWorkSchedule.getWorkScheduleType().getWorkTimeDuration());
+            // end = endDate.toDateTime(endWorkSchedule.getWorkScheduleType().getWorkEndTime());
             if (endWorkSchedule.getWorkScheduleType().isWorkTimeNextDay()) {
-                end = end.plusDays(1);
+                end = end.plusDays(2);
             }
         }
 
@@ -173,6 +176,7 @@ public class ReadAssiduousnessWorkSheet extends Service {
                     }
                     for (final Leave leave : leavesList) {
                         if (leave.getJustificationMotive().getJustificationType() == JustificationType.OCCURRENCE
+                                && leave.getJustificationMotive().getDayType() != DayType.WORKDAY
                                 && leave.getJustificationMotive().getJustificationGroup() != JustificationGroup.CURRENT_YEAR_HOLIDAYS
                                 && leave.getJustificationMotive().getJustificationGroup() != JustificationGroup.LAST_YEAR_HOLIDAYS) {
                             if (notes.length() != 0) {
@@ -250,7 +254,7 @@ public class ReadAssiduousnessWorkSheet extends Service {
             Interval gapResult = dayBeforeWorkTimeInterval.gap(thisDayWorkTimeInterval);
             if (gapResult != null) {
                 if (!gapResult.contains(clocking)) {
-                    return false;
+                    return dayBeforeWorkTimeInterval.contains(clocking);
                 }
             } else {
                 return dayBeforeWorkTimeInterval.contains(clocking);

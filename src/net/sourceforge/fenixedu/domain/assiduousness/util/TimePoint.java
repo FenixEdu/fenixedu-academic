@@ -1,6 +1,8 @@
 package net.sourceforge.fenixedu.domain.assiduousness.util;
 
+import org.joda.time.DateTime;
 import org.joda.time.TimeOfDay;
+import org.joda.time.YearMonthDay;
 
 public class TimePoint {
 
@@ -140,6 +142,14 @@ public class TimePoint {
             }
         }
         return null;
+    }
+
+    public DateTime getDateTime(YearMonthDay day) {
+        DateTime pointDateTime = day.toDateTime(getTime());
+        if (isNextDay()) {
+            pointDateTime = pointDateTime.plusDays(1);
+        }
+        return pointDateTime;
     }
 
 }
