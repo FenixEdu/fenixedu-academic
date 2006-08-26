@@ -26,3 +26,6 @@ function executeWithTempFile() {
 	rm tmp.sql
 	echo
 }
+
+execute "Alter SITE Table" alterSiteTable.sql
+execute "Create Multilanguage slots" createMultilanguageColumns.sql
