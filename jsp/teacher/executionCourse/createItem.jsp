@@ -9,6 +9,9 @@
 	<bean:message key="link.createItem"/>
 </h2>
 
-<fr:create type="net.sourceforge.fenixedu.domain.Item" schema="net.sourceforge.fenixedu.domain.ItemCreator">
+<bean:define id="url" type="java.lang.String">/manageExecutionCourse.do?method=section&amp;executionCourseID=<bean:write name="executionCourse" property="idInternal"/>&amp;sectionID=<bean:write name="section" property="idInternal"/></bean:define>
+<fr:edit name="itemFactoryCreator"
+		type="net.sourceforge.fenixedu.domain.Item" schema="net.sourceforge.fenixedu.domain.ItemCreator"
+		action="<%= url %>">
 	<fr:hidden slot="section" name="section"/>
-</fr:create>
+</fr:edit>

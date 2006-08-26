@@ -79,7 +79,9 @@
 		<br/>
 		<br/>
 
-		<%= item.getInformation().getContent(Language.pt) %>
+		<logic:present name="item" property="information">
+			<%= item.getInformation().getContent(Language.pt) %>
+		</logic:present>
 		<logic:equal name="item" property="urgent" value="true">
 			</font>
 		</logic:equal>

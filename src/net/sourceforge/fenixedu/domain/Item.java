@@ -1,9 +1,11 @@
 package net.sourceforge.fenixedu.domain;
 
+import java.io.Serializable;
 import java.util.Comparator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
 import net.sourceforge.fenixedu.util.MultiLanguageString;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -35,15 +37,15 @@ public class Item extends Item_Base {
 
     public void edit(final MultiLanguageString name, final MultiLanguageString information, final Boolean urgent,
             final Integer order) {
-        if (name == null || information == null || urgent == null || order == null) {
+        if (name == null) {
             throw new NullPointerException();
         }
 
         setName(name);
         setInformation(information);
-        setUrgent(urgent);
+        setUrgent(urgent == null ? Boolean.FALSE : Boolean.TRUE);
 
-        final int newOrder = order.intValue();
+        final int newOrder = getNewOrder(order);
         final int oldOrder = getItemOrder() == null ? Integer.MAX_VALUE : getItemOrder().intValue();
         if (newOrder != oldOrder) {
             final boolean moveUp = newOrder > oldOrder;
@@ -61,8 +63,15 @@ public class Item extends Item_Base {
                     }
                 }
             }
-            setItemOrder(order);
+            setItemOrder(Integer.valueOf(newOrder));
         }
+    }
+
+    private int getNewOrder(Integer order) {
+	if (order == null) {
+	    return getSection().getAssociatedItemsSet().size();
+	}
+	return order.intValue() - 1;
     }
 
     public void delete() {
@@ -130,6 +139,62 @@ public class Item extends Item_Base {
             }
         }
         return newOrder;
+    }
+
+    public static abstract class ItemFactory implements Serializable, FactoryExecutor {
+	private Boolean urgent;
+	private Integer itemOrder;
+	private MultiLanguageString information;
+	private MultiLanguageString name;
+	public MultiLanguageString getInformation() {
+	    return information;
+	}
+	public void setInformation(MultiLanguageString information) {
+	    this.information = information;
+	}
+	public Integer getItemOrder() {
+	    return itemOrder;
+	}
+	public void setItemOrder(Integer itemOrder) {
+	    this.itemOrder = itemOrder;
+	}
+	public MultiLanguageString getName() {
+	    return name;
+	}
+	public void setName(MultiLanguageString name) {
+	    this.name = name;
+	}
+	public Boolean getUrgent() {
+	    return urgent;
+	}
+	public void setUrgent(Boolean urgent) {
+	    this.urgent = urgent;
+	}
+
+    }
+
+    public static class ItemFactoryCreator extends ItemFactory {
+	private DomainReference<Section> sectionDomainReference;
+
+	public ItemFactoryCreator(final Section section) {
+	    super();
+	    setSection(section);
+	}
+
+	public Section getSection() {
+	    return sectionDomainReference == null ? null : sectionDomainReference.getObject();
+	}
+
+	public void setSection(Section section) {
+	    this.sectionDomainReference = section == null ? null : new DomainReference<Section>(section);
+	}
+
+	public Item execute() {
+	    return execute(getSection());
+	}
+	public Item execute(final Section section) {
+	    return new Item(section, getName(), getInformation(), getUrgent(), getItemOrder());
+	}
     }
 
 }

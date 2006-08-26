@@ -129,4 +129,9 @@ public class MultiLanguageString implements Serializable {
         return mls;
     }
 
+    @Override
+    public String toString() {
+	return getContent();
+    }
+
 }

@@ -4,6 +4,7 @@
  */
 package net.sourceforge.fenixedu.domain;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Iterator;
@@ -12,6 +13,7 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
 import net.sourceforge.fenixedu.util.MultiLanguageString;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -22,203 +24,277 @@ import org.joda.time.YearMonthDay;
  */
 public class Section extends Section_Base {
 
-	public static final Comparator<Section> COMPARATOR_BY_ORDER = new BeanComparator("sectionOrder");
+    public static final Comparator<Section> COMPARATOR_BY_ORDER = new BeanComparator("sectionOrder");
 
     protected Section() {
-		super();
-		setRootDomainObject(RootDomainObject.getInstance());
+	super();
+	setRootDomainObject(RootDomainObject.getInstance());
     }
 
-    public Section(final Site site, final MultiLanguageString name, final Integer order, final Section superiorSection) {
-        this();
-        if (site == null) {
-            throw new NullPointerException();
-        }
+    public Section(final Site site, final MultiLanguageString name, final Integer order,
+	    final Section superiorSection) {
+	this();
+	if (site == null) {
+	    throw new NullPointerException();
+	}
 
-        setSite(site);
-        setSuperiorSection(superiorSection);
-        edit(name, order);
+	setSite(site);
+	setSuperiorSection(superiorSection);
+	edit(name, order);
     }
 
     public void edit(final MultiLanguageString name, final Integer order) {
-        if (name == null || order == null) {
-            throw new NullPointerException();
-        }
+	if (name == null) {
+	    throw new NullPointerException();
+	}
 
-        setLastModifiedDateYearMonthDay(new YearMonthDay());
-        setName(name);
-        final int newOrder = order.intValue();
-        final int oldOrder = getSectionOrder() == null ? Integer.MAX_VALUE : getSectionOrder().intValue();
-        if (newOrder != oldOrder) {
-            final boolean moveUp = newOrder > oldOrder;
-            for (final Section otherSection : getSite().getAssociatedSectionsSet()) {
-                if (otherSection.getSuperiorSection() == getSuperiorSection()) {
-                    if (otherSection != this) {
-                        final int otherOrder = otherSection.getSectionOrder().intValue();
-                        if (moveUp) {
-                            if (otherOrder > oldOrder && otherOrder <= newOrder) {
-                                otherSection.setSectionOrder(Integer.valueOf(otherOrder - 1));
-                            }
-                        } else {
-                            if (otherOrder >= newOrder && otherOrder < oldOrder) {
-                                otherSection.setSectionOrder(Integer.valueOf(otherOrder + 1));
-                            }
-                        }
-                    }
-                }
-            }
-            setSectionOrder(order);
-        }
+	setLastModifiedDateYearMonthDay(new YearMonthDay());
+	setName(name);
+	if (getSectionOrder() == null) {
+	    setSectionOrder(Integer.valueOf(Integer.MAX_VALUE));
+	}
+	final int newOrder = getNewOrder(order);
+	final int oldOrder = getSectionOrder().intValue();
+	if (newOrder != oldOrder) {
+	    final boolean moveUp = newOrder > oldOrder;
+	    for (final Section otherSection : getSite().getAssociatedSectionsSet()) {
+		if (otherSection.getSuperiorSection() == getSuperiorSection()) {
+		    if (otherSection != this) {
+			final int otherOrder = otherSection.getSectionOrder().intValue();
+			if (moveUp) {
+			    if (otherOrder > oldOrder && otherOrder <= newOrder) {
+				otherSection.setSectionOrder(Integer.valueOf(otherOrder - 1));
+			    }
+			} else {
+			    if (otherOrder >= newOrder && otherOrder < oldOrder) {
+				otherSection.setSectionOrder(Integer.valueOf(otherOrder + 1));
+			    }
+			}
+		    }
+		}
+	    }
+	    setSectionOrder(Integer.valueOf(newOrder));
+	}
+    }
+
+    private int getNewOrder(Integer order) {
+	if (order == null) {
+	    if (getSuperiorSection() == null) {
+		return getSite().getOrderedTopLevelSections().size();
+	    } else {
+		return getSuperiorSection().getAssociatedSectionsSet().size();
+	    }
+	}
+	return order.intValue() - 1;
     }
 
     public void insertItem(String itemName, String itemInformation, Boolean itemUrgent,
-            Integer insertItemOrder) throws DomainException {
+	    Integer insertItemOrder) throws DomainException {
 
-        if (itemName == null || insertItemOrder == null || itemUrgent == null || insertItemOrder == null) {
-            throw new NullPointerException();
-        }
+	if (itemName == null || insertItemOrder == null || itemUrgent == null || insertItemOrder == null) {
+	    throw new NullPointerException();
+	}
 
-        for (Item item : this.getAssociatedItems()) {
-            if (item.getName().equals(itemName))
-                throw new DomainException("error.duplicate.item");
-        }
+	for (Item item : this.getAssociatedItems()) {
+	    if (item.getName().equals(itemName))
+		throw new DomainException("error.duplicate.item");
+	}
 
-        Item item = new Item();
-//        item.setInformation(itemInformation);
-//        item.setName(itemName);
-        item.setUrgent(itemUrgent);
-        Integer itemOrder = new Integer(organizeExistingItemsOrder(insertItemOrder.intValue()));
-        item.setItemOrder(itemOrder);
+	Item item = new Item();
+	// item.setInformation(itemInformation);
+	// item.setName(itemName);
+	item.setUrgent(itemUrgent);
+	Integer itemOrder = new Integer(organizeExistingItemsOrder(insertItemOrder.intValue()));
+	item.setItemOrder(itemOrder);
 
-        item.setSection(this);
+	item.setSection(this);
     }
 
     private int organizeExistingItemsOrder(int insertItemOrder) {
 
-        Iterator items = this.getAssociatedItemsIterator();
+	Iterator items = this.getAssociatedItemsIterator();
 
-        if (this.getAssociatedItems() != null) {
-            int itemOrder;
+	if (this.getAssociatedItems() != null) {
+	    int itemOrder;
 
-            for (; items.hasNext();) {
-                Item item = (Item) items.next();
-                itemOrder = item.getItemOrder().intValue();
-                if (itemOrder >= insertItemOrder)
-                    item.setItemOrder(new Integer(itemOrder + 1));
-            }
-        }
-        return insertItemOrder;
+	    for (; items.hasNext();) {
+		Item item = (Item) items.next();
+		itemOrder = item.getItemOrder().intValue();
+		if (itemOrder >= insertItemOrder)
+		    item.setItemOrder(new Integer(itemOrder + 1));
+	    }
+	}
+	return insertItemOrder;
     }
 
     public void edit(String newSectionName, Integer newOrder) {
 
-        if (newSectionName == null || newOrder == null) {
-            throw new NullPointerException();
-        }
+	if (newSectionName == null || newOrder == null) {
+	    throw new NullPointerException();
+	}
 
-        newOrder = organizeSectionsOrder(newOrder, this.getSectionOrder(), this.getSuperiorSection(),
-                this.getSite());
+	newOrder = organizeSectionsOrder(newOrder, this.getSectionOrder(), this.getSuperiorSection(),
+		this.getSite());
 
-//        this.setName(newSectionName);
-        this.setSectionOrder(newOrder);
+	// this.setName(newSectionName);
+	this.setSectionOrder(newOrder);
     }
 
     private Integer organizeSectionsOrder(Integer newOrder, Integer oldOrder, Section superiorSection,
-            Site site) {
+	    Site site) {
 
-        List<Section> sectionsList = site.getAssociatedSections(superiorSection);
+	List<Section> sectionsList = site.getAssociatedSections(superiorSection);
 
-        int diffOrder = newOrder.intValue() - oldOrder.intValue();
+	int diffOrder = newOrder.intValue() - oldOrder.intValue();
 
-        if (diffOrder != 0) {
-            if (diffOrder > 0) {
-                for (Section section : sectionsList) {
-                    int sectionOrder = section.getSectionOrder().intValue();
-                    if (sectionOrder > oldOrder.intValue() && sectionOrder <= newOrder.intValue()) {
-                        section.setSectionOrder(new Integer(sectionOrder - 1));
-                    }
-                }
-            } else {
-                for (Section section : sectionsList) {
-                    int sectionOrder = section.getSectionOrder().intValue();
-                    if (sectionOrder >= newOrder.intValue() && sectionOrder < oldOrder.intValue()) {
-                        section.setSectionOrder(new Integer(sectionOrder + 1));
-                    }
-                }
-            }
-        }
-        return newOrder;
+	if (diffOrder != 0) {
+	    if (diffOrder > 0) {
+		for (Section section : sectionsList) {
+		    int sectionOrder = section.getSectionOrder().intValue();
+		    if (sectionOrder > oldOrder.intValue() && sectionOrder <= newOrder.intValue()) {
+			section.setSectionOrder(new Integer(sectionOrder - 1));
+		    }
+		}
+	    } else {
+		for (Section section : sectionsList) {
+		    int sectionOrder = section.getSectionOrder().intValue();
+		    if (sectionOrder >= newOrder.intValue() && sectionOrder < oldOrder.intValue()) {
+			section.setSectionOrder(new Integer(sectionOrder + 1));
+		    }
+		}
+	    }
+	}
+	return newOrder;
     }
 
     public void delete() {
 
-        checkIfSectionCanBeDeleted(this);
+	checkIfSectionCanBeDeleted(this);
 
-        for (Section subSection : this.getAssociatedSections()) {
-            checkIfSectionCanBeDeleted(subSection);
-        }
+	for (Section subSection : this.getAssociatedSections()) {
+	    checkIfSectionCanBeDeleted(subSection);
+	}
 
-        Section superiorSection = this.getSuperiorSection();
-        Site sectionSite = this.getSite();
-        Integer sectionToDeleteOrder = this.getSectionOrder();
+	Section superiorSection = this.getSuperiorSection();
+	Site sectionSite = this.getSite();
+	Integer sectionToDeleteOrder = this.getSectionOrder();
 
-        // Delete Associated Items
-        if (this.getAssociatedItemsCount() != 0) {
-            List<Item> items = new ArrayList();
-            items.addAll(this.getAssociatedItems());
-            for (Item item : items) {
-                item.delete();
-            }
-        }
+	// Delete Associated Items
+	if (this.getAssociatedItemsCount() != 0) {
+	    List<Item> items = new ArrayList();
+	    items.addAll(this.getAssociatedItems());
+	    for (Item item : items) {
+		item.delete();
+	    }
+	}
 
-        // Delete Associated Sections
-        if (this.getAssociatedSectionsCount() != 0) {
-            List<Section> sections = new ArrayList();
-            sections.addAll(this.getAssociatedSections());
-            for (Section section : sections) {
-                section.delete();
-            }
-        }
+	// Delete Associated Sections
+	if (this.getAssociatedSectionsCount() != 0) {
+	    List<Section> sections = new ArrayList();
+	    sections.addAll(this.getAssociatedSections());
+	    for (Section section : sections) {
+		section.delete();
+	    }
+	}
 
-        // Delete Associations with Superior Section if exists
-        if (superiorSection != null) {
-            this.setSuperiorSection(null);
-        }
+	// Delete Associations with Superior Section if exists
+	if (superiorSection != null) {
+	    this.setSuperiorSection(null);
+	}
 
-        // Delete Associations with Site
-        this.setSite(null);
+	// Delete Associations with Site
+	this.setSite(null);
 
-        // ReOrder Sections
-        List<Section> sectionsReordered = sectionSite.getAssociatedSections(superiorSection);
-        for (Section section : sectionsReordered) {
-            Integer sectionOrder = section.getSectionOrder();
-            if (sectionOrder.intValue() > sectionToDeleteOrder.intValue()) {
-                section.setSectionOrder(new Integer(sectionOrder.intValue() - 1));
-            }
-        }
+	// ReOrder Sections
+	List<Section> sectionsReordered = sectionSite.getAssociatedSections(superiorSection);
+	for (Section section : sectionsReordered) {
+	    Integer sectionOrder = section.getSectionOrder();
+	    if (sectionOrder.intValue() > sectionToDeleteOrder.intValue()) {
+		section.setSectionOrder(new Integer(sectionOrder.intValue() - 1));
+	    }
+	}
 
-        removeRootDomainObject();
-        super.deleteDomainObject();
+	removeRootDomainObject();
+	super.deleteDomainObject();
     }
 
     private void checkIfSectionCanBeDeleted(Section section) {
-        for (Item item : section.getAssociatedItems()) {
-            if (item.getFileItems().size() != 0) {
-                throw new DomainException("section.cannotDeleteWhileHasItemsWithFiles");
-            }
-        }
+	for (Item item : section.getAssociatedItems()) {
+	    if (item.getFileItems().size() != 0) {
+		throw new DomainException("section.cannotDeleteWhileHasItemsWithFiles");
+	    }
+	}
     }
 
     public SortedSet<Section> getOrderedSubSections() {
-    	final SortedSet<Section> sections = new TreeSet<Section>(Section.COMPARATOR_BY_ORDER);
-    	sections.addAll(getAssociatedSectionsSet());
-    	return sections;
+	final SortedSet<Section> sections = new TreeSet<Section>(Section.COMPARATOR_BY_ORDER);
+	sections.addAll(getAssociatedSectionsSet());
+	return sections;
     }
 
     public SortedSet<Item> getOrderedItems() {
-        final SortedSet<Item> items = new TreeSet<Item>(Item.COMPARATOR_BY_ORDER);
-        items.addAll(getAssociatedItemsSet());
-        return items;
+	final SortedSet<Item> items = new TreeSet<Item>(Item.COMPARATOR_BY_ORDER);
+	items.addAll(getAssociatedItemsSet());
+	return items;
+    }
+
+    public static abstract class SectionFactory implements Serializable, FactoryExecutor {
+	private Integer sectionOrder;
+
+	private MultiLanguageString name;
+
+	public MultiLanguageString getName() {
+	    return name;
+	}
+
+	public void setName(MultiLanguageString name) {
+	    this.name = name;
+	}
+
+	public Integer getSectionOrder() {
+	    return sectionOrder;
+	}
+
+	public void setSectionOrder(Integer sectionOrder) {
+	    this.sectionOrder = sectionOrder;
+	}
+    }
+
+    public static class SectionFactoryCreator extends SectionFactory {
+	private DomainReference<Section> superiorSectionDomainReference;
+
+	private DomainReference<Site> siteDomainReference;
+
+	public SectionFactoryCreator(final Site site, final Section superiorSection) {
+	    super();
+	    setSite(site);
+	    setSuperiorSection(superiorSection);
+	}
+
+	public Site getSite() {
+	    return siteDomainReference == null ? null : siteDomainReference.getObject();
+	}
+
+	public void setSite(Site site) {
+	    this.siteDomainReference = site == null ? null : new DomainReference<Site>(site);
+	}
+
+	public Section getSuperiorSection() {
+	    return superiorSectionDomainReference == null ? null : superiorSectionDomainReference
+		    .getObject();
+	}
+
+	public void setSuperiorSection(Section superiorSection) {
+	    this.superiorSectionDomainReference = superiorSection == null ? null
+		    : new DomainReference<Section>(superiorSection);
+	}
+
+	public Section execute() {
+	    return execute(getSite(), getSuperiorSection());
+	}
+	public Section execute(final Site site, final Section superiorSection) {
+	    return new Section(site, getName(), getSectionOrder(), superiorSection);
+	}
     }
 
 }

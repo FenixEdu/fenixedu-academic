@@ -31,6 +31,8 @@ import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Section;
 import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.domain.Teacher;
+import net.sourceforge.fenixedu.domain.Item.ItemFactoryCreator;
+import net.sourceforge.fenixedu.domain.Section.SectionFactoryCreator;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
@@ -68,7 +70,9 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
 
     public ActionForward createItem(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-        selectSection(request);
+        final Section section = selectSection(request);
+        final ItemFactoryCreator itemFactoryCreator = new ItemFactoryCreator(section);
+        request.setAttribute("itemFactoryCreator", itemFactoryCreator);
         return mapping.findForward("createItem");
     }
 
@@ -105,7 +109,10 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
 
     public ActionForward createSection(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-        selectSection(request);
+        final Section section = selectSection(request);
+        final ExecutionCourse executionCourse = (ExecutionCourse) request.getAttribute("executionCourse");
+        final SectionFactoryCreator sectionFactoryCreator = new SectionFactoryCreator(executionCourse.getSite(), section);
+        request.setAttribute("sectionFactoryCreator", sectionFactoryCreator);
         return mapping.findForward("createSection");
     }
 
