@@ -3,16 +3,23 @@
 <html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
+<%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 
-<h2><bean:write name="section" property="name" /></h2>
+<h2><fr:view name="section" property="name" /></h2>
 
 <logic:notEmpty name="section" property="associatedItems">
 	<logic:iterate id="item" name="section" property="orderedItems">
 		<logic:equal name="item" property="urgent" value="true">
 			<font color="red">
 		</logic:equal>
-		<h3><bean:write name="item" property="name"/></h3>
-		<bean:write name="item" property="information" filter="false"/><br/>
+		<h3><fr:view name="item" property="name"/></h3>
+		<fr:view name="item" property="information">
+			<fr:layout>
+				<fr:property name="escaped" value="false" />
+				<fr:property name="newlineAware" value="false" />
+			</fr:layout>
+		</fr:view>
+		<br/>
 		<logic:equal name="item" property="urgent" value="true">
 			</font>
 		</logic:equal>

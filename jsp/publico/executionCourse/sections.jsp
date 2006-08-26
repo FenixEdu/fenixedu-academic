@@ -3,6 +3,7 @@
 <html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
+<%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 
 <bean:define id="sections_temp" name="sections"/>
 <logic:iterate id="section" name="sections_temp">
@@ -15,7 +16,7 @@
 		<bean:define id="url">/executionCourse.do?method=section&amp;sectionID=<bean:write name="section" property="idInternal"/></bean:define>
 		<html:link page="<%= url %>"
 				paramId="executionCourseID" paramName="executionCourse" paramProperty="idInternal">
-			<bean:write name="section" property="name"/>
+			<fr:view name="section" property="name"/>
 		</html:link>
 	<logic:notPresent name="section" property="superiorSection">
 		</li>
