@@ -30,11 +30,6 @@
 				<bean:message key="link.teacher.executionCourseManagement.foruns"/>
 			</html:link>
 		</li>
-		<li>
-			<html:link page="/sectionViewer.do?method=sectionsFirstPage" paramId="objectCode" paramName="executionCourse" paramProperty="idInternal">
-				<bean:message key="link.sectionsManagement"/>
-			</html:link>
-		</li>
 
 		<li class="navheader"><bean:message key="label.executionCourseManagement.menu.sections"/></li>
 		<li>

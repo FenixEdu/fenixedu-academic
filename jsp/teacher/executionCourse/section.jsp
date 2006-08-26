@@ -41,7 +41,8 @@
 	<bean:message key="button.insertItem"/>
 </html:link>
 
-
+<br/>
+<span class="error"><!-- Error messages go here --><html:errors /></span>
 
 <logic:notEmpty name="section" property="associatedItems">
 	<logic:iterate id="item" name="section" property="orderedItems" type="net.sourceforge.fenixedu.domain.Item">
@@ -54,7 +55,7 @@
 		</h3>
 
 		<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" /> 
-		<bean:define id="url" type="java.lang.String">/manageExecutionCourse.do?method=editItem&sectionID=<bean:write name="item" property="idInternal"/></bean:define>
+		<bean:define id="url" type="java.lang.String">/manageExecutionCourse.do?method=editItem&itemID=<bean:write name="item" property="idInternal"/></bean:define>
 		<html:link page="<%= url %>" paramId="executionCourseID" paramName="executionCourse" paramProperty="idInternal">
 			<bean:message key="button.editItem"/>
 		</html:link>
@@ -62,7 +63,7 @@
 		&nbsp;&nbsp;
 
 		<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" /> 
-		<bean:define id="url" type="java.lang.String">/manageExecutionCourse.do?method=editItem&sectionID=<bean:write name="item" property="idInternal"/></bean:define>
+		<bean:define id="url" type="java.lang.String">/manageExecutionCourse.do?method=deleteItem&itemID=<bean:write name="item" property="idInternal"/></bean:define>
 		<html:link page="<%= url %>" paramId="executionCourseID" paramName="executionCourse" paramProperty="idInternal">
 			<bean:message key="button.deleteItem"/>
 		</html:link>
@@ -70,7 +71,7 @@
 		&nbsp;&nbsp;
 
 		<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" /> 
-		<bean:define id="url" type="java.lang.String">/manageExecutionCourse.do?method=editItem&sectionID=<bean:write name="item" property="idInternal"/></bean:define>
+		<bean:define id="url" type="java.lang.String">/manageExecutionCourse.do?method=uploadFile&itemID=<bean:write name="item" property="idInternal"/></bean:define>
 		<html:link page="<%= url %>" paramId="executionCourseID" paramName="executionCourse" paramProperty="idInternal">
 			<bean:message key="button.insertFile"/>
 		</html:link>
@@ -99,16 +100,21 @@
 							<html:link href="<%= pt.utl.ist.fenix.tools.file.FileManagerFactory.getFileManager().getDirectDownloadUrlFormat() + "/" + externalStorageIdentification + "/" + filename %>" ><bean:write name="fileItem" property="displayName"/></html:link>
 						</td>
 						<td>
+							<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" /> 
+							<bean:define id="url" type="java.lang.String">/manageExecutionCourse.do?method=deleteFile&itemID=<bean:write name="item" property="idInternal"/>&amp;sectionID=<bean:write name="section" property="idInternal"/>&amp;fileItemId=<%= fileItemId %></bean:define>
+							<bean:define id="delConfirmationMessageScript" type="java.lang.String">return confirm('Tem a certeza que deseja apagar o ficheiro <%= displayName %>?')</bean:define>
+							<html:link page="<%= url %>" paramId="executionCourseID" paramName="executionCourse" paramProperty="idInternal"
+									onclick="<%= delConfirmationMessageScript %>"
+									>
+								<bean:message key="label.teacher.siteAdministration.viewSection.deleteItemFile"/>
+							</html:link>
+						</td>
+						<td>
 							&nbsp;&nbsp;<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" />
-						</td>
-						<td>
-							delete file
-						</td>
-						<td>
-							&nbsp;&nbsp;<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" />
-						</td>
-						<td>
-							edit file permissions
+							<bean:define id="url" type="java.lang.String">/editItemFilePermissions.do?method=prepareEditItemFilePermissions&itemID=<bean:write name="item" property="idInternal"/>&amp;sectionID=<bean:write name="section" property="idInternal"/>&amp;fileItemId=<%= fileItemId %></bean:define>
+							<html:link page="<%= url %>" paramId="executionCourseID" paramName="executionCourse" paramProperty="idInternal">
+								<bean:message key="label.teacher.siteAdministration.viewSection.editItemFilePermissions"/>
+							</html:link>
 						</td>
 					</tr>
 				</logic:iterate>

@@ -21,8 +21,7 @@ public class EditItemFilePermissions extends FileItemService {
             throws FenixServiceException, ExcepcaoPersistencia, DomainException, FileManagerException {
 
         final Item item = rootDomainObject.readItemByOID(itemId);
-        final Group permittedGroup = createPermittedGroup(newPermittedGroupType, item.getSection()
-                .getSite().getExecutionCourse());
+        final Group permittedGroup = createPermittedGroup(newPermittedGroupType, item.getSection().getSite().getExecutionCourse());
 
         final FileItem fileItem = FileItem.readByOID(fileItemId);
         fileItem.setFileItemPermittedGroupType(newPermittedGroupType);

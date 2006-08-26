@@ -579,6 +579,18 @@
 		<put name="body" value="/teacher/executionCourse/createItem.jsp" />
 	</definition>
 
+	<definition name="manage-execution-course-editItem" extends="execution-course-administration">
+		<put name="body" value="/teacher/executionCourse/editItem.jsp" />
+	</definition>
+
+	<definition name="manage-execution-course-uploadFile" extends="execution-course-administration">
+		<put name="body" value="/teacher/executionCourse/uploadFile.jsp" />
+	</definition>
+
+	<definition name="manage-execution-course-editFile" extends="execution-course-administration">
+		<put name="body" value="/teacher/executionCourse/editFile.jsp" />
+	</definition>
+
 	<!-- =================== MarkSheetManagement ============== -->
 	<definition name="show.evaluationIndex" extends="df.teacher.evaluation-management">
 		<put name="body" value="/teacher/evaluation/evaluationIndex.jsp" />
