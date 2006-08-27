@@ -1139,7 +1139,6 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         newInfoItem.setItemOrder(order);
         newInfoItem.setName(itemName);
         newInfoItem.setInformation(information);
-        newInfoItem.setUrgent(new Boolean(urgentString));
         IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
         Object args[] = { objectCode, sectionCode, newInfoItem };
         try {
@@ -1225,7 +1224,6 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         newInfoItem.setInformation(information);
         newInfoItem.setName(name);
         newInfoItem.setItemOrder(itemOrder);
-        newInfoItem.setUrgent(urgent);
         IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
         Object editItemArgs[] = { objectCode, itemCode, newInfoItem };
         try {

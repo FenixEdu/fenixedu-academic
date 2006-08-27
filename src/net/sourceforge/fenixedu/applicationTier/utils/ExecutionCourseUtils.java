@@ -56,8 +56,7 @@ public class ExecutionCourseUtils {
             Iterator associatedItems = sectionFrom.getAssociatedItemsIterator();
             while (associatedItems.hasNext()) {
                 Item item = (Item) associatedItems.next();
-                sectionTo.insertItem(item.getName().getContent(Language.pt), item.getInformation().getContent(Language.pt), item.getUrgent(), item
-                        .getItemOrder());
+                sectionTo.insertItem(item.getName().getContent(Language.pt), item.getInformation().getContent(Language.pt),item.getItemOrder());
             }
         }
     }

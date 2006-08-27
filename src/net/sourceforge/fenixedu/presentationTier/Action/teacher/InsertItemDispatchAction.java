@@ -104,8 +104,7 @@ public class InsertItemDispatchAction extends FenixDispatchAction {
         String information = (String) dynaForm.get("information");
         String urgentString = (String) dynaForm.get("urgent");
 
-        InfoItem infoItem = new InfoItem(information, itemName, order, infoSection, new Boolean(
-                urgentString));
+        InfoItem infoItem = new InfoItem(information, itemName, order, infoSection);
 
         Object args[] = { infoItem };
 

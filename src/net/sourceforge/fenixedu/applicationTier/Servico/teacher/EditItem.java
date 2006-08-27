@@ -23,7 +23,7 @@ public class EditItem extends Service {
 		if (diffOrder < 0)
 			newInfoItem.setItemOrder(newInfoItem.getItemOrder() + 1);
 
-		item.edit(newInfoItem.getName(), newInfoItem.getInformation(), newInfoItem.getUrgent(), newInfoItem.getItemOrder());
+		item.edit(newInfoItem.getName(), newInfoItem.getInformation(), newInfoItem.getItemOrder());
 
 		return Boolean.TRUE;
 	}

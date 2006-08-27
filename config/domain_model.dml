@@ -1854,7 +1854,6 @@ class net.sourceforge.fenixedu.domain.InsuranceValue extends net.sourceforge.fen
 
 class net.sourceforge.fenixedu.domain.Item extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer keySection;
-	Boolean urgent;
 	Integer itemOrder;
 	MultiLanguageString information;
 	MultiLanguageString name;

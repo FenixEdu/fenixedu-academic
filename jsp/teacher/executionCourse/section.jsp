@@ -46,9 +46,6 @@
 
 <logic:notEmpty name="section" property="associatedItems">
 	<logic:iterate id="item" name="section" property="orderedItems" type="net.sourceforge.fenixedu.domain.Item">
-		<logic:equal name="item" property="urgent" value="true">
-			<font color="red">
-		</logic:equal>
 		<h3>
 			<bean:message key="label.item"/>:&nbsp;
 			<%= item.getName().getContent(Language.pt) %>
@@ -82,9 +79,6 @@
 		<logic:present name="item" property="information">
 			<%= item.getInformation().getContent(Language.pt) %>
 		</logic:present>
-		<logic:equal name="item" property="urgent" value="true">
-			</font>
-		</logic:equal>
 		<logic:notEmpty name="item" property="fileItems">
 			<br/>
 			<br/>

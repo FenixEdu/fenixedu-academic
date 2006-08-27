@@ -9,9 +9,6 @@
 
 <logic:notEmpty name="section" property="associatedItems">
 	<logic:iterate id="item" name="section" property="orderedItems">
-		<logic:equal name="item" property="urgent" value="true">
-			<font color="red">
-		</logic:equal>
 		<h3><fr:view name="item" property="name"/></h3>
 		<fr:view name="item" property="information">
 			<fr:layout>
@@ -20,9 +17,6 @@
 			</fr:layout>
 		</fr:view>
 		<br/>
-		<logic:equal name="item" property="urgent" value="true">
-			</font>
-		</logic:equal>
 		<logic:notEmpty name="item" property="fileItems">
 			<br/>
 			<br/>

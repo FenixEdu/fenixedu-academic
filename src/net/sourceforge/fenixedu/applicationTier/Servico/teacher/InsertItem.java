@@ -17,7 +17,7 @@ public class InsertItem extends Service {
             infoItem.setItemOrder(section.getAssociatedItemsCount());
         }
         
-        section.insertItem(infoItem.getName(), infoItem.getInformation(), infoItem.getUrgent(), infoItem.getItemOrder());
+        section.insertItem(infoItem.getName(), infoItem.getInformation(), infoItem.getItemOrder());
           
         return Boolean.TRUE;
     }

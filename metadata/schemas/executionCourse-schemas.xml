@@ -174,7 +174,6 @@
 		<property name="format" value="${name}" />
 		<property name="defaultText" value="Fim"/>
 	</slot>
-	<slot name="urgent"/>
 	<slot name="information" layout="rich-text">
    		<property name="safe" value="true" />
    		<property name="columns" value="70"/>
@@ -193,12 +192,11 @@
 		<property name="format" value="${name}" />
 		<property name="defaultText" value="Fim"/>
 	</slot>
-	<slot name="urgent"/>
 	<slot name="information" layout="rich-text">
    		<property name="safe" value="true" />
    		<property name="columns" value="70"/>
    		<property name="rows" value="15"/>
    		<property name="config" value="advanced" />
 	</slot>
-	<setter signature="edit(name,information,urgent,itemOrder)"/>
+	<setter signature="edit(name,information,itemOrder)"/>
 </schema>

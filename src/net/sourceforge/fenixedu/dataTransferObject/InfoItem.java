@@ -27,8 +27,6 @@ public class InfoItem extends InfoObject implements Comparable {
 
     private InfoSection infoSection;
 
-    private Boolean urgent;
-
     private List<InfoFileItem> infoFileItems;
 
     /**
@@ -40,14 +38,12 @@ public class InfoItem extends InfoObject implements Comparable {
     /**
      * Constructor
      */
-    public InfoItem(String information, String name, Integer itemOrder, InfoSection infoSection,
-            Boolean urgent) {
+    public InfoItem(String information, String name, Integer itemOrder, InfoSection infoSection) {
 
         this.information = information;
         this.name = name;
         this.itemOrder = itemOrder;
         this.infoSection = infoSection;
-        this.urgent = urgent;
     }
 
     /**
@@ -60,8 +56,7 @@ public class InfoItem extends InfoObject implements Comparable {
             resultado = getInformation().equals(infoItem.getInformation())
                     && getName().equals(infoItem.getName())
                     && getItemOrder().equals(infoItem.getItemOrder())
-                    && getInfoSection().equals(infoItem.getInfoSection())
-                    && getUrgent().equals(infoItem.getUrgent());
+                    && getInfoSection().equals(infoItem.getInfoSection());
         }
         return resultado;
     }
@@ -74,7 +69,6 @@ public class InfoItem extends InfoObject implements Comparable {
         result += ", name=" + name;
         result += ", itemOrder=" + itemOrder;
         result += ", infoSection=" + infoSection;
-        result += ", urgent=" + urgent;
         result += "]";
         return result;
     }
@@ -108,13 +102,6 @@ public class InfoItem extends InfoObject implements Comparable {
     }
 
     /**
-     * @return Boolean
-     */
-    public Boolean getUrgent() {
-        return urgent;
-    }
-
-    /**
      * Sets the information.
      * 
      * @param information
@@ -145,16 +132,6 @@ public class InfoItem extends InfoObject implements Comparable {
     }
 
     /**
-     * Sets the urgent.
-     * 
-     * @param urgent
-     *            The urgent to set
-     */
-    public void setUrgent(Boolean urgent) {
-        this.urgent = urgent;
-    }
-
-    /**
      * Sets the infoSection.
      * 
      * @param infoSection
@@ -175,7 +152,6 @@ public class InfoItem extends InfoObject implements Comparable {
             setInformation(item.getInformation().getContent(Language.pt));
             setItemOrder(item.getItemOrder());
             setName(item.getName().getContent(Language.pt));
-            setUrgent(item.getUrgent());
 
             List<InfoFileItem> infoFileItems = new ArrayList<InfoFileItem>();
 

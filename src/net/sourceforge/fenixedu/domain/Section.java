@@ -50,48 +50,55 @@ public class Section extends Section_Base {
 
 	setLastModifiedDateYearMonthDay(new YearMonthDay());
 	setName(name);
+
+
+	int newOrder = getNewOrder(order);
 	if (getSectionOrder() == null) {
 	    setSectionOrder(Integer.valueOf(Integer.MAX_VALUE));
 	}
-	final int newOrder = getNewOrder(order);
-	final int oldOrder = getSectionOrder().intValue();
-	if (newOrder != oldOrder) {
+	if (getSectionOrder() != null) {
+	    final int oldOrder = getSectionOrder().intValue();
 	    final boolean moveUp = newOrder > oldOrder;
-	    for (final Section otherSection : getSite().getAssociatedSectionsSet()) {
-		if (otherSection.getSuperiorSection() == getSuperiorSection()) {
-		    if (otherSection != this) {
-			final int otherOrder = otherSection.getSectionOrder().intValue();
-			if (moveUp) {
-			    if (otherOrder > oldOrder && otherOrder <= newOrder) {
-				otherSection.setSectionOrder(Integer.valueOf(otherOrder - 1));
-			    }
-			} else {
-			    if (otherOrder >= newOrder && otherOrder < oldOrder) {
-				otherSection.setSectionOrder(Integer.valueOf(otherOrder + 1));
+	    if (moveUp && order != null) {
+		newOrder--;
+	    }
+	    if (newOrder != oldOrder) {
+		for (final Section otherSection : getAssociatedSectionsSet()) {
+		    if (otherSection.getSuperiorSection() == getSuperiorSection()) {
+			if (this != otherSection) {
+			    final int otherOrder = otherSection.getSectionOrder().intValue();
+			    if (moveUp) {
+				if (otherOrder > oldOrder && otherOrder <= newOrder) {
+				    otherSection.setSectionOrder(Integer.valueOf(otherOrder - 1));
+				}
+			    } else {
+				if (otherOrder >= newOrder && otherOrder < oldOrder) {
+				    otherSection.setSectionOrder(Integer.valueOf(otherOrder + 1));
+				}
 			    }
 			}
 		    }
 		}
 	    }
-	    setSectionOrder(Integer.valueOf(newOrder));
 	}
+
+	setSectionOrder(Integer.valueOf(newOrder));
     }
 
     private int getNewOrder(Integer order) {
 	if (order == null) {
 	    if (getSuperiorSection() == null) {
-		return getSite().getOrderedTopLevelSections().size();
+		return getSite().getOrderedTopLevelSections().size() - 1;
 	    } else {
-		return getSuperiorSection().getAssociatedSectionsSet().size();
+		return getSuperiorSection().getAssociatedSectionsSet().size() - 1;
 	    }
 	}
-	return order.intValue() - 1;
+	return order.intValue();
     }
 
-    public void insertItem(String itemName, String itemInformation, Boolean itemUrgent,
-	    Integer insertItemOrder) throws DomainException {
+    public void insertItem(String itemName, String itemInformation, Integer insertItemOrder) throws DomainException {
 
-	if (itemName == null || insertItemOrder == null || itemUrgent == null || insertItemOrder == null) {
+	if (itemName == null || insertItemOrder == null || insertItemOrder == null) {
 	    throw new NullPointerException();
 	}
 
@@ -103,7 +110,6 @@ public class Section extends Section_Base {
 	Item item = new Item();
 	// item.setInformation(itemInformation);
 	// item.setName(itemName);
-	item.setUrgent(itemUrgent);
 	Integer itemOrder = new Integer(organizeExistingItemsOrder(insertItemOrder.intValue()));
 	item.setItemOrder(itemOrder);
 
