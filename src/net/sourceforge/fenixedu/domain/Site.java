@@ -146,4 +146,15 @@ public class Site extends Site_Base {
     	}
     	return sections;
     }
+
+    public int getNumberOfTopLevelSections() {
+	int count = 0;
+	for (final Section section : getAssociatedSectionsSet()) {
+	    if (section.getSuperiorSection() == null) {
+		count++;
+
+	    }
+	}
+	return count;
+    }
 }

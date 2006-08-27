@@ -14,4 +14,7 @@
 		type="net.sourceforge.fenixedu.domain.Item" schema="net.sourceforge.fenixedu.domain.ItemCreator"
 		action="<%= url %>">
 	<fr:hidden slot="section" name="section"/>
+	<fr:layout name="tabular">
+	    <fr:property name="classes" value="thtop thlight thright mbottom1"/>
+    </fr:layout>
 </fr:edit>

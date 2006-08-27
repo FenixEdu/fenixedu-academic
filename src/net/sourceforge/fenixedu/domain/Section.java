@@ -6,6 +6,7 @@ package net.sourceforge.fenixedu.domain;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
@@ -51,7 +52,6 @@ public class Section extends Section_Base {
 	setLastModifiedDateYearMonthDay(new YearMonthDay());
 	setName(name);
 
-
 	int newOrder = getNewOrder(order);
 	if (getSectionOrder() == null) {
 	    setSectionOrder(Integer.valueOf(Integer.MAX_VALUE));
@@ -63,7 +63,9 @@ public class Section extends Section_Base {
 		newOrder--;
 	    }
 	    if (newOrder != oldOrder) {
-		for (final Section otherSection : getAssociatedSectionsSet()) {
+		final Collection<Section> sections = getSuperiorSection() == null ?
+			getSite().getAssociatedSectionsSet() : getSuperiorSection().getAssociatedSectionsSet();
+		for (final Section otherSection : sections) {
 		    if (otherSection.getSuperiorSection() == getSuperiorSection()) {
 			if (this != otherSection) {
 			    final int otherOrder = otherSection.getSectionOrder().intValue();
@@ -88,7 +90,7 @@ public class Section extends Section_Base {
     private int getNewOrder(Integer order) {
 	if (order == null) {
 	    if (getSuperiorSection() == null) {
-		return getSite().getOrderedTopLevelSections().size() - 1;
+		return getSite().getNumberOfTopLevelSections() - 1;
 	    } else {
 		return getSuperiorSection().getAssociatedSectionsSet().size() - 1;
 	    }
