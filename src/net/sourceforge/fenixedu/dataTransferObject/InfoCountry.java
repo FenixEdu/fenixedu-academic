@@ -20,7 +20,7 @@ public class InfoCountry extends InfoObject {
     }
 
     public boolean equals(Object obj) {
-	return obj != null && country == ((InfoCountry) obj).country;
+	return obj instanceof InfoCountry && country == ((InfoCountry) obj).country;
     }
 
     public String getCode() {
@@ -37,6 +37,16 @@ public class InfoCountry extends InfoObject {
 
     public static InfoCountry newInfoFromDomain(final Country country) {
 	return country == null ? null : new InfoCountry(country);
+    }
+
+    @Override
+    public Integer getIdInternal() {
+	return country.getIdInternal();
+    }
+
+    @Override
+    public void setIdInternal(Integer integer) {
+	throw new Error("Method should not be called!");
     }
 
 }

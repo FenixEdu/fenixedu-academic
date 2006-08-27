@@ -18,6 +18,7 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoRoom;
+import net.sourceforge.fenixedu.dataTransferObject.InfoRoomEditor;
 import net.sourceforge.fenixedu.domain.space.OldBuilding;
 import net.sourceforge.fenixedu.domain.space.OldRoom;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -27,7 +28,7 @@ import org.apache.commons.collections.Predicate;
 
 public class CriarSala extends Service {
 
-    public Object run(InfoRoom infoSala) throws FenixServiceException, ExcepcaoPersistencia {
+    public Object run(InfoRoomEditor infoSala) throws FenixServiceException, ExcepcaoPersistencia {
         final OldRoom existingRoom = OldRoom.findOldRoomByName(infoSala.getNome());
 
         if (existingRoom != null) {
@@ -53,7 +54,7 @@ public class CriarSala extends Service {
         });
     }
 
-    protected OldRoom writeRoom(final InfoRoom infoRoom, final OldBuilding building)
+    protected OldRoom writeRoom(final InfoRoomEditor infoRoom, final OldBuilding building)
             throws ExcepcaoPersistencia {
         final OldRoom room = new OldRoom();
         room.setCapacidadeExame(infoRoom.getCapacidadeExame());

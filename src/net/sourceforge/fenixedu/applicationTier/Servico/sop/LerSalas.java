@@ -1,12 +1,5 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.sop;
 
-/**
- * Servi�o LerSalas
- * 
- * @author tfc130
- * @version
- */
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,13 +10,12 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class LerSalas extends Service {
 
-	public Object run() throws ExcepcaoPersistencia {
-		List infoSalas = new ArrayList();
-		for (final OldRoom oldRoom : OldRoom.getOldRooms()) {
-			infoSalas.add(new InfoRoom(oldRoom.getNome(), oldRoom.getBuilding().getName(), oldRoom.getPiso(),
-					oldRoom.getTipo(), oldRoom.getCapacidadeNormal(), oldRoom.getCapacidadeExame()));
-		}
-		return infoSalas;
+    public Object run() throws ExcepcaoPersistencia {
+	final List infoSalas = new ArrayList();
+	for (final OldRoom oldRoom : OldRoom.getOldRooms()) {
+	    infoSalas.add(InfoRoom.newInfoFromDomain(oldRoom));
 	}
+	return infoSalas;
+    }
 
 }

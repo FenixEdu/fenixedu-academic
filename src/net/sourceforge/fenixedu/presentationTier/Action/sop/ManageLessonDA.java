@@ -24,6 +24,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoRoom;
 import net.sourceforge.fenixedu.dataTransferObject.InfoRoomOccupation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
 import net.sourceforge.fenixedu.dataTransferObject.comparators.RoomAlphabeticComparator;
+import net.sourceforge.fenixedu.domain.space.OldRoom;
 import net.sourceforge.fenixedu.domain.space.RoomOccupation;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException;
@@ -120,8 +121,7 @@ public class ManageLessonDA extends
         fim.set(Calendar.MINUTE, Integer.parseInt((String) manageLessonForm.get("minutosFim")));
         fim.set(Calendar.SECOND, 0);
 
-        InfoRoom infoSala = new InfoRoom();
-        infoSala.setNome((String) manageLessonForm.get("nomeSala"));
+        InfoRoom infoSala = new InfoRoom(OldRoom.findOldRoomByName((String) manageLessonForm.get("nomeSala")));
 
         Boolean quinzenal = (Boolean) manageLessonForm.get("quinzenal");
         Integer weekOfQuinzenalStart = null;
@@ -143,10 +143,6 @@ public class ManageLessonDA extends
         ActionErrors actionErrors = checkTimeIntervalAndWeekDay(inicio, fim, weekDay);
 
         if (actionErrors.isEmpty()) {
-            InfoRoom infoRoom = new InfoRoom();
-            infoRoom.setCapacidadeNormal(new Integer(0));
-            infoRoom.setCapacidadeExame(new Integer(0));
-
             InfoLesson lessonBeingEdited = (InfoLesson) request.getAttribute(SessionConstants.LESSON);
 
             InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request
@@ -238,8 +234,7 @@ public class ManageLessonDA extends
 
         InfoRoom infoSala = null;
         if(manageLessonForm.get("nomeSala") != null || !StringUtils.isEmpty((String) manageLessonForm.get("nomeSala"))) {
-            infoSala = new InfoRoom();
-            infoSala.setNome((String) manageLessonForm.get("nomeSala"));
+            infoSala = new InfoRoom(OldRoom.findOldRoomByName((String) manageLessonForm.get("nomeSala")));
         }
 
         ActionErrors actionErrors = checkTimeIntervalAndWeekDay(inicio, fim, weekDay);
@@ -415,17 +410,12 @@ public class ManageLessonDA extends
 
         InfoRoom infoSala = null;
         if(manageLessonForm.get("nomeSala") != null || !StringUtils.isEmpty((String) manageLessonForm.get("nomeSala"))) {
-            infoSala = new InfoRoom();
-            infoSala.setNome((String) manageLessonForm.get("nomeSala"));
+            infoSala = new InfoRoom(OldRoom.findOldRoomByName((String) manageLessonForm.get("nomeSala")));
         }
 
         ActionErrors actionErrors = checkTimeIntervalAndWeekDay(inicio, fim, weekDay);
 
         if (actionErrors.isEmpty()) {
-            InfoRoom infoRoom = new InfoRoom();
-            infoRoom.setCapacidadeNormal(new Integer(0));
-            infoRoom.setCapacidadeExame(new Integer(0));
-
             InfoShift infoShift = (InfoShift) (request.getAttribute(SessionConstants.SHIFT));
 
             InfoRoomOccupation infoRoomOccupation = null;

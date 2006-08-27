@@ -59,11 +59,7 @@ public class PrepareInsertSummary extends Service {
         final List<InfoRoom> infoRooms = new ArrayList<InfoRoom>(rooms.size());
 
         for (final OldRoom room : rooms) {
-            final InfoRoom infoRoom = new InfoRoom();
-            infoRooms.add(infoRoom);
-
-            infoRoom.setIdInternal(room.getIdInternal());
-            infoRoom.setNome(room.getName());
+            infoRooms.add(InfoRoom.newInfoFromDomain(room));
         }
 
         Collections.sort(infoRooms, new BeanComparator("nome"));

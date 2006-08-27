@@ -25,6 +25,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoLesson;
 import net.sourceforge.fenixedu.dataTransferObject.InfoRoom;
+import net.sourceforge.fenixedu.dataTransferObject.InfoRoomEditor;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
 import net.sourceforge.fenixedu.dataTransferObject.comparators.ComparatorByNameForInfoExecutionDegree;
 import net.sourceforge.fenixedu.domain.Degree;
@@ -387,7 +388,7 @@ public class ContextUtils {
 
     public static void setSelectedRoomsContext(HttpServletRequest request) throws FenixActionException {
 
-        Object argsSelectRooms[] = { new InfoRoom(readRequestValue(request, "selectRoomCriteria_Name"),
+        Object argsSelectRooms[] = { new InfoRoomEditor(readRequestValue(request, "selectRoomCriteria_Name"),
                 readRequestValue(request, "selectRoomCriteria_Building"), readIntegerRequestValue(
                         request, "selectRoomCriteria_Floor"), readTypeRoomRequestValue(request,
                         "selectRoomCriteria_Type"), readIntegerRequestValue(request,

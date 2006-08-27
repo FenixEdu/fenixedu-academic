@@ -10,72 +10,30 @@ import net.sourceforge.fenixedu.domain.space.OldRoom;
 
 /**
  * @author João Fialho & Rita Ferreira
- *
+ * 
  */
 public class InfoRoomWithInfoInquiriesRoom extends InfoRoom {
-	
-//	private boolean alreadyEvaluatedFlag = false;
-	private InfoInquiriesRoom inquiriesRoom;
 
-	/**
-	 * @return Returns the alreadyEvaluatedFlag.
-	 */
-//	public boolean isAlreadyEvaluatedFlag() {
-//		return alreadyEvaluatedFlag;
-//	}
-	
+    private InfoInquiriesRoom inquiriesRoom;
 
-	/**
-	 * @param alreadyEvaluatedFlag The alreadyEvaluatedFlag to set.
-	 */
-//	public void setAlreadyEvaluatedFlag(boolean alreadyEvaluatedFlag) {
-//		this.alreadyEvaluatedFlag = alreadyEvaluatedFlag;
-//	}
-	
-	
-	
-	
-	public void copyFromDomain(OldRoom room) {
-		super.copyFromDomain(room);
-	}
-	
     public static InfoRoomWithInfoInquiriesRoom newInfoFromDomain(OldRoom room) {
-		InfoRoomWithInfoInquiriesRoom infoRoom = null;
-        if (room != null) {
-            infoRoom = new InfoRoomWithInfoInquiriesRoom();
-            infoRoom.copyFromDomain(room);
-        }
-        return infoRoom;
+	InfoRoomWithInfoInquiriesRoom infoRoom = null;
+	if (room != null) {
+	    infoRoom = new InfoRoomWithInfoInquiriesRoom(room);
+	}
+	return infoRoom;
     }
-	public InfoRoomWithInfoInquiriesRoom() {
-		
-	}
-	
-	public InfoRoomWithInfoInquiriesRoom(InfoRoom ir) {
-		this.setIdInternal(ir.getIdInternal());
-	    this.setNome(ir.getNome());
-		this.setEdificio(ir.getEdificio());
-		this.setPiso(ir.getPiso());
-		this.setCapacidadeNormal(ir.getCapacidadeNormal());
-		this.setCapacidadeExame(ir.getCapacidadeExame());
-		this.setTipo(ir.getTipo());
-	}
 
-	/**
-	 * @return Returns the inquiriesRoom.
-	 */
-	public InfoInquiriesRoom getInquiriesRoom() {
-		return inquiriesRoom;
-	}
-	
+    public InfoRoomWithInfoInquiriesRoom(final OldRoom oldRoom) {
+	super(oldRoom);
+    }
 
-	/**
-	 * @param inquiriesRoom The inquiriesRoom to set.
-	 */
-	public void setInquiriesRoom(InfoInquiriesRoom inquiriesRoom) {
-		this.inquiriesRoom = inquiriesRoom;
-	}
-	
+    public InfoInquiriesRoom getInquiriesRoom() {
+	return inquiriesRoom;
+    }
 
+    public void setInquiriesRoom(InfoInquiriesRoom inquiriesRoom) {
+	this.inquiriesRoom = inquiriesRoom;
+    }
 
 }

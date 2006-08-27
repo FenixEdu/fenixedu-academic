@@ -11,6 +11,7 @@ import javax.servlet.http.HttpSession;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoRoom;
+import net.sourceforge.fenixedu.dataTransferObject.InfoRoomEditor;
 import net.sourceforge.fenixedu.dataTransferObject.RoomKey;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException;
@@ -55,7 +56,7 @@ public class EditarSalaAction extends FenixSelectedRoomsAndSelectedRoomIndexCont
         // Read edited values from form
         IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
         DynaActionForm salaBean = (DynaActionForm) form;
-        InfoRoom editedRoom = new InfoRoom((String) salaBean.get("name"), (String) salaBean
+        InfoRoomEditor editedRoom = new InfoRoomEditor((String) salaBean.get("name"), (String) salaBean
                 .get("building"), new Integer((String) salaBean.get("floor")), new TipoSala(new Integer(
                 (String) salaBean.get("type"))), new Integer((String) salaBean.get("capacityNormal")),
                 new Integer((String) salaBean.get("capacityExame")));

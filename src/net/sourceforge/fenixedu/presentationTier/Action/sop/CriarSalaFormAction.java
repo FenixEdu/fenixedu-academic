@@ -7,6 +7,7 @@ import javax.servlet.http.HttpSession;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoRoom;
+import net.sourceforge.fenixedu.dataTransferObject.InfoRoomEditor;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
@@ -31,7 +32,7 @@ public class CriarSalaFormAction extends Action {
         HttpSession sessao = request.getSession(false);
         if (sessao != null) {
             IUserView userView = (IUserView) sessao.getAttribute(SessionConstants.U_VIEW);
-            Object argsCriarSala[] = { new InfoRoom((String) criarSalaForm.get("name"),
+            Object argsCriarSala[] = { new InfoRoomEditor((String) criarSalaForm.get("name"),
                     (String) criarSalaForm.get("building"), new Integer((String) criarSalaForm
                             .get("floor")),
                     new TipoSala(new Integer((String) criarSalaForm.get("type"))), new Integer(

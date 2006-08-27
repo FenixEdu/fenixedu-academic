@@ -973,7 +973,7 @@ public class FillInquiryAction extends FenixDispatchAction {
         for (InfoLesson lesson : attendingClassLessons) {
             if(lesson.getInfoSala() != null) {
                 if (!attendingCourseRooms.contains(lesson.getInfoSala())) {
-    				attendingCourseRooms.add(new InfoRoomWithInfoInquiriesRoom(lesson.getInfoSala()));
+    				attendingCourseRooms.add(new InfoRoomWithInfoInquiriesRoom(lesson.getInfoSala().getRoom()));
                 }
             }
         }

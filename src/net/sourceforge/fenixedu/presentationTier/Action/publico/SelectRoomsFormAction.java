@@ -10,6 +10,7 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterExce
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoRoom;
+import net.sourceforge.fenixedu.dataTransferObject.InfoRoomEditor;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixContextAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
@@ -41,7 +42,7 @@ public class SelectRoomsFormAction extends FenixContextAction {
 
         //		if (sessao != null) {
 
-        Object argsSelectRooms[] = { new InfoRoom(readFormValue(roomForm, "name"), readFormValue(
+        Object argsSelectRooms[] = { new InfoRoomEditor(readFormValue(roomForm, "name"), readFormValue(
                 roomForm, "building"), readIntegerFormValue(roomForm, "floor"), readTypeRoomFormValue(
                 roomForm, "type"), readIntegerFormValue(roomForm, "capacityNormal"),
                 readIntegerFormValue(roomForm, "capacityExame")) };

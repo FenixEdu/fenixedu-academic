@@ -38,6 +38,7 @@ import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.domain.Teacher;
+import net.sourceforge.fenixedu.domain.space.OldRoom;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
@@ -475,8 +476,7 @@ public class SummaryManagerAction extends FenixDispatchAction {
 
                 if (request.getParameter("room") != null && request.getParameter("room").length() > 0) {
                     // lesson's room
-                    InfoRoom infoRoom = new InfoRoom();
-                    infoRoom.setIdInternal(new Integer(request.getParameter("room")));
+                    InfoRoom infoRoom = new InfoRoom((OldRoom) rootDomainObject.readSpaceByOID(new Integer(request.getParameter("room"))));
                     infoSummary.setInfoRoom(infoRoom);
                 }
             } else if (lessonId.intValue() >= 0) {

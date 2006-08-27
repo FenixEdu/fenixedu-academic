@@ -87,10 +87,8 @@ public class ReadSummary extends Service {
         final Collection<OldRoom> rooms = OldRoom.getOldRooms();
         List<InfoRoom> infoRooms = new ArrayList(rooms.size());
         for (final OldRoom room : rooms) {
-            final InfoRoom infoRoom = new InfoRoom();
+            final InfoRoom infoRoom = new InfoRoom(room);
             infoRooms.add(infoRoom);
-            infoRoom.setIdInternal(room.getIdInternal());
-            infoRoom.setNome(room.getName());
         }
         Collections.sort(infoRooms, new BeanComparator("nome"));
 

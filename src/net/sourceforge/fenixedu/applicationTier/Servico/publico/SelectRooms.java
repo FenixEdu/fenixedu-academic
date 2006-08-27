@@ -18,12 +18,13 @@ import java.util.Set;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.InfoRoom;
+import net.sourceforge.fenixedu.dataTransferObject.InfoRoomEditor;
 import net.sourceforge.fenixedu.domain.space.OldRoom;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class SelectRooms extends Service {
 
-	public Object run(InfoRoom infoRoom) throws ExcepcaoPersistencia {
+	public Object run(InfoRoomEditor infoRoom) throws ExcepcaoPersistencia {
 		Integer tipo = infoRoom.getTipo() != null ? infoRoom.getTipo().getTipo() : null;
 
 		Set<OldRoom> salas = OldRoom.findOldRoomsBySpecifiedArguments(infoRoom.getNome(), infoRoom.getEdificio(),

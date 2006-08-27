@@ -10,6 +10,7 @@ import javax.servlet.http.HttpSession;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoRoom;
+import net.sourceforge.fenixedu.dataTransferObject.InfoRoomEditor;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
@@ -34,7 +35,7 @@ public class SelectRoomsFormAction extends FenixAction {
         HttpSession sessao = request.getSession(true);
         if (sessao != null) {
 
-            Object argsSelectRooms[] = { new InfoRoom(readFormValue(roomForm, "name"), readFormValue(
+            Object argsSelectRooms[] = { new InfoRoomEditor(readFormValue(roomForm, "name"), readFormValue(
                     roomForm, "building"), readIntegerFormValue(roomForm, "floor"),
                     readTypeRoomFormValue(roomForm, "type"), readIntegerFormValue(roomForm,
                             "capacityNormal"), readIntegerFormValue(roomForm, "capacityExame")), };

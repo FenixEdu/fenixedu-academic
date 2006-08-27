@@ -5,6 +5,7 @@ import java.util.Set;
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoRoom;
+import net.sourceforge.fenixedu.dataTransferObject.InfoRoomEditor;
 import net.sourceforge.fenixedu.dataTransferObject.RoomKey;
 import net.sourceforge.fenixedu.domain.space.OldBuilding;
 import net.sourceforge.fenixedu.domain.space.OldRoom;
@@ -15,7 +16,7 @@ import org.apache.commons.collections.Predicate;
 
 public class EditarSala extends Service {
 
-	public void run(RoomKey salaAntiga, InfoRoom salaNova) throws ExistingServiceException,
+	public void run(RoomKey salaAntiga, InfoRoomEditor salaNova) throws ExistingServiceException,
 			ExcepcaoPersistencia {
 
         final OldRoom room = OldRoom.findOldRoomByName(salaAntiga.getNomeSala());
