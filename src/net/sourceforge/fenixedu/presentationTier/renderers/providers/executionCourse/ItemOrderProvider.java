@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.presentationTier.renderers.providers.executionC
 import net.sourceforge.fenixedu.domain.Item;
 import net.sourceforge.fenixedu.domain.Section;
 import net.sourceforge.fenixedu.domain.Item.ItemFactoryCreator;
-import net.sourceforge.fenixedu.domain.Section.SectionFactoryCreator;
 import net.sourceforge.fenixedu.presentationTier.renderers.converters.ItemOrderConverter;
 import net.sourceforge.fenixedu.renderers.DataProvider;
 import net.sourceforge.fenixedu.renderers.components.converters.Converter;

@@ -260,10 +260,10 @@ public class MenuOptionListRenderer extends InputRenderer {
             for (MetaObject metaObject : possibleMetaObjects) {
                 Object obj = metaObject.getObject();
                 MetaObjectKey key = metaObject.getKey();
-                
+
                 HtmlMenuOption option = menu.createOption(null);
                 option.setValue(key.toString());
-                
+
                 if (getEachLayout() == null) {
                     option.setText(getObjectLabel(obj));
                 }
@@ -278,6 +278,12 @@ public class MenuOptionListRenderer extends InputRenderer {
                 }
 
                 // select the option
+                if (provider != null) {
+                    final Object convertedObject = provider.getConverter().convert(type, key.toString());
+                    if (convertedObject.equals(object)) {
+                	option.setSelected(true);
+                    }
+                }
                 if (obj.equals(object)) {
                     option.setSelected(true);
                 }
