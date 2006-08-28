@@ -83,7 +83,165 @@
 			<form-property name="functionsAccumulationNote" type="java.lang.String" />												
 			<form-property name="executionPeriodId" type="java.lang.Integer"/>
 			<form-property name="teacherId" type="java.lang.Integer" />												
-		</form-bean>  
+		</form-bean>
+
+<!-- Teacher Service Distribution -->		
+		<form-bean name="teacherServiceDistributionForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
+			<form-property name="page" type="java.lang.Integer" initial="0"/>
+			<form-property name="executionYear" type="java.lang.Integer"/>
+			<form-property name="executionPeriod" type="java.lang.Integer"/>
+			<form-property name="name" type="java.lang.String"/>
+			<form-property name="executionYearForCopy" type="java.lang.Integer"/>
+			<form-property name="executionPeriodForCopy" type="java.lang.Integer"/>
+			<form-property name="teacherServiceDistribution" type="java.lang.Integer"/>			
+		</form-bean>
+		
+		<form-bean name="valuationPhasesManagementForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
+			<form-property name="page" type="java.lang.Integer" initial="0"/>
+			<form-property name="valuationPhase" type="java.lang.Integer"/>
+			<form-property name="name" type="java.lang.String"/>
+			<form-property name="teacherServiceDistribution" type="java.lang.Integer"/>
+			<form-property name="dataManagementOption" type="java.lang.Integer"/>
+			<form-property name="executionYear" type="java.lang.Integer"/>
+			<form-property name="executionPeriod" type="java.lang.Integer"/>
+			<form-property name="selectedTeacherServiceDistribution" type="java.lang.String"/>
+			<form-property name="isPublished" type="java.lang.Boolean"/>
+		</form-bean>
+
+		<form-bean name="valuationGroupingSupportForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
+			<form-property name="name" type="java.lang.String"/>
+			<form-property name="page" type="java.lang.Integer" initial="0"/>
+			<form-property name="valuationCompetenceCourse" type="java.lang.Integer"/>
+			<form-property name="valuationTeacher" type="java.lang.Integer"/>
+			<form-property name="valuationGrouping" type="java.lang.Integer"/>
+			<form-property name="teacherServiceDistribution" type="java.lang.Integer"/>
+			<form-property name="person" type="java.lang.Integer"/>
+			<form-property name="viewType" type="java.lang.Integer"/>
+			<form-property name="phaseManagementPermission" type="java.lang.Boolean"/> 
+			<form-property name="automaticValuationPermission" type="java.lang.Boolean"/>
+			<form-property name="omissionConfigurationPermission" type="java.lang.Boolean"/>
+			<form-property name="valuationCompetenceCoursesAndTeachersManagementPermission" type="java.lang.Boolean"/>
+			<form-property name="valuationCompetenceCourseDissociation" type="java.lang.Integer"/>
+			<form-property name="valuationTeacherDissociation" type="java.lang.Integer"/>
+			<form-property name="coursesAndTeachersValuationPermission" type="java.lang.Boolean"/>
+			<form-property name="coursesAndTeachersManagementPermission" type="java.lang.Boolean"/>
+			<form-property name="otherGrouping" type="java.lang.Integer"/>
+		</form-bean>
+
+		<form-bean name="courseValuationForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
+			<form-property name="page" type="java.lang.Integer" initial="0"/>
+			<form-property name="courseValuationType" type="java.lang.String"/>
+			<form-property name="firstTimeEnrolledStudentsManual" type="java.lang.String"/>
+			<form-property name="firstTimeEnrolledStudentsType" type="java.lang.String"/>
+			<form-property name="secondTimeEnrolledStudentsManual" type="java.lang.String"/>
+			<form-property name="secondTimeEnrolledStudentsType" type="java.lang.String"/>
+			<form-property name="studentsPerTheoreticalShiftManual" type="java.lang.String"/>
+			<form-property name="studentsPerTheoreticalShiftType" type="java.lang.String"/>
+			<form-property name="studentsPerPraticalShiftManual" type="java.lang.String"/>
+			<form-property name="studentsPerPraticalShiftType" type="java.lang.String"/>
+			<form-property name="studentsPerTheoPratShiftManual" type="java.lang.String"/>
+			<form-property name="studentsPerTheoPratShiftType" type="java.lang.String"/>
+			<form-property name="studentsPerLaboratorialShiftManual" type="java.lang.String"/>
+			<form-property name="studentsPerLaboratorialShiftType" type="java.lang.String"/>
+			<form-property name="weightFirstTimeEnrolledStudentsPerTheoShiftManual" type="java.lang.String"/>
+			<form-property name="weightFirstTimeEnrolledStudentsPerTheoShiftType" type="java.lang.String"/>
+			<form-property name="weightFirstTimeEnrolledStudentsPerPratShiftManual" type="java.lang.String"/>
+			<form-property name="weightFirstTimeEnrolledStudentsPerPratShiftType" type="java.lang.String"/>
+			<form-property name="weightFirstTimeEnrolledStudentsPerTheoPratShiftManual" type="java.lang.String"/>
+			<form-property name="weightFirstTimeEnrolledStudentsPerTheoPratShiftType" type="java.lang.String"/>
+			<form-property name="weightFirstTimeEnrolledStudentsPerLabShiftManual" type="java.lang.String"/>
+			<form-property name="weightFirstTimeEnrolledStudentsPerLabShiftType" type="java.lang.String"/>
+			<form-property name="weightSecondTimeEnrolledStudentsPerTheoShiftManual" type="java.lang.String"/>
+			<form-property name="weightSecondTimeEnrolledStudentsPerTheoShiftType" type="java.lang.String"/>
+			<form-property name="weightSecondTimeEnrolledStudentsPerPratShiftManual" type="java.lang.String"/>
+			<form-property name="weightSecondTimeEnrolledStudentsPerPratShiftType" type="java.lang.String"/>
+			<form-property name="weightSecondTimeEnrolledStudentsPerTheoPratShiftManual" type="java.lang.String"/>
+			<form-property name="weightSecondTimeEnrolledStudentsPerTheoPratShiftType" type="java.lang.String"/>
+			<form-property name="weightSecondTimeEnrolledStudentsPerLabShiftManual" type="java.lang.String"/>
+			<form-property name="weightSecondTimeEnrolledStudentsPerLabShiftType" type="java.lang.String"/>
+			<form-property name="isActive" type="java.lang.Boolean"/>
+			<form-property name="theoreticalHoursManual" type="java.lang.String"/>
+			<form-property name="theoreticalHoursType" type="java.lang.String"/>
+			<form-property name="praticalHoursManual" type="java.lang.String"/>
+			<form-property name="praticalHoursType" type="java.lang.String"/>
+			<form-property name="theoPratHoursManual" type="java.lang.String"/>
+			<form-property name="theoPratHoursType" type="java.lang.String"/>
+			<form-property name="laboratorialHoursManual" type="java.lang.String"/>
+			<form-property name="laboratorialHoursType" type="java.lang.String"/>	
+			<form-property name="valuationCompetenceCourse" type="java.lang.Integer"/>
+			<form-property name="valuationCurricularCourse" type="java.lang.Integer"/>
+			<form-property name="curricularCourseValuation" type="java.lang.Integer"/>
+			<form-property name="curricularCourseValuationGroup" type="java.lang.Integer"/>
+			<form-property name="valuationGrouping" type="java.lang.Integer"/>				
+			<form-property name="teacherServiceDistribution" type="java.lang.Integer"/>
+			<form-property name="curricularCourseValuationArray" type="java.lang.String[]"/>
+			<form-property name="nonAssociatedCurricularCourseValuationArray" type="java.lang.String[]"/>
+			<form-property name="usingCurricularCourseValuations" type="java.lang.Boolean"/>
+			<form-property name="courseValuationViewLink" type="java.lang.String"/>
+			<form-property name="suppressRedundantHoursTypes" type="java.lang.Boolean"/>
+			<form-property name="executionPeriod" type="java.lang.Integer"/>		
+		</form-bean>
+
+		<form-bean name="professorshipValuationForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
+			<form-property name="page" type="java.lang.Integer" initial="0"/>
+			<form-property name="theoreticalHoursManual" type="java.lang.String"/>
+			<form-property name="theoreticalHoursType" type="java.lang.String"/>
+			<form-property name="praticalHoursManual" type="java.lang.String"/>
+			<form-property name="praticalHoursType" type="java.lang.String"/>
+			<form-property name="theoPratHoursManual" type="java.lang.String"/>
+			<form-property name="theoPratHoursType" type="java.lang.String"/>
+			<form-property name="laboratorialHoursManual" type="java.lang.String"/>
+			<form-property name="laboratorialHoursType" type="java.lang.String"/>
+			<form-property name="valuationCompetenceCourse" type="java.lang.Integer"/>
+			<form-property name="valuationCurricularCourse" type="java.lang.Integer"/>
+			<form-property name="curricularCourseValuationGroup" type="java.lang.Integer"/>
+			<form-property name="valuationGrouping" type="java.lang.Integer"/>
+			<form-property name="valuationTeacher" type="java.lang.Integer"/>
+			<form-property name="teacherServiceDistribution" type="java.lang.Integer"/>
+			<form-property name="viewType" type="java.lang.Integer"/>	
+			<form-property name="professorshipValuation" type="java.lang.Integer"/>
+			<form-property name="distributionViewAnchor" type="java.lang.Integer"/>
+			<form-property name="executionPeriod" type="java.lang.Integer"/>
+			<form-property name="extraCreditsName" type="java.lang.String"/>
+			<form-property name="extraCreditsValue" type="java.lang.String"/>
+			<form-property name="usingExtraCredits" type="java.lang.Boolean"/>									
+		</form-bean>
+
+		<form-bean name="teacherServiceDistributionValuationForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
+			<form-property name="teacherServiceDistribution" type="java.lang.Integer"/>
+			<form-property name="valuationPhase" type="java.lang.Integer"/>
+			<form-property name="valuationGrouping" type="java.lang.Integer"/>
+			<form-property name="viewType" type="java.lang.Integer"/>
+			<form-property name="viewCurricularInformation" type="java.lang.Boolean"/>
+			<form-property name="viewStudentsEnrolments" type="java.lang.Boolean"/>
+			<form-property name="viewShiftHours" type="java.lang.Boolean"/>
+			<form-property name="viewStudentsEnrolmentsPerShift" type="java.lang.Boolean"/>
+			<form-property name="executionPeriod" type="java.lang.Integer"/>
+		</form-bean>
+
+		<form-bean name="valuationTeachersGroupForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
+			<form-property name="page" type="java.lang.Integer" initial="0"/>
+			<form-property name="name" type="java.lang.String"/>
+			<form-property name="category" type="java.lang.Integer"/>
+			<form-property name="teacherServiceDistribution" type="java.lang.Integer"/>
+			<form-property name="department" type="java.lang.Integer"/>
+			<form-property name="valuationGrouping" type="java.lang.Integer"/>
+			<form-property name="hours" type="java.lang.String"/>
+			<form-property name="teacher" type="java.lang.Integer"/>
+			<form-property name="valuationTeacher" type="java.lang.Integer"/>
+			<form-property name="valuationCourse" type="java.lang.Integer"/>
+			<form-property name="valuationCurricularCourse" type="java.lang.Integer"/>
+			<form-property name="curricularYearsArray" type="java.lang.String[]"/>
+			<form-property name="executionPeriod" type="java.lang.Integer"/>
+			<form-property name="theoreticalHours" type="java.lang.String"/>
+			<form-property name="praticalHours" type="java.lang.String"/>
+			<form-property name="theoPratHours" type="java.lang.String"/>
+			<form-property name="laboratorialHours" type="java.lang.String"/>
+			<form-property name="courseName" type="java.lang.String"/>
+			<form-property name="degreeCurricularPlan" type="java.lang.Integer"/>
+		</form-bean>
+		
+		<form-bean name="globalTeacherServiceDistributionValuationForm" type="net.sourceforge.fenixedu.presentationTier.formbeans.teacherServiceDistribution.GlobalTeacherServiceDistributionValuationForm"/>				  		  
     </form-beans>
 
     <!-- ========== Global Exception Definitions ============================== -->
@@ -232,6 +390,148 @@
 			<forward name="show-employee-list" path="show-employee-list" />
 			<forward name="show-employee-work-sheet" path="show-employee-work-sheet" />
 		</action>
+
+<!-- Teacher Service Distribution -->
+        <action path="/teacherServiceDistribution"
+        	name="teacherServiceDistributionForm"
+        	parameter="method"
+        	scope="request"
+        	input="/teacherServiceDistribution.do?method=prepareForEmptyTeacherServiceDistributionCreation&amp;page=0"
+        	type="net.sourceforge.fenixedu.presentationTier.Action.departmentMember.teacherServiceDistribution.TeacherServiceDistributionAction">
+        		<forward name="showMain" path="df.page.teacherServiceDistribution.showTeacherServiceDistributionMainOptions"/>
+        		<forward name="showTeacherServiceDistributionCreationOptions" path="df.page.teacherServiceDistribution.showTeacherServiceDistributionCreationOptions"/>
+        		<forward name="showTeacherServiceDistributionCreationForm" path="df.page.teacherServiceDistribution.showTeacherServiceDistributionCreationForm"/>	
+        		<forward name="showTeacherServiceDistributionServices" path="df.page.teacherServiceDistribution.showTeacherServiceDistributionServices"/>
+        		<forward name="showTeacherServiceDistributions" path="df.page.teacherServiceDistribution.showTeacherServiceDistributions"/>
+        </action>
+
+	    <action path="/teacherServiceDistributionCopy"
+        	name="teacherServiceDistributionForm"
+        	parameter="method"
+        	scope="request"
+        	input="/teacherServiceDistributionCopy.do?method=prepareForTeacherServiceDistributionCopy&amp;page=0"
+        	type="net.sourceforge.fenixedu.presentationTier.Action.departmentMember.teacherServiceDistribution.TeacherServiceDistributionAction">
+        		<forward name="showTeacherServiceDistributionsForCopy" path="df.page.teacherServiceDistribution.showTeacherServiceDistributionsForCopy"/>
+        		<forward name="showTeacherServiceDistributionServices" path="df.page.teacherServiceDistribution.showTeacherServiceDistributionServices"/>
+        </action>
+
+        <action path="/valuationPhasesManagement"
+        	type="net.sourceforge.fenixedu.presentationTier.Action.departmentMember.teacherServiceDistribution.ValuationPhasesManagementAction"
+        	parameter="method"
+        	scope="request"
+        	input="/valuationPhasesManagement.do?method=prepareForValuationPhasesManagement&amp;page=0"
+        	name="valuationPhasesManagementForm">
+        	<forward name="showValuationPhasesManagementForm" path="df.page.teacherServiceDistribution.showValuationPhasesManagementForm"/>
+        	<forward name="valuationPhaseDataManagementOptions" path="df.page.teacherServiceDistribution.valuationPhaseDataManagementOptions"/>
+        	<forward name="showOmissionValuesValuationForm" path="df.page.teacherServiceDistribution.showOmissionValuesValuationForm"/>
+		</action>
+	
+        <action path="/valuationGroupingSupport"
+        	type="net.sourceforge.fenixedu.presentationTier.Action.departmentMember.teacherServiceDistribution.ValuationGroupingSupportAction"
+        	parameter="method"
+        	scope="request"
+        	input="/valuationGroupingSupport.do?method=prepareForValuationGroupingSupportServices&amp;page=0"
+        	name="valuationGroupingSupportForm">
+        	<forward name="showValuationGroupingSupportServices" path="df.page.teacherServiceDistribution.showValuationGroupingSupportServices"/>
+        	<forward name="showValuationGroupingCreationForm" path="df.page.teacherServiceDistribution.showValuationGroupingCreationForm"/>
+        	<forward name="showValuationGroupingEditionForm" path="df.page.teacherServiceDistribution.showValuationGroupingEditionForm"/>        	
+        	<forward name="showValuationGroupingPermissionServicesForm" path="df.page.teacherServiceDistribution.showValuationGroupingPermissionServicesForm"/>
+        	<forward name="showValuationGroupingPermissionServicesFormByPerson" path="df.page.teacherServiceDistribution.showValuationGroupingPermissionServicesFormByPerson"/>
+        </action>
+
+        <action path="/courseValuation"
+        	type="net.sourceforge.fenixedu.presentationTier.Action.departmentMember.teacherServiceDistribution.CourseValuationAction"
+        	parameter="method"
+        	scope="request"
+        	validate="true"
+        	input="/courseValuation.do?method=loadCourseValuations&amp;page=0&amp;fromValidation=1"
+        	name="courseValuationForm">
+        	<forward name="courseValuationForm" path="df.page.teacherServiceDistribution.courseValuationForm"/>
+        	<forward name="curricularCourseValuationGroupCreationForm" path="df.page.teacherServiceDistribution.curricularCourseValuationGroupCreationForm"/>
+        </action>
+
+        <action path="/curricularCourseValuationGroupCreation"
+        	type="net.sourceforge.fenixedu.presentationTier.Action.departmentMember.teacherServiceDistribution.CourseValuationAction"
+        	parameter="method"
+        	scope="request"
+        	validate="true"
+        	input="/courseValuation.do?method=prepareForCurricularCourseValuationGroupCreation&amp;page=0"
+        	name="courseValuationForm">
+        	<forward name="courseValuationForm" path="df.page.teacherServiceDistribution.courseValuationForm"/>
+        	<forward name="curricularCourseValuationGroupCreationForm" path="df.page.teacherServiceDistribution.curricularCourseValuationGroupCreationForm"/>
+        </action>
+
+        <action path="/professorshipValuation"
+        	type="net.sourceforge.fenixedu.presentationTier.Action.departmentMember.teacherServiceDistribution.ProfessorshipValuationAction"
+        	parameter="method"
+        	scope="request"
+        	validate="true"
+        	input="/professorshipValuation.do?method=loadProfessorshipValuations&amp;page=0"
+        	name="professorshipValuationForm">
+        	<forward name="professorshipValuationForm" path="df.page.teacherServiceDistribution.professorshipValuationForm"/>
+        	<forward name="professorshipValuationFormByValuationTeacher" path="df.page.teacherServiceDistribution.professorshipValuationFormByValuationTeacher"/>
+		</action>        
+
+        <action path="/professorshipValuationByTeachers"
+        	type="net.sourceforge.fenixedu.presentationTier.Action.departmentMember.teacherServiceDistribution.ProfessorshipValuationAction"
+        	parameter="method"
+        	scope="request"
+        	validate="true"
+        	input="/professorshipValuationByTeachers.do?method=loadProfessorshipValuations&amp;page=0"
+        	name="professorshipValuationForm">
+        	<forward name="professorshipValuationForm" path="df.page.teacherServiceDistribution.professorshipValuationForm"/>
+        	<forward name="professorshipValuationFormByValuationTeacher" path="df.page.teacherServiceDistribution.professorshipValuationFormByValuationTeacher"/>
+		</action>        
+
+        <action path="/teacherServiceDistributionValuation"
+        	type="net.sourceforge.fenixedu.presentationTier.Action.departmentMember.teacherServiceDistribution.TeacherServiceDistributionValuationAction"
+        	parameter="method"
+        	scope="request"
+        	validate="true"
+        	name="teacherServiceDistributionValuationForm">
+        	<forward name="showTeacherServiceDistributionValuation" path="df.page.teacherServiceDistribution.showTeacherServiceDistributionValuation"/>
+			<forward name="showTeacherServiceDistributionValuationByTeachersAndCourses" path="df.page.teacherServiceDistribution.showTeacherServiceDistributionValuationByTeachersAndCourses"/>
+			<forward name="showTeacherServiceDistributionValuationByTeachers" path="df.page.teacherServiceDistribution.showTeacherServiceDistributionValuationByTeachers"/>
+			<forward name="showTeacherServiceDistributionValuationByCharts" path="df.page.teacherServiceDistribution.showTeacherServiceDistributionValuationByCharts"/>
+		</action>
+			
+		<action path="/valuationTeachersGroup"
+			type = "net.sourceforge.fenixedu.presentationTier.Action.departmentMember.teacherServiceDistribution.ValuationTeachersGroupAction"
+			parameter="method"
+			scope="request"
+			input="/valuationTeachersGroup.do?method=showFormToCreateTeacher&amp;page=0"
+			name="valuationTeachersGroupForm">
+			
+			<forward name="listValuationTeachers" path="df.page.teacherServiceDistribution.list-valuation-teachers"/>
+			<forward name="showTeachersList" path="df.page.teacherServiceDistribution.show-teachers-list"/>
+			<forward name="showCoursesList" path="df.page.teacherServiceDistribution.show-courses-list"/>
+			<forward name="showFormToCreateTeacher" path="df.page.teacherServiceDistribution.show-form-to-create-teacher"/>
+			<forward name="showFormToCreateCourse" path="df.page.teacherServiceDistribution.show-form-to-create-course"/>
+		</action>
+		
+		<action path="/valuationCoursesGroup"
+			type = "net.sourceforge.fenixedu.presentationTier.Action.departmentMember.teacherServiceDistribution.ValuationTeachersGroupAction"
+			parameter="method"
+			scope="request"
+			input="/valuationTeachersGroup.do?method=showFormToCreateCourse&amp;page=0"
+			name="valuationTeachersGroupForm">
+			
+			<forward name="listValuationTeachers" path="df.page.teacherServiceDistribution.list-valuation-teachers"/>
+			<forward name="showFormToCreateCourse" path="df.page.teacherServiceDistribution.show-form-to-create-course"/>		
+		</action>
+
+		<action path="/globalTeacherServiceDistributionValuation"
+			type="net.sourceforge.fenixedu.presentationTier.Action.departmentMember.teacherServiceDistribution.GlobalTeacherServiceDistributionValuationAction"
+			parameter="method"
+			scope="request"
+			validate="true"
+			name="globalTeacherServiceDistributionValuationForm">
+			<forward name="showGlobalTeacherServiceDistributions" path="df.page.teacherServiceDistribution.showGlobalTeacherServiceDistributions"/>
+			<forward name="showGlobalTeacherServiceDistributionsValuationByCourses" path="df.page.teacherServiceDistribution.showGlobalTeacherServiceDistributionsValuationByCourses"/>
+			<forward name="showGlobalTeacherServiceDistributionsValuationByTeachers" path="df.page.teacherServiceDistribution.showGlobalTeacherServiceDistributionsValuationByTeachers"/>
+			<forward name="showGlobalTeacherServiceDistributionsValuationByTeachersAndCourses" path="df.page.teacherServiceDistribution.showGlobalTeacherServiceDistributionsValuationByTeachersAndCourses"/>
+		</action>
+
     </action-mappings>
     <!-- ========== Controller Configuration ================================ -->
     <controller processorClass="net.sourceforge.fenixedu.presentationTier.processor.FenixRequestProcessorWithTiles"/>

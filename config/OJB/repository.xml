@@ -91,6 +91,7 @@
 <!ENTITY serviceRequests SYSTEM "repository_serviceRequests.xml">
 <!ENTITY functionalities SYSTEM "repository_functionalities.xml">
 <!ENTITY material SYSTEM "repository_material.xml">
+<!ENTITY teacherServiceDistribution SYSTEM "repository_teacher_service_distribution.xml">
 ]>
 <descriptor-repository version="1.0" isolation-level="repeatable-read">
 
@@ -186,5 +187,6 @@
 	&serviceRequests;
     &functionalities;
     &material;
+    &teacherServiceDistribution;
     
 </descriptor-repository>

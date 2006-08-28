@@ -1,0 +1,43 @@
+<!-- ************************************************************************************************************ -->
+<!-- Definitions for net.sourceforge.fenixedu.domain.teacherServiceDistribution -->
+<!-- ************************************************************************************************************ -->
+ 
+<class-descriptor class="net.sourceforge.fenixedu.domain.teacherServiceDistribution.TeacherServiceDistribution" table="TEACHER_SERVICE_DISTRIBUTION">
+</class-descriptor>
+
+
+<class-descriptor class="net.sourceforge.fenixedu.domain.teacherServiceDistribution.ValuationPhase" table="VALUATION_PHASE">
+</class-descriptor>
+  
+<class-descriptor class="net.sourceforge.fenixedu.domain.teacherServiceDistribution.ValuationCompetenceCourse" table="VALUATION_COMPETENCE_COURSE"/>
+
+<class-descriptor class="net.sourceforge.fenixedu.domain.teacherServiceDistribution.ValuationCurricularCourse" table="VALUATION_CURRICULAR_COURSE"/>
+
+<class-descriptor class="net.sourceforge.fenixedu.domain.teacherServiceDistribution.ValuationTeacher" table="VALUATION_TEACHER">
+</class-descriptor>
+
+<class-descriptor class="net.sourceforge.fenixedu.domain.teacherServiceDistribution.ValuationGrouping" table="VALUATION_GROUPING">	
+</class-descriptor>
+
+
+<class-descriptor class="net.sourceforge.fenixedu.domain.teacherServiceDistribution.CourseValuation">
+	<extent-class class-ref="net.sourceforge.fenixedu.domain.teacherServiceDistribution.CompetenceCourseValuation"/>
+	<extent-class class-ref="net.sourceforge.fenixedu.domain.teacherServiceDistribution.CurricularCourseValuation"/>
+	<extent-class class-ref="net.sourceforge.fenixedu.domain.teacherServiceDistribution.CurricularCourseValuationGroup"/>
+</class-descriptor>
+
+
+
+<class-descriptor class="net.sourceforge.fenixedu.domain.teacherServiceDistribution.CompetenceCourseValuation" table="COURSE_VALUATION">
+</class-descriptor>
+
+
+<class-descriptor class="net.sourceforge.fenixedu.domain.teacherServiceDistribution.CurricularCourseValuationGroup" table="COURSE_VALUATION">	 
+</class-descriptor>
+
+<class-descriptor class="net.sourceforge.fenixedu.domain.teacherServiceDistribution.CurricularCourseValuation" table="COURSE_VALUATION">
+</class-descriptor>
+
+
+<class-descriptor class="net.sourceforge.fenixedu.domain.teacherServiceDistribution.ProfessorshipValuation" table="PROFESSORSHIP_VALUATION">
+</class-descriptor>

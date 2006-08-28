@@ -1209,4 +1209,26 @@ public class ExecutionCourse extends ExecutionCourse_Base {
         }
         return shiftTypes;
     }
+
+    public Integer getNumberOfShifts(ShiftType shiftType) {
+    	int numShifts = 0;
+
+    	for (Shift shiftEntry : this.getAssociatedShifts()) {
+    	    if (shiftEntry.getTipo() == shiftType) {
+    	    	numShifts++;
+    	    }
+    	}
+    	
+    	return numShifts;
+    }    
+    
+    public Double getCurricularCourseEnrolmentsWeight(CurricularCourse curricularCourse) {
+    	Double totalEnrolmentStudentNumber = new Double(getTotalEnrolmentStudentNumber());
+    	if(totalEnrolmentStudentNumber > 0d) {
+    		return  curricularCourse.getTotalEnrolmentStudentNumber(getExecutionPeriod()) / totalEnrolmentStudentNumber;
+    	} else {
+    		return 0d;
+    	}
+    }
+    
 }

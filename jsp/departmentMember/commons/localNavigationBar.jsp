@@ -62,6 +62,16 @@
 			</html:link></li>
 		<% } %>
 		--%>
+		
+		<%-- TeacherServiceDistribution entry point
+		<br/>
+  		<li>
+		  	<html:link page="/teacherServiceDistribution.do?method=prepareTeacherServiceDistribution">
+		  		<bean:message key="link.teacherServiceDistribution"/>
+		  	</html:link>  
+		</li> 				
+		<br/>				
+		--%>
 	</ul>
 	
 	<br />

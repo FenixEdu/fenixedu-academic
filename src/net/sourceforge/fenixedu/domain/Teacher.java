@@ -210,6 +210,15 @@ public class Teacher extends Teacher_Base {
         return null;
     }
 
+    public Department getLastWorkingDepartment(YearMonthDay begin, YearMonthDay end) {
+        Employee employee = this.getPerson().getEmployee();
+        if (employee != null) {
+            return employee.getLastDepartmentWorkingPlace(begin, end);
+        }
+        return null;
+    }   
+    
+    
     public Department getLastWorkingDepartment() {
         Employee employee = this.getPerson().getEmployee();
         if (employee != null) {
@@ -1085,4 +1094,24 @@ public class Teacher extends Teacher_Base {
                 || isCoordinatorFor(curricularCourse.getDegreeCurricularPlan(), executionPeriod
                         .getExecutionYear());
     }
+    
+    public Double getHoursLecturedOnExecutionCourseByShiftType(ExecutionCourse executionCourse, ShiftType shiftType) {
+        double returnValue = 0;
+
+        Professorship professorship = getProfessorshipByExecutionCourse(executionCourse);
+        TeacherService teacherService = getTeacherServiceByExecutionPeriod(executionCourse
+                .getExecutionPeriod());
+        if (teacherService != null) {
+            List<DegreeTeachingService> teachingServices = teacherService
+                    .getDegreeTeachingServiceByProfessorship(professorship);
+            for (DegreeTeachingService teachingService : teachingServices) {
+            	if(teachingService.getShift().getTipo() == shiftType) {
+	                returnValue += ((teachingService.getPercentage() / 100) * teachingService.getShift()
+	                        .hours());
+            	}
+            }
+        }
+        return returnValue;
+    }
+    
 }

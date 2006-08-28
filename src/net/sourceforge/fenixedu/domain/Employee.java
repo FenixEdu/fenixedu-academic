@@ -176,4 +176,11 @@ public class Employee extends Employee_Base {
         }
         return null;
     }
+    
+    public Department getLastDepartmentWorkingPlace(YearMonthDay begin, YearMonthDay end) {
+    	Unit unit = getLastWorkingPlaceByPeriod(begin, end);
+    	Unit departmentUnit = (unit != null) ? unit.getDepartmentUnit() : null;
+    	return (departmentUnit != null) ? departmentUnit.getDepartment() : null;    	    	
+    }
+    
 }

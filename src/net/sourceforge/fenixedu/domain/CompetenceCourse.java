@@ -14,6 +14,7 @@ import java.util.Set;
 import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.accessControl.Checked;
+import net.sourceforge.fenixedu.commons.CollectionUtils;
 import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriodType;
 import net.sourceforge.fenixedu.domain.degreeStructure.BibliographicReferences;
 import net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseInformation;
@@ -30,6 +31,7 @@ import net.sourceforge.fenixedu.util.MultiLanguageString;
 import net.sourceforge.fenixedu.util.UniqueAcronymCreator;
 
 import org.apache.commons.beanutils.BeanComparator;
+import org.apache.commons.collections.Predicate;
 import org.joda.time.YearMonthDay;
 
 public class CompetenceCourse extends CompetenceCourse_Base {
@@ -707,6 +709,39 @@ public class CompetenceCourse extends CompetenceCourse_Base {
             multiLanguageString.setContent(Language.en, getProgramEn());
         }
         return multiLanguageString;
+    }
+
+    public List<ExecutionCourse> getExecutionCoursesByExecutionPeriod(final ExecutionPeriod executionPeriod) {
+    	Set<ExecutionCourse> executionCourseSet = new HashSet<ExecutionCourse>();
+    	
+    	List<CurricularCourse> curricularCourseList = getCurricularCoursesWithActiveScopesInExecutionPeriod(executionPeriod);
+    	
+    	for (CurricularCourse curricularCourse : curricularCourseList) {
+    		executionCourseSet.addAll(curricularCourse.getExecutionCoursesByExecutionPeriod(executionPeriod));
+		}
+    	
+    	List<ExecutionCourse> executionCourseList = new ArrayList<ExecutionCourse>();
+    	executionCourseList.addAll(executionCourseSet);
+
+    	return executionCourseList;
+    }
+
+    
+    @SuppressWarnings("unchecked")
+	public List<CurricularCourse> getCurricularCoursesWithActiveScopesInExecutionPeriod(final ExecutionPeriod executionPeriod) {
+    	return (List<CurricularCourse>) CollectionUtils.select(getAssociatedCurricularCourses(), new Predicate() {
+
+			public boolean evaluate(Object arg0) {
+				CurricularCourse curricularCourse = (CurricularCourse) arg0;
+				
+				for(DegreeModuleScope moduleScope : curricularCourse.getDegreeModuleScopes()) {
+					if(moduleScope.isActiveForExecutionPeriod(executionPeriod)) {
+						return true;
+					}
+				}
+				return false;
+			}
+    	});
     }
     
 }

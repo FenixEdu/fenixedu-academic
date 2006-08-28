@@ -12,12 +12,17 @@ package net.sourceforge.fenixedu.domain;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
+import net.sourceforge.fenixedu.commons.CollectionUtils;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.teacher.TeacherPersonalExpectation;
+import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TeacherServiceDistribution;
 
+import org.apache.commons.collections.Predicate;
 import org.joda.time.YearMonthDay;
 
 public class Department extends Department_Base {
@@ -152,8 +157,89 @@ public class Department extends Department_Base {
         final int end = this.getRealName().indexOf(")");
         return this.getRealName().substring(begin + 1, end);
     }
+
+    public List<Teacher> getTeachers(YearMonthDay begin, YearMonthDay end) {
+        List<Teacher> teachers = new ArrayList<Teacher>();
+        List<Employee> employees = this.getWorkingEmployees(begin, end);
+        for (Employee employee : employees) {
+            Teacher teacher = employee.getPerson().getTeacher();
+            if (teacher != null
+                    && !teacher.getAllLegalRegimensWithoutEndSituations(begin,
+                            end).isEmpty()) {
+                teachers.add(teacher);
+            }
+        }
+        return teachers;
+    }
+
+    @SuppressWarnings("unchecked")
+	public List<TeacherServiceDistribution> getTeacherServiceDistributionsByExecutionPeriods(final List<ExecutionPeriod> executionPeriodList) {
+    	return (List<TeacherServiceDistribution>) CollectionUtils.select(getTeacherServiceDistributions(),
+    			new Predicate() {
+					public boolean evaluate(Object arg0) {
+						TeacherServiceDistribution teacherServiceDistribution = (TeacherServiceDistribution) arg0;
+						return !CollectionUtils.intersection(teacherServiceDistribution.getExecutionPeriods(), executionPeriodList).isEmpty();
+					}
+    	});
+    }
     
+    public List<TeacherServiceDistribution> getTeacherServiceDistributionsByExecutionPeriod(final ExecutionPeriod executionPeriod) {
+    	List<ExecutionPeriod> executionPeriodList = new ArrayList<ExecutionPeriod>();
+    	executionPeriodList.add(executionPeriod);
+    	return getTeacherServiceDistributionsByExecutionPeriods(executionPeriodList);
+    }
+
+    public List<TeacherServiceDistribution> getTeacherServiceDistributionsByExecutionYear(final ExecutionYear executionYear) {
+    	return getTeacherServiceDistributionsByExecutionPeriods(executionYear.getExecutionPeriods());
+    }
+
     
+    private void readAndSaveEmployees(Unit unit, Set<Employee> employees, YearMonthDay currentDate) {
+        for (Contract contract : unit.getWorkingContracts()) {
+            Employee employee = contract.getEmployee();
+            if (employee.getActive().booleanValue() && contract.isActive(currentDate)) {
+                employees.add(employee);
+            }
+        }
+        for (Unit subUnit : unit.getSubUnits()) {
+            readAndSaveEmployees(subUnit, employees, currentDate);
+        }
+    }
+    
+    public List<Employee> getWorkingEmployees(YearMonthDay begin, YearMonthDay end) {
+
+        Unit departmentUnit = this.getDepartmentUnit();
+        Set<Employee> employees = new HashSet<Employee>();
+
+        if (departmentUnit != null) {
+            readAndSaveEmployees(departmentUnit, employees, begin, end);
+        }
+        return new ArrayList<Employee>(employees);
+    }
+
+
+    private void readAndSaveEmployees(Unit unit, Set<Employee> employees, YearMonthDay begin, YearMonthDay end) {
+        for (Contract contract : unit.getWorkingContracts(begin, end)) {
+            employees.add(contract.getEmployee());
+        }
+        for (Unit subUnit : unit.getSubUnits()) {
+            readAndSaveEmployees(subUnit, employees, begin, end);
+        }
+    }
+    
+	public List<Employee> getCurrentActiveWorkingEmployees() {
+
+        Unit departmentUnit = this.getDepartmentUnit();
+        Set<Employee> employees = new HashSet<Employee>();
+        YearMonthDay currentDate = new YearMonthDay();
+
+        if (departmentUnit != null) {
+            readAndSaveEmployees(departmentUnit, employees, currentDate);
+        }
+        return new ArrayList<Employee>(employees);
+    }
+
+	
     // -------------------------------------------------------------
     // read static methods 
     // -------------------------------------------------------------

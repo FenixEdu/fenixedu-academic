@@ -150,6 +150,9 @@ valueType net.sourceforge.fenixedu.domain.research.result.ResultParticipation.Re
 valueType net.sourceforge.fenixedu.domain.research.event.EventParticipation.EventParticipationRole as EventParticipationRole;
 valueType net.sourceforge.fenixedu.util.Month																			as Month;
 
+valueType net.sourceforge.fenixedu.domain.teacherServiceDistribution.ValuationPhaseStatus		as ValuationPhaseStatus;
+valueType net.sourceforge.fenixedu.domain.teacherServiceDistribution.ValuationValueType		as ValuationValueType;
+
 /*
 *
 * Class definitions
@@ -900,6 +903,8 @@ class net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule extends net.s
 		Integer keyDegreeCurricularPlan;
 		
 	    GradeScale gradeScale;
+	    
+	    Integer keyValuationCurricularCourse;
 	}
 
 	class net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup extends net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule {
@@ -982,6 +987,7 @@ class net.sourceforge.fenixedu.domain.CompetenceCourse extends net.sourceforge.f
 	Integer keyCompetenceCourseGroupUnit;
 	CurricularStage curricularStage;
 	YearMonthDay creationDateYearMonthDay;
+	Integer keyValuationCompetenceCourse;
 }
 
 
@@ -3726,6 +3732,149 @@ class net.sourceforge.fenixedu.domain.YearStudentSpecialSeasonCode extends net.s
 	Integer keyStudent;
 
 	}
+
+/*
+ * Teacher Service Distribution
+ */
+
+class net.sourceforge.fenixedu.domain.teacherServiceDistribution.TeacherServiceDistribution extends net.sourceforge.fenixedu.domain.DomainObject {
+	Integer keyDepartment;
+	Integer keyCreator;
+	String name;
+	Group phasesManagementGroup;
+	Group automaticValuationGroup;
+	Group omissionConfigurationGroup;
+	Group valuationCompetenceCoursesAndTeachersManagementGroup;	
+	
+}
+
+class net.sourceforge.fenixedu.domain.teacherServiceDistribution.ValuationPhase extends net.sourceforge.fenixedu.domain.DomainObject {
+	Integer keyTeacherServiceDistribution;
+	Integer keyPreviousValuationPhase;
+	Integer keyNextValuationPhase;
+	String name;
+	ValuationPhaseStatus status;
+	Integer studentsPerTheoreticalShift;
+	Integer studentsPerPraticalShift;
+	Integer studentsPerTheoPratShift;
+	Integer studentsPerLaboratorialShift;
+	Double weightFirstTimeEnrolledStudentsPerTheoShift;
+	Double weightFirstTimeEnrolledStudentsPerPratShift;
+	Double weightFirstTimeEnrolledStudentsPerTheoPratShift;
+	Double weightFirstTimeEnrolledStudentsPerLabShift;
+	Double weightSecondTimeEnrolledStudentsPerTheoShift;
+	Double weightSecondTimeEnrolledStudentsPerPratShift;
+	Double weightSecondTimeEnrolledStudentsPerTheoPratShift;
+	Double weightSecondTimeEnrolledStudentsPerLabShift;
+	Boolean isPublished;	
+}
+
+class net.sourceforge.fenixedu.domain.teacherServiceDistribution.ValuationTeacher extends net.sourceforge.fenixedu.domain.DomainObject {
+	Integer keyTeacher;
+	Integer keyCategory;
+	String name;
+	Integer requiredHours;
+	String extraCreditsName;
+	Double extraCreditsValue;
+	Boolean usingExtraCredits;	
+}
+
+class net.sourceforge.fenixedu.domain.teacherServiceDistribution.ValuationGrouping extends net.sourceforge.fenixedu.domain.DomainObject {
+	Integer keyValuationPhase;
+	Integer keyParent;
+	String name;
+	Group coursesAndTeachersValuationManagers;
+	Group coursesAndTeachersManagementGroup;
+}
+
+class net.sourceforge.fenixedu.domain.teacherServiceDistribution.ValuationCompetenceCourse extends net.sourceforge.fenixedu.domain.DomainObject {
+	Integer keyCompetenceCourse;
+	String name;
+}
+
+class net.sourceforge.fenixedu.domain.teacherServiceDistribution.ValuationCurricularCourse extends net.sourceforge.fenixedu.domain.DomainObject {
+	Integer keyValuationCompetenceCourse;
+	Integer keyCurricularCourse;
+	Integer keyDegreeCurricularPlan;
+	Integer keyExecutionPeriod;
+	String acronym;
+	Double theoreticalHours;
+	Double praticalHours;
+	Double theoPratHours;
+	Double laboratorialHours;
+}
+
+class net.sourceforge.fenixedu.domain.teacherServiceDistribution.CourseValuation extends net.sourceforge.fenixedu.domain.DomainObject {
+	String ojbConcreteClass;
+
+	Integer keyValuationPhase;
+	Integer keyExecutionPeriod;
+	Integer firstTimeEnrolledStudentsManual;
+	ValuationValueType firstTimeEnrolledStudentsType;
+	Integer secondTimeEnrolledStudentsManual;
+	ValuationValueType secondTimeEnrolledStudentsType;
+	Integer studentsPerTheoreticalShiftManual;
+	ValuationValueType studentsPerTheoreticalShiftType;
+	Integer studentsPerPraticalShiftManual;
+	ValuationValueType studentsPerPraticalShiftType;
+	Integer studentsPerTheoPratShiftManual;
+	ValuationValueType studentsPerTheoPratShiftType;
+	Integer studentsPerLaboratorialShiftManual;
+	ValuationValueType studentsPerLaboratorialShiftType;
+	Double weightFirstTimeEnrolledStudentsPerTheoShiftManual;
+	ValuationValueType weightFirstTimeEnrolledStudentsPerTheoShiftType;
+	Double weightFirstTimeEnrolledStudentsPerPratShiftManual;
+	ValuationValueType weightFirstTimeEnrolledStudentsPerPratShiftType;
+	Double weightFirstTimeEnrolledStudentsPerTheoPratShiftManual;
+	ValuationValueType weightFirstTimeEnrolledStudentsPerTheoPratShiftType;
+	Double weightFirstTimeEnrolledStudentsPerLabShiftManual;
+	ValuationValueType weightFirstTimeEnrolledStudentsPerLabShiftType;
+	Double weightSecondTimeEnrolledStudentsPerTheoShiftManual;
+	ValuationValueType weightSecondTimeEnrolledStudentsPerTheoShiftType;
+	Double weightSecondTimeEnrolledStudentsPerPratShiftManual;
+	ValuationValueType weightSecondTimeEnrolledStudentsPerPratShiftType;
+	Double weightSecondTimeEnrolledStudentsPerTheoPratShiftManual;
+	ValuationValueType weightSecondTimeEnrolledStudentsPerTheoPratShiftType;
+	Double weightSecondTimeEnrolledStudentsPerLabShiftManual;
+	ValuationValueType weightSecondTimeEnrolledStudentsPerLabShiftType;
+	Boolean isActive;
+	Double theoreticalHoursManual;
+	ValuationValueType theoreticalHoursType;
+	Double praticalHoursManual;
+	ValuationValueType praticalHoursType;
+	Double theoPratHoursManual;
+	ValuationValueType theoPratHoursType;
+	Double laboratorialHoursManual;
+	ValuationValueType laboratorialHoursType;	
+}
+
+
+	class net.sourceforge.fenixedu.domain.teacherServiceDistribution.CompetenceCourseValuation extends net.sourceforge.fenixedu.domain.teacherServiceDistribution.CourseValuation {
+		Integer keyValuationCompetenceCourse;
+	}
+
+	class net.sourceforge.fenixedu.domain.teacherServiceDistribution.CurricularCourseValuation extends net.sourceforge.fenixedu.domain.teacherServiceDistribution.CourseValuation {
+		Integer keyValuationCurricularCourse;
+		Integer keyCurricularCourseValuationGroup;
+	}
+
+	class net.sourceforge.fenixedu.domain.teacherServiceDistribution.CurricularCourseValuationGroup extends net.sourceforge.fenixedu.domain.teacherServiceDistribution.CourseValuation {
+		Boolean usingCurricularCourseValuations;	
+	}
+
+class net.sourceforge.fenixedu.domain.teacherServiceDistribution.ProfessorshipValuation extends net.sourceforge.fenixedu.domain.DomainObject {
+	Integer keyCourseValuation;
+	Integer keyValuationTeacher;
+	
+	Double theoreticalHoursManual;
+	ValuationValueType theoreticalHoursType;
+	Double praticalHoursManual;
+	ValuationValueType praticalHoursType;
+	Double theoPratHoursManual;
+	ValuationValueType theoPratHoursType;
+	Double laboratorialHoursManual;
+	ValuationValueType laboratorialHoursType;
+}
 
 /*
  * Relations definitions
@@ -9610,3 +9759,256 @@ relation RootDomainObjectLessonPlanning {
 		multiplicity *;
 	}
 }
+
+
+/*
+ * Teacher Service Distribution
+ */
+
+relation RootDomainObjectTeacherServiceDistribution {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.teacherServiceDistribution.TeacherServiceDistribution playsRole teacherServiceDistributions {
+		multiplicity*;
+	}
+}
+
+relation TeacherServiceDistributionCreator {
+	net.sourceforge.fenixedu.domain.teacherServiceDistribution.TeacherServiceDistribution playsRole teacherServiceDistributions {
+		multiplicity*;
+	}
+	net.sourceforge.fenixedu.domain.Person playsRole creator;
+}
+
+relation TeacherServiceDistributionDepartment {
+	net.sourceforge.fenixedu.domain.teacherServiceDistribution.TeacherServiceDistribution playsRole teacherServiceDistributions {
+		multiplicity*;
+	}
+	net.sourceforge.fenixedu.domain.Department playsRole department;	
+}
+
+relation TeacherServiceDistributionExecutionPeriod {
+	net.sourceforge.fenixedu.domain.teacherServiceDistribution.TeacherServiceDistribution playsRole teacherServiceDistributions {
+		multiplicity*;
+	}
+	
+	net.sourceforge.fenixedu.domain.ExecutionPeriod playsRole executionPeriods {
+		multiplicity*;
+	}	
+}
+
+relation RootDomainObjectValuationPhase {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.teacherServiceDistribution.ValuationPhase playsRole valuationPhases {
+		multiplicity*;
+	}
+}
+
+relation ValuationPhaseTeacherServiceDistribution {
+	net.sourceforge.fenixedu.domain.teacherServiceDistribution.ValuationPhase playsRole valuationPhases {
+		multiplicity*;
+	}
+	
+	net.sourceforge.fenixedu.domain.teacherServiceDistribution.TeacherServiceDistribution playsRole teacherServiceDistribution;
+}
+
+relation ValuationPhaseValuationPhase {
+	net.sourceforge.fenixedu.domain.teacherServiceDistribution.ValuationPhase playsRole previousValuationPhase;
+	net.sourceforge.fenixedu.domain.teacherServiceDistribution.ValuationPhase playsRole nextValuationPhase;
+}
+
+relation RootDomainObjectValuationTeacher {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.teacherServiceDistribution.ValuationTeacher playsRole valuationTeachers {
+		multiplicity*;
+	}
+}
+
+relation ValuationTeacherTeacher {
+	net.sourceforge.fenixedu.domain.teacherServiceDistribution.ValuationTeacher playsRole valuationTeachers {
+		multiplicity*;
+	}
+	
+	net.sourceforge.fenixedu.domain.Teacher playsRole teacher;
+}
+
+relation ValuationTeacherCategory {
+	net.sourceforge.fenixedu.domain.teacherServiceDistribution.ValuationTeacher playsRole valuationTeachers {
+		multiplicity*;
+	}
+	
+	net.sourceforge.fenixedu.domain.teacher.Category playsRole category;
+}
+
+relation RootDomainObjectValuationGrouping {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.teacherServiceDistribution.ValuationGrouping playsRole valuationGroupings {
+		multiplicity*;
+	}
+}
+
+relation ValuationGroupingValuationPhase {
+	net.sourceforge.fenixedu.domain.teacherServiceDistribution.ValuationGrouping playsRole groupings {
+		multiplicity*;
+	}
+	
+	net.sourceforge.fenixedu.domain.teacherServiceDistribution.ValuationPhase playsRole valuationPhase;
+}
+
+relation ValuationGroupingValuationGrouping {
+	net.sourceforge.fenixedu.domain.teacherServiceDistribution.ValuationGrouping playsRole childs {
+		multiplicity*;
+	}
+	
+	net.sourceforge.fenixedu.domain.teacherServiceDistribution.ValuationGrouping playsRole parent;
+}
+
+relation ValuationTeacherValuationGrouping {
+	net.sourceforge.fenixedu.domain.teacherServiceDistribution.ValuationTeacher playsRole valuationTeachers {
+		multiplicity*;
+	}
+	
+	net.sourceforge.fenixedu.domain.teacherServiceDistribution.ValuationGrouping playsRole valuationGroupings {
+		multiplicity*;
+	}
+}
+
+relation ValuationCompetenceCourseValuationGrouping {
+	net.sourceforge.fenixedu.domain.teacherServiceDistribution.ValuationCompetenceCourse playsRole valuationCompetenceCourses {
+		multiplicity*;
+	}
+	
+	net.sourceforge.fenixedu.domain.teacherServiceDistribution.ValuationGrouping playsRole valuationGroupings {
+		multiplicity*;
+	}
+}
+
+relation RootDomainObjectValuationCompetenceCourse {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.teacherServiceDistribution.ValuationCompetenceCourse playsRole valuationCompetenceCourses {
+		multiplicity*;
+	}
+}
+
+relation ValuationCompetenceCourseCompetenceCourse {
+	net.sourceforge.fenixedu.domain.teacherServiceDistribution.ValuationCompetenceCourse playsRole valuationCompetenceCourse;	
+	net.sourceforge.fenixedu.domain.CompetenceCourse playsRole competenceCourse;
+}
+
+relation RootDomainObjectValuationCurricularCourse {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.teacherServiceDistribution.ValuationCurricularCourse playsRole valuationCurricularCourses {
+		multiplicity*;
+	}
+}
+
+
+relation ValuationCurricularCourseValuationCompetenceCourse {
+	net.sourceforge.fenixedu.domain.teacherServiceDistribution.ValuationCurricularCourse playsRole associatedValuationCurricularCourses {
+		multiplicity*;
+	}
+	
+	net.sourceforge.fenixedu.domain.teacherServiceDistribution.ValuationCompetenceCourse playsRole valuationCompetenceCourse;
+}
+
+relation ValuationCurricularCourseCurricularCourse {
+	net.sourceforge.fenixedu.domain.teacherServiceDistribution.ValuationCurricularCourse playsRole valuationCurricularCourse;
+	net.sourceforge.fenixedu.domain.CurricularCourse playsRole curricularCourse;
+}
+
+relation ValuationCurricularCourseDegreeCurricularPlan {
+	net.sourceforge.fenixedu.domain.teacherServiceDistribution.ValuationCurricularCourse playsRole valuationCurricularCourses {
+		multiplicity*;
+	}
+
+	net.sourceforge.fenixedu.domain.DegreeCurricularPlan playsRole degreeCurricularPlan;
+}
+
+relation ValuationCurricularCourseCurricularYear {
+	net.sourceforge.fenixedu.domain.teacherServiceDistribution.ValuationCurricularCourse playsRole valuationCurricularCourses {
+		multiplicity*;
+	}
+	
+	net.sourceforge.fenixedu.domain.CurricularYear playsRole curricularYears {
+		multiplicity*;
+	}
+}
+
+relation ValuationCurricularCourseExecutionPeriod {
+	net.sourceforge.fenixedu.domain.teacherServiceDistribution.ValuationCurricularCourse playsRole valuationCurricularCourses {
+		multiplicity*;
+	}
+
+	net.sourceforge.fenixedu.domain.ExecutionPeriod playsRole executionPeriod;
+}
+
+relation RootDomainObjectCourseValuation {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.teacherServiceDistribution.CourseValuation playsRole courseValuations {
+		multiplicity*;
+	}
+}
+
+relation CourseValuationValuationPhase {
+	net.sourceforge.fenixedu.domain.teacherServiceDistribution.CourseValuation playsRole courseValuations {
+		multiplicity*;
+	}
+	
+	net.sourceforge.fenixedu.domain.teacherServiceDistribution.ValuationPhase playsRole valuationPhase;
+}
+
+relation CourseValuationExecutionPeriod {
+	net.sourceforge.fenixedu.domain.teacherServiceDistribution.CourseValuation playsRole courseValuations {
+		multiplicity*;
+	}
+
+	net.sourceforge.fenixedu.domain.ExecutionPeriod playsRole executionPeriod;	
+}
+
+relation CompetenceCourseValuationValuationCompetenceCourse {
+	net.sourceforge.fenixedu.domain.teacherServiceDistribution.CompetenceCourseValuation playsRole competenceCourseValuations {
+		multiplicity*;
+	}
+	
+	net.sourceforge.fenixedu.domain.teacherServiceDistribution.ValuationCompetenceCourse playsRole valuationCompetenceCourse;
+}
+
+relation CurricularCourseValuationValuationCurricularCourse {
+	net.sourceforge.fenixedu.domain.teacherServiceDistribution.CurricularCourseValuation playsRole curricularCourseValuations {
+		multiplicity*;
+	}
+	
+	net.sourceforge.fenixedu.domain.teacherServiceDistribution.ValuationCurricularCourse playsRole valuationCurricularCourse;
+}
+
+relation CurricularCourseValuationCurricularCourseValuationGroup {
+	net.sourceforge.fenixedu.domain.teacherServiceDistribution.CurricularCourseValuation playsRole curricularCourseValuations {
+		multiplicity*;
+	}
+	
+	net.sourceforge.fenixedu.domain.teacherServiceDistribution.CurricularCourseValuationGroup playsRole curricularCourseValuationGroup;
+}
+
+relation RootDomainObjectProfessorshipValuation {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.teacherServiceDistribution.ProfessorshipValuation playsRole professorshipValuations {
+		multiplicity*;
+	}
+}
+
+relation ProfessorshipValuationValuationTeacher {
+	net.sourceforge.fenixedu.domain.teacherServiceDistribution.ProfessorshipValuation playsRole professorshipValuations {
+		multiplicity*;
+	}
+	
+	net.sourceforge.fenixedu.domain.teacherServiceDistribution.ValuationTeacher playsRole valuationTeacher;
+}
+
+
+relation ProfessorshipValuationCourseValuation {
+	net.sourceforge.fenixedu.domain.teacherServiceDistribution.ProfessorshipValuation playsRole professorshipValuations {
+		multiplicity*;
+	}
+	
+	net.sourceforge.fenixedu.domain.teacherServiceDistribution.CourseValuation playsRole courseValuation;
+}
+

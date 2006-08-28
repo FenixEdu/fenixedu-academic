@@ -22,7 +22,8 @@
 			</html:link>
 		</li>
 	</ul>
-
+	
+	<ul>
 	<logic:present role="DEPARTMENT_CREDITS_MANAGER">
 
 			<li class="navheader">
@@ -59,8 +60,16 @@
 					</li>
 				</logic:equal>
 			</logic:notEmpty>
-		</ul>
 	</logic:present>
+	
+		<%-- TeacherServiceDistribution entry point
+  		<li>
+		  	<html:link page="/teacherServiceDistribution.do?method=prepareTeacherServiceDistribution">
+		  		<bean:message key="link.teacherServiceDistribution"/>
+		  	</html:link>  
+		</li> 				
+		--%>
+					
 
 		<li class="navheader">
 			<strong><bean:message key="link.group.managementGroups.title"/></strong>
@@ -80,6 +89,7 @@
         	<html:link page="/manageFinalDegreeWork.do?method=showChooseExecutionDegreeFormForDepartment">
 				<bean:message key="link.manage.final.degree.works"/>
 			</html:link>
-		</li>
+		</li>	
+
 	</ul>
 </logic:present>

@@ -637,4 +637,18 @@ public class Unit extends Unit_Base {
         
         return contributor;
     }
+    
+    public boolean isDepartmentUnit() {
+        return isUnitDepartment(this);
+    }
+
+    private void readAndSaveEmployees(Unit unit, Set<Employee> employees, YearMonthDay begin, YearMonthDay end) {
+        for (Contract contract : unit.getWorkingContracts(begin, end)) {
+            employees.add(contract.getEmployee());
+        }
+        for (Unit subUnit : unit.getSubUnits()) {
+            readAndSaveEmployees(subUnit, employees, begin, end);
+        }
+    }
+
 }

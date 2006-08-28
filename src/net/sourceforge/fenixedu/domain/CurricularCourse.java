@@ -1397,4 +1397,55 @@ public class CurricularCourse extends CurricularCourse_Base {
         return multiLanguageString;
     }
 
+    private int countAssociatedStudentsByExecutionPeriodAndEnrolmentNumber(ExecutionPeriod executionPeriod, int enrolmentNumber) {
+    	int curricularCourseAndExecutionPeriodAssociatedStudents = 0;
+
+	    for (CurriculumModule curriculumModule : getCurriculumModules()) {
+			Enrolment enrolmentsEntry = (Enrolment) curriculumModule;
+			if (enrolmentsEntry.getExecutionPeriod() == executionPeriod) {
+	
+			    StudentCurricularPlan studentCurricularPlanEntry = enrolmentsEntry
+				    .getStudentCurricularPlan();
+			    int numberOfEnrolmentsForThatCurricularCourseAndExecutionPeriod = 0;
+	
+			    for (Enrolment enrolmentsFromStudentCPEntry : studentCurricularPlanEntry
+				    .getEnrolments()) {
+					if (enrolmentsFromStudentCPEntry.getCurricularCourse() == this
+						&& (enrolmentsFromStudentCPEntry.getExecutionPeriod().compareTo(
+								executionPeriod) <= 0)) {
+					    ++numberOfEnrolmentsForThatCurricularCourseAndExecutionPeriod;
+					}
+			    }
+	
+			    if (numberOfEnrolmentsForThatCurricularCourseAndExecutionPeriod == enrolmentNumber) {
+			    	curricularCourseAndExecutionPeriodAssociatedStudents++;
+			    }
+			}
+	    }
+
+    	return curricularCourseAndExecutionPeriodAssociatedStudents;    
+    }
+    
+
+    public Integer getTotalEnrolmentStudentNumber(ExecutionPeriod executionPeriod) {
+    	int curricularCourseAndExecutionPeriodStudentNumber = 0;
+
+	    for (CurriculumModule curriculumModule : getCurriculumModules()) {
+		Enrolment enrolmentsEntry = (Enrolment) curriculumModule;
+			if (enrolmentsEntry.getExecutionPeriod() == executionPeriod) {
+			    curricularCourseAndExecutionPeriodStudentNumber++;
+			}
+	    }
+	    
+    	return curricularCourseAndExecutionPeriodStudentNumber;
+    }
+
+    public Integer getFirstTimeEnrolmentStudentNumber(ExecutionPeriod executionPeriod) {
+    	return countAssociatedStudentsByExecutionPeriodAndEnrolmentNumber(executionPeriod, 1);
+    }
+
+    public Integer getSecondTimeEnrolmentStudentNumber(ExecutionPeriod executionPeriod) {
+    	return getTotalEnrolmentStudentNumber(executionPeriod) - getFirstTimeEnrolmentStudentNumber(executionPeriod);
+    }
+    
 }
