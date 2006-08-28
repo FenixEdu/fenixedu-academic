@@ -63,7 +63,7 @@ public class EnrollmentAuthorizationFilter extends AuthorizationByManyRolesFilte
 			return "noAuthorization";
 		}
 		if (insideEnrollmentPeriod(studentCurricularPlan)) {
-			final Tutor tutor = studentCurricularPlan.getStudent().getAssociatedTutor();
+			final Tutor tutor = studentCurricularPlan.getAssociatedTutor();
 			if (tutor != null) {
 				return new String("error.enrollment.student.withTutor+"
 						+ tutor.getTeacher().getTeacherNumber().toString() + "+"

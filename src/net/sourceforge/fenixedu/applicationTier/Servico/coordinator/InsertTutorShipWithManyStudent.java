@@ -68,9 +68,7 @@ public class InsertTutorShipWithManyStudent extends InsertTutorShip {
 
                 Tutor tutor = registration.getAssociatedTutor();
                 if (tutor == null) {
-                    tutor = new Tutor();
-                    tutor.setTeacher(teacher);
-                    tutor.setStudent(registration);
+                    registration.getActiveStudentCurricularPlan().setAssociatedTutor(new Tutor(teacher));
                 }
             }
         } catch (Exception e) {

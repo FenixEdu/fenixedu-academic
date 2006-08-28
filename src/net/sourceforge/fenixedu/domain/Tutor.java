@@ -7,9 +7,10 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 public class Tutor extends Tutor_Base {
 
-    public Tutor() {
+    public Tutor(Teacher teacher) {
 		super();
 		setRootDomainObject(RootDomainObject.getInstance());
+        setTeacher(teacher);
 	}
 
 	private Boolean getCanBeDeleted() {

@@ -2741,6 +2741,7 @@ class net.sourceforge.fenixedu.domain.StudentCurricularPlan extends net.sourcefo
     Integer keyRoot;
     StudentCurricularPlanState currentState;
     Specialization specialization;
+    Integer keyAssociatedTutor;
 }
 
 
@@ -3109,6 +3110,7 @@ class net.sourceforge.fenixedu.domain.publication.PublicationTypeAttribute exten
 class net.sourceforge.fenixedu.domain.Tutor extends net.sourceforge.fenixedu.domain.DomainObject {
     Integer keyTeacher;
     Integer keyStudent;
+    Integer keyStudentCurricularPlan;
 }
 
 
@@ -6688,6 +6690,10 @@ relation TutorStudent {
     net.sourceforge.fenixedu.domain.student.Registration playsRole student;
 }
 
+relation TutorStudentCurricularPlan {
+    net.sourceforge.fenixedu.domain.Tutor playsRole associatedTutor;
+    net.sourceforge.fenixedu.domain.StudentCurricularPlan playsRole studentCurricularPlan;
+}
 
 relation TutorTeacher {
     net.sourceforge.fenixedu.domain.Tutor playsRole associatedTutors {
