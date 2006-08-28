@@ -15,9 +15,9 @@
 <logic:iterate id="entry" name="executionCourse" property="curricularCoursesIndexedByCompetenceCourse">
 	<bean:define id="competenceCourse" name="entry" property="key"/>
 	<logic:equal name="competenceCourse" property="curricularStage.name" value="APPROVED">
-		<h3>
-			<fr:view name="competenceCourse" property="nameI18N"/>
-			<br/>
+
+		<p class="mtop2 mbottom05"><em><fr:view name="competenceCourse" property="nameI18N"/></em></p>
+		<h3 class="mvert0">
 			<logic:iterate id="curricularCourse" name="entry" property="value" indexId="i">
 				<logic:notEqual name="i" value="0"><br/></logic:notEqual>
 				<bean:define id="degree" name="curricularCourse" property="degreeCurricularPlan.degree"/>
@@ -26,19 +26,19 @@
 				<fr:view name="degree" property="nameI18N"/>
 			</logic:iterate>
 		</h3>
-		<blockquote>
-			<h4>
+			<h4 class="mbottom05 greytxt">
 				<bean:message key="label.generalObjectives"/>
 			</h4>
 			<logic:present name="competenceCourse" property="objectives">
+				<div class="mtop05" style="line-height: 1.5em;">
 				<fr:view name="competenceCourse" property="objectivesI18N">
 					<fr:layout>
 						<fr:property name="escaped" value="false" />
 						<fr:property name="newlineAware" value="false" />
 					</fr:layout>
 				</fr:view>
+				</div>
 			</logic:present>
-		</blockquote>
 	</logic:equal>
 </logic:iterate>
 
@@ -51,9 +51,8 @@
 			<% request.setAttribute("curriculum", curriculum); %>
 			<% request.setAttribute("lastCurriculum", lastCurriculum); %>
 
-				<h3 class="mtop2">
-					<fr:view name="curricularCourse" property="nameI18N"/>
-					<br/>
+				<p class="mtop2 mbottom05"><em><fr:view name="curricularCourse" property="nameI18N"/></em></p>
+				<h3 class="mvert0">
 					<bean:message bundle="ENUMERATION_RESOURCES" name="degree" property="degreeType.name"/>
 					<bean:message key="label.in"/>
 					<fr:view name="degree" property="nameI18N"/>
@@ -63,11 +62,13 @@
 						<h4 class="mbottom05 greytxt">
 							<bean:message key="label.generalObjectives"/>
 						</h4>
+						<div class="mtop05" style="line-height: 1.5em;">
 						<fr:view name="curriculum" property="generalObjectivesI18N">
 							<fr:layout name="html">
 								<fr:property name="escaped" value="false" />
 							</fr:layout>
 						</fr:view>
+						</div>
 						<logic:notEmpty name="curriculum" property="operacionalObjectives">
 							<h4 class="mbottom05 greytxt">
 								<bean:message key="label.operacionalObjectives"/>
@@ -88,3 +89,4 @@
 
 		</logic:notEqual>
 	</logic:iterate>
+	

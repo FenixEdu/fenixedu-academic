@@ -14,8 +14,9 @@
 		<em><bean:message key="message.evaluation.not.available"/></em>
 	</p>
 </logic:empty>
+
 <logic:notEmpty name="executionCourse" property="evaluationMethod">
-	<div class="mtop05" style="line-height: 1.5em;">
+	<div class="mtop1" style="line-height: 1.5em;">
 		<fr:view name="executionCourse" property="evaluationMethod.evaluationElements">
 			<fr:layout>
 				<fr:property name="escaped" value="false" />

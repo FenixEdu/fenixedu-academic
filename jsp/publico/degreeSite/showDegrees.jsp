@@ -14,7 +14,7 @@
 	</logic:iterate>
 				
 <bean:define id="institutionUrl" type="java.lang.String"><bean:message key="institution.url" bundle="GLOBAL_RESOURCES"/></bean:define>
-<div class="breadcumbs"><a href="<%= institutionUrl %>"><bean:message key="institution.name.abbreviation" bundle="GLOBAL_RESOURCES"/></a>  > Ensino</div>
+<div class="breadcumbs mvert0"><a href="<%= institutionUrl %>"><bean:message key="institution.name.abbreviation" bundle="GLOBAL_RESOURCES"/></a>  > Ensino</div>
 				<div class="version"><span class="px10"><a href="#">english version</a> <img src="<%= request.getContextPath() %>/images/icon_uk.gif" alt="<bean:message key="icon_uk" bundle="IMAGE_RESOURCES" />" width="16" height="12" /></span></div> 
 
 				<h1><bean:message key="public.degree.information.label.education" bundle="PUBLIC_DEGREE_INFORMATION" /></h1>

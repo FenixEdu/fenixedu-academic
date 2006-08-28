@@ -10,7 +10,7 @@
 
 <logic:present name="infoDegreeCurricularPlan">
 	
-	<div class="breadcumbs"><a href="http://www.ist.utl.pt/index.shtml">IST</a>
+	<div class="breadcumbs mvert0"><a href="http://www.ist.utl.pt/index.shtml">IST</a>
 		&nbsp;&gt;&nbsp;<a href="http://www.ist.utl.pt/html/ensino/index.shtml">Ensino</a>
 		<bean:define id="degreeType" name="infoDegreeCurricularPlan" property="infoDegree.tipoCurso" />	
 		&nbsp;&gt;&nbsp; 
