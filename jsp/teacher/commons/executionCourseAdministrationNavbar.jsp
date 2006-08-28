@@ -7,7 +7,7 @@
 <logic:notPresent name="executionCourse">
 	<logic:present name="siteView">
 		<bean:define id="component" name="siteView" property="commonComponent"/>
-		<bean:define id="executionCourse" toScope="request" name="component" property="executionCourse.executionCourse"/>
+		<bean:define id="executionCourse" name="component" property="executionCourse"/>
 	</logic:present>
 </logic:notPresent>
 
@@ -18,7 +18,17 @@
 				<bean:message key="link.home"/>
 			</html:link>
 		</li>
-	
+		<li>
+			<html:link page="/alternativeSite.do?method=prepareCustomizationOptions" paramId="objectCode" paramName="executionCourse" paramProperty="idInternal">
+				<bean:message key="link.personalizationOptions"/>
+			</html:link>
+		</li>
+		<li>
+			<html:link href="<%= request.getContextPath()+"/publico/executionCourse.do?method=firstPage" %>" paramId="executionCourseID" paramName="executionCourse" paramProperty="idInternal" target="_blank">
+				<bean:message key="link.executionCourseManagement.menu.view.course.page"/>
+			</html:link>
+		</li>
+		
 	<li class="navheader"><bean:message key="label.executionCourseManagement.menu.communication"/></li>
 		<li>
 			<html:link page="/announcementManagementAction.do?method=showAnnouncements" paramId="objectCode" paramName="executionCourse" paramProperty="idInternal">
@@ -120,18 +130,8 @@
 		
 	<li class="navheader"><bean:message key="label.executionCourseManagement.menu.page"/></li>
 		<li>
-			<html:link page="/alternativeSite.do?method=prepareCustomizationOptions" paramId="objectCode" paramName="executionCourse" paramProperty="idInternal">
-				<bean:message key="link.personalizationOptions"/>
-			</html:link>
-		</li>
-		<li>
 			<html:link page="/copySiteExecutionCourse.do?method=prepareChooseExecutionPeriod" paramId="objectCode" paramName="executionCourse" paramProperty="idInternal">
 				<bean:message key="link.copySiteExecutionCourse"/>
-			</html:link>
-		</li>
-		<li>
-			<html:link href="<%= request.getContextPath()+"/publico/executionCourse.do?method=firstPage" %>" paramId="executionCourseID" paramName="executionCourse" paramProperty="idInternal" target="_blank">
-				<bean:message key="link.executionCourseManagement.menu.view.course.page"/>
 			</html:link>
 		</li>
 	</ul>
