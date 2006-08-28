@@ -13,6 +13,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
 import net.sourceforge.fenixedu.domain.ApplicationDocumentType;
 import net.sourceforge.fenixedu.fileSuport.FileSuportObject;
+import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
 
@@ -21,9 +22,8 @@ import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import org.apache.struts.actions.DispatchAction;
 
-public class ShowApplicationDocumentDispatchAction extends DispatchAction {
+public class ShowApplicationDocumentDispatchAction extends FenixDispatchAction {
 
     /** request * */
     public static final String REQUEST_DOCUMENT_TYPE = "documentType";

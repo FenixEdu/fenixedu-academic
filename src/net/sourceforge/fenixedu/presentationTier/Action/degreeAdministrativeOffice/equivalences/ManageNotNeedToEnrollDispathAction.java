@@ -19,6 +19,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoNotNeedToEnrollInCurricul
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
+import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -29,14 +30,13 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
-import org.apache.struts.actions.DispatchAction;
 
 /**
  * @author Ricardo Rodrigues
  * 
  */
 
-public class ManageNotNeedToEnrollDispathAction extends DispatchAction {
+public class ManageNotNeedToEnrollDispathAction extends FenixDispatchAction {
 
     private static final ComparatorChain curricularCourseComparator = new ComparatorChain();
     static {

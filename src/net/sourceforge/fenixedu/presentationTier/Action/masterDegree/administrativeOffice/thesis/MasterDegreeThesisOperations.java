@@ -13,6 +13,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExternalPerson;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
+import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
@@ -22,7 +23,6 @@ import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.DynaActionForm;
-import org.apache.struts.actions.DispatchAction;
 
 /**
  * 
@@ -31,7 +31,7 @@ import org.apache.struts.actions.DispatchAction;
  * 
  */
 
-public class MasterDegreeThesisOperations extends DispatchAction {
+public class MasterDegreeThesisOperations extends FenixDispatchAction {
 
     public boolean getStudentByNumberAndDegreeType(ActionForm form, HttpServletRequest request,
             ActionErrors actionErrors) throws FenixActionException, FenixFilterException {

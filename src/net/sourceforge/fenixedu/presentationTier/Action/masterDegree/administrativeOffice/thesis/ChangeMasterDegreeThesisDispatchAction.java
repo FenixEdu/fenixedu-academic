@@ -9,6 +9,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingSe
 import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeThesisDataVersion;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
+import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
@@ -20,7 +21,6 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
-import org.apache.struts.actions.DispatchAction;
 
 /**
  * 
@@ -29,7 +29,7 @@ import org.apache.struts.actions.DispatchAction;
  *  
  */
 
-public class ChangeMasterDegreeThesisDispatchAction extends DispatchAction {
+public class ChangeMasterDegreeThesisDispatchAction extends FenixDispatchAction {
 
     public ActionForward getStudentAndMasterDegreeThesisDataVersion(ActionMapping mapping,
             ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
