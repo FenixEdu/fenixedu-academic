@@ -28,7 +28,6 @@ public class ItemTest extends DomainTestBase {
         item.setIdInternal(0);
         item.setName(new MultiLanguageString(Language.pt, "ItemName"));
         item.setInformation(new MultiLanguageString(Language.pt, "ItemInformation"));
-        item.setUrgent(true);
         item.setSection(section);
         item.setItemOrder(0);      
         
@@ -36,7 +35,6 @@ public class ItemTest extends DomainTestBase {
         item2.setIdInternal(1);
         item2.setName(new MultiLanguageString(Language.pt, "ItemName2"));
         item2.setInformation(new MultiLanguageString(Language.pt, "ItemInformation2"));
-        item2.setUrgent(false);
         item2.setSection(section);
         item2.setItemOrder(1);        
 
@@ -44,7 +42,6 @@ public class ItemTest extends DomainTestBase {
         item3.setIdInternal(2);
         item3.setName(new MultiLanguageString(Language.pt, "ItemName3"));
         item3.setInformation(new MultiLanguageString(Language.pt, "ItemInformation3"));
-        item3.setUrgent(true);
         item3.setSection(section);
         item3.setItemOrder(2);
     }
@@ -84,7 +81,7 @@ public class ItemTest extends DomainTestBase {
     public void testEdit() {
           
         try{
-            item2.edit((MultiLanguageString) null, null, null, null);
+            item2.edit((MultiLanguageString) null, null, null);
             fail("Expected NullPointerException");
         }
         catch(NullPointerException e){
@@ -92,17 +89,17 @@ public class ItemTest extends DomainTestBase {
             assertEquals("Information Unexpected", "ItemInformation2", item2.getInformation());
         }
         
-        item2.edit("ItemName2New", "ItemInformation2New", false, 2);
+        item2.edit("ItemName2New", "ItemInformation2New", 2);
         
         testEditInformation("ItemName2New","ItemInformation2New" , false);       
         testItemsOrder(0, 2, 1);            
         
-        item2.edit("ItemName22New", "ItemInformation22New", false, 0);
+        item2.edit("ItemName22New", "ItemInformation22New", 0);
         
         testEditInformation("ItemName22New","ItemInformation22New" , false);              
         testItemsOrder(1, 0, 2);        
         
-        item2.edit("ItemName222New", "ItemInformation222New", true, 1);
+        item2.edit("ItemName222New", "ItemInformation222New", 1);
         
         testEditInformation("ItemName222New","ItemInformation222New" , true);                       
         testItemsOrder(0, 1, 2);        
@@ -111,7 +108,6 @@ public class ItemTest extends DomainTestBase {
     private void testEditInformation(String name, String information, boolean urgent){
         assertEquals("Name Unexpected", name, item2.getName());
         assertEquals("Information Unexpected", information, item2.getInformation());
-        assertEquals("Urgent Unexpected", urgent, item2.getUrgent().booleanValue());
     }
     
     private void testItemsOrder(int value1, int value2, int value3){
