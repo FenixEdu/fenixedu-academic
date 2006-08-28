@@ -61,7 +61,7 @@ public class WorkScheduleType extends WorkScheduleType_Base {
                 return null;
             } else {
                 // /////////remove in 2007
-                if (getFixedWorkPeriod() == null) {
+                if (getMeal().getMinimumMealBreakInterval() != Duration.ZERO) {
                     return getMeal().calculateMealDiscount(
                             getMeal().getMealBreak().overlap(lunchBreak).toDuration());
                 }
