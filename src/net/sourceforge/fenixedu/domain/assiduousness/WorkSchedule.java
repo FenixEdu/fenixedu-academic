@@ -76,28 +76,27 @@ public class WorkSchedule extends WorkSchedule_Base {
                     workDaySheet.setUnjustifiedTime(wsType.calculateFixedPeriodDuration(timeline));
 
                     // ///////////////////to remove in 2007
-                    if (lunchDiscount != Duration.ZERO) {
-                        if (wsType.getMeal().getMinimumMealBreakInterval() != Duration.ZERO
-                                && wsType.getFixedWorkPeriod() == null) {
-                            Duration discount = Duration.ZERO;
-                            DateTime fistClockDateTime = firstWorkTimePoint.getDateTime(day);
-                            DateTime beginMealBreak = day.toDateTime(wsType.getMeal()
-                                    .getBeginMealBreak());
+                    if (lunchDiscount != Duration.ZERO
+                            && wsType.getMeal().getMinimumMealBreakInterval() != Duration.ZERO
+                            && wsType.getFixedWorkPeriod() == null) {
+                        Duration discount = Duration.ZERO;
+                        DateTime fistClockDateTime = firstWorkTimePoint.getDateTime(day);
+                        DateTime beginMealBreak = day.toDateTime(wsType.getMeal().getBeginMealBreak());
 
-                            if (fistClockDateTime.isAfter(beginMealBreak)) {
-                                discount = new Duration(beginMealBreak, fistClockDateTime);
-                            }
-                            DateTime lastClockDateTime = lastWorkTimePoint.getDateTime(day);
-                            DateTime endMealBreak = day.toDateTime(wsType.getMeal().getEndMealBreak());
-                            if (lastClockDateTime.isBefore(endMealBreak)) {
-                                discount = discount.plus(new Duration(lastClockDateTime, endMealBreak));
-                            }
-                            if (discount.isShorterThan(lunchDiscount)) {
-                                lunchDiscount = lunchDiscount.minus(discount);
-                            } else {
-                                lunchDiscount = Duration.ZERO;// lunchDiscount.plus(lunchDiscount);
-                            }
+                        if (fistClockDateTime.isAfter(beginMealBreak)) {
+                            discount = new Duration(beginMealBreak, fistClockDateTime);
                         }
+                        DateTime lastClockDateTime = lastWorkTimePoint.getDateTime(day);
+                        DateTime endMealBreak = day.toDateTime(wsType.getMeal().getEndMealBreak());
+                        if (lastClockDateTime.isBefore(endMealBreak)) {
+                            discount = discount.plus(new Duration(lastClockDateTime, endMealBreak));
+                        }
+                        if (discount.isShorterThan(lunchDiscount)) {
+                            lunchDiscount = lunchDiscount.minus(discount);
+                        } else {
+                            lunchDiscount = Duration.ZERO;
+                        }
+
                         Duration balanceTime = subtractDurationsWithoutSeconds(firstWorkPeriod.plus(
                                 lastWorkPeriod).minus(lunchDiscount), getWorkScheduleType()
                                 .getNormalWorkPeriod().getWorkPeriodDuration());
