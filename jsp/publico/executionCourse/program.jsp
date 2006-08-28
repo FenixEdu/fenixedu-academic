@@ -16,9 +16,9 @@
 <logic:iterate id="entry" name="executionCourse" property="curricularCoursesIndexedByCompetenceCourse">
 	<bean:define id="competenceCourse" name="entry" property="key"/>
 	<logic:equal name="competenceCourse" property="curricularStage.name" value="APPROVED">
-		<h3>
-			<fr:view name="competenceCourse" property="nameI18N"/>
-			<br/>
+
+		<p class="mtop2 mbottom05"><em><fr:view name="competenceCourse" property="nameI18N"/></em></p>
+		<h3 class="mvert0">
 			<logic:iterate id="curricularCourse" name="entry" property="value" indexId="i">
 				<logic:notEqual name="i" value="0"><br/></logic:notEqual>
 				<bean:define id="degree" name="curricularCourse" property="degreeCurricularPlan.degree"/>
@@ -50,6 +50,8 @@
 			<% request.setAttribute("curriculum", curriculum); %>
 			<% request.setAttribute("lastCurriculum", lastCurriculum); %>
 
+			<p class="mtop2 mbottom05"><em><fr:view name="curricularCourse" property="nameI18N"/></em></p>
+				<h3 class="mvert0">
 				<h3 class="mtop2">
 					<fr:view name="curricularCourse" property="nameI18N"/>
 					<br/>
