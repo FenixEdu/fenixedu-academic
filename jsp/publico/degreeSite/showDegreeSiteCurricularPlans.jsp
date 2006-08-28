@@ -182,7 +182,7 @@
 		<p><i><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="not.available" /></i></p>
 	</logic:empty>
 	<logic:notEmpty name="infoDegreeCurricularPlan" property="description">
-		<bean:write name="infoDegreeCurricularPlan" property="description" filter="false" />
+		<p><bean:write name="infoDegreeCurricularPlan" property="description" filter="false" /></p>
 	</logic:notEmpty>
 
 </logic:present>
