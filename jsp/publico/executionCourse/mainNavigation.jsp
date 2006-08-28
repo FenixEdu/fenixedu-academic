@@ -85,7 +85,7 @@
 	</logic:notEmpty>
 	<li>
 		<bean:define id="imageURL" type="java.lang.String">
-			background: url(<%= request.getContextPath() %>/images/rss_ico.gif) 10px 3px no-repeat; padding-left: 32px;
+			background: url(<%= request.getContextPath() %>/images/rss_ico.png) 10px 3px no-repeat; padding-left: 20px;
 		</bean:define>
 		<html:link page="/executionCourse.do?method=rss" style="<%=imageURL%>"
 				paramId="executionCourseID" paramName="executionCourse" paramProperty="idInternal">

@@ -34,7 +34,7 @@
 			<a href="<%= urlA %>"><%= urlA %></a>
 		</td>
 		<td style="border-bottom: 1px solid #eee; padding: 0.5em 1em;">
-			<a href="<%= urlA %>"><img src="<%= request.getContextPath() %>/images/rss_ico.gif" alt="<bean:message key="rss_ico" bundle="IMAGE_RESOURCES" />" /></a>
+			<a href="<%= urlA %>"><img src="<%= request.getContextPath() %>/images/rss_ico.png" alt="<bean:message key="rss_ico" bundle="IMAGE_RESOURCES" />" /></a>
 		</td>
 	</tr>
 	<tr>
@@ -46,7 +46,7 @@
 			<a href="<%= urlS %>"><%= urlS %></a>
 		</td>
 		<td style="border-bottom: 1px solid #eee; padding: 0.5em 1em;">
-			<a href="<%= urlS %>"><img src="<%= request.getContextPath() %>/images/rss_ico.gif" alt="<bean:message key="rss_ico" bundle="IMAGE_RESOURCES" />" /></a>
+			<a href="<%= urlS %>"><img src="<%= request.getContextPath() %>/images/rss_ico.png" alt="<bean:message key="rss_ico" bundle="IMAGE_RESOURCES" />" /></a>
 		</td>
 	</tr>
 </table>
