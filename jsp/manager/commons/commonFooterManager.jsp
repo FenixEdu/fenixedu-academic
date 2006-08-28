@@ -1,3 +1,3 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <html:xhtml/>
-<p>copyright 2006 - Instituto Superior T&eacute;cnico</p>
+<p>&copy;2006, Instituto Superior Técnico. Todos os direitos reservados.</p>
