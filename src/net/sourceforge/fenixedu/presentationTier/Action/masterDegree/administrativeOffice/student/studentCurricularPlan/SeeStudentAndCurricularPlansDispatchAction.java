@@ -79,7 +79,7 @@ public class SeeStudentAndCurricularPlansDispatchAction extends FenixDispatchAct
         }
 
         Object args[] = { studentName2, idNumber2, idType2, studentNumber2 };
-        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = getUserView(request);
 
         List studentList = null;
         try {

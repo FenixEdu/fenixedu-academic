@@ -124,7 +124,7 @@ public class ShowExamsManagement extends FenixContextDispatchAction {
             HttpServletResponse response) throws Exception {
 
         HttpSession session = request.getSession(false);
-        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = getUserView(request);
 
         ContextUtils.setCurricularYearContext(request);
         ContextUtils.setExecutionCourseContext(request);
@@ -145,7 +145,7 @@ public class ShowExamsManagement extends FenixContextDispatchAction {
         HttpSession session = request.getSession(false);
         ActionErrors actionErrors = new ActionErrors();
 
-        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = getUserView(request);
 
         ContextUtils.setCurricularYearContext(request);
         ContextUtils.setExecutionCourseContext(request);

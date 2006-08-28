@@ -65,7 +65,7 @@ public class CreateGuideDispatchAction extends FenixDispatchAction {
 	DynaActionForm createGuideForm = (DynaActionForm) form;
 
 	if (session != null) {
-	    IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+	    IUserView userView = getUserView(request);
 
 	    // Transport chosen Execution Degree
 	    String executionDegreeIDParam = getFromRequest(SessionConstants.EXECUTION_DEGREE_OID,
@@ -114,7 +114,7 @@ public class CreateGuideDispatchAction extends FenixDispatchAction {
 	if (session != null) {
 	    // session.removeAttribute(SessionConstants.CERTIFICATE_LIST);
 
-	    IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+	    IUserView userView = getUserView(request);
 
 	    DynaActionForm createGuideForm = (DynaActionForm) form;
 
@@ -230,7 +230,7 @@ public class CreateGuideDispatchAction extends FenixDispatchAction {
 	saveToken(request);
 
 	DynaActionForm createGuideForm = (DynaActionForm) form;
-	IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+	IUserView userView = getUserView(request);
 
 	session.removeAttribute(SessionConstants.PRINT_PASSWORD);
 	session.removeAttribute(SessionConstants.PRINT_INFORMATION);

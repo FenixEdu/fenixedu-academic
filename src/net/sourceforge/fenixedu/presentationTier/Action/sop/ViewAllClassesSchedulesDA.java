@@ -35,7 +35,7 @@ public class ViewAllClassesSchedulesDA extends FenixContextDispatchAction {
         HttpSession session = request.getSession(false);
         if (session != null) {
             //GestorServicos gestor = GestorServicos.manager();
-            IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+            IUserView userView = getUserView(request);
 
             InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request
                     .getAttribute(SessionConstants.EXECUTION_PERIOD);
@@ -63,7 +63,7 @@ public class ViewAllClassesSchedulesDA extends FenixContextDispatchAction {
 
         HttpSession session = request.getSession(false);
         if (session != null) {
-            IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+            IUserView userView = getUserView(request);
             DynaActionForm chooseViewAllClassesSchedulesContextForm = (DynaActionForm) form;
 
             InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request

@@ -63,7 +63,7 @@ public class InsertApplicationDocumentsAction extends FenixDispatchAction {
             HttpServletResponse response) throws Exception {
 
         HttpSession session = request.getSession(false);
-        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = getUserView(request);
 
         DynaActionForm appDocForm = (DynaActionForm) form;
         FormFile cvFormFile = (FormFile) appDocForm.get("cvFile");

@@ -62,7 +62,7 @@ public class ChooseDeclarationInfoAction extends FenixDispatchAction {
         if (session != null) {
             DynaActionForm chooseDeclaration = (DynaActionForm) form;
 
-            IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+            IUserView userView = getUserView(request);
 
             //remove sessions variables
             session.removeAttribute(SessionConstants.DEGREE_TYPE);
@@ -134,7 +134,7 @@ public class ChooseDeclarationInfoAction extends FenixDispatchAction {
 
         if (session != null) {
             String anoLectivo;
-            IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+            IUserView userView = getUserView(request);
 
             session.removeAttribute(SessionConstants.INFO_STUDENT_CURRICULAR_PLAN);
             session.removeAttribute(SessionConstants.DATE);

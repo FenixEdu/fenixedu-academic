@@ -34,7 +34,7 @@ public class ViewStudentsAndGroupsWithoutShiftAction extends FenixContextAction 
             HttpServletResponse response) throws FenixActionException, FenixFilterException {
 
         HttpSession session = request.getSession(false);
-        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = getUserView(request);
 
         String groupPropertiesCodeString = request.getParameter("groupPropertiesCode");
         Integer groupPropertiesCode = new Integer(groupPropertiesCodeString);

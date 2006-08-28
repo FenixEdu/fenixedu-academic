@@ -46,7 +46,7 @@ public class TeacherManagerDispatchAction extends FenixDispatchAction {
 
             HttpSession session = getSession(request);
             session.removeAttribute(SessionConstants.INFO_SECTION);
-            IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+            IUserView userView = getUserView(request);
             InfoSite infoSite = (InfoSite) session.getAttribute(SessionConstants.INFO_SITE);
             Object args[] = { infoSite.getInfoExecutionCourse() };
             boolean result = false;
@@ -80,7 +80,7 @@ public class TeacherManagerDispatchAction extends FenixDispatchAction {
 
         HttpSession session = getSession(request);
         session.removeAttribute(SessionConstants.INFO_SECTION);
-        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = getUserView(request);
         InfoSite infoSite = (InfoSite) session.getAttribute(SessionConstants.INFO_SITE);
         String teacherNumberString = request.getParameter("teacherNumber");
 
@@ -102,7 +102,7 @@ public class TeacherManagerDispatchAction extends FenixDispatchAction {
 
         HttpSession session = getSession(request);
         session.removeAttribute(SessionConstants.INFO_SECTION);
-        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = getUserView(request);
         InfoSite infoSite = (InfoSite) session.getAttribute(SessionConstants.INFO_SITE);
         DynaActionForm teacherForm = (DynaActionForm) form;
 

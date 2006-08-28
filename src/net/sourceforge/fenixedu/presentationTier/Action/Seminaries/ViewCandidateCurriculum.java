@@ -45,7 +45,7 @@ public class ViewCandidateCurriculum extends FenixAction {
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
         HttpSession session = request.getSession();
-        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = getUserView(request);
         String username = request.getParameter("username");
         IUserView studentUserView = new MockUserView(username, new ArrayList(0), null);
         List cps = null;

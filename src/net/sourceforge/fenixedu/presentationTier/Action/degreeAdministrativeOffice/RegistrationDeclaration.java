@@ -43,7 +43,7 @@ public class RegistrationDeclaration extends FenixDispatchAction {
 
         HttpSession session = request.getSession(false);
 
-        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = getUserView(request);
 
         InfoRegistrationDeclaration infoRegistrationDeclaration = null;
 

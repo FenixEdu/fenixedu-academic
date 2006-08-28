@@ -38,7 +38,7 @@ public class ViewExecutionCourseProjectsAction extends FenixContextAction {
 		throws FenixActionException, FenixFilterException, FenixServiceException {
 
 		HttpSession session = request.getSession(false);
-		IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+		IUserView userView = getUserView(request);
 
 		String executionCourseCodeString = request.getParameter("executionCourseCode");
 

@@ -69,7 +69,7 @@ public class ListContributorsDispatchAction extends FenixDispatchAction {
 
             DynaActionForm createCandidateForm = (DynaActionForm) form;
 
-            IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+            IUserView userView = getUserView(request);
 
             // Get the Information
 
@@ -159,7 +159,7 @@ public class ListContributorsDispatchAction extends FenixDispatchAction {
         if (session != null) {
             DynaActionForm editContributorForm = (DynaActionForm) form;
 
-            IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+            IUserView userView = getUserView(request);
             InfoContributor infoContributor = (InfoContributor) session
                     .getAttribute(SessionConstants.CONTRIBUTOR);
 

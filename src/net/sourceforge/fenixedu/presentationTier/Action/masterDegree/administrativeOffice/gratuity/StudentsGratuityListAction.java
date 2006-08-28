@@ -167,7 +167,7 @@ public class StudentsGratuityListAction extends FenixDispatchAction {
             HttpServletRequest request, HttpServletResponse response) throws Exception {
         ActionErrors errors = new ActionErrors();
         HttpSession session = request.getSession();
-        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = getUserView(request);
 
         // read data from form
         String executionYear = null;
@@ -250,7 +250,7 @@ public class StudentsGratuityListAction extends FenixDispatchAction {
         ActionErrors errors = new ActionErrors();
         HttpSession session = request.getSession();
         DynaActionForm studentGratuityListForm = (DynaActionForm) actionForm;
-        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = getUserView(request);
 
         // data from request
         String executionYearString = null;
@@ -357,7 +357,7 @@ public class StudentsGratuityListAction extends FenixDispatchAction {
 
         ActionErrors errors = new ActionErrors();
         HttpSession session = request.getSession();
-        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = getUserView(request);
         DynaActionForm studentGratuityListForm = (DynaActionForm) actionForm;
 
         String degree = (String) studentGratuityListForm.get("degree");

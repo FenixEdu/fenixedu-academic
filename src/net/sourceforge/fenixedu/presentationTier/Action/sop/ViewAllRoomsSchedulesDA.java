@@ -60,7 +60,7 @@ public class ViewAllRoomsSchedulesDA extends FenixContextDispatchAction {
 
         HttpSession session = request.getSession(false);
         if (session != null) {
-            IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+            IUserView userView = getUserView(request);
             DynaActionForm chooseViewAllRoomsSchedulesContextForm = (DynaActionForm) form;
 
             InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request

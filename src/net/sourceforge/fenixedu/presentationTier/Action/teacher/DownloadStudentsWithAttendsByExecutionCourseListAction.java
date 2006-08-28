@@ -106,7 +106,7 @@ public class DownloadStudentsWithAttendsByExecutionCourseListAction extends Feni
             // ok, we don't want to view a shift's student list
         }
 
-        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = getUserView(request);
 
         String checkedCoursesIds[] = request.getParameterValues("coursesIDs");
         String enrollmentType[] = request.getParameterValues("enrollmentType");

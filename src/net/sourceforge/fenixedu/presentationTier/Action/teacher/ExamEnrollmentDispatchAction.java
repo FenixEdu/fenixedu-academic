@@ -48,7 +48,7 @@ public class ExamEnrollmentDispatchAction extends FenixDispatchAction {
 
         HttpSession session = request.getSession(false);
 
-        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = getUserView(request);
 
         Integer evaluationCode = getFromRequest("evaluationCode", request);
 
@@ -96,7 +96,7 @@ public class ExamEnrollmentDispatchAction extends FenixDispatchAction {
 
         HttpSession session = request.getSession(false);
 
-        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = getUserView(request);
 
         Integer evaluationCode = getFromRequest("evaluationCode", request);
 

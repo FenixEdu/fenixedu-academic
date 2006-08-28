@@ -400,7 +400,7 @@ public class ChooseContextDispatchAction extends FenixDateAndTimeDispatchAction 
 
         HttpSession session = getSession(request);
 
-        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = getUserView(request);
 
         Integer objectCode = null;
         if (infoExecutionCourseCode == null) {

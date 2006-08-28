@@ -50,7 +50,7 @@ public class ShowCandidacySecondForm extends FenixAction {
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixActionException {
         HttpSession session = this.getSession(request);
-        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = getUserView(request);
         //idInternal is equivalency's IdInternal
         String equivalencyIDString = request.getParameter("idInternal");
         String themeIDString = request.getParameter("themeID");

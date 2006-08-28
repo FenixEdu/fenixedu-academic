@@ -59,7 +59,7 @@ public class AlternativeSiteManagementAction extends FenixDispatchAction {
         String initialStatement = (String) alternativeSiteForm.get("initialStatement");
         String introduction = (String) alternativeSiteForm.get("introduction");
 
-        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = getUserView(request);
         Object args[] = { infoSite, alternativeSite, mail, initialStatement, introduction };
         try {
             ServiceManagerServiceFactory.executeService(userView, "EditSite", args);

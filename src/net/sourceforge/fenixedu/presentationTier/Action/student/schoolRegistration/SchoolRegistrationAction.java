@@ -389,7 +389,7 @@ public class SchoolRegistrationAction extends TransactionalDispatchAction {
             HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
             FenixServiceException, FenixActionException {
         HttpSession session = request.getSession(false);
-        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = getUserView(request);
 
         Object[] args = { userView.getPerson().getStudentByUsername() };
         List infoLessons;

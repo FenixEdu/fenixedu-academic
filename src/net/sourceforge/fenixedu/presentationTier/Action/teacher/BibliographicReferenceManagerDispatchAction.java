@@ -58,7 +58,7 @@ public class BibliographicReferenceManagerDispatchAction extends FenixDispatchAc
 
         InfoExecutionCourse infoExecutionCourse = infoSite.getInfoExecutionCourse();
 
-        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = getUserView(request);
         Object args[] = { infoExecutionCourse, title, authors, reference, year, optional };
         try {
             ServiceManagerServiceFactory.executeService(userView, "InsertBibliographicReference", args);
@@ -111,7 +111,7 @@ public class BibliographicReferenceManagerDispatchAction extends FenixDispatchAc
 
         Object args[] = { infoExecutionCourse, infoBibliographicReference, infoBibliographicReferenceNew };
 
-        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = getUserView(request);
         try {
             ServiceManagerServiceFactory.executeService(userView, "EditBibliographicReference", args);
         } catch (FenixServiceException e) {
@@ -150,7 +150,7 @@ public class BibliographicReferenceManagerDispatchAction extends FenixDispatchAc
         InfoBibliographicReference infoBibliographicReference = (InfoBibliographicReference) bibliographicReferences
                 .get(index.intValue());
 
-        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = getUserView(request);
         Object args[] = { infoExecutionCourse, infoBibliographicReference };
         try {
             ServiceManagerServiceFactory.executeService(userView, "DeleteBibliographicReference", args);
@@ -179,7 +179,7 @@ public class BibliographicReferenceManagerDispatchAction extends FenixDispatchAc
 
         InfoExecutionCourse infoExecutionCourse = infoSite.getInfoExecutionCourse();
 
-        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = getUserView(request);
         Object args[] = { infoExecutionCourse, null };
         List references = null;
         try {

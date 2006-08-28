@@ -55,7 +55,7 @@ public class EditGuideDispatchAction extends FenixDispatchAction {
         if (session != null) {
             DynaActionForm editGuideForm = (DynaActionForm) form;
 
-            IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+            IUserView userView = getUserView(request);
 
             // Get the Information
             Integer guideNumber = new Integer(request.getParameter("number"));
@@ -92,7 +92,7 @@ public class EditGuideDispatchAction extends FenixDispatchAction {
 
         if (session != null) {
 
-            IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+            IUserView userView = getUserView(request);
             Integer guideYear = new Integer(request.getParameter("year"));
             Integer guideNumber = new Integer(request.getParameter("number"));
             Integer guideVersion = new Integer(request.getParameter("version"));
@@ -180,7 +180,7 @@ public class EditGuideDispatchAction extends FenixDispatchAction {
 
         if (session != null) {
 
-            IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+            IUserView userView = getUserView(request);
             Integer guideYear = new Integer(request.getParameter("year"));
             Integer guideNumber = new Integer(request.getParameter("number"));
             Integer guideVersion = new Integer(request.getParameter("version"));
@@ -227,7 +227,7 @@ public class EditGuideDispatchAction extends FenixDispatchAction {
         if (session != null) {
             DynaActionForm editGuideForm = (DynaActionForm) form;
 
-            IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+            IUserView userView = getUserView(request);
 
             Integer guideYear = new Integer(request.getParameter("year"));
             Integer guideNumber = new Integer(request.getParameter("number"));

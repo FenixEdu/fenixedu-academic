@@ -145,7 +145,7 @@ public class RoomSiteViewerDispatchAction extends FenixContextDispatchAction {
             HttpServletResponse response) throws Exception {
 
         HttpSession session = request.getSession();
-        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = getUserView(request);
 
         String roomName = request.getParameter("roomName");
         if (roomName == null) {

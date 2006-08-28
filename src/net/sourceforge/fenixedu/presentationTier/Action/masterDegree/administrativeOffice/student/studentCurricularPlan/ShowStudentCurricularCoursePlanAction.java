@@ -33,7 +33,7 @@ public class ShowStudentCurricularCoursePlanAction extends FenixDispatchAction {
         }
         studentCurricularPlanId = new Integer(studentCurricularPlanIdString);
 
-        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = getUserView(request);
 
         Object args[] = { studentCurricularPlanId };
 

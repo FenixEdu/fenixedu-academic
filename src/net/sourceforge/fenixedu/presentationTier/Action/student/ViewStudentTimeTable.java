@@ -35,7 +35,7 @@ public class ViewStudentTimeTable extends FenixAction {
             HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
 
         HttpSession session = request.getSession(false);
-        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = getUserView(request);
 
         Object[] args = { userView.getPerson().getStudentByUsername() };
         List infoLessons;

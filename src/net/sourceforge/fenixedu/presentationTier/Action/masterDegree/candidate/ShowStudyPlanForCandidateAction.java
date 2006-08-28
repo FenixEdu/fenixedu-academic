@@ -23,7 +23,7 @@ public class ShowStudyPlanForCandidateAction extends FenixAction {
             HttpServletResponse response) throws Exception {
 
         HttpSession session = request.getSession(false);
-        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = getUserView(request);
         ArrayList candidateStudyPlan = null;
 
         // transport candidate ID

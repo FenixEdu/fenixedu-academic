@@ -42,7 +42,7 @@ public class DissociateProfShipsAndRespForDispatchAction extends FenixDispatchAc
             ActionForm form, HttpServletRequest request, HttpServletResponse response)
             throws FenixActionException, FenixFilterException {
         HttpSession session = request.getSession(false);
-        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = getUserView(request);
 
         DynaActionForm teacherNumberForm = (DynaActionForm) form;
 
@@ -88,7 +88,7 @@ public class DissociateProfShipsAndRespForDispatchAction extends FenixDispatchAc
     public ActionForward dissociateProfShipsAndRespFor(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
         HttpSession session = request.getSession(false);
-        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = getUserView(request);
 
         DynaActionForm teacherForm = (DynaActionForm) form;
         Integer teacherNumber = Integer.valueOf((String) teacherForm.get("teacherNumber"));

@@ -70,7 +70,7 @@ public class ChooseGuideDispatchAction extends FenixDispatchAction {
 
             DynaActionForm chooseGuide = (DynaActionForm) form;
 
-            IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+            IUserView userView = getUserView(request);
 
             // Get the Information
             Integer guideNumber = new Integer((String) chooseGuide.get("guideNumber"));
@@ -108,7 +108,7 @@ public class ChooseGuideDispatchAction extends FenixDispatchAction {
 
         if (session != null) {
 
-            IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+            IUserView userView = getUserView(request);
 
             // Get the Information
             Integer guideNumber = new Integer(request.getParameter("number"));

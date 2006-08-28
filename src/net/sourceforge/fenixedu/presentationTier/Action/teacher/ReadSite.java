@@ -40,7 +40,7 @@ public class ReadSite extends FenixAction {
 
         HttpSession session = request.getSession(false);
         session.removeAttribute(SessionConstants.INFO_SECTION);
-        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = getUserView(request);
 
         //		InfoTeacher infoTeacher =
         //			(InfoTeacher) session.getAttribute(SessionConstants.INFO_TEACHER);

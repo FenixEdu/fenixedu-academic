@@ -46,7 +46,7 @@ public class CurriculumDispatchAction extends FenixDispatchAction {
             HttpServletRequest request, HttpServletResponse response) throws Exception {
 
         HttpSession session = request.getSession();
-        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = getUserView(request);
 
         Integer degreeCurricularPlanID = null;
         if (request.getParameter("degreeCurricularPlanID") != null) {
@@ -169,7 +169,7 @@ public class CurriculumDispatchAction extends FenixDispatchAction {
             request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);
         }
 
-        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = getUserView(request);
 
         String studentCurricularPlanID = request.getParameter("studentCPID");
         if (studentCurricularPlanID == null) {

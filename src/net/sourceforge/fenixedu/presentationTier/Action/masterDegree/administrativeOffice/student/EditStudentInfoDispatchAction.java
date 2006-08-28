@@ -46,7 +46,7 @@ public class EditStudentInfoDispatchAction extends FenixDispatchAction {
         HttpSession session = request.getSession(false);
         if (session != null) {
             DynaActionForm changeApplicationInfoForm = (DynaActionForm) form;
-            IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+            IUserView userView = getUserView(request);
 
             Integer personCode = Integer.valueOf(getFromRequest("idInternal", request));
             Integer number = Integer.valueOf(getFromRequest("number", request));

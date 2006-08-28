@@ -32,7 +32,7 @@ public class ChooseStudentDispatchAction extends FenixDispatchAction {
 
         HttpSession session = request.getSession();
 
-        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = getUserView(request);
         DynaActionForm studentForm = (DynaActionForm) form;
 
         Integer studentNumber = (Integer) studentForm.get("number");

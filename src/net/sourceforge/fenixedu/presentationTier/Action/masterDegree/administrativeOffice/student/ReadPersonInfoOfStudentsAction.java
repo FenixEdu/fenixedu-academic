@@ -48,7 +48,7 @@ public class ReadPersonInfoOfStudentsAction extends FenixAction {
         session.removeAttribute(SessionConstants.CANDIDATE_SITUATION_LIST);
 
         if (session != null) {
-            IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+            IUserView userView = getUserView(request);
             Integer studentNumber = new Integer(getFromRequest("studentNumber", request));
             //String graduationType = getFromRequest("graduationType",
             // request);

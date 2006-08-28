@@ -10,13 +10,12 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 import net.sourceforge.fenixedu.accessControl.AccessControl;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
+import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
 import net.sourceforge.fenixedu.stm.Transaction;
 
 public class CloseTransactionFilter implements Filter {
@@ -71,9 +70,7 @@ public class CloseTransactionFilter implements Filter {
 		IUserView userView = null;
 		if (request instanceof HttpServletRequest) {
 			HttpServletRequest httpRequest = (HttpServletRequest) request;
-			HttpSession session = httpRequest.getSession(false);
-			if (session != null)
-				userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+				userView = SessionUtils.getUserView(httpRequest);
 		}
 
 		if (userView == null)

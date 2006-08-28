@@ -44,7 +44,7 @@ public class UnEnrollStudentGroupShiftDispatchAction extends FenixDispatchAction
     {
 
         HttpSession session = request.getSession(false);
-        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = getUserView(request);
         String studentGroupCodeString = request.getParameter("studentGroupCode");
         String groupPropertiesCodeString = request.getParameter("groupPropertiesCode");
 		Integer groupPropertiesCode = new Integer(groupPropertiesCodeString);

@@ -21,8 +21,8 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoForReadStudentsWithAttend
 import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
 import net.sourceforge.fenixedu.dataTransferObject.TeacherAdministrationSiteView;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
+import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
 import net.sourceforge.fenixedu.util.AttendacyStateSelectionType;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -30,14 +30,11 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
-import org.apache.struts.actions.DispatchAction;
 
 /**
  * @author Andre Fernandes / Joao Brito
  */
-public class StudentsWithAttendsByCurricularCourseListAction extends
-        DispatchAction
-{
+public class StudentsWithAttendsByCurricularCourseListAction extends FenixDispatchAction {
     public ActionForward readStudents(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
         DynaActionForm formBean = (DynaActionForm)form;
@@ -88,7 +85,7 @@ public class StudentsWithAttendsByCurricularCourseListAction extends
         }
 
        
-        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = getUserView(request);
         Object args[] = { executionCourseID, coursesIDs, enrollmentTypeList, shiftIDs };
         TeacherAdministrationSiteView siteView = null;
         InfoForReadStudentsWithAttendsByExecutionCourse infoDTO = null;
@@ -165,7 +162,7 @@ public class StudentsWithAttendsByCurricularCourseListAction extends
         }
         
         DynaActionForm formBean = (DynaActionForm)form;
-        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = getUserView(request);
         
         Integer degreeCurricularPlanID = null;
         if(request.getParameter("degreeCurricularPlanID") != null){

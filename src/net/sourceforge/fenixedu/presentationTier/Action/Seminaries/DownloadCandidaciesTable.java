@@ -116,7 +116,7 @@ public class DownloadCandidaciesTable extends FenixAction {
             HttpServletResponse response) throws FenixActionException {
         String document = DownloadCandidaciesTable.COLUMNS_HEADERS + "\n";
         HttpSession session = this.getSession(request);
-        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = getUserView(request);
 
         //
         List candidacies = new LinkedList();

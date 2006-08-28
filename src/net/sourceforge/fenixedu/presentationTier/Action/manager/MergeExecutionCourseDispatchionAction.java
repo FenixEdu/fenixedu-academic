@@ -111,7 +111,7 @@ public class MergeExecutionCourseDispatchionAction extends FenixDispatchAction {
             HttpServletRequest request, HttpServletResponse response) throws 
             FenixServiceException, FenixFilterException {
         HttpSession session = request.getSession(false);
-        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = getUserView(request);
         
         SortedSet<Degree> degrees = new TreeSet(Degree.DEGREE_COMPARATOR_BY_NAME_AND_DEGREE_TYPE); 
         degrees.addAll(RootDomainObject.getInstance().getDegrees()); 
@@ -135,7 +135,7 @@ public class MergeExecutionCourseDispatchionAction extends FenixDispatchAction {
             HttpServletRequest request, HttpServletResponse response) throws 
             FenixServiceException, FenixFilterException {
         HttpSession session = request.getSession(false);
-        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = getUserView(request);
         DynaActionForm mergeExecutionCoursesForm = (DynaActionForm) form;
         Integer sourceExecutionCourseId = (Integer) mergeExecutionCoursesForm
                 .get("sourceExecutionCourseId");

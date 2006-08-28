@@ -32,7 +32,7 @@ public class EditStudentCurricularCoursePlan extends FenixDispatchAction {
         HttpSession session = request.getSession(false);
         DynaActionForm editStudentCurricularPlanForm = (DynaActionForm) form;
         Integer studentCurricularPlanId = new Integer(getFromRequest("studentCurricularPlanId", request));
-        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = getUserView(request);
 
         Object args[] = { studentCurricularPlanId };
 
@@ -113,7 +113,7 @@ public class EditStudentCurricularCoursePlan extends FenixDispatchAction {
 
         Integer studentCurricularPlanId = new Integer(studentCurricularPlanIdString);
         String observations = (String) editStudentCurricularPlanForm.get("observations");
-        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = getUserView(request);
 
         List extraCurricularCourses = new ArrayList();
 

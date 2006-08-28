@@ -69,7 +69,7 @@ public class SummaryManagerAction extends FenixDispatchAction {
     public ActionForward showSummaries(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws FenixFilterException {
         HttpSession session = request.getSession(false);
-        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = getUserView(request);
 
         Integer executionCourseId = getObjectCode(request);
         request.setAttribute("objectCode", executionCourseId);
@@ -170,7 +170,7 @@ public class SummaryManagerAction extends FenixDispatchAction {
     public ActionForward prepareInsertSummary(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws FenixFilterException {
         HttpSession session = request.getSession(false);
-        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = getUserView(request);
 
         Integer objectCode = getObjectCode(request);
         Integer teacherNumber = getTeacherNumber(request);
@@ -402,7 +402,7 @@ public class SummaryManagerAction extends FenixDispatchAction {
             HttpServletRequest request, HttpServletResponse response) throws FenixFilterException {
         try {
             HttpSession session = request.getSession(false);
-            IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+            IUserView userView = getUserView(request);
 
             Integer executionCourseId = getObjectCode(request);
             request.setAttribute("objectCode", executionCourseId);
@@ -510,7 +510,7 @@ public class SummaryManagerAction extends FenixDispatchAction {
     public ActionForward prepareEditSummary(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws FenixFilterException {
         HttpSession session = request.getSession(false);
-        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = getUserView(request);
 
         String summaryIdString = request.getParameter("summaryCode");
         Integer summaryId = new Integer(summaryIdString);
@@ -673,7 +673,7 @@ public class SummaryManagerAction extends FenixDispatchAction {
             HttpServletResponse response) throws FenixFilterException {
         try {
             HttpSession session = request.getSession(false);
-            IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+            IUserView userView = getUserView(request);
 
             String summaryIdString = request.getParameter("summaryCode");
             Integer summaryId = new Integer(summaryIdString);
@@ -711,7 +711,7 @@ public class SummaryManagerAction extends FenixDispatchAction {
             HttpServletRequest request, HttpServletResponse response) throws FenixFilterException {
         try {
             HttpSession session = request.getSession(false);
-            IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+            IUserView userView = getUserView(request);
 
             String summaryIdString = request.getParameter("summaryCode");
             Integer summaryId = new Integer(summaryIdString);

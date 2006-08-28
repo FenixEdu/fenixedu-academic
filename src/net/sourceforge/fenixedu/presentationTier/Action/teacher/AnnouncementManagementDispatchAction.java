@@ -43,7 +43,7 @@ public class AnnouncementManagementDispatchAction extends FenixDispatchAction {
         String information = (String) insertAnnouncementForm.get("information");
 
         InfoSite infoSite = (InfoSite) session.getAttribute(SessionConstants.INFO_SITE);
-        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = getUserView(request);
 
         Object args[] = { infoSite, title, information };
         ServiceManagerServiceFactory.executeService(userView, "InsertAnnouncement", args);
@@ -79,7 +79,7 @@ public class AnnouncementManagementDispatchAction extends FenixDispatchAction {
 
         InfoSite infoSite = (InfoSite) session.getAttribute(SessionConstants.INFO_SITE);
         InfoAnnouncement infoAnnouncement = (InfoAnnouncement) session.getAttribute("Announcement");
-        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = getUserView(request);
 
         Object args[] = { infoSite, infoAnnouncement, newTitle, newInformation };
         ServiceManagerServiceFactory.executeService(userView, "EditAnnouncement", args);
@@ -107,7 +107,7 @@ public class AnnouncementManagementDispatchAction extends FenixDispatchAction {
         Integer index = new Integer(announcementIndex);
         InfoAnnouncement infoAnnouncement = (InfoAnnouncement) announcements.get(index.intValue());
 
-        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = getUserView(request);
 
         Object args[] = { infoSite.getInfoExecutionCourse(), infoSite, infoAnnouncement };
         ServiceManagerServiceFactory.executeService(userView, "DeleteAnnouncement", args);

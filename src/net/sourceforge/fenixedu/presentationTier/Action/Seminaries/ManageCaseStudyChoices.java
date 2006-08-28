@@ -176,7 +176,7 @@ public class ManageCaseStudyChoices extends FenixAction {
         String themeIDString = request.getParameter("themeID");
         String motivation = request.getParameter("motivation");
         String submition = request.getParameter("submition");
-        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = getUserView(request);
         Integer equivalencyID = null;
         Integer themeID = null;
         if (equivalencyIDString == null)

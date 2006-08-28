@@ -23,7 +23,7 @@ public class ViewEnroledExecutionCoursesAction extends FenixContextAction {
             HttpServletResponse response) throws FenixServiceException, FenixFilterException {
 
         final HttpSession session = request.getSession(false);
-        final IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+        final IUserView userView = getUserView(request);
 
         final Object[] args = { userView.getUtilizador() };
         final List allInfoExecutionCourses = (List) ServiceUtils.executeService(userView,

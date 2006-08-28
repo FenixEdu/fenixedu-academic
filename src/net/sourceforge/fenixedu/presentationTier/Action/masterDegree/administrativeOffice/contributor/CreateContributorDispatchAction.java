@@ -60,7 +60,7 @@ public class CreateContributorDispatchAction extends FenixDispatchAction {
 
         if (session != null) {
             DynaActionForm createContributorForm = (DynaActionForm) form;
-            IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+            IUserView userView = getUserView(request);
 
             final String contributorName = (String) createContributorForm.get("contributorName");
             try {

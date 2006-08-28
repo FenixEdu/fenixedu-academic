@@ -61,7 +61,7 @@ public class MakeCandidateStudyPlanDispatchAction extends FenixDispatchAction {
             HttpServletRequest request, HttpServletResponse response) throws Exception {
 
         HttpSession session = request.getSession(false);
-        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = getUserView(request);
         Integer degreeCurricularPlanID = Integer.valueOf(getFromRequest("degreeCurricularPlanID",
                 request));
         ActionErrors errors = new ActionErrors();
@@ -158,7 +158,7 @@ public class MakeCandidateStudyPlanDispatchAction extends FenixDispatchAction {
 
         // Get the Master Degree List
         Object args[] = { executionYear };
-        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = getUserView(request);
         List masterDegreeList = null;
         try {
 
@@ -251,7 +251,7 @@ public class MakeCandidateStudyPlanDispatchAction extends FenixDispatchAction {
         request.setAttribute("degree", degree);
         // Get the Curricular Course List
 
-        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = getUserView(request);
         List curricularCourseList = null;
         try {
 
@@ -525,7 +525,7 @@ public class MakeCandidateStudyPlanDispatchAction extends FenixDispatchAction {
             HttpServletResponse response) throws Exception {
 
         HttpSession session = request.getSession(false);
-        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = getUserView(request);
 
         Integer candidateID = new Integer(request.getParameter("candidateID"));
 

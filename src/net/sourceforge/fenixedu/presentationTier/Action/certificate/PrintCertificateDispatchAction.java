@@ -60,7 +60,7 @@ public class PrintCertificateDispatchAction extends FenixDispatchAction {
         // InfoStudentCurricularPlan newInfoStudentCurricularPlan = new
         // InfoStudentCurricularPlan();
         if (session != null) {
-            IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+            IUserView userView = getUserView(request);
             session.removeAttribute(SessionConstants.MATRICULA);
             session.removeAttribute(SessionConstants.MATRICULA_ENROLMENT);
             session.removeAttribute(SessionConstants.DURATION_DEGREE);

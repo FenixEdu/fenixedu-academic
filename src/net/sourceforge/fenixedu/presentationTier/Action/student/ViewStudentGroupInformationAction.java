@@ -40,7 +40,7 @@ public class ViewStudentGroupInformationAction extends FenixContextAction {
 		throws FenixActionException, FenixFilterException, FenixServiceException {
 
 		HttpSession session = request.getSession(false);
-		IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+		IUserView userView = getUserView(request);
 
 		String studentGroupCodeString = request.getParameter("studentGroupCode");
 		Integer studentGroupCode = new Integer(studentGroupCodeString);

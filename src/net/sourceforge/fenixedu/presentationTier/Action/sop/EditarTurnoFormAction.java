@@ -33,7 +33,7 @@ public class EditarTurnoFormAction extends
         DynaActionForm editarTurnoForm = (DynaActionForm) form;
         HttpSession session = request.getSession(false);
         if (session != null) {
-            IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+            IUserView userView = getUserView(request);
 
             //			List infoTurnos =
             //				(ArrayList) session.getAttribute(

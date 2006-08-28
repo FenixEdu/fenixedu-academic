@@ -93,7 +93,7 @@ public class ListCandidatesDispatchAction extends FenixDispatchAction {
 	    String executionYear = (String) session.getAttribute(SessionConstants.EXECUTION_YEAR);
 	    listCandidatesForm.set("executionYear", executionYear);
 
-	    IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+	    IUserView userView = getUserView(request);
 
 	    // Get the Degree List
 
@@ -136,7 +136,7 @@ public class ListCandidatesDispatchAction extends FenixDispatchAction {
 
 	    DynaActionForm listCandidatesForm = (DynaActionForm) form;
 
-	    IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+	    IUserView userView = getUserView(request);
 
 	    // Get the Information
 	    String degreeTypeTemp = (String) listCandidatesForm.get("specialization");
@@ -220,7 +220,7 @@ public class ListCandidatesDispatchAction extends FenixDispatchAction {
 
 	if (session != null) {
 
-	    IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+	    IUserView userView = getUserView(request);
 	    Integer personID = Integer.valueOf(request.getParameter("personID"));
 	    request.setAttribute("candidateID", new Integer(request.getParameter("candidateID")));
 
@@ -251,7 +251,7 @@ public class ListCandidatesDispatchAction extends FenixDispatchAction {
 
 	if (session != null) {
 
-	    IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+	    IUserView userView = getUserView(request);
 	    Integer candidateID = (Integer) request.getAttribute("candidateID");
 
 	    if (candidateID == null) {
@@ -291,7 +291,7 @@ public class ListCandidatesDispatchAction extends FenixDispatchAction {
 
 	    DynaActionForm editCandidateForm = (DynaActionForm) form;
 
-	    IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+	    IUserView userView = getUserView(request);
 
 	    Integer candidateID = (Integer) request.getAttribute("candidateID");
 	    if (candidateID == null) {
@@ -357,7 +357,7 @@ public class ListCandidatesDispatchAction extends FenixDispatchAction {
 
 	    DynaActionForm editCandidateForm = (DynaActionForm) form;
 
-	    IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+	    IUserView userView = getUserView(request);
 
 	    Integer candidateID = (Integer) editCandidateForm.get("candidateID");
 
@@ -510,7 +510,7 @@ public class ListCandidatesDispatchAction extends FenixDispatchAction {
 
 	if (session != null) {
 
-	    IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+	    IUserView userView = getUserView(request);
 
 	    // Read the Candidate
 
@@ -702,7 +702,7 @@ public class ListCandidatesDispatchAction extends FenixDispatchAction {
     public ActionForward showApplicationDocuments(ActionMapping mapping, ActionForm form,
 	    HttpServletRequest request, HttpServletResponse response) throws Exception {
 	HttpSession session = request.getSession(false);
-	IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+	IUserView userView = getUserView(request);
 
 	String documentTypeStr = request.getParameter(REQUEST_DOCUMENT_TYPE);
 

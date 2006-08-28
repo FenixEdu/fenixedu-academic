@@ -69,7 +69,7 @@ public class CandidateRegistrationDispatchAction extends FenixDispatchAction {
             degreeCode = (String) candidateRegistration.get("degreeCode");
         }
 
-        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = getUserView(request);
 
         List result = null;
 
@@ -115,7 +115,7 @@ public class CandidateRegistrationDispatchAction extends FenixDispatchAction {
 
         DynaActionForm candidateRegistration = (DynaActionForm) form;
 
-        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = getUserView(request);
         Integer candidateID = new Integer(request.getParameter("candidateID"));
 
         candidateRegistration.set("candidateID", candidateID);
@@ -152,7 +152,7 @@ public class CandidateRegistrationDispatchAction extends FenixDispatchAction {
 
         DynaActionForm candidateRegistration = (DynaActionForm) form;
 
-        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = getUserView(request);
         Integer candidateID = (Integer) candidateRegistration.get("candidateID");
         Integer branchID = (Integer) candidateRegistration.get("branchID");
 
@@ -227,7 +227,7 @@ public class CandidateRegistrationDispatchAction extends FenixDispatchAction {
 
         DynaActionForm candidateRegistration = (DynaActionForm) form;
 
-        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = getUserView(request);
         Integer candidateID = (Integer) candidateRegistration.get("candidateID");
 
         InfoCandidateRegistration infoCandidateRegistration = null;

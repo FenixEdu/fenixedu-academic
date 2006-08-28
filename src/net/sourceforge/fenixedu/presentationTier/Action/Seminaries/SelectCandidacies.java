@@ -93,7 +93,7 @@ public class SelectCandidacies extends FenixDispatchAction {
     public ActionForward changeSelection(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
         HttpSession session = this.getSession(request);
-        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = getUserView(request);
         DynaActionForm selectCases = (DynaActionForm) form;
         Integer[] selectedStudents = null;
         Integer[] previousSelected = null;

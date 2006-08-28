@@ -35,7 +35,7 @@ public class ChangePersonPasswordAction extends FenixAction {
 
         if (session != null) {
             DynaActionForm changePasswordForm = (DynaActionForm) form;
-            IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+            IUserView userView = getUserView(request);
             String oldPassword = (String) changePasswordForm.get("oldPassword");
             String newPassword = (String) changePasswordForm.get("newPassword");
 

@@ -35,7 +35,7 @@ public class ReadCurricularCourseListAction extends FenixDispatchAction {
         }
         objectCode = new Integer(objectCodeString);
 
-        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = getUserView(request);
 
         Object args[] = { objectCode };
 

@@ -42,7 +42,7 @@ public class ChooseMasterDegreeDispatchAction extends FenixDispatchAction {
 
         // Get the Degree List
         Object args[] = { executionYear };
-        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = getUserView(request);
         List degreeList = null;
         try {
 

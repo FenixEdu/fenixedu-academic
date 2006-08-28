@@ -38,7 +38,7 @@ public class PrintGuideDispatchAction extends FenixDispatchAction {
         
         if (session != null) {
             
-            IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+            IUserView userView = getUserView(request);
             InfoGuide infoGuide = (InfoGuide) session.getAttribute(SessionConstants.GUIDE);
             String graduationType = (String) request.getAttribute("graduationType");
             if (graduationType == null) {
@@ -89,7 +89,7 @@ public class PrintGuideDispatchAction extends FenixDispatchAction {
             HttpServletResponse response) throws Exception {
         HttpSession session = request.getSession(false);
         if (session != null) {
-            IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+            IUserView userView = getUserView(request);
             Integer number = new Integer(request.getParameter("number"));
             Integer year = new Integer(request.getParameter("year"));
             Integer version = new Integer(request.getParameter("version"));

@@ -54,7 +54,7 @@ public class ManageNotNeedToEnrollDispathAction extends FenixDispatchAction {
 
         HttpSession session = request.getSession(false);
 
-        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = getUserView(request);
 
         String insert = (String) request.getParameter("insert");
         if (insert != null) {
@@ -111,7 +111,7 @@ public class ManageNotNeedToEnrollDispathAction extends FenixDispatchAction {
             HttpServletRequest request, HttpServletResponse response) throws Exception {
 
         HttpSession session = request.getSession(false);
-        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = getUserView(request);
 
         DynaActionForm notNeedToEnrollForm = (DynaActionForm) form;
         Integer[] curricularCoursesID = (Integer[]) notNeedToEnrollForm.get("curricularCoursesID");
@@ -131,7 +131,7 @@ public class ManageNotNeedToEnrollDispathAction extends FenixDispatchAction {
             HttpServletRequest request, HttpServletResponse response) throws Exception {
 
         HttpSession session = request.getSession(false);
-        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = getUserView(request);
 
         Integer notNeedToEnrollID = new Integer((String) request.getParameter("notNeedToEnrollID"));
         Object[] args = { notNeedToEnrollID };

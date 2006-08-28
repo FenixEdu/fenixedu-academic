@@ -80,7 +80,7 @@ public class PrintAllCandidatesListDispatchAction extends FenixDispatchAction {
 		else reqExportToExcel = false;
 
         HttpSession session = request.getSession(false);
-        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = getUserView(request);
 
 		// parse do valor do filtro e do dcpID
 		if (reqFilterBy!=null)
@@ -153,7 +153,7 @@ public class PrintAllCandidatesListDispatchAction extends FenixDispatchAction {
 		else reqExportToExcel = false;
 
 		HttpSession session = request.getSession(false);
-        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = getUserView(request);
 
         try {
         	filterBy = PrintAllCandidatesFilter.valueOf(reqFilterBy);

@@ -52,7 +52,7 @@ public class EnrollStudentGroupShiftDispatchAction extends FenixDispatchAction
     {
 
         HttpSession session = request.getSession(false);
-        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = getUserView(request);
 
         String groupPropertiesCodeString = request.getParameter("groupPropertiesCode");
         String studentGroupCodeString = request.getParameter("studentGroupCode");
@@ -192,7 +192,7 @@ public class EnrollStudentGroupShiftDispatchAction extends FenixDispatchAction
 
         DynaActionForm enrollStudentGroupForm = (DynaActionForm) form;
 
-        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = getUserView(request);
 
         String studentGroupCodeString = request.getParameter("studentGroupCode");
         String groupPropertiesCodeString = request.getParameter("groupPropertiesCode");

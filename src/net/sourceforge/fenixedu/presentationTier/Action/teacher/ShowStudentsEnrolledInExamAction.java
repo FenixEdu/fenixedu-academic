@@ -41,7 +41,7 @@ public class ShowStudentsEnrolledInExamAction extends FenixAction {
             HttpServletResponse response) throws FenixActionException, FenixFilterException {
 
         final HttpSession session = request.getSession(false);
-        final IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+        final IUserView userView = getUserView(request);
         
         final Integer executionCourseCode = Integer.valueOf(request.getParameter("objectCode"));
         final Integer writtenEvaluationCode = Integer.valueOf(request.getParameter("evaluationCode"));

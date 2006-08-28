@@ -61,7 +61,7 @@ public class CoordinationTeamDispatchAction extends FenixDispatchAction {
             FenixFilterException {
 
         HttpSession session = request.getSession(false);
-        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = getUserView(request);
 
         Integer degreeCurricularPlanID = null;
         if (request.getParameter("degreeCurricularPlanID") != null) {
@@ -106,7 +106,7 @@ public class CoordinationTeamDispatchAction extends FenixDispatchAction {
             HttpServletRequest request, HttpServletResponse response) throws FenixActionException,
             FenixFilterException {
         HttpSession session = request.getSession(false);
-        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = getUserView(request);
 
         Integer degreeCurricularPlanID = new Integer(Integer.parseInt(request
                 .getParameter("degreeCurricularPlanID")));
@@ -135,7 +135,7 @@ public class CoordinationTeamDispatchAction extends FenixDispatchAction {
             HttpServletRequest request, HttpServletResponse response) throws FenixActionException,
             FenixFilterException {
         HttpSession session = request.getSession(false);
-        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = getUserView(request);
         DynaActionForm teacherForm = (DynaActionForm) form;
         Integer teacherNumber = new Integer((String) teacherForm.get("teacherNumber"));
         String infoExecutionDegreeIdString = request.getParameter("infoExecutionDegreeId");
@@ -166,7 +166,7 @@ public class CoordinationTeamDispatchAction extends FenixDispatchAction {
             HttpServletRequest request, HttpServletResponse response) throws FenixActionException,
             FenixServiceException, FenixFilterException {
         HttpSession session = request.getSession(false);
-        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = getUserView(request);
         DynaActionForm removeCoordinatorsForm = (DynaActionForm) form;
         Integer[] coordinatorsIds = (Integer[]) removeCoordinatorsForm.get("coordinatorsIds");
         List coordinators = Arrays.asList(coordinatorsIds);

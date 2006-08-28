@@ -41,7 +41,7 @@ public class CurriculumDispatchActionForMasterDegreeAdministrativeOffice extends
 
         HttpSession session = request.getSession();
 
-        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = getUserView(request);
 
         String studentCurricularPlanID = request.getParameter("studentCPID");
         if (studentCurricularPlanID == null) {
@@ -85,7 +85,7 @@ public class CurriculumDispatchActionForMasterDegreeAdministrativeOffice extends
             HttpServletRequest request, HttpServletResponse response) throws Exception {
 
         HttpSession session = request.getSession();
-        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = getUserView(request);
 
         String studentNumber = getStudent(request);
         List infoStudents = null;

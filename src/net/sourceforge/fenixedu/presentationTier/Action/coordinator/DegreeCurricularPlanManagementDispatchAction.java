@@ -42,7 +42,7 @@ public class DegreeCurricularPlanManagementDispatchAction extends FenixDispatchA
             HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
 
         final HttpSession session = request.getSession(false);
-        final IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+        final IUserView userView = getUserView(request);
 
         final Integer degreeCurricularPlanID = getAndSetIntegerToRequest("degreeCurricularPlanID", request);
         
@@ -100,7 +100,7 @@ public class DegreeCurricularPlanManagementDispatchAction extends FenixDispatchA
             HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
 
         HttpSession session = request.getSession(false);
-        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = getUserView(request);
 
         Integer degreeCurricularPlanID = getAndSetIntegerToRequest("degreeCurricularPlanID", request);       
 
@@ -201,7 +201,7 @@ public class DegreeCurricularPlanManagementDispatchAction extends FenixDispatchA
             HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixServiceException, FenixFilterException {
 
         HttpSession session = request.getSession(false);
-        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = getUserView(request);
 
         Integer infoCurricularCourseCode = getAndSetIntegerToRequest("infoCurricularCourseCode", request);
         Integer degreeCurricularPlanID = getAndSetIntegerToRequest("degreeCurricularPlanID", request);
@@ -339,7 +339,7 @@ public class DegreeCurricularPlanManagementDispatchAction extends FenixDispatchA
     public ActionForward viewCurricularCourseInformationHistory(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
         HttpSession session = request.getSession(false);
-        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = getUserView(request);
 
         Integer infoCurricularCourseCode = getAndSetIntegerToRequest("infoCurricularCourseCode", request);
         String executionYear = getAndSetStringToRequest("executionYear", request);
@@ -393,7 +393,7 @@ public class DegreeCurricularPlanManagementDispatchAction extends FenixDispatchA
     public ActionForward prepareEditCurriculum(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
         HttpSession session = request.getSession(false);
-        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = getUserView(request);
 
         Integer infoExecutionDegreeCode = getAndSetIntegerToRequest("infoExecutionDegreeCode", request);
         Integer infoCurricularCourseCode = getAndSetIntegerToRequest("infoCurricularCourseCode", request);
@@ -488,7 +488,7 @@ public class DegreeCurricularPlanManagementDispatchAction extends FenixDispatchA
     public ActionForward editCurriculum(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixServiceException, FenixFilterException {
         HttpSession session = request.getSession(false);
-        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = getUserView(request);
 
         Integer infoExecutionDegreeCode = getAndSetIntegerToRequest("infoExecutionDegreeCode", request);
         Integer infoCurricularCourseCode = getAndSetIntegerToRequest("infoCurricularCourseCode", request);

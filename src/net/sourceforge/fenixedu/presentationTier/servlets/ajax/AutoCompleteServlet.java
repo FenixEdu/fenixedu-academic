@@ -9,11 +9,10 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
+import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 
 import org.apache.commons.beanutils.BeanUtils;
@@ -106,8 +105,7 @@ public class AutoCompleteServlet extends HttpServlet {
     }
 
     private IUserView getUserView(HttpServletRequest request) {
-        HttpSession session = request.getSession(false);
-        return (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+        return SessionUtils.getUserView(request);
     }
 
     private String getResponseHtml(List result, String labelField, String format, String valueField, String styleClass) {

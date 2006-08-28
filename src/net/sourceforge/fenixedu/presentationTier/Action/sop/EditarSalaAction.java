@@ -54,7 +54,7 @@ public class EditarSalaAction extends FenixSelectedRoomsAndSelectedRoomIndexCont
         }
 
         // Read edited values from form
-        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = getUserView(request);
         DynaActionForm salaBean = (DynaActionForm) form;
         InfoRoomEditor editedRoom = new InfoRoomEditor((String) salaBean.get("name"), (String) salaBean
                 .get("building"), new Integer((String) salaBean.get("floor")), new TipoSala(new Integer(

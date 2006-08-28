@@ -39,9 +39,7 @@ public class GenerateNewPasswordDispatchAction extends FenixDispatchAction {
     public ActionForward findPerson(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
-        HttpSession session = request.getSession();
-
-        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = getUserView(request);
 
         DynaActionForm newPasswordForm = (DynaActionForm) form;
 
@@ -66,7 +64,7 @@ public class GenerateNewPasswordDispatchAction extends FenixDispatchAction {
 
         HttpSession session = request.getSession();
 
-        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = getUserView(request);
 
         Integer personID = new Integer(request.getParameter("personID"));
 

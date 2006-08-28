@@ -47,7 +47,7 @@ public class TutorManagementDispatchAction extends FenixDispatchAction {
         //This code is temporary, it just verify if the coordinator logged is a
         // LEEC's coordinator
         HttpSession session = request.getSession();
-        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = getUserView(request);
 
         Object[] args = { Integer.valueOf(executionDegreeId), userView.getUtilizador(), "LEEC" };
         Boolean authorized = Boolean.FALSE;

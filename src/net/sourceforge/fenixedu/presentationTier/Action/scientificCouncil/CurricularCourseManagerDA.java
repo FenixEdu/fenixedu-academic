@@ -45,7 +45,7 @@ public class CurricularCourseManagerDA extends FenixDispatchAction {
             HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
         HttpSession session = request.getSession(false);
         if (session != null) {
-            IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+            IUserView userView = getUserView(request);
             ISiteComponent component = new InfoSiteSCDegrees();
             readSiteView(request, userView, null, null, null, component);
             return mapping.findForward("selectDegree");
@@ -58,7 +58,7 @@ public class CurricularCourseManagerDA extends FenixDispatchAction {
             HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
         HttpSession session = request.getSession(false);
         if (session != null) {
-            IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+            IUserView userView = getUserView(request);
 
             String degreeIdString = request.getParameter("index");
 
@@ -75,7 +75,7 @@ public class CurricularCourseManagerDA extends FenixDispatchAction {
             HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
         HttpSession session = request.getSession(false);
         if (session != null) {
-            IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+            IUserView userView = getUserView(request);
 
             String degreeCurricularPlanIdString = request.getParameter("index");
             Integer degreeCurricularPlanId = new Integer(degreeCurricularPlanIdString);
@@ -92,7 +92,7 @@ public class CurricularCourseManagerDA extends FenixDispatchAction {
             HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
         HttpSession session = request.getSession(false);
         if (session != null) {
-            IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+            IUserView userView = getUserView(request);
 
             String degreeCurricularPlanIdString = request.getParameter("index");
             Integer degreeCurricularPlanId = new Integer(degreeCurricularPlanIdString);
@@ -127,7 +127,7 @@ public class CurricularCourseManagerDA extends FenixDispatchAction {
             HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
         HttpSession session = request.getSession(false);
         if (session != null) {
-            IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+            IUserView userView = getUserView(request);
 
             DynaActionForm basicCoursesList = (DynaActionForm) form;
             String[] coursesIdsString = (String[]) basicCoursesList.get("basicCurricularCourses");
@@ -156,7 +156,7 @@ public class CurricularCourseManagerDA extends FenixDispatchAction {
             HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
         HttpSession session = request.getSession(false);
         if (session != null) {
-            IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+            IUserView userView = getUserView(request);
 
             String curricularCourseIdString = request.getParameter("index");
 
@@ -179,7 +179,7 @@ public class CurricularCourseManagerDA extends FenixDispatchAction {
             HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
         HttpSession session = request.getSession(false);
         if (session != null) {
-            IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+            IUserView userView = getUserView(request);
 
             String curriculumIdString = request.getParameter("index");
 
@@ -202,7 +202,7 @@ public class CurricularCourseManagerDA extends FenixDispatchAction {
             HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
         HttpSession session = request.getSession(false);
         if (session != null) {
-            IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+            IUserView userView = getUserView(request);
 
             String program = request.getParameter("program");
             String programEn = request.getParameter("programEn");
@@ -237,7 +237,7 @@ public class CurricularCourseManagerDA extends FenixDispatchAction {
             HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
         HttpSession session = request.getSession(false);
         if (session != null) {
-            IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+            IUserView userView = getUserView(request);
 
             String curricularCourseIdString = request.getParameter("index");
 
@@ -260,7 +260,7 @@ public class CurricularCourseManagerDA extends FenixDispatchAction {
             HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
         HttpSession session = request.getSession(false);
         if (session != null) {
-            IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+            IUserView userView = getUserView(request);
 
             String program = request.getParameter("program");
             String programEn = request.getParameter("programEn");

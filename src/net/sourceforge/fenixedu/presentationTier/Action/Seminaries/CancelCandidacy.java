@@ -30,7 +30,7 @@ public class CancelCandidacy extends FenixAction {
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixActionException {
         HttpSession session = this.getSession(request);
-        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = getUserView(request);
         String candidacyIDString = request.getParameter("objectCode");
         Integer candidacyID;
         if (candidacyIDString == null)

@@ -37,7 +37,7 @@ public class EditSectionDispatchAction extends FenixDispatchAction {
 
         HttpSession session = request.getSession(false);
 
-        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = getUserView(request);
         InfoSite infoSite = (InfoSite) session.getAttribute(SessionConstants.INFO_SITE);
 
         InfoSection currentSection = (InfoSection) session.getAttribute(SessionConstants.INFO_SECTION);
@@ -90,7 +90,7 @@ public class EditSectionDispatchAction extends FenixDispatchAction {
         order = new Integer(order.intValue() - 1);
         HttpSession session = request.getSession(false);
 
-        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = getUserView(request);
         InfoSite infoSite = (InfoSite) session.getAttribute(SessionConstants.INFO_SITE);
         InfoSection oldSection = (InfoSection) session.getAttribute(SessionConstants.INFO_SECTION);
 
@@ -152,7 +152,7 @@ public class EditSectionDispatchAction extends FenixDispatchAction {
 
         DynaActionForm sectionForm = (DynaValidatorForm) form;
         Integer index = (Integer) sectionForm.get("sectionIndex");
-        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = getUserView(request);
 
         List allSections = (List) session.getAttribute(SessionConstants.POSSIBLE_PARENT_SECTIONS);
 

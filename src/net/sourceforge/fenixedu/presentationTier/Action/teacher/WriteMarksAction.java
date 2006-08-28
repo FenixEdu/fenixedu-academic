@@ -171,7 +171,7 @@ public class WriteMarksAction extends FenixDispatchAction {
 
     private void prepareInputForward(HttpServletRequest request, HttpSession session,
             Integer objectCode, Integer evaluationCode) throws FenixActionException, FenixFilterException {
-        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = getUserView(request);
         ISiteComponent commonComponent = new InfoSiteCommon();
         Object[] args = { objectCode, commonComponent, new InfoEvaluation(), null, evaluationCode, null };
 
@@ -203,7 +203,7 @@ public class WriteMarksAction extends FenixDispatchAction {
         request.setAttribute("objectCode", objectCode);
         request.setAttribute("evaluationCode", evaluationCode);
 
-        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = getUserView(request);
 
         Object[] args = { objectCode, evaluationCode, hashMarks };
         TeacherAdministrationSiteView siteView = null;

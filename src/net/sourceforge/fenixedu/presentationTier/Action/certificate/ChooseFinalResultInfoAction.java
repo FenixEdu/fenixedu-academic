@@ -71,7 +71,7 @@ public class ChooseFinalResultInfoAction extends FenixDispatchAction {
 
             DynaActionForm chooseDeclaration = (DynaActionForm) form;
 
-            IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+            IUserView userView = getUserView(request);
 
             //remove sessions variables
             session.removeAttribute(SessionConstants.DEGREE_TYPE);
@@ -138,7 +138,7 @@ public class ChooseFinalResultInfoAction extends FenixDispatchAction {
         HttpSession session = request.getSession(false);
 
         if (session != null) {
-            IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+            IUserView userView = getUserView(request);
 
             session.removeAttribute(SessionConstants.INFO_STUDENT_CURRICULAR_PLAN);
             session.removeAttribute(SessionConstants.DATE);

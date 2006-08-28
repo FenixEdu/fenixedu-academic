@@ -54,7 +54,7 @@ public class EditStudentPersonInfoDispatchAction extends FenixDispatchAction {
 	session.removeAttribute(SessionConstants.CANDIDATE_SITUATION_LIST);
 
 	if (session != null) {
-	    IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+	    IUserView userView = getUserView(request);
 	    Integer personId = 0;
 	    try {
 		personId = new Integer(getFromRequest("personId", request));
@@ -122,7 +122,7 @@ public class EditStudentPersonInfoDispatchAction extends FenixDispatchAction {
 	HttpSession session = request.getSession(false);
 	if (session != null) {
 	    DynaActionForm changeApplicationInfoForm = (DynaActionForm) form;
-	    IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+	    IUserView userView = getUserView(request);
 
 	    Integer personCode = Integer.valueOf(getFromRequest("idInternal", request));
 

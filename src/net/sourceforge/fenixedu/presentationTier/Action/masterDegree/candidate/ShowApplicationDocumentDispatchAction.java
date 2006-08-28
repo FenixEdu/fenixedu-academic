@@ -39,7 +39,7 @@ public class ShowApplicationDocumentDispatchAction extends FenixDispatchAction {
     public ActionForward showApplicationDocuments(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
         HttpSession session = request.getSession(false);
-        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = getUserView(request);
         ActionErrors actionErrors = new ActionErrors();
 
         request.setAttribute("candidateID", request.getParameter("candidateID"));

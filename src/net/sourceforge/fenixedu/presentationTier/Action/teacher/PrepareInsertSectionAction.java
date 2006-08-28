@@ -43,7 +43,7 @@ public class PrepareInsertSectionAction extends FenixDispatchAction {
 
         InfoSite infoSite = (InfoSite) session.getAttribute(SessionConstants.INFO_SITE);
 
-        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = getUserView(request);
 
         InfoSection parentSection = (InfoSection) session.getAttribute(SessionConstants.INFO_SECTION);
 
@@ -73,7 +73,7 @@ public class PrepareInsertSectionAction extends FenixDispatchAction {
 
         InfoSite infoSite = (InfoSite) session.getAttribute(SessionConstants.INFO_SITE);
 
-        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = getUserView(request);
 
         session.removeAttribute(SessionConstants.INFO_SECTION);
 

@@ -48,7 +48,7 @@ public class ChooseCurricularCourseDispatchAction extends FenixDispatchAction {
 
         // Get the Curricular Course List
         Object args[] = { executionYear, degree };
-        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = getUserView(request);
         List curricularCourseList = null;
         try {
             curricularCourseList = (ArrayList) ServiceManagerServiceFactory.executeService(userView,
@@ -82,7 +82,7 @@ public class ChooseCurricularCourseDispatchAction extends FenixDispatchAction {
         request.setAttribute("degree", getFromRequest("degree", request));
         request.setAttribute("jspTitle", getFromRequest("jspTitle", request));
 
-        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = getUserView(request);
         Object args[] = { userView, courseID, executionYear };
 
         List listEnrolmentEvaluation = null;
@@ -119,7 +119,7 @@ public class ChooseCurricularCourseDispatchAction extends FenixDispatchAction {
         request.setAttribute("courseID", getFromRequest("courseID", request));
 
         Integer courseID = new Integer(getFromRequest("courseID", request));
-        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = getUserView(request);
 
         List studentList = null;
         try {

@@ -118,7 +118,7 @@ public class ShowCandidacies extends FenixAction {
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixActionException {
         HttpSession session = this.getSession(request);
-        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = getUserView(request);
         //
         List candidacies = new LinkedList();
         ActionForward destiny = null;

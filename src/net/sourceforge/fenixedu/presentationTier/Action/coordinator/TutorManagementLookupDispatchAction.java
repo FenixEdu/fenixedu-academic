@@ -17,7 +17,7 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
-import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
+import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
 
 import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionErrors;
@@ -38,7 +38,7 @@ public class TutorManagementLookupDispatchAction extends LookupDispatchAction {
         ActionErrors errors = new ActionErrors();
 
         HttpSession session = request.getSession();
-        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = SessionUtils.getUserView(request);
 
         DynaActionForm tutorForm = (DynaActionForm) actionForm;
         Integer tutorNumber = Integer.valueOf((String) tutorForm.get("tutorNumber"));
@@ -96,8 +96,7 @@ public class TutorManagementLookupDispatchAction extends LookupDispatchAction {
             HttpServletRequest request, HttpServletResponse response) throws Exception {
         ActionErrors errors = new ActionErrors();
 
-        HttpSession session = request.getSession();
-        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = SessionUtils.getUserView(request);
 
         DynaActionForm tutorForm = (DynaActionForm) actionForm;
         Integer tutorNumber = Integer.valueOf((String) tutorForm.get("tutorNumber"));
@@ -159,8 +158,7 @@ public class TutorManagementLookupDispatchAction extends LookupDispatchAction {
             HttpServletRequest request, HttpServletResponse response) throws Exception {
         ActionErrors errors = new ActionErrors();
 
-        HttpSession session = request.getSession();
-        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = SessionUtils.getUserView(request);
 
         DynaActionForm tutorForm = (DynaActionForm) actionForm;
         Integer tutorNumber = Integer.valueOf((String) tutorForm.get("tutorNumber"));

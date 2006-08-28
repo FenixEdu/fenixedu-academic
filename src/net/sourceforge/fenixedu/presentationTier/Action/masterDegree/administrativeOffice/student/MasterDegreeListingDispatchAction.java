@@ -44,7 +44,7 @@ public class MasterDegreeListingDispatchAction extends FenixDispatchAction {
 
             session.removeAttribute(SessionConstants.MASTER_DEGREE_LIST);
 
-            IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+            IUserView userView = getUserView(request);
 
             DegreeType degreeType = DegreeType.MASTER_DEGREE;
 
@@ -72,7 +72,7 @@ public class MasterDegreeListingDispatchAction extends FenixDispatchAction {
 
         if (session != null) {
 
-            IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+            IUserView userView = getUserView(request);
 
             //Get the Chosen Master Degree
             Integer masterDegreeID = new Integer(request.getParameter("degreeID"));
@@ -118,7 +118,7 @@ public class MasterDegreeListingDispatchAction extends FenixDispatchAction {
 
         HttpSession session = request.getSession(false);
 
-        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = getUserView(request);
 
         //Get the Selected Degree Curricular Plan
         Integer degreeCurricularPlanID = new Integer(request.getParameter("curricularPlanID"));

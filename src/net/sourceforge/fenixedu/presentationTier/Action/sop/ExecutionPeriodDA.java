@@ -49,7 +49,7 @@ public class ExecutionPeriodDA extends FenixContextDispatchAction {
             HttpServletResponse response) throws Exception {
         HttpSession session = request.getSession(false);
 
-        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = getUserView(request);
 
         InfoExecutionPeriod selectedExecutionPeriod = (InfoExecutionPeriod) request
                 .getAttribute(SessionConstants.EXECUTION_PERIOD);
@@ -112,7 +112,7 @@ public class ExecutionPeriodDA extends FenixContextDispatchAction {
         HttpSession session = request.getSession(false);
         DynaActionForm indexForm = (DynaActionForm) form;
 
-        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = getUserView(request);
 
         // get selected execution period
         InfoExecutionPeriod selectedInfoExecutionPeriod = null;

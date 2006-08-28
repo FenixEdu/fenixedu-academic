@@ -177,7 +177,7 @@ public class SummaryManagerAction extends TeacherAdministrationViewerDispatchAct
             FenixFilterException {
         
         HttpSession session = request.getSession(false);
-        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = getUserView(request);
 
         Integer objectCode = getObjectCode(request);
         request.setAttribute("objectCode", objectCode);
@@ -400,7 +400,7 @@ public class SummaryManagerAction extends TeacherAdministrationViewerDispatchAct
             FenixServiceException {
         try {
             HttpSession session = request.getSession(false);
-            IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+            IUserView userView = getUserView(request);
 
             Integer executionCourseId = getObjectCode(request);
             request.setAttribute("objectCode", executionCourseId);
@@ -535,7 +535,7 @@ public class SummaryManagerAction extends TeacherAdministrationViewerDispatchAct
             FenixFilterException {
 
         HttpSession session = request.getSession(false);
-        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = getUserView(request);
         DynaActionForm summaryForm = (DynaActionForm) form;
 
         String summaryIdString = request.getParameter("summaryCode");
@@ -692,7 +692,7 @@ public class SummaryManagerAction extends TeacherAdministrationViewerDispatchAct
             HttpServletResponse response) throws FenixServiceException, FenixFilterException {
         try {
             HttpSession session = request.getSession(false);
-            IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+            IUserView userView = getUserView(request);
 
             String summaryIdString = request.getParameter("summaryCode");
             Integer summaryId = new Integer(summaryIdString);
@@ -731,7 +731,7 @@ public class SummaryManagerAction extends TeacherAdministrationViewerDispatchAct
             HttpServletRequest request, HttpServletResponse response) {
         try {
             HttpSession session = request.getSession(false);
-            IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+            IUserView userView = getUserView(request);
 
             String summaryIdString = request.getParameter("summaryCode");
             Integer summaryId = new Integer(summaryIdString);

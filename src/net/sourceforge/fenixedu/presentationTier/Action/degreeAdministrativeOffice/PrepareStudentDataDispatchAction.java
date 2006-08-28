@@ -30,7 +30,7 @@ public class PrepareStudentDataDispatchAction extends FenixDispatchAction {
         DynaActionForm getStudentByNumberAndDegreeTypeForm = (DynaActionForm) form;
         HttpSession session = request.getSession();
 
-        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = getUserView(request);
 
         Integer degreeType = null;
         Integer studentNumber = null;

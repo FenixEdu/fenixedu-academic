@@ -38,7 +38,7 @@ public class ViewShiftsAndGroupsAction extends FenixContextAction {
             HttpServletResponse response) throws FenixActionException, FenixFilterException, FenixServiceException {
 
         HttpSession session = request.getSession(false);
-        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = getUserView(request);
 
         String groupPropertiesCodeString = request.getParameter("groupPropertiesCode");
 

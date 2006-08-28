@@ -98,7 +98,7 @@ public class GenerateFilesAction extends FenixDispatchAction {
             HttpServletRequest request, HttpServletResponse response) throws Exception {
         HttpSession session = request.getSession();
 
-        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = getUserView(request);
         ActionErrors errors = new ActionErrors();
 
         String fileType = request.getParameter("file");

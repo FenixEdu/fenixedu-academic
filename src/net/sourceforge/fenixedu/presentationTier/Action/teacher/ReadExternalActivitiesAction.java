@@ -37,7 +37,7 @@ public class ReadExternalActivitiesAction extends FenixAction {
             HttpServletRequest request, HttpServletResponse response) throws Exception {
         HttpSession session = request.getSession(false);
 
-        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = getUserView(request);
 
         if (session != null) {
             Object[] args = { userView.getUtilizador() };

@@ -28,7 +28,7 @@ public class AccessAnnouncementManagementAction extends FenixAction {
 
         HttpSession session = request.getSession(false);
         session.removeAttribute(SessionConstants.INFO_SECTION);
-        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = getUserView(request);
 
         InfoSite infoSite = (InfoSite) session.getAttribute(SessionConstants.INFO_SITE);
 

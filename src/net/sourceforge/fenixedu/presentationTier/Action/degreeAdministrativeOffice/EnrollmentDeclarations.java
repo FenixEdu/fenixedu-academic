@@ -44,7 +44,7 @@ public class EnrollmentDeclarations extends FenixDispatchAction {
 
         HttpSession session = request.getSession(false);
 
-        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = getUserView(request);
 
         DynaActionForm studentsNumberForm = (DynaActionForm) form;
         Integer firstStudentNumber = new Integer((String) studentsNumberForm.get("firstStudentNumber"));

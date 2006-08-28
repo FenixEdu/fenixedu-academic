@@ -48,7 +48,7 @@ public class GuideListingByStateDispatchAction extends FenixDispatchAction {
 
         HttpSession session = request.getSession(false);
 
-        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = getUserView(request);
 
         DynaActionForm chooseGuide = (DynaActionForm) form;
 

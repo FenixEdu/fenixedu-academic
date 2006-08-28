@@ -630,7 +630,7 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
         Integer fileItemId = getFileItemId(request);
 
         HttpSession session = request.getSession(false);
-        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = getUserView(request);
         Object[] args = { item.getIdInternal(), fileItemId };
         try {
             ServiceUtils.executeService(userView, "DeleteFileItemFromItem", args);

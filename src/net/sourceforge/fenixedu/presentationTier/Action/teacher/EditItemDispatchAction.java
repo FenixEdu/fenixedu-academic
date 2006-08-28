@@ -69,7 +69,7 @@ public class EditItemDispatchAction extends FenixDispatchAction {
         DynaActionForm itemForm = (DynaActionForm) form;
         HttpSession session = request.getSession(false);
 
-        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = getUserView(request);
 
         InfoSection infoSection = (InfoSection) session.getAttribute(SessionConstants.INFO_SECTION);
 

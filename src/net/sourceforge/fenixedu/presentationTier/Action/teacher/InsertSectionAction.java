@@ -41,7 +41,7 @@ public class InsertSectionAction extends FenixAction {
 
         InfoSite infoSite = (InfoSite) session.getAttribute(SessionConstants.INFO_SITE);
 
-        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = getUserView(request);
 
         InfoSection parentSection = (InfoSection) session.getAttribute(SessionConstants.INFO_SECTION);
 

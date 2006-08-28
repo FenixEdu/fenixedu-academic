@@ -66,7 +66,7 @@ public class InsertItemDispatchAction extends FenixDispatchAction {
             HttpServletResponse response) throws FenixActionException, FenixFilterException {
 
         HttpSession session = request.getSession(false);
-        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = getUserView(request);
         DynaActionForm dynaForm = (DynaValidatorForm) form;
         InfoSection infoSection = (InfoSection) session.getAttribute(SessionConstants.INFO_SECTION);
 

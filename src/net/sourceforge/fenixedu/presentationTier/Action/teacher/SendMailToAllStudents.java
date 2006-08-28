@@ -55,7 +55,7 @@ public class SendMailToAllStudents extends FenixDispatchAction {
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixActionException, FenixServiceException, FenixFilterException {
         HttpSession session = this.getSession(request);
-        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = getUserView(request);
         TeacherAdministrationSiteView siteView = null;
         Integer objectCode = null;
         // Integer shiftID = null;
@@ -96,7 +96,7 @@ public class SendMailToAllStudents extends FenixDispatchAction {
             HttpServletRequest request, HttpServletResponse response) throws FenixActionException,
             FenixServiceException, FenixFilterException {
         HttpSession session = this.getSession(request);
-        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = getUserView(request);
         TeacherAdministrationSiteView siteView = null;
         Object argsReadPerson[] = { userView.getUtilizador() };
         InfoPerson infoPerson = null;
@@ -190,7 +190,7 @@ public class SendMailToAllStudents extends FenixDispatchAction {
     public ActionForward sendMailCandidacies(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
         HttpSession session = this.getSession(request);
-        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = getUserView(request);
         //
         String from = request.getParameter("from");
         String fromName = request.getParameter("fromName");
@@ -265,7 +265,7 @@ public class SendMailToAllStudents extends FenixDispatchAction {
             HttpServletResponse response) throws FenixActionException, FenixServiceException,
             FenixFilterException {
         HttpSession session = this.getSession(request);
-        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = getUserView(request);
         Integer objectCode = null;
         Integer shiftID = null;
         Integer groupCode = null;

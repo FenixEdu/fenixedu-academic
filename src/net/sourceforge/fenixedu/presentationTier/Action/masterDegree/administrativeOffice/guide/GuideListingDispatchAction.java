@@ -65,7 +65,7 @@ public class GuideListingDispatchAction extends FenixDispatchAction {
 
             DynaActionForm chooseGuideForm = (DynaActionForm) form;
 
-            IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+            IUserView userView = getUserView(request);
 
             // Get the Information
             Integer guideYear = new Integer((String) chooseGuideForm.get("year"));
@@ -94,7 +94,7 @@ public class GuideListingDispatchAction extends FenixDispatchAction {
 
         if (session != null) {
 
-            IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+            IUserView userView = getUserView(request);
             Integer guideYear = new Integer(request.getParameter("year"));
             Integer guideNumber = new Integer(request.getParameter("number"));
 
@@ -145,7 +145,7 @@ public class GuideListingDispatchAction extends FenixDispatchAction {
 
         if (session != null) {
 
-            IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+            IUserView userView = getUserView(request);
             DynaActionForm choosePersonForm = (DynaActionForm) form;
 
             String identificationDocumentNumber = (String) choosePersonForm
@@ -212,7 +212,7 @@ public class GuideListingDispatchAction extends FenixDispatchAction {
 
         if (session != null) {
 
-            IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+            IUserView userView = getUserView(request);
 
             Integer personID = Integer.valueOf(request.getParameter("personID"));
 

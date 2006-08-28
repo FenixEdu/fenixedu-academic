@@ -38,7 +38,7 @@ public class ChangePersonalInfoDispatchAction extends FenixDispatchAction {
 
         DynaActionForm changePersonalInformationForm = (DynaActionForm) form;
 
-        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = getUserView(request);
 
         // Clear the Session
         session.removeAttribute(SessionConstants.NATIONALITY_LIST_KEY);
@@ -91,7 +91,7 @@ public class ChangePersonalInfoDispatchAction extends FenixDispatchAction {
 
         DynaActionForm changePersonalInfoForm = (DynaActionForm) form;
 
-        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = getUserView(request);
 
         Object changeArgs[] = { userView.getUtilizador() };
         Object result = null;

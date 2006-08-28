@@ -58,7 +58,7 @@ public class ChooseCertificateInfoAction extends FenixDispatchAction {
             session.removeAttribute(SessionConstants.DOCUMENT_REASON);
             session.removeAttribute(SessionConstants.CERTIFICATE_LIST);
 
-            IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+            IUserView userView = getUserView(request);
 
             List types = new ArrayList();
             types.add(DocumentType.CERTIFICATE);
@@ -101,7 +101,7 @@ public class ChooseCertificateInfoAction extends FenixDispatchAction {
 
             DynaActionForm chooseDeclaration = (DynaActionForm) form;
 
-            IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+            IUserView userView = getUserView(request);
 
             // remove sessions variables
             session.removeAttribute(SessionConstants.INFO_STUDENT_CURRICULAR_PLAN);
@@ -188,7 +188,7 @@ public class ChooseCertificateInfoAction extends FenixDispatchAction {
             session.removeAttribute(SessionConstants.DEGREE_TYPE);
             session.removeAttribute(SessionConstants.DATE);
 
-            IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+            IUserView userView = getUserView(request);
 
             String certificateString = (String) session.getAttribute(SessionConstants.CERTIFICATE_TYPE);
 

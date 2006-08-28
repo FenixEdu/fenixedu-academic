@@ -36,7 +36,7 @@ public class MarksListAction extends FenixDispatchAction {
 
         HttpSession session = request.getSession(false);
 
-        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = getUserView(request);
 
         Integer executionCourseCode = getFromRequest("objectCode", request);
 
@@ -71,7 +71,7 @@ public class MarksListAction extends FenixDispatchAction {
             HttpServletRequest request, HttpServletResponse response) throws Exception {
         HttpSession session = request.getSession(false);
 
-        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = getUserView(request);
 
         Integer executionCourseCode = getFromRequest("objectCode", request);
 
@@ -112,7 +112,7 @@ public class MarksListAction extends FenixDispatchAction {
         Integer infoExecutionCourseCode = getFromRequest("objectCode", request);
 
         ISiteComponent commonComponent = new InfoSiteCommon();
-        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = getUserView(request);
         Object[] args = { infoExecutionCourseCode, commonComponent, new InfoEvaluation(), null,
                 evaluationCode, null };
         TeacherAdministrationSiteView siteView = null;
@@ -154,7 +154,7 @@ public class MarksListAction extends FenixDispatchAction {
         }
 
         Object[] args = { objectCode, evaluationCode, publishmentMessage, sendSMS, announcementTitle };
-        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = getUserView(request);
         try {
             ServiceUtils.executeService(userView, "PublishMarks", args);
         } catch (FenixServiceException e) {

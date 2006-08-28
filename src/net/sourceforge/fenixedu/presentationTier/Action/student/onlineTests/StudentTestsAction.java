@@ -52,7 +52,7 @@ public class StudentTestsAction extends FenixDispatchAction {
     public ActionForward viewStudentExecutionCoursesWithTests(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
         HttpSession session = request.getSession();
-        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = getUserView(request);
 
         List studentExecutionCoursesList = null;
         try {
@@ -70,7 +70,7 @@ public class StudentTestsAction extends FenixDispatchAction {
             throws FenixActionException, FenixFilterException {
 
         HttpSession session = request.getSession();
-        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = getUserView(request);
 
         InfoSiteStudentDistributedTests infoSiteStudentDistributedTests = null;
         String objectCode = request.getParameter("objectCode");
@@ -89,7 +89,7 @@ public class StudentTestsAction extends FenixDispatchAction {
             throws FenixActionException, FenixFilterException {
 
         HttpSession session = request.getSession();
-        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = getUserView(request);
 
         Integer testCode = null;
 
@@ -145,7 +145,7 @@ public class StudentTestsAction extends FenixDispatchAction {
             throws FenixActionException, FenixFilterException {
 
         HttpSession session = request.getSession(false);
-        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = getUserView(request);
 
         String testCode = request.getParameter("testCode");
         String exerciseIdString = request.getParameter("exerciseCode");
@@ -183,7 +183,7 @@ public class StudentTestsAction extends FenixDispatchAction {
             throws FenixActionException, FenixFilterException {
 
         HttpSession session = request.getSession(false);
-        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = getUserView(request);
         Integer testCode = null;
         String objectCode = request.getParameter("objectCode");
         Integer studentCode = new Integer(request.getParameter("studentCode"));
@@ -272,7 +272,7 @@ public class StudentTestsAction extends FenixDispatchAction {
             throws FenixActionException, FenixFilterException {
 
         HttpSession session = request.getSession(false);
-        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = getUserView(request);
 
         Integer testCode = null;
         try {

@@ -42,7 +42,7 @@ public class ChooseExecutionYearDispatchAction extends FenixDispatchAction {
 
             session.removeAttribute(SessionConstants.MASTER_DEGREE_LIST);
 
-            IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+            IUserView userView = getUserView(request);
 
             DegreeType degreeType = DegreeType.MASTER_DEGREE;
 
@@ -70,7 +70,7 @@ public class ChooseExecutionYearDispatchAction extends FenixDispatchAction {
 
         if (session != null) {
 
-            IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+            IUserView userView = getUserView(request);
 
             //Get the Chosen Master Degree
             Integer masterDegreeID = new Integer(request.getParameter("degreeID"));
@@ -105,7 +105,7 @@ public class ChooseExecutionYearDispatchAction extends FenixDispatchAction {
         // Get Execution Year List
         /*
          * MessageResources messages = getResources(request); IUserView userView =
-         * (IUserView) session.getAttribute(SessionConstants.U_VIEW); ArrayList
+         * getUserView(request); ArrayList
          * executionYearList = null; try { executionYearList = (ArrayList)
          * ServiceManagerServiceFactory.executeService( userView,
          * "ReadNotClosedExecutionYears", null); } catch
@@ -123,7 +123,7 @@ public class ChooseExecutionYearDispatchAction extends FenixDispatchAction {
         HttpSession session = request.getSession(false);
 
         if (session != null) {
-            IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+            IUserView userView = getUserView(request);
 
             //Get the Chosen Master Degree
             Integer curricularPlanID = new Integer(request.getParameter("curricularPlanID"));

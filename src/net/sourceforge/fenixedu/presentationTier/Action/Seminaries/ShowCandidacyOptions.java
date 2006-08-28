@@ -40,7 +40,7 @@ public class ShowCandidacyOptions extends FenixAction {
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixActionException {
         HttpSession session = this.getSession(request);
-        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = getUserView(request);
         String seminaryIDString = request.getParameter("objectCode");
         Integer seminaryID;
         if (seminaryIDString == null)

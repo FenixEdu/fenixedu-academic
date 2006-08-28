@@ -42,7 +42,7 @@ public class SeniorInformationAction extends FenixDispatchAction {
             HttpServletResponse response) throws Exception {
 
         HttpSession session = request.getSession(false);
-        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = getUserView(request);
 
         Object[] args = { userView };
         InfoSenior infoSenior = (InfoSenior) ServiceUtils.executeService(userView,

@@ -30,7 +30,7 @@ public class ShowMarksListOptionsAction extends FenixDispatchAction {
 
         HttpSession session = request.getSession(false);
 
-        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = getUserView(request);
 
         Integer executionCourseCode = null;
         String executionCourseCodeString = request.getParameter("objectCode");
