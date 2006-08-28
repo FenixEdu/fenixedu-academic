@@ -23,6 +23,7 @@ import net.sourceforge.fenixedu.domain.gratuity.ExemptionGratuityType;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
+import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.CollectionUtils;
@@ -98,10 +99,7 @@ public class ExemptionGratuityAction extends FenixDispatchAction {
             ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
         ActionErrors errors = new ActionErrors();
-        HttpSession session = request.getSession();
-
-        IUserView userView = (IUserView) session
-                .getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = SessionUtils.getUserView(request);
 
         // Read parameters
         String executionYear = request.getParameter("executionYear");

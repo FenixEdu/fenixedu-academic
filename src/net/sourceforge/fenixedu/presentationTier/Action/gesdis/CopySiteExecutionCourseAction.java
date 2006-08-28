@@ -322,8 +322,6 @@ public class CopySiteExecutionCourseAction extends FenixDispatchAction {
             Integer infoExecutionCourseCode, Object obj1, Object obj2) throws FenixActionException,
             FenixFilterException {
 
-        HttpSession session = getSession(request);
-
         IUserView userView = getUserView(request);
 
         Integer objectCode = null;

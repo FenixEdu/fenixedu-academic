@@ -22,7 +22,6 @@ import net.sourceforge.fenixedu.dataTransferObject.SiteView;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.CollectionUtils;
@@ -40,7 +39,6 @@ public class ShowStudentsEnrolledInExamAction extends FenixAction {
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixActionException, FenixFilterException {
 
-        final HttpSession session = request.getSession(false);
         final IUserView userView = getUserView(request);
         
         final Integer executionCourseCode = Integer.valueOf(request.getParameter("objectCode"));

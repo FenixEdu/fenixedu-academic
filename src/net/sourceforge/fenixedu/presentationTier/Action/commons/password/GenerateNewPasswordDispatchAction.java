@@ -62,8 +62,6 @@ public class GenerateNewPasswordDispatchAction extends FenixDispatchAction {
     public ActionForward generatePassword(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-        HttpSession session = request.getSession();
-
         IUserView userView = getUserView(request);
 
         Integer personID = new Integer(request.getParameter("personID"));

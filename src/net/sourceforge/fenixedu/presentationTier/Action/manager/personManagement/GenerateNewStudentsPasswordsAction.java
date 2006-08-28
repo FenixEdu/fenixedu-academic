@@ -39,7 +39,6 @@ public class GenerateNewStudentsPasswordsAction extends FenixDispatchAction {
     public ActionForward generatePasswords(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-        HttpSession session = request.getSession();
         IUserView userView = getUserView(request);
         DynaActionForm passwordsForm = (DynaActionForm) form;
         String fromNumber = (String) passwordsForm.get("fromNumber");

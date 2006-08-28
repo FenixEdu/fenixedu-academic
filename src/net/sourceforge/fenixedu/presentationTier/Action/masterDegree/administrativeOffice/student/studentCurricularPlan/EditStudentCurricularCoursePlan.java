@@ -6,7 +6,6 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -29,7 +28,6 @@ public class EditStudentCurricularCoursePlan extends FenixDispatchAction {
 
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-        HttpSession session = request.getSession(false);
         DynaActionForm editStudentCurricularPlanForm = (DynaActionForm) form;
         Integer studentCurricularPlanId = new Integer(getFromRequest("studentCurricularPlanId", request));
         IUserView userView = getUserView(request);
@@ -96,7 +94,6 @@ public class EditStudentCurricularCoursePlan extends FenixDispatchAction {
     public ActionForward edit(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
-        HttpSession session = request.getSession(false);
         DynaActionForm editStudentCurricularPlanForm = (DynaActionForm) form;
 
         String studentCurricularPlanIdString = request.getParameter("studentCurricularPlanId");

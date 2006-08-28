@@ -60,7 +60,6 @@ public class MakeCandidateStudyPlanDispatchAction extends FenixDispatchAction {
     public ActionForward prepareSelectCandidates(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-        HttpSession session = request.getSession(false);
         IUserView userView = getUserView(request);
         Integer degreeCurricularPlanID = Integer.valueOf(getFromRequest("degreeCurricularPlanID",
                 request));

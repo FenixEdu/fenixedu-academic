@@ -41,7 +41,6 @@ public class DissociateProfShipsAndRespForDispatchAction extends FenixDispatchAc
     public ActionForward prepareDissociateECShowProfShipsAndRespFor(ActionMapping mapping,
             ActionForm form, HttpServletRequest request, HttpServletResponse response)
             throws FenixActionException, FenixFilterException {
-        HttpSession session = request.getSession(false);
         IUserView userView = getUserView(request);
 
         DynaActionForm teacherNumberForm = (DynaActionForm) form;

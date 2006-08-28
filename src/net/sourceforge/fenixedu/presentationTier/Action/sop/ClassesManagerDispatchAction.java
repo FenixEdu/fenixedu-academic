@@ -37,8 +37,6 @@ public class ClassesManagerDispatchAction extends
     public ActionForward listClasses(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
-        //HttpSession session = request.getSession(false);
-
         InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request
                 .getAttribute(SessionConstants.EXECUTION_PERIOD);
 

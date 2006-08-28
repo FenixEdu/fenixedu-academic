@@ -39,8 +39,6 @@ public class CurriculumDispatchActionForMasterDegreeAdministrativeOffice extends
     public ActionForward getCurriculum(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-        HttpSession session = request.getSession();
-
         IUserView userView = getUserView(request);
 
         String studentCurricularPlanID = request.getParameter("studentCPID");

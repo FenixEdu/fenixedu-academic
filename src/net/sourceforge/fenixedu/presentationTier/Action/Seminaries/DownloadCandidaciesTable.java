@@ -115,7 +115,6 @@ public class DownloadCandidaciesTable extends FenixAction {
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixActionException {
         String document = DownloadCandidaciesTable.COLUMNS_HEADERS + "\n";
-        HttpSession session = this.getSession(request);
         IUserView userView = getUserView(request);
 
         //

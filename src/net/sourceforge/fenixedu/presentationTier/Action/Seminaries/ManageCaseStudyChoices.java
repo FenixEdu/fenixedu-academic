@@ -167,7 +167,6 @@ public class ManageCaseStudyChoices extends FenixAction {
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixActionException {
         ActionForward destiny = null;
-        HttpSession session = this.getSession(request);
         DynaActionForm selectCases = (DynaActionForm) form;
         String[] selectedCasesArray = (String[]) selectCases.get("selectedCases");
         String[] unselectedCasesArray = (String[]) selectCases.get("unselectedCases");

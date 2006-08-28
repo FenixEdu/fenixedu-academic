@@ -29,7 +29,6 @@ import org.apache.struts.action.ActionMapping;
 public class CancelCandidacy extends FenixAction {
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixActionException {
-        HttpSession session = this.getSession(request);
         IUserView userView = getUserView(request);
         String candidacyIDString = request.getParameter("objectCode");
         Integer candidacyID;

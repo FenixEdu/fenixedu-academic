@@ -110,7 +110,6 @@ public class MergeExecutionCourseDispatchionAction extends FenixDispatchAction {
     public ActionForward prepareChooseDegreesAndExecutionPeriod(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws 
             FenixServiceException, FenixFilterException {
-        HttpSession session = request.getSession(false);
         IUserView userView = getUserView(request);
         
         SortedSet<Degree> degrees = new TreeSet(Degree.DEGREE_COMPARATOR_BY_NAME_AND_DEGREE_TYPE); 

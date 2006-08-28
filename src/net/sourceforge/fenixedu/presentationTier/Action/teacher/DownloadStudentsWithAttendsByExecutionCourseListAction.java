@@ -16,7 +16,6 @@ import java.util.Map;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
@@ -36,7 +35,6 @@ import net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationType;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
 import net.sourceforge.fenixedu.util.AttendacyStateSelectionType;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -94,7 +92,6 @@ public class DownloadStudentsWithAttendsByExecutionCourseListAction extends Feni
 
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixActionException, FenixFilterException, FenixServiceException {
-        HttpSession session = request.getSession(false);
         Integer executionCourseID = null;
         List coursesIDs = null;
         List enrollmentTypeList = null;

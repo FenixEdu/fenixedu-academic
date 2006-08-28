@@ -21,7 +21,6 @@ import net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoSeminaryWithEq
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
 
 import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionErrors;
@@ -39,7 +38,6 @@ import org.apache.struts.action.ActionMapping;
 public class ShowCandidacyOptions extends FenixAction {
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixActionException {
-        HttpSession session = this.getSession(request);
         IUserView userView = getUserView(request);
         String seminaryIDString = request.getParameter("objectCode");
         Integer seminaryID;

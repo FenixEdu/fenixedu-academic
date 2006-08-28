@@ -33,8 +33,6 @@ public class ChooseMasterDegreeDispatchAction extends FenixDispatchAction {
     public ActionForward prepareChooseMasterDegree(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-        HttpSession session = request.getSession();
-
         String executionYear = getFromRequest("executionYear", request);
 
         request.setAttribute("jspTitle", getFromRequest("jspTitle", request));

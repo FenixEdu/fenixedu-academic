@@ -14,7 +14,6 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
@@ -44,7 +43,6 @@ public class ViewCandidateCurriculum extends FenixAction {
 
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-        HttpSession session = request.getSession();
         IUserView userView = getUserView(request);
         String username = request.getParameter("username");
         IUserView studentUserView = new MockUserView(username, new ArrayList(0), null);

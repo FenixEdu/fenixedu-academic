@@ -36,9 +36,6 @@ public class ChooseCurricularCourseDispatchAction extends FenixDispatchAction {
 
     public ActionForward prepareChooseCurricularCourse(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
-
-        HttpSession session = request.getSession();
-
         String executionYear = getFromRequest("executionYear", request);
         String degree = getFromRequest("degree", request);
 

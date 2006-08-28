@@ -54,7 +54,6 @@ public class ListAllSeminaries extends FenixAction {
 
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixActionException {
-        HttpSession session = this.getSession(request);
         IUserView userView = getUserView(request);
         List seminaries = null;
         ActionForward destiny = null;

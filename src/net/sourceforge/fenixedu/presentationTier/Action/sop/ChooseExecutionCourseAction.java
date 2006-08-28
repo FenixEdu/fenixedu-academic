@@ -39,8 +39,6 @@ public class ChooseExecutionCourseAction extends
 
         super.execute(mapping, form, request, response);
 
-        //HttpSession session = request.getSession(false);
-
         DynaValidatorForm chooseCourseForm = (DynaValidatorForm) form;
 
         InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request

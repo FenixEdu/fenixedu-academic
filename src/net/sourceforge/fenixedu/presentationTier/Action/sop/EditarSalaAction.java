@@ -6,7 +6,6 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
@@ -35,8 +34,6 @@ public class EditarSalaAction extends FenixSelectedRoomsAndSelectedRoomIndexCont
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
         super.execute(mapping, form, request, response);
-
-        HttpSession session = request.getSession(false);
 
         List edificios = Util.readExistingBuldings(null, null);
         List tipos = Util.readTypesOfRooms(null, null);

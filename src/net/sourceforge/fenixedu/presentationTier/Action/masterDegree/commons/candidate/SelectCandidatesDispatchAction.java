@@ -40,8 +40,6 @@ public class SelectCandidatesDispatchAction extends FenixDispatchAction {
     public ActionForward prepareSelectCandidates(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-        HttpSession session = request.getSession(false);
-
         DynaActionForm approvalForm = (DynaActionForm) form;
 
         IUserView userView = getUserView(request);
@@ -164,8 +162,6 @@ public class SelectCandidatesDispatchAction extends FenixDispatchAction {
     public ActionForward selectCandidates(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-        HttpSession session = request.getSession(false);
-
         DynaActionForm approvalForm = (DynaActionForm) form;
 
         IUserView userView = getUserView(request);
@@ -202,7 +198,7 @@ public class SelectCandidatesDispatchAction extends FenixDispatchAction {
         request.setAttribute("executionYear", executionYear);
         request.setAttribute("degree", degree);
         request.setAttribute(SessionConstants.EXECUTION_DEGREE, String.valueOf(executionDegree));
-        session.setAttribute(SessionConstants.EXECUTION_DEGREE, String.valueOf(executionDegree));
+        request.getSession(false).setAttribute(SessionConstants.EXECUTION_DEGREE, String.valueOf(executionDegree));
 
         // Get Numerus Clausus
         Integer numerusClausus = null;

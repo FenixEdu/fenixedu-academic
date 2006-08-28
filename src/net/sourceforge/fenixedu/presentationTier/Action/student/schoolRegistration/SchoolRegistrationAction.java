@@ -9,7 +9,6 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
@@ -33,7 +32,6 @@ import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionEx
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixTransactionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.InvalidPasswordActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
 import net.sourceforge.fenixedu.util.Data;
 
@@ -388,7 +386,6 @@ public class SchoolRegistrationAction extends TransactionalDispatchAction {
     public ActionForward printSchedule(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
             FenixServiceException, FenixActionException {
-        HttpSession session = request.getSession(false);
         IUserView userView = getUserView(request);
 
         Object[] args = { userView.getPerson().getStudentByUsername() };

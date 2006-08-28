@@ -144,7 +144,6 @@ public class RoomSiteViewerDispatchAction extends FenixContextDispatchAction {
     public ActionForward roomViewer(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
-        HttpSession session = request.getSession();
         IUserView userView = getUserView(request);
 
         String roomName = request.getParameter("roomName");

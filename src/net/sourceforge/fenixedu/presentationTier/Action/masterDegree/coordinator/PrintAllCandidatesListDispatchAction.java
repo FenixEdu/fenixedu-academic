@@ -15,7 +15,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeCandidate;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
 import net.sourceforge.fenixedu.util.PrintAllCandidatesFilter;
 import net.sourceforge.fenixedu.util.PrintAllCandidatesFilterType;
 import net.sourceforge.fenixedu.util.SituationName;
@@ -79,7 +78,6 @@ public class PrintAllCandidatesListDispatchAction extends FenixDispatchAction {
 			reqExportToExcel = true;
 		else reqExportToExcel = false;
 
-        HttpSession session = request.getSession(false);
         IUserView userView = getUserView(request);
 
 		// parse do valor do filtro e do dcpID

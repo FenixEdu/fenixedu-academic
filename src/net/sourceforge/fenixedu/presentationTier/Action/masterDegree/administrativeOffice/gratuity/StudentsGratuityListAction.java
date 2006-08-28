@@ -166,7 +166,6 @@ public class StudentsGratuityListAction extends FenixDispatchAction {
     public ActionForward studentsGratuityList(ActionMapping mapping, ActionForm actionForm,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
         ActionErrors errors = new ActionErrors();
-        HttpSession session = request.getSession();
         IUserView userView = getUserView(request);
 
         // read data from form
@@ -248,7 +247,6 @@ public class StudentsGratuityListAction extends FenixDispatchAction {
     public ActionForward coordinatorStudentsGratuityList(ActionMapping mapping, ActionForm actionForm,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
         ActionErrors errors = new ActionErrors();
-        HttpSession session = request.getSession();
         DynaActionForm studentGratuityListForm = (DynaActionForm) actionForm;
         IUserView userView = getUserView(request);
 

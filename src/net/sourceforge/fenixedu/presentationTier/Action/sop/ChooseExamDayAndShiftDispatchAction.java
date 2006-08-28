@@ -56,9 +56,6 @@ public class ChooseExamDayAndShiftDispatchAction extends FenixContextDispatchAct
     public ActionForward choose(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
-        //HttpSession session = request.getSession(false);
-        //IUserView userView = SessionUtils.getUserView(request);
-
         DynaValidatorForm chooseDayAndShiftForm = (DynaValidatorForm) form;
 
         Integer day = new Integer((String) chooseDayAndShiftForm.get("day"));

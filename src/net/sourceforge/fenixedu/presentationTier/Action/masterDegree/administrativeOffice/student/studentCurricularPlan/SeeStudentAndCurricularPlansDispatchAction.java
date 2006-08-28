@@ -41,8 +41,6 @@ public class SeeStudentAndCurricularPlansDispatchAction extends FenixDispatchAct
     public ActionForward read(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixActionException, FenixFilterException {
 
-        HttpSession session = request.getSession();
-
         String idNumber1 = this.getFromRequest("idNumber", request);
         String idType1 = this.getFromRequest("idType", request);
         String studentName1 = this.getFromRequest("studentName", request);

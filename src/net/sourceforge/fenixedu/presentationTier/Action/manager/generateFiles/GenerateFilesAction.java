@@ -96,8 +96,6 @@ public class GenerateFilesAction extends FenixDispatchAction {
 
     public ActionForward generateGratuityFile(ActionMapping mapping, ActionForm actionForm,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
-        HttpSession session = request.getSession();
-
         IUserView userView = getUserView(request);
         ActionErrors errors = new ActionErrors();
 

@@ -45,7 +45,6 @@ public class CurriculumDispatchAction extends FenixDispatchAction {
     public ActionForward getStudentCP(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-        HttpSession session = request.getSession();
         IUserView userView = getUserView(request);
 
         Integer degreeCurricularPlanID = null;
@@ -158,8 +157,6 @@ public class CurriculumDispatchAction extends FenixDispatchAction {
 
     public ActionForward getCurriculumForCoordinator(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
-
-        HttpSession session = request.getSession();
 
         // get and set the degreeCurricularPlanID from the request and onto the
         // request

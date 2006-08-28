@@ -5,7 +5,6 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
@@ -92,8 +91,6 @@ public class PrepareSelectExecutionCourseAction extends FenixContextAction {
 			Integer infoExecutionCourseCode, Object obj1, Object obj2)
 			throws FenixActionException, FenixFilterException
 			{
-
-		HttpSession session = getSession(request);
 
 		IUserView userView = getUserView(request);
 
