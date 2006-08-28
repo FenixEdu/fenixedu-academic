@@ -6,7 +6,7 @@
 <%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="dt" %>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 
-<h2>
+<h2 class="mbottom1">
 	<bean:message key="link.program"/>
 </h2>
 
@@ -16,8 +16,8 @@
 <logic:iterate id="entry" name="executionCourse" property="curricularCoursesIndexedByCompetenceCourse">
 	<bean:define id="competenceCourse" name="entry" property="key"/>
 	<logic:equal name="competenceCourse" property="curricularStage.name" value="APPROVED">
-
-		<p class="mtop2 mbottom05"><em><fr:view name="competenceCourse" property="nameI18N"/></em></p>
+		<div class="mbottom2">
+		<p class="mbottom05"><em><fr:view name="competenceCourse" property="nameI18N"/></em></p>
 		<h3 class="mvert0">
 			<logic:iterate id="curricularCourse" name="entry" property="value" indexId="i">
 				<logic:notEqual name="i" value="0"><br/></logic:notEqual>
@@ -32,12 +32,13 @@
 				</fr:view>
 			</logic:iterate>
 		</h3>
-		<blockquote>
-			<h4>
+
+			<h4 class="mbottom05 greytxt">
 				<bean:message key="title.program"/>
 			</h4>
-			<fr:view name="competenceCourse" property="programI18N" layout="html"/>
-		</blockquote>
+			<div class="mtop05" style="line-height: 1.5em;">
+				<fr:view name="competenceCourse" property="programI18N" layout="html"/>
+			</div>
 	</logic:equal>
 </logic:iterate>
 
@@ -49,12 +50,9 @@
 			<% net.sourceforge.fenixedu.domain.Curriculum lastCurriculum = curricularCourse.findLatestCurriculum(); %>
 			<% request.setAttribute("curriculum", curriculum); %>
 			<% request.setAttribute("lastCurriculum", lastCurriculum); %>
-
-			<p class="mtop2 mbottom05"><em><fr:view name="curricularCourse" property="nameI18N"/></em></p>
+		<div class="mbottom2">
+			<p class="mbottom05"><em><fr:view name="curricularCourse" property="nameI18N"/></em></p>
 				<h3 class="mvert0">
-				<h3 class="mtop2">
-					<fr:view name="curricularCourse" property="nameI18N"/>
-					<br/>
 					<bean:message bundle="ENUMERATION_RESOURCES" name="degree" property="degreeType.name"/>
 					<bean:message key="label.in"/>
 					<fr:view name="degree" property="nameI18N"/>
@@ -75,5 +73,6 @@
 					<logic:notPresent name="curriculum">
 						<bean:message key="message.program.not.defined"/>
 					</logic:notPresent>
+			</div>
 		</logic:notEqual>
 	</logic:iterate>

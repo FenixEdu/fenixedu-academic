@@ -14,10 +14,8 @@
 
 /***********************************************************	licenciatura section***********************************************************/.degree_imageplacer { float: right; width: 250px; margin: 0 30px 0 30px; }	/***********************************************************	general stripes layout table for www.ist.utl.pt***********************************************************/.tab_lay { border: 1px solid #999; font-size: 11px; }.tab_lay th { color: #333; background: #ccc; text-align: left; padding: 5px; }.tab_lay td { padding: 5px; height: 2em; }.tab_lay td.subheader { font: bold 12px "bitstream vera sans", "Trebuchet MS", Georgia, Arial, Helvetica, sans-serif; color: #333; background: #e2e2e2; padding: 5px 5px 5px 5px; }.tab_lay td.bluecell { background: #EDF3FE; }.tab_themes { border: 1px solid #999; font-size: 11px; }.tab_themes td { line-height: 1.5em; padding: 5px; height: 2em; }.tab_themes td.title { background: #e2e2e2; }.tab_themes h3 { color: #333; margin: 0; }/***********************************************************	context navigation***********************************************************/#contextual_nav { float: right; width: 200px; margin: 0 0 20px 20px; padding: 20px 0 20px 20px; /* border-left: 1px solid #ccc; */}#contextual_nav h2 { color:#666; }#contextual_nav ul, #contextual_nav li  { list-style-type: none; margin: 0; padding-left: 0; }#contextual_nav ul { margin-bottom: 20px; padding-left: 15px; border-left: 1px solid #ccc; }#contextual_nav li { background: url(/img/icon_redcircle.gif) no-repeat 0 50%; padding-left: 15px; }#contextual_nav li { background: url(../images/icon_redcircle.gif) no-repeat 0 50%; padding-left: 15px; }/*********************************************************** Errors***********************************************************/.serv_error_403 { background: url(http://www.ist.utl.pt/img/403.gif) no-repeat 30px 10px; }.serv_error_404 { background: url(http://www.ist.utl.pt/img/404.gif) no-repeat 30px 10px; }/***********************************************************	sitemap***********************************************************/#sitemap ul { list-style-type: square; line-height: 0.9em; font-size: 10px; margin-top: 0.4em; }#sitemap li { padding: 0.3em 0 0.3em 0; }h2.sitemap a:link, h2.sitemap a:visited {  font: bold 12px "bitstream vera sans", "Trebuchet MS", Georgia, Arial, Helvetica, sans-serif; text-decoration: underline; color: #c30; }h2.sitemap a:hover { text-decoration: none; background:#c30; color: #fff; padding: 2px 4px 2px 4px; }
 
-.altJavaScriptSubmitButton { display:block; }.showHideDetailsButton { display:none; }
-
-
-.showHideDetailsButton { display:none; }
+.altJavaScriptSubmitButton { display:block; }.showHideDetailsButton { display:none; }
+.cnone { clear: none; }
 .mtop0 { margin-top: 0;}
 .mtop025 { margin-top: 0.25em;}
 .mtop05 { margin-top: 0.5em;}
@@ -27,6 +25,7 @@
 .mtop3 { margin-top: 3em;}
 .mbottom0 { margin-bottom: 0;}
 .mbottom025 { margin-bottom: 0.25em;}
+.mbottom03 { margin-bottom: 0.3em;}
 .mbottom05 { margin-bottom: 0.5em;}
 .mbottom1 { margin-bottom: 1em;}
 .mbottom2 { margin-bottom: 2em;}
@@ -39,7 +38,6 @@
 .mvert1 { margin-top: 1em; margin-bottom: 1em; }
 .mvert2 { margin-top: 2em; margin-bottom: 2em; }
 .mvert3 { margin-top: 3em; margin-bottom: 3em; }
-
 
 table.thlight th { font-weight: normal; }
 table.thright th { text-align: right; }

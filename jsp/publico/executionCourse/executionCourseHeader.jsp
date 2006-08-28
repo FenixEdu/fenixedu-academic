@@ -7,7 +7,7 @@
 
 <jsp:include page="/i18n.jsp"/>
 
-<h1 style="margin-top: 0; margin-bottom: 5px;">
+<h1 class="mtop0 mbottom03 cnone">
 	<bean:write name="executionCourse" property="nome"/>
 	<span class="greytxt" style="font-size: 11px;">
 		(<bean:write name="executionCourse" property="executionPeriod.semester" />
