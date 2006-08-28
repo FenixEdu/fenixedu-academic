@@ -52,7 +52,8 @@
 			<% request.setAttribute("lastCurriculum", lastCurriculum); %>
 
 				<h3 class="mtop2">
-					<%-- <fr:view name="curricularCourse" property="nameI18N"/> --%>
+					<fr:view name="curricularCourse" property="nameI18N"/>
+					<br/>
 					<bean:message bundle="ENUMERATION_RESOURCES" name="degree" property="degreeType.name"/>
 					<bean:message key="label.in"/>
 					<fr:view name="degree" property="nameI18N"/>
@@ -87,12 +88,3 @@
 
 		</logic:notEqual>
 	</logic:iterate>
-
-<%--
-<h3 class="mtop2">Licenciatura (5 anos) em Engenharia Informática e de Computadores - Alameda</h3>
-<h4 class="mbottom05 greytxt">Objectivos Gerais</h4>
-<p class="mtop05">Vivamus bibendum massa vel pede. Mauris quis felis quis diam luctus consectetuer. Sed ullamcorper eleifend arcu. Nulla facilisi. Suspendisse tincidunt rhoncus ipsum. Etiam in dui. Mauris molestie arcu eget diam pretium laoreet. Phasellus hendrerit bibendum nisl. Mauris odio. Nulla facilisi. Proin rhoncus. Nulla convallis augue sit amet urna. Proin tempor, elit sit amet viverra blandit, elit mauris consectetuer neque, nec rhoncus lorem felis vitae dolor.</p>
-<h4 class="mbottom05 greytxt">Objectivos Operacionais</h4>
-<p class="mtop05">Vivamus bibendum massa vel pede. Mauris quis felis quis diam luctus consectetuer. Sed ullamcorper eleifend arcu. Nulla facilisi. Suspendisse tincidunt rhoncus ipsum. Etiam in dui. Mauris molestie arcu eget diam pretium laoreet. Phasellus hendrerit bibendum nisl. Mauris odio. Nulla facilisi. Proin rhoncus. Nulla convallis augue sit amet urna. Proin tempor, elit sit amet viverra blandit, elit mauris consectetuer neque, nec rhoncus lorem felis vitae dolor.</p>
---%>
-	

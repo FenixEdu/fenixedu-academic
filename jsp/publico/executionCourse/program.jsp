@@ -51,8 +51,8 @@
 			<% request.setAttribute("lastCurriculum", lastCurriculum); %>
 
 				<h3 class="mtop2">
-					<%-- <fr:view name="curricularCourse" property="nameI18N"/> --%>
-
+					<fr:view name="curricularCourse" property="nameI18N"/>
+					<br/>
 					<bean:message bundle="ENUMERATION_RESOURCES" name="degree" property="degreeType.name"/>
 					<bean:message key="label.in"/>
 					<fr:view name="degree" property="nameI18N"/>
