@@ -81,7 +81,7 @@ text-align: right;
 	
 	<h:form>
 		<h:panelGrid columns="1" styleClass="search">
-			<h:panelGrid columns="2" styleClass="search">
+			<h:panelGrid columns="3" styleClass="search">
 				<h:outputText value="#{bundle['label.common.executionYear']}&nbsp;" escape="false" styleClass="leftColumn" />
 				<fc:selectOneMenu value="#{viewTeacherService.selectedExecutionYearID}"
 					onchange="this.form.submit();">
@@ -95,7 +95,7 @@ text-align: right;
 				</fc:selectOneMenu>	
 				<h:outputText value="<input value='#{htmlAltBundle['submit.sumbit']}' id='javascriptButtonID2' class='altJavaScriptSubmitButton' alt='#{htmlAltBundle['submit.sumbit']}' type='submit'>" escape="false"/>
 			</h:panelGrid>
-			<h:panelGrid columns="1" styleClass="search" width="100%">
+			<h:panelGrid columns="2" styleClass="search" width="100%">
 				<h:selectManyCheckbox value="#{viewTeacherService.selectedViewByTeacherOptions}" layout="pageDirection"
 					onchange="this.form.submit();">
 					<f:selectItems binding="#{viewTeacherService.viewByTeacherOptionsItems}"/>

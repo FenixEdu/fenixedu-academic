@@ -65,21 +65,29 @@ public class ReadTeacherServiceDistributionByCourse extends Service {
 							continue;
 						}
 						
-						int executionCourseFirstTimeEnrollementStudentNumber = executionCourseEntry
-								.getFirstTimeEnrolmentStudentNumber();
-						int executionCourseSecondTimeEnrollementStudentNumber = executionCourseEntry
-								.getSecondOrMoreTimeEnrolmentStudentNumber();
+//						 performance enhancement
+						int executionCourseFirstTimeEnrollementStudentNumber = executionCourseEntry.getFirstTimeEnrolmentStudentNumber();
+						int totalStudentsNumber = executionCourseEntry.getTotalEnrolmentStudentNumber();						
+						int executionCourseSecondTimeEnrollementStudentNumber = totalStudentsNumber - executionCourseFirstTimeEnrollementStudentNumber;
+						
+						int theoreticalShiftsNumber = executionCourseEntry.getNumberOfShifts(ShiftType.TEORICA);
+						int praticalShiftsNumber = executionCourseEntry.getNumberOfShifts(ShiftType.PRATICA);
+						int theoPratShiftsNumber = executionCourseEntry.getNumberOfShifts(ShiftType.TEORICO_PRATICA);
+						int laboratorialShiftsNumber = executionCourseEntry.getNumberOfShifts(ShiftType.LABORATORIAL);
+						
+						double theoreticalStudentsNumberPerShift = theoreticalShiftsNumber == 0 ? 0 : (double) totalStudentsNumber / theoreticalShiftsNumber;
+						double praticalStudentsNumberPerShift = theoreticalShiftsNumber == 0 ? 0 : (double) totalStudentsNumber / praticalShiftsNumber;
+						double theoPratStudentsNumberPerShift = theoreticalShiftsNumber == 0 ? 0 : (double) totalStudentsNumber / theoPratShiftsNumber;
+						double laboratorialStudentsNumberPerShift = theoreticalShiftsNumber == 0 ? 0 : (double) totalStudentsNumber / laboratorialShiftsNumber;
 
-						String campus = getCampusForCurricularCourseAndExecutionPeriod(
-								curricularCourseEntry, executionPeriodEntry);
+						String campus = getCampusForCurricularCourseAndExecutionPeriod(curricularCourseEntry, executionPeriodEntry);
 
 						returnDTO
 								.addExecutionCourse(
 										executionCourseEntry.getIdInternal(),
 										executionCourseEntry.getNome(),
 										campus,
-										curricularCourseEntry.getDegreeCurricularPlan().getDegree()
-												.getSigla(),
+										curricularCourseEntry.getDegreeCurricularPlan().getDegree().getSigla(),
 										curricularYearsSet,
 										executionCourseEntry.getExecutionPeriod().getSemester(),
 										executionCourseFirstTimeEnrollementStudentNumber,
@@ -88,12 +96,10 @@ public class ReadTeacherServiceDistributionByCourse extends Service {
 										executionCourseEntry.getTotalHours(ShiftType.PRATICA),
 										executionCourseEntry.getTotalHours(ShiftType.LABORATORIAL),
 										executionCourseEntry.getTotalHours(ShiftType.TEORICO_PRATICA),
-										executionCourseEntry.getStudentsNumberByShift(ShiftType.TEORICA),
-										executionCourseEntry.getStudentsNumberByShift(ShiftType.PRATICA),
-										executionCourseEntry
-												.getStudentsNumberByShift(ShiftType.LABORATORIAL),
-										executionCourseEntry
-												.getStudentsNumberByShift(ShiftType.TEORICO_PRATICA));
+										theoreticalStudentsNumberPerShift,
+										praticalStudentsNumberPerShift,
+										laboratorialStudentsNumberPerShift,
+										theoPratStudentsNumberPerShift);
 
 						fillExecutionCourseDTOWithTeachers(returnDTO, executionCourseEntry, department);
 

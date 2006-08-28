@@ -168,11 +168,8 @@ public class DistributionTeacherServicesByTeachersDTO extends DataTranferObject 
 		private String teacherName;
 
 		private Integer teacherRequiredHours;
-
-		private Double teacherSpentCredits;
 		
 		private Double teacherAccumulatedCredits;
-				
 
 		List<ExecutionCourseTeacherServiceDTO> executionCourseTeacherServiceList;
 		
@@ -181,13 +178,12 @@ public class DistributionTeacherServicesByTeachersDTO extends DataTranferObject 
 		List<TeacherCreditsInfoDTO> exemptionSituationList;
 
 		
-		public TeacherDistributionServiceEntryDTO(Integer internal, Integer teacherNumber, String category,  String name, Integer hours, Double credits, Double accumulatedCredits) {
+		public TeacherDistributionServiceEntryDTO(Integer internal, Integer teacherNumber, String category,  String name, Integer hours, Double accumulatedCredits) {
 			this.teacherNumber = teacherNumber;
 			teacherCategory = category;
 			teacherIdInternal = internal;
 			teacherName = name;
 			teacherRequiredHours = hours;
-			teacherSpentCredits = credits;
 			teacherAccumulatedCredits = accumulatedCredits;
 			
 			executionCourseTeacherServiceList = new ArrayList<ExecutionCourseTeacherServiceDTO>();
@@ -224,7 +220,16 @@ public class DistributionTeacherServicesByTeachersDTO extends DataTranferObject 
 
 
 		public Double getTeacherSpentCredits() {
-			return teacherSpentCredits;
+			double credits = 0d;
+			
+			for (TeacherCreditsInfoDTO managementCredits : managementFunctionList) {
+				credits += managementCredits.getCredits();
+			}
+			for (TeacherCreditsInfoDTO exemptionCredits : exemptionSituationList) {
+				credits += exemptionCredits.getCredits();
+			}
+			
+			return credits;
 		}
 
 
@@ -237,22 +242,22 @@ public class DistributionTeacherServicesByTeachersDTO extends DataTranferObject 
 			return teacherNumber;
 		}
 		
-		private String getFormattedValue(Double value, int fractionDigitsNumber){
+		private String getFormattedValue(Double value){
 			StringBuilder sb = new StringBuilder();
 			Formatter formatter = new Formatter(sb);
 			
-			formatter.format("%." + fractionDigitsNumber + "f", value);
+			formatter.format("%.1f", value);
 			return sb.toString();
 		}
 		
 		public String getFormattedTeacherSpentCredits() {
 
-			return getFormattedValue(getTeacherSpentCredits(), 1);
+			return getFormattedValue(getTeacherSpentCredits());
 		}
 		
 		public String getFormattedTeacherAccumulatedCredits() {
 
-			return getFormattedValue(getAccumulatedCredits(), 2);
+			return getFormattedValue(getAccumulatedCredits());
 		}
 		
 		public Integer getTotalLecturedHours() {
@@ -301,11 +306,6 @@ public class DistributionTeacherServicesByTeachersDTO extends DataTranferObject 
 			exemptionSituationList.add(new TeacherCreditsInfoDTO(exemptionType, credits));
 		}
 
-		public void setTeacherSpentCredits(Double teacherSpentCredits) {
-			this.teacherSpentCredits = teacherSpentCredits;
-		}
-
-
 		public List<TeacherCreditsInfoDTO> getExemptionSituationList() {
 			return exemptionSituationList;
 		}
@@ -319,9 +319,8 @@ public class DistributionTeacherServicesByTeachersDTO extends DataTranferObject 
 		teachersMap = new HashMap<Integer, TeacherDistributionServiceEntryDTO>();
 	}
 
-	public void addTeacher(Integer key, Integer teacherNumber, String category, String name,
-			Integer hours, Double credits, Double accumulatedCredits) {
-		TeacherDistributionServiceEntryDTO t = new TeacherDistributionServiceEntryDTO(key, teacherNumber, category, name, hours, credits, accumulatedCredits);
+	public void addTeacher(Integer key, Integer teacherNumber, String category, String name, Integer hours, Double accumulatedCredits) {
+		TeacherDistributionServiceEntryDTO t = new TeacherDistributionServiceEntryDTO(key, teacherNumber, category, name, hours, accumulatedCredits);
 
 		if(!teachersMap.containsKey(key)) {
 			teachersMap.put(key, t);
@@ -343,15 +342,7 @@ public class DistributionTeacherServicesByTeachersDTO extends DataTranferObject 
 			teacher.setTeacherRequiredHours(teacher.getTeacherRequiredHours() + hours);
 		}
 	}
-	
-	public void addCreditsToTeacher(Integer keyTeacher, Double credits){
-		TeacherDistributionServiceEntryDTO teacher = teachersMap.get(keyTeacher);
 		
-		if(teacher != null){
-			teacher.setTeacherSpentCredits(teacher.getTeacherSpentCredits() + credits);
-		}
-	}
-	
 	public boolean isTeacherPresent(Integer keyTeacher){
 		return teachersMap.containsKey((keyTeacher));
 	}

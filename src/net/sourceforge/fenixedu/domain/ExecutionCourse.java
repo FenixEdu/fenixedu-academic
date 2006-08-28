@@ -371,23 +371,26 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 
     private int countAssociatedStudentsByEnrolmentNumber(int enrolmentNumber) {
         int executionCourseAssociatedStudents = 0;
+        ExecutionPeriod courseExecutionPeriod = getExecutionPeriod();
 
         for (CurricularCourse curricularCourseFromExecutionCourseEntry : getAssociatedCurricularCourses()) {
             for (CurriculumModule curriculumModule : curricularCourseFromExecutionCourseEntry
                     .getCurriculumModules()) {
                 Enrolment enrolmentsEntry = (Enrolment) curriculumModule;
-                if (enrolmentsEntry.getExecutionPeriod() == getExecutionPeriod()) {
+                if (enrolmentsEntry.getExecutionPeriod() == courseExecutionPeriod) {
 
                     StudentCurricularPlan studentCurricularPlanEntry = enrolmentsEntry
                             .getStudentCurricularPlan();
                     int numberOfEnrolmentsForThatExecutionCourse = 0;
 
-                    for (Enrolment enrolmentsFromStudentCPEntry : studentCurricularPlanEntry
-                            .getEnrolments()) {
+                    for (Enrolment enrolmentsFromStudentCPEntry : studentCurricularPlanEntry.getEnrolments()) {
                         if (enrolmentsFromStudentCPEntry.getCurricularCourse() == curricularCourseFromExecutionCourseEntry
                                 && (enrolmentsFromStudentCPEntry.getExecutionPeriod().compareTo(
-                                        getExecutionPeriod()) <= 0)) {
+                                		courseExecutionPeriod) <= 0)) {
                             ++numberOfEnrolmentsForThatExecutionCourse;
+                            if(numberOfEnrolmentsForThatExecutionCourse > enrolmentNumber){
+                            	break;
+                            }
                         }
                     }
 
@@ -403,12 +406,13 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 
     public Integer getTotalEnrolmentStudentNumber() {
         int executionCourseStudentNumber = 0;
-
+        ExecutionPeriod courseExecutionPeriod = getExecutionPeriod();
+        
         for (CurricularCourse curricularCourseFromExecutionCourseEntry : getAssociatedCurricularCourses()) {
             for (CurriculumModule curriculumModule : curricularCourseFromExecutionCourseEntry
                     .getCurriculumModules()) {
                 Enrolment enrolmentsEntry = (Enrolment) curriculumModule;
-                if (enrolmentsEntry.getExecutionPeriod() == getExecutionPeriod()) {
+                if (enrolmentsEntry.getExecutionPeriod() == courseExecutionPeriod) {
                     executionCourseStudentNumber++;
                 }
             }
@@ -440,19 +444,12 @@ public class ExecutionCourse extends ExecutionCourse_Base {
     }
 
     public Double getStudentsNumberByShift(ShiftType shiftType) {
-        int numShifts = 0;
-        int executionCourseStudentNumber = getTotalEnrolmentStudentNumber();
-
-        for (Shift shiftEntry : this.getAssociatedShifts()) {
-            if (shiftEntry.getTipo() == shiftType) {
-                numShifts++;
-            }
-        }
+        int numShifts = getNumberOfShifts(shiftType);
 
         if (numShifts == 0)
             return 0.0;
         else
-            return (double) executionCourseStudentNumber / numShifts;
+            return (double) getTotalEnrolmentStudentNumber() / numShifts;
     }
 
     public List<Enrolment> getActiveEnrollments() {
