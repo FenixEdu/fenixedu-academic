@@ -14,17 +14,16 @@ import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.enrollment.CurricularCourse2Enroll;
 import net.sourceforge.fenixedu.domain.exceptions.EnrolmentRuleDomainException;
 
-public class LETBolonhaEnrolmentRule extends BolonhaEnrolmentRule {
+public class LEGMBolonhaEnrolmentRule extends BolonhaEnrolmentRule {
 
-    private static final String PROJECTOI_CODE = "B5Z";
 
-    private static final String DISSERTACAO_CODE = "$60";
+    private static final String DISSERTACAO_CODE = "$48";
 
-    private static final String[] COMMONS = { "AFG", "B50", "ACZ", "AFL" };
+    private static final String[] COMMONS = { "AZY", "AZX", "AZZ", "$47", "$46" };
 
-    private static final String[] DEGREE = { "ACY", "AH0", "AFC", "AF6", "AF5", "OP", "4I", "0T", "81" };
+    private static final String[] DEGREE = { "AG3", "5Q", "B0B", "B07", "B04", "B03" };
 
-    public LETBolonhaEnrolmentRule(StudentCurricularPlan studentCurricularPlan,
+    public LEGMBolonhaEnrolmentRule(StudentCurricularPlan studentCurricularPlan,
 	    ExecutionPeriod executionPeriod) {
 	super(studentCurricularPlan, executionPeriod);
     }
@@ -33,22 +32,19 @@ public class LETBolonhaEnrolmentRule extends BolonhaEnrolmentRule {
 	    List<CurricularCourse2Enroll> curricularCoursesToBeEnrolledIn)
 	    throws EnrolmentRuleDomainException {
 
-	final boolean projectoI = isEnrolledInExecutionPeriodOrAproved(PROJECTOI_CODE);
 	final boolean dissertacao = isEnrolledInExecutionPeriodOrAproved(DISSERTACAO_CODE);
 
-	if (projectoI) {
+	if (countEnrolments(DEGREE) >= 1) {
 	    removeCurricularCourse(curricularCoursesToBeEnrolledIn, DISSERTACAO_CODE);
 	}
-	
 	if (dissertacao) {
-	    removeCurricularCourse(curricularCoursesToBeEnrolledIn, PROJECTOI_CODE);
 	    removeCurricularCourses(curricularCoursesToBeEnrolledIn, Arrays.asList(DEGREE));
 	}
 
-	if (!projectoI && !dissertacao) {
+	/*if (!projecto && !dissertacao) {
 	    removeCurricularCourses(curricularCoursesToBeEnrolledIn, Arrays.asList(DEGREE));
-	    //removeCurricularCourses(curricularCoursesToBeEnrolledIn, Arrays.asList(COMMONS));
-	}
+	    removeCurricularCourses(curricularCoursesToBeEnrolledIn, Arrays.asList(COMMONS));
+	}*/
 
 	return curricularCoursesToBeEnrolledIn;
     }
