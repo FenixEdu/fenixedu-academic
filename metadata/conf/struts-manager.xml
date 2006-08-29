@@ -499,6 +499,8 @@
 			<form-property name="enrolmentPeriodID" type="java.lang.String"/>
 			<form-property name="startDate" type="java.lang.String"/>
 			<form-property name="endDate" type="java.lang.String"/>
+			<form-property name="startTime" type="java.lang.String"/>
+			<form-property name="endTime" type="java.lang.String"/>			
 			<form-property name="degreeType" type="java.lang.String"/>
 			<form-property name="enrolmentPeriodClass" type="java.lang.String"/>
 		</form-bean>
