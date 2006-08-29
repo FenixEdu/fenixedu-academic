@@ -8,18 +8,10 @@
 <logic:present name="executionCourse">
 
 	<bean:define id="executionCourseID" name="executionCourse" property="idInternal"/>	
-	<bean:define id="submitUrl">
-		/manageExecutionCourse.do?method=listExecutionCoursesToImportLessonPlannings&executionCourseID=<bean:write name="executionCourseID"/>
-	</bean:define>
-	<bean:define id="showLessonPlannings">
-		/manageExecutionCourse.do?method=lessonPlannings&executionCourseID=<bean:write name="executionCourseID"/>
-	</bean:define>	
-	<bean:define id="postBackLink">
-		/manageExecutionCourse.do?method=prepareImportLessonPlanningsPostBack&executionCourseID=<bean:write name="executionCourseID"/>
-	</bean:define>	
-	<bean:define id="invalidLink">
-		/manageExecutionCourse.do?method=prepareImportLessonPlanningsInvalid&executionCourseID=<bean:write name="executionCourseID"/>
-	</bean:define>	
+	<bean:define id="submitUrl">/manageExecutionCourse.do?method=listExecutionCoursesToImportLessonPlannings&executionCourseID=<bean:write name="executionCourseID"/></bean:define>
+	<bean:define id="showLessonPlannings">/manageExecutionCourse.do?method=lessonPlannings&executionCourseID=<bean:write name="executionCourseID"/></bean:define>	
+	<bean:define id="postBackLink">/manageExecutionCourse.do?method=prepareImportLessonPlanningsPostBack&executionCourseID=<bean:write name="executionCourseID"/></bean:define>	
+	<bean:define id="invalidLink">/manageExecutionCourse.do?method=prepareImportLessonPlanningsInvalid&executionCourseID=<bean:write name="executionCourseID"/></bean:define>	
 
 	<H2><bean:message key="label.import.lessonPlannings.title"/></H2>
 							
@@ -38,9 +30,7 @@
 	 	<logic:notEmpty name="importLessonPlanningBean" property="executionPeriod">	
 	 		<logic:notEmpty name="importLessonPlanningBean" property="executionDegree">	
 				<br/>
-				<bean:define id="importLessonPlanningsUrl">
-					/manageExecutionCourse.do?method=importLessonPlannings&executionCourseID=<bean:write name="executionCourseID"/>
-				</bean:define>		
+				<bean:define id="importLessonPlanningsUrl">/manageExecutionCourse.do?method=importLessonPlannings&executionCourseID=<bean:write name="executionCourseID"/></bean:define>		
 				<H3><bean:message key="label.choose.course"/></H3>			
 				<fr:edit id="importLessonPlanningBeanWithExecutionCourse" name="importLessonPlanningBean" schema="ListExecutionCoursesToImportLessonPlannings" 
 					action="<%= importLessonPlanningsUrl %>" >

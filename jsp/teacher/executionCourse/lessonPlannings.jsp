@@ -23,34 +23,22 @@
 		</li>
 	</ul>
 	
-	<bean:define id="uri" toScope="page" type="java.lang.String">
-		/manageExecutionCourse.do?method=lessonPlannings&executionCourseID=<bean:write name="executionCourse" property="idInternal"/>
-	</bean:define>
+	<bean:define id="uri" toScope="page" type="java.lang.String">/manageExecutionCourse.do?method=lessonPlannings&executionCourseID=<bean:write name="executionCourse" property="idInternal"/></bean:define>
 	
 	<fr:form action="<%= uri %>">
 		<fr:edit id="lessonPlanningAvailable" name="executionCourse" property="site" schema="lessonPlanningAvailable" nested="true" />
 		<html:submit><bean:message key="label.submit"/></html:submit>
 	</fr:form>
 
-	<bean:define id="edit">
-		/manageExecutionCourse.do?method=prepareEditLessonPlanning&executionCourseID=<bean:write name="executionCourse" property="idInternal"/>&page=0
-	</bean:define>	
-	<bean:define id="delete">
-		/manageExecutionCourse.do?method=deleteLessonPlanning&executionCourseID=<bean:write name="executionCourse" property="idInternal"/>&page=0
-	</bean:define>
-	<bean:define id="moveUp">
-		/manageExecutionCourse.do?method=moveUpLessonPlanning&executionCourseID=<bean:write name="executionCourse" property="idInternal"/>&page=0
-	</bean:define>
-	<bean:define id="moveDown">
-		/manageExecutionCourse.do?method=moveDownLessonPlanning&executionCourseID=<bean:write name="executionCourse" property="idInternal"/>&page=0
-	</bean:define>	
+	<bean:define id="edit">/manageExecutionCourse.do?method=prepareEditLessonPlanning&executionCourseID=<bean:write name="executionCourse" property="idInternal"/>&page=0</bean:define>	
+	<bean:define id="delete">/manageExecutionCourse.do?method=deleteLessonPlanning&executionCourseID=<bean:write name="executionCourse" property="idInternal"/>&page=0</bean:define>	
+	<bean:define id="moveUp">/manageExecutionCourse.do?method=moveUpLessonPlanning&executionCourseID=<bean:write name="executionCourse" property="idInternal"/>&page=0</bean:define>
+	<bean:define id="moveDown">/manageExecutionCourse.do?method=moveDownLessonPlanning&executionCourseID=<bean:write name="executionCourse" property="idInternal"/>&page=0</bean:define>	
 
 	<logic:iterate id="lessonPlannings" name="lessonPlanningsMap">		
 		<logic:notEmpty name="lessonPlannings" property="value">
 			<h3 class="mtop2"><span class="underline1"><bean:message key="label.lessons"/> <bean:message name="lessonPlannings" property="key.name" bundle="APPLICATION_RESOURCES"/></span></h3>
-			<bean:define id="deleteLessonPlanings">
-				/manageExecutionCourse.do?method=deleteLessonPlannings&executionCourseID=<bean:write name="executionCourse" property="idInternal"/>&shiftType=<bean:write name="lessonPlannings" property="key"/>
-			</bean:define>			
+			<bean:define id="deleteLessonPlanings">/manageExecutionCourse.do?method=deleteLessonPlannings&executionCourseID=<bean:write name="executionCourse" property="idInternal"/>&shiftType=<bean:write name="lessonPlannings" property="key"/></bean:define>			
 			(<html:link action="<%= deleteLessonPlanings %>" onclick="return confirm('Tem a certeza que deseja apagar os planos deste tipo?')"><bean:message key="link.delete.all.lessonPlannings.by.type"/></html:link>)
 		</logic:notEmpty>
 		<logic:iterate id="lessonPlanning" name="lessonPlannings" property="value" indexId="index">
