@@ -336,7 +336,7 @@ public class CurricularCourse extends CurricularCourse_Base {
             curricularCourseScopesFound = (List) CollectionUtils.select(this.getScopes(),
                     new Predicate() {
                         public boolean evaluate(Object arg0) {
-                            return ((CurricularCourseScope) arg0).getBranch().equals(branch);
+                            return ((CurricularCourseScope) arg0).getBranch().equals(branch) && ((CurricularCourseScope) arg0).isActive(date);
                         }
                     });
 
@@ -347,7 +347,7 @@ public class CurricularCourse extends CurricularCourse_Base {
                             curricularCourseScopesFound, new Predicate() {
                                 public boolean evaluate(Object arg0) {
                                     return ((CurricularCourseScope) arg0).getCurricularSemester()
-                                            .getSemester().equals(semester);
+                                            .getSemester().equals(semester) && ((CurricularCourseScope) arg0).isActive(date);
                                 }
                             });
 
@@ -378,7 +378,7 @@ public class CurricularCourse extends CurricularCourse_Base {
                         new Predicate() {
                             public boolean evaluate(Object arg0) {
                                 return ((CurricularCourseScope) arg0).getCurricularSemester()
-                                        .getSemester().equals(semester);
+                                        .getSemester().equals(semester) && ((CurricularCourseScope) arg0).isActive(date);
                             }
                         });
 
@@ -489,17 +489,14 @@ public class CurricularCourse extends CurricularCourse_Base {
             return null;
         }
 
-        CurricularYear minCurricularYear = ((CurricularCourseScope) listOfScopes.get(0))
-                .getCurricularSemester().getCurricularYear();
-
-        CurricularYear actualCurricularYear = null;
+        CurricularYear minCurricularYear = null;
+        
         for (CurricularCourseScope curricularCourseScope : (List<CurricularCourseScope>) listOfScopes) {
-            actualCurricularYear = curricularCourseScope.getCurricularSemester().getCurricularYear();
-
-            if (minCurricularYear.getYear().intValue() > actualCurricularYear.getYear().intValue()
-                    && curricularCourseScope.isActive(date).booleanValue()) {
-
-                minCurricularYear = actualCurricularYear;
+            if(curricularCourseScope.isActive(date).booleanValue()) {
+        	CurricularYear actualCurricularYear = curricularCourseScope.getCurricularSemester().getCurricularYear();
+        	if (minCurricularYear == null || minCurricularYear.getYear().intValue() > actualCurricularYear.getYear().intValue()) {
+        	    minCurricularYear = actualCurricularYear;
+        	}
             }
         }
 
