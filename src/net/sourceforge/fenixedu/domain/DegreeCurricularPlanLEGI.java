@@ -3,16 +3,16 @@ package net.sourceforge.fenixedu.domain;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.degree.enrollment.rules.LEABolonhaEnrolmentRule;
+import net.sourceforge.fenixedu.domain.degree.enrollment.rules.LEGIBolonhaEnrolmentRule;
 
 /**
  * @author Ricardo Rodrigues
  * 
  */
 
-public class DegreeCurricularPlanLEA extends DegreeCurricularPlanLEA_Base {
+public class DegreeCurricularPlanLEGI extends DegreeCurricularPlanLEA_Base {
 
-    public DegreeCurricularPlanLEA() {
+    public DegreeCurricularPlanLEGI() {
         setOjbConcreteClass(getClass().getName());
     }
 
@@ -21,8 +21,7 @@ public class DegreeCurricularPlanLEA extends DegreeCurricularPlanLEA_Base {
 
         List result = new ArrayList();
         result.addAll(super.getListOfEnrollmentRules(studentCurricularPlan, executionPeriod));
-        /*result.add(new LEAOptionalGroupsEnrollmentRule(studentCurricularPlan, executionPeriod));*/
-        result.add(new LEABolonhaEnrolmentRule(studentCurricularPlan, executionPeriod));
+        result.add(new LEGIBolonhaEnrolmentRule(studentCurricularPlan, executionPeriod));
         
         return result;
     }
