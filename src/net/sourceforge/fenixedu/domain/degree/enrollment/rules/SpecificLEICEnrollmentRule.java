@@ -307,33 +307,33 @@ public class SpecificLEICEnrollmentRule extends SpecificEnrolmentRule implements
 
 
 	protected List<CurricularCourse> getLEIC4And5Courses() {
-		Set<CurricularCourse> allCurricularCourses = new HashSet<CurricularCourse>();
-		
-		Set<CurricularCourse> areaCourses = new HashSet<CurricularCourse>();
-		
-		for (Branch branch : (List<Branch>) studentCurricularPlan.getDegreeCurricularPlan().getSpecializationAreas()) {
-            addOldCurricularCourses(allCurricularCourses, branch.getCurricularCourseGroups());
+	    Set<CurricularCourse> allCurricularCourses = new HashSet<CurricularCourse>();
+
+	    Set<CurricularCourse> areaCourses = new HashSet<CurricularCourse>();
+
+	    for (Branch branch : (List<Branch>) studentCurricularPlan.getDegreeCurricularPlan().getSpecializationAreas()) {
+		addOldCurricularCourses(allCurricularCourses, branch.getCurricularCourseGroups());
+	    }
+	    for (Branch branch : (List<Branch>)studentCurricularPlan.getDegreeCurricularPlan().getSecundaryAreas()) {
+		addOldCurricularCourses(allCurricularCourses, branch.getCurricularCourseGroups());
+	    }
+	    allCurricularCourses.removeAll(specializationAndSecundaryAreaCurricularCoursesToCountForCredits);
+	    addOldCurricularCourses(allCurricularCourses, studentCurricularPlan.getDegreeCurricularPlan().getAllOptionalCurricularCourseGroups());
+
+	    for (CurricularCourse course : allCurricularCourses) {
+		if(!studentCurricularPlan.isCurricularCourseApproved(course) && !studentCurricularPlan.isCurricularCourseEnrolledInExecutionPeriod(course, executionPeriod)) {
+		    if(isAnyScopeActive(course.getScopes())) {
+			areaCourses.add(course);
+		    }
 		}
-		for (Branch branch : (List<Branch>)studentCurricularPlan.getDegreeCurricularPlan().getSecundaryAreas()) {
-            addOldCurricularCourses(allCurricularCourses, branch.getCurricularCourseGroups());
+		else {
+		    if(isAnyScopeActive(course.getScopes())) {
+			optionalCourses++;
+		    }
 		}
-		allCurricularCourses.removeAll(specializationAndSecundaryAreaCurricularCoursesToCountForCredits);
-        addOldCurricularCourses(allCurricularCourses, studentCurricularPlan.getDegreeCurricularPlan().getAllOptionalCurricularCourseGroups());
-        
-		for (CurricularCourse course : allCurricularCourses) {
-			if(!studentCurricularPlan.isCurricularCourseApproved(course) && !studentCurricularPlan.isCurricularCourseEnrolledInExecutionPeriod(course, executionPeriod)) {
-				if(isAnyScopeActive(course.getScopes())) {
-					areaCourses.add(course);
-				}
-			}
-			else {
-				if(isAnyScopeActive(course.getScopes())) {
-					optionalCourses++;
-				}
-			}
-		}
-		
-		return new ArrayList<CurricularCourse>(areaCourses);
+	    }
+
+	    return new ArrayList<CurricularCourse>(areaCourses);
 	}
 
 
@@ -349,31 +349,31 @@ public class SpecificLEICEnrollmentRule extends SpecificEnrolmentRule implements
 
 
 	protected List<CurricularCourse> getTagus4And5Courses() {
-		DegreeCurricularPlan tagusCurricularPlan = RootDomainObject.getInstance().readDegreeCurricularPlanByOID(89);
-		Set<CurricularCourse> areaCourses = new HashSet<CurricularCourse>();
-		Set<CurricularCourse> allCurricularCourses = new HashSet<CurricularCourse>();
+	    DegreeCurricularPlan tagusCurricularPlan = RootDomainObject.getInstance().readDegreeCurricularPlanByOID(89);
+	    Set<CurricularCourse> areaCourses = new HashSet<CurricularCourse>();
+	    Set<CurricularCourse> allCurricularCourses = new HashSet<CurricularCourse>();
 
-		for (Branch branch : (List<Branch>) tagusCurricularPlan.getSpecializationAreas()) {
-            addOldCurricularCourses(allCurricularCourses, branch.getCurricularCourseGroups());
-        }
-		for (Branch branch : (List<Branch>) tagusCurricularPlan.getSecundaryAreas()) {
-            addOldCurricularCourses(allCurricularCourses, branch.getCurricularCourseGroups());
-		}
-        addOldCurricularCourses(allCurricularCourses, tagusCurricularPlan.getAllOptionalCurricularCourseGroups());
-        
-		for (CurricularCourse course : allCurricularCourses) {
-			if (!isApproved(course) && !studentCurricularPlan.isCurricularCourseEnrolledInExecutionPeriod(course, executionPeriod)) {
-				if (!studentCurricularPlan.isCurricularCourseApproved(course) && isAnyScopeActive(course.getScopes())) {
-					areaCourses.add(course);
-				}
-			} else {
-				if(isAnyScopeActive(course.getScopes())) {
-					optionalCourses++;
-				}
-			}
-		}
+	    for (Branch branch : (List<Branch>) tagusCurricularPlan.getSpecializationAreas()) {
+		addOldCurricularCourses(allCurricularCourses, branch.getCurricularCourseGroups());
+	    }
+	    for (Branch branch : (List<Branch>) tagusCurricularPlan.getSecundaryAreas()) {
+		addOldCurricularCourses(allCurricularCourses, branch.getCurricularCourseGroups());
+	    }
+	    addOldCurricularCourses(allCurricularCourses, tagusCurricularPlan.getAllOptionalCurricularCourseGroups());
 
-		return new ArrayList<CurricularCourse>(areaCourses);
+	    for (CurricularCourse course : allCurricularCourses) {
+		if (!isApproved(course) && !studentCurricularPlan.isCurricularCourseEnrolledInExecutionPeriod(course, executionPeriod)) {
+		    if (!studentCurricularPlan.isCurricularCourseApproved(course) && isAnyScopeActive(course.getScopes())) {
+			areaCourses.add(course);
+		    }
+		} else {
+		    if(isAnyScopeActive(course.getScopes())) {
+			optionalCourses++;
+		    }
+		}
+	    }
+
+	    return new ArrayList<CurricularCourse>(areaCourses);
 	}
 
 	private void addOldCurricularCourses(Set<CurricularCourse> allCurricularCourses, List<CurricularCourseGroup> curricularCourseGroups) {
