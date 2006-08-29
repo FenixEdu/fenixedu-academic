@@ -29,3 +29,11 @@ function executeWithTempFile() {
 
 execute "TeacherServiceDistribution Table Definitions" teacherServiceDistributionTableDefinitions.sql
 execute "Transfer Tutor From Registration To SCP" transferTutorFromRegistrationToSCP.sql
+
+
+execute "Add DegreeCurricularPlanLEBL" addDegreeCurricularPlanLEBL.sql
+execute "Add DegreeCurricularPlanLEQ" addDegreeCurricularPlanLEQ.sql
+execute "Add DegreeCurricularPlanLEGM" addDegreeCurricularPlanLEGM.sql
+execute "Add DegreeCurricularPlanLEMAT" addDegreeCurricularPlanLEMAT.sql
+execute "Add DegreeCurricularPlanLEGI" addDegreeCurricularPlanLEGI.sql
+execute "Change EnrolmentPeriod" changeEnrolmentPeriodTable.sql
