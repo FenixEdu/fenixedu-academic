@@ -18,7 +18,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoSiteMarks;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteObjectives;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteProgram;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteProjects;
-import net.sourceforge.fenixedu.dataTransferObject.InfoSiteRSS;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteSection;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteShifts;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteShiftsAndGroups;
@@ -101,9 +100,6 @@ public class PublicTilesComponentController extends ControllerSupport {
         }
         else if (component instanceof InfoSiteStudentsAndGroups) {
             tileContext.putAttribute("body", "/publico/viewStudentsAndgroups_bd.jsp");
-        } else if(component instanceof InfoSiteRSS){
-        	tileContext.putAttribute("rss", "/publico/rss_header.jsp");
-        	tileContext.putAttribute("body", "/publico/rss_bd.jsp");
         }
     }
 
