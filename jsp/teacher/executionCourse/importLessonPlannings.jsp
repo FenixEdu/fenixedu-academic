@@ -47,9 +47,11 @@
 			</logic:notEmpty>
 		</logic:notEmpty>
 	</logic:notEmpty>
-
-
-	<logic:notEmpty name="shifts">			
+		
+	<logic:notEmpty name="noShifts">	
+		<br/><p><bean:message key="label.no.shits.to.import.lessonPlannings"/></p>
+	</logic:notEmpty>		
+	<logic:notEmpty name="shifts">		
 		<p class="mtop2 mbottom05"><strong><bean:message key="label.choose.shift.import"/>:</strong></p>
 		<html:form action="/manageExecutionCourse">
 			<html:hidden property="method" value="importLessonPlanningsBySummaries"/>

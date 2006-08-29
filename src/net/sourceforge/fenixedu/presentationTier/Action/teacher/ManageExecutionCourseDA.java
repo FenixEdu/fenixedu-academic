@@ -518,6 +518,9 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
             }
         }
         request.setAttribute("shifts", shiftsBean);
+        if(shifts.isEmpty()) {
+            request.setAttribute("noShifts", true);
+        }
     }
 
     public ActionForward lessonPlannings(ActionMapping mapping, ActionForm form,
