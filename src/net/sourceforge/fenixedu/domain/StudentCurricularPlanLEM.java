@@ -39,7 +39,7 @@ public class StudentCurricularPlanLEM extends StudentCurricularPlanLEM_Base {
      * @param optionalCurricularCourseGroup
      */
     //  FIXME: MÉTODO PARA O 2º SEMSTERE
-    protected void selectOptionalCoursesToBeRemoved(List curricularCoursesToRemove,
+   /* protected void selectOptionalCoursesToBeRemoved(List curricularCoursesToRemove,
             List curricularCoursesToKeep, CurricularCourseGroup optionalCurricularCourseGroup, ExecutionPeriod executionPeriod) {
         int count = 0;
 
@@ -90,9 +90,9 @@ public class StudentCurricularPlanLEM extends StudentCurricularPlanLEM_Base {
         } else {
             curricularCoursesToKeep.addAll(optionalCurricularCourseGroup.getCurricularCourses());
         }
-    }
+    }*/
 
- /*   
+    
     //FIXME: MÉTODO PARA O 1º SEMSTERE
     protected void selectOptionalCoursesToBeRemoved(List curricularCoursesToRemove,
             List curricularCoursesToKeep, CurricularCourseGroup optionalCurricularCourseGroup, ExecutionPeriod executionPeriod) {
@@ -112,12 +112,12 @@ public class StudentCurricularPlanLEM extends StudentCurricularPlanLEM_Base {
                             || curricularCourse.getCode().equals(MAQUINAS_FERRAMENTAS_CODE)) {
                         if (optionalCurricularCourseGroup.getName().equalsIgnoreCase(
                                 FITH_YEAR_2SEM_OPTIONAL_GROUP)) {
-                            List<CurricularCourse> curricularCoursesToIgnore = new ArrayList();
+                            List<CurricularCourse> curricularCoursesToIgnore = new ArrayList<CurricularCourse>();
                             curricularCoursesToIgnore.add(curricularCourse);
                             int done4year1sem = countDoneOrEnrolledCurricularCoursesExcept(ccgProd4Year1Sem,
-                                    curricularCoursesToIgnore);
+                                    curricularCoursesToIgnore, executionPeriod);
                             int done5year1sem = countDoneOrEnrolledCurricularCoursesExcept(ccgProd5Year1Sem,
-                                    ccgProd4Year1Sem.getCurricularCourses());
+                                    ccgProd4Year1Sem.getCurricularCourses(), executionPeriod);
                             if (done4year1sem >= 1 && done5year1sem >= 1) {
                                 count++;
                             }
@@ -125,7 +125,7 @@ public class StudentCurricularPlanLEM extends StudentCurricularPlanLEM_Base {
                             if (optionalCurricularCourseGroup.getName().equalsIgnoreCase(
                                 FOURTH_YEAR_2SEM_OPTIONAL_GROUP)) {
                             int number = countDoneOrEnrolledCurricularCoursesExcept(ccgProd5Year1Sem,
-                                    optionalCurricularCourseGroup.getCurricularCourses());
+                                    optionalCurricularCourseGroup.getCurricularCourses(), executionPeriod);
                             if (number >= 2) {
                                 count++;
                             }
@@ -146,7 +146,7 @@ public class StudentCurricularPlanLEM extends StudentCurricularPlanLEM_Base {
             curricularCoursesToKeep.addAll(optionalCurricularCourseGroup.getCurricularCourses());
         }
     }
-*/
+
     /**
      * @param optionalGroupName
      * @return
