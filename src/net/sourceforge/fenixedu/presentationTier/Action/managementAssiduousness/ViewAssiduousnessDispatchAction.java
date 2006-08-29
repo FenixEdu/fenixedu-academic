@@ -55,11 +55,6 @@ public class ViewAssiduousnessDispatchAction extends FenixDispatchAction {
             yearMonth = new YearMonth();
             yearMonth.setYear(new YearMonthDay().getYear());
             yearMonth.setMonth(Month.values()[new YearMonthDay().getMonthOfYear() - 1]);
-        } else if (yearMonth.getYear() > new YearMonthDay().getYear()
-                || (yearMonth.getYear() == new YearMonthDay().getYear() && yearMonth.getMonth()
-                        .compareTo(Month.values()[new YearMonthDay().getMonthOfYear() - 1]) > 0)) {
-            saveErrors(request, employee, yearMonth,"error.invalidFutureDate");
-            return mapping.findForward("show-employee-work-sheet");
         } else if (yearMonth.getYear() < 2006) {            
             saveErrors(request, employee, yearMonth,"error.invalidPastDate");            
             return mapping.findForward("show-employee-work-sheet");
