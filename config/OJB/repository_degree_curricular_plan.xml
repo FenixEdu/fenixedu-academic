@@ -10,6 +10,11 @@
     <extent-class class-ref="net.sourceforge.fenixedu.domain.DegreeCurricularPlanLEA"/>    
     <extent-class class-ref="net.sourceforge.fenixedu.domain.DegreeCurricularPlanLET"/>    
     <extent-class class-ref="net.sourceforge.fenixedu.domain.DegreeCurricularPlanLEAN"/> 
+    <extent-class class-ref="net.sourceforge.fenixedu.domain.DegreeCurricularPlanLEBL"/>     
+    <extent-class class-ref="net.sourceforge.fenixedu.domain.DegreeCurricularPlanLEQ"/>         
+    <extent-class class-ref="net.sourceforge.fenixedu.domain.DegreeCurricularPlanLEGM"/>     
+    <extent-class class-ref="net.sourceforge.fenixedu.domain.DegreeCurricularPlanLEMAT"/>    
+    <extent-class class-ref="net.sourceforge.fenixedu.domain.DegreeCurricularPlanLEGI"/>    
     
 	
 	
@@ -313,4 +318,27 @@
 <!-- *************************************************************************************************************** -->
 <class-descriptor class="net.sourceforge.fenixedu.domain.DegreeCurricularPlanLEAN" table="DEGREE_CURRICULAR_PLAN"/>
 
+<!-- *************************************************************************************************************** -->
+<!-- Definitions for net.sourceforge.fenixedu.domain.DegreeCurricularPlanLEBL --> 
+<!-- *************************************************************************************************************** -->
+<class-descriptor class="net.sourceforge.fenixedu.domain.DegreeCurricularPlanLEBL" table="DEGREE_CURRICULAR_PLAN"/>
 
+<!-- *************************************************************************************************************** -->
+<!-- Definitions for net.sourceforge.fenixedu.domain.DegreeCurricularPlanLEQ --> 
+<!-- *************************************************************************************************************** -->
+<class-descriptor class="net.sourceforge.fenixedu.domain.DegreeCurricularPlanLEQ" table="DEGREE_CURRICULAR_PLAN"/>
+
+<!-- *************************************************************************************************************** -->
+<!-- Definitions for net.sourceforge.fenixedu.domain.DegreeCurricularPlanLEGM --> 
+<!-- *************************************************************************************************************** -->
+<class-descriptor class="net.sourceforge.fenixedu.domain.DegreeCurricularPlanLEGM" table="DEGREE_CURRICULAR_PLAN"/>
+
+<!-- *************************************************************************************************************** -->
+<!-- Definitions for net.sourceforge.fenixedu.domain.DegreeCurricularPlanLEMAT --> 
+<!-- *************************************************************************************************************** -->
+<class-descriptor class="net.sourceforge.fenixedu.domain.DegreeCurricularPlanLEMAT" table="DEGREE_CURRICULAR_PLAN"/>
+
+<!-- *************************************************************************************************************** -->
+<!-- Definitions for net.sourceforge.fenixedu.domain.DegreeCurricularPlanLEGI --> 
+<!-- *************************************************************************************************************** -->
+<class-descriptor class="net.sourceforge.fenixedu.domain.DegreeCurricularPlanLEGI" table="DEGREE_CURRICULAR_PLAN"/>
