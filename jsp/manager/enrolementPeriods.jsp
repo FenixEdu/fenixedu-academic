@@ -67,11 +67,20 @@
 		</tr>
 		<tr>
 			<td class="listClasses">
+				<bean:message bundle="MANAGER_RESOURCES" key="label.enrolment.period.startDate"/>
 			</td>
 			<td class="listClasses">
-				<html:text bundle="HTMLALT_RESOURCES" altKey="text.startDate" property="startDate" size="8"/> <html:text bundle="HTMLALT_RESOURCES" altKey="text.endDate" property="endDate" size="8"/>
+				<html:text bundle="HTMLALT_RESOURCES" altKey="text.startDate" property="startDate" size="8"/> <html:text bundle="HTMLALT_RESOURCES" altKey="text.endDate" property="startTime" size="5"/>
 			</td>
 		</tr>
+		<tr>
+			<td class="listClasses">
+				<bean:message bundle="MANAGER_RESOURCES" key="label.enrolment.period.endDate"/>
+			</td>
+			<td class="listClasses">
+				<html:text bundle="HTMLALT_RESOURCES" altKey="text.startDate" property="endDate" size="8"/> <html:text bundle="HTMLALT_RESOURCES" altKey="text.endDate" property="endTime" size="5"/>
+			</td>
+		</tr>		
 	</table>
 
 	<br />
@@ -102,8 +111,14 @@
 					<bean:message bundle="MANAGER_RESOURCES" key="label.enrolment.period.startDate"/>
 				</th>
 				<th class="listClasses-header">
+					<bean:message bundle="MANAGER_RESOURCES" key="label.enrolment.period.startDate"/>
+				</th>				
+				<th class="listClasses-header">
 					<bean:message bundle="MANAGER_RESOURCES" key="label.enrolment.period.endDate"/>
 				</th>
+				<th class="listClasses-header">
+					<bean:message bundle="MANAGER_RESOURCES" key="label.enrolment.period.endDate"/>
+				</th>				
 				<th class="listClasses-header">
 				</th>
 			</tr>
@@ -130,9 +145,17 @@
 							<html:text bundle="HTMLALT_RESOURCES" altKey="text.startDate" property="startDate" value="<%= startDate.toString() %>" size="8"/>
 						</td>
 						<td class="listClasses">
+							<bean:define id="startTime" type="java.lang.String"><dt:format pattern="HH:mm"><bean:write name="infoEnrolmentPeriod" property="startDate.time"/></dt:format></bean:define>
+							<html:text bundle="HTMLALT_RESOURCES" altKey="text.startDate" property="startTime" value="<%= startTime.toString() %>" size="5"/>
+						</td>						
+						<td class="listClasses">
 							<bean:define id="endDate" type="java.lang.String"><dt:format pattern="yyyy/MM/dd"><bean:write name="infoEnrolmentPeriod" property="endDate.time"/></dt:format></bean:define>
 							<html:text bundle="HTMLALT_RESOURCES" altKey="text.endDate" property="endDate" value="<%= endDate.toString() %>" size="8"/>
 						</td>
+						<td class="listClasses">
+							<bean:define id="endTime" type="java.lang.String"><dt:format pattern="HH:mm"><bean:write name="infoEnrolmentPeriod" property="endDate.time"/></dt:format></bean:define>
+							<html:text bundle="HTMLALT_RESOURCES" altKey="text.endDate" property="endTime" value="<%= endTime.toString() %>" size="5"/>
+						</td>						
 						<td class="listClasses">
 							<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton">
 								<bean:message bundle="MANAGER_RESOURCES" key="button.change"/>

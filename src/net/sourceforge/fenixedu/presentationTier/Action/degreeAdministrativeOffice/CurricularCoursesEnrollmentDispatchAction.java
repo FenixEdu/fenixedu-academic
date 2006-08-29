@@ -31,6 +31,7 @@ import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.commons.TransactionalDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.util.Data;
+import net.sourceforge.fenixedu.util.DateFormatUtil;
 import net.sourceforge.fenixedu.util.SecretaryEnrolmentStudentReason;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -122,9 +123,9 @@ public class CurricularCoursesEnrollmentDispatchAction extends TransactionalDisp
 			}
 
 		} catch (OutOfCurricularCourseEnrolmentPeriod e) {
-			final String startDate = (e.getStartDate() != null) ? Data.format2DayMonthYear(e
-					.getStartDate()) : "";
-			final String endDate = (e.getEndDate() != null) ? Data.format2DayMonthYear(e.getEndDate())
+		    
+			final String startDate = (e.getStartDate() != null) ? DateFormatUtil.format("yyyy-MM-dd HH:mm", e.getStartDate()) : "";
+			final String endDate = (e.getEndDate() != null) ? DateFormatUtil.format("yyyy-MM-dd HH:mm", e.getEndDate())
 					: "";
 			addActionMessage(request, e.getMessageKey(), startDate, endDate);
 

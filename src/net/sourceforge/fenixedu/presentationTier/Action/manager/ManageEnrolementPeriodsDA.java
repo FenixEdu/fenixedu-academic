@@ -1,6 +1,8 @@
 package net.sourceforge.fenixedu.presentationTier.Action.manager;
 
+import java.text.ParseException;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -49,10 +51,13 @@ public class ManageEnrolementPeriodsDA extends FenixDispatchAction {
         final String enrolmentPeriodIDString = (String) actionForm.get("enrolmentPeriodID");
         final String startDateString = (String) actionForm.get("startDate");
         final String endDateString = (String) actionForm.get("endDate");
+        
+        final String startTimeString = (String) actionForm.get("startTime");
+        final String endTimeString = (String) actionForm.get("endTime");
 
-        final Object[] args = { Integer.valueOf(enrolmentPeriodIDString),
-        		DateFormatUtil.parse("yyyy/MM/dd", startDateString),
-        		DateFormatUtil.parse("yyyy/MM/dd", endDateString)};
+
+        final Object[] args = { Integer.valueOf(enrolmentPeriodIDString), getDate(startDateString, startTimeString),
+        		getDate(endDateString, endTimeString)};
         ServiceManagerServiceFactory.executeService(userView, "ChangeEnrolmentPeriodValues", args);
 
         return prepare(mapping, form, request, response);
@@ -68,13 +73,17 @@ public class ManageEnrolementPeriodsDA extends FenixDispatchAction {
         final String enrolmentPeriodClassString = (String) actionForm.get("enrolmentPeriodClass");
         final String startDateString = (String) actionForm.get("startDate");
         final String endDateString = (String) actionForm.get("endDate");
+        
+        final String startTimeString = (String) actionForm.get("startTime");
+        final String endTimeString = (String) actionForm.get("endTime");
+
 
         final DegreeType degreeType = degreeTypeString.length() == 0 ? null : DegreeType.valueOf(degreeTypeString);
 
         final Object[] args = { Integer.valueOf(executionPeriodIDString),
         		degreeType, enrolmentPeriodClassString,
-        		DateFormatUtil.parse("yyyy/MM/dd", startDateString),
-        		DateFormatUtil.parse("yyyy/MM/dd", endDateString)};
+        		getDate(startDateString, startTimeString),
+        		getDate(endDateString, endTimeString)};
         ServiceManagerServiceFactory.executeService(userView, "CreateEnrolmentPeriods", args);
 
         return prepare(mapping, form, request, response);
@@ -113,6 +122,10 @@ public class ManageEnrolementPeriodsDA extends FenixDispatchAction {
 
     private boolean isValidObjectID(final String objectIDString) {
         return objectIDString != null && objectIDString.length() > 0 && StringUtils.isNumeric(objectIDString);
+    }
+    
+    private Date getDate(String date, String time) throws ParseException {
+	return DateFormatUtil.parse("yyyy/MM/ddHH:mm", date + time); 
     }
 
 }
