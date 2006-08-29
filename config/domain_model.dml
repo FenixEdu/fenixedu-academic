@@ -778,6 +778,22 @@ class net.sourceforge.fenixedu.domain.DegreeCurricularPlan extends net.sourcefor
 
     class net.sourceforge.fenixedu.domain.DegreeCurricularPlanLEAN extends net.sourceforge.fenixedu.domain.DegreeCurricularPlan {
     }
+    
+	class net.sourceforge.fenixedu.domain.DegreeCurricularPlanLEBL extends net.sourceforge.fenixedu.domain.DegreeCurricularPlan {
+    }
+    
+    class net.sourceforge.fenixedu.domain.DegreeCurricularPlanLEQ extends net.sourceforge.fenixedu.domain.DegreeCurricularPlan {
+    }
+    
+    class net.sourceforge.fenixedu.domain.DegreeCurricularPlanLEGM extends net.sourceforge.fenixedu.domain.DegreeCurricularPlan {
+    }
+    
+    class net.sourceforge.fenixedu.domain.DegreeCurricularPlanLEMAT extends net.sourceforge.fenixedu.domain.DegreeCurricularPlan {
+    }
+
+    class net.sourceforge.fenixedu.domain.DegreeCurricularPlanLEGI extends net.sourceforge.fenixedu.domain.DegreeCurricularPlan {
+    }
+
 
 class net.sourceforge.fenixedu.domain.DegreeInfo extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer keyDegree;
@@ -1171,8 +1187,8 @@ class net.sourceforge.fenixedu.domain.log.EnrolmentLog extends net.sourceforge.f
 
 class net.sourceforge.fenixedu.domain.EnrolmentPeriod extends net.sourceforge.fenixedu.domain.DomainObject {
     String ojbConcreteClass;
-	YearMonthDay endDateYearMonthDay;
-	YearMonthDay startDateYearMonthDay;
+	DateTime endDateDateTime;
+	DateTime startDateDateTime;
     Integer keyDegreeCurricularPlan;
     Integer keyExecutionPeriod;
 }
