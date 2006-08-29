@@ -124,12 +124,13 @@ public class EnrollmentAuthorizationFilter extends AuthorizationByManyRolesFilte
 		    return "error.message.requested.change.degree";
 		}
 		
-		if (registration.hasAssociatedTutor()) {
+		/*if (registration.hasAssociatedTutor()) {
 		    return new String("error.enrollment.student.withTutor+"
 		            + registration.getAssociatedTutor().getTeacher().getTeacherNumber().toString() + "+"
 		            + registration.getAssociatedTutor().getTeacher().getPerson().getNome());
 		}
-
+		*/
+		
 		// check if the student is in the list of secretary enrolments
 		// students
 		final SecretaryEnrolmentStudent secretaryEnrolmentStudent = registration.getSecretaryEnrolmentStudents().isEmpty() ?
