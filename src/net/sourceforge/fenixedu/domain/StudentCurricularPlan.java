@@ -1485,7 +1485,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 		    .getEnrolmentPeriodInCurricularCoursesSpecialSeasonByExecutionPeriod(executionPeriod);
 
 	    return (periodInCurricularCoursesSpecialSeason != null && periodInCurricularCoursesSpecialSeason
-		    .containsDate(new YearMonthDay()));
+		    .containsDate(new DateTime()));
 	}
 	return false;
     }

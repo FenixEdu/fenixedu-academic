@@ -26,7 +26,7 @@ public abstract class EnrolmentPeriod extends EnrolmentPeriod_Base {
     }
     
     public boolean isValid(Date date) {
-    	return (DateFormatUtil.compareDates("yyyyMMdd", this.getStartDate(), date) <= 0) && (DateFormatUtil.compareDates("yyyyMMdd", this.getEndDate(), date) >= 0);  
+    	return (DateFormatUtil.compareDates("yyyyMMddHHmm", this.getStartDate(), date) <= 0) && (DateFormatUtil.compareDates("yyyyMMddHHmm", this.getEndDate(), date) >= 0);  
     }
 
 }

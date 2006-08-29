@@ -488,7 +488,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
         List<EnrolmentPeriodInCurricularCourses> result = new ArrayList<EnrolmentPeriodInCurricularCourses>();
         for (EnrolmentPeriod enrolmentPeriod : this.getEnrolmentPeriods()) {
             if ((enrolmentPeriod instanceof EnrolmentPeriodInCurricularCourses)
-                    && DateFormatUtil.isAfter("yyyyMMdd", enrolmentPeriod.getStartDate(), new Date())) {
+                    && DateFormatUtil.isAfter("yyyyMMddHHmm", enrolmentPeriod.getStartDate(), new Date())) {
                 result.add((EnrolmentPeriodInCurricularCourses) enrolmentPeriod);
             }
         }
@@ -518,7 +518,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 
         final List<IEnrollmentRule> result = new ArrayList<IEnrollmentRule>(4);
 
-        result.add(new MaximumNumberEctsCreditsEnrolmentRule(studentCurricularPlan, executionPeriod));
+        //result.add(new MaximumNumberEctsCreditsEnrolmentRule(studentCurricularPlan, executionPeriod));
         result.add(new PrecedencesEnrollmentRule(studentCurricularPlan, executionPeriod));
         result.add(new PreviousYearsCurricularCourseEnrollmentRule(studentCurricularPlan, executionPeriod));
 

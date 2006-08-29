@@ -34,8 +34,8 @@ public class ClassEnrollmentAuthorizationFilter extends Filtro {
         
         if (studentCurricularPlan != null) {
         	EnrolmentPeriodInClasses enrolmentPeriodInClasses = studentCurricularPlan.getDegreeCurricularPlan().getCurrentClassesEnrollmentPeriod();
-            if (enrolmentPeriodInClasses == null || enrolmentPeriodInClasses.getStartDateYearMonthDay() == null
-                    || enrolmentPeriodInClasses.getEndDateYearMonthDay() == null) {
+            if (enrolmentPeriodInClasses == null || enrolmentPeriodInClasses.getStartDateDateTime() == null
+                    || enrolmentPeriodInClasses.getEndDateDateTime() == null) {
                 throw new CurrentClassesEnrolmentPeriodUndefinedForDegreeCurricularPlan();
             }
 
