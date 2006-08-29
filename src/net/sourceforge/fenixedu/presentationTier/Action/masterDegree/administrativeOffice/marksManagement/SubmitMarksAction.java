@@ -18,6 +18,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolment;
 import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolmentEvaluation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteEnrolmentEvaluation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlan;
+import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
@@ -36,7 +37,7 @@ import org.apache.struts.validator.DynaValidatorForm;
 
 /**
  * @author Fernanda Quitério 01/07/2003
- *  
+ * 
  */
 public class SubmitMarksAction extends FenixDispatchAction {
 
@@ -77,10 +78,10 @@ public class SubmitMarksAction extends FenixDispatchAction {
 
     private void setForm(ActionForm form, InfoSiteEnrolmentEvaluation infoSiteEnrolmentEvaluation) {
         DynaValidatorForm submitMarksForm = (DynaValidatorForm) form;
-        if (infoSiteEnrolmentEvaluation.getInfoTeacher().getTeacherNumber() != null) {
-            //		fill in teacher number in case it exists
-            submitMarksForm.set("teacherNumber", infoSiteEnrolmentEvaluation.getInfoTeacher()
-                    .getTeacherNumber().toString());
+        InfoTeacher infoTeacher = infoSiteEnrolmentEvaluation.getInfoTeacher();
+        if (infoTeacher != null && infoTeacher.getTeacherNumber() != null) {
+            // fill in teacher number in case it exists
+            submitMarksForm.set("teacherNumber", infoTeacher.getTeacherNumber().toString());
         }
         if (infoSiteEnrolmentEvaluation.getLastEvaluationDate() != null) {
             Calendar calendar = Calendar.getInstance();
@@ -110,7 +111,7 @@ public class SubmitMarksAction extends FenixDispatchAction {
         List evaluations = new ArrayList();
         Integer sizeList = new Integer(MarksManagementDispatchAction.getFromRequest("sizeList", request));
 
-        //transform form into list with student's code and students's grade
+        // transform form into list with student's code and students's grade
         for (int i = 0; i < sizeList.intValue(); i++) {
             InfoEnrolmentEvaluation infoEnrolmentEvaluation = getFinalEvaluation(request, i);
             if (infoEnrolmentEvaluation != null) {
@@ -120,7 +121,7 @@ public class SubmitMarksAction extends FenixDispatchAction {
 
         Calendar calendar = Calendar.getInstance();
         calendar.setLenient(false);
-        //		get information from form
+        // get information from form
         DynaValidatorForm marksForm = (DynaValidatorForm) form;
         Integer teacherNumber = new Integer((String) marksForm.get("teacherNumber"));
         int year = new Integer((String) marksForm.get("year")).intValue();
@@ -134,7 +135,7 @@ public class SubmitMarksAction extends FenixDispatchAction {
             return mapping.findForward("ShowMarksManagementMenu");
         }
 
-        //		Insert final evaluation
+        // Insert final evaluation
         IUserView userView = SessionUtils.getUserView(request);
         Object args[] = { evaluations, teacherNumber, evaluationDate, userView };
         List evaluationsWithError = null;
@@ -148,7 +149,7 @@ public class SubmitMarksAction extends FenixDispatchAction {
             throw new FenixActionException(e);
         }
 
-        //		check for invalid marks
+        // check for invalid marks
         ActionErrors actionErrors = null;
         actionErrors = checkForErrors(evaluationsWithError);
         if (actionErrors != null) {
@@ -162,7 +163,7 @@ public class SubmitMarksAction extends FenixDispatchAction {
     private InfoEnrolmentEvaluation getFinalEvaluation(HttpServletRequest request, int index) {
         Integer studentCode = null;
         Integer enrolmentCode = null;
-		Integer evaluationId = null;
+        Integer evaluationId = null;
         String evaluation = request.getParameter("enrolmentEvaluation[" + index + "].grade");
         if (request.getParameter("enrolmentEvaluation[" + index + "].studentCode") != null) {
             studentCode = Integer.valueOf(request.getParameter("enrolmentEvaluation[" + index
@@ -170,19 +171,21 @@ public class SubmitMarksAction extends FenixDispatchAction {
 
             enrolmentCode = Integer.valueOf(request.getParameter("enrolmentEvaluation[" + index
                     + "].enrolmentCode"));
-			
-			evaluationId = Integer.valueOf(request.getParameter("enrolmentEvaluation[" + index
-					+ "].idInternal"));
+
+            evaluationId = Integer.valueOf(request.getParameter("enrolmentEvaluation[" + index
+                    + "].idInternal"));
 
         }
         if (studentCode != null) {
 
-            //enrolment evaluation with only student code and mark and
+            // enrolment evaluation with only student code and mark and
             // enrolment code
 
-            final Enrolment enrolment = (Enrolment) RootDomainObject.getInstance().readCurriculumModuleByOID(enrolmentCode);
+            final Enrolment enrolment = (Enrolment) RootDomainObject.getInstance()
+                    .readCurriculumModuleByOID(enrolmentCode);
 
-            InfoStudentCurricularPlan infoStudentCurricularPlan = new InfoStudentCurricularPlan(enrolment.getStudentCurricularPlan());
+            InfoStudentCurricularPlan infoStudentCurricularPlan = new InfoStudentCurricularPlan(
+                    enrolment.getStudentCurricularPlan());
 
             InfoEnrolment infoEnrolment = new InfoEnrolment();
             infoEnrolment.setIdInternal(enrolmentCode);
@@ -192,7 +195,7 @@ public class SubmitMarksAction extends FenixDispatchAction {
             infoEnrolmentEvaluation.setInfoEnrolment(infoEnrolment);
 
             infoEnrolmentEvaluation.setGrade(evaluation);
-			infoEnrolmentEvaluation.setIdInternal(evaluationId);
+            infoEnrolmentEvaluation.setIdInternal(evaluationId);
             return infoEnrolmentEvaluation;
         }
         return null;
