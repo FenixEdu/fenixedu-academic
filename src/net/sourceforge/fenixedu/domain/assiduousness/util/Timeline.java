@@ -117,9 +117,17 @@ public class Timeline {
                         // removes the current point attribute to new point interval attributes
                         insideIntervals.removeAttribute(attribute);
                     } else {
-                        newPoint.getIntervalAttributes().addAttribute(attribute);
-                        // adds the current point attribute to new point interval attributes
-                        insideIntervals.addAttribute(attribute);
+                        if (newPoint.getPointAttributes().contains(DomainConstants.WORKED_ATTRIBUTES)
+                                && attribute.equals(AttributeType.MEAL) && i % 2 == 0 && i != 0) {
+                            currentPoint.getPointAttributes().addAttribute(attribute);
+                            currentPoint.getIntervalAttributes().addAttribute(attribute);
+                            newPoint.getPointAttributes().addAttribute(attribute);
+                            newPoint.getIntervalAttributes().removeAttribute(attribute);
+                        } else {
+                            newPoint.getIntervalAttributes().addAttribute(attribute);
+                            // adds the current point attribute to new point interval attributes
+                            insideIntervals.addAttribute(attribute);
+                        }
                     }
                 }
             }
