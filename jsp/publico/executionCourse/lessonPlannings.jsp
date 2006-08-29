@@ -13,7 +13,7 @@
 	</logic:empty>			
 	<logic:iterate id="lessonPlannings" name="lessonPlanningsMap">		
 		<logic:notEmpty name="lessonPlannings" property="value">
-			<h3 class="mtop2"><bean:message key="label.lessons"/> <bean:message name="lessonPlannings" property="key.name" bundle="DEFAULT"/></h3>
+			<h3 class="arrow_bullet mtop2 greytxt"><bean:message key="label.lessons"/> <bean:message name="lessonPlannings" property="key.name" bundle="DEFAULT"/></h3>
 		</logic:notEmpty>
 
 		<logic:iterate id="lessonPlanning" name="lessonPlannings" property="value" indexId="index">
