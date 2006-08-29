@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.dataTransferObject;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
+import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Lesson;
 import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.util.DiaSemana;
@@ -20,7 +21,7 @@ public class InfoLesson extends InfoShowOccupation implements ISmsDTO, Comparabl
         INFO_LESSON_COMPARATOR_CHAIN.addComparator(new BeanComparator("infoSala.nome"));
     }
     
-    private Lesson lesson;
+    private DomainReference<Lesson> lesson;
     
     private InfoRoom infoSala;
     private InfoShift infoShift;
@@ -28,31 +29,31 @@ public class InfoLesson extends InfoShowOccupation implements ISmsDTO, Comparabl
 
     public InfoLesson(Lesson lesson) {
     	super.copyFromDomain(lesson);
-    	this.lesson = lesson;
+    	this.lesson = new DomainReference<Lesson>(lesson);
     }
 
     public DiaSemana getDiaSemana() {
-        return lesson.getDiaSemana();
+        return getLesson().getDiaSemana();
     }
 
     public Calendar getFim() {
-        return lesson.getFim();
+        return getLesson().getFim();
     }
 
     public Calendar getInicio() {
-        return lesson.getInicio();
+        return getLesson().getInicio();
     }
 
     public ShiftType getTipo() {
-        return lesson.getTipo();
+        return getLesson().getTipo();
     }
 
     public Integer getFrequency() {        
-        return lesson.getFrequency();
+        return getLesson().getFrequency();
     }
     
     public Integer getWeekOfQuinzenalStart() {
-        return lesson.getWeekOfQuinzenalStart();
+        return getLesson().getWeekOfQuinzenalStart();
     }
     
     public String getWeekDay() {
@@ -79,16 +80,16 @@ public class InfoLesson extends InfoShowOccupation implements ISmsDTO, Comparabl
     }
     
     public InfoRoom getInfoSala() {
-        return (infoSala == null) ? infoSala = InfoRoom.newInfoFromDomain(lesson.getSala()) : infoSala;
+        return (infoSala == null) ? infoSala = InfoRoom.newInfoFromDomain(getLesson().getSala()) : infoSala;
     }
 
     public InfoShift getInfoShift() {
-        return (infoShift == null) ? infoShift = InfoShift.newInfoFromDomain(lesson.getShift()) : infoShift;
+        return (infoShift == null) ? infoShift = InfoShift.newInfoFromDomain(getLesson().getShift()) : infoShift;
     }
 
     public InfoRoomOccupation getInfoRoomOccupation() {
     	if (infoRoomOccupation == null) {
-    		infoRoomOccupation = InfoRoomOccupationWithInfoRoomAndInfoPeriod.newInfoFromDomain(lesson.getRoomOccupation());
+    		infoRoomOccupation = InfoRoomOccupationWithInfoRoomAndInfoPeriod.newInfoFromDomain(getLesson().getRoomOccupation());
     	}
     	return infoRoomOccupation;
 	}
@@ -136,6 +137,10 @@ public class InfoLesson extends InfoShowOccupation implements ISmsDTO, Comparabl
         result += "\n\n";
 
         return result;
+    }
+    
+    private Lesson getLesson(){
+        return lesson == null ? null : lesson.getObject();
     }
 
 }

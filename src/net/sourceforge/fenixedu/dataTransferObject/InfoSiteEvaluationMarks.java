@@ -4,27 +4,29 @@ import java.util.Collection;
 import java.util.Comparator;
 import java.util.TreeSet;
 
+import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Evaluation;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Mark;
 
 import org.apache.commons.beanutils.BeanComparator;
 
-
 public class InfoSiteEvaluationMarks extends DataTranferObject implements ISiteComponent {
 
     private static final Comparator comparator = new BeanComparator("attend.aluno.number");
 
     private Integer evaluationID;
-    private Evaluation evaluation;
-    private ExecutionCourse executionCourse;
+
+    private DomainReference<Evaluation> evaluation;
+
+    private DomainReference<ExecutionCourse> executionCourse;
 
     public Evaluation getEvaluation() {
-        return evaluation;
+        return evaluation == null ? null : evaluation.getObject();
     }
 
     public void setEvaluation(Evaluation evaluation) {
-        this.evaluation = evaluation;
+        this.evaluation = new DomainReference<Evaluation>(evaluation);
     }
 
     public Integer getEvaluationID() {
@@ -42,11 +44,11 @@ public class InfoSiteEvaluationMarks extends DataTranferObject implements ISiteC
     }
 
     public ExecutionCourse getExecutionCourse() {
-        return executionCourse;
+        return executionCourse == null ? null : executionCourse.getObject();
     }
 
     public void setExecutionCourse(ExecutionCourse executionCourse) {
-        this.executionCourse = executionCourse;
+        this.executionCourse = new DomainReference<ExecutionCourse>(executionCourse);
     }
 
 }

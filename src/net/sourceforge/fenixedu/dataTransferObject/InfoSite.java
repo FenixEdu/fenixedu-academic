@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.dataTransferObject;
 
+import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Site;
 
 /**
@@ -13,19 +14,19 @@ import net.sourceforge.fenixedu.domain.Site;
 
 public class InfoSite extends InfoObject implements ISiteComponent {
 
-    private final Site site;
+    private final DomainReference<Site> site;
 
     private InfoExecutionCourse infoExecutionCourse;
 
     public InfoSite(final Site site) {
-        this.site = site;
+        this.site = new DomainReference<Site>(site);
     }
 
     /**
      * @return the dynamicMailDistribution
      */
     public Boolean getDynamicMailDistribution() {
-        return site.getDynamicMailDistribution();
+        return getSite().getDynamicMailDistribution();
     }
 
     /**
@@ -46,49 +47,49 @@ public class InfoSite extends InfoObject implements ISiteComponent {
     }
 
     public boolean equals(Object obj) {
-        return obj instanceof InfoSite && site == ((InfoSite) obj).site;
+        return obj instanceof InfoSite && getSite() == ((InfoSite) obj).getSite();
     }
 
     /**
      * @see java.lang.Object#toString()
      */
     public String toString() {
-        return site.toString();
+        return getSite().toString();
     }
 
     /**
      * @return String
      */
     public String getAlternativeSite() {
-        return site.getAlternativeSite();
+        return getSite().getAlternativeSite();
     }
 
     /**
      * @return String
      */
     public String getMail() {
-        return site.getMail();
+        return getSite().getMail();
     }
 
     /**
      * @return String
      */
     public String getInitialStatement() {
-        return site.getInitialStatement();
+        return getSite().getInitialStatement();
     }
 
     /**
      * @return String
      */
     public String getIntroduction() {
-        return site.getIntroduction();
+        return getSite().getIntroduction();
     }
 
     /**
      * @return String
      */
     public String getStyle() {
-        return site.getStyle();
+        return getSite().getStyle();
     }
 
     public static InfoSite newInfoFromDomain(Site site) {
@@ -97,7 +98,10 @@ public class InfoSite extends InfoObject implements ISiteComponent {
 
     @Override
     public Integer getIdInternal() {
-        return site.getIdInternal();
+        return getSite().getIdInternal();
     }
 
+    private Site getSite() {
+        return site == null ? null : site.getObject();
+    }
 }

@@ -12,6 +12,7 @@ package net.sourceforge.fenixedu.dataTransferObject;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Lesson;
 import net.sourceforge.fenixedu.domain.SchoolClass;
 import net.sourceforge.fenixedu.domain.Shift;
@@ -21,46 +22,47 @@ import net.sourceforge.fenixedu.util.NumberUtils;
 
 public class InfoShift extends InfoObject {
 
-	private final Shift shift;
+    private final DomainReference<Shift> shift;
 
-	public InfoShift(final Shift shift) {
-		this.shift = shift;
+    public InfoShift(final Shift shift) {
+        this.shift = new DomainReference<Shift>(shift);
     }
 
     public Integer getSize() {
-    	return Integer.valueOf(shift.getAssociatedClasses().size());
+        return Integer.valueOf(getShift().getAssociatedClasses().size());
     }
 
     public String getNome() {
-        return shift.getNome();
+        return getShift().getNome();
     }
 
     public InfoExecutionCourse getInfoDisciplinaExecucao() {
-        return InfoExecutionCourse.newInfoFromDomain(shift.getDisciplinaExecucao());
+        return InfoExecutionCourse.newInfoFromDomain(getShift().getDisciplinaExecucao());
     }
 
     public ShiftType getTipo() {
-        return shift.getTipo();
+        return getShift().getTipo();
     }
 
     public Integer getLotacao() {
-        return shift.getLotacao();
+        return getShift().getLotacao();
     }
 
     public Integer getOcupation() {
-        return shift.getStudentsCount();
+        return getShift().getStudentsCount();
     }
 
     public Double getPercentage() {
-    	return NumberUtils.formatNumber(Double.valueOf(getOcupation().floatValue() * 100 / getLotacao().floatValue()), 1);
+        return NumberUtils.formatNumber(Double.valueOf(getOcupation().floatValue() * 100
+                / getLotacao().floatValue()), 1);
     }
 
     public boolean equals(Object obj) {
-    	return obj != null && shift == ((InfoShift) obj).shift;
+        return obj != null && getShift() == ((InfoShift) obj).getShift();
     }
 
     public String toString() {
-    	return shift.toString();
+        return getShift().toString();
     }
 
     public String getLessons() {
@@ -71,13 +73,13 @@ public class InfoShift extends InfoObject {
             int index = 0;
             for (final InfoLesson infoLesson : infoLessonsList) {
                 index = index + 1;
-                stringBuilder.append(infoLesson.getDiaSemana().toString());          
+                stringBuilder.append(infoLesson.getDiaSemana().toString());
                 stringBuilder.append(" (");
                 stringBuilder.append(DateFormatUtil.format("HH:mm", infoLesson.getInicio().getTime()));
                 stringBuilder.append("-");
                 stringBuilder.append(DateFormatUtil.format("HH:mm", infoLesson.getFim().getTime()));
                 stringBuilder.append(") ");
-                if(infoLesson.getInfoSala() != null) {
+                if (infoLesson.getInfoSala() != null) {
                     stringBuilder.append(infoLesson.getInfoSala().getNome().toString());
                 }
 
@@ -94,37 +96,41 @@ public class InfoShift extends InfoObject {
     }
 
     public Integer getAvailabilityFinal() {
-        return shift.getAvailabilityFinal();
+        return getShift().getAvailabilityFinal();
     }
 
     public List<InfoLesson> getInfoLessons() {
-    	final List<InfoLesson> infoLessons = new ArrayList<InfoLesson>();
-    	for (final Lesson lesson : shift.getAssociatedLessonsSet()) {
-    		infoLessons.add(InfoLesson.newInfoFromDomain(lesson));
-    	}
+        final List<InfoLesson> infoLessons = new ArrayList<InfoLesson>();
+        for (final Lesson lesson : getShift().getAssociatedLessonsSet()) {
+            infoLessons.add(InfoLesson.newInfoFromDomain(lesson));
+        }
         return infoLessons;
     }
 
     public List getInfoClasses() {
-    	final List<InfoClass> infoClasses = new ArrayList<InfoClass>();
-    	for (final SchoolClass schoolClass : shift.getAssociatedClassesSet()) {
-    		infoClasses.add(InfoClass.newInfoFromDomain(schoolClass));
-    	}
+        final List<InfoClass> infoClasses = new ArrayList<InfoClass>();
+        for (final SchoolClass schoolClass : getShift().getAssociatedClassesSet()) {
+            infoClasses.add(InfoClass.newInfoFromDomain(schoolClass));
+        }
         return infoClasses;
     }
 
-	@Override
-	public Integer getIdInternal() {
-		return shift.getIdInternal();
-	}
+    @Override
+    public Integer getIdInternal() {
+        return getShift().getIdInternal();
+    }
 
     @Override
     public void setIdInternal(Integer integer) {
         throw new Error("Method should not be called!");
     }
 
-	public static InfoShift newInfoFromDomain(final Shift shift) {
-		return shift == null ? null : new InfoShift(shift);
-	}
+    public static InfoShift newInfoFromDomain(final Shift shift) {
+        return shift == null ? null : new InfoShift(shift);
+    }
+
+    private Shift getShift() {
+        return shift == null ? null : shift.getObject();
+    }
 
 }

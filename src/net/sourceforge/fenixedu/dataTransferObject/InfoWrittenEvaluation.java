@@ -9,6 +9,7 @@ import java.util.Calendar;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.CurricularCourseScope;
+import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Exam;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
@@ -17,23 +18,34 @@ import net.sourceforge.fenixedu.domain.space.RoomOccupation;
 
 /**
  * @author Ana e Ricardo
- *  
+ * 
  */
 public class InfoWrittenEvaluation extends InfoEvaluation {
 
-    protected WrittenEvaluation writtenEvaluation;
+    protected DomainReference<WrittenEvaluation> writtenEvaluation;
+
     protected Calendar day;
+
     protected Calendar beginning;
+
     protected Calendar end;
+
     protected Calendar enrollmentBeginDay;
+
     protected Calendar enrollmentEndDay;
+
     protected Calendar enrollmentBeginTime;
+
     protected Calendar enrollmentEndTime;
+
     protected List associatedCurricularCourseScope;
+
     protected List associatedRoomOccupation;
-    protected List associatedExecutionCourse;    
+
+    protected List associatedExecutionCourse;
+
     protected Integer enrolledStudents;
-    
+
     public List getAssociatedCurricularCourseScope() {
         return associatedCurricularCourseScope;
     }
@@ -113,7 +125,7 @@ public class InfoWrittenEvaluation extends InfoEvaluation {
     public void setAssociatedExecutionCourse(List list) {
         associatedExecutionCourse = list;
     }
-    
+
     public Integer getEnrolledStudents() {
         return enrolledStudents;
     }
@@ -133,18 +145,21 @@ public class InfoWrittenEvaluation extends InfoEvaluation {
     public void copyFromDomain(WrittenEvaluation writtenEvaluation) {
         super.copyFromDomain(writtenEvaluation);
         if (writtenEvaluation != null) {
-            this.writtenEvaluation = writtenEvaluation;
+            setWrittenEvaluation(writtenEvaluation);
             associatedExecutionCourse = new ArrayList();
             associatedRoomOccupation = new ArrayList();
             associatedCurricularCourseScope = new ArrayList();
-            for(ExecutionCourse executionCourse : writtenEvaluation.getAssociatedExecutionCourses()){
+            for (ExecutionCourse executionCourse : writtenEvaluation.getAssociatedExecutionCourses()) {
                 associatedExecutionCourse.add(InfoExecutionCourse.newInfoFromDomain(executionCourse));
             }
-            for(RoomOccupation roomOccupation : writtenEvaluation.getAssociatedRoomOccupation()){
-                associatedRoomOccupation.add(InfoRoomOccupationWithInfoRoom.newInfoFromDomain(roomOccupation));
+            for (RoomOccupation roomOccupation : writtenEvaluation.getAssociatedRoomOccupation()) {
+                associatedRoomOccupation.add(InfoRoomOccupationWithInfoRoom
+                        .newInfoFromDomain(roomOccupation));
             }
-            for(CurricularCourseScope curricularCourseScope : writtenEvaluation.getAssociatedCurricularCourseScope()){
-                associatedCurricularCourseScope.add(InfoCurricularCourseScope.newInfoFromDomain(curricularCourseScope));
+            for (CurricularCourseScope curricularCourseScope : writtenEvaluation
+                    .getAssociatedCurricularCourseScope()) {
+                associatedCurricularCourseScope.add(InfoCurricularCourseScope
+                        .newInfoFromDomain(curricularCourseScope));
             }
             setBeginning(writtenEvaluation.getBeginning());
             setDay(writtenEvaluation.getDay());
@@ -154,7 +169,7 @@ public class InfoWrittenEvaluation extends InfoEvaluation {
             setEnrollmentEndDay(writtenEvaluation.getEnrollmentEndDay());
             setEnrollmentEndTime(writtenEvaluation.getEnrollmentEndTime());
         }
-    }  
+    }
 
     public static InfoWrittenEvaluation newInfoFromDomain(WrittenEvaluation writtenEvaluation) {
         InfoWrittenEvaluation infoWrittenEvaluation = null;
@@ -162,7 +177,8 @@ public class InfoWrittenEvaluation extends InfoEvaluation {
             if (writtenEvaluation instanceof Exam) {
                 infoWrittenEvaluation = InfoExam.newInfoFromDomain((Exam) writtenEvaluation);
             } else if (writtenEvaluation instanceof WrittenTest) {
-                infoWrittenEvaluation = InfoWrittenTest.newInfoFromDomain((WrittenTest)writtenEvaluation);
+                infoWrittenEvaluation = InfoWrittenTest
+                        .newInfoFromDomain((WrittenTest) writtenEvaluation);
             } else {
                 infoWrittenEvaluation = new InfoWrittenEvaluation();
                 infoWrittenEvaluation.copyFromDomain(writtenEvaluation);
@@ -172,10 +188,11 @@ public class InfoWrittenEvaluation extends InfoEvaluation {
     }
 
     public WrittenEvaluation getWrittenEvaluation() {
-        return writtenEvaluation;
+        return writtenEvaluation == null ? null : writtenEvaluation.getObject();
     }
 
     public void setWrittenEvaluation(WrittenEvaluation writtenEvaluation) {
-        this.writtenEvaluation = writtenEvaluation;
+        this.writtenEvaluation = writtenEvaluation == null ? null
+                : new DomainReference<WrittenEvaluation>(writtenEvaluation);
     }
 }

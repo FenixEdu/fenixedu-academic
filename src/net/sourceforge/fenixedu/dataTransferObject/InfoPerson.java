@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.Advisory;
+import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
@@ -15,11 +16,11 @@ import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.Registration;
 
 public class InfoPerson extends InfoObject {
-    
-    private Person person;
+
+    private DomainReference<Person> person;
 
     public InfoPerson(Person person) {
-	this.person = person;
+        this.person = new DomainReference<Person>(person);
     }
 
     public boolean equals(Object o) {
@@ -32,12 +33,17 @@ public class InfoPerson extends InfoObject {
     public String toString() {
         StringBuilder result = new StringBuilder();
         result.append("Person :\n");
-        result.append("\n  - Identification Document Number : ").append(getNumeroDocumentoIdentificacao());
+        result.append("\n  - Identification Document Number : ").append(
+                getNumeroDocumentoIdentificacao());
         result.append("\n  - Identification Document Type : ").append(getTipoDocumentoIdentificacao());
-        result.append("\n  - Identification Document Issue Place : ").append(getLocalEmissaoDocumentoIdentificacao());
-        result.append("\n  - Identification Document Issue Date : ").append(getDataEmissaoDocumentoIdentificacao());
-        result.append("\n  - Identification Document Expiration Date : ").append(getDataValidadeDocumentoIdentificacao());
-        result.append("\n  - Name : ").append(getNome());;
+        result.append("\n  - Identification Document Issue Place : ").append(
+                getLocalEmissaoDocumentoIdentificacao());
+        result.append("\n  - Identification Document Issue Date : ").append(
+                getDataEmissaoDocumentoIdentificacao());
+        result.append("\n  - Identification Document Expiration Date : ").append(
+                getDataValidadeDocumentoIdentificacao());
+        result.append("\n  - Name : ").append(getNome());
+        ;
         result.append("\n  - Birth : ").append(getNascimento());
         result.append("\n  - Father Name : ").append(getNomePai());
         result.append("\n  - Mother Name : ").append(getNomeMae());
@@ -65,183 +71,183 @@ public class InfoPerson extends InfoObject {
     }
 
     public String getCodigoFiscal() {
-        return person.getFiscalCode();
+        return getPerson().getFiscalCode();
     }
 
     public String getCodigoPostal() {
-        return person.getAreaCode();
+        return getPerson().getAreaCode();
     }
 
     public String getConcelhoMorada() {
-        return person.getDistrictSubdivisionOfResidence();
+        return getPerson().getDistrictSubdivisionOfResidence();
     }
 
     public String getConcelhoNaturalidade() {
-        return person.getDistrictSubdivisionOfBirth();
+        return getPerson().getDistrictSubdivisionOfBirth();
     }
 
     public Date getDataEmissaoDocumentoIdentificacao() {
-        return person.getEmissionDateOfDocumentId();
+        return getPerson().getEmissionDateOfDocumentId();
     }
 
     public Date getDataValidadeDocumentoIdentificacao() {
-        return person.getExpirationDateOfDocumentId();
+        return getPerson().getExpirationDateOfDocumentId();
     }
 
     public String getDistritoMorada() {
-        return person.getDistrictOfResidence();
+        return getPerson().getDistrictOfResidence();
     }
 
     public String getDistritoNaturalidade() {
-        return person.getDistrictOfBirth();
+        return getPerson().getDistrictOfBirth();
     }
 
     public String getEmail() {
-        return person.getEmail();
+        return getPerson().getEmail();
     }
 
     public String getEnderecoWeb() {
-        return person.getWebAddress();
+        return getPerson().getWebAddress();
     }
 
     public MaritalStatus getMaritalStatus() {
-        return person.getMaritalStatus();
+        return getPerson().getMaritalStatus();
     }
 
     public String getFreguesiaMorada() {
-        return person.getParishOfResidence();
+        return getPerson().getParishOfResidence();
     }
 
     public String getFreguesiaNaturalidade() {
-        return person.getParishOfBirth();
+        return getPerson().getParishOfBirth();
     }
 
     public InfoCountry getInfoPais() {
-        return InfoCountry.newInfoFromDomain(person.getCountry());
+        return InfoCountry.newInfoFromDomain(getPerson().getCountry());
     }
 
     public String getLocalEmissaoDocumentoIdentificacao() {
-        return person.getEmissionLocationOfDocumentId();
+        return getPerson().getEmissionLocationOfDocumentId();
     }
 
     public String getLocalidade() {
-        return person.getArea();
+        return getPerson().getArea();
     }
 
     public String getLocalidadeCodigoPostal() {
-        return person.getAreaOfAreaCode();
+        return getPerson().getAreaOfAreaCode();
     }
 
     public String getMorada() {
-        return person.getAddress();
+        return getPerson().getAddress();
     }
 
     public String getNacionalidade() {
-        return person.getCountry().getNationality();
+        return getPerson().getCountry().getNationality();
     }
 
     public Date getNascimento() {
-        return person.getDateOfBirth();
+        return getPerson().getDateOfBirth();
     }
 
     public String getNome() {
-        return person.getName();
+        return getPerson().getName();
     }
 
     public String getNomeMae() {
-        return person.getNameOfMother();
+        return getPerson().getNameOfMother();
     }
-    
+
     public String getNomePai() {
-        return person.getNameOfFather();
+        return getPerson().getNameOfFather();
     }
 
     public String getNumContribuinte() {
-        return person.getSocialSecurityNumber();
+        return getPerson().getSocialSecurityNumber();
     }
 
     public String getNumeroDocumentoIdentificacao() {
-        return person.getDocumentIdNumber();
+        return getPerson().getDocumentIdNumber();
     }
 
     public String getPassword() {
-        return person.getPassword();
+        return getPerson().getPassword();
     }
 
     public String getProfissao() {
-        return person.getProfession();
+        return getPerson().getProfession();
     }
 
     public Gender getSexo() {
-        return person.getGender();
+        return getPerson().getGender();
     }
 
     public String getTelefone() {
-        return person.getPhone();
+        return getPerson().getPhone();
     }
 
     public String getTelemovel() {
-        return person.getMobile();
+        return getPerson().getMobile();
     }
 
     public IDDocumentType getTipoDocumentoIdentificacao() {
-        return person.getIdDocumentType();
+        return getPerson().getIdDocumentType();
     }
 
     public String getUsername() {
-        return person.getUsername();
+        return getPerson().getUsername();
     }
 
     public List<InfoAdvisory> getInfoAdvisories() {
-	final List<InfoAdvisory> result = new ArrayList<InfoAdvisory>(person.getAdvisoriesCount());
-	for (final Advisory advisory : person.getAdvisoriesSet()) {
-	    result.add(InfoAdvisory.newInfoFromDomain(advisory));
-	}
+        final List<InfoAdvisory> result = new ArrayList<InfoAdvisory>(getPerson().getAdvisoriesCount());
+        for (final Advisory advisory : getPerson().getAdvisoriesSet()) {
+            result.add(InfoAdvisory.newInfoFromDomain(advisory));
+        }
         return result;
     }
 
     public Boolean getAvailableEmail() {
-        return person.getAvailableEmail();
+        return getPerson().getAvailableEmail();
     }
 
     public String getWorkPhone() {
-        return person.getWorkPhone();
+        return getPerson().getWorkPhone();
     }
 
     public Boolean getAvailableWebSite() {
-        return person.getAvailableWebSite();
+        return getPerson().getAvailableWebSite();
     }
 
     public Boolean getAvailablePhoto() {
-        return person.getAvailablePhoto();
+        return getPerson().getAvailablePhoto();
     }
 
     public InfoExternalPerson getInfoExternalPerson() {
-        return InfoExternalPersonWithPersonAndWLocation.newInfoFromDomain(person.getExternalPerson());
+        return InfoExternalPersonWithPersonAndWLocation.newInfoFromDomain(getPerson()
+                .getExternalPerson());
     }
 
-    private List<String> getImportantRoles(Person person, List<String> mainRoles) {        
+    private List<String> getImportantRoles(Person person, List<String> mainRoles) {
 
-	if(person.getPersonRolesCount() != 0){
+        if (person.getPersonRolesCount() != 0) {
             boolean teacher = false, employee = false;
 
-            for(final Role personRole : person.getPersonRolesSet()){
-        	
-                if(personRole.getRoleType() == RoleType.TEACHER){                        
+            for (final Role personRole : person.getPersonRolesSet()) {
+
+                if (personRole.getRoleType() == RoleType.TEACHER) {
                     mainRoles.add("Docente");
                     teacher = true;
-                    
-                } else if(personRole.getRoleType() == RoleType.STUDENT){
+
+                } else if (personRole.getRoleType() == RoleType.STUDENT) {
                     mainRoles.add("Aluno");
-                    
-                } else if(personRole.getRoleType() == RoleType.GRANT_OWNER){
+
+                } else if (personRole.getRoleType() == RoleType.GRANT_OWNER) {
                     mainRoles.add("Bolseiro");
-                }
-                else if(!teacher && personRole.getRoleType() == RoleType.EMPLOYEE){                
+                } else if (!teacher && personRole.getRoleType() == RoleType.EMPLOYEE) {
                     employee = true;
-                }                
+                }
             }
-            if(employee && !teacher){
+            if (employee && !teacher) {
                 mainRoles.add("Funcionário");
             }
         }
@@ -249,43 +255,48 @@ public class InfoPerson extends InfoObject {
     }
 
     public static InfoPerson newInfoFromDomain(Person person) {
-	return (person != null) ? new InfoPerson(person) : null; 
+        return (person != null) ? new InfoPerson(person) : null;
     }
 
     public InfoEmployee getInfoEmployee() {
-        return InfoEmployeeWithAll.newInfoFromDomain(person.getEmployee());
+        return InfoEmployeeWithAll.newInfoFromDomain(getPerson().getEmployee());
     }
 
     public List<InfoStudentCurricularPlan> getInfoStudentCurricularPlanList() {
-	final List<InfoStudentCurricularPlan> result = new ArrayList<InfoStudentCurricularPlan>();
-	for (final Registration registration : person.getStudentsSet()) {
-	    for (final StudentCurricularPlan studentCurricularPlan : registration.getStudentCurricularPlansSet()) {
-		result.add(InfoStudentCurricularPlan.newInfoFromDomain(studentCurricularPlan));
-	    }
-	}
+        final List<InfoStudentCurricularPlan> result = new ArrayList<InfoStudentCurricularPlan>();
+        for (final Registration registration : getPerson().getStudentsSet()) {
+            for (final StudentCurricularPlan studentCurricularPlan : registration
+                    .getStudentCurricularPlansSet()) {
+                result.add(InfoStudentCurricularPlan.newInfoFromDomain(studentCurricularPlan));
+            }
+        }
         return result;
     }
 
     public InfoTeacher getInfoTeacher() {
-        return InfoTeacher.newInfoFromDomain(person.getTeacher());
+        return InfoTeacher.newInfoFromDomain(getPerson().getTeacher());
     }
 
     public List<String> getMainRoles() {
-        return getImportantRoles(person, new ArrayList());
+        return getImportantRoles(getPerson(), new ArrayList());
     }
 
     public String getIstUsername() {
-	return person.getIstUsername();
+        return getPerson().getIstUsername();
     }
-    
+
     @Override
     public Integer getIdInternal() {
-        return person.getIdInternal();
+        return getPerson().getIdInternal();
     }
-    
+
     @Override
     public void setIdInternal(Integer integer) {
-	throw new Error("Method should not be called!");
+        throw new Error("Method should not be called!");
+    }
+
+    private Person getPerson() {
+        return person == null ? null : person.getObject();
     }
 
 }

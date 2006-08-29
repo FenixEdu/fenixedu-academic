@@ -9,47 +9,48 @@ package net.sourceforge.fenixedu.dataTransferObject;
 /**
  * @author tfc130
  */
+import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.space.OldRoom;
 import net.sourceforge.fenixedu.util.TipoSala;
 
 public class InfoRoom extends InfoObject implements Comparable {
 
-    private final OldRoom room;
+    private final DomainReference<OldRoom> room;
 
     public InfoRoom(final OldRoom room) {
-	this.room = room;
+	this.room = new DomainReference<OldRoom>(room);
     }
 
     public String getNome() {
-        return room.getName();
+        return getRoom().getName();
     }
 
     public String getEdificio() {
-        return room.getBuilding().getName();
+        return getRoom().getBuilding().getName();
     }
 
     public Integer getPiso() {
-        return room.getPiso();
+        return getRoom().getPiso();
     }
 
     public TipoSala getTipo() {
-        return room.getTipo();
+        return getRoom().getTipo();
     }
 
     public Integer getCapacidadeNormal() {
-        return room.getCapacidadeNormal();
+        return getRoom().getCapacidadeNormal();
     }
 
     public Integer getCapacidadeExame() {
-        return room.getCapacidadeExame();
+        return getRoom().getCapacidadeExame();
     }
 
     public boolean equals(Object obj) {
-	return obj instanceof InfoRoom && room == ((InfoRoom) obj).room;
+	return obj instanceof InfoRoom && getRoom() == ((InfoRoom) obj).getRoom();
     }
 
     public String toString() {
-	return room.toString();
+	return getRoom().toString();
     }
 
     public int compareTo(Object obj) {
@@ -62,7 +63,7 @@ public class InfoRoom extends InfoObject implements Comparable {
 
     @Override
     public Integer getIdInternal() {
-	return room.getIdInternal();
+	return getRoom().getIdInternal();
     }
 
     @Override
@@ -71,7 +72,7 @@ public class InfoRoom extends InfoObject implements Comparable {
     }
 
     public OldRoom getRoom() {
-        return room;
+        return room == null ? null : room.getObject();
     }
 
 }

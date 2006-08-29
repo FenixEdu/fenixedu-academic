@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.dataTransferObject;
 
+import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.StudentKind;
 import net.sourceforge.fenixedu.domain.student.StudentType;
 
@@ -11,48 +12,52 @@ import net.sourceforge.fenixedu.domain.student.StudentType;
 
 public class InfoStudentKind extends InfoObject {
 
-	private final StudentKind studentKind;
+    private final DomainReference<StudentKind> studentKind;
 
     public InfoStudentKind(final StudentKind studentKind) {
-    	this.studentKind = studentKind;
+        this.studentKind = new DomainReference<StudentKind>(studentKind);
     }
 
     public static InfoStudentKind newInfoFromDomain(final StudentKind studentKind) {
-    	return studentKind == null ? null : new InfoStudentKind(studentKind);
+        return studentKind == null ? null : new InfoStudentKind(studentKind);
     }
 
     public boolean equals(Object obj) {
-    	return obj instanceof InfoStudentKind && studentKind == ((InfoStudentKind) obj).studentKind;
+        return obj instanceof InfoStudentKind && getStudentKind() == ((InfoStudentKind) obj).getStudentKind();
     }
 
     public String toString() {
-    	return studentKind.toString();
+        return getStudentKind().toString();
     }
 
     public StudentType getStudentType() {
-        return studentKind.getStudentType();
+        return getStudentKind().getStudentType();
     }
 
     public Integer getMaxCoursesToEnrol() {
-        return studentKind.getMaxCoursesToEnrol();
+        return getStudentKind().getMaxCoursesToEnrol();
     }
 
     public Integer getMaxNACToEnrol() {
-        return studentKind.getMaxNACToEnrol();
+        return getStudentKind().getMaxNACToEnrol();
     }
 
     public Integer getMinCoursesToEnrol() {
-        return studentKind.getMinCoursesToEnrol();
+        return getStudentKind().getMinCoursesToEnrol();
     }
 
-	@Override
-	public Integer getIdInternal() {
-		return studentKind.getIdInternal();
-	}
+    @Override
+    public Integer getIdInternal() {
+        return getStudentKind().getIdInternal();
+    }
 
     @Override
     public void setIdInternal(Integer integer) {
         throw new Error("Method should not be called!");
+    }
+
+    private StudentKind getStudentKind() {
+        return studentKind == null ? null : studentKind.getObject();
     }
 
 }

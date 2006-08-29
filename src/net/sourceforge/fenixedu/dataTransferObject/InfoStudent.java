@@ -6,6 +6,7 @@
 
 package net.sourceforge.fenixedu.dataTransferObject;
 
+import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.util.StudentState;
@@ -16,68 +17,71 @@ import net.sourceforge.fenixedu.util.StudentState;
 
 public class InfoStudent extends InfoObject {
 
-	private final Registration registration;
+    private final DomainReference<Registration> registration;
 
     public InfoStudent(final Registration registration) {
-    	this.registration = registration;
+        this.registration = new DomainReference<Registration>(registration);
     }
 
     public InfoPerson getInfoPerson() {
-        return InfoPerson.newInfoFromDomain(registration.getPerson());
+        return InfoPerson.newInfoFromDomain(getRegistration().getPerson());
     }
 
     public Integer getNumber() {
-        return registration.getNumber();
+        return getRegistration().getNumber();
     }
 
     public StudentState getState() {
-        return registration.getState();
+        return getRegistration().getState();
     }
 
     public DegreeType getDegreeType() {
-        return registration.getDegreeType();
+        return getRegistration().getDegreeType();
     }
 
     public InfoStudentKind getInfoStudentKind() {
-        return InfoStudentKind.newInfoFromDomain(registration.getStudentKind());
+        return InfoStudentKind.newInfoFromDomain(getRegistration().getStudentKind());
     }
 
     public Boolean getPayedTuition() {
-        return registration.getPayedTuition();
+        return getRegistration().getPayedTuition();
     }
 
     public boolean equals(Object obj) {
-    	return obj instanceof InfoStudent && registration == ((InfoStudent) obj).registration;
+        return obj instanceof InfoStudent && getRegistration() == ((InfoStudent) obj).getRegistration();
     }
 
     public String toString() {
-    	return registration.toString();
+        return getRegistration().toString();
     }
 
     public static InfoStudent newInfoFromDomain(Registration registration) {
-    	return registration == null ? null : new InfoStudent(registration);
+        return registration == null ? null : new InfoStudent(registration);
     }
 
-	public Boolean getFlunked() {
-		return registration.getFlunked();
-	}
+    public Boolean getFlunked() {
+        return getRegistration().getFlunked();
+    }
 
-	public Boolean getRequestedChangeDegree() {
-		return registration.getRequestedChangeDegree();
-	}
+    public Boolean getRequestedChangeDegree() {
+        return getRegistration().getRequestedChangeDegree();
+    }
 
-	public Boolean getInterruptedStudies() {
-		return registration.getInterruptedStudies();
-	}
+    public Boolean getInterruptedStudies() {
+        return getRegistration().getInterruptedStudies();
+    }
 
-	@Override
-	public Integer getIdInternal() {
-		return registration.getIdInternal();
-	}
+    @Override
+    public Integer getIdInternal() {
+        return getRegistration().getIdInternal();
+    }
 
     @Override
     public void setIdInternal(Integer integer) {
         throw new Error("Method should not be called!");
     }
 
+    private Registration getRegistration() {
+        return registration == null ? null : registration.getObject();
+    }
 }

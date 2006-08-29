@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.dataTransferObject;
 
+import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.University;
 
 /**
@@ -10,10 +11,10 @@ import net.sourceforge.fenixedu.domain.University;
 
 public class InfoUniversity extends InfoObject {
 
-    private final University university;
+    private final DomainReference<University> university;
 
     public InfoUniversity(final University university) {
-    	this.university = university;
+    	this.university = new DomainReference<University>(university);
     }
 
     public boolean equals(Object obj) {
@@ -21,25 +22,29 @@ public class InfoUniversity extends InfoObject {
     }
 
     public String toString() {
-    	return university.toString();
+    	return getUniversity().toString();
     }
 
     public String getCode() {
-        return university.getCode();
+        return getUniversity().getCode();
     }
 
     public String getName() {
-        return university.getName();
+        return getUniversity().getName();
     }
 
     @Override
     public Integer getIdInternal() {
-        return university.getIdInternal();
+        return getUniversity().getIdInternal();
     }
 
     @Override
     public void setIdInternal(Integer integer) {
         throw new Error("Method should not be called!");
+    }
+
+    private University getUniversity() {
+        return university == null ? null : university.getObject();
     }
 
 }
