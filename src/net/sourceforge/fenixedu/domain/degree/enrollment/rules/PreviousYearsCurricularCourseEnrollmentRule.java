@@ -7,6 +7,7 @@ import java.util.Map;
 
 import net.sourceforge.fenixedu.domain.Branch;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
+import net.sourceforge.fenixedu.domain.CurricularYear;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseEnrollmentType;
@@ -106,8 +107,9 @@ public class PreviousYearsCurricularCourseEnrollmentRule implements IEnrollmentR
     }
 
     private boolean isCurricularCourseFromYear(int i, CurricularCourse curricularCourse) {
-        return (curricularCourse.getCurricularYearByBranchAndSemester(this.studentBranch,
-                this.executionPeriod.getSemester()).getYear().intValue() == i);
+	CurricularYear curricularYear = curricularCourse.getCurricularYearByBranchAndSemester(this.studentBranch,
+                this.executionPeriod.getSemester());
+        return (curricularYear != null && curricularYear.getYear().intValue() == i);
     }
 
     private void putCurricularCourseInHashMap(Map map, int i,
