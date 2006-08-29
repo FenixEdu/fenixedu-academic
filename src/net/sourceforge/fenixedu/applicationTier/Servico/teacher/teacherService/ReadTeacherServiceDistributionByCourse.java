@@ -15,6 +15,7 @@ import net.sourceforge.fenixedu.dataTransferObject.teacher.distribution.Distribu
 import net.sourceforge.fenixedu.domain.CompetenceCourse;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.CurricularCourseScope;
+import net.sourceforge.fenixedu.domain.CurricularYear;
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
@@ -133,10 +134,11 @@ public class ReadTeacherServiceDistributionByCourse extends Service {
 		
 		Set<String> curricularYearsSet = new LinkedHashSet<String>();
 		for (CurricularCourseScope scopeEntry : scopesList) {
-			curricularYearsSet.add(curricularCourseEntry
-					.getCurricularYearByBranchAndSemester(scopeEntry.getBranch(),
-							scopeEntry.getCurricularSemester().getSemester()).getYear()
-					.toString());
+			CurricularYear curricularYear = curricularCourseEntry.getCurricularYearByBranchAndSemester(scopeEntry.getBranch(),
+					scopeEntry.getCurricularSemester().getSemester());
+			if(curricularYear != null){
+				curricularYearsSet.add(curricularYear.getYear().toString());
+			}
 		}
 		return curricularYearsSet;
 	}

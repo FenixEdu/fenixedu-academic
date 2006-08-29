@@ -44,19 +44,14 @@ text-align: center;
 text-align: left;
 background-color: #fff;
 }
-.backwhite a {
-/*color: #888;*/
-}
+
 .backwhite ul {
 margin: 0.3em 0;
 }
 .backwhite ul li {
 padding: 0.2em 0.5em;
 }
-.backwhite ul li a {
-/*text-decoration: none;*/
-/*border-bottom: 1px solid #ddd;*/
-}
+
 table.search {
 background-color: #f5f5f5;
 border-collapse: collapse;
@@ -81,7 +76,7 @@ text-align: right;
 	
 	<h:form>
 		<h:panelGrid columns="1" styleClass="search">
-			<h:panelGrid columns="2" styleClass="search">
+			<h:panelGrid columns="3" styleClass="search">
 				<h:outputText value="#{bundle['label.common.executionYear']}&nbsp;" escape="false" styleClass="leftColumn" />
 				<fc:selectOneMenu value="#{viewTeacherService.selectedExecutionYearID}"
 					onchange="this.form.submit();">
@@ -95,7 +90,7 @@ text-align: right;
 				</fc:selectOneMenu>
 				<h:outputText value="<input value='#{htmlAltBundle['submit.sumbit']}' id='javascriptButtonID2' class='altJavaScriptSubmitButton' alt='#{htmlAltBundle['submit.sumbit']}' type='submit'>" escape="false"/>
 			</h:panelGrid>
-			<h:panelGrid columns="1" styleClass="search" width="100%">
+			<h:panelGrid columns="2" styleClass="search" width="100%">
 				<h:selectManyCheckbox value="#{viewTeacherService.selectedViewOptions}" layout="pageDirection"
 					onchange="this.form.submit();">
 					<f:selectItems binding="#{viewTeacherService.viewOptionsItems}"/>
