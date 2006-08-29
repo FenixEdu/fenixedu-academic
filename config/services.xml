@@ -10325,7 +10325,7 @@
             <chain name="ExecutionCourseLecturingTeacherAuthorization" />
         </filterChains>
     </service>
-      <service>
+    <service>
         <name>MoveLessonPlanning</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.MoveLessonPlanning</implementationClass>
         <description />
@@ -10334,8 +10334,16 @@
             <chain name="ExecutionCourseLecturingTeacherAuthorization" />
         </filterChains>
     </service>
-    
-<!-- Teacher Service Distribution -->
+    <service>
+        <name>ImportLessonPlanning</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.ImportLessonPlanning</implementationClass>
+        <description />
+        <isTransactional>true</isTransactional>
+        <filterChains>
+            <chain name="ExecutionCourseLecturingTeacherAuthorization" />
+        </filterChains>
+    </service>  	
+	<!-- Teacher Service Distribution -->
 	<service>
     	<name>CreateTeacherServiceDistribution</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacherServiceDistribution.CreateTeacherServiceDistribution</implementationClass>
@@ -10744,6 +10752,5 @@
         <filterChains>
         	<chain name="DepartmentMemberOrTeacherOrEmployeeAuthorization"></chain>
         </filterChains>     
-    </service>    
-    
+    </service>      
 </serviceDefinitions>

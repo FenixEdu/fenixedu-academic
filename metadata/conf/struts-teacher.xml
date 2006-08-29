@@ -167,7 +167,7 @@
             <form-property name="byTeacher" type="java.lang.String"/>
             <form-property name="objectCode" type="java.lang.String"/>
             <form-property name="page" type="java.lang.Integer" initial="0"/>
-        </form-bean>        
+        </form-bean>                
         <form-bean name="summaryForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
             <form-property name="forHidden" type="java.lang.String" initial=""/>
             <form-property name="editor" type="java.lang.String" initial="true"/>
@@ -190,6 +190,13 @@
             <form-property name="byTeacher" type="java.lang.String"/>            
             <form-property name="lessonPlanning" type="java.lang.String"/>            
         </form-bean>
+        
+        <!-- Summaries Management -->
+        <form-bean name="summariesManagementForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">            	
+            <form-property name="shift" type="java.lang.String" initial=""/>                    
+            <form-property name="executionCourseID" type="java.lang.String" initial=""/>                    
+        </form-bean>
+        
         <!-- evaluation form-->
         <form-bean name="evaluationForm" type="org.apache.struts.validator.DynaValidatorForm" 
             dynamic="true">
@@ -888,7 +895,14 @@
 	   		<form-property name="method" type="java.lang.String"/>
 	   		<form-property name="executionCourseID" type="java.lang.Integer"/>
 		</form-bean>
-				
+	
+		<form-bean name="manageExecutionCourseForm"
+				type="org.apache.struts.validator.DynaValidatorForm"
+				dynamic="true">
+	   		<form-property name="shiftID" type="java.lang.String"/>
+	   		<form-property name="executionCourseID" type="java.lang.String"/>
+		</form-bean>
+						
     </form-beans>
 
     <!-- ========== Global Exception Definitions ============================== -->
@@ -995,13 +1009,15 @@
         </action>
         <action path="/manageExecutionCourse"
         		parameter="method"
-				type="net.sourceforge.fenixedu.presentationTier.Action.teacher.ManageExecutionCourseDA">
+				type="net.sourceforge.fenixedu.presentationTier.Action.teacher.ManageExecutionCourseDA"
+				name="manageExecutionCourseForm">				
 			<forward name="instructions" path="manage-execution-course-instructions"/>
 			<forward name="program" path="manage-execution-course-program"/>
 			<forward name="objectives" path="manage-execution-course-objectives"/>
 			<forward name="evaluationMethod" path="manage-execution-course-evaluationMethod"/>
 			<forward name="bibliographicReference" path="manage-execution-course-bibliographicReference"/>
 			<forward name="lessonPlannings" path="manage-execution-course-lessonPlannings"/>
+			<forward name="importLessonPlannings" path="manage-execution-course-lessonPlannings-import"/>
 			<forward name="create-lessonPlanning" path="manage-execution-course-lessonPlanning-create"/>
 			<forward name="createSection" path="manage-execution-course-createSection"/>
 			<forward name="section" path="manage-execution-course-section"/>
@@ -1009,7 +1025,7 @@
 			<forward name="createItem" path="manage-execution-course-createItem"/>
 			<forward name="editItem" path="manage-execution-course-editItem"/>
 			<forward name="uploadFile" path="manage-execution-course-uploadFile"/>
-			<forward name="editFile" path="manage-execution-course-editFile"/>
+			<forward name="editFile" path="manage-execution-course-editFile"/>			
         </action>
         <action path="/createProgram"
         		parameter="method"
@@ -1416,6 +1432,16 @@
             <forward name="insertSummary" path="insertSummary" />
             <forward name="editSummary" path="editSummary" />
         </action>
+
+        <!-- Summaries Management -->
+		<action path="/summariesManagement" 
+		    name="summariesManagementForm"
+            parameter="method" 
+            scope="request" 
+            type="net.sourceforge.fenixedu.presentationTier.Action.teacher.SummariesManagementDA" 
+            validate="true" >
+            <forward name="prepareInsertSummary" path="prepare-insert-summary" />           
+        </action>	
 
         <!-- Actions For Groups -->
         <action path="/viewExecutionCourseProjects" parameter="method" scope="request" 

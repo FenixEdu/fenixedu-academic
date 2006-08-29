@@ -45,6 +45,32 @@
 		<property name="classes" value="list2 liinline" />
 	</slot>
 </schema>
+<schema name="ChooseDegreePeriodAndCurricularYearToImportLessonPlannings" type="net.sourceforge.fenixedu.dataTransferObject.teacher.ImportLessonPlanningsBean" bundle="DEFAULT">		
+	<slot name="executionPeriod" key="label.executionPeriod" layout="menu-select-postback" 
+		validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.NotClosedPublicExecutionPeriodsProvider" />				
+		<property name="format"	value="${executionYear.year} - ${semester}º Sem" />
+		<property name="destination" value="postBack"/>
+	</slot>	
+	<slot name="executionDegree" key="label.degree.name" layout="menu-select"
+		validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionDegreesToImportLessonPlanningsProvider" />
+		<property name="format" value="${degree.degreeType.name} em ${degree.name} ${degreeCurricularPlan.name}" />
+	</slot>
+	<slot name="curricularYear" key="label.curricularYear" layout="menu-select"
+		validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.CurricularYearsProvider" />
+		<property name="format" value="${year}" />
+	</slot>
+</schema>
+<schema name="ListExecutionCoursesToImportLessonPlannings" type="net.sourceforge.fenixedu.dataTransferObject.teacher.ImportLessonPlanningsBean" bundle="DEFAULT">		
+	<slot name="executionCourse" key="label.import.lessonPlannings.course" layout="menu-select"
+		validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionCoursesToImportLessonPlanningsProvider" />
+		<property name="format" value="${nome}" />
+	</slot>
+	<slot name="importType" key="label.import.lessonPlannings.importType" layout="radio" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" />		
+</schema>
 <schema name="net.sourceforge.fenixedu.domain.EvaluationMethod" type="net.sourceforge.fenixedu.domain.EvaluationMethod" bundle="DEFAULT">
 	<slot name="evaluationElements" layout="rich-text" key="no.title.evaluationElements">
    		<property name="safe" value="true" />

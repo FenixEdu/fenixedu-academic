@@ -1,6 +1,9 @@
 package net.sourceforge.fenixedu.domain;
 
+import java.util.Comparator;
 import java.util.List;
+
+import org.apache.commons.beanutils.BeanComparator;
 
 /**
  * @author dcs-rjao
@@ -10,6 +13,8 @@ import java.util.List;
 
 public class CurricularYear extends CurricularYear_Base implements Comparable<CurricularYear> {
 
+    public static Comparator<CurricularYear> CURRICULAR_YEAR_COMPARATORY_BY_YEAR = new BeanComparator("year");
+    
     public CurricularYear() {
         super();
         setRootDomainObject(RootDomainObject.getInstance());

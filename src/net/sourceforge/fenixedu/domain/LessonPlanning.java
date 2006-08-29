@@ -33,6 +33,11 @@ public class LessonPlanning extends LessonPlanning_Base {
         removeExecutionCourse();
         deleteDomainObject();
     }
+    
+    public void deleteWithoutReOrder() {
+        removeExecutionCourse();
+        deleteDomainObject();
+    }
 
     public void moveTo(Integer order) {        
         List<LessonPlanning> lessonPlannings = getExecutionCourse().getLessonPlanningsOrderedByOrder(getLessonType());        

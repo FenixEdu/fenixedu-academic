@@ -15,7 +15,6 @@ import java.util.TreeSet;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
@@ -33,6 +32,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoSummary;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
 import net.sourceforge.fenixedu.dataTransferObject.SiteView;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.Language;
 import net.sourceforge.fenixedu.domain.LessonPlanning;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Shift;
@@ -42,11 +42,9 @@ import net.sourceforge.fenixedu.domain.space.OldRoom;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 import net.sourceforge.fenixedu.util.DateFormatUtil;
-import net.sourceforge.fenixedu.util.LanguageUtils;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.CollectionUtils;
@@ -68,7 +66,7 @@ public class SummaryManagerAction extends FenixDispatchAction {
 
     public ActionForward showSummaries(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws FenixFilterException {
-        HttpSession session = request.getSession(false);
+        
         IUserView userView = getUserView(request);
 
         Integer executionCourseId = getObjectCode(request);
@@ -169,7 +167,7 @@ public class SummaryManagerAction extends FenixDispatchAction {
 
     public ActionForward prepareInsertSummary(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws FenixFilterException {
-        HttpSession session = request.getSession(false);
+        
         IUserView userView = getUserView(request);
 
         Integer objectCode = getObjectCode(request);
@@ -269,8 +267,8 @@ public class SummaryManagerAction extends FenixDispatchAction {
         String lessonPlanningID = dynaActionForm.getString("lessonPlanning");
         if(!StringUtils.isEmpty(lessonPlanningID)) {
             LessonPlanning lessonPlanning = rootDomainObject.readLessonPlanningByOID(Integer.valueOf(lessonPlanningID));
-            dynaActionForm.set("summaryText", lessonPlanning.getPlanning().getContent(LanguageUtils.getLanguage().pt));
-            dynaActionForm.set("title", lessonPlanning.getTitle().getContent(LanguageUtils.getLanguage().pt));
+            dynaActionForm.set("summaryText", lessonPlanning.getPlanning().getContent(Language.pt));
+            dynaActionForm.set("title", lessonPlanning.getTitle().getContent(Language.pt));
         }
     }
 
@@ -401,7 +399,7 @@ public class SummaryManagerAction extends FenixDispatchAction {
     public ActionForward insertSummary(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws FenixFilterException {
         try {
-            HttpSession session = request.getSession(false);
+            
             IUserView userView = getUserView(request);
 
             Integer executionCourseId = getObjectCode(request);
@@ -509,7 +507,7 @@ public class SummaryManagerAction extends FenixDispatchAction {
 
     public ActionForward prepareEditSummary(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws FenixFilterException {
-        HttpSession session = request.getSession(false);
+        
         IUserView userView = getUserView(request);
 
         String summaryIdString = request.getParameter("summaryCode");
@@ -628,8 +626,8 @@ public class SummaryManagerAction extends FenixDispatchAction {
         String lessonPlanningID = summaryForm.getString("lessonPlanning");
         if(!StringUtils.isEmpty(lessonPlanningID)) {
             LessonPlanning lessonPlanning = rootDomainObject.readLessonPlanningByOID(Integer.valueOf(lessonPlanningID));
-            summaryForm.set("summaryText", lessonPlanning.getPlanning().getContent(LanguageUtils.getLanguage().pt));
-            ((InfoSiteSummary) siteView.getComponent()).getInfoSummary().setTitle(lessonPlanning.getTitle().getContent(LanguageUtils.getLanguage().pt));
+            summaryForm.set("summaryText", lessonPlanning.getPlanning().getContent(Language.pt));
+            ((InfoSiteSummary) siteView.getComponent()).getInfoSummary().setTitle(lessonPlanning.getTitle().getContent(Language.pt));
         }
     }
 
@@ -672,7 +670,7 @@ public class SummaryManagerAction extends FenixDispatchAction {
     public ActionForward editSummary(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixFilterException {
         try {
-            HttpSession session = request.getSession(false);
+           
             IUserView userView = getUserView(request);
 
             String summaryIdString = request.getParameter("summaryCode");
@@ -709,8 +707,7 @@ public class SummaryManagerAction extends FenixDispatchAction {
 
     public ActionForward deleteSummary(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws FenixFilterException {
-        try {
-            HttpSession session = request.getSession(false);
+        try {            
             IUserView userView = getUserView(request);
 
             String summaryIdString = request.getParameter("summaryCode");

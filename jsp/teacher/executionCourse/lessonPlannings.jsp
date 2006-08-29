@@ -16,6 +16,11 @@
 				<bean:message key="link.create.lessonPlanning"/>
 			</html:link>
 		</li>
+		<li>
+			<html:link page="/manageExecutionCourse.do?method=prepareImportLessonPlannings&amp;page=0" paramId="executionCourseID" paramName="executionCourse" paramProperty="idInternal">
+				<bean:message key="link.import.lessonPlanning"/>
+			</html:link>
+		</li>
 	</ul>
 	
 	<bean:define id="uri" toScope="page" type="java.lang.String">
@@ -39,10 +44,14 @@
 	<bean:define id="moveDown">
 		/manageExecutionCourse.do?method=moveDownLessonPlanning&executionCourseID=<bean:write name="executionCourse" property="idInternal"/>&page=0
 	</bean:define>	
-		
+
 	<logic:iterate id="lessonPlannings" name="lessonPlanningsMap">		
 		<logic:notEmpty name="lessonPlannings" property="value">
 			<h3 class="mtop2"><span class="underline1"><bean:message key="label.lessons"/> <bean:message name="lessonPlannings" property="key.name" bundle="APPLICATION_RESOURCES"/></span></h3>
+			<bean:define id="deleteLessonPlanings">
+				/manageExecutionCourse.do?method=deleteLessonPlannings&executionCourseID=<bean:write name="executionCourse" property="idInternal"/>&shiftType=<bean:write name="lessonPlannings" property="key"/>
+			</bean:define>			
+			(<html:link action="<%= deleteLessonPlanings %>" onclick="return confirm('Tem a certeza que deseja apagar os planos deste tipo?')"><bean:message key="link.delete.all.lessonPlannings.by.type"/></html:link>)
 		</logic:notEmpty>
 		<logic:iterate id="lessonPlanning" name="lessonPlannings" property="value" indexId="index">
 		<div>

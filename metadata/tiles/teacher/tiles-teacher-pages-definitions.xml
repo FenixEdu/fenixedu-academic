@@ -535,6 +535,10 @@
 		<put name="body" value="/teacher/executionCourse/createLessonPlanning.jsp" />
 	</definition>	
 	
+	<definition name="manage-execution-course-lessonPlannings-import" extends="execution-course-administration">
+		<put name="body" value="/teacher/executionCourse/importLessonPlannings.jsp" />
+	</definition>	
+	
 	<definition name="manage-execution-course-bibliographicReference" extends="execution-course-administration">
 		<put name="body" value="/teacher/executionCourse/bibliographicReference.jsp" />
 	</definition>
@@ -621,5 +625,10 @@
 	<definition name="view-project-submission-logs-by-group" extends="df.teacher.evaluation-management">
 		<put name="body" value="/teacher/evaluation/viewProjectSubmissionLogsByGroup.jsp" />
 	</definition>
-
+	
+	<!-- ==== Summaries Management === -->
+	<definition name="prepare-insert-summary" extends="execution-course-administration">
+		<put name="body" value="/teacher/executionCourse/createSummary.jsp" />
+	</definition>		
+	
 </tiles-definitions>
