@@ -162,6 +162,26 @@ public class BibliographicReferences {
 		public int compareTo(BibliographicReference bibliographicReference) {
 			return getOrder() - bibliographicReference.getOrder();
 		}
+
+        public boolean isMain() {
+            return getType() == BibliographicReferenceType.MAIN;
+        }
+
+        public boolean isSecondary() {
+            return getType() == BibliographicReferenceType.SECONDARY;
+        }
+        
+        public String toString() {
+            StringBuilder result = new StringBuilder();
+            
+            result.append(year).append(" || ");
+            result.append(title).append(" || ");
+            result.append(authors).append(" || ");
+            result.append(reference).append(" || ");
+            result.append(url).append("\n");
+            
+            return result.toString();
+        }
     }
     
     public enum BibliographicReferenceType {        
@@ -172,4 +192,29 @@ public class BibliographicReferences {
             return name();
         }
     }
+
+    public List<BibliographicReference> getMainBibliographicReferences() {
+        List<BibliographicReference> result = new ArrayList<BibliographicReference>();
+        
+        for (BibliographicReference bibliographicReference : getBibliographicReferencesList()) {
+            if (bibliographicReference.isMain()) {
+                result.add(bibliographicReference);
+            }
+        }
+        
+        return result;
+    }
+    
+    public List<BibliographicReference> getSecondaryBibliographicReferences() {
+        List<BibliographicReference> result = new ArrayList<BibliographicReference>();
+        
+        for (BibliographicReference bibliographicReference : getBibliographicReferencesList()) {
+            if (bibliographicReference.isSecondary()) {
+                result.add(bibliographicReference);
+            }
+        }
+        
+        return result;
+    }
+    
 }

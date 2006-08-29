@@ -106,6 +106,14 @@ public class CompetenceCourse extends CompetenceCourse_Base {
         return (getRecentCompetenceCourseInformation() != null) ? getRecentCompetenceCourseInformation().getBibliographicReferences() : null;
     }
 
+    public List<BibliographicReferences.BibliographicReference> getMainBibliographicReferences() {
+        return this.getBibliographicReferences().getMainBibliographicReferences();
+    }
+    
+    public List<BibliographicReferences.BibliographicReference> getSecondaryBibliographicReferences() {
+        return this.getBibliographicReferences().getSecondaryBibliographicReferences();
+    }
+    
     public void createBibliographicReference(String year, String title, String authors, String reference,
             String url, BibliographicReferenceType type) {
         checkIfCanEdit(false);
