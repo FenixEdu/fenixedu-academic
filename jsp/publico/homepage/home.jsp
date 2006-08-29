@@ -24,7 +24,7 @@
 			<bean:write name="homepage" property="person.employee.currentDepartmentWorkingPlace.departmentUnit.idInternal"/>
 		</bean:define>
 
-		<div class="breadcumbs">
+		<div class="breadcumbs mvert0">
 			<html:link href="<%= institutionUrl %>">
 				<bean:message key="institution.name.abbreviation" bundle="GLOBAL_RESOURCES"/>
 			</html:link>
@@ -55,7 +55,7 @@
 		</h1>
 
 
-	<table class="invisible">
+	<table class="invisible thleft">
 		<!-- photo -->
 		<logic:equal name="homepage" property="showPhoto" value="true">
 			<bean:define id="homepageID" name="homepage" property="idInternal"/>
