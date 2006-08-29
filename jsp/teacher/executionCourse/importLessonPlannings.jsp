@@ -13,7 +13,11 @@
 	<bean:define id="postBackLink">/manageExecutionCourse.do?method=prepareImportLessonPlanningsPostBack&executionCourseID=<bean:write name="executionCourseID"/></bean:define>	
 	<bean:define id="invalidLink">/manageExecutionCourse.do?method=prepareImportLessonPlanningsInvalid&executionCourseID=<bean:write name="executionCourseID"/></bean:define>	
 
-	<H2><bean:message key="label.import.lessonPlannings.title"/></H2>
+	<h2><bean:message key="label.import.lessonPlannings.title"/></h2>
+
+	<div class="infoop2">
+		<bean:message key="label.lessonsPlanning.import.instructions"/>
+	</div>
 							
 	<fr:edit id="importLessonPlanningBean" name="importLessonPlanningBean" schema="ChooseDegreePeriodAndCurricularYearToImportLessonPlannings"
 		 action="<%= submitUrl %>">
@@ -21,39 +25,38 @@
 		<fr:destination name="invalid" path="<%= invalidLink %>"/>
 		<fr:destination name="cancel" path="<%= showLessonPlannings %>"/>
 		<fr:layout name="tabular" >
-				<fr:property name="classes" value="tstyle4"/>
-		        <fr:property name="columnClasses" value="listClasses,,"/>
+				<fr:property name="classes" value="tstyle5 thlight"/>
+		        <fr:property name="columnClasses" value=",,tdclear"/>
 		</fr:layout>
 	</fr:edit>
 
 	<logic:notEmpty name="importLessonPlanningBean" property="curricularYear">	
 	 	<logic:notEmpty name="importLessonPlanningBean" property="executionPeriod">	
 	 		<logic:notEmpty name="importLessonPlanningBean" property="executionDegree">	
-				<br/>
 				<bean:define id="importLessonPlanningsUrl">/manageExecutionCourse.do?method=importLessonPlannings&executionCourseID=<bean:write name="executionCourseID"/></bean:define>		
-				<H3><bean:message key="label.choose.course"/></H3>			
+				<p class="mtop2 mbottom05"><strong><bean:message key="label.choose.course"/>:</strong></p>			
 				<fr:edit id="importLessonPlanningBeanWithExecutionCourse" name="importLessonPlanningBean" schema="ListExecutionCoursesToImportLessonPlannings" 
 					action="<%= importLessonPlanningsUrl %>" >
 					<fr:destination name="cancel" path="<%= showLessonPlannings %>"/>
 					<fr:destination name="invalid" path="<%= invalidLink %>"/>
 					<fr:layout name="tabular" >
-							<fr:property name="classes" value="tstyle4"/>
-					        <fr:property name="columnClasses" value="listClasses,,"/>
+							<fr:property name="classes" value="tstyle5 thlight mtop0"/>
+					        <fr:property name="columnClasses" value=",,tdclear"/>
 					</fr:layout>
 				</fr:edit>						
 			</logic:notEmpty>
 		</logic:notEmpty>
 	</logic:notEmpty>
-	
-	<logic:notEmpty name="shifts">		
-		<br/>	
-		<H3><bean:message key="label.choose.shift"/></H3>
+
+
+	<logic:notEmpty name="shifts">			
+		<p class="mtop2 mbottom05"><strong><bean:message key="label.choose.shift.import"/>:</strong></p>
 		<html:form action="/manageExecutionCourse">
 			<html:hidden property="method" value="importLessonPlanningsBySummaries"/>
 			<html:hidden property="executionCourseID" value="<%= executionCourseID.toString() %>"/>
-			<table class="tstyle4" border="0">	
+			<table class="tstyle5 thlight mtop0" border="0">	
 				<tr>
-					<th class="listClasses"><bean:message key="label.shift"/>:</th>		
+					<th><bean:message key="label.shift"/>:</th>		
 					<td>
 						<html:select bundle="HTMLALT_RESOURCES" altKey="select.shift" property="shiftID" >
 							<html:options collection="shifts" property="value" labelProperty="label"/>

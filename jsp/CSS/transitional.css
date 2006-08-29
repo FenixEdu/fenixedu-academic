@@ -72,8 +72,13 @@ ul.list2 li { padding: 0.25em 0;}
 ul.list3 { }
 ul.list3 li { padding-left: 12px; background: url(../images/transitional/bullet08.gif) left no-repeat; }
 
+ul.liinline {
+margin: 0;
+padding: 0;
+}
 ul.liinline li {
 display: inline;
+margin: 0;
 padding: 0 0.25em;
 }
 
@@ -158,6 +163,22 @@ text-align: center;
 .tstyle7 td { padding: 0.5em; border: 1px solid #eee; background: #eee; }
 
 .tpadding01 th, .tpadding01 td { padding: 0.5em 0.1em; }
+
+td.tdclear {
+border-right: none;
+border-bottom: none;
+border-top: none;
+background: none;
+}
+
+.tstylenone { border: none; background: none; }
+.tstylenone th { border: none; background: none; }
+.tstylenone td { border: none; background: none; }
+
+.vacenter { vertical-align: middle; }
+.vacenter th { vertical-align: middle; }
+.vacenter td { vertical-align: middle; }
+
 
 
 /* fichas */
@@ -367,6 +388,8 @@ margin-left: 10.5em;
 .pbottom3 { padding-bottom: 3em;}
 .pleft1 { padding-left: 2em; }
 .pleft2 { padding-left: 2em; }
+.nomargin { margin: 0; }
+.nopadding { padding: 0; }
 .mtop0 { margin-top: 0;}
 .mtop05 { margin-top: 0.5em;}
 .mtop1 { margin-top: 1em;}

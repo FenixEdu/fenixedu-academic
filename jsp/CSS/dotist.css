@@ -647,6 +647,9 @@ select.degrees {
 	TABLE Classes: Info TD + Info TD with Icons + ListClasses
 ******************************************************************/
 
+.infoop2 p {
+margin: 0.25em 0;	
+}
 
 .infoIcons {
 	background-color: #EBECED;
