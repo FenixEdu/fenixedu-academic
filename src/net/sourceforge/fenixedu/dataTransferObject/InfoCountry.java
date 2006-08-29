@@ -7,32 +7,37 @@
 package net.sourceforge.fenixedu.dataTransferObject;
 
 import net.sourceforge.fenixedu.domain.Country;
+import net.sourceforge.fenixedu.domain.DomainReference;
 
 /**
  * @author tfc130
  */
 public class InfoCountry extends InfoObject {
 
-    private final Country country;
+    private final DomainReference<Country> countryDomainReference;
 
     public InfoCountry(final Country country) {
-	this.country = country;
+	   countryDomainReference = new DomainReference<Country>(country);
+    }
+
+    public Country getCountry() {
+        return countryDomainReference == null ? null : countryDomainReference.getObject();
     }
 
     public boolean equals(Object obj) {
-	return obj instanceof InfoCountry && country == ((InfoCountry) obj).country;
+	return obj instanceof InfoCountry && getCountry() == ((InfoCountry) obj).getCountry();
     }
 
     public String getCode() {
-        return country.getCode();
+        return getCountry().getCode();
     }
 
     public String getName() {
-        return country.getName();
+        return getCountry().getName();
     }
 
     public String getNationality() {
-        return country.getNationality();
+        return getCountry().getNationality();
     }
 
     public static InfoCountry newInfoFromDomain(final Country country) {
@@ -41,7 +46,7 @@ public class InfoCountry extends InfoObject {
 
     @Override
     public Integer getIdInternal() {
-	return country.getIdInternal();
+	return getCountry().getIdInternal();
     }
 
     @Override

@@ -6,6 +6,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.Coordinator;
+import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -23,55 +24,59 @@ public class InfoExecutionDegree extends InfoObject {
 		((ComparatorChain) COMPARATOR_BY_DEGREE_TYPE_AND_NAME).addComparator(new BeanComparator("executionDegree.degreeCurricularPlan.degree.nome"));
 	}
 
-	private final ExecutionDegree executionDegree;
+    private final DomainReference<ExecutionDegree> executionDegreeDomainReference;
 
     private String qualifiedName;
 
     private boolean getNextExecutionYear = false;
 
     public InfoExecutionDegree(final ExecutionDegree executionDegree) {
-    	this.executionDegree = executionDegree;
+    	executionDegreeDomainReference = new DomainReference<ExecutionDegree>(executionDegree);
+    }
+
+    public ExecutionDegree getEecutionDegree() {
+        return executionDegreeDomainReference == null ? null : executionDegreeDomainReference.getObject();
     }
 
     public InfoExecutionYear getInfoExecutionYear() {
         return InfoExecutionYear.newInfoFromDomain(getNextExecutionYear ?
-        		executionDegree.getExecutionYear().getNextExecutionYear() : executionDegree.getExecutionYear());
+        		getExecutionDegree().getExecutionYear().getNextExecutionYear() : getExecutionDegree().getExecutionYear());
     }
 
     public InfoDegreeCurricularPlan getInfoDegreeCurricularPlan() {
-        return InfoDegreeCurricularPlan.newInfoFromDomain(executionDegree.getDegreeCurricularPlan());
+        return InfoDegreeCurricularPlan.newInfoFromDomain(getExecutionDegree().getDegreeCurricularPlan());
     }
 
     public Boolean getTemporaryExamMap() {
-        return executionDegree.getTemporaryExamMap();
+        return getExecutionDegree().getTemporaryExamMap();
     }
 
     public InfoCampus getInfoCampus() {
-        return InfoCampus.newInfoFromDomain(executionDegree.getCampus());
+        return InfoCampus.newInfoFromDomain(getExecutionDegree().getCampus());
     }
 
     public List<InfoCoordinator> getCoordinatorsList() {
     	final List<InfoCoordinator> infoCoordinators = new ArrayList<InfoCoordinator>();
-    	for (final Coordinator coordinator : executionDegree.getCoordinatorsListSet()) {
+    	for (final Coordinator coordinator : getExecutionDegree().getCoordinatorsListSet()) {
     		infoCoordinators.add(InfoCoordinator.newInfoFromDomain(coordinator));
     	}
         return infoCoordinators;
     }
 
     public InfoPeriod getInfoPeriodExamsFirstSemester() {
-        return InfoPeriod.newInfoFromDomain(executionDegree.getPeriodExamsFirstSemester());
+        return InfoPeriod.newInfoFromDomain(getExecutionDegree().getPeriodExamsFirstSemester());
     }
 
     public InfoPeriod getInfoPeriodExamsSecondSemester() {
-        return InfoPeriod.newInfoFromDomain(executionDegree.getPeriodExamsSecondSemester());
+        return InfoPeriod.newInfoFromDomain(getExecutionDegree().getPeriodExamsSecondSemester());
     }
 
     public InfoPeriod getInfoPeriodLessonsFirstSemester() {
-        return InfoPeriod.newInfoFromDomain(executionDegree.getPeriodLessonsFirstSemester());
+        return InfoPeriod.newInfoFromDomain(getExecutionDegree().getPeriodLessonsFirstSemester());
     }
 
     public InfoPeriod getInfoPeriodLessonsSecondSemester() {
-        return InfoPeriod.newInfoFromDomain(executionDegree.getPeriodLessonsSecondSemester());
+        return InfoPeriod.newInfoFromDomain(getExecutionDegree().getPeriodLessonsSecondSemester());
     }
 
     public String getQualifiedName() {
@@ -83,15 +88,15 @@ public class InfoExecutionDegree extends InfoObject {
     }
 
     public boolean isBolonha() {
-        return executionDegree.isBolonha();
+        return getExecutionDegree().isBolonha();
     }
 
     public boolean equals(Object obj) {
-    	return obj != null && executionDegree == ((InfoExecutionDegree) obj).executionDegree;
+    	return obj != null && getExecutionDegree() == ((InfoExecutionDegree) obj).getExecutionDegree();
     }
 
     public String toString() {
-    	return executionDegree.toString();
+    	return getExecutionDegree().toString();
     }
 
     public static List buildLabelValueBeansForList(List executionDegrees,
@@ -155,7 +160,7 @@ public class InfoExecutionDegree extends InfoObject {
 
 	@Override
 	public Integer getIdInternal() {
-		return executionDegree.getIdInternal();
+		return getExecutionDegree().getIdInternal();
 	}
 
     @Override
@@ -168,7 +173,7 @@ public class InfoExecutionDegree extends InfoObject {
 	}
 
 	public ExecutionDegree getExecutionDegree() {
-		return executionDegree;
+		return getExecutionDegree();
 	}
 
 }

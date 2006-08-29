@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.dataTransferObject;
 import java.util.Date;
 
 import net.sourceforge.fenixedu.domain.Announcement;
+import net.sourceforge.fenixedu.domain.DomainReference;
 
 /**
  * @author EP 15
@@ -12,38 +13,42 @@ import net.sourceforge.fenixedu.domain.Announcement;
 
 public class InfoAnnouncement extends InfoObject implements Comparable, ISiteComponent {
 
-    private final Announcement announcement;
+    private final DomainReference<Announcement> announcementDomainReference;
 
     public InfoAnnouncement(final Announcement announcement) {
-	this.announcement = announcement;
+	   announcementDomainReference = new DomainReference<Announcement>(announcement);
+    }
+
+    public Announcement getAnnouncement() {
+        return announcementDomainReference == null ? null : announcementDomainReference.getObject();
     }
 
     public boolean equals(Object obj) {
-	return obj != null && announcement == ((InfoAnnouncement) obj).announcement;
+	return obj != null && getAnnouncement() == ((InfoAnnouncement) obj).getAnnouncement();
     }
 
     public String toString() {
-	return announcement.toString();
+	return getAnnouncement().toString();
     }
 
     public Date getCreationDate() {
-	return announcement.getCreationDate();
+	return getAnnouncement().getCreationDate();
     }
 
     public String getInformation() {
-	return announcement.getInformation();
+	return getAnnouncement().getInformation();
     }
 
     public InfoSite getInfoSite() {
-	return InfoSite.newInfoFromDomain(announcement.getSite());
+	return InfoSite.newInfoFromDomain(getAnnouncement().getSite());
     }
 
     public Date getLastModifiedDate() {
-	return announcement.getLastModifiedDate();
+	return getAnnouncement().getLastModifiedDate();
     }
 
     public String getTitle() {
-	return announcement.getTitle();
+	return getAnnouncement().getTitle();
     }
 
     public int compareTo(Object arg0) {
@@ -81,7 +86,7 @@ public class InfoAnnouncement extends InfoObject implements Comparable, ISiteCom
 
     @Override
     public Integer getIdInternal() {
-	return announcement.getIdInternal();
+	return getAnnouncement().getIdInternal();
     }
 
     @Override

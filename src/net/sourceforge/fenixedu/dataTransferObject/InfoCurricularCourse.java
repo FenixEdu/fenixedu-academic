@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Locale;
 
 import net.sourceforge.fenixedu.domain.CurricularCourse;
+import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.GradeScale;
 import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseType;
 import net.sourceforge.fenixedu.util.CurricularCourseExecutionScope;
@@ -20,7 +21,7 @@ import net.sourceforge.fenixedu.util.CurricularCourseExecutionScope;
  */
 public class InfoCurricularCourse extends InfoObject implements Comparable, ISiteComponent {
 
-    private final CurricularCourse curricularCourse;
+    private final DomainReference<CurricularCourse> curricularCourseDomainReference;
 
     private boolean showEnVersion = false;
 
@@ -37,11 +38,15 @@ public class InfoCurricularCourse extends InfoObject implements Comparable, ISit
     private String chosen;
 
     public InfoCurricularCourse(final CurricularCourse curricularCourse) {
-    	this.curricularCourse = curricularCourse;
+    	curricularCourseDomainReference = new DomainReference<CurricularCourse>(curricularCourse);
+    }
+
+    public CurricularCourse getCurricularCourse() {
+        return curricularCourseDomainReference == null ? null : curricularCourseDomainReference.getObject();
     }
 
     public Boolean getBasic() {
-        return curricularCourse.getBasic();
+        return getCurricularCourse().getBasic();
     }
 
     public String getOwnershipType() {
@@ -49,39 +54,39 @@ public class InfoCurricularCourse extends InfoObject implements Comparable, ISit
     }
 
     public boolean equals(Object obj) {
-    	return obj instanceof InfoCurricularCourse && curricularCourse == ((InfoCurricularCourse) obj).curricularCourse;
+    	return obj instanceof InfoCurricularCourse && getCurricularCourse() == ((InfoCurricularCourse) obj).getCurricularCourse();
     }
 
     public String toString() {
-    	return curricularCourse.toString();
+    	return getCurricularCourse().toString();
     }
 
     public String getCode() {
-        return curricularCourse.getCode();
+        return getCurricularCourse().getCode();
     }
 
     public Double getCredits() {
-        return curricularCourse.getCredits();
+        return getCurricularCourse().getCredits();
     }
 
     public Double getLabHours() {
-        return curricularCourse.getLabHours();
+        return getCurricularCourse().getLabHours();
     }
 
     public Double getPraticalHours() {
-        return curricularCourse.getPraticalHours();
+        return getCurricularCourse().getPraticalHours();
     }
 
     public Double getTheoPratHours() {
-        return curricularCourse.getTheoPratHours();
+        return getCurricularCourse().getTheoPratHours();
     }
 
     public Double getTheoreticalHours() {
-        return curricularCourse.getTheoreticalHours();
+        return getCurricularCourse().getTheoreticalHours();
     }
 
     public InfoDegreeCurricularPlan getInfoDegreeCurricularPlan() {
-    	final InfoDegreeCurricularPlan infoDegreeCurricularPlan = InfoDegreeCurricularPlan.newInfoFromDomain(curricularCourse.getDegreeCurricularPlan());
+    	final InfoDegreeCurricularPlan infoDegreeCurricularPlan = InfoDegreeCurricularPlan.newInfoFromDomain(getCurricularCourse().getDegreeCurricularPlan());
     	if (showEnVersion) {
     		infoDegreeCurricularPlan.prepareEnglishPresentation(Locale.ENGLISH);
     	}
@@ -97,15 +102,15 @@ public class InfoCurricularCourse extends InfoObject implements Comparable, ISit
     }
 
     public CurricularCourseType getType() {
-        return curricularCourse.getType();
+        return getCurricularCourse().getType();
     }
 
     public CurricularCourseExecutionScope getCurricularCourseExecutionScope() {
-        return curricularCourse.getCurricularCourseExecutionScope();
+        return getCurricularCourse().getCurricularCourseExecutionScope();
     }
 
     public Boolean getMandatory() {
-        return curricularCourse.getMandatory();
+        return getCurricularCourse().getMandatory();
     }
 
     public boolean infoCurricularCourseIsMandatory() {
@@ -180,35 +185,35 @@ public class InfoCurricularCourse extends InfoObject implements Comparable, ISit
     }
 
     public Double getEctsCredits() {
-        return curricularCourse.getEctsCredits();
+        return getCurricularCourse().getEctsCredits();
     }
 
     public Integer getEnrollmentWeigth() {
-        return curricularCourse.getEnrollmentWeigth();
+        return getCurricularCourse().getEnrollmentWeigth();
     }
 
     public Integer getMaximumValueForAcumulatedEnrollments() {
-        return curricularCourse.getMaximumValueForAcumulatedEnrollments();
+        return getCurricularCourse().getMaximumValueForAcumulatedEnrollments();
     }
 
     public Integer getMinimumValueForAcumulatedEnrollments() {
-        return curricularCourse.getMinimumValueForAcumulatedEnrollments();
+        return getCurricularCourse().getMinimumValueForAcumulatedEnrollments();
     }
 
     public Double getWeigth() {
-        return curricularCourse.getWeigth();
+        return getCurricularCourse().getWeigth();
     }
 
     public Boolean getMandatoryEnrollment() {
-        return curricularCourse.getMandatoryEnrollment();
+        return getCurricularCourse().getMandatoryEnrollment();
     }
 
     public Boolean getEnrollmentAllowed() {
-        return curricularCourse.getEnrollmentAllowed();
+        return getCurricularCourse().getEnrollmentAllowed();
     }
 
     public String getAcronym(){
-    	return curricularCourse.getAcronym();
+    	return getCurricularCourse().getAcronym();
     }
     
     public static InfoCurricularCourse newInfoFromDomain(CurricularCourse curricularCourse) {
@@ -221,12 +226,12 @@ public class InfoCurricularCourse extends InfoObject implements Comparable, ISit
     }
 
     public String getName() {
-    	return showEnVersion && curricularCourse.getNameEn() != null && curricularCourse.getNameEn().length() > 0 
-    			? curricularCourse.getNameEn() : curricularCourse.getName();
+    	return showEnVersion && getCurricularCourse().getNameEn() != null && getCurricularCourse().getNameEn().length() > 0 
+    			? getCurricularCourse().getNameEn() : getCurricularCourse().getName();
     }
 
     public String getNameEn() {
-        return curricularCourse.getNameEn();
+        return getCurricularCourse().getNameEn();
     }
     
     public void prepareEnglishPresentation(Locale locale) {
@@ -244,16 +249,16 @@ public class InfoCurricularCourse extends InfoObject implements Comparable, ISit
     }
 
 	public GradeScale getGradeScale() {
-		return curricularCourse.getGradeScale();
+		return getCurricularCourse().getGradeScale();
 	}
 
     @Override
     public Integer getIdInternal() {
-        return curricularCourse.getIdInternal();
+        return getCurricularCourse().getIdInternal();
     }
 
     public boolean getIsBolonha() {
-        return curricularCourse.isBolonha();
+        return getCurricularCourse().isBolonha();
     }
 
 }

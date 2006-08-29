@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.dataTransferObject;
 import java.util.Date;
 
 import net.sourceforge.fenixedu.domain.Advisory;
+import net.sourceforge.fenixedu.domain.DomainReference;
 
 /**
  * @author Nuno Nunes & Luis Cruz
@@ -12,34 +13,38 @@ import net.sourceforge.fenixedu.domain.Advisory;
 
 public class InfoAdvisory extends InfoObject {
 
-	private final Advisory advisory;
+    private final DomainReference<Advisory> advisoryDomainReference;
 
     public InfoAdvisory(final Advisory advisory) {
-    	this.advisory = advisory;
+    	advisoryDomainReference = new DomainReference<Advisory>(advisory);
+    }
+
+    public Advisory getAdvisory() {
+        return advisoryDomainReference == null ? null : advisoryDomainReference.getObject();
     }
 
     public String toString() {
-    	return advisory.toString();
+    	return getAdvisory().toString();
     }
 
     public Date getCreated() {
-        return advisory.getCreated();
+        return getAdvisory().getCreated();
     }
 
     public Date getExpires() {
-        return advisory.getExpires();
+        return getAdvisory().getExpires();
     }
 
     public String getMessage() {
-        return advisory.getMessage();
+        return getAdvisory().getMessage();
     }
 
     public String getSubject() {
-        return advisory.getSubject();
+        return getAdvisory().getSubject();
     }
 
     public String getSender() {
-        return advisory.getSender();
+        return getAdvisory().getSender();
     }
 
     public static InfoAdvisory newInfoFromDomain(Advisory advisory) {
@@ -48,7 +53,7 @@ public class InfoAdvisory extends InfoObject {
 
 	@Override
 	public Integer getIdInternal() {
-		return advisory.getIdInternal();
+		return getAdvisory().getIdInternal();
 	}
 
     @Override

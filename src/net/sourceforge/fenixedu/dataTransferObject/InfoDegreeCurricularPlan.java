@@ -7,6 +7,7 @@ import java.util.Locale;
 
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.GradeScale;
 import net.sourceforge.fenixedu.domain.degree.degreeCurricularPlan.DegreeCurricularPlanState;
@@ -20,34 +21,38 @@ import net.sourceforge.fenixedu.util.MarkType;
  */
 public class InfoDegreeCurricularPlan extends InfoObject implements Comparable {
 
-	private DegreeCurricularPlan degreeCurricularPlan;
+    private DomainReference<DegreeCurricularPlan> degreeCurricularPlanDomainReference;
 
 	private boolean showEnVersion = false;
 
     public InfoDegreeCurricularPlan(final DegreeCurricularPlan degreeCurricularPlan) {
-    	this.degreeCurricularPlan = degreeCurricularPlan;
+    	degreeCurricularPlanDomainReference = new DomainReference<DegreeCurricularPlan>(degreeCurricularPlan);
+    }
+
+    public DegreeCurricularPlan getDegreeCurricularPlan() {
+        return degreeCurricularPlanDomainReference == null ? null : degreeCurricularPlanDomainReference.getObject();
     }
 
     public boolean equals(Object obj) {
-    	return obj instanceof InfoDegreeCurricularPlan && degreeCurricularPlan == ((InfoDegreeCurricularPlan) obj).degreeCurricularPlan;
+    	return obj instanceof InfoDegreeCurricularPlan && getDegreeCurricularPlan() == ((InfoDegreeCurricularPlan) obj).getDegreeCurricularPlan();
     }
 
     public String toString() {
-    	return degreeCurricularPlan.toString();
+    	return getDegreeCurricularPlan().toString();
     }
 
     public String getLabel() {
-        final String degreeName = degreeCurricularPlan.getDegree().getName();
-        final String initialDateString = DateFormatUtil.format("dd/MM/yyyy", degreeCurricularPlan.getInitialDate());
+        final String degreeName = getDegreeCurricularPlan().getDegree().getName();
+        final String initialDateString = DateFormatUtil.format("dd/MM/yyyy", getDegreeCurricularPlan().getInitialDate());
 
-        final int labelSize = degreeName.length() + initialDateString.length() + degreeCurricularPlan.getName().length() + 4;
+        final int labelSize = degreeName.length() + initialDateString.length() + getDegreeCurricularPlan().getName().length() + 4;
 
         final StringBuilder stringBuilder = new StringBuilder(labelSize);
         stringBuilder.append(degreeName);
         stringBuilder.append(" ");
         stringBuilder.append(initialDateString);
         stringBuilder.append(" - ");
-        stringBuilder.append(degreeCurricularPlan.getName());
+        stringBuilder.append(getDegreeCurricularPlan().getName());
         return stringBuilder.toString();
     }
 
@@ -55,58 +60,58 @@ public class InfoDegreeCurricularPlan extends InfoObject implements Comparable {
      * @return Needed Credtis to Finish the Degree
      */
     public Double getNeededCredits() {
-        return degreeCurricularPlan.getNeededCredits();
+        return getDegreeCurricularPlan().getNeededCredits();
     }
 
     /**
      * @return Date
      */
     public Date getEndDate() {
-        return degreeCurricularPlan.getEndDate();
+        return getDegreeCurricularPlan().getEndDate();
     }
 
     /**
      * @return Date
      */
     public Date getInitialDate() {
-        return degreeCurricularPlan.getInitialDate();
+        return getDegreeCurricularPlan().getInitialDate();
     }
 
     /**
      * @return String
      */
     public String getName() {
-        return degreeCurricularPlan.getName();
+        return getDegreeCurricularPlan().getName();
     }
 
     public String getPresentationName() {
-        return degreeCurricularPlan.getDegree().getName() + " " + getName();
+        return getDegreeCurricularPlan().getDegree().getName() + " " + getName();
     }
 
     /**
      * @return DegreeCurricularPlanState
      */
     public DegreeCurricularPlanState getState() {
-        return degreeCurricularPlan.getState();
+        return getDegreeCurricularPlan().getState();
     }
 
     public Integer getDegreeDuration() {
-        return degreeCurricularPlan.getDegreeDuration();
+        return getDegreeCurricularPlan().getDegreeDuration();
     }
 
     public Integer getMinimalYearForOptionalCourses() {
-        return degreeCurricularPlan.getMinimalYearForOptionalCourses();
+        return getDegreeCurricularPlan().getMinimalYearForOptionalCourses();
     }
 
     public MarkType getMarkType() {
-        return degreeCurricularPlan.getMarkType();
+        return getDegreeCurricularPlan().getMarkType();
     }
 
     /**
      * @return
      */
     public Integer getNumerusClausus() {
-        return degreeCurricularPlan.getNumerusClausus();
+        return getDegreeCurricularPlan().getNumerusClausus();
     }
 
     // alphabetical order
@@ -120,25 +125,25 @@ public class InfoDegreeCurricularPlan extends InfoObject implements Comparable {
      */
     public List<InfoCurricularCourse> getCurricularCourses() {
     	final List<InfoCurricularCourse> infoCurricularCourses = new ArrayList<InfoCurricularCourse>();
-    	for (final CurricularCourse curricularCourse : degreeCurricularPlan.getCurricularCoursesSet()) {
+    	for (final CurricularCourse curricularCourse : getDegreeCurricularPlan().getCurricularCoursesSet()) {
     		infoCurricularCourses.add(InfoCurricularCourse.newInfoFromDomain(curricularCourse));
     	}
         return infoCurricularCourses;
     }
 
     public String getDescription() {
-    	return showEnVersion ? getDescriptionEn() : degreeCurricularPlan.getDescription();
+    	return showEnVersion ? getDescriptionEn() : getDegreeCurricularPlan().getDescription();
     }
 
     public String getDescriptionEn() {
-        return degreeCurricularPlan.getDescriptionEn();
+        return getDegreeCurricularPlan().getDescriptionEn();
     }
 
     /**
      * @return InfoDegree
      */
     public InfoDegree getInfoDegree() {
-    	final InfoDegree infoDegree = InfoDegree.newInfoFromDomain(degreeCurricularPlan.getDegree());
+    	final InfoDegree infoDegree = InfoDegree.newInfoFromDomain(getDegreeCurricularPlan().getDegree());
     	if (showEnVersion) { 
     		infoDegree.prepareEnglishPresentation(Locale.ENGLISH);
     	}
@@ -161,24 +166,24 @@ public class InfoDegreeCurricularPlan extends InfoObject implements Comparable {
     }
 
     public String getAnotation() {
-        return degreeCurricularPlan.getAnotation();
+        return getDegreeCurricularPlan().getAnotation();
     }
 
     public List<InfoExecutionDegree> getInfoExecutionDegrees() {
     	final List<InfoExecutionDegree> infoExeutionDegrees = new ArrayList<InfoExecutionDegree>();
-    	for (final ExecutionDegree executionDegree : degreeCurricularPlan.getExecutionDegreesSet()) {
+    	for (final ExecutionDegree executionDegree : getDegreeCurricularPlan().getExecutionDegreesSet()) {
     		infoExeutionDegrees.add(InfoExecutionDegree.newInfoFromDomain(executionDegree));
     	}
         return infoExeutionDegrees;
     }
 
 	public GradeScale getGradeScale() {
-		return degreeCurricularPlan.getGradeScale();
+		return getDegreeCurricularPlan().getGradeScale();
 	}
 
 	@Override
 	public Integer getIdInternal() {
-		return degreeCurricularPlan.getIdInternal();
+		return getDegreeCurricularPlan().getIdInternal();
 	}
 
 }

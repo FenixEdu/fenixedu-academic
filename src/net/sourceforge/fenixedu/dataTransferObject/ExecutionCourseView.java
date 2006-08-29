@@ -4,6 +4,7 @@
  */
 package net.sourceforge.fenixedu.dataTransferObject;
 
+import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 
 /**
@@ -15,10 +16,10 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
  */
 public class ExecutionCourseView {
 
-    private final ExecutionCourse executionCourse;
+    private final DomainReference<ExecutionCourse> executionCourseDomainReference; 
 
     public ExecutionCourseView(final ExecutionCourse executionCourse) {
-        this.executionCourse = executionCourse;
+        executionCourseDomainReference = new DomainReference<ExecutionCourse>(executionCourse);
     }
 
     private Integer curricularYear;
@@ -46,17 +47,21 @@ public class ExecutionCourseView {
         this.degreeCurricularPlanAnotation = degreeCurricularPlanAnotation;
     }
 
+    public ExecutionCourse getExecutionCourse() {
+        return executionCourseDomainReference == null ? null : executionCourseDomainReference.getObject();
+    }
+
     public String getExecutionCourseName() {
-        return executionCourse.getNome();
+        return getExecutionCourse().getNome();
     }
     public Integer getExecutionCourseOID() {
-        return executionCourse.getIdInternal();
+        return getExecutionCourse().getIdInternal();
     }
     public Integer getSemester() {
-        return executionCourse.getExecutionPeriod().getSemester();
+        return getExecutionCourse().getExecutionPeriod().getSemester();
     }
     public Integer getExecutionPeriodOID() {
-        return executionCourse.getExecutionPeriod().getIdInternal();
+        return getExecutionCourse().getExecutionPeriod().getIdInternal();
     }
 
 }

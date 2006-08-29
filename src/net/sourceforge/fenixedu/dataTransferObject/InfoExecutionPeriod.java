@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.dataTransferObject;
 import java.util.Date;
 
 import net.sourceforge.fenixedu.domain.DomainObject;
+import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.util.PeriodState;
 
@@ -11,24 +12,25 @@ import net.sourceforge.fenixedu.util.PeriodState;
  */
 public class InfoExecutionPeriod extends InfoObject {
 
-    private final ExecutionPeriod executionPeriod;
+    private final DomainReference<ExecutionPeriod> executionPeriodDomainReference;
 
     private String qualifiedName;
 
     public InfoExecutionPeriod(final ExecutionPeriod executionPeriod) {
-        this.executionPeriod = executionPeriod;
+        executionPeriodDomainReference = new DomainReference<ExecutionPeriod>(executionPeriod);
     }
+
 
     private InfoExecutionYear infoExecutionYear = null;
     public InfoExecutionYear getInfoExecutionYear() {
         if (infoExecutionYear == null) {
-            infoExecutionYear = new InfoExecutionYear(executionPeriod.getExecutionYear());
+            infoExecutionYear = new InfoExecutionYear(getExecutionPeriod().getExecutionYear());
         }
         return infoExecutionYear;
     }
 
     public String getName() {
-        return executionPeriod.getName();
+        return getExecutionPeriod().getName();
     }
 
     public boolean equals(Object obj) {
@@ -42,15 +44,15 @@ public class InfoExecutionPeriod extends InfoObject {
     }
 
     public String toString() {
-        return executionPeriod.toString();
+        return getExecutionPeriod().toString();
     }
 
     public PeriodState getState() {
-        return executionPeriod.getState();
+        return getExecutionPeriod().getState();
     }
 
     public Integer getSemester() {
-        return executionPeriod.getSemester();
+        return getExecutionPeriod().getSemester();
     }
 
     public int compareTo(Object arg0) {
@@ -64,11 +66,11 @@ public class InfoExecutionPeriod extends InfoObject {
     }
 
     public Date getBeginDate() {
-        return executionPeriod.getBeginDate();
+        return getExecutionPeriod().getBeginDate();
     }
 
     public Date getEndDate() {
-        return executionPeriod.getEndDate();
+        return getExecutionPeriod().getEndDate();
     }
 
     /**
@@ -91,7 +93,7 @@ public class InfoExecutionPeriod extends InfoObject {
     }
 
     public InfoExecutionPeriod getPreviousInfoExecutionPeriod() {
-        final ExecutionPeriod previousInfoExecutionPeriod = executionPeriod.getPreviousExecutionPeriod();
+        final ExecutionPeriod previousInfoExecutionPeriod = getExecutionPeriod().getPreviousExecutionPeriod();
         return previousInfoExecutionPeriod == null ? null : new InfoExecutionPeriod(previousInfoExecutionPeriod);
     }
 
@@ -104,11 +106,11 @@ public class InfoExecutionPeriod extends InfoObject {
 	}
 
     public Date getInquiryResponseBegin() {
-        return executionPeriod.getInquiryResponseBegin();
+        return getExecutionPeriod().getInquiryResponseBegin();
     }
 
     public Date getInquiryResponseEnd() {
-        return executionPeriod.getInquiryResponseEnd();
+        return getExecutionPeriod().getInquiryResponseEnd();
     }
 
     @Override
@@ -123,7 +125,7 @@ public class InfoExecutionPeriod extends InfoObject {
 
     @Override
     public Integer getIdInternal() {
-        return executionPeriod.getIdInternal();
+        return getExecutionPeriod().getIdInternal();
     }
 
     @Override
@@ -131,8 +133,8 @@ public class InfoExecutionPeriod extends InfoObject {
         throw new Error("Method should not be called!");
     }
 
-	public ExecutionPeriod getExecutionPeriod() {
-		return executionPeriod;
-	}
+    public ExecutionPeriod getExecutionPeriod() {
+        return executionPeriodDomainReference == null ? null : executionPeriodDomainReference.getObject();
+    }
 
 }

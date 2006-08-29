@@ -5,6 +5,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.domain.CurricularCourseScope;
 import net.sourceforge.fenixedu.domain.CurricularSemester;
+import net.sourceforge.fenixedu.domain.DomainReference;
 
 /**
  * @author dcs-rjao
@@ -14,31 +15,35 @@ import net.sourceforge.fenixedu.domain.CurricularSemester;
 
 public class InfoCurricularSemester extends InfoObject {
 
-	private final CurricularSemester curricularSemester;
+    private final DomainReference<CurricularSemester> curricularSemesterDomainReference;
 
     public InfoCurricularSemester(final CurricularSemester curricularSemester) {
-    	this.curricularSemester = curricularSemester;
+    	curricularSemesterDomainReference = new DomainReference<CurricularSemester>(curricularSemester);;
+    }
+
+    public CurricularSemester getCurricularSemester() {
+        return curricularSemesterDomainReference == null ? null : curricularSemesterDomainReference.getObject();
     }
 
     public boolean equals(Object obj) {
-    	return obj instanceof InfoCurricularSemester && curricularSemester == ((InfoCurricularSemester) obj).curricularSemester;
+    	return obj instanceof InfoCurricularSemester && getCurricularSemester() == ((InfoCurricularSemester) obj).getCurricularSemester();
     }
 
     public String toString() {
-    	return curricularSemester.toString();
+    	return getCurricularSemester().toString();
     }
 
     public InfoCurricularYear getInfoCurricularYear() {
-    	return InfoCurricularYear.newInfoFromDomain(curricularSemester.getCurricularYear());
+    	return InfoCurricularYear.newInfoFromDomain(getCurricularSemester().getCurricularYear());
     }
 
     public Integer getSemester() {
-    	return curricularSemester.getSemester();
+    	return getCurricularSemester().getSemester();
     }
 
     public List getInfoScopes() {
     	final List<InfoCurricularCourseScope> scopes = new ArrayList<InfoCurricularCourseScope>();
-    	for (final CurricularCourseScope scope : curricularSemester.getScopesSet()) {
+    	for (final CurricularCourseScope scope : getCurricularSemester().getScopesSet()) {
     		scopes.add(InfoCurricularCourseScope.newInfoFromDomain(scope));
     	}
         return scopes;
@@ -50,7 +55,7 @@ public class InfoCurricularSemester extends InfoObject {
 
 	@Override
 	public Integer getIdInternal() {
-		return curricularSemester.getIdInternal();
+		return getCurricularSemester().getIdInternal();
 	}
 
     @Override

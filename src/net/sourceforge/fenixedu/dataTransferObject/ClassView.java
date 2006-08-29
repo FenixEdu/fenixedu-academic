@@ -4,6 +4,7 @@
  */
 package net.sourceforge.fenixedu.dataTransferObject;
 
+import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.SchoolClass;
 
 /**
@@ -13,42 +14,46 @@ import net.sourceforge.fenixedu.domain.SchoolClass;
  */
 public class ClassView {
 
-    private final SchoolClass schoolClass;
+    private final DomainReference<SchoolClass> schoolClassDomainReference;
 
     public ClassView(final SchoolClass schoolClass) {
-        this.schoolClass = schoolClass;
+        schoolClassDomainReference = new DomainReference<SchoolClass>(schoolClass);
+    }
+
+    public SchoolClass getSchoolClass() {
+        return schoolClassDomainReference == null ? null : schoolClassDomainReference.getObject();
     }
 
     public String getClassName() {
-        return schoolClass.getNome();
+        return getSchoolClass().getNome();
     }
 
     public Integer getClassOID() {
-        return schoolClass.getIdInternal();
+        return getSchoolClass().getIdInternal();
     }
 
     public Integer getCurricularYear() {
-        return schoolClass.getAnoCurricular();
+        return getSchoolClass().getAnoCurricular();
     }
 
     public Integer getSemester() {
-        return schoolClass.getExecutionPeriod().getSemester();
+        return getSchoolClass().getExecutionPeriod().getSemester();
     }
 
     public Integer getDegreeCurricularPlanID() {
-        return schoolClass.getExecutionDegree().getDegreeCurricularPlan().getIdInternal();
+        return getSchoolClass().getExecutionDegree().getDegreeCurricularPlan().getIdInternal();
     }
 
     public String getDegreeInitials() {
-        return schoolClass.getExecutionDegree().getDegreeCurricularPlan().getDegree().getSigla();
+        return getSchoolClass().getExecutionDegree().getDegreeCurricularPlan().getDegree().getSigla();
     }
 
     public Integer getExecutionPeriodOID() {
-        return schoolClass.getExecutionPeriod().getIdInternal();
+        return getSchoolClass().getExecutionPeriod().getIdInternal();
     }
 
     public String getNameDegreeCurricularPlan() {
-        return schoolClass.getExecutionDegree().getDegreeCurricularPlan().getName();
+        return getSchoolClass().getExecutionDegree().getDegreeCurricularPlan().getName();
     }
 
 }

@@ -4,6 +4,7 @@ import java.util.Locale;
 import java.util.StringTokenizer;
 
 import net.sourceforge.fenixedu.domain.Branch;
+import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.branch.BranchType;
 
 /**
@@ -15,16 +16,20 @@ import net.sourceforge.fenixedu.domain.branch.BranchType;
 
 public class InfoBranch extends InfoObject {
 
-	private final Branch branch;
+    private final DomainReference<Branch> branchDomainReference;
+
+    public Branch getBranch() {
+        return branchDomainReference == null ? null : branchDomainReference.getObject();
+    }
 
 	private boolean showEnVersion = false;
 
     public InfoBranch(final Branch branch) {
-    	this.branch = branch;
+    	branchDomainReference = new DomainReference<Branch>(branch);
     }
 
     public String toString() {
-    	return branch.toString();
+    	return getBranch().toString();
     }
 
     public Boolean representsCommonBranch() {
@@ -52,32 +57,32 @@ public class InfoBranch extends InfoObject {
     }
 
     public String getCode() {
-        return branch.getCode();
+        return getBranch().getCode();
     }
 
     public String getName() {
-    	return showEnVersion && branch.getNameEn() != null && branch.getNameEn().length() > 0 ?
-    			branch.getNameEn() : branch.getName();
+    	return showEnVersion && getBranch().getNameEn() != null && getBranch().getNameEn().length() > 0 ?
+    			getBranch().getNameEn() : getBranch().getName();
     }
 
     public InfoDegreeCurricularPlan getInfoDegreeCurricularPlan() {
-    	return InfoDegreeCurricularPlan.newInfoFromDomain(branch.getDegreeCurricularPlan());
+    	return InfoDegreeCurricularPlan.newInfoFromDomain(getBranch().getDegreeCurricularPlan());
     }
 
     public String getAcronym() {
-        return branch.getAcronym();
+        return getBranch().getAcronym();
     }
 
     public Integer getSecondaryCredits() {
-        return branch.getSecondaryCredits();
+        return getBranch().getSecondaryCredits();
     }
 
     public Integer getSpecializationCredits() {
-        return branch.getSpecializationCredits();
+        return getBranch().getSpecializationCredits();
     }
 
     public BranchType getBranchType() {
-        return branch.getBranchType();
+        return getBranch().getBranchType();
     }
 
     public static InfoBranch newInfoFromDomain(Branch branch) {
@@ -85,7 +90,7 @@ public class InfoBranch extends InfoObject {
     }
 
     public String getNameEn() {
-        return branch.getNameEn();
+        return getBranch().getNameEn();
     }
 
     public void prepareEnglishPresentation(Locale locale) {
@@ -96,7 +101,7 @@ public class InfoBranch extends InfoObject {
 
 	@Override
 	public Integer getIdInternal() {
-		return branch.getIdInternal();
+		return getBranch().getIdInternal();
 	}
 
     @Override

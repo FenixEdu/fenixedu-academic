@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.dataTransferObject;
 
 import net.sourceforge.fenixedu.domain.CurricularYear;
+import net.sourceforge.fenixedu.domain.DomainReference;
 
 /**
  * @author dcs-rjao
@@ -10,22 +11,26 @@ import net.sourceforge.fenixedu.domain.CurricularYear;
 
 public class InfoCurricularYear extends InfoObject {
 
-	private final CurricularYear curricularYear;
+    private final DomainReference<CurricularYear> curricularYearDomainReference;
 
     public InfoCurricularYear(final CurricularYear curricularYear) {
-        this.curricularYear = curricularYear;
+        curricularYearDomainReference = new DomainReference<CurricularYear>(curricularYear);
+    }
+
+    public CurricularYear getCurricularYear() {
+        return curricularYearDomainReference == null ? null : curricularYearDomainReference.getObject();
     }
 
     public boolean equals(Object obj) {
-    	return obj instanceof InfoCurricularYear && curricularYear == ((InfoCurricularYear) obj).curricularYear;
+    	return obj instanceof InfoCurricularYear && getCurricularYear() == ((InfoCurricularYear) obj).getCurricularYear();
     }
 
     public String toString() {
-    	return curricularYear.toString();
+    	return getCurricularYear().toString();
     }
 
     public Integer getYear() {
-    	return curricularYear.getYear();
+    	return getCurricularYear().getYear();
     }
 
     public static InfoCurricularYear newInfoFromDomain(final CurricularYear curricularYear) {
@@ -34,7 +39,7 @@ public class InfoCurricularYear extends InfoObject {
 
 	@Override
 	public Integer getIdInternal() {
-		return curricularYear.getIdInternal();
+		return getCurricularYear().getIdInternal();
 	}
 
     @Override

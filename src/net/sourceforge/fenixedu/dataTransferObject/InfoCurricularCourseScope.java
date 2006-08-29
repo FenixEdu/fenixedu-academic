@@ -10,42 +10,47 @@ import java.util.Calendar;
 import java.util.Locale;
 
 import net.sourceforge.fenixedu.domain.CurricularCourseScope;
+import net.sourceforge.fenixedu.domain.DomainReference;
 
 /**
  * @author tfc130
  */
 public class InfoCurricularCourseScope extends InfoObject {
 
-	private final CurricularCourseScope curricularCourseScope;
+    private final DomainReference<CurricularCourseScope> curricularCourseScopeDomainReference;
 
 	private boolean showEnVersion = false;
 
     public InfoCurricularCourseScope(final CurricularCourseScope curricularCourseScope) {
-    	this.curricularCourseScope = curricularCourseScope;
+    	curricularCourseScopeDomainReference = new DomainReference<CurricularCourseScope>(curricularCourseScope);
+    }
+
+    public CurricularCourseScope getCurricularCourseScope() {
+        return curricularCourseScopeDomainReference == null ? null : curricularCourseScopeDomainReference.getObject();
     }
 
     public boolean equals(Object obj) {
-    	return obj instanceof InfoCurricularCourseScope && curricularCourseScope == ((InfoCurricularCourseScope) obj).curricularCourseScope;
+    	return obj instanceof InfoCurricularCourseScope && getCurricularCourseScope() == ((InfoCurricularCourseScope) obj).getCurricularCourseScope();
     }
 
     public String toString() {
-    	return curricularCourseScope.toString();
+    	return getCurricularCourseScope().toString();
     }
 
     public Boolean isActive() {
-    	return curricularCourseScope.isActive();
+    	return getCurricularCourseScope().isActive();
     }
 
     public Calendar getBeginDate() {
-        return curricularCourseScope.getBeginDate();
+        return getCurricularCourseScope().getBeginDate();
     }
 
     public Calendar getEndDate() {
-        return curricularCourseScope.getEndDate();
+        return getCurricularCourseScope().getEndDate();
     }
 
     public InfoBranch getInfoBranch() {
-    	final InfoBranch infoBranch = InfoBranch.newInfoFromDomain(curricularCourseScope.getBranch());
+    	final InfoBranch infoBranch = InfoBranch.newInfoFromDomain(getCurricularCourseScope().getBranch());
     	if (showEnVersion) {
     		infoBranch.prepareEnglishPresentation(Locale.ENGLISH);
     	}
@@ -53,11 +58,11 @@ public class InfoCurricularCourseScope extends InfoObject {
     }
 
     public InfoCurricularCourse getInfoCurricularCourse() {
-        return InfoCurricularCourse.newInfoFromDomain(curricularCourseScope.getCurricularCourse());
+        return InfoCurricularCourse.newInfoFromDomain(getCurricularCourseScope().getCurricularCourse());
     }
 
     public InfoCurricularSemester getInfoCurricularSemester() {
-        return InfoCurricularSemester.newInfoFromDomain(curricularCourseScope.getCurricularSemester());
+        return InfoCurricularSemester.newInfoFromDomain(getCurricularCourseScope().getCurricularSemester());
     }
 
     public static InfoCurricularCourseScope newInfoFromDomain(final CurricularCourseScope curricularCourseScope) {
@@ -65,7 +70,7 @@ public class InfoCurricularCourseScope extends InfoObject {
     }
 
     public String getAnotation() {
-        return curricularCourseScope.getAnotation();
+        return getCurricularCourseScope().getAnotation();
     }
 
     public void prepareEnglishPresentation(Locale locale) {
@@ -74,7 +79,7 @@ public class InfoCurricularCourseScope extends InfoObject {
 
 	@Override
 	public Integer getIdInternal() {
-		return curricularCourseScope.getIdInternal();
+		return getCurricularCourseScope().getIdInternal();
 	}
 
     @Override

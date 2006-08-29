@@ -5,6 +5,7 @@
  */
 package net.sourceforge.fenixedu.dataTransferObject;
 
+import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.SchoolClass;
 
 /**
@@ -12,34 +13,38 @@ import net.sourceforge.fenixedu.domain.SchoolClass;
  */
 public class InfoClass extends InfoObject {
 
-	private final SchoolClass schoolClass;
+    private final DomainReference<SchoolClass> schoolClassDomainReference;
+
+    public SchoolClass getSchoolClass() {
+        return schoolClassDomainReference == null ? null : schoolClassDomainReference.getObject();
+    }
 
     public InfoClass(final SchoolClass schoolClass) {
-    	this.schoolClass = schoolClass;
+        schoolClassDomainReference = new DomainReference<SchoolClass>(schoolClass);
     }
 
     public String getNome() {
-        return schoolClass.getNome();
+        return getSchoolClass().getNome();
     }
 
     public Integer getAnoCurricular() {
-        return schoolClass.getAnoCurricular();
+        return getSchoolClass().getAnoCurricular();
     }
 
     public boolean equals(Object obj) {
-    	return obj != null && schoolClass == ((InfoClass) obj).schoolClass;
+    	return obj != null && getSchoolClass() == ((InfoClass) obj).getSchoolClass();
     }
 
     public String toString() {
-    	return schoolClass.toString();
+    	return getSchoolClass().toString();
     }
 
     public InfoExecutionDegree getInfoExecutionDegree() {
-        return InfoExecutionDegree.newInfoFromDomain(schoolClass.getExecutionDegree());
+        return InfoExecutionDegree.newInfoFromDomain(getSchoolClass().getExecutionDegree());
     }
 
     public InfoExecutionPeriod getInfoExecutionPeriod() {
-        return InfoExecutionPeriod.newInfoFromDomain(schoolClass.getExecutionPeriod());
+        return InfoExecutionPeriod.newInfoFromDomain(getSchoolClass().getExecutionPeriod());
     }
 
     public static InfoClass newInfoFromDomain(final SchoolClass schoolClass) {
@@ -48,7 +53,7 @@ public class InfoClass extends InfoObject {
 
 	@Override
 	public Integer getIdInternal() {
-		return schoolClass.getIdInternal();
+		return getSchoolClass().getIdInternal();
 	}
 
     @Override

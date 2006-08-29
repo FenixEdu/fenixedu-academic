@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.dataTransferObject;
 
 import java.util.Date;
 
+import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.util.PeriodState;
 
@@ -10,14 +11,18 @@ import net.sourceforge.fenixedu.util.PeriodState;
  */
 public class InfoExecutionYear extends InfoObject {
 
-    private final ExecutionYear executionYear;
+    private final DomainReference<ExecutionYear> executionYearDomainReference;
 
     public InfoExecutionYear(final ExecutionYear executionYear) {
-        this.executionYear = executionYear;
+        executionYearDomainReference = new DomainReference<ExecutionYear>(executionYear);
+    }
+
+    public ExecutionYear getExecutionYear() {
+        return executionYearDomainReference == null ? null : executionYearDomainReference.getObject();
     }
 
     public String getYear() {
-        return executionYear.getYear();
+        return getExecutionYear().getYear();
     }
 
     public boolean equals(Object obj) {
@@ -29,11 +34,11 @@ public class InfoExecutionYear extends InfoObject {
     }
 
     public String toString() {
-        return executionYear.getYear();
+        return getExecutionYear().getYear();
     }
 
     public PeriodState getState() {
-        return executionYear.getState();
+        return getExecutionYear().getState();
     }
 
     public int compareTo(Object arg0) {
@@ -42,11 +47,11 @@ public class InfoExecutionYear extends InfoObject {
     }
 
     public Date getBeginDate() {
-        return executionYear.getBeginDate();
+        return getExecutionYear().getBeginDate();
     }
 
     public Date getEndDate() {
-        return executionYear.getEndDate();
+        return getExecutionYear().getEndDate();
     }
 
     public static InfoExecutionYear newInfoFromDomain(final ExecutionYear executionYear) {
@@ -66,13 +71,13 @@ public class InfoExecutionYear extends InfoObject {
     }
 
     public InfoExecutionYear getNextInfoExecutionYear() {
-        final ExecutionYear nextExecutionYear = executionYear.getNextExecutionYear();
+        final ExecutionYear nextExecutionYear = getExecutionYear().getNextExecutionYear();
         return nextExecutionYear == null ? null : InfoExecutionYear.newInfoFromDomain(nextExecutionYear);
     }
 
     @Override
     public Integer getIdInternal() {
-        return executionYear.getIdInternal();
+        return getExecutionYear().getIdInternal();
     }
 
     @Override

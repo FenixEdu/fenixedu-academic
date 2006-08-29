@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.dataTransferObject;
 import java.util.Locale;
 
 import net.sourceforge.fenixedu.domain.DegreeInfo;
+import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Language;
 
@@ -12,7 +13,7 @@ import net.sourceforge.fenixedu.domain.Language;
 public class InfoDegreeInfo extends InfoObject implements ISiteComponent {
 
     private InfoDegree infoDegree;
-    private ExecutionYear executionYear;
+    private DomainReference<ExecutionYear> executionYearDomainReference;
     
     private String description;
     private String history;
@@ -195,13 +196,8 @@ public class InfoDegreeInfo extends InfoObject implements ISiteComponent {
         result += " nota minima= " + getMarkMin();
         result += " nota m�xima= " + getMarkMax();
         result += " nota m�dia= " + getMarkAverage();
-        result += " data �ltima modifica��o= " + getLastModificationDate();
         result += "]";
         return result;
-    }
-
-    public InfoExecutionYear getLastModificationDate() {
-        return InfoExecutionYear.newInfoFromDomain(executionYear);
     }
 
     public String getAdditionalInfo() {
