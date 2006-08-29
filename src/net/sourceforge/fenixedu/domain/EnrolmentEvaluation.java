@@ -320,7 +320,6 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base implements Com
 	setExamDateYearMonthDay(null);
 	setGradeAvailableDateYearMonthDay(null);
 	
-        removePersonResponsibleForGrade();
         removeMarkSheet();
     }
 
