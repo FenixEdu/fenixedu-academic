@@ -13,9 +13,11 @@ public class ResultUnitAssociationCreationBean implements Serializable {
     private String role;
     private String unitName;
 
-    public ResultUnitAssociationCreationBean(Result resultReference) {
-        role = ResultUnitAssociationRole.getDefaultUnitRoleType().toString();
-        this.result = new DomainReference<Result>(resultReference);
+    public ResultUnitAssociationCreationBean(Result result) {
+	setResult(new DomainReference<Result>(result));
+	setUnit(null);
+	setUnitName(null);
+	setRole(ResultUnitAssociationRole.getDefaultRole());
     }
     
     public ResultUnitAssociationRole getRole() {
@@ -43,10 +45,10 @@ public class ResultUnitAssociationCreationBean implements Serializable {
     }
     
     public Result getResult() {
-        return (this.result == null) ? null : this.result.getObject();
+        return result.getObject();
     }
 
-    public void setResult(Result result) {
-        this.result = (result != null) ? new DomainReference<Result>(result) : null;
+    public void setResult(DomainReference<Result> result) {
+        this.result = result;
     }
 }

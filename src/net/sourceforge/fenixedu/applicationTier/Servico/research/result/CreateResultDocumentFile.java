@@ -3,9 +3,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.research.result;
 import net.sourceforge.fenixedu.accessControl.AccessControl;
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.research.result.ResultDocumentFileSubmissionBean;
-import net.sourceforge.fenixedu.domain.Role;
-import net.sourceforge.fenixedu.domain.accessControl.RoleGroup;
-import net.sourceforge.fenixedu.domain.person.RoleType;
+import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.research.result.Result;
 import net.sourceforge.fenixedu.domain.research.result.ResultDocumentFile;
 import pt.utl.ist.fenix.tools.file.FileDescriptor;
@@ -17,16 +15,16 @@ import pt.utl.ist.fenix.tools.file.Node;
 public class CreateResultDocumentFile extends Service {
     public ResultDocumentFile run(ResultDocumentFileSubmissionBean bean) {
         final Result result = bean.getResult();
-        final String fileName = result.getIdInternal() + String.valueOf(System.currentTimeMillis());
-        final String displayName = bean.getFilename();
-        final FileMetadata fileMetadata = new FileMetadata(fileName, AccessControl.getUserView().getPerson().getName());
-
+        //final String fileName = result.getIdInternal() + String.valueOf(System.currentTimeMillis());
+        final String displayName = bean.getDisplayName();
+        final FileMetadata fileMetadata = new FileMetadata(displayName, AccessControl.getUserView().getPerson().getName());
+        final Group permittedGroup = ResultDocumentFile.getPermittedGroup(bean.getPermission());
         final FileDescriptor fileDescriptor = FileManagerFactory.getFileManager().saveFile(
-                getFilePath(result), fileName, true, fileMetadata, bean.getInputStream());
+                getFilePath(result), bean.getFileName(), (permittedGroup != null) ? true : false, fileMetadata, bean.getInputStream());
         
-        return new ResultDocumentFile(result, fileName, displayName, fileDescriptor.getMimeType(), fileDescriptor
-                .getChecksum(), fileDescriptor.getChecksumAlgorithm(), fileDescriptor.getSize(),
-                fileDescriptor.getUniqueId(), new RoleGroup(Role.getRoleByRoleType(RoleType.RESEARCHER)));
+        return new ResultDocumentFile(result, fileDescriptor.getFilename(), displayName, fileDescriptor.getMimeType(), fileDescriptor
+	                .getChecksum(), fileDescriptor.getChecksumAlgorithm(), fileDescriptor.getSize(),
+	                fileDescriptor.getUniqueId(), permittedGroup);
     }
 
     /**

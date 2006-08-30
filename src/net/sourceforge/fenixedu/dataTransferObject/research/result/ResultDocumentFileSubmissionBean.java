@@ -5,38 +5,64 @@ import java.io.Serializable;
 
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.research.result.Result;
+import net.sourceforge.fenixedu.domain.research.result.ResultDocumentFile.ResultDocumentFilePermissionType;
 
 public class ResultDocumentFileSubmissionBean implements Serializable {
     private DomainReference<Result> result;
-    private String filename;
-    private transient InputStream inputStream;
     
-    public ResultDocumentFileSubmissionBean(Result resultReference) {
-        super();
-        this.result = new DomainReference<Result>(resultReference); 
+    private transient InputStream inputStream;
+
+    private String fileName;
+    
+    private String displayName;
+    
+    private ResultDocumentFilePermissionType permission;
+
+    public ResultDocumentFileSubmissionBean(Result result) {
+	setResult(new DomainReference<Result>(result));
+	setFileName(null);
+	setDisplayName(null);
+	setInputStream(null);
+	setPermission(ResultDocumentFilePermissionType.getDefaultType());
     }
 
-    public String getFilename() {
-        return filename;
+    public Result getResult() {
+	return result.getObject();
     }
 
-    public void setFilename(String filename) {
-        this.filename = filename;
+    public void setResult(DomainReference<Result> result) {
+	this.result = result;
+    }
+
+    public String getFileName() {
+	return fileName;
+    }
+
+    public void setFileName(String fileName) {
+	this.fileName = fileName;
     }
 
     public InputStream getInputStream() {
-        return inputStream;
+	return inputStream;
     }
 
     public void setInputStream(InputStream inputStream) {
-        this.inputStream = inputStream;
+	this.inputStream = inputStream;
     }
-    
-    public Result getResult() {
-        return (this.result == null) ? null : this.result.getObject();
+
+    public String getDisplayName() {
+        return displayName;
     }
-    
-    public void setResult(Result result) {
-        this.result = (result != null) ? new DomainReference<Result>(result) : null;
+
+    public void setDisplayName(String displayName) {
+        this.displayName = displayName;
+    }
+
+    public ResultDocumentFilePermissionType getPermission() {
+        return permission;
+    }
+
+    public void setPermission(ResultDocumentFilePermissionType permission) {
+        this.permission = permission;
     }
 }

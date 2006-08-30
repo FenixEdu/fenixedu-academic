@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.domain.research.result.publication;
 
+import net.sourceforge.fenixedu.accessControl.Checked;
+import net.sourceforge.fenixedu.domain.Country;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
@@ -19,49 +21,125 @@ import net.sourceforge.fenixedu.util.Month;
  *   Extra from previous publications: numberPages, language
  */
 public class Thesis extends Thesis_Base {
-    
-    public  Thesis() {
-        super();
-    }
 
-    //constructor with required fields
-    public Thesis(Person participator, ThesisType thesisType, String title, Unit school, Integer year) {
-        super();
-        if((participator == null) || (title == null) || (title.length() == 0) || (thesisType == null) || (school == null) || (year == null))
-            throw new DomainException("error.publication.missingRequiredFields");
-        
-        //by default any participation is of type Author
-        setParticipation(participator, ResultParticipationRole.Author);
-        setTitle(title);
-        setThesisType(thesisType);
-        setOrganization(school);
-        setYear(year);
-    }
-    
-    //edit with required fields
-    public void edit(ThesisType thesisType, String title, Unit school, Integer year) {
-        if((title == null) || (title.length() == 0) || (thesisType == null) || (school == null) || (year == null))
-            throw new DomainException("error.publication.missingRequiredFields");
-        
-        setTitle(title);
-        setThesisType(thesisType);
-        setOrganization(school);
-        setYear(year);
-    }
-    
-    public void setNonRequiredAttributes(String address, String note, Integer numberPages,
-            String language, Month month, String url) {
-
-        this.setAddress(address);
-        this.setNote(note);
-        this.setNumberPages(numberPages);
-        this.setLanguage(language);
-        this.setMonth(month);
-        this.setUrl(url);
-    }
-    
     public enum ThesisType {
-        PHD_THESIS,
-        MASTERS_THESIS;
+	PHD_THESIS, MASTERS_THESIS;
+    }
+
+    public Thesis() {
+	super();
+    }
+
+    public Thesis(Person participator, ThesisType thesisType, String title, Unit school, Integer year,
+	    String address, String note, Integer numberPages, String language, Month month, String url) {
+	this();
+	checkRequiredParameters(thesisType, title, school, year);
+	super.setParticipation(participator, ResultParticipationRole.Author);
+	fillAllAttributes(thesisType, title, school, year, address, note, numberPages, language, month,
+		url);
+    }
+
+    @Checked("ResultPredicates.writePredicate")
+    public void setEditAll(ThesisType thesisType, String title, Unit school, Integer year,
+	    String address, String note, Integer numberPages, String language, Month month, String url){
+	checkRequiredParameters(thesisType, title, school, year);
+	fillAllAttributes(thesisType, title, school, year, address, note, numberPages, language, month,
+		url);
+	super.setModifyedByAndDate();
+    }
+
+    private void fillAllAttributes(ThesisType thesisType, String title, Unit school, Integer year,
+	    String address, String note, Integer numberPages, String language, Month month, String url) {
+	super.setTitle(title);
+	super.setThesisType(thesisType);
+	super.setOrganization(school);
+	super.setYear(year);
+	super.setAddress(address);
+	super.setNote(note);
+	super.setNumberPages(numberPages);
+	super.setLanguage(language);
+	super.setMonth(month);
+	super.setUrl(url);
+    }
+
+    private void checkRequiredParameters(ThesisType thesisType, String title, Unit school, Integer year) {
+	if ((title == null) || (title.length() == 0))
+	    throw new DomainException("error.researcher.Thesis.title.null");
+	if (thesisType == null) 
+	    throw new DomainException("error.researcher.Thesis.thesisType.null");
+	if (school == null)
+	    throw new DomainException("error.researcher.Thesis.school.null");
+	if (year == null)
+	    throw new DomainException("error.researcher.Thesis.year.null");
+    }
+    
+    @Override
+    public void setTitle(String title) {
+	throw new DomainException("error.researcher.Thesis.call","setTitle");
+    }
+    
+    @Override
+    public void setThesisType(ThesisType thesisType) {
+	throw new DomainException("error.researcher.Thesis.call","setThesisType");
+    }
+    
+    @Override
+    public void setYear(Integer year) {
+	throw new DomainException("error.researcher.Thesis.call","setYear");
+    }
+    
+    @Override
+    public void setAddress(String address) {
+	throw new DomainException("error.researcher.Thesis.call","setAddress");
+    }
+    
+    @Override
+    public void setNote(String note) {
+	throw new DomainException("error.researcher.Thesis.call","setNote");
+    }
+    
+    @Override
+    public void setNumberPages(Integer numberPages) {
+	throw new DomainException("error.researcher.Thesis.call","setNumberPages");
+    }
+    
+    @Override
+    public void setLanguage(String language) {
+	throw new DomainException("error.researcher.Thesis.call","setLanguage");
+    }
+    
+    @Override
+    public void setMonth(Month month) {
+	throw new DomainException("error.researcher.Thesis.call","setMonth");
+    }
+    
+    @Override
+    public void setUrl(String url) {
+	throw new DomainException("error.researcher.Thesis.call","setUrl");
+    }
+    
+    @Override
+    public void setPublisher(Unit publisher) {
+	throw new DomainException("error.researcher.Thesis.call","setPublisher");
+    }
+    
+    @Override
+    public void setOrganization(Unit organization) {
+	throw new DomainException("error.researcher.Thesis.call","setOrganization");
+    }
+    
+    @Override
+    public void setCountry(Country country) {
+	throw new DomainException("error.researcher.Thesis.call","setCountry");
+    }
+    
+    @Override
+    protected void setModifyedByAndDate() {
+	throw new DomainException("error.researcher.Thesis.call","setModifyedByAndDate");
+    }
+    
+    @Override
+    public void setParticipation(Person creator, ResultParticipationRole role) {
+	throw new DomainException("error.researcher.Thesis.call","setParticipation");
     }
 }

@@ -8,9 +8,9 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class DeleteResultPublication extends Service {
 
     public void run(Integer oid) throws ExcepcaoPersistencia, FenixServiceException {
-        ResultPublication publication = (ResultPublication) rootDomainObject.readResultByOID(oid);
-        if(publication == null)
-            throw new FenixServiceException();
-        publication.delete();
+	ResultPublication publication = (ResultPublication) rootDomainObject.readResultByOID(oid);
+	if (publication == null)
+	    throw new FenixServiceException();
+	publication.delete();
     }
 }

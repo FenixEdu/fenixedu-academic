@@ -8,236 +8,102 @@ import net.sourceforge.fenixedu.domain.research.result.publication.BookPart.Book
 
 public class EditResultPublication extends ResultPublicationService {
 
-    public void run(BookBean bookBean) throws FenixServiceException {
-        if ((bookBean == null) || (bookBean.getIdInternal() == null))
-            throw new FenixServiceException();
+    public void run(BookBean bean) throws FenixServiceException {
+	final Book book = (Book) getResultPublication(bean);
 
-        Book book = (Book) rootDomainObject.readResultByOID(bookBean.getIdInternal());
-        if (book == null)
-            throw new FenixServiceException();
-
-        // edit Book with required fields;
-        book.edit(bookBean.getTitle(), getPublisher(bookBean), bookBean.getYear());
-
-        // fill optional fields
-        book.setNonRequiredAttributes(bookBean.getVolume(), bookBean.getSeries(), bookBean.getAddress(),
-                bookBean.getEdition(), bookBean.getIsbn(), bookBean.getNumberPages(), bookBean
-                        .getLanguage(), bookBean.getCountry(), bookBean.getScope(), bookBean.getNote(),
-                bookBean.getMonth(), bookBean.getUrl());
+	book.setEditAll(bean.getTitle(), getPublisher(bean), bean.getYear(), bean.getVolume(), bean
+		.getSeries(), bean.getAddress(), bean.getEdition(), bean.getIsbn(), bean
+		.getNumberPages(), bean.getLanguage(), bean.getCountry(), bean.getScope(), bean
+		.getNote(), bean.getMonth(), bean.getUrl());
     }
 
-    public void run(BookPartBean bookPartBean) throws FenixServiceException {
-        if ((bookPartBean == null) || (bookPartBean.getIdInternal() == null))
-            throw new FenixServiceException();
+    public void run(BookPartBean bean) throws FenixServiceException {
+	final BookPart bookPart = (BookPart) getResultPublication(bean);
 
-        BookPart bookPart = (BookPart) rootDomainObject.readResultByOID(bookPartBean.getIdInternal());
-        if (bookPart == null)
-            throw new FenixServiceException();
-
-        if (bookPartBean.getBookPartType().equals(BookPartType.Inbook))
-            editInbook(bookPart, bookPartBean);
-        else
-            editIncollection(bookPart, bookPartBean);
+	if (bean.getBookPartType().equals(BookPartType.Inbook)) {
+	    bookPart.setEditAllInbook(bean.getBookPartType(), bean.getTitle(), bean.getChapter(), bean
+		    .getFirstPage(), bean.getLastPage(), getPublisher(bean), bean.getYear(), bean
+		    .getVolume(), bean.getSeries(), bean.getEdition(), bean.getCountry(), bean
+		    .getAddress(), bean.getNote(), bean.getMonth(), bean.getUrl());
+	} else {
+	    bookPart.setEditAllIncollection(bean.getBookPartType(), bean.getTitle(),
+		    bean.getBookTitle(), getPublisher(bean), bean.getYear(), bean.getFirstPage(), bean
+			    .getLastPage(), getOrganization(bean), bean.getCountry(), bean.getAddress(),
+		    bean.getNote(), bean.getMonth(), bean.getUrl());
+	}
     }
 
-    private void editIncollection(BookPart bookPart, BookPartBean bookPartBean) {
-        // edit Incollection with required fields;
-        bookPart.edit(bookPartBean.getBookPartType(), bookPartBean.getTitle(), bookPartBean
-                .getBookTitle(), getPublisher(bookPartBean), bookPartBean.getYear());
+    public void run(ArticleBean bean) throws FenixServiceException {
+	final Article article = (Article) getResultPublication(bean);
 
-        // fill optional fields
-        bookPart.setIncollectionNonRequiredAttributes(bookPartBean.getFirstPage(), bookPartBean
-                .getLastPage(), getOrganization(bookPartBean), bookPartBean.getCountry(), bookPartBean
-                .getAddress(), bookPartBean.getNote(), bookPartBean.getMonth(), bookPartBean.getUrl());
+	article.setEditAll(bean.getTitle(), bean.getJournal(), bean.getYear(), getPublisher(bean), bean
+		.getVolume(), bean.getNumber(), bean.getFirstPage(), bean.getLastPage(), bean.getNote(),
+		bean.getIssn(), bean.getLanguage(), bean.getCountry(), bean.getScope(), bean.getMonth(),
+		bean.getUrl());
     }
 
-    private void editInbook(BookPart bookPart, BookPartBean bookPartBean) {
-        // edit Inbook with required fields;
-        bookPart.edit(bookPartBean.getBookPartType(), bookPartBean.getTitle(),
-                bookPartBean.getChapter(), bookPartBean.getFirstPage(), bookPartBean.getLastPage(),
-                getPublisher(bookPartBean), bookPartBean.getYear());
+    public void run(InproceedingsBean bean) throws FenixServiceException {
+	final Inproceedings inproceedings = (Inproceedings) getResultPublication(bean);
+	final Event event = getEventFromBean(bean);
 
-        // fill optional fields
-        bookPart.setInbookNonRequiredAttributes(bookPartBean.getVolume(), bookPartBean.getSeries(),
-                bookPartBean.getEdition(), bookPartBean.getCountry(), bookPartBean.getAddress(),
-                bookPartBean.getNote(), bookPartBean.getMonth(), bookPartBean.getUrl());
+	inproceedings.setEditAll(bean.getTitle(), bean.getBookTitle(), bean.getYear(), event,
+		getPublisher(bean), getOrganization(bean), bean.getAddress(), bean.getFirstPage(), bean
+			.getLastPage(), bean.getNote(), bean.getLanguage(), bean.getMonth(), bean
+			.getUrl());
     }
 
-    public void run(ArticleBean articleBean) throws FenixServiceException {
-        if ((articleBean == null) || (articleBean.getIdInternal() == null))
-            throw new FenixServiceException();
+    public void run(ProceedingsBean bean) throws FenixServiceException {
+	final Proceedings proceedings = (Proceedings) getResultPublication(bean);
+	final Event event = getEventFromBean(bean);
 
-        Article article = (Article) rootDomainObject.readResultByOID(articleBean.getIdInternal());
-        if (article == null)
-            throw new FenixServiceException();
-
-        // edit Article with required fields;
-        article.edit(articleBean.getTitle(), articleBean.getJournal(), articleBean.getYear());
-
-        // fill optional fields
-        article.setNonRequiredAttributes(getPublisher(articleBean), articleBean.getVolume(), articleBean
-                .getNumber(), articleBean.getFirstPage(), articleBean.getLastPage(), articleBean
-                .getNote(), articleBean.getIssn(), articleBean.getLanguage(), articleBean.getCountry(),
-                articleBean.getScope(), articleBean.getMonth(), articleBean.getUrl());
+	proceedings.setEditAll(bean.getTitle(), bean.getYear(), event, getPublisher(bean),
+		getOrganization(bean), bean.getAddress(), bean.getNote(), bean.getMonth(),
+		bean.getUrl());
     }
 
-    public void run(InproceedingsBean inproceedingsBean) throws FenixServiceException {
-        if ((inproceedingsBean == null) || (inproceedingsBean.getIdInternal() == null))
-            throw new FenixServiceException();
+    public void run(ThesisBean bean) throws FenixServiceException {
+	final Thesis thesis = (Thesis) getResultPublication(bean);
 
-        Inproceedings inproceedings = (Inproceedings) rootDomainObject.readResultByOID(inproceedingsBean
-                .getIdInternal());
-        if (inproceedings == null)
-            throw new FenixServiceException();
-
-        Event event = inproceedingsBean.getEvent();
-        if (event == null) {
-            event = new Event(inproceedingsBean.getEventEndDate(),
-                    inproceedingsBean.getEventStartDate(), inproceedingsBean.getEventLocal(),
-                    inproceedingsBean.getEventFee(), inproceedingsBean.getEventType(), inproceedingsBean
-                            .getEventName());
-        }
-
-        // edit Inproceedings with required fields;
-        inproceedings.edit(inproceedingsBean.getTitle(), inproceedingsBean.getBookTitle(),
-                inproceedingsBean.getYear(), event);
-
-        // fill optional fields
-        inproceedings.setNonRequiredAttributes(getPublisher(inproceedingsBean),
-                getOrganization(inproceedingsBean), inproceedingsBean.getAddress(), inproceedingsBean
-                        .getFirstPage(), inproceedingsBean.getLastPage(), inproceedingsBean.getNote(),
-                inproceedingsBean.getLanguage(), inproceedingsBean.getMonth(), inproceedingsBean
-                        .getUrl());
+	thesis.setEditAll(bean.getThesisType(), bean.getTitle(), getOrganization(bean), bean.getYear(),
+		bean.getAddress(), bean.getNote(), bean.getNumberPages(), bean.getLanguage(), bean
+			.getMonth(), bean.getUrl());
     }
 
-    public void run(ProceedingsBean proceedingsBean) throws FenixServiceException {
-        if ((proceedingsBean == null) || (proceedingsBean.getIdInternal() == null))
-            throw new FenixServiceException();
+    public void run(ManualBean bean) throws FenixServiceException {
+	final Manual manual = (Manual) getResultPublication(bean);
 
-        Proceedings proceedings = (Proceedings) rootDomainObject.readResultByOID(proceedingsBean
-                .getIdInternal());
-        if (proceedings == null)
-            throw new FenixServiceException();
-
-        Event event = proceedingsBean.getEvent();
-        if (event == null) {
-            event = new Event(proceedingsBean.getEventEndDate(), proceedingsBean.getEventStartDate(),
-                    proceedingsBean.getEventLocal(), proceedingsBean.getEventFee(), proceedingsBean
-                            .getEventType(), proceedingsBean.getEventName());
-        }
-
-        // edit Proceedings with required fields;
-        proceedings.edit(proceedingsBean.getTitle(), proceedingsBean.getYear(), event);
-
-        // fill optional fields
-        proceedings.setNonRequiredAttributes(getPublisher(proceedingsBean),
-                getOrganization(proceedingsBean), proceedingsBean.getAddress(), proceedingsBean
-                        .getNote(), proceedingsBean.getMonth(), proceedingsBean.getUrl());
+	manual.setEditAll(bean.getTitle(), getOrganization(bean), bean.getYear(), bean.getAddress(),
+		bean.getNote(), bean.getEdition(), bean.getMonth(), bean.getUrl());
     }
 
-    public void run(ThesisBean thesisBean) throws FenixServiceException {
-        if ((thesisBean == null) || (thesisBean.getIdInternal() == null))
-            throw new FenixServiceException();
+    public void run(TechnicalReportBean bean) throws FenixServiceException {
+	final TechnicalReport technicalReport = (TechnicalReport) getResultPublication(bean);
 
-        Thesis thesis = (Thesis) rootDomainObject.readResultByOID(thesisBean.getIdInternal());
-        if (thesis == null)
-            throw new FenixServiceException();
-
-        // edit Thesis with required fields;
-        thesis.edit(thesisBean.getThesisType(), thesisBean.getTitle(), getOrganization(thesisBean),
-                thesisBean.getYear());
-
-        // fill optional fields
-        thesis.setNonRequiredAttributes(thesisBean.getAddress(), thesisBean.getNote(), thesisBean
-                .getNumberPages(), thesisBean.getLanguage(), thesisBean.getMonth(), thesisBean.getUrl());
+	technicalReport.setEditAll(bean.getTitle(), getOrganization(bean), bean.getYear(), bean
+		.getTechnicalReportType(), bean.getNumber(), bean.getAddress(), bean.getNote(), bean
+		.getNumberPages(), bean.getLanguage(), bean.getMonth(), bean.getUrl());
     }
 
-    public void run(ManualBean manualBean) throws FenixServiceException {
-        if ((manualBean == null) || (manualBean.getIdInternal() == null))
-            throw new FenixServiceException();
+    public void run(BookletBean bean) throws FenixServiceException {
+	final Booklet booklet = (Booklet) getResultPublication(bean);
 
-        Manual manual = (Manual) rootDomainObject.readResultByOID(manualBean.getIdInternal());
-        if (manual == null)
-            throw new FenixServiceException();
-
-        // edit Manual with required fields;
-        manual.edit(manualBean.getTitle());
-
-        // fill optional fields
-        manual.setNonRequiredAttributes(getOrganization(manualBean), manualBean.getYear(), manualBean
-                .getAddress(), manualBean.getNote(), manualBean.getEdition(), manualBean.getMonth(),
-                manualBean.getUrl());
+	booklet.setEditAll(bean.getTitle(), bean.getHowPublished(), bean.getYear(), bean.getMonth(),
+		bean.getAddress(), bean.getNote(), bean.getUrl());
     }
 
-    public void run(TechnicalReportBean technicalReportBean) throws FenixServiceException {
-        if ((technicalReportBean == null) || (technicalReportBean.getIdInternal() == null))
-            throw new FenixServiceException();
+    public void run(MiscBean bean) throws FenixServiceException {
+	final Misc misc = (Misc) getResultPublication(bean);
 
-        TechnicalReport technicalReport = (TechnicalReport) rootDomainObject
-                .readResultByOID(technicalReportBean.getIdInternal());
-        if (technicalReport == null)
-            throw new FenixServiceException();
-
-        // edit TechnicalReport with required fields;
-        technicalReport.edit(technicalReportBean.getTitle(), getOrganization(technicalReportBean),
-                technicalReportBean.getYear());
-
-        // fill optional fields
-        technicalReport.setNonRequiredAttributes(technicalReportBean.getTechnicalReportType(),
-                technicalReportBean.getNumber(), technicalReportBean.getAddress(), technicalReportBean
-                        .getNote(), technicalReportBean.getNumberPages(), technicalReportBean
-                        .getLanguage(), technicalReportBean.getMonth(), technicalReportBean.getUrl());
+	misc.setEditAll(bean.getTitle(), getPublisher(bean), bean.getYear(), bean.getHowPublished(),
+		bean.getNote(), bean.getAddress(), bean.getOtherPublicationType(),
+		bean.getNumberPages(), bean.getLanguage(), bean.getCountry(), bean.getMonth(), bean
+			.getUrl());
     }
 
-    public void run(BookletBean bookletBean) throws FenixServiceException {
-        if ((bookletBean == null) || (bookletBean.getIdInternal() == null))
-            throw new FenixServiceException();
+    public void run(UnpublishedBean bean) throws FenixServiceException {
+	final Unpublished unpublished = (Unpublished) getResultPublication(bean);
 
-        Booklet booklet = (Booklet) rootDomainObject.readResultByOID(bookletBean.getIdInternal());
-        if (booklet == null)
-            throw new FenixServiceException();
-
-        // edit Booklet with required fields;
-        booklet.edit(bookletBean.getTitle());
-
-        // fill optional fields
-        booklet.setNonRequiredAttributes(bookletBean.getHowPublished(), bookletBean.getYear(),
-                bookletBean.getMonth(), bookletBean.getAddress(), bookletBean.getNote(), bookletBean
-                        .getUrl());
-    }
-
-    public void run(MiscBean miscBean) throws FenixServiceException {
-        if ((miscBean == null) || (miscBean.getIdInternal() == null))
-            throw new FenixServiceException();
-
-        Misc misc = (Misc) rootDomainObject.readResultByOID(miscBean.getIdInternal());
-        if (misc == null)
-            throw new FenixServiceException();
-
-        // edit Misc with required fields;
-        misc.edit(miscBean.getTitle());
-
-        // fill optional fields
-        misc.setNonRequiredAttributes(getPublisher(miscBean), miscBean.getYear(), miscBean
-                .getHowPublished(), miscBean.getNote(), miscBean.getAddress(), miscBean
-                .getOtherPublicationType(), miscBean.getNumberPages(), miscBean.getLanguage(), miscBean
-                .getCountry(), miscBean.getMonth(), miscBean.getUrl());
-    }
-
-    public void run(UnpublishedBean unpublishedBean) throws FenixServiceException {
-        if ((unpublishedBean == null) || (unpublishedBean.getIdInternal() == null))
-            throw new FenixServiceException();
-
-        Unpublished unpublished = (Unpublished) rootDomainObject.readResultByOID(unpublishedBean
-                .getIdInternal());
-        if (unpublished == null)
-            throw new FenixServiceException();
-
-        // edit Unpublished with required fields;
-        unpublished.edit(unpublishedBean.getTitle(), unpublishedBean.getNote());
-
-        // fill optional fields
-        unpublished.setNonRequiredAttributes(unpublishedBean.getYear(), unpublishedBean.getMonth(),
-                unpublishedBean.getUrl());
+	unpublished.setEditAll(bean.getTitle(), bean.getNote(), bean.getYear(), bean.getMonth(), bean
+		.getUrl());
     }
 }

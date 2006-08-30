@@ -1,40 +1,35 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.research.result;
 
-import net.sourceforge.fenixedu.accessControl.AccessControl;
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.externalPerson.InsertExternalPerson;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.research.result.ResultParticipationCreationBean;
-import net.sourceforge.fenixedu.domain.ExternalPerson;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.research.result.Result;
 import net.sourceforge.fenixedu.domain.research.result.ResultParticipation;
+import net.sourceforge.fenixedu.domain.research.result.ResultParticipation.ResultParticipationRole;
 
 public class CreateResultParticipation extends Service {
 
     public ResultParticipation run(ResultParticipationCreationBean bean) throws FenixServiceException {
-        final Result result = bean.getResult();
-        
-        final Person person = AccessControl.getUserView().getPerson();
-        ResultParticipation resultParticipation = null;
-        
-        if(bean.getPerson()!=null) {
-            resultParticipation = new ResultParticipation(result,bean.getPerson(),bean.getResultParticipationRole(), person);
-        }
-        else {
-            if (!(bean.getOrganization()==null && (bean.getOrganizationName()==null||bean.getOrganizationName().equals("")))) {
-                final InsertExternalPerson insertExternalPerson = new InsertExternalPerson();
-                final ExternalPerson externalPerson;
-                if (bean.getOrganization() == null) {
-                    externalPerson = insertExternalPerson.run(bean.getPersonName(), bean.getOrganizationName());
-                }
-                else {
-                    externalPerson = insertExternalPerson.run(bean.getPersonName(), bean.getOrganization());
-                }
-                resultParticipation = new ResultParticipation(result,externalPerson.getPerson(),bean.getResultParticipationRole(), person);
-            }
-        }
-        
-        return resultParticipation;
+	final Result result = bean.getResult();
+	final ResultParticipationRole role = bean.getResultParticipationRole();
+	final Unit organization = bean.getOrganization();
+	Person participator = bean.getParticipator();
+
+	if (participator == null) {
+	    final InsertExternalPerson newPerson = new InsertExternalPerson();
+	    final String participatorName = bean.getParticipatorName();
+
+	    if (organization != null) {
+		participator = (newPerson.run(participatorName, organization)).getPerson();
+	    } else {
+		final String orgName = bean.getOrganizationName();
+		participator = (newPerson.run(participatorName, orgName)).getPerson();
+	    }
+	}
+
+	return new ResultParticipation(result, participator, role);
     }
 }

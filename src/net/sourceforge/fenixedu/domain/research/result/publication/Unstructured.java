@@ -10,5 +10,4 @@ public class Unstructured extends Unstructured_Base {
     public  Unstructured() {
         super();
     }
-    
 }

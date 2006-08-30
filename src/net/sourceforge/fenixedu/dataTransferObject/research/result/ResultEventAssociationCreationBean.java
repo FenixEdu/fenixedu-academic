@@ -17,13 +17,13 @@ public class ResultEventAssociationCreationBean implements Serializable {
     private String eventNameStr;
     private EventType eventType;
 
-    public ResultEventAssociationCreationBean(Result resultReference) {
-        this.result = new DomainReference<Result>(resultReference);
-        this.role = ResultEventAssociationRole.getDefaultEventRoleType();
-        this.event = null;
-        this.eventType = EventType.getDefaultType();
-        this.eventNameMLS = null;
-        this.eventNameStr = null;
+    public ResultEventAssociationCreationBean(Result result) {
+	setResult(new DomainReference<Result>(result));
+        setRole(ResultEventAssociationRole.getDefaultRole());
+        setEvent(null);
+        setEventType(EventType.getDefaultType());
+        setEventNameMLS(null);
+        setEventNameStr(null);
     }
     
     public ResultEventAssociationRole getRole() {
@@ -51,11 +51,11 @@ public class ResultEventAssociationCreationBean implements Serializable {
     }
     
     public Result getResult() {
-        return (this.result == null) ? null : this.result.getObject();
+        return result.getObject();
     }
 
-    public void setResult(Result result) {
-        this.result = (result != null) ? new DomainReference<Result>(result) : null;
+    public void setResult(DomainReference<Result> result) {
+        this.result = result;
     }
     
     public EventType getEventType() {

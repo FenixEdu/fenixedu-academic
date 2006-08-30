@@ -8,7 +8,6 @@ import net.sourceforge.fenixedu.domain.research.result.ResultParticipation;
 
 public class SaveResultParticipationsOrder extends Service {
     public void run(Result result, List<ResultParticipation> newParticipationsOrder) {
-        result.setResultParticipationsOrder(newParticipationsOrder);
-        result.setModificationDateAndAuthor();
+	result.setParticipationsOrder(newParticipationsOrder);
     }
 }

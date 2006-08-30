@@ -1,88 +1,109 @@
 package net.sourceforge.fenixedu.domain.research.result;
 
-import net.sourceforge.fenixedu.accessControl.AccessControl;
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.dataTransferObject.research.result.ResultUnitAssociationCreationBean;
+import net.sourceforge.fenixedu.accessControl.Checked;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
-import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 
 public class ResultUnitAssociation extends ResultUnitAssociation_Base {
-    
+
     public enum ResultUnitAssociationRole {
-        Sponsor,
-        Participant;
-        
-        public String getName() {
-            return name();
-        }
-        
-        public static ResultUnitAssociationRole getDefaultUnitRoleType(){
-            return Sponsor;
-        }
+	Sponsor, Participant;
+
+	public String getName() {
+	    return name();
+	}
+
+	public static ResultUnitAssociationRole getDefaultRole() {
+	    return Sponsor;
+	}
     }
-    
-	public  ResultUnitAssociation() {
-        super();
-        setRootDomainObject(RootDomainObject.getInstance());
+
+    public ResultUnitAssociation() {
+	super();
+	setRootDomainObject(RootDomainObject.getInstance());
     }
-    
+
     public ResultUnitAssociation(Result result, Unit unit, ResultUnitAssociationRole role) {
-        this();
-        checkParameters(result, unit, role);
-        setResult(result);
-        setUnit(unit);
-        setRole(role);
-        setChangedBy();
-    }
-    
-    private void checkParameters(Result result, Unit unit, ResultUnitAssociationRole role) {
-        if (result == null) {
-            throw new DomainException("error.ResultUnitAssociation.result.cannot.be.null");
-        }
-        if (unit == null) {
-            throw new DomainException("error.ResultEventAssociation.unit.cannot.be.null");
-        }
-        if (role == null) {
-            throw new DomainException("error.ResultAssociations.role.cannot.be.null");
-        }
-        if(result.hasAssociationWithUnitRole(unit,role)){
-            throw new DomainException("error.ResultAssociations.association.exists");
-        }
+	this();
+	checkParameters(result, unit, role);
+	// This set is made first in order to make access control verifications on ResultPredicates.
+	super.setResult(result);
+	setEditAll(result, unit, role);
     }
 
-    public void setChangedBy() {
-        this.getResult().setModificationDateAndAuthor();
+    @Checked("ResultPredicates.unitWritePredicate")
+    public void setEditAll(Result result, Unit unit, ResultUnitAssociationRole role) {
+	super.setResult(result);
+	super.setUnit(unit);
+	super.setRole(role);
     }
     
-    public void delete() {
-        this.removeResult();
-        this.removeUnit();
-        this.removeRootDomainObject();
-        deleteDomainObject();
+    public static ResultUnitAssociation readByOid(Integer oid) {
+	final ResultUnitAssociation association = RootDomainObject.getInstance().readResultUnitAssociationByOID(oid);
+	
+	if (association==null) {
+	    throw new DomainException("error.researcher.ResultUnitAssociation.null");
+	}
+	
+	return association;
     }
-    
+
     /**
-     * Method used to call the service responsible for creating a ResultUnitAssociation
-     *  
-     * @param bean
-     * @throws FenixFilterException
-     * @throws FenixServiceException
+     * Setters block!
      */
-	public static void create(ResultUnitAssociationCreationBean bean) throws FenixFilterException, FenixServiceException {
-		ServiceUtils.executeService(AccessControl.getUserView(), "CreateResultUnitAssociation", bean);
-	}
+    @Override
+    public void setResult(Result Result) {
+	throw new DomainException("error.researcher.ResultUnitAssociation.call","setResult");
+    }
 
-	/**
-	 * Method used to call the service responsible for removing a ResultUnitAssociation
-	 * 
-	 * @param associationId
-	 * @throws FenixFilterException
-	 * @throws FenixServiceException
-	 */
-	public static void remove(Integer associationId) throws FenixFilterException, FenixServiceException {
-		ServiceUtils.executeService(AccessControl.getUserView(), "DeleteResultUnitAssociation", associationId);
+    @Override
+    public void setUnit(Unit Unit) {
+	throw new DomainException("error.researcher.ResultUnitAssociation.call","setUnit");
+    }
+
+    @Override
+    public void setRole(ResultUnitAssociationRole role) {
+	throw new DomainException("error.researcher.ResultUnitAssociation.call","setRole");
+    }
+
+    @Override
+    public void removeUnit() {
+	throw new DomainException("error.researcher.ResultUnitAssociation.call","removeUnit");
+    }
+
+    @Override
+    public void removeResult() {
+	throw new DomainException("error.researcher.ResultUnitAssociation.call","removeResult");
+    }
+
+    /**
+     * Method responsible for deleting a ResultUnitAssociation
+     */
+    @Checked("ResultPredicates.unitWritePredicate")
+    public void delete() {
+	removeReferences();
+	removeRootDomainObject();
+	deleteDomainObject();
+    }
+
+    private void removeReferences() {
+	super.setResult(null);
+	super.setUnit(null);
+    }
+
+    private void checkParameters(Result result, Unit unit, ResultUnitAssociationRole role) {
+	if (result == null) {
+	    throw new DomainException("error.researcher.ResultUnitAssociation.result.null");
 	}
+	if (unit == null) {
+	    throw new DomainException("error.researcher.ResultUnitAssociation.unit.null");
+	}
+	if (role == null) {
+	    throw new DomainException("error.researcher.ResultUnitAssociation.role.null");
+	}
+	if (result.hasAssociationWithUnitRole(unit, role)) {
+	    throw new DomainException("error.researcher.ResultUnitAssociation.association.exists");
+	}
+    }
 }
