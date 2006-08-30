@@ -9858,108 +9858,84 @@
 		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.research.result.ChangeResultParticipationsOrder</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
-		<filterChains>
-			<chain name="ResearcherAuthorization" />
-		</filterChains>
 	</service>
 	<service>
 		<name>SaveResultParticipationsOrder</name>
 		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.research.result.SaveResultParticipationsOrder</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
-		<filterChains>
-			<chain name="ResearcherAuthorization" />
-		</filterChains>
 	</service>
    	<service>
 		<name>DeleteResultParticipation</name>
 		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.research.result.DeleteResultParticipation</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
-		<filterChains>
-			<chain name="ResearcherAuthorization" />
-		</filterChains>
 	</service>
 	<service>
 		<name>CreateResultParticipation</name>
 		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.research.result.CreateResultParticipation</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
-		<filterChains>
-			<chain name="ResearcherAuthorization" />
-		</filterChains>
 	</service>
 	<service>
 		<name>CreateResultEventAssociation</name>
 		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.research.result.CreateResultEventAssociation</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
-		<filterChains>
-			<chain name="ResearcherAuthorization" />
-		</filterChains>
 	</service>
 	<service>
 		<name>DeleteResultEventAssociation</name>
 		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.research.result.DeleteResultEventAssociation</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
-		<filterChains>
-			<chain name="ResearcherAuthorization" />
-		</filterChains>
 	</service>
 	<service>
 		<name>CreateResultUnitAssociation</name>
 		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.research.result.CreateResultUnitAssociation</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
-		<filterChains>
-			<chain name="ResearcherAuthorization" />
-		</filterChains>
 	</service>
 	<service>
 		<name>DeleteResultUnitAssociation</name>
 		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.research.result.DeleteResultUnitAssociation</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
-		<filterChains>
-			<chain name="ResearcherAuthorization" />
-		</filterChains>
 	</service>
 	<service>
 		<name>DeleteResultPatent</name>
 		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.research.result.patent.DeleteResultPatent</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
-		<filterChains>
-			<chain name="ResearcherAuthorization" />
-		</filterChains>
 	</service>
 	<service>
 		<name>DeleteResultPublication</name>
 		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.research.result.publication.DeleteResultPublication</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
-		<filterChains>
-			<chain name="ResearcherAuthorization" />
-		</filterChains>
 	</service>
 	<service>
 		<name>CreateResultPublication</name>
 		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.research.result.publication.CreateResultPublication</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
-		<filterChains>
-			<chain name="ResearcherAuthorization" />
-		</filterChains>
 	</service>
 	<service>
 		<name>EditResultPublication</name>
 		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.research.result.publication.EditResultPublication</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
-		<filterChains>
-			<chain name="ResearcherAuthorization" />
-		</filterChains>
+	</service>
+	<service>
+		<name>CreateResultDocumentFile</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.research.result.CreateResultDocumentFile</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+	</service>
+	<service>
+		<name>DeleteResultDocumentFile</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.research.result.DeleteResultDocumentFile</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
 	</service>
 	<service>
 		<name>SetUserUID</name>

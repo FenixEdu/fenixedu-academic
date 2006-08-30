@@ -147,6 +147,7 @@ valueType net.sourceforge.fenixedu.domain.research.project.ProjectEventAssociati
 valueType net.sourceforge.fenixedu.domain.research.result.ResultUnitAssociation.ResultUnitAssociationRole as ResultUnitAssociationRole;
 valueType net.sourceforge.fenixedu.domain.research.result.ResultEventAssociation.ResultEventAssociationRole as ResultEventAssociationRole;
 valueType net.sourceforge.fenixedu.domain.research.result.ResultParticipation.ResultParticipationRole as ResultParticipationRole;
+valueType net.sourceforge.fenixedu.domain.research.result.ResultDocumentFile.ResultDocumentFilePermissionType as ResultDocumentFilePermissionType;
 valueType net.sourceforge.fenixedu.domain.research.event.EventParticipation.EventParticipationRole as EventParticipationRole;
 valueType net.sourceforge.fenixedu.util.Month																			as Month;
 
@@ -6780,31 +6781,31 @@ relation PublicationAuthorship {
 }
 
 relation ResultUnitAssociationResult {
-	net.sourceforge.fenixedu.domain.research.result.Result playsRole result;
-		net.sourceforge.fenixedu.domain.research.result.ResultUnitAssociation playsRole resultUnitAssociations {
+	net.sourceforge.fenixedu.domain.research.result.ResultUnitAssociation playsRole resultUnitAssociations {
 		multiplicity *;
 	}
+	net.sourceforge.fenixedu.domain.research.result.Result playsRole result;
 }
 
 relation ResulUnitAssociationUnit {
-	net.sourceforge.fenixedu.domain.organizationalStructure.Unit playsRole unit;
-		net.sourceforge.fenixedu.domain.research.result.ResultUnitAssociation playsRole resultUnitAssociations {
+	net.sourceforge.fenixedu.domain.research.result.ResultUnitAssociation playsRole resultUnitAssociations {
 		multiplicity *;
 	}
+	net.sourceforge.fenixedu.domain.organizationalStructure.Unit playsRole unit;
 }
 
 relation ResultEventAssociationResult {
-	net.sourceforge.fenixedu.domain.research.result.Result playsRole result;
 	net.sourceforge.fenixedu.domain.research.result.ResultEventAssociation playsRole resultEventAssociations {
 		multiplicity *;
 	}
+	net.sourceforge.fenixedu.domain.research.result.Result playsRole result;
 }
 
 relation ResultEventAssociationEvent {
-	net.sourceforge.fenixedu.domain.research.event.Event playsRole event;
 	net.sourceforge.fenixedu.domain.research.result.ResultEventAssociation playsRole resultEventAssociations {
 		multiplicity *;
 	}
+	net.sourceforge.fenixedu.domain.research.event.Event playsRole event;
 }
 
 relation ResultCountry {
@@ -7382,9 +7383,11 @@ relation EventConferenceArticles {
 	}
 }
 
-relation ResultResultDocumentFile {
+relation ResultDocumentFileResult {
+	net.sourceforge.fenixedu.domain.research.result.ResultDocumentFile playsRole resultDocumentFiles {
+		multiplicity *;
+	}
 	net.sourceforge.fenixedu.domain.research.result.Result playsRole result;
-	net.sourceforge.fenixedu.domain.research.result.ResultDocumentFile playsRole resultDocumentFile;
 }
 
 relation ProjectParticipationProject {
