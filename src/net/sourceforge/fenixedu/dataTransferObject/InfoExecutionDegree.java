@@ -34,7 +34,7 @@ public class InfoExecutionDegree extends InfoObject {
     	executionDegreeDomainReference = new DomainReference<ExecutionDegree>(executionDegree);
     }
 
-    public ExecutionDegree getEecutionDegree() {
+    public ExecutionDegree getExecutionDegree() {
         return executionDegreeDomainReference == null ? null : executionDegreeDomainReference.getObject();
     }
 
@@ -170,10 +170,6 @@ public class InfoExecutionDegree extends InfoObject {
 
 	public void setGetNextExecutionYear(boolean getNextExecutionYear) {
 		this.getNextExecutionYear = getNextExecutionYear;
-	}
-
-	public ExecutionDegree getExecutionDegree() {
-		return getExecutionDegree();
 	}
 
 }
