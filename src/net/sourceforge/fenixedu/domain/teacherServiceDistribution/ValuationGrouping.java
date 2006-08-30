@@ -419,8 +419,8 @@ public class ValuationGrouping extends ValuationGrouping_Base {
 		return totalStudents;
 	}
 
-	public Double getAllActiveCourseValuationFirstTimeEnrolledStudentsByExecutionPeriods(List<ExecutionPeriod> executionPeriodList) {
-		double totalStudents = 0d; 
+	public Integer getAllActiveCourseValuationFirstTimeEnrolledStudentsByExecutionPeriods(List<ExecutionPeriod> executionPeriodList) {
+		int totalStudents = 0; 
 		
 		for(CourseValuation courseValuation : getActiveCourseValuationByExecutionPeriods(executionPeriodList)) {
 			totalStudents += courseValuation.getFirstTimeEnrolledStudents();
@@ -429,8 +429,8 @@ public class ValuationGrouping extends ValuationGrouping_Base {
 		return totalStudents;
 	}
 
-	public Number getAllActiveCourseValuationSecondTimeEnrolledStudentsByExecutionPeriods(List<ExecutionPeriod> executionPeriodList) {
-		double totalStudents = 0d; 
+	public Integer getAllActiveCourseValuationSecondTimeEnrolledStudentsByExecutionPeriods(List<ExecutionPeriod> executionPeriodList) {
+		int totalStudents = 0; 
 		
 		for(CourseValuation courseValuation : getActiveCourseValuationByExecutionPeriods(executionPeriodList)) {
 			totalStudents += courseValuation.getSecondTimeEnrolledStudents();

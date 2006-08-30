@@ -2,83 +2,225 @@ package net.sourceforge.fenixedu.util.teacherServiceDistribution.report;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.ResourceBundle;
+
+import net.sourceforge.fenixedu._development.PropertiesManager;
+import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.teacherServiceDistribution.ValuationGrouping;
 
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartUtilities;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.data.DefaultCategoryDataset;
+import org.jfree.data.DefaultPieDataset;
 
-import net.sourceforge.fenixedu._development.PropertiesManager;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
-import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TeacherServiceDistribution;
-import net.sourceforge.fenixedu.domain.teacherServiceDistribution.ValuationGrouping;
-import net.sourceforge.fenixedu.domain.teacherServiceDistribution.ValuationPhase;
+public abstract class TeacherServiceDistributionChart {
+	protected ValuationGrouping valuationGrouping = null;
 
-public class TeacherServiceDistributionChart {
-	private ValuationPhase valuationPhase = null;
-	private List<ExecutionPeriod> executionPeriodList = null;
+	protected List<ExecutionPeriod> executionPeriodList = null;
+
+	protected ResourceBundle resourceBundle = ResourceBundle.getBundle("resources.DepartmentMemberResources");
+
+	public abstract void execute(final OutputStream outputStream) throws IOException;
 	
-	private ResourceBundle resourceBundle = ResourceBundle.getBundle("resources.DepartmentMemberResources");
 	
-	public TeacherServiceDistributionChart(ValuationPhase valuationPhase, List<ExecutionPeriod> executionPeriodList) {
-		this.valuationPhase = valuationPhase;
+	public static TeacherServiceDistributionChart generateValuatedHoursPerGroupingChart() {
+		return new TeacherServiceDistributionChart() {
+			public void execute(final OutputStream outputStream) throws IOException {
+				DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+
+				if (this.valuationGrouping.hasAnyChilds()) {
+					for (ValuationGrouping grouping : this.valuationGrouping.getChilds()) {
+						Double allActiveCourseValuationTheoreticalHours = grouping.getAllActiveCourseValuationTheoreticalHoursByExecutionPeriods(executionPeriodList);
+						Double allActiveCourseValuationPraticalHours = grouping.getAllActiveCourseValuationPraticalHoursByExecutionPeriods(executionPeriodList);
+						Double allActiveCourseValuationTheoPratHours = grouping.getAllActiveCourseValuationTheoPratHoursByExecutionPeriods(executionPeriodList);
+						Double allActiveCourseValuationLaboratorialHours = grouping.getAllActiveCourseValuationLaboratorialHoursByExecutionPeriods(executionPeriodList);
+
+						dataset.setValue(
+								allActiveCourseValuationTheoreticalHours + allActiveCourseValuationPraticalHours
+										+ allActiveCourseValuationTheoPratHours
+										+ allActiveCourseValuationLaboratorialHours,
+								resourceBundle.getString("label.teacherServiceDistribution.hours.total"),
+								grouping.getName());
+						dataset.setValue(
+								allActiveCourseValuationTheoreticalHours,
+								resourceBundle.getString("label.teacherServiceDistribution.theoretical"),
+								grouping.getName());
+						dataset.setValue(
+								allActiveCourseValuationPraticalHours,
+								resourceBundle.getString("label.teacherServiceDistribution.pratical"),
+								grouping.getName());
+						dataset.setValue(
+								allActiveCourseValuationTheoPratHours,
+								resourceBundle.getString("label.teacherServiceDistribution.theoPrat"),
+								grouping.getName());
+						dataset.setValue(
+								allActiveCourseValuationLaboratorialHours,
+								resourceBundle.getString("label.teacherServiceDistribution.laboratorial"),
+								grouping.getName());
+					}
+
+					JFreeChart chart = ChartFactory.createBarChart3D(
+							resourceBundle.getString("label.teacherServiceDistribution.hoursByGrouping"),
+							resourceBundle.getString("label.teacherServiceDistribution.ValuationGroupings"),
+							resourceBundle.getString("label.teacherServiceDistribution.hours.total"),
+							dataset,
+							PlotOrientation.VERTICAL,
+							true,
+							true,
+							false);
+
+					ChartUtilities.writeChartAsPNG(
+							outputStream,
+							chart,
+							Integer.parseInt(PropertiesManager.getProperty("teacherServiceDistribution.chart.width")),
+							Integer.parseInt(PropertiesManager.getProperty("teacherServiceDistribution.chart.height")));
+				}
+			}
+		};
+	}
+
+	public static TeacherServiceDistributionChart generateValuatedNumberStudentsPerGroupingChart() {
+		return new TeacherServiceDistributionChart() {
+			public void execute(final OutputStream outputStream) throws IOException {
+				DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+
+				if (valuationGrouping.hasAnyChilds()) {
+					for (ValuationGrouping grouping : valuationGrouping.getChilds()) {
+						Integer allActiveCourseValuationFirstTimeEnrolledStudents = grouping.getAllActiveCourseValuationFirstTimeEnrolledStudentsByExecutionPeriods(executionPeriodList);
+						Integer allActiveCourseValuationSecondTimeEnrolledStudents = grouping.getAllActiveCourseValuationSecondTimeEnrolledStudentsByExecutionPeriods(executionPeriodList);
+
+						dataset.setValue(
+								allActiveCourseValuationFirstTimeEnrolledStudents
+										+ allActiveCourseValuationSecondTimeEnrolledStudents,
+								resourceBundle.getString("label.teacherServiceDistribution.students.total"),
+								grouping.getName());
+						dataset.setValue(
+								allActiveCourseValuationFirstTimeEnrolledStudents,
+								resourceBundle.getString("label.teacherServiceDistribution..num.firstTimeEnrolledStudents"),
+								grouping.getName());
+						dataset.setValue(
+								allActiveCourseValuationSecondTimeEnrolledStudents,
+								resourceBundle.getString("label.teacherServiceDistribution..num.secondTimeEnrolledStudents"),
+								grouping.getName());
+					}
+
+					JFreeChart chart = ChartFactory.createBarChart3D(
+							resourceBundle.getString("label.teacherServiceDistribution.numberStudentsByGrouping"),
+							resourceBundle.getString("label.teacherServiceDistribution.ValuationGroupings"),
+							resourceBundle.getString("label.teacherServiceDistribution.students.total"),
+							dataset,
+							PlotOrientation.VERTICAL,
+							true,
+							true,
+							false);
+
+					ChartUtilities.writeChartAsPNG(
+							outputStream,
+							chart,
+							Integer.parseInt(PropertiesManager.getProperty("teacherServiceDistribution.chart.width")),
+							Integer.parseInt(PropertiesManager.getProperty("teacherServiceDistribution.chart.height")));
+				}
+			}
+		};
+	}
+
+	public static TeacherServiceDistributionChart generateValuatedHoursPerGroupingPieChart() {
+		return new TeacherServiceDistributionChart() {
+			public void execute(final OutputStream outputStream) throws IOException {
+				Map<String, Double> valuatedTotalHoursPerGroupingMap = new HashMap<String, Double>();
+
+				if (this.valuationGrouping.hasAnyChilds()) {
+					for (ValuationGrouping grouping : this.valuationGrouping.getChilds()) {
+						valuatedTotalHoursPerGroupingMap.put(
+								grouping.getName(),
+								grouping.getAllActiveCourseValuationTotalHoursByExecutionPeriods(executionPeriodList));
+					}
+
+					Double totalHours = 0d;
+
+					for (String groupingName : valuatedTotalHoursPerGroupingMap.keySet()) {
+						totalHours += valuatedTotalHoursPerGroupingMap.get(groupingName);
+					}
+
+					DefaultPieDataset dataset = new DefaultPieDataset();
+
+					for (String groupingName : valuatedTotalHoursPerGroupingMap.keySet()) {
+						dataset.setValue(groupingName, (new Double(
+								StrictMath.round((valuatedTotalHoursPerGroupingMap.get(groupingName) / totalHours) * 100))).intValue());
+					}
+
+					JFreeChart chart = ChartFactory.createPieChart3D(
+							resourceBundle.getString("label.teacherServiceDistribution.hoursByGrouping") + " %",
+							dataset,
+							true,
+							true,
+							false);
+
+					ChartUtilities.writeChartAsPNG(
+							outputStream,
+							chart,
+							Integer.parseInt(PropertiesManager.getProperty("teacherServiceDistribution.chart.width")),
+							Integer.parseInt(PropertiesManager.getProperty("teacherServiceDistribution.chart.height")));
+				}
+
+			}
+		};
+	}
+
+	public static TeacherServiceDistributionChart generateValuatedNumberStudentsPerGroupingPieChart() {
+		return new TeacherServiceDistributionChart() {
+			public void execute(final OutputStream outputStream) throws IOException {
+				Map<String, Double> valuatedTotalNumberStudentsPerGroupingMap = new HashMap<String, Double>();
+
+				if (this.valuationGrouping.hasAnyChilds()) {
+					for (ValuationGrouping grouping : this.valuationGrouping.getChilds()) {
+						valuatedTotalNumberStudentsPerGroupingMap.put(
+								grouping.getName(),
+								grouping.getAllActiveCourseValuationTotalStudentsByExecutionPeriods(executionPeriodList));
+					}
+
+					Double totalNumberOfStudents = 0d;
+
+					for (String groupingName : valuatedTotalNumberStudentsPerGroupingMap.keySet()) {
+						totalNumberOfStudents += valuatedTotalNumberStudentsPerGroupingMap.get(groupingName);
+					}
+
+					DefaultPieDataset dataset = new DefaultPieDataset();
+
+					for (String groupingName : valuatedTotalNumberStudentsPerGroupingMap.keySet()) {
+						dataset.setValue(groupingName, (new Double(
+								StrictMath.round((valuatedTotalNumberStudentsPerGroupingMap.get(groupingName) / totalNumberOfStudents) * 100))).intValue());
+					}
+
+					JFreeChart chart = ChartFactory.createPieChart3D(
+							resourceBundle.getString("label.teacherServiceDistribution.numberStudentsByGrouping") + " %",
+							dataset,
+							true,
+							true,
+							false);
+
+					ChartUtilities.writeChartAsPNG(
+							outputStream,
+							chart,
+							Integer.parseInt(PropertiesManager.getProperty("teacherServiceDistribution.chart.width")),
+							Integer.parseInt(PropertiesManager.getProperty("teacherServiceDistribution.chart.height")));
+				}
+
+			}
+		};
+	}	
+
+	public void setExecutionPeriodList(List<ExecutionPeriod> executionPeriodList) {
 		this.executionPeriodList = executionPeriodList;
 	}
-	
-	public void generateValuatedHoursPerGrouping(final OutputStream outputStream) throws IOException {
-		ValuationGrouping rootValuationGrouping = valuationPhase.getRootValuationGrouping();
-		DefaultCategoryDataset dataset = new DefaultCategoryDataset();
-		
-		
-		if(rootValuationGrouping.hasAnyChilds()) {
-			for(ValuationGrouping valuationGrouping : rootValuationGrouping.getChilds()) {
-				dataset.setValue(valuationGrouping.getAllActiveCourseValuationTotalHoursByExecutionPeriods(executionPeriodList), resourceBundle.getString("label.teacherServiceDistribution.hours.total"), valuationGrouping.getName());
-				dataset.setValue(valuationGrouping.getAllActiveCourseValuationTheoreticalHoursByExecutionPeriods(executionPeriodList), resourceBundle.getString("label.teacherServiceDistribution.theoretical"), valuationGrouping.getName());
-				dataset.setValue(valuationGrouping.getAllActiveCourseValuationPraticalHoursByExecutionPeriods(executionPeriodList), resourceBundle.getString("label.teacherServiceDistribution.pratical"), valuationGrouping.getName());
-				dataset.setValue(valuationGrouping.getAllActiveCourseValuationTheoPratHoursByExecutionPeriods(executionPeriodList), resourceBundle.getString("label.teacherServiceDistribution.theoPrat"), valuationGrouping.getName());
-				dataset.setValue(valuationGrouping.getAllActiveCourseValuationLaboratorialHoursByExecutionPeriods(executionPeriodList), resourceBundle.getString("label.teacherServiceDistribution.laboratorial"), valuationGrouping.getName());
-			}
-			
-			JFreeChart chart = ChartFactory.createBarChart3D(
-					resourceBundle.getString("label.teacherServiceDistribution.hoursByGrouping"),
-					resourceBundle.getString("label.teacherServiceDistribution.ValuationGroupings"),
-					resourceBundle.getString("label.teacherServiceDistribution.hours.total"),
-					dataset,
-					PlotOrientation.VERTICAL,
-					true,
-					true,
-					false);
-			
-			ChartUtilities.writeChartAsPNG(outputStream, chart, Integer.parseInt(PropertiesManager.getProperty("teacherServiceDistribution.chart.width")), Integer.parseInt(PropertiesManager.getProperty("teacherServiceDistribution.chart.height")));
-		}
-	}
-	
-	public void generateValuatedNumberStudentsPerGrouping(final OutputStream outputStream) throws IOException {
-		ValuationGrouping rootValuationGrouping = valuationPhase.getRootValuationGrouping();
-		DefaultCategoryDataset dataset = new DefaultCategoryDataset();
-		
-		
-		if(rootValuationGrouping.hasAnyChilds()) {
-			for(ValuationGrouping valuationGrouping : rootValuationGrouping.getChilds()) {
-				dataset.setValue(valuationGrouping.getAllActiveCourseValuationTotalStudentsByExecutionPeriods(executionPeriodList), resourceBundle.getString("label.teacherServiceDistribution.students.total"), valuationGrouping.getName());
-				dataset.setValue(valuationGrouping.getAllActiveCourseValuationFirstTimeEnrolledStudentsByExecutionPeriods(executionPeriodList), resourceBundle.getString("label.teacherServiceDistribution..num.firstTimeEnrolledStudents"), valuationGrouping.getName());
-				dataset.setValue(valuationGrouping.getAllActiveCourseValuationSecondTimeEnrolledStudentsByExecutionPeriods(executionPeriodList), resourceBundle.getString("label.teacherServiceDistribution..num.secondTimeEnrolledStudents"), valuationGrouping.getName());
-			}
 
-			JFreeChart chart = ChartFactory.createBarChart3D(
-					"Número De Alunos Estimados Por Agrupamento",
-					resourceBundle.getString("label.teacherServiceDistribution.ValuationGroupings"),
-					resourceBundle.getString("label.teacherServiceDistribution.students.total"),
-					dataset,
-					PlotOrientation.VERTICAL,
-					true,
-					true,
-					false);
-			
-			ChartUtilities.writeChartAsPNG(outputStream, chart, Integer.parseInt(PropertiesManager.getProperty("teacherServiceDistribution.chart.width")), Integer.parseInt(PropertiesManager.getProperty("teacherServiceDistribution.chart.height")));			
-		}
+
+	public void setValuationGrouping(ValuationGrouping valuationGrouping) {
+		this.valuationGrouping = valuationGrouping;
 	}
 }

@@ -257,16 +257,17 @@ public class TeacherServiceDistributionValuationAction extends
         return null;
 	}
 
-	
-	public ActionForward generateValuatedHoursPerGrouping(
+
+	private ActionForward generateTeacherServiceDistributionValuationChart(
 			ActionMapping mapping, 
 			ActionForm form, 
 			HttpServletRequest request,
-			HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+			HttpServletResponse response,
+			TeacherServiceDistributionChart teacherServiceDistributionChart)  throws FenixFilterException, FenixServiceException {
 		IUserView userView = SessionUtils.getUserView(request);
 		DynaActionForm dynaForm = (DynaActionForm) form;
-		Integer valuationPhaseId = new Integer(request.getParameter("valuationPhase"));
-		ValuationPhase valuationPhase = rootDomainObject.readValuationPhaseByOID(valuationPhaseId);
+		Integer valuationGroupingId = new Integer(request.getParameter("valuationGrouping"));
+		ValuationGrouping valuationGrouping = rootDomainObject.readValuationGroupingByOID(valuationGroupingId);
 		
 		Integer executionPeriodId = new Integer(request.getParameter("executionPeriod"));
 		ExecutionPeriod selectedExecutionPeriod = rootDomainObject.readExecutionPeriodByOID(executionPeriodId);
@@ -275,15 +276,18 @@ public class TeacherServiceDistributionValuationAction extends
 		if(selectedExecutionPeriod != null) {
 			executionPeriodList.add(selectedExecutionPeriod);
 		} else {
-			executionPeriodList.addAll(valuationPhase.getTeacherServiceDistribution().getExecutionPeriods());
+			executionPeriodList.addAll(valuationGrouping.getValuationPhase().getTeacherServiceDistribution().getExecutionPeriods());
 		}
 		
 		try {
 			response.setContentType("image/png");
 			ServletOutputStream writer = response.getOutputStream();
 			
-	        TeacherServiceDistributionChart teacherServiceDistributionGraphs = new TeacherServiceDistributionChart(valuationPhase, executionPeriodList);
-	        teacherServiceDistributionGraphs.generateValuatedHoursPerGrouping(writer);
+			
+			teacherServiceDistributionChart.setValuationGrouping(valuationGrouping);
+			teacherServiceDistributionChart.setExecutionPeriodList(executionPeriodList);
+			
+	        teacherServiceDistributionChart.execute(writer);
 	        
 	        writer.flush();
 	        response.flushBuffer();			
@@ -291,7 +295,16 @@ public class TeacherServiceDistributionValuationAction extends
             throw new FenixServiceException();
         }
         
-        return null;
+        return null;		
+	}
+	
+	public ActionForward generateValuatedHoursPerGrouping(
+			ActionMapping mapping, 
+			ActionForm form, 
+			HttpServletRequest request,
+			HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+		
+		return generateTeacherServiceDistributionValuationChart(mapping, form, request, response, TeacherServiceDistributionChart.generateValuatedHoursPerGroupingChart());
 	}
 
 	public ActionForward generateValuatedNumberStudentsPerGrouping(
@@ -299,35 +312,25 @@ public class TeacherServiceDistributionValuationAction extends
 			ActionForm form, 
 			HttpServletRequest request,
 			HttpServletResponse response) throws FenixFilterException, FenixServiceException {
-		IUserView userView = SessionUtils.getUserView(request);
-		DynaActionForm dynaForm = (DynaActionForm) form;
-		Integer valuationPhaseId = new Integer(request.getParameter("valuationPhase"));
-		ValuationPhase valuationPhase = rootDomainObject.readValuationPhaseByOID(valuationPhaseId);
-		
-		Integer executionPeriodId = new Integer(request.getParameter("executionPeriod"));
-		ExecutionPeriod selectedExecutionPeriod = rootDomainObject.readExecutionPeriodByOID(executionPeriodId);
-		
-		List<ExecutionPeriod> executionPeriodList = new ArrayList<ExecutionPeriod>();
-		if(selectedExecutionPeriod != null) {
-			executionPeriodList.add(selectedExecutionPeriod);
-		} else {
-			executionPeriodList.addAll(valuationPhase.getTeacherServiceDistribution().getExecutionPeriods());
-		}
-		
-		try {
-			response.setContentType("image/png");
-			ServletOutputStream writer = response.getOutputStream();
-			
-	        TeacherServiceDistributionChart teacherServiceDistributionGraphs = new TeacherServiceDistributionChart(valuationPhase, executionPeriodList);
-	        teacherServiceDistributionGraphs.generateValuatedNumberStudentsPerGrouping(writer);
-	        
-	        writer.flush();
-	        response.flushBuffer();			
-        } catch (IOException e) {
-            throw new FenixServiceException();
-        }
-        
-        return null;
+		return generateTeacherServiceDistributionValuationChart(mapping, form, request, response, TeacherServiceDistributionChart.generateValuatedNumberStudentsPerGroupingChart());	
+	}
+
+	
+	public ActionForward generateValuatedHoursPerGroupingPieChart(
+			ActionMapping mapping, 
+			ActionForm form, 
+			HttpServletRequest request,
+			HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+		return generateTeacherServiceDistributionValuationChart(mapping, form, request, response, TeacherServiceDistributionChart.generateValuatedHoursPerGroupingPieChart());
+	}
+	
+	
+	public ActionForward generateValuatedNumberStudentsPerGroupingPieChart(
+			ActionMapping mapping, 
+			ActionForm form, 
+			HttpServletRequest request,
+			HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+		return generateTeacherServiceDistributionValuationChart(mapping, form, request, response, TeacherServiceDistributionChart.generateValuatedNumberStudentsPerGroupingPieChart());
 	}
 	
 	private void exportToXls(

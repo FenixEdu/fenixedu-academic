@@ -124,6 +124,16 @@ text-align: right;
 			</html:select>
 		</td>
 	</tr>
+	<tr class='left'>
+		<td>
+			<b><bean:message key="label.teacherServiceDistribution.ValuationGrouping"/>:</b>
+		</td>
+		<td colspan="2">
+			<html:select property="valuationGrouping" onchange="this.form.method.value='loadTeacherServiceDistribution'; this.form.submit();">
+				<html:options collection="valuationGroupingOptionEntryList" property="idInternal" labelProperty="name"/>
+			</html:select>
+		</td>
+	</tr>	
 </table>
 <br/>
 
@@ -156,18 +166,45 @@ text-align: right;
 <b> <bean:message key="label.teacherServiceDistribution.viewByCharts"/> </b>
 <br/>
 <br/>
-
-<bean:define id="valuationPhaseId" name="teacherServiceDistributionValuationForm" property="valuationPhase"/>
-<bean:define id="executionPeriodId" name="teacherServiceDistributionValuationForm" property="executionPeriod"/>
-<html:img page='<%= "/teacherServiceDistributionValuation.do?method=generateValuatedHoursPerGrouping&valuationPhase=" + valuationPhaseId + "&executionPeriod=" + executionPeriodId %>'/>
+<b>&bull;</b>&nbsp;<a href="#hoursByGrouping"><bean:message key="label.teacherServiceDistribution.hoursByGrouping"/></a>
 <br/>
+<b>&bull;</b>&nbsp;<a href="#numberStudentsByGrouping"><bean:message key="label.teacherServiceDistribution.numberStudentsByGrouping"/></a>
 <br/>
-<html:img page='<%= "/teacherServiceDistributionValuation.do?method=generateValuatedNumberStudentsPerGrouping&valuationPhase=" + valuationPhaseId + "&executionPeriod=" + executionPeriodId %>'/>
+<b>&bull;</b>&nbsp;<a href="#hoursByGroupingPercentage"><bean:message key="label.teacherServiceDistribution.hoursByGrouping"/> %</a>
 <br/>
+<b>&bull;</b>&nbsp;<a href="#numberStudentsByGroupingPercentage"><bean:message key="label.teacherServiceDistribution.numberStudentsByGrouping"/> %</a>
 <br/>
-
 <html:link page='<%= "/teacherServiceDistribution.do?method=showTeacherServiceDistributionServices&amp;teacherServiceDistribution=" + teacherServiceDistributionId %>'>
 	<bean:message key="link.back"/>
 </html:link>
+<br/>
+<br/>
+
+<bean:define id="valuationGroupingId" name="teacherServiceDistributionValuationForm" property="valuationGrouping"/>
+<bean:define id="executionPeriodId" name="teacherServiceDistributionValuationForm" property="executionPeriod"/>
+<a name="hoursByGrouping">
+	<html:img page='<%= "/teacherServiceDistributionValuation.do?method=generateValuatedHoursPerGrouping&valuationGrouping=" + valuationGroupingId + "&executionPeriod=" + executionPeriodId %>'/>
+</a>
+<br/>
+<br/>
+
+<a name="numberStudentsByGrouping">
+	<html:img page='<%= "/teacherServiceDistributionValuation.do?method=generateValuatedNumberStudentsPerGrouping&valuationGrouping=" + valuationGroupingId + "&executionPeriod=" + executionPeriodId %>'/>
+</a>
+<br/>
+<br/>
+
+<a name="hoursByGroupingPercentage">
+	<html:img page='<%= "/teacherServiceDistributionValuation.do?method=generateValuatedHoursPerGroupingPieChart&valuationGrouping=" + valuationGroupingId + "&executionPeriod=" + executionPeriodId %>'/>
+</a>
+<br/>
+<br/>
+
+<a name="numberStudentsByGroupingPercentage">
+	<html:img page='<%= "/teacherServiceDistributionValuation.do?method=generateValuatedNumberStudentsPerGroupingPieChart&valuationGrouping=" + valuationGroupingId + "&executionPeriod=" + executionPeriodId %>'/>
+</a>
+<br/>
+<br/>
+
 
 </html:form>
