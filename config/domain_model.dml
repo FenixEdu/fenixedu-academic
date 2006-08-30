@@ -2728,6 +2728,12 @@ class net.sourceforge.fenixedu.domain.student.Registration extends net.sourcefor
 	Integer keyStudent;
 }
 
+class net.sourceforge.fenixedu.domain.student.RegistrationDataByPeriod extends net.sourceforge.fenixedu.domain.DomainObject {
+	Integer keyStudentKind;
+	Integer keyExecutionPeriod;
+	Integer keyRegistration;
+}
+
 class net.sourceforge.fenixedu.domain.student.Student extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer keyPerson;
 	Integer number;
@@ -6781,14 +6787,14 @@ relation PublicationAuthorship {
 }
 
 relation ResultUnitAssociationResult {
-	net.sourceforge.fenixedu.domain.research.result.ResultUnitAssociation playsRole resultUnitAssociations {
+		net.sourceforge.fenixedu.domain.research.result.ResultUnitAssociation playsRole resultUnitAssociations {
 		multiplicity *;
 	}
 	net.sourceforge.fenixedu.domain.research.result.Result playsRole result;
 }
 
 relation ResulUnitAssociationUnit {
-	net.sourceforge.fenixedu.domain.research.result.ResultUnitAssociation playsRole resultUnitAssociations {
+		net.sourceforge.fenixedu.domain.research.result.ResultUnitAssociation playsRole resultUnitAssociations {
 		multiplicity *;
 	}
 	net.sourceforge.fenixedu.domain.organizationalStructure.Unit playsRole unit;
@@ -7541,6 +7547,33 @@ relation AdministrativeOfficeUnit {
 	net.sourceforge.fenixedu.domain.organizationalStructure.Unit playsRole unit;
 }
 
+relation RegistrationDataExecutionPeriod {
+	net.sourceforge.fenixedu.domain.student.RegistrationDataByPeriod playsRole registrationDataByPeriod {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.ExecutionPeriod playsRole executionPeriod;
+}
+
+relation RegistrationDataRegistration {
+	net.sourceforge.fenixedu.domain.student.RegistrationDataByPeriod playsRole registrationDataByPeriod {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.student.Registration playsRole registration;
+}
+
+relation RegistrationDataStudentKind {
+	net.sourceforge.fenixedu.domain.student.RegistrationDataByPeriod playsRole registrationDataByPeriod {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.StudentKind playsRole studentKind;
+}
+
+relation RootDomainObjectRegistrationData {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.student.RegistrationDataByPeriod playsRole registrationDataByPeriod {
+		multiplicity *;
+	}
+}
 
 /*
  * Relations definitions of relations to RootDomainObject
