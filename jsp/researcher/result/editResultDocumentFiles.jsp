@@ -26,6 +26,9 @@
 	<bean:define id="removePath">
 		/result/resultDocumentFilesManagement.do?method=remove&<bean:write name="parameters"/>
 	</bean:define>
+	<bean:define id="backLink">
+		/result/resultAssociationsManagement.do?method=backToResult&<bean:write name="parameters"/>		
+	</bean:define>
 
 	<%-- Use Case Titles --%>
 	<em><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.Result.superUseCase.title"/></em>
@@ -76,4 +79,8 @@
 		<fr:destination name="invalid" path="<%= invalidPath %>"/>
 		<fr:destination name="cancel" path="<%= cancelPath %>"/>
 	</fr:edit>
+	<br/>
+	
+	<%-- Go to previous page --%>
+	<html:link page="<%= backLink %>"><bean:message bundle="RESEARCHER_RESOURCES" key="link.goBackToView"/></html:link>
 </logic:present>
