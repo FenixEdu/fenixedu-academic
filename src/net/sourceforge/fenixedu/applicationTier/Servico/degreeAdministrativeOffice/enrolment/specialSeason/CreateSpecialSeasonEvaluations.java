@@ -10,23 +10,20 @@ import net.sourceforge.fenixedu.domain.SpecialSeasonCode;
 import net.sourceforge.fenixedu.domain.student.Registration;
 
 public class CreateSpecialSeasonEvaluations extends Service {
-	
-	public void run(Registration registration, ExecutionYear executionYear, Collection<Enrolment> enrolments) throws EnrolmentException {
 
-		SpecialSeasonCode specialSeasonCode = registration.getSpecialSeasonCodeByExecutionYear(executionYear);
-		
-    	if(specialSeasonCode == null) {
-    		throw new EnrolmentException("error.no.specialSeason.code");
-    	} 
-    	
-    	if(specialSeasonCode.getMaxEnrolments() < 
-    			(registration.getActiveStudentCurricularPlan().getSpecialSeasonEnrolments(executionYear).size() + enrolments.size())) {
-    		throw new EnrolmentException("error.too.many.specialSeason.enrolments", new String[] {specialSeasonCode.getMaxEnrolments().toString()});
-    	}
+    public void run(Registration registration, ExecutionYear executionYear,
+	    Collection<Enrolment> enrolments) throws EnrolmentException {
 
-		for (Enrolment enrolment : enrolments) {
-			enrolment.createSpecialSeasonEvaluation();
-		}
+	SpecialSeasonCode specialSeasonCode = registration
+		.getSpecialSeasonCodeByExecutionYear(executionYear);
+
+	if (specialSeasonCode == null) {
+	    throw new EnrolmentException("error.no.specialSeason.code");
 	}
+
+	for (Enrolment enrolment : enrolments) {
+	    enrolment.createSpecialSeasonEvaluation();
+	}
+    }
 
 }
