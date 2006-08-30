@@ -334,7 +334,7 @@
 	<slot name="result.title"/>
 </schema>
 
-<schema name="person.result" type="net.sourceforge.fenixedu.domain.research.result.Result">
+<schema name="result.simple.detail" type="net.sourceforge.fenixedu.domain.research.result.Result">
 	<slot name="title"/>
 </schema>
 
@@ -367,13 +367,15 @@
 	<slot name="url"/>
 </schema>
 
-<schema name="patent.create" type="net.sourceforge.fenixedu.domain.research.result.patent.ResultPatent" bundle="RESEARCHER_RESOURCES"
-		extends="patent-default" constructor="title,registrationDate,approvalDate">
+<schema type="net.sourceforge.fenixedu.domain.research.result.patent.ResultPatent" 
+		extends="patent-default" name="patent.create" bundle="RESEARCHER_RESOURCES"
+		constructor="participation,title,note,patentType,patentStatus,registrationDate,approvalDate,country,local,patentNumber,url">
+	<slot name="participation" hidden="true"/>
 </schema>
 
 <schema name="patent.edit" type="net.sourceforge.fenixedu.domain.research.result.patent.ResultPatent" 
 		bundle="RESEARCHER_RESOURCES" extends="patent-default">
-	<setter signature="setPatentEdit(title,registrationDate,approvalDate)"/>
+	<setter signature="setEditAll(title,note,patentType,patentStatus,registrationDate,approvalDate,country,local,patentNumber,url)"/>
 </schema>
 
 <schema name="patent.viewEditData" extends="patent-default" type="net.sourceforge.fenixedu.domain.research.result.patent.ResultPatent" bundle="RESEARCHER_RESOURCES">
@@ -385,10 +387,12 @@
 
 <schema name="result.patentShortList" type="net.sourceforge.fenixedu.domain.research.result.patent.ResultPatent">
 	<slot name="title" layout="link">
-        <property name="linkFormat"><![CDATA[/resultPatents/preparePatentDetails.do?resultId=${idInternal}]]></property>
+        <property name="linkFormat"><![CDATA[/resultPatents/prepareDetails.do?resultId=${idInternal}]]></property>
         <property name="useParent" value="true"/>
 	</slot>
 	<slot name="registrationDate"/>
+	<slot name="approvalDate"/>
+	<slot name="lastModificationDate"/>
 </schema>
 
 <!-- Schemas used for Result Participations Management -->
@@ -402,9 +406,9 @@
 </schema>
 
 <schema name="resultParticipation.creation" type="net.sourceforge.fenixedu.dataTransferObject.research.result.ResultParticipationCreationBean" bundle="RESEARCHER_RESOURCES">
-	<slot name="person" layout="autoComplete" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+	<slot name="participator" layout="autoComplete" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
 		<property name="size" value="70"/>
-		<property name="rawSlotName" value="personName"/>
+		<property name="rawSlotName" value="participatorName"/>
 		<property name="labelField" value="name"/>
 		<property name="indicatorShown" value="true"/>
 		<property name="serviceName" value="SearchObjects"/>
@@ -419,7 +423,7 @@
 </schema>
 
 <schema name="resultParticipation.fullCreation" type="net.sourceforge.fenixedu.dataTransferObject.research.result.ResultParticipationCreationBean" bundle="RESEARCHER_RESOURCES">
-	<slot name="personName" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" read-only="true"/>
+	<slot name="participatorName" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" read-only="true"/>
 	<slot name="organization" layout="autoComplete" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
 		<property name="size" value="40"/>
 		<property name="rawSlotName" value="organizationName"/>
@@ -438,12 +442,22 @@
 
 <!-- Schemas used for Result Documents Management -->
 <schema name="resultDocumentFile.summary" bundle="RESEARCHER_RESOURCES" type="net.sourceforge.fenixedu.domain.research.result.ResultDocumentFile">
+	<slot name="displayName"/>
 	<slot name="filename"/>
+	<slot name="size"/>
+	<slot name="uploadTime"/>
 </schema>
 
 <schema name="resultDocumentFile.submission.edit" bundle="RESEARCHER_RESOURCES" type="net.sourceforge.fenixedu.dataTransferObject.research.result.ResultDocumentFileSubmissionBean">
+	<slot name="displayName">
+		<property name="size" value="70"/>
+	</slot>
 	<slot name="inputStream" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
-		<property name="fileNameSlot" value="filename"/>
+		<property name="fileNameSlot" value="fileName"/>
+		<property name="size" value="60"/>
+	</slot>
+	<slot name="permission" layout="radio">
+		<property name="classes" value="list2 liinline" />
 	</slot>
 </schema>
 
@@ -494,7 +508,7 @@
 		<property name="serviceName" value="SearchObjects"/>
 		<property name="serviceArgs" value="slot=name"/>
 		<property name="className" value="net.sourceforge.fenixedu.domain.organizationalStructure.Unit"/>				
-		<property name="minChars" value="5"/>
+		<property name="minChars" value="3"/>
 	</slot>
 	<slot name="role" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
 </schema>
