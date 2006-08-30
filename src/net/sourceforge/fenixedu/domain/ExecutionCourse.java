@@ -152,6 +152,10 @@ public class ExecutionCourse extends ExecutionCourse_Base {
         site.setExecutionCourse(this);
     }
 
+    public void copySectionsAndItemsFrom(final ExecutionCourse executionCourseFrom) throws DomainException {
+        this.getSite().copySectionsAndItemsFrom(executionCourseFrom.getSite());
+    }
+
     public void createEvaluationMethod(final MultiLanguageString evaluationElements) {
         if (evaluationElements == null)
             throw new NullPointerException();
@@ -178,17 +182,16 @@ public class ExecutionCourse extends ExecutionCourse_Base {
     public List<BibliographicReference> copyBibliographicReferencesFrom(final ExecutionCourse executionCourseFrom) {
         final List<BibliographicReference> notCopiedBibliographicReferences = new ArrayList<BibliographicReference>();
         
-        if (executionCourseFrom.hasAnyAssociatedBibliographicReferences()) {
-            for (final BibliographicReference bibliographicReference : executionCourseFrom.getAssociatedBibliographicReferences()) {
-                if (canAddBibliographicReference(bibliographicReference)) {
-                    this.createBibliographicReference(bibliographicReference.getTitle(),
-                            bibliographicReference.getAuthors(), bibliographicReference.getReference(),
-                            bibliographicReference.getYear(), bibliographicReference.getOptional());
-                } else {
-                    notCopiedBibliographicReferences.add(bibliographicReference);                
-                }
+        for (final BibliographicReference bibliographicReference : executionCourseFrom.getAssociatedBibliographicReferences()) {
+            if (canAddBibliographicReference(bibliographicReference)) {
+                this.createBibliographicReference(bibliographicReference.getTitle(),
+                        bibliographicReference.getAuthors(), bibliographicReference.getReference(),
+                        bibliographicReference.getYear(), bibliographicReference.getOptional());
+            } else {
+                notCopiedBibliographicReferences.add(bibliographicReference);                
             }
         }
+
         return notCopiedBibliographicReferences;
     }
     
