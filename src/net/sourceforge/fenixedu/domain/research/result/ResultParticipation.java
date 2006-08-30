@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.domain.research.result;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
@@ -80,7 +81,7 @@ public class ResultParticipation extends ResultParticipation_Base {
 	if (orderChange == null) {
 	    throw new DomainException("error.researcher.ResultParticipation.orderChange.null");
 	}
-	move(OrderChange.getOffset(orderChange));
+	move(orderChange);
 	setChangedBy();
     }
 
@@ -129,11 +130,12 @@ public class ResultParticipation extends ResultParticipation_Base {
 	this.getResult().setModifyedByAndDate();
     }
 
-    private void move(int offset) {
-	final List<ResultParticipation> orderedParticipations = this.getResult()
-		.getResultParticipations();
-	final int newOrder = this.getPersonOrder() + offset;
-
+    private void move(OrderChange change) {
+	final int newOrder = this.getPersonOrder() + OrderChange.getOffset(change);
+	final List<ResultParticipation> originalList = this.getResult().getOrderedResultParticipations(); 
+	List<ResultParticipation> orderedParticipations = new ArrayList<ResultParticipation>();
+	orderedParticipations.addAll(originalList);
+	
 	orderedParticipations.remove(this);
 
 	// Participation will be the first element in list.
@@ -153,7 +155,7 @@ public class ResultParticipation extends ResultParticipation_Base {
 	// (0,1,2...).
 	int index = 0;
 	for (ResultParticipation participation : orderedParticipations) {
-	    participation.setPersonOrderAttribute(index++);
+	    originalList.get(originalList.indexOf(participation)).setPersonOrderAttribute(index++);
 	}
     }
 
