@@ -9826,7 +9826,18 @@
         <isTransactional>true</isTransactional>
         <filterChains>
         </filterChains>
-    </service>  
+    </service>
+	<service>
+        <name>SearchPersonsForParticipations</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.research.SearchPersonsForParticipations</implementationClass>
+        <description>
+            Generic service to search all external Units that have a string property
+            that matches some user input.
+        </description>
+        <isTransactional>true</isTransactional>
+        <filterChains>
+        </filterChains>
+    </service>        
 	<service>
 		<name>ChangeResultParticipationsOrder</name>
 		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.research.result.ChangeResultParticipationsOrder</implementationClass>
