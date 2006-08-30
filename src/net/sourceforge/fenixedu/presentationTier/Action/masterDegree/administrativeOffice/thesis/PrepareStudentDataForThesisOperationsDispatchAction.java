@@ -78,7 +78,7 @@ public class PrepareStudentDataForThesisOperationsDispatchAction extends FenixDi
         Object argsStudentCurricularPlan[] = { studentNumber, DegreeType.valueOf(degreeType) };
         try {
             infoStudentCurricularPlan = (InfoStudentCurricularPlan) ServiceUtils.executeService(
-                    userView, "student.ReadActiveStudentCurricularPlanByNumberAndDegreeType",
+                    userView, "ReadActiveOrLastStudentCurricularPlanByNumberAndDegreeType",
                     argsStudentCurricularPlan);
         } catch (FenixServiceException e) {
             throw new FenixActionException(e);

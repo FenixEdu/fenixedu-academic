@@ -153,7 +153,12 @@
 			<logic:iterate id="externalJury" name="externalJuriesList">
 				<tr>
 					<td align="left" ><bean:write name="externalJury" property="infoPerson.nome"/></td>
-					<td align="left"><bean:write name="externalJury" property="infoInstitution.name"/></td>					
+					<td align="left">
+						<logic:notEmpty name="externalJury" property="infoInstitution" >
+							<bean:write name="externalJury" property="infoInstitution.name"/>
+						</logic:notEmpty>
+						&nbsp;
+					</td>					
 				</tr>				
 			</logic:iterate>
 			<tr> 

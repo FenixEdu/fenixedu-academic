@@ -206,7 +206,11 @@
 				<tr>
 					<td>&nbsp;</td>
 					<td align="left"><bean:write name="externalJury" property="infoPerson.nome"/></td>
-					<td align="left"><bean:write name="externalJury" property="infoInstitution.name"/></td>
+					<td align="left">
+						<logic:notEmpty name="externalJury" property="infoInstitution" >
+							<bean:write name="externalJury" property="infoInstitution.name"/>
+						</logic:notEmpty>&nbsp;
+					</td>
 					<td align="center">
 						<html:multibox bundle="HTMLALT_RESOURCES" altKey="multibox.removedExternalJuriesIDs" property="removedExternalJuriesIDs">
 							<bean:write name="externalJury" property="idInternal"/>
@@ -276,7 +280,11 @@
 				<tr>
 					<td>&nbsp;</td>
 					<td align="left"><bean:write name="externalJury" property="infoPerson.nome"/></td>
-					<td align="left"><bean:write name="externalJury" property="infoInstitution.name"/></td>						
+					<td align="left">
+						<logic:notEmpty name="externalJury" property="infoInstitution" >
+							<bean:write name="externalJury" property="infoInstitution.name"/>
+						</logic:notEmpty>&nbsp;
+					</td>						
 					<td>
 						<html:radio bundle="HTMLALT_RESOURCES" altKey="radio.externalJuriesIDs" idName="externalJury" property="externalJuriesIDs" value="idInternal"/>	
 					</td>

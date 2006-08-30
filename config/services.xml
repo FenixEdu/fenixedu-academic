@@ -10739,4 +10739,13 @@
         	<chain name="DepartmentMemberOrTeacherOrEmployeeAuthorization"></chain>
         </filterChains>     
     </service>      
+    
+    <service>
+    	<name>ReadActiveOrLastStudentCurricularPlanByNumberAndDegreeType</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.student.ReadActiveOrLastStudentCurricularPlanByNumberAndDegreeType</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>  
+        <filterChains>
+        </filterChains>     
+    </service>      
 </serviceDefinitions>
