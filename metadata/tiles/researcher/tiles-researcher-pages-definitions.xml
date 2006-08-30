@@ -87,13 +87,13 @@
     </definition>
     <definition name="result.documentFiles" 
         extends="researcher.masterPage">
-        <put name="body" value="/researcher/result/manageResultDocumentFiles.jsp"></put>
+        <put name="body" value="/researcher/result/editResultDocumentFiles.jsp"></put>
     </definition>
 
     <!-- Result patents definitions -->
     <definition name="patents.list" 
     			extends="researcher.masterPage">
-        <put name="body" value="/researcher/result/patents/listPatents.jsp"></put>
+        <put name="body" value="/researcher/result/patents/managePatents.jsp"></put>
     </definition>
     <definition name="patents.create" 
         extends="researcher.masterPage">
