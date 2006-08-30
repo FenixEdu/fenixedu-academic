@@ -518,7 +518,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 
         final List<IEnrollmentRule> result = new ArrayList<IEnrollmentRule>(4);
 
-        //result.add(new MaximumNumberEctsCreditsEnrolmentRule(studentCurricularPlan, executionPeriod));
+        result.add(new MaximumNumberEctsCreditsEnrolmentRule(studentCurricularPlan, executionPeriod));
         result.add(new PrecedencesEnrollmentRule(studentCurricularPlan, executionPeriod));
         result.add(new PreviousYearsCurricularCourseEnrollmentRule(studentCurricularPlan, executionPeriod));
 
