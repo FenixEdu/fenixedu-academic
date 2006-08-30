@@ -71,41 +71,8 @@ public class ExecutionCourseUtils {
         }
     }
 
-    public static List<BibliographicReference> copyBibliographicReference(final ExecutionCourse executionCourseFrom,
-            ExecutionCourse executionCourseTo) {
-        final List<BibliographicReference> notCopiedBibliographicReferences = new ArrayList();
-        
-        if (executionCourseFrom.getAssociatedBibliographicReferencesCount() > 0) {
-            Iterator bibliographicReferences = executionCourseFrom
-                    .getAssociatedBibliographicReferencesIterator();
-            while (bibliographicReferences.hasNext()) {
-                BibliographicReference bibliographicReference = (BibliographicReference) bibliographicReferences
-                        .next();
-                if (canAddBibliographicReferenceTo(executionCourseTo, bibliographicReference)) {
-                    executionCourseTo.createBibliographicReference(bibliographicReference.getTitle(),
-                            bibliographicReference.getAuthors(), bibliographicReference.getReference(),
-                            bibliographicReference.getYear(), bibliographicReference.getOptional());
-                }
-                else {
-                    notCopiedBibliographicReferences.add(bibliographicReference);                
-                }
-            }
-        }
-        return notCopiedBibliographicReferences;
-    }
-
-    private static boolean canAddBibliographicReferenceTo(final ExecutionCourse executionCourse,
-            final BibliographicReference bibliographicReferenceToAdd) {
-        final Iterator associatedBibliographicReferences = executionCourse
-                .getAssociatedBibliographicReferencesIterator();
-        while (associatedBibliographicReferences.hasNext()) {
-            BibliographicReference bibliographicReference = (BibliographicReference) associatedBibliographicReferences
-                    .next();
-            if (bibliographicReference.getTitle().equals(bibliographicReferenceToAdd.getTitle())) {
-                return false;
-            }
-        }
-        return true;
+    public static List<BibliographicReference> copyBibliographicReference(final ExecutionCourse executionCourseFrom, ExecutionCourse executionCourseTo) {
+        return executionCourseTo.copyBibliographicReferencesFrom(executionCourseFrom);
     }
 
     public static void copyEvaluationMethod(final ExecutionCourse executionCourseFrom,

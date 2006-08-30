@@ -175,6 +175,32 @@ public class ExecutionCourse extends ExecutionCourse_Base {
         bibliographicReference.setExecutionCourse(this);
     }
 
+    public List<BibliographicReference> copyBibliographicReferencesFrom(final ExecutionCourse executionCourseFrom) {
+        final List<BibliographicReference> notCopiedBibliographicReferences = new ArrayList<BibliographicReference>();
+        
+        if (executionCourseFrom.hasAnyAssociatedBibliographicReferences()) {
+            for (final BibliographicReference bibliographicReference : executionCourseFrom.getAssociatedBibliographicReferences()) {
+                if (canAddBibliographicReference(bibliographicReference)) {
+                    this.createBibliographicReference(bibliographicReference.getTitle(),
+                            bibliographicReference.getAuthors(), bibliographicReference.getReference(),
+                            bibliographicReference.getYear(), bibliographicReference.getOptional());
+                } else {
+                    notCopiedBibliographicReferences.add(bibliographicReference);                
+                }
+            }
+        }
+        return notCopiedBibliographicReferences;
+    }
+    
+    private boolean canAddBibliographicReference(final BibliographicReference bibliographicReferenceToAdd) {
+        for (final BibliographicReference bibliographicReference : this.getAssociatedBibliographicReferences()) {
+            if (bibliographicReference.getTitle().equals(bibliographicReferenceToAdd.getTitle())) {
+                return false;
+            }
+        }
+        return true;
+    }
+
     public CourseReport createCourseReport(String report) {
         if (report == null)
             throw new NullPointerException();
