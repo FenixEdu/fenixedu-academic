@@ -63,7 +63,7 @@
 		<property name="format" value="${year}" />
 	</slot>
 </schema>
-<schema name="ListExecutionCoursesToImportLessonPlannings" type="net.sourceforge.fenixedu.dataTransferObject.teacher.ImportLessonPlanningsBean" bundle="DEFAULT">		
+<schema name="ListExecutionCoursesToImportLessonPlannings" type="net.sourceforge.fenixedu.dataTransferObject.teacher.executionCourse.ImportContentBean" bundle="DEFAULT">
 	<slot name="executionCourse" key="label.import.lessonPlannings.course" layout="menu-select"
 		validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionCoursesToImportLessonPlanningsProvider" />

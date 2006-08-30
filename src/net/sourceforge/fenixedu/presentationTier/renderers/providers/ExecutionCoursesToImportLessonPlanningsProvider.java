@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import net.sourceforge.fenixedu.dataTransferObject.teacher.ImportLessonPlanningsBean;
+import net.sourceforge.fenixedu.dataTransferObject.teacher.executionCourse.ImportContentBean;
 import net.sourceforge.fenixedu.domain.CurricularYear;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
@@ -16,7 +16,7 @@ import net.sourceforge.fenixedu.renderers.components.converters.Converter;
 public class ExecutionCoursesToImportLessonPlanningsProvider implements DataProvider {
 
     public Object provide(Object source, Object currentValue) {
-        ImportLessonPlanningsBean bean = (ImportLessonPlanningsBean) source;                
+        ImportContentBean bean = (ImportContentBean) source;                
         ExecutionPeriod executionPeriod = bean.getExecutionPeriod();
         CurricularYear curricularYear = bean.getCurricularYear();
         DegreeCurricularPlan degreeCurricularPlan = bean.getExecutionDegree().getDegreeCurricularPlan();        

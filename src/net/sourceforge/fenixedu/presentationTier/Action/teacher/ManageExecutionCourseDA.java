@@ -17,6 +17,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.gesdis.CreateLessonPlanningBean;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.ImportLessonPlanningsBean;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.ImportLessonPlanningsBean.ImportType;
+import net.sourceforge.fenixedu.dataTransferObject.teacher.executionCourse.ImportContentBean;
 import net.sourceforge.fenixedu.domain.BibliographicReference;
 import net.sourceforge.fenixedu.domain.CompetenceCourse;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
@@ -331,13 +332,13 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
         return mapping.findForward("evaluationMethod");
     }
 
-    public ActionForward bibliographicReference(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-    		throws Exception {
+    // BIBLIOGRAPHIC REFERENCES
+    
+    public ActionForward bibliographicReference(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
         return mapping.findForward("bibliographicReference");
     }
 
-    public ActionForward prepareCreateBibliographicReference(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-    		throws Exception {
+    public ActionForward prepareCreateBibliographicReference(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
         return mapping.findForward("create-bibliographicReference");
     }
 
@@ -409,6 +410,63 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
         return mapping.findForward("bibliographicReference");
     }
         
+    public ActionForward prepareImportBibliographicReferences(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) {
+          
+        request.setAttribute("importBibliographicReferencesBean", new ImportContentBean());
+        return mapping.findForward("importBibliographicReferences");
+    }
+    
+    public ActionForward prepareImportBibliographicReferencesPostBack(ActionMapping mapping,
+            ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) {    
+        
+        IViewState viewState = RenderUtils.getViewState("importBibliographicReferencesBean");        
+        final ImportContentBean bean = (ImportContentBean) viewState.getMetaObject().getObject();                        
+        RenderUtils.invalidateViewState();        
+        request.setAttribute("importBibliographicReferencesBean", bean);
+        return mapping.findForward("importBibliographicReferences");
+    }
+    
+    public ActionForward prepareImportBibliographicReferencesInvalid(ActionMapping mapping,
+            ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) {
+        
+        IViewState viewState = RenderUtils.getViewState("importBibliographicReferencesBeanWithExecutionCourse");
+        viewState = (viewState == null) ? RenderUtils.getViewState("importBibliographicReferencesBean") : viewState;
+        final ImportContentBean bean = (ImportContentBean) viewState.getMetaObject().getObject();  
+        request.setAttribute("importBibliographicReferencesBean", bean);        
+        return mapping.findForward("importBibliographicReferences");
+    }
+    
+    public ActionForward listExecutionCoursesToImportBibliographicReferences(ActionMapping mapping,
+            ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) {
+        
+        final IViewState viewState = RenderUtils.getViewState("importBibliographicReferencesBean");
+        final ImportContentBean bean = (ImportContentBean) viewState.getMetaObject().getObject();        
+        request.setAttribute("importBibliographicReferencesBean", bean);
+        return mapping.findForward("importBibliographicReferences");
+    }
+
+    public ActionForward importBibliographicReferences(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+     
+        final ExecutionCourse executionCourseTo = (ExecutionCourse) request.getAttribute("executionCourse");
+        final IViewState viewState = RenderUtils.getViewState("importBibliographicReferencesBeanWithExecutionCourse");
+        final ImportContentBean bean = (ImportContentBean) viewState.getMetaObject().getObject();                
+        request.setAttribute("importBibliographicReferencesBean", bean);
+        
+        final ExecutionCourse executionCourseFrom = bean.getExecutionCourse();
+        final Object args[] = { executionCourseTo.getIdInternal(), executionCourseTo, executionCourseFrom, null};
+        try {
+            ServiceManagerServiceFactory.executeService(getUserView(request), "ImportBibliographicReferences", args);
+        } catch (DomainException e) {
+            addActionMessage(request, e.getKey(), e.getArgs());
+        }
+
+        return mapping.findForward("bibliographicReference");
+    }     
+       
+    // LESSON PLANNINGS
+
     public ActionForward listExecutionCoursesToImportLessonPlannings(ActionMapping mapping,
             ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) {
         
@@ -522,7 +580,7 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
             request.setAttribute("noShifts", true);
         }
     }
-
+    
     public ActionForward lessonPlannings(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) {
         

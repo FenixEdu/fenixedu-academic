@@ -1018,6 +1018,7 @@
 			<forward name="bibliographicReference" path="manage-execution-course-bibliographicReference"/>
 			<forward name="lessonPlannings" path="manage-execution-course-lessonPlannings"/>
 			<forward name="importLessonPlannings" path="manage-execution-course-lessonPlannings-import"/>
+			<forward name="importBibliographicReferences" path="manage-execution-course-bibliographicReferences-import"/>
 			<forward name="create-lessonPlanning" path="manage-execution-course-lessonPlanning-create"/>
 			<forward name="createSection" path="manage-execution-course-createSection"/>
 			<forward name="section" path="manage-execution-course-section"/>

@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.teacher.ImportLessonPlanningsBean;
+import net.sourceforge.fenixedu.dataTransferObject.teacher.executionCourse.ImportContentBean;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.presentationTier.renderers.converters.DomainObjectKeyConverter;
@@ -14,7 +15,7 @@ import net.sourceforge.fenixedu.renderers.components.converters.Converter;
 public class ExecutionDegreesToImportLessonPlanningsProvider implements DataProvider {
 
     public Object provide(Object source, Object currentValue) {
-        ImportLessonPlanningsBean bean = (ImportLessonPlanningsBean) source;
+        ImportContentBean bean = (ImportContentBean) source;
         ExecutionPeriod executionPeriod = bean.getExecutionPeriod();               
         if(executionPeriod != null) {            
             List<ExecutionDegree> executionDegrees = new ArrayList<ExecutionDegree>();

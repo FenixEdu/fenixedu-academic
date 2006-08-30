@@ -30,6 +30,12 @@
 				<bean:message key="label.insertBibliographicReference"/>                   		     
 			</html:link>
 		</div>
+		<div class="gen-button">
+			<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" /> 
+			<html:link page="/manageExecutionCourse.do?method=prepareImportBibliographicReferences&amp;page=0" paramId="executionCourseID" paramName="executionCourse" paramProperty="idInternal">
+				<bean:message key="link.import.bibliographicReferences"/>
+			</html:link>
+		</div>
 	</p>
 
 	<h3>

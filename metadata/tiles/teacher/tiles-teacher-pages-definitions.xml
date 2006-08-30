@@ -530,7 +530,7 @@
 	<definition name="manage-execution-course-lessonPlannings" extends="execution-course-administration">
 		<put name="body" value="/teacher/executionCourse/lessonPlannings.jsp" />
 	</definition>
-
+	
 	<definition name="manage-execution-course-lessonPlanning-create" extends="execution-course-administration">
 		<put name="body" value="/teacher/executionCourse/createLessonPlanning.jsp" />
 	</definition>	
@@ -538,6 +538,10 @@
 	<definition name="manage-execution-course-lessonPlannings-import" extends="execution-course-administration">
 		<put name="body" value="/teacher/executionCourse/importLessonPlannings.jsp" />
 	</definition>	
+	
+	<definition name="manage-execution-course-bibliographicReferences-import" extends="execution-course-administration">
+		<put name="body" value="/teacher/executionCourse/importBibliographicReferences.jsp" />
+	</definition>
 	
 	<definition name="manage-execution-course-bibliographicReference" extends="execution-course-administration">
 		<put name="body" value="/teacher/executionCourse/bibliographicReference.jsp" />
