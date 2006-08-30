@@ -152,11 +152,6 @@ public class Book extends Book_Base {
     }
     
     @Override
-    protected void setModifyedByAndDate() {
-	throw new DomainException("error.researcher.Book.call","setModifyedByAndDate");
-    }
-    
-    @Override
     public void setParticipation(Person creator, ResultParticipationRole role) {
 	throw new DomainException("error.researcher.Book.call","setParticipation");
     }

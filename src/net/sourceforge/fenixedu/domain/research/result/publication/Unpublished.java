@@ -90,11 +90,6 @@ public class Unpublished extends Unpublished_Base {
     }
     
     @Override
-    protected void setModifyedByAndDate() {
-	throw new DomainException("error.researcher.Unpublished.call","setModifyedByAndDate");
-    }
-    
-    @Override
     public void setParticipation(Person creator, ResultParticipationRole role) {
 	throw new DomainException("error.researcher.Unpublished.call","setParticipation");
     }

@@ -124,11 +124,6 @@ public class Misc extends Misc_Base {
     }
     
     @Override
-    protected void setModifyedByAndDate() {
-	throw new DomainException("error.researcher.Misc.call","setModifyedByAndDate");
-    }
-    
-    @Override
     public void setParticipation(Person creator, ResultParticipationRole role) {
 	throw new DomainException("error.researcher.Misc.call","setParticipation");
     }

@@ -103,11 +103,6 @@ public class Manual extends Manual_Base {
     }
     
     @Override
-    protected void setModifyedByAndDate() {
-	throw new DomainException("error.researcher.Manual.call","setModifyedByAndDate");
-    }
-    
-    @Override
     public void setParticipation(Person creator, ResultParticipationRole role) {
 	throw new DomainException("error.researcher.Manual.call","setParticipation");
     }

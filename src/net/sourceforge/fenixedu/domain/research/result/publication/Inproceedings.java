@@ -144,11 +144,6 @@ public class Inproceedings extends Inproceedings_Base {
     }
     
     @Override
-    protected void setModifyedByAndDate() {
-	throw new DomainException("error.researcher.Inproceedings.call","setModifyedByAndDate");
-    }
-    
-    @Override
     public void setParticipation(Person creator, ResultParticipationRole role) {
 	throw new DomainException("error.researcher.Inproceedings.call","setParticipation");
     }

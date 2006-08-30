@@ -132,11 +132,6 @@ public class TechnicalReport extends TechnicalReport_Base {
     }
     
     @Override
-    protected void setModifyedByAndDate() {
-	throw new DomainException("error.researcher.TechnicalReport.call","setModifyedByAndDate");
-    }
-    
-    @Override
     public void setParticipation(Person creator, ResultParticipationRole role) {
 	throw new DomainException("error.researcher.TechnicalReport.call","setParticipation");
     }

@@ -112,11 +112,6 @@ public class Proceedings extends Proceedings_Base {
     }
     
     @Override
-    protected void setModifyedByAndDate() {
-	throw new DomainException("error.researcher.Proceedings.call","setModifyedByAndDate");
-    }
-    
-    @Override
     public void setParticipation(Person participator, ResultParticipationRole role) {
 	throw new DomainException("error.researcher.Proceedings.call","setModifyedByAndDate");
     }
