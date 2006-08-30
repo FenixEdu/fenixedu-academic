@@ -268,9 +268,4 @@ public class BookPart extends BookPart_Base {
     public void setParticipation(Person creator, ResultParticipationRole role) {
 	throw new DomainException("error.researcher.BookPart.call","setParticipation");
     }
-    
-    @Override
-    public void setParticipationsOrder(List<ResultParticipation> newParticipationsOrder) {
-	throw new DomainException("error.researcher.BookPart.call","setParticipation");
-    }
 }

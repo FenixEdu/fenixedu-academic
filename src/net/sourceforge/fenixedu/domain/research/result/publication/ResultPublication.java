@@ -63,9 +63,4 @@ public class ResultPublication extends ResultPublication_Base {
     public void removeOrganization() {
 	throw new DomainException("error.researcher.ResultPublication.call","removeOrganization");
     }
-    
-    @Override
-    public void setParticipationsOrder(List<ResultParticipation> newParticipationsOrder) {
-	throw new DomainException("error.researcher.ResultPublication.call","setParticipationsOrder");
-    }
 }

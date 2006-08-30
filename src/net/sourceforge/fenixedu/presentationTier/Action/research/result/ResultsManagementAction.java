@@ -91,10 +91,12 @@ public class ResultsManagementAction extends FenixDispatchAction {
 	    
 	    addMessage(request, ex.getKey(), ex.getArgs());
 	    
-	    ViewDestination destination = RenderUtils.getViewState().getDestination("exception");
-	    RenderUtils.invalidateViewState();
-	    if(destination!=null) {
-		return destination.getActionForward();
+	    if (RenderUtils.getViewState()!=null){
+		ViewDestination destination = RenderUtils.getViewState().getDestination("exception");
+		RenderUtils.invalidateViewState();
+		if(destination!=null) {
+		    return destination.getActionForward();
+		}
 	    }
 	}
 	

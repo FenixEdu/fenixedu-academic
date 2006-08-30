@@ -163,11 +163,6 @@ public class ResultPatent extends ResultPatent_Base {
     }
 
     @Override
-    public void setParticipationsOrder(List<ResultParticipation> newParticipationsOrder) {
-	throw new DomainException("error.researcher.ResultPatent.illegal.call","setParticipationsOrder");
-    }
-
-    @Override
     protected void setModifyedByAndDate() {
 	throw new DomainException("error.researcher.ResultPatent.illegal.call","setModifyedByAndDate");
     }
