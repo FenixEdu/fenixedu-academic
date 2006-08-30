@@ -12,8 +12,8 @@
 		<bean:define id="newParticipationsSchema" name="participationsSchema" type="java.lang.String"/>
 	</logic:present>
 
-	<h2><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.result.publication.publicationsManagement"/></h2>
-	<h3><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.result.publication.publicationsDetails"/></h3>
+	<h2><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultPublication.management.title"/></h2>
+	<h3><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultPublication.details.link"/></h3>
 	
 	<%-- Participations --%>
 	<h3><bean:message bundle="RESEARCHER_RESOURCES" key="label.resultParticipations"/></h3>
@@ -24,8 +24,8 @@
 	</fr:view>
 	<br/>
 
-	<h3><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.result.publication"/>
-	&nbsp;(<bean:message bundle="RESEARCHER_RESOURCES" key="<%="researcher.result.publication.publicationType."+resultPublicationType%>"/>)</h3>
+	<h3><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultPublication"/>
+	&nbsp;(<bean:message bundle="RESEARCHER_RESOURCES" key="<%="researcher.ResultPublication.type."+resultPublicationType%>"/>)</h3>
  	<fr:view name="publication" layout="tabular" schema="<%="result.publication.details."+resultPublicationType %>">
  		<fr:layout name="tabular">
         	<fr:property name="classes" value="style1"/>
@@ -34,6 +34,6 @@
 	   </fr:view>
  	
  	<br /><br />
- 	<html:link page="/publications/publicationsManagement.do?method=listPublications"><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.result.publication.backToPublications" /></html:link>
+ 	<html:link page="/publications/publicationsManagement.do?method=listPublications"><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultPublication.backTo.link" /></html:link>
  		
 </logic:present>

@@ -10,13 +10,13 @@
 	<bean:define id="publicationBean" name="publicationBean" type="net.sourceforge.fenixedu.dataTransferObject.research.result.publication.ResultPublicationBean"/>
 
 	<!-- Insert new publication -->
-	<h2><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.result.publication.publicationsManagement"/></h2>
-	<h3><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.result.publication.createPublication"/></h3>
+	<h2><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultPublication.management.title"/></h2>
+	<h3><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultPublication.create"/></h3>
 
 	<!-- possible publication types -->		
 	<html:form action="/publications/publicationsManagement"> 
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" />
-		<bean:message bundle="RESEARCHER_RESOURCES" key="researcher.result.publication.publicationType"/>
+		<bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultPublication.type"/>
 		<e:labelValues id="resultPublicationTypes" enumeration="net.sourceforge.fenixedu.dataTransferObject.research.result.publication.ResultPublicationBean$ResultPublicationType" bundle="ENUMERATION_RESOURCES" />
 		<html:select bundle="HTMLALT_RESOURCES" altKey="select.resultPublicationType" value="<%=publicationBean.getPublicationType().toString()%>" property="resultPublicationType">
 			<html:options collection="resultPublicationTypes" property="value" labelProperty="label"  />
@@ -43,7 +43,7 @@
 		</fr:edit>
 		
 		<!-- Present publication fields -->
-		<h3><bean:message bundle="RESEARCHER_RESOURCES" key="<%="researcher.result.publication.publicationType." + publicationBean.getPublicationType() %>"/></h3>
+		<h3><bean:message bundle="RESEARCHER_RESOURCES" key="<%="researcher.ResultPublication.type." + publicationBean.getPublicationType() %>"/></h3>
 		<fr:edit nested="true" id="createPublication" name="publicationBean" schema="<%=publicationBean.getActiveSchema() %>">
 	 	    <fr:layout name="tabular">
 	    	    <fr:property name="classes" value="style1"/>
@@ -56,7 +56,7 @@
 		<!-- Create event in case of inproceedings or proceedings -->
 		<logic:equal name="publicationBean" property="createEvent" value="true">
 			<br/>
-			<bean:message bundle="RESEARCHER_RESOURCES" key="researcher.result.publication.createEvent"/>
+			<bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultPublication.createEvent"/>
 			<fr:edit nested="true" id="createEvent" name="publicationBean" schema="result.publication.create.Event">
 		 	    <fr:layout name="tabular">
 		    	    <fr:property name="classes" value="style1"/>

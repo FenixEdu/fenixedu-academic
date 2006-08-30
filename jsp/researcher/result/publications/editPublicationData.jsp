@@ -9,9 +9,9 @@
 <logic:present role="RESEARCHER">		
 	<bean:define id="publicationBean" name="publicationBean" type="net.sourceforge.fenixedu.dataTransferObject.research.result.publication.ResultPublicationBean"/>
 	
-	<h2><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.result.publication.publicationsManagement"/></h2>
-	<h3><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.result.publication.editPublication"/>
-	&nbsp;(<bean:message bundle="RESEARCHER_RESOURCES" key="<%="researcher.result.publication.publicationType."+publicationBean.getPublicationType().toString()%>"/>)</h3>
+	<h2><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultPublication.management.title"/></h2>
+	<h3><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultPublication.edit"/>
+	&nbsp;(<bean:message bundle="RESEARCHER_RESOURCES" key="<%="researcher.ResultPublication.type."+publicationBean.getPublicationType().toString()%>"/>)</h3>
 
 	<logic:messagesPresent message="true">
 		<html:messages id="messages" message="true" bundle="RESEARCHER_RESOURCES">
@@ -37,7 +37,7 @@
 
 		<!-- Create event in case of inproceedings or proceedings -->
 		<logic:equal name="publicationBean" property="createEvent" value="true">
-		<br/><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.result.publication.createEvent"/>
+		<br/><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultPublication.createEvent"/>
 			<fr:edit nested="true" id="createEvent" name="publicationBean" type="net.sourceforge.fenixedu.dataTransferObject.research.result.publication.ResultPublicationBean"
 					schema="result.publication.create.Event">
 		 	    <fr:layout name="tabular">
