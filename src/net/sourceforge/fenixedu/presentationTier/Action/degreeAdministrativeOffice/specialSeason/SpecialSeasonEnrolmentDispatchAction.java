@@ -29,117 +29,143 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 public class SpecialSeasonEnrolmentDispatchAction extends FenixDispatchAction {
-	
+
     public ActionForward prepareChooseStudent(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) {
-    	SpecialSeasonEnrolmentBean specialSeasonEnrolmentBean = new SpecialSeasonEnrolmentBean();
-    	ExecutionYear executionYear = ExecutionYear.readCurrentExecutionYear();
-    	specialSeasonEnrolmentBean.setExecutionYear(executionYear);
-    	request.setAttribute("bean", specialSeasonEnrolmentBean);
-    	return mapping.findForward("prepareChooseStudent");
+	    HttpServletRequest request, HttpServletResponse response) {
+	SpecialSeasonEnrolmentBean specialSeasonEnrolmentBean = new SpecialSeasonEnrolmentBean();
+	ExecutionYear executionYear = ExecutionYear.readCurrentExecutionYear();
+	specialSeasonEnrolmentBean.setExecutionYear(executionYear);
+	request.setAttribute("bean", specialSeasonEnrolmentBean);
+	return mapping.findForward("prepareChooseStudent");
     }
 
-    
-    private ActionForward specialSeasonEnrolments(SpecialSeasonEnrolmentBean specialSeasonEnrolmentBean, ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) {
-    	
-    	specialSeasonEnrolmentBean.setSpecialSeasonCode(specialSeasonEnrolmentBean.getStudent().getSpecialSeasonCodeByExecutionYear(specialSeasonEnrolmentBean.getExecutionYear()));
-    	
-    	Set<SpecialSeasonToEnrolBean> toEnrol = new HashSet<SpecialSeasonToEnrolBean>();
-    	for (Enrolment enrolment : specialSeasonEnrolmentBean.getStudent().getActiveStudentCurricularPlan().getSpecialSeasonToEnrol(specialSeasonEnrolmentBean.getExecutionYear())) {
-			SpecialSeasonToEnrolBean enrolmentBean = new SpecialSeasonToEnrolBean();
-			enrolmentBean.setEnrolment(enrolment);
-			if(enrolment.getEnrollmentState() == EnrollmentState.ENROLLED) {
-				enrolmentBean.setEnrolmentCondition(EnrollmentCondition.TEMPORARY);
-			} else {
-				enrolmentBean.setEnrolmentCondition(EnrollmentCondition.FINAL);
-			}
-			toEnrol.add(enrolmentBean);
-		}
-    	
-    	Set<SpecialSeasonToEnrolBean> alreadyEnroled = new HashSet<SpecialSeasonToEnrolBean>();
-    	for (Enrolment enrolment : specialSeasonEnrolmentBean.getStudent().getActiveStudentCurricularPlan().getSpecialSeasonEnrolments(specialSeasonEnrolmentBean.getExecutionYear())) {
-			SpecialSeasonToEnrolBean enrolmentBean = new SpecialSeasonToEnrolBean();
-			enrolmentBean.setEnrolment(enrolment);
-			alreadyEnroled.add(enrolmentBean);
-		}
-    	
-    	specialSeasonEnrolmentBean.setSpecialSeasonToEnrol(toEnrol);
-    	specialSeasonEnrolmentBean.setSpecialSeasonAlreadyEnroled(alreadyEnroled);
-    	
-    	request.setAttribute("bean", specialSeasonEnrolmentBean);
-    	
-    	return mapping.findForward("viewSpecialSeasonEnrolments");
+    private ActionForward specialSeasonEnrolments(SpecialSeasonEnrolmentBean specialSeasonEnrolmentBean,
+	    ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+
+	specialSeasonEnrolmentBean.setSpecialSeasonCode(specialSeasonEnrolmentBean.getStudent()
+		.getSpecialSeasonCodeByExecutionYear(specialSeasonEnrolmentBean.getExecutionYear()));
+
+	Set<SpecialSeasonToEnrolBean> toEnrol = new HashSet<SpecialSeasonToEnrolBean>();
+	for (Enrolment enrolment : specialSeasonEnrolmentBean.getStudent()
+		.getActiveStudentCurricularPlan().getSpecialSeasonToEnrol(
+			specialSeasonEnrolmentBean.getExecutionYear())) {
+	    SpecialSeasonToEnrolBean enrolmentBean = new SpecialSeasonToEnrolBean();
+	    enrolmentBean.setEnrolment(enrolment);
+	    if (enrolment.getEnrollmentState() == EnrollmentState.ENROLLED) {
+		enrolmentBean.setEnrolmentCondition(EnrollmentCondition.TEMPORARY);
+	    } else {
+		enrolmentBean.setEnrolmentCondition(EnrollmentCondition.FINAL);
+	    }
+	    toEnrol.add(enrolmentBean);
+	}
+
+	Set<SpecialSeasonToEnrolBean> alreadyEnroled = new HashSet<SpecialSeasonToEnrolBean>();
+	for (Enrolment enrolment : specialSeasonEnrolmentBean.getStudent()
+		.getActiveStudentCurricularPlan().getSpecialSeasonEnrolments(
+			specialSeasonEnrolmentBean.getExecutionYear())) {
+	    SpecialSeasonToEnrolBean enrolmentBean = new SpecialSeasonToEnrolBean();
+	    enrolmentBean.setEnrolment(enrolment);
+	    alreadyEnroled.add(enrolmentBean);
+	}
+
+	specialSeasonEnrolmentBean.setSpecialSeasonToEnrol(toEnrol);
+	specialSeasonEnrolmentBean.setSpecialSeasonAlreadyEnroled(alreadyEnroled);
+
+	request.setAttribute("bean", specialSeasonEnrolmentBean);
+
+	return mapping.findForward("viewSpecialSeasonEnrolments");
     }
-    
+
     public ActionForward viewSpecialSeasonEnrolments(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) {
-    	SpecialSeasonEnrolmentBean specialSeasonEnrolmentBean = (SpecialSeasonEnrolmentBean) RenderUtils.getViewState().getMetaObject().getObject();
+	    HttpServletRequest request, HttpServletResponse response) {
+	SpecialSeasonEnrolmentBean specialSeasonEnrolmentBean = (SpecialSeasonEnrolmentBean) RenderUtils
+		.getViewState().getMetaObject().getObject();
 
-    	Registration registration = Registration.readStudentByNumberAndDegreeType(specialSeasonEnrolmentBean.getStudentNumber(), DegreeType.DEGREE);
-    	
-    	if(registration == null) {
-    		addActionMessage(request, "error.student.notExist", specialSeasonEnrolmentBean.getStudentNumber().toString());
-    		request.setAttribute("bean", specialSeasonEnrolmentBean);
-    		return mapping.findForward("prepareChooseStudent");
-    	}
-    	
-    	specialSeasonEnrolmentBean.setStudent(registration);
-    		
-    	return specialSeasonEnrolments(specialSeasonEnrolmentBean, mapping, form, request, response);
+	Registration registration = Registration.readStudentByNumberAndDegreeType(
+		specialSeasonEnrolmentBean.getStudentNumber(), DegreeType.DEGREE);
+
+	if (registration == null) {
+	    addActionMessage(request, "error.student.notExist", specialSeasonEnrolmentBean
+		    .getStudentNumber().toString());
+	    request.setAttribute("bean", specialSeasonEnrolmentBean);
+	    return mapping.findForward("prepareChooseStudent");
+	}
+
+	specialSeasonEnrolmentBean.setStudent(registration);
+
+	return specialSeasonEnrolments(specialSeasonEnrolmentBean, mapping, form, request, response);
     }
-    
+
     public ActionForward createSpecialSeasonEnrolments(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException {
-    	SpecialSeasonEnrolmentBean specialSeasonEnrolmentBean = (SpecialSeasonEnrolmentBean) RenderUtils.getViewState("enrol").getMetaObject().getObject();
-    	RenderUtils.invalidateViewState();
-    	
-    	Collection<Enrolment> specialSeasonToEnrolSubmited = specialSeasonEnrolmentBean.getSpecialSeasonToEnrolSubmited();
-    	if(!specialSeasonToEnrolSubmited.isEmpty()) {
-    		try {
-				ServiceUtils.executeService(getUserView(request), "CreateSpecialSeasonEvaluations", new Object[] {specialSeasonEnrolmentBean.getStudent(), specialSeasonEnrolmentBean.getExecutionYear(), specialSeasonToEnrolSubmited});
-			} catch (EnrolmentException e) {
-				addActionMessage(request, e.getMessage(), e.getArgs());
-			} 
-    	}
-    	
-    	return specialSeasonEnrolments(specialSeasonEnrolmentBean, mapping, form, request, response);
+	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
+	    FenixServiceException {
+	SpecialSeasonEnrolmentBean specialSeasonEnrolmentBean = (SpecialSeasonEnrolmentBean) RenderUtils
+		.getViewState("enrol").getMetaObject().getObject();
+	RenderUtils.invalidateViewState();
+
+	Collection<Enrolment> specialSeasonToEnrolSubmited = specialSeasonEnrolmentBean
+		.getSpecialSeasonToEnrolSubmited();
+	if (!specialSeasonToEnrolSubmited.isEmpty()) {
+	    try {
+		ServiceUtils.executeService(getUserView(request), "CreateSpecialSeasonEvaluations",
+			new Object[] { specialSeasonEnrolmentBean.getStudent(),
+				specialSeasonEnrolmentBean.getExecutionYear(),
+				specialSeasonToEnrolSubmited });
+	    } catch (EnrolmentException e) {
+		addActionMessage(request, e.getMessage(), e.getArgs());
+	    }
+	}
+
+	if (specialSeasonEnrolmentBean.getStudent().getSpecialSeasonCodeByExecutionYear(
+		specialSeasonEnrolmentBean.getExecutionYear()).getMaxEnrolments() < specialSeasonEnrolmentBean
+		.getStudent().getActiveStudentCurricularPlan().getSpecialSeasonEnrolments(
+			specialSeasonEnrolmentBean.getExecutionYear()).size()) {
+	    
+	    addActionMessage(request, "error.too.many.specialSeason.enrolments",
+		    specialSeasonEnrolmentBean.getStudent().getSpecialSeasonCodeByExecutionYear(
+			    specialSeasonEnrolmentBean.getExecutionYear()).getMaxEnrolments().toString());
+	    
+	}
+
+	return specialSeasonEnrolments(specialSeasonEnrolmentBean, mapping, form, request, response);
     }
-    
+
     public ActionForward deleteSpecialSeasonEnrolments(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException {
-    	SpecialSeasonEnrolmentBean specialSeasonEnrolmentBean = (SpecialSeasonEnrolmentBean) RenderUtils.getViewState("unenrol").getMetaObject().getObject();
-    	RenderUtils.invalidateViewState();
-    	
-    	Collection<Enrolment> specialSeasonAlreadyEnroledSubmited = specialSeasonEnrolmentBean.getSpecialSeasonAlreadyEnroledSubmited();
-    	if(!specialSeasonAlreadyEnroledSubmited.isEmpty()) {
-    		try {
-				ServiceUtils.executeService(getUserView(request), "DeleteSpecialSeasonEvaluations", new Object[] {specialSeasonAlreadyEnroledSubmited});
-			} catch (NotAuthorizedFilterException e) {
-				// TODO Auto-generated catch block
-				
-			} catch (DomainException e) {
-				// TODO Auto-generated catch block
-				
-			}
-    	}
-    	
-    	return specialSeasonEnrolments(specialSeasonEnrolmentBean, mapping, form, request, response);
+	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
+	    FenixServiceException {
+	SpecialSeasonEnrolmentBean specialSeasonEnrolmentBean = (SpecialSeasonEnrolmentBean) RenderUtils
+		.getViewState("unenrol").getMetaObject().getObject();
+	RenderUtils.invalidateViewState();
+
+	Collection<Enrolment> specialSeasonAlreadyEnroledSubmited = specialSeasonEnrolmentBean
+		.getSpecialSeasonAlreadyEnroledSubmited();
+	if (!specialSeasonAlreadyEnroledSubmited.isEmpty()) {
+	    ServiceUtils.executeService(getUserView(request), "DeleteSpecialSeasonEvaluations",
+		    new Object[] { specialSeasonAlreadyEnroledSubmited });
+	}
+
+	return specialSeasonEnrolments(specialSeasonEnrolmentBean, mapping, form, request, response);
     }
-    
-    public ActionForward changeSpecialSeasonCodePostBack(ActionMapping mapping,
-            ActionForm form, HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException {
-        
-    	SpecialSeasonEnrolmentBean specialSeasonEnrolmentBean = (SpecialSeasonEnrolmentBean) RenderUtils.getViewState().getMetaObject().getObject();
-        RenderUtils.invalidateViewState();
-        
-        try {
-			ServiceUtils.executeService(getUserView(request), "ChangeSpecialSeasonCode", new Object[] {specialSeasonEnrolmentBean.getStudent(), specialSeasonEnrolmentBean.getExecutionYear(), specialSeasonEnrolmentBean.getSpecialSeasonCode()});
-		} catch (DomainException e) {
-			addActionMessage(request, e.getMessage(), null);
-		}
-        
-		return specialSeasonEnrolments(specialSeasonEnrolmentBean, mapping, form, request, response);
+
+    public ActionForward changeSpecialSeasonCodePostBack(ActionMapping mapping, ActionForm form,
+	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
+	    FenixServiceException {
+
+	SpecialSeasonEnrolmentBean specialSeasonEnrolmentBean = (SpecialSeasonEnrolmentBean) RenderUtils
+		.getViewState().getMetaObject().getObject();
+	RenderUtils.invalidateViewState();
+
+	try {
+	    ServiceUtils.executeService(getUserView(request), "ChangeSpecialSeasonCode", new Object[] {
+		    specialSeasonEnrolmentBean.getStudent(),
+		    specialSeasonEnrolmentBean.getExecutionYear(),
+		    specialSeasonEnrolmentBean.getSpecialSeasonCode() });
+	} catch (DomainException e) {
+	    addActionMessage(request, e.getMessage(), null);
+	}
+
+	return specialSeasonEnrolments(specialSeasonEnrolmentBean, mapping, form, request, response);
     }
 
 }
