@@ -6,28 +6,29 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 
 <logic:present role="RESEARCHER">
-	<bean:define id="unitAssociations" name="result" property="resultUnitAssociations"/>
+	<bean:define id="associations" name="result" property="resultUnitAssociations"/>
 	
 	<!-- Action paths definitions -->
-	<bean:define id="requestParameters">
-		resultId=<bean:write name="result" property="idInternal"/>&resultType=<bean:write name="result" property="class.simpleName"/>
+	<bean:define id="parameters">
+		resultId=<bean:write name="result" property="idInternal"/>
+		&resultType=<bean:write name="result" property="class.simpleName"/>
 	</bean:define>
-	<bean:define id="createActionPath">
-		/result/resultAssociationsManagement.do?method=createUnitAssociation&<bean:write name="requestParameters"/>
+	<bean:define id="createPath">
+		/result/resultAssociationsManagement.do?method=createUnitAssociation&<bean:write name="parameters"/>
 	</bean:define>
-	<bean:define id="prepareEditActionPath">
-		/result/resultAssociationsManagement.do?method=prepareEditUnitAssociations&<bean:write name="requestParameters"/>
+	<bean:define id="prepareEditPath">
+		/result/resultAssociationsManagement.do?method=prepareEditUnitAssociations&<bean:write name="parameters"/>
 	</bean:define>
 	<bean:define id="backLink">
-		/result/resultAssociationsManagement.do?method=backToResult&<bean:write name="requestParameters"/>
+		/result/resultAssociationsManagement.do?method=backToResult&<bean:write name="parameters"/>
 	</bean:define>
 	<bean:define id="removeLink">
-		/result/resultAssociationsManagement.do?method=removeUnitAssociation&<bean:write name="requestParameters"/>
+		/result/resultAssociationsManagement.do?method=removeUnitAssociation&<bean:write name="parameters"/>
 	</bean:define>
 
 	<%-- Title --%>		
-	<em><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.result.superUseCaseTitle"/></em>
-	<h2><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.result.unitAssociations.useCaseTitle"/>: <fr:view name="result" property="title"/></h2>
+	<em><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.Result.superUseCase.title"/></em>
+	<h2><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultUnitAssociation.useCase.title"/>: <fr:view name="result" property="title"/></h2>
 	
 	<%-- Warning/Error messages --%>
 	<logic:messagesPresent name="messages" message="true">
@@ -37,12 +38,16 @@
 	</logic:messagesPresent>
 
 	<%-- List of existing unit associations --%>
-	<logic:empty name="unitAssociations">
-		<p><em><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.result.unitAssociations.emptyList"/></em></p>
+	<h4><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultUnitAssociation.title.label"/></h4>
+	<logic:empty name="associations">
+		<p><em><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultUnitAssociation.emptyList"/></em></p>
 	</logic:empty>
-	<logic:notEmpty name="unitAssociations">
-		<fr:view name="unitAssociations" layout="tabular" schema="resultUnitAssociation.summary">
-			<fr:layout>
+	<logic:notEmpty name="associations">
+		<fr:view name="associations"schema="resultUnitAssociation.summary">
+			<fr:layout name="tabular">
+				<fr:property name="classes" value="tstyle2" />
+				<fr:property name="columnClasses" value=",,,acenter" />
+				
 				<fr:property name="link(remove)" value="<%= removeLink %>"/>
 				<fr:property name="param(remove)" value="idInternal/associationId"/>
 				<fr:property name="key(remove)" value="link.remove"/>
@@ -52,18 +57,20 @@
 	</logic:notEmpty>
 	
 	<%-- Create new result unit association --%>
-	<h3/> <bean:message bundle="RESEARCHER_RESOURCES" key="researcher.result.unitAssociations.addNewUnitAssociation"/> </h3>
+	<h3/><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultUnitAssociation.add"/></h3>
 	<logic:present name="bean">
-		<fr:edit 	id="bean" name="bean" schema="resultUnitAssociation.create"
-					action="<%= createActionPath %>">
-			<fr:destination name="invalid" path="<%= prepareEditActionPath %>"/>	
+		<fr:edit id="bean" name="bean" schema="resultUnitAssociation.create" action="<%= createPath %>">
+			<fr:layout name="tabular">
+				<fr:property name="classes" value="style1"/>
+				<fr:property name="columnClasses" value="listClasses,,"/>
+			</fr:layout>
+			<fr:destination name="exception" path="<%= prepareEditPath %>"/>
+			<fr:destination name="invalid" path="<%= prepareEditPath %>"/>	
 			<fr:destination name="cancel" path="<%= backLink %>"/>	
 		</fr:edit>
 	</logic:present>
 	<br/>
 	
 	<%-- Go to previous page --%>
-	<html:link page="<%= backLink %>">
-		<bean:message bundle="RESEARCHER_RESOURCES" key="researcher.project.editProject.goBackToView" />
-	</html:link>
+	<html:link page="<%= backLink %>"><bean:message bundle="RESEARCHER_RESOURCES" key="link.goBackToView"/></html:link>
 </logic:present>
