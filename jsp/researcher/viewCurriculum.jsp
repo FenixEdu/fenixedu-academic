@@ -131,21 +131,21 @@
 		<fr:view name="resultPublications">
 			<fr:layout>
 				<fr:property name="eachLayout" value="values-comma"/>
-				<fr:property name="eachSchema" value="person.result"/>
+				<fr:property name="eachSchema" value="result.simple.detail"/>
 			</fr:layout>
 		</fr:view>
 		
 		<!-- Patents -->
 		<h3 id='patentsTitle' class='cd_heading'/> <span> <bean:message bundle="RESEARCHER_RESOURCES" key="researcher.viewCurriculum.patentsTitle"/> </span> </h3>
 		
-		<fr:view name="resultPatents">
+		<fr:view name="resultPatents" layout="tabular-list">
 			<fr:layout>
-				<fr:property name="eachLayout" value="values-comma"/>
-				<fr:property name="eachSchema" value="person.result"/>
+				<fr:property name="subLayout" value="values"/>
+				<fr:property name="subSchema" value="result.simple.detail"/>
 			</fr:layout>
 		</fr:view>
 		<logic:empty name="resultPatents">
-			<p><em><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.result.patent.listPatentsUseCase.emptyList"/></em></p>
+			<p><em><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultPatent.emptyList"/></em></p>
 		</logic:empty>
 
 </logic:present>
