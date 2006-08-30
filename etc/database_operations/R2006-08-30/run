@@ -37,3 +37,5 @@ execute "Add DegreeCurricularPlanLEGM" addDegreeCurricularPlanLEGM.sql
 execute "Add DegreeCurricularPlanLEMAT" addDegreeCurricularPlanLEMAT.sql
 execute "Add DegreeCurricularPlanLEGI" addDegreeCurricularPlanLEGI.sql
 execute "Change EnrolmentPeriod" changeEnrolmentPeriodTable.sql
+
+execute "Create RegistrationData Table" createRegistrationDataByPeriodTable.sql

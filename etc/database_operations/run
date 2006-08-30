@@ -27,4 +27,3 @@ function executeWithTempFile() {
 	echo
 }
 
-execute "Create RegistrationData Table" createRegistrationDataByPeriodTable.sql
