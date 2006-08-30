@@ -409,9 +409,9 @@
 	<slot name="participator" layout="autoComplete" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
 		<property name="size" value="70"/>
 		<property name="rawSlotName" value="participatorName"/>
-		<property name="labelField" value="name"/>
+		<property name="labelField" value="text"/>
 		<property name="indicatorShown" value="true"/>
-		<property name="serviceName" value="SearchObjects"/>
+		<property name="serviceName" value="SearchPersonsForParticipations"/>
 		<property name="serviceArgs" value="slot=name"/>
 		<property name="className" value="net.sourceforge.fenixedu.domain.Person"/>				
 		<property name="minChars" value="3"/>
