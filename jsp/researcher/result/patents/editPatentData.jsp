@@ -7,18 +7,18 @@
 
 <logic:present role="RESEARCHER">
 	<bean:define id="actionPath">
-		/resultPatents/prepareEditPatent.do?resultId=<bean:write name="patent" property="idInternal"/>
+		/resultPatents/prepareEdit.do?resultId=<bean:write name="patent" property="idInternal"/>
 	</bean:define>
 	<bean:define id="exceptionPath">
-		/resultPatents/prepareEditPatentData.do?resultId=<bean:write name="patent" property="idInternal"/>
+		/resultPatents/prepareEditData.do?resultId=<bean:write name="patent" property="idInternal"/>
 	</bean:define>
 	<bean:define id="cancelPath">
 		<%= actionPath %>
 	</bean:define>
 
 	<%-- Title messages --%>
-	<em><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.result.superUseCaseTitle"/></em>
-	<h2><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.result.patent.editPatentUseCase.title"/></h2>
+	<em><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.Result.superUseCase.title"/></em>
+	<h2><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultPatent.edit.useCase.title"/></h2>
 	<h3><bean:message bundle="RESEARCHER_RESOURCES" key="label.data"/></h3>	
 	
 	<%-- Warning/Error messages --%>
@@ -36,6 +36,7 @@
 	        <fr:property name="columnClasses" value="listClasses,,"/>
 	    </fr:layout>
 	    <fr:destination name="exception" path="<%= exceptionPath %>"/>
+	    <fr:destination name="invalid" path="<%= exceptionPath %>"/>
    	    <fr:destination name="cancel" path="<%= cancelPath %>"/>
 	</fr:edit>
 </logic:present>

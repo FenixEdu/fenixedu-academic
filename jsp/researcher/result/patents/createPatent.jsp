@@ -7,8 +7,8 @@
 
 <logic:present role="RESEARCHER">
 	<!-- Titles -->
-	<em><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.result.superUseCaseTitle"/></em>
-	<h2><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.result.patent.createPatentUseCase.title"/></h2>
+	<em><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.Result.superUseCase.title"/></em>
+	<h2><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultPatent.create.link"/></h2>
 	
 	<!-- Author name -->
 	<h3><bean:message bundle="RESEARCHER_RESOURCES" key="label.resultParticipations"/></h3>
@@ -24,14 +24,15 @@
 	<h3><bean:message bundle="RESEARCHER_RESOURCES" key="label.data"/></h3>	
 	<fr:create 	id="createPatent" type="net.sourceforge.fenixedu.domain.research.result.patent.ResultPatent" 
 				schema="patent.create"
-				action="/patents/patentsManagement.do?method=prepareEditPatent">
+				action="/patents/management.do?method=prepareEdit">
+		<fr:hidden slot="participation" name="UserView" property="person"/>
 	    <fr:layout name="tabular">
 	        <fr:property name="classes" value="style1"/>
 	        <fr:property name="columnClasses" value="listClasses,,"/>
 	    </fr:layout>
-	    <fr:destination name="exception" path="/patents/patentsManagement.do?method=prepareCreatePatent"/>
-	    <fr:destination name="invalid" path="/patents/patentsManagement.do?method=prepareCreatePatent"/>
-	    <fr:destination name="cancel" path="/patents/patentsManagement.do?method=listPatents"/>
+	    <fr:destination name="exception" path="/patents/management.do?method=prepareCreate"/>
+	    <fr:destination name="invalid" path="/patents/management.do?method=prepareCreate"/>
+	    <fr:destination name="cancel" path="/patents/management.do?method=management"/>
 	</fr:create>
 </logic:present>
 <br/>
