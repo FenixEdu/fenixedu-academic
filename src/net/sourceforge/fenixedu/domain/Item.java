@@ -105,44 +105,6 @@ public class Item extends Item_Base {
 	super.deleteDomainObject();
     }
 
-    public void edit(String newItemName, String newItemInformation, Integer newOrder) {
-
-	if (newItemName == null || newItemInformation == null || newOrder == null)
-	    throw new NullPointerException();
-
-	newOrder = organizeItemsOrder(newOrder, this.getItemOrder(), this.getSection());
-
-	// this.setInformation(newItemInformation);
-	this.setItemOrder(newOrder);
-	// this.setName(newItemName);
-    }
-
-    private Integer organizeItemsOrder(Integer newOrder, Integer oldOrder, Section section) {
-
-	List<Item> items = section.getAssociatedItems();
-
-	int diffOrder = newOrder.intValue() - oldOrder.intValue();
-
-	if (diffOrder != 0) {
-	    if (diffOrder > 0)
-		for (Item item : items) {
-		    int iterItemOrder = item.getItemOrder().intValue();
-		    if (iterItemOrder > oldOrder.intValue() && iterItemOrder <= newOrder.intValue()) {
-			item.setItemOrder(new Integer(iterItemOrder - 1));
-		    }
-		}
-	    else {
-		for (Item item : items) {
-		    int iterItemOrder = item.getItemOrder().intValue();
-		    if (iterItemOrder >= newOrder.intValue() && iterItemOrder < oldOrder.intValue()) {
-			item.setItemOrder(new Integer(iterItemOrder + 1));
-		    }
-		}
-	    }
-	}
-	return newOrder;
-    }
-
     public static abstract class ItemFactory implements Serializable, FactoryExecutor {
 	private Integer itemOrder;
 

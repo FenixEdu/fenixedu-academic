@@ -113,6 +113,8 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
         return item;
     }
 
+    // SECTIONS
+
     public ActionForward createSection(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
         final Section section = selectSection(request);
@@ -175,7 +177,77 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
         final Integer sectionID = Integer.valueOf(parameter);
         return rootDomainObject.readSectionByOID(sectionID);
     }
+    
+    public ActionForward prepareImportSections(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) {
+          
+        request.setAttribute("importContentBean", new ImportContentBean());
+        return mapping.findForward("importSections");
+    }
+    
+    public ActionForward prepareImportSectionsPostBack(ActionMapping mapping,
+            ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) {    
+        
+        prepareImportContentPostBack(request);
+        return mapping.findForward("importSections");
+    }
 
+    private void prepareImportContentPostBack(HttpServletRequest request) {
+        IViewState viewState = RenderUtils.getViewState("importContentBean");        
+        final ImportContentBean bean = (ImportContentBean) viewState.getMetaObject().getObject();                        
+        RenderUtils.invalidateViewState();        
+        request.setAttribute("importContentBean", bean);
+    }
+    
+    public ActionForward prepareImportSectionsInvalid(ActionMapping mapping,
+            ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) {
+        
+        prepareImportContentInvalid(request);        
+        return mapping.findForward("importSections");
+    }
+
+    private void prepareImportContentInvalid(HttpServletRequest request) {
+        IViewState viewState = RenderUtils.getViewState("importContentBeanWithExecutionCourse");
+        viewState = (viewState == null) ? RenderUtils.getViewState("importContentBean") : viewState;
+        final ImportContentBean bean = (ImportContentBean) viewState.getMetaObject().getObject();  
+        request.setAttribute("importContentBean", bean);
+    }
+    
+    public ActionForward listExecutionCoursesToImportSections(ActionMapping mapping,
+            ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) {
+        
+        listExecutionCoursesToImportContent(request);
+        return mapping.findForward("importSections");
+    }
+
+    private void listExecutionCoursesToImportContent(HttpServletRequest request) {
+        final IViewState viewState = RenderUtils.getViewState("importContentBean");
+        final ImportContentBean bean = (ImportContentBean) viewState.getMetaObject().getObject();        
+        request.setAttribute("importContentBean", bean);
+    }
+
+    public ActionForward importSections(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+     
+        importContent(request, "ImportSections");
+        return mapping.findForward("instructions");
+    }
+
+    private void importContent(HttpServletRequest request, String importContentService) throws FenixServiceException, FenixFilterException {
+        final ExecutionCourse executionCourseTo = (ExecutionCourse) request.getAttribute("executionCourse");
+        final IViewState viewState = RenderUtils.getViewState("importContentBeanWithExecutionCourse");
+        final ImportContentBean bean = (ImportContentBean) viewState.getMetaObject().getObject();                
+        request.setAttribute("importContentBean", bean);
+        
+        final ExecutionCourse executionCourseFrom = bean.getExecutionCourse();
+        final Object args[] = { executionCourseTo.getIdInternal(), executionCourseTo, executionCourseFrom, null};
+        try {
+            ServiceManagerServiceFactory.executeService(getUserView(request), importContentService, args);
+        } catch (DomainException e) {
+            addActionMessage(request, e.getKey(), e.getArgs());
+        }
+    }     
+       
     public ActionForward program(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
         return mapping.findForward("program");

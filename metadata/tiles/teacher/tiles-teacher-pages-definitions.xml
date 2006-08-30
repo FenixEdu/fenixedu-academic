@@ -575,6 +575,10 @@
 		<put name="body" value="/teacher/executionCourse/createSection.jsp" />
 	</definition>
 
+	<definition name="manage-execution-course-sections-import" extends="execution-course-administration">
+		<put name="body" value="/teacher/executionCourse/importSections.jsp" />
+	</definition>
+	
 	<definition name="manage-execution-course-section" extends="execution-course-administration">
 		<put name="body" value="/teacher/executionCourse/section.jsp" />
 	</definition>

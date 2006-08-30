@@ -2930,24 +2930,6 @@
 		</filterChains>
 	</service>
 	<service>
-		<name>InsertSection</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.InsertSection</implementationClass>
-		<description />
-		<isTransactional>true</isTransactional>
-		<filterChains>
-			<chain name="ExecutionCourseAndSectionLecturingTeacherAuthorization" />
-		</filterChains>
-	</service>
-	<service>
-		<name>EditSection</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.EditSection</implementationClass>
-		<description />
-		<isTransactional>true</isTransactional>
-		<filterChains>
-			<chain name="ExecutionCourseAndSectionLecturingTeacherAuthorization" />
-		</filterChains>
-	</service>
-	<service>
 		<name>DeleteSection</name>
 		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.DeleteSection</implementationClass>
 		<description />
@@ -2956,22 +2938,14 @@
 			<chain name="ExecutionCourseLecturingTeacherAuthorization" />
 		</filterChains>
 	</service>
-	<service>
-		<name>InsertItem</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.InsertItem</implementationClass>
+		<service>
+		<name>ImportSections</name>
+		<implementationClass> 
+            net.sourceforge.fenixedu.applicationTier.Servico.teacher.ImportSections</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains>
-			<chain name="ExecutionCourseAndSectionLecturingTeacherAuthorization" />
-		</filterChains>
-	</service>
-	<service>
-		<name>EditItem</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.EditItem</implementationClass>
-		<description />
-		<isTransactional>true</isTransactional>
-		<filterChains>
-			<chain name="ExecutionCourseAndItemLecturingTeacherAuthorization" />
+			<chain name="ExecutionCourseLecturingTeacherAuthorization" />
 		</filterChains>
 	</service>
 	<service>

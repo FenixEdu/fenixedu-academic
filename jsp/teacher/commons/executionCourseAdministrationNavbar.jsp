@@ -47,6 +47,11 @@
 				<bean:message key="link.createSection"/>
 			</html:link>
 		</li>
+		<li>
+			<html:link page="/manageExecutionCourse.do?method=prepareImportSections" paramId="executionCourseID" paramName="executionCourse" paramProperty="idInternal">
+				<bean:message key="label.import.sections"/>
+			</html:link>
+		</li>
 		<logic:notEmpty name="executionCourse" property="site.associatedSections">
 			<bean:define id="sections" toScope="request" name="executionCourse" property="site.orderedTopLevelSections"/>
 			<jsp:include page="/teacher/executionCourse/sections.jsp"/>

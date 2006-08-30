@@ -5,7 +5,6 @@
 package net.sourceforge.fenixedu.domain;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -14,6 +13,7 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.util.MultiLanguageString;
 
 import org.joda.time.DateTime;
 
@@ -42,39 +42,8 @@ public class Site extends Site_Base {
         new Announcement(title, new DateTime(), information, this);
     }
 
-    public Section createSection(String sectionName, Section parentSection, Integer sectionOrder) {
-        if (sectionName == null || sectionOrder == null)
-            throw new NullPointerException();
-
-        final Section section = new Section();
-        // section.setName(sectionName);
-        section.setLastModifiedDate(Calendar.getInstance().getTime());
-
-        Integer newSectionOrder = organizeExistingSectionsOrder(parentSection, sectionOrder);
-        section.setSectionOrder(newSectionOrder);
-
-        section.setSite(this);
-        section.setSuperiorSection(parentSection);
-
-        return section;
-    }
-
-    private Integer organizeExistingSectionsOrder(final Section parentSection, int sectionOrder) {
-
-        List<Section> associatedSections = getAssociatedSections(parentSection);
-
-        if (associatedSections != null) {
-            if (sectionOrder == -1) {
-                sectionOrder = associatedSections.size();
-            }
-            for (final Section section : associatedSections) {
-                int oldSectionOrder = section.getSectionOrder();
-                if (oldSectionOrder >= sectionOrder) {
-                    section.setSectionOrder(oldSectionOrder + 1);
-                }
-            }
-        }
-        return sectionOrder;
+    public Section createSection(MultiLanguageString sectionName, Section parentSection, Integer sectionOrder) {
+        return new Section(this, sectionName, sectionOrder, parentSection);
     }
 
     private static final Comparator<Announcement> ANNOUNCEMENT_ORDER = new Comparator<Announcement>() {
@@ -163,7 +132,7 @@ public class Site extends Site_Base {
     public void copySectionsAndItemsFrom(Site siteFrom) {
         for (Section sectionFrom : siteFrom.getAssociatedSections()) {
             if (sectionFrom.getSuperiorSection() == null) {
-                Section sectionTo = this.createSection(sectionFrom.getName().getContent(Language.pt), null, sectionFrom.getSectionOrder());
+                Section sectionTo = this.createSection(sectionFrom.getName(), null, sectionFrom.getSectionOrder());
                 sectionTo.copyItemsFrom(sectionFrom);
                 sectionTo.copySubSectionsAndItemsFrom(sectionFrom);
             }

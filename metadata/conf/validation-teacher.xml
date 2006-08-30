@@ -593,33 +593,6 @@
 
     </form>         
 		
-	<!-- validation for editSectionForm -->
-    <form name="editSectionForm">
-      <field property="name" depends="required" page="1">
-        <arg0 key="message.sectionName" resource="true"/>
-      </field>
-      <field property="sectionOrder" depends="required" page="1">
-        <arg0 key="message.sectionOrder" resource="true"/>
-      </field>
-
-    </form>      	
-		          
-		<!-- validation for itemForm -->
-    <form name="itemForm">
-      <field property="information" depends="required" page="1">
-        <arg0 key="message.itemInformation" resource="true"/>
-      </field>
-      
-      <field property="name" depends="required" page="1">
-        <arg0 key="message.itemName" resource="true"/>
-      </field>
- 	<field property="urgent" depends="required" page="1">
-        <arg0 key="message.urgent" resource="true"/>
-      </field>
-       <field property="itemOrder" depends="required" page="1">
-        <arg0 key="message.itemOrder" resource="true"/>
-      </field>
-    </form>
     <!-- Credits Validation -->
    <form name="creditsTeacherForm">
 		   <field property="tfcStudentsNumber" depends="integer" page="1">

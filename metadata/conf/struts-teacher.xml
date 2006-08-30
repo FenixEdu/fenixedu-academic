@@ -246,28 +246,6 @@
             <form-property name="page" type="java.lang.Integer" initial="0" />
             <form-property name="dynamicMailDistribution" type="java.lang.Boolean" />
         </form-bean>        
-        <form-bean name="sectionForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
-            <form-property name="name" type="java.lang.String" />
-            <form-property name="sectionOrder" type="java.lang.String" />
-            <form-property name="page" type="java.lang.Integer" initial="0" />
-        </form-bean>
-        <form-bean name="editSectionForm" type="org.apache.struts.validator.DynaValidatorForm" 
-            dynamic="true">
-            <form-property name="name" type="java.lang.String" />
-            <form-property name="sectionOrder" type="java.lang.Integer" />
-            <!-- to remove -->
-            <form-property name="parentSection" type="java.lang.String" />
-            <form-property name="sectionIndex" type="java.lang.Integer" />
-            <form-property name="page" type="java.lang.Integer" initial="0" />
-        </form-bean>
-        <form-bean name="itemForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
-            <form-property name="editor" type="java.lang.String" initial="true"/>
-            <form-property name="information" type="java.lang.String"/>
-            <form-property name="itemOrder" type="java.lang.String" />
-            <form-property name="name" type="java.lang.String" />
-            <form-property name="urgent" type="java.lang.String"/>
-            <form-property name="page" type="java.lang.Integer" initial="0" />
-        </form-bean>
         <!-- Forms for credits -->
         <!--		<form-bean name="executionCourseShiftsPercentageForm"
 			type="org.apache.struts.validator.DynaValidatorForm"
@@ -1016,12 +994,13 @@
 			<forward name="objectives" path="manage-execution-course-objectives"/>
 			<forward name="evaluationMethod" path="manage-execution-course-evaluationMethod"/>
 			<forward name="bibliographicReference" path="manage-execution-course-bibliographicReference"/>
+			<forward name="importBibliographicReferences" path="manage-execution-course-bibliographicReferences-import"/>
 			<forward name="lessonPlannings" path="manage-execution-course-lessonPlannings"/>
 			<forward name="importLessonPlannings" path="manage-execution-course-lessonPlannings-import"/>
-			<forward name="importBibliographicReferences" path="manage-execution-course-bibliographicReferences-import"/>
 			<forward name="create-lessonPlanning" path="manage-execution-course-lessonPlanning-create"/>
 			<forward name="createSection" path="manage-execution-course-createSection"/>
 			<forward name="section" path="manage-execution-course-section"/>
+			<forward name="importSections" path="manage-execution-course-sections-import"/>
 			<forward name="editSection" path="manage-execution-course-editSection"/>
 			<forward name="createItem" path="manage-execution-course-createItem"/>
 			<forward name="editItem" path="manage-execution-course-editItem"/>
@@ -1109,30 +1088,6 @@
             <forward name="createSection" path="/createSection.jsp"/>
             <forward name="createSubSection" path="/createSubSection.jsp"/>
         </action>
-        <!-- Edit Section -->
-        <action name="editSectionForm" path="/editSection" parameter="method" scope="request" 
-            type="net.sourceforge.fenixedu.presentationTier.Action.teacher.TeacherAdministrationViewerDispatchAction" 
-            validate="true" className="net.sourceforge.fenixedu.presentationTier.mapping.SiteManagementActionMapping">
-            <set-property property="componentClassName" value="net.sourceforge.fenixedu.dataTransferObject.InfoSiteSections"/>
-            <set-property property="inputForwardName" value="editSection"/>
-            <exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException" 
-                key="resources.Action.exceptions.ExistingActionException" 
-                handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler" />
-            <exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException" 
-                key="resources.Action.exceptions.NonExistingActionException" 
-                handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler" />
-            <forward name="editSection" path="/editSection.jsp"/>
-            <forward name="prepareEditSection" path="/editSection.do?method=prepareEdit"/>
-            <forward name="sectionsFirstPage" path="/sectionsFirstPage.jsp"/>
-            <forward name="viewSection" path="/viewSection.jsp"/>
-        </action>
-        <action name="sectionForm" input="/viewSection.jsp" path="/sectionManagement" parameter="method" 
-            type="net.sourceforge.fenixedu.presentationTier.Action.teacher.TeacherAdministrationViewerDispatchAction" 
-            validate="false">
-            <forward name="viewSection" path="/viewSection.jsp"/>
-            <forward name="createSection" path="/createSection.jsp"/>
-            <forward name="createSubSection" path="/createSubSection.jsp"/>
-        </action>
         <!-- Section viewer -->
         <!-- Delete Section -->
         <action path="/deleteSection" input="/viewSection.jsp" parameter="method" 
@@ -1143,30 +1098,6 @@
         <!-- Delete Item -->
         <action path="/deleteItem" input="/viewSection.jsp" parameter="method" 
             type="net.sourceforge.fenixedu.presentationTier.Action.teacher.TeacherAdministrationViewerDispatchAction">
-            <forward name="viewSection" path="/viewSection.jsp"/>
-        </action>
-        <!-- Edit Item -->
-        <action name="itemForm" input="/editItem.jsp" path="/editItem" parameter="method" scope="request" 
-            type="net.sourceforge.fenixedu.presentationTier.Action.teacher.TeacherAdministrationViewerDispatchAction" 
-            validate="true" className="net.sourceforge.fenixedu.presentationTier.mapping.SiteManagementActionMapping">
-            <set-property property="componentClassName" value="net.sourceforge.fenixedu.dataTransferObject.InfoSiteItems"/>
-            <set-property property="inputForwardName" value="editItem"/>
-            <exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException" 
-                key="resources.Action.exceptions.ExistingActionException" 
-                handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler" />
-            <forward name="editItem" path="/editItem.jsp"/>
-            <forward name="viewSection" path="/viewSection.jsp"/>
-        </action>
-        <!-- Insert Item -->
-        <action name="itemForm" path="/insertItem" parameter="method" scope="request" 
-            type="net.sourceforge.fenixedu.presentationTier.Action.teacher.TeacherAdministrationViewerDispatchAction" 
-            validate="true" className="net.sourceforge.fenixedu.presentationTier.mapping.SiteManagementActionMapping">
-            <set-property property="componentClassName" value="net.sourceforge.fenixedu.dataTransferObject.InfoSiteSection"/>
-            <set-property property="inputForwardName" value="insertItem"/>
-            <exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException" 
-                key="resources.Action.exceptions.ExistingActionException" 
-                handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler" />
-            <forward name="insertItem" path="/insertItem.jsp"/>
             <forward name="viewSection" path="/viewSection.jsp"/>
         </action>
         <!-- Actions For ExamEnrollments -->

@@ -25,7 +25,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidChangeServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidSituationServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonValidChangeServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.dataTransferObject.ISiteComponent;
@@ -36,7 +35,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoEvaluationMethod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGrouping;
-import net.sourceforge.fenixedu.dataTransferObject.InfoItem;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSite;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteAnnouncement;
@@ -76,7 +74,6 @@ import net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActio
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.InvalidArgumentsActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.InvalidSessionActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
 import net.sourceforge.fenixedu.presentationTier.mapping.SiteManagementActionMapping;
@@ -849,59 +846,6 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         return mapping.findForward("createSection");
     }
 
-    public ActionForward createSection(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixActionException,
-            FenixFilterException {
-        HttpSession session = request.getSession(false);
-        Integer sectionCode = getSectionCode(request);
-        Integer objectCode = getObjectCode(request);
-        DynaActionForm dynaForm = (DynaValidatorForm) form;
-        String sectionName = (String) dynaForm.get("name");
-        Integer order = Integer.valueOf((String) dynaForm.get("sectionOrder"));
-        IUserView userView = getUserView(request);
-        Object args[] = { objectCode, sectionCode, sectionName, order };
-        try {
-            ServiceManagerServiceFactory.executeService(userView, "InsertSection", args);
-        } catch (ExistingServiceException e) {
-            throw new ExistingActionException("Uma sec��o com esse nome", e);
-        } catch (FenixServiceException fenixServiceException) {
-            throw new FenixActionException(fenixServiceException.getMessage(), fenixServiceException);
-        }
-        return sectionsFirstPage(mapping, form, request, response);
-    }
-
-    public ActionForward prepareEditSection(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixActionException,
-            FenixFilterException {
-        Integer sectionCode = getSectionCode(request);
-        ISiteComponent sectionsComponent = new InfoSiteSections();
-        readSiteView(request, sectionsComponent, null, sectionCode, null);
-        return mapping.findForward("editSection");
-    }
-
-    public ActionForward editSection(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException, FenixFilterException {
-        HttpSession session = request.getSession(false);
-        Integer sectionCode = getSectionCode(request);
-        Integer objectCode = getObjectCode(request);
-        DynaActionForm sectionForm = (DynaValidatorForm) form;
-        String sectionName = (String) sectionForm.get("name");
-        Integer order = (Integer) sectionForm.get("sectionOrder");
-        order = new Integer(order.intValue() - 1);
-        IUserView userView = getUserView(request);
-        Object editionArgs[] = { objectCode, sectionCode, sectionName, order };
-        try {
-            ServiceManagerServiceFactory.executeService(userView, "EditSection", editionArgs);
-        } catch (ExistingServiceException ex) {
-            throw new ExistingActionException(sectionName, ex);
-        } catch (NonExistingServiceException ex) {
-            throw new NonExistingActionException(sectionName, ex);
-        } catch (FenixServiceException fenixServiceException) {
-            throw new FenixActionException(fenixServiceException);
-        }
-        return sectionsFirstPage(mapping, form, request, response);
-    }
-
     public ActionForward deleteSection(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws FenixActionException,
             FenixFilterException {
@@ -1098,79 +1042,6 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         return viewSection(mapping, form, request, response);
     }
 
-    public ActionForward prepareInsertItem(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixActionException,
-            FenixFilterException {
-        Integer sectionCode = getSectionCode(request);
-        ISiteComponent sectionComponent = new InfoSiteSection();
-        readSiteView(request, sectionComponent, null, sectionCode, null);
-
-        DynaActionForm actionForm = (DynaActionForm) form;
-        htmlEditorConfigurations(request, actionForm);
-
-        return mapping.findForward("insertItem");
-    }
-
-    public ActionForward insertItem(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException, FenixFilterException {
-        HttpSession session = request.getSession(false);
-        Integer sectionCode = getSectionCode(request);
-        Integer objectCode = getObjectCode(request);
-        DynaActionForm dynaForm = (DynaValidatorForm) form;
-        Integer order = new Integer((String) dynaForm.get("itemOrder"));
-        String itemName = (String) dynaForm.get("name");
-        String information = (String) dynaForm.get("information");
-
-        // HtmlValidator htmlValidator = new HtmlValidator();
-        // htmlValidator.validateHTMLString(information);
-        // String errors = htmlValidator.getErrors();
-        //  
-        // if((errors != null) && (!errors.equals(""))){
-        // ActionErrors actionErrors = new ActionErrors();
-        // request.setAttribute("errors", errors);
-        // actionErrors.add("htmlErrors", new
-        // ActionError("html.validate.error"));
-        // saveErrors(request, actionErrors);
-        // return mapping.getInputForward();
-        // }
-
-        String urgentString = (String) dynaForm.get("urgent");
-        InfoItem newInfoItem = new InfoItem();
-        newInfoItem.setItemOrder(order);
-        newInfoItem.setName(itemName);
-        newInfoItem.setInformation(information);
-        IUserView userView = getUserView(request);
-        Object args[] = { objectCode, sectionCode, newInfoItem };
-        try {
-            ServiceManagerServiceFactory.executeService(userView, "InsertItem", args);
-        } catch (ExistingServiceException e) {
-            throw new ExistingActionException("Um item com esse nome", e);
-        } catch (FenixServiceException fenixServiceException) {
-            throw new FenixActionException(fenixServiceException.getMessage());
-        }
-        return viewSection(mapping, form, request, response);
-    }
-
-    public ActionForward prepareEditItem(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixActionException,
-            FenixFilterException {
-        Integer itemCode = getItemCode(request);
-        ISiteComponent itemsComponent = new InfoSiteItems();
-        SiteView siteView = readSiteView(request, itemsComponent, null, itemCode, null);
-        String information = ((InfoSiteItems) siteView.getComponent()).getItem().getInformation();
-
-        if (information != null) {
-            DynaActionForm itemForm = (DynaActionForm) form;
-            itemForm.set("information", ((InfoSiteItems) siteView.getComponent()).getItem()
-                    .getInformation());
-        }
-
-        DynaActionForm actionForm = (DynaActionForm) form;
-        htmlEditorConfigurations(request, actionForm);
-
-        return mapping.findForward("editItem");
-    }
-
     private Integer getItemCode(HttpServletRequest request) {
         Integer itemCode = null;
         String itemCodeString = request.getParameter("itemCode");
@@ -1193,47 +1064,6 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         }
 
         return fileItemId;
-    }
-
-    public ActionForward editItem(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException, FenixFilterException {
-        HttpSession session = request.getSession(false);
-        Integer itemCode = getItemCode(request);
-        Integer objectCode = getObjectCode(request);
-        DynaActionForm itemForm = (DynaActionForm) form;
-        String information = (String) itemForm.get("information");
-
-        // HtmlValidator htmlValidator = new HtmlValidator();
-        // htmlValidator.validateHTMLString(information);
-        // String errors = htmlValidator.getErrors();
-        //  
-        // if((errors != null) && (!errors.equals(""))){
-        // ActionErrors actionErrors = new ActionErrors();
-        // request.setAttribute("errors", errors);
-        // actionErrors.add("htmlErrors", new
-        // ActionError("html.validate.error"));
-        // saveErrors(request, actionErrors);
-        // return mapping.getInputForward();
-        // }
-
-        String name = (String) itemForm.get("name");
-        Boolean urgent = new Boolean((String) itemForm.get("urgent"));
-        Integer itemOrder = new Integer((String) itemForm.get("itemOrder"));
-        itemOrder = new Integer(itemOrder.intValue() - 1);
-        InfoItem newInfoItem = new InfoItem();
-        newInfoItem.setInformation(information);
-        newInfoItem.setName(name);
-        newInfoItem.setItemOrder(itemOrder);
-        IUserView userView = getUserView(request);
-        Object editItemArgs[] = { objectCode, itemCode, newInfoItem };
-        try {
-            ServiceManagerServiceFactory.executeService(userView, "EditItem", editItemArgs);
-        } catch (ExistingServiceException e) {
-            throw new ExistingActionException("Um item com esse nome", e);
-        } catch (FenixServiceException fenixServiceException) {
-            throw new FenixActionException(fenixServiceException);
-        }
-        return viewSection(mapping, form, request, response);
     }
 
     public ActionForward deleteItem(ActionMapping mapping, ActionForm form, HttpServletRequest request,
