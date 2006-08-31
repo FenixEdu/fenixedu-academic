@@ -2722,7 +2722,6 @@ class net.sourceforge.fenixedu.domain.student.Registration extends net.sourcefor
     Character arithmeticMeanClassification;        
     Integer keySenior;
     Integer keyAssociatedGaugingTestResult;
-	Integer keyAssociatedTutor;
 	Integer keyPersonalDataUseInquiryAnswers;
 	Integer keyPrecedentDegreeInformation;
 	Integer keyStudent;
@@ -3129,13 +3128,10 @@ class net.sourceforge.fenixedu.domain.publication.PublicationTypeAttribute exten
     Boolean required;
 }
 
-
 class net.sourceforge.fenixedu.domain.Tutor extends net.sourceforge.fenixedu.domain.DomainObject {
     Integer keyTeacher;
-    Integer keyStudent;
     Integer keyStudentCurricularPlan;
 }
-
 
 class net.sourceforge.fenixedu.domain.WebSite extends net.sourceforge.fenixedu.domain.DomainObject {
     String ojbConcreteClass;
@@ -3143,7 +3139,6 @@ class net.sourceforge.fenixedu.domain.WebSite extends net.sourceforge.fenixedu.d
     String mail;
     String name;
 }
-
 
     class net.sourceforge.fenixedu.domain.SiteIST extends net.sourceforge.fenixedu.domain.WebSite {
     }
@@ -6706,11 +6701,6 @@ relation TransactionPersonAccount {
 		multiplicity *;
 	}
 	net.sourceforge.fenixedu.domain.PersonAccount playsRole personAccount;
-}
-
-relation TutorStudent {
-    net.sourceforge.fenixedu.domain.Tutor playsRole associatedTutor;
-    net.sourceforge.fenixedu.domain.student.Registration playsRole student;
 }
 
 relation TutorStudentCurricularPlan {

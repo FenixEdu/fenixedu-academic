@@ -27,3 +27,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Change Tutor Table" changeTutorTable.sql

@@ -887,16 +887,15 @@ public class Registration extends Registration_Base {
         return true;
     }
 
-//    @Override
-//    public Tutor getAssociatedTutor() {
-//
-//        StudentCurricularPlan activeStudentCurricularPlan = this
-//                .getActiveOrConcludedStudentCurricularPlan();
-//        if (activeStudentCurricularPlan == null) {
-//            activeStudentCurricularPlan = this.getLastStudentCurricularPlan();
-//        }
-//
-//        return activeStudentCurricularPlan.getAssociatedTutor();
-//    }
+    public Tutor getAssociatedTutor() {
+
+        StudentCurricularPlan activeStudentCurricularPlan = this
+                .getActiveOrConcludedStudentCurricularPlan();
+        if (activeStudentCurricularPlan == null) {
+            activeStudentCurricularPlan = this.getLastStudentCurricularPlan();
+        }
+
+        return activeStudentCurricularPlan.getAssociatedTutor();
+    }
 
 }
