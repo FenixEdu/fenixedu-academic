@@ -7869,17 +7869,6 @@
 		</filterChains>
 	</service>
 	<service>
-		<name>CopySiteExecutionCourse</name>
-		<implementationClass>
-			net.sourceforge.fenixedu.applicationTier.Servico.teacher.CopySiteExecutionCourse
-		</implementationClass>
-		<description />
-		<isTransactional>true</isTransactional>
-		<filterChains>
-			<chain name="TeacherAuthorization" />
-		</filterChains>
-	</service>
-	<service>
 		<name>ReadLessonStartDate</name>
 		<implementationClass> 
             net.sourceforge.fenixedu.applicationTier.Servico.teacher.CalculateFirstDayOfLesson
