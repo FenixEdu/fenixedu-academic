@@ -21,7 +21,6 @@
 		</fr:layout>
 	</fr:view>
 </div>
-<br/>
 
 	<logic:messagesPresent message="true">
 		<html:messages id="message" message="true">

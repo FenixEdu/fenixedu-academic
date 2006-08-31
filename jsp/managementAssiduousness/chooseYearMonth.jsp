@@ -5,10 +5,8 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 <em><bean:message key="title.assiduousness" /></em>
-<br />
 <h2><bean:message key="link.exportWorkSheets" /></h2>
-<br />
-<p><span class="error0"><html:errors /></span></p>
+<p class="mtop2"><span class="error0"><html:errors /></span></p>
 
 <fr:form action="/exportAssiduousness.do?method=exportToPDFWorkDaySheet">
 	<fr:edit name="yearMonth" schema="choose.date">
