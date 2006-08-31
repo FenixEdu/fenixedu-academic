@@ -27,6 +27,16 @@ public class InfoTutor extends InfoObject {
 	return tutorDomainReference == null ? null : tutorDomainReference.getObject();
     }
     
+    @Override
+    public Integer getIdInternal() {
+	return getTutor().getIdInternal();
+    }
+
+    @Override
+    public void setIdInternal(Integer integer) {
+	throw new Error("Method should not be called!");
+    }
+
     /**
      * @return Returns the infoStudent.
      */

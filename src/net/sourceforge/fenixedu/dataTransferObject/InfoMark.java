@@ -30,6 +30,16 @@ public class InfoMark extends InfoObject {
 	return (markDomainReference == null) ? null : markDomainReference.getObject();
     }
     
+    @Override
+    public Integer getIdInternal() {
+	return getMarkObject().getIdInternal();
+    }
+
+    @Override
+    public void setIdInternal(Integer integer) {
+	throw new Error("Method should not be called!");
+    }
+
     /**
      * @return
      */
