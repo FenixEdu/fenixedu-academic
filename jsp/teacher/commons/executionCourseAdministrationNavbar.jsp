@@ -133,11 +133,5 @@
 			</html:link>
 		</li>
 		
-	<li class="navheader"><bean:message key="label.executionCourseManagement.menu.page"/></li>
-		<li>
-			<html:link page="/copySiteExecutionCourse.do?method=prepareChooseExecutionPeriod" paramId="objectCode" paramName="executionCourse" paramProperty="idInternal">
-				<bean:message key="link.copySiteExecutionCourse"/>
-			</html:link>
-		</li>
 	</ul>
 </logic:present>
