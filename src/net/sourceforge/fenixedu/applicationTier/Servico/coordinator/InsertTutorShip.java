@@ -14,6 +14,10 @@ public class InsertTutorShip extends Service {
     public Boolean verifyStudentOfThisDegree(Registration registration, DegreeType degreeType, String degreeCode)
             throws FenixServiceException, ExcepcaoPersistencia {
         StudentCurricularPlan studentCurricularPlan = registration.getActiveStudentCurricularPlan();
+        
+        if(studentCurricularPlan == null){
+            return false;
+        }
 
         return studentCurricularPlan.getDegreeCurricularPlan().getDegree().getSigla().equals(degreeCode);
     }

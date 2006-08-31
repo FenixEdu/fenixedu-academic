@@ -24,6 +24,6 @@ public class UserCoordinatorByExecutionDegree extends Service {
             throw new FenixServiceException("error.exception.notAuthorized");
         }
         return Boolean.valueOf(coordinator.getExecutionDegree().getDegreeCurricularPlan().getDegree()
-                .getSigla().equals(degree2Compare));
+                .getSigla().startsWith(degree2Compare));
     }
 }

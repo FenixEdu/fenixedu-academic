@@ -90,7 +90,7 @@ public class EnrollmentLEECAuthorizationFilter extends EnrollmentAuthorizationFi
             degreeCode = studentCurricularPlan.getDegreeCurricularPlan().getDegree().getSigla();
         }
 
-        return DEGREE_LEEC_CODE.equals(degreeCode);
+        return degreeCode.startsWith(DEGREE_LEEC_CODE);
     }
 
     private boolean verifyCoordinatorLEEC(Teacher teacher, Object[] arguments) {
@@ -113,7 +113,7 @@ public class EnrollmentLEECAuthorizationFilter extends EnrollmentAuthorizationFi
                     .getSigla();
         }
 
-        return DEGREE_LEEC_CODE.equals(degreeCode);
+        return degreeCode.startsWith(DEGREE_LEEC_CODE);
     }
 
 }

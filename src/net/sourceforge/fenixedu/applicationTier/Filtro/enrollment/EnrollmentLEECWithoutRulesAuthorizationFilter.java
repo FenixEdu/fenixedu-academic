@@ -101,7 +101,7 @@ public class EnrollmentLEECWithoutRulesAuthorizationFilter extends Authorization
                         && studentCurricularPlan.getDegreeCurricularPlan().getDegree() != null) {
                     String degreeCode = studentCurricularPlan.getDegreeCurricularPlan().getDegree()
                             .getSigla();
-                    isLEEC = DEGREE_LEEC_CODE.equals(degreeCode);
+                    isLEEC = degreeCode.startsWith(DEGREE_LEEC_CODE);
                 }
             }
         }

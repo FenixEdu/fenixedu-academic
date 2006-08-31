@@ -145,7 +145,7 @@ public class EquivalenceAuthorizationFilter extends Filtro {
      */
     private boolean isThisStudentsDegreeTheOne(Registration registration) {
         StudentCurricularPlan studentCurricularPlan = registration.getActiveStudentCurricularPlan();
-        return studentCurricularPlan.getDegreeCurricularPlan().getDegree().getSigla().equals(
+        return studentCurricularPlan.getDegreeCurricularPlan().getDegree().getSigla().startsWith(
                 DEGREE_ACRONYM);
     }
 }

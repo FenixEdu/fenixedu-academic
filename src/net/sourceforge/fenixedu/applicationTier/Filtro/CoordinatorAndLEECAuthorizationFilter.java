@@ -45,7 +45,7 @@ public class CoordinatorAndLEECAuthorizationFilter extends AuthorizationByRoleFi
         if (executionDegree != null) {
             final DegreeCurricularPlan degreeCurricularPlan = executionDegree.getDegreeCurricularPlan();
             final Degree degree = degreeCurricularPlan.getDegree();
-            if (degree.getSigla().equalsIgnoreCase("LEEC") || degree.getSigla().equalsIgnoreCase("LEEC-pB")) {
+            if (degree.getSigla().startsWith("LEEC") || degree.getSigla().equalsIgnoreCase("LEEC-pB")) {
                 final Person person = id.getPerson();
                 final Teacher teacher = person != null ? person.getTeacher() : null;
 
