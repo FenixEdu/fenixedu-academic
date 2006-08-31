@@ -113,7 +113,9 @@ public class Timeline {
                         // removes the current point attribute to new point interval attributes
                         insideIntervals.removeAttribute(attribute);
                     } else {
-                        if (newPoint.getPointAttributes().contains(DomainConstants.WORKED_ATTRIBUTES)
+                        if (!newPoint.getIntervalAttributes().contains(AttributeType.JUSTIFICATION)
+                                && newPoint.getPointAttributes().contains(
+                                        DomainConstants.WORKED_ATTRIBUTES)
                                 && attribute.equals(AttributeType.MEAL) && workedPoints % 2 == 0
                                 && workedPoints != 0) {
                             TimePoint mealStart = findIntervalStartPointByAttribute(AttributeType.MEAL);
@@ -134,8 +136,11 @@ public class Timeline {
                             }
                             TimePoint mealEnd = findIntervalEndPointByAttribute(AttributeType.MEAL);
                             if (mealEnd != null) {
+                                TimePoint pointBeforeMeal = findWorkedPointBefore(newPoint);
                                 if (!mealEnd.getPointAttributes().contains(
-                                        DomainConstants.WORKED_ATTRIBUTES)) {
+                                        DomainConstants.WORKED_ATTRIBUTES)
+                                        && pointBeforeMeal.getIntervalAttributes().contains(
+                                                AttributeType.MEAL)) {
                                     int oldMealIndex = getTimePointIndex(mealEnd);
                                     if (oldMealIndex != -1) {
                                         mealEnd.getPointAttributes().removeAttribute(attribute);
@@ -182,6 +187,20 @@ public class Timeline {
             }
         }
         return -1;
+    }
+
+    private TimePoint findWorkedPointBefore(TimePoint pointAfter) {
+        TimePoint result = null;
+        for (TimePoint point : getTimePoints()) {
+            if (point.isBefore(pointAfter)) {
+                if (point.getPointAttributes().contains(DomainConstants.WORKED_ATTRIBUTES)) {
+                    result = point;
+                }
+            } else {
+                return result;
+            }
+        }
+        return result;
     }
 
     // Removes an attribute from all timeline's points starting from startPosition

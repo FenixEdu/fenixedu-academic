@@ -17,7 +17,7 @@
 	<span class="toprint"><br/></span>
 	<fr:view name="employeeWorkSheet" property="employee" schema="show.employeeInformation">
 		<fr:layout name="tabular">
-			<fr:property name="classes" value="examMap" />
+			<fr:property name="classes" value="showinfo1 thbold" />
 		</fr:layout>
 	</fr:view>
 </div>
@@ -60,7 +60,7 @@
 	<logic:notEmpty name="employeeWorkSheet" property="workDaySheetList">
 		<fr:view name="employeeWorkSheet" property="workDaySheetList" schema="show.workDaySheet">
 			<fr:layout name="tabular">
-			    <fr:property name="classes" value="tstyle1b printborder"/>
+			    <fr:property name="classes" value="tstyle1b printborder tpadding1"/>
 				<fr:property name="columnClasses" value="bgcolor3 acenter,,acenter,aright,aright,aleft,aleft" />
 				<fr:property name="headerClasses" value="acenter" />
 			</fr:layout>
@@ -74,6 +74,12 @@
 		</logic:present>
 		<logic:present name="employeeWorkSheet" property="unjustifiedBalance">
 			<p class="mvert05"><bean:message key="label.totalUnjustified" />: <b><bean:write name="employeeWorkSheet" property="unjustifiedBalanceString"/></b></p>
+		</logic:present>
+		<logic:present name="employeeWorkSheet" property="complementaryWeeklyRest">
+			<p class="mvert05"><bean:message key="label.totalComplementaryWeeklyRest" />: <b><bean:write name="employeeWorkSheet" property="complementaryWeeklyRestString"/></b></p>
+		</logic:present>
+		<logic:present name="employeeWorkSheet" property="weeklyRest">
+			<p class="mvert05"><bean:message key="label.totalWeeklyRest" />: <b><bean:write name="employeeWorkSheet" property="weeklyRestString"/></b></p>
 		</logic:present>
 	</logic:notEmpty>
 
