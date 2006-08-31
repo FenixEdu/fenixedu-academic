@@ -41,7 +41,7 @@ public class InfoTutor extends InfoObject {
      * @return Returns the infoStudent.
      */
     public InfoStudent getInfoStudent() {
-        return InfoStudent.newInfoFromDomain(getTutor().getStudent());
+        return InfoStudent.newInfoFromDomain(getTutor().getStudentCurricularPlan().getStudent());
     }
 
     /**
