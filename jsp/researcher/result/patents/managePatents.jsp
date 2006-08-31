@@ -5,21 +5,6 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 
-<style>
-		h3.cd_heading {
-		font-weight: normal;
-		margin-top: 3em;
-		border-top: 1px solid #e5e5e5;
-		background-color: #fafafa;
-		padding: 0.25em 0 0em 0.25em;
-		padding: 0.5em 0.25em;
-		}
-		h3.cd_heading span {
-		margin-top: 2em;
-		border-bottom: 2px solid #fda;
-		}
-</style>
-		
 <logic:present role="RESEARCHER">
 	<h2/><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultPatent.management.title"/></h2>
 		

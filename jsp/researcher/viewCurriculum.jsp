@@ -5,83 +5,10 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 
-<style>
-		table.search {
-		background-color: #f5f5f5;
-		border-collapse: collapse;
-		}
-		table.search tr td {
-		border: 1px solid #fff;
-		padding: 0.3em;
-		}
-		.leftcolumn {
-		text-align: right;
-		}
-		
-		h3.cd_heading {
-		font-weight: normal;
-		margin-top: 3em;
-		border-top: 1px solid #e5e5e5;
-		background-color: #fafafa;
-		padding: 0.25em 0 0em 0.25em;
-		padding: 0.5em 0.25em;
-		}
-		h3.cd_heading span {
-		margin-top: 2em;
-		border-bottom: 2px solid #fda;
-		}
-		
-		div.cd_block {
-		background-color: #fed;
-		padding: 0.5em 0.5em 0.5em 0.5em;
-		}
-		
-		table.cd {
-		border-collapse: collapse;
-		}
-		table.cd th {
-		border: 1px solid #ccc;
-		background-color: #eee;
-		padding: 0.5em;
-		text-align: center;
-		}
-		table.cd td {
-		border: 1px solid #ccc;
-		background-color: #fff;
-		padding: 0.5em;
-		text-align: center;
-		}
-		
-		p.insert {
-		padding-left: 2em;
-		}
-		div.cd_float {
-		width: 100%;
-		float: left;
-		padding: 0 2.5em;
-		padding-bottom: 1em;
-		}
-		ul.cd_block {
-		width: 43%;
-		list-style: none;
-		float: left; 
-		margin: 0;
-		padding: 0;
-		padding: 1em;
-		}
-		ul.cd_block li {
-		}
-		ul.cd_nostyle {
-		list-style: none;
-		}
-</style>
-
-
 <logic:present role="RESEARCHER">		
 
 		<h2 id='pageTitle'/> <bean:message bundle="RESEARCHER_RESOURCES" key="researcher.viewCurriculum.title"/> </h2>
 		
-				
 		<!-- Personal Information -->
 		<h3 id='personalInformationTitle' class='cd_heading'/> <span> <bean:message bundle="RESEARCHER_RESOURCES" key="researcher.viewCurriculum.personalInformationTitle"/> </span> </h3>
 		
