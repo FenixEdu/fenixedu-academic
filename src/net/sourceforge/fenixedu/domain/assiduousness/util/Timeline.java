@@ -67,34 +67,29 @@ public class Timeline {
     }
 
     public void plotList(List<TimePoint> pointList) {
-        for (TimePoint point : pointList) {
-            plotPoint(point);
+        for (int i = 0; i < pointList.size(); i++) {
+            plotPoint(pointList.get(i), i);
         }
     }
 
     // Adds a point to the time line, sets the openIntervals accordingly
     // TODO must refactor! it's confusing and has some dups...
-    public void plotPoint(TimePoint newPoint) {
+    public void plotPoint(TimePoint newPoint, int workedPoints) {
         int timeLineSize = getNumberOfTimePoints();
         Attributes insideIntervals = new Attributes();
         for (int i = 0; i < timeLineSize; i++) {
             TimePoint currentPoint = getTimeLinePosition(i);
             if (newPoint.isAtSameTime(currentPoint)) {
-                if (insideIntervals.contains(newPoint.getPointAttributes())) {
-                    // the interval is open and we're going to close it right away
-                    pointClosesInterval(insideIntervals, newPoint, i);
-                    // TODO verificar isto! - apaguei, em principio e' redundante
-                    // currentPoint.getPointAttributes().removeAttributes(newPoint.getPointAttributes().getAttributes());
-                    // // remove the newPoint attributes from the current point
-                    currentPoint.getPointAttributes().addAttributes(
-                            newPoint.getPointAttributes().getAttributes());
-                    // since the time is the same we will not add the new point but use the current
-                } else { // the interval is not open, let's create it
-                    pointOpensInterval(insideIntervals, newPoint, i);
-                    insideIntervals.addAttributes(currentPoint.getIntervalAttributes().getAttributes());
-                    currentPoint.getPointAttributes().addAttributes(
-                            newPoint.getPointAttributes().getAttributes());
-                    // since the time is the same we will not add the new point but use the current
+                for (AttributeType attributeType : newPoint.getPointAttributes().getAttributes()) {
+                    if (insideIntervals.contains(attributeType)) {
+                        pointClosesInterval(insideIntervals, attributeType, i);
+                        currentPoint.getPointAttributes().addAttribute(attributeType);
+                    } else {
+                        pointOpensInterval(insideIntervals, attributeType, i);
+                        // insideIntervals.addAttributes(currentPoint.getIntervalAttributes()
+                        // .getAttributes());
+                        currentPoint.getPointAttributes().addAttribute(attributeType);
+                    }
                 }
                 return;
             } else if (newPoint.isBefore(currentPoint)) {
@@ -102,11 +97,12 @@ public class Timeline {
                 // adds the point in this position and shifts the current point to the next position
                 // (i+1) se attrib ponto do novo ponto estao em intervalos abertos => intervalo vai-se
                 // fechar
-                if (insideIntervals.contains(newPoint.getPointAttributes())) {
-                    // inserted point only has 1 attribute
-                    pointClosesInterval(insideIntervals, newPoint, i);
-                } else { // novo intervalo
-                    pointOpensInterval(insideIntervals, newPoint, i);
+                for (AttributeType attributeType : newPoint.getPointAttributes().getAttributes()) {
+                    if (insideIntervals.contains(attributeType)) {
+                        pointClosesInterval(insideIntervals, attributeType, i);
+                    } else {
+                        pointOpensInterval(insideIntervals, attributeType, i);
+                    }
                 }
                 return; // get off the for loop
             } else {
@@ -118,11 +114,41 @@ public class Timeline {
                         insideIntervals.removeAttribute(attribute);
                     } else {
                         if (newPoint.getPointAttributes().contains(DomainConstants.WORKED_ATTRIBUTES)
-                                && attribute.equals(AttributeType.MEAL) && i % 2 == 0 && i != 0) {
-                            currentPoint.getPointAttributes().addAttribute(attribute);
-                            currentPoint.getIntervalAttributes().addAttribute(attribute);
-                            newPoint.getPointAttributes().addAttribute(attribute);
-                            newPoint.getIntervalAttributes().removeAttribute(attribute);
+                                && attribute.equals(AttributeType.MEAL) && workedPoints % 2 == 0
+                                && workedPoints != 0) {
+                            TimePoint mealStart = findIntervalStartPointByAttribute(AttributeType.MEAL);
+                            TimePoint newMealStart = findStartLunchBreak(null);
+                            if (!mealStart.getPointAttributes().contains(
+                                    DomainConstants.WORKED_ATTRIBUTES)
+                                    && newMealStart != null && newMealStart.isBefore(mealStart)) {
+                                int newMealIndex = getTimePointIndex(newMealStart);
+                                if (newMealIndex != -1) {
+                                    newMealStart.getPointAttributes()
+                                            .removeAttribute(AttributeType.MEAL);
+                                    newMealStart.getPointAttributes().addAttribute(AttributeType.MEAL);
+                                    newMealStart.getIntervalAttributes()
+                                            .addAttribute(AttributeType.MEAL);
+                                    addIntervalAttributeToNextPoints(newMealIndex, new Attributes(
+                                            AttributeType.MEAL));
+                                }
+                            }
+                            TimePoint mealEnd = findIntervalEndPointByAttribute(AttributeType.MEAL);
+                            if (mealEnd != null) {
+                                if (!mealEnd.getPointAttributes().contains(
+                                        DomainConstants.WORKED_ATTRIBUTES)) {
+                                    int oldMealIndex = getTimePointIndex(mealEnd);
+                                    if (oldMealIndex != -1) {
+                                        mealEnd.getPointAttributes().removeAttribute(attribute);
+                                        addIntervalAttributeToNextPoints(oldMealIndex, new Attributes(
+                                                AttributeType.MEAL));
+                                    }
+                                    newPoint.getPointAttributes().addAttribute(attribute);
+                                    insideIntervals.addAttribute(attribute);
+                                }
+                            } else {
+                                newPoint.getPointAttributes().addAttribute(attribute);
+                                insideIntervals.addAttribute(attribute);
+                            }
                         } else {
                             newPoint.getIntervalAttributes().addAttribute(attribute);
                             // adds the current point attribute to new point interval attributes
@@ -146,6 +172,16 @@ public class Timeline {
         } else { // novo intervalo
             pointOpensInterval(insideIntervals, newPoint, timeLineSize - 1);
         }
+    }
+
+    private int getTimePointIndex(TimePoint mealStart) {
+        for (int i = 0; i < timePoints.size(); i++) {
+            TimePoint timePoint = timePoints.get(i);
+            if (timePoint.equals(mealStart)) {
+                return i;
+            }
+        }
+        return -1;
     }
 
     // Removes an attribute from all timeline's points starting from startPosition
@@ -179,6 +215,14 @@ public class Timeline {
         // attribute from this and the next points
     }
 
+    private void pointClosesInterval(Attributes insideIntervals, AttributeType attributeType,
+            int position) {
+        insideIntervals.removeAttributes(new Attributes(attributeType).getAttributes()); // remove the
+        // attribute from the openIntervals set
+        removeIntervalAttributeFromNextPoints(position, new Attributes(attributeType)); // remove the
+        // attribute from this and the next points
+    }
+
     // As the point opens the interval, this method adds the point's attribute to the open intervals set
     // and to all subsequent point's attribute sets
     // part of plotPoint
@@ -186,6 +230,14 @@ public class Timeline {
         insideIntervals.addAttributes(point.getPointAttributes().getAttributes()); // adds the point's
         // attribute to the openInterval set
         addIntervalAttributeToNextPoints(position, point.getPointAttributes()); // adds the point's
+        // attribute to this and the rest of the following points
+    }
+
+    private void pointOpensInterval(Attributes insideIntervals, AttributeType attributeType, int position) {
+        insideIntervals.addAttributes(new Attributes(attributeType).getAttributes()); // adds the
+        // point's
+        // attribute to the openInterval set
+        addIntervalAttributeToNextPoints(position, new Attributes(attributeType)); // adds the point's
         // attribute to this and the rest of the following points
     }
 
