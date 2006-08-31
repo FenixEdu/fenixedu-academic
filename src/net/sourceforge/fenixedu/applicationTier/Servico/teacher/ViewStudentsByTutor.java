@@ -9,7 +9,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.dataTransferObject.InfoTutorWithInfoStudent;
+import net.sourceforge.fenixedu.dataTransferObject.InfoTutor;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.Tutor;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -28,7 +28,7 @@ public class ViewStudentsByTutor extends Service {
             throw new FenixServiceException("error.tutor.impossibleOperation");
         }
 
-        List infoTutorStudents = new ArrayList();        
+        List<InfoTutor> infoTutorStudents = new ArrayList<InfoTutor>();        
         Teacher teacher = Teacher.readTeacherByUsername(userName);
 
         List<Tutor> tutorStudents = teacher.getAssociatedTutors();
@@ -38,7 +38,7 @@ public class ViewStudentsByTutor extends Service {
         }
 
         for (Tutor tutor : tutorStudents) {
-            infoTutorStudents.add(InfoTutorWithInfoStudent.newInfoFromDomain(tutor));
+            infoTutorStudents.add(InfoTutor.newInfoFromDomain(tutor));
         }
 
         return infoTutorStudents;

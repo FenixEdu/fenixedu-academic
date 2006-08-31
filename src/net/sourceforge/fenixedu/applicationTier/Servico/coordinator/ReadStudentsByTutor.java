@@ -11,7 +11,6 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTutor;
-import net.sourceforge.fenixedu.dataTransferObject.InfoTutorWithInfoStudent;
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.Tutor;
@@ -57,9 +56,9 @@ public class ReadStudentsByTutor extends Service {
             return teacherAndStudentsList;
         }
 
-        List<InfoTutor> infoTutorStudents = new ArrayList();
+        List<InfoTutor> infoTutorStudents = new ArrayList<InfoTutor>();
         for (Tutor tutor : tutorStudents) {
-            infoTutorStudents.add(InfoTutorWithInfoStudent.newInfoFromDomain(tutor));
+            infoTutorStudents.add(InfoTutor.newInfoFromDomain(tutor));
         }
         teacherAndStudentsList.add(infoTutorStudents);
 
