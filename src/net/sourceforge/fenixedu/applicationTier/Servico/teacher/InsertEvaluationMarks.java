@@ -16,7 +16,7 @@ import net.sourceforge.fenixedu.applicationTier.strategy.degreeCurricularPlan.st
 import net.sourceforge.fenixedu.dataTransferObject.ISiteComponent;
 import net.sourceforge.fenixedu.dataTransferObject.InfoEvaluation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoFrequentaWithInfoStudentAndPerson;
-import net.sourceforge.fenixedu.dataTransferObject.InfoMark;
+import net.sourceforge.fenixedu.dataTransferObject.InfoMarkEditor;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteCommon;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteMarks;
 import net.sourceforge.fenixedu.dataTransferObject.TeacherAdministrationSiteView;
@@ -41,9 +41,9 @@ public class InsertEvaluationMarks extends Service {
 
         Site site = null;
         Evaluation evaluation = null;
-        List marksErrorsInvalidMark = null;
+        List<InfoMarkEditor> marksErrorsInvalidMark = null;
         List attendList = null;
-        HashMap newHashMarks = new HashMap();
+        HashMap<String, String> newHashMarks = new HashMap<String, String>();
 
         //Site
     	final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseCode);
@@ -55,7 +55,7 @@ public class InsertEvaluationMarks extends Service {
         //Attend List
         attendList = executionCourse.getAttends();
 
-        marksErrorsInvalidMark = new ArrayList();
+        marksErrorsInvalidMark = new ArrayList<InfoMarkEditor>();
         ListIterator iterAttends = attendList.listIterator();
 
         while (iterAttends.hasNext()) {
@@ -66,7 +66,7 @@ public class InsertEvaluationMarks extends Service {
 
             if (mark != null && mark.length() > 0) {
                 if (!isValidMark(evaluation, mark, attend.getAluno())) {
-                    InfoMark infoMark = new InfoMark();
+                    InfoMarkEditor infoMark = new InfoMarkEditor();
                     infoMark.setMark(mark);
 
                     infoMark.setInfoFrequenta(InfoFrequentaWithInfoStudentAndPerson

@@ -6,6 +6,7 @@
 
 package net.sourceforge.fenixedu.dataTransferObject;
 
+import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Mark;
 
 /**
@@ -14,118 +15,51 @@ import net.sourceforge.fenixedu.domain.Mark;
  */
 
 public class InfoMark extends InfoObject {
-    protected String mark;
-
-    protected String publishedMark;
-
-    private InfoEvaluation infoEvaluation;
-
-    private InfoFrequenta infoFrequenta;
-
-    public InfoMark() {
+    
+    private final DomainReference<Mark> markDomainReference;
+    
+    public InfoMark(final Mark mark) {
+	markDomainReference = new DomainReference<Mark>(mark);
     }
 
-    public InfoMark(String mark, String publishedMark, InfoFrequenta frequenta, InfoEvaluation evaluation) {
-        setInfoFrequenta(frequenta);
-        setInfoEvaluation(evaluation);
-        setPublishedMark(mark);
-        setPublishedMark(publishedMark);
+    public static InfoMark newInfoFromDomain(Mark mark) {
+        return mark == null ? null : new InfoMark(mark);
     }
 
-    //  public boolean equals(Object obj) {
-    //    boolean resultado = false;
-    //    if (obj instanceof InfoMark) {
-    //      InfoMark infoMark = (InfoMark)obj;
-    //      resultado = getMark().equals(infoMark.getPublishedMark());
-    //    }
-    //    return resultado;
-    //  }
-
-    public String toString() {
-        String result = "[InfoStudent";
-        result += ", mark=" + mark;
-        result += ", published mark=" + publishedMark;
-
-        if (infoEvaluation != null)
-            result += ", exam" + infoEvaluation.toString();
-        result += "]";
-        if (infoFrequenta != null)
-            result += ", exam" + infoFrequenta.toString();
-        result += "]";
-        return result;
+    private Mark getMarkObject() {
+	return (markDomainReference == null) ? null : markDomainReference.getObject();
     }
-
-    /**
-     * @return
-     */
-    public InfoEvaluation getInfoEvaluation() {
-        return infoEvaluation;
-    }
-
-    /**
-     * @return
-     */
-    public InfoFrequenta getInfoFrequenta() {
-        return infoFrequenta;
-    }
-
+    
     /**
      * @return
      */
     public String getMark() {
-        return mark;
+        return getMarkObject().getMark();
     }
 
     /**
      * @return
      */
     public String getPublishedMark() {
-        return publishedMark;
+        return getMarkObject().getPublishedMark();
     }
 
     /**
-     * @param exam
+     * @return
      */
-    public void setInfoEvaluation(InfoEvaluation evaluation) {
-        infoEvaluation = evaluation;
+    public InfoEvaluation getInfoEvaluation() {
+        return InfoEvaluation.newInfoFromDomain(getMarkObject().getEvaluation());
     }
 
     /**
-     * @param frequenta
+     * @return
      */
-    public void setInfoFrequenta(InfoFrequenta frequenta) {
-        infoFrequenta = frequenta;
+    public InfoFrequenta getInfoFrequenta() {
+	return InfoFrequenta.newInfoFromDomain(getMarkObject().getAttend());
     }
 
-    /**
-     * @param string
-     */
-    public void setMark(String string) {
-        mark = string;
+    public String toString() {
+	return getMarkObject().toString();
     }
 
-    /**
-     * @param string
-     */
-    public void setPublishedMark(String string) {
-        publishedMark = string;
-    }
-
-    public void copyFromDomain(Mark mark) {
-        super.copyFromDomain(mark);
-        if (mark != null) {
-            setMark(mark.getMark());
-            setPublishedMark(mark.getPublishedMark());
-        }
-    }
-
-    public static InfoMark newInfoFromDomain(Mark mark) {
-        InfoMark infoMark = null;
-        if (mark != null) {
-            infoMark = new InfoMark();
-            infoMark.copyFromDomain(mark);
-        }
-
-        return infoMark;
-    }
 }

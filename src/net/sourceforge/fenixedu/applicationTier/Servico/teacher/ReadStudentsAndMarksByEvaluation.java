@@ -12,7 +12,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoEvaluation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoFrequenta;
 import net.sourceforge.fenixedu.dataTransferObject.InfoFrequentaWithAll;
 import net.sourceforge.fenixedu.dataTransferObject.InfoMark;
-import net.sourceforge.fenixedu.dataTransferObject.InfoMarkWithInfoAttendAndInfoStudent;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteCommon;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteMarks;
 import net.sourceforge.fenixedu.dataTransferObject.TeacherAdministrationSiteView;
@@ -77,7 +76,7 @@ public class ReadStudentsAndMarksByEvaluation extends Service {
             public Object transform(Object input) {
                 Mark mark = (Mark) input;
 
-                InfoMark infoMark = InfoMarkWithInfoAttendAndInfoStudent.newInfoFromDomain(mark);
+                InfoMark infoMark = InfoMark.newInfoFromDomain(mark);
                 return infoMark;
             }
         });
