@@ -898,4 +898,30 @@ public class Registration extends Registration_Base {
         return activeStudentCurricularPlan.getAssociatedTutor();
     }
 
+    public RegistrationDataByPeriod getActualPeriodRegistrationData() {
+        ExecutionPeriod actualExecutionPeriod = ExecutionPeriod.readActualExecutionPeriod();
+        for (RegistrationDataByPeriod registrationDataByPeriod : getRegistrationDataByPeriod()) {
+            if (registrationDataByPeriod.getExecutionPeriod().equals(actualExecutionPeriod)) {
+                return registrationDataByPeriod;
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public void setStudentKind(StudentKind studentKind) {
+        if (getActualPeriodRegistrationData() == null) {
+            getRegistrationDataByPeriod().add(new RegistrationDataByPeriod());
+        }
+        getActualPeriodRegistrationData().setStudentKind(studentKind);
+    }
+
+//    @Override
+//    public StudentKind getStudentKind() {
+//        if (getActualPeriodRegistrationData() == null) {
+//            return null;
+//        }
+//        return getActualPeriodRegistrationData().getStudentKind();
+//    }
+
 }
