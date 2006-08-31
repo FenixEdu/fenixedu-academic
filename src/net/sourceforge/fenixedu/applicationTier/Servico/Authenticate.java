@@ -205,6 +205,7 @@ public class Authenticate extends Service implements Serializable {
         } catch (UnsupportedEncodingException e) {
             throw new RuntimeException(e);
         } catch (CASAuthenticationException e) {
+            e.printStackTrace();
             throw new ExcepcaoAutenticacao("bad.authentication", e);
         }
 
