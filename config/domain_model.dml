@@ -2699,7 +2699,6 @@ class net.sourceforge.fenixedu.domain.StatusAssiduidade extends net.sourceforge.
 
 
 class net.sourceforge.fenixedu.domain.student.Registration extends net.sourceforge.fenixedu.domain.DomainObject {
-	Integer keyStudentKind;
 	Double entryGrade;
 	String istUniversity;
 	Boolean enrollmentForbidden;
@@ -6542,13 +6541,6 @@ relation StudentSecretaryEnrolmentStudent {
 		multiplicity *;
 	}
 	net.sourceforge.fenixedu.domain.student.Registration playsRole student;
-}
-
-relation StudentStudentKind {
-	net.sourceforge.fenixedu.domain.student.Registration playsRole students {
-		multiplicity *;
-	}
-	net.sourceforge.fenixedu.domain.StudentKind playsRole studentKind;
 }
 
 relation StudentTestQuestions {

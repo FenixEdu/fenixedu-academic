@@ -102,7 +102,8 @@ public class Registration extends Registration_Base {
             ;
 
         removePerson();
-        removeStudentKind();
+        for (; !getRegistrationDataByPeriod().isEmpty(); getRegistrationDataByPeriod().get(0).delete())
+            ;        
         removeRootDomainObject();
         super.deleteDomainObject();
     }
@@ -908,7 +909,6 @@ public class Registration extends Registration_Base {
         return null;
     }
 
-    @Override
     public void setStudentKind(StudentKind studentKind) {
         if (getActualPeriodRegistrationData() == null) {
             getRegistrationDataByPeriod().add(new RegistrationDataByPeriod());
@@ -916,12 +916,11 @@ public class Registration extends Registration_Base {
         getActualPeriodRegistrationData().setStudentKind(studentKind);
     }
 
-//    @Override
-//    public StudentKind getStudentKind() {
-//        if (getActualPeriodRegistrationData() == null) {
-//            return null;
-//        }
-//        return getActualPeriodRegistrationData().getStudentKind();
-//    }
+    public StudentKind getStudentKind() {
+        if (getActualPeriodRegistrationData() == null) {
+            return null;
+        }
+        return getActualPeriodRegistrationData().getStudentKind();
+    }
 
 }
