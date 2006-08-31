@@ -35,7 +35,7 @@
 		<td>
 			<fr:edit id="lessonPlanningAvailable" name="executionCourse" property="site" schema="lessonPlanningAvailable" nested="true">
 				<fr:layout name="tabular">
-					<fr:property name="classes" value="tstylenone vacenter thlight" />
+					<fr:property name="classes" value="tstylenone vamiddle thlight" />
 				</fr:layout>		
 			</fr:edit>
 		</td>
