@@ -4,11 +4,19 @@ import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 
 public class RegistrationDataByPeriod extends RegistrationDataByPeriod_Base {
-    
-    public  RegistrationDataByPeriod() {
+
+    public RegistrationDataByPeriod() {
         super();
         setRootDomainObject(RootDomainObject.getInstance());
         setExecutionPeriod(ExecutionPeriod.readActualExecutionPeriod());
     }
-    
+
+    public void delete() {
+        removeExecutionPeriod();
+        removeStudentKind();
+        removeRootDomainObject();
+        removeRegistration();
+        super.deleteDomainObject();
+    }
+
 }
