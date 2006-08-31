@@ -4,6 +4,7 @@
  ---- Headings ----------
 ----------------------- */
 
+
 h2 { margin: 0.5em 0 0.75em 0; }
 /* h3 { margin: 1.5em 0 0.5em 0; } */
 
@@ -16,6 +17,7 @@ padding-left: 0.75em;
 margin-right: 0.75em;
 background: url(../images/transitional/bullet07.gif) left no-repeat;
 }
+
 
 /* ----------------------
  ---- Info Blocks ------
@@ -48,6 +50,7 @@ background: #fff url(../images/transitional/grad64-f5-fff.gif) top repeat-x;
 border: 1px solid #ddd;
 background: #fafafa url(../images/transitional/grad32-fa-eee.gif) bottom repeat-x;
 }
+
 
 /* ----------------------
  ---- Lists ------------
@@ -149,7 +152,7 @@ padding: 0.5em; /*padding em "em" dá problemas de rendering no firefox, faz arre
 .tstyle1b td { border: 1px solid #ccccc2; }
 .tstyle1c td { border: 1px solid #c8cacc; }
 .tstyle2 td { border: none; border-bottom: 1px solid #ccc; border-top: 1px solid #ccc; }
-.tstyle3 td { border: 1px solid #ccc; background-color: #fafafa; }
+.tstyle3 td {border: 1px solid #ccc; background-color: #fafafa; }
 .tstyle4 td { border: 1px solid #ccc; background-color: #fafafa; }
 .tstyle5 td { padding: 0.3em; border: 1px solid #fff; background: #f5f5f5; }
 .tstyle6 td { border: 1px solid #ccccc2; width: 65%;}
@@ -220,6 +223,7 @@ padding: 0.5em;
 .showinfo3 th { border-bottom: 1px solid #ccc; }
 .showinfo3 td { border-bottom: 1px solid #eee; }
 
+
 .thleft th { text-align: left;}
 .thright th { text-align: right;}
 .emphasis1 th { background: #ffc; }
@@ -234,6 +238,7 @@ margin: 0.5em 0;
 border: 1px solid #fff;
 padding: 0.3em;
 }
+
 
 .sfloat {
 padding: 0.5em;
@@ -270,6 +275,7 @@ list-style: circle;
 }
 
 ul.padding1 li { padding: 0.25em 0; }
+
 
 /* ----------------------
  ---- Feedback  --------
@@ -453,9 +459,11 @@ margin-bottom: 2em;
 margin-top: 0.5em;
 }
 
+
 /* input elements display */
 .input_hidden { display: none; }
 .input_inline { display: inline; }
+
 
 /**********************************************
 	 navlateral list & links
@@ -504,6 +512,9 @@ text-decoration: none;
 #navlateral ul li.sub ul { height: 0; /* IE Hack */ }
 html>body #navlateral ul li.sub ul { height: auto;	/* Hidden from IE */ }
 #navlateral ul li.sub ul li { margin-left: 16px; }
+
+#navlateral ul li.sub1 { margin-left: 10px; }
+#navlateral ul li.sub2 { margin-left: 20px; }
 
 #navlateral ul li.plus a {
 background: url(../images/navlateral/plus01.gif) 0.4em 55% no-repeat;
@@ -617,20 +628,20 @@ background-color: #ffffea;
 }
 
 .greyBorderClass {
-background-color: #EBECED;
-border-style: solid;
-border-width: 1px;
-border-color: #909090;
-width: 100%
+	background-color: #EBECED;
+	border-style: solid;
+	border-width: 1px;
+	border-color: #909090;
+	width: 100%
 }
 .blackBorderClass {
-background-color: #ffffff;
-border-style: solid;
-border-width: 1px;
-border-color: #909090
+	background-color: #ffffff;
+	border-style: solid;
+	border-width: 1px;
+	border-color: #909090
 }
 .boldFontClass { 
-font-weight: bold
+	font-weight: bold
 }
 
 .instructions {

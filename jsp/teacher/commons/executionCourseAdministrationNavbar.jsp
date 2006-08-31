@@ -1,8 +1,9 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
-<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
+
+<html:xhtml/>
 
 <logic:notPresent name="executionCourse">
 	<logic:present name="siteView">
@@ -40,18 +41,11 @@
 				<bean:message key="link.teacher.executionCourseManagement.foruns"/>
 			</html:link>
 		</li>
-
-		<li class="navheader"><bean:message key="label.executionCourseManagement.menu.sections"/></li>
 		<li>
-			<html:link page="/manageExecutionCourse.do?method=createSection" paramId="executionCourseID" paramName="executionCourse" paramProperty="idInternal">
-				<bean:message key="link.createSection"/>
+			<html:link page="/manageExecutionCourse.do?method=sections" paramId="executionCourseID" paramName="executionCourse" paramProperty="idInternal">
+				<bean:message key="label.executionCourseManagement.menu.sections"/>
 			</html:link>
-		</li>
-		<li>
-			<html:link page="/manageExecutionCourse.do?method=prepareImportSections" paramId="executionCourseID" paramName="executionCourse" paramProperty="idInternal">
-				<bean:message key="label.import.sections"/>
-			</html:link>
-		</li>
+		</li>	
 		<logic:notEmpty name="executionCourse" property="site.associatedSections">
 			<bean:define id="sections" toScope="request" name="executionCourse" property="site.orderedTopLevelSections"/>
 			<jsp:include page="/teacher/executionCourse/sections.jsp"/>

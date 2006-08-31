@@ -113,8 +113,13 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
         return item;
     }
 
+
     // SECTIONS
 
+    public ActionForward sections(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
+        return mapping.findForward("sectionsManagement");
+    }
+    
     public ActionForward createSection(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
         final Section section = selectSection(request);
@@ -137,7 +142,7 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
         final Object[] args = { request.getAttribute("executionCourse"), section };
         executeService(request, "DeleteSection", args);
         request.setAttribute("section", superiorSection);
-        return superiorSection == null ? mapping.findForward("instructions") : mapping.findForward("section");
+        return superiorSection == null ? mapping.findForward("sectionsManagement") : mapping.findForward("section");
     }
 
     public ActionForward section(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
@@ -210,7 +215,7 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
             HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException {
      
         importContent(request, "ImportSections");
-        return mapping.findForward("instructions");
+        return mapping.findForward("sectionsManagement");
     }
 
     private void prepareImportContentPostBack(HttpServletRequest request) {

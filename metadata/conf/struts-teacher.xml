@@ -983,6 +983,7 @@
 			<forward name="importLessonPlannings" path="manage-execution-course-lessonPlannings-import"/>
 			<forward name="create-lessonPlanning" path="manage-execution-course-lessonPlanning-create"/>
 			<forward name="createSection" path="manage-execution-course-createSection"/>
+			<forward name="sectionsManagement" path="manage-execution-course-sectionsManagement"/>
 			<forward name="section" path="manage-execution-course-section"/>
 			<forward name="importSections" path="manage-execution-course-sections-import"/>
 			<forward name="editSection" path="manage-execution-course-editSection"/>
