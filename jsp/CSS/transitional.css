@@ -1,29 +1,21 @@
-
-
-/* transitional.css - 09.01.2006 
-   by João Alfaiate @ Fenix */
-
+/* transitional.css - 01.2006 by João Alfaiate @ Fenix */
 
 /* ----------------------
  ---- Headings ----------
 ----------------------- */
 
-
 h2 { margin: 0.5em 0 0.75em 0; }
-/*
-h3 { margin: 1.5em 0 0.5em 0; }
-*/
+/* h3 { margin: 1.5em 0 0.5em 0; } */
 
 /* ----------------------
  ---- Anchors ----------
 ----------------------- */
 
 a.action1 {
-padding-left: 10px;
-margin-right: 10px;
+padding-left: 0.75em;
+margin-right: 0.75em;
 background: url(../images/transitional/bullet07.gif) left no-repeat;
 }
-
 
 /* ----------------------
  ---- Info Blocks ------
@@ -56,7 +48,6 @@ background: #fff url(../images/transitional/grad64-f5-fff.gif) top repeat-x;
 border: 1px solid #ddd;
 background: #fafafa url(../images/transitional/grad32-fa-eee.gif) bottom repeat-x;
 }
-
 
 /* ----------------------
  ---- Lists ------------
@@ -94,6 +85,7 @@ table.thtop th { vertical-align: top; }
 
 /* ordenamento das colunas*/
 table.thlight th { font-weight: normal; }
+table.thbold th { font-weight: bold; }
 table.taleft th, table.taleft td { text-align: left; }
 table.taright th, table.taright td { text-align: right; }
 table .aleft  { text-align: left; }
@@ -116,53 +108,56 @@ border-collapse: collapse;
 margin: 1em 0;
 }
 
-.tstyle6 { width: 100%; }
-
 .tstyle1a { }
 .tstyle1b { }
 .tstyle1c { }
 .tstyle2 { }
 .tstyle3 { border: 2px solid #ccc; }
 .tstyle4 { }
+.tstyle6 { width: 100%; }
 
 .tstyle1a th, .tstyle1b th, .tstyle1c th, .tstyle2 th, .tstyle3 th, .tstyle4 th {
 padding: 0.5em;
 text-align: center;
-/*font-weight: normal;*/
 }
 
 .tstyle1a th { border: 1px solid #ccc; }
-.tstyle1b th, .tstyle6 th { border: 1px solid #ccccc2;}
+.tstyle1b th { border: 1px solid #ccccc2;}
 .tstyle1c th { border: 1px solid #c8cacc; }
 .tstyle2 th { border: none; border-bottom: 1px solid #ccc; }
 .tstyle3 th { padding: 0.5em 1em; border: 1px solid #ccc; }
 .tstyle4 th { border: 1px solid #ccc; }
 .tstyle5 th { padding: 0.3em; border: 1px solid #fff; vertical-align: top; }
-.tstyle6 th { padding: 0.5em; /*text-align: center;*/ /*font-weight: normal;*/ width: 35%; }
+.tstyle6 th { padding: 0.5em; border: 1px solid #ccccc2; width: 35%; }
 .tstyle7 th { padding: 0.5em; border: 1px solid #eee; }
 
 .tstyle1a th { background: #f8f8f8 url(../../pics/back_32gray.gif) left bottom repeat-x; }
-.tstyle1b th, .tstyle6 th { background: #fafaf6 url(../../pics/back_32yellow.gif) left bottom repeat-x;}
+.tstyle1b th { background: #fafaf6 url(../../pics/back_32yellow.gif) left bottom repeat-x;}
 .tstyle1c th { background: #f6f8fa url(../../pics/back_32blue.gif) left bottom repeat-x; }
 .tstyle3 th { background-color: #eee; }
 .tstyle2 th { background: #f5f5f5 /*url(../../pics/back_32gray.gif) left bottom repeat-x*/; }
 .tstyle4 th { background: #eee; }
 .tstyle5 th { background: #f5f5f5; }
+.tstyle6 th { background: #fafaf6 url(../../pics/back_32yellow.gif) left bottom repeat-x; }
 .tstyle7 th { background: #eee; }
 
-.tstyle1a td, .tstyle1b td, .tstyle1c td, .tstyle2 td, .tstyle3 td, .tstyle4 td  { padding: 0.5em; } /*padding em "em" dá problemas de rendering no firefox, faz arredondamentos diferentes */
+.tstyle1a td, .tstyle1b td, .tstyle1c td, .tstyle2 td, .tstyle3 td, .tstyle4 td  {
+padding: 0.5em; /*padding em "em" dá problemas de rendering no firefox, faz arredondamentos diferentes */
+}
 
 .tstyle1a td { border: 1px solid #cccccc; }
 .tstyle1b td { border: 1px solid #ccccc2; }
 .tstyle1c td { border: 1px solid #c8cacc; }
 .tstyle2 td { border: none; border-bottom: 1px solid #ccc; border-top: 1px solid #ccc; }
-.tstyle3 td {border: 1px solid #ccc; background-color: #fafafa; }
+.tstyle3 td { border: 1px solid #ccc; background-color: #fafafa; }
 .tstyle4 td { border: 1px solid #ccc; background-color: #fafafa; }
 .tstyle5 td { padding: 0.3em; border: 1px solid #fff; background: #f5f5f5; }
 .tstyle6 td { border: 1px solid #ccccc2; width: 65%;}
 .tstyle7 td { padding: 0.5em; border: 1px solid #eee; background: #eee; }
 
-.tpadding01 th, .tpadding01 td { padding: 0.5em 0.1em; }
+.tpadding01 th, .tpadding01 td {
+padding: 0.5em 0.1em;
+}
 
 td.tdclear {
 border-right: none;
@@ -175,13 +170,16 @@ background: none;
 .tstylenone th { border: none; background: none; }
 .tstylenone td { border: none; background: none; }
 
-.vacenter { vertical-align: middle; }
-.vacenter th { vertical-align: middle; }
-.vacenter td { vertical-align: middle; }
+.vamiddle { vertical-align: middle; }
+.vamiddle th { vertical-align: middle; }
+.vamiddle td { vertical-align: middle; }
+
+table.noborder { padding-left: 1em; padding-bottom: 1em; }
+table.noborder tr td { border: none; }
+table.noborder tr td { padding: 0; margin: 0; }
 
 
-
-/* fichas */
+/* fichas */ /* to remove later? */
 tr.bordernone td { border: none; }
 tr.rowbg1 td { background-color: #fafaf6; }
 tr.rowbg2 td { background-color: #f5f5ea; }
@@ -222,10 +220,8 @@ padding: 0.5em;
 .showinfo3 th { border-bottom: 1px solid #ccc; }
 .showinfo3 td { border-bottom: 1px solid #eee; }
 
-
 .thleft th { text-align: left;}
 .thright th { text-align: right;}
-/*.sp td { padding: 0.3em 0.5em; }*/
 .emphasis1 th { background: #ffc; }
 .emphasis2 th { font-weight: bold; }
 
@@ -238,7 +234,6 @@ margin: 0.5em 0;
 border: 1px solid #fff;
 padding: 0.3em;
 }
-
 
 .sfloat {
 padding: 0.5em;
@@ -274,12 +269,7 @@ background-color: #fff;
 list-style: circle;
 }
 
-.color1 { color: #808060; }
-.color2 { color: #806d5b; }
-.color3 { color: #336699; }
-
 ul.padding1 li { padding: 0.25em 0; }
-
 
 /* ----------------------
  ---- Feedback  --------
@@ -347,28 +337,25 @@ padding-right: 0.5em;
 .lfloat2 label { float: left; text-align: right; width: 12em; }
 .lfloat3 label { float: left; text-align: right; width: 15em; }
 
-.lempty {
-color: #fff;
-}
-
-.lfloat .indent105 {
-margin-left: 10.5em;
-}
+.lempty { color: #fff; }
+.lfloat .indent105 { margin-left: 10.5em; }
 
 /* ----------------------
  ---- Classes ----------
 ----------------------- */
 
-.p_mvert015 p { margin: 0.15em 0; }
-.smalltxt { font-size: 0.85em;}
-.prenomargin { margin: 0; padding: 0; font-family: Verdana, Arial, Helvetica, sans-serif;}
+.color1 { color: #808060; }
+.color2 { color: #806d5b; }
+.color3 { color: #336699; }
 
-
-/* highlights */
 .highlight1 { background-color: #ffb; } /* amarelo */
 .highlight2 { background-color: #f5f5f5; } 
 .highlight3 { background-color: #def; } /* azul */
 .highlight4 { background-color: #dfb ; } /* verde */
+
+.p_mvert015 p { margin: 0.15em 0; }
+.smalltxt { font-size: 0.85em;}
+.prenomargin { margin: 0; padding: 0; font-family: Verdana, Arial, Helvetica, sans-serif;}
 
 .aleft { text-align: left; }
 .aright { text-align: right; }
@@ -434,24 +421,18 @@ td.pleft4 { padding-left: 4em; }
 td.pleft5 { padding-left: 5em; }
 td.pleft6 { padding-left: 6em; }
 
-
-table.noborder {
-padding-left: 1em;
-padding-bottom: 1em;
-}
-table.noborder tr td {
-border: none;
-}
-table.noborder tr td {
-padding: 0;
-margin: 0;
-}
-
 .width100 { width: 100%; }
 .width8em { width: 8em; } /*used in forums*/
 .width10em { width: 10em; }
 
 .toprint { display: none;}
+.dnone { display: none; }
+.dinline { display: inline; }
+.dblock { display: block; }
+.switchInline { display: none; }
+.switchBlock { display: none; }
+.switchNone { display: block; }
+
 .lowlight1 { color: #999; }
 .bgcolor1 { background-color: #fcfcf0; }
 .bgcolor2 { background-color: #fbfbdd; }
@@ -472,11 +453,9 @@ margin-bottom: 2em;
 margin-top: 0.5em;
 }
 
-
 /* input elements display */
 .input_hidden { display: none; }
 .input_inline { display: inline; }
-
 
 /**********************************************
 	 navlateral list & links
@@ -526,7 +505,6 @@ text-decoration: none;
 html>body #navlateral ul li.sub ul { height: auto;	/* Hidden from IE */ }
 #navlateral ul li.sub ul li { margin-left: 16px; }
 
-
 #navlateral ul li.plus a {
 background: url(../images/navlateral/plus01.gif) 0.4em 55% no-repeat;
 padding-left: 16px;
@@ -545,30 +523,6 @@ background: #eee url(../images/navlateral/minus01.gif) 0.4em 55% no-repeat;
 /**********************************************
 	 to organize
 ***********************************************/
-
-
-.dnone {
-display: none;
-}
-.dinline {
-display: inline;
-}
-.dblock {
-display: block;
-}
-
-.switchInline {
-display: none;
-}
-.switchBlock {
-display: none;
-}
-.switchNone {
-display: block;
-}
-
-
-
 
 div.pass_warning {
 font-weight: normal;
@@ -663,20 +617,20 @@ background-color: #ffffea;
 }
 
 .greyBorderClass {
-	background-color: #EBECED;
-	border-style: solid;
-	border-width: 1px;
-	border-color: #909090;
-	width: 100%
+background-color: #EBECED;
+border-style: solid;
+border-width: 1px;
+border-color: #909090;
+width: 100%
 }
 .blackBorderClass {
-	background-color: #ffffff;
-	border-style: solid;
-	border-width: 1px;
-	border-color: #909090
+background-color: #ffffff;
+border-style: solid;
+border-width: 1px;
+border-color: #909090
 }
 .boldFontClass { 
-	font-weight: bold
+font-weight: bold
 }
 
 .instructions {

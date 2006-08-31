@@ -425,11 +425,15 @@ table.showborder td { border: 1px solid #aaa; }
 .toprint { display: block;}
 
 table.printborder { border-collapse: collapse; }
-table.printborder th, table.printborder td { padding: 0.25em 0.5em; border: 1px solid #888; }
+table.printborder th, table.printborder td { border: 1px solid #888; }
+table.tpadding1 th, table.tpadding1 td { padding: 0.15em 0.5em;}
 
 /*
 .tstyle1b { border-collapse: collapse; }
 .tstyle1b th, .tstyle1b td { padding: 0.25em 0.5em; }
 .tstyle1b th { border: 1px solid #888; }
 .tstyle1b td { border: 1px solid #888; }
+
+.tstyle1b th { border: 11px solid #888; }
+.tstyle1b th, .tstyle1b td { padding: 5.25em 0.5em; margin: 5em; }
 */
