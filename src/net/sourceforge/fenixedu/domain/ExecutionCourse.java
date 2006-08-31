@@ -164,6 +164,18 @@ public class ExecutionCourse extends ExecutionCourse_Base {
         evaluationMethod.setEvaluationElements(evaluationElements);
         evaluationMethod.setExecutionCourse(this);
     }
+    
+    public void copyEvaluationMethodFrom(ExecutionCourse executionCourseFrom) {
+        if (executionCourseFrom.getEvaluationMethod() != null) {
+            final EvaluationMethod evaluationMethodFrom = executionCourseFrom.getEvaluationMethod();
+            final EvaluationMethod evaluationMethodTo = this.getEvaluationMethod();
+            if (evaluationMethodTo == null) {
+        	this.createEvaluationMethod(evaluationMethodFrom.getEvaluationElements());
+            } else {
+                evaluationMethodTo.edit(evaluationMethodFrom.getEvaluationElements());
+            }
+        }
+    }
 
     public void createBibliographicReference(final String title, final String authors,
             final String reference, final String year, final Boolean optional) {
@@ -1297,4 +1309,5 @@ public class ExecutionCourse extends ExecutionCourse_Base {
     		return 0d;
     	}
     }
+
 }

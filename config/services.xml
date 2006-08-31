@@ -2862,6 +2862,16 @@
 		</filterChains>
 	</service>
 	<service>
+		<name>ImportEvaluationMethod</name>
+		<implementationClass> 
+            net.sourceforge.fenixedu.applicationTier.Servico.teacher.ImportEvaluationMethod</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		<filterChains>
+			<chain name="ExecutionCourseLecturingTeacherAuthorization" />
+		</filterChains>
+	</service>	
+	<service>
 		<name>CreateBibliographicReference</name>
 		<implementationClass> 
             net.sourceforge.fenixedu.applicationTier.Servico.teacher.CreateBibliographicReference</implementationClass>

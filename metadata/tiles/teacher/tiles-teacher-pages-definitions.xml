@@ -523,6 +523,10 @@
 		<put name="body" value="/teacher/executionCourse/evaluationMethod.jsp" />
 	</definition>
 
+	<definition name="manage-execution-course-evaluationMethod-import" extends="execution-course-administration">
+		<put name="body" value="/teacher/executionCourse/importEvaluationMethod.jsp" />
+	</definition>
+	
 	<definition name="manage-execution-course-evaluationMethod-edit" extends="execution-course-administration">
 		<put name="body" value="/teacher/executionCourse/editEvaluationMethod.jsp" />
 	</definition>

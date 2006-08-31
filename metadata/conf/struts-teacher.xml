@@ -993,6 +993,7 @@
 			<forward name="program" path="manage-execution-course-program"/>
 			<forward name="objectives" path="manage-execution-course-objectives"/>
 			<forward name="evaluationMethod" path="manage-execution-course-evaluationMethod"/>
+			<forward name="importEvaluationMethod" path="manage-execution-course-evaluationMethod-import"/>
 			<forward name="bibliographicReference" path="manage-execution-course-bibliographicReference"/>
 			<forward name="importBibliographicReferences" path="manage-execution-course-bibliographicReferences-import"/>
 			<forward name="lessonPlannings" path="manage-execution-course-lessonPlannings"/>

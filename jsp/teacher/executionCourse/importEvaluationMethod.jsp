@@ -9,18 +9,18 @@
 <logic:present name="executionCourse">
 
 	<bean:define id="executionCourseID" name="executionCourse" property="idInternal"/>	
-	<bean:define id="submitUrl">/manageExecutionCourse.do?method=listExecutionCoursesToImportBibliographicReferences&executionCourseID=<bean:write name="executionCourseID"/></bean:define>
-	<bean:define id="showBibliographicReferences">/manageExecutionCourse.do?method=bibliographicReferences&executionCourseID=<bean:write name="executionCourseID"/></bean:define>	
-	<bean:define id="postBackLink">/manageExecutionCourse.do?method=prepareImportBibliographicReferencesPostBack&executionCourseID=<bean:write name="executionCourseID"/></bean:define>	
+	<bean:define id="submitUrl">/manageExecutionCourse.do?method=listExecutionCoursesToImportEvaluationMethod&executionCourseID=<bean:write name="executionCourseID"/></bean:define>
+	<bean:define id="showEvaluationMethod">/manageExecutionCourse.do?method=evaluationMethod&executionCourseID=<bean:write name="executionCourseID"/></bean:define>	
+	<bean:define id="postBackLink">/manageExecutionCourse.do?method=prepareImportEvaluationMethodPostBack&executionCourseID=<bean:write name="executionCourseID"/></bean:define>	
 	<bean:define id="invalidLink">/manageExecutionCourse.do?method=prepareBiliographicReferencesInvalid&executionCourseID=<bean:write name="executionCourseID"/></bean:define>	
 
-	<H2><bean:message key="label.import.bibliographicReferences.title"/></H2>
+	<H2><bean:message key="link.import.evaluationMethod"/></H2>
 							
 	<fr:edit id="importContentBean" name="importContentBean" schema="ChooseDegreePeriodAndCurricularYearToImportLessonPlannings"
 		 action="<%= submitUrl %>">
 		<fr:destination name="postBack" path="<%= postBackLink %>"/>
 		<fr:destination name="invalid" path="<%= invalidLink %>"/>
-		<fr:destination name="cancel" path="<%= showBibliographicReferences %>"/>
+		<fr:destination name="cancel" path="<%= showEvaluationMethod %>"/>
 		<fr:layout name="tabular" >
 				<fr:property name="classes" value="tstyle4"/>
 		        <fr:property name="columnClasses" value="listClasses,,"/>
@@ -31,11 +31,11 @@
 	 	<logic:notEmpty name="importContentBean" property="executionPeriod">	
 	 		<logic:notEmpty name="importContentBean" property="executionDegree">	
 				<br/>
-				<bean:define id="importBibliographicReferencesUrl">/manageExecutionCourse.do?method=importBibliographicReferences&executionCourseID=<bean:write name="executionCourseID"/></bean:define>		
+				<bean:define id="importEvaluationMethodUrl">/manageExecutionCourse.do?method=importEvaluationMethod&executionCourseID=<bean:write name="executionCourseID"/></bean:define>		
 				<H3><bean:message key="label.choose.course"/></H3>			
 				<fr:edit id="importContentBeanWithExecutionCourse" name="importContentBean" schema="ListExecutionCoursesToImportLessonPlannings" 
-					action="<%= importBibliographicReferencesUrl %>" >
-					<fr:destination name="cancel" path="<%= showBibliographicReferences %>"/>
+					action="<%= importEvaluationMethodUrl %>" >
+					<fr:destination name="cancel" path="<%= showEvaluationMethod %>"/>
 					<fr:destination name="invalid" path="<%= invalidLink %>"/>
 					<fr:layout name="tabular" >
 							<fr:property name="classes" value="tstyle4"/>
@@ -63,7 +63,7 @@
 				</tr>				
 			</table>
 			<html:submit><bean:message key="label.submit"/></html:submit>
-			<html:button property="cancel" onclick="this.form.method.value='bibliographicReferences';this.form.submit()"><bean:message key="button.cancel"/></html:button>	
+			<html:button property="cancel" onclick="this.form.method.value='evaluationMethod';this.form.submit()"><bean:message key="button.cancel"/></html:button>	
 		</html:form>
 	</logic:notEmpty>
 	

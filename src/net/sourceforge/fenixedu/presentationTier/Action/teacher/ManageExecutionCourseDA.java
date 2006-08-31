@@ -192,13 +192,6 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
         return mapping.findForward("importSections");
     }
 
-    private void prepareImportContentPostBack(HttpServletRequest request) {
-        IViewState viewState = RenderUtils.getViewState("importContentBean");        
-        final ImportContentBean bean = (ImportContentBean) viewState.getMetaObject().getObject();                        
-        RenderUtils.invalidateViewState();        
-        request.setAttribute("importContentBean", bean);
-    }
-    
     public ActionForward prepareImportSectionsInvalid(ActionMapping mapping,
             ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) {
         
@@ -206,13 +199,6 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
         return mapping.findForward("importSections");
     }
 
-    private void prepareImportContentInvalid(HttpServletRequest request) {
-        IViewState viewState = RenderUtils.getViewState("importContentBeanWithExecutionCourse");
-        viewState = (viewState == null) ? RenderUtils.getViewState("importContentBean") : viewState;
-        final ImportContentBean bean = (ImportContentBean) viewState.getMetaObject().getObject();  
-        request.setAttribute("importContentBean", bean);
-    }
-    
     public ActionForward listExecutionCoursesToImportSections(ActionMapping mapping,
             ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) {
         
@@ -220,17 +206,31 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
         return mapping.findForward("importSections");
     }
 
-    private void listExecutionCoursesToImportContent(HttpServletRequest request) {
-        final IViewState viewState = RenderUtils.getViewState("importContentBean");
-        final ImportContentBean bean = (ImportContentBean) viewState.getMetaObject().getObject();        
-        request.setAttribute("importContentBean", bean);
-    }
-
     public ActionForward importSections(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException {
      
         importContent(request, "ImportSections");
         return mapping.findForward("instructions");
+    }
+
+    private void prepareImportContentPostBack(HttpServletRequest request) {
+        IViewState viewState = RenderUtils.getViewState("importContentBean");        
+        final ImportContentBean bean = (ImportContentBean) viewState.getMetaObject().getObject();                        
+        RenderUtils.invalidateViewState();        
+        request.setAttribute("importContentBean", bean);
+    }
+    
+    private void prepareImportContentInvalid(HttpServletRequest request) {
+        IViewState viewState = RenderUtils.getViewState("importContentBeanWithExecutionCourse");
+        viewState = (viewState == null) ? RenderUtils.getViewState("importContentBean") : viewState;
+        final ImportContentBean bean = (ImportContentBean) viewState.getMetaObject().getObject();  
+        request.setAttribute("importContentBean", bean);
+    }
+    
+    private void listExecutionCoursesToImportContent(HttpServletRequest request) {
+        final IViewState viewState = RenderUtils.getViewState("importContentBean");
+        final ImportContentBean bean = (ImportContentBean) viewState.getMetaObject().getObject();        
+        request.setAttribute("importContentBean", bean);
     }
 
     private void importContent(HttpServletRequest request, String importContentService) throws FenixServiceException, FenixFilterException {
@@ -246,8 +246,11 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
         } catch (DomainException e) {
             addActionMessage(request, e.getKey(), e.getArgs());
         }
-    }     
+    }
+    
        
+    // PROGRAM
+    
     public ActionForward program(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
         return mapping.findForward("program");
@@ -304,6 +307,8 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
     	executeFactoryMethod(request);
         return mapping.findForward("program");
     }
+    
+    // OBJECTIVES
 
     public ActionForward objectives(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
@@ -355,6 +360,8 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
         return mapping.findForward("objectives");
     }
 
+    // EVALUATION METHOD
+    
     public ActionForward evaluationMethod(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
     		throws Exception {
         return mapping.findForward("evaluationMethod");
@@ -403,6 +410,42 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
 
         return mapping.findForward("evaluationMethod");
     }
+    
+    public ActionForward prepareImportEvaluationMethod(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) {
+          
+        request.setAttribute("importContentBean", new ImportContentBean());
+        return mapping.findForward("importEvaluationMethod");
+    }
+    
+    public ActionForward prepareImportEvaluationMethodPostBack(ActionMapping mapping,
+            ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) {    
+        
+        prepareImportContentPostBack(request);
+        return mapping.findForward("importEvaluationMethod");
+    }
+
+    public ActionForward prepareImportEvaluationMethodInvalid(ActionMapping mapping,
+            ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) {
+        
+        prepareImportContentInvalid(request);        
+        return mapping.findForward("importEvaluationMethod");
+    }
+
+    public ActionForward listExecutionCoursesToImportEvaluationMethod(ActionMapping mapping,
+            ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) {
+        
+        listExecutionCoursesToImportContent(request);
+        return mapping.findForward("importEvaluationMethod");
+    }
+
+    public ActionForward importEvaluationMethod(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+     
+        importContent(request, "ImportEvaluationMethod");
+        return mapping.findForward("evaluationMethod");
+    }
+
 
     // BIBLIOGRAPHIC REFERENCES
     
@@ -485,58 +528,39 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
     public ActionForward prepareImportBibliographicReferences(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) {
           
-        request.setAttribute("importBibliographicReferencesBean", new ImportContentBean());
+        request.setAttribute("importContentBean", new ImportContentBean());
         return mapping.findForward("importBibliographicReferences");
     }
     
     public ActionForward prepareImportBibliographicReferencesPostBack(ActionMapping mapping,
             ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) {    
         
-        IViewState viewState = RenderUtils.getViewState("importBibliographicReferencesBean");        
-        final ImportContentBean bean = (ImportContentBean) viewState.getMetaObject().getObject();                        
-        RenderUtils.invalidateViewState();        
-        request.setAttribute("importBibliographicReferencesBean", bean);
-        return mapping.findForward("importBibliographicReferences");
+	prepareImportContentPostBack(request);
+	return mapping.findForward("importBibliographicReferences");
     }
     
     public ActionForward prepareImportBibliographicReferencesInvalid(ActionMapping mapping,
             ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) {
         
-        IViewState viewState = RenderUtils.getViewState("importBibliographicReferencesBeanWithExecutionCourse");
-        viewState = (viewState == null) ? RenderUtils.getViewState("importBibliographicReferencesBean") : viewState;
-        final ImportContentBean bean = (ImportContentBean) viewState.getMetaObject().getObject();  
-        request.setAttribute("importBibliographicReferencesBean", bean);        
-        return mapping.findForward("importBibliographicReferences");
+	prepareImportContentInvalid(request);
+	return mapping.findForward("importBibliographicReferences");
     }
     
     public ActionForward listExecutionCoursesToImportBibliographicReferences(ActionMapping mapping,
             ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) {
         
-        final IViewState viewState = RenderUtils.getViewState("importBibliographicReferencesBean");
-        final ImportContentBean bean = (ImportContentBean) viewState.getMetaObject().getObject();        
-        request.setAttribute("importBibliographicReferencesBean", bean);
-        return mapping.findForward("importBibliographicReferences");
+	listExecutionCoursesToImportContent(request);
+	return mapping.findForward("importBibliographicReferences");
     }
 
     public ActionForward importBibliographicReferences(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException {
      
-        final ExecutionCourse executionCourseTo = (ExecutionCourse) request.getAttribute("executionCourse");
-        final IViewState viewState = RenderUtils.getViewState("importBibliographicReferencesBeanWithExecutionCourse");
-        final ImportContentBean bean = (ImportContentBean) viewState.getMetaObject().getObject();                
-        request.setAttribute("importBibliographicReferencesBean", bean);
-        
-        final ExecutionCourse executionCourseFrom = bean.getExecutionCourse();
-        final Object args[] = { executionCourseTo.getIdInternal(), executionCourseTo, executionCourseFrom, null};
-        try {
-            ServiceManagerServiceFactory.executeService(getUserView(request), "ImportBibliographicReferences", args);
-        } catch (DomainException e) {
-            addActionMessage(request, e.getKey(), e.getArgs());
-        }
-
+	importContent(request, "ImportBibliographicReferences");
         return mapping.findForward("bibliographicReference");
     }     
-       
+
+    
     // LESSON PLANNINGS
 
     public ActionForward listExecutionCoursesToImportLessonPlannings(ActionMapping mapping,

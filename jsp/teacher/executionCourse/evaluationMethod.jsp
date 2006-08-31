@@ -74,5 +74,9 @@
 	<html:link page="/editEvaluationMethod.do?method=prepareEditEvaluationMethod" paramId="executionCourseID" paramName="executionCourse" paramProperty="idInternal">
 		<bean:message key="button.edit"/>
 	</html:link>
+	<br/>
+	<html:link page="/manageExecutionCourse.do?method=prepareImportEvaluationMethod&amp;page=0" paramId="executionCourseID" paramName="executionCourse" paramProperty="idInternal">
+		<bean:message key="link.import.evaluationMethod"/>
+	</html:link>
 
 </logic:present>
