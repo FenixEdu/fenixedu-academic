@@ -55,6 +55,10 @@ public class SchedulesPrintAction extends ShowTeacherCreditsDispatchAction {
             Unit lastWorkingUnit = teacher.getLastWorkingUnit(occupationPeriod.getStartYearMonthDay(), occupationPeriod.getEndYearMonthDay());           
             if(lastWorkingUnit != null) {
                 request.setAttribute("workingUnit", lastWorkingUnit);
+                Unit departmentUnit = lastWorkingUnit.getDepartmentUnit();
+                if(departmentUnit != null && departmentUnit.getDepartment() != null ) {
+                    request.setAttribute("departmentRealName", lastWorkingUnit.getDepartmentUnit().getDepartment().getRealName());
+                }
             }
         }
     }

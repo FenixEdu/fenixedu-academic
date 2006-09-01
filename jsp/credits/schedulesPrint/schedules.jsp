@@ -16,7 +16,7 @@
 <logic:notEmpty name="legalRegimen">
 	<tr><td><strong><bean:message key="label.name" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>:</strong> <bean:write name="legalRegimen" property="teacher.person.name"/></td><td><strong><bean:message key="label.number" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>:</strong> <bean:write name="legalRegimen" property="teacher.teacherNumber"/></td></tr>
 	<tr><td><strong><bean:message key="label.category" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>:</strong> <bean:write name="legalRegimen" property="category.code"/></td><logic:notEmpty name="workingUnit"><td><strong><bean:message key="label.section" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>:</strong> <bean:write name="workingUnit" property="name"/></td></tr>
-	<tr><td><strong><bean:message key="label.department" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>:</strong> <logic:notEmpty name="workingUnit" property="departmentUnit"> <bean:write name="workingUnit" property="departmentUnit.department.realName"/> </logic:notEmpty> </td><td><strong><bean:message key="label.costCenter" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>:</strong> <bean:write name="workingUnit" property="costCenterCode"/></td></tr></logic:notEmpty>
+	<tr><td><strong><bean:message key="label.department" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>:</strong> <logic:notEmpty name="departmentRealName"> <bean:write name="departmentRealName"/> </logic:notEmpty> </td><td><strong><bean:message key="label.costCenter" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>:</strong> <bean:write name="workingUnit" property="costCenterCode"/></td></tr></logic:notEmpty>
 </logic:notEmpty>
 </table>
 
@@ -58,7 +58,7 @@
 						<bean:define id="lessonList" name="degreeTeachingService" property="shift.lessonsOrderedByWeekDayAndStartTime"/>											
 						<tr>
 							<td><bean:write name="degreeTeachingService" property="shift.nome"/></td>
-							<td><bean:write name="degreeTeachingService" property="shift.tipo"/></td>
+							<td><bean:message name="degreeTeachingService" property="shift.tipo.name" bundle="ENUMERATION_RESOURCES"/></td>
 							
 							<td>
 								<logic:iterate id="lesson" name="lessonList" indexId="index">
@@ -88,7 +88,7 @@
 							<bean:define id="lessonList" name="degreeTeachingService" property="shift.lessonsOrderedByWeekDayAndStartTime"/>												
 							<tr>
 								<td><bean:write name="degreeTeachingService" property="shift.nome"/></td>
-								<td><bean:write name="degreeTeachingService" property="shift.tipo"/></td>
+								<td><bean:message name="degreeTeachingService" property="shift.tipo.name" bundle="ENUMERATION_RESOURCES"/></td>
 								
 								<td>
 									<logic:iterate id="lesson" name="lessonList" indexId="index">
