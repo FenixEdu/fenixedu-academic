@@ -37,6 +37,11 @@ public class InfoEmployee extends InfoObject {
 	return getEmployee().getIdInternal();
     }
 
+    @Override
+    public void setIdInternal(Integer integer) {
+	throw new Error("Method should not be called!");
+    }
+
     public Integer getEmployeeNumber() {
 	return getEmployee().getEmployeeNumber();
     }
