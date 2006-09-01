@@ -4,7 +4,6 @@
  ---- Headings ----------
 ----------------------- */
 
-
 h2 { margin: 0.5em 0 0.75em 0; }
 /* h3 { margin: 1.5em 0 0.5em 0; } */
 
@@ -17,7 +16,6 @@ padding-left: 0.75em;
 margin-right: 0.75em;
 background: url(../images/transitional/bullet07.gif) left no-repeat;
 }
-
 
 /* ----------------------
  ---- Info Blocks ------
@@ -50,7 +48,6 @@ background: #fff url(../images/transitional/grad64-f5-fff.gif) top repeat-x;
 border: 1px solid #ddd;
 background: #fafafa url(../images/transitional/grad32-fa-eee.gif) bottom repeat-x;
 }
-
 
 /* ----------------------
  ---- Lists ------------
@@ -152,7 +149,7 @@ padding: 0.5em; /*padding em "em" dá problemas de rendering no firefox, faz arre
 .tstyle1b td { border: 1px solid #ccccc2; }
 .tstyle1c td { border: 1px solid #c8cacc; }
 .tstyle2 td { border: none; border-bottom: 1px solid #ccc; border-top: 1px solid #ccc; }
-.tstyle3 td {border: 1px solid #ccc; background-color: #fafafa; }
+.tstyle3 td { border: 1px solid #ccc; background-color: #fafafa; }
 .tstyle4 td { border: 1px solid #ccc; background-color: #fafafa; }
 .tstyle5 td { padding: 0.3em; border: 1px solid #fff; background: #f5f5f5; }
 .tstyle6 td { border: 1px solid #ccccc2; width: 65%;}
@@ -223,7 +220,6 @@ padding: 0.5em;
 .showinfo3 th { border-bottom: 1px solid #ccc; }
 .showinfo3 td { border-bottom: 1px solid #eee; }
 
-
 .thleft th { text-align: left;}
 .thright th { text-align: right;}
 .emphasis1 th { background: #ffc; }
@@ -238,7 +234,6 @@ margin: 0.5em 0;
 border: 1px solid #fff;
 padding: 0.3em;
 }
-
 
 .sfloat {
 padding: 0.5em;
@@ -275,7 +270,6 @@ list-style: circle;
 }
 
 ul.padding1 li { padding: 0.25em 0; }
-
 
 /* ----------------------
  ---- Feedback  --------
@@ -459,11 +453,9 @@ margin-bottom: 2em;
 margin-top: 0.5em;
 }
 
-
 /* input elements display */
 .input_hidden { display: none; }
 .input_inline { display: inline; }
-
 
 /**********************************************
 	 navlateral list & links
@@ -781,4 +773,77 @@ margin-top: 2em;
 text-align: left;
 padding-bottom: 0em;
 margin-bottom: 0.25em;
+}
+
+
+
+table.search {
+background-color: #f5f5f5;
+border-collapse: collapse;
+}
+table.search tr td {
+border: 1px solid #fff;
+padding: 0.3em;
+}
+.leftcolumn {
+text-align: right;
+}
+
+h3.cd_heading {
+font-family: Verdana, Arial, Helvetica, sans-serif;
+font-weight: normal;
+font-size: 1.1em;
+margin-top: 3em;
+border-top: 1px solid #e5e5e5;
+background-color: #fafafa;
+padding: 0.5em 0.25em;
+}
+h3.cd_heading span {
+margin-top: 2em;
+padding-bottom: 1px;
+border-bottom: 1px solid #fda;
+}
+
+div.cd_block {
+background-color: #fed;
+padding: 0.5em 0.5em 0.5em 0.5em;
+}
+
+table.cd {
+border-collapse: collapse;
+}
+table.cd th {
+border: 1px solid #ccc;
+background-color: #eee;
+padding: 0.5em;
+text-align: center;
+}
+table.cd td {
+border: 1px solid #ccc;
+background-color: #fff;
+padding: 0.5em;
+text-align: center;
+}
+
+p.insert {
+padding-left: 2em;
+}
+div.cd_float {
+width: 100%;
+float: left;
+padding: 0 2.5em;
+padding-bottom: 1em;
+}
+ul.cd_block {
+width: 43%;
+list-style: none;
+float: left; 
+margin: 0;
+padding: 0;
+padding: 1em;
+}
+ul.cd_block li {
+}
+ul.cd_nostyle {
+list-style: none;
 }
