@@ -25,12 +25,23 @@ public abstract class BolonhaEnrolmentRule implements IEnrollmentRule {
     protected int countEnrolments(String[] group) {
 	int res = 0;
 	for (String code : group) {
+	    if(isEnrolledInExecutionPeriod(code)) {
+		res++;
+	    }
+	}
+	return res;
+    }
+    
+    protected int countEnroledOrAprovedEnrolments(String[] group) {
+	int res = 0;
+	for (String code : group) {
 	    if(isEnrolledInExecutionPeriodOrAproved(code)) {
 		res++;
 	    }
 	}
 	return res;
     }
+
 
     protected boolean isGroupCompleted(CurricularCourseGroup optionalCurricularCourse, List<CurricularCourse2Enroll> curricularCoursesToBeEnrolledIn) {
 	
@@ -62,21 +73,34 @@ public abstract class BolonhaEnrolmentRule implements IEnrollmentRule {
 	});
     }
 
-    protected boolean isEnrolledInExecutionPeriodOrAproved(final CurricularCourse curricularCourse) {
+    protected boolean isEnrolledInExecutionPeriod(final CurricularCourse curricularCourse) {
+	
+	return studentCurricularPlan.isCurricularCourseEnrolledInExecutionPeriod(curricularCourse,executionPeriod);
+    }
+    
+    private boolean isEnrolledInExecutionPeriodOrAproved(final CurricularCourse curricularCourse) {
 	
 	return studentCurricularPlan.isCurricularCourseEnrolledInExecutionPeriod(curricularCourse,executionPeriod)
 		|| studentCurricularPlan.isCurricularCourseApproved(curricularCourse);
 
     }
     
+    protected boolean isEnrolledInExecutionPeriod(final String code) {
+
+	final CurricularCourse curricularCourse = studentCurricularPlan.getDegreeCurricularPlan().getCurricularCourseByCode(code);
+	
+	return isEnrolledInExecutionPeriod(curricularCourse);
+
+    }
     
-    protected boolean isEnrolledInExecutionPeriodOrAproved(final String code) {
+    private boolean isEnrolledInExecutionPeriodOrAproved(final String code) {
 
 	final CurricularCourse curricularCourse = studentCurricularPlan.getDegreeCurricularPlan().getCurricularCourseByCode(code);
 	
 	return isEnrolledInExecutionPeriodOrAproved(curricularCourse);
 
     }
+
 
     protected void removeCurricularCourse(List curricularCourses2Enroll, final String curricular_corse_code) {
 	CollectionUtils.filter(curricularCourses2Enroll, new Predicate() {
