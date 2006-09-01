@@ -343,7 +343,7 @@ public class CurricularCourse extends CurricularCourse_Base {
             if (curricularCourseScopesFound != null && !curricularCourseScopesFound.isEmpty()) {
 
                 if (semester != null) {
-                    curricularCourseScopeFound = (CurricularCourseScope) CollectionUtils.find(
+                    curricularCourseScopesFound = (List) CollectionUtils.select(
                             curricularCourseScopesFound, new Predicate() {
                                 public boolean evaluate(Object arg0) {
                                     return ((CurricularCourseScope) arg0).getCurricularSemester()
@@ -351,9 +351,8 @@ public class CurricularCourse extends CurricularCourse_Base {
                                 }
                             });
 
-                    if (curricularCourseScopeFound != null) {
-                        curricularYearToReturn = curricularCourseScopeFound.getCurricularSemester()
-                                .getCurricularYear();
+                    if (curricularCourseScopesFound != null && !curricularCourseScopesFound.isEmpty()) {
+                	curricularYearToReturn = getCurricularYearWithLowerYear(curricularCourseScopesFound, date);
                     } else {
                         foundInBranchButNotInSemester = true;
                     }
