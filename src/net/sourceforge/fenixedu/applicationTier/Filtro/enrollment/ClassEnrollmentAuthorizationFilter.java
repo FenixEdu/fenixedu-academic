@@ -13,6 +13,7 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFi
 import net.sourceforge.fenixedu.domain.EnrolmentPeriodInClasses;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.student.Registration;
+import net.sourceforge.fenixedu.util.DateFormatUtil;
 import pt.utl.ist.berserk.ServiceRequest;
 import pt.utl.ist.berserk.ServiceResponse;
 import pt.utl.ist.berserk.logic.filterManager.exceptions.FilterException;
@@ -23,9 +24,9 @@ import pt.utl.ist.berserk.logic.filterManager.exceptions.FilterException;
  */
 public class ClassEnrollmentAuthorizationFilter extends Filtro {
 
-    private static SimpleDateFormat outputDateFormat = new SimpleDateFormat("dd/MM/yyyy");
-
-    private static SimpleDateFormat comparableDateFormat = new SimpleDateFormat("yyyyMMdd");
+    private static SimpleDateFormat outputDateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+    
+    private static String comparableDateFormatString = "yyyyMMddHHmm";
 
     public void execute(ServiceRequest request, ServiceResponse response) throws FilterException, Exception {
 
@@ -39,16 +40,11 @@ public class ClassEnrollmentAuthorizationFilter extends Filtro {
                 throw new CurrentClassesEnrolmentPeriodUndefinedForDegreeCurricularPlan();
             }
 
-            Calendar now = Calendar.getInstance();
+            Date now = new Date();
             Date startDate = enrolmentPeriodInClasses.getStartDate();
             Date endDate = enrolmentPeriodInClasses.getEndDate();
-
-            Integer nowValue = new Integer(comparableDateFormat.format(now.getTime()));
-            Integer startDateValue = new Integer(comparableDateFormat.format(startDate));
-            Integer endDateValue = new Integer(comparableDateFormat.format(endDate));
-
-            if ((nowValue.intValue() < startDateValue.intValue())
-                    || (nowValue.intValue() > endDateValue.intValue())) {
+            
+            if(DateFormatUtil.compareDates(comparableDateFormatString, startDate, now) > 0 || DateFormatUtil.compareDates(comparableDateFormatString, endDate, now) < 0) { 
                 String startDateString = outputDateFormat.format(startDate);
                 String endDateString = outputDateFormat.format(endDate);
 
