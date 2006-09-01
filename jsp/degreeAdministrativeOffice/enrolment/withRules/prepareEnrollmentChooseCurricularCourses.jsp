@@ -201,8 +201,7 @@ input { font-size: 11px; }
 		<tr class="header">
 		<th class="listClasses-header"><bean:message key="label.courses" bundle="STUDENT_RESOURCES"/></th>
 		<th class="listClasses-header"><bean:message key="label.course.type" bundle="STUDENT_RESOURCES"/></th>		
-		<th class="listClasses-header"><bean:message key="label.course.enrollment.weight2" bundle="STUDENT_RESOURCES"/></th>
-		<th class="listClasses-header"><bean:message key="label.course.enrollment.acumulated.enrollments2" bundle="STUDENT_RESOURCES"/></th>
+		<th class="listClasses-header"><bean:message key="label.course.enrollment.ectsCredits" bundle="STUDENT_RESOURCES"/></th>
 		<th class="listClasses-header"><bean:message key="label.course.enrollment.state" bundle="STUDENT_RESOURCES"/></th>
 		<th class="listClasses-header"><bean:message key="label.course.enrollment.cancel" bundle="STUDENT_RESOURCES"/></th>		
 		</tr>
@@ -221,8 +220,7 @@ input { font-size: 11px; }
 		            
 				<%} %>
 				
-				<td class="listClasses"><bean:write name="enrollmentElem" property="curricularCourse.enrollmentWeigth"/></td>
-				<td class="listClasses"><bean:write name="enrollmentElem" property="accumulatedWeight"/></td>
+				<td class="listClasses"><bean:write name="enrollmentElem" property="ectsCredits"/></td>
 				<td class="listClasses">
 					<bean:message name="enrollmentElem" property="condition.name" bundle="ENUMERATION_RESOURCES"/>
 				</td>
@@ -254,8 +252,7 @@ input { font-size: 11px; }
 		<tr class="header">
 		<th class="listClasses-header"><bean:message key="label.course" bundle="STUDENT_RESOURCES"/></th>
 		<th class="listClasses-header"><bean:message key="label.course.type" bundle="STUDENT_RESOURCES"/></th>	
-		<th class="listClasses-header"><bean:message key="label.course.enrollment.weight2" bundle="STUDENT_RESOURCES"/></th>
-		<th class="listClasses-header"><bean:message key="label.course.enrollment.acumulated.enrollments2" bundle="STUDENT_RESOURCES"/></th>
+		<th class="listClasses-header"><bean:message key="label.course.enrollment.ectsCredits" bundle="STUDENT_RESOURCES"/></th>
 		<th class="listClasses-header"><bean:message key="label.course.enrollment.curricularYear" bundle="STUDENT_RESOURCES"/></th>
 		<th class="listClasses-header"><bean:message key="label.course.enrollment.state" bundle="STUDENT_RESOURCES"/></th>
 		<th class="listClasses-header"><bean:message key="label.course.enrollment.enroll" bundle="STUDENT_RESOURCES"/></th>		
@@ -273,8 +270,7 @@ input { font-size: 11px; }
 						
 					<% } %>
 				</td>
-				<td class="listClasses"><bean:write name="curricularCourse2Enrol" property="curricularCourse.enrollmentWeigth"/></td>
-				<td class="listClasses"><bean:write name="curricularCourse2Enrol" property="accumulatedWeight"/></td>
+				<td class="listClasses"><bean:write name="curricularCourse2Enrol" property="ectsCredits"/></td>
 				<td class="listClasses"><bean:write name="curricularCourse2Enrol" property="curricularYear.year"/></td>
 				<td class="listClasses"><bean:message name="curricularCourse2Enrol" property="enrollmentType.name" bundle="ENUMERATION_RESOURCES"/></td>
 				<td class="listClasses">
