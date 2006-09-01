@@ -14,11 +14,13 @@ import org.apache.commons.collections.Predicate;
 
 public class LEGIBolonhaEnrolmentRule extends BolonhaEnrolmentRule {
 
-    private static final String[] DEGREE = { "B5T", "B31"};
+    private static final String[] DEGREE_PRODUCAO = { "B5T", "B31"};
     
-    private static final String[] PRODUCAO = { "$89"};
+    private static final String[] DEGREE_EMPREENDIMENTOS = { "B5T", "B31", "AA9"};
     
-    private static final String[] EMPREENDIMENTOS = { "$91", "A4O", "1A", "A4H"};
+    private static final String[] PRODUCAO = { "$107"};
+    
+    private static final String[] EMPREENDIMENTOS = { "A4O", "1A", "A4H", "$108"};
     
     private static final String[] COMMONS_PRODUCAO = { "A4G", "AA9", "A4B", "AFY", "$83"}; 
     
@@ -38,10 +40,10 @@ public class LEGIBolonhaEnrolmentRule extends BolonhaEnrolmentRule {
 	    throws EnrolmentRuleDomainException {
 
 	if(studentCurricularPlan.getBranch().getCode().equals(PRODUCAO_CODE)) {
-	    return applyBranch(curricularCoursesToBeEnrolledIn, COMMONS_PRODUCAO, DEGREE, PRODUCAO);
+	    return applyBranch(curricularCoursesToBeEnrolledIn, COMMONS_PRODUCAO, DEGREE_PRODUCAO, PRODUCAO);
 	}
 	if(studentCurricularPlan.getBranch().getCode().equals(EMPREENDIMENTOS_CODE)) {
-	    return applyBranch(curricularCoursesToBeEnrolledIn, COMMONS_EMPREENDIMENTOS, DEGREE, EMPREENDIMENTOS);
+	    return applyBranch(curricularCoursesToBeEnrolledIn, COMMONS_EMPREENDIMENTOS, DEGREE_EMPREENDIMENTOS, EMPREENDIMENTOS);
 	}
 	
 	return curricularCoursesToBeEnrolledIn;
