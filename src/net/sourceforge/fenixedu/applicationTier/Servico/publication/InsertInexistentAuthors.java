@@ -8,7 +8,7 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.externalPerson.InsertExternalPersons;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.dataTransferObject.InfoExternalPerson;
+import net.sourceforge.fenixedu.dataTransferObject.InfoExternalPersonEditor;
 import net.sourceforge.fenixedu.dataTransferObject.InfoInstitution;
 import net.sourceforge.fenixedu.dataTransferObject.publication.InfoAuthor;
 import net.sourceforge.fenixedu.domain.ExternalPerson;
@@ -23,10 +23,11 @@ public class InsertInexistentAuthors extends Service {
         List<Integer> externalPersonsIndexes = new ArrayList<Integer>();
 
         int index = 0;
-        final List<InfoExternalPerson> infoExternalPersons = new ArrayList<InfoExternalPerson>();
+        final List<InfoExternalPersonEditor> infoExternalPersons = new ArrayList<InfoExternalPersonEditor>();
         for (final InfoAuthor infoAuthor : infoAuthorsList) {
             if (infoAuthor.getIdInternal() == null) {
-                InfoExternalPerson infoExternalPerson = new InfoExternalPerson();
+                InfoExternalPersonEditor infoExternalPerson = new InfoExternalPersonEditor();
+                
                 infoExternalPerson.setName(infoAuthor.getAuthor());
                 
                 InfoInstitution infoInstitution = new InfoInstitution();

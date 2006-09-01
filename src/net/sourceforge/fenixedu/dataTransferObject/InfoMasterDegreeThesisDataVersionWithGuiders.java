@@ -37,23 +37,22 @@ public class InfoMasterDegreeThesisDataVersionWithGuiders extends InfoMasterDegr
 
         this.allGuiders = new ArrayList<GuiderDTO>();
 
-        for (InfoTeacher guider : (List<InfoTeacher>) this.getInfoGuiders()) {
+        for (InfoTeacher guider : this.getInfoGuiders()) {
             this.allGuiders.add(new GuiderDTO(GuiderType.GUIDER, guider.getInfoPerson().getNome(),
                     guider.getTeacherNumber(), institution));
         }
 
-        for (InfoExternalPerson guider : (List<InfoExternalPerson>) this.getInfoExternalGuiders()) {
+        for (InfoExternalPerson guider : this.getInfoExternalGuiders()) {
             this.allGuiders.add(new GuiderDTO(GuiderType.EXTERNAL_GUIDER, guider.getInfoPerson()
                     .getNome(), null, guider.getInfoInstitution().getName()));
         }
 
-        for (InfoTeacher assistentGuider : (List<InfoTeacher>) this.getInfoAssistentGuiders()) {
+        for (InfoTeacher assistentGuider : this.getInfoAssistentGuiders()) {
             this.allGuiders.add(new GuiderDTO(GuiderType.ASSISTENT, assistentGuider.getInfoPerson()
                     .getNome(), assistentGuider.getTeacherNumber(), institution));
         }
 
-        for (InfoExternalPerson assistentGuider : (List<InfoExternalPerson>) this
-                .getInfoExternalAssistentGuiders()) {
+        for (InfoExternalPerson assistentGuider : this.getInfoExternalAssistentGuiders()) {
             this.allGuiders.add(new GuiderDTO(GuiderType.EXTERNAL_ASSISTENT, assistentGuider
                     .getInfoPerson().getNome(), null, assistentGuider.getInfoInstitution().getName()));
         }
@@ -80,11 +79,11 @@ public class InfoMasterDegreeThesisDataVersionWithGuiders extends InfoMasterDegr
      * @param externalPersons
      * @return
      */
-    private List copyExternalPersons(List externalPersons) {
+    private List<InfoExternalPerson> copyExternalPersons(List<ExternalPerson> externalPersons) {
         
         List<InfoExternalPerson> infoExternalPersons = new ArrayList<InfoExternalPerson>(externalPersons.size());
-        for (ExternalPerson externalPerson : (List<ExternalPerson>)externalPersons) {
-            infoExternalPersons.add(InfoExternalPersonWithPersonAndWLocation.newInfoFromDomain(externalPerson));            
+        for (ExternalPerson externalPerson : externalPersons) {
+            infoExternalPersons.add(InfoExternalPerson.newInfoFromDomain(externalPerson));            
         }
         return infoExternalPersons;
         
@@ -94,8 +93,8 @@ public class InfoMasterDegreeThesisDataVersionWithGuiders extends InfoMasterDegr
      * @param masterDegreeThesisDataVersion
      * @return
      */
-    private List copyTeachers(List teachers) {
-        return (List) CollectionUtils.collect(teachers, new Transformer() {
+    private List<InfoTeacher> copyTeachers(List teachers) {
+        return (List<InfoTeacher>) CollectionUtils.collect(teachers, new Transformer() {
             public Object transform(Object arg0) {
                 Teacher teacher = (Teacher) arg0;
                 return InfoTeacher.newInfoFromDomain(teacher);

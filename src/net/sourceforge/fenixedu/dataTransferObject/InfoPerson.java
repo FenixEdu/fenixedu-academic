@@ -223,8 +223,7 @@ public class InfoPerson extends InfoObject {
     }
 
     public InfoExternalPerson getInfoExternalPerson() {
-        return InfoExternalPersonWithPersonAndWLocation.newInfoFromDomain(getPerson()
-                .getExternalPerson());
+        return InfoExternalPerson.newInfoFromDomain(getPerson().getExternalPerson());
     }
 
     private List<String> getImportantRoles(Person person, List<String> mainRoles) {

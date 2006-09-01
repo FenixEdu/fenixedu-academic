@@ -161,7 +161,7 @@ public class InfoMasterDegreeProofVersion extends InfoObject {
         return (List) CollectionUtils.collect(externalPersons, new Transformer() {
             public Object transform(Object arg0) {
                 ExternalPerson externalPerson = (ExternalPerson) arg0;
-                return InfoExternalPersonWithPersonAndWLocation.newInfoFromDomain(externalPerson);
+                return InfoExternalPerson.newInfoFromDomain(externalPerson);
             }
         });
     }

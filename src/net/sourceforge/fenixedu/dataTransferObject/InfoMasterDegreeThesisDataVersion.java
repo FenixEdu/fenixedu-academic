@@ -19,13 +19,13 @@ public class InfoMasterDegreeThesisDataVersion extends InfoObject {
 
     private InfoMasterDegreeThesis infoMasterDegreeThesis;
 
-    private List infoExternalAssistentGuiders;
+    private List<InfoExternalPerson> infoExternalAssistentGuiders;
 
-    private List infoAssistentGuiders;
+    private List<InfoTeacher> infoAssistentGuiders;
 
-    private List infoGuiders;
+    private List<InfoTeacher> infoGuiders;
 
-    private List infoExternalGuiders;
+    private List<InfoExternalPerson> infoExternalGuiders;
 
     private InfoEmployee infoResponsibleEmployee;
 
@@ -51,35 +51,35 @@ public class InfoMasterDegreeThesisDataVersion extends InfoObject {
         return dissertationTitle;
     }
 
-    public void setInfoAssistentGuiders(List infoAssistentGuiders) {
+    public void setInfoAssistentGuiders(List<InfoTeacher> infoAssistentGuiders) {
         this.infoAssistentGuiders = infoAssistentGuiders;
     }
 
-    public List getInfoAssistentGuiders() {
+    public List<InfoTeacher> getInfoAssistentGuiders() {
         return infoAssistentGuiders;
     }
 
-    public void setInfoExternalAssistentGuiders(List infoExternalAssistentGuiders) {
+    public void setInfoExternalAssistentGuiders(List<InfoExternalPerson> infoExternalAssistentGuiders) {
         this.infoExternalAssistentGuiders = infoExternalAssistentGuiders;
     }
 
-    public List getInfoExternalAssistentGuiders() {
+    public List<InfoExternalPerson> getInfoExternalAssistentGuiders() {
         return infoExternalAssistentGuiders;
     }
 
-    public void setInfoGuiders(List infoGuiders) {
+    public void setInfoGuiders(List<InfoTeacher> infoGuiders) {
         this.infoGuiders = infoGuiders;
     }
 
-    public List getInfoGuiders() {
+    public List<InfoTeacher> getInfoGuiders() {
         return infoGuiders;
     }
 
-    public List getInfoExternalGuiders() {
+    public List<InfoExternalPerson> getInfoExternalGuiders() {
         return infoExternalGuiders;
     }
 
-    public void setInfoExternalGuiders(List infoExternalGuiders) {
+    public void setInfoExternalGuiders(List<InfoExternalPerson> infoExternalGuiders) {
         this.infoExternalGuiders = infoExternalGuiders;
     }
 

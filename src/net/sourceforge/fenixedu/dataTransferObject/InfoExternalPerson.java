@@ -4,6 +4,7 @@
  */
 package net.sourceforge.fenixedu.dataTransferObject;
 
+import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.ExternalPerson;
 
 /**
@@ -13,78 +14,46 @@ import net.sourceforge.fenixedu.domain.ExternalPerson;
  */
 public class InfoExternalPerson extends InfoObject {
     
-    private InfoPerson infoPerson;
+    private DomainReference<ExternalPerson> externalPersonDomainReference;
 
-    private InfoInstitution infoInstitution;
+    public InfoExternalPerson(final ExternalPerson externalPerson) {
+	externalPersonDomainReference = new DomainReference<ExternalPerson>(externalPerson);
+    }
+    
+    public static InfoExternalPerson newInfoFromDomain(final ExternalPerson externalPerson) {
+        return externalPerson == null ? null : new InfoExternalPerson(externalPerson);
+    }
+    
+    private ExternalPerson getExternalPerson() {
+	return externalPersonDomainReference == null ? null : externalPersonDomainReference.getObject();
+    }
+    
+    public boolean equals(Object obj) {
+        return obj instanceof InfoExternalPerson && getExternalPerson() == ((InfoExternalPerson) obj).getExternalPerson();
+    }
+
+    @Override
+    public Integer getIdInternal() {
+	return getExternalPerson().getIdInternal();
+    }
+
+    @Override
+    public void setIdInternal(Integer integer) {
+	throw new Error("Method should not be called!");
+    }
 
     /**
      * @return Returns the infoPerson.
      */
     public InfoPerson getInfoPerson() {
-        return infoPerson;
-    }
-
-    /**
-     * @param infoPerson
-     *            The infoPerson to set.
-     */
-    public void setInfoPerson(InfoPerson infoPerson) {
-        this.infoPerson = infoPerson;
+        return InfoPerson.newInfoFromDomain(getExternalPerson().getPerson());
     }
 
     /**
      * @return Returns the infoInstitution.
      */
     public InfoInstitution getInfoInstitution() {
-        return infoInstitution;
+        return InfoInstitution.newInfoFromDomain(getExternalPerson().getInstitutionUnit());
     }
 
-    /**
-     * @param infoInstitution
-     *            The infoInstitution to set.
-     */
-    public void setInfoInstitution(InfoInstitution infoInstitution) {
-        this.infoInstitution = infoInstitution;
-    }
-
-    public boolean equals(Object obj) {
-        boolean result = false;
-
-        if (obj instanceof InfoExternalPerson) {
-            InfoExternalPerson infoExternalPerson = (InfoExternalPerson) obj;
-            result = this.getInfoPerson().equals(infoExternalPerson.getInfoPerson());
-        }
-        return result;
-    }
-
-    public static InfoExternalPerson newInfoFromDomain(ExternalPerson externalPerson) {
-        InfoExternalPerson infoExternalPerson = null;
-        if (externalPerson != null) {
-            infoExternalPerson = new InfoExternalPerson();
-            infoExternalPerson.copyFromDomain(externalPerson);
-        }
-        return infoExternalPerson;
-    }
-    
-    public void copyFromDomain(ExternalPerson externalPerson) {
-        super.copyFromDomain(externalPerson);
-        
-        setInfoPerson(InfoPerson.newInfoFromDomain(externalPerson.getPerson()));
-        setInfoInstitution(InfoInstitution.newInfoFromDomain(externalPerson.getInstitutionUnit()));
-        
-    }
-    
-    /*
-     * Temporary solution to remove InfoPerson
-     */
-    private String name;
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-    
 }

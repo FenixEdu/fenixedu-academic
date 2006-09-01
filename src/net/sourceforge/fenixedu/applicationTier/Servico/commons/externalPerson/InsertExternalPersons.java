@@ -6,7 +6,7 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.institution.InsertInstitution;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.dataTransferObject.InfoExternalPerson;
+import net.sourceforge.fenixedu.dataTransferObject.InfoExternalPersonEditor;
 import net.sourceforge.fenixedu.domain.ExternalPerson;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UnitUtils;
@@ -14,14 +14,14 @@ import net.sourceforge.fenixedu.domain.person.Gender;
 
 public class InsertExternalPersons extends Service {
 
-    public List<ExternalPerson> run(List<InfoExternalPerson> infoExternalPersons)
+    public List<ExternalPerson> run(List<InfoExternalPersonEditor> infoExternalPersons)
 	    throws FenixServiceException {
 
 	final List<ExternalPerson> externalPersons = new ArrayList<ExternalPerson>();
 
 	List<Unit> institutions = Unit.readAllUnits();
 
-	for (final InfoExternalPerson infoExternalPerson : infoExternalPersons) {
+	for (final InfoExternalPersonEditor infoExternalPerson : infoExternalPersons) {
 
 	    // retrieving existing work location
 	    Unit currentInstitution = UnitUtils.readExternalInstitutionUnitByName(infoExternalPerson
