@@ -57,7 +57,7 @@ public class VBox<E> extends jvstm.VBox<E> implements VersionedSubject,dml.runti
 	if (body.version < txNumber) {
 	    commit(allocateBody(txNumber));
 	} else {
-	    System.out.println("WARNING: adding older version for a box.  This should not happen...");
+	    //System.out.println("WARNING: adding older version for a box.  This should not happen...");
 	}
     }
 
