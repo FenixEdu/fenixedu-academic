@@ -17,7 +17,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoEmployee;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGratuityValues;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPaymentPhase;
-import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixLookupDispatchAction;
@@ -189,9 +188,6 @@ public class InsertGratuityDataLookupDispatchAction extends FenixLookupDispatchA
 
     private InfoGratuityValues fillGratuity(IUserView userView, DynaValidatorForm actionForm) {
 
-	InfoEmployee infoEmployee = new InfoEmployee();
-	infoEmployee.setPerson(InfoPerson.newInfoFromDomain(userView.getPerson()));
-
 	String degree = (String) actionForm.get("degree");
 	Integer degreeId = Integer.valueOf(StringUtils.substringAfter(degree, "#"));
 
@@ -201,7 +197,7 @@ public class InsertGratuityDataLookupDispatchAction extends FenixLookupDispatchA
 	InfoGratuityValues infoGratuityValues = new InfoGratuityValues();
 
 	infoGratuityValues.setInfoExecutionDegree(infoExecutionDegree);
-	infoGratuityValues.setInfoEmployee(infoEmployee);
+	infoGratuityValues.setInfoEmployee(new InfoEmployee(userView.getPerson().getEmployee()));
 
 	if ((String) actionForm.get("gratuityId") != null
 		&& ((String) actionForm.get("gratuityId")).length() > 0) {

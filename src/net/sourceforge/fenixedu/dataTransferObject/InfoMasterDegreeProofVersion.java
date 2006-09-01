@@ -207,8 +207,7 @@ public class InfoMasterDegreeProofVersion extends InfoObject {
             this
                     .setInfoExternalJuries(copyExternalPersons(masterDegreeProofVersion
                             .getExternalJuries()));
-            this.setInfoResponsibleEmployee(InfoEmployeeWithPerson
-                    .newInfoFromDomain(masterDegreeProofVersion.getResponsibleEmployee()));
+            this.setInfoResponsibleEmployee(InfoEmployee.newInfoFromDomain(masterDegreeProofVersion.getResponsibleEmployee()));
         }
 
     }

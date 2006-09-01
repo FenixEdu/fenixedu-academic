@@ -4,6 +4,7 @@
  */
 package net.sourceforge.fenixedu.dataTransferObject;
 
+import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Employee;
 
 /**
@@ -12,85 +13,48 @@ import net.sourceforge.fenixedu.domain.Employee;
  * 
  */
 public class InfoEmployee extends InfoObject {
-    private InfoPerson person = null;
 
-    private Integer employeeNumber = null;
-
-    private InfoUnit workingUnit = null;
-
-    private InfoUnit mailingUnit = null;
-
-    public void setPerson(InfoPerson person) {
-        this.person = person;
+    private final DomainReference<Employee> employeeDomainReference;
+    
+    public InfoEmployee(final Employee employee) {
+	employeeDomainReference = new DomainReference<Employee>(employee);
+    }
+    
+    public static InfoEmployee newInfoFromDomain(final Employee employee) {
+	return employee == null ? null : new InfoEmployee(employee);
+    }
+    
+    private Employee getEmployee() {
+	return employeeDomainReference == null ? null : employeeDomainReference.getObject();
+    }
+    
+    public boolean equals(Object obj) {
+        return obj instanceof InfoEmployee && getEmployee() == ((InfoEmployee) obj).getEmployee();
     }
 
-    public InfoPerson getPerson() {
-        return person;
+    @Override
+    public Integer getIdInternal() {
+	return getEmployee().getIdInternal();
     }
 
     public Integer getEmployeeNumber() {
-        return employeeNumber;
-    }
-
-    public void setEmployeeNumber(Integer employeeNumber) {
-        this.employeeNumber = employeeNumber;
-    }
-
-    public String toString() {
-        String result = "[" + this.getClass().getName() + ": \n";
-        result += "idInternal = " + getIdInternal() + "; \n";
-        result += "number = " + this.employeeNumber + "; \n";
-        result += "person = " + this.person.getIdInternal() + "; \n";
-        result += "] \n";
-
-        return result;
-    }
-
-    public boolean equals(Object obj) {
-        boolean result = false;
-
-        if (obj instanceof InfoEmployee) {
-            InfoEmployee infoEmployee = (InfoEmployee) obj;
-            result = this.person.equals(infoEmployee.getPerson());
-        }
-        return result;
-    }
-
-    public void copyFromDomain(Employee employee) {
-        super.copyFromDomain(employee);
-        if (employee != null) {
-            setEmployeeNumber(employee.getEmployeeNumber());
-            if (employee.getCurrentContract() != null) {
-                setWorkingUnit(InfoUnit
-                        .newInfoFromDomain(employee.getCurrentContract().getWorkingUnit()));
-                setMailingUnit(InfoUnit
-                        .newInfoFromDomain(employee.getCurrentContract().getMailingUnit()));
-            }
-        }
-    }
-
-    public static InfoEmployee newInfoFromDomain(Employee employee) {
-        InfoEmployee infoEmployee = null;
-        if (employee != null) {
-            infoEmployee = new InfoEmployee();
-            infoEmployee.copyFromDomain(employee);
-        }
-        return infoEmployee;
+	return getEmployee().getEmployeeNumber();
     }
 
     public InfoUnit getWorkingUnit() {
-        return workingUnit;
-    }
-
-    public void setWorkingUnit(InfoUnit workingUnit) {
-        this.workingUnit = workingUnit;
+        return InfoUnit.newInfoFromDomain(getEmployee().getCurrentContract().getWorkingUnit());
     }
 
     public InfoUnit getMailingUnit() {
-        return mailingUnit;
+	return InfoUnit.newInfoFromDomain(getEmployee().getCurrentContract().getMailingUnit());
     }
 
-    public void setMailingUnit(InfoUnit mailingUnit) {
-        this.mailingUnit = mailingUnit;
+    public InfoPerson getPerson() {
+	return InfoPerson.newInfoFromDomain(getEmployee().getPerson());
     }
+
+    public String toString() {
+        return getEmployee().toString();
+    }
+
 }

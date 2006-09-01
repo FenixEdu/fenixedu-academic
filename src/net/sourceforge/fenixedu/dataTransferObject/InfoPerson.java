@@ -259,7 +259,7 @@ public class InfoPerson extends InfoObject {
     }
 
     public InfoEmployee getInfoEmployee() {
-        return InfoEmployeeWithAll.newInfoFromDomain(getPerson().getEmployee());
+        return InfoEmployee.newInfoFromDomain(getPerson().getEmployee());
     }
 
     public List<InfoStudentCurricularPlan> getInfoStudentCurricularPlanList() {

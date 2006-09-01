@@ -4,7 +4,7 @@
 package net.sourceforge.fenixedu.dataTransferObject.managementAssiduousness;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoCostCenter;
-import net.sourceforge.fenixedu.dataTransferObject.InfoEmployeeWithPerson;
+import net.sourceforge.fenixedu.dataTransferObject.InfoEmployee;
 import net.sourceforge.fenixedu.domain.managementAssiduousness.ExtraWorkRequests;
 
 /**
@@ -16,7 +16,7 @@ public class InfoExtraWorkRequestsWithAll extends InfoExtraWorkRequests {
     public void copyFromDomain(ExtraWorkRequests extraWorkRequests) {
         super.copyFromDomain(extraWorkRequests);
         if(extraWorkRequests != null) {
-            setInfoEmployee(InfoEmployeeWithPerson.newInfoFromDomain(extraWorkRequests.getEmployee()));
+            setInfoEmployee(InfoEmployee.newInfoFromDomain(extraWorkRequests.getEmployee()));
             setInfoCostCenterExtraWork(InfoCostCenter.newInfoFromDomain(extraWorkRequests.getCostCenterExtraWork()));
             setInfoCostCenterMoney(InfoCostCenter.newInfoFromDomain(extraWorkRequests.getCostCenterMoney()));            
         }

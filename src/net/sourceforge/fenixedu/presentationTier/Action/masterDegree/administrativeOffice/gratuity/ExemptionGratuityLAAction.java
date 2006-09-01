@@ -11,7 +11,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.InfoEmployee;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGratuitySituation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGratuityValues;
-import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.gratuity.ExemptionGratuityType;
@@ -122,11 +121,8 @@ public class ExemptionGratuityLAAction extends FenixLookupDispatchAction {
         infoGratuitySituation.setInfoGratuityValues(infoGratuityValues);
 
         // employee who made register
+        infoGratuitySituation.setInfoEmployee(new InfoEmployee(userView.getPerson().getEmployee()));
 
-        InfoEmployee infoEmployee = new InfoEmployee();
-        infoEmployee.setPerson(InfoPerson.newInfoFromDomain(userView.getPerson()));
-
-        infoGratuitySituation.setInfoEmployee(infoEmployee);
         return infoGratuitySituation;
     }
 

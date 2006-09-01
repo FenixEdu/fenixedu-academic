@@ -3,7 +3,7 @@
  */
 package net.sourceforge.fenixedu.dataTransferObject.managementAssiduousness;
 
-import net.sourceforge.fenixedu.dataTransferObject.InfoEmployeeWithPerson;
+import net.sourceforge.fenixedu.dataTransferObject.InfoEmployee;
 import net.sourceforge.fenixedu.domain.managementAssiduousness.ExtraWork;
 
 /**
@@ -15,7 +15,7 @@ public class InfoExtraWorkWithAll extends InfoExtraWork {
     public void copyFromDomain(ExtraWork extraWork) {
         super.copyFromDomain(extraWork);
         if(extraWork != null) {
-            setInfoEmployee(InfoEmployeeWithPerson.newInfoFromDomain(extraWork.getEmployee()));          
+            setInfoEmployee(InfoEmployee.newInfoFromDomain(extraWork.getEmployee()));          
         }
     }
     

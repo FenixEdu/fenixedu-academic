@@ -12,8 +12,7 @@ public class InfoMasterDegreeThesisDataVersionWithGuidersAndResp extends
     public void copyFromDomain(MasterDegreeThesisDataVersion masterDegreeThesisDataVersion) {
         super.copyFromDomain(masterDegreeThesisDataVersion);
         if (masterDegreeThesisDataVersion != null) {
-            setInfoResponsibleEmployee(InfoEmployeeWithPerson
-                    .newInfoFromDomain(masterDegreeThesisDataVersion.getResponsibleEmployee()));
+            setInfoResponsibleEmployee(InfoEmployee.newInfoFromDomain(masterDegreeThesisDataVersion.getResponsibleEmployee()));
         }
     }
 
