@@ -11,6 +11,7 @@ import net.sourceforge.fenixedu.domain.assiduousness.WorkScheduleType;
 
 import org.joda.time.DateTime;
 import org.joda.time.Duration;
+import org.joda.time.Interval;
 import org.joda.time.TimeOfDay;
 import org.joda.time.YearMonthDay;
 
@@ -453,6 +454,9 @@ public class Timeline {
             TimePoint minimumClockTimePoint, TimePoint maximumClockTimePoint, Duration maximumDuration) {
         Duration totalDuration = Duration.ZERO;
         Duration temp = null;
+        List<Interval> timePointIntervals = new ArrayList<Interval>();
+        List<Interval> justificationsIntervals = new ArrayList<Interval>();
+
         for (AttributeType attributeType : DomainConstants.WORKED_ATTRIBUTES.getAttributes()) {
             TimePoint[] timePoints = findIntervalByAttribute(attributeType);
             if (timePoints != null) {
@@ -460,6 +464,20 @@ public class Timeline {
                         .isAtSameTime(timePoints[1])))
                         || (lastTimePoint != null && (lastTimePoint.isBefore(timePoints[0]) || lastTimePoint
                                 .isAtSameTime(timePoints[0])))) {
+                    DateTime begin = timePoints[0].getTime().toDateTimeToday();
+                    DateTime end = timePoints[1].getTime().toDateTimeToday();
+                    if (timePoints[1].isNextDay()) {
+                        end = end.plusDays(1);
+                    }
+                    Interval timePointInterval = new Interval(begin, end);
+                    if (timePoints[0].getPointAttributes().contains(AttributeType.JUSTIFICATION)
+                            && timePoints[1].getPointAttributes().contains(AttributeType.JUSTIFICATION)) {
+                        justificationsIntervals.add(timePointInterval);
+
+                    } else {
+                        timePointIntervals.add(timePointInterval);
+                    }
+
                     temp = getDurationBetweenPoints(timePoints[0], timePoints[1], minimumClockTimePoint,
                             maximumClockTimePoint);
                     if (!(timePoints[0].getPointAttributes().contains(AttributeType.JUSTIFICATION) && timePoints[1]
@@ -472,6 +490,15 @@ public class Timeline {
                 }
             } else {
                 break;
+            }
+        }
+
+        for (Interval justificationInterval : justificationsIntervals) {
+            for (Interval workedInterval : timePointIntervals) {
+                Interval overlap = justificationInterval.overlap(workedInterval);
+                if (overlap != null) {
+                    totalDuration = totalDuration.minus(overlap.toDuration());
+                }
             }
         }
         return totalDuration;
@@ -689,13 +716,13 @@ public class Timeline {
     }
 
     public TimePoint getLastWorkTimePoint() {
-        TimePoint lastTimePoint = null;
-        for (TimePoint point : getTimePoints()) {
+        for (int i = getNumberOfTimePoints() - 1; i >= 0; i--) {
+            TimePoint point = getTimePoints().get(i);
             if (point.getPointAttributes().contains(DomainConstants.WORKED_ATTRIBUTES)) {
-                lastTimePoint = point;
+                return point;
             }
         }
-        return lastTimePoint;
+        return null;
     }
 
     // Plots the pairs of clockings in the timeline
