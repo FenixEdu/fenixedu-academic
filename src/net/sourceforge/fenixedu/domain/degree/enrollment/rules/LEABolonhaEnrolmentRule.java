@@ -26,8 +26,8 @@ public class LEABolonhaEnrolmentRule extends BolonhaEnrolmentRule {
 	    List<CurricularCourse2Enroll> curricularCoursesToBeEnrolledIn)
 	    throws EnrolmentRuleDomainException {
 
-	final boolean projecto = isEnrolledInExecutionPeriodOrAproved(PROJECTO_CODE);
-	final boolean dissertacao = isEnrolledInExecutionPeriodOrAproved(DISSERTACAO_CODE);
+	final boolean projecto = isEnrolledInExecutionPeriod(PROJECTO_CODE);
+	final boolean dissertacao = isEnrolledInExecutionPeriod(DISSERTACAO_CODE);
 
 	if (projecto) {
 	    removeCurricularCourse(curricularCoursesToBeEnrolledIn, DISSERTACAO_CODE);

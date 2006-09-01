@@ -26,8 +26,8 @@ public class LEQBolonhaEnrolmentRule extends BolonhaEnrolmentRule {
 	    List<CurricularCourse2Enroll> curricularCoursesToBeEnrolledIn)
 	    throws EnrolmentRuleDomainException {
 
-	final boolean estagio = isEnrolledInExecutionPeriodOrAproved(ESTAGIO_CODE);
-	final boolean dissertacao = isEnrolledInExecutionPeriodOrAproved(DISSERTACAO_CODE);
+	final boolean estagio = isEnrolledInExecutionPeriod(ESTAGIO_CODE);
+	final boolean dissertacao = isEnrolledInExecutionPeriod(DISSERTACAO_CODE);
 
 	if (estagio) {
 	    removeCurricularCourse(curricularCoursesToBeEnrolledIn, DISSERTACAO_CODE);

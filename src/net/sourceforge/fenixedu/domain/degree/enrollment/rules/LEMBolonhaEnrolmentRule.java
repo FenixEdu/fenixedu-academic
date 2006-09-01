@@ -62,7 +62,7 @@ public class LEMBolonhaEnrolmentRule extends BolonhaEnrolmentRule {
 
     private List<CurricularCourse2Enroll> applyProducao(List<CurricularCourse2Enroll> curricularCoursesToBeEnrolledIn) {
 
-	if(isEnrolledInExecutionPeriodOrAproved(DISSERTACAO_CODE)) {
+	if(isEnrolledInExecutionPeriod(DISSERTACAO_CODE)) {
 	    removeCurricularCourse(curricularCoursesToBeEnrolledIn, PRODUCAO_MECANICAI_CODE);
 	    removeCurricularCourse(curricularCoursesToBeEnrolledIn, PROJECTO_MECANICOI_CODE);
 	    int common = countEnrolments(GROUP_320_COMMON);
@@ -79,7 +79,7 @@ public class LEMBolonhaEnrolmentRule extends BolonhaEnrolmentRule {
 		}
 	    }
 	} else {
-	    if(isEnrolledInExecutionPeriodOrAproved(PRODUCAO_MECANICAI_CODE) || isEnrolledInExecutionPeriodOrAproved(PROJECTO_MECANICOI_CODE)) {
+	    if(isEnrolledInExecutionPeriod(PRODUCAO_MECANICAI_CODE) || isEnrolledInExecutionPeriod(PROJECTO_MECANICOI_CODE)) {
 		removeCurricularCourse(curricularCoursesToBeEnrolledIn, DISSERTACAO_CODE);
 	    }
 	    
@@ -104,7 +104,7 @@ public class LEMBolonhaEnrolmentRule extends BolonhaEnrolmentRule {
 
     private List<CurricularCourse2Enroll> applyTermodinamica(List<CurricularCourse2Enroll> curricularCoursesToBeEnrolledIn) {
 	
-	if(isEnrolledInExecutionPeriodOrAproved(DISSERTACAO_CODE)) {
+	if(isEnrolledInExecutionPeriod(DISSERTACAO_CODE)) {
 	    removeCurricularCourses(curricularCoursesToBeEnrolledIn, Arrays.asList(GROUP_310));
 	} else {
 	    if((countEnrolments(GROUP_310) >= 1)){
@@ -117,13 +117,13 @@ public class LEMBolonhaEnrolmentRule extends BolonhaEnrolmentRule {
 
     private List<CurricularCourse2Enroll> applyAutomacaoRobotica(List<CurricularCourse2Enroll> curricularCoursesToBeEnrolledIn) {
 
-	if(isEnrolledInExecutionPeriodOrAproved(DISSERTACAO_CODE)) {
+	if(isEnrolledInExecutionPeriod(DISSERTACAO_CODE)) {
 	    removeCurricularCourse(curricularCoursesToBeEnrolledIn, PROJECTO_SISTEMASI_CODE);
 	    if(countEnrolments(GROUP_330) == 1) {
 		removeCurricularCourses(curricularCoursesToBeEnrolledIn, Arrays.asList(GROUP_330));
 	    }
 	} else {
-	    if((countEnrolments(GROUP_330) == 2) || isEnrolledInExecutionPeriodOrAproved(PROJECTO_SISTEMASI_CODE)){
+	    if((countEnrolments(GROUP_330) == 2) || isEnrolledInExecutionPeriod(PROJECTO_SISTEMASI_CODE)){
 		removeCurricularCourse(curricularCoursesToBeEnrolledIn, DISSERTACAO_CODE);
 	    }
 	}

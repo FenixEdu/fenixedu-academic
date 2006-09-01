@@ -19,9 +19,9 @@ public class LEGMBolonhaEnrolmentRule extends BolonhaEnrolmentRule {
 
     private static final String DISSERTACAO_CODE = "$48";
 
-    private static final String[] COMMONS = { "AZY", "AZX", "AZZ", "$47", "$46" };
+    private static final String[] COMMONS = { "AZY", "AZX", "AZZ", "$47"};
 
-    private static final String[] DEGREE = { "AG3", "5Q", "B0B", "B07", "B04", "B03" };
+    private static final String[] DEGREE = { "AG3", "5Q", "B0B", "B07", "B04", "B03"};
 
     public LEGMBolonhaEnrolmentRule(StudentCurricularPlan studentCurricularPlan,
 	    ExecutionPeriod executionPeriod) {
@@ -32,7 +32,7 @@ public class LEGMBolonhaEnrolmentRule extends BolonhaEnrolmentRule {
 	    List<CurricularCourse2Enroll> curricularCoursesToBeEnrolledIn)
 	    throws EnrolmentRuleDomainException {
 
-	final boolean dissertacao = isEnrolledInExecutionPeriodOrAproved(DISSERTACAO_CODE);
+	final boolean dissertacao = isEnrolledInExecutionPeriod(DISSERTACAO_CODE);
 
 	if (countEnrolments(DEGREE) >= 1) {
 	    removeCurricularCourse(curricularCoursesToBeEnrolledIn, DISSERTACAO_CODE);
@@ -40,11 +40,6 @@ public class LEGMBolonhaEnrolmentRule extends BolonhaEnrolmentRule {
 	if (dissertacao) {
 	    removeCurricularCourses(curricularCoursesToBeEnrolledIn, Arrays.asList(DEGREE));
 	}
-
-	/*if (!projecto && !dissertacao) {
-	    removeCurricularCourses(curricularCoursesToBeEnrolledIn, Arrays.asList(DEGREE));
-	    removeCurricularCourses(curricularCoursesToBeEnrolledIn, Arrays.asList(COMMONS));
-	}*/
 
 	return curricularCoursesToBeEnrolledIn;
     }

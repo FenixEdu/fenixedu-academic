@@ -26,7 +26,7 @@ public class LEMATBolonhaEnrolmentRule extends BolonhaEnrolmentRule {
 	    List<CurricularCourse2Enroll> curricularCoursesToBeEnrolledIn)
 	    throws EnrolmentRuleDomainException {
 
-	final boolean dissertacao = isEnrolledInExecutionPeriodOrAproved(DISSERTACAO_CODE);
+	final boolean dissertacao = isEnrolledInExecutionPeriod(DISSERTACAO_CODE);
 
 	if (dissertacao) {
 	    if(studentCurricularPlan.isCurricularCourseApproved(studentCurricularPlan.getDegreeCurricularPlan().getCurricularCourseByCode(MECANICA_COMPUTACIONAL))) {
