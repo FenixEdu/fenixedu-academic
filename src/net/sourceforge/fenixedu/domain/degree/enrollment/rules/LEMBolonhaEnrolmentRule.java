@@ -50,12 +50,14 @@ public class LEMBolonhaEnrolmentRule extends BolonhaEnrolmentRule {
 	    List<CurricularCourse2Enroll> curricularCoursesToBeEnrolledIn)
 	    throws EnrolmentRuleDomainException {
 
-	if(studentCurricularPlan.getBranch().getCode().equals(TERMODINAMICA_CODE)) {
-	    return applyTermodinamica(curricularCoursesToBeEnrolledIn);
-	} if(studentCurricularPlan.getBranch().getCode().equals(PRODUCAO_CODE)) {
-	    return applyProducao(curricularCoursesToBeEnrolledIn);
-	} if(studentCurricularPlan.getBranch().getCode().equals(AUTOMACAO_ROBOTICA_CODE)) {
-	    return applyAutomacaoRobotica(curricularCoursesToBeEnrolledIn);
+	if(studentCurricularPlan.getBranch() != null) {
+	    if(studentCurricularPlan.getBranch().getCode().equals(TERMODINAMICA_CODE)) {
+		return applyTermodinamica(curricularCoursesToBeEnrolledIn);
+	    } if(studentCurricularPlan.getBranch().getCode().equals(PRODUCAO_CODE)) {
+		return applyProducao(curricularCoursesToBeEnrolledIn);
+	    } if(studentCurricularPlan.getBranch().getCode().equals(AUTOMACAO_ROBOTICA_CODE)) {
+		return applyAutomacaoRobotica(curricularCoursesToBeEnrolledIn);
+	    }
 	}
 	return curricularCoursesToBeEnrolledIn;
     }

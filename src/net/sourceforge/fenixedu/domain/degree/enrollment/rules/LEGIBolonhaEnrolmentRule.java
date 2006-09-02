@@ -39,11 +39,13 @@ public class LEGIBolonhaEnrolmentRule extends BolonhaEnrolmentRule {
 	    List<CurricularCourse2Enroll> curricularCoursesToBeEnrolledIn)
 	    throws EnrolmentRuleDomainException {
 
-	if(studentCurricularPlan.getBranch().getCode().equals(PRODUCAO_CODE)) {
-	    return applyBranch(curricularCoursesToBeEnrolledIn, COMMONS_PRODUCAO, DEGREE_PRODUCAO, PRODUCAO);
-	}
-	if(studentCurricularPlan.getBranch().getCode().equals(EMPREENDIMENTOS_CODE)) {
-	    return applyBranch(curricularCoursesToBeEnrolledIn, COMMONS_EMPREENDIMENTOS, DEGREE_EMPREENDIMENTOS, EMPREENDIMENTOS);
+	if(studentCurricularPlan.getBranch() != null) {
+	    if(studentCurricularPlan.getBranch().getCode().equals(PRODUCAO_CODE)) {
+		return applyBranch(curricularCoursesToBeEnrolledIn, COMMONS_PRODUCAO, DEGREE_PRODUCAO, PRODUCAO);
+	    }
+	    if(studentCurricularPlan.getBranch().getCode().equals(EMPREENDIMENTOS_CODE)) {
+		return applyBranch(curricularCoursesToBeEnrolledIn, COMMONS_EMPREENDIMENTOS, DEGREE_EMPREENDIMENTOS, EMPREENDIMENTOS);
+	    }
 	}
 	
 	return curricularCoursesToBeEnrolledIn;
