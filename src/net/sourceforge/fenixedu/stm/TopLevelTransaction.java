@@ -49,6 +49,8 @@ public class TopLevelTransaction extends jvstm.TopLevelTransaction implements Fe
     private ServiceInfo serviceInfo = ServiceInfo.getCurrentServiceInfo();
     private PersistenceBroker broker = PersistenceBrokerFactory.defaultPersistenceBroker();
 
+    private long startTime = System.currentTimeMillis();
+
     private Thread executingThread = Thread.currentThread();
 
     TopLevelTransaction(int number) {
@@ -107,7 +109,11 @@ public class TopLevelTransaction extends jvstm.TopLevelTransaction implements Fe
 
     protected void doCommit() {
 	notifyBeforeCommit(this);
+	long endTime = System.currentTimeMillis();
+	System.out.println("Transaction " + this + " took: " + (endTime - startTime) + " isWrite: " + isWriteTransaction());
 	super.doCommit();
+	long actualCoomitTime = System.currentTimeMillis();
+	System.out.println("Do coomit() " + this + " took: " + (actualCoomitTime - endTime));
 	notifyAfterCommit(this);
     }
 
