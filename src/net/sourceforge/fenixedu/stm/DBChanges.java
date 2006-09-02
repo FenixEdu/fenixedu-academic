@@ -162,7 +162,7 @@ class DBChanges {
 	    
 	// write change logs
 	Connection conn = pb.serviceConnectionManager().getConnection();
-	writeAttrChangeLogs(conn, txNumber);
+	//writeAttrChangeLogs(conn, txNumber);
 
 	// write ServiceInfo
 	ServiceInfo info = ServiceInfo.getCurrentServiceInfo();
