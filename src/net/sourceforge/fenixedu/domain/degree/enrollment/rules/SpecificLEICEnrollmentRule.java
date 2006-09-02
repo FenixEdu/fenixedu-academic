@@ -293,6 +293,7 @@ public class SpecificLEICEnrollmentRule extends SpecificEnrolmentRule implements
 			CurricularCourse2Enroll course2Enroll = new CurricularCourse2Enroll();
 			course2Enroll.setCurricularCourse(curricularCourse);
 			course2Enroll.setOptionalCurricularCourse(Boolean.TRUE);
+			course2Enroll.setCurricularYear(curricularCourse.getCurricularYearByBranchAndSemester(null, executionPeriod.getSemester()));
 			if(temporary) {
 				course2Enroll.setEnrollmentType(CurricularCourseEnrollmentType.TEMPORARY);
 			}
