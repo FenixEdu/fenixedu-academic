@@ -179,18 +179,6 @@ public class TopLevelTransaction extends jvstm.TopLevelTransaction implements Fe
 	// in memory everything is ok, but we need to check against the db
 	PersistenceBroker pb = getOJBBroker();
 
-	long topLevelTime1 = System.currentTimeMillis();
-	long topLevelTime2 = 0;
-	long topLevelTime3 = 0;
-	long topLevelTime4 = 0;
-	long topLevelTime5 = 0;
-	long topLevelTime6 = 0;
-	long topLevelTime7 = 0;
-	long topLevelTime8 = 0;
-	long topLevelTime9 = 0;
-	long topLevelTime10 = 0;
-	long topLevelTime11 = 0;
-	long topLevelTime12 = 0;
 	try {
 	    if (! pb.isInTransaction()) {
 		pb.beginTransaction();
@@ -200,68 +188,44 @@ public class TopLevelTransaction extends jvstm.TopLevelTransaction implements Fe
 
 	    int txNumber = getNumber();
 
-	    topLevelTime2 = System.currentTimeMillis();
 	    try {
 		// obtain exclusive lock on db
 		//ResultSet rs = stmt.executeQuery("SELECT GET_LOCK('ciapl.commitlock',10)");
-		topLevelTime3 = System.currentTimeMillis();
 		//if (rs.next() && (rs.getInt(1) == 1)) {
 		    // ensure that we will get the last data in the database
 		if(true)
 		{		   
 		    //conn.commit();
-		    topLevelTime4 = System.currentTimeMillis();
 		    /*if (TransactionChangeLogs.updateFromTxLogsOnDatabase(pb, txNumber) != txNumber) {
 			// the cache may have been updated, so perform the tx-validation again
 			if (! validateCommit()) {
 			    throw new jvstm.CommitException();
 			}
 		    }*/
-		    topLevelTime5 = System.currentTimeMillis();
 		    txNumber = super.performValidCommit();
-		    topLevelTime6 = System.currentTimeMillis();
 		    // ensure that changes are visible to other TXs before releasing lock
 		    conn.commit();
-		    topLevelTime7 = System.currentTimeMillis();
 		} else {
 		    throw new Error("Couldn't get exclusive commit lock on the database");
 		}
 	    } finally {
-		topLevelTime8 = System.currentTimeMillis();
 		// release exclusive lock on db
 		// if the lock was not gained, calling RELEASE_LOCK has no effect
 		//stmt.executeUpdate("DO RELEASE_LOCK('ciapl.commitlock')");
 	    }
 
-	    topLevelTime9 = System.currentTimeMillis();
 	    pb.commitTransaction();
 	    pb = null;
 
-	    topLevelTime10 = System.currentTimeMillis();
 	    return txNumber;
 	} catch (SQLException sqle) {
 	    throw new Error("Error while accessing database");
 	} catch (LookupException le) {
 	    throw new Error("Error while obtaining database connection");
 	} finally {
-	    topLevelTime11 = System.currentTimeMillis();
 	    if (pb != null) {
 		pb.abortTransaction();
 	    }
-	    topLevelTime12 = System.currentTimeMillis();
-
-	    System.out.println(
-		        "2: " + (topLevelTime2 - topLevelTime1)
-		    + " ,3: "+ (topLevelTime3 - topLevelTime2)
-		    + " ;4: " + (topLevelTime4 - topLevelTime3)
-		    + " ;5: " + (topLevelTime5 - topLevelTime4)
-		    + " ;6: " + (topLevelTime6 - topLevelTime5)
-		    + " ;7: " + (topLevelTime7 - topLevelTime6)
-		    + " ;8: " + (topLevelTime8 - topLevelTime7)
-		    + " ;9: " + (topLevelTime9 - topLevelTime10)
-		    + " ;10: " + (topLevelTime10 - topLevelTime9)
-		    + " ;11: " + (topLevelTime11 - topLevelTime10)
-		    + " ;12: " + (topLevelTime12 - topLevelTime11));
 	}
     }
 
