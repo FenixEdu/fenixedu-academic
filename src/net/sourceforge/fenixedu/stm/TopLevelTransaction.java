@@ -203,18 +203,20 @@ public class TopLevelTransaction extends jvstm.TopLevelTransaction implements Fe
 	    topLevelTime2 = System.currentTimeMillis();
 	    try {
 		// obtain exclusive lock on db
-		ResultSet rs = stmt.executeQuery("SELECT GET_LOCK('ciapl.commitlock',10)");
+		//ResultSet rs = stmt.executeQuery("SELECT GET_LOCK('ciapl.commitlock',10)");
 		topLevelTime3 = System.currentTimeMillis();
-		if (rs.next() && (rs.getInt(1) == 1)) {
+		//if (rs.next() && (rs.getInt(1) == 1)) {
 		    // ensure that we will get the last data in the database
-		    conn.commit();
+		if(true)
+		{		   
+		    //conn.commit();
 		    topLevelTime4 = System.currentTimeMillis();
-		    if (TransactionChangeLogs.updateFromTxLogsOnDatabase(pb, txNumber) != txNumber) {
+		    /*if (TransactionChangeLogs.updateFromTxLogsOnDatabase(pb, txNumber) != txNumber) {
 			// the cache may have been updated, so perform the tx-validation again
 			if (! validateCommit()) {
 			    throw new jvstm.CommitException();
 			}
-		    }
+		    }*/
 		    topLevelTime5 = System.currentTimeMillis();
 		    txNumber = super.performValidCommit();
 		    topLevelTime6 = System.currentTimeMillis();
@@ -228,7 +230,7 @@ public class TopLevelTransaction extends jvstm.TopLevelTransaction implements Fe
 		topLevelTime8 = System.currentTimeMillis();
 		// release exclusive lock on db
 		// if the lock was not gained, calling RELEASE_LOCK has no effect
-		stmt.executeUpdate("DO RELEASE_LOCK('ciapl.commitlock')");
+		//stmt.executeUpdate("DO RELEASE_LOCK('ciapl.commitlock')");
 	    }
 
 	    topLevelTime9 = System.currentTimeMillis();
