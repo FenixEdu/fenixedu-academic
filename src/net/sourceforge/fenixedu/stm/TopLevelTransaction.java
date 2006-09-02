@@ -188,7 +188,7 @@ public class TopLevelTransaction extends jvstm.TopLevelTransaction implements Fe
 
 	    try {
 		// obtain exclusive lock on db
-		ResultSet rs = stmt.executeQuery("SELECT GET_LOCK('ciapl.commitlock',100)");
+		ResultSet rs = stmt.executeQuery("SELECT GET_LOCK('ciapl.commitlock',5)");
 		
 		if (rs.next() && (rs.getInt(1) == 1)) {
 		    // ensure that we will get the last data in the database
