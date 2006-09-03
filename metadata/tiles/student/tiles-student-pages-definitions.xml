@@ -45,7 +45,7 @@
 	</definition>
 	<definition name="show-shifts-to-enroll" extends="definition.student.masterPage">	
 		<put name="navLocal" value="/student/enrollment/listClasses.jsp" />
-		<put name="body" value="/student/enrollment/showShiftsToEnroll.jsp" />		
+		<put name="body" value="/student/enrollment/showShiftsToEnroll.jsp" />
 	</definition>
 	<definition name="enrollment-confirmation" extends="definition.student.one-column">
 		<put name="body" value="/student/enrollment/showShiftsEnrollment.jsp" />		
