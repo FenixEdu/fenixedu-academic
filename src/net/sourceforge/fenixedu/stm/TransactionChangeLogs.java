@@ -145,6 +145,10 @@ public class TransactionChangeLogs {
 
 
     public static int updateFromTxLogsOnDatabase(PersistenceBroker pb, int txNumber) throws SQLException,LookupException {
+	return updateFromTxLogsOnDatabase(pb, txNumber, false);
+    }
+
+    public static int updateFromTxLogsOnDatabase(PersistenceBroker pb, int txNumber, boolean forUpdate) throws SQLException,LookupException {
 	Connection conn = pb.serviceConnectionManager().getConnection();
 
 	// ensure that the connection is up-to-date
@@ -156,7 +160,8 @@ public class TransactionChangeLogs {
 	int maxTxNumber = txNumber;
 	ResultSet rs = stmt.executeQuery("SELECT OBJ_CLASS,OBJ_ID,OBJ_ATTR,TX_NUMBER FROM TX_CHANGE_LOGS WHERE TX_NUMBER > " 
 					 + maxTxNumber 
-					 + " ORDER BY TX_NUMBER");
+					 + " ORDER BY TX_NUMBER"
+					 + (forUpdate ? " FOR UPDATE" : ""));
 
 	int previousTxNum = -1;
 	ChangeLogSet clSet = null;

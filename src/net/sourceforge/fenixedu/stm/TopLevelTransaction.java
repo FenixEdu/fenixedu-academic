@@ -1,18 +1,16 @@
 package net.sourceforge.fenixedu.stm;
 
 import java.sql.Connection;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import jvstm.CommitException;
 import jvstm.VBoxBody;
 
 import org.apache.ojb.broker.PersistenceBroker;
 import org.apache.ojb.broker.PersistenceBrokerFactory;
 import org.apache.ojb.broker.accesslayer.LookupException;
-
-import pt.utl.ist.fenix.tools.util.StringAppender;
 
 
 public class TopLevelTransaction extends jvstm.TopLevelTransaction implements FenixTransaction {
@@ -183,43 +181,25 @@ public class TopLevelTransaction extends jvstm.TopLevelTransaction implements Fe
 	    if (! pb.isInTransaction()) {
 		pb.beginTransaction();
 	    }
-	    Connection conn = pb.serviceConnectionManager().getConnection();
-	    Statement stmt = conn.createStatement();
 
 	    int txNumber = getNumber();
-
 	    try {
-		// obtain exclusive lock on db
-		//ResultSet rs = stmt.executeQuery("SELECT GET_LOCK('ciapl.commitlock',10)");
-		//if (rs.next() && (rs.getInt(1) == 1)) {
-		    // ensure that we will get the last data in the database
-		if(true)
-		{		   
-		    //conn.commit();
-		    /*if (TransactionChangeLogs.updateFromTxLogsOnDatabase(pb, txNumber) != txNumber) {
-			// the cache may have been updated, so perform the tx-validation again
-			if (! validateCommit()) {
-			    throw new jvstm.CommitException();
-			}
-		    }*/
-		    txNumber = super.performValidCommit();
-		    // ensure that changes are visible to other TXs before releasing lock
-		    conn.commit();
-		} else {
-		    throw new Error("Couldn't get exclusive commit lock on the database");
+		if (TransactionChangeLogs.updateFromTxLogsOnDatabase(pb, txNumber, true) != txNumber) {
+		    // the cache may have been updated, so perform the tx-validation again
+		    if (! validateCommit()) {
+			throw new jvstm.CommitException();
+		    }
 		}
-	    } finally {
-		// release exclusive lock on db
-		// if the lock was not gained, calling RELEASE_LOCK has no effect
-		//stmt.executeUpdate("DO RELEASE_LOCK('ciapl.commitlock')");
+	    } catch (SQLException sqlex) {
+		throw new CommitException();
 	    }
+	    txNumber = super.performValidCommit();
+	    // ensure that changes are visible to other TXs before releasing lock
 
 	    pb.commitTransaction();
 	    pb = null;
 
-	    return txNumber;
-	} catch (SQLException sqle) {
-	    throw new Error("Error while accessing database");
+	    return txNumber;	
 	} catch (LookupException le) {
 	    throw new Error("Error while obtaining database connection");
 	} finally {
