@@ -177,28 +177,39 @@ public class TopLevelTransaction extends jvstm.TopLevelTransaction implements Fe
 	// in memory everything is ok, but we need to check against the db
 	PersistenceBroker pb = getOJBBroker();
 
+	long time1 = System.currentTimeMillis();
+	long time2 = 0;
+	long time3 = 0;
+	long time4 = 0;
+	long time5 = 0;
+	long time6 = 0;
+	long time7 = 0;
+	long time8 = 0;
 	try {
 	    if (! pb.isInTransaction()) {
 		pb.beginTransaction();
 	    }
-
+	    time2 = System.currentTimeMillis();
 	    int txNumber = getNumber();
 	    try {
+		time3 = System.currentTimeMillis();
 		if (TransactionChangeLogs.updateFromTxLogsOnDatabase(pb, txNumber, true) != txNumber) {
 		    // the cache may have been updated, so perform the tx-validation again
 		    if (! validateCommit()) {
 			throw new jvstm.CommitException();
 		    }
 		}
+		time4 = System.currentTimeMillis();
 	    } catch (SQLException sqlex) {
 		throw new CommitException();
 	    }
+	    time5 = System.currentTimeMillis();
 	    txNumber = super.performValidCommit();
 	    // ensure that changes are visible to other TXs before releasing lock
-
+	    time6 = System.currentTimeMillis();
 	    pb.commitTransaction();
 	    pb = null;
-
+	    time7 = System.currentTimeMillis();
 	    return txNumber;	
 	} catch (LookupException le) {
 	    throw new Error("Error while obtaining database connection");
@@ -206,6 +217,16 @@ public class TopLevelTransaction extends jvstm.TopLevelTransaction implements Fe
 	    if (pb != null) {
 		pb.abortTransaction();
 	    }
+		time8 = System.currentTimeMillis();
+		System.out.println(
+			" ,2: " + (time2 - time1)
+			+ " ,3: " + (time3 - time2)
+			+ " ,4: " + (time4 - time3)
+			+ " ,5: " + (time5 - time4)
+			+ " ,6: " + (time6 - time5)
+			+ " ,7: " + (time7 - time6)
+			+ " ,8: " + (time8 - time7)
+			);
 	}
     }
 
