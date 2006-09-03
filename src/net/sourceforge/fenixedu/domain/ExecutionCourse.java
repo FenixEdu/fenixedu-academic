@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.domain;
 
 import java.text.Collator;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
@@ -1304,10 +1305,23 @@ public class ExecutionCourse extends ExecutionCourse_Base {
     public Double getCurricularCourseEnrolmentsWeight(CurricularCourse curricularCourse) {
     	Double totalEnrolmentStudentNumber = new Double(getTotalEnrolmentStudentNumber());
     	if(totalEnrolmentStudentNumber > 0d) {
-    		return  curricularCourse.getTotalEnrolmentStudentNumber(getExecutionPeriod()) / totalEnrolmentStudentNumber;
+    	    return  curricularCourse.getTotalEnrolmentStudentNumber(getExecutionPeriod()) / totalEnrolmentStudentNumber;
     	} else {
-    		return 0d;
+    	    return 0d;
     	}
+    }
+
+    public Set<ShiftType> getOldShiftTypesToEnrol() {
+	final List<ShiftType> validShiftTypes = Arrays.asList(new ShiftType[] { ShiftType.TEORICA,
+		ShiftType.PRATICA, ShiftType.LABORATORIAL, ShiftType.TEORICO_PRATICA });
+
+	final Set<ShiftType> result = new HashSet<ShiftType>(4);
+	for (final Shift shift : getAssociatedShiftsSet()) {
+	    if (validShiftTypes.contains(shift.getTipo())) {
+		result.add(shift.getTipo());
+	    }
+	}
+	return result;
     }
 
 }

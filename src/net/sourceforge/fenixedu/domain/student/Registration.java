@@ -26,6 +26,7 @@ import net.sourceforge.fenixedu.domain.Project;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.SchoolClass;
 import net.sourceforge.fenixedu.domain.Shift;
+import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.domain.SpecialSeasonCode;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.StudentKind;
@@ -788,8 +789,8 @@ public class Registration extends Registration_Base {
         int result = 0;
         final List<Shift> enroledShifts = getShiftsFor(executionPeriod);
         for (final ExecutionCourse executionCourse : getAttendingExecutionCoursesFor(executionPeriod)) {
-            for (final Shift shift : executionCourse.getAssociatedShiftsSet()) {
-                if (!enroledShiftsContainsShiftWithSameExecutionCourseAndShiftType(enroledShifts, shift)) {
+            for (final ShiftType shiftType : executionCourse.getOldShiftTypesToEnrol()) {
+        	if (!enroledShiftsContainsShiftWithSameExecutionCourseAndShiftType(enroledShifts, executionCourse, shiftType)) {
                     result++;
                     break;
                 }
@@ -797,15 +798,15 @@ public class Registration extends Registration_Base {
         }
         return Integer.valueOf(result);
     }
-
+    
     private boolean enroledShiftsContainsShiftWithSameExecutionCourseAndShiftType(
-            final List<Shift> enroledShifts, final Shift shift) {
+            final List<Shift> enroledShifts, final ExecutionCourse executionCourse, final ShiftType shiftType) {
 
         return CollectionUtils.exists(enroledShifts, new Predicate() {
             public boolean evaluate(Object object) {
                 Shift enroledShift = (Shift) object;
-                return enroledShift.getDisciplinaExecucao() == shift.getDisciplinaExecucao()
-                        && enroledShift.getTipo() == shift.getTipo();
+                return enroledShift.getDisciplinaExecucao() == executionCourse
+                        && enroledShift.getTipo() == shiftType;
             }
         });
     }
