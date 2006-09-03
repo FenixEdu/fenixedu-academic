@@ -39,7 +39,7 @@ public class EnrollStudentInShiftsAction extends FenixAction {
 
             if (errorReport.getUnAvailableShifts().size() > 0) {
             	for (final Shift shift : (List<Shift>) errorReport.getUnAvailableShifts()) {
-            		addActionMessage(request, "error.shift.enrollment.capacityExceded", shift.getNome());
+            	    addActionMessage(request, "error.shift.enrollment.capacityExceded", shift.getNome());
             	}
             }
             if (errorReport.getUnExistingShifts().size() > 0) {
@@ -55,7 +55,8 @@ public class EnrollStudentInShiftsAction extends FenixAction {
             addActionMessage(request, e.getMessage());
             return mapping.getInputForward();
         }
-        
+
+        saveMessages(request);
         return mapping.findForward("enrollmentConfirmation");
     }
     
