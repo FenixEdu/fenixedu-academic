@@ -89,17 +89,17 @@ public class ItemTest extends DomainTestBase {
             assertEquals("Information Unexpected", "ItemInformation2", item2.getInformation());
         }
         
-        item2.edit("ItemName2New", "ItemInformation2New", 2);
+        item2.edit(new MultiLanguageString("ItemName2New"), new MultiLanguageString("ItemInformation2New"), 2);
         
         testEditInformation("ItemName2New","ItemInformation2New" , false);       
         testItemsOrder(0, 2, 1);            
         
-        item2.edit("ItemName22New", "ItemInformation22New", 0);
+        item2.edit(new MultiLanguageString("ItemName22New"), new MultiLanguageString("ItemInformation22New"), 0);
         
         testEditInformation("ItemName22New","ItemInformation22New" , false);              
         testItemsOrder(1, 0, 2);        
         
-        item2.edit("ItemName222New", "ItemInformation222New", 1);
+        item2.edit(new MultiLanguageString("ItemName222New"), new MultiLanguageString("ItemInformation222New"), 1);
         
         testEditInformation("ItemName222New","ItemInformation222New" , true);                       
         testItemsOrder(0, 1, 2);        

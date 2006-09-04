@@ -100,7 +100,7 @@ public class SiteTest extends DomainTestBase {
         }
 
         try {
-            site.createSection("SectionName", null, null);
+            site.createSection(new MultiLanguageString("SectionName"), null, null);
             fail("Expected NullPointerException!");
         } catch (NullPointerException e) {
             assertEquals("Size unexpected!", 1, site.getAssociatedSectionsCount());
@@ -116,7 +116,7 @@ public class SiteTest extends DomainTestBase {
         // Create Section to a Site at last position
         dateBeforeCreation = Calendar.getInstance().getTime();
         sleep(1000);
-        site.createSection("SectionNameLast", null, -1);
+        site.createSection(new MultiLanguageString("SectionNameLast"), null, -1);
         sleep(1000);
         dateAfterCreation = Calendar.getInstance().getTime();
         assertEquals("Size unexpected!", 2, site.getAssociatedSectionsCount());
@@ -137,7 +137,7 @@ public class SiteTest extends DomainTestBase {
         // "SectionNameLast"
         dateBeforeCreation = Calendar.getInstance().getTime();
         sleep(1000);
-        site.createSection("SectionNameBetween", null, 1);
+        site.createSection(new MultiLanguageString("SectionNameBetween"), null, 1);
         sleep(1000);
         dateAfterCreation = Calendar.getInstance().getTime();
         assertEquals("Size unexpected!", 3, site.getAssociatedSectionsCount());
@@ -159,7 +159,7 @@ public class SiteTest extends DomainTestBase {
         // Create Section to a Site at start position
         dateBeforeCreation = Calendar.getInstance().getTime();
         sleep(1000);
-        site.createSection("SectionNameStart", null, 0);
+        site.createSection(new MultiLanguageString("SectionNameStart"), null, 0);
         sleep(1000);
         dateAfterCreation = Calendar.getInstance().getTime();
         assertEquals("Size unexpected!", 4, site.getAssociatedSectionsCount());
@@ -183,7 +183,7 @@ public class SiteTest extends DomainTestBase {
         // Create SubSection to a Site and ParentSection
         dateBeforeCreation = Calendar.getInstance().getTime();
         sleep(1000);
-        site.createSection("SubSectionNameStart", parentSection, -1);
+        site.createSection(new MultiLanguageString("SubSectionNameStart"), parentSection, -1);
         sleep(1000);
         dateAfterCreation = Calendar.getInstance().getTime();
         assertEquals("Size unexpected!", 5, site.getAssociatedSectionsCount());
@@ -204,7 +204,7 @@ public class SiteTest extends DomainTestBase {
         // Create SubSection to a Site and ParentSection at last postion
         dateBeforeCreation = Calendar.getInstance().getTime();
         sleep(1000);
-        site.createSection("SubSectionNameLast", parentSection, -1);
+        site.createSection(new MultiLanguageString("SubSectionNameLast"), parentSection, -1);
         sleep(1000);
         dateAfterCreation = Calendar.getInstance().getTime();
         assertEquals("Size unexpected!", 6, site.getAssociatedSectionsCount());
@@ -228,7 +228,7 @@ public class SiteTest extends DomainTestBase {
         // "SubSectionNameStart" and "SubSectionNameLast"
         dateBeforeCreation = Calendar.getInstance().getTime();
         sleep(1000);
-        site.createSection("SubSectionNameBetween", parentSection, 1);
+        site.createSection(new MultiLanguageString("SubSectionNameBetween"), parentSection, 1);
         sleep(1000);
         dateAfterCreation = Calendar.getInstance().getTime();
         assertEquals("Size unexpected!", 7, site.getAssociatedSectionsCount());
@@ -253,7 +253,7 @@ public class SiteTest extends DomainTestBase {
         // Create SubSection to a Site and ParentSection at start position
         dateBeforeCreation = Calendar.getInstance().getTime();
         sleep(1000);
-        site.createSection("SubSectionNameFirst", parentSection, 0);
+        site.createSection(new MultiLanguageString("SubSectionNameFirst"), parentSection, 0);
         sleep(1000);
         dateAfterCreation = Calendar.getInstance().getTime();
         assertEquals("Size unexpected!", 8, site.getAssociatedSectionsCount());

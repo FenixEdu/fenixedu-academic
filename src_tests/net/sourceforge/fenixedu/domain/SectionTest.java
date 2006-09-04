@@ -96,7 +96,7 @@ public class SectionTest extends DomainTestBase {
         }
         
         try {
-            section.insertItem("ItemName1", "ItemInformation1", 0);          
+            section.insertItem(new MultiLanguageString("ItemName1"), new MultiLanguageString("ItemInformation1"), 0);          
             testInsertItemInformation(1, "ItemName1", "ItemInformation1", 0, 0);             
        
         } catch (DomainException e) {
@@ -105,7 +105,7 @@ public class SectionTest extends DomainTestBase {
         
         //Test: insert an item with the same name of an existing one 
         try {
-            section.insertItem("ItemName1", "ItemInformation111111", 0);
+            section.insertItem(new MultiLanguageString("ItemName1"), new MultiLanguageString("ItemInformation111111"), 0);
             fail("Expected DomainException");
           
         } catch (DomainException e) {            
@@ -113,7 +113,7 @@ public class SectionTest extends DomainTestBase {
         }
         
         try {
-            section.insertItem("ItemName2", "ItemInformation2", 1);           
+            section.insertItem(new MultiLanguageString("ItemName2"), new MultiLanguageString("ItemInformation2"), 1);           
             testInsertItemInformation(2, "ItemName2", "ItemInformation2", 1, 0);
                    
         } catch (DomainException e) {
@@ -121,7 +121,7 @@ public class SectionTest extends DomainTestBase {
         }        
               
         try {
-            section.insertItem("ItemName3", "ItemInformation3", 1);
+            section.insertItem(new MultiLanguageString("ItemName3"), new MultiLanguageString("ItemInformation3"), 1);
             testInsertItemInformation(3, "ItemName3", "ItemInformation3", 1, 0);
                            
         } catch (DomainException e) {
@@ -129,7 +129,7 @@ public class SectionTest extends DomainTestBase {
         }
         
         try {
-            section.insertItem("ItemName4", "ItemInformation4", 2);            
+            section.insertItem(new MultiLanguageString("ItemName4"), new MultiLanguageString("ItemInformation4"), 2);            
             testInsertItemInformation(4, "ItemName4", "ItemInformation4", 2, 0);            
         
         } catch (DomainException e) {
@@ -153,7 +153,7 @@ public class SectionTest extends DomainTestBase {
             assertEquals("Order Unexpected", 0, section.getSectionOrder().intValue());
         }
               
-        section.edit("NewSectionName", 1);
+        section.edit(new MultiLanguageString("NewSectionName"), 1);
         
         assertEquals("Name Unexpected", "NewSectionName", section.getName());
         assertEquals("Order Unexpected", 1, section.getSectionOrder().intValue());        
@@ -165,7 +165,7 @@ public class SectionTest extends DomainTestBase {
         
         
         // Test: Organize SubSections Order
-        section2.edit("NewSectionName2", 1);                             
+        section2.edit(new MultiLanguageString("NewSectionName2"), 1);                             
         
         assertEquals("Name Unexpected", "NewSectionName2", section2.getName());
         assertEquals("Order Unexpected", 1, section2.getSectionOrder().intValue());
